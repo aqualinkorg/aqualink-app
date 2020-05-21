@@ -1,6 +1,6 @@
 import { Reef } from './reefs.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { ReefDto } from './interfaces/reef.dto';
+import { ReefDto } from './interfaces/reefs.dto';
 
 @EntityRepository(Reef)
 export class ReefRepository extends Repository<Reef> {

@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
-import { ReefDto } from './interfaces/reef.dto';
+import { ReefDto } from './interfaces/reefs.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReefRepository } from './reefs.repository';
 
 @Controller('reefs')
-export class ReefController {
+export class ReefsController {
   constructor(
       @InjectRepository(ReefRepository) private readonly reefRepository: ReefRepository,
       ) {}

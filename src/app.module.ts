@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ReefsModule } from './reefs/reefs.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ReefsModule } from './reefs/reefs.module';
 
 @Module({
   imports: [
