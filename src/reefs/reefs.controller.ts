@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards, AuthGuard } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { ReefDto } from './interfaces/reef.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReefRepository } from './reefs.repository';
 
 @Controller('reefs')
-// @UseGuards(AuthGuard('jwt'))
 export class ReefController {
   constructor(
       @InjectRepository(ReefRepository) private readonly reefRepository: ReefRepository,
