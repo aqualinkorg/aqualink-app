@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 
 @Entity()
 export class Reef {
@@ -8,9 +8,34 @@ export class Reef {
    @Column({length: 50})
    name: string;
 
-   @Column()
-   age: number;
+   @Column("polygon")
+   @Index({ spatial: true })
+   polygon: string;
 
-   @Column({length: 100, nullable: true})
-   breed: string;
+   @Column()
+   region_id: number;
+
+   @Column()
+   temperature_threshold: number;
+
+   @Column()
+   depth: number;
+   
+   @Column()
+   status: string;
+
+   @Column()
+   admin_id: number;
+
+   @Column({nullable: true})
+   video_stream: string;
+
+   @Column()
+   stream_id: number;
+
+   @Column()
+   created_at: Date;
+
+   @Column()
+   updated_at: Date;  
 }
