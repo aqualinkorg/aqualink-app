@@ -1,0 +1,31 @@
+[
+    {
+        "id": 32,
+        "user_id": 4,
+        "user_name": "Bob Moses",
+        "dive_date": "2020-05-04",
+        "bottom_temperature": 25,
+        "observations": "Less activity than usual.",
+        "upload_date": "2020-05-12",
+        "images": [
+            {
+                "id": 240,
+                "location": "23.455,54.44",
+                "url": "https://images.unsplash.com/photo-1546026423-cc4642628d2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
+                "timestamp": 123732333,
+                "upload_timestamp": 123732333,
+                "featured": true,
+                "poi_label_id": 1
+            },
+            {
+                "id": 243,
+                "location": "23.435,54.44",
+                "url": "https://images.unsplash.com/photo-1546026423-cc4642628d2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
+                "timestamp": 123732443,
+                "upload_timestamp": 123732333,
+                "featured": false,
+                "poi_label_id": 2
+            }
+        ]
+    }
+]

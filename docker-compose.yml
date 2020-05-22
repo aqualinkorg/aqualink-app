@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  aqua-postgres:
+    image: postgres:12.2
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_PASSWORD: '!ChangeMe!'
