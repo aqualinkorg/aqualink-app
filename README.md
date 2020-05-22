@@ -13,6 +13,21 @@ This is the main repository for the Aqualink Coral Monitoring Application.
 $ yarn
 ```
 
+### Settings
+Make sure you have a .env file with the following values:
+
+```
+APP_SECRET=!NotSoSecretChangeMe!
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=!ChangeMe!
+POSTGRES_HOST=localhost
+POSTGRES_PORT=54321
+POSTGRES_DATABASE=postgres
+PORT=3000
+MODE=DEV
+RUN_MIGRATIONS=true
+```
+
 ### Running the app
 
 ```bash
