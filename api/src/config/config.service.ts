@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Reef } from '../reefs/reefs.entity'
 
 require('dotenv').config();
 
@@ -39,7 +40,7 @@ class ConfigService {
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
 
-      entities: ['**/*.entity{.ts,.js}'],
+      entities: [Reef],
 
       migrationsTableName: 'migration',
 
