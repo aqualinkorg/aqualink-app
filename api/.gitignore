@@ -1,5 +1,5 @@
 # Environment variables
-.env
+.env*
 
 # Local postgres data
 db_data/*
