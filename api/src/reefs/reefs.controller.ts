@@ -3,6 +3,7 @@ import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
 import { ReefDto } from './interfaces/reefs.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReefRepository } from './reefs.repository';
+import reefs from '../../mock_response/reefs.json'
 import reefDetails from '../../mock_response/reefs_id.json'
 import dailyData from '../../mock_response/daily_data.json'
 import surveys from '../../mock_response/survey_data.json'
@@ -20,7 +21,8 @@ export class ReefsController {
 
   @Get()
   findAll() {
-    return this.reefRepository.find();
+    // return this.reefRepository.find();
+    return reefs;
   }
 
   @Get(':id')
