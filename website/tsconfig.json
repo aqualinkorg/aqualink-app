@@ -17,9 +17,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "downlevelIteration": true
   },
   "include": [
     "src"
+  ],
+  "files": [
+    "src/custom.d.ts"
   ]
 }
