@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-navbar />
+  <div
+    id="app"
+  >
+    <p>
+      Route not found.
+    </p>
+  </div>
+</div>
+`;
