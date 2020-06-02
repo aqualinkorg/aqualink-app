@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+- **Styling & UI Library** Use [Material UI](https://material-ui.com/). Note that to use the [styles API](https
+://material-ui.com/styles/basics/) you can `import @material-ui/core/styles`. We prefer the Hooks styles API.
+- **Routing** Uses [React Router](https://reacttraining.com/react-router/web/guides/quick-start).
+- **State Management** Uses [Redux](https://redux.js.org/introduction/getting-started) and the [Redux Toolkit](https
+://redux-toolkit.js.org/api/configureStore) with slices.
+- **Testing** Uses [Jest](https://jestjs.io/) with [Enzyme](https://enzymejs.github.io/enzyme/)
+
 ## Available Scripts
 
 In the project directory, you can run:
