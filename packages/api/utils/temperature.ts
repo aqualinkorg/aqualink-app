@@ -13,40 +13,49 @@
 //      Bleaching Alert Level 2 (severe bleaching and significant mortality likely): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than or equal to 8. 
 // 
 // DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
+
+
 function getDHD(reefID) {
     /**
-     * Calculates the Degree Heating Days of a reef location.
+     * Calculates the Degree Heating Days of a reef location. 
      *
      * HS = SST(daily) - MMM if SST(daily) > MMM
      * HS = 0                if SST(daily) <= MMM
      * HS > 1C               bleaching threshold
      *
-     * @param  {int}    reefID        ID of the Reef
+     * @param {int}    reefID        ID of the Reef
      *
      * @return {float} DHD           Degree Heating Days
      */
-    var SST = getSST(reefID);
-    var MMM = getMMM(reefID);
-    var HS = SST.map(function (value) {
+
+    let SST = getSST(reefID);
+    let MMM = getMMM(reefID)
+    let HS = SST.map(value => {
         return (value - MMM > 0 ? value - MMM : 0);
     });
-    var DHD = 0;
-    HS.forEach(function (HSday) {
+
+    let DHD = 0;
+    HS.forEach(HSday => {
         if (HSday >= 1) {
             DHD += HSday;
         }
     });
+
     return DHD;
 }
+
+
 // Test functions
 function getSST(reefID) {
-    var SST = [27, 28, 29, 28];
+    let SST = [27, 28, 29, 28];
     return SST;
 }
+
 function getMMM(reefID) {
-    var MMM = 27.5;
+    let MMM = 27.5;
     return MMM;
 }
+
 // Test calc
 // let DHD = getDHD(0);
 // console.log('Degree heating days are: ', DHD);
