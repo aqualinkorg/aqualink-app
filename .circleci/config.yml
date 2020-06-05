@@ -45,5 +45,5 @@ jobs:
           command: apt-get update && apt-get install -y postgresql-client
 
       # Run tests
-      - run: cd packages/api && yarn && yarn test
-      - run: cd packages/website && yarn && yarn test
+      - run: cd api && yarn && yarn test
+      - run: cd website && yarn && yarn test
