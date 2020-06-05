@@ -21,29 +21,29 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+    #   - restore_cache:
+    #       keys:
+    #         - v1-dependencies-{{ checksum "yarn.lock" }}
+    #         # fallback to using the latest cache if no exact match is found
+    #         - v1-dependencies-
 
-      - run: yarn install --ignore-engines
-      - run:
-          name: Check yarn.lock
-          command: git diff --exit-code yarn.lock
+    #   - run: yarn install --ignore-engines
+    #   - run:
+    #       name: Check yarn.lock
+    #       command: git diff --exit-code yarn.lock
 
-      - save_cache:
-          paths:
-            - node_modules
-            - packages/website/node_modules
-            - packages/api/node_modules
-            - /usr/local/share/.cache/yarn/v4/
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+    #   - save_cache:
+    #       paths:
+    #         - node_modules
+    #         - packages/website/node_modules
+    #         - packages/api/node_modules
+    #         - /usr/local/share/.cache/yarn/v4/
+    #       key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
           name: Install psql
           command: apt-get update && apt-get install -y postgresql-client
 
       # Run tests
-      - run: cd packages/api && yarn test
-      - run: cd packages/website && yarn test
+      - run: cd packages/api && yarn && yarn test
+      - run: cd packages/website && yarn && yarn test
