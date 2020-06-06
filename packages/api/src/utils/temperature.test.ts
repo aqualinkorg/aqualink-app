@@ -12,9 +12,10 @@ function getMaximumMonthlyMean(reefID: number) {
 test('Not enough SST.', () => {
   const seaSurfaceTemperatures = getSeaSurfaceTemperatures(1);
   const maximumMonthlyMean = getMaximumMonthlyMean(1)
-  return expect(calculateDegreeHeatingDays(seaSurfaceTemperatures, maximumMonthlyMean)).rejects.toThrow(
-    'Calculating Degree Heating Days requires exactly 84 days of data.',
-  );
+  return expect(
+    () => { calculateDegreeHeatingDays(seaSurfaceTemperatures, maximumMonthlyMean) }).toThrow(
+      Error
+    );
 });
 
 test('Calculates data as expected.', () => {
