@@ -26,7 +26,7 @@
  * @param {float[]}    seaSurfaceTemperatures        list of seaSurfaceTemperatures
  * @param {float}      maximumMonthlyMean            maximumMonthlyMean for this location
  *
- * @return {float} DHD           Degree Heating Days
+ * @return {float}     degreeHeatingDays             Degree Heating Days
  */
 
 export function calculateDegreeHeatingDays(seaSurfaceTemperatures: number[], maximumMonthlyMean: number) {
@@ -34,11 +34,10 @@ export function calculateDegreeHeatingDays(seaSurfaceTemperatures: number[], max
     throw new Error('Calculating Degree Heating Days requires exactly 84 days of data.');
   }
 
-  const degreeHeatingDays = seaSurfaceTemperatures.reduce((sum, value) => {
-    // deviation calculation
+  return seaSurfaceTemperatures.reduce((sum, value) => {
+    // Calculate deviation.
     const degreeDeviation = value - maximumMonthlyMean
+    // Add degree deviation for days above bleaching threshold (MMM + 1 degree).
     return sum + (degreeDeviation >= 1 ? value - maximumMonthlyMean : 0);
   }, 0)
-
-  return degreeHeatingDays;
 };
