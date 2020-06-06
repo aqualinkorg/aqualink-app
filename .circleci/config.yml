@@ -1,0 +1,53 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:12
+        environment:
+          DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
+
+      - image: postgres:12.2
+        environment:
+          POSTGRES_PASSWORD: 'CHANGE-ME'
+        name: postgres
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: cd api && yarn install --ignore-engines      
+      - run:
+          name: Check API yarn.lock
+          command: git diff --exit-code api/yarn.lock
+
+      - run: cd website && yarn install --ignore-engines
+      - run:
+          name: Check website yarn.lock
+          command: git diff --exit-code website/yarn.lock
+
+      - save_cache:
+          paths:
+            - website/node_modules
+            - api/node_modules
+            - /usr/local/share/.cache/yarn/v4/
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install psql
+          command: apt-get update && apt-get install -y postgresql-client
+
+      # Run tests
+      - run: cd api && yarn test
+      - run: cd website && yarn test
