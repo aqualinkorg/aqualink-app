@@ -15,10 +15,10 @@ describe('Reefs Controller', () => {
       // providers: [ReefRepository],
       controllers: [ReefsController],
     }).compile();
-  
+
     controller = module.get<ReefsController>(ReefsController);
   });
-  
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
