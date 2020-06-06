@@ -1,4 +1,4 @@
-import { calculateDegreeHeatingDays } from '.';
+import { calculateDegreeHeatingDays } from './temperature';
 
 // Mock functions
 function getSeaSurfaceTemperatures(reefID: number) {
@@ -21,5 +21,5 @@ test('Calculates data as expected.', () => {
   const seaSurfaceTemperatures = getSeaSurfaceTemperatures(84);
   const maximumMonthlyMean = getMaximumMonthlyMean(1)
   const DHD = calculateDegreeHeatingDays(seaSurfaceTemperatures, maximumMonthlyMean)
-  expect(DHD()).toBe(35)
+  expect(DHD).toBe(1512)
 });

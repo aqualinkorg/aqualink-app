@@ -16,29 +16,29 @@
  * DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
 **/
 
-function calculateDegreeHeatingDays(seaSurfaceTemperatures: number[], maximumMonthlyMean: number) {
-    /**
-     * Calculates the Degree Heating Days of a reef location using 12 weeks of data.
-     *
-     * HS = SST(daily) - MMM if SST(daily) > MMM
-     * HS = 0                if SST(daily) <= MMM
-     * HS > 1C               bleaching threshold
-     *
-     * @param {float[]}    seaSurfaceTemperatures        list of seaSurfaceTemperatures
-     * @param {float}      maximumMonthlyMean            maximumMonthlyMean for this location
-     *
-     * @return {float} DHD           Degree Heating Days
-     */
+/**
+ * Calculates the Degree Heating Days of a reef location using 12 weeks of data.
+ *
+ * HS = SST(daily) - MMM if SST(daily) > MMM
+ * HS = 0                if SST(daily) <= MMM
+ * HS > 1C               bleaching threshold
+ *
+ * @param {float[]}    seaSurfaceTemperatures        list of seaSurfaceTemperatures
+ * @param {float}      maximumMonthlyMean            maximumMonthlyMean for this location
+ *
+ * @return {float} DHD           Degree Heating Days
+ */
 
-    if (seaSurfaceTemperatures.length !== 84) {
-        throw new Error('Calculating Degree Heating Days requires exactly 84 days of data.');
-    }
+export function calculateDegreeHeatingDays(seaSurfaceTemperatures: number[], maximumMonthlyMean: number) {
+  if (seaSurfaceTemperatures.length !== 84) {
+    throw new Error('Calculating Degree Heating Days requires exactly 84 days of data.');
+  }
 
-    const degreeHeatingDays = seaSurfaceTemperatures.map(
-        value => {
-            const degreeDeviation = value - maximumMonthlyMean
-            return (degreeDeviation >= 1 ? value - maximumMonthlyMean : 0);
-        }).reduce(function (a, b) { return a + b }, 0)
+  const degreeHeatingDays = seaSurfaceTemperatures.reduce((sum, value) => {
+    // deviation calculation
+    const degreeDeviation = value - maximumMonthlyMean
+    return sum + (degreeDeviation >= 1 ? value - maximumMonthlyMean : 0);
+  }, 0)
 
-    return degreeHeatingDays;
-}
+  return degreeHeatingDays;
+};
