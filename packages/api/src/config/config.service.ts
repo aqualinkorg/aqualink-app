@@ -1,11 +1,10 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Reef } from '../reefs/reefs.entity'
+import { Reef } from '../reefs/reefs.entity';
 
 require('dotenv').config();
 
 class ConfigService {
-
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -17,7 +16,7 @@ class ConfigService {
   }
 
   public ensureValues(keys: string[]) {
-    keys.forEach(k => this.getValue(k, true));
+    keys.forEach((k) => this.getValue(k, true));
     return this;
   }
 
@@ -27,7 +26,7 @@ class ConfigService {
 
   public isProduction() {
     const mode = this.getValue('MODE', false);
-    return mode != 'DEV';
+    return mode !== 'DEV';
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
@@ -35,7 +34,7 @@ class ConfigService {
       type: 'postgres',
 
       host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT')),
+      port: parseInt(this.getValue('POSTGRES_PORT'), 10),
       username: this.getValue('POSTGRES_USER'),
       password: this.getValue('POSTGRES_PASSWORD'),
       database: this.getValue('POSTGRES_DATABASE'),
@@ -53,16 +52,14 @@ class ConfigService {
       ssl: this.isProduction(),
     };
   }
-
 }
 
-const configService = new ConfigService(process.env)
-  .ensureValues([
-    'POSTGRES_HOST',
-    'POSTGRES_PORT',
-    'POSTGRES_USER',
-    'POSTGRES_PASSWORD',
-    'POSTGRES_DATABASE'
-  ]);
+const configService = new ConfigService(process.env).ensureValues([
+  'POSTGRES_HOST',
+  'POSTGRES_PORT',
+  'POSTGRES_USER',
+  'POSTGRES_PASSWORD',
+  'POSTGRES_DATABASE',
+]);
 
 export { configService };

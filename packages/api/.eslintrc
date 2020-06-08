@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-useless-constructor": "off",
+    "no-empty-function": ["error", { "allow": ["constructors"] }]
+  }
+}
