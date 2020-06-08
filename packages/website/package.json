@@ -31,23 +31,6 @@
     "redux": "^4.0.5",
     "typescript": "~3.8.2"
   },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-config-react-app": "^5.2.0",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-flowtype": "^3.0",
-    "eslint-plugin-fp": "^2.3.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^1.7",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -56,22 +39,9 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore",
     "precommit": "lint-staged"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "yarn run lint --fix"
     ]
   },
   "browserslist": {

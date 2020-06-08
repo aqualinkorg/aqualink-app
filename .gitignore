@@ -1,7 +1,7 @@
 # Environment variables
 .env*
 
-/node_modules
+node_modules
 
 # OS
 .DS_Store
