@@ -8,8 +8,12 @@ class ConfigService {
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
-    if (!value && throwOnMissing) {
-      throw new Error(`config error - missing env.${key}`);
+    if (!value) {
+      if (throwOnMissing) {
+        throw new Error(`config error - missing env.${key}`);
+      } else {
+        return '';
+      }
     }
 
     return value;
