@@ -1,7 +1,5 @@
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { join } from 'path';
-// const { join } = require('path');
-// const { SnakeNamingStrategy } = require('typeorm-naming-strategies')
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
