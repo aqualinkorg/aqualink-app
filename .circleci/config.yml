@@ -27,20 +27,16 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: cd api && yarn install --ignore-engines      
+      - run: yarn install --ignore-engines
       - run:
-          name: Check API yarn.lock
-          command: git diff --exit-code api/yarn.lock
-
-      - run: cd website && yarn install --ignore-engines
-      - run:
-          name: Check website yarn.lock
-          command: git diff --exit-code website/yarn.lock
+          name: Check yarn.lock
+          command: git diff --exit-code yarn.lock
 
       - save_cache:
           paths:
-            - website/node_modules
-            - api/node_modules
+            - node_modules
+            - packages/website/node_modules
+            - packages/api/node_modules
             - /usr/local/share/.cache/yarn/v4/
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
@@ -49,5 +45,12 @@ jobs:
           command: apt-get update && apt-get install -y postgresql-client
 
       # Run tests
-      - run: cd api && yarn test
-      - run: cd website && yarn test
+      # This could also be run using lerna: `yarn test` in the main repo, but doing it
+      # explicitly like this separates out the tasks nicely in the UI.
+      - run: cd packages/api && yarn test
+      - run: cd packages/website && yarn test
+
+      - run: yarn lint:all
+
+      # Ensure that a normal build succeeds
+      - run: yarn build
