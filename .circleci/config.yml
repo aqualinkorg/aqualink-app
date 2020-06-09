@@ -46,6 +46,11 @@ jobs:
 
       # Run tests
       # This could also be run using lerna: `yarn test` in the main repo, but doing it
-      # explicitely like this separates out the tasks nicely in the UI.
+      # explicitly like this separates out the tasks nicely in the UI.
       - run: cd packages/api && yarn test
       - run: cd packages/website && yarn test
+
+      - run: yarn lint:all
+
+      # Ensure that a normal build succeeds
+      - run: yarn build
