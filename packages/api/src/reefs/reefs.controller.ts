@@ -29,28 +29,25 @@ export class ReefsController {
   }
 
   @Get()
-  // eslint-disable-next-line class-methods-use-this
   findAll() {
     // return this.reefRepository.find();
     return reefs;
   }
 
   @Get(':id')
-  // eslint-disable-next-line class-methods-use-this
   findOne(@Param('id') id: string) {
     return merge(reefDetails, { id });
     // return this.reefRepository.findOneReef(id);
   }
 
   @Get(':id/daily_data')
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   findDailyData(@Param('id') id: string) {
     return dailyData;
     // return this.reefRepository.findOneReef(id);
   }
 
   @Get(':id/surveys/:poi')
-  // eslint-disable-next-line class-methods-use-this
   findSurveys(@Param('id') id: string, @Param('poi') poi: string) {
     return surveys.map((survey) => ({
       ...survey,
