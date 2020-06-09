@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Reef {
@@ -13,12 +20,10 @@ export class Reef {
   polygon: string;
 
   @Column()
-  // eslint-disable-next-line camelcase
-  region_id: number;
+  regionId: number;
 
   @Column()
-  // eslint-disable-next-line camelcase
-  temperature_threshold: number;
+  temperatureThreshold: number;
 
   @Column()
   depth: number;
@@ -27,22 +32,17 @@ export class Reef {
   status: string;
 
   @Column()
-  // eslint-disable-next-line camelcase
-  admin_id: number;
+  adminId: number;
 
   @Column({ nullable: true })
-  // eslint-disable-next-line camelcase
-  video_stream: string;
+  videoStream: string;
 
   @Column()
-  // eslint-disable-next-line camelcase
-  stream_id: number;
+  streamId: number;
 
-  @Column()
-  // eslint-disable-next-line camelcase
-  created_at: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @Column()
-  // eslint-disable-next-line camelcase
-  updated_at: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
