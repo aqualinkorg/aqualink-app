@@ -1,7 +1,16 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Reef } from '../reefs/reefs.entity';
 
-require('dotenv').config();
+// dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
+try {
+  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
+  require('dotenv').config();
+} catch {
+  // Pass
+}
+
+// ormconfig is a CommonJS/AMD style import rather than ES6-style module due to how TypeORM CLI works internally.
+// This means we need to use require rather than import, unfortunately.
+const dbConfig = require('../../ormconfig');
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -29,41 +38,18 @@ class ConfigService {
   }
 
   public isProduction() {
-    const mode = this.getValue('MODE', false);
-    return mode !== 'DEV';
+    const mode = this.getValue('NODE_ENV', false);
+    return mode !== 'development';
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
-      type: 'postgres',
-
-      host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT'), 10),
-      username: this.getValue('POSTGRES_USER'),
-      password: this.getValue('POSTGRES_PASSWORD'),
-      database: this.getValue('POSTGRES_DATABASE'),
-
-      entities: [Reef],
-
-      migrationsTableName: 'migration',
-
-      migrations: ['src/migration/*.ts'],
-
-      cli: {
-        migrationsDir: 'src/migration',
-      },
-
+      ...dbConfig,
       ssl: this.isProduction(),
     };
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues([
-  'POSTGRES_HOST',
-  'POSTGRES_PORT',
-  'POSTGRES_USER',
-  'POSTGRES_PASSWORD',
-  'POSTGRES_DATABASE',
-]);
+const configService = new ConfigService(process.env);
 
 export { configService };

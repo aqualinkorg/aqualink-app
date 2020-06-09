@@ -9,8 +9,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ReefDto } from './interfaces/reefs.dto';
-import { ReefRepository } from './reefs.repository';
+import { Repository } from 'typeorm';
+import { Reef } from './reefs.entity';
 import reefs from '../../mock_response/reefs.json';
 import reefDetails from '../../mock_response/reefs_id.json';
 import dailyData from '../../mock_response/daily_data.json';
@@ -19,13 +19,13 @@ import surveys from '../../mock_response/survey_data.json';
 @Controller('reefs')
 export class ReefsController {
   constructor(
-    @InjectRepository(ReefRepository)
-    private readonly reefRepository: ReefRepository,
+    @InjectRepository(Reef)
+    private readonly reefRepository: Repository<Reef>,
   ) {}
 
   @Post()
-  create(@Body() reefDto: ReefDto) {
-    return this.reefRepository.createReef(reefDto);
+  create(@Body() reefData: Reef) {
+    return this.reefRepository.insert(reefData);
   }
 
   @Get()
@@ -59,12 +59,12 @@ export class ReefsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() reefDto: ReefDto) {
-    return this.reefRepository.updateReef(id, reefDto);
+  update(@Param('id') id: string, @Body() reef: Reef) {
+    return this.reefRepository.save({ ...reef, id: parseInt(id, 10) });
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.reefRepository.removeReef(id);
+    return this.reefRepository.delete(id);
   }
 }
