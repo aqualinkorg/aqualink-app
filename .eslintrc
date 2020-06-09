@@ -62,7 +62,10 @@
       "ignoreRestSiblings": true
     }],
     "lines-between-class-members": "off",
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}"]
+    }]
   },
   "settings": {
     "import/resolver": {
@@ -79,5 +82,14 @@
       }
     }
   },
-  "ignorePatterns": ["src/serviceWorker.ts"]
+  "ignorePatterns": ["src/serviceWorker.ts"],
+  "overrides": [
+    // Don't warn about reassignment in spec files so that we can use before blocks to assign to scoped variables.
+    {
+      "files": "**/*.{spec,test}.{ts,tsx}",
+      "rules": {
+        "fp/no-mutation": "off"
+      }
+    }
+  ]
 }

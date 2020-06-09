@@ -5,9 +5,7 @@ import { Reef } from './reefs.entity';
 import { ReefRepository } from './reefs.repository';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Reef, ReefRepository])
-  ],
+  imports: [TypeOrmModule.forFeature([Reef, ReefRepository])],
   controllers: [ReefsController],
 })
 export class ReefsModule {}
