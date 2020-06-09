@@ -1,16 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "declaration": true,
-    "removeComments": true,
-    "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2017",
-    "sourceMap": true,
-    "baseUrl": "./",
-    "incremental": true,
-    "resolveJsonModule": true,
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,19 +8,18 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
-  },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
-  "include": [
-    "src"
-  ]
+    "jsx": "react",
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "downlevelIteration": true
+  }
 }
