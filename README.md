@@ -34,6 +34,12 @@ yarn test
 
 # Start up all of the packages locally
 yarn start
+
+# Lint a specific file
+yarn lint ./packages/api/src/path/to/file.ts
+
+# Lint all the files in the app
+yarn lint:all
 ```
 
 ## Contributing
