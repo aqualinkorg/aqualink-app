@@ -3,9 +3,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Index,
+  ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Region } from '../regions/regions.entity';
+import { User } from '../users/users.entity';
+import { VideoStream } from './video-streams.entity';
 
 @Entity()
 export class Reef {
@@ -19,10 +24,7 @@ export class Reef {
   @Index({ spatial: true })
   polygon: string;
 
-  @Column()
-  regionId: number;
-
-  @Column()
+  @Column('float')
   temperatureThreshold: number;
 
   @Column()
@@ -31,18 +33,24 @@ export class Reef {
   @Column()
   status: string;
 
-  @Column()
-  adminId: number;
-
   @Column({ nullable: true })
   videoStream: string;
-
-  @Column()
-  streamId: number;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => Region, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'region_id' })
+  regionId: Region;
+
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'admin_id' })
+  adminId: User;
+
+  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'stream_id' })
+  streamId: VideoStream;
 }
