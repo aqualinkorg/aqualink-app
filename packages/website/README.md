@@ -7,6 +7,17 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **State Management** Uses [Redux](https://redux.js.org/introduction/getting-started) and the [Redux Toolkit](https://redux-toolkit.js.org/api/configureStore) with slices.
 - **Testing** Uses [Jest](https://jestjs.io/) with [Enzyme](https://enzymejs.github.io/enzyme/)
 
+## Settings
+
+The app must be configured before you can run it. Configuration is sourced from the following environment variables.
+
+```
+REACT_APP_API_BASE_URL="http://localhost:8080/"
+```
+
+In development, we optionally use [dotenv](https://www.npmjs.com/package/dotenv) to automatically load environment
+variables from the file `./.env` - you can use the provided `.env.example` file as a template.
+
 ## Available Scripts
 
 In the project directory, you can run:
