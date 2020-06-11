@@ -5,6 +5,8 @@ import {
   Index,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Survey } from './surveys.entity';
@@ -54,4 +56,10 @@ export class SurveyVideo {
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'poi_id' })
   poiId: ReefPointOfInterest;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

@@ -5,6 +5,8 @@ import {
   Index,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 
@@ -27,4 +29,10 @@ export class Spotter {
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'reef_id' })
   reefId: Reef;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

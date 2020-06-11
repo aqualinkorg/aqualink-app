@@ -27,12 +27,12 @@ export class User {
   @Column({ length: 254 })
   email: string;
 
-  @Column('point')
+  @Column({ type: 'point', nullable: true })
   @Index({ spatial: true })
-  location: string;
+  location?: string;
 
-  @Column({ length: 50 })
-  country: string;
+  @Column({ length: 50, nullable: true })
+  country?: string;
 
   @Column({
     type: 'enum',
@@ -41,11 +41,11 @@ export class User {
   })
   adminLevel: AdminLevel;
 
-  @Column()
-  description: string;
+  @Column({ nullable: true })
+  description?: string;
 
-  @Column()
-  imageUrl: string;
+  @Column({ nullable: true })
+  imageUrl?: string;
 
   @CreateDateColumn()
   createdAt: Date;
