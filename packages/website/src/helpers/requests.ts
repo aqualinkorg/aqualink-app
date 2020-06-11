@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const agent = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -7,14 +7,13 @@ const agent = axios.create({
     Accept: "application/json",
     crossDomain: true,
   },
-  // withCredentials: true
 });
 
-function send<T>(request: Request): Promise<T> {
+function send<T>(request: Request): Promise<AxiosResponse<T>> {
   const headers = request.token
     ? { Authorization: `Bearer ${request.token}` }
     : {};
-  return agent.request({
+  return agent.request<T>({
     method: request.method,
     url: request.url,
     headers,
