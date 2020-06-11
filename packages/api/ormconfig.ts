@@ -20,10 +20,10 @@ const connectionInfo = process.env.DATABASE_URL
         (process.env.POSTGRES_PORT &&
           parseInt(process.env.POSTGRES_PORT, 10)) ||
         5432,
-      database: 'aqualink_dev',
+      database: process.env.POSTGRES_DATABASE || 'aqualink_dev',
       ...(process.env.POSTGRES_USER && { username: process.env.POSTGRES_USER }),
       ...(process.env.POSTGRES_PASSWORD && {
-        username: process.env.POSTGRES_PASSWORD,
+        password: process.env.POSTGRES_PASSWORD,
       }),
     };
 
