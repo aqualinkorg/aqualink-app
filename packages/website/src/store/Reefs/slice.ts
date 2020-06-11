@@ -11,6 +11,10 @@ const selectedReefInitialState: ReefState = {
     regionName: "",
     managerName: "",
     videoStream: "",
+    polygon: {
+      type: "",
+      coordinates: [[0, 0]],
+    },
   },
   loading: false,
   error: null,
