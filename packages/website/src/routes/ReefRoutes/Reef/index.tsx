@@ -4,12 +4,14 @@ import {
   WithStyles,
   createStyles,
   Grid,
-  Paper,
+  Card,
+  CardContent,
   Typography,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import { Map, TileLayer } from "react-leaflet";
+import ReactPlayer from "react-player";
 
 import ReefNavBar from "./ReefNavBar";
 import { reefDetailsSelector, reefRequest } from "../../../store/Reefs/slice";
@@ -48,9 +50,20 @@ const Reef = ({ match, classes }: ReefProps) => {
               </div>
             </Grid>
             <Grid key={2} item>
-              <Typography variant="h5">FEATURE VIDEO:</Typography>
+              <Typography variant="h5">FEATURE VIDEO</Typography>
               <div className={classes.container}>
-                <Paper className={classes.paper} />
+                <Card className={classes.card}>
+                  <CardContent className={classes.content}>
+                    <ReactPlayer
+                      height="100%"
+                      width="100%"
+                      playing
+                      muted
+                      light
+                      url={`${reefDetails.videoStream}`}
+                    />
+                  </CardContent>
+                </Card>
               </div>
             </Grid>
           </Grid>
@@ -76,18 +89,19 @@ const styles = () =>
       width: "100%",
       borderRadius: 4,
     },
-    paper: {
+    card: {
       height: "100%",
       width: "100%",
-      backgroundColor: "blue",
+      display: "flex",
+    },
+    content: {
+      height: "100%",
+      width: "100%",
+      padding: "0",
     },
   });
 
-interface MatchParams {
-  id: string;
-}
-
-interface MatchProps extends RouteComponentProps<MatchParams> {}
+interface MatchProps extends RouteComponentProps<{ id: string }> {}
 
 type ReefProps = WithStyles<typeof styles> & MatchProps;
 

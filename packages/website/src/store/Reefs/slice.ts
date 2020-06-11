@@ -10,6 +10,7 @@ const selectedReefInitialState: ReefState = {
     id: "",
     regionName: "",
     managerName: "",
+    videoStream: "",
   },
   loading: false,
   error: null,
