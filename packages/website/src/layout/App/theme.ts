@@ -25,7 +25,7 @@ const theme: any = createMuiTheme({
   overrides: {
     MuiAppBar: {
       root: {
-        height: "122px",
+        height: 122,
         justifyContent: "center",
         backgroundColor: lightBlue,
       },
@@ -40,16 +40,16 @@ const theme: any = createMuiTheme({
     },
     MuiTypography: {
       h5: {
-        fontSize: "26px",
+        fontSize: 26,
       },
       subtitle1: {
-        fontSize: "14px",
+        fontSize: 14,
       },
       subtitle2: {
-        fontSize: "12px",
+        fontSize: 12,
       },
       caption: {
-        fontSize: "10px",
+        fontSize: 10,
       },
       gutterBottom: {
         marginBottom: "3rem",
@@ -63,7 +63,7 @@ const theme: any = createMuiTheme({
     },
     MuiButton: {
       root: {
-        borderRadius: "5px",
+        borderRadius: 5,
       },
       containedPrimary: {
         backgroundColor: lightBlue,

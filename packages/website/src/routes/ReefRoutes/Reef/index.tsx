@@ -70,11 +70,11 @@ const styles = () => {
       height: "20vw",
       width: "35vw",
       marginTop: "1rem",
-      borderRadius: "10px",
     },
     map: {
       height: "100%",
       width: "100%",
+      borderRadius: 4,
     },
     paper: {
       height: "100%",
