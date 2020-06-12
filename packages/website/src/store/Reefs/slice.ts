@@ -12,7 +12,7 @@ const selectedReefInitialState: ReefState = {
     managerName: "",
   },
   loading: false,
-  error: "",
+  error: null,
 };
 
 export const reefRequest = createAsyncThunk<
@@ -60,6 +60,7 @@ const selectedReefSlice = createSlice({
       return {
         ...state,
         loading: true,
+        error: null,
       };
     });
   },

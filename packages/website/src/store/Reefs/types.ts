@@ -7,5 +7,5 @@ export interface Reef {
 export interface ReefState {
   details: Reef;
   loading: boolean;
-  error?: string;
+  error?: string | null;
 }
