@@ -60,8 +60,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   );
 };
 
-const styles = () => {
-  return createStyles({
+const styles = () =>
+  createStyles({
     root: {
       flexGrow: 1,
       marginTop: "5rem",
@@ -82,7 +82,6 @@ const styles = () => {
       backgroundColor: "blue",
     },
   });
-};
 
 interface MatchParams {
   id: string;

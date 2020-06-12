@@ -65,16 +65,13 @@ const selectedReefSlice = createSlice({
   },
 });
 
-export const reefDetailsSelector = (state: RootState): ReefState["details"] => {
-  return state.selectedReef.details;
-};
+export const reefDetailsSelector = (state: RootState): ReefState["details"] =>
+  state.selectedReef.details;
 
-export const reefLoadingSelector = (state: RootState): ReefState["loading"] => {
-  return state.selectedReef.loading;
-};
+export const reefLoadingSelector = (state: RootState): ReefState["loading"] =>
+  state.selectedReef.loading;
 
-export const reefErrorSelector = (state: RootState): ReefState["error"] => {
-  return state.selectedReef.error;
-};
+export const reefErrorSelector = (state: RootState): ReefState["error"] =>
+  state.selectedReef.error;
 
 export default selectedReefSlice.reducer;

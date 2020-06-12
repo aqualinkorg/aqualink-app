@@ -10,35 +10,33 @@ import {
 } from "@material-ui/core";
 import HomePageNavBar from "./HomePageNavBar";
 
-const Homepage = ({ classes }: HomepageProps) => {
-  return (
-    <>
-      <HomePageNavBar />
-      <div className={classes.root}>
-        <Grid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="center"
-        >
-          <Grid item>
-            <Typography gutterBottom color="primary" variant="h1">
-              Welcome to Aqualink App
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button href="/reefs" color="primary" variant="contained">
-              See Reefs List
-            </Button>
-          </Grid>
+const Homepage = ({ classes }: HomepageProps) => (
+  <>
+    <HomePageNavBar />
+    <div className={classes.root}>
+      <Grid
+        container
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography gutterBottom color="primary" variant="h1">
+            Welcome to Aqualink App
+          </Typography>
         </Grid>
-      </div>
-    </>
-  );
-};
+        <Grid item>
+          <Button href="/reefs" color="primary" variant="contained">
+            See Reefs List
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
+  </>
+);
 
-const styles = (theme: Theme) => {
-  return createStyles({
+const styles = (theme: Theme) =>
+  createStyles({
     root: {
       display: "flex",
       alignItems: "center",
@@ -46,7 +44,6 @@ const styles = (theme: Theme) => {
       backgroundColor: theme.palette.text.secondary,
     },
   });
-};
 
 interface HomepageProps extends WithStyles<typeof styles> {}
 
