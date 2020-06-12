@@ -8,23 +8,21 @@ import {
   WithStyles,
   Theme,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ReefsList = ({ classes }: ReefsListProps) => {
-  const history = useHistory();
-
   return (
     <>
       <div className={classes.root}>
         <List component="nav">
-          <ListItem button>
-            <ListItemText
-              primary="Reef 1"
-              onClick={() => {
-                history.push("/reefs/1");
-              }}
-            />
-          </ListItem>
+          <Link
+            style={{ color: "inherit", textDecoration: "none" }}
+            to="/reefs/1"
+          >
+            <ListItem button>
+              <ListItemText primary="Reef 1" />
+            </ListItem>
+          </Link>
         </List>
       </div>
     </>

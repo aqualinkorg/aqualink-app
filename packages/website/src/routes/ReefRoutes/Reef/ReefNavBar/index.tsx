@@ -7,12 +7,10 @@ import {
   IconButton,
   Avatar,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => {
-  const history = useHistory();
-
   return (
     <AppBar position="static">
       <Toolbar>
@@ -26,14 +24,11 @@ const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => {
           <Grid item>
             <Grid alignItems="center" container spacing={2}>
               <Grid item>
-                <IconButton
-                  edge="start"
-                  color="inherit"
-                  aria-label="menu"
-                  onClick={() => history.push("/reefs")}
-                >
-                  <ArrowBack />
-                </IconButton>
+                <Link style={{ color: "inherit" }} to="/reefs">
+                  <IconButton edge="start" color="inherit" aria-label="menu">
+                    <ArrowBack />
+                  </IconButton>
+                </Link>
               </Grid>
               {reefName && lastSurvey && (
                 <>
