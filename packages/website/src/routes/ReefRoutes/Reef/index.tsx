@@ -26,9 +26,9 @@ const Reef = ({ match, classes }: ReefProps) => {
   return (
     <>
       <ReefNavBar
-        reefName={reefDetails.region_name}
+        reefName={reefDetails.regionName}
         lastSurvey="May 10, 2020"
-        managerName={reefDetails.manager_name}
+        managerName={reefDetails.managerName}
       />
       <Grid container className={classes.root}>
         <Grid item xs={12}>

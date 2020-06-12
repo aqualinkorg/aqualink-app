@@ -8,8 +8,8 @@ import reefServices from "../../services/reefServices";
 const selectedReefInitialState: ReefState = {
   details: {
     id: "",
-    region_name: "",
-    manager_name: "",
+    regionName: "",
+    managerName: "",
   },
   loading: false,
   error: "",

@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 export interface Reef {
   id: string;
-  region_name: string;
-  manager_name: string;
+  regionName: string;
+  managerName: string;
 }
 export interface ReefState {
   details: Reef;
