@@ -1,12 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import ReefNavBar from ".";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Reef from ".";
 
 test("renders as expected", () => {
   const { container } = render(
     <Router>
-      <ReefNavBar reefName="" managerName="" lastSurvey="May 10, 2020" />
+      <Route exact path="/reefs/1" component={Reef} />
     </Router>
   );
   expect(container).toMatchSnapshot();

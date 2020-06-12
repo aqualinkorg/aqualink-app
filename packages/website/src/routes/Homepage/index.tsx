@@ -8,11 +8,13 @@ import {
   WithStyles,
   createStyles,
 } from "@material-ui/core";
-import HomePageNavBar from "./HomePageNavBar";
+import { Link } from "react-router-dom";
+
+import HomepageNavBar from "./HomepageNavBar";
 
 const Homepage = ({ classes }: HomepageProps) => (
   <>
-    <HomePageNavBar />
+    <HomepageNavBar />
     <div className={classes.root}>
       <Grid
         container
@@ -26,9 +28,11 @@ const Homepage = ({ classes }: HomepageProps) => (
           </Typography>
         </Grid>
         <Grid item>
-          <Button href="/reefs" color="primary" variant="contained">
-            See Reefs List
-          </Button>
+          <Link style={{ textDecoration: "none" }} to="/reefs">
+            <Button color="primary" variant="contained">
+              See Reefs List
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </div>

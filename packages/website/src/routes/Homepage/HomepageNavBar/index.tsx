@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Grid, Button } from "@material-ui/core";
 
-const HomePageNavBar = () => (
+const HomepageNavBar = () => (
   <AppBar position="static">
     <Toolbar>
       <Grid item xs={12}>
@@ -17,4 +17,4 @@ const HomePageNavBar = () => (
   </AppBar>
 );
 
-export default HomePageNavBar;
+export default HomepageNavBar;
