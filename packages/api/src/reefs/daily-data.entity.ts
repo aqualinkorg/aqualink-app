@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Reef } from './reefs.entity';
 
@@ -63,4 +65,10 @@ export class DailyData {
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'reef_id' })
   reefId: Reef;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

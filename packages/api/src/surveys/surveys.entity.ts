@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
@@ -32,4 +34,10 @@ export class Survey {
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'reef_id' })
   reefId: Reef;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

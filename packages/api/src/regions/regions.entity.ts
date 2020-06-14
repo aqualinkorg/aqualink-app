@@ -5,6 +5,8 @@ import {
   Index,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -22,4 +24,10 @@ export class Region {
   @ManyToOne(() => Region, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'parent_id' })
   parentId: Region;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
