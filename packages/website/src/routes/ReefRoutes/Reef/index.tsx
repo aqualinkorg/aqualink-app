@@ -36,7 +36,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             <Grid key={1} item>
               <Typography variant="h5">LOCATION:</Typography>
               <div className={classes.container}>
-                <Map />
+                <Map polygon={reefDetails.polygon} />
               </div>
             </Grid>
             <Grid key={2} item>

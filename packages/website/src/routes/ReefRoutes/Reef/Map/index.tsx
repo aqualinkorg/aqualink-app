@@ -2,27 +2,22 @@ import React from "react";
 import { Map, TileLayer, Polygon } from "react-leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-const ReefMap = ({ classes }: ReefMapProps) => {
+import { Reef } from "../../../../store/Reefs/types";
+import { mapBounds } from "../../../../helpers/mapBounds";
+
+const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   return (
     <Map
       dragging={false}
-      minZoom={7}
       className={classes.map}
-      center={[37.848344, -123.612622]}
-      zoom={7}
+      bounds={mapBounds(polygon.coordinates)}
+      boundsOptions={{ padding: [150, 150] }}
+      zoomControl={false}
+      doubleClickZoom={false}
+      scrollWheelZoom={false}
     >
-      <TileLayer
-        // attribution="Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-      />
-      <Polygon
-        positions={[
-          [37.969305, -124.277304],
-          [37.848344, -123.612622],
-          [36.930852, -123.326233],
-          [36.731202, -125.164667],
-        ]}
-      />
+      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <Polygon positions={polygon.coordinates} />
     </Map>
   );
 };
@@ -32,10 +27,15 @@ const styles = () => {
     map: {
       height: "100%",
       width: "100%",
+      borderRadius: 4,
     },
   });
 };
 
-interface ReefMapProps extends WithStyles<typeof styles> {}
+interface ReefMapIncomingProps {
+  polygon: Reef["polygon"];
+}
+
+type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
 
 export default withStyles(styles)(ReefMap);

@@ -13,7 +13,7 @@ const selectedReefInitialState: ReefState = {
     videoStream: "",
     polygon: {
       type: "",
-      coordinates: [[0, 0]],
+      coordinates: [[[0, 0]]],
     },
   },
   loading: false,

@@ -2,7 +2,7 @@
 type Position = [number, number];
 
 interface Polygon {
-  coordinates: Position[];
+  coordinates: [Position[]];
   type: string;
 }
 
