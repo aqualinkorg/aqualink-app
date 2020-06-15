@@ -26,7 +26,7 @@ const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
             {reefName && lastSurvey && (
               <>
                 <Grid item>
-                  <Typography variant="h5">{reefName}</Typography>
+                  <Typography variant="h4">{reefName}</Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1">{`Last surveyed: ${lastSurvey}`}</Typography>

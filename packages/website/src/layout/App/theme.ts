@@ -39,8 +39,17 @@ const theme: any = createMuiTheme({
       },
     },
     MuiTypography: {
-      h5: {
+      h2: {
+        fontSize: 52,
+      },
+      h4: {
         fontSize: 26,
+      },
+      h5: {
+        fontSize: 20,
+      },
+      h6: {
+        fontSize: 16,
       },
       subtitle1: {
         fontSize: 14,
@@ -51,8 +60,11 @@ const theme: any = createMuiTheme({
       caption: {
         fontSize: 10,
       },
+      overline: {
+        fontSize: 8.5,
+      },
       gutterBottom: {
-        marginBottom: "3rem",
+        marginBottom: "1rem",
       },
     },
     MuiGrid: {
@@ -70,6 +82,13 @@ const theme: any = createMuiTheme({
       },
       containedSecondary: {
         backgroundColor: darkGreyBlue,
+      },
+    },
+    MuiCardContent: {
+      root: {
+        "&:last-child": {
+          paddingBottom: 0,
+        },
       },
     },
   },
