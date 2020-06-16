@@ -52,11 +52,11 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
             <div
               class="MuiGrid-root MuiGrid-item"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5"
+              <h4
+                class="MuiTypography-root MuiTypography-h4"
               >
                 Hawai
-              </h5>
+              </h4>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -132,11 +132,11 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
         <div
           class="MuiGrid-root MuiGrid-item"
         >
-          <h5
-            class="MuiTypography-root MuiTypography-h5"
+          <h6
+            class="MuiTypography-root MuiTypography-h6"
           >
             LOCATION:
-          </h5>
+          </h6>
           <div
             class="Reef-container-2"
           >
@@ -148,17 +148,515 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
         <div
           class="MuiGrid-root MuiGrid-item"
         >
-          <h5
-            class="MuiTypography-root MuiTypography-h5"
+          <h6
+            class="MuiTypography-root MuiTypography-h6"
           >
             FEATURE VIDEO
-          </h5>
+          </h6>
           <div
             class="Reef-container-2"
           >
             <mock-featurevideo
               url=""
             />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-10 MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="Reef-smallContainer-3"
+          >
+            <div
+              class="MuiPaper-root MuiCard-root Temperature-card-4 MuiPaper-elevation1 MuiPaper-rounded"
+            >
+              <div
+                class="MuiCardHeader-root Temperature-header-5"
+              >
+                <div
+                  class="MuiCardHeader-content"
+                >
+                  <div
+                    class="MuiTypography-root MuiTypography-body1"
+                    style="display: flex; align-items: baseline;"
+                  >
+                    <div
+                      class="MuiBox-root MuiBox-root-8"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-h6"
+                      >
+                        CURRENT CONDITIONS
+                      </h6>
+                    </div>
+                    <div
+                      class="MuiBox-root MuiBox-root-9"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle2"
+                      >
+                        (05/12/20 8:16AM PST)
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiCardContent-root Temperature-content-6"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
+                  style="height: 100%; padding: 0px 32px 0px 32px;"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-7"
+                    >
+                      <span
+                        class="MuiTypography-root MuiTypography-caption"
+                      >
+                        TEMP AT 25M
+                      </span>
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2"
+                      >
+                        31.4 ℃
+                      </h2>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-space-between MuiGrid-grid-xs-5"
+                    >
+                      <span
+                        class="MuiTypography-root MuiTypography-caption"
+                      >
+                        SURFACE TEMP
+                      </span>
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom"
+                      >
+                        32 ℃
+                      </h5>
+                      <span
+                        class="MuiTypography-root MuiTypography-caption"
+                      >
+                        WIND
+                      </span>
+                      <div
+                        class="MuiTypography-root MuiTypography-body1"
+                        style="display: flex; align-items: baseline;"
+                      >
+                        <div
+                          class="MuiBox-root MuiBox-root-10"
+                        >
+                          <h5
+                            class="MuiTypography-root MuiTypography-h5"
+                          >
+                            7
+                          </h5>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-11"
+                        >
+                          <h6
+                            class="MuiTypography-root MuiTypography-subtitle2"
+                          >
+                            kph
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-12"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-caption"
+                          >
+                            FROM
+                          </span>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-13"
+                        >
+                          <h5
+                            class="MuiTypography-root MuiTypography-h5"
+                          >
+                            223 °
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-7"
+                    >
+                      <div
+                        class="MuiPaper-root MuiAlert-root MuiAlert-filledWarning Temperature-alert-7 MuiPaper-elevation0"
+                        role="alert"
+                      >
+                        <div
+                          class="MuiAlert-icon"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                            />
+                          </svg>
+                        </div>
+                        <div
+                          class="MuiAlert-message"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-caption"
+                          >
+                            ALERT LEVEL: HIGH
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-5"
+                    >
+                      <span
+                        class="MuiTypography-root MuiTypography-caption"
+                      >
+                        WAVES
+                      </span>
+                      <div
+                        class="MuiTypography-root MuiTypography-body1"
+                        style="display: flex; align-items: baseline;"
+                      >
+                        <div
+                          class="MuiBox-root MuiBox-root-14"
+                        >
+                          <h5
+                            class="MuiTypography-root MuiTypography-h5"
+                          >
+                            0.5
+                          </h5>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-15"
+                        >
+                          <h6
+                            class="MuiTypography-root MuiTypography-subtitle2"
+                          >
+                            m
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-16"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-caption"
+                          >
+                            AT
+                          </span>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-17"
+                        >
+                          <h5
+                            class="MuiTypography-root MuiTypography-h5"
+                          >
+                            15
+                          </h5>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-18"
+                        >
+                          <h6
+                            class="MuiTypography-root MuiTypography-subtitle2"
+                          >
+                            S
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-19"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-overline"
+                          >
+                            FROM
+                          </span>
+                        </div>
+                        <div
+                          class="MuiBox-root MuiBox-root-20"
+                        >
+                          <h5
+                            class="MuiTypography-root MuiTypography-h5"
+                            style="margin-left: 4px;"
+                          >
+                            25 ℃
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="Reef-smallContainer-3"
+          >
+            <div
+              class="MuiGrid-root Stats-root-21 MuiGrid-container MuiGrid-spacing-xs-9 MuiGrid-justify-xs-center"
+            >
+              <div
+                class="MuiGrid-root Stats-item-22 MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <div
+                  class="MuiPaper-root MuiCard-root Stats-card1-23 MuiPaper-elevation1 MuiPaper-rounded"
+                >
+                  <div
+                    class="MuiCardHeader-root"
+                    style="flex: 0 1 auto;"
+                  >
+                    <div
+                      class="MuiCardHeader-content"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+                      >
+                        MAX PAST 7 DAYS
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiCardContent-root"
+                    style="flex: 1 1 auto;"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-space-around"
+                      style="height: 100%;"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-caption"
+                          style="color: rgb(104, 104, 104);"
+                        >
+                          SURFACE TEMP
+                        </span>
+                        <h3
+                          class="MuiTypography-root MuiTypography-h3"
+                          style="color: rgb(13, 139, 195); font-weight: 300;"
+                        >
+                          33.2 ℃
+                        </h3>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+                        >
+                          TEMP AT 25M
+                        </span>
+                        <h3
+                          class="MuiTypography-root MuiTypography-h3"
+                          style="color: rgb(116, 182, 110); font-weight: 300;"
+                        >
+                          31.7 ℃
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root Stats-item-22 MuiGrid-item MuiGrid-grid-xs-6"
+              >
+                <div
+                  class="MuiPaper-root MuiCard-root Stats-card2-24 MuiPaper-elevation1 MuiPaper-rounded"
+                >
+                  <div
+                    class="MuiCardHeader-root"
+                    style="flex: 0 1 auto;"
+                  >
+                    <div
+                      class="MuiCardHeader-content"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                      >
+                        DEGREE HEATING DAYS
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiCardContent-root"
+                    style="flex: 1 1 auto; padding: 0px;"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-space-between"
+                      style="height: 100%;"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <h1
+                          class="MuiTypography-root MuiTypography-h1"
+                          style="font-weight: 300; padding-left: 1rem;"
+                        >
+                          16
+                        </h1>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+                          style="width: 100%; margin: 0px;"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(8, 91, 163);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              0
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(12, 157, 165);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              14
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(117, 180, 114);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              28
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(123, 217, 37);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              42
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(193, 229, 34);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              56
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(229, 187, 43);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              70
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(230, 121, 40);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              84
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(232, 79, 46);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              98
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(216, 69, 36);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              112
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(128, 58, 32);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              126
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(185, 41, 68);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              140
+                            </span>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
+                            style="background-color: rgb(128, 48, 126);"
+                          >
+                            <span
+                              class="MuiTypography-root MuiTypography-caption"
+                            >
+                              175
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
