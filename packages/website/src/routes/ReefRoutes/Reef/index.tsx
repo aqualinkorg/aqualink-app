@@ -5,7 +5,6 @@ import {
   createStyles,
   Grid,
   Typography,
-  Paper,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
@@ -14,6 +13,7 @@ import ReefNavBar from "./ReefNavBar";
 import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Temperature from "./Temperature";
+import Stats from "./Stats";
 import { reefDetailsSelector, reefRequest } from "../../../store/Reefs/slice";
 
 const Reef = ({ match, classes }: ReefProps) => {
@@ -58,7 +58,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             </Grid>
             <Grid key={4} item>
               <div className={classes.smallContainer}>
-                <Paper />
+                <Stats />
               </div>
             </Grid>
           </Grid>
@@ -80,7 +80,7 @@ const styles = () =>
       marginTop: "1rem",
     },
     smallContainer: {
-      height: "15vw",
+      height: "13vw",
       width: "35vw",
     },
   });

@@ -10,6 +10,7 @@ import {
   CardHeader,
   Grid,
 } from "@material-ui/core";
+import ErrorIcon from "@material-ui/icons/Error";
 import { Alert } from "@material-ui/lab";
 
 const Temperature = ({ classes }: TemperatureProps) => (
@@ -17,12 +18,17 @@ const Temperature = ({ classes }: TemperatureProps) => (
     <CardHeader
       className={classes.header}
       title={
-        <div className={classes.title}>
-          <Typography variant="h6">CURRENT CONDITIONS</Typography>
-          <Typography style={{ marginLeft: 8 }} variant="subtitle2">
-            (05/12/20 8:16AM PST)
-          </Typography>
-        </div>
+        <Typography
+          style={{ display: "flex", alignItems: "baseline" }}
+          component="div"
+        >
+          <Box>
+            <Typography variant="h6">CURRENT CONDITIONS</Typography>
+          </Box>
+          <Box ml={1}>
+            <Typography variant="subtitle2">(05/12/20 8:16AM PST)</Typography>
+          </Box>
+        </Typography>
       }
     />
     <CardContent className={classes.content}>
@@ -45,7 +51,7 @@ const Temperature = ({ classes }: TemperatureProps) => (
         >
           <Grid
             item
-            xs={6}
+            xs={7}
             container
             direction="column"
             alignItems="flex-start"
@@ -55,7 +61,7 @@ const Temperature = ({ classes }: TemperatureProps) => (
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={5}
             container
             direction="column"
             alignItems="flex-start"
@@ -95,7 +101,7 @@ const Temperature = ({ classes }: TemperatureProps) => (
         >
           <Grid
             item
-            xs={6}
+            xs={7}
             container
             direction="column"
             alignItems="flex-start"
@@ -104,13 +110,14 @@ const Temperature = ({ classes }: TemperatureProps) => (
               className={classes.alert}
               variant="filled"
               severity="warning"
+              icon={<ErrorIcon />}
             >
               <Typography variant="caption">ALERT LEVEL: HIGH</Typography>
             </Alert>
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={5}
             container
             direction="column"
             alignItems="flex-start"
@@ -164,15 +171,11 @@ const styles = () =>
       display: "flex",
       padding: "10px 32px 10px 32px",
     },
-    title: {
-      display: "flex",
-      alignItems: "center",
-    },
     content: {
       height: "100%",
       width: "100%",
       padding: 0,
-      marginTop: "2rem",
+      marginTop: "1rem",
     },
     alert: {
       height: 23,
