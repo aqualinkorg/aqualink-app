@@ -14,6 +14,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import { colorCode } from "../../../../assets/colorCode";
 import bottom from "../../../../assets/bottom.svg";
+import { ReefState } from "../../../../store/Reefs/types";
 
 const colorFinder = (value: number) => {
   const len = colorCode.length;
@@ -27,9 +28,21 @@ const colorFinder = (value: number) => {
   return colorCode[len - 1];
 };
 
-const Stats = ({ classes }: StatsProps) => {
-  const degreeHetingDays = 2.4;
-  const colorItem = colorFinder(degreeHetingDays);
+const Stats = ({ dailyData, classes }: StatsProps) => {
+  const degreeHetingDays =
+    dailyData && dailyData[0] && dailyData[0].degreeHeatingDays;
+
+  const colorItem = degreeHetingDays && colorFinder(degreeHetingDays);
+
+  const weekSurfaceTemperatures = dailyData
+    .slice(0, 7)
+    .map((item) => item.surfaceTemperature);
+  const weekMaxSurfaceTemperature = Math.max(...weekSurfaceTemperatures);
+
+  const weekBottomTemperatures = dailyData
+    .slice(0, 7)
+    .map((item) => item.bottomTemperature.max);
+  const weekMaxkBottomTemperature = Math.max(...weekBottomTemperatures);
 
   return (
     <Grid
@@ -64,24 +77,28 @@ const Stats = ({ classes }: StatsProps) => {
                   <Typography style={{ color: "#686868" }} variant="caption">
                     SURFACE TEMP
                   </Typography>
-                  <Typography
-                    style={{ fontWeight: 300 }}
-                    variant="h3"
-                    color="textSecondary"
-                  >
-                    33.2 &#8451;
-                  </Typography>
+                  {weekMaxSurfaceTemperature > -Infinity && (
+                    <Typography
+                      style={{ fontWeight: 300 }}
+                      variant="h3"
+                      color="textSecondary"
+                    >
+                      {weekMaxSurfaceTemperature} &#8451;
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid item>
                   <Typography style={{ color: "#128cc0" }} variant="caption">
                     TEMP AT 25M
                   </Typography>
-                  <Typography
-                    style={{ color: "#128cc0", fontWeight: 300 }}
-                    variant="h3"
-                  >
-                    31.7 &#8451;
-                  </Typography>
+                  {weekMaxkBottomTemperature > -Infinity && (
+                    <Typography
+                      style={{ color: "#128cc0", fontWeight: 300 }}
+                      variant="h3"
+                    >
+                      {weekMaxkBottomTemperature} &#8451;
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             </CardContent>
@@ -107,16 +124,18 @@ const Stats = ({ classes }: StatsProps) => {
               style={{ height: "100%" }}
             >
               <Grid item>
-                <Typography
-                  style={{
-                    color: colorItem.color,
-                    fontWeight: 300,
-                    paddingLeft: "1rem",
-                  }}
-                  variant="h1"
-                >
-                  {degreeHetingDays}
-                </Typography>
+                {colorItem && (
+                  <Typography
+                    style={{
+                      color: colorItem.color,
+                      fontWeight: 300,
+                      paddingLeft: "1rem",
+                    }}
+                    variant="h1"
+                  >
+                    {degreeHetingDays}
+                  </Typography>
+                )}
               </Grid>
               <Grid item container>
                 {colorCode.map((elem) => (
@@ -128,16 +147,18 @@ const Stats = ({ classes }: StatsProps) => {
                     item
                     xs={1}
                   >
-                    <FiberManualRecordIcon
-                      style={{
-                        width: "1rem",
-                        height: "1rem",
-                        color:
-                          elem.value === colorItem.value
-                            ? colorItem.color
-                            : "transparent",
-                      }}
-                    />
+                    {colorItem && (
+                      <FiberManualRecordIcon
+                        style={{
+                          width: "1rem",
+                          height: "1rem",
+                          color:
+                            elem.value === colorItem.value
+                              ? colorItem.color
+                              : "transparent",
+                        }}
+                      />
+                    )}
                     <Grid
                       container
                       justify="center"
@@ -181,6 +202,10 @@ const styles = () =>
     },
   });
 
-interface StatsProps extends WithStyles<typeof styles> {}
+interface StatsIncomingProps {
+  dailyData: ReefState["details"]["dailyData"];
+}
+
+type StatsProps = WithStyles<typeof styles> & StatsIncomingProps;
 
 export default withStyles(styles)(Stats);

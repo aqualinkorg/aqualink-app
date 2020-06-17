@@ -26,6 +26,7 @@ describe("Reef Detail Page", () => {
             type: "",
             coordinates: [[[0, 0]]],
           },
+          dailyData: [],
         },
         loading: false,
         error: null,

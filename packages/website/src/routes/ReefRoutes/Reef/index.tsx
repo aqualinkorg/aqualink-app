@@ -53,12 +53,12 @@ const Reef = ({ match, classes }: ReefProps) => {
           <Grid container justify="center" spacing={10}>
             <Grid key={3} item>
               <div className={classes.smallContainer}>
-                <Temperature />
+                <Temperature dailyData={reefDetails.dailyData} />
               </div>
             </Grid>
             <Grid key={4} item>
               <div className={classes.smallContainer}>
-                <Stats />
+                <Stats dailyData={reefDetails.dailyData} />
               </div>
             </Grid>
           </Grid>
