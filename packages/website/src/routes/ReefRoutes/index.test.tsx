@@ -6,9 +6,8 @@ test("renders as expected", () => {
   const { container } = render(
     <Router>
       <Switch>
-        <Route exact path="/" component={() => <div>Homepage</div>} />
-        <Route path="/reefs" component={() => <div>Reefs</div>} />
-        <Route default component={() => <div>Not Found</div>} />
+        <Route exact path="/reefs" render={() => <div>Reefs List</div>} />
+        <Route exact path="/reefs/1" render={() => <div>Reefs</div>} />
       </Switch>
     </Router>
   );

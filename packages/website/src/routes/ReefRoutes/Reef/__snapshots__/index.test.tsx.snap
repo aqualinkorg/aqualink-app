@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reef Detail Page should render with given state from Redux store 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <a
+                href="/reefs"
+              >
+                <button
+                  aria-label="menu"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiIconButton-label"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </a>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5"
+              >
+                Hawai
+              </h5>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1"
+              >
+                Last surveyed: May 10, 2020
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-end"
+              >
+                <h6
+                  class="MuiTypography-root MuiTypography-subtitle2"
+                >
+                  Managed by: Manager
+                </h6>
+                <span
+                  class="MuiTypography-root MuiTypography-caption"
+                >
+                  Contact Manager
+                </span>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiAvatar-fallback"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div
+    class="MuiGrid-root Reef-root-1 MuiGrid-container"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-10 MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5"
+          >
+            LOCATION:
+          </h5>
+          <div
+            class="Reef-container-2"
+          >
+            <div
+              class="Reef-map-3 leaflet-container"
+              style="position: relative;"
+              tabindex="0"
+            >
+              <div
+                class="leaflet-pane leaflet-map-pane"
+                style="left: 0px; top: 0px;"
+              >
+                <div
+                  class="leaflet-pane leaflet-tile-pane"
+                >
+                  <div
+                    class="leaflet-layer "
+                    style="z-index: 1;"
+                  >
+                    <div
+                      class="leaflet-tile-container leaflet-zoom-animated"
+                      style="z-index: 18; left: 0px; top: 0px;"
+                    >
+                      <img
+                        alt=""
+                        class="leaflet-tile"
+                        role="presentation"
+                        src="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/6/24/10"
+                        style="width: 256px; height: 256px; left: -60px; top: -189px;"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="leaflet-pane leaflet-shadow-pane"
+                />
+                <div
+                  class="leaflet-pane leaflet-overlay-pane"
+                />
+                <div
+                  class="leaflet-pane leaflet-marker-pane"
+                />
+                <div
+                  class="leaflet-pane leaflet-tooltip-pane"
+                />
+                <div
+                  class="leaflet-pane leaflet-popup-pane"
+                />
+              </div>
+              <div
+                class="leaflet-control-container"
+              >
+                <div
+                  class="leaflet-top leaflet-left"
+                >
+                  <div
+                    class="leaflet-control-zoom leaflet-bar leaflet-control"
+                  >
+                    <a
+                      aria-label="Zoom in"
+                      class="leaflet-control-zoom-in"
+                      href="#"
+                      role="button"
+                      title="Zoom in"
+                    >
+                      +
+                    </a>
+                    <a
+                      aria-label="Zoom out"
+                      class="leaflet-control-zoom-out leaflet-disabled"
+                      href="#"
+                      role="button"
+                      title="Zoom out"
+                    >
+                      −
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="leaflet-top leaflet-right"
+                />
+                <div
+                  class="leaflet-bottom leaflet-left"
+                />
+                <div
+                  class="leaflet-bottom leaflet-right"
+                >
+                  <div
+                    class="leaflet-control-attribution leaflet-control"
+                  >
+                    <a
+                      href="https://leafletjs.com"
+                      title="A JS library for interactive maps"
+                    >
+                      Leaflet
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5"
+          >
+            FEATURE VIDEO:
+          </h5>
+          <div
+            class="Reef-container-2"
+          >
+            <div
+              class="MuiPaper-root Reef-paper-4 MuiPaper-elevation1 MuiPaper-rounded"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
