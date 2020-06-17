@@ -80,7 +80,7 @@ const styles = () =>
       marginTop: "1rem",
     },
     smallContainer: {
-      height: "13vw",
+      height: "15vw",
       width: "35vw",
     },
   });
