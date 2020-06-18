@@ -14,6 +14,7 @@ import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Temperature from "./Temperature";
 import Stats from "./Stats";
+import Charts from "./Charts";
 import { reefDetailsSelector, reefRequest } from "../../../store/Reefs/slice";
 
 const Reef = ({ match, classes }: ReefProps) => {
@@ -63,6 +64,11 @@ const Reef = ({ match, classes }: ReefProps) => {
             </Grid>
           </Grid>
         </Grid>
+        <Grid container justify="center">
+          <Grid className={classes.chartContainer} item xs={9}>
+            <Charts />
+          </Grid>
+        </Grid>
       </Grid>
     </>
   );
@@ -82,6 +88,9 @@ const styles = () =>
     smallContainer: {
       height: "15vw",
       width: "35vw",
+    },
+    chartContainer: {
+      height: "10vh",
     },
   });
 
