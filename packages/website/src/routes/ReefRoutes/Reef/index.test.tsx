@@ -9,7 +9,8 @@ import Reef from ".";
 
 const mockStore = configureStore([]);
 
-jest.mock("./Map");
+jest.mock("./Map", () => "Mock-Map");
+jest.mock("./FeatureVideo", () => "Mock-FeatureVideo");
 
 describe("Reef Detail Page", () => {
   let element: HTMLElement;
