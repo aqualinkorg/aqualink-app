@@ -6,10 +6,12 @@ import {
   withStyles,
   WithStyles,
 } from "@material-ui/core";
+
 import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Temperature from "./Temperature";
 import Stats from "./Stats";
+import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
@@ -44,6 +46,11 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
         </Grid>
       </Grid>
     </Grid>
+    <Grid container justify="center">
+      <Grid className={classes.chartContainer} item xs={9}>
+        <Charts />
+      </Grid>
+    </Grid>
   </Grid>
 );
 
@@ -61,6 +68,9 @@ const styles = () =>
     smallContainer: {
       height: "15vw",
       width: "35vw",
+    },
+    chartContainer: {
+      height: "10vh",
     },
   });
 
