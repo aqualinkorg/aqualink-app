@@ -1,12 +1,11 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class InitDB1591898534952 implements MigrationInterface {
-    name = 'InitDB1591898534952'
+export class InitDB1592510640883 implements MigrationInterface {
+    name = 'InitDB1592510640883'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "region" ("id" SERIAL NOT NULL, "name" character varying(50) NOT NULL, "polygon" polygon NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "parent_id" integer, CONSTRAINT "PK_5f48ffc3af96bc486f5f3f3a6da" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_46b146ce5d6ee2de43d8448562" ON "region" USING GiST ("polygon") `);
-        await queryRunner.query(`CREATE TYPE "user_admin_level_enum" AS ENUM('default', 'reef_manager', 'super_admin')`);
         await queryRunner.query(`CREATE TABLE "user" ("id" SERIAL NOT NULL, "firebase_uid" character varying(128) NOT NULL, "full_name" character varying(50) NOT NULL, "email" character varying(254) NOT NULL, "location" point, "country" character varying(50), "admin_level" "user_admin_level_enum" NOT NULL DEFAULT 'default', "description" character varying, "image_url" character varying, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_af7cabf8e064aa7bad09c731ba" ON "user" USING GiST ("location") `);
         await queryRunner.query(`CREATE TABLE "video_stream" ("id" SERIAL NOT NULL, "owner_email" character varying(254) NOT NULL, "location" point NOT NULL, "url" character varying NOT NULL, "quality" integer NOT NULL DEFAULT 1, "important" boolean NOT NULL, "hidden" boolean NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_c8a8fee15d627cfb3b4db140d5b" PRIMARY KEY ("id"))`);
@@ -78,7 +77,6 @@ export class InitDB1591898534952 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "video_stream"`);
         await queryRunner.query(`DROP INDEX "IDX_af7cabf8e064aa7bad09c731ba"`);
         await queryRunner.query(`DROP TABLE "user"`);
-        await queryRunner.query(`DROP TYPE "user_admin_level_enum"`);
         await queryRunner.query(`DROP INDEX "IDX_46b146ce5d6ee2de43d8448562"`);
         await queryRunner.query(`DROP TABLE "region"`);
     }
