@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiCard-root FeatureVideo-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+  >
+    <div
+      class="MuiCardContent-root FeatureVideo-content-2"
+    >
+      <div
+        style="width: 100%; height: 100%;"
+      />
+    </div>
+  </div>
+</div>
+`;
