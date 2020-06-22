@@ -70,7 +70,7 @@ const styles = () =>
       width: "35vw",
     },
     chartContainer: {
-      height: "10vh",
+      height: "30vh",
     },
   });
 
