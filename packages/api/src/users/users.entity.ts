@@ -28,7 +28,7 @@ export class User {
   @Index({ unique: true })
   email: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 50, nullable: true })
   organization: string;
 
   @Column({ type: 'point', nullable: true })

@@ -40,7 +40,7 @@ export function saveUserQuery(user) {
   const userColumns = [
     'full_name',
     'email',
-    // 'organization',
+    'organization',
   ];
 
   const User = nodeSql.define({
@@ -49,9 +49,9 @@ export function saveUserQuery(user) {
   });
 
   return User.insert([pick(user, userColumns)])
-    // .onConflict({
-    //   constraint: 'email',
-    // })
+    .onConflict({
+      constraint: 'email', // email
+    })
     .returning(User.id)
     .toQuery();
 }

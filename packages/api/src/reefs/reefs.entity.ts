@@ -30,7 +30,7 @@ export class Reef {
   @Column()
   depth: number;
 
-  @Column()
+  @Column({ default: 0 })
   status: number;
 
   @Column({ nullable: true })
