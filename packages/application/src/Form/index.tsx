@@ -19,8 +19,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { useForm } from "react-hook-form";
 
 import { getCurrentDate } from "../helpers/getCurrentDate";
-
-const reefPicture = require("./reef-picture.png");
+import Map from "./Map";
 
 const Form = ({ classes }: FormProps) => {
   const {
@@ -123,7 +122,9 @@ const Form = ({ classes }: FormProps) => {
       </Grid>
       <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={4}>
-          <img style={{ borderRadius: 4 }} src={reefPicture} alt="reef" />
+          <Grid className={classes.map} item>
+            <Map center={[latitude, longitude]} />
+          </Grid>
         </Grid>
         <Grid container direction="column" item xs={4}>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -366,6 +367,10 @@ const styles = () =>
     },
     textField: {
       color: "black",
+    },
+    map: {
+      height: "40vh",
+      width: "30vw",
     },
   });
 
