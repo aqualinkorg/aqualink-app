@@ -125,9 +125,9 @@ const Form = ({ classes }: FormProps) => {
       {/* Form Page Message */}
       <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={8}>
-          <Typography variant="h5">Survey</Typography>
+          <Typography variant="h5">Application</Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
-            Please take a minute to fill out one of these surveys for each site
+            Please take a minute to fill out one of these forms for each site
             you wish to apply for.
           </Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
@@ -390,6 +390,6 @@ const styles = () =>
     },
   });
 
-interface FormProps extends WithStyles<typeof styles> {}
+interface FormProps extends WithStyles<typeof styles> { }
 
 export default withStyles(styles)(Form);
