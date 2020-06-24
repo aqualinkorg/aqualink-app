@@ -8,6 +8,8 @@ services:
     ports:
       - 54321:5432
     environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
       POSTGRES_PASSWORD: '!ChangeMe!'
 
 volumes:
