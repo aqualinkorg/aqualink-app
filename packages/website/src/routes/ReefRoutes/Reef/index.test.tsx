@@ -9,6 +9,9 @@ import Reef from ".";
 
 const mockStore = configureStore([]);
 
+jest.mock("./Map", () => "Mock-Map");
+jest.mock("./FeatureVideo", () => "Mock-FeatureVideo");
+
 describe("Reef Detail Page", () => {
   let element: HTMLElement;
   beforeEach(() => {
@@ -18,6 +21,11 @@ describe("Reef Detail Page", () => {
           id: "1",
           regionName: "Hawai",
           managerName: "Manager",
+          videoStream: "",
+          polygon: {
+            type: "",
+            coordinates: [[[0, 0]]],
+          },
         },
         loading: false,
         error: null,
