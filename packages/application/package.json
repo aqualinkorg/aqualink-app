@@ -26,15 +26,6 @@
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
-  "devDependencies": {
-    "eslint": "^6.0.1",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-plugin-import": "^2.18.0",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-material-ui": "^1.0.1",
-    "eslint-plugin-react": "^7.14.2",
-    "prettier": "^1.18.2"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
