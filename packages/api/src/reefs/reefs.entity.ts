@@ -20,7 +20,7 @@ export class Reef {
   @Column({ length: 50 })
   name: string;
 
-  @Column('polygon')
+  @Column('geometry')
   @Index({ spatial: true })
   polygon: string;
 
@@ -31,7 +31,7 @@ export class Reef {
   depth: number;
 
   @Column()
-  status: string;
+  status: number;
 
   @Column({ nullable: true })
   videoStream: string;
@@ -42,15 +42,15 @@ export class Reef {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'region_id' })
-  regionId: Region;
+  regionId: Region | number;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'admin_id' })
-  adminId: User;
+  adminId: User | number;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE' })
+  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'stream_id' })
-  streamId: VideoStream;
+  streamId: VideoStream | number;
 }
