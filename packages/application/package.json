@@ -30,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy:prod": "yarn build && firebase deploy --only hosting:prod-target",
-    "deploy:staging": "yarn build && firebase deploy --only hosting:staging-target"
+    "deploy:staging": "yarn build && firebase deploy --only hosting:staging-target",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore"
   },
   "browserslist": {
     "production": [
