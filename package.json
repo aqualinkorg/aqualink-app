@@ -7,22 +7,16 @@
   "scripts": {
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint --fix",
     "lint:all": "eslint packages/*/src/**/*.{ts,tsx} --fix",
-
     "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
     "clean:root": "rimraf node_modules",
-
     "start": "lerna run start -- --parallel",
-
     "build": "lerna run build --concurrency=1 --stream",
-
     "test": "lerna run test --concurrency=1 --stream",
-
     "test:quick": "lerna run test:quick --concurrency=1 --stream",
     "test:coverage": "lerna run test:coverage --parallel",
     "test:watch": "lerna run test:watch --parallel",
-
     "publish:release": "lerna publish --force-publish=* --no-push --no-git-tag-version"
   },
   "devDependencies": {
