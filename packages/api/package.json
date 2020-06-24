@@ -8,8 +8,9 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
-    "gcp-build": "",
+    "gcp-build": "npm install yarn",
     "deploy": "yarn run build; gcloud app deploy",
+    "deploy:staging": "yarn run build; gcloud app deploy app-staging.yaml",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
     "start:dev": "nodemon --config nodemon.json",
