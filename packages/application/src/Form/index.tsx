@@ -390,6 +390,6 @@ const styles = () =>
     },
   });
 
-interface FormProps extends WithStyles<typeof styles> { }
+interface FormProps extends WithStyles<typeof styles> {}
 
 export default withStyles(styles)(Form);
