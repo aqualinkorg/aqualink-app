@@ -18,7 +18,6 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 import { useForm } from "react-hook-form";
 
-import { getCurrentDate } from "../helpers/getCurrentDate";
 import Map from "./Map";
 
 const Form = ({ classes }: FormProps) => {
@@ -37,7 +36,7 @@ const Form = ({ classes }: FormProps) => {
   const [depth, setDepth] = useState<number>(0);
   const [installationSchedule, setInstallationSchedule] = useState<
     string | null
-  >(getCurrentDate());
+  >(new Date().toString());
 
   const onSubmit = useCallback(
     (
@@ -52,9 +51,9 @@ const Form = ({ classes }: FormProps) => {
     [userName, organization, installationSchedule]
   );
 
-  const handleDateChange = (date: Date | null, value?: string | null) => {
-    if (value) {
-      setInstallationSchedule(value);
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      setInstallationSchedule(date.toString());
     }
   };
 
