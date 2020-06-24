@@ -27,6 +27,9 @@ export class User {
   @Column({ length: 254 })
   email: string;
 
+  @Column({ length: 50 })
+  organization: string;
+
   @Column({ type: 'point', nullable: true })
   @Index({ spatial: true })
   location?: string;

@@ -17,7 +17,7 @@ export class Region {
   @Column({ length: 50 })
   name: string;
 
-  @Column('polygon')
+  @Column('geometry', { spatialFeatureType: 'Polygon' })
   @Index({ spatial: true })
   polygon: string;
 
