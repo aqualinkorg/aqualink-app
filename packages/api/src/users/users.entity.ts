@@ -18,13 +18,14 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 128 })
+  @Column({ length: 128, nullable: true })
   firebaseUid: string;
 
   @Column({ length: 50 })
   fullName: string;
 
   @Column({ length: 254 })
+  @Index({ unique: true })
   email: string;
 
   @Column({ type: 'point', nullable: true })

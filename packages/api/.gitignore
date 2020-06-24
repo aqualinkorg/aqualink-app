@@ -4,3 +4,6 @@
 # Tests
 /coverage
 /.nyc_output
+
+# Import data
+/scripts/survey_data/*
