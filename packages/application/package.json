@@ -17,6 +17,6 @@
     },
     "scripts": {
         "deploy:prod": "yarn build && firebase deploy --only hosting:prod-target",
-        "deploy:staging": "yarn build && firebase deploy --only hosting:staging-target",
+        "deploy:staging": "yarn build && firebase deploy --only hosting:staging-target"
     }
 }
