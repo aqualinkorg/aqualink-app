@@ -10,7 +10,7 @@ import {
 
 export const surveyFilePath = path.resolve(
   __dirname,
-  './survey_data/proposed_sites.csv',
+  './application_data/proposed_sites.csv',
 );
 
 

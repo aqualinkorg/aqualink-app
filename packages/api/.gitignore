@@ -6,4 +6,4 @@
 /.nyc_output
 
 # Import data
-/scripts/survey_data/*
+/scripts/application_data/*
