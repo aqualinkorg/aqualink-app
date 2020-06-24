@@ -1,27 +1,24 @@
 /* eslint-disable no-restricted-globals */
-import React, {
-  useState,
-  ChangeEvent,
-  useCallback,
-  BaseSyntheticEvent,
-} from "react";
+import React, { useState, useCallback, BaseSyntheticEvent } from "react";
 import {
   AppBar,
   Toolbar,
   Grid,
   Typography,
-  Select,
-  MenuItem,
   Button,
   createStyles,
   withStyles,
   WithStyles,
-  Dialog,
-  DialogContent,
-  DialogActions,
   TextField,
 } from "@material-ui/core";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import { useForm } from "react-hook-form";
+
+import { getCurrentDate } from "../helpers/getCurrentDate";
 
 const reefPicture = require("./reef-picture.png");
 
@@ -34,17 +31,14 @@ const Form = ({ classes }: FormProps) => {
     handleSubmit,
   } = useForm();
 
-  const [contact, setContact] = useState<string>("");
-  const [contactDialogName, setContactDialogName] = useState<string>("");
-  const [contactList, setContactList] = useState<string[]>([
-    "Zack Johnson",
-    "David Lang",
-  ]);
-  const [contactDialogOpen, setContactDialogOpen] = useState<boolean>(false);
-
-  const handleContactDialog = (open: boolean) => {
-    setContactDialogOpen(open);
-  };
+  const [userName, setUserName] = useState<string>("Joe Doe");
+  const [organization, setOrganization] = useState<string>("Greenpeace");
+  const [latitude, setLatitude] = useState<number>(0.1);
+  const [longitude, setLongitude] = useState<number>(0.1);
+  const [depth, setDepth] = useState<number>(0);
+  const [installationSchedule, setInstallationSchedule] = useState<
+    string | null
+  >(getCurrentDate());
 
   const onSubmit = useCallback(
     (
@@ -52,54 +46,23 @@ const Form = ({ classes }: FormProps) => {
       event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
     ) => {
       if (event) {
-        console.log(event);
-        // event.preventDefault();
+        event.preventDefault();
       }
-      console.log({ ...data, contact });
+      console.log({ ...data, userName, organization, installationSchedule });
     },
-    [contact]
+    [userName, organization, installationSchedule]
   );
 
-  const addContact = () => {
-    if (typeof contactDialogName === "string") {
-      if (
-        contactDialogName !== "" &&
-        !contactList.includes(contactDialogName)
-      ) {
-        setContactList([...contactList, contactDialogName]);
-      }
+  const handleDateChange = (date: Date | null, value?: string | null) => {
+    if (value) {
+      setInstallationSchedule(value);
     }
-    setContactDialogName("");
-    setContactDialogOpen(false);
   };
 
   const handleChange = useCallback(
     (prop: string) => {
-      return async (
-        event: ChangeEvent<{
-          name?: string | undefined;
-          value: string | unknown;
-        }>
-      ) => {
-        const { target } = event;
-        const { value } = target;
+      return async () => {
         switch (prop) {
-          case "contact":
-            if (typeof value === "string") {
-              setContact(value);
-            }
-            break;
-          case "contactDialogName":
-            if (typeof value === "string") {
-              setContactDialogName(value);
-            }
-            break;
-          case "siteName":
-            await triggerValidation("siteName");
-            break;
-          case "siteLocation":
-            await triggerValidation("siteLocation");
-            break;
           case "latitude":
             await triggerValidation("latitude");
             break;
@@ -109,15 +72,24 @@ const Form = ({ classes }: FormProps) => {
           case "depth":
             await triggerValidation("depth");
             break;
-          case "organizations":
-            await triggerValidation("organizations");
+          case "reefName":
+            await triggerValidation("reefName");
+            break;
+          case "permitting":
+            await triggerValidation("permitting");
+            break;
+          case "fundingSource":
+            await triggerValidation("fundingSource");
+            break;
+          case "installation":
+            await triggerValidation("installation");
             break;
           default:
             break;
         }
       };
     },
-    [triggerValidation, setContact, setContactDialogName]
+    [triggerValidation]
   );
 
   return (
@@ -155,105 +127,31 @@ const Form = ({ classes }: FormProps) => {
         </Grid>
         <Grid container direction="column" item xs={4}>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {/* Site Contact */}
-            <Typography>Site Contact</Typography>
-            <Typography style={{ fontWeight: 300 }} variant="body1">
-              Please Select the primary contact for this site from the list
-            </Typography>
-            <Select
-              variant="outlined"
-              className={classes.select}
-              labelId="survey-form"
-              label="Select a contact"
-              id="contact"
-              value={contact}
-              onChange={handleChange("contact")}
-              placeholder="Select a contact"
-            >
-              {contactList.map((item) => {
-                return (
-                  <MenuItem
-                    className={classes.menuItem}
-                    key={item}
-                    value={item}
-                  >
-                    {item}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-            <Typography style={{ fontWeight: 300 }} variant="body1">
-              If you do not see your contact information here, please{" "}
-              <Button onClick={() => handleContactDialog(true)} color="primary">
-                add a new contact
-              </Button>
-            </Typography>
-            <Dialog
-              open={contactDialogOpen}
-              onClose={() => setContactDialogOpen(false)}
-              aria-labelledby="form-dialog-title"
-            >
-              <DialogContent>
-                <TextField
-                  inputProps={{ className: classes.textField }}
-                  autoFocus
-                  margin="dense"
-                  id="contact-dialog-name"
-                  label="Contact Name"
-                  fullWidth
-                  onChange={handleChange("contactDialogName")}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={() => setContactDialogOpen(false)}
-                  color="primary"
-                >
-                  Cancel
-                </Button>
-                <Button onClick={addContact} color="primary">
-                  Add
-                </Button>
-              </DialogActions>
-            </Dialog>
-            {/* Site Name */}
-            <Typography style={{ marginTop: "3rem" }}>Site Name</Typography>
+            {/* User Name */}
+            <Typography>Your Name</Typography>
             <TextField
               inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "Site Name is required",
-              })}
-              error={!!errors.siteName}
               variant="outlined"
-              id="site-name"
-              name="siteName"
+              id="user-name"
               fullWidth
-              onChange={handleChange("siteName")}
-              placeholder="e.g. Sombrero Reef"
-              helperText={errors.siteName ? errors.siteName.message : ""}
+              disabled
+              value={userName}
+            />
+            {/* Organization */}
+            <Typography style={{ marginTop: "3rem" }}>Organization</Typography>
+            <TextField
+              inputProps={{ className: classes.textField }}
+              variant="outlined"
+              id="organization"
+              fullWidth
+              disabled
+              value={organization}
             />
             {/* Site Location */}
-            <Typography style={{ marginTop: "3rem" }}>Site Location</Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "Site Location is required",
-              })}
-              error={!!errors.siteLocation}
-              variant="outlined"
-              id="site-location"
-              name="siteLocation"
-              fullWidth
-              onChange={handleChange("siteLocation")}
-              placeholder="e.g. Marathon Key, Florida"
-              helperText={
-                errors.siteLocation ? errors.siteLocation.message : ""
-              }
-            />
+            <Typography style={{ marginTop: "3rem" }}>Location</Typography>
             {/* Longitude and Latitude */}
-            <Grid style={{ marginTop: "3rem" }} container item spacing={4}>
+            <Grid style={{ marginTop: "0.5rem" }} container item spacing={4}>
               <Grid item xs={6}>
-                <Typography>Latitude</Typography>
                 <TextField
                   inputProps={{ className: classes.textField }}
                   inputRef={register({
@@ -267,14 +165,15 @@ const Form = ({ classes }: FormProps) => {
                   name="latitude"
                   variant="outlined"
                   id="site-latitude"
+                  label="Latitude"
                   fullWidth
                   onChange={handleChange("latitude")}
-                  placeholder="in decimal degrees"
+                  placeholder="Latitude in decimal degrees"
                   helperText={errors.latitude ? errors.latitude.message : ""}
+                  defaultValue={latitude}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography>Longitude</Typography>
                 <TextField
                   inputProps={{ className: classes.textField }}
                   inputRef={register({
@@ -288,10 +187,12 @@ const Form = ({ classes }: FormProps) => {
                   name="longitude"
                   variant="outlined"
                   id="site-longitude"
+                  label="Longitude"
                   fullWidth
                   onChange={handleChange("longitude")}
-                  placeholder="in decimal degrees"
+                  placeholder="Longitude in decimal degrees"
                   helperText={errors.longitude ? errors.longitude.message : ""}
+                  defaultValue={longitude}
                 />
               </Grid>
             </Grid>
@@ -312,34 +213,118 @@ const Form = ({ classes }: FormProps) => {
               id="site-depth"
               fullWidth
               onChange={handleChange("depth")}
-              placeholder="in meters"
+              placeholder="Depth in meters"
               helperText={errors.depth ? errors.depth.message : ""}
+              defaultValue={depth}
             />
-            {/* Collaborating Organizations */}
             <Typography style={{ marginTop: "3rem" }}>
-              Collaborating Organizations
+              Please provide some additional information for each reef:
+            </Typography>
+            {/* Reef Name */}
+            <Typography style={{ marginTop: "3rem" }}>Reef Name</Typography>
+            <TextField
+              inputProps={{ className: classes.textField }}
+              inputRef={register({
+                required: "Reef Name is required",
+              })}
+              error={!!errors.reefName}
+              variant="outlined"
+              id="reef-name"
+              name="reefName"
+              fullWidth
+              onChange={handleChange("reefName")}
+              placeholder="e.g. Sombrero Reef"
+              helperText={errors.reefName ? errors.reefName.message : ""}
+            />
+            {/* Permitting */}
+            <Typography style={{ marginTop: "3rem" }}>Permtting</Typography>
+            <TextField
+              inputProps={{ className: classes.textField }}
+              inputRef={register({
+                required: "This is a required field",
+              })}
+              error={!!errors.permitting}
+              variant="outlined"
+              id="permitting"
+              name="permitting"
+              fullWidth
+              multiline
+              onChange={handleChange("permitting")}
+              placeholder="Please describe the permitting requirements. Please be sure to
+              mention the authority having jurisdiction."
+              helperText={errors.permitting ? errors.permitting.message : ""}
+            />
+            {/* Funding Source */}
+            <Typography style={{ marginTop: "3rem" }}>
+              Funding Source
             </Typography>
             <TextField
               inputProps={{ className: classes.textField }}
-              inputRef={register({})}
-              name="organizations"
+              inputRef={register({
+                required: "This is a required field",
+              })}
+              error={!!errors.fundingSource}
               variant="outlined"
-              id="site-organizations"
+              id="funding-source"
+              name="fundingSource"
               fullWidth
-              onChange={handleChange("organizations")}
               multiline
-              placeholder="Please list any organizations that will be collaborating with you on the installation, maintenance, and monitoring on this site"
+              onChange={handleChange("fundingSource")}
+              placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
+              helperText={
+                errors.fundingSource ? errors.fundingSource.message : ""
+              }
+            />
+            {/* Schedule for Installation */}
+            <Typography style={{ marginTop: "3rem" }}>
+              Schedule for Installation.
+            </Typography>
+            <Typography style={{ fontWeight: 300 }}>
+              What is the soonest date after September 2020 that you could
+              install the spotter and conduct a survey.
+            </Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin="dense"
+                format="MM/dd/yyyy"
+                value={installationSchedule}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
+            {/* Installation, survey and maintenance personnel and equipment */}
+            <Typography style={{ marginTop: "3rem" }}>
+              Installation, survey and maintenance personnel and equipment
+            </Typography>
+            <TextField
+              inputProps={{ className: classes.textField }}
+              inputRef={register({
+                required: "This is a required field",
+              })}
+              error={!!errors.installation}
+              variant="outlined"
+              id="installation"
+              name="installation"
+              fullWidth
+              multiline
+              onChange={handleChange("installation")}
+              placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+              helperText={
+                errors.installation ? errors.installation.message : ""
+              }
             />
             <Grid style={{ margin: "3rem 0 3rem 0" }} item>
               <Button
                 disabled={
                   !!Object.keys(errors).length ||
-                  !contact ||
-                  !getValues().siteName ||
-                  !getValues().siteLocation ||
                   !getValues().latitude ||
                   !getValues().longitude ||
-                  !getValues().depth
+                  !getValues().reefName ||
+                  !getValues().permitting ||
+                  !getValues().fundingSource ||
+                  !getValues().installation
                 }
                 type="submit"
                 color="primary"

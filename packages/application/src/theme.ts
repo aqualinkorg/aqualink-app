@@ -38,6 +38,16 @@ const theme: any = createMuiTheme({
         minHeight: 40,
       },
     },
+    MuiInputBase: {
+      root: {
+        color: "black",
+      },
+    },
+    MuiButtonBase: {
+      root: {
+        color: "black",
+      },
+    },
     MuiTypography: {
       h5: {
         fontSize: 26,

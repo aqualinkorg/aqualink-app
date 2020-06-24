@@ -10,3 +10,8 @@ html, body { height: 100vh }
     flex-direction: column;
     flex-grow: 1;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersDay-day,
+.MuiPickersCalendarHeader-switchHeader {
+  color: black;
+}
