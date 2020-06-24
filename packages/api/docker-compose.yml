@@ -1,14 +1,10 @@
 version: '3.4'
 services:
   aqua-postgres:
-    image: postgres:12.2-postgis
-    build:
-      context: .
-      dockerfile: postgres-postgis.Dockerfile
+    image: kartoza/postgis:12.1
     restart: always
     volumes:
       - db_data:/var/lib/postgresql
-      - ./postgres-postgis-init.sql:/docker-entrypoint-initdb.d/1-init.sql
     ports:
       - 54321:5432
     environment:
