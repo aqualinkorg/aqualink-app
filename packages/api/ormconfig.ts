@@ -42,6 +42,7 @@ export = {
     // See
     // https://stackoverflow.com/questions/59435293/typeorm-entity-in-nestjs-cannot-use-import-statement-outside-a-module
     join(__dirname, 'src/**', '*.entity.ts'),
+    join(__dirname, 'src/**', '*.entity.js'),
   ],
   migrations: [join(__dirname, 'migration/**', '*.ts')],
   subscribers: [join(__dirname, 'subscriber/**', '*.ts')],
