@@ -13,7 +13,17 @@ function App() {
       <Router>
         <div id="app">
           <Switch>
+            {/* Redirect the home to Aqualink website */}
+            <Route
+              exact
+              path="/"
+              component={() => {
+                window.location.replace("https://www.aqualink.org/");
+                return null;
+              }}
+            />
             <Route exact path="/:appId/:uid" component={Form} />
+
             <Route default component={NotFound} />
           </Switch>
         </div>
