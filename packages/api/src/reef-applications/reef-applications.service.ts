@@ -3,7 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ReefApplication } from './reef-applications.entity';
 import { ReefApplicationsRepository } from './reef-applications.repository';
 import { CreateReefApplicationDto } from './dto/create-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
 import { CreateReefDto } from '../reefs/dto/create-reef.dto';
+import { UpdateReefDto } from '../reefs/dto/update-reef.dto';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -33,5 +35,19 @@ export class ReefApplicationsService {
       );
     }
     return found;
+  }
+
+  async update(
+    id: number,
+    uid: string,
+    updateReefApplicationDto: UpdateReefApplicationDto,
+    updateReefDto: UpdateReefDto,
+  ): Promise<void> {
+    return this.reefApplicationsRepository.change(
+      id,
+      uid,
+      updateReefApplicationDto,
+      updateReefDto,
+    );
   }
 }
