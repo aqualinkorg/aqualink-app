@@ -1,10 +1,10 @@
 import {
   IsNotEmpty,
   IsString,
-  IsDate,
   IsOptional,
   Validate,
   IsInt,
+  IsDateString,
 } from 'class-validator';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Reef } from '../../reefs/reefs.entity';
@@ -22,7 +22,7 @@ export class CreateReefApplicationDto {
   readonly fundingSource?: string;
 
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   readonly installationSchedule?: Date;
 
   @IsOptional()

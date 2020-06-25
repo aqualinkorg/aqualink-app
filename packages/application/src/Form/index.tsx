@@ -26,18 +26,19 @@ import {
   Collapse,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useForm } from "react-hook-form";
+import { RouteComponentProps } from "react-router-dom";
 
 import Map from "./Map";
-import formServices from "../services/formServices";
+import formServices, { SendFormData } from "../services/formServices";
 
-const Form = ({ classes }: FormProps) => {
+const Form = ({ match, classes }: FormProps) => {
   const {
     register,
     errors,
@@ -48,6 +49,7 @@ const Form = ({ classes }: FormProps) => {
     reset,
   } = useForm();
 
+  const [reefId, setReefId] = useState<number | null>(null);
   const [userName, setUserName] = useState<string>("");
   const [organization, setOrganization] = useState<string>("");
   const [latitude, setLatitude] = useState<number | null>(null);
@@ -55,31 +57,32 @@ const Form = ({ classes }: FormProps) => {
   const [depth, setDepth] = useState<number | null>(null);
   const [installationSchedule, setInstallationSchedule] = useState<
     string | null
-  >(new Date().toString());
+  >(new Date().toISOString());
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
 
   useEffect(() => {
     formServices
-      .getFormData("1")
+      .getFormData(match.params.appId, match.params.uid)
       .then((resp) => {
         const { data } = resp;
         if (data) {
-          setUserName(data.userName);
-          setOrganization(data.organization);
-          setLatitude(data.latitude);
-          setLongitude(data.longitude);
-          setDepth(data.depth);
+          setUserName(data.userId.fullName);
+          setOrganization(data.userId.organization);
+          setLatitude(data.reefId.polygon.coordinates[0]);
+          setLongitude(data.reefId.polygon.coordinates[1]);
+          setDepth(data.reefId.depth);
+          setReefId(data.reefId.id);
           setValue([
-            { latitude: data.latitude },
-            { longitude: data.longitude },
-            { depth: data.depth },
+            { latitude: data.reefId.polygon.coordinates[0] },
+            { longitude: data.reefId.polygon.coordinates[1] },
+            { depth: data.reefId.depth },
           ]);
         }
       })
       // eslint-disable-next-line no-console
       .catch(() => setErrorAlertOpen(true));
-  }, [setValue]);
+  }, [setValue, match.params.appId, match.params.uid]);
 
   const onSubmit = useCallback(
     (
@@ -90,18 +93,42 @@ const Form = ({ classes }: FormProps) => {
         event.preventDefault();
       }
       // eslint-disable-next-line
-      console.log({ ...data, userName, organization, installationSchedule });
-      setDialogOpen(true);
-      reset();
-      setInstallationSchedule(new Date().toString());
+      const sendData: SendFormData = {
+        uid: match.params.uid,
+        reef: {
+          name: data.reefName,
+          polygon: {
+            type: "Point",
+            coordinates: [
+              parseFloat(data.latitude),
+              parseFloat(data.longitude),
+            ],
+          },
+          depth: parseFloat(data.depth),
+        },
+        reefApplication: {
+          reefId,
+          uid: match.params.uid,
+          permitRequirements: data.permitting,
+          fundingSource: data.fundingSource,
+          installationSchedule,
+          installationResources: data.installation,
+        },
+      };
+
+      formServices.sendFormData(match.params.appId, sendData).then(() => {
+        setDialogOpen(true);
+        reset();
+        setInstallationSchedule(new Date().toISOString());
+      });
     },
-    [userName, organization, installationSchedule, reset]
+    [installationSchedule, reset, match.params.appId, match.params.uid, reefId]
   );
 
   const handleDateChange = useCallback(
     (date: Date | null) => {
       if (date) {
-        setInstallationSchedule(date.toString());
+        setInstallationSchedule(date.toISOString());
       }
     },
     [setInstallationSchedule]
@@ -500,6 +527,20 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface FormProps extends WithStyles<typeof styles> {}
+interface MatchProps
+  extends RouteComponentProps<{ appId: string; uid: string }> {}
+
+interface FormData {
+  reefName: string;
+  latitude: number;
+  longitude: number;
+  depth: number;
+  permitting: string;
+  fundingSource: string;
+  installationSchedule: string;
+  installation: string;
+}
+
+type FormProps = WithStyles<typeof styles> & MatchProps;
 
 export default withStyles(styles)(Form);

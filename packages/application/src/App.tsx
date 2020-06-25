@@ -13,7 +13,7 @@ function App() {
       <Router>
         <div id="app">
           <Switch>
-            <Route exact path="/" component={Form} />
+            <Route exact path="/:appId/:uid" component={Form} />
             <Route default component={NotFound} />
           </Switch>
         </div>
