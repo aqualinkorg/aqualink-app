@@ -31,8 +31,8 @@
   "scripts": {
     "start": "cp .env.local .env && react-scripts start",
     "build": "react-scripts build",
-    "deploy:prod": "cp .env.prod .env && yarn build && firebase deploy --only hosting:prod-target",
-    "deploy:staging": "cp .env.staging .env && yarn build && firebase deploy --only hosting:staging-target",
+    "deploy:prod": "REACT_APP_API_BASE_URL=https://ocean-systems.uc.r.appspot.com/ yarn build && firebase deploy --only hosting:prod-target",
+    "deploy:staging": "REACT_APP_API_BASE_URL=https://staging-dot-ocean-systems.uc.r.appspot.com/ yarn build && firebase deploy --only hosting:staging-target",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore"
   },
   "browserslist": {
