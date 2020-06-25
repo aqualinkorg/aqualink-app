@@ -11,4 +11,4 @@ import { ReefsModule } from './reefs/reefs.module';
   ],
   controllers: [AppController],
 })
-export class AppModule { }
+export class AppModule {}
