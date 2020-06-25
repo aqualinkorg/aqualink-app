@@ -530,17 +530,6 @@ const styles = (theme: Theme) =>
 interface MatchProps
   extends RouteComponentProps<{ appId: string; uid: string }> {}
 
-interface FormData {
-  reefName: string;
-  latitude: number;
-  longitude: number;
-  depth: number;
-  permitting: string;
-  fundingSource: string;
-  installationSchedule: string;
-  installation: string;
-}
-
 type FormProps = WithStyles<typeof styles> & MatchProps;
 
 export default withStyles(styles)(Form);
