@@ -48,16 +48,6 @@ const theme: any = createMuiTheme({
         color: "black",
       },
     },
-    MuiDialog: {
-      paper: {
-        backgroundColor: darkGreyBlue,
-      },
-    },
-    MuiDialogContentText: {
-      root: {
-        color: white,
-      },
-    },
     MuiTypography: {
       h5: {
         fontSize: 26,

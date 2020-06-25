@@ -7,6 +7,7 @@ import React, {
   ChangeEvent,
 } from "react";
 import {
+  Theme,
   AppBar,
   Toolbar,
   Grid,
@@ -40,6 +41,7 @@ const Form = ({ classes }: FormProps) => {
     getValues,
     handleSubmit,
     setValue,
+    reset,
   } = useForm();
 
   const [userName, setUserName] = useState<string>("");
@@ -81,15 +83,19 @@ const Form = ({ classes }: FormProps) => {
       // eslint-disable-next-line
       console.log({ ...data, userName, organization, installationSchedule });
       setDialogOpen(true);
+      reset();
     },
-    [userName, organization, installationSchedule]
+    [userName, organization, installationSchedule, reset]
   );
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      setInstallationSchedule(date.toString());
-    }
-  };
+  const handleDateChange = useCallback(
+    (date: Date | null) => {
+      if (date) {
+        setInstallationSchedule(date.toString());
+      }
+    },
+    [setInstallationSchedule]
+  );
 
   const handleChange = useCallback(
     (prop: string) => {
@@ -366,16 +372,22 @@ const Form = ({ classes }: FormProps) => {
             />
             {/* Successful Submission Dialog */}
             <Dialog open={dialogOpen}>
-              <DialogTitle id="successful-submission-dialog-title">
+              <DialogTitle
+                className={classes.successDialogTitle}
+                id="successful-submission-dialog-title"
+              >
                 Successful Form Submission
               </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="successful-submission-dialog-content">
+              <DialogContent className={classes.successDialogContent}>
+                <DialogContentText
+                  className={classes.successDialogContentText}
+                  id="successful-submission-dialog-content"
+                >
                   You have successfully submitted the form. Click Visit to
                   navigate to Aqualink Home Page.
                 </DialogContentText>
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={classes.successDialogActions}>
                 <Button color="primary" onClick={() => setDialogOpen(false)}>
                   Back
                 </Button>
@@ -422,7 +434,7 @@ const Form = ({ classes }: FormProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     select: {
       width: "100%",
@@ -439,6 +451,18 @@ const styles = () =>
     map: {
       height: "40vh",
       width: "30vw",
+    },
+    successDialogTitle: {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    successDialogContent: {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    successDialogContentText: {
+      color: theme.palette.text.primary,
+    },
+    successDialogActions: {
+      backgroundColor: theme.palette.primary.dark,
     },
   });
 
