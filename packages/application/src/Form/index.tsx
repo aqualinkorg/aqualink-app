@@ -238,15 +238,20 @@ const Form = ({ match, classes }: FormProps) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid style={{ marginTop: "4rem" }} container justify="center">
-        <Grid item xs={4}>
+      <Grid
+        style={{ marginTop: "4rem" }}
+        container
+        justify="center"
+        spacing={3}
+      >
+        <Grid item xs={10} md={4}>
           <Grid className={classes.map} item>
             <Map
               center={latitude && longitude ? [latitude, longitude] : [0, 0]}
             />
           </Grid>
         </Grid>
-        <Grid container direction="column" item xs={4}>
+        <Grid container direction="column" item xs={10} md={4}>
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             {/* User Name */}
             <Typography>Your Name</Typography>
@@ -526,6 +531,10 @@ const styles = (theme: Theme) =>
     map: {
       height: "40vh",
       width: "30vw",
+
+      [theme.breakpoints.down("md")]: {
+        width: "100%",
+      },
     },
     successDialogTitle: {
       backgroundColor: theme.palette.primary.dark,
