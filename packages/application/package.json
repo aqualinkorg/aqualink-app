@@ -29,7 +29,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cp .env.local .env && react-scripts start",
     "build": "react-scripts build",
     "deploy:prod": "cp .env.prod .env && yarn build && firebase deploy --only hosting:prod-target",
     "deploy:staging": "cp .env.staging .env && yarn build && firebase deploy --only hosting:staging-target",
