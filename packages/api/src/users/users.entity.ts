@@ -21,7 +21,7 @@ export class User {
   @Column({ length: 128, nullable: true })
   firebaseUid: string;
 
-  @Column({ length: 254 })
+  @Column({ length: 254, nullable: true })
   fullName: string;
 
   @Column({ length: 254 })
