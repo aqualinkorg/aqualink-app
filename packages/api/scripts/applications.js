@@ -67,7 +67,7 @@ async function runDataImport() {
 
 async function getLinks(createdAfterdateString) {
     // Date must be of type "2020-07-03"
-    const linkRequest = `SELECT u.email, a.uid, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
+    const linkRequest = `SELECT u.email, CONCAT('join.aqualink.org/', a.id, '/', a.uid) as url, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
         FROM users u, reef_application a, reef r
         WHERE u.id = a.user_id and r.id = a.reef_id and r.created_at > '${createdAfterdateString}';`
 
