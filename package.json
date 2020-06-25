@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "lint": "eslint --cache --cache-location node_modules/.cache/eslint --fix",
-    "lint:all": "eslint packages/*/src/**/*.{ts,tsx} --fix",
+    "lint:all": "lerna run lint",
     "clean": "yarn run clean:artifacts && yarn run clean:packages && yarn run clean:root",
     "clean:artifacts": "lerna run clean --parallel",
     "clean:packages": "lerna clean --yes",
