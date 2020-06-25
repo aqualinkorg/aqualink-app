@@ -11,6 +11,8 @@ try {
   // Pass
 }
 
+export const FINAL_URL = process.env.FINAL_URL || 'INSERT_URL/';
+
 // If we have a DATABASE_URL, use that
 export const connectionInfo = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
