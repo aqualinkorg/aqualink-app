@@ -29,10 +29,10 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "cp .env.local .env && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy:prod": "REACT_APP_API_BASE_URL=https://ocean-systems.uc.r.appspot.com/ yarn build && firebase deploy --only hosting:prod-target",
-    "deploy:staging": "REACT_APP_API_BASE_URL=https://staging-dot-ocean-systems.uc.r.appspot.com/ yarn build && firebase deploy --only hosting:staging-target",
+    "deploy:prod": "dotenv -e .env.prod yarn build && firebase deploy --only hosting:prod-target",
+    "deploy:staging": "dotenv -e .env.staging yarn build && firebase deploy --only hosting:staging-target",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore"
   },
   "browserslist": {
