@@ -1,3 +1,4 @@
+import { runSqlQuery, connectToPostgres } from './db-utils'
 import {
     addApplicationInfo,
     getUserQuery,
@@ -7,7 +8,6 @@ import {
     surveyFilePath,
     verifyImportFilesExist,
 } from './import-utils'
-import { runSqlQuery, connectToPostgres } from './db-utils'
 
 
 function getDepth(depthRange) {
