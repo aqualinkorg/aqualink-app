@@ -79,4 +79,4 @@ async function getLinks(createdAfterdateString) {
 
 
 runDataImport()
-getLinks('2020-06-01')
+// getLinks('2020-06-01')
