@@ -16,6 +16,11 @@ import {
   withStyles,
   WithStyles,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@material-ui/core";
 import {
   KeyboardDatePicker,
@@ -45,20 +50,23 @@ const Form = ({ classes }: FormProps) => {
   const [installationSchedule, setInstallationSchedule] = useState<
     string | null
   >(new Date().toString());
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     formServices.getFormData("1").then((resp) => {
       const { data } = resp;
-      setUserName(data.userName);
-      setOrganization(data.organization);
-      setLatitude(data.latitude);
-      setLongitude(data.longitude);
-      setDepth(data.depth);
-      setValue([
-        { latitude: data.latitude },
-        { longitude: data.longitude },
-        { depth: data.depth },
-      ]);
+      if (data) {
+        setUserName(data.userName);
+        setOrganization(data.organization);
+        setLatitude(data.latitude);
+        setLongitude(data.longitude);
+        setDepth(data.depth);
+        setValue([
+          { latitude: data.latitude },
+          { longitude: data.longitude },
+          { depth: data.depth },
+        ]);
+      }
     });
   }, [setValue]);
 
@@ -72,6 +80,7 @@ const Form = ({ classes }: FormProps) => {
       }
       // eslint-disable-next-line
       console.log({ ...data, userName, organization, installationSchedule });
+      setDialogOpen(true);
     },
     [userName, organization, installationSchedule]
   );
@@ -355,6 +364,26 @@ const Form = ({ classes }: FormProps) => {
                 errors.installation ? errors.installation.message : ""
               }
             />
+            {/* Successful Submission Dialog */}
+            <Dialog open={dialogOpen}>
+              <DialogTitle id="successful-submission-dialog-title">
+                Successful Form Submission
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="successful-submission-dialog-content">
+                  You have successfully submitted the form. Click Visit to
+                  navigate to Aqualink Home Page.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button color="primary" onClick={() => setDialogOpen(false)}>
+                  Back
+                </Button>
+                <Button color="primary" href="https://www.aqualink.org/">
+                  Visit
+                </Button>
+              </DialogActions>
+            </Dialog>
             <Grid style={{ margin: "3rem 0 3rem 0" }} item>
               <Button
                 disabled={
