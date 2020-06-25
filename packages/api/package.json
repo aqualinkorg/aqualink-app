@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
     "gcp-build": "npm install yarn",
-    "deploy": "cp .env.prod .env && yarn run build && gcloud app deploy",
+    "deploy:prod": "cp .env.prod .env && yarn run build && gcloud app deploy",
     "deploy:staging": "cp .env.staging .env && yarn run build && gcloud app deploy app-staging.yaml",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
