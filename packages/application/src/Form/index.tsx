@@ -251,6 +251,7 @@ const Form = ({ match, classes }: FormProps) => {
             {/* User Name */}
             <Typography>Your Name</Typography>
             <TextField
+              className={classes.nonEditableField}
               inputProps={{ className: classes.textField }}
               variant="outlined"
               id="user-name"
@@ -261,6 +262,7 @@ const Form = ({ match, classes }: FormProps) => {
             {/* Organization */}
             <Typography style={{ marginTop: "3rem" }}>Organization</Typography>
             <TextField
+              className={classes.nonEditableField}
               inputProps={{ className: classes.textField }}
               variant="outlined"
               id="organization"
@@ -511,6 +513,9 @@ const styles = (theme: Theme) =>
       color: "black",
       marginTop: "1rem",
       marginBottom: "1rem",
+    },
+    nonEditableField: {
+      backgroundColor: "#E6E6E6",
     },
     menuItem: {
       color: "black",
