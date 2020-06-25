@@ -21,14 +21,14 @@ export class User {
   @Column({ length: 128, nullable: true })
   firebaseUid: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 254 })
   fullName: string;
 
   @Column({ length: 254 })
   @Index({ unique: true })
   email: string;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ length: 254, nullable: true })
   organization: string;
 
   @Column({ type: 'point', nullable: true })

@@ -34,7 +34,6 @@ export const connectionInfo = process.env.DATABASE_URL
 // Note: queries wrapped in sql.query should usually be run with `runSqlQuery` or the function
 //       returned by `getQuery` rather than this raw object.
 let pgPool = new Pool(connectionInfo);
-console.log(pgPool)
 export const query = async (
   text,
   params,

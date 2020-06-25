@@ -17,17 +17,17 @@ export class Reef {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column({ nullable: true })
   name: string;
 
   @Column('geometry')
   @Index({ spatial: true })
   polygon: string;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   temperatureThreshold: number;
 
-  @Column()
+  @Column({ nullable: true })
   depth: number;
 
   @Column({ default: 0 })

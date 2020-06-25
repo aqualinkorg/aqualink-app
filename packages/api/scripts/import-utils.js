@@ -36,28 +36,35 @@ export function processFile(filePath, onData) {
   });
 }
 
+const userColumns = [
+  'full_name',
+  'email',
+  'organization',
+];
+
+const User = nodeSql.define({
+  name: 'user',
+  columns: ['id'].concat(userColumns),
+});
+
 export function saveUserQuery(user) {
-  const userColumns = [
-    'full_name',
-    'email',
-    'organization',
-  ];
-
-  const User = nodeSql.define({
-    name: 'user',
-    columns: ['id'].concat(userColumns),
-  });
-
   return User.insert([pick(user, userColumns)])
-    .onConflict({
-      constraint: 'email', // email
-    })
+    .onConflict({})
     .returning(User.id)
     .toQuery();
 }
 
+export function getUserQuery(user) {
+  return User.select(User.id)
+    .from(User)
+    .where(
+      User.email.equals(user.email)
+    )
+    .toQuery();
+}
+
 export function saveReefQuery(reef) {
-  const reefColumns = ['name', 'lat', 'lon', 'depth'];
+  const reefColumns = ['polygon', 'depth'];
 
   const Reef = nodeSql.define({
     name: 'reef',
@@ -66,15 +73,15 @@ export function saveReefQuery(reef) {
 
   return Reef.insert([pick(reef, reefColumns)])
     .onConflict({
-      constraint: '(lat, lon)',
+      index: '(polygon)',
     })
     .returning(Reef.id)
     .toQuery();
 }
 
-const applicationInfo = nodeSql.define({
-  name: 'application',
-  columns: ['user_id', 'reef_id'],
+const ApplicationInfo = nodeSql.define({
+  name: 'reef_application',
+  columns: ['id', 'uid', 'user_id', 'reef_id'],
 });
 
 export async function addApplicationInfo(client, userId, reefId) {
@@ -83,10 +90,10 @@ export async function addApplicationInfo(client, userId, reefId) {
     reef_id: reefId,
   }];
 
-  const { text, values } = applicationInfo
+  const { text, values } = ApplicationInfo
     .insert(insertRows)
     .onConflict({})
-    .returning(applicationInfo.reef_id)
+    .returning(ApplicationInfo.uid)
     .toQuery();
 
   const { rows } = await runSqlQuery(text, values, client);
