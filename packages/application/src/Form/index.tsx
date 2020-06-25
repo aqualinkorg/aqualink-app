@@ -60,6 +60,7 @@ const Form = ({ match, classes }: FormProps) => {
   >(new Date().toISOString());
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
   useEffect(() => {
     formServices
@@ -81,7 +82,10 @@ const Form = ({ match, classes }: FormProps) => {
         }
       })
       // eslint-disable-next-line no-console
-      .catch(() => setErrorAlertOpen(true));
+      .catch(() => {
+        setErrorAlertOpen(true);
+        setAlertMessage("Failed to load form data");
+      });
   }, [setValue, match.params.appId, match.params.uid]);
 
   const onSubmit = useCallback(
@@ -116,11 +120,17 @@ const Form = ({ match, classes }: FormProps) => {
         },
       };
 
-      formServices.sendFormData(match.params.appId, sendData).then(() => {
-        setDialogOpen(true);
-        reset();
-        setInstallationSchedule(new Date().toISOString());
-      });
+      formServices
+        .sendFormData(match.params.appId, sendData)
+        .then(() => {
+          setDialogOpen(true);
+          reset();
+          setInstallationSchedule(new Date().toISOString());
+        })
+        .catch(() => {
+          setErrorAlertOpen(true);
+          setAlertMessage("Form submission failed");
+        });
     },
     [installationSchedule, reset, match.params.appId, match.params.uid, reefId]
   );
@@ -212,7 +222,7 @@ const Form = ({ match, classes }: FormProps) => {
             </IconButton>
           }
         >
-          Failed to load form data
+          {alertMessage}
         </Alert>
       </Collapse>
       {/* Form Page Message */}
