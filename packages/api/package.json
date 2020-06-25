@@ -13,7 +13,7 @@
     "deploy:staging": "cp .env.staging .env && yarn run build && gcloud app deploy app-staging.yaml",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
-    "start:dev": "cp .env.local .env nodemon --config nodemon.json",
+    "start:dev": "cp .env.local .env && nodemon --config nodemon.json",
     "start:dev:db": "docker-compose up",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main.js",
