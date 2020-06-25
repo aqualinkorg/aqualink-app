@@ -4,6 +4,7 @@ export class addApplicationInfo1593040864197 implements MigrationInterface {
     name = 'addApplicationInfo1593040864197'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "postgis"`);
         await queryRunner.query(`DROP INDEX "IDX_af7cabf8e064aa7bad09c731ba"`);
         await queryRunner.query(`DROP INDEX "IDX_de4eb243bae87587f9ca56ba8d"`);
         await queryRunner.query(`DROP INDEX "IDX_cd07cbd734fb8d7d6417a8c936"`);
@@ -44,6 +45,6 @@ export class addApplicationInfo1593040864197 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_cd07cbd734fb8d7d6417a8c936" ON "spotter" ("location") `);
         await queryRunner.query(`CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" ("location") `);
         await queryRunner.query(`CREATE INDEX "IDX_af7cabf8e064aa7bad09c731ba" ON "user" ("location") `);
+        await queryRunner.query(`DROP EXTENSION IF EXISTS "postgis"`);
     }
-
 }
