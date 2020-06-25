@@ -16,7 +16,7 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "survey" DROP CONSTRAINT "FK_a37da0d039df5145bd187a32e09"`);
         await queryRunner.query(`ALTER TABLE "reef" DROP CONSTRAINT "FK_dc56bfd6bfcd1f221ec83885294"`);
         await queryRunner.query(`ALTER TABLE "reef_application" DROP CONSTRAINT "FK_a3ff599da8838fd358d43cec7bc"`);
-        await queryRunner.query(`CREATE SEQUENCE "users_id_seq" OWNED BY "users"."id"`);
+        await queryRunner.query(`CREATE SEQUENCE IF NOT EXISTS "users_id_seq" OWNED BY "users"."id"`);
         await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "id" SET DEFAULT nextval('users_id_seq')`);
         await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "full_name" DROP NOT NULL`);
         await queryRunner.query(`ALTER TABLE "reef" DROP COLUMN "name"`);
