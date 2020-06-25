@@ -17,13 +17,13 @@ export class Region {
   @Column({ length: 50 })
   name: string;
 
-  @Column('polygon')
+  @Column('geometry', { spatialFeatureType: 'Polygon' })
   @Index({ spatial: true })
   polygon: string;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'parent_id' })
-  parentId: Region;
+  parentId: Region | number;
 
   @CreateDateColumn()
   createdAt: Date;
