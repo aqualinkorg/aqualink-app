@@ -22,7 +22,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
+  Collapse,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import CloseIcon from '@material-ui/icons/Close';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -48,28 +52,33 @@ const Form = ({ classes }: FormProps) => {
   const [organization, setOrganization] = useState<string>("");
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
-  const [depth, setDepth] = useState<number>(0);
+  const [depth, setDepth] = useState<number | null>(null);
   const [installationSchedule, setInstallationSchedule] = useState<
     string | null
   >(new Date().toString());
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    formServices.getFormData("1").then((resp) => {
-      const { data } = resp;
-      if (data) {
-        setUserName(data.userName);
-        setOrganization(data.organization);
-        setLatitude(data.latitude);
-        setLongitude(data.longitude);
-        setDepth(data.depth);
-        setValue([
-          { latitude: data.latitude },
-          { longitude: data.longitude },
-          { depth: data.depth },
-        ]);
-      }
-    });
+    formServices
+      .getFormData("1")
+      .then((resp) => {
+        const { data } = resp;
+        if (data) {
+          setUserName(data.userName);
+          setOrganization(data.organization);
+          setLatitude(data.latitude);
+          setLongitude(data.longitude);
+          setDepth(data.depth);
+          setValue([
+            { latitude: data.latitude },
+            { longitude: data.longitude },
+            { depth: data.depth },
+          ]);
+        }
+      })
+      // eslint-disable-next-line no-console
+      .catch(() => setErrorAlertOpen(true));
   }, [setValue]);
 
   const onSubmit = useCallback(
@@ -84,6 +93,7 @@ const Form = ({ classes }: FormProps) => {
       console.log({ ...data, userName, organization, installationSchedule });
       setDialogOpen(true);
       reset();
+      setInstallationSchedule(new Date().toString());
     },
     [userName, organization, installationSchedule, reset]
   );
@@ -119,6 +129,9 @@ const Form = ({ classes }: FormProps) => {
             await triggerValidation("longitude");
             break;
           case "depth":
+            if (!isNaN(valueNum)) {
+              setDepth(valueNum);
+            }
             await triggerValidation("depth");
             break;
           case "reefName":
@@ -156,6 +169,25 @@ const Form = ({ classes }: FormProps) => {
           </Grid>
         </Toolbar>
       </AppBar>
+      <Collapse in={errorAlertOpen}>
+        <Alert
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setErrorAlertOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Failed to load form data
+        </Alert>
+      </Collapse>
       {/* Form Page Message */}
       <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={8}>
@@ -405,7 +437,9 @@ const Form = ({ classes }: FormProps) => {
                   !getValues().reefName ||
                   !getValues().permitting ||
                   !getValues().fundingSource ||
-                  !getValues().installation
+                  !getValues().installation ||
+                  userName === "" ||
+                  organization === ""
                 }
                 type="submit"
                 color="primary"
