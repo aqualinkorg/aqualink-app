@@ -3,13 +3,14 @@ import {
     addApplicationInfo,
     getReefQuery,
     getUserQuery,
+    linksFilePath,
     processFile,
     saveReefQuery,
     saveUserQuery,
     surveyFilePath,
     verifyImportFilesExist,
 } from './import-utils'
-
+import ObjectsToCsv from 'objects-to-csv';
 
 function getDepth(depthRange) {
     const depthArray = depthRange.replace('-', ' ')
@@ -21,7 +22,7 @@ function getDepth(depthRange) {
 /**
  * Runs survey import functions.
  */
-async function run() {
+async function runDataImport() {
     await verifyImportFilesExist();
     const client = connectToPostgres();
     await processFile(surveyFilePath, async (application) => {
@@ -64,4 +65,18 @@ async function run() {
     });
 }
 
-run()
+async function getLinks(createdAfterdateString) {
+    // Date must be of type "2020-07-03"
+    const linkRequest = `SELECT u.email, a.uid, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
+        FROM users u, reef_application a, reef r
+        WHERE u.id = a.user_id and r.id = a.reef_id and r.created_at > '${createdAfterdateString}';`
+
+    const { rows: links } = await runSqlQuery(linkRequest);
+    console.log(`Exporting ${links.length} links to file`)
+    const csv = new ObjectsToCsv(links);
+    await csv.toDisk(linksFilePath);
+}
+
+
+runDataImport()
+getLinks('2020-06-01')
