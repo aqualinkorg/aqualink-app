@@ -10,6 +10,7 @@ import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Reef } from '../../reefs/reefs.entity';
 import { User } from '../../users/users.entity';
 
+
 export class UpdateReefApplicationDto {
   @IsOptional()
   @IsString()
