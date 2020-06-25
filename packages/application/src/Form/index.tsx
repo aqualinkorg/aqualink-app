@@ -81,7 +81,6 @@ const Form = ({ match, classes }: FormProps) => {
           ]);
         }
       })
-      // eslint-disable-next-line no-console
       .catch(() => {
         setErrorAlertOpen(true);
         setAlertMessage("Failed to load form data");
@@ -96,7 +95,7 @@ const Form = ({ match, classes }: FormProps) => {
       if (event) {
         event.preventDefault();
       }
-      // eslint-disable-next-line
+
       const sendData: SendFormData = {
         uid: match.params.uid,
         reef: {
