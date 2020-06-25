@@ -20,7 +20,7 @@ export class Reef {
   @Column({ nullable: true })
   name: string;
 
-  @Column('geometry')
+  @Column('geometry', { unique: true })
   @Index({ spatial: true })
   polygon: string;
 

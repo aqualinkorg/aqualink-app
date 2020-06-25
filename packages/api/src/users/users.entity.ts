@@ -13,7 +13,7 @@ export enum AdminLevel {
   SuperAdmin = 'super_admin',
 }
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;

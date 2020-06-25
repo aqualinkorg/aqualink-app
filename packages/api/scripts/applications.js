@@ -1,6 +1,7 @@
 import { runSqlQuery, connectToPostgres } from './db-utils'
 import {
     addApplicationInfo,
+    getReefQuery,
     getUserQuery,
     processFile,
     saveReefQuery,
@@ -43,22 +44,23 @@ async function run() {
         // Parse depth string from the application form and use the max.
         const depth = getDepth(depthRange)
 
-        // Convert lat, lon to POINT geometry.
+        // Convert lat, lon to POINT geometry, avoiding under/overfloats
         const polygon = `POINT(${(parseFloat(lng) + 360) % 360} ${lat})`;
 
         const { text: reefText, values: reefValues } = saveReefQuery({ polygon, depth });
         const { rows: reefRows } = await runSqlQuery(reefText, reefValues, client);
 
-        const reefId = reefRows[0].id
+        let reefId
+        if (reefRows.length === 0) {
+            const { text: existintgReefText, values: existintgReefValues } = getReefQuery({ polygon });
+            const { rows: existingReefRows } = await runSqlQuery(existintgReefText, existintgReefValues, client);
+            reefId = existingReefRows[0].id
+        } else {
+            reefId = reefRows[0].id
+        }
 
         // Create application
-        // TODO - make reef_id unique in reef_application
-        // uid should be of type UUID and have a default
-        // CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-        // Then use gen_random_uuid() as default function
-        const appId = await addApplicationInfo(client, userId, reefId)
-        console.log(appId)
-
+        await addApplicationInfo(client, userId, reefId)
     });
 }
 

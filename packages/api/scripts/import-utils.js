@@ -43,7 +43,7 @@ const userColumns = [
 ];
 
 const User = nodeSql.define({
-  name: 'user',
+  name: 'users',
   columns: ['id'].concat(userColumns),
 });
 
@@ -63,19 +63,26 @@ export function getUserQuery(user) {
     .toQuery();
 }
 
+const reefColumns = ['polygon', 'depth'];
+
+const Reef = nodeSql.define({
+  name: 'reef',
+  columns: ['id'].concat(reefColumns),
+});
+
 export function saveReefQuery(reef) {
-  const reefColumns = ['polygon', 'depth'];
-
-  const Reef = nodeSql.define({
-    name: 'reef',
-    columns: ['id'].concat(reefColumns),
-  });
-
   return Reef.insert([pick(reef, reefColumns)])
-    .onConflict({
-      index: '(polygon)',
-    })
+    .onConflict({})
     .returning(Reef.id)
+    .toQuery();
+}
+
+export function getReefQuery(reef) {
+  return Reef.select(Reef.id)
+    .from(Reef)
+    .where(
+      Reef.polygon.equals(reef.polygon)
+    )
     .toQuery();
 }
 

@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  OneToOne,
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
@@ -27,7 +28,7 @@ export class ReefApplication {
   @Column({ nullable: true })
   installationResources: string;
 
-  @Column({ length: 128 })
+  @Column({ length: 128, default: 'gen_random_uuid()' })
   uid: string;
 
   @CreateDateColumn()
@@ -36,7 +37,7 @@ export class ReefApplication {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @OneToOne(() => Reef, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'reef_id' })
   reefId: Reef | number;
 
