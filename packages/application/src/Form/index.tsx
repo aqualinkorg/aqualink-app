@@ -75,8 +75,8 @@ const Form = ({ match, classes }: FormProps) => {
           setDepth(data.reefId.depth);
           setReefId(data.reefId.id);
           setValue([
-            { latitude: data.reefId.polygon.coordinates[1] },
-            { longitude: data.reefId.polygon.coordinates[0] },
+            { latitude: data.reefId.polygon.coordinates[1].toFixed(4) },
+            { longitude: data.reefId.polygon.coordinates[0].toFixed(4) },
             { depth: data.reefId.depth },
           ]);
         }
