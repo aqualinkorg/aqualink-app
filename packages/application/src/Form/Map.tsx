@@ -14,15 +14,7 @@ const myIcon = L.icon({
 
 const ReefMap = ({ center, classes }: ReefMapProps) => {
   return (
-    <Map
-      className={classes.map}
-      center={center}
-      zoom={5}
-      dragging={false}
-      zoomControl={false}
-      doubleClickZoom={false}
-      scrollWheelZoom={false}
-    >
+    <Map className={classes.map} center={center} zoom={6}>
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       <Marker icon={myIcon} position={center} />
     </Map>

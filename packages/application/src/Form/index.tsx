@@ -4,6 +4,7 @@ import React, {
   useCallback,
   BaseSyntheticEvent,
   useEffect,
+  ChangeEvent,
 } from "react";
 import {
   AppBar,
@@ -33,12 +34,13 @@ const Form = ({ classes }: FormProps) => {
     triggerValidation,
     getValues,
     handleSubmit,
+    setValue,
   } = useForm();
 
-  const [userName, setUserName] = useState<string>("Joe Doe");
-  const [organization, setOrganization] = useState<string>("Greenpeace");
-  const [latitude, setLatitude] = useState<number>(0.1);
-  const [longitude, setLongitude] = useState<number>(0.1);
+  const [userName, setUserName] = useState<string>("");
+  const [organization, setOrganization] = useState<string>("");
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
   const [depth, setDepth] = useState<number>(0);
   const [installationSchedule, setInstallationSchedule] = useState<
     string | null
@@ -52,8 +54,13 @@ const Form = ({ classes }: FormProps) => {
       setLatitude(data.latitude);
       setLongitude(data.longitude);
       setDepth(data.depth);
+      setValue([
+        { latitude: data.latitude },
+        { longitude: data.longitude },
+        { depth: data.depth },
+      ]);
     });
-  }, []);
+  }, [setValue]);
 
   const onSubmit = useCallback(
     (
@@ -77,12 +84,23 @@ const Form = ({ classes }: FormProps) => {
 
   const handleChange = useCallback(
     (prop: string) => {
-      return async () => {
+      return async (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => {
+        const { target } = event;
+        const { value } = target;
+        const valueNum = parseFloat(value);
         switch (prop) {
           case "latitude":
+            if (!isNaN(valueNum)) {
+              setLatitude(valueNum);
+            }
             await triggerValidation("latitude");
             break;
           case "longitude":
+            if (!isNaN(valueNum)) {
+              setLongitude(valueNum);
+            }
             await triggerValidation("longitude");
             break;
           case "depth":
@@ -140,7 +158,9 @@ const Form = ({ classes }: FormProps) => {
       <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={4}>
           <Grid className={classes.map} item>
-            <Map center={[latitude, longitude]} />
+            <Map
+              center={latitude && longitude ? [latitude, longitude] : [0, 0]}
+            />
           </Grid>
         </Grid>
         <Grid container direction="column" item xs={4}>
@@ -168,14 +188,14 @@ const Form = ({ classes }: FormProps) => {
             {/* Site Location */}
             <Typography style={{ marginTop: "3rem" }}>Location</Typography>
             {/* Longitude and Latitude */}
-            <Grid style={{ marginTop: "0.5rem" }} container item spacing={4}>
+            <Grid container item spacing={4}>
               <Grid item xs={6}>
                 <TextField
                   inputProps={{ className: classes.textField }}
                   inputRef={register({
                     required: "Latitude is required",
                     pattern: {
-                      value: /^\d+\.\d+$/,
+                      value: /^-?\d+\.\d+$/,
                       message: "Latitude should be a decimal number",
                     },
                   })}
@@ -183,11 +203,12 @@ const Form = ({ classes }: FormProps) => {
                   name="latitude"
                   variant="outlined"
                   id="site-latitude"
-                  label="Latitude"
                   fullWidth
                   onChange={handleChange("latitude")}
                   placeholder="Latitude in decimal degrees"
-                  helperText={errors.latitude ? errors.latitude.message : ""}
+                  helperText={
+                    errors.latitude ? errors.latitude.message : "Latitude"
+                  }
                   defaultValue={latitude}
                 />
               </Grid>
@@ -197,7 +218,7 @@ const Form = ({ classes }: FormProps) => {
                   inputRef={register({
                     required: "Longitude is required",
                     pattern: {
-                      value: /^\d+\.\d+$/,
+                      value: /^-?\d+\.\d+$/,
                       message: "Longitude should be a decimal number",
                     },
                   })}
@@ -205,11 +226,12 @@ const Form = ({ classes }: FormProps) => {
                   name="longitude"
                   variant="outlined"
                   id="site-longitude"
-                  label="Longitude"
                   fullWidth
                   onChange={handleChange("longitude")}
                   placeholder="Longitude in decimal degrees"
-                  helperText={errors.longitude ? errors.longitude.message : ""}
+                  helperText={
+                    errors.longitude ? errors.longitude.message : "Longitude"
+                  }
                   defaultValue={longitude}
                 />
               </Grid>
