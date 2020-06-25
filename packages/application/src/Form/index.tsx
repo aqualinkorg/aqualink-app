@@ -70,13 +70,13 @@ const Form = ({ match, classes }: FormProps) => {
         if (data) {
           setUserName(data.userId.fullName);
           setOrganization(data.userId.organization);
-          setLatitude(data.reefId.polygon.coordinates[0]);
-          setLongitude(data.reefId.polygon.coordinates[1]);
+          setLatitude(data.reefId.polygon.coordinates[1]);
+          setLongitude(data.reefId.polygon.coordinates[0]);
           setDepth(data.reefId.depth);
           setReefId(data.reefId.id);
           setValue([
-            { latitude: data.reefId.polygon.coordinates[0] },
-            { longitude: data.reefId.polygon.coordinates[1] },
+            { latitude: data.reefId.polygon.coordinates[1] },
+            { longitude: data.reefId.polygon.coordinates[0] },
             { depth: data.reefId.depth },
           ]);
         }
@@ -103,8 +103,8 @@ const Form = ({ match, classes }: FormProps) => {
           polygon: {
             type: "Point",
             coordinates: [
-              parseFloat(data.latitude),
               parseFloat(data.longitude),
+              parseFloat(data.latitude),
             ],
           },
           depth: parseFloat(data.depth),
@@ -320,7 +320,7 @@ const Form = ({ match, classes }: FormProps) => {
               </Grid>
             </Grid>
             {/* Depth */}
-            <Typography style={{ marginTop: "3rem" }}>Depth</Typography>
+            <Typography style={{ marginTop: "3rem" }}>Depth (m)</Typography>
             <TextField
               inputProps={{ className: classes.textField }}
               inputRef={register({
