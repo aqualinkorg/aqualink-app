@@ -19,7 +19,7 @@ POSTGRES_PORT=54321
 POSTGRES_DATABASE=postgres
 ```
 
-In production, `APP_SECRET` should be set as well. And the database needs to have the `postgis` extension enabled. To enable it, you can run the `postgis-init.sql` on your database. (Locally, we use a docker with `postgis` pre-installed.)
+In production, `APP_SECRET` should be set as well. And the database needs to have the `postgis` extension enabled. `postgis` gets installed as part of the migration. But you can also add it manually by running `CREATE IF NOT EXISTS EXTENSION postgis;`.
 
 In development, we optionally use [dotenv](https://www.npmjs.com/package/dotenv) to automatically load environment
 variables from the file `./.env` - you can create these file with the database connection options listed above.
