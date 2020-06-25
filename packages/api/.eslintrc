@@ -3,5 +3,21 @@
     "no-useless-constructor": "off",
     "no-empty-function": ["error", { "allow": ["constructors"] }],
     "class-methods-use-this": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "test/*"
+      ],
+      "rules": {
+        "fp/no-mutation": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    }
+  ]
 }
