@@ -13,6 +13,10 @@ export const surveyFilePath = path.resolve(
   './application_data/proposed_sites.csv',
 );
 
+export const linksFilePath = path.resolve(
+  __dirname,
+  './application_data/links.csv',
+);
 
 function assertFileExists(filePath) {
   if (!fs.existsSync(filePath)) {
