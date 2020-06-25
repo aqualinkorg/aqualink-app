@@ -63,6 +63,7 @@ const Form = ({ classes }: FormProps) => {
       if (event) {
         event.preventDefault();
       }
+      // eslint-disable-next-line
       console.log({ ...data, userName, organization, installationSchedule });
     },
     [userName, organization, installationSchedule]
