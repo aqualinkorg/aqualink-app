@@ -1,4 +1,4 @@
-import { runSqlQuery, connectToPostgres } from './db-utils'
+import { runSqlQuery, connectToPostgres, FINAL_URL } from './db-utils'
 import {
     addApplicationInfo,
     getReefQuery,
@@ -65,9 +65,9 @@ async function runDataImport() {
     });
 }
 
-async function getLinks(createdAfterdateString) {
+async function getLinks(url, createdAfterdateString) {
     // Date must be of type "2020-07-03"
-    const linkRequest = `SELECT u.email, CONCAT('join.aqualink.org/', a.id, '/', a.uid) as url, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
+    const linkRequest = `SELECT u.email, u.full_name, u.organization, CONCAT('${url}', a.id, '/', a.uid) as url, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
         FROM users u, reef_application a, reef r
         WHERE u.id = a.user_id and r.id = a.reef_id and r.created_at > '${createdAfterdateString}';`
 
@@ -79,4 +79,4 @@ async function getLinks(createdAfterdateString) {
 
 
 runDataImport()
-// getLinks('2020-06-01')
+// getLinks(FINAL_URL, '2020-06-01')
