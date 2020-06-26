@@ -227,13 +227,13 @@ const Form = ({ match, classes }: FormProps) => {
       {/* Form Page Message */}
       <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={8}>
-          <Typography variant="h5">Application</Typography>
+          <Typography variant="h5">Site Information</Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
             Please take a minute to fill out one of these forms for each site
-            you wish to apply for.
+            you had applied for.
           </Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
-            If you have any questions dont hesitate to reach out to{" "}
+            If you have any questions, dont hesitate to reach out to{" "}
             <a href="mailto:info@aqualink.org">info@aqualink.org</a>
           </Typography>
         </Grid>
@@ -453,8 +453,8 @@ const Form = ({ match, classes }: FormProps) => {
                   className={classes.successDialogContentText}
                   id="successful-submission-dialog-content"
                 >
-                  Thank you for submitting your application. If you applied for
-                  other reefs, make sure to fill in their forms as well.
+                  Thank you for submitting your form. If you applied for other
+                  reefs, make sure to fill in their forms as well.
                 </DialogContentText>
               </DialogContent>
               <DialogActions className={classes.successDialogActions}>
