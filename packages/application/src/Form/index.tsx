@@ -233,7 +233,7 @@ const Form = ({ match, classes }: FormProps) => {
             you wish to apply for.
           </Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
-            If you have any quesions dont hesitate to reach out to{" "}
+            If you have any questions dont hesitate to reach out to{" "}
             <a href="mailto:info@aqualink.org">info@aqualink.org</a>
           </Typography>
         </Grid>
@@ -451,15 +451,15 @@ const Form = ({ match, classes }: FormProps) => {
                 className={classes.successDialogTitle}
                 id="successful-submission-dialog-title"
               >
-                Successful Form Submission
+                Success!
               </DialogTitle>
               <DialogContent className={classes.successDialogContent}>
                 <DialogContentText
                   className={classes.successDialogContentText}
                   id="successful-submission-dialog-content"
                 >
-                  You have successfully submitted the form. Click Visit to
-                  navigate to Aqualink Home Page.
+                  Thank you for submitting your application. Click Visit to
+                  explore Aqualink.org.
                 </DialogContentText>
               </DialogContent>
               <DialogActions className={classes.successDialogActions}>
