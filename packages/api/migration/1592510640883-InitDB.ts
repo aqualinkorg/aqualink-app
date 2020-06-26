@@ -78,6 +78,7 @@ export class InitDB1592510640883 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "video_stream"`);
         await queryRunner.query(`DROP INDEX "IDX_af7cabf8e064aa7bad09c731ba"`);
         await queryRunner.query(`DROP TABLE "user"`);
+        await queryRunner.query(`DROP TYPE "user_admin_level_enum"`);
         await queryRunner.query(`DROP INDEX "IDX_46b146ce5d6ee2de43d8448562"`);
         await queryRunner.query(`DROP TABLE "region"`);
     }
