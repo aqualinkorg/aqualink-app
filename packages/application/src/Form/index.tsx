@@ -251,8 +251,7 @@ const Form = ({ match, classes }: FormProps) => {
             {/* User Name */}
             <Typography>Your Name</Typography>
             <TextField
-              className={classes.nonEditableField}
-              inputProps={{ className: classes.textField }}
+              inputProps={{ className: classes.nonEditableField }}
               variant="outlined"
               id="user-name"
               fullWidth
@@ -262,8 +261,7 @@ const Form = ({ match, classes }: FormProps) => {
             {/* Organization */}
             <Typography style={{ marginTop: "3rem" }}>Organization</Typography>
             <TextField
-              className={classes.nonEditableField}
-              inputProps={{ className: classes.textField }}
+              inputProps={{ className: classes.nonEditableField }}
               variant="outlined"
               id="organization"
               fullWidth
@@ -276,7 +274,7 @@ const Form = ({ match, classes }: FormProps) => {
             <Grid container item spacing={4}>
               <Grid item xs={6}>
                 <TextField
-                  inputProps={{ className: classes.textField }}
+                  inputProps={{ className: classes.nonEditableField }}
                   inputRef={register({
                     required: "Latitude is required",
                     pattern: {
@@ -290,6 +288,7 @@ const Form = ({ match, classes }: FormProps) => {
                   id="site-latitude"
                   fullWidth
                   onChange={handleChange("latitude")}
+                  disabled
                   placeholder="Latitude in decimal degrees"
                   helperText={
                     errors.latitude ? errors.latitude.message : "Latitude"
@@ -299,7 +298,7 @@ const Form = ({ match, classes }: FormProps) => {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  inputProps={{ className: classes.textField }}
+                  inputProps={{ className: classes.nonEditableField }}
                   inputRef={register({
                     required: "Longitude is required",
                     pattern: {
@@ -313,6 +312,7 @@ const Form = ({ match, classes }: FormProps) => {
                   id="site-longitude"
                   fullWidth
                   onChange={handleChange("longitude")}
+                  disabled
                   placeholder="Longitude in decimal degrees"
                   helperText={
                     errors.longitude ? errors.longitude.message : "Longitude"
@@ -453,16 +453,13 @@ const Form = ({ match, classes }: FormProps) => {
                   className={classes.successDialogContentText}
                   id="successful-submission-dialog-content"
                 >
-                  Thank you for submitting your application. Click Visit to
-                  explore Aqualink.org.
+                  Thank you for submitting your application. If you applied for
+                  other reefs, make sure to fill in their forms as well.
                 </DialogContentText>
               </DialogContent>
               <DialogActions className={classes.successDialogActions}>
-                <Button color="primary" onClick={() => setDialogOpen(false)}>
-                  Back
-                </Button>
                 <Button color="primary" href="https://www.aqualink.org/">
-                  Visit
+                  Visit Aqualink.org
                 </Button>
               </DialogActions>
             </Dialog>
