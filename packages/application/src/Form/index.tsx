@@ -238,12 +238,7 @@ const Form = ({ match, classes }: FormProps) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid
-        style={{ marginTop: "4rem" }}
-        container
-        justify="center"
-        spacing={3}
-      >
+      <Grid style={{ marginTop: "4rem" }} container justify="center">
         <Grid item xs={10} md={4}>
           <Grid className={classes.map} item>
             <Map
@@ -533,6 +528,7 @@ const styles = (theme: Theme) =>
       width: "30vw",
 
       [theme.breakpoints.down("md")]: {
+        marginBottom: "3rem",
         width: "100%",
       },
     },
