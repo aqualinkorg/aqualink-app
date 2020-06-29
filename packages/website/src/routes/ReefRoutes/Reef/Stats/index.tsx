@@ -54,7 +54,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
     >
       <Grid className={classes.item} item xs={6}>
         <Card style={{ height: "inherit" }}>
-          <CardMedia className={classes.card1} image={bottom}>
+          <CardMedia className={classes.card} image={bottom}>
             <CardHeader
               style={{ flex: "0 1 auto" }}
               title={
@@ -106,7 +106,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
         </Card>
       </Grid>
       <Grid className={classes.item} item xs={6}>
-        <Card className={classes.card2}>
+        <Card className={classes.card}>
           <CardHeader
             style={{ flex: "0 1 auto" }}
             title={
@@ -188,13 +188,7 @@ const styles = () =>
     item: {
       height: "inherit",
     },
-    card1: {
-      height: "inherit",
-      backgroundColor: "#eff0f0",
-      display: "flex",
-      flexFlow: "column",
-    },
-    card2: {
+    card: {
       height: "inherit",
       backgroundColor: "#eff0f0",
       display: "flex",
