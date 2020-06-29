@@ -24,6 +24,7 @@ import {
   DialogTitle,
   IconButton,
   Collapse,
+  Container,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import CloseIcon from "@material-ui/icons/Close";
@@ -207,287 +208,298 @@ const Form = ({ match, classes }: FormProps) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Collapse in={errorAlertOpen}>
-        <Alert
-          severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setErrorAlertOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          {alertMessage}
-        </Alert>
-      </Collapse>
-      {/* Form Page Message */}
-      <Grid style={{ marginTop: "4rem" }} container justify="center">
-        <Grid item xs={8}>
-          <Typography variant="h5">Site Information</Typography>
-          <Typography style={{ fontWeight: 300 }} variant="body1">
-            Please take a moment to fill out this form for each site you would
-            like to manage with Aqualink.
-          </Typography>
-          <Typography style={{ fontWeight: 300 }} variant="body1">
-            If you have any questions, dont hesitate to reach out to{" "}
-            <a href="mailto:info@aqualink.org">info@aqualink.org</a>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid style={{ marginTop: "4rem" }} container justify="center">
-        <Grid item xs={10} md={4}>
-          <Grid className={classes.map} item>
-            <Map
-              center={latitude && longitude ? [latitude, longitude] : [0, 0]}
-            />
+      <Container disableGutters maxWidth={false}>
+        <Collapse in={errorAlertOpen}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setErrorAlertOpen(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {alertMessage}
+          </Alert>
+        </Collapse>
+      </Container>
+      <Container>
+        {/* Form Page Message */}
+        <Grid style={{ marginTop: "4rem" }} container justify="center">
+          <Grid item xs={12}>
+            <Typography variant="h5">Site Information</Typography>
+            <Typography style={{ fontWeight: 300 }} variant="body1">
+              Please take a moment to fill out this form for each site you would
+              like to manage with Aqualink.
+            </Typography>
+            <Typography style={{ fontWeight: 300 }} variant="body1">
+              If you have any questions, don&apos;t hesitate to reach out to{" "}
+              <a href="mailto:info@aqualink.org">info@aqualink.org</a>
+            </Typography>
           </Grid>
         </Grid>
-        <Grid container direction="column" item xs={10} md={4}>
-          <form noValidate onSubmit={handleSubmit(onSubmit)}>
-            {/* User Name */}
-            <Typography>Your Name</Typography>
-            <TextField
-              inputProps={{ className: classes.nonEditableField }}
-              variant="outlined"
-              id="user-name"
-              fullWidth
-              disabled
-              value={userName}
-            />
-            {/* Organization */}
-            <Typography style={{ marginTop: "3rem" }}>Organization</Typography>
-            <TextField
-              inputProps={{ className: classes.nonEditableField }}
-              variant="outlined"
-              id="organization"
-              fullWidth
-              disabled
-              value={organization}
-            />
-            {/* Site Location */}
-            <Typography style={{ marginTop: "3rem" }}>Location</Typography>
-            {/* Longitude and Latitude */}
-            <Grid container item spacing={4}>
-              <Grid item xs={6}>
-                <TextField
-                  inputProps={{ className: classes.nonEditableField }}
-                  inputRef={register({
-                    required: "Latitude is required",
-                    pattern: {
-                      value: /^-?\d+\.\d+$/,
-                      message: "Latitude should be a decimal number",
-                    },
-                  })}
-                  error={!!errors.latitude}
-                  name="latitude"
-                  variant="outlined"
-                  id="site-latitude"
-                  fullWidth
-                  onChange={handleChange("latitude")}
-                  disabled
-                  placeholder="Latitude in decimal degrees"
-                  helperText={
-                    errors.latitude ? errors.latitude.message : "Latitude"
-                  }
-                  defaultValue={latitude}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  inputProps={{ className: classes.nonEditableField }}
-                  inputRef={register({
-                    required: "Longitude is required",
-                    pattern: {
-                      value: /^-?\d+\.\d+$/,
-                      message: "Longitude should be a decimal number",
-                    },
-                  })}
-                  error={!!errors.longitude}
-                  name="longitude"
-                  variant="outlined"
-                  id="site-longitude"
-                  fullWidth
-                  onChange={handleChange("longitude")}
-                  disabled
-                  placeholder="Longitude in decimal degrees"
-                  helperText={
-                    errors.longitude ? errors.longitude.message : "Longitude"
-                  }
-                  defaultValue={longitude}
-                />
-              </Grid>
-            </Grid>
-            {/* Depth */}
-            <Typography style={{ marginTop: "3rem" }}>Depth (m)</Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "Depth is required",
-                pattern: {
-                  value: /^\d+(\.\d+)?$/,
-                  message: "Depth should be a number",
-                },
-              })}
-              error={!!errors.depth}
-              name="depth"
-              variant="outlined"
-              id="site-depth"
-              fullWidth
-              onChange={handleChange("depth")}
-              placeholder="Depth in meters"
-              helperText={errors.depth ? errors.depth.message : ""}
-              defaultValue={depth}
-            />
-            <Typography style={{ marginTop: "3rem" }}>
-              Please provide some additional information for each reef:
-            </Typography>
-            {/* Reef Name */}
-            <Typography style={{ marginTop: "3rem" }}>Reef Name</Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "Reef Name is required",
-              })}
-              error={!!errors.reefName}
-              variant="outlined"
-              id="reef-name"
-              name="reefName"
-              fullWidth
-              onChange={handleChange("reefName")}
-              placeholder="e.g. Sombrero Reef"
-              helperText={errors.reefName ? errors.reefName.message : ""}
-            />
-            {/* Permitting */}
-            <Typography style={{ marginTop: "3rem" }}>Permtting</Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "This is a required field",
-              })}
-              error={!!errors.permitting}
-              variant="outlined"
-              id="permitting"
-              name="permitting"
-              fullWidth
-              multiline
-              onChange={handleChange("permitting")}
-              placeholder="Please describe the permitting requirements. Please be sure to
-              mention the authority having jurisdiction."
-              helperText={errors.permitting ? errors.permitting.message : ""}
-            />
-            {/* Funding Source */}
-            <Typography style={{ marginTop: "3rem" }}>
-              Funding Source
-            </Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "This is a required field",
-              })}
-              error={!!errors.fundingSource}
-              variant="outlined"
-              id="funding-source"
-              name="fundingSource"
-              fullWidth
-              multiline
-              onChange={handleChange("fundingSource")}
-              placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
-              helperText={
-                errors.fundingSource ? errors.fundingSource.message : ""
-              }
-            />
-            {/* Schedule for Installation */}
-            <Typography style={{ marginTop: "3rem" }}>
-              Schedule for Installation.
-            </Typography>
-            <Typography style={{ fontWeight: 300 }}>
-              What is the soonest date after September 2020 that you could
-              install the spotter and conduct a survey.
-            </Typography>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                margin="dense"
-                format="MM/dd/yyyy"
-                value={installationSchedule}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
+        <Grid
+          style={{ marginTop: "4rem" }}
+          container
+          justify="center"
+          spacing={5}
+        >
+          <Grid item xs={12} md={6}>
+            <Grid className={classes.map} item>
+              <Map
+                center={latitude && longitude ? [latitude, longitude] : [0, 0]}
               />
-            </MuiPickersUtilsProvider>
-            {/* Installation, survey and maintenance personnel and equipment */}
-            <Typography style={{ marginTop: "3rem" }}>
-              Installation, survey and maintenance personnel and equipment
-            </Typography>
-            <TextField
-              inputProps={{ className: classes.textField }}
-              inputRef={register({
-                required: "This is a required field",
-              })}
-              error={!!errors.installation}
-              variant="outlined"
-              id="installation"
-              name="installation"
-              fullWidth
-              multiline
-              onChange={handleChange("installation")}
-              placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
-              helperText={
-                errors.installation ? errors.installation.message : ""
-              }
-            />
-            {/* Successful Submission Dialog */}
-            <Dialog open={dialogOpen}>
-              <DialogTitle
-                className={classes.successDialogTitle}
-                id="successful-submission-dialog-title"
-              >
-                Success!
-              </DialogTitle>
-              <DialogContent className={classes.successDialogContent}>
-                <DialogContentText
-                  className={classes.successDialogContentText}
-                  id="successful-submission-dialog-content"
-                >
-                  Thank you for submitting your form. If you applied for other
-                  reefs, make sure to fill in their forms as well.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions className={classes.successDialogActions}>
-                <Button color="primary" href="https://www.aqualink.org/">
-                  Visit Aqualink.org
-                </Button>
-              </DialogActions>
-            </Dialog>
-            <Grid style={{ margin: "3rem 0 3rem 0" }} item>
-              <Button
-                disabled={
-                  !!Object.keys(errors).length ||
-                  !getValues().latitude ||
-                  !getValues().longitude ||
-                  !getValues().reefName ||
-                  !getValues().permitting ||
-                  !getValues().fundingSource ||
-                  !getValues().installation ||
-                  userName === "" ||
-                  organization === ""
-                }
-                type="submit"
-                color="primary"
-                variant="contained"
-              >
-                Submit
-              </Button>
             </Grid>
-          </form>
+          </Grid>
+          <Grid container direction="column" item xs={12} md={6}>
+            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+              {/* User Name */}
+              <Typography>Your Name</Typography>
+              <TextField
+                inputProps={{ className: classes.nonEditableField }}
+                variant="outlined"
+                id="user-name"
+                fullWidth
+                disabled
+                value={userName}
+              />
+              {/* Organization */}
+              <Typography style={{ marginTop: "3rem" }}>
+                Organization
+              </Typography>
+              <TextField
+                inputProps={{ className: classes.nonEditableField }}
+                variant="outlined"
+                id="organization"
+                fullWidth
+                disabled
+                value={organization}
+              />
+              {/* Site Location */}
+              <Typography style={{ marginTop: "3rem" }}>Location</Typography>
+              {/* Longitude and Latitude */}
+              <Grid container item spacing={4}>
+                <Grid item xs={6}>
+                  <TextField
+                    inputProps={{ className: classes.nonEditableField }}
+                    inputRef={register({
+                      required: "Latitude is required",
+                      pattern: {
+                        value: /^-?\d+\.\d+$/,
+                        message: "Latitude should be a decimal number",
+                      },
+                    })}
+                    error={!!errors.latitude}
+                    name="latitude"
+                    variant="outlined"
+                    id="site-latitude"
+                    fullWidth
+                    onChange={handleChange("latitude")}
+                    disabled
+                    placeholder="Latitude in decimal degrees"
+                    helperText={
+                      errors.latitude ? errors.latitude.message : "Latitude"
+                    }
+                    defaultValue={latitude}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    inputProps={{ className: classes.nonEditableField }}
+                    inputRef={register({
+                      required: "Longitude is required",
+                      pattern: {
+                        value: /^-?\d+\.\d+$/,
+                        message: "Longitude should be a decimal number",
+                      },
+                    })}
+                    error={!!errors.longitude}
+                    name="longitude"
+                    variant="outlined"
+                    id="site-longitude"
+                    fullWidth
+                    onChange={handleChange("longitude")}
+                    disabled
+                    placeholder="Longitude in decimal degrees"
+                    helperText={
+                      errors.longitude ? errors.longitude.message : "Longitude"
+                    }
+                    defaultValue={longitude}
+                  />
+                </Grid>
+              </Grid>
+              {/* Depth */}
+              <Typography style={{ marginTop: "3rem" }}>Depth (m)</Typography>
+              <TextField
+                inputProps={{ className: classes.textField }}
+                inputRef={register({
+                  required: "Depth is required",
+                  pattern: {
+                    value: /^\d+(\.\d+)?$/,
+                    message: "Depth should be a number",
+                  },
+                })}
+                error={!!errors.depth}
+                name="depth"
+                variant="outlined"
+                id="site-depth"
+                fullWidth
+                onChange={handleChange("depth")}
+                placeholder="Depth in meters"
+                helperText={errors.depth ? errors.depth.message : ""}
+                defaultValue={depth}
+              />
+              <Typography style={{ marginTop: "3rem" }}>
+                Please provide some additional information for each reef:
+              </Typography>
+              {/* Reef Name */}
+              <Typography style={{ marginTop: "3rem" }}>Reef Name</Typography>
+              <TextField
+                inputProps={{ className: classes.textField }}
+                inputRef={register({
+                  required: "Reef Name is required",
+                })}
+                error={!!errors.reefName}
+                variant="outlined"
+                id="reef-name"
+                name="reefName"
+                fullWidth
+                onChange={handleChange("reefName")}
+                placeholder="e.g. Sombrero Reef"
+                helperText={errors.reefName ? errors.reefName.message : ""}
+              />
+              {/* Permitting */}
+              <Typography style={{ marginTop: "3rem" }}>Permitting</Typography>
+              <TextField
+                inputProps={{ className: classes.textField }}
+                inputRef={register({
+                  required: "This is a required field",
+                })}
+                error={!!errors.permitting}
+                variant="outlined"
+                id="permitting"
+                name="permitting"
+                fullWidth
+                multiline
+                onChange={handleChange("permitting")}
+                placeholder="Please describe the permitting requirements. Please be sure to
+              mention the authority having jurisdiction."
+                helperText={errors.permitting ? errors.permitting.message : ""}
+              />
+              {/* Funding Source */}
+              <Typography style={{ marginTop: "3rem" }}>
+                Funding Source
+              </Typography>
+              <TextField
+                inputProps={{ className: classes.textField }}
+                inputRef={register({
+                  required: "This is a required field",
+                })}
+                error={!!errors.fundingSource}
+                variant="outlined"
+                id="funding-source"
+                name="fundingSource"
+                fullWidth
+                multiline
+                onChange={handleChange("fundingSource")}
+                placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs."
+                helperText={
+                  errors.fundingSource ? errors.fundingSource.message : ""
+                }
+              />
+              {/* Schedule for Installation */}
+              <Typography style={{ marginTop: "3rem" }}>
+                Schedule for Installation.
+              </Typography>
+              <Typography style={{ fontWeight: 300 }}>
+                What is the soonest date after September 2020 that you could
+                install the spotter and conduct a survey.
+              </Typography>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  margin="dense"
+                  format="MM/dd/yyyy"
+                  value={installationSchedule}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+              {/* Installation, survey and maintenance personnel and equipment */}
+              <Typography style={{ marginTop: "3rem" }}>
+                Installation, survey and maintenance personnel and equipment
+              </Typography>
+              <TextField
+                inputProps={{ className: classes.textField }}
+                inputRef={register({
+                  required: "This is a required field",
+                })}
+                error={!!errors.installation}
+                variant="outlined"
+                id="installation"
+                name="installation"
+                fullWidth
+                multiline
+                onChange={handleChange("installation")}
+                placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+                helperText={
+                  errors.installation ? errors.installation.message : ""
+                }
+              />
+              {/* Successful Submission Dialog */}
+              <Dialog open={dialogOpen}>
+                <DialogTitle
+                  className={classes.successDialogTitle}
+                  id="successful-submission-dialog-title"
+                >
+                  Success!
+                </DialogTitle>
+                <DialogContent className={classes.successDialogContent}>
+                  <DialogContentText
+                    className={classes.successDialogContentText}
+                    id="successful-submission-dialog-content"
+                  >
+                    Thank you for submitting your form. If you applied for other
+                    reefs, make sure to fill in their forms as well.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions className={classes.successDialogActions}>
+                  <Button color="primary" href="https://www.aqualink.org/">
+                    Visit Aqualink.org
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Grid style={{ margin: "3rem 0 3rem 0" }} item>
+                <Button
+                  disabled={
+                    !!Object.keys(errors).length ||
+                    !getValues().latitude ||
+                    !getValues().longitude ||
+                    !getValues().reefName ||
+                    !getValues().permitting ||
+                    !getValues().fundingSource ||
+                    !getValues().installation ||
+                    userName === "" ||
+                    organization === ""
+                  }
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
       {/* Form page Footer */}
       <AppBar position="static">
         <Toolbar>
@@ -524,11 +536,10 @@ const styles = (theme: Theme) =>
     },
     map: {
       height: "40vh",
-      width: "30vw",
+      width: "100%",
 
       [theme.breakpoints.down("md")]: {
         marginBottom: "3rem",
-        width: "100%",
       },
     },
     successDialogTitle: {
