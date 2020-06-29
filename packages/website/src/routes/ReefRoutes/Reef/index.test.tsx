@@ -11,6 +11,7 @@ const mockStore = configureStore([]);
 
 jest.mock("./Map", () => "Mock-Map");
 jest.mock("./FeatureVideo", () => "Mock-FeatureVideo");
+jest.mock("./Charts", () => "Mock-Charts");
 
 describe("Reef Detail Page", () => {
   let element: HTMLElement;

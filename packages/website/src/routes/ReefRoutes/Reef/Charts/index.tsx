@@ -7,62 +7,80 @@ import {
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
-const data = (canvas: HTMLCanvasElement) => {
-  const ctx = canvas.getContext("2d");
-  let gradient;
-  if (ctx) {
-    gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
-    gradient.addColorStop(0.5, "rgba(22, 141, 189, 0)");
-  }
-
-  const dataArray = Array.from({ length: 8 }, () => Math.random() * 3 + 31.5);
-
-  const thresholdValue = 32.8;
-  const thresholdArray = new Array(dataArray.length).fill(thresholdValue);
-  const shaded = dataArray.map((elem) => Math.min(elem, thresholdValue));
-
-  return {
-    labels: [
-      "MAY 1",
-      "MAY 2",
-      "MAY 3",
-      "MAY 4",
-      "MAY 5",
-      "MAY 6",
-      "MAY 7",
-      "MAY 8",
-    ],
-    datasets: [
-      {
-        label: "MEAN DAILY WATER TEMPERATURE AT 25M (C\u00B0)",
-        data: dataArray,
-        backgroundColor: gradient,
-        borderColor: "rgba(75,192,192,1)",
-        pointBackgroundColor: "#ffffff",
-        pointBorderWidth: 2,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        fill: false,
-        data: thresholdArray,
-        backgroundColor: "#FA8D00",
-        borderColor: "#212121",
-        borderDash: [8, 5],
-        borderWidth: 1,
-        pointRadius: 0,
-        pointHoverRadius: 0,
-      },
-      {
-        fill: "-2",
-        data: shaded,
-        backgroundColor: "#FA8D00",
-      },
-    ],
-  };
-};
-
 const Charts = ({ classes }: ChartsProps) => {
+  const data = (canvas: HTMLCanvasElement) => {
+    const graphHeight = 261;
+    const offset = 8;
+    const threshold = 33;
+    const percentage = (35 - threshold) / 8;
+    const ctx = canvas.getContext("2d");
+    let overflowGradient;
+    let gradient;
+    if (ctx) {
+      overflowGradient = ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        percentage * graphHeight + offset
+      );
+      overflowGradient.addColorStop(0, "rgba(250, 141, 0, 1)");
+      overflowGradient.addColorStop(1, "rgba(250, 141, 0, 1)");
+      overflowGradient.addColorStop(1, "rgba(250, 141, 0, 0)");
+      gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
+      gradient.addColorStop(0.6, "rgba(22, 141, 189, 0)");
+    }
+
+    const dataArray = [32.4, 32.7, 32.5, 32.7, 32.7, 33.5, 34.1, 34.3];
+    const thresholdArray = Array(8).fill(threshold);
+
+    return {
+      labels: [
+        "MAY 1",
+        "MAY 2",
+        "MAY 3",
+        "MAY 4",
+        "MAY 5",
+        "MAY 6",
+        "MAY 7",
+        "MAY 8",
+      ],
+      datasets: [
+        {
+          label: "Mean Water Temperature",
+          data: dataArray,
+          backgroundColor: overflowGradient,
+          borderColor: "rgba(75,192,192,1)",
+          borderWidth: 1.5,
+          pointBackgroundColor: "#ffffff",
+          pointBorderWidth: 1.5,
+          pointRadius: 3,
+          cubicInterpolationMode: "monotone",
+        },
+        {
+          label: "Mean Water Temperature",
+          data: dataArray,
+          backgroundColor: gradient,
+          borderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#ffffff",
+          pointBorderWidth: 0,
+          pointRadius: 0,
+          cubicInterpolationMode: "monotone",
+        },
+        {
+          fill: false,
+          data: thresholdArray,
+          backgroundColor: "#FA8D00",
+          borderColor: "#212121",
+          borderDash: [8, 5],
+          borderWidth: 1,
+          pointRadius: 0,
+          pointHoverRadius: 0,
+        },
+      ],
+    };
+  };
+
   return (
     <div className={classes.root}>
       <Typography
@@ -73,6 +91,11 @@ const Charts = ({ classes }: ChartsProps) => {
       </Typography>
       <Line
         options={{
+          tooltips: {
+            filter: (tooltipItem: any) => {
+              return tooltipItem.datasetIndex === 0;
+            },
+          },
           legend: {
             display: false,
           },
@@ -81,7 +104,7 @@ const Charts = ({ classes }: ChartsProps) => {
               {
                 ticks: {
                   padding: 10,
-                  // labelOffset: 100,
+                  labelOffset: -100,
                 },
               },
             ],
