@@ -16,6 +16,6 @@ export class EntityExists {
   }
 
   defaultMessage(args: ValidationArguments) {
-    return `Foreign-key constraint error on ${args.constraints[0]}.`;
+    return `Foreign-key constraint error on ${args.constraints[0].name}.`;
   }
 }

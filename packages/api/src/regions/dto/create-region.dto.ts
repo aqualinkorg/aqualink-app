@@ -1,8 +1,16 @@
-import { IsNotEmpty, MaxLength, IsOptional, Validate } from 'class-validator';
+import {
+  IsNotEmpty,
+  MaxLength,
+  IsOptional,
+  IsString,
+  IsInt,
+  Validate,
+} from 'class-validator';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../regions.entity';
 
 export class CreateRegionDto {
+  @IsString()
   @IsNotEmpty()
   @MaxLength(50)
   readonly name: string;
@@ -11,7 +19,7 @@ export class CreateRegionDto {
   readonly polygon: string;
 
   @IsOptional()
-  @IsNotEmpty()
+  @IsInt()
   @Validate(EntityExists, [Region])
-  readonly parentId?: number;
+  readonly parent?: Region;
 }

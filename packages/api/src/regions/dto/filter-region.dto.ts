@@ -1,14 +1,14 @@
-import { IsNotEmpty, IsOptional, Validate } from 'class-validator';
-import { EntityExists } from '../../validations/entity-exists.constraint';
-import { Region } from '../regions.entity';
+import { IsNotEmpty, IsOptional, IsString, IsInt } from 'class-validator';
+import { Type } from 'class-transformer/decorators';
 
 export class FilterRegionDto {
   @IsOptional()
+  @IsString()
   @IsNotEmpty()
   readonly name?: string;
 
   @IsOptional()
-  @IsNotEmpty()
-  @Validate(EntityExists, [Region])
-  readonly parentId?: number;
+  @Type(() => Number)
+  @IsInt()
+  readonly parent?: number;
 }
