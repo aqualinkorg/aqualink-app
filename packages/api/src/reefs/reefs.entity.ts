@@ -4,7 +4,6 @@ import {
   Column,
   Index,
   ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -43,14 +42,11 @@ export class Reef {
   updatedAt: Date;
 
   @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'region_id' })
-  regionId: Region | number;
+  region?: Region;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'admin_id' })
-  adminId: User | number;
+  admin?: User;
 
   @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'stream_id' })
-  streamId: VideoStream | number;
+  stream?: VideoStream;
 }
