@@ -12,9 +12,11 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
       const map = current.leafletElement;
+      // Initialize map's position to fit the given polygon
       map.fitBounds(mapBounds(polygon.coordinates), { padding: [150, 150] });
       const zoom = map.getZoom();
       if (zoom < Infinity) {
+        // User can't zoom out from the initial frame
         map.setMinZoom(zoom);
       }
     }
