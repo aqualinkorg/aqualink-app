@@ -1,3 +1,4 @@
+import { countBy } from 'lodash'
 import { runSqlQuery, connectToPostgres, FINAL_URL } from './db-utils'
 import {
     addApplicationInfo,
@@ -18,6 +19,49 @@ function getDepth(depthRange) {
             .map((d) => (Math.abs(parseFloat(d))))
     return Math.max(...depthArray, 0)
 }
+
+function flattenLinks(apps) {
+    const flat = Object.assign(...apps.map(({ lat, lon, url }, i) => (
+        {
+            // [`lat_${i}`]: lat,
+            // [`lon_${i}`]: lon,
+            [`link_${i}`]: url,
+        }
+    )))
+    return flat
+}
+async function getLinks(url, createdAfterdateString) {
+    // Date must be of type "2020-07-03"
+    const linkRequest = `SELECT u.email, u.full_name, u.organization, CONCAT('${url}', a.id, '/', a.uid) as url, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
+        FROM users u, reef_application a, reef r
+        WHERE u.id = a.user_id and r.id = a.reef_id and r.created_at > '${createdAfterdateString}';`
+
+    const { rows: links } = await runSqlQuery(linkRequest);
+
+    const groupEmails = links.reduce((r, app) => {
+        r[app.email] = [...r[app.email] || [], app];
+        return r;
+    }, {});
+
+    const appNumber = Object.values(groupEmails).map((apps) => apps.length)
+    console.log(countBy(appNumber))
+
+    const finalArray = Object.values(groupEmails).map((apps) => {
+        return {
+            email: apps[0].email,
+            name: apps[0].full_name,
+            organization: apps[0].organization,
+            ...flattenLinks(apps)
+        }
+    })
+
+    console.log(`Exporting ${links.length} links to file for ${finalArray.length} emails.`)
+
+    const csv = new ObjectsToCsv(finalArray);
+    await csv.toDisk(linksFilePath, { allColumns: true });
+}
+
+
 
 /**
  * Runs survey import functions.
@@ -63,20 +107,10 @@ async function runDataImport() {
         // Create application
         await addApplicationInfo(client, userId, reefId)
     });
-}
 
-async function getLinks(url, createdAfterdateString) {
-    // Date must be of type "2020-07-03"
-    const linkRequest = `SELECT u.email, u.full_name, u.organization, CONCAT('${url}', a.id, '/', a.uid) as url, ST_Y(r.polygon) as lat, ST_X(r.polygon) AS lon
-        FROM users u, reef_application a, reef r
-        WHERE u.id = a.user_id and r.id = a.reef_id and r.created_at > '${createdAfterdateString}';`
-
-    const { rows: links } = await runSqlQuery(linkRequest);
-    console.log(`Exporting ${links.length} links to file`)
-    const csv = new ObjectsToCsv(links);
-    await csv.toDisk(linksFilePath);
+    // Export links to CSV when done.
+    await getLinks(FINAL_URL, '2020-06-01')
 }
 
 
 runDataImport()
-// getLinks(FINAL_URL, '2020-06-01')
