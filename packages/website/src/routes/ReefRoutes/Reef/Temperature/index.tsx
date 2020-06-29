@@ -42,6 +42,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
             </Box>
             <Box ml={1}>
+              {/* TODO: Import this value from the API */}
               <Typography variant="subtitle2">(05/12/20 8:16AM PST)</Typography>
             </Box>
           </Typography>

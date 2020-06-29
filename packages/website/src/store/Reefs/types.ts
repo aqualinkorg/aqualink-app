@@ -6,7 +6,7 @@ interface Polygon {
   type: string;
 }
 
-interface Data {
+export interface Data {
   id: number;
   date: "string";
   reefId: number;
