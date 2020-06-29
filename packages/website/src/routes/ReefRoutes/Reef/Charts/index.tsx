@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
+require("../../../../helpers/chartPlugin")
 
 const Charts = ({ classes }: ChartsProps) => {
   const data = (canvas: HTMLCanvasElement) => {
@@ -23,8 +24,8 @@ const Charts = ({ classes }: ChartsProps) => {
         0,
         percentage * graphHeight + offset
       );
-      overflowGradient.addColorStop(0, "rgba(250, 141, 0, 1)");
-      overflowGradient.addColorStop(1, "rgba(250, 141, 0, 1)");
+      // overflowGradient.addColorStop(0, "rgba(250, 141, 0, 1)");
+      // overflowGradient.addColorStop(1, "rgba(250, 141, 0, 1)");
       overflowGradient.addColorStop(1, "rgba(250, 141, 0, 0)");
       gradient = ctx.createLinearGradient(0, 0, 0, 400);
       gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
@@ -70,7 +71,8 @@ const Charts = ({ classes }: ChartsProps) => {
         {
           fill: false,
           data: thresholdArray,
-          backgroundColor: "#FA8D00",
+          fillBetweenSet: 0,
+          fillBetweenColor: "#FA8D00",
           borderColor: "#212121",
           borderDash: [8, 5],
           borderWidth: 1,
@@ -91,6 +93,7 @@ const Charts = ({ classes }: ChartsProps) => {
       </Typography>
       <Line
         options={{
+          responsive: true,
           tooltips: {
             filter: (tooltipItem: any) => {
               return tooltipItem.datasetIndex === 0;
