@@ -29,10 +29,10 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
-  const degreeHetingDays =
+  const degreeHeatingDays =
     dailyData && dailyData[0] && dailyData[0].degreeHeatingDays;
 
-  const colorItem = degreeHetingDays && colorFinder(degreeHetingDays);
+  const colorItem = degreeHeatingDays && colorFinder(degreeHeatingDays);
 
   const weekSurfaceTemperatures = dailyData
     .slice(0, 7)
@@ -42,7 +42,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
   const weekBottomTemperatures = dailyData
     .slice(0, 7)
     .map((item) => item.bottomTemperature.max);
-  const weekMaxkBottomTemperature = Math.max(...weekBottomTemperatures);
+  const weekMaxBottomTemperature = Math.max(...weekBottomTemperatures);
 
   return (
     <Grid
@@ -91,12 +91,12 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
                   <Typography style={{ color: "#128cc0" }} variant="caption">
                     TEMP AT 25M
                   </Typography>
-                  {weekMaxkBottomTemperature > -Infinity && (
+                  {weekMaxBottomTemperature > -Infinity && (
                     <Typography
                       style={{ color: "#128cc0", fontWeight: 300 }}
                       variant="h3"
                     >
-                      {weekMaxkBottomTemperature} &#8451;
+                      {weekMaxBottomTemperature} &#8451;
                     </Typography>
                   )}
                 </Grid>
@@ -133,7 +133,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
                     }}
                     variant="h1"
                   >
-                    {degreeHetingDays}
+                    {degreeHeatingDays}
                   </Typography>
                 )}
               </Grid>
