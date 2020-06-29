@@ -83,7 +83,9 @@ const Form = ({ match, classes }: FormProps) => {
       })
       .catch(() => {
         setErrorAlertOpen(true);
-        setAlertMessage("Failed to load form data");
+        setAlertMessage(
+          "Failed to load form data. Are you sure you have the right link?"
+        );
       });
   }, [setValue, match.params.appId, match.params.uid]);
 
@@ -229,8 +231,8 @@ const Form = ({ match, classes }: FormProps) => {
         <Grid item xs={8}>
           <Typography variant="h5">Site Information</Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
-            Please take a minute to fill out one of these forms for each site
-            you had applied for.
+            Please take a moment to fill out this form for each site you would
+            like to manage with Aqualink.
           </Typography>
           <Typography style={{ fontWeight: 300 }} variant="body1">
             If you have any questions, dont hesitate to reach out to{" "}
