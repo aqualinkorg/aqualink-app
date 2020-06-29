@@ -14,7 +14,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import { colorCode } from "../../../../assets/colorCode";
 import bottom from "../../../../assets/bottom.svg";
-import { ReefState } from "../../../../store/Reefs/types";
+import { Reef } from "../../../../store/Reefs/types";
 
 const colorFinder = (value: number) => {
   const len = colorCode.length;
@@ -197,7 +197,7 @@ const styles = () =>
   });
 
 interface StatsIncomingProps {
-  dailyData: ReefState["details"]["dailyData"];
+  dailyData: Reef["dailyData"];
 }
 
 type StatsProps = WithStyles<typeof styles> & StatsIncomingProps;
