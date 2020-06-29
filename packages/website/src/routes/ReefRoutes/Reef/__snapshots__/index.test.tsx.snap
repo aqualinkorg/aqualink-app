@@ -314,7 +314,7 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
                   style="height: inherit;"
                 >
                   <div
-                    class="MuiCardMedia-root Stats-card1-12"
+                    class="MuiCardMedia-root Stats-card-12"
                     style="background-image: url(bottom.svg);"
                   >
                     <div
@@ -368,7 +368,7 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
                 class="MuiGrid-root Stats-item-11 MuiGrid-item MuiGrid-grid-xs-6"
               >
                 <div
-                  class="MuiPaper-root MuiCard-root Stats-card2-13 MuiPaper-elevation1 MuiPaper-rounded"
+                  class="MuiPaper-root MuiCard-root Stats-card-12 MuiPaper-elevation1 MuiPaper-rounded"
                 >
                   <div
                     class="MuiCardHeader-root"
