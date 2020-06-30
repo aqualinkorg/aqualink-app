@@ -7,6 +7,8 @@ import {
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
+require("../../../../helpers/backgroundPlugin");
+
 const Charts = ({ classes }: ChartsProps) => {
   const data = (canvas: HTMLCanvasElement) => {
     const graphHeight = 261;
@@ -91,6 +93,12 @@ const Charts = ({ classes }: ChartsProps) => {
       </Typography>
       <Line
         options={{
+          plugins: {
+            chartJsPluginBarchartBackground: {
+              color: "rgb(158, 166, 170, 0.07)",
+              mode: "odd",
+            },
+          },
           tooltips: {
             filter: (tooltipItem: any) => {
               return tooltipItem.datasetIndex === 0;
@@ -105,6 +113,9 @@ const Charts = ({ classes }: ChartsProps) => {
                 ticks: {
                   padding: 10,
                   labelOffset: -100,
+                },
+                gridLines: {
+                  display: false,
                 },
               },
             ],
