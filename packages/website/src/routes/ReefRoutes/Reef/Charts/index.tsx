@@ -8,26 +8,14 @@ import {
 import { Line } from "react-chartjs-2";
 
 require("../../../../helpers/backgroundPlugin");
+require("../../../../helpers/fillPlugin");
 
 const Charts = ({ classes }: ChartsProps) => {
   const data = (canvas: HTMLCanvasElement) => {
-    const graphHeight = 261;
-    const offset = 8;
-    const threshold = 33;
-    const percentage = (35 - threshold) / 8;
     const ctx = canvas.getContext("2d");
-    let overflowGradient;
+    const threshold = 33;
     let gradient;
     if (ctx) {
-      overflowGradient = ctx.createLinearGradient(
-        0,
-        0,
-        0,
-        percentage * graphHeight + offset
-      );
-      overflowGradient.addColorStop(0, "rgba(250, 141, 0, 1)");
-      overflowGradient.addColorStop(1, "rgba(250, 141, 0, 1)");
-      overflowGradient.addColorStop(1, "rgba(250, 141, 0, 0)");
       gradient = ctx.createLinearGradient(0, 0, 0, 400);
       gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
       gradient.addColorStop(0.6, "rgba(22, 141, 189, 0)");
@@ -51,7 +39,6 @@ const Charts = ({ classes }: ChartsProps) => {
         {
           label: "Mean Water Temperature",
           data: dataArray,
-          backgroundColor: overflowGradient,
           borderColor: "rgba(75,192,192,1)",
           borderWidth: 1.5,
           pointBackgroundColor: "#ffffff",
@@ -97,6 +84,11 @@ const Charts = ({ classes }: ChartsProps) => {
             chartJsPluginBarchartBackground: {
               color: "rgb(158, 166, 170, 0.07)",
               mode: "odd",
+            },
+            fillPlugin: {
+              datasetIndex: 0,
+              zeroLevel: 33,
+              color: "rgba(250, 141, 0, 1)",
             },
           },
           tooltips: {
