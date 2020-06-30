@@ -4,7 +4,6 @@ import {
   Column,
   Index,
   ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -21,13 +20,12 @@ export class Region {
   @Index({ spatial: true })
   polygon: string;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
-  @JoinColumn({ name: 'parent_id' })
-  parentId: Region | number;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
+  parent?: Region;
 }
