@@ -7,3 +7,6 @@
 
 # Import data
 /scripts/application_data/*
+
+# Database
+/db_data/

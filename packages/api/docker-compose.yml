@@ -9,3 +9,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: '!ChangeMe!'
+    volumes:
+      - ./db_data:/var/lib/postgresql
