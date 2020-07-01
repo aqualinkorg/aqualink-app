@@ -28,6 +28,5 @@ test('Calculates data as expected.', () => {
 });
 
 test('Get MMM as expected.', () => {
-  const maximumMonthlyMean = getMMM(10, 10);
-  expect(maximumMonthlyMean).toBe(1512);
+  getMMM(10, 10).then((data) => expect(data).toEqual(1512));
 });

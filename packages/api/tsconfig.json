@@ -3,5 +3,8 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "module": "commonjs"
-  }
+  },
+  "files": [
+    "src/custom.d.ts"
+  ]
 }
