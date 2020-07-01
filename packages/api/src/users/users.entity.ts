@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 export enum AdminLevel {
   Default = 'default',
@@ -18,6 +19,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Exclude()
   @Column({ length: 128, nullable: true })
   firebaseUid: string;
 

@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 
@@ -28,6 +29,7 @@ export class ReefApplication {
   @Column({ nullable: true })
   installationResources: string;
 
+  @Exclude()
   @Column({ length: 128, default: () => 'gen_random_uuid()', unique: true })
   uid: string;
 

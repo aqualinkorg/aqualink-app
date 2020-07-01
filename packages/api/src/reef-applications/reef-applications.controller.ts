@@ -6,6 +6,9 @@ import {
   Put,
   Query,
   ParseIntPipe,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  SerializeOptions,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
@@ -14,7 +17,11 @@ import {
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
+@SerializeOptions({
+  excludePrefixes: ['id', 'createdAt', 'updatedAt', 'adminLevel'],
+})
 export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
