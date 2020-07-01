@@ -25,6 +25,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
+    "firebase-tools": "^8.4.3",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
@@ -45,8 +46,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore",
     "precommit": "lint-staged",
-    "deploy:prod": "dotenv -e .env.prod yarn build && firebase deploy --only hosting:prod-target",
-    "deploy:staging": "dotenv -e .env.staging yarn build && firebase deploy --only hosting:staging-target"
+    "deploy:prod": "dotenv -e .env.prod yarn build && yarn run firebase deploy --only hosting:prod-target",
+    "deploy:staging": "dotenv -e .env.staging yarn build && yarn run firebase deploy --only hosting:staging-target"
   },
   "jest": {
     "snapshotSerializers": [
