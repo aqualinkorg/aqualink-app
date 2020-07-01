@@ -13,7 +13,7 @@ export const fillBetweenLinesPlugin = {
 
     const top = yScale.getPixelForValue(max);
     const zero = yScale.getPixelForValue(options.zeroLevel);
-    const bottom = yScale.getPixelForValue(27);
+    const bottom = yScale.getPixelForValue(options.bottom);
 
     const { ctx } = chart.chart;
     const gradient = ctx.createLinearGradient(0, top, 0, bottom);

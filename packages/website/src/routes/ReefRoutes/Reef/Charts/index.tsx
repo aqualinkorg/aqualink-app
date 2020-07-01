@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -11,6 +11,15 @@ require("../../../../helpers/backgroundPlugin");
 require("../../../../helpers/fillPlugin");
 
 const Charts = ({ classes }: ChartsProps) => {
+  const chartRef = useRef<Line>(null);
+  const [state, setState] = useState({
+    top: 0,
+    left: 0,
+    date: "",
+    value: 0,
+  });
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+
   const data = (canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
     const threshold = 33;
@@ -47,7 +56,7 @@ const Charts = ({ classes }: ChartsProps) => {
           cubicInterpolationMode: "monotone",
         },
         {
-          label: "Mean Water Temperature",
+          label: "Mean Water Temperatures",
           data: dataArray,
           backgroundColor: gradient,
           borderColor: "rgba(75,192,192,1)",
@@ -57,6 +66,7 @@ const Charts = ({ classes }: ChartsProps) => {
           cubicInterpolationMode: "monotone",
         },
         {
+          label: "Mean",
           fill: false,
           data: thresholdArray,
           backgroundColor: "#FA8D00",
@@ -79,6 +89,7 @@ const Charts = ({ classes }: ChartsProps) => {
         MEAN DAILY WATER TEMPERATURE AT 25M (C&deg;)
       </Typography>
       <Line
+        ref={chartRef}
         options={{
           plugins: {
             chartJsPluginBarchartBackground: {
@@ -88,12 +99,33 @@ const Charts = ({ classes }: ChartsProps) => {
             fillPlugin: {
               datasetIndex: 0,
               zeroLevel: 33,
+              bottom: 27,
               color: "rgba(250, 141, 0, 1)",
             },
           },
           tooltips: {
             filter: (tooltipItem: any) => {
               return tooltipItem.datasetIndex === 0;
+            },
+            enabled: false,
+            custom: (tooltipModel: any) => {
+              const chart = chartRef.current;
+              if (!chart) {
+                return;
+              }
+              if (showTooltip) {
+                setShowTooltip(false);
+                return;
+              }
+              const position = chart.chartInstance.canvas.getBoundingClientRect();
+              const left = position.left + tooltipModel.caretX - 20;
+              const top = position.top + tooltipModel.caretY - 10;
+              const date =
+                tooltipModel.dataPoints[0] && tooltipModel.dataPoints[0].xLabel;
+              const value =
+                tooltipModel.dataPoints[0] && tooltipModel.dataPoints[0].yLabel;
+              setState({ top, left, date, value });
+              setShowTooltip(true);
             },
           },
           legend: {
@@ -133,6 +165,21 @@ const Charts = ({ classes }: ChartsProps) => {
         height={65}
         data={data}
       />
+      {showTooltip ? (
+        <div
+          onMouseLeave={() => setShowTooltip(false)}
+          className="chart-tooltip"
+          style={{
+            backgroundColor: "#404b6b",
+            opacity: 0.9,
+            position: "fixed",
+            top: state.top,
+            left: state.left,
+          }}
+        >
+          Tooltip
+        </div>
+      ) : null}
     </div>
   );
 };
