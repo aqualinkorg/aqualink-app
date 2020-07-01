@@ -35,10 +35,6 @@ interface GetFormData {
 export interface SendFormData {
   reef: {
     name: string;
-    polygon: {
-      type: string;
-      coordinates: [number, number];
-    };
     depth: number;
   };
   reefApplication: {

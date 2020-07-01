@@ -4,7 +4,6 @@ import React, {
   useCallback,
   BaseSyntheticEvent,
   useEffect,
-  ChangeEvent,
 } from "react";
 import {
   Theme,
@@ -33,7 +32,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { RouteComponentProps } from "react-router-dom";
 
 import Map from "./Map";
@@ -48,16 +47,13 @@ const Form = ({ match, classes }: FormProps) => {
     handleSubmit,
     setValue,
     reset,
+    control,
   } = useForm();
 
   const [userName, setUserName] = useState<string>("");
   const [organization, setOrganization] = useState<string>("");
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
-  const [depth, setDepth] = useState<number | null>(null);
-  const [installationSchedule, setInstallationSchedule] = useState<
-    string | null
-  >(new Date().toISOString());
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
@@ -75,12 +71,13 @@ const Form = ({ match, classes }: FormProps) => {
           setOrganization(data.user.organization);
           setLatitude(data.reef.polygon.coordinates[1]);
           setLongitude(data.reef.polygon.coordinates[0]);
-          setDepth(data.reef.depth);
-          setValue([
-            { latitude: data.reef.polygon.coordinates[1].toFixed(4) },
-            { longitude: data.reef.polygon.coordinates[0].toFixed(4) },
-            { depth: data.reef.depth },
-          ]);
+          // Modifyable data
+          setValue("depth", data.reef.depth);
+          setValue("reefName", data.reef.name);
+          setValue("installationSchedule", data.installationSchedule);
+          setValue("installationResources", data.installationResources);
+          setValue("fundingSource", data.fundingSource);
+          setValue("permitRequirements", data.permitRequirements);
           setAppId(data.appId);
         }
       } catch (err) {
@@ -110,20 +107,13 @@ const Form = ({ match, classes }: FormProps) => {
       const sendData: SendFormData = {
         reef: {
           name: data.reefName,
-          polygon: {
-            type: "Point",
-            coordinates: [
-              parseFloat(data.longitude),
-              parseFloat(data.latitude),
-            ],
-          },
           depth: parseFloat(data.depth),
         },
         reefApplication: {
-          permitRequirements: data.permitting,
+          permitRequirements: data.permitRequirements,
           fundingSource: data.fundingSource,
-          installationSchedule,
-          installationResources: data.installation,
+          installationSchedule: data.installationSchedule,
+          installationResources: data.installationResources,
         },
       };
 
@@ -132,71 +122,24 @@ const Form = ({ match, classes }: FormProps) => {
         .then(() => {
           setDialogOpen(true);
           reset();
-          setInstallationSchedule(new Date().toISOString());
         })
         .catch(() => {
           setErrorAlertOpen(true);
           setAlertMessage("Form submission failed");
         });
     },
-    [installationSchedule, reset, appId]
+    [reset, appId]
   );
 
-  const handleDateChange = useCallback(
-    (date: Date | null) => {
-      if (date) {
-        setInstallationSchedule(date.toISOString());
-      }
-    },
-    [setInstallationSchedule]
-  );
+  const handleChange = (prop: string) => () => triggerValidation(prop);
 
-  const handleChange = useCallback(
-    (prop: string) => {
-      return async (
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => {
-        const { target } = event;
-        const { value } = target;
-        const valueNum = parseFloat(value);
-        switch (prop) {
-          case "latitude":
-            if (!isNaN(valueNum)) {
-              setLatitude(valueNum);
-            }
-            await triggerValidation("latitude");
-            break;
-          case "longitude":
-            if (!isNaN(valueNum)) {
-              setLongitude(valueNum);
-            }
-            await triggerValidation("longitude");
-            break;
-          case "depth":
-            if (!isNaN(valueNum)) {
-              setDepth(valueNum);
-            }
-            await triggerValidation("depth");
-            break;
-          case "reefName":
-            await triggerValidation("reefName");
-            break;
-          case "permitting":
-            await triggerValidation("permitting");
-            break;
-          case "fundingSource":
-            await triggerValidation("fundingSource");
-            break;
-          case "installation":
-            await triggerValidation("installation");
-            break;
-          default:
-            break;
-        }
-      };
-    },
-    [triggerValidation]
-  );
+  const readyToSubmit =
+    !!Object.keys(errors).length ||
+    !getValues().reefName ||
+    !getValues().permitRequirements ||
+    !getValues().fundingSource ||
+    !getValues().installationSchedule ||
+    !getValues().installationResources;
 
   return (
     <>
@@ -293,49 +236,25 @@ const Form = ({ match, classes }: FormProps) => {
                 <Grid item xs={6}>
                   <TextField
                     inputProps={{ className: classes.nonEditableField }}
-                    inputRef={register({
-                      required: "Latitude is required",
-                      pattern: {
-                        value: /^-?\d+\.\d+$/,
-                        message: "Latitude should be a decimal number",
-                      },
-                    })}
-                    error={!!errors.latitude}
                     name="latitude"
                     variant="outlined"
                     id="site-latitude"
                     fullWidth
-                    onChange={handleChange("latitude")}
                     disabled
                     placeholder="Latitude in decimal degrees"
-                    helperText={
-                      errors.latitude ? errors.latitude.message : "Latitude"
-                    }
-                    defaultValue={latitude}
+                    value={latitude || ""}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
                     inputProps={{ className: classes.nonEditableField }}
-                    inputRef={register({
-                      required: "Longitude is required",
-                      pattern: {
-                        value: /^-?\d+\.\d+$/,
-                        message: "Longitude should be a decimal number",
-                      },
-                    })}
-                    error={!!errors.longitude}
                     name="longitude"
                     variant="outlined"
                     id="site-longitude"
                     fullWidth
-                    onChange={handleChange("longitude")}
                     disabled
                     placeholder="Longitude in decimal degrees"
-                    helperText={
-                      errors.longitude ? errors.longitude.message : "Longitude"
-                    }
-                    defaultValue={longitude}
+                    value={longitude || ""}
                   />
                 </Grid>
               </Grid>
@@ -358,7 +277,6 @@ const Form = ({ match, classes }: FormProps) => {
                 onChange={handleChange("depth")}
                 placeholder="Depth in meters"
                 helperText={errors.depth ? errors.depth.message : ""}
-                defaultValue={depth}
               />
               <Typography style={{ marginTop: "3rem" }}>
                 Please provide some additional information for each reef:
@@ -386,16 +304,20 @@ const Form = ({ match, classes }: FormProps) => {
                 inputRef={register({
                   required: "This is a required field",
                 })}
-                error={!!errors.permitting}
+                error={!!errors.permitRequirements}
                 variant="outlined"
-                id="permitting"
-                name="permitting"
+                id="permitRequirements"
+                name="permitRequirements"
                 fullWidth
                 multiline
-                onChange={handleChange("permitting")}
+                onChange={handleChange("permitRequirements")}
                 placeholder="Please describe the permitting requirements. Please be sure to
               mention the authority having jurisdiction."
-                helperText={errors.permitting ? errors.permitting.message : ""}
+                helperText={
+                  errors.permitRequirements
+                    ? errors.permitRequirements.message
+                    : ""
+                }
               />
               {/* Funding Source */}
               <Typography style={{ marginTop: "3rem" }}>
@@ -427,14 +349,21 @@ const Form = ({ match, classes }: FormProps) => {
                 install the spotter and conduct a survey.
               </Typography>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  margin="dense"
-                  format="MM/dd/yyyy"
-                  value={installationSchedule}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
+                <Controller
+                  name="installationSchedule"
+                  control={control}
+                  as={
+                    <KeyboardDatePicker
+                      margin="dense"
+                      format="MM/dd/yyyy"
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                      // These props will get overridden by Controller
+                      onChange={() => {}}
+                      value={0}
+                    />
+                  }
                 />
               </MuiPickersUtilsProvider>
               {/* Installation, survey and maintenance personnel and equipment */}
@@ -448,14 +377,16 @@ const Form = ({ match, classes }: FormProps) => {
                 })}
                 error={!!errors.installation}
                 variant="outlined"
-                id="installation"
-                name="installation"
+                id="installationResources"
+                name="installationResources"
                 fullWidth
                 multiline
-                onChange={handleChange("installation")}
+                onChange={handleChange("installationResources")}
                 placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
                 helperText={
-                  errors.installation ? errors.installation.message : ""
+                  errors.installationResources
+                    ? errors.installationResources.message
+                    : ""
                 }
               />
               {/* Successful Submission Dialog */}
@@ -483,17 +414,7 @@ const Form = ({ match, classes }: FormProps) => {
               </Dialog>
               <Grid style={{ margin: "3rem 0 3rem 0" }} item>
                 <Button
-                  disabled={
-                    !!Object.keys(errors).length ||
-                    !getValues().latitude ||
-                    !getValues().longitude ||
-                    !getValues().reefName ||
-                    !getValues().permitting ||
-                    !getValues().fundingSource ||
-                    !getValues().installation ||
-                    userName === "" ||
-                    organization === ""
-                  }
+                  disabled={readyToSubmit}
                   type="submit"
                   color="primary"
                   variant="contained"
