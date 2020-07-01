@@ -4,11 +4,11 @@ import {
   Param,
   Get,
   Put,
-  Query,
-  ParseIntPipe,
   UseInterceptors,
   ClassSerializerInterceptor,
   SerializeOptions,
+  Query,
+  NotFoundException,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
@@ -16,6 +16,7 @@ import {
   UpdateReefApplicationDto,
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
+import { idFromHash } from '../utils/urls';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
@@ -26,20 +27,29 @@ export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
   @Get(':id')
-  findOne(
-    @Param('id', ParseIntPipe) id: number,
+  async findOne(
+    @Param('id') idParam: string,
     @Query('uid') uid: string,
   ): Promise<ReefApplication> {
-    return this.reefApplicationsService.findOne(id, uid);
+    // To maintain backward compatibility, the ID can either be a numeric key or a unique encoded value.
+    const intId = parseInt(idParam, 10);
+    // eslint-disable-next-line no-restricted-globals
+    const id = isNaN(intId) ? idFromHash(idParam) : intId;
+    const app = await this.reefApplicationsService.findOne(id);
+    // eslint-disable-next-line no-restricted-globals
+    if (!isNaN(intId) && app.uid !== uid) {
+      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
+    }
+    return app;
   }
 
   @Put(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('uid') uid: string,
+    @Param('id') hashedId: string,
     @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
     @Body('reef') reef: UpdateReefWithApplicationDto,
   ) {
-    return this.reefApplicationsService.update(id, uid, reefApplication, reef);
+    const id = idFromHash(hashedId);
+    return this.reefApplicationsService.update(id, reefApplication, reef);
   }
 }

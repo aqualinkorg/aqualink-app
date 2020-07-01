@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import theme from "./theme";
 import Form from "./Form";
-import NotFound from "./NotFound";
+import { NotFound } from "./NotFound";
 import "./App.css";
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
                 return null;
               }}
             />
+            <Route exact path="/join/:appHash" component={Form} />
             <Route exact path="/:appId/:uid" component={Form} />
 
             <Route default component={NotFound} />

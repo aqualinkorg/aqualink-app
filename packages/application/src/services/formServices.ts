@@ -1,6 +1,7 @@
 import requests from "../helpers/requests";
 
 interface GetFormData {
+  appId: string;
   fundingSource: string | null;
   installationResources: string | null;
   installationSchedule: string | null;
@@ -32,7 +33,6 @@ interface GetFormData {
 }
 
 export interface SendFormData {
-  uid: string;
   reef: {
     name: string;
     polygon: {
@@ -49,7 +49,7 @@ export interface SendFormData {
   };
 }
 
-const getFormData = (appId: string, uid: string) =>
+const getFormData = (appId: string, uid?: string) =>
   requests.send<GetFormData>({
     url: `/reef-applications/${appId}`,
     method: "GET",

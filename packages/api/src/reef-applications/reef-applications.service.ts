@@ -30,33 +30,28 @@ export class ReefApplicationsService {
     });
   }
 
-  findOne(id: number, uid: string): Promise<ReefApplication> {
+  findOne(id: number): Promise<ReefApplication> {
     try {
       return this.appRepo.findOneOrFail({
-        where: { id, uid },
+        where: { id },
         relations: ['reef', 'user'],
       });
     } catch (err) {
-      throw new NotFoundException(
-        `ReefApplication with ID ${id} and UID ${uid} not found.`,
-      );
+      throw new NotFoundException(`ReefApplication with ID ${id} not found.`);
     }
   }
 
   async update(
     id: number,
-    uid: string,
     appParams: UpdateReefApplicationDto,
     reefParams: UpdateReefWithApplicationDto,
   ): Promise<ReefApplication> {
     const app = await this.appRepo.findOne({
-      where: { id, uid },
+      where: { id },
       relations: ['reef'],
     });
     if (!app) {
-      throw new NotFoundException(
-        `Reef Application with ID ${id} and UID ${uid} not found.`,
-      );
+      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
     }
 
     const res = await this.appRepo.update(app.id, appParams);

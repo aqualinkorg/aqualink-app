@@ -61,11 +61,14 @@ const Form = ({ match, classes }: FormProps) => {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const [appId, setAppId] = useState<string>();
 
   useEffect(() => {
-    formServices
-      .getFormData(match.params.appId, match.params.uid)
-      .then((resp) => {
+    const getFormData = async () => {
+      try {
+        const resp = await ("appHash" in match.params
+          ? formServices.getFormData(match.params.appHash)
+          : formServices.getFormData(match.params.appId, match.params.uid));
         const { data } = resp;
         if (data) {
           setUserName(data.user.fullName);
@@ -78,15 +81,18 @@ const Form = ({ match, classes }: FormProps) => {
             { longitude: data.reef.polygon.coordinates[0].toFixed(4) },
             { depth: data.reef.depth },
           ]);
+          setAppId(data.appId);
         }
-      })
-      .catch(() => {
+      } catch (err) {
+        console.error(err);
         setErrorAlertOpen(true);
         setAlertMessage(
           "Failed to load form data. Are you sure you have the right link?"
         );
-      });
-  }, [setValue, match.params.appId, match.params.uid]);
+      }
+    };
+    getFormData();
+  }, [setValue, match.params]);
 
   const onSubmit = useCallback(
     (
@@ -97,8 +103,11 @@ const Form = ({ match, classes }: FormProps) => {
         event.preventDefault();
       }
 
+      if (!appId) {
+        throw new Error("Can't submit without a valid application ID");
+      }
+
       const sendData: SendFormData = {
-        uid: match.params.uid,
         reef: {
           name: data.reefName,
           polygon: {
@@ -119,7 +128,7 @@ const Form = ({ match, classes }: FormProps) => {
       };
 
       formServices
-        .sendFormData(match.params.appId, sendData)
+        .sendFormData(appId, sendData)
         .then(() => {
           setDialogOpen(true);
           reset();
@@ -130,7 +139,7 @@ const Form = ({ match, classes }: FormProps) => {
           setAlertMessage("Form submission failed");
         });
     },
-    [installationSchedule, reset, match.params.appId, match.params.uid]
+    [installationSchedule, reset, appId]
   );
 
   const handleDateChange = useCallback(
@@ -553,7 +562,15 @@ const styles = (theme: Theme) =>
   });
 
 interface MatchProps
-  extends RouteComponentProps<{ appId: string; uid: string }> {}
+  extends RouteComponentProps<
+    | {
+        appId: string;
+        uid: string;
+      }
+    | {
+        appHash: string;
+      }
+  > {}
 
 type FormProps = WithStyles<typeof styles> & MatchProps;
 

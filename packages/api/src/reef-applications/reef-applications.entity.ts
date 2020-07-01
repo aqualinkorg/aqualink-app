@@ -8,12 +8,14 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
+import { hashId } from '../utils/urls';
 
 @Entity()
 export class ReefApplication {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -45,4 +47,9 @@ export class ReefApplication {
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
+
+  @Expose()
+  get appId(): string {
+    return hashId(this.id);
+  }
 }
