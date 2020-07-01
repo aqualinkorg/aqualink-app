@@ -53,12 +53,16 @@ const Reef = ({ match, classes }: ReefProps) => {
           <Grid container justify="center" spacing={10}>
             <Grid key={3} item>
               <div className={classes.smallContainer}>
-                <Temperature dailyData={reefDetails.dailyData} />
+                {reefDetails.dailyData.length > 0 ? (
+                  <Temperature dailyData={reefDetails.dailyData} />
+                ) : null}
               </div>
             </Grid>
             <Grid key={4} item>
               <div className={classes.smallContainer}>
-                <Stats dailyData={reefDetails.dailyData} />
+                {reefDetails.dailyData.length > 0 ? (
+                  <Stats dailyData={reefDetails.dailyData} />
+                ) : null}
               </div>
             </Grid>
           </Grid>

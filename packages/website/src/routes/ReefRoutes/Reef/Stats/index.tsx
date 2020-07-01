@@ -29,10 +29,9 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
-  const degreeHeatingDays =
-    dailyData && dailyData[0] && dailyData[0].degreeHeatingDays;
+  const { degreeHeatingDays } = dailyData[0];
 
-  const colorItem = degreeHeatingDays && colorFinder(degreeHeatingDays);
+  const colorItem = colorFinder(degreeHeatingDays);
 
   const weekSurfaceTemperatures = dailyData
     .slice(0, 7)

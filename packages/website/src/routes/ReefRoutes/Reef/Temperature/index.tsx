@@ -16,18 +16,9 @@ import { Alert } from "@material-ui/lab";
 import { ReefState } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  const bottomTemperature =
-    dailyData &&
-    dailyData[0] &&
-    dailyData[0].bottomTemperature &&
-    dailyData[0].bottomTemperature.max;
+  const bottomTemperature = dailyData[0].bottomTemperature.max;
 
-  const surfaceTemperature =
-    dailyData && dailyData[0] && dailyData[0].surfaceTemperature;
-
-  const wind = dailyData && dailyData[0] && dailyData[0].wind;
-
-  const waves = dailyData && dailyData[0] && dailyData[0].waves;
+  const { surfaceTemperature, wind, waves } = dailyData[0];
 
   return (
     <Card className={classes.card}>
