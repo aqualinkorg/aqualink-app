@@ -188,29 +188,33 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
                 <div
                   class="MuiCardHeader-content"
                 >
-                  <div
-                    class="MuiTypography-root MuiTypography-body1"
-                    style="display: flex; align-items: baseline;"
+                  <span
+                    class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
                   >
                     <div
-                      class="MuiBox-root MuiBox-root-8"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
-                      <h6
-                        class="MuiTypography-root MuiTypography-h6"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                        style="margin-right: 0.5rem;"
                       >
-                        CURRENT CONDITIONS
-                      </h6>
-                    </div>
-                    <div
-                      class="MuiBox-root MuiBox-root-9"
-                    >
-                      <h6
-                        class="MuiTypography-root MuiTypography-subtitle2"
+                        <h6
+                          class="MuiTypography-root MuiTypography-h6"
+                        >
+                          CURRENT CONDITIONS
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        (05/12/20 8:16AM PST)
-                      </h6>
+                        <h6
+                          class="MuiTypography-root MuiTypography-subtitle2"
+                        >
+                          (05/12/20 8:16AM PST)
+                        </h6>
+                      </div>
                     </div>
-                  </div>
+                  </span>
                 </div>
               </div>
               <div
@@ -304,17 +308,17 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
             class="Reef-smallContainer-3"
           >
             <div
-              class="MuiGrid-root Stats-root-10 MuiGrid-container MuiGrid-spacing-xs-9 MuiGrid-justify-xs-center"
+              class="MuiGrid-root Stats-root-8 MuiGrid-container MuiGrid-spacing-xs-9 MuiGrid-justify-xs-center"
             >
               <div
-                class="MuiGrid-root Stats-item-11 MuiGrid-item MuiGrid-grid-xs-6"
+                class="MuiGrid-root Stats-item-9 MuiGrid-item MuiGrid-grid-xs-6"
               >
                 <div
                   class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
                   style="height: inherit;"
                 >
                   <div
-                    class="MuiCardMedia-root Stats-card-12"
+                    class="MuiCardMedia-root Stats-card-10"
                     style="background-image: url(bottom.svg);"
                   >
                     <div
@@ -365,10 +369,10 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
                 </div>
               </div>
               <div
-                class="MuiGrid-root Stats-item-11 MuiGrid-item MuiGrid-grid-xs-6"
+                class="MuiGrid-root Stats-item-9 MuiGrid-item MuiGrid-grid-xs-6"
               >
                 <div
-                  class="MuiPaper-root MuiCard-root Stats-card-12 MuiPaper-elevation1 MuiPaper-rounded"
+                  class="MuiPaper-root MuiCard-root Stats-card-10 MuiPaper-elevation1 MuiPaper-rounded"
                 >
                   <div
                     class="MuiCardHeader-root"

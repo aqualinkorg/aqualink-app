@@ -34,18 +34,14 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Typography
-            style={{ display: "flex", alignItems: "baseline" }}
-            component="div"
-          >
-            <Box>
+          <Grid container alignItems="baseline">
+            <Grid style={{ marginRight: "0.5rem" }} item>
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
-            </Box>
-            <Box ml={1}>
-              {/* TODO: Import this value from the API */}
+            </Grid>
+            <Grid item>
               <Typography variant="subtitle2">(05/12/20 8:16AM PST)</Typography>
-            </Box>
-          </Typography>
+            </Grid>
+          </Grid>
         }
       />
       <CardContent className={classes.content}>
@@ -139,6 +135,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 severity="warning"
                 icon={<ErrorIcon />}
               >
+                {/* TODO: Alert `severity` prop and `ALERT LEVEL` should have conditional values based on the temperature scale */}
                 <Typography variant="caption">ALERT LEVEL: HIGH</Typography>
               </Alert>
             </Grid>
