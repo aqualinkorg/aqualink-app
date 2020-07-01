@@ -4,9 +4,9 @@ import {
   Column,
   OneToOne,
   ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
@@ -38,10 +38,9 @@ export class ReefApplication {
   updatedAt: Date;
 
   @OneToOne(() => Reef, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'reef_id' })
-  reefId: Reef | number;
+  @JoinColumn()
+  reef: Reef;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
-  userId: User | number;
+  user: User;
 }

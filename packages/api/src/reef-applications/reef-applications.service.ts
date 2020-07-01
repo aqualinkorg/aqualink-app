@@ -1,53 +1,66 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { ReefApplication } from './reef-applications.entity';
-import { ReefApplicationsRepository } from './reef-applications.repository';
 import { CreateReefApplicationDto } from './dto/create-reef-application.dto';
-import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
+import {
+  UpdateReefApplicationDto,
+  UpdateReefWithApplicationDto,
+} from './dto/update-reef-application.dto';
 import { CreateReefDto } from '../reefs/dto/create-reef.dto';
-import { UpdateReefDto } from '../reefs/dto/update-reef.dto';
+import { Reef } from '../reefs/reefs.entity';
 
 @Injectable()
 export class ReefApplicationsService {
   constructor(
-    @InjectRepository(ReefApplicationsRepository)
-    private reefApplicationsRepository: ReefApplicationsRepository,
+    @InjectRepository(ReefApplication)
+    private appRepo: Repository<ReefApplication>,
+    @InjectRepository(Reef)
+    private reefRepo: Repository<Reef>,
   ) {}
 
   async create(
-    createReefApplicationDto: CreateReefApplicationDto,
-    createReefDto: CreateReefDto,
+    appParams: CreateReefApplicationDto,
+    reefParams: CreateReefDto,
   ): Promise<ReefApplication> {
-    return this.reefApplicationsRepository.add(
-      createReefApplicationDto,
-      createReefDto,
-    );
+    const reef = await this.reefRepo.save(reefParams);
+    return this.appRepo.save({
+      ...appParams,
+      reef,
+    });
   }
 
-  async findOne(id: number, uid: string): Promise<ReefApplication> {
-    const found = await this.reefApplicationsRepository.findOne({
-      where: { id, uid },
-      relations: ['reefId', 'userId'],
-    });
-    if (!found || found.uid !== uid) {
+  findOne(id: number, uid: string): Promise<ReefApplication> {
+    try {
+      return this.appRepo.findOneOrFail({
+        where: { id, uid },
+        relations: ['reef', 'user'],
+      });
+    } catch (err) {
       throw new NotFoundException(
         `ReefApplication with ID ${id} and UID ${uid} not found.`,
       );
     }
-    return found;
   }
 
   async update(
     id: number,
     uid: string,
-    updateReefApplicationDto: UpdateReefApplicationDto,
-    updateReefDto: UpdateReefDto,
-  ): Promise<void> {
-    return this.reefApplicationsRepository.change(
-      id,
-      uid,
-      updateReefApplicationDto,
-      updateReefDto,
-    );
+    appParams: UpdateReefApplicationDto,
+    reefParams: UpdateReefWithApplicationDto,
+  ): Promise<ReefApplication> {
+    const app = await this.appRepo.findOne({
+      where: { id, uid },
+      relations: ['reef'],
+    });
+    if (!app) {
+      throw new NotFoundException(
+        `Reef Application with ID ${id} and UID ${uid} not found.`,
+      );
+    }
+
+    const res = await this.appRepo.update(app.id, appParams);
+    await this.reefRepo.update(app.reef.id, reefParams);
+    return res.generatedMaps[0] as ReefApplication;
   }
 }

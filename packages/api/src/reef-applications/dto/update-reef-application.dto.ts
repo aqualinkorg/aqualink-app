@@ -2,41 +2,33 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  IsInt,
-  Validate,
   IsDateString,
+  IsInt,
 } from 'class-validator';
-import { EntityExists } from '../../validations/entity-exists.constraint';
-import { Reef } from '../../reefs/reefs.entity';
-import { User } from '../../users/users.entity';
 
 export class UpdateReefApplicationDto {
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly permitRequirements?: string;
+  readonly permitRequirements: string;
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly fundingSource?: string;
+  readonly fundingSource: string;
 
   @IsOptional()
   @IsDateString()
   readonly installationSchedule?: Date;
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly installationResources?: string;
+  readonly installationResources: string;
+}
 
-  @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [Reef])
-  readonly reefId?: number;
+export class UpdateReefWithApplicationDto {
+  @IsString()
+  @IsNotEmpty()
+  readonly name: string;
 
-  @IsOptional()
   @IsInt()
-  @Validate(EntityExists, [User])
-  readonly userId?: number;
+  readonly depth: number;
 }

@@ -50,7 +50,6 @@ const Form = ({ match, classes }: FormProps) => {
     reset,
   } = useForm();
 
-  const [reefId, setReefId] = useState<number | null>(null);
   const [userName, setUserName] = useState<string>("");
   const [organization, setOrganization] = useState<string>("");
   const [latitude, setLatitude] = useState<number | null>(null);
@@ -69,16 +68,15 @@ const Form = ({ match, classes }: FormProps) => {
       .then((resp) => {
         const { data } = resp;
         if (data) {
-          setUserName(data.userId.fullName);
-          setOrganization(data.userId.organization);
-          setLatitude(data.reefId.polygon.coordinates[1]);
-          setLongitude(data.reefId.polygon.coordinates[0]);
-          setDepth(data.reefId.depth);
-          setReefId(data.reefId.id);
+          setUserName(data.user.fullName);
+          setOrganization(data.user.organization);
+          setLatitude(data.reef.polygon.coordinates[1]);
+          setLongitude(data.reef.polygon.coordinates[0]);
+          setDepth(data.reef.depth);
           setValue([
-            { latitude: data.reefId.polygon.coordinates[1].toFixed(4) },
-            { longitude: data.reefId.polygon.coordinates[0].toFixed(4) },
-            { depth: data.reefId.depth },
+            { latitude: data.reef.polygon.coordinates[1].toFixed(4) },
+            { longitude: data.reef.polygon.coordinates[0].toFixed(4) },
+            { depth: data.reef.depth },
           ]);
         }
       })
@@ -113,8 +111,6 @@ const Form = ({ match, classes }: FormProps) => {
           depth: parseFloat(data.depth),
         },
         reefApplication: {
-          reefId,
-          uid: match.params.uid,
           permitRequirements: data.permitting,
           fundingSource: data.fundingSource,
           installationSchedule,
@@ -134,7 +130,7 @@ const Form = ({ match, classes }: FormProps) => {
           setAlertMessage("Form submission failed");
         });
     },
-    [installationSchedule, reset, match.params.appId, match.params.uid, reefId]
+    [installationSchedule, reset, match.params.appId, match.params.uid]
   );
 
   const handleDateChange = useCallback(
