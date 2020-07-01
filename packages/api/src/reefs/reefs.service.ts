@@ -28,17 +28,17 @@ export class ReefsService {
       query.andWhere('reef.status = :status', { status: filter.status });
     }
     if (filter.region) {
-      query.andWhere('reef.region = :regionId', {
-        regionId: filter.region,
+      query.andWhere('reef.region = :region', {
+        region: filter.region,
       });
     }
     if (filter.admin) {
-      query.andWhere('reef.admin = :adminId', {
-        adminId: filter.admin,
+      query.andWhere('reef.admin = :admin', {
+        admin: filter.admin,
       });
     }
-    query.leftJoinAndSelect('reef.region', 'regions');
-    query.leftJoinAndSelect('reef.admin', 'user');
+    query.leftJoinAndSelect('reef.region', 'region');
+    query.leftJoinAndSelect('reef.admin', 'admin');
     query.leftJoinAndSelect('reef.stream', 'stream');
     return query.getMany();
   }
