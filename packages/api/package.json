@@ -35,6 +35,7 @@
     "@nestjs/typeorm": "^7.0.0",
     "@types/lodash": "^4.14.156",
     "dotenv": "^8.2.0",
+    "geotiff": "^1.0.0-beta.12",
     "lodash": "^4.17.15",
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",
