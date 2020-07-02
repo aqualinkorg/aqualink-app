@@ -1,4 +1,5 @@
 import * as GeoTIFF from 'geotiff';
+import { pointToPixel } from './coordinates';
 
 const MMMFileUrl =
   'https://storage.googleapis.com/reef_climatology/sst_clim_mmm.tiff';
@@ -23,25 +24,20 @@ const MMMFileUrl =
 
 export async function getMMM(lat: number, long: number) {
   const tiff = await GeoTIFF.fromUrl(MMMFileUrl);
-  console.log("Number of images (pyramids):", await tiff.getImageCount());
   const image = await tiff.getImage();
 
   const boundingBox = image.getBoundingBox();
   const width = image.getWidth();
   const height = image.getHeight();
 
-  const x =
+  const { x, y } = pointToPixel(lat, long, boundingBox, width, height);
 
-    console.log("Bounding box:", image.getBoundingBox());
-
-  console.log("Width:", image.getWidth());
-  console.log("Height:", image.getHeight());
-
-  let data = await image.readRasters({
-    window: [200, 200, 210, 210], samples: [0]
+  const data = await image.readRasters({
+    window: [x - 1, y - 1, x + 1, y + 1],
   });
-  console.log(await data);
 
+  console.log(x);
+  console.log(await data);
 }
 
 /**
