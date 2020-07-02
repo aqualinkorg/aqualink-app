@@ -17,6 +17,7 @@ import {
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
 import { idFromHash, isValidId } from '../utils/urls';
+import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
@@ -33,7 +34,7 @@ export class ReefApplicationsController {
   ): Promise<ReefApplication> {
     // To maintain backward compatibility, the ID can either be a numeric key or a unique encoded value.
     const isIntId = isValidId(idParam);
-    const id = isIntId ? idFromHash(idParam) : parseInt(idParam, 10);
+    const id = isIntId ? parseInt(idParam, 10) : idFromHash(idParam);
     const app = await this.reefApplicationsService.findOne(id);
     if (isIntId && app.uid !== uid) {
       throw new NotFoundException(`Reef Application with ID ${id} not found.`);
@@ -41,13 +42,12 @@ export class ReefApplicationsController {
     return app;
   }
 
-  @Put(':id')
+  @Put(':hashId')
   update(
-    @Param('id') hashedId: string,
+    @Param('hashId', new ParseHashedIdPipe()) id: number,
     @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
     @Body('reef') reef: UpdateReefWithApplicationDto,
   ) {
-    const id = idFromHash(hashedId);
     return this.reefApplicationsService.update(id, reefApplication, reef);
   }
 }
