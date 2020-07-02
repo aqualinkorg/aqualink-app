@@ -4,4 +4,4 @@ function NotFound() {
   return <p>Route not found.</p>;
 }
 
-export { NotFound as default, NotFound };
+export default NotFound;

@@ -60,6 +60,7 @@ const sendFormData = (appId: string, data: SendFormData) =>
     method: "PUT",
     data,
   });
+
 export default {
   getFormData,
   sendFormData,
