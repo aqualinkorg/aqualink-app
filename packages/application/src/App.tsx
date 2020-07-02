@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/react";
 
 import theme from "./theme";
 import Form from "./Form";
-import { NotFound } from "./NotFound";
+import NotFound from "./NotFound";
 import "./App.css";
 
 if (process.env.NODE_ENV && process.env.NODE_ENV !== "development") {
