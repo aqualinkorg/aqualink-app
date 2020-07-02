@@ -16,7 +16,7 @@ import {
   UpdateReefApplicationDto,
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
-import { idFromHash } from '../utils/urls';
+import { idFromHash, isValidId } from '../utils/urls';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
@@ -32,12 +32,10 @@ export class ReefApplicationsController {
     @Query('uid') uid: string,
   ): Promise<ReefApplication> {
     // To maintain backward compatibility, the ID can either be a numeric key or a unique encoded value.
-    const intId = parseInt(idParam, 10);
-    // eslint-disable-next-line no-restricted-globals
-    const id = isNaN(intId) ? idFromHash(idParam) : intId;
+    const isIntId = isValidId(idParam);
+    const id = isIntId ? idFromHash(idParam) : parseInt(idParam, 10);
     const app = await this.reefApplicationsService.findOne(id);
-    // eslint-disable-next-line no-restricted-globals
-    if (!isNaN(intId) && app.uid !== uid) {
+    if (isIntId && app.uid !== uid) {
       throw new NotFoundException(`Reef Application with ID ${id} not found.`);
     }
     return app;
