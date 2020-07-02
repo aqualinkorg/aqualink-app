@@ -1,10 +1,11 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const skyBlue: string = "#009EE0";
-const lightBlue: string = "#168DBD";
-const darkGreyBlue: string = "#2D3436";
-const white: string = "#FFFFFF";
-const lightGray = "#CCCCCC";
+const skyBlue: string = "#009ee0";
+const lightBlue: string = "#168dbd";
+const darkGreyBlue: string = "#2d3436";
+const black: string = "#2f2f2f";
+const white: string = "#ffffff";
+const lightGray = "#cccccc";
 
 export const colors = { skyBlue, lightBlue, darkGreyBlue };
 
@@ -16,7 +17,7 @@ const theme: any = createMuiTheme({
     },
     text: {
       primary: white,
-      secondary: darkGreyBlue,
+      secondary: black,
     },
     grey: {
       500: lightGray,
@@ -39,8 +40,20 @@ const theme: any = createMuiTheme({
       },
     },
     MuiTypography: {
-      h5: {
+      h2: {
+        fontSize: 52,
+      },
+      h3: {
+        fontSize: 32,
+      },
+      h4: {
         fontSize: 26,
+      },
+      h5: {
+        fontSize: 20,
+      },
+      h6: {
+        fontSize: 16,
       },
       subtitle1: {
         fontSize: 14,
@@ -51,8 +64,11 @@ const theme: any = createMuiTheme({
       caption: {
         fontSize: 10,
       },
+      overline: {
+        fontSize: 8.5,
+      },
       gutterBottom: {
-        marginBottom: "3rem",
+        marginBottom: "1rem",
       },
     },
     MuiGrid: {
@@ -70,6 +86,13 @@ const theme: any = createMuiTheme({
       },
       containedSecondary: {
         backgroundColor: darkGreyBlue,
+      },
+    },
+    MuiCardContent: {
+      root: {
+        "&:last-child": {
+          paddingBottom: 0,
+        },
       },
     },
   },
