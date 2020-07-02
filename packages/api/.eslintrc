@@ -18,6 +18,14 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "scripts/*"
+      ],
+      "rules": {
+        "no-console": "off"
+      }
     }
   ]
 }
