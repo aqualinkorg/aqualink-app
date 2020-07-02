@@ -22,8 +22,13 @@ export const fillBetweenLinesPlugin = {
     gradient.addColorStop(ratio, options.color);
     gradient.addColorStop(ratio, "rgba(0, 0, 0, 0)");
     gradient.addColorStop(1, "rgba(0,0,0,0)");
-    chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
-    chart.update();
+    if (
+      !chart.data.datasets[options.datasetIndex].backgroundColor ||
+      options.update
+    ) {
+      chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
+      chart.update();
+    }
   },
 };
 

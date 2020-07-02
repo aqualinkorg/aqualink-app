@@ -7,6 +7,8 @@ import {
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
+import Tooltip from "./tooltip";
+
 require("../../../../helpers/backgroundPlugin");
 require("../../../../helpers/fillPlugin");
 
@@ -19,6 +21,16 @@ const Charts = ({ classes }: ChartsProps) => {
     value: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [update, setUpdate] = useState<boolean>(false);
+
+  let resizeTimer: NodeJS.Timeout;
+  window.addEventListener("resize", () => {
+    setUpdate(true);
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      setUpdate(false);
+    }, 1);
+  });
 
   const data = (canvas: HTMLCanvasElement) => {
     const ctx = canvas.getContext("2d");
@@ -101,6 +113,7 @@ const Charts = ({ classes }: ChartsProps) => {
               zeroLevel: 33,
               bottom: 27,
               color: "rgba(250, 141, 0, 1)",
+              update,
             },
           },
           tooltips: {
@@ -118,8 +131,8 @@ const Charts = ({ classes }: ChartsProps) => {
                 return;
               }
               const position = chart.chartInstance.canvas.getBoundingClientRect();
-              const left = position.left + tooltipModel.caretX - 20;
-              const top = position.top + tooltipModel.caretY - 10;
+              const left = position.left + tooltipModel.caretX - 5;
+              const top = position.top + tooltipModel.caretY - 5;
               const date =
                 tooltipModel.dataPoints[0] && tooltipModel.dataPoints[0].xLabel;
               const value =
@@ -170,14 +183,12 @@ const Charts = ({ classes }: ChartsProps) => {
           onMouseLeave={() => setShowTooltip(false)}
           className="chart-tooltip"
           style={{
-            backgroundColor: "#404b6b",
-            opacity: 0.9,
             position: "fixed",
             top: state.top,
             left: state.left,
           }}
         >
-          Tooltip
+          <Tooltip />
         </div>
       ) : null}
     </div>
