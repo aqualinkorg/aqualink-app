@@ -54,7 +54,7 @@
     }
   },
   "lint-staged": {
-    "packages/*/src/**/*.{js,jsx,ts,tsx}": [
+    "packages/*/{src,scripts,test}/**/*.{js,jsx,ts,tsx}": [
       "yarn run lint"
     ]
   }
