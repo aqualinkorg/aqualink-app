@@ -29,7 +29,7 @@ export const fillBetweenLinesPlugin = {
       gradient.addColorStop(1, "rgba(0,0,0,0)");
       if (
         !chart.data.datasets[options.datasetIndex].backgroundColor ||
-        options.update
+        options.updateChart
       ) {
         chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
         chart.update();
