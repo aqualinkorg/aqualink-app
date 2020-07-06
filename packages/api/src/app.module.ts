@@ -13,4 +13,4 @@ import { RegionsModule } from './regions/regions.module';
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
   ],
 })
-export class AppModule { }
+export class AppModule {}

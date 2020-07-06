@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reef Detail Page should render with given state from Redux store 1`] = `
+exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <header
     class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
@@ -12,10 +12,10 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -50,30 +50,34 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
               </a>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-11"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5"
+              <div
+                class="MuiGrid-root MuiGrid-item"
               >
-                Hawai
-              </h5>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <h6
-                class="MuiTypography-root MuiTypography-subtitle1"
+                <h4
+                  class="MuiTypography-root MuiTypography-h4"
+                >
+                  Hawai
+                </h4>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
               >
-                Last surveyed: May 10, 2020
-              </h6>
+                <h6
+                  class="MuiTypography-root MuiTypography-subtitle1"
+                >
+                  Last surveyed: May 10, 2020
+                </h6>
+              </div>
             </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center MuiGrid-justify-xs-flex-end"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -121,46 +125,163 @@ exports[`Reef Detail Page should render with given state from Redux store 1`] = 
     </div>
   </header>
   <div
-    class="MuiGrid-root Reef-root-1 MuiGrid-container"
+    class="Reef-noData-8"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-10 MuiGrid-justify-xs-center"
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h2 MuiTypography-colorPrimary MuiTypography-gutterBottom"
+        >
+          No Data Found
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-no-data 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
         >
-          <h5
-            class="MuiTypography-root MuiTypography-h5"
-          >
-            LOCATION:
-          </h5>
           <div
-            class="Reef-container-2"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
           >
-            <mock-map
-              polygon="[object Object]"
-            />
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <a
+                href="/reefs"
+              >
+                <button
+                  aria-label="menu"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiIconButton-label"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </a>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-11"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <h4
+                  class="MuiTypography-root MuiTypography-h4"
+                >
+                  Hawai
+                </h4>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <h6
+                  class="MuiTypography-root MuiTypography-subtitle1"
+                >
+                  Last surveyed: May 10, 2020
+                </h6>
+              </div>
+            </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
         >
-          <h5
-            class="MuiTypography-root MuiTypography-h5"
-          >
-            FEATURE VIDEO
-          </h5>
           <div
-            class="Reef-container-2"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center MuiGrid-justify-xs-flex-end"
           >
-            <mock-featurevideo
-              url=""
-            />
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-end"
+              >
+                <h6
+                  class="MuiTypography-root MuiTypography-subtitle2"
+                >
+                  Managed by: Manager
+                </h6>
+                <span
+                  class="MuiTypography-root MuiTypography-caption"
+                >
+                  Contact Manager
+                </span>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container"
+              >
+                <div
+                  class="MuiAvatar-root MuiAvatar-circle MuiAvatar-colorDefault"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiAvatar-fallback"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </header>
+  <div
+    class="Reef-noData-4"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <h2
+          class="MuiTypography-root MuiTypography-h2 MuiTypography-colorPrimary MuiTypography-gutterBottom"
+        >
+          No Data Found
+        </h2>
       </div>
     </div>
   </div>
