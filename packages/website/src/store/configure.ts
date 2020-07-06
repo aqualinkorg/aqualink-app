@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { configureStore } from "@reduxjs/toolkit";
 
 import reducer from "./reducer";
