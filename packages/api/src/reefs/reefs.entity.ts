@@ -17,21 +17,21 @@ export class Reef {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column({ nullable: true })
   name: string;
 
-  @Column('polygon')
+  @Column('geometry', { unique: true })
   @Index({ spatial: true })
   polygon: string;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   temperatureThreshold: number;
 
-  @Column()
+  @Column({ nullable: true })
   depth: number;
 
-  @Column()
-  status: string;
+  @Column({ default: 0 })
+  status: number;
 
   @Column({ nullable: true })
   videoStream: string;
@@ -42,15 +42,15 @@ export class Reef {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'region_id' })
-  regionId: Region;
+  regionId: Region | number;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'admin_id' })
-  adminId: User;
+  adminId: User | number;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE' })
+  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'stream_id' })
-  streamId: VideoStream;
+  streamId: VideoStream | number;
 }

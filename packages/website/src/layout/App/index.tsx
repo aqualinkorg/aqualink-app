@@ -2,7 +2,7 @@ import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import NotFound from "../../routes/NotFound";
+import { NotFound } from "../../routes/NotFound";
 import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
 import theme from "./theme";

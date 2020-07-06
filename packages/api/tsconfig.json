@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "emitDecoratorMetadata": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "target": "es6"
   }
 }

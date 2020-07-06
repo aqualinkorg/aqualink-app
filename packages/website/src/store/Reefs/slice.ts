@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 import { ReefState } from "./types";
+/* eslint-disable-next-line import/no-cycle */
 import { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 

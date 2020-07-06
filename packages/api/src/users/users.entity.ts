@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 export enum AdminLevel {
   Default = 'default',
@@ -13,19 +14,24 @@ export enum AdminLevel {
   SuperAdmin = 'super_admin',
 }
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 128 })
+  @Exclude()
+  @Column({ length: 128, nullable: true })
   firebaseUid: string;
 
-  @Column({ length: 50 })
+  @Column({ length: 254, nullable: true })
   fullName: string;
 
   @Column({ length: 254 })
+  @Index({ unique: true })
   email: string;
+
+  @Column({ length: 254, nullable: true })
+  organization: string;
 
   @Column({ type: 'point', nullable: true })
   @Index({ spatial: true })
