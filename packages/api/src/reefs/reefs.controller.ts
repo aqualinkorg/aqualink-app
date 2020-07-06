@@ -58,7 +58,7 @@ export class ReefsController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateReefDto: UpdateReefDto,
-  ): Promise<void> {
+  ): Promise<Reef> {
     return this.reefsService.update(id, updateReefDto);
   }
 

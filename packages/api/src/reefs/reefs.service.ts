@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reef } from './reefs.entity';
@@ -53,11 +57,16 @@ export class ReefsService {
     return found;
   }
 
-  async update(id: number, updateReefDto: UpdateReefDto) {
+  async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
     const result = await this.reefsRepository.update(id, updateReefDto);
     if (!result.affected) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
+    const updated = await this.reefsRepository.findOne(id);
+    if (!updated) {
+      throw new InternalServerErrorException('Something went wrong.');
+    }
+    return updated;
   }
 
   async delete(id: number): Promise<void> {

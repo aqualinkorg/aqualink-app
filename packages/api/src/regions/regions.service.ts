@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Region } from './regions.entity';
@@ -48,6 +52,11 @@ export class RegionsService {
     if (!result.affected) {
       throw new NotFoundException(`Region with ID ${id} not found.`);
     }
+    const updated = await this.regionsRepository.findOne(id);
+    if (!updated) {
+      throw new InternalServerErrorException('Something went wrong.');
+    }
+    return updated;
   }
 
   async delete(id: number): Promise<void> {
