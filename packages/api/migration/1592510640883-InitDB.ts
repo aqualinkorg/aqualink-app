@@ -4,6 +4,7 @@ export class InitDB1592510640883 implements MigrationInterface {
     name = 'InitDB1592510640883'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "postgis"`);
         await queryRunner.query(`CREATE TABLE "region" ("id" SERIAL NOT NULL, "name" character varying(50) NOT NULL, "polygon" polygon NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "parent_id" integer, CONSTRAINT "PK_5f48ffc3af96bc486f5f3f3a6da" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_46b146ce5d6ee2de43d8448562" ON "region" USING GiST ("polygon") `);
         await queryRunner.query(`CREATE TYPE "user_admin_level_enum" AS ENUM('default', 'reef_manager', 'super_admin')`);
@@ -81,6 +82,7 @@ export class InitDB1592510640883 implements MigrationInterface {
         await queryRunner.query(`DROP TYPE "user_admin_level_enum"`);
         await queryRunner.query(`DROP INDEX "IDX_46b146ce5d6ee2de43d8448562"`);
         await queryRunner.query(`DROP TABLE "region"`);
+        await queryRunner.query(`DROP EXTENSION IF EXISTS "postgis"`);
     }
 
 }

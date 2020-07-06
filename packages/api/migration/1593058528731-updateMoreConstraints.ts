@@ -4,11 +4,6 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
     name = 'updateMoreConstraints1593058528731'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP INDEX "IDX_15b3fe608b52f34df363512e39"`);
-        await queryRunner.query(`DROP INDEX "IDX_de4eb243bae87587f9ca56ba8d"`);
-        await queryRunner.query(`DROP INDEX "IDX_cd07cbd734fb8d7d6417a8c936"`);
-        await queryRunner.query(`DROP INDEX "IDX_9229452ed71aae8c51844ce86e"`);
-        await queryRunner.query(`DROP INDEX "IDX_332a5f87cb3709f88980816dab"`);
         await queryRunner.query(`ALTER TABLE "region" ALTER COLUMN "polygon" TYPE geometry(Polygon)`);
         await queryRunner.query(`ALTER TABLE "survey_image" DROP CONSTRAINT "FK_0cc86911e0b38bfd04e5e896fc7"`);
         await queryRunner.query(`ALTER TABLE "survey_video" DROP CONSTRAINT "FK_352ae17e348cefa40d60bd2c76e"`);
@@ -31,11 +26,6 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
         await queryRunner.query(`DROP SEQUENCE IF EXISTS "reef_application_uid_seq"`);
         await queryRunner.query(`ALTER TABLE "reef_application" ALTER COLUMN "uid" SET DEFAULT gen_random_uuid()`);
         await queryRunner.query(`ALTER TABLE "reef_application" ADD CONSTRAINT "UQ_77d33d9b9602120cd1529312e77" UNIQUE ("reef_id")`);
-        await queryRunner.query(`CREATE INDEX "IDX_15b3fe608b52f34df363512e39" ON "users" USING GiST ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" USING GiST ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_cd07cbd734fb8d7d6417a8c936" ON "spotter" USING GiST ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_9229452ed71aae8c51844ce86e" ON "survey_image" USING GiST ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_332a5f87cb3709f88980816dab" ON "survey_video" USING GiST ("location") `);
         await queryRunner.query(`ALTER TABLE "reef" ADD CONSTRAINT "FK_dc56bfd6bfcd1f221ec83885294" FOREIGN KEY ("admin_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "reef_application" ADD CONSTRAINT "FK_77d33d9b9602120cd1529312e77" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "reef_application" ADD CONSTRAINT "FK_a3ff599da8838fd358d43cec7bc" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -53,14 +43,9 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "reef_application" DROP CONSTRAINT "FK_a3ff599da8838fd358d43cec7bc"`);
         await queryRunner.query(`ALTER TABLE "reef_application" DROP CONSTRAINT "FK_77d33d9b9602120cd1529312e77"`);
         await queryRunner.query(`ALTER TABLE "reef" DROP CONSTRAINT "FK_dc56bfd6bfcd1f221ec83885294"`);
-        await queryRunner.query(`DROP INDEX "IDX_332a5f87cb3709f88980816dab"`);
-        await queryRunner.query(`DROP INDEX "IDX_9229452ed71aae8c51844ce86e"`);
-        await queryRunner.query(`DROP INDEX "IDX_cd07cbd734fb8d7d6417a8c936"`);
-        await queryRunner.query(`DROP INDEX "IDX_de4eb243bae87587f9ca56ba8d"`);
-        await queryRunner.query(`DROP INDEX "IDX_15b3fe608b52f34df363512e39"`);
         await queryRunner.query(`ALTER TABLE "reef_application" DROP CONSTRAINT "UQ_77d33d9b9602120cd1529312e77"`);
         await queryRunner.query(`ALTER TABLE "reef_application" ALTER COLUMN "uid" DROP DEFAULT`);
-        await queryRunner.query(`CREATE SEQUENCE "reef_application_uid_seq" OWNED BY "reef_application"."uid"`);
+        await queryRunner.query(`CREATE SEQUENCE IF NOT EXISTS "reef_application_uid_seq" OWNED BY "reef_application"."uid"`);
         await queryRunner.query(`ALTER TABLE "reef_application" ALTER COLUMN "uid" SET DEFAULT nextval('reef_application_uid_seq')`);
         await queryRunner.query(`ALTER TABLE "reef_application" DROP CONSTRAINT "UQ_adfd79a75e1f1b576138711e9b5"`);
         await queryRunner.query(`ALTER TABLE "reef_application" ADD CONSTRAINT "FK_77d33d9b9602120cd1529312e77" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -72,7 +57,7 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "reef" ADD "name" character varying(50) NOT NULL`);
         await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "full_name" SET NOT NULL`);
         await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "id" DROP DEFAULT`);
-        await queryRunner.query(`DROP SEQUENCE "users_id_seq"`);
+        await queryRunner.query(`DROP SEQUENCE IF EXISTS "users_id_seq"`);
         await queryRunner.query(`ALTER TABLE "reef_application" ADD CONSTRAINT "FK_a3ff599da8838fd358d43cec7bc" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "reef" ADD CONSTRAINT "FK_dc56bfd6bfcd1f221ec83885294" FOREIGN KEY ("admin_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "survey" ADD CONSTRAINT "FK_a37da0d039df5145bd187a32e09" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
@@ -80,11 +65,6 @@ export class updateMoreConstraints1593058528731 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "survey_video" ADD CONSTRAINT "FK_352ae17e348cefa40d60bd2c76e" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "survey_image" ADD CONSTRAINT "FK_0cc86911e0b38bfd04e5e896fc7" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "region" ALTER COLUMN "polygon" TYPE geometry(POLYGON,0)`);
-        await queryRunner.query(`CREATE INDEX "IDX_332a5f87cb3709f88980816dab" ON "survey_video" ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_9229452ed71aae8c51844ce86e" ON "survey_image" ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_cd07cbd734fb8d7d6417a8c936" ON "spotter" ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_de4eb243bae87587f9ca56ba8d" ON "video_stream" ("location") `);
-        await queryRunner.query(`CREATE INDEX "IDX_15b3fe608b52f34df363512e39" ON "users" ("location") `);
     }
 
 }
