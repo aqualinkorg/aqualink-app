@@ -3,53 +3,51 @@ import {
   Body,
   Param,
   Get,
-  Post,
   Put,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  SerializeOptions,
   Query,
-  ParseIntPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
-import { CreateReefApplicationDto } from './dto/create-reef-application.dto';
-import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
-import { CreateReefDto } from '../reefs/dto/create-reef.dto';
-import { UpdateReefDto } from '../reefs/dto/update-reef.dto';
+import {
+  UpdateReefApplicationDto,
+  UpdateReefWithApplicationDto,
+} from './dto/update-reef-application.dto';
+import { idFromHash, isValidId } from '../utils/urls';
+import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
+@SerializeOptions({
+  excludePrefixes: ['id', 'createdAt', 'updatedAt', 'adminLevel'],
+})
 export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
-  @Post()
-  create(
-    @Body('reefApplication') createReefApplicationDto: CreateReefApplicationDto,
-    @Body('reef') createReefDto: CreateReefDto,
-  ): Promise<ReefApplication> {
-    return this.reefApplicationsService.create(
-      createReefApplicationDto,
-      createReefDto,
-    );
-  }
-
   @Get(':id')
-  findOne(
-    @Param('id', ParseIntPipe) id: number,
+  async findOne(
+    @Param('id') idParam: string,
     @Query('uid') uid: string,
   ): Promise<ReefApplication> {
-    return this.reefApplicationsService.findOne(id, uid);
+    // To maintain backward compatibility, the ID can either be a numeric key or a unique encoded value.
+    const isIntId = isValidId(idParam);
+    const id = isIntId ? parseInt(idParam, 10) : idFromHash(idParam);
+    const app = await this.reefApplicationsService.findOne(id);
+    if (isIntId && app.uid !== uid) {
+      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
+    }
+    return app;
   }
 
-  @Put(':id')
+  @Put(':hashId')
   update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('uid') uid: string,
-    @Body('reefApplication') updateReefApplicationDto: UpdateReefApplicationDto,
-    @Body('reef') updateReefDto: UpdateReefDto,
-  ): Promise<void> {
-    return this.reefApplicationsService.update(
-      id,
-      uid,
-      updateReefApplicationDto,
-      updateReefDto,
-    );
+    @Param('hashId', new ParseHashedIdPipe()) id: number,
+    @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
+    @Body('reef') reef: UpdateReefWithApplicationDto,
+  ) {
+    return this.reefApplicationsService.update(id, reefApplication, reef);
   }
 }

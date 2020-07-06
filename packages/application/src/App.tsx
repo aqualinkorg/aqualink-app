@@ -33,6 +33,7 @@ function App() {
                 return null;
               }}
             />
+            <Route exact path="/join/:appHash" component={Form} />
             <Route exact path="/:appId/:uid" component={Form} />
 
             <Route default component={NotFound} />

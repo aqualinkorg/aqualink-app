@@ -4,9 +4,7 @@ import { pick } from 'lodash';
 import nodeSql from 'sql';
 import stripBomStream from 'strip-bom-stream';
 import csv from 'csv-parser';
-import {
-  runSqlQuery,
-} from './db-utils';
+import { runSqlQuery } from './db-utils';
 
 export const surveyFilePath = path.resolve(
   __dirname,
@@ -35,16 +33,13 @@ export function processFile(filePath, onData) {
     fs.createReadStream(filePath, { encoding: 'utf8' })
       .pipe(stripBomStream())
       .pipe(csv())
+      // eslint-disable-next-line fp/no-mutating-methods
       .on('data', (data) => promises.push(onData(data)))
       .on('end', () => Promise.all(promises).then(resolve));
   });
 }
 
-const userColumns = [
-  'full_name',
-  'email',
-  'organization',
-];
+const userColumns = ['full_name', 'email', 'organization'];
 
 const User = nodeSql.define({
   name: 'users',
@@ -61,9 +56,7 @@ export function saveUserQuery(user) {
 export function getUserQuery(user) {
   return User.select(User.id)
     .from(User)
-    .where(
-      User.email.equals(user.email)
-    )
+    .where(User.email.equals(user.email))
     .toQuery();
 }
 
@@ -84,9 +77,7 @@ export function saveReefQuery(reef) {
 export function getReefQuery(reef) {
   return Reef.select(Reef.id)
     .from(Reef)
-    .where(
-      Reef.polygon.equals(reef.polygon)
-    )
+    .where(Reef.polygon.equals(reef.polygon))
     .toQuery();
 }
 
@@ -96,13 +87,14 @@ const ApplicationInfo = nodeSql.define({
 });
 
 export async function addApplicationInfo(client, userId, reefId) {
-  const insertRows = [{
-    user_id: userId,
-    reef_id: reefId,
-  }];
+  const insertRows = [
+    {
+      user_id: userId,
+      reef_id: reefId,
+    },
+  ];
 
-  const { text, values } = ApplicationInfo
-    .insert(insertRows)
+  const { text, values } = ApplicationInfo.insert(insertRows)
     .onConflict({})
     .returning(ApplicationInfo.uid)
     .toQuery();

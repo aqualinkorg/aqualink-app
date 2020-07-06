@@ -1,16 +1,14 @@
 import requests from "../helpers/requests";
 
 interface GetFormData {
-  createdAt: string;
+  appId: string;
   fundingSource: string | null;
-  id: number;
   installationResources: string | null;
   installationSchedule: string | null;
   permitRequirements: string | null;
-  reefId: {
+  reef: {
     createdAt: string;
     depth: number;
-    id: number;
     name: string;
     polygon: {
       coordinates: [number, number];
@@ -21,37 +19,25 @@ interface GetFormData {
     updatedAt: string;
     videoStream: string;
   };
-  uid: string;
-  updatedAt: string;
-  userId: {
-    adminLevel: string;
+  user: {
     country: string | null;
     createdAt: string;
     description: string | null;
     email: string;
     firebaseUid: string;
     fullName: string;
-    id: number;
     imageUrl: string | null;
     location: string | null;
     organization: string;
-    updatedAt: string;
   };
 }
 
 export interface SendFormData {
-  uid: string;
   reef: {
     name: string;
-    polygon: {
-      type: string;
-      coordinates: [number, number];
-    };
     depth: number;
   };
   reefApplication: {
-    reefId: number | null;
-    uid: string;
     permitRequirements: string | null;
     fundingSource: string | null;
     installationSchedule: string | null;
@@ -59,7 +45,7 @@ export interface SendFormData {
   };
 }
 
-const getFormData = (appId: string, uid: string) =>
+const getFormData = (appId: string, uid?: string) =>
   requests.send<GetFormData>({
     url: `/reef-applications/${appId}`,
     method: "GET",

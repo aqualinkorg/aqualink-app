@@ -17,19 +17,18 @@ export const FINAL_URL = process.env.FINAL_URL || 'INSERT_URL/';
 export const connectionInfo = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
   : {
-    user: 'postgres',
-    host: process.env.POSTGRES_HOST || 'localhost',
-    port:
-      (process.env.POSTGRES_PORT &&
-        parseInt(process.env.POSTGRES_PORT, 10)) ||
-      5432,
-    database: process.env.POSTGRES_DATABASE || 'aqualink_dev',
-    ...(process.env.POSTGRES_USER && { username: process.env.POSTGRES_USER }),
-    ...(process.env.POSTGRES_PASSWORD && {
-      password: process.env.POSTGRES_PASSWORD,
-    }),
-  };
-
+      user: 'postgres',
+      host: process.env.POSTGRES_HOST || 'localhost',
+      port:
+        (process.env.POSTGRES_PORT &&
+          parseInt(process.env.POSTGRES_PORT, 10)) ||
+        5432,
+      database: process.env.POSTGRES_DATABASE || 'aqualink_dev',
+      ...(process.env.POSTGRES_USER && { username: process.env.POSTGRES_USER }),
+      ...(process.env.POSTGRES_PASSWORD && {
+        password: process.env.POSTGRES_PASSWORD,
+      }),
+    };
 
 // Wrap Pg connection Pool
 // See https://node-postgres.com/guides/project-structure
@@ -94,13 +93,17 @@ export async function connectToPostgres(
   }
 
   if (verbose) {
-    log.info(`Connecting to Postgres DB with connection string '${connectionInfo}'.`);
+    log.info(
+      `Connecting to Postgres DB with connection string '${connectionInfo}'.`,
+    );
   }
 
   if (connectSingleClient) {
+    // eslint-disable-next-line fp/no-mutation
     pgPool = new Client(connectionInfo);
     await pgPool.connect();
   } else {
+    // eslint-disable-next-line fp/no-mutation
     pgPool = new Pool({ ...connectionInfo, ...connectionOptions });
   }
   return pgPool;

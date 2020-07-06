@@ -30,13 +30,11 @@ export class CreateReefApplicationDto {
   @IsNotEmpty()
   readonly installationResources?: string;
 
-  @IsOptional()
   @IsInt()
   @Validate(EntityExists, [Reef])
   readonly reefId?: number;
 
-  @IsOptional()
-  @IsNotEmpty()
+  @IsInt()
   @Validate(EntityExists, [User])
-  readonly userId?: number;
+  readonly userId: number;
 }

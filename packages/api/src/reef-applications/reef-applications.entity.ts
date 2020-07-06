@@ -4,15 +4,18 @@ import {
   Column,
   OneToOne,
   ManyToOne,
-  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
+import { hashId } from '../utils/urls';
 
 @Entity()
 export class ReefApplication {
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,6 +31,7 @@ export class ReefApplication {
   @Column({ nullable: true })
   installationResources: string;
 
+  @Exclude()
   @Column({ length: 128, default: () => 'gen_random_uuid()', unique: true })
   uid: string;
 
@@ -38,10 +42,14 @@ export class ReefApplication {
   updatedAt: Date;
 
   @OneToOne(() => Reef, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'reef_id' })
-  reefId: Reef | number;
+  @JoinColumn()
+  reef: Reef;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
-  userId: User | number;
+  user: User;
+
+  @Expose()
+  get appId(): string {
+    return hashId(this.id);
+  }
 }
