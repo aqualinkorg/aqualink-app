@@ -38,7 +38,7 @@ export class RegionsController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateRegionDto: UpdateRegionDto,
-  ): Promise<void> {
+  ): Promise<Region> {
     return this.regionsService.update(id, updateRegionDto);
   }
 

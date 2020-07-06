@@ -37,15 +37,15 @@ export class CreateReefDto {
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [Region])
-  readonly regionId?: number;
+  readonly region?: Region;
 
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [User])
-  readonly adminId?: number;
+  readonly admin?: User;
 
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [VideoStream])
-  readonly streamId?: number;
+  readonly stream?: VideoStream;
 }
