@@ -30,14 +30,19 @@ export async function getMMM(lat: number, long: number) {
   const width = image.getWidth();
   const height = image.getHeight();
 
-  const { x, y } = pointToPixel(lat, long, boundingBox, width, height);
+  const { pixelX, pixelY } = pointToPixel(
+    lat,
+    long,
+    boundingBox,
+    width,
+    height,
+  );
 
   const data = await image.readRasters({
-    window: [x - 1, y - 1, x + 1, y + 1],
+    window: [pixelX, pixelY, pixelX + 1, pixelY + 1],
   });
 
-  console.log(x);
-  console.log(await data);
+  return data[0][0];
 }
 
 /**

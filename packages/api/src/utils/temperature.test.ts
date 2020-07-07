@@ -27,6 +27,6 @@ test('Calculates data as expected.', () => {
   expect(DHD).toBe(1512);
 });
 
-test('Get MMM as expected.', () => {
-  getMMM(10, 10).then((data) => expect(data).toEqual(1512));
+test('Get MMM as expected.', async () => {
+  await getMMM(-90, -10).then((data) => expect(data).toEqual(2860));
 });
