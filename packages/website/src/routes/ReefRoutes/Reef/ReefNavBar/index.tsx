@@ -14,8 +14,8 @@ const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
   <AppBar position="static">
     <Toolbar>
       <Grid item container justify="space-between" alignItems="center" xs={12}>
-        <Grid item>
-          <Grid alignItems="center" container spacing={2}>
+        <Grid item xs={6}>
+          <Grid alignItems="center" direction="row" container spacing={1}>
             <Grid item>
               <Link style={{ color: "inherit" }} to="/reefs">
                 <IconButton edge="start" color="inherit" aria-label="menu">
@@ -24,20 +24,20 @@ const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
               </Link>
             </Grid>
             {reefName && lastSurvey && (
-              <>
+              <Grid item xs={11} direction="column" container>
                 <Grid item>
-                  <Typography variant="h5">{reefName}</Typography>
+                  <Typography variant="h4">{reefName}</Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1">{`Last surveyed: ${lastSurvey}`}</Typography>
                 </Grid>
-              </>
+              </Grid>
             )}
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item xs={6}>
           {managerName && (
-            <Grid container alignItems="center" spacing={2}>
+            <Grid container justify="flex-end" alignItems="center" spacing={2}>
               <Grid item>
                 <Grid container direction="column" alignItems="flex-end">
                   <Typography variant="subtitle2">

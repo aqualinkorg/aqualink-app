@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 import { ReefState } from "./types";
+/* eslint-disable-next-line import/no-cycle */
 import { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
@@ -13,8 +14,9 @@ const selectedReefInitialState: ReefState = {
     videoStream: "",
     polygon: {
       type: "",
-      coordinates: [[[0, 0]]],
+      coordinates: [[]],
     },
+    dailyData: [],
   },
   loading: false,
   error: null,
@@ -27,7 +29,9 @@ export const reefRequest = createAsyncThunk<
 >("selectedReef/request", async (id: string, { rejectWithValue }) => {
   try {
     const { data } = await reefServices.getReef(id);
-    return data;
+    const { data: dailyData } = await reefServices.getReefDailyData(id);
+
+    return { ...data, dailyData };
   } catch (err) {
     const error: AxiosError<ReefState["error"]> = err;
     return rejectWithValue(error.message);

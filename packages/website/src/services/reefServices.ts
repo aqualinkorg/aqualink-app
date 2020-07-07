@@ -7,6 +7,13 @@ const getReef = (id: string) =>
     method: "GET",
   });
 
+const getReefDailyData = (id: string) =>
+  requests.send<ReefState["details"]["dailyData"]>({
+    url: `reefs/${id}/daily_data`,
+    method: "GET",
+  });
+
 export default {
   getReef,
+  getReefDailyData,
 };

@@ -137,7 +137,7 @@
     }
   },
   "ignorePatterns": [
-    "src/serviceWorker.ts"
+    "**/src/serviceWorker.ts"
   ],
   "overrides": [
     // Don't warn about reassignment in spec files so that we can use before blocks to assign to scoped variables.

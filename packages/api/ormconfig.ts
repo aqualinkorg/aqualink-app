@@ -34,7 +34,7 @@ export = {
   type: 'postgres',
   ...connectionInfo,
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
-  synchronize: env === 'development',
+  synchronize: false,
   logging: false,
   namingStrategy: new SnakeNamingStrategy(),
   entities: [
