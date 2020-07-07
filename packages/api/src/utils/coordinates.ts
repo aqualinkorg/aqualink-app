@@ -12,11 +12,12 @@ export function pointToPixel(
   const geoWidth = Math.abs(maxLong - minLong);
   const geoHeight = Math.abs(maxLat - minLat);
 
-  const tempLat = ((lat - minLat) % 180) + minLat;
   const tempLong = ((long - minLong) % 360) + minLong;
+  const tempLat = ((lat - minLat) % 180) + minLat;
 
+  // Pixel (0, 0) is the top left corner.
   const pixelX = Math.round(((tempLong - minLong) / geoWidth) * width);
-  const pixelY = Math.round(((tempLat - minLat) / geoHeight) * height);
+  const pixelY = height - Math.round(((tempLat - minLat) / geoHeight) * height);
 
   return { pixelX, pixelY };
 }

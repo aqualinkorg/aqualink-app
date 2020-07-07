@@ -22,17 +22,18 @@ const MMMFileUrl =
  * DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
  * */
 
-export async function getMMM(lat: number, long: number) {
+export async function getMMM(long: number, lat: number) {
   const tiff = await GeoTIFF.fromUrl(MMMFileUrl);
   const image = await tiff.getImage();
 
+  const gdalNoData = image.getGDALNoData()
   const boundingBox = image.getBoundingBox();
   const width = image.getWidth();
   const height = image.getHeight();
 
   const { pixelX, pixelY } = pointToPixel(
-    lat,
     long,
+    lat,
     boundingBox,
     width,
     height,
@@ -42,7 +43,7 @@ export async function getMMM(lat: number, long: number) {
     window: [pixelX, pixelY, pixelX + 1, pixelY + 1],
   });
 
-  return data[0][0];
+  return data[0][0] !== gdalNoData ? data[0][0] / 100 : null;
 }
 
 /**
