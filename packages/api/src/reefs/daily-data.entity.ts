@@ -36,13 +36,13 @@ export class DailyData {
   satelliteTemperature: number;
 
   @Column('float')
-  minWaveSpeed: number;
+  minWaveHeight: number;
 
   @Column('float')
-  maxWaveSpeed: number;
+  maxWaveHeight: number;
 
   @Column('float')
-  avgWaveSpeed: number;
+  avgWaveHeight: number;
 
   @Column()
   waveDirection: number;
