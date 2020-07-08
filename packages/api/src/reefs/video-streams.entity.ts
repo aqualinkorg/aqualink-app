@@ -12,7 +12,7 @@ export class VideoStream {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 254 })
+  @Column()
   ownerEmail: string;
 
   @Column('point')

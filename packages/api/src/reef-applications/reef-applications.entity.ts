@@ -32,7 +32,7 @@ export class ReefApplication {
   installationResources: string;
 
   @Exclude()
-  @Column({ length: 128, default: () => 'gen_random_uuid()', unique: true })
+  @Column({ default: () => 'gen_random_uuid()', unique: true })
   uid: string;
 
   @CreateDateColumn()
