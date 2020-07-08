@@ -33,18 +33,31 @@ const Charts = ({ classes }: ChartsProps) => {
   const [thresholdTextPosition, setThresholdTextPosition] = useState<number>(0);
 
   const chartLabels = [
-    "MAY 1",
-    "MAY 2",
-    "MAY 3",
-    "MAY 4",
-    "MAY 5",
-    "MAY 6",
-    "MAY 7",
-    "MAY 8",
+    new Date(2020, 3, 30).toLocaleString(),
+    new Date(2020, 4, 1, 3).toLocaleString(),
+    new Date(2020, 4, 2, 4).toLocaleString(),
+    new Date(2020, 4, 2, 7).toLocaleString(),
+    new Date(2020, 4, 3, 3).toLocaleString(),
+    new Date(2020, 4, 4, 3, 28).toLocaleString(),
+    new Date(2020, 4, 5).toLocaleString(),
+    new Date(2020, 4, 6).toLocaleString(),
+    new Date(2020, 4, 7, 4).toLocaleString(),
+    new Date(2020, 4, 8, 5).toLocaleString(),
   ];
-  const temperatureData = [32.4, 32.7, 32.5, 32.7, 32.7, 33.5, 34.1, 34.3];
-  const windData = [11.1, 11.3, 11.7, 11, 11.6, 11.8, 12.1, 12.4];
-  const waveData = [1, 1.3, 1.2, 1.6, 1, 1.2, 1.4, 1.2];
+  const temperatureData = [
+    32.1,
+    32.4,
+    32.7,
+    32.3,
+    32.5,
+    32.7,
+    32.7,
+    33.5,
+    34.1,
+    34.3,
+  ];
+  const windData = [10.5, 11.1, 11.3, 11.5, 11.7, 11, 11.6, 11.8, 12.1, 12.4];
+  const waveData = [1.3, 1, 1.3, 1.4, 1.2, 1.6, 1, 1.2, 1.4, 1.2];
 
   let resizeTimout: NodeJS.Timeout;
   window.addEventListener("resize", () => {
@@ -107,8 +120,8 @@ const Charts = ({ classes }: ChartsProps) => {
       return;
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 5;
-    const top = position.top + tooltipModel.caretY - 5;
+    const left = position.left + tooltipModel.caretX - 120;
+    const top = position.bottom - 300;
     const date =
       tooltipModel.dataPoints &&
       tooltipModel.dataPoints[0] &&
@@ -164,6 +177,7 @@ const Charts = ({ classes }: ChartsProps) => {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
                   mode: "odd",
+                  axis: "time",
                 },
                 fillPlugin: {
                   datasetIndex: 0,
@@ -194,10 +208,16 @@ const Charts = ({ classes }: ChartsProps) => {
               scales: {
                 xAxes: [
                   {
+                    type: "time",
+                    time: {
+                      displayFormats: {
+                        hour: "MMM D h:mm a",
+                      },
+                    },
                     ticks: {
-                      padding: 10,
-                      labelOffset: -100,
-                      callback: () => " ".repeat(2 * chartLabels[0].length),
+                      display: false,
+                      min: new Date(2020, 4, 1).toLocaleString(),
+                      max: new Date(2020, 4, 8).toLocaleString(),
                     },
                     gridLines: {
                       display: false,
@@ -262,10 +282,16 @@ const Charts = ({ classes }: ChartsProps) => {
               scales: {
                 xAxes: [
                   {
+                    type: "time",
+                    time: {
+                      displayFormats: {
+                        hour: "MMM D h:mm a",
+                      },
+                    },
                     ticks: {
-                      padding: 10,
-                      labelOffset: -100,
-                      callback: () => " ".repeat(2 * chartLabels[0].length),
+                      display: false,
+                      min: new Date(2020, 4, 1).toLocaleString(),
+                      max: new Date(2020, 4, 8).toLocaleString(),
                     },
                     gridLines: {
                       display: false,
@@ -327,9 +353,24 @@ const Charts = ({ classes }: ChartsProps) => {
               scales: {
                 xAxes: [
                   {
+                    type: "time",
+                    time: {
+                      displayFormats: {
+                        hour: "MMM D h:mm a",
+                      },
+                    },
                     ticks: {
+                      min: new Date(2020, 4, 1).toLocaleString(),
+                      max: new Date(2020, 4, 8).toLocaleString(),
                       padding: 10,
-                      labelOffset: -100,
+                      maxRotation: 0,
+                      callback: (value: string) => {
+                        const splitDate = value.split(" ");
+                        if (splitDate[2] === "12:00" && splitDate[3] === "pm") {
+                          return `${splitDate[0]} ${splitDate[1]}`;
+                        }
+                        return null;
+                      },
                     },
                     gridLines: {
                       display: false,
@@ -366,13 +407,17 @@ const Charts = ({ classes }: ChartsProps) => {
                 setSliceAtLabel(null);
               }}
               className="chart-tooltip"
+              id="chart-tooltip"
               style={{
                 position: "fixed",
                 top: tooltipPosition.top,
                 left: tooltipPosition.left,
               }}
             >
-              <Tooltip data={tooltipData} />
+              <>
+                <Tooltip data={tooltipData} />
+                <div className="tooltip-arrow" />
+              </>
             </div>
           ) : null}
         </div>

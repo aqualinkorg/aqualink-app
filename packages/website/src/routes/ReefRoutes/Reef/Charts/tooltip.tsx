@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 const Tooltip = ({ data, classes }: TooltipProps) => {
-  const date = new Date(`${data.date} 2020`);
+  const splitDate = data.date.split(", ");
 
   return (
     <Card className={classes.tooltip}>
@@ -28,12 +28,12 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
           >
             <Grid item>
               <Typography color="textPrimary" variant="caption">
-                {date.toLocaleDateString("en-US")}
+                {splitDate[0]}
               </Typography>
             </Grid>
             <Grid item>
               <Typography color="textPrimary" variant="caption">
-                12:00AM
+                {splitDate[1]}
               </Typography>
             </Grid>
           </Grid>
@@ -125,8 +125,8 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
 const styles = () =>
   createStyles({
     tooltip: {
-      height: "25vh",
-      width: "26vh",
+      height: 230,
+      width: 240,
       display: "flex",
       flexFlow: "column",
       backgroundColor: "#404b6b",
