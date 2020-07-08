@@ -15,7 +15,7 @@ export class Spotter {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column()
   @Index({ unique: true })
   sofarName: string;
 
@@ -23,7 +23,7 @@ export class Spotter {
   @Index({ spatial: true })
   location: string;
 
-  @Column({ length: 50 })
+  @Column()
   hardwareVersion: string;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })

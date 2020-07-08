@@ -13,7 +13,7 @@ export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column()
   name: string;
 
   @Column('geometry', { spatialFeatureType: 'Polygon' })
