@@ -1,21 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-import { ReefState } from "./types";
+import { SelectedReefState } from "./types";
 /* eslint-disable-next-line import/no-cycle */
 import { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
-const selectedReefInitialState: ReefState = {
+const selectedReefInitialState: SelectedReefState = {
   details: {
-    id: "",
-    regionName: "",
-    managerName: "",
-    videoStream: "",
+    id: null,
+    name: null,
     polygon: {
-      type: "",
+      type: "Polygon",
       coordinates: [[]],
     },
+    temperatureThreshold: null,
+    depth: null,
+    status: 0,
+    videoStream: null,
     dailyData: [],
   },
   loading: false,
@@ -23,7 +25,7 @@ const selectedReefInitialState: ReefState = {
 };
 
 export const reefRequest = createAsyncThunk<
-  ReefState["details"],
+  SelectedReefState["details"],
   string,
   CreateAsyncThunkTypes
 >("selectedReef/request", async (id: string, { rejectWithValue }) => {
@@ -33,7 +35,7 @@ export const reefRequest = createAsyncThunk<
 
     return { ...data, dailyData };
   } catch (err) {
-    const error: AxiosError<ReefState["error"]> = err;
+    const error: AxiosError<SelectedReefState["error"]> = err;
     return rejectWithValue(error.message);
   }
 });
@@ -45,7 +47,7 @@ const selectedReefSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       reefRequest.fulfilled,
-      (state, action: PayloadAction<ReefState["details"]>) => {
+      (state, action: PayloadAction<SelectedReefState["details"]>) => {
         return {
           ...state,
           details: action.payload,
@@ -56,7 +58,7 @@ const selectedReefSlice = createSlice({
 
     builder.addCase(
       reefRequest.rejected,
-      (state, action: PayloadAction<ReefState["error"]>) => {
+      (state, action: PayloadAction<SelectedReefState["error"]>) => {
         return {
           ...state,
           error: action.payload,
@@ -75,13 +77,16 @@ const selectedReefSlice = createSlice({
   },
 });
 
-export const reefDetailsSelector = (state: RootState): ReefState["details"] =>
-  state.selectedReef.details;
+export const reefDetailsSelector = (
+  state: RootState
+): SelectedReefState["details"] => state.selectedReef.details;
 
-export const reefLoadingSelector = (state: RootState): ReefState["loading"] =>
-  state.selectedReef.loading;
+export const reefLoadingSelector = (
+  state: RootState
+): SelectedReefState["loading"] => state.selectedReef.loading;
 
-export const reefErrorSelector = (state: RootState): ReefState["error"] =>
-  state.selectedReef.error;
+export const reefErrorSelector = (
+  state: RootState
+): SelectedReefState["error"] => state.selectedReef.error;
 
 export default selectedReefSlice.reducer;

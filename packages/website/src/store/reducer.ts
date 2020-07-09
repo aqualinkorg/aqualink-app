@@ -1,10 +1,11 @@
+/* eslint-disable import/no-cycle */
 import { combineReducers } from "redux";
-
-/* eslint-disable-next-line import/no-cycle */
-import selectedReef from "./Reefs/slice";
+import selectedReef from "./Reefs/selectedReefSlicelice";
+import reefsList from "./Reefs/reefsListSlice";
 
 const appReducer = combineReducers({
   selectedReef,
+  reefsList,
 });
 
 export default appReducer;

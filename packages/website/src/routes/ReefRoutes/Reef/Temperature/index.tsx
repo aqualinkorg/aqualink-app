@@ -11,12 +11,13 @@ import {
   Grid,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import { Alert } from "@material-ui/lab";
+import Alert from "@material-ui/lab/Alert";
 
-import { ReefState } from "../../../../store/Reefs/types";
+import { SelectedReefState } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
   const bottomTemperature = dailyData[0].bottomTemperature.max;
+  const date = new Date(dailyData[0].date);
 
   const { surfaceTemperature, wind, waves } = dailyData[0];
 
@@ -30,7 +31,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">(05/12/20 8:16AM PST)</Typography>
+              <Typography variant="subtitle2">{`(${date.toLocaleDateString(
+                "en-US"
+              )} 8:16AM PST)`}</Typography>
             </Grid>
           </Grid>
         }
@@ -126,7 +129,6 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 severity="warning"
                 icon={<ErrorIcon />}
               >
-                {/* TODO: Alert `severity` prop and `ALERT LEVEL` should have conditional values based on the temperature scale */}
                 <Typography variant="caption">ALERT LEVEL: HIGH</Typography>
               </Alert>
             </Grid>
@@ -203,7 +205,7 @@ const styles = () =>
   });
 
 interface TemperatureIncomingProps {
-  dailyData: ReefState["details"]["dailyData"];
+  dailyData: SelectedReefState["details"]["dailyData"];
 }
 
 type TemperatureProps = WithStyles<typeof styles> & TemperatureIncomingProps;

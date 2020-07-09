@@ -21,15 +21,17 @@ import {
   reefLoadingSelector,
   reefErrorSelector,
   reefRequest,
-} from "../../../store/Reefs/slice";
+} from "../../../store/Reefs/selectedReefSlice";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const renderCondition =
-    reefDetails.polygon.coordinates[0].length > 0 &&
-    reefDetails.videoStream !== "" &&
+    ((reefDetails.polygon.type === "Point" &&
+      reefDetails.polygon.coordinates.length === 2) ||
+      (reefDetails.polygon.type === "Polygon" &&
+        reefDetails.polygon.coordinates[0].length > 0)) &&
     reefDetails.dailyData.length > 0;
   const reefId = match.params.id;
   const dispatch = useDispatch();
@@ -41,9 +43,9 @@ const Reef = ({ match, classes }: ReefProps) => {
   return (
     <>
       <ReefNavBar
-        reefName={reefDetails.regionName}
+        reefName={reefDetails.name || ""}
         lastSurvey="May 10, 2020"
-        managerName={reefDetails.managerName}
+        managerName={reefDetails.admin || ""}
       />
       {loading ? (
         <LinearProgress />
@@ -60,7 +62,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               <Grid key={2} item>
                 <Typography variant="h6">FEATURE VIDEO</Typography>
                 <div className={classes.container}>
-                  <FeatureVideo url={reefDetails.videoStream} />
+                  <FeatureVideo url={reefDetails.videoStream || ""} />
                 </div>
               </Grid>
             </Grid>

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   List,
   ListItem,
@@ -10,22 +11,45 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-const ReefsList = ({ classes }: ReefsListProps) => (
-  <>
-    <div className={classes.root}>
-      <List component="nav">
-        <Link
-          style={{ color: "inherit", textDecoration: "none" }}
-          to="/reefs/1"
-        >
-          <ListItem button>
-            <ListItemText primary="Reef 1" />
-          </ListItem>
-        </Link>
-      </List>
-    </div>
-  </>
-);
+import {
+  reefsListSelector,
+  reefsRequest,
+} from "../../../store/Reefs/reefsListSlice";
+
+const ReefsList = ({ classes }: ReefsListProps) => {
+  const reefsList = useSelector(reefsListSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reefsRequest());
+  }, [dispatch]);
+
+  return (
+    <>
+      <div className={classes.root}>
+        <List component="nav">
+          {reefsList.map(
+            (reef) =>
+              reef.id && (
+                <Link
+                  key={`reef-list-item-${reef.id}`}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to={`/reefs/${reef.id}`}
+                >
+                  <ListItem button>
+                    <ListItemText
+                      style={{ color: "white" }}
+                      primary={reef.name}
+                    />
+                  </ListItem>
+                </Link>
+              )
+          )}
+        </List>
+      </div>
+    </>
+  );
+};
 
 const styles = (theme: Theme) =>
   createStyles({

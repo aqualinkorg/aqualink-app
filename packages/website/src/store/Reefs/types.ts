@@ -1,9 +1,13 @@
 /* eslint-disable camelcase */
 type Position = [number, number];
-
-interface Polygon {
+export interface Polygon {
   coordinates: [Position[]];
-  type: string;
+  type: "Polygon";
+}
+
+export interface Point {
+  coordinates: Position;
+  type: "Point";
 }
 
 export interface Data {
@@ -34,15 +38,26 @@ export interface Data {
 }
 
 export interface Reef {
-  id: string;
-  regionName: string;
-  managerName: string;
-  videoStream: string;
-  polygon: Polygon;
+  id: number | null;
+  name: string | null;
+  polygon: Polygon | Point;
+  temperatureThreshold: number | null;
+  depth: number | null;
+  status: number;
+  videoStream: string | null;
+  region?: string;
+  admin?: string;
+  stream?: string;
   dailyData: Data[];
 }
 
-export interface ReefState {
+export interface ReefsListState {
+  list: Reef[];
+  loading: boolean;
+  error?: string | null;
+}
+
+export interface SelectedReefState {
   details: Reef;
   loading: boolean;
   error?: string | null;
