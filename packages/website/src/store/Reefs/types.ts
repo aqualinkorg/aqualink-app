@@ -38,7 +38,7 @@ export interface Data {
 }
 
 export interface Reef {
-  id: number | null;
+  id: number;
   name: string | null;
   polygon: Polygon | Point;
   temperatureThreshold: number | null;
