@@ -3,6 +3,7 @@
   "exclude": [
     "node_modules",
     "test",
+    "src/seeds",
     "**/*spec.ts",
   ],
   "compilerOptions": {

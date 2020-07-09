@@ -6,9 +6,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "test/*"
-      ],
+      "files": ["test/*"],
       "rules": {
         "fp/no-mutation": "off",
         "import/no-extraneous-dependencies": [
@@ -20,11 +18,22 @@
       }
     },
     {
-      "files": [
-        "scripts/*"
-      ],
+      "files": ["scripts/*"],
       "rules": {
         "no-console": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/seeds/*"],
+      "rules": {
+        "no-param-reassign": "off",
+        "fp/no-mutation": "off",
         "import/no-extraneous-dependencies": [
           "error",
           {

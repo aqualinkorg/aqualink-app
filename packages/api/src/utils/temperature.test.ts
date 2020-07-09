@@ -1,4 +1,4 @@
-import { calculateDegreeHeatingDays } from './temperature';
+import { calculateDegreeHeatingDays, getMMM } from './temperature';
 
 // Mock functions
 function getSeaSurfaceTemperatures(reefID: number) {
@@ -25,4 +25,10 @@ test('Calculates data as expected.', () => {
     maximumMonthlyMean,
   );
   expect(DHD).toBe(1512);
+});
+
+test('Get MMM as expected.', async () => {
+  await getMMM(0, 0).then((data) => expect(data).toEqual(28.95));
+  await getMMM(-89.9, -10).then((data) => expect(data).toEqual(26.55));
+  await getMMM(-108.0, -53.1).then((data) => expect(data).toEqual(7.94));
 });

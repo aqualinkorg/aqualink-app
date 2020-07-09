@@ -7,6 +7,7 @@ import {
   IsInt,
   IsUrl,
 } from 'class-validator';
+import { GeoJSON } from 'geojson';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
@@ -19,7 +20,7 @@ export class CreateReefDto {
   readonly name: string;
 
   @IsNotEmpty()
-  readonly polygon: string;
+  readonly polygon: GeoJSON;
 
   @IsInt()
   readonly temperatureThreshold: number;
