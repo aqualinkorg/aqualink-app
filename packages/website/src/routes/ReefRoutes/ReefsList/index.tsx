@@ -28,23 +28,17 @@ const ReefsList = ({ classes }: ReefsListProps) => {
     <>
       <div className={classes.root}>
         <List component="nav">
-          {reefsList.map(
-            (reef) =>
-              reef.id && (
-                <Link
-                  key={`reef-list-item-${reef.id}`}
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  to={`/reefs/${reef.id}`}
-                >
-                  <ListItem button>
-                    <ListItemText
-                      style={{ color: "white" }}
-                      primary={reef.name}
-                    />
-                  </ListItem>
-                </Link>
-              )
-          )}
+          {reefsList.map((reef) => (
+            <Link
+              key={`reef-list-item-${reef.id}`}
+              style={{ color: "inherit", textDecoration: "none" }}
+              to={`/reefs/${reef.id}`}
+            >
+              <ListItem button>
+                <ListItemText style={{ color: "white" }} primary={reef.name} />
+              </ListItem>
+            </Link>
+          ))}
         </List>
       </div>
     </>
