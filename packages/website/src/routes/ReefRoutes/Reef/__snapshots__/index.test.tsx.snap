@@ -89,7 +89,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <h6
             class="MuiTypography-root MuiTypography-h6"
           >
-            FEATURE VIDEO
+            FEATURED VIDEO
           </h6>
           <div
             class="ReefDetails-container-27"
@@ -205,7 +205,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           <h5
                             class="MuiTypography-root MuiTypography-h5"
                           >
-                            11
+                            9
                           </h5>
                         </div>
                         <div
@@ -292,7 +292,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           <h5
                             class="MuiTypography-root MuiTypography-h5"
                           >
-                            3
+                            5
                           </h5>
                         </div>
                         <div
@@ -474,7 +474,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           class="MuiTypography-root MuiTypography-h1"
                           style="color: rgb(8, 91, 163); font-weight: 300; padding-left: 1rem;"
                         >
-                          1
+                          0.1
                         </h1>
                       </div>
                       <div
