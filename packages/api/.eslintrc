@@ -30,7 +30,7 @@
       }
     },
     {
-      "files": ["src/database/*"],
+      "files": ["src/seeds/*"],
       "rules": {
         "no-param-reassign": "off",
         "fp/no-mutation": "off",
