@@ -3,8 +3,7 @@ import { AxiosError } from "axios";
 
 import { ReefsListState } from "./types";
 
-/* eslint-disable-next-line import/no-cycle */
-import { RootState, CreateAsyncThunkTypes } from "../configure";
+import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
 const reefsListInitialState: ReefsListState = {
