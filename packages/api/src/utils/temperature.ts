@@ -1,3 +1,9 @@
+import * as GeoTIFF from 'geotiff';
+import { pointToPixel } from './coordinates';
+
+const MMMFileUrl =
+  'https://storage.googleapis.com/reef_climatology/sst_clim_mmm.tiff';
+
 /**
  * Corals start to become stressed when the SST is 1°C warmer than the maxiumum monthly mean temperature (MMM).
  * The MMM is the highest temperature out of the monthly mean temperatures over the year (warmest summer month)
@@ -15,6 +21,30 @@
  *
  * DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
  * */
+
+export async function getMMM(long: number, lat: number) {
+  const tiff = await GeoTIFF.fromUrl(MMMFileUrl);
+  const image = await tiff.getImage();
+
+  const gdalNoData = image.getGDALNoData()
+  const boundingBox = image.getBoundingBox();
+  const width = image.getWidth();
+  const height = image.getHeight();
+
+  const { pixelX, pixelY } = pointToPixel(
+    long,
+    lat,
+    boundingBox,
+    width,
+    height,
+  );
+
+  const data = await image.readRasters({
+    window: [pixelX, pixelY, pixelX + 1, pixelY + 1],
+  });
+
+  return data[0][0] !== gdalNoData ? data[0][0] / 100 : null;
+}
 
 /**
  * Calculates the Degree Heating Days of a reef location using 12 weeks of data.
