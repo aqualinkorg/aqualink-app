@@ -1,25 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
-
-import { SelectedReefState } from "./types";
-/* eslint-disable-next-line import/no-cycle */
-import { RootState, CreateAsyncThunkTypes } from "../configure";
+import type { AxiosError } from "axios";
+import type { SelectedReefState } from "./types";
+import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
 const selectedReefInitialState: SelectedReefState = {
-  details: {
-    id: null,
-    name: null,
-    polygon: {
-      type: "Polygon",
-      coordinates: [[]],
-    },
-    temperatureThreshold: null,
-    depth: null,
-    status: 0,
-    videoStream: null,
-    dailyData: [],
-  },
   loading: false,
   error: null,
 };

@@ -1,20 +1,20 @@
 import requests from "../helpers/requests";
-import { SelectedReefState, ReefsListState } from "../store/Reefs/types";
+import type { Data, Reef } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
-  requests.send<SelectedReefState["details"]>({
+  requests.send<Reef>({
     url: `/reefs/${id}`,
     method: "GET",
   });
 
 const getReefDailyData = (id: string) =>
-  requests.send<SelectedReefState["details"]["dailyData"]>({
+  requests.send<Data[]>({
     url: `reefs/${id}/daily_data`,
     method: "GET",
   });
 
 const getReefs = () =>
-  requests.send<ReefsListState["list"]>({
+  requests.send<Reef[]>({
     url: "reefs",
     method: "GET",
   });

@@ -12,8 +12,7 @@ export interface Point {
 
 export interface Data {
   id: number;
-  date: "string";
-  reefId: number;
+  date: string;
   bottomTemperature: {
     min: number;
     max: number;
@@ -45,9 +44,9 @@ export interface Reef {
   depth: number | null;
   status: number;
   videoStream: string | null;
-  region?: string;
-  admin?: string;
-  stream?: string;
+  region: string | null;
+  admin: string | null;
+  stream: string | null;
   dailyData: Data[];
 }
 
@@ -58,7 +57,7 @@ export interface ReefsListState {
 }
 
 export interface SelectedReefState {
-  details: Reef;
+  details?: Reef;
   loading: boolean;
   error?: string | null;
 }

@@ -12,10 +12,13 @@ import {
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import Alert from "@material-ui/lab/Alert";
-
-import { SelectedReefState } from "../../../../store/Reefs/types";
+import type { Data } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
+  if (dailyData.length === 0) {
+    return null;
+  }
+
   const bottomTemperature = dailyData[0].bottomTemperature.max;
   const date = new Date(dailyData[0].date);
 
@@ -205,7 +208,7 @@ const styles = () =>
   });
 
 interface TemperatureIncomingProps {
-  dailyData: SelectedReefState["details"]["dailyData"];
+  dailyData: Data[];
 }
 
 type TemperatureProps = WithStyles<typeof styles> & TemperatureIncomingProps;

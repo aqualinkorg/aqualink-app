@@ -29,6 +29,10 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
+  if (dailyData.length === 0) {
+    return null;
+  }
+
   const { degreeHeatingDays } = dailyData[0];
 
   const colorItem = colorFinder(degreeHeatingDays);
