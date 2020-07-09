@@ -8,6 +8,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GeoJSON } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
 
 @Entity()
@@ -21,7 +22,7 @@ export class Spotter {
 
   @Column('point')
   @Index({ spatial: true })
-  location: string;
+  location: GeoJSON;
 
   @Column({ length: 50 })
   hardwareVersion: string;
