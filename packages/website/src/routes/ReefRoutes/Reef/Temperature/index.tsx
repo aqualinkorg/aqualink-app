@@ -19,10 +19,17 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
     return null;
   }
 
-  const bottomTemperature = dailyData[0].bottomTemperature.max;
+  const bottomTemperature = dailyData[0].maxBottomTemperature;
   const date = new Date(dailyData[0].date);
 
-  const { surfaceTemperature, wind, waves } = dailyData[0];
+  const {
+    surfaceTemperature,
+    maxWindSpeed,
+    windDirection,
+    maxWaveHeight,
+    wavePeriod,
+    waveDirection,
+  } = dailyData[0];
 
   return (
     <Card className={classes.card}>
@@ -88,13 +95,13 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 </Typography>
               )}
               <Typography variant="caption">WIND</Typography>
-              {wind && (
+              {maxWindSpeed && (
                 <Typography
                   style={{ display: "flex", alignItems: "baseline" }}
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{wind.maxSpeed}</Typography>
+                    <Typography variant="h5">{maxWindSpeed}</Typography>
                   </Box>
                   <Box ml={0}>
                     <Typography variant="subtitle2">kph</Typography>
@@ -103,9 +110,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">
-                      {wind.direction} &#176;
-                    </Typography>
+                    <Typography variant="h5">{windDirection} &#176;</Typography>
                   </Box>
                 </Typography>
               )}
@@ -143,13 +148,13 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               alignItems="flex-start"
             >
               <Typography variant="caption">WAVES</Typography>
-              {waves && (
+              {maxWaveHeight && (
                 <Typography
                   style={{ display: "flex", alignItems: "baseline" }}
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{waves.speed}</Typography>
+                    <Typography variant="h5">{maxWaveHeight}</Typography>
                   </Box>
                   <Box ml={0}>
                     <Typography variant="subtitle2">m</Typography>
@@ -158,7 +163,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">AT</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{waves.period}</Typography>
+                    <Typography variant="h5">{wavePeriod}</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="subtitle2">S</Typography>
@@ -167,9 +172,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="overline">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">
-                      {waves.direction} &#176;
-                    </Typography>
+                    <Typography variant="h5">{waveDirection} &#176;</Typography>
                   </Box>
                 </Typography>
               )}

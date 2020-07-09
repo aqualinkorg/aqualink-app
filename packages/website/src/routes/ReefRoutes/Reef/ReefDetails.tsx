@@ -23,7 +23,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
           </div>
         </Grid>
         <Grid key={2} item>
-          <Typography variant="h6">FEATURE VIDEO</Typography>
+          <Typography variant="h6">FEATURED VIDEO</Typography>
           <div className={classes.container}>
             <FeatureVideo url={reef.videoStream || ""} />
           </div>

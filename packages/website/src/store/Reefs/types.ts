@@ -13,27 +13,25 @@ export interface Point {
 export interface Data {
   id: number;
   date: string;
-  bottomTemperature: {
-    min: number;
-    max: number;
-    avg: number;
-  };
+
+  minBottomTemperature: number;
+  maxBottomTemperature: number;
+  avgBottomTemperature: number;
+
   degreeHeatingDays: number;
   surfaceTemperature: number;
   satelliteTemperature: number;
-  wind: {
-    speed: number;
-    minSpeed: number;
-    maxSpeed: number;
-    direction: number;
-  };
-  waves: {
-    speed: number;
-    minSpeed: number;
-    maxSpeed: number;
-    direction: number;
-    period: number;
-  };
+
+  minWindSpeed: number;
+  maxWindSpeed: number;
+  avgWindSpeed: number;
+  windDirection: number;
+
+  minWaveHeight: number;
+  maxWaveHeight: number;
+  avgWaveHeight: number;
+  waveDirection: number;
+  wavePeriod: number;
 }
 
 export interface Reef {

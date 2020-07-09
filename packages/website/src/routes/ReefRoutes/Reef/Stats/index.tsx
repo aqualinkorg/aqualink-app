@@ -35,7 +35,9 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
 
   const { degreeHeatingDays } = dailyData[0];
 
-  const colorItem = colorFinder(degreeHeatingDays);
+  const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;
+
+  const colorItem = colorFinder(degreeHeatingWeeks);
 
   const weekSurfaceTemperatures = dailyData
     .slice(0, 7)
@@ -44,7 +46,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
 
   const weekBottomTemperatures = dailyData
     .slice(0, 7)
-    .map((item) => item.bottomTemperature.max);
+    .map((item) => item.maxBottomTemperature);
   const weekMaxBottomTemperature = Math.max(...weekBottomTemperatures);
 
   return (
@@ -136,7 +138,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
                     }}
                     variant="h1"
                   >
-                    {degreeHeatingDays}
+                    {degreeHeatingWeeks}
                   </Typography>
                 )}
               </Grid>
