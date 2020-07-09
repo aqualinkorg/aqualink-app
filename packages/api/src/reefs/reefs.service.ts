@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reef } from './reefs.entity';
+import { DailyData } from './daily-data.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
@@ -15,6 +16,9 @@ export class ReefsService {
   constructor(
     @InjectRepository(Reef)
     private reefsRepository: Repository<Reef>,
+
+    @InjectRepository(DailyData)
+    private dailyDataRepository: Repository<DailyData>,
   ) {}
 
   async create(createReefDto: CreateReefDto): Promise<Reef> {
@@ -74,5 +78,9 @@ export class ReefsService {
     if (!result.affected) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
+  }
+
+  async findDailyData(id: number): Promise<DailyData[]> {
+    return this.dailyDataRepository.find({ where: { reef: id } });
   }
 }

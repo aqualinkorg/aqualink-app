@@ -7,18 +7,19 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GeoJSON } from 'geojson';
 
 @Entity()
 export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column()
   name: string;
 
   @Column('geometry', { spatialFeatureType: 'Polygon' })
   @Index({ spatial: true })
-  polygon: string;
+  polygon: GeoJSON;
 
   @CreateDateColumn()
   createdAt: Date;

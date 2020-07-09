@@ -14,7 +14,6 @@ import { Reef } from './reefs.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
-import dailyData from '../../mock_response/daily_data.json';
 import surveys from '../../mock_response/survey_data.json';
 
 @Controller('reefs')
@@ -38,9 +37,8 @@ export class ReefsController {
 
   @Get(':id/daily_data')
   // eslint-disable-next-line no-unused-vars
-  findDailyData(@Param('id') id: string) {
-    return dailyData;
-    // return this.reefRepository.findOneReef(id);
+  findDailyData(@Param('id') id: number) {
+    return this.reefsService.findDailyData(id);
   }
 
   @Get(':id/surveys/:poi')

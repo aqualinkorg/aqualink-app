@@ -20,24 +20,24 @@ export class User {
   id: number;
 
   @Exclude()
-  @Column({ length: 128, nullable: true })
+  @Column({ nullable: true })
   firebaseUid: string;
 
-  @Column({ length: 254, nullable: true })
+  @Column({ nullable: true })
   fullName: string;
 
-  @Column({ length: 254 })
+  @Column()
   @Index({ unique: true })
   email: string;
 
-  @Column({ length: 254, nullable: true })
+  @Column({ nullable: true })
   organization: string;
 
   @Column({ type: 'point', nullable: true })
   @Index({ spatial: true })
   location?: string;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ nullable: true })
   country?: string;
 
   @Column({
