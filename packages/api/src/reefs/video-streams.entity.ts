@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { GeoJSON } from 'geojson';
 
 @Entity()
 export class VideoStream {
@@ -17,7 +18,7 @@ export class VideoStream {
 
   @Column('point')
   @Index({ spatial: true })
-  location: string;
+  location: GeoJSON;
 
   @Column()
   url: string;

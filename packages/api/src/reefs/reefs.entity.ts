@@ -1,3 +1,4 @@
+import { GeoJSON } from 'geojson';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -19,9 +20,13 @@ export class Reef {
   @Column({ nullable: true })
   name: string;
 
-  @Column('geometry', { unique: true })
+  @Column({
+    type: 'geometry',
+    unique: true,
+    srid: 4326,
+  })
   @Index({ spatial: true })
-  polygon: string;
+  polygon: GeoJSON;
 
   @Column('float', { nullable: true })
   temperatureThreshold: number;
