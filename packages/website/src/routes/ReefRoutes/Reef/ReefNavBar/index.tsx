@@ -6,21 +6,12 @@ import {
   Typography,
   IconButton,
   Avatar,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
-const ReefNavBar = ({
-  reefName,
-  lastSurvey,
-  managerName,
-  classes,
-}: ReefNavBarProps) => (
-  <AppBar className={classes.root} position="static">
+const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
+  <AppBar position="static" color="primary">
     <Toolbar>
       <Grid item container justify="space-between" alignItems="center" xs={12}>
         <Grid item xs={6}>
@@ -68,21 +59,12 @@ const ReefNavBar = ({
   </AppBar>
 );
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      "&.MuiPaper-root": {
-        backgroundColor: theme.palette.primary.main,
-      },
-    },
-  });
-
 interface ReefNavBarIncomingProps {
   reefName?: string;
   lastSurvey?: string;
   managerName?: string;
 }
 
-type ReefNavBarProps = WithStyles<typeof styles> & ReefNavBarIncomingProps;
+type ReefNavBarProps = ReefNavBarIncomingProps;
 
-export default withStyles(styles)(ReefNavBar);
+export default ReefNavBar;
