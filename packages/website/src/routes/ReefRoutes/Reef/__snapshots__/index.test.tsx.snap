@@ -3,7 +3,7 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary ReefNavBar-appBar-25 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -59,7 +59,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </header>
   <div
-    class="MuiGrid-root ReefDetails-root-25 MuiGrid-container"
+    class="MuiGrid-root ReefDetails-root-26 MuiGrid-container"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -76,7 +76,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             LOCATION:
           </h6>
           <div
-            class="ReefDetails-container-26"
+            class="ReefDetails-container-27"
           >
             <mock-map
               polygon="[object Object]"
@@ -92,7 +92,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             FEATURED VIDEO
           </h6>
           <div
-            class="ReefDetails-container-26"
+            class="ReefDetails-container-27"
           >
             <mock-featurevideo
               url=""
@@ -111,7 +111,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item"
         >
           <div
-            class="ReefDetails-smallContainer-27"
+            class="ReefDetails-smallContainer-28"
           >
             <div
               class="MuiPaper-root MuiCard-root Temperature-card-29 MuiPaper-elevation1 MuiPaper-rounded"
@@ -362,7 +362,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item"
         >
           <div
-            class="ReefDetails-smallContainer-27"
+            class="ReefDetails-smallContainer-28"
           >
             <div
               class="MuiGrid-root Stats-root-44 MuiGrid-container MuiGrid-spacing-xs-9 MuiGrid-justify-xs-center"
@@ -817,11 +817,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
     >
-      <div
-        class="MuiGrid-root ReefDetails-chartContainer-28 MuiGrid-item MuiGrid-grid-xs-9"
-      >
-        <mock-charts />
-      </div>
+      <mock-charts />
     </div>
   </div>
 </div>
@@ -830,7 +826,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-no-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary ReefNavBar-appBar-2 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"

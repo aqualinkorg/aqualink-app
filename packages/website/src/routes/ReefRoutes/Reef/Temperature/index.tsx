@@ -15,12 +15,9 @@ import Alert from "@material-ui/lab/Alert";
 import type { Data } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  if (dailyData.length === 0) {
-    return null;
-  }
-
-  const bottomTemperature = dailyData[0].maxBottomTemperature;
-  const date = new Date(dailyData[0].date);
+  const dailyDataLength = dailyData.length;
+  const bottomTemperature = dailyData[dailyDataLength - 1].maxBottomTemperature;
+  const date = new Date(dailyData[dailyDataLength - 1].date);
 
   const {
     surfaceTemperature,
@@ -29,7 +26,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
     maxWaveHeight,
     wavePeriod,
     waveDirection,
-  } = dailyData[0];
+  } = dailyData[dailyDataLength - 1];
 
   return (
     <Card className={classes.card}>

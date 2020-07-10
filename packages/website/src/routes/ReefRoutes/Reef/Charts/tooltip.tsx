@@ -12,7 +12,8 @@ import {
 } from "@material-ui/core";
 
 const Tooltip = ({ data, classes }: TooltipProps) => {
-  const splitDate = data.date.split(", ");
+  const date = new Date(data.date).toLocaleString().replace(/:\d{2}\s/, " ");
+  const splitDate = date.split(", ");
 
   return (
     <Card className={classes.tooltip}>

@@ -33,16 +33,16 @@ const Charts = ({ classes }: ChartsProps) => {
   const [thresholdTextPosition, setThresholdTextPosition] = useState<number>(0);
 
   const chartLabels = [
-    new Date(2020, 3, 30).toLocaleString(),
-    new Date(2020, 4, 1, 3).toLocaleString(),
-    new Date(2020, 4, 2, 4).toLocaleString(),
-    new Date(2020, 4, 2, 7).toLocaleString(),
-    new Date(2020, 4, 3, 3).toLocaleString(),
-    new Date(2020, 4, 4, 3, 28).toLocaleString(),
-    new Date(2020, 4, 5).toLocaleString(),
-    new Date(2020, 4, 6).toLocaleString(),
-    new Date(2020, 4, 7, 4).toLocaleString(),
-    new Date(2020, 4, 8, 5).toLocaleString(),
+    new Date(2020, 3, 30).toISOString(),
+    new Date(2020, 4, 1, 3).toISOString(),
+    new Date(2020, 4, 2, 4).toISOString(),
+    new Date(2020, 4, 2, 7).toISOString(),
+    new Date(2020, 4, 3, 3).toISOString(),
+    new Date(2020, 4, 4, 3, 28).toISOString(),
+    new Date(2020, 4, 5).toISOString(),
+    new Date(2020, 4, 6).toISOString(),
+    new Date(2020, 4, 7, 4).toISOString(),
+    new Date(2020, 4, 8, 5).toISOString(),
   ];
   const temperatureData = [
     32.1,
@@ -58,15 +58,6 @@ const Charts = ({ classes }: ChartsProps) => {
   ];
   const windData = [10.5, 11.1, 11.3, 11.5, 11.7, 11, 11.6, 11.8, 12.1, 12.4];
   const waveData = [1.3, 1, 1.3, 1.4, 1.2, 1.6, 1, 1.2, 1.4, 1.2];
-
-  let resizeTimout: NodeJS.Timeout;
-  window.addEventListener("resize", () => {
-    setUpdateChart(true);
-    clearTimeout(resizeTimout);
-    resizeTimout = setTimeout(() => {
-      setUpdateChart(false);
-    }, 1);
-  });
 
   const data = (
     labels: string[],
@@ -139,6 +130,20 @@ const Charts = ({ classes }: ChartsProps) => {
       setSliceAtLabel(date);
     }
   };
+
+  const onResize = () => {
+    setUpdateChart(true);
+    setTimeout(() => {
+      setUpdateChart(false);
+    }, 1);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   useEffect(() => {
     const chart = temperatureChartRef.current;
@@ -216,8 +221,8 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     ticks: {
                       display: false,
-                      min: new Date(2020, 4, 1).toLocaleString(),
-                      max: new Date(2020, 4, 8).toLocaleString(),
+                      min: new Date(2020, 4, 1).toISOString(),
+                      max: new Date(2020, 4, 8).toISOString(),
                     },
                     gridLines: {
                       display: false,
@@ -290,8 +295,8 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     ticks: {
                       display: false,
-                      min: new Date(2020, 4, 1).toLocaleString(),
-                      max: new Date(2020, 4, 8).toLocaleString(),
+                      min: new Date(2020, 4, 1).toISOString(),
+                      max: new Date(2020, 4, 8).toISOString(),
                     },
                     gridLines: {
                       display: false,
@@ -360,8 +365,8 @@ const Charts = ({ classes }: ChartsProps) => {
                       },
                     },
                     ticks: {
-                      min: new Date(2020, 4, 1).toLocaleString(),
-                      max: new Date(2020, 4, 8).toLocaleString(),
+                      min: new Date(2020, 4, 1).toISOString(),
+                      max: new Date(2020, 4, 8).toISOString(),
                       padding: 10,
                       maxRotation: 0,
                       callback: (value: string) => {
