@@ -47,9 +47,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
       </Grid>
     </Grid>
     <Grid container justify="center">
-      <Grid className={classes.chartContainer} item xs={9}>
-        <Charts />
-      </Grid>
+      <Charts />
     </Grid>
   </Grid>
 );
@@ -68,9 +66,6 @@ const styles = () =>
     smallContainer: {
       height: "15vw",
       width: "35vw",
-    },
-    chartContainer: {
-      height: "30vh",
     },
   });
 
