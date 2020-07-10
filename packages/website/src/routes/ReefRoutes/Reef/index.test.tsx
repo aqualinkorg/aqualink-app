@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
-
+import type { Reef as ReefType, Data } from "../../../store/Reefs/types";
 import Reef from ".";
 
 const mockStore = configureStore([]);
@@ -16,63 +16,56 @@ describe("Reef Detail Page", () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
   beforeEach(() => {
+    const reef: ReefType = {
+      id: 1,
+      name: null,
+      polygon: {
+        type: "Polygon",
+        coordinates: [[[0, 0]]],
+      },
+      temperatureThreshold: 22,
+      depth: 4,
+      status: 1,
+      region: "Hawaii",
+      videoStream: null,
+      stream: null,
+      admin: null,
+      dailyData: [],
+    };
+
     const emptyStore = mockStore({
       selectedReef: {
-        details: {
-          id: "1",
-          regionName: "Hawai",
-          managerName: "Manager",
-          videoStream: "",
-          polygon: {
-            type: "",
-            coordinates: [[[0, 0]]],
-          },
-          dailyData: [],
-        },
+        details: reef,
         loading: false,
         error: null,
       },
     });
 
+    const dailyData: Data = {
+      id: 1,
+      date: "20 May 2020",
+      minBottomTemperature: 20,
+      maxBottomTemperature: 30,
+      avgBottomTemperature: 25,
+      degreeHeatingDays: 1,
+      surfaceTemperature: 25,
+      satelliteTemperature: 26,
+      minWindSpeed: 10,
+      maxWindSpeed: 9,
+      avgWindSpeed: 11,
+      windDirection: 180,
+      minWaveHeight: 3,
+      maxWaveHeight: 5,
+      avgWaveHeight: 4,
+      waveDirection: 180,
+      wavePeriod: 2,
+    };
+
     const fullStore = mockStore({
       selectedReef: {
         details: {
-          id: "1",
-          regionName: "Hawai",
-          managerName: "Manager",
-          videoStream: "",
-          polygon: {
-            type: "",
-            coordinates: [[[0, 0]]],
-          },
-          dailyData: [
-            {
-              id: 1,
-              date: "20 May 2020",
-              reefId: 1,
-              bottomTemperature: {
-                min: 20,
-                max: 30,
-                avg: 25,
-              },
-              degreeHeatingDays: 1,
-              surfaceTemperature: 25,
-              satelliteTemperature: 26,
-              wind: {
-                speed: 10,
-                minSpeed: 9,
-                maxSpeed: 11,
-                direction: 180,
-              },
-              waves: {
-                speed: 3,
-                minSpeed: 3,
-                maxSpeed: 4,
-                direction: 180,
-                period: 2,
-              },
-            },
-          ],
+          ...reef,
+          dailyData: [dailyData],
         },
         loading: false,
         error: null,

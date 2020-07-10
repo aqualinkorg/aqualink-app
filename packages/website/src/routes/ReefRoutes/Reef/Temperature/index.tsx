@@ -11,14 +11,25 @@ import {
   Grid,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import { Alert } from "@material-ui/lab";
-
-import { ReefState } from "../../../../store/Reefs/types";
+import Alert from "@material-ui/lab/Alert";
+import type { Data } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  const bottomTemperature = dailyData[0].bottomTemperature.max;
+  if (dailyData.length === 0) {
+    return null;
+  }
 
-  const { surfaceTemperature, wind, waves } = dailyData[0];
+  const bottomTemperature = dailyData[0].maxBottomTemperature;
+  const date = new Date(dailyData[0].date);
+
+  const {
+    surfaceTemperature,
+    maxWindSpeed,
+    windDirection,
+    maxWaveHeight,
+    wavePeriod,
+    waveDirection,
+  } = dailyData[0];
 
   return (
     <Card className={classes.card}>
@@ -30,7 +41,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">(05/12/20 8:16AM PST)</Typography>
+              <Typography variant="subtitle2">{`(${date.toLocaleDateString(
+                "en-US"
+              )} 8:16AM PST)`}</Typography>
             </Grid>
           </Grid>
         }
@@ -82,13 +95,13 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 </Typography>
               )}
               <Typography variant="caption">WIND</Typography>
-              {wind && (
+              {maxWindSpeed && (
                 <Typography
                   style={{ display: "flex", alignItems: "baseline" }}
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{wind.maxSpeed}</Typography>
+                    <Typography variant="h5">{maxWindSpeed}</Typography>
                   </Box>
                   <Box ml={0}>
                     <Typography variant="subtitle2">kph</Typography>
@@ -97,9 +110,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">
-                      {wind.direction} &#176;
-                    </Typography>
+                    <Typography variant="h5">{windDirection} &#176;</Typography>
                   </Box>
                 </Typography>
               )}
@@ -126,7 +137,6 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 severity="warning"
                 icon={<ErrorIcon />}
               >
-                {/* TODO: Alert `severity` prop and `ALERT LEVEL` should have conditional values based on the temperature scale */}
                 <Typography variant="caption">ALERT LEVEL: HIGH</Typography>
               </Alert>
             </Grid>
@@ -138,13 +148,13 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               alignItems="flex-start"
             >
               <Typography variant="caption">WAVES</Typography>
-              {waves && (
+              {maxWaveHeight && (
                 <Typography
                   style={{ display: "flex", alignItems: "baseline" }}
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{waves.speed}</Typography>
+                    <Typography variant="h5">{maxWaveHeight}</Typography>
                   </Box>
                   <Box ml={0}>
                     <Typography variant="subtitle2">m</Typography>
@@ -153,7 +163,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">AT</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{waves.period}</Typography>
+                    <Typography variant="h5">{wavePeriod}</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="subtitle2">S</Typography>
@@ -162,9 +172,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="overline">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">
-                      {waves.direction} &#176;
-                    </Typography>
+                    <Typography variant="h5">{waveDirection} &#176;</Typography>
                   </Box>
                 </Typography>
               )}
@@ -203,7 +211,7 @@ const styles = () =>
   });
 
 interface TemperatureIncomingProps {
-  dailyData: ReefState["details"]["dailyData"];
+  dailyData: Data[];
 }
 
 type TemperatureProps = WithStyles<typeof styles> & TemperatureIncomingProps;

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
-  <AppBar position="static">
+  <AppBar position="static" color="primary">
     <Toolbar>
       <Grid item container justify="space-between" alignItems="center" xs={12}>
         <Grid item xs={6}>
@@ -59,10 +59,12 @@ const ReefNavBar = ({ reefName, lastSurvey, managerName }: ReefNavBarProps) => (
   </AppBar>
 );
 
-interface ReefNavBarProps {
+interface ReefNavBarIncomingProps {
   reefName?: string;
   lastSurvey?: string;
   managerName?: string;
 }
+
+type ReefNavBarProps = ReefNavBarIncomingProps;
 
 export default ReefNavBar;
