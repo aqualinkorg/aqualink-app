@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary HomepageNavBar-appBar-3 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary HomepageNavBar-appBar-4 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -107,7 +107,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          class="HomepageMap-map-7 leaflet-container leaflet-grab leaflet-touch-drag"
+          class="HomepageMap-map-8 leaflet-container leaflet-grab leaflet-touch-drag"
           style="position: relative;"
           tabindex="0"
         >
@@ -226,9 +226,97 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-xs-6"
       >
-         
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+        >
+          <div
+            class="MuiPaper-root ReefTable-selectedReef-9 MuiPaper-elevation6 MuiPaper-rounded"
+          >
+            <div
+              class="MuiGrid-root ReefTable-card-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
+              >
+                <div
+                  class="MuiCardMedia-root ReefTable-cardImage-11"
+                  style="background-image: url(reef-image.png);"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7"
+              >
+                 
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+                  >
+                    TEMP AT 25M
+                  </span>
+                  <h4
+                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                  >
+                    29.5℃
+                  </h4>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+                  >
+                    SURFACE TEMP
+                  </span>
+                  <h4
+                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                  >
+                    31.8℃
+                  </h4>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <span
+                    class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+                  >
+                    DEG. HEAT. DAYS
+                  </span>
+                  <h4
+                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                  >
+                    14
+                  </h4>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <button
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <span
+                      class="MuiButton-label"
+                    >
+                      EXPLORE
+                    </span>
+                    <span
+                      class="MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

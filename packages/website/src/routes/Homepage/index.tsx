@@ -3,6 +3,7 @@ import { Grid, withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import HomepageNavBar from "./NavBar";
 import HomepageMap from "./Map";
+import ReefTable from "./ReefTable";
 
 const Homepage = ({ classes }: HomepageProps) => (
   <>
@@ -18,8 +19,8 @@ const Homepage = ({ classes }: HomepageProps) => (
         <Grid className={classes.map} item xs={6}>
           <HomepageMap />
         </Grid>
-        <Grid item xs={6}>
-          {" "}
+        <Grid className={classes.reefTable} item xs={6}>
+          <ReefTable />
         </Grid>
       </Grid>
     </div>
@@ -29,12 +30,14 @@ const Homepage = ({ classes }: HomepageProps) => (
 const styles = () =>
   createStyles({
     root: {
-      display: "flex",
-      alignItems: "center",
       height: "100%",
     },
     map: {
       height: "100%",
+    },
+    reefTable: {
+      height: "calc(100vh - 64px)",
+      overflowY: "auto",
     },
   });
 

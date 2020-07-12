@@ -29,6 +29,7 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
 
   // TODO: Dispatch action to search for reefs based on value
   const onSearchSubmit = () => {
+    // eslint-disable-next-line no-console
     console.log(searchLocationText);
   };
 
@@ -99,7 +100,7 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
           ) : (
             <Grid container justify="flex-end" item xs={6}>
               <Grid item>
-                <Button>SIGN IN</Button>
+                <Button onClick={() => setSignedIn(true)}>SIGN IN</Button>
               </Grid>
               <Grid item>
                 <Button>REGISTER</Button>
