@@ -43,7 +43,9 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
             </IconButton>
           </Grid>
           <Grid container item xs={5}>
-            <Typography variant="h4">Aqua</Typography>
+            <Typography style={{ fontWeight: 500 }} variant="h4">
+              Aqua
+            </Typography>
             <Typography style={{ fontWeight: 300 }} variant="h4">
               link
             </Typography>

@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Homepage from ".";
 
+jest.mock("./ReefTable", () => "Mock-ReefTable");
+
 test("renders as expected", () => {
   const { container } = render(
     <Router>

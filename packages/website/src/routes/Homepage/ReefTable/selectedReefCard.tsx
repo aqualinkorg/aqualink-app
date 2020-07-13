@@ -11,21 +11,71 @@ import {
   Theme,
 } from "@material-ui/core";
 
+import CardChart from "./cardChart";
+import { Reef } from "../../../store/Reefs/types";
+
 const reefImage = require("../../../assets/reef-image.png");
 
-const SelectedReefCard = ({ classes }: SelectedReefCardProps) => {
+const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   return (
-    <>
+    <div className={classes.root}>
+      <Typography
+        style={{ margin: "0 0 0.5rem 1.5rem" }}
+        variant="h5"
+        color="textSecondary"
+      >
+        Featured Reef
+      </Typography>
       <Grid container justify="center">
-        <Paper elevation={6} className={classes.selectedReef}>
+        <Paper elevation={3} className={classes.selectedReef}>
           <Grid className={classes.card} container item xs={12}>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <CardMedia className={classes.cardImage} image={reefImage} />
             </Grid>
-            <Grid item xs={7}>
-              {" "}
+            <Grid container item xs={6}>
+              <Grid item xs={12}>
+                <Typography
+                  style={{ padding: "0.5rem 0 0 0.5rem" }}
+                  color="textSecondary"
+                  variant="h5"
+                >
+                  Kealakekua Bay Reef
+                </Typography>
+                <Typography
+                  style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
+                  color="textSecondary"
+                  variant="h6"
+                >
+                  Kahaluu-eauhou, HI
+                </Typography>
+              </Grid>
+              {reef &&
+                reef.dailyData &&
+                reef.dailyData.length > 0 &&
+                reef.temperatureThreshold && (
+                  <Grid item xs={12}>
+                    <Typography
+                      style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
+                      color="textSecondary"
+                      variant="subtitle1"
+                    >
+                      MEAN DAILY WATER TEMPERATURE AT 25M (C°)
+                    </Typography>
+                    <CardChart
+                      dailyData={reef.dailyData}
+                      temperatureThreshold={reef.temperatureThreshold}
+                    />
+                  </Grid>
+                )}
             </Grid>
-            <Grid container direction="row" alignItems="center" item xs={2}>
+            <Grid
+              style={{ paddingLeft: "2rem" }}
+              container
+              direction="row"
+              alignItems="center"
+              item
+              xs={2}
+            >
               <Grid item xs={12}>
                 <Typography variant="caption" color="textSecondary">
                   TEMP AT 25M
@@ -71,16 +121,18 @@ const SelectedReefCard = ({ classes }: SelectedReefCardProps) => {
           </Grid>
         </Paper>
       </Grid>
-    </>
+    </div>
   );
 };
 
 const styles = (theme: Theme) =>
   createStyles({
-    selectedReef: {
+    root: {
       marginTop: "1rem",
+    },
+    selectedReef: {
       width: "49vw",
-      height: "23vh",
+      height: "28vh",
     },
     card: {
       height: "100%",
@@ -94,6 +146,11 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface SelectedReefCardProps extends WithStyles<typeof styles> {}
+interface selectedReefCardIncomingProps {
+  reef?: Reef;
+}
+
+type SelectedReefCardProps = selectedReefCardIncomingProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(SelectedReefCard);

@@ -43,6 +43,7 @@ exports[`renders as expected 1`] = `
         >
           <h4
             class="MuiTypography-root MuiTypography-h4"
+            style="font-weight: 500;"
           >
             Aqua
           </h4>

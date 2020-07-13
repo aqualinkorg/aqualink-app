@@ -94,7 +94,6 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
 
   const onResize = useCallback(() => {
     setUpdateChart(true);
-    setThreshold(temperatureThreshold);
     setTimeout(() => {
       setUpdateChart(false);
       setThreshold(temperatureThreshold);
@@ -211,6 +210,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               chartLabels,
               bottomTemperatureData,
               0.6,
+              3,
               true
             )}
           />
@@ -281,7 +281,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               },
             }}
             height={30}
-            data={createChartData(chartLabels, windSpeedData, 0.3, false)}
+            data={createChartData(chartLabels, windSpeedData, 0.3, 3, false)}
           />
           <Typography
             style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
@@ -350,7 +350,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                       stepSize: 1,
                       max: 5,
                       callback: (value: number) => {
-                        return `   ${value}m  `;
+                        return `    ${value}m  `;
                       },
                     },
                   },
@@ -358,7 +358,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               },
             }}
             height={30}
-            data={createChartData(chartLabels, waveHeightData, 0.3, false)}
+            data={createChartData(chartLabels, waveHeightData, 0.3, 3, false)}
           />
           {showTooltip ? (
             <div
