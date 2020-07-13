@@ -232,16 +232,16 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
         >
           <div
-            class="MuiPaper-root ReefTable-selectedReef-9 MuiPaper-elevation6 MuiPaper-rounded"
+            class="MuiPaper-root SelectedReefCard-selectedReef-9 MuiPaper-elevation6 MuiPaper-rounded"
           >
             <div
-              class="MuiGrid-root ReefTable-card-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              class="MuiGrid-root SelectedReefCard-card-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3"
               >
                 <div
-                  class="MuiCardMedia-root ReefTable-cardImage-11"
+                  class="MuiCardMedia-root SelectedReefCard-cardImage-11"
                   style="background-image: url(reef-image.png);"
                 />
               </div>
@@ -262,7 +262,7 @@ exports[`renders as expected 1`] = `
                     TEMP AT 25M
                   </span>
                   <h4
-                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                    class="MuiTypography-root SelectedReefCard-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
                   >
                     29.5℃
                   </h4>
@@ -276,7 +276,7 @@ exports[`renders as expected 1`] = `
                     SURFACE TEMP
                   </span>
                   <h4
-                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                    class="MuiTypography-root SelectedReefCard-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
                   >
                     31.8℃
                   </h4>
@@ -290,7 +290,7 @@ exports[`renders as expected 1`] = `
                     DEG. HEAT. DAYS
                   </span>
                   <h4
-                    class="MuiTypography-root ReefTable-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                    class="MuiTypography-root SelectedReefCard-cardMetrics-12 MuiTypography-h4 MuiTypography-colorTextSecondary"
                   >
                     14
                   </h4>
