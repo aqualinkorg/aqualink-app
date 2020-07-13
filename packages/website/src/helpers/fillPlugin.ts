@@ -9,8 +9,6 @@ export const fillBetweenLinesPlugin = {
       chart &&
       chart.chart &&
       chart.scales &&
-      options.top &&
-      options.bottom &&
       options.zeroLevel &&
       options.color
     ) {

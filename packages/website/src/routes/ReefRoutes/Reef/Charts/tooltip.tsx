@@ -60,12 +60,14 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
             <Grid container justify="flex-start" item xs={6}>
               <Typography variant="caption">TEMP AT 25M</Typography>
               <Typography variant="h5">
-                {`${data.temperature}`} &#8451;
+                {data.bottomTemperature} &#8451;
               </Typography>
             </Grid>
             <Grid container justify="flex-end" item xs={6}>
               <Typography variant="caption">SURFACE TEMP</Typography>
-              <Typography variant="h5">31.4 &#8451;</Typography>
+              <Typography variant="h5">
+                {data.surfaceTemperature} &#8451;
+              </Typography>
             </Grid>
           </Grid>
           <Grid container direction="column" item xs={12}>
@@ -77,14 +79,14 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
               <Box>
                 <Typography variant="h5">{data.wind}</Typography>
               </Box>
-              <Box ml={0}>
+              <Box ml={0.2}>
                 <Typography variant="subtitle2">kph</Typography>
               </Box>
               <Box ml={0.5}>
                 <Typography variant="caption">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">230&#176;</Typography>
+                <Typography variant="h5">{data.windDirection}&#176;</Typography>
               </Box>
             </Typography>
           </Grid>
@@ -97,23 +99,25 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
               <Box>
                 <Typography variant="h5">{data.wave}</Typography>
               </Box>
-              <Box ml={0}>
+              <Box ml={0.2}>
                 <Typography variant="subtitle2">m</Typography>
               </Box>
               <Box ml={0.5}>
                 <Typography variant="caption">AT</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">15</Typography>
+                <Typography variant="h5">{data.wavePeriod}</Typography>
               </Box>
-              <Box ml={0.5}>
-                <Typography variant="subtitle2">S</Typography>
+              <Box ml={0.2}>
+                <Typography variant="subtitle2">s</Typography>
               </Box>
               <Box ml={0.5}>
                 <Typography variant="overline">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">25 &#176;</Typography>
+                <Typography variant="h5">
+                  {data.waveDirection} &#176;
+                </Typography>
               </Box>
             </Typography>
           </Grid>
@@ -138,9 +142,13 @@ const styles = () =>
 interface TooltipData {
   data: {
     date: string;
-    temperature: number;
+    bottomTemperature: number;
+    surfaceTemperature: number;
     wind: number;
+    windDirection: number;
     wave: number;
+    wavePeriod: number;
+    waveDirection: number;
   };
 }
 

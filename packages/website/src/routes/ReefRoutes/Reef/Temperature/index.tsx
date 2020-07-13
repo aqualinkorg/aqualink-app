@@ -15,9 +15,14 @@ import Alert from "@material-ui/lab/Alert";
 import type { Data } from "../../../../store/Reefs/types";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  const dailyDataLength = dailyData.length;
-  const bottomTemperature = dailyData[dailyDataLength - 1].maxBottomTemperature;
-  const date = new Date(dailyData[dailyDataLength - 1].date);
+  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
+    if (item1.date > item2.date) {
+      return -1;
+    }
+    return 1;
+  });
+  const bottomTemperature = sortByDate[0].maxBottomTemperature;
+  const date = new Date(sortByDate[0].date);
 
   const {
     surfaceTemperature,
@@ -26,7 +31,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
     maxWaveHeight,
     wavePeriod,
     waveDirection,
-  } = dailyData[dailyDataLength - 1];
+  } = sortByDate[0];
 
   return (
     <Card className={classes.card}>
@@ -87,7 +92,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
             >
               <Typography variant="caption">SURFACE TEMP</Typography>
               {surfaceTemperature && (
-                <Typography gutterBottom variant="h5">
+                <Typography gutterBottom variant="h4">
                   {surfaceTemperature} &#8451;
                 </Typography>
               )}
@@ -98,16 +103,16 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{maxWindSpeed}</Typography>
+                    <Typography variant="h4">{maxWindSpeed}</Typography>
                   </Box>
-                  <Box ml={0}>
+                  <Box ml={0.2}>
                     <Typography variant="subtitle2">kph</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{windDirection} &#176;</Typography>
+                    <Typography variant="h4">{windDirection}&#176;</Typography>
                   </Box>
                 </Typography>
               )}
@@ -151,25 +156,25 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{maxWaveHeight}</Typography>
+                    <Typography variant="h4">{maxWaveHeight}</Typography>
                   </Box>
-                  <Box ml={0}>
+                  <Box ml={0.2}>
                     <Typography variant="subtitle2">m</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="caption">AT</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{wavePeriod}</Typography>
+                    <Typography variant="h4">{wavePeriod}</Typography>
+                  </Box>
+                  <Box ml={0.2}>
+                    <Typography variant="subtitle2">s</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="subtitle2">S</Typography>
+                    <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="overline">FROM</Typography>
-                  </Box>
-                  <Box ml={0.5}>
-                    <Typography variant="h5">{waveDirection} &#176;</Typography>
+                    <Typography variant="h4">{waveDirection}&#176;</Typography>
                   </Box>
                 </Typography>
               )}

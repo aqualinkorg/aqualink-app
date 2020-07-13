@@ -47,7 +47,10 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
       </Grid>
     </Grid>
     <Grid container justify="center">
-      <Charts />
+      <Charts
+        dailyData={reef.dailyData}
+        temperatureThreshold={reef.temperatureThreshold}
+      />
     </Grid>
   </Grid>
 );

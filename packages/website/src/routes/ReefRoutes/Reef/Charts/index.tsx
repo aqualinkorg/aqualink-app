@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -9,97 +9,83 @@ import {
 import { Line } from "react-chartjs-2";
 
 import Tooltip from "./tooltip";
+import type { Data } from "../../../../store/Reefs/types";
+import { createChartData } from "../../../../helpers/createChartData";
 
 require("../../../../helpers/backgroundPlugin");
 require("../../../../helpers/fillPlugin");
 require("../../../../helpers/slicePlugin");
 require("../../../../helpers/thresholdPlugin");
 
-const Charts = ({ classes }: ChartsProps) => {
+const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
   const windChartRef = useRef<Line>(null);
   const waveChartRef = useRef<Line>(null);
-  const bleachingThreshold = 33.5;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState({
     date: "",
-    temperature: 0,
+    bottomTemperature: 0,
+    surfaceTemperature: 0,
     wind: 0,
+    windDirection: 0,
     wave: 0,
+    wavePeriod: 0,
+    waveDirection: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [updateChart, setUpdateChart] = useState<boolean>(false);
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [thresholdTextPosition, setThresholdTextPosition] = useState<number>(0);
 
-  const chartLabels = [
-    new Date(2020, 3, 30).toISOString(),
-    new Date(2020, 4, 1, 3).toISOString(),
-    new Date(2020, 4, 2, 4).toISOString(),
-    new Date(2020, 4, 2, 7).toISOString(),
-    new Date(2020, 4, 3, 3).toISOString(),
-    new Date(2020, 4, 4, 3, 28).toISOString(),
-    new Date(2020, 4, 5).toISOString(),
-    new Date(2020, 4, 6).toISOString(),
-    new Date(2020, 4, 7, 4).toISOString(),
-    new Date(2020, 4, 8, 5).toISOString(),
-  ];
-  const temperatureData = [
-    32.1,
-    32.4,
-    32.7,
-    32.3,
-    32.5,
-    32.7,
-    32.7,
-    33.5,
-    34.1,
-    34.3,
-  ];
-  const windData = [10.5, 11.1, 11.3, 11.5, 11.7, 11, 11.6, 11.8, 12.1, 12.4];
-  const waveData = [1.3, 1, 1.3, 1.4, 1.2, 1.6, 1, 1.2, 1.4, 1.2];
+  const dailyDataLen = dailyData.length;
 
-  const data = (
-    labels: string[],
-    dataArray: number[],
-    gradiendPercenage: number,
-    fill: boolean
-  ) => (canvas: HTMLCanvasElement) => {
-    const ctx = canvas.getContext("2d");
-    let gradient;
-    if (ctx) {
-      gradient = ctx.createLinearGradient(0, 0, 0, 400);
-      gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
-      gradient.addColorStop(gradiendPercenage, "rgba(22, 141, 189, 0)");
+  // Sort daily data by date
+  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
+    if (item1.date > item2.date) {
+      return 1;
     }
+    return -1;
+  });
+  const dates = sortByDate.map((item) => item.date);
 
-    return {
-      labels,
-      datasets: [
-        {
-          label: "overflow-dataset",
-          data: dataArray,
-          fill,
-          borderColor: "#168dbd",
-          borderWidth: 1.5,
-          pointBackgroundColor: "#ffffff",
-          pointBorderWidth: 1.5,
-          pointRadius: 3,
-          cubicInterpolationMode: "monotone",
-        },
-        {
-          label: "gradient-dataset",
-          data: dataArray,
-          backgroundColor: gradient,
-          borderColor: "#168dbd",
-          pointBackgroundColor: "#ffffff",
-          pointBorderWidth: 0,
-          pointRadius: 0,
-          cubicInterpolationMode: "monotone",
-        },
-      ],
-    };
-  };
+  // Acquire bottom temperature data and append an extra value equal to the
+  // temperature mean in order to make temperature chart continuous
+  const bottomTemperatureData = sortByDate.map(
+    (item) => item.avgBottomTemperature
+  );
+  const bottomTemperatureChartData = [
+    ...bottomTemperatureData,
+    bottomTemperatureData.reduce((a, b) => a + b) / dailyDataLen,
+  ];
+
+  // Acquire wind speed data and append an extra value equal to the
+  // wind speed mean in order to make wind chart continuous
+  const windSpeedData = sortByDate.map((item) => item.avgWindSpeed);
+  const windSpeedChartData = [
+    ...windSpeedData,
+    windSpeedData.reduce((a, b) => a + b) / dailyDataLen,
+  ];
+
+  // Acquire wave height data and append an extra value equal to the
+  // wave height mean in order to make wave chart continuous
+  const waveHeightData = sortByDate.map((item) => item.avgWaveHeight);
+  const waveHeightChartData = [
+    ...waveHeightData,
+    waveHeightData.reduce((a, b) => a + b) / dailyDataLen,
+  ];
+
+  const xAxisMax = new Date(
+    new Date(dates[dailyDataLen - 1]).setHours(24, 0, 0, 0)
+  ).toISOString();
+  const xAxisMin = new Date(
+    new Date(xAxisMax).setHours(-7 * 24, 0, 0, 0)
+  ).toISOString();
+
+  // Add an extra date one day after the final daily data date
+  const chartLabels = [
+    ...dates,
+    new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
+  ];
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
@@ -122,37 +108,49 @@ const Charts = ({ classes }: ChartsProps) => {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,
-        temperature: temperatureData[index],
-        wind: windData[index],
-        wave: waveData[index],
+        bottomTemperature: bottomTemperatureData[index],
+        surfaceTemperature: sortByDate[index].surfaceTemperature,
+        wind: windSpeedData[index],
+        windDirection: sortByDate[index].windDirection,
+        wave: waveHeightData[index],
+        wavePeriod: sortByDate[index].wavePeriod,
+        waveDirection: sortByDate[index].waveDirection,
       });
       setShowTooltip(true);
       setSliceAtLabel(date);
     }
   };
 
-  const onResize = () => {
-    setUpdateChart(true);
-    setTimeout(() => {
-      setUpdateChart(false);
-    }, 1);
+  const setThreshold = (value: number | null) => {
+    const chart = temperatureChartRef.current;
+
+    if (chart) {
+      const yScale = chart.chartInstance.scales["y-axis-0"];
+      setThresholdTextPosition(yScale.getPixelForValue(value));
+    }
   };
 
+  const onResize = useCallback(() => {
+    setUpdateChart(true);
+    setThreshold(temperatureThreshold);
+    setTimeout(() => {
+      setUpdateChart(false);
+      setThreshold(temperatureThreshold);
+    }, 1);
+  }, [temperatureThreshold]);
+
+  // Update chart and set temperature threshold position when window is resized
   useEffect(() => {
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [onResize]);
 
+  // Set temperature threshold position on first render
   useEffect(() => {
-    const chart = temperatureChartRef.current;
-
-    if (chart) {
-      const yScale = chart.chartInstance.scales["y-axis-0"];
-      setThresholdTextPosition(yScale.getPixelForValue(bleachingThreshold));
-    }
-  }, [setThresholdTextPosition]);
+    setThreshold(temperatureThreshold);
+  }, [temperatureThreshold]);
 
   return (
     <>
@@ -167,7 +165,7 @@ const Charts = ({ classes }: ChartsProps) => {
           <Typography variant="caption">(Mean)</Typography>
         </Grid>
       </Grid>
-      <Grid className={classes.chartContainer} item xs={9}>
+      <Grid item md={9}>
         <div className={classes.root}>
           <Typography
             style={{ marginLeft: "4rem", fontWeight: "normal" }}
@@ -181,13 +179,11 @@ const Charts = ({ classes }: ChartsProps) => {
               plugins: {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
-                  mode: "odd",
-                  axis: "time",
                 },
                 fillPlugin: {
                   datasetIndex: 0,
-                  zeroLevel: bleachingThreshold,
-                  bottom: 27,
+                  zeroLevel: temperatureThreshold,
+                  bottom: 0,
                   top: 35,
                   color: "rgba(250, 141, 0, 1)",
                   updateChart,
@@ -197,7 +193,7 @@ const Charts = ({ classes }: ChartsProps) => {
                   datasetIndex: 0,
                 },
                 thresholdPlugin: {
-                  threshold: bleachingThreshold,
+                  threshold: temperatureThreshold,
                 },
               },
               tooltips: {
@@ -221,8 +217,8 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     ticks: {
                       display: false,
-                      min: new Date(2020, 4, 1).toISOString(),
-                      max: new Date(2020, 4, 8).toISOString(),
+                      min: xAxisMin,
+                      max: xAxisMax,
                     },
                     gridLines: {
                       display: false,
@@ -237,15 +233,11 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     display: true,
                     ticks: {
-                      steps: 4,
-                      min: 27,
-                      stepSize: 1,
-                      max: 35,
+                      min: 0,
+                      stepSize: 5,
+                      max: 40,
                       callback: (value: number) => {
-                        if (value % 2 === 1) {
-                          return `    ${value}\u00B0   `;
-                        }
-                        return null;
+                        return `  ${value}\u00B0   `;
                       },
                     },
                   },
@@ -253,7 +245,12 @@ const Charts = ({ classes }: ChartsProps) => {
               },
             }}
             height={60}
-            data={data(chartLabels, temperatureData, 0.6, true)}
+            data={createChartData(
+              chartLabels,
+              bottomTemperatureChartData,
+              0.6,
+              true
+            )}
           />
           <Typography
             style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
@@ -267,7 +264,6 @@ const Charts = ({ classes }: ChartsProps) => {
               plugins: {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
-                  mode: "odd",
                 },
                 sliceDrawPlugin: {
                   sliceAtLabel,
@@ -295,8 +291,8 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     ticks: {
                       display: false,
-                      min: new Date(2020, 4, 1).toISOString(),
-                      max: new Date(2020, 4, 8).toISOString(),
+                      min: xAxisMin,
+                      max: xAxisMax,
                     },
                     gridLines: {
                       display: false,
@@ -311,10 +307,9 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     display: true,
                     ticks: {
-                      steps: 2,
-                      min: 5,
-                      stepSize: 5,
-                      max: 15,
+                      min: 0,
+                      stepSize: 1,
+                      max: 5,
                       callback: (value: number) => {
                         return ` ${value}kph  `;
                       },
@@ -324,7 +319,7 @@ const Charts = ({ classes }: ChartsProps) => {
               },
             }}
             height={30}
-            data={data(chartLabels, windData, 0.3, false)}
+            data={createChartData(chartLabels, windSpeedChartData, 0.3, false)}
           />
           <Typography
             style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
@@ -338,7 +333,6 @@ const Charts = ({ classes }: ChartsProps) => {
               plugins: {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
-                  mode: "odd",
                 },
                 sliceDrawPlugin: {
                   sliceAtLabel,
@@ -365,8 +359,8 @@ const Charts = ({ classes }: ChartsProps) => {
                       },
                     },
                     ticks: {
-                      min: new Date(2020, 4, 1).toISOString(),
-                      max: new Date(2020, 4, 8).toISOString(),
+                      min: xAxisMin,
+                      max: xAxisMax,
                       padding: 10,
                       maxRotation: 0,
                       callback: (value: string) => {
@@ -390,10 +384,9 @@ const Charts = ({ classes }: ChartsProps) => {
                     },
                     display: true,
                     ticks: {
-                      steps: 3,
-                      min: 0.5,
-                      stepSize: 0.5,
-                      max: 2,
+                      min: 0,
+                      stepSize: 1,
+                      max: 5,
                       callback: (value: number) => {
                         return `   ${value}m  `;
                       },
@@ -403,7 +396,7 @@ const Charts = ({ classes }: ChartsProps) => {
               },
             }}
             height={30}
-            data={data(chartLabels, waveData, 0.3, false)}
+            data={createChartData(chartLabels, waveHeightChartData, 0.3, false)}
           />
           {showTooltip ? (
             <div
@@ -436,11 +429,13 @@ const styles = () =>
     root: {
       height: "100%",
     },
-    chartContainer: {
-      height: "30vh",
-    },
   });
 
-type ChartsProps = WithStyles<typeof styles>;
+interface ChartsIncomingProps {
+  dailyData: Data[];
+  temperatureThreshold: number | null;
+}
+
+type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Charts);

@@ -14,7 +14,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import { colorCode } from "../../../../assets/colorCode";
 import bottom from "../../../../assets/bottom.svg";
-import { Reef } from "../../../../store/Reefs/types";
+import type { Data } from "../../../../store/Reefs/types";
 
 const colorFinder = (value: number) => {
   const len = colorCode.length;
@@ -29,19 +29,24 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
-  const dailyDataLength = dailyData.length;
-  const { degreeHeatingDays } = dailyData[dailyDataLength - 1];
+  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
+    if (item1.date > item2.date) {
+      return -1;
+    }
+    return 1;
+  });
+  const { degreeHeatingDays } = sortByDate[0];
 
   const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;
 
   const colorItem = colorFinder(degreeHeatingWeeks);
 
-  const weekSurfaceTemperatures = dailyData
+  const weekSurfaceTemperatures = sortByDate
     .slice(0, 7)
     .map((item) => item.surfaceTemperature);
   const weekMaxSurfaceTemperature = Math.max(...weekSurfaceTemperatures);
 
-  const weekBottomTemperatures = dailyData
+  const weekBottomTemperatures = sortByDate
     .slice(0, 7)
     .map((item) => item.maxBottomTemperature);
   const weekMaxBottomTemperature = Math.max(...weekBottomTemperatures);
@@ -199,7 +204,7 @@ const styles = () =>
   });
 
 interface StatsIncomingProps {
-  dailyData: Reef["dailyData"];
+  dailyData: Data[];
 }
 
 type StatsProps = WithStyles<typeof styles> & StatsIncomingProps;
