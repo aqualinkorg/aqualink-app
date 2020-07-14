@@ -13,10 +13,14 @@ import {
 
 import CardChart from "./cardChart";
 import { Reef } from "../../../store/Reefs/types";
+import { sortDailyData } from "../../../helpers/sortDailyData";
 
 const reefImage = require("../../../assets/reef-image.png");
 
 const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
+  const sortByDate = sortDailyData(reef.dailyData);
+  const dailyDataLen = sortByDate.length;
+
   return (
     <div className={classes.root}>
       <Typography
@@ -39,34 +43,29 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   color="textSecondary"
                   variant="h5"
                 >
-                  Kealakekua Bay Reef
+                  {reef.name}
                 </Typography>
                 <Typography
                   style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
                   color="textSecondary"
                   variant="h6"
                 >
-                  Kahaluu-eauhou, HI
+                  {reef.region}
                 </Typography>
               </Grid>
-              {reef &&
-                reef.dailyData &&
-                reef.dailyData.length > 0 &&
-                reef.temperatureThreshold && (
-                  <Grid item xs={12}>
-                    <Typography
-                      style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
-                      color="textSecondary"
-                      variant="subtitle1"
-                    >
-                      MEAN DAILY WATER TEMPERATURE AT 25M (C°)
-                    </Typography>
-                    <CardChart
-                      dailyData={reef.dailyData}
-                      temperatureThreshold={reef.temperatureThreshold}
-                    />
-                  </Grid>
-                )}
+              <Grid item xs={12}>
+                <Typography
+                  style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  MEAN DAILY WATER TEMPERATURE AT 25M (C°)
+                </Typography>
+                <CardChart
+                  dailyData={reef.dailyData}
+                  temperatureThreshold={reef.temperatureThreshold}
+                />
+              </Grid>
             </Grid>
             <Grid
               style={{ paddingLeft: "2rem" }}
@@ -85,7 +84,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  29.5&#8451;
+                  {sortByDate[dailyDataLen - 1].maxBottomTemperature}&#8451;
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -97,7 +96,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  31.8&#8451;
+                  {sortByDate[dailyDataLen - 1].surfaceTemperature}&#8451;
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -109,7 +108,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  14
+                  {sortByDate[dailyDataLen - 1].degreeHeatingDays}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -147,7 +146,7 @@ const styles = (theme: Theme) =>
   });
 
 interface selectedReefCardIncomingProps {
-  reef?: Reef;
+  reef: Reef;
 }
 
 type SelectedReefCardProps = selectedReefCardIncomingProps &

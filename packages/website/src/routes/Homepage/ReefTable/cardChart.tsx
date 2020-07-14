@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Line } from "react-chartjs-2";
 
 import { createChartData } from "../../../helpers/createChartData";
+import { sortDailyData } from "../../../helpers/sortDailyData";
 import type { Data } from "../../../store/Reefs/types";
 
 require("../../../helpers/backgroundPlugin");
@@ -12,12 +13,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
 
   const dailyDataLen = dailyData.length;
   // Sort daily data by date
-  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
-    if (item1.date > item2.date) {
-      return 1;
-    }
-    return -1;
-  });
+  const sortByDate = sortDailyData(dailyData);
   const dates = sortByDate.map((item) => item.date);
 
   // Acquire bottom temperature data and append an extra value equal to the

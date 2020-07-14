@@ -23,7 +23,7 @@ interface Row {
 
 const ReefTable = () => {
   const reefsList = useSelector(reefsListSelector);
-  const selectedReefDetails = useSelector(reefDetailsSelector);
+  const selectedReef = useSelector(reefDetailsSelector);
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   const headerStyle: CSSProperties = {
@@ -110,38 +110,45 @@ const ReefTable = () => {
 
   return (
     <>
-      <SelectedReefCard reef={selectedReefDetails} />
-      <Grid style={{ marginTop: "2rem" }} item xs={12}>
-        <MaterialTable
-          icons={{
-            SortArrow: forwardRef((props, ref) => (
-              <ArrowUpwardIcon {...props} ref={ref} />
-            )),
-          }}
-          columns={tableColumns}
-          data={tableData}
-          onRowClick={(event, row) => {
-            if (row && row.tableData) {
-              setSelectedRow(row.tableData.id);
-            }
-          }}
-          options={{
-            rowStyle: (rowData) => ({
-              backgroundColor:
-                selectedRow === rowData.tableData.id
-                  ? colors.lighterBlue
-                  : "none",
-            }),
-            paging: false,
-            headerStyle,
-          }}
-          components={{
-            Container: (props) => <Paper {...props} elevation={0} />,
-            Toolbar: () => null,
-            Pagination: () => null,
-          }}
-        />
-      </Grid>
+      {selectedReef &&
+        selectedReef.dailyData &&
+        selectedReef.dailyData.length > 0 &&
+        selectedReef.temperatureThreshold && (
+          <SelectedReefCard reef={selectedReef} />
+        )}
+      {reefsList && reefsList.length > 0 && (
+        <Grid style={{ marginTop: "2rem" }} item xs={12}>
+          <MaterialTable
+            icons={{
+              SortArrow: forwardRef((props, ref) => (
+                <ArrowUpwardIcon {...props} ref={ref} />
+              )),
+            }}
+            columns={tableColumns}
+            data={tableData}
+            onRowClick={(event, row) => {
+              if (row && row.tableData) {
+                setSelectedRow(row.tableData.id);
+              }
+            }}
+            options={{
+              rowStyle: (rowData) => ({
+                backgroundColor:
+                  selectedRow === rowData.tableData.id
+                    ? colors.lighterBlue
+                    : "none",
+              }),
+              paging: false,
+              headerStyle,
+            }}
+            components={{
+              Container: (props) => <Paper {...props} elevation={0} />,
+              Toolbar: () => null,
+              Pagination: () => null,
+            }}
+          />
+        </Grid>
+      )}
     </>
   );
 };

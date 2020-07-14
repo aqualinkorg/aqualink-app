@@ -13,7 +13,7 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   useEffect(() => {
     dispatch(reefsRequest());
-    dispatch(reefRequest("1"));
+    dispatch(reefRequest("18"));
   }, [dispatch]);
 
   return (
