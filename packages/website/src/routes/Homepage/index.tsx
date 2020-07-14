@@ -1,31 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Grid, withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import HomepageNavBar from "./NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
+import { reefsRequest } from "../../store/Reefs/reefsListSlice";
+import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 
-const Homepage = ({ classes }: HomepageProps) => (
-  <>
-    <HomepageNavBar />
-    <div className={classes.root}>
-      <Grid
-        style={{ height: "100%" }}
-        container
-        direction="row"
-        justify="flex-start"
-        alignItems="center"
-      >
-        <Grid className={classes.map} item xs={6}>
-          <HomepageMap />
+const Homepage = ({ classes }: HomepageProps) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(reefsRequest());
+    dispatch(reefRequest("1"));
+  }, [dispatch]);
+
+  return (
+    <>
+      <HomepageNavBar />
+      <div className={classes.root}>
+        <Grid
+          style={{ height: "100%" }}
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="center"
+        >
+          <Grid className={classes.map} item xs={6}>
+            <HomepageMap />
+          </Grid>
+          <Grid className={classes.reefTable} item xs={6}>
+            <ReefTable />
+          </Grid>
         </Grid>
-        <Grid className={classes.reefTable} item xs={6}>
-          <ReefTable />
-        </Grid>
-      </Grid>
-    </div>
-  </>
-);
+      </div>
+    </>
+  );
+};
 
 const styles = () =>
   createStyles({

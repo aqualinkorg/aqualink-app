@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`Homepage should render with given state from Redux store 1`] = `
 <div>
   <header
     class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary HomepageNavBar-appBar-4 MuiPaper-elevation4"

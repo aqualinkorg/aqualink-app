@@ -131,7 +131,7 @@ const styles = (theme: Theme) =>
       marginTop: "1rem",
     },
     selectedReef: {
-      width: "49vw",
+      width: "48vw",
       height: "28vh",
     },
     card: {
