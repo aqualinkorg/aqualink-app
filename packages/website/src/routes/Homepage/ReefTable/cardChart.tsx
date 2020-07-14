@@ -61,6 +61,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
           plugins: {
             chartJsPluginBarchartBackground: {
               color: "rgb(158, 166, 170, 0.07)",
+              xTicksFontWeight: 2.8,
             },
             fillPlugin: {
               datasetIndex: 0,

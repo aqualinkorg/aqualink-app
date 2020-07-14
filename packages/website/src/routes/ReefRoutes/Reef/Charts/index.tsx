@@ -295,6 +295,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               plugins: {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
+                  xTicksFontWeight: 1.2,
                 },
                 sliceDrawPlugin: {
                   sliceAtLabel,
