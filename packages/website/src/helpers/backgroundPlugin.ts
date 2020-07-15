@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const { Chart } = require("react-chartjs-2");
 
 const plugin = {

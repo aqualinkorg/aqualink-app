@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const { Chart } = require("react-chartjs-2");
 
 export const fillBetweenLinesPlugin = {
@@ -29,6 +28,7 @@ export const fillBetweenLinesPlugin = {
         !chart.data.datasets[options.datasetIndex].backgroundColor ||
         options.updateChart
       ) {
+        // eslint-disable-next-line no-param-reassign
         chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
         chart.update();
       }
