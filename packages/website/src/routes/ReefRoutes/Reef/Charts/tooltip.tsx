@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 
 const Tooltip = ({ data, classes }: TooltipProps) => {
+  // Remove seconds from date
   const date = new Date(data.date).toLocaleString().replace(/:\d{2}\s/, " ");
   const splitDate = date.split(", ");
 
