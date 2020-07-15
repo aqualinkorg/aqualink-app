@@ -311,7 +311,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                       stepSize: 1,
                       max: 5,
                       callback: (value: number) => {
-                        return ` ${value}kph  `;
+                        return `${value}kph  `;
                       },
                     },
                   },

@@ -1,7 +1,7 @@
 export const createChartData = (
   labels: string[],
   dataArray: number[],
-  gradiendPercenage: number,
+  gradientPercenage: number,
   fill: boolean
 ) => (canvas: HTMLCanvasElement) => {
   const ctx = canvas.getContext("2d");
@@ -9,7 +9,7 @@ export const createChartData = (
   if (ctx) {
     gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, "rgba(22, 141, 189, 0.29)");
-    gradient.addColorStop(gradiendPercenage, "rgba(22, 141, 189, 0)");
+    gradient.addColorStop(gradientPercenage, "rgba(22, 141, 189, 0)");
   }
 
   return {
