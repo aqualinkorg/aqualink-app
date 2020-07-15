@@ -11,6 +11,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
@@ -34,7 +35,7 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
   };
 
   return (
-    <AppBar className={classes.appBar} position="static">
+    <AppBar className={classes.appBar} position="static" color="primary">
       <Toolbar>
         <Grid container alignItems="center" item xs={12}>
           <Grid item xs={1}>
@@ -115,10 +116,13 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     appBar: {
       height: 64,
+      "&.MuiPaper-root": {
+        backgroundColor: theme.palette.primary.main,
+      },
     },
     searchBar: {
       height: 42,
