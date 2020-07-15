@@ -11,11 +11,10 @@ import { Line } from "react-chartjs-2";
 import Tooltip from "./tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
-
-require("../../../../helpers/backgroundPlugin");
-require("../../../../helpers/fillPlugin");
-require("../../../../helpers/slicePlugin");
-require("../../../../helpers/thresholdPlugin");
+import "../../../../helpers/backgroundPlugin";
+import "../../../../helpers/fillPlugin";
+import "../../../../helpers/slicePlugin";
+import "../../../../helpers/thresholdPlugin";
 
 const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
