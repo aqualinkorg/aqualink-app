@@ -6,5 +6,5 @@
     "target": "es6"
   },
   "include": ["src"],
-  "files": ["src/custom.d.ts"]
+  "files": ["src/custom.d.ts", "ormconfig.ts"]
 }
