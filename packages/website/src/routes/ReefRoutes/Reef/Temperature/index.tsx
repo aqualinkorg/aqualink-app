@@ -13,16 +13,15 @@ import {
 import ErrorIcon from "@material-ui/icons/Error";
 import Alert from "@material-ui/lab/Alert";
 import type { Data } from "../../../../store/Reefs/types";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
-    if (item1.date > item2.date) {
-      return -1;
-    }
-    return 1;
-  });
+  const sortByDate = sortDailyData(dailyData, "desc");
   const bottomTemperature = sortByDate[0].maxBottomTemperature;
-  const date = new Date(sortByDate[0].date);
+  const date = new Date(sortByDate[0].date)
+    .toLocaleString()
+    .replace(/:\d{2}\s/, " ")
+    .split(", ");
 
   const {
     surfaceTemperature,
@@ -43,9 +42,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">{`(${date.toLocaleDateString(
-                "en-US"
-              )} 8:16AM PST)`}</Typography>
+              <Typography variant="subtitle2">{`${date[0]} ${date[1]}`}</Typography>
             </Grid>
           </Grid>
         }

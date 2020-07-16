@@ -15,6 +15,7 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import { colorCode } from "../../../../assets/colorCode";
 import bottom from "../../../../assets/bottom.svg";
 import type { Data } from "../../../../store/Reefs/types";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
 
 const colorFinder = (value: number) => {
   const len = colorCode.length;
@@ -29,12 +30,7 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
-  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
-    if (item1.date > item2.date) {
-      return -1;
-    }
-    return 1;
-  });
+  const sortByDate = sortDailyData(dailyData, "desc");
   const { degreeHeatingDays } = sortByDate[0];
 
   const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;

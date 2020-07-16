@@ -11,6 +11,8 @@ import { Line } from "react-chartjs-2";
 import Tooltip from "./tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { createDatasets, calculateAxisLimits } from "./utils";
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
 import "../../../../helpers/slicePlugin";
@@ -36,55 +38,16 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [thresholdTextPosition, setThresholdTextPosition] = useState<number>(0);
 
-  const dailyDataLen = dailyData.length;
-
   // Sort daily data by date
-  const sortByDate = Object.values(dailyData).sort((item1, item2) => {
-    if (item1.date > item2.date) {
-      return 1;
-    }
-    return -1;
-  });
-  const dates = sortByDate.map((item) => item.date);
+  const sortByDate = sortDailyData(dailyData);
 
-  // Acquire bottom temperature data and append an extra value equal to the
-  // temperature mean in order to make temperature chart continuous
-  const bottomTemperatureData = sortByDate.map(
-    (item) => item.avgBottomTemperature
-  );
-  const bottomTemperatureChartData = [
-    ...bottomTemperatureData,
-    bottomTemperatureData.reduce((a, b) => a + b) / dailyDataLen,
-  ];
+  const {
+    bottomTemperatureData,
+    windSpeedData,
+    waveHeightData,
+  } = createDatasets(sortByDate);
 
-  // Acquire wind speed data and append an extra value equal to the
-  // wind speed mean in order to make wind chart continuous
-  const windSpeedData = sortByDate.map((item) => item.avgWindSpeed);
-  const windSpeedChartData = [
-    ...windSpeedData,
-    windSpeedData.reduce((a, b) => a + b) / dailyDataLen,
-  ];
-
-  // Acquire wave height data and append an extra value equal to the
-  // wave height mean in order to make wave chart continuous
-  const waveHeightData = sortByDate.map((item) => item.avgWaveHeight);
-  const waveHeightChartData = [
-    ...waveHeightData,
-    waveHeightData.reduce((a, b) => a + b) / dailyDataLen,
-  ];
-
-  const xAxisMax = new Date(
-    new Date(dates[dailyDataLen - 1]).setHours(24, 0, 0, 0)
-  ).toISOString();
-  const xAxisMin = new Date(
-    new Date(xAxisMax).setHours(-7 * 24, 0, 0, 0)
-  ).toISOString();
-
-  // Add an extra date one day after the final daily data date
-  const chartLabels = [
-    ...dates,
-    new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
-  ];
+  const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
@@ -246,7 +209,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
             height={60}
             data={createChartData(
               chartLabels,
-              bottomTemperatureChartData,
+              bottomTemperatureData,
               0.6,
               true
             )}
@@ -318,7 +281,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               },
             }}
             height={30}
-            data={createChartData(chartLabels, windSpeedChartData, 0.3, false)}
+            data={createChartData(chartLabels, windSpeedData, 0.3, false)}
           />
           <Typography
             style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
@@ -395,7 +358,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               },
             }}
             height={30}
-            data={createChartData(chartLabels, waveHeightChartData, 0.3, false)}
+            data={createChartData(chartLabels, waveHeightData, 0.3, false)}
           />
           {showTooltip ? (
             <div

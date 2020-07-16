@@ -144,7 +144,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
                         >
-                          (5/20/2020 8:16AM PST)
+                          5/20/2020 12:00 AM
                         </h6>
                       </div>
                     </div>
