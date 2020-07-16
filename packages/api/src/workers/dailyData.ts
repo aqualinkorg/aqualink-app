@@ -1,25 +1,17 @@
 /** Worker to process daily data for all reefs. */
 import { sum } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
-import { getSofarDailyData } from '../utils/sofar';
+import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { InsertDailyData } from '../reefs/dto/insert-daily-data.dto';
-
-// getSofarDailyData()
-// ReefsService
-async function getSpotterData(spotterId: string) {
-  // TODO - Implement Spotter Data Retrieval
-  // https://docs.sofarocean.com/spotter-sensor
-  // getSofarSpotterData()
-  return { surfaceTemperature: 20, bottomTemperature: [0] };
-}
 
 async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
   const { polygon, spotterId } = reef;
   const [longitude, latitude] = polygon.coordinates;
 
   // Get Spotter Data
-  const spotterData = spotterId && (await getSpotterData('reef.spotterId'));
+  const spotterData =
+    spotterId && (await getSpotterData('reef.spotterId', date));
   const minBottomTemperature =
     spotterId && Math.min(...spotterData.bottomTemperature);
   const maxBottomTemperature =
