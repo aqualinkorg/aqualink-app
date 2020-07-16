@@ -119,7 +119,8 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
   const windDirection = sum(windDirections) / windDirections.length;
 
   return {
-    reef: id,
+    reef,
+    date,
     minBottomTemperature,
     maxBottomTemperature,
     avgBottomTemperature,
