@@ -126,7 +126,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
           <Typography variant="caption">(Mean)</Typography>
         </Grid>
       </Grid>
-      <Grid item md={9}>
+      <Grid item xs={10}>
         <div className={classes.root}>
           <Typography
             style={{ marginLeft: "4rem", fontWeight: "normal" }}
