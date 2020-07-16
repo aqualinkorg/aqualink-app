@@ -6,8 +6,7 @@ exports[`renders as expected 1`] = `
     class="MuiPaper-root MuiCard-root Tooltip-tooltip-1 MuiPaper-elevation1 MuiPaper-rounded"
   >
     <div
-      class="MuiCardHeader-root"
-      style="flex: 0 1 auto; padding: 0.5rem 2rem 0.5rem 2rem;"
+      class="MuiCardHeader-root Tooltip-tooltipHeader-2"
     >
       <div
         class="MuiCardHeader-content"
@@ -39,8 +38,7 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="MuiCardContent-root"
-      style="flex: 1 1 auto; padding: 0.5rem 2rem 0.5rem 2rem;"
+      class="MuiCardContent-root Tooltip-tooltipContent-3"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between"
@@ -87,18 +85,17 @@ exports[`renders as expected 1`] = `
             WIND
           </span>
           <div
-            class="MuiTypography-root MuiTypography-body1"
-            style="display: flex; align-items: baseline;"
+            class="MuiTypography-root Tooltip-tooltipContentRow-4 MuiTypography-body1"
           >
             <div
-              class="MuiBox-root MuiBox-root-2"
+              class="MuiBox-root MuiBox-root-5"
             >
               <h5
                 class="MuiTypography-root MuiTypography-h5"
               />
             </div>
             <div
-              class="MuiBox-root MuiBox-root-3"
+              class="MuiBox-root MuiBox-root-6"
             >
               <h6
                 class="MuiTypography-root MuiTypography-subtitle2"
@@ -107,7 +104,7 @@ exports[`renders as expected 1`] = `
               </h6>
             </div>
             <div
-              class="MuiBox-root MuiBox-root-4"
+              class="MuiBox-root MuiBox-root-7"
             >
               <span
                 class="MuiTypography-root MuiTypography-caption"
@@ -116,7 +113,7 @@ exports[`renders as expected 1`] = `
               </span>
             </div>
             <div
-              class="MuiBox-root MuiBox-root-5"
+              class="MuiBox-root MuiBox-root-8"
             >
               <h5
                 class="MuiTypography-root MuiTypography-h5"
@@ -135,34 +132,8 @@ exports[`renders as expected 1`] = `
             WAVES
           </span>
           <div
-            class="MuiTypography-root MuiTypography-body1"
-            style="display: flex; align-items: baseline;"
+            class="MuiTypography-root Tooltip-tooltipContentRow-4 MuiTypography-body1"
           >
-            <div
-              class="MuiBox-root MuiBox-root-6"
-            >
-              <h5
-                class="MuiTypography-root MuiTypography-h5"
-              />
-            </div>
-            <div
-              class="MuiBox-root MuiBox-root-7"
-            >
-              <h6
-                class="MuiTypography-root MuiTypography-subtitle2"
-              >
-                m
-              </h6>
-            </div>
-            <div
-              class="MuiBox-root MuiBox-root-8"
-            >
-              <span
-                class="MuiTypography-root MuiTypography-caption"
-              >
-                AT
-              </span>
-            </div>
             <div
               class="MuiBox-root MuiBox-root-9"
             >
@@ -176,11 +147,36 @@ exports[`renders as expected 1`] = `
               <h6
                 class="MuiTypography-root MuiTypography-subtitle2"
               >
-                s
+                m
               </h6>
             </div>
             <div
               class="MuiBox-root MuiBox-root-11"
+            >
+              <span
+                class="MuiTypography-root MuiTypography-caption"
+              >
+                AT
+              </span>
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-12"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5"
+              />
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-13"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle2"
+              >
+                s
+              </h6>
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-14"
             >
               <span
                 class="MuiTypography-root MuiTypography-overline"
@@ -189,7 +185,7 @@ exports[`renders as expected 1`] = `
               </span>
             </div>
             <div
-              class="MuiBox-root MuiBox-root-12"
+              class="MuiBox-root MuiBox-root-15"
             >
               <h5
                 class="MuiTypography-root MuiTypography-h5"

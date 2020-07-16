@@ -31,7 +31,7 @@ const Tooltip = ({
   return (
     <Card className={classes.tooltip}>
       <CardHeader
-        style={{ flex: "0 1 auto", padding: "0.5rem 2rem 0.5rem 2rem" }}
+        className={classes.tooltipHeader}
         title={
           <Grid
             alignItems="center"
@@ -53,9 +53,7 @@ const Tooltip = ({
           </Grid>
         }
       />
-      <CardContent
-        style={{ flex: "1 1 auto", padding: "0.5rem 2rem 0.5rem 2rem" }}
-      >
+      <CardContent className={classes.tooltipContent}>
         <Grid
           style={{ height: "100%" }}
           item
@@ -81,10 +79,7 @@ const Tooltip = ({
           </Grid>
           <Grid container direction="column" item xs={12}>
             <Typography variant="caption">WIND</Typography>
-            <Typography
-              style={{ display: "flex", alignItems: "baseline" }}
-              component="div"
-            >
+            <Typography className={classes.tooltipContentRow} component="div">
               <Box>
                 <Typography variant="h5">{wind}</Typography>
               </Box>
@@ -101,10 +96,7 @@ const Tooltip = ({
           </Grid>
           <Grid container direction="column" item xs={12}>
             <Typography variant="caption">WAVES</Typography>
-            <Typography
-              style={{ display: "flex", alignItems: "baseline" }}
-              component="div"
-            >
+            <Typography className={classes.tooltipContentRow} component="div">
               <Box>
                 <Typography variant="h5">{wave}</Typography>
               </Box>
@@ -143,6 +135,18 @@ const styles = () =>
       flexFlow: "column",
       backgroundColor: "#404b6b",
       opacity: 0.9,
+    },
+    tooltipHeader: {
+      flex: "0 1 auto",
+      padding: "0.5rem 2rem 0.5rem 2rem",
+    },
+    tooltipContent: {
+      flex: "1 1 auto",
+      padding: "0.5rem 2rem 0.5rem 2rem",
+    },
+    tooltipContentRow: {
+      display: "flex",
+      alignItems: "baseline",
     },
   });
 
