@@ -13,6 +13,8 @@ jest.mock("react-chartjs-2", () => ({
 }));
 
 test("renders as expected", () => {
+  const originalError = console.error;
+  console.error = jest.fn();
   const dailyData = [
     {
       id: 1,
@@ -38,4 +40,5 @@ test("renders as expected", () => {
     <Charts dailyData={dailyData} temperatureThreshold={0} />
   );
   expect(container).toMatchSnapshot();
+  console.error = originalError;
 });
