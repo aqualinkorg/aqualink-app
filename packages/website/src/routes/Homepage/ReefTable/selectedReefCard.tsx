@@ -10,6 +10,7 @@ import {
   createStyles,
   Theme,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import CardChart from "./cardChart";
 import { Reef } from "../../../store/Reefs/types";
@@ -112,9 +113,14 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Button size="small" variant="contained" color="primary">
-                  EXPLORE
-                </Button>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to={`/reefs/${reef.id}`}
+                >
+                  <Button size="small" variant="contained" color="primary">
+                    EXPLORE
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
           </Grid>
