@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
-import Tooltip from "./tooltip";
+import Tooltip from "./Tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
