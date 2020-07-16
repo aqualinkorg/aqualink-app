@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
-import Tooltip from "./Tooltip";
+import Tooltip, { TooltipData } from "./Tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
@@ -23,7 +23,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const windChartRef = useRef<Line>(null);
   const waveChartRef = useRef<Line>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  const [tooltipData, setTooltipData] = useState({
+  const [tooltipData, setTooltipData] = useState<TooltipData>({
     date: "",
     bottomTemperature: 0,
     surfaceTemperature: 0,
@@ -375,7 +375,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               }}
             >
               <>
-                <Tooltip data={tooltipData} />
+                <Tooltip {...tooltipData} />
                 <div className="tooltip-arrow" />
               </>
             </div>

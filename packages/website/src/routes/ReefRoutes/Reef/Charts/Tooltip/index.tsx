@@ -11,10 +11,22 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const Tooltip = ({ data, classes }: TooltipProps) => {
+const Tooltip = ({
+  date,
+  bottomTemperature,
+  surfaceTemperature,
+  wave,
+  waveDirection,
+  wavePeriod,
+  wind,
+  windDirection,
+  classes,
+}: TooltipProps) => {
   // Remove seconds from date
-  const date = new Date(data.date).toLocaleString().replace(/:\d{2}\s/, " ");
-  const splitDate = date.split(", ");
+  const dateWithoutSeconds = new Date(date)
+    .toLocaleString()
+    .replace(/:\d{2}\s/, " ");
+  const splitDate = dateWithoutSeconds.split(", ");
 
   return (
     <Card className={classes.tooltip}>
@@ -60,15 +72,11 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
           >
             <Grid container justify="flex-start" item xs={6}>
               <Typography variant="caption">TEMP AT 25M</Typography>
-              <Typography variant="h5">
-                {data.bottomTemperature} &#8451;
-              </Typography>
+              <Typography variant="h5">{bottomTemperature} &#8451;</Typography>
             </Grid>
             <Grid container justify="flex-end" item xs={6}>
               <Typography variant="caption">SURFACE TEMP</Typography>
-              <Typography variant="h5">
-                {data.surfaceTemperature} &#8451;
-              </Typography>
+              <Typography variant="h5">{surfaceTemperature} &#8451;</Typography>
             </Grid>
           </Grid>
           <Grid container direction="column" item xs={12}>
@@ -78,7 +86,7 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
               component="div"
             >
               <Box>
-                <Typography variant="h5">{data.wind}</Typography>
+                <Typography variant="h5">{wind}</Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">kph</Typography>
@@ -87,7 +95,7 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
                 <Typography variant="caption">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">{data.windDirection}&#176;</Typography>
+                <Typography variant="h5">{windDirection}&#176;</Typography>
               </Box>
             </Typography>
           </Grid>
@@ -98,7 +106,7 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
               component="div"
             >
               <Box>
-                <Typography variant="h5">{data.wave}</Typography>
+                <Typography variant="h5">{wave}</Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">m</Typography>
@@ -107,7 +115,7 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
                 <Typography variant="caption">AT</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">{data.wavePeriod}</Typography>
+                <Typography variant="h5">{wavePeriod}</Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">s</Typography>
@@ -116,9 +124,7 @@ const Tooltip = ({ data, classes }: TooltipProps) => {
                 <Typography variant="overline">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">
-                  {data.waveDirection} &#176;
-                </Typography>
+                <Typography variant="h5">{waveDirection} &#176;</Typography>
               </Box>
             </Typography>
           </Grid>
@@ -140,17 +146,15 @@ const styles = () =>
     },
   });
 
-interface TooltipData {
-  data: {
-    date: string;
-    bottomTemperature: number;
-    surfaceTemperature: number;
-    wind: number;
-    windDirection: number;
-    wave: number;
-    wavePeriod: number;
-    waveDirection: number;
-  };
+export interface TooltipData {
+  date: string;
+  bottomTemperature: number;
+  surfaceTemperature: number;
+  wind: number;
+  windDirection: number;
+  wave: number;
+  wavePeriod: number;
+  waveDirection: number;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;
