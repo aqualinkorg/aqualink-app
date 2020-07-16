@@ -14,6 +14,7 @@ const plugin = {
     ctx.save();
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
+      // eslint-disable-next-line no-param-reassign
       chart.scales["x-axis-0"].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
