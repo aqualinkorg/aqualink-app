@@ -59,3 +59,14 @@ export async function getSofarDailyData(
 
   return hindcastVariables.values as SofarValue[];
 }
+
+export function getValueClosestToDate(sofarValues: SofarValue[], date: Date) {
+  const index = sofarValues.reduce((r, a, i, aa) => {
+    return i &&
+      Math.abs(new Date(aa[r].timestamp).getTime() - date.getTime()) <
+        Math.abs(new Date(a.timestamp).getTime() - date.getTime())
+      ? r
+      : i;
+  }, -1);
+  return sofarValues[index].value;
+}
