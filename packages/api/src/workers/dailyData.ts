@@ -15,7 +15,7 @@ async function getSpotterData(spotterId: string) {
 }
 
 async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
-  const { id, polygon, spotterId } = reef;
+  const { polygon, spotterId } = reef;
   const [longitude, latitude] = polygon.coordinates;
 
   // Get Spotter Data
