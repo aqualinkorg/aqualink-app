@@ -20,6 +20,9 @@ export class Reef {
   @Column({ nullable: true })
   name: string;
 
+  @Column({ nullable: true })
+  spotterId: string;
+
   @Column({
     type: 'geometry',
     unique: true,
