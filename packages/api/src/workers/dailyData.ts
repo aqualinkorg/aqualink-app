@@ -9,12 +9,12 @@ import { InsertDailyData } from '../reefs/dto/insert-daily-data.dto';
 // ReefsService
 async function getSpotterData(spotterId: string) {
   // TODO - Implement Spotter Data Retrieval
+  // https://docs.sofarocean.com/spotter-sensor
   // getSofarSpotterData()
   return { surfaceTemperature: 20, bottomTemperature: [0] };
 }
 
 async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
-  // https://docs.sofarocean.com/spotter-sensor
   const { id, polygon, spotterId } = reef;
   const [longitude, latitude] = polygon.coordinates;
 
@@ -137,3 +137,16 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
     windDirection,
   };
 }
+
+async function getReefsDailyData(date: Date) {
+  // TODO: implement loop
+  // for reef in reefs: dailyData = getDailyData(reef: Reef, date: Date), insert in DB
+  // TODO - Prevent duplicate inserts on (reef_id, date)
+}
+
+async function run() {
+  const today = new Date();
+  await getReefsDailyData(today);
+}
+
+run();
