@@ -60,7 +60,15 @@ export async function getSofarDailyData(
   return hindcastVariables.values as SofarValue[];
 }
 
-export async function getSpotterData(spotterId: string, date: Date) {
+type SpotterData = {
+  surfaceTemperature: number;
+  bottomTemperature: number[];
+};
+
+export async function getSpotterData(
+  spotterId: string,
+  date: Date,
+): Promise<SpotterData> {
   // TODO - Implement Spotter Data Retrieval
   // https://docs.sofarocean.com/spotter-sensor
   // getSofarSpotterData()
