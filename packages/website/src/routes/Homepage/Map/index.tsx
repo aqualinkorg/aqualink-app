@@ -69,7 +69,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
                   reef.polygon.coordinates[0],
                 ]}
               >
-                <Popup className={classes.popup}>
+                <Popup closeButton={false} className={classes.popup}>
                   <Card>
                     <CardHeader
                       className={classes.popupHeader}

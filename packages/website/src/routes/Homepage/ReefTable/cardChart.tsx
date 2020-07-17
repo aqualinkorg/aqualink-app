@@ -4,6 +4,10 @@ import { Line } from "react-chartjs-2";
 import { createChartData } from "../../../helpers/createChartData";
 import { sortDailyData } from "../../../helpers/sortDailyData";
 import type { Data } from "../../../store/Reefs/types";
+import {
+  createDatasets,
+  calculateAxisLimits,
+} from "../../ReefRoutes/Reef/Charts/utils";
 
 require("../../../helpers/backgroundPlugin");
 require("../../../helpers/fillPlugin");
@@ -11,33 +15,12 @@ require("../../../helpers/fillPlugin");
 const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
   const [updateChart, setUpdateChart] = useState<boolean>(false);
 
-  const dailyDataLen = dailyData.length;
   // Sort daily data by date
   const sortByDate = sortDailyData(dailyData);
-  const dates = sortByDate.map((item) => item.date);
 
-  // Acquire bottom temperature data and append an extra value equal to the
-  // temperature mean in order to make temperature chart continuous
-  const bottomTemperatureData = sortByDate.map(
-    (item) => item.avgBottomTemperature
-  );
-  const bottomTemperatureChartData = [
-    ...bottomTemperatureData,
-    bottomTemperatureData.reduce((a, b) => a + b) / dailyDataLen,
-  ];
+  const { bottomTemperatureData } = createDatasets(sortByDate);
 
-  const xAxisMax = new Date(
-    new Date(dates[dailyDataLen - 1]).setHours(24, 0, 0, 0)
-  ).toISOString();
-  const xAxisMin = new Date(
-    new Date(xAxisMax).setHours(-7 * 24, 0, 0, 0)
-  ).toISOString();
-
-  // Add an extra date one day after the final daily data date
-  const chartLabels = [
-    ...dates,
-    new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
-  ];
+  const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
 
   const onResize = useCallback(() => {
     setUpdateChart(true);
@@ -125,13 +108,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
           },
         }}
         height={100}
-        data={createChartData(
-          chartLabels,
-          bottomTemperatureChartData,
-          0.6,
-          0,
-          true
-        )}
+        data={createChartData(chartLabels, bottomTemperatureData, 0.6, 0, true)}
       />
     </>
   );
