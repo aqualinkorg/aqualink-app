@@ -34,6 +34,10 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
       const map = current.leafletElement;
+      const southWest = L.latLng(-90, -240);
+      const northEast = L.latLng(90, 240);
+      const bounds = L.latLngBounds(southWest, northEast);
+      map.setMaxBounds(bounds);
       map.flyTo(center, zoom, { duration: 1 });
     }
   }, [center, zoom]);
@@ -63,6 +67,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 
   return (
     <Map
+      maxBoundsViscosity={1.0}
       className={classes.map}
       ref={mapRef}
       center={center}
