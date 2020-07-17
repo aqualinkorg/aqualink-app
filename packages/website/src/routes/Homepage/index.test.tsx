@@ -17,6 +17,9 @@ describe("Homepage", () => {
         loading: false,
         error: null,
       },
+      homepage: {
+        reefOnMap: null,
+      },
     });
 
     store.dispatch = jest.fn();

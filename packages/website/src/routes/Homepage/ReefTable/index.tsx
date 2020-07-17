@@ -1,5 +1,5 @@
 import React, { CSSProperties, forwardRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import MaterialTable, { Column } from "material-table";
 import { Grid, Paper, Typography } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
@@ -8,6 +8,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import SelectedReefCard from "./selectedReefCard";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
+import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { colors } from "../../../layout/App/theme";
 
 interface Row {
@@ -24,6 +25,7 @@ interface Row {
 const ReefTable = () => {
   const reefsList = useSelector(reefsListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
+  const dispatch = useDispatch();
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   const headerStyle: CSSProperties = {
@@ -148,6 +150,7 @@ const ReefTable = () => {
             onRowClick={(event, row) => {
               if (row && row.tableData) {
                 setSelectedRow(row.tableData.id);
+                dispatch(setReefOnMap(reefsList[row.tableData.id]));
               }
             }}
             options={{

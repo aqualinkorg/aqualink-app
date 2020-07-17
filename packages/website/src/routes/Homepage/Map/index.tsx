@@ -1,17 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Map, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core";
 
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
+import {
+  reefOnMapSelector,
+  unsetReefOnMap,
+} from "../../../store/Homepage/homepageSlice";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./popup";
 
-const marker = require("../../../assets/buoy.png");
+const pin = require("../../../assets/buoy.png");
 
 const pinIcon = L.icon({
-  iconUrl: marker,
+  iconUrl: pin,
   iconSize: [24, 24],
   iconAnchor: [8, 48],
   popupAnchor: [3, -48],
@@ -19,6 +23,9 @@ const pinIcon = L.icon({
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const mapRef = useRef<Map>(null);
+  const markerRef = useRef<Marker>(null);
+  const dispatch = useDispatch();
+  const reefOnMap = useSelector(reefOnMapSelector);
   const reefsList = useSelector(reefsListSelector);
   const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
@@ -31,6 +38,29 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     }
   }, [center, zoom]);
 
+  useEffect(() => {
+    const markerCurrent = markerRef.current;
+    const mapCurrent = mapRef.current;
+    if (
+      markerCurrent &&
+      markerCurrent.leafletElement &&
+      mapCurrent &&
+      mapCurrent.leafletElement &&
+      reefOnMap &&
+      reefOnMap.polygon &&
+      reefOnMap.polygon.type === "Point"
+    ) {
+      const map = mapCurrent.leafletElement;
+      const marker = markerCurrent.leafletElement;
+      map.flyTo(
+        [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
+        6,
+        { duration: 1 }
+      );
+      marker.openPopup();
+    }
+  }, [reefOnMap]);
+
   return (
     <Map
       className={classes.map}
@@ -40,6 +70,18 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       minZoom={2}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      {reefOnMap && reefOnMap.polygon.type === "Point" && (
+        <Marker
+          ref={markerRef}
+          icon={pinIcon}
+          position={[
+            reefOnMap.polygon.coordinates[1],
+            reefOnMap.polygon.coordinates[0],
+          ]}
+        >
+          <Popup reef={reefOnMap} />
+        </Marker>
+      )}
       {reefsList.length > 0 &&
         reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
@@ -49,6 +91,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
                 onClick={() => {
                   setZoom(6);
                   setCenter([lat, lng]);
+                  dispatch(unsetReefOnMap());
                 }}
                 key={reef.id}
                 icon={pinIcon}

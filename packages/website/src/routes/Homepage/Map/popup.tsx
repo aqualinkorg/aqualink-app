@@ -18,7 +18,7 @@ import { Reef } from "../../../store/Reefs/types";
 import { colors } from "../../../layout/App/theme";
 
 const Popup = ({ reef, classes }: PopupProps) => (
-  <LeafletPopup closeButton={false} className={classes.popup}>
+  <LeafletPopup onClose={() => console.log("PONAS??")} closeButton={false} className={classes.popup}>
     <Card>
       <CardHeader
         className={classes.popupHeader}
