@@ -1,11 +1,11 @@
 /** Worker to process daily data for all reefs. */
 import { sum, get } from 'lodash';
 import { createConnection } from 'typeorm';
-import dbConfig from '../../ormconfig';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
+const dbConfig = require('../../ormconfig');
 
 async function getDailyData(reef: Reef, date: Date): Promise<any> {
   const { polygon, spotterId } = reef;
