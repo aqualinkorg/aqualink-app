@@ -1,17 +1,17 @@
 /** Worker to process daily data for all reefs. */
-import { sum } from 'lodash';
+import { sum, get } from 'lodash';
+import { createConnection } from 'typeorm';
+import dbConfig from '../../ormconfig';
 import { Reef } from '../reefs/reefs.entity';
+import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
-import { calculateDegreeHeatingDays } from '../utils/temperature';
-import { InsertDailyData } from '../reefs/dto/insert-daily-data.dto';
+// import { calculateDegreeHeatingDays } from '../utils/temperature';
 
-async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
+async function getDailyData(reef: Reef, date: Date): Promise<any> {
   const { polygon, spotterId } = reef;
-  const [longitude, latitude] = polygon.coordinates;
-
+  const [longitude, latitude] = get(polygon, 'coordinates');
   // Get Spotter Data
-  const spotterData =
-    spotterId && (await getSpotterData('reef.spotterId', date));
+  const spotterData = await getSpotterData('reef.spotterId', date);
   const minBottomTemperature =
     spotterId && Math.min(...spotterData.bottomTemperature);
   const maxBottomTemperature =
@@ -25,23 +25,23 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
   // TODO - Get data for the past 84 days.
-  const seaSurfaceTemperatures = [];
+  const seaSurfaceTemperatures = [] as number[];
   // TODO - Add NOAA MMM to the reef table.
   const MMM = 28;
-  const degreeHeatingDays = calculateDegreeHeatingDays(
-    seaSurfaceTemperatures,
-    MMM,
-  );
+  const degreeHeatingDays = 0; // calculateDegreeHeatingDays(seaSurfaceTemperatures, MMM);
 
   // Get satelliteTemperature close to midnight local time.
-  const satelliteTemperature = await getSofarDailyData(
-    'HYCOM',
-    'HYCOM-seaSurfaceTemperature',
-    latitude,
-    longitude,
-    date,
-  )[-1].value;
-
+  console.log('get satellite Temperature');
+  const satelliteTemperature = (
+    await getSofarDailyData(
+      'HYCOM',
+      'HYCOM-seaSurfaceTemperature',
+      latitude,
+      longitude,
+      date,
+    )
+  ).slice(-1)[0].value;
+  console.log(satelliteTemperature);
   // Get NOAA waves data
   const significantWaveHeights = (
     await getSofarDailyData(
@@ -68,8 +68,9 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
     )
   ).map(({ value }) => value);
 
-  const waveDirection =
-    sum(meanDirectionWindWaves) / meanDirectionWindWaves.length;
+  const waveDirection = Math.round(
+    sum(meanDirectionWindWaves) / meanDirectionWindWaves.length,
+  );
 
   const meanPeriodWindWaves = (
     await getSofarDailyData(
@@ -81,7 +82,9 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
     )
   ).map(({ value }) => value);
 
-  const wavePeriod = sum(meanPeriodWindWaves) / meanPeriodWindWaves.length;
+  const wavePeriod = Math.round(
+    sum(meanPeriodWindWaves) / meanPeriodWindWaves.length,
+  );
 
   // Get NOAA GFS wind data
   const windVelocities = (
@@ -108,7 +111,7 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
     )
   ).map(({ value }) => value);
 
-  const windDirection = sum(windDirections) / windDirections.length;
+  const windDirection = Math.round(sum(windDirections) / windDirections.length);
 
   return {
     reef,
@@ -133,13 +136,25 @@ async function getDailyData(reef: Reef, date: Date): Promise<InsertDailyData> {
 
 async function getReefsDailyData(date: Date) {
   // TODO: implement loop
-  // for reef in reefs: dailyData = getDailyData(reef: Reef, date: Date), insert in DB
   // TODO - Prevent duplicate inserts on (reef_id, date)
+  createConnection(dbConfig).then(async (connection) => {
+    const reefRepository = connection.getRepository(Reef);
+    const dailyDataRepository = connection.getRepository(DailyData);
+    const allReefs = await reefRepository.find();
+    allReefs.forEach(async (reef) => {
+      const dailyDataInput = await getDailyData(reef, date);
+      const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
+      dailyDataRepository.save(dailyDataEntities);
+    });
+  });
 }
 
 async function run() {
   const today = new Date();
-  await getReefsDailyData(today);
+  today.setHours(0, 0, 0, 0);
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  await getReefsDailyData(yesterday);
 }
 
 run();
