@@ -44,7 +44,11 @@ const ReefTable = () => {
       field: "locationName",
       cellStyle,
       render: (rowData) => (
-        <Typography variant="subtitle1" color="textSecondary">
+        <Typography
+          style={{ paddingRight: "1.5rem" }}
+          variant="subtitle1"
+          color="textSecondary"
+        >
           {rowData.locationName}
         </Typography>
       ),
@@ -55,7 +59,10 @@ const ReefTable = () => {
       type: "numeric",
       cellStyle,
       render: (rowData) => (
-        <Typography style={{ color: colors.lightBlue }} variant="h6">
+        <Typography
+          style={{ color: colors.lightBlue, paddingLeft: "2rem" }}
+          variant="h6"
+        >
           {rowData.temp} &#8451;
         </Typography>
       ),
@@ -66,7 +73,11 @@ const ReefTable = () => {
       type: "numeric",
       cellStyle,
       render: (rowData) => (
-        <Typography variant="subtitle1" color="textSecondary">
+        <Typography
+          style={{ paddingLeft: "2rem" }}
+          variant="subtitle1"
+          color="textSecondary"
+        >
           {rowData.depth} m
         </Typography>
       ),
@@ -77,7 +88,11 @@ const ReefTable = () => {
       type: "numeric",
       cellStyle,
       render: (rowData) => (
-        <Typography variant="subtitle1" color="textSecondary">
+        <Typography
+          style={{ paddingLeft: "2rem" }}
+          variant="subtitle1"
+          color="textSecondary"
+        >
           {rowData.dhd}
         </Typography>
       ),
@@ -88,7 +103,11 @@ const ReefTable = () => {
       cellStyle,
       render: (rowData) => {
         if (rowData.alert === "warning") {
-          return <ErrorIcon style={{ color: colors.lightBlue }} />;
+          return (
+            <ErrorIcon
+              style={{ color: colors.lightBlue, paddingRight: "2rem" }}
+            />
+          );
         }
         return null;
       },
