@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-type Position = [number, number];
+export type Position = [number, number];
+
 export interface Polygon {
   coordinates: [Position[]];
   type: "Polygon";
