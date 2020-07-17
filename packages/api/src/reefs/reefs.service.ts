@@ -10,7 +10,6 @@ import { DailyData } from './daily-data.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
-import { InsertDailyData } from './dto/insert-daily-data.dto';
 
 @Injectable()
 export class ReefsService {
@@ -83,9 +82,5 @@ export class ReefsService {
 
   async findDailyData(id: number): Promise<DailyData[]> {
     return this.dailyDataRepository.find({ where: { reef: id } });
-  }
-
-  async insertDailyData(insertDailyData: InsertDailyData): Promise<DailyData> {
-    return this.dailyDataRepository.save(insertDailyData);
   }
 }
