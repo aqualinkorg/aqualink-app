@@ -16,7 +16,7 @@ import type { Reef } from "../../../store/Reefs/types";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
   <Grid container justify="center" className={classes.root}>
-    <Grid container justify="space-evenly" item xs={12}>
+    <Grid container justify="space-evenly" item xs={10}>
       <Grid key={1} item xs={11} md={5}>
         <div className={classes.container}>
           <Map polygon={reef.polygon} />
@@ -28,7 +28,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
         </div>
       </Grid>
     </Grid>
-    <Grid container justify="space-evenly" item xs={12}>
+    <Grid container justify="space-evenly" item xs={10}>
       <Grid key={3} item xs={11} md={5}>
         <div className={classes.smallContainer}>
           <Temperature dailyData={reef.dailyData} />
@@ -56,24 +56,15 @@ const styles = (theme: Theme) =>
       marginTop: "5rem",
     },
     container: {
-      height: "25vw",
+      height: "48vh",
       marginBottom: "5rem",
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.between("md", "lg")]: {
         height: "35vh",
-      },
-      [theme.breakpoints.down("sm")]: {
-        height: "50vh",
       },
     },
     smallContainer: {
-      height: "18vw",
+      height: "30vh",
       marginBottom: "5rem",
-      [theme.breakpoints.down("md")]: {
-        height: "28vh",
-      },
-      [theme.breakpoints.down("sm")]: {
-        height: "32vh",
-      },
     },
     statsContainer: {
       [theme.breakpoints.down("sm")]: {

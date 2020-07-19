@@ -22,6 +22,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
   const windChartRef = useRef<Line>(null);
   const waveChartRef = useRef<Line>(null);
+  const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     date: "",
@@ -126,7 +127,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
           <Typography variant="caption">(Mean)</Typography>
         </Grid>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={9}>
         <div className={classes.root}>
           <Typography
             style={{ marginLeft: "4rem", fontWeight: "normal" }}
@@ -205,7 +206,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                 ],
               },
             }}
-            height={60}
+            height={chartHeight}
             data={createChartData(
               chartLabels,
               bottomTemperatureData,
@@ -280,7 +281,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                 ],
               },
             }}
-            height={30}
+            height={0.5 * chartHeight}
             data={createChartData(chartLabels, windSpeedData, 0.3, 3, false)}
           />
           <Typography
@@ -358,7 +359,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                 ],
               },
             }}
-            height={30}
+            height={0.5 * chartHeight}
             data={createChartData(chartLabels, waveHeightData, 0.3, 3, false)}
           />
           {showTooltip ? (
