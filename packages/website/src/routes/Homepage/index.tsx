@@ -53,6 +53,6 @@ const styles = () =>
     },
   });
 
-interface HomepageProps extends WithStyles<typeof styles> {}
+type HomepageProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Homepage);

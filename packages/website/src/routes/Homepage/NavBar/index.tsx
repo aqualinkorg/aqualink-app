@@ -162,6 +162,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface HomepageNavBarProps extends WithStyles<typeof styles> {}
+type HomepageNavBarProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(HomepageNavBar);

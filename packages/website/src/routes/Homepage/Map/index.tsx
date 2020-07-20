@@ -123,6 +123,6 @@ const styles = () =>
     },
   });
 
-interface HomepageMapProps extends WithStyles<typeof styles> {}
+type HomepageMapProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(HomepageMap);

@@ -37,6 +37,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface FooterProps extends WithStyles<typeof styles> {}
+type FooterProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Footer);
