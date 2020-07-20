@@ -107,7 +107,7 @@ const Form = ({ match, classes }: FormProps) => {
       const sendData: SendFormData = {
         reef: {
           name: data.reefName,
-          depth: parseFloat(data.depth),
+          depth: Math.round(parseFloat(data.depth)),
         },
         reefApplication: {
           permitRequirements: data.permitRequirements,
