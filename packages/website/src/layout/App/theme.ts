@@ -6,7 +6,7 @@ const lighterBlue: string = "#c0e1f0";
 const darkGreyBlue: string = "#2d3436";
 const black: string = "#2f2f2f";
 const white: string = "#ffffff";
-const lightGray: string = "#cccccc";
+const lightGray: string = "#939393";
 
 const fontFamily: string =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
@@ -18,6 +18,7 @@ const theme: any = createMuiTheme({
     primary: {
       main: lightBlue,
       dark: darkGreyBlue,
+      light: white,
     },
     text: {
       primary: white,
@@ -106,6 +107,11 @@ const theme: any = createMuiTheme({
         "&:last-child": {
           paddingBottom: 0,
         },
+      },
+    },
+    MuiInputLabel: {
+      root: {
+        color: lightGray,
       },
     },
   },

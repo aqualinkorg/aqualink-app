@@ -16,10 +16,8 @@ const Footer = ({ classes }: FooterProps) => {
       <Toolbar>
         <Grid container justify="center">
           <Grid item xs={10} container direction="row">
-            <Typography style={{ fontWeight: 500 }} variant="h4">
-              Aqua
-            </Typography>
-            <Typography style={{ fontWeight: 300 }} variant="h4">
+            <Typography variant="h4">Aqua</Typography>
+            <Typography style={{ color: "#8AC6DE" }} variant="h4">
               link
             </Typography>
           </Grid>

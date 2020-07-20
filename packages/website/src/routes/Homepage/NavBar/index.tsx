@@ -18,9 +18,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import RegisterDialog from "../RegisterDialog";
+import SignInDialog from "../SignInDialog";
+
 const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
   const [searchLocationText, setSearchLocationText] = useState<string>("");
-  const [signedIn, setSignedIn] = useState<boolean>(false);
+  const signedIn = false;
+  const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
+  const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -34,85 +39,102 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
     console.log(searchLocationText);
   };
 
+  const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
+  const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
+
   return (
-    <AppBar className={classes.appBar} position="static" color="primary">
-      <Toolbar>
-        <Grid container alignItems="center" item xs={12}>
-          <Grid item xs={1}>
-            <IconButton edge="start" color="inherit">
-              <MenuIcon />
-            </IconButton>
-          </Grid>
-          <Grid container item xs={5}>
-            <Typography style={{ fontWeight: 500 }} variant="h4">
-              Aqua
-            </Typography>
-            <Typography style={{ fontWeight: 300 }} variant="h4">
-              link
-            </Typography>
-          </Grid>
-          {signedIn ? (
-            <>
-              <Grid container justify="flex-end" item xs={3}>
-                <Grid
-                  className={classes.searchBar}
-                  container
-                  alignItems="center"
-                  item
-                  xs={8}
-                >
+    <>
+      <AppBar className={classes.appBar} position="static" color="primary">
+        <Toolbar>
+          <Grid container alignItems="center" item xs={12}>
+            <Grid item xs={1}>
+              <IconButton edge="start" color="inherit">
+                <MenuIcon />
+              </IconButton>
+            </Grid>
+            <Grid container item xs={5}>
+              <Typography variant="h4">Aqua</Typography>
+              <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                link
+              </Typography>
+            </Grid>
+            {signedIn ? (
+              <>
+                <Grid container justify="flex-end" item xs={3}>
                   <Grid
-                    className={classes.searchBarIcon}
-                    item
-                    xs={2}
+                    className={classes.searchBar}
                     container
                     alignItems="center"
-                    justify="center"
-                  >
-                    <IconButton size="small" onClick={onSearchSubmit}>
-                      <SearchIcon />
-                    </IconButton>
-                  </Grid>
-                  <Grid
-                    className={classes.searchBarText}
                     item
-                    xs={10}
-                    container
-                    alignItems="center"
+                    xs={8}
                   >
-                    <InputBase
-                      value={searchLocationText}
-                      onChange={onChangeSearchText}
-                      placeholder="Search location"
-                    />
+                    <Grid
+                      className={classes.searchBarIcon}
+                      item
+                      xs={2}
+                      container
+                      alignItems="center"
+                      justify="center"
+                    >
+                      <IconButton size="small" onClick={onSearchSubmit}>
+                        <SearchIcon />
+                      </IconButton>
+                    </Grid>
+                    <Grid
+                      className={classes.searchBarText}
+                      item
+                      xs={10}
+                      container
+                      alignItems="center"
+                    >
+                      <InputBase
+                        value={searchLocationText}
+                        onChange={onChangeSearchText}
+                        placeholder="Search location"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
+                <Grid container justify="flex-end" item xs={3}>
+                  <IconButton>
+                    <NotificationsIcon />
+                  </IconButton>
+                  <IconButton>
+                    <Avatar />
+                  </IconButton>
+                  <IconButton>
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </Grid>
+              </>
+            ) : (
+              <Grid container justify="flex-end" item xs={6}>
+                <Grid item>
+                  <Button onClick={() => handleSignInDialog(true)}>
+                    SIGN IN
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button onClick={() => handleRegisterDialog(true)}>
+                    REGISTER
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid container justify="flex-end" item xs={3}>
-                <IconButton>
-                  <NotificationsIcon />
-                </IconButton>
-                <IconButton>
-                  <Avatar />
-                </IconButton>
-                <IconButton>
-                  <ExpandMoreIcon />
-                </IconButton>
-              </Grid>
-            </>
-          ) : (
-            <Grid container justify="flex-end" item xs={6}>
-              <Grid item>
-                <Button onClick={() => setSignedIn(true)}>SIGN IN</Button>
-              </Grid>
-              <Grid item>
-                <Button>REGISTER</Button>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-      </Toolbar>
-    </AppBar>
+            )}
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <RegisterDialog
+        open={registerDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
+      <SignInDialog
+        open={signInDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
+    </>
   );
 };
 

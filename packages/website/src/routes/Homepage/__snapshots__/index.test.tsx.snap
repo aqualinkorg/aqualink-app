@@ -43,13 +43,12 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         >
           <h4
             class="MuiTypography-root MuiTypography-h4"
-            style="font-weight: 500;"
           >
             Aqua
           </h4>
           <h4
             class="MuiTypography-root MuiTypography-h4"
-            style="font-weight: 300;"
+            style="color: rgb(138, 198, 222);"
           >
             link
           </h4>
@@ -108,7 +107,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          class="HomepageMap-map-8 leaflet-container leaflet-grab leaflet-touch-drag"
+          class="HomepageMap-map-25 leaflet-container leaflet-grab leaflet-touch-drag"
           style="position: relative;"
           tabindex="0"
         >
