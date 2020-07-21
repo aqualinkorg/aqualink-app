@@ -229,7 +229,7 @@ const RegisterDialog = ({
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      height: "70vh",
+      height: "72vh",
       width: "30vw",
     },
     closeButton: {
