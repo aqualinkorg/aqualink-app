@@ -3,14 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import App from "./layout/App";
-import { store } from "./store/configure";
+import { store, persistor } from "./store/configure";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </>,
   document.getElementById("root")

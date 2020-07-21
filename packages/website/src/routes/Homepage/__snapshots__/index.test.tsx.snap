@@ -107,7 +107,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          class="HomepageMap-map-25 leaflet-container leaflet-grab leaflet-touch-drag"
+          class="HomepageMap-map-27 leaflet-container leaflet-grab leaflet-touch-drag"
           style="position: relative;"
           tabindex="0"
         >

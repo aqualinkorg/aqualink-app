@@ -6,7 +6,10 @@ const createUser = (email: string, password: string) =>
 const signInUser = (email: string, password: string) =>
   app.auth().signInWithEmailAndPassword(email, password);
 
+const signOutUser = () => app.auth().signOut();
+
 export default {
   createUser,
   signInUser,
+  signOutUser,
 };

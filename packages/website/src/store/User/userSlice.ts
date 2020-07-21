@@ -53,6 +53,22 @@ export const signInUser = createAsyncThunk<
   }
 );
 
+const signOutUserPromise = async (): Promise<UserState["userInfo"]> => {
+  try {
+    await userServices.signOutUser();
+    return null;
+  } catch (err) {
+    const error: AxiosError<UserState["error"]> = err;
+    return Promise.reject(error.message);
+  }
+};
+
+export const signOutUser = createAsyncThunk<
+  UserState["userInfo"],
+  void,
+  CreateAsyncThunkTypes
+>("user/signOut", () => signOutUserPromise());
+
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
@@ -113,6 +129,37 @@ const userSlice = createSlice({
     );
 
     builder.addCase(signInUser.pending, (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    });
+
+    // User Sign Out
+    builder.addCase(
+      signOutUser.fulfilled,
+      (state, action: PayloadAction<UserState["userInfo"]>) => {
+        return {
+          ...state,
+          userInfo: action.payload,
+          loading: false,
+        };
+      }
+    );
+
+    builder.addCase(
+      signOutUser.rejected,
+      (_state, action: PayloadAction<UserState["error"]>) => {
+        return {
+          userInfo: null,
+          error: action.payload,
+          loading: false,
+        };
+      }
+    );
+
+    builder.addCase(signOutUser.pending, (state) => {
       return {
         ...state,
         loading: true,
