@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useCallback } from "react";
+import React, { BaseSyntheticEvent, useCallback, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -17,9 +17,9 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { signInUser } from "../../../store/User/userSlice";
+import { signInUser, userInfoSelector } from "../../../store/User/userSlice";
 import { UserRequestParams } from "../../../store/User/types";
 
 const SignInDialog = ({
@@ -29,6 +29,7 @@ const SignInDialog = ({
   classes,
 }: SignInDialogProps) => {
   const dispatch = useDispatch();
+  const user = useSelector(userInfoSelector);
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -49,6 +50,12 @@ const SignInDialog = ({
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    if (user) {
+      handleSignInOpen(false);
+    }
+  }, [user, handleSignInOpen]);
 
   return (
     <Dialog open={open}>

@@ -20,6 +20,11 @@ describe("Homepage", () => {
       homepage: {
         reefOnMap: null,
       },
+      user: {
+        userInfo: null,
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();

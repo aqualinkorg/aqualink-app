@@ -11,9 +11,11 @@ describe("NavBar", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
-      user: null,
-      loading: false,
-      error: null,
+      user: {
+        userInfo: null,
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();

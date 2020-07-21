@@ -17,13 +17,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useSelector } from "react-redux";
 
 import RegisterDialog from "../RegisterDialog";
 import SignInDialog from "../SignInDialog";
+import { userInfoSelector } from "../../../store/User/userSlice";
 
 const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
+  const user = useSelector(userInfoSelector);
   const [searchLocationText, setSearchLocationText] = useState<string>("");
-  const signedIn = false;
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
 
@@ -58,7 +60,7 @@ const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
                 link
               </Typography>
             </Grid>
-            {signedIn ? (
+            {user ? (
               <>
                 <Grid container justify="flex-end" item xs={3}>
                   <Grid

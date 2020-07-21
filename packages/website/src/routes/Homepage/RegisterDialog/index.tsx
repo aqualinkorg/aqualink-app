@@ -1,4 +1,9 @@
-import React, { BaseSyntheticEvent, useCallback, useState } from "react";
+import React, {
+  BaseSyntheticEvent,
+  useCallback,
+  useState,
+  useEffect,
+} from "react";
 import { Link } from "react-router-dom";
 import {
   withStyles,
@@ -18,9 +23,9 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { createUser } from "../../../store/User/userSlice";
+import { createUser, userInfoSelector } from "../../../store/User/userSlice";
 import { UserRequestParams } from "../../../store/User/types";
 
 const RegisterDialog = ({
@@ -30,6 +35,7 @@ const RegisterDialog = ({
   classes,
 }: RegisterDialogProps) => {
   const dispatch = useDispatch();
+  const user = useSelector(userInfoSelector);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
   const { register, errors, handleSubmit } = useForm({
@@ -52,6 +58,12 @@ const RegisterDialog = ({
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    if (user) {
+      handleRegisterOpen(false);
+    }
+  }, [user, handleRegisterOpen]);
 
   return (
     <Dialog open={open}>
