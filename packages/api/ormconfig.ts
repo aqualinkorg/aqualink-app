@@ -45,8 +45,8 @@ export = ({
     join(__dirname, 'src/**', '*.entity.ts'),
     join(__dirname, 'src/**', '*.entity.js'),
   ],
-  seeds: [join(__dirname, 'src/database', '*.seeds.ts')],
-  factories: [join(__dirname, 'src/database', '*.factory.ts')],
+  seeds: [join(__dirname, 'src/seeds', '*.seeds.ts')],
+  factories: [join(__dirname, 'src/seeds', '*.factory.ts')],
   migrations: [join(__dirname, 'migration/**', '*.ts')],
   subscribers: [join(__dirname, 'subscriber/**', '*.ts')],
   cli: {

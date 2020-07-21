@@ -10,6 +10,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import ReefNavBar from "./ReefNavBar";
+import ReefFooter from "./Footer";
 import {
   reefDetailsSelector,
   reefLoadingSelector,
@@ -40,7 +41,10 @@ const Reef = ({ match, classes }: ReefProps) => {
       {loading ? (
         <LinearProgress />
       ) : reefDetails && reefDetails.dailyData.length > 0 && !error ? (
-        <ReefDetails reef={reefDetails} />
+        <>
+          <ReefDetails reef={reefDetails} />
+          <ReefFooter />
+        </>
       ) : (
         <div className={classes.noData}>
           <Grid

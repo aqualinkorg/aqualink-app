@@ -5,7 +5,6 @@
     "module": "commonjs",
     "target": "es6"
   },
-  "files": [
-    "src/custom.d.ts"
-  ]
+  "include": ["src"],
+  "files": ["src/custom.d.ts", "ormconfig.ts"]
 }
