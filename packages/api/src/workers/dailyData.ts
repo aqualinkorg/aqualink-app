@@ -1,6 +1,6 @@
 /** Worker to process daily data for all reefs. */
 import { sum, get } from 'lodash';
-import { createConnection } from 'typeorm';
+import { createConnection, Connection } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
@@ -31,7 +31,6 @@ async function getDailyData(reef: Reef, date: Date): Promise<any> {
   const degreeHeatingDays = 0; // calculateDegreeHeatingDays(seaSurfaceTemperatures, MMM);
 
   // Get satelliteTemperature close to midnight local time.
-  console.log('get satellite Temperature');
   const satelliteTemperature = (
     await getSofarDailyData(
       'HYCOM',
@@ -41,7 +40,6 @@ async function getDailyData(reef: Reef, date: Date): Promise<any> {
       date,
     )
   ).slice(-1)[0].value;
-  console.log(satelliteTemperature);
   // Get NOAA waves data
   const significantWaveHeights = (
     await getSofarDailyData(
@@ -134,27 +132,30 @@ async function getDailyData(reef: Reef, date: Date): Promise<any> {
   };
 }
 
-async function getReefsDailyData(date: Date) {
-  // TODO: implement loop
-  // TODO - Prevent duplicate inserts on (reef_id, date)
-  createConnection(dbConfig).then(async (connection) => {
-    const reefRepository = connection.getRepository(Reef);
-    const dailyDataRepository = connection.getRepository(DailyData);
-    const allReefs = await reefRepository.find();
-    allReefs.forEach(async (reef) => {
-      const dailyDataInput = await getDailyData(reef, date);
-      const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
-      dailyDataRepository.save(dailyDataEntities);
-    });
+export async function getReefsDailyData(connection: Connection, date: Date) {
+  const reefRepository = connection.getRepository(Reef);
+  const dailyDataRepository = connection.getRepository(DailyData);
+  const allReefs = await reefRepository.find();
+  allReefs.forEach(async (reef) => {
+    const dailyDataInput = await getDailyData(reef, date);
+    const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
+    dailyDataRepository.save(dailyDataEntities);
   });
 }
 
 async function run() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  await getReefsDailyData(yesterday);
+  createConnection(dbConfig).then(async (connection) => {
+    try {
+      await getReefsDailyData(connection, yesterday);
+    } catch (error) {
+      console.error(error);
+    }
+  });
 }
 
 run();
