@@ -53,7 +53,11 @@ export const signInUser = createAsyncThunk<
   }
 );
 
-const signOutUserPromise = async (): Promise<UserState["userInfo"]> => {
+export const signOutUser = createAsyncThunk<
+  UserState["userInfo"],
+  void,
+  CreateAsyncThunkTypes
+>("user/signOut", async () => {
   try {
     await userServices.signOutUser();
     return null;
@@ -61,13 +65,7 @@ const signOutUserPromise = async (): Promise<UserState["userInfo"]> => {
     const error: AxiosError<UserState["error"]> = err;
     return Promise.reject(error.message);
   }
-};
-
-export const signOutUser = createAsyncThunk<
-  UserState["userInfo"],
-  void,
-  CreateAsyncThunkTypes
->("user/signOut", () => signOutUserPromise());
+});
 
 const userSlice = createSlice({
   name: "user",
