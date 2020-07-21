@@ -3,11 +3,11 @@ import { get } from 'lodash';
 import * as superagent from 'superagent';
 import geoTz from 'geo-tz';
 import moment from 'moment-timezone';
-
-const SOFAR_URL =
-  'https://storm-glass-prod.herokuapp.com/marine-weather/v1/models/';
-
-// const YOUR_API_TOKEN = '';
+import {
+  SOFAR_API_TOKEN,
+  SOFAR_MARINE_URL,
+  // SOFAR_SPOTTER_URL,
+} from './constants';
 
 type SofarValue = {
   timestamp: string;
@@ -23,14 +23,14 @@ export async function sofarHindcast(
   end: string,
 ) {
   const response = await superagent
-    .get(`${SOFAR_URL}${modelId}/hindcast/point`)
+    .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`)
     .query({
       variableIDs: [variableID],
       latitude,
       longitude,
       start,
       end,
-      //   token: YOUR_API_TOKEN,
+      token: SOFAR_API_TOKEN,
     });
   return response.body.hindcastVariables[0];
 }
@@ -72,6 +72,7 @@ export async function getSpotterData(
   // TODO - Implement Spotter Data Retrieval
   // https://docs.sofarocean.com/spotter-sensor
   // getSofarSpotterData()
+  // using SOFAR_SPOTTER_URL
   return { surfaceTemperature: 20, bottomTemperature: [0] };
 }
 
