@@ -18,6 +18,10 @@ import {
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+
+import { createUser } from "../../../store/User/userSlice";
+import { UserRequestParams } from "../../../store/User/types";
 
 const RegisterDialog = ({
   open,
@@ -25,6 +29,7 @@ const RegisterDialog = ({
   handleSignInOpen,
   classes,
 }: RegisterDialogProps) => {
+  const dispatch = useDispatch();
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
   const { register, errors, handleSubmit } = useForm({
@@ -39,10 +44,13 @@ const RegisterDialog = ({
       if (event) {
         event.preventDefault();
       }
-      // eslint-disable-next-line no-console
-      console.log(data);
+      const registerInfo: UserRequestParams = {
+        email: data.emailAddress,
+        password: data.password,
+      };
+      dispatch(createUser(registerInfo));
     },
-    []
+    [dispatch]
   );
 
   return (

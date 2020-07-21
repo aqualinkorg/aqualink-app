@@ -17,6 +17,10 @@ import {
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { signInUser } from "../../../store/User/userSlice";
+import { UserRequestParams } from "../../../store/User/types";
 
 const SignInDialog = ({
   open,
@@ -24,6 +28,7 @@ const SignInDialog = ({
   handleSignInOpen,
   classes,
 }: SignInDialogProps) => {
+  const dispatch = useDispatch();
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -36,10 +41,13 @@ const SignInDialog = ({
       if (event) {
         event.preventDefault();
       }
-      // eslint-disable-next-line no-console
-      console.log(data);
+      const registerInfo: UserRequestParams = {
+        email: data.emailAddress,
+        password: data.password,
+      };
+      dispatch(signInUser(registerInfo));
     },
-    []
+    [dispatch]
   );
 
   return (
