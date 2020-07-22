@@ -46,6 +46,7 @@
     "@nestjs/typeorm": "^7.0.0",
     "@types/lodash": "^4.14.156",
     "@types/moment-timezone": "^0.5.13",
+    "axios": "^0.19.2",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "geo-tz": "^6.0.0",
@@ -59,7 +60,6 @@
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
-    "superagent": "^5.3.1",
     "typeorm": "^0.2.25",
     "typeorm-naming-strategies": "^1.1.0"
   },

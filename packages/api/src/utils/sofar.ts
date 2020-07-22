@@ -1,6 +1,6 @@
 /** Utility function to access the Sofar APIand retrieve relevant data. */
 import { get } from 'lodash';
-import * as superagent from 'superagent';
+import axios from 'axios';
 import geoTz from 'geo-tz';
 import moment from 'moment-timezone';
 import {
@@ -22,17 +22,20 @@ export async function sofarHindcast(
   start: string,
   end: string,
 ) {
-  const response = await superagent
-    .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`)
-    .query({
-      variableIDs: [variableID],
-      latitude,
-      longitude,
-      start,
-      end,
-      token: SOFAR_API_TOKEN,
-    });
-  return response.body.hindcastVariables[0];
+  const response = await axios.get(
+    `${SOFAR_MARINE_URL}${modelId}/hindcast/point`,
+    {
+      params: {
+        variableIDs: [variableID],
+        latitude,
+        longitude,
+        start,
+        end,
+        token: SOFAR_API_TOKEN,
+      },
+    },
+  );
+  return response.data.hindcastVariables[0];
 }
 
 export async function getSofarDailyData(
