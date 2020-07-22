@@ -1,17 +1,19 @@
 /** Worker to process daily data for all reefs. */
-import { sum, get } from 'lodash';
+import { sum } from 'lodash';
 import { createConnection, Connection } from 'typeorm';
+import { Point } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
 const dbConfig = require('../../ormconfig');
 
-async function getDailyData(reef: Reef, date: Date): Promise<any> {
+async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId } = reef;
-  const [longitude, latitude] = get(polygon, 'coordinates');
-  // Get Spotter Data
-  const spotterData = await getSpotterData('reef.spotterId', date);
+  // TODO - Accept Polygon option
+  const [longitude, latitude] = (polygon as Point).coordinates;
+
+  const spotterData = await getSpotterData(spotterId, date);
   const minBottomTemperature =
     spotterId && Math.min(...spotterData.bottomTemperature);
   const maxBottomTemperature =
@@ -136,11 +138,13 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
-  allReefs.forEach(async (reef) => {
-    const dailyDataInput = await getDailyData(reef, date);
-    const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
-    dailyDataRepository.save(dailyDataEntities);
-  });
+  return Promise.all(
+    allReefs.map(async (reef) => {
+      const dailyDataInput = await getDailyData(reef, date);
+      const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
+      dailyDataRepository.save(dailyDataEntities);
+    }),
+  );
 }
 
 async function run() {

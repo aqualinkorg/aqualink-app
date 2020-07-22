@@ -43,6 +43,7 @@ export async function getSofarDailyData(
   date: Date,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
+  // We fetch daily data from midnight to midnight LOCAL time.
   const timezone = get(geoTz(latitude, longitude), 0, '') as string;
   const m = moment.tz(date, timezone);
   const start = m.clone().startOf('day').utc().format();
@@ -76,13 +77,14 @@ export async function getSpotterData(
   return { surfaceTemperature: 20, bottomTemperature: [0] };
 }
 
+/** Utility function to get the closest available data given a date in UTC. */
 export function getValueClosestToDate(sofarValues: SofarValue[], date: Date) {
-  const index = sofarValues.reduce((r, a, i, aa) => {
-    return i &&
-      Math.abs(new Date(aa[r].timestamp).getTime() - date.getTime()) <
-        Math.abs(new Date(a.timestamp).getTime() - date.getTime())
-      ? r
-      : i;
-  }, -1);
-  return sofarValues[index].value;
+  const timeDiff = (timestamp: string) =>
+    Math.abs(new Date(timestamp).getTime() - date.getTime());
+
+  return sofarValues.reduce((prevClosest, nextPoint) =>
+    timeDiff(prevClosest.timestamp) > timeDiff(nextPoint.timestamp)
+      ? nextPoint
+      : prevClosest,
+  ).value;
 }

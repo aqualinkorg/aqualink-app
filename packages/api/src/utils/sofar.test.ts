@@ -1,6 +1,6 @@
 import { getSofarDailyData } from './sofar';
 
-test('Test', async () => {
+test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSofarDailyData(
     'HYCOM',
