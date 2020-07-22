@@ -1,29 +1,9 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { persistStore, persistReducer, PERSIST } from "redux-persist";
-import { createWhitelistFilter } from "redux-persist-transform-filter";
-import storage from "redux-persist/lib/storage";
+import { configureStore } from "@reduxjs/toolkit";
 
 /* eslint-disable-next-line import/no-cycle */
 import reducer from "./reducer";
 
-const persistConfig = {
-  key: "aqualink-app-storage",
-  storage,
-  transforms: [createWhitelistFilter("user", ["userInfo"])],
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
-
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [PERSIST],
-    },
-  }),
-});
-
-export const persistor = persistStore(store);
+export const store = configureStore({ reducer });
 
 export type RootState = ReturnType<typeof store.getState>;
 
