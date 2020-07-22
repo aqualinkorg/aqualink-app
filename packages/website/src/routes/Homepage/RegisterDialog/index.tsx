@@ -20,12 +20,20 @@ import {
   TextField,
   Button,
   Checkbox,
+  LinearProgress,
+  Collapse,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-import { createUser, userInfoSelector } from "../../../store/User/userSlice";
+import {
+  createUser,
+  userInfoSelector,
+  userLoadingSelector,
+  userErrorSelector,
+} from "../../../store/User/userSlice";
 import { UserRequestParams } from "../../../store/User/types";
 
 const RegisterDialog = ({
@@ -36,6 +44,9 @@ const RegisterDialog = ({
 }: RegisterDialogProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
+  const loading = useSelector(userLoadingSelector);
+  const error = useSelector(userErrorSelector);
+  const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
   const { register, errors, handleSubmit } = useForm({
@@ -63,7 +74,10 @@ const RegisterDialog = ({
     if (user) {
       handleRegisterOpen(false);
     }
-  }, [user, handleRegisterOpen]);
+    if (error) {
+      setErrorAlertOpen(true);
+    }
+  }, [user, handleRegisterOpen, error]);
 
   return (
     <Dialog open={open}>
@@ -98,6 +112,28 @@ const RegisterDialog = ({
             </Grid>
           }
         />
+        {loading && <LinearProgress />}
+        {error && (
+          <Collapse in={errorAlertOpen}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setErrorAlertOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {error}
+            </Alert>
+          </Collapse>
+        )}
         <CardContent>
           <Grid container justify="center" item xs={12}>
             <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={10}>

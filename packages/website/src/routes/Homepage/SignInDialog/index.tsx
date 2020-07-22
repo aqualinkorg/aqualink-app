@@ -1,4 +1,9 @@
-import React, { BaseSyntheticEvent, useCallback, useEffect } from "react";
+import React, {
+  BaseSyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import {
   withStyles,
   WithStyles,
@@ -13,13 +18,21 @@ import {
   IconButton,
   TextField,
   Button,
+  LinearProgress,
+  Collapse,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signInUser, userInfoSelector } from "../../../store/User/userSlice";
+import {
+  signInUser,
+  userInfoSelector,
+  userLoadingSelector,
+  userErrorSelector,
+} from "../../../store/User/userSlice";
 import { UserRequestParams } from "../../../store/User/types";
 
 const SignInDialog = ({
@@ -30,6 +43,9 @@ const SignInDialog = ({
 }: SignInDialogProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
+  const loading = useSelector(userLoadingSelector);
+  const error = useSelector(userErrorSelector);
+  const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -55,7 +71,10 @@ const SignInDialog = ({
     if (user) {
       handleSignInOpen(false);
     }
-  }, [user, handleSignInOpen]);
+    if (error) {
+      setErrorAlertOpen(true);
+    }
+  }, [user, handleSignInOpen, error]);
 
   return (
     <Dialog open={open}>
@@ -90,6 +109,28 @@ const SignInDialog = ({
             </Grid>
           }
         />
+        {loading && <LinearProgress />}
+        {error && (
+          <Collapse in={errorAlertOpen}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setErrorAlertOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {error}
+            </Alert>
+          </Collapse>
+        )}
         <CardContent>
           <Grid container justify="center" item xs={12}>
             <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={10}>
