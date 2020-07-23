@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
-import { runDailyUpdate } from '../../src/workers/dailyData';
+import * as functions from "firebase-functions";
+import { runDailyUpdate } from "../../../api/src/workers/dailyData";
 
 // Start a daily update for each reefs.
 exports.dailyUpdate = functions.https.onRequest(async (req, res) => {
