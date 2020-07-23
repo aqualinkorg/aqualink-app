@@ -151,7 +151,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   );
 }
 
-async function run() {
+export async function runDailyUpdate() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -166,4 +166,4 @@ async function run() {
   });
 }
 
-run();
+runDailyUpdate();
