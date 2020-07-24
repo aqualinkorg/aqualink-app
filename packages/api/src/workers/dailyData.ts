@@ -1,12 +1,11 @@
 /** Worker to process daily data for all reefs. */
 import { sum } from 'lodash';
-import { createConnection, Connection } from 'typeorm';
+import { Connection } from 'typeorm';
 import { Point } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
-const dbConfig = require('../../ormconfig');
 
 async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId } = reef;
@@ -31,9 +30,9 @@ async function getDailyData(reef: Reef, date: Date) {
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
   // TODO - Get data for the past 84 days.
-  const seaSurfaceTemperatures = [] as number[];
+  // const seaSurfaceTemperatures = [] as number[];
   // TODO - Add NOAA MMM to the reef table.
-  const MMM = 28;
+  // const MMM = 28;
   const degreeHeatingDays = 0; // calculateDegreeHeatingDays(seaSurfaceTemperatures, MMM);
 
   // Get satelliteTemperature close to midnight local time.
@@ -145,25 +144,44 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   return Promise.all(
     allReefs.map(async (reef) => {
       const dailyDataInput = await getDailyData(reef, date);
-      const dailyDataEntities = dailyDataRepository.create(dailyDataInput);
-      dailyDataRepository.save(dailyDataEntities);
+      const entity = dailyDataRepository.create(dailyDataInput);
+      try {
+        const res = await dailyDataRepository.save(entity);
+        return res;
+      } catch (err) {
+        // Update instead of insert
+        if (err.constraint === 'no_duplicated_date') {
+          const res = await dailyDataRepository.update(
+            {
+              reef,
+              date: entity.date,
+            },
+            entity,
+          );
+          return res;
+        }
+        console.error(
+          `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
+        );
+        return undefined;
+      }
     }),
   );
 }
 
-export async function runDailyUpdate() {
+/* eslint-disable no-console */
+export async function runDailyUpdate(conn: Connection) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  createConnection(dbConfig).then(async (connection) => {
-    try {
-      await getReefsDailyData(connection, yesterday);
-    } catch (error) {
-      console.error(error);
-    }
-  });
+  console.log(`Daily Update for data on ${yesterday.toDateString()}`);
+  try {
+    await getReefsDailyData(conn, yesterday);
+    console.log('Completed daily update.');
+  } catch (error) {
+    console.error(error);
+  }
 }
-
-runDailyUpdate();
+/* eslint-enable no-console */

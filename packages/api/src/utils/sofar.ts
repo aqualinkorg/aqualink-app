@@ -1,10 +1,9 @@
-/** Utility function to access the Sofar APIand retrieve relevant data. */
+/** Utility function to access the Sofar API and retrieve relevant data. */
 import { get } from 'lodash';
 import axios from 'axios';
 import geoTz from 'geo-tz';
 import moment from 'moment-timezone';
 import {
-  SOFAR_API_TOKEN,
   SOFAR_MARINE_URL,
   // SOFAR_SPOTTER_URL,
 } from './constants';
@@ -31,7 +30,7 @@ export async function sofarHindcast(
         longitude,
         start,
         end,
-        token: SOFAR_API_TOKEN,
+        token: process.env.SOFAR_API_TOKEN,
       },
     },
   );
@@ -70,7 +69,9 @@ type SpotterData = {
 };
 
 export async function getSpotterData(
+  // eslint-disable-next-line no-unused-vars
   spotterId: string,
+  // eslint-disable-next-line no-unused-vars
   date: Date,
 ): Promise<SpotterData> {
   // TODO - Implement Spotter Data Retrieval

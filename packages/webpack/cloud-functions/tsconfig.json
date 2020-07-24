@@ -1,9 +1,0 @@
-{
-  "extends": "../../api/tsconfig.build.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "sourceMap": true,
-  "compileOnSave": true,
-  "include": ["src"]
-}

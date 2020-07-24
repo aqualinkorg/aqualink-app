@@ -10,3 +10,9 @@
 
 # Database
 /db_data/
+
+# Firebase Local Config
+.runtimeconfig.json
+
+# Firebase Cloud Functions Generated files
+cloud-functions/dist/*.js
