@@ -71,16 +71,16 @@ $ yarn test:cov
 
 We run daily updates using Firebase Cloud Functions.
 
-#### Settings
+#### Environment Variables
 
-Before exporting your functions, make sure that the environment variables are set properly:
+Before exporting your functions, make sure that the environment variables are set properly using the chosen environment.
 
 ```
-firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
+export $(grep -v '^#' .env.staging | xargs) && firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
 ```
 
 #### Deploy
 
 ```
-firebase deploy --only functions:dailyUpdate
+yarn deploy:cloud-functions
 ```
