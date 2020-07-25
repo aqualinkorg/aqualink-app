@@ -1,4 +1,5 @@
 # Aqualink - API
+
 The primary purpose of the API is to serve Aqualink data to the website. In thre future, we will also thrive to make the API open and avilable for developers.
 
 ### Installation
@@ -8,6 +9,7 @@ $ yarn install
 ```
 
 ### Settings
+
 The database connection must be configured before you can run the app. Configuration is sourced from environment
 variables. You can either specify a Postgres connection URL using `DATABASE_URL`, or individual options:
 
@@ -63,4 +65,22 @@ $ yarn test:e2e
 
 # test coverage
 $ yarn test:cov
+```
+
+### Daily Updates
+
+We run daily updates using Firebase Cloud Functions.
+
+#### Settings
+
+Before exporting your functions, make sure that the environment variables are set properly:
+
+```
+firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
+```
+
+#### Deploy
+
+```
+firebase deploy --only functions:dailyUpdate
 ```
