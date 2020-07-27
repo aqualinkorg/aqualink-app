@@ -40,7 +40,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       map.setMaxBounds(bounds);
       map.flyTo(center, zoom, { duration: 1 });
     }
-  }, [center, zoom]);
+  }, [center, zoom, mapRef]);
 
   useEffect(() => {
     const markerCurrent = markerRef.current;
@@ -61,7 +61,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       );
       marker.openPopup();
     }
-  }, [reefOnMap]);
+  }, [reefOnMap, markerRef, mapRef]);
 
   return (
     <Map
