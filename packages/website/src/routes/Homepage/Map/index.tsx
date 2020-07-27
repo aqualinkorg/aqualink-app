@@ -50,9 +50,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       markerCurrent.leafletElement &&
       mapCurrent &&
       mapCurrent.leafletElement &&
-      reefOnMap &&
-      reefOnMap.polygon &&
-      reefOnMap.polygon.type === "Point"
+      reefOnMap?.polygon?.type === "Point"
     ) {
       const map = mapCurrent.leafletElement;
       const marker = markerCurrent.leafletElement;
