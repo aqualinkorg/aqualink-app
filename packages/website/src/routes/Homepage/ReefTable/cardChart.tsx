@@ -9,8 +9,8 @@ import {
   calculateAxisLimits,
 } from "../../ReefRoutes/Reef/Charts/utils";
 
-require("../../../helpers/backgroundPlugin");
-require("../../../helpers/fillPlugin");
+import "../../../helpers/backgroundPlugin";
+import "../../../helpers/fillPlugin";
 
 const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
   const [updateChart, setUpdateChart] = useState<boolean>(false);
