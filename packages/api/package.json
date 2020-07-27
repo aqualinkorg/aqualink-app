@@ -12,7 +12,7 @@
     "gcp-build": "npm install yarn",
     "deploy:prod": "mv .env .env.bkp && cp .env.prod .env && yarn run build && gcloud app deploy && mv .env.bkp .env",
     "deploy:staging": "mv .env .env.bkp && cp .env.staging .env && yarn run build && gcloud app deploy app-staging.yaml && mv .env.bkp .env",
-    "deploy:cloud-functions": "yarn build:cloud-functions && firebase deploy --only functions:dailyUpdate",
+    "deploy:cloud-functions": "yarn build:cloud-functions && firebase deploy --only functions:scheduledDailyUpdate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
     "start:dev": "cp .env.local .env && nodemon --config nodemon.json",

@@ -36,21 +36,46 @@ const {
 } = require('../ormconfig');
 
 // Start a daily update for each reefs.
-exports.dailyUpdate = functions.https.onRequest(async (req, res) => {
-  const dbUrl = functions.config().database.url;
-  // eslint-disable-next-line fp/no-mutation
-  process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
-  // eslint-disable-next-line no-undef
-  const entities = dbEntities.map(extractEntityDefinition);
-  const conn = await createConnection({
-    ...dbConfig,
-    url: dbUrl,
-    entities,
+exports.dailyUpdate = functions
+  .runWith({ timeoutSeconds: 120 })
+  .https.onRequest(async (req, res) => {
+    const dbUrl = functions.config().database.url;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+    try {
+      await runDailyUpdate(conn);
+      res.json({ result: `Daily update on ${new Date()}` });
+    } finally {
+      conn.close();
+    }
   });
-  try {
-    await runDailyUpdate(conn);
-    res.json({ result: `Daily update on ${new Date()}` });
-  } finally {
-    conn.close();
-  }
-});
+
+exports.scheduledDailyUpdate = functions
+  .runWith({ timeoutSeconds: 120 })
+  .pubsub.schedule('every 24 hours')
+  .onRun(async () => {
+    const dbUrl = functions.config().database.url;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+    try {
+      await runDailyUpdate(conn);
+      // eslint-disable-next-line no-console
+      console.log(`Daily update on ${new Date()}`);
+    } finally {
+      conn.close();
+    }
+  });
