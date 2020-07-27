@@ -16,7 +16,7 @@ import CardChart from "./cardChart";
 import { Reef } from "../../../store/Reefs/types";
 import { sortDailyData } from "../../../helpers/sortDailyData";
 
-import reefImage from "../../../assets/reef-image.png";
+import reefImage from "../../../assets/reef-image.jpg";
 
 const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const sortByDate = sortDailyData(reef.dailyData);
