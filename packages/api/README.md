@@ -71,9 +71,11 @@ $ yarn test:cov
 
 We run daily updates using Firebase Cloud Functions.
 
-#### Environment Variables
+#### Prerequisite
 
-Before exporting your functions, make sure that the environment variables are set properly using the chosen environment.
+Before running daily updates for the first time, you will need to augment your reef table with timezone and maximum monthly mean temperature. To do so, you can simply use the convenience script `yarn augment-reefs`.
+
+In addition, you will need to set the environment variables in Firebase:
 
 ```
 export $(grep -v '^#' .env.staging | xargs) && firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
