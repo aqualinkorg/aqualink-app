@@ -6,7 +6,7 @@ import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 import { Reef, Position } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
-const marker = require("../../../../assets/marker.png");
+import marker from "../../../../assets/marker.png";
 
 const pinIcon = L.icon({
   iconUrl: marker,

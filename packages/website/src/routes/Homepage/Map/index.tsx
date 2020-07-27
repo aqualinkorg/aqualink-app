@@ -12,7 +12,7 @@ import {
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./popup";
 
-const pin = require("../../../assets/buoy.png");
+import pin from "../../../assets/buoy.png";
 
 const pinIcon = L.icon({
   iconUrl: pin,
