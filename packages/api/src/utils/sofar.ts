@@ -1,7 +1,5 @@
 /** Utility function to access the Sofar API and retrieve relevant data. */
-import { get } from 'lodash';
 import axios from 'axios';
-import geoTz from 'geo-tz';
 import moment from 'moment-timezone';
 import {
   SOFAR_MARINE_URL,
