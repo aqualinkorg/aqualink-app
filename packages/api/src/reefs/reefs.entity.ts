@@ -43,6 +43,12 @@ export class Reef {
   @Column({ nullable: true })
   videoStream: string;
 
+  @Column('float', { nullable: true })
+  maxMonthlyMean: number;
+
+  @Column({ nullable: true })
+  timezone: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
