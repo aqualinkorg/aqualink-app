@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import type { AxiosError } from "axios";
+import { FirebaseError } from "firebase";
 
 import type { User, UserState, UserRequestParams } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
@@ -26,7 +26,7 @@ export const createUser = createAsyncThunk<
         token: await user?.getIdToken(),
       };
     } catch (err) {
-      const error: AxiosError<UserState["error"]> = err;
+      const error: FirebaseError = err;
       return rejectWithValue(error.message);
     }
   }
@@ -47,7 +47,7 @@ export const signInUser = createAsyncThunk<
         token: await user?.getIdToken(),
       };
     } catch (err) {
-      const error: AxiosError<UserState["error"]> = err;
+      const error: FirebaseError = err;
       return rejectWithValue(error.message);
     }
   }
@@ -62,7 +62,7 @@ export const signOutUser = createAsyncThunk<
     await userServices.signOutUser();
     return null;
   } catch (err) {
-    const error: AxiosError<UserState["error"]> = err;
+    const error: FirebaseError = err;
     return Promise.reject(error.message);
   }
 });
@@ -70,7 +70,15 @@ export const signOutUser = createAsyncThunk<
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
-  reducers: {},
+  reducers: {
+    initialiseUser: (
+      state,
+      { payload }: PayloadAction<UserState["userInfo"]>
+    ) => ({
+      ...state,
+      userInfo: payload,
+    }),
+  },
   extraReducers: (builder) => {
     // User Create
     builder.addCase(
@@ -175,5 +183,7 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
+
+export const { initialiseUser } = userSlice.actions;
 
 export default userSlice.reducer;
