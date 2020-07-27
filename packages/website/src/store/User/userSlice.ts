@@ -71,7 +71,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    initialiseUser: (
+    initializeUser: (
       state,
       { payload }: PayloadAction<UserState["userInfo"]>
     ) => ({
@@ -184,6 +184,6 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
 
-export const { initialiseUser } = userSlice.actions;
+export const { initializeUser } = userSlice.actions;
 
 export default userSlice.reducer;

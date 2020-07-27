@@ -8,7 +8,7 @@ import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
 import theme from "./theme";
 import "./App.css";
-import { initialiseUser } from "../../store/User/userSlice";
+import { initializeUser } from "../../store/User/userSlice";
 import app from "../../firebase";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     if (user) {
       // User is signed in
       user.getIdToken().then((token) => {
-        dispatch(initialiseUser({ email: user.email, uid: user.uid, token }));
+        dispatch(initializeUser({ email: user.email, uid: user.uid, token }));
       });
     }
     setRender(true);
