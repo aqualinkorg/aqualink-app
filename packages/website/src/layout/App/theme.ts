@@ -1,14 +1,14 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const skyBlue: string = "#009ee0";
-const lightBlue: string = "#168dbd";
-const lighterBlue: string = "#c0e1f0";
-const darkGreyBlue: string = "#2d3436";
-const black: string = "#2f2f2f";
-const white: string = "#ffffff";
-const lightGray: string = "#939393";
+const skyBlue = "#009ee0";
+const lightBlue = "#168dbd";
+const lighterBlue = "#c0e1f0";
+const darkGreyBlue = "#2d3436";
+const black = "#2f2f2f";
+const white = "#ffffff";
+const lightGray = "#939393";
 
-const fontFamily: string =
+const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
 
 export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue };
