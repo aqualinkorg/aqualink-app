@@ -38,79 +38,77 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
   }, [onResize]);
 
   return (
-    <>
-      <Line
-        options={{
-          plugins: {
-            chartJsPluginBarchartBackground: {
-              color: "rgb(158, 166, 170, 0.07)",
-              xTicksFontWeight: 2.8,
-            },
-            fillPlugin: {
-              datasetIndex: 0,
-              zeroLevel: temperatureThreshold,
-              bottom: 0,
-              top: 35,
-              color: "rgba(250, 141, 0, 1)",
-              updateChart,
-            },
+    <Line
+      options={{
+        plugins: {
+          chartJsPluginBarchartBackground: {
+            color: "rgb(158, 166, 170, 0.07)",
+            xTicksFontWeight: 2.8,
           },
-          tooltips: {
-            enabled: false,
+          fillPlugin: {
+            datasetIndex: 0,
+            zeroLevel: temperatureThreshold,
+            bottom: 0,
+            top: 35,
+            color: "rgba(250, 141, 0, 1)",
+            updateChart,
           },
-          legend: {
-            display: false,
-          },
-          scales: {
-            xAxes: [
-              {
-                type: "time",
-                time: {
-                  displayFormats: {
-                    hour: "MMM D h:mm a",
-                  },
-                },
-                ticks: {
-                  min: xAxisMin,
-                  max: xAxisMax,
-                  padding: 10,
-                  maxRotation: 0,
-                  callback: (value: string) => {
-                    const splitDate = value.split(" ");
-                    if (splitDate[2] === "12:00" && splitDate[3] === "pm") {
-                      return `${splitDate[0]} ${splitDate[1]}`;
-                    }
-                    return null;
-                  },
-                },
-                gridLines: {
-                  display: false,
-                  drawTicks: false,
+        },
+        tooltips: {
+          enabled: false,
+        },
+        legend: {
+          display: false,
+        },
+        scales: {
+          xAxes: [
+            {
+              type: "time",
+              time: {
+                displayFormats: {
+                  hour: "MMM D h:mm a",
                 },
               },
-            ],
-            yAxes: [
-              {
-                gridLines: {
-                  drawTicks: false,
-                },
-                display: true,
-                ticks: {
-                  min: 0,
-                  stepSize: 20,
-                  max: 40,
-                  callback: (value: number) => {
-                    return `${value}\u00B0 `;
-                  },
+              ticks: {
+                min: xAxisMin,
+                max: xAxisMax,
+                padding: 10,
+                maxRotation: 0,
+                callback: (value: string) => {
+                  const splitDate = value.split(" ");
+                  if (splitDate[2] === "12:00" && splitDate[3] === "pm") {
+                    return `${splitDate[0]} ${splitDate[1]}`;
+                  }
+                  return null;
                 },
               },
-            ],
-          },
-        }}
-        height={100}
-        data={createChartData(chartLabels, bottomTemperatureData, 0.6, 0, true)}
-      />
-    </>
+              gridLines: {
+                display: false,
+                drawTicks: false,
+              },
+            },
+          ],
+          yAxes: [
+            {
+              gridLines: {
+                drawTicks: false,
+              },
+              display: true,
+              ticks: {
+                min: 0,
+                stepSize: 20,
+                max: 40,
+                callback: (value: number) => {
+                  return `${value}\u00B0 `;
+                },
+              },
+            },
+          ],
+        },
+      }}
+      height={100}
+      data={createChartData(chartLabels, bottomTemperatureData, 0.6, 0, true)}
+    />
   );
 };
 
