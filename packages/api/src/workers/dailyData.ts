@@ -8,7 +8,7 @@ import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
 
 async function getDailyData(reef: Reef, date: Date) {
-  const { polygon, spotterId } = reef;
+  const { polygon, spotterId, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -42,6 +42,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'HYCOM-seaSurfaceTemperature',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).slice(-1)[0].value;
@@ -52,6 +53,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'NOAAOperationalWaveModel-significantWaveHeight',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).map(({ value }) => value);
@@ -67,6 +69,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'NOAAOperationalWaveModel-meanDirectionWindWaves',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).map(({ value }) => value);
@@ -81,6 +84,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'NOAAOperationalWaveModel-meanPeriodWindWaves',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).map(({ value }) => value);
@@ -96,6 +100,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'GFS-magnitude10MeterWind',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).map(({ value }) => value);
@@ -110,6 +115,7 @@ async function getDailyData(reef: Reef, date: Date) {
       'GFS-magnitude10MeterWind',
       latitude,
       longitude,
+      localTimezone,
       date,
     )
   ).map(({ value }) => value);

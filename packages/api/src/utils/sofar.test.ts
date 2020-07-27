@@ -7,8 +7,10 @@ test('It processes Sofar API for daily data.', async () => {
     'HYCOM-seaSurfaceTemperature',
     -3.5976336810301888,
     -178.0000002552476,
+    'Etc/GMT+12',
     new Date('2020-07-07'),
   );
+
   expect(values).toEqual([
     { timestamp: '2020-07-06T12:00:00.000Z', value: 29.3450012207031 },
     { timestamp: '2020-07-06T15:00:00.000Z', value: 29.4020004272461 },

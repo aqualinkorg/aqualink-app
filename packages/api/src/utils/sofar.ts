@@ -42,12 +42,12 @@ export async function getSofarDailyData(
   variableID: string,
   latitude: number,
   longitude: number,
+  localTimezone: string,
   date: Date,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const timezone = get(geoTz(latitude, longitude), 0, '') as string;
-  const m = moment.tz(date, timezone);
+  const m = moment.tz(date, localTimezone);
   const start = m.clone().startOf('day').utc().format();
   const end = m.clone().endOf('day').utc().format();
   // Get data for model and return values
