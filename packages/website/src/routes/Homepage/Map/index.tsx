@@ -10,7 +10,7 @@ import {
   unsetReefOnMap,
 } from "../../../store/Homepage/homepageSlice";
 import { Reef } from "../../../store/Reefs/types";
-import Popup from "./popup";
+import Popup from "./Popup";
 
 import pin from "../../../assets/buoy.png";
 

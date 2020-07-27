@@ -5,7 +5,7 @@ import { Grid, Paper, Typography } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ErrorIcon from "@material-ui/icons/Error";
 
-import SelectedReefCard from "./selectedReefCard";
+import SelectedReefCard from "./SelectedReefCard";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";

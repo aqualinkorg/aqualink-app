@@ -14,8 +14,8 @@ import {
 import { Popup as LeafletPopup } from "react-leaflet";
 import { Link } from "react-router-dom";
 
-import { Reef } from "../../../store/Reefs/types";
-import { colors } from "../../../layout/App/theme";
+import { Reef } from "../../../../store/Reefs/types";
+import { colors } from "../../../../layout/App/theme";
 
 const Popup = ({ reef, classes }: PopupProps) => (
   <LeafletPopup closeButton={false} className={classes.popup}>

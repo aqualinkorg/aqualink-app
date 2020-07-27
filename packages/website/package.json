@@ -32,6 +32,7 @@
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "material-table": "^1.65.0",
+    "mutationobserver-shim": "^0.3.7",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.1",

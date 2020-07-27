@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Line } from "react-chartjs-2";
 
-import { createChartData } from "../../../helpers/createChartData";
-import { sortDailyData } from "../../../helpers/sortDailyData";
-import type { Data } from "../../../store/Reefs/types";
+import { createChartData } from "../../../../helpers/createChartData";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
+import type { Data } from "../../../../store/Reefs/types";
 import {
   createDatasets,
   calculateAxisLimits,
-} from "../../ReefRoutes/Reef/Charts/utils";
+} from "../../../ReefRoutes/Reef/Charts/utils";
 
-import "../../../helpers/backgroundPlugin";
-import "../../../helpers/fillPlugin";
+import "../../../../helpers/backgroundPlugin";
+import "../../../../helpers/fillPlugin";
 
 const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
   const [updateChart, setUpdateChart] = useState<boolean>(false);

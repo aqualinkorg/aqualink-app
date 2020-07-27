@@ -13,10 +13,10 @@ import {
 import { Link } from "react-router-dom";
 
 import CardChart from "./cardChart";
-import { Reef } from "../../../store/Reefs/types";
-import { sortDailyData } from "../../../helpers/sortDailyData";
+import { Reef } from "../../../../store/Reefs/types";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
 
-import reefImage from "../../../assets/reef-image.jpg";
+import reefImage from "../../../../assets/reef-image.jpg";
 
 const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const sortByDate = sortDailyData(reef.dailyData);
