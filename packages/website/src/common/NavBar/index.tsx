@@ -21,11 +21,11 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 
-import RegisterDialog from "../RegisterDialog";
-import SignInDialog from "../SignInDialog";
-import { userInfoSelector, signOutUser } from "../../../store/User/userSlice";
+import RegisterDialog from "../../routes/Homepage/RegisterDialog";
+import SignInDialog from "../../routes/Homepage/SignInDialog";
+import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
-const HomepageNavBar = ({ classes }: HomepageNavBarProps) => {
+const NavBar = ({ classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const [searchLocationText, setSearchLocationText] = useState<string>("");
@@ -202,6 +202,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-type HomepageNavBarProps = WithStyles<typeof styles>;
+type NavBarProps = WithStyles<typeof styles>;
 
-export default withStyles(styles)(HomepageNavBar);
+export default withStyles(styles)(NavBar);

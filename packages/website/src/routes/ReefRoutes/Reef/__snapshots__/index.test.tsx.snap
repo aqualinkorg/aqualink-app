@@ -65,24 +65,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-10"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-10"
       >
         <div
           class="ReefDetails-container-29"
         >
           <mock-map
             polygon="[object Object]"
-          />
-        </div>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
-      >
-        <div
-          class="ReefDetails-container-29"
-        >
-          <mock-featurevideo
-            url=""
           />
         </div>
       </div>
