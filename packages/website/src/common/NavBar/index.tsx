@@ -1,11 +1,11 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Grid,
   IconButton,
   Typography,
-  InputBase,
+  TextField,
   Avatar,
   Button,
   Menu,
@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,19 +25,19 @@ import { useSelector, useDispatch } from "react-redux";
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
+import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
+  const reefs = useSelector(reefsListSelector);
   const dispatch = useDispatch();
   const [searchLocationText, setSearchLocationText] = useState<string>("");
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const onChangeSearchText = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setSearchLocationText(event.target.value);
+  const onChangeSearchText = (value: string) => {
+    setSearchLocationText(value);
   };
 
   // TODO: Dispatch action to search for reefs based on value
@@ -108,10 +109,26 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                         container
                         alignItems="center"
                       >
-                        <InputBase
-                          value={searchLocationText}
-                          onChange={onChangeSearchText}
-                          placeholder="Search location"
+                        <Autocomplete
+                          id="location"
+                          options={reefs}
+                          onInputChange={(_event, value: string) =>
+                            onChangeSearchText(value)
+                          }
+                          className={classes.searchBarInput}
+                          getOptionLabel={(reef) => reef.name || ""}
+                          style={{ height: "100%", width: "100%" }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              style={{ height: "100%" }}
+                              placeholder="Search Location"
+                              variant="outlined"
+                              InputLabelProps={{
+                                shrink: false,
+                              }}
+                            />
+                          )}
                         />
                       </Grid>
                     </Grid>
@@ -207,6 +224,17 @@ const styles = (theme: Theme) =>
       margin: 0,
       backgroundColor: theme.palette.grey[500],
       color: theme.palette.text.secondary,
+    },
+    searchBarInput: {
+      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderWidth: 0,
+      },
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderWidth: 0,
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderWidth: 0,
+      },
     },
   });
 

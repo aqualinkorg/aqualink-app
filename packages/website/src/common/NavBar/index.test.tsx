@@ -16,13 +16,18 @@ describe("NavBar", () => {
         loading: false,
         error: null,
       },
+      reefsList: {
+        list: [],
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();
 
     element = render(
       <Provider store={store}>
-        <HomePageNavBar />
+        <HomePageNavBar searchLocation={false} />
       </Provider>
     ).container;
   });
