@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Homepage should render with given state from Redux store 1`] = `
+exports[`RegisterDialog should render with given state from Redux store 1`] = `
 <div
   aria-hidden="true"
 />

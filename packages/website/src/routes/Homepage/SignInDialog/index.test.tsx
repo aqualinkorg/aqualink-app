@@ -8,7 +8,7 @@ import SignInDialog from ".";
 
 const mockStore = configureStore([]);
 
-describe("Homepage", () => {
+describe("SignInDialog", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({

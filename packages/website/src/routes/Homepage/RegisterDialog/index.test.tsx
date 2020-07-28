@@ -8,7 +8,7 @@ import RegisterDialog from ".";
 
 const mockStore = configureStore([]);
 
-describe("Homepage", () => {
+describe("RegisterDialog", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
