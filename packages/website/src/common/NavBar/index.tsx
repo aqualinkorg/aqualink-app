@@ -25,7 +25,7 @@ import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
-const NavBar = ({ classes }: NavBarProps) => {
+const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const [searchLocationText, setSearchLocationText] = useState<string>("");
@@ -73,43 +73,51 @@ const NavBar = ({ classes }: NavBarProps) => {
               </Typography>
             </Grid>
             {user ? (
-              <>
-                <Grid container justify="flex-end" item xs={3}>
-                  <Grid
-                    className={classes.searchBar}
-                    container
-                    alignItems="center"
-                    item
-                    xs={8}
-                  >
+              <Grid
+                container
+                alignItems="center"
+                justify="flex-end"
+                item
+                xs={6}
+              >
+                {searchLocation && (
+                  <Grid container justify="flex-end" item xs={6}>
                     <Grid
-                      className={classes.searchBarIcon}
-                      item
-                      xs={2}
+                      className={classes.searchBar}
                       container
                       alignItems="center"
-                      justify="center"
-                    >
-                      <IconButton size="small" onClick={onSearchSubmit}>
-                        <SearchIcon />
-                      </IconButton>
-                    </Grid>
-                    <Grid
-                      className={classes.searchBarText}
                       item
-                      xs={10}
-                      container
-                      alignItems="center"
+                      xs={8}
                     >
-                      <InputBase
-                        value={searchLocationText}
-                        onChange={onChangeSearchText}
-                        placeholder="Search location"
-                      />
+                      <Grid
+                        className={classes.searchBarIcon}
+                        item
+                        xs={2}
+                        container
+                        alignItems="center"
+                        justify="center"
+                      >
+                        <IconButton size="small" onClick={onSearchSubmit}>
+                          <SearchIcon />
+                        </IconButton>
+                      </Grid>
+                      <Grid
+                        className={classes.searchBarText}
+                        item
+                        xs={10}
+                        container
+                        alignItems="center"
+                      >
+                        <InputBase
+                          value={searchLocationText}
+                          onChange={onChangeSearchText}
+                          placeholder="Search location"
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid container justify="flex-end" item xs={3}>
+                )}
+                <Grid container justify="flex-end" item xs={6}>
                   <IconButton>
                     <NotificationsIcon />
                   </IconButton>
@@ -138,7 +146,7 @@ const NavBar = ({ classes }: NavBarProps) => {
                     </MenuItem>
                   </Menu>
                 </Grid>
-              </>
+              </Grid>
             ) : (
               <Grid container justify="flex-end" item xs={6}>
                 <Grid item>
@@ -202,6 +210,10 @@ const styles = (theme: Theme) =>
     },
   });
 
-type NavBarProps = WithStyles<typeof styles>;
+interface NavBarIncomingProps {
+  searchLocation: boolean;
+}
+
+type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(NavBar);

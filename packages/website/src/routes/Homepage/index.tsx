@@ -18,7 +18,7 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   return (
     <>
-      <HomepageNavBar />
+      <HomepageNavBar searchLocation />
       <div className={classes.root}>
         <Grid
           style={{ height: "100%" }}

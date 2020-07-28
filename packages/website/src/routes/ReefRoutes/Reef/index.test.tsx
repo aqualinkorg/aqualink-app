@@ -40,6 +40,11 @@ describe("Reef Detail Page", () => {
         loading: false,
         error: null,
       },
+      user: {
+        userInfo: null,
+        error: null,
+        loading: false,
+      },
     });
 
     const dailyData: Data = {
@@ -70,6 +75,11 @@ describe("Reef Detail Page", () => {
         },
         loading: false,
         error: null,
+      },
+      user: {
+        userInfo: null,
+        error: null,
+        loading: false,
       },
     });
 
