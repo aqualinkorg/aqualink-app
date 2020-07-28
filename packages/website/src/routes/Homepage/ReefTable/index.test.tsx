@@ -10,9 +10,24 @@ const mockStore = configureStore([]);
 describe("ReefTable", () => {
   let element: HTMLElement;
   beforeEach(() => {
+    const reef = {
+      id: 1,
+      name: "Mock Reef Hartmann",
+      polygon: {
+        type: "Point",
+        coordinates: [-39.7, -89.7],
+      },
+      temperatureThreshold: 5,
+      depth: 19,
+      status: 0,
+      videoStream: null,
+      region: null,
+      admin: null,
+      stream: null,
+    };
     const store = mockStore({
       reefsList: {
-        list: [],
+        list: [reef],
         loading: false,
         error: null,
       },
