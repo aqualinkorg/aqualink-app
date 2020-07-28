@@ -3,72 +3,190 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary ReefNavBar-appBar-27 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-53 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+            tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiGrid-root MuiGrid-item"
+            <span
+              class="MuiIconButton-label"
             >
-              <a
-                href="/reefs"
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
               >
-                <button
-                  aria-label="menu"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
-                </button>
-              </a>
-            </div>
-            
-          </div>
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
-        />
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
   <div
-    class="MuiGrid-root ReefDetails-root-28 MuiGrid-container MuiGrid-justify-xs-center"
+    class="MuiGrid-root ReefNavBar-root-76 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <a
+            href="/reefs"
+          >
+            <button
+              aria-label="menu"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorPrimary MuiIconButton-edgeStart"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+    />
+  </div>
+  <div
+    class="MuiGrid-root Reef-spotterAlert-52 MuiGrid-container MuiGrid-justify-xs-center"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+    >
+      <div
+        class="MuiPaper-root MuiAlert-root MuiAlert-standardInfo MuiPaper-elevation0"
+        role="alert"
+      >
+        <div
+          class="MuiAlert-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiAlert-message"
+        >
+          Currently no spotter deployed at this reef location. All data values values are derived from a combination of NOAA satellite readings weather models.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiGrid-root ReefDetails-root-78 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-10"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-10"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-11"
       >
         <div
-          class="ReefDetails-container-29"
+          class="ReefDetails-container-79"
         >
           <mock-map
             polygon="[object Object]"
@@ -83,13 +201,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
       >
         <div
-          class="ReefDetails-smallContainer-30"
+          class="ReefDetails-smallContainer-80"
         >
           <div
-            class="MuiPaper-root MuiCard-root Temperature-card-32 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Temperature-card-82 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Temperature-header-33"
+              class="MuiCardHeader-root Temperature-header-83"
             >
               <div
                 class="MuiCardHeader-content"
@@ -124,7 +242,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Temperature-content-34"
+              class="MuiCardContent-root Temperature-content-84"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
@@ -172,7 +290,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       style="display: flex; align-items: baseline;"
                     >
                       <div
-                        class="MuiBox-root MuiBox-root-36"
+                        class="MuiBox-root MuiBox-root-86"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -181,7 +299,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-37"
+                        class="MuiBox-root MuiBox-root-87"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -190,7 +308,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-38"
+                        class="MuiBox-root MuiBox-root-88"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -199,7 +317,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-39"
+                        class="MuiBox-root MuiBox-root-89"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -218,7 +336,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-7"
                   >
                     <div
-                      class="MuiPaper-root MuiAlert-root MuiAlert-filledWarning Temperature-alert-35 MuiPaper-elevation0"
+                      class="MuiPaper-root MuiAlert-root MuiAlert-filledWarning Temperature-alert-85 MuiPaper-elevation0"
                       role="alert"
                     >
                       <div
@@ -259,7 +377,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       style="display: flex; align-items: baseline;"
                     >
                       <div
-                        class="MuiBox-root MuiBox-root-40"
+                        class="MuiBox-root MuiBox-root-90"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -268,7 +386,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-41"
+                        class="MuiBox-root MuiBox-root-91"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -277,7 +395,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-42"
+                        class="MuiBox-root MuiBox-root-92"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -286,7 +404,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-43"
+                        class="MuiBox-root MuiBox-root-93"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -295,7 +413,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-44"
+                        class="MuiBox-root MuiBox-root-94"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -304,7 +422,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-45"
+                        class="MuiBox-root MuiBox-root-95"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -313,7 +431,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-46"
+                        class="MuiBox-root MuiBox-root-96"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -334,20 +452,20 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
       >
         <div
-          class="ReefDetails-smallContainer-30 ReefDetails-statsContainer-31"
+          class="ReefDetails-smallContainer-80 ReefDetails-statsContainer-81"
         >
           <div
-            class="MuiGrid-root Stats-root-47 MuiGrid-container MuiGrid-justify-xs-space-between"
+            class="MuiGrid-root Stats-root-97 MuiGrid-container MuiGrid-justify-xs-space-between"
           >
             <div
-              class="MuiGrid-root Stats-item-48 MuiGrid-item MuiGrid-grid-xs-5"
+              class="MuiGrid-root Stats-item-98 MuiGrid-item MuiGrid-grid-xs-5"
             >
               <div
                 class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
                 style="height: inherit;"
               >
                 <div
-                  class="MuiCardMedia-root Stats-card-49"
+                  class="MuiCardMedia-root Stats-card-99"
                   style="background-image: url(bottom.svg);"
                 >
                   <div
@@ -412,10 +530,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiGrid-root Stats-item-48 MuiGrid-item MuiGrid-grid-xs-5"
+              class="MuiGrid-root Stats-item-98 MuiGrid-item MuiGrid-grid-xs-5"
             >
               <div
-                class="MuiPaper-root MuiCard-root Stats-card-49 MuiPaper-elevation1 MuiPaper-rounded"
+                class="MuiPaper-root MuiCard-root Stats-card-99 MuiPaper-elevation1 MuiPaper-rounded"
               >
                 <div
                   class="MuiCardHeader-root"
@@ -795,7 +913,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-50 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-100 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -827,58 +945,96 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-no-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary ReefNavBar-appBar-2 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-3 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+            tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiGrid-root MuiGrid-item"
+            <span
+              class="MuiIconButton-label"
             >
-              <a
-                href="/reefs"
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
               >
-                <button
-                  aria-label="menu"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiIconButton-label"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                      />
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
-                </button>
-              </a>
-            </div>
-            
-          </div>
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
-        />
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
