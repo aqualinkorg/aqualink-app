@@ -3,7 +3,7 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-53 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-54 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -97,7 +97,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </header>
   <div
-    class="MuiGrid-root ReefNavBar-root-76 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+    class="MuiGrid-root ReefNavBar-root-78 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
@@ -141,7 +141,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     />
   </div>
   <div
-    class="MuiGrid-root Reef-spotterAlert-52 MuiGrid-container MuiGrid-justify-xs-center"
+    class="MuiGrid-root Reef-spotterAlert-53 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
@@ -173,7 +173,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </div>
   <div
-    class="MuiGrid-root ReefDetails-root-78 MuiGrid-container MuiGrid-justify-xs-center"
+    class="MuiGrid-root ReefDetails-root-80 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-10"
@@ -182,7 +182,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-11"
       >
         <div
-          class="ReefDetails-container-79"
+          class="ReefDetails-container-81"
         >
           <mock-map
             polygon="[object Object]"
@@ -197,13 +197,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
       >
         <div
-          class="ReefDetails-smallContainer-80"
+          class="ReefDetails-smallContainer-82"
         >
           <div
-            class="MuiPaper-root MuiCard-root Temperature-card-82 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Temperature-card-84 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Temperature-header-83"
+              class="MuiCardHeader-root Temperature-header-85"
             >
               <div
                 class="MuiCardHeader-content"
@@ -238,7 +238,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Temperature-content-84"
+              class="MuiCardContent-root Temperature-content-86"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
@@ -286,7 +286,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       style="display: flex; align-items: baseline;"
                     >
                       <div
-                        class="MuiBox-root MuiBox-root-86"
+                        class="MuiBox-root MuiBox-root-88"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -295,7 +295,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-87"
+                        class="MuiBox-root MuiBox-root-89"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -304,7 +304,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-88"
+                        class="MuiBox-root MuiBox-root-90"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -313,7 +313,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-89"
+                        class="MuiBox-root MuiBox-root-91"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -332,7 +332,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-7"
                   >
                     <div
-                      class="MuiPaper-root MuiAlert-root MuiAlert-filledWarning Temperature-alert-85 MuiPaper-elevation0"
+                      class="MuiPaper-root MuiAlert-root MuiAlert-filledWarning Temperature-alert-87 MuiPaper-elevation0"
                       role="alert"
                     >
                       <div
@@ -373,7 +373,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       style="display: flex; align-items: baseline;"
                     >
                       <div
-                        class="MuiBox-root MuiBox-root-90"
+                        class="MuiBox-root MuiBox-root-92"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -382,7 +382,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-91"
+                        class="MuiBox-root MuiBox-root-93"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -391,7 +391,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-92"
+                        class="MuiBox-root MuiBox-root-94"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -400,7 +400,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-93"
+                        class="MuiBox-root MuiBox-root-95"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -409,7 +409,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h4>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-94"
+                        class="MuiBox-root MuiBox-root-96"
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-subtitle2"
@@ -418,7 +418,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </h6>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-95"
+                        class="MuiBox-root MuiBox-root-97"
                       >
                         <span
                           class="MuiTypography-root MuiTypography-caption"
@@ -427,7 +427,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </span>
                       </div>
                       <div
-                        class="MuiBox-root MuiBox-root-96"
+                        class="MuiBox-root MuiBox-root-98"
                       >
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
@@ -448,20 +448,20 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-5"
       >
         <div
-          class="ReefDetails-smallContainer-80 ReefDetails-statsContainer-81"
+          class="ReefDetails-smallContainer-82 ReefDetails-statsContainer-83"
         >
           <div
-            class="MuiGrid-root Stats-root-97 MuiGrid-container MuiGrid-justify-xs-space-between"
+            class="MuiGrid-root Stats-root-99 MuiGrid-container MuiGrid-justify-xs-space-between"
           >
             <div
-              class="MuiGrid-root Stats-item-98 MuiGrid-item MuiGrid-grid-xs-5"
+              class="MuiGrid-root Stats-item-100 MuiGrid-item MuiGrid-grid-xs-5"
             >
               <div
                 class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
                 style="height: inherit;"
               >
                 <div
-                  class="MuiCardMedia-root Stats-card-99"
+                  class="MuiCardMedia-root Stats-card-101"
                   style="background-image: url(bottom.svg);"
                 >
                   <div
@@ -526,10 +526,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiGrid-root Stats-item-98 MuiGrid-item MuiGrid-grid-xs-5"
+              class="MuiGrid-root Stats-item-100 MuiGrid-item MuiGrid-grid-xs-5"
             >
               <div
-                class="MuiPaper-root MuiCard-root Stats-card-99 MuiPaper-elevation1 MuiPaper-rounded"
+                class="MuiPaper-root MuiCard-root Stats-card-101 MuiPaper-elevation1 MuiPaper-rounded"
               >
                 <div
                   class="MuiCardHeader-root"
@@ -909,7 +909,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-100 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-102 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"

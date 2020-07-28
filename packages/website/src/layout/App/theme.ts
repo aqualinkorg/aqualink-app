@@ -114,6 +114,16 @@ const theme: any = createMuiTheme({
         color: lightGray,
       },
     },
+    MuiInputBase: {
+      root: {
+        height: "100%",
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        padding: 0,
+      },
+    },
   },
 });
 
