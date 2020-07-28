@@ -16,7 +16,7 @@ import type { Reef } from "../../../store/Reefs/types";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
   <Grid container justify="center" className={classes.root}>
-    <Grid container justify="space-evenly" item xs={10}>
+    <Grid container justify="space-around" item xs={10}>
       <Grid key={1} item xs={11} md={reef.videoStream ? 5 : 11}>
         <div className={classes.container}>
           <Map polygon={reef.polygon} />
@@ -30,7 +30,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
         </Grid>
       )}
     </Grid>
-    <Grid container justify="space-evenly" item xs={10}>
+    <Grid container justify="space-around" item xs={10}>
       <Grid key={3} item xs={11} md={5}>
         <div className={classes.smallContainer}>
           <Temperature dailyData={reef.dailyData} />
@@ -59,7 +59,7 @@ const styles = (theme: Theme) =>
     },
     container: {
       height: "48vh",
-      marginBottom: "2rem",
+      marginBottom: "4rem",
       [theme.breakpoints.between("md", "lg")]: {
         height: "35vh",
       },
