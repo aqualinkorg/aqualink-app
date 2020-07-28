@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import HomepageNavBar from "./NavBar";
+import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
