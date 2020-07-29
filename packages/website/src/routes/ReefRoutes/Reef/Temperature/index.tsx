@@ -100,7 +100,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h4">{maxWindSpeed}</Typography>
+                    <Typography variant="h4">
+                      {maxWindSpeed.toFixed(2)}
+                    </Typography>
                   </Box>
                   <Box ml={0.2}>
                     <Typography variant="subtitle2">kph</Typography>
@@ -109,7 +111,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h4">{windDirection}&#176;</Typography>
+                    <Typography variant="h4">
+                      {windDirection.toFixed(0)}&#176;
+                    </Typography>
                   </Box>
                 </Typography>
               )}
@@ -153,7 +157,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h4">{maxWaveHeight}</Typography>
+                    <Typography variant="h4">
+                      {maxWaveHeight.toFixed(2)}
+                    </Typography>
                   </Box>
                   <Box ml={0.2}>
                     <Typography variant="subtitle2">m</Typography>
@@ -162,7 +168,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">AT</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h4">{wavePeriod}</Typography>
+                    <Typography variant="h4">
+                      {wavePeriod.toFixed(0)}
+                    </Typography>
                   </Box>
                   <Box ml={0.2}>
                     <Typography variant="subtitle2">s</Typography>
@@ -171,7 +179,9 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h4">{waveDirection}&#176;</Typography>
+                    <Typography variant="h4">
+                      {waveDirection.toFixed(0)}&#176;
+                    </Typography>
                   </Box>
                 </Typography>
               )}
