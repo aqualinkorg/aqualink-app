@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import {
   AppBar,
   Toolbar,
@@ -26,24 +26,41 @@ import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
+import { setReefOnMap } from "../../store/Homepage/homepageSlice";
+import type { Reef } from "../../store/Reefs/types";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const reefs = useSelector(reefsListSelector);
   const dispatch = useDispatch();
-  const [searchLocationText, setSearchLocationText] = useState<string>("");
+  const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const onChangeSearchText = (value: string) => {
-    setSearchLocationText(value);
+  const onChangeSearchText = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const searchValue = event.target.value;
+    const index = reefs.findIndex(
+      (reef) => reef.name?.toLowerCase() === searchValue.toLowerCase()
+    );
+    if (index > -1) {
+      setSearchedReef(reefs[index]);
+    }
   };
 
-  // TODO: Dispatch action to search for reefs based on value
+  const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
+    if (value) {
+      setSearchedReef(value);
+      dispatch(setReefOnMap(value));
+    }
+  };
+
   const onSearchSubmit = () => {
-    // eslint-disable-next-line no-console
-    console.log(searchLocationText);
+    if (searchedReef) {
+      dispatch(setReefOnMap(searchedReef));
+    }
   };
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
@@ -111,16 +128,18 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       >
                         <Autocomplete
                           id="location"
-                          options={reefs}
-                          onInputChange={(_event, value: string) =>
-                            onChangeSearchText(value)
-                          }
                           className={classes.searchBarInput}
+                          options={reefs}
                           getOptionLabel={(reef) => reef.name || ""}
-                          style={{ height: "100%", width: "100%" }}
+                          value={searchedReef}
+                          onChange={onDropdownItemSelect}
+                          onInputChange={(event, value, reason) =>
+                            reason === "clear" && setSearchedReef(null)
+                          }
                           renderInput={(params) => (
                             <TextField
                               {...params}
+                              onChange={onChangeSearchText}
                               style={{ height: "100%" }}
                               placeholder="Search Location"
                               variant="outlined"
@@ -235,6 +254,8 @@ const styles = (theme: Theme) =>
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderWidth: 0,
       },
+      height: "100%",
+      width: "100%",
     },
   });
 
