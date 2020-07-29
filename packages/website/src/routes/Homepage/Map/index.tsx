@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Map, TileLayer, Marker } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup as LeafletPopup } from "react-leaflet";
 import L from "leaflet";
 import { createStyles, withStyles, WithStyles } from "@material-ui/core";
 
@@ -82,7 +82,9 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
             reefOnMap.polygon.coordinates[0],
           ]}
         >
-          <Popup reef={reefOnMap} />
+          <LeafletPopup closeButton={false} className={classes.popup}>
+            <Popup reef={reefOnMap} />
+          </LeafletPopup>
         </Marker>
       )}
       {reefsList.length > 0 &&
@@ -103,7 +105,9 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
                   reef.polygon.coordinates[0],
                 ]}
               >
-                <Popup reef={reef} />
+                <LeafletPopup closeButton={false} className={classes.popup}>
+                  <Popup reef={reef} />
+                </LeafletPopup>
               </Marker>
             );
           }
@@ -118,6 +122,9 @@ const styles = () =>
     map: {
       height: "100%",
       width: "100%",
+    },
+    popup: {
+      width: "12vw",
     },
   });
 

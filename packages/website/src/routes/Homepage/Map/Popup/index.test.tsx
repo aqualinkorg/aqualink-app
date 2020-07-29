@@ -1,10 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Popup from ".";
 import { Reef } from "../../../../store/Reefs/types";
-
-jest.mock("react-leaflet");
 
 test("renders as expected", () => {
   const reef: Reef = {
@@ -24,6 +23,10 @@ test("renders as expected", () => {
     dailyData: [],
   };
 
-  const { container } = render(<Popup reef={reef} />);
+  const { container } = render(
+    <Router>
+      <Popup reef={reef} />
+    </Router>
+  );
   expect(container).toMatchSnapshot();
 });
