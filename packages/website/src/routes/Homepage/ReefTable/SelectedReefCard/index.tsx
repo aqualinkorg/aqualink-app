@@ -85,7 +85,8 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].maxBottomTemperature}&#8451;
+                  {sortByDate[dailyDataLen - 1].maxBottomTemperature.toFixed(2)}
+                  &#8451;
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -97,7 +98,8 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].surfaceTemperature}&#8451;
+                  {sortByDate[dailyDataLen - 1].surfaceTemperature.toFixed(2)}
+                  &#8451;
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -109,7 +111,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].degreeHeatingDays}
+                  {sortByDate[dailyDataLen - 1].degreeHeatingDays.toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
