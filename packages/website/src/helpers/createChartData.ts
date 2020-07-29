@@ -2,6 +2,7 @@ export const createChartData = (
   labels: string[],
   dataArray: number[],
   gradientPercenage: number,
+  pointRadius: number,
   fill: boolean
 ) => (canvas: HTMLCanvasElement) => {
   const ctx = canvas.getContext("2d");
@@ -23,7 +24,7 @@ export const createChartData = (
         borderWidth: 1.5,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,
-        pointRadius: 3,
+        pointRadius,
         cubicInterpolationMode: "monotone",
       },
       {

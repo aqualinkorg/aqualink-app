@@ -52,10 +52,9 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
       className={classes.root}
       container
       direction="row"
-      justify="center"
-      spacing={9}
+      justify="space-between"
     >
-      <Grid className={classes.item} item xs={6}>
+      <Grid className={classes.item} item xs={5}>
         <Card style={{ height: "inherit" }}>
           <CardMedia className={classes.card} image={bottom}>
             <CardHeader
@@ -67,7 +66,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
               }
             />
             <CardContent
-              style={{ flex: "1 1 auto", padding: "0 1rem 1rem 1rem" }}
+              style={{ flex: "1 1 auto", padding: "0rem 1rem 2rem 1rem" }}
             >
               <Grid
                 container
@@ -108,7 +107,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
           </CardMedia>
         </Card>
       </Grid>
-      <Grid className={classes.item} item xs={6}>
+      <Grid className={classes.item} item xs={5}>
         <Card className={classes.card}>
           <CardHeader
             style={{ flex: "0 1 auto" }}

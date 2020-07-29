@@ -3,7 +3,7 @@ import type { Data, Reef } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
   requests.send<Reef>({
-    url: `/reefs/${id}`,
+    url: `reefs/${id}`,
     method: "GET",
   });
 

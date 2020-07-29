@@ -26,7 +26,7 @@ export const reefsRequest = createAsyncThunk<
   ReefsListState["list"],
   void,
   CreateAsyncThunkTypes
->("reefsListSlice/request", () => getReefs());
+>("reefsList/request", () => getReefs());
 
 const reefsListSlice = createSlice({
   name: "reefsList",

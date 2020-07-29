@@ -22,6 +22,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
   const windChartRef = useRef<Line>(null);
   const waveChartRef = useRef<Line>(null);
+  const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     date: "",
@@ -94,7 +95,6 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
 
   const onResize = useCallback(() => {
     setUpdateChart(true);
-    setThreshold(temperatureThreshold);
     setTimeout(() => {
       setUpdateChart(false);
       setThreshold(temperatureThreshold);
@@ -127,7 +127,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
           <Typography variant="caption">(Mean)</Typography>
         </Grid>
       </Grid>
-      <Grid item md={9}>
+      <Grid item xs={9}>
         <div className={classes.root}>
           <Typography
             style={{ marginLeft: "4rem", fontWeight: "normal" }}
@@ -206,11 +206,12 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                 ],
               },
             }}
-            height={60}
+            height={chartHeight}
             data={createChartData(
               chartLabels,
               bottomTemperatureData,
               0.6,
+              3,
               true
             )}
           />
@@ -280,8 +281,8 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                 ],
               },
             }}
-            height={30}
-            data={createChartData(chartLabels, windSpeedData, 0.3, false)}
+            height={0.5 * chartHeight}
+            data={createChartData(chartLabels, windSpeedData, 0.3, 3, false)}
           />
           <Typography
             style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
@@ -295,6 +296,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
               plugins: {
                 chartJsPluginBarchartBackground: {
                   color: "rgb(158, 166, 170, 0.07)",
+                  xTicksFontWeight: 1.2,
                 },
                 sliceDrawPlugin: {
                   sliceAtLabel,
@@ -350,15 +352,15 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
                       stepSize: 1,
                       max: 5,
                       callback: (value: number) => {
-                        return `   ${value}m  `;
+                        return `    ${value}m  `;
                       },
                     },
                   },
                 ],
               },
             }}
-            height={30}
-            data={createChartData(chartLabels, waveHeightData, 0.3, false)}
+            height={0.5 * chartHeight}
+            data={createChartData(chartLabels, waveHeightData, 0.3, 3, false)}
           />
           {showTooltip ? (
             <div
