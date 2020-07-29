@@ -1,5 +1,4 @@
 import { Strategy } from 'passport-custom';
-import { ExtractJwt } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
@@ -11,9 +10,15 @@ export class FirebaseAuthStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
+  extractAuthHeaderAsBearerToken(req: any): string | undefined {
+    const authHeader = req.headers.authorization;
+    const match = authHeader && authHeader.match(/bearer (.*)/i);
+    return match && match[1];
+  }
+
   async authenticate(req: any): Promise<void> {
     const self = this;
-    const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+    const token = this.extractAuthHeaderAsBearerToken(req);
     if (!token) {
       return self.fail(new UnauthorizedException(), 401);
     }
