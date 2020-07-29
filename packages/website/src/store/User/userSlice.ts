@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { FirebaseError } from "firebase";
 
-import type { User, UserState, UserRequestParams } from "./types";
+import type {
+  User,
+  UserState,
+  UserRegisterParams,
+  UserSignInParams,
+} from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import userServices from "../../services/userServices";
 
@@ -13,16 +18,20 @@ const userInitialState: UserState = {
 
 export const createUser = createAsyncThunk<
   User,
-  UserRequestParams,
+  UserRegisterParams,
   CreateAsyncThunkTypes
 >(
   "user/create",
-  async ({ email, password }: UserRequestParams, { rejectWithValue }) => {
+  async (
+    { fullName, email, password }: UserRegisterParams,
+    { rejectWithValue }
+  ) => {
     try {
       const { user } = await userServices.createUser(email, password);
+      const { data } = await userServices.storeUser(fullName, email, user?.uid);
       return {
-        email: user?.email,
-        uid: user?.uid,
+        email: data.email,
+        firebaseUid: data.firebaseUid,
         token: await user?.getIdToken(),
       };
     } catch (err) {
@@ -34,16 +43,16 @@ export const createUser = createAsyncThunk<
 
 export const signInUser = createAsyncThunk<
   User,
-  UserRequestParams,
+  UserSignInParams,
   CreateAsyncThunkTypes
 >(
   "user/signIn",
-  async ({ email, password }: UserRequestParams, { rejectWithValue }) => {
+  async ({ email, password }: UserSignInParams, { rejectWithValue }) => {
     try {
       const { user } = await userServices.signInUser(email, password);
       return {
         email: user?.email,
-        uid: user?.uid,
+        firebaseUid: user?.uid,
         token: await user?.getIdToken(),
       };
     } catch (err) {

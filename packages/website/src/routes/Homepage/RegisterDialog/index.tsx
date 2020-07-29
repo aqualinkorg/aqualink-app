@@ -34,7 +34,7 @@ import {
   userLoadingSelector,
   userErrorSelector,
 } from "../../../store/User/userSlice";
-import { UserRequestParams } from "../../../store/User/types";
+import { UserRegisterParams } from "../../../store/User/types";
 
 const RegisterDialog = ({
   open,
@@ -61,7 +61,8 @@ const RegisterDialog = ({
       if (event) {
         event.preventDefault();
       }
-      const registerInfo: UserRequestParams = {
+      const registerInfo: UserRegisterParams = {
+        fullName: `${data.firstName} ${data.lastName}`,
         email: data.emailAddress,
         password: data.password,
       };

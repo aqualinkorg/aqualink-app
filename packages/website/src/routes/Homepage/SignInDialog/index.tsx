@@ -33,7 +33,7 @@ import {
   userLoadingSelector,
   userErrorSelector,
 } from "../../../store/User/userSlice";
-import { UserRequestParams } from "../../../store/User/types";
+import { UserSignInParams } from "../../../store/User/types";
 
 const SignInDialog = ({
   open,
@@ -58,7 +58,7 @@ const SignInDialog = ({
       if (event) {
         event.preventDefault();
       }
-      const registerInfo: UserRequestParams = {
+      const registerInfo: UserSignInParams = {
         email: data.emailAddress,
         password: data.password,
       };

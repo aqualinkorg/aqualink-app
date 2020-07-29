@@ -1,6 +1,6 @@
 export interface User {
   email?: string | null;
-  uid?: string | null;
+  firebaseUid?: string | null;
   token?: string | null;
 }
 
@@ -10,7 +10,13 @@ export interface UserState {
   error?: string | null;
 }
 
-export interface UserRequestParams {
+export interface UserRegisterParams {
+  fullName: string;
+  email: string;
+  password: string;
+}
+
+export interface UserSignInParams {
   email: string;
   password: string;
 }

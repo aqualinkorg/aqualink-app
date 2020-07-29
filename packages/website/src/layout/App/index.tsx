@@ -18,7 +18,9 @@ function App() {
     if (user) {
       // User is signed in
       user.getIdToken().then((token) => {
-        dispatch(initializeUser({ email: user.email, uid: user.uid, token }));
+        dispatch(
+          initializeUser({ email: user.email, firebaseUid: user.uid, token })
+        );
       });
     }
     setRender(true);
