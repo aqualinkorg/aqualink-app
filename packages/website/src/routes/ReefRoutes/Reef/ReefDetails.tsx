@@ -14,42 +14,47 @@ import Stats from "./Stats";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
-const ReefDetails = ({ classes, reef }: ReefDetailProps) => (
-  <Grid container justify="center" className={classes.root}>
-    <Grid container justify="space-around" item xs={10}>
-      <Grid key={1} item xs={11} md={reef.videoStream ? 5 : 11}>
-        <div className={classes.container}>
-          <Map polygon={reef.polygon} />
-        </div>
-      </Grid>
-      {reef.videoStream && (
-        <Grid key={2} item xs={11} md={5}>
+const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
+  console.log(reef);
+  return (
+    <Grid container justify="center" className={classes.root}>
+      <Grid container justify="space-around" item xs={10}>
+        <Grid key={1} item xs={11} md={reef.videoStream ? 5 : 11}>
           <div className={classes.container}>
-            <FeatureVideo url={reef.videoStream} />
+            <Map polygon={reef.polygon} />
           </div>
         </Grid>
-      )}
-    </Grid>
-    <Grid container justify="space-around" item xs={10}>
-      <Grid key={3} item xs={11} md={5}>
-        <div className={classes.smallContainer}>
-          <Temperature dailyData={reef.dailyData} />
-        </div>
+        {reef.videoStream && (
+          <Grid key={2} item xs={11} md={5}>
+            <div className={classes.container}>
+              <FeatureVideo url={reef.videoStream} />
+            </div>
+          </Grid>
+        )}
       </Grid>
-      <Grid key={4} item xs={11} md={5}>
-        <div className={`${classes.smallContainer} ${classes.statsContainer}`}>
-          <Stats dailyData={reef.dailyData} />
-        </div>
+      <Grid container justify="space-around" item xs={10}>
+        <Grid key={3} item xs={11} md={5}>
+          <div className={classes.smallContainer}>
+            <Temperature dailyData={reef.dailyData} />
+          </div>
+        </Grid>
+        <Grid key={4} item xs={11} md={5}>
+          <div
+            className={`${classes.smallContainer} ${classes.statsContainer}`}
+          >
+            <Stats dailyData={reef.dailyData} />
+          </div>
+        </Grid>
+      </Grid>
+      <Grid container justify="center" item xs={12}>
+        <Charts
+          dailyData={reef.dailyData}
+          temperatureThreshold={reef.temperatureThreshold}
+        />
       </Grid>
     </Grid>
-    <Grid container justify="center" item xs={12}>
-      <Charts
-        dailyData={reef.dailyData}
-        temperatureThreshold={reef.temperatureThreshold}
-      />
-    </Grid>
-  </Grid>
-);
+  );
+};
 
 const styles = (theme: Theme) =>
   createStyles({
