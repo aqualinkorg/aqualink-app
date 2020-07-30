@@ -51,8 +51,8 @@ const Reef = ({ match, classes }: ReefProps) => {
               <Grid item xs={11}>
                 <Alert severity="info">
                   Currently no spotter deployed at this reef location. All data
-                  values values are derived from a combination of NOAA satellite
-                  readings weather models.
+                  values are derived from a combination of NOAA satellite
+                  readings and weather models.
                 </Alert>
               </Grid>
             </Grid>
