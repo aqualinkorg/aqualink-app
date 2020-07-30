@@ -159,7 +159,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 >
                   <Box>
                     <Typography variant="h4">
-                      {formatNumber(maxWaveHeight, s2)}
+                      {formatNumber(maxWaveHeight, 2)}
                     </Typography>
                   </Box>
                   <Box ml={0.2}>
