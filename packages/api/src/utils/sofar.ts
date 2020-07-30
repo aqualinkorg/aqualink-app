@@ -19,9 +19,8 @@ export async function sofarHindcast(
   start: string,
   end: string,
 ) {
-  const response = await axios.get(
-    `${SOFAR_MARINE_URL}${modelId}/hindcast/point`,
-    {
+  return axios
+    .get(`${SOFAR_MARINE_URL}${modelId}/hindcast/point`, {
       params: {
         variableIDs: [variableID],
         latitude,
@@ -30,9 +29,19 @@ export async function sofarHindcast(
         end,
         token: process.env.SOFAR_API_TOKEN,
       },
-    },
-  );
-  return response.data.hindcastVariables[0];
+    })
+    .then((response) => {
+      return response.data.hindcastVariables[0];
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error(
+          `Sofar API responded with a ${error.response.status} status.`,
+        );
+      } else {
+        console.error(`An error occured accessing the Sofar API - ${error}`);
+      }
+    });
 }
 
 export async function getSofarDailyData(
@@ -58,7 +67,12 @@ export async function getSofarDailyData(
     end,
   );
 
-  return hindcastVariables.values as SofarValue[];
+  // Filter out unkown values
+  return (hindcastVariables
+    ? hindcastVariables.values.filter(
+        (data: SofarValue) => data.value && data.value !== 9999,
+      )
+    : []) as SofarValue[];
 }
 
 type SpotterData = {

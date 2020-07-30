@@ -7,6 +7,12 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
 
+const getAverage = (numbers: number[]) => {
+  return numbers.length > 0
+    ? Math.round(sum(numbers) / numbers.length)
+    : undefined;
+};
+
 async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
@@ -20,7 +26,7 @@ async function getDailyData(reef: Reef, date: Date) {
     ? Math.max(...spotterData.bottomTemperature)
     : undefined;
   const avgBottomTemperature = spotterId
-    ? sum(spotterData.bottomTemperature) / spotterData.bottomTemperature.length
+    ? getAverage(spotterData.bottomTemperature)
     : undefined;
 
   const surfaceTemperature = spotterId
@@ -35,17 +41,22 @@ async function getDailyData(reef: Reef, date: Date) {
   // const MMM = 28;
   const degreeHeatingDays = 0; // calculateDegreeHeatingDays(seaSurfaceTemperatures, MMM);
 
-  // Get satelliteTemperature close to midnight local time.
-  const satelliteTemperature = (
-    await getSofarDailyData(
-      'HYCOM',
-      'HYCOM-seaSurfaceTemperature',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).slice(-1)[0].value;
+  const satelliteTemperatureData = await getSofarDailyData(
+    'HYCOM',
+    'HYCOM-seaSurfaceTemperature',
+    latitude,
+    longitude,
+    localTimezone,
+    date,
+  );
+
+  // Get satelliteTemperature closest to midnight local time by grabbing the last datapoint.
+  const satelliteTemperature =
+    (satelliteTemperatureData &&
+      satelliteTemperatureData.length > 0 &&
+      satelliteTemperatureData.slice(-1)[0].value) ||
+    undefined;
+
   // Get NOAA waves data
   const significantWaveHeights = (
     await getSofarDailyData(
@@ -60,8 +71,7 @@ async function getDailyData(reef: Reef, date: Date) {
 
   const minWaveHeight = Math.min(...significantWaveHeights);
   const maxWaveHeight = Math.max(...significantWaveHeights);
-  const avgWaveHeight =
-    sum(significantWaveHeights) / significantWaveHeights.length;
+  const avgWaveHeight = getAverage(significantWaveHeights);
 
   const meanDirectionWindWaves = (
     await getSofarDailyData(
@@ -74,9 +84,7 @@ async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const waveDirection = Math.round(
-    sum(meanDirectionWindWaves) / meanDirectionWindWaves.length,
-  );
+  const waveDirection = getAverage(meanDirectionWindWaves);
 
   const meanPeriodWindWaves = (
     await getSofarDailyData(
@@ -89,9 +97,7 @@ async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const wavePeriod = Math.round(
-    sum(meanPeriodWindWaves) / meanPeriodWindWaves.length,
-  );
+  const wavePeriod = getAverage(meanPeriodWindWaves);
 
   // Get NOAA GFS wind data
   const windVelocities = (
@@ -107,7 +113,7 @@ async function getDailyData(reef: Reef, date: Date) {
 
   const minWindSpeed = Math.min(...windVelocities);
   const maxWindSpeed = Math.max(...windVelocities);
-  const avgWindSpeed = sum(windVelocities) / windVelocities.length;
+  const avgWindSpeed = getAverage(windVelocities);
 
   const windDirections = (
     await getSofarDailyData(
@@ -120,7 +126,7 @@ async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const windDirection = Math.round(sum(windDirections) / windDirections.length);
+  const windDirection = getAverage(windDirections);
 
   return {
     reef,
