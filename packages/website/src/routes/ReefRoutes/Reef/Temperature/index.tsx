@@ -14,6 +14,7 @@ import ErrorIcon from "@material-ui/icons/Error";
 import Alert from "@material-ui/lab/Alert";
 import type { Data } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { formatNumber } from "../../../../helpers/numberUtils";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
@@ -101,7 +102,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 >
                   <Box>
                     <Typography variant="h4">
-                      {maxWindSpeed.toFixed(2)}
+                      {formatNumber(maxWindSpeed, 2)}
                     </Typography>
                   </Box>
                   <Box ml={0.2}>
@@ -112,7 +113,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="h4">
-                      {windDirection.toFixed(0)}&#176;
+                      {formatNumber(windDirection, 0)}&#176;
                     </Typography>
                   </Box>
                 </Typography>
@@ -158,7 +159,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                 >
                   <Box>
                     <Typography variant="h4">
-                      {maxWaveHeight.toFixed(2)}
+                      {formatNumber(maxWaveHeight, s2)}
                     </Typography>
                   </Box>
                   <Box ml={0.2}>
@@ -169,7 +170,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="h4">
-                      {wavePeriod.toFixed(0)}
+                      {formatNumber(wavePeriod, 0)}
                     </Typography>
                   </Box>
                   <Box ml={0.2}>
@@ -180,7 +181,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="h4">
-                      {waveDirection.toFixed(0)}&#176;
+                      {formatNumber(waveDirection, 0)}&#176;
                     </Typography>
                   </Box>
                 </Typography>

@@ -15,7 +15,7 @@ import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
-  console.log(reef);
+  // console.log(reef);
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid container justify="space-around" item xs={10}>
@@ -49,7 +49,8 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
       <Grid container justify="center" item xs={12}>
         <Charts
           dailyData={reef.dailyData}
-          temperatureThreshold={reef.temperatureThreshold}
+          // TODO - Remove default
+          temperatureThreshold={reef.temperatureThreshold || 20}
         />
       </Grid>
     </Grid>

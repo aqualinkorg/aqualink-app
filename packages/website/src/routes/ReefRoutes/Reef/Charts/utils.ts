@@ -4,16 +4,22 @@ export const createDatasets = (dailyData: Data[]) => {
   const dailyDataLen = dailyData.length;
 
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
+  const surfaceTemperature = dailyData.map(
+    (item) => item.surfaceTemperature || item.satelliteTemperature
+  );
   const windSpeed = dailyData.map((item) => item.avgWindSpeed);
   const waveHeight = dailyData.map((item) => item.avgWaveHeight);
 
   const meanBottomTemperature =
     bottomTemperature.reduce((a, b) => a + b) / dailyDataLen;
+  const meanSurfaceTemperature =
+    surfaceTemperature.reduce((a, b) => a + b) / dailyDataLen;
   const meanWindSpeed = windSpeed.reduce((a, b) => a + b) / dailyDataLen;
   const meanWaveHeight = waveHeight.reduce((a, b) => a + b) / dailyDataLen;
 
   return {
     bottomTemperatureData: [...bottomTemperature, meanBottomTemperature],
+    surfaceTemperatureData: [...surfaceTemperature, meanSurfaceTemperature],
     windSpeedData: [...windSpeed, meanWindSpeed],
     waveHeightData: [...waveHeight, meanWaveHeight],
   };

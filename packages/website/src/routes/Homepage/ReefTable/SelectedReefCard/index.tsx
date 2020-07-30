@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import CardChart from "./cardChart";
 import { Reef } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 
@@ -85,7 +86,10 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].maxBottomTemperature.toFixed(2)}
+                  {formatNumber(
+                    sortByDate[dailyDataLen - 1].maxBottomTemperature,
+                    2
+                  )}
                   &#8451;
                 </Typography>
               </Grid>
@@ -98,7 +102,10 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].surfaceTemperature.toFixed(2)}
+                  {formatNumber(
+                    sortByDate[dailyDataLen - 1].surfaceTemperature,
+                    2
+                  )}
                   &#8451;
                 </Typography>
               </Grid>
@@ -111,7 +118,10 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {sortByDate[dailyDataLen - 1].degreeHeatingDays.toFixed(2)}
+                  {formatNumber(
+                    sortByDate[dailyDataLen - 1].degreeHeatingDays,
+                    2
+                  )}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
