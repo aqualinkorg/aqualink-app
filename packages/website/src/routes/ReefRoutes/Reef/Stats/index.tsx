@@ -37,14 +37,14 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
 
   const colorItem = colorFinder(degreeHeatingWeeks);
 
-  const weekSurfaceTemperatures = sortByDate
-    .slice(0, 7)
-    .map((item) => item.surfaceTemperature);
+  const weekSurfaceTemperatures = sortByDate.map(
+    (item) => item.surfaceTemperature
+  );
   const weekMaxSurfaceTemperature = Math.max(...weekSurfaceTemperatures);
 
-  const weekBottomTemperatures = sortByDate
-    .slice(0, 7)
-    .map((item) => item.maxBottomTemperature);
+  const weekBottomTemperatures = sortByDate.map(
+    (item) => item.maxBottomTemperature
+  );
   const weekMaxBottomTemperature = Math.max(...weekBottomTemperatures);
 
   return (
