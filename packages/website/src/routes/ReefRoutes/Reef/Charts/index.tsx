@@ -44,6 +44,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
 
   const {
     bottomTemperatureData,
+    surfaceTemperatureData,
     windSpeedData,
     waveHeightData,
   } = createDatasets(sortByDate);
@@ -72,7 +73,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
       setTooltipData({
         date,
         bottomTemperature: bottomTemperatureData[index],
-        surfaceTemperature: sortByDate[index].surfaceTemperature,
+        surfaceTemperature: surfaceTemperatureData[index],
         wind: windSpeedData[index],
         windDirection: sortByDate[index].windDirection,
         wave: waveHeightData[index],
@@ -209,158 +210,11 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
             height={chartHeight}
             data={createChartData(
               chartLabels,
-              bottomTemperatureData,
+              surfaceTemperatureData,
               0.6,
               3,
               true
             )}
-          />
-          <Typography
-            style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
-            variant="h6"
-          >
-            MEAN DAILY WIND SPEED (KPH)
-          </Typography>
-          <Line
-            ref={windChartRef}
-            options={{
-              plugins: {
-                chartJsPluginBarchartBackground: {
-                  color: "rgb(158, 166, 170, 0.07)",
-                },
-                sliceDrawPlugin: {
-                  sliceAtLabel,
-                  datasetIndex: 0,
-                },
-              },
-              tooltips: {
-                filter: (tooltipItem: any) => {
-                  return tooltipItem.datasetIndex === 0;
-                },
-                enabled: false,
-                custom: customTooltip(windChartRef),
-              },
-              legend: {
-                display: false,
-              },
-              scales: {
-                xAxes: [
-                  {
-                    type: "time",
-                    time: {
-                      displayFormats: {
-                        hour: "MMM D h:mm a",
-                      },
-                    },
-                    ticks: {
-                      display: false,
-                      min: xAxisMin,
-                      max: xAxisMax,
-                    },
-                    gridLines: {
-                      display: false,
-                      drawTicks: false,
-                    },
-                  },
-                ],
-                yAxes: [
-                  {
-                    gridLines: {
-                      drawTicks: false,
-                    },
-                    display: true,
-                    ticks: {
-                      min: 0,
-                      stepSize: 1,
-                      max: 5,
-                      callback: (value: number) => {
-                        return `${value}kph  `;
-                      },
-                    },
-                  },
-                ],
-              },
-            }}
-            height={0.5 * chartHeight}
-            data={createChartData(chartLabels, windSpeedData, 0.3, 3, false)}
-          />
-          <Typography
-            style={{ margin: "2rem 0 0 4rem", fontWeight: "normal" }}
-            variant="h6"
-          >
-            MEAN DAILY WAVE HEIGHT (M)
-          </Typography>
-          <Line
-            ref={waveChartRef}
-            options={{
-              plugins: {
-                chartJsPluginBarchartBackground: {
-                  color: "rgb(158, 166, 170, 0.07)",
-                  xTicksFontWeight: 1.2,
-                },
-                sliceDrawPlugin: {
-                  sliceAtLabel,
-                  datasetIndex: 0,
-                },
-              },
-              tooltips: {
-                filter: (tooltipItem: any) => {
-                  return tooltipItem.datasetIndex === 0;
-                },
-                enabled: false,
-                custom: customTooltip(waveChartRef),
-              },
-              legend: {
-                display: false,
-              },
-              scales: {
-                xAxes: [
-                  {
-                    type: "time",
-                    time: {
-                      displayFormats: {
-                        hour: "MMM D h:mm a",
-                      },
-                    },
-                    ticks: {
-                      min: xAxisMin,
-                      max: xAxisMax,
-                      padding: 10,
-                      maxRotation: 0,
-                      callback: (value: string) => {
-                        const splitDate = value.split(" ");
-                        if (splitDate[2] === "12:00" && splitDate[3] === "pm") {
-                          return `${splitDate[0]} ${splitDate[1]}`;
-                        }
-                        return null;
-                      },
-                    },
-                    gridLines: {
-                      display: false,
-                      drawTicks: false,
-                    },
-                  },
-                ],
-                yAxes: [
-                  {
-                    gridLines: {
-                      drawTicks: false,
-                    },
-                    display: true,
-                    ticks: {
-                      min: 0,
-                      stepSize: 1,
-                      max: 5,
-                      callback: (value: number) => {
-                        return `    ${value}m  `;
-                      },
-                    },
-                  },
-                ],
-              },
-            }}
-            height={0.5 * chartHeight}
-            data={createChartData(chartLabels, waveHeightData, 0.3, 3, false)}
           />
           {showTooltip ? (
             <div

@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
+import { formatNumber } from "../../../../../helpers/numberUtils";
 
 const Tooltip = ({
   date,
@@ -70,18 +71,22 @@ const Tooltip = ({
           >
             <Grid container justify="flex-start" item xs={6}>
               <Typography variant="caption">TEMP AT 25M</Typography>
-              <Typography variant="h5">{bottomTemperature} &#8451;</Typography>
+              <Typography variant="h5">
+                {formatNumber(bottomTemperature, 1)} &#8451;
+              </Typography>
             </Grid>
             <Grid container justify="flex-end" item xs={6}>
               <Typography variant="caption">SURFACE TEMP</Typography>
-              <Typography variant="h5">{surfaceTemperature} &#8451;</Typography>
+              <Typography variant="h5">
+                {formatNumber(surfaceTemperature, 1)} &#8451;
+              </Typography>
             </Grid>
           </Grid>
           <Grid container direction="column" item xs={12}>
             <Typography variant="caption">WIND</Typography>
             <Typography className={classes.tooltipContentRow} component="div">
               <Box>
-                <Typography variant="h5">{wind}</Typography>
+                <Typography variant="h5">{formatNumber(wind, 1)}</Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">kph</Typography>
@@ -90,7 +95,9 @@ const Tooltip = ({
                 <Typography variant="caption">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">{windDirection}&#176;</Typography>
+                <Typography variant="h5">
+                  {formatNumber(windDirection, 0)}&#176;
+                </Typography>
               </Box>
             </Typography>
           </Grid>
@@ -98,7 +105,7 @@ const Tooltip = ({
             <Typography variant="caption">WAVES</Typography>
             <Typography className={classes.tooltipContentRow} component="div">
               <Box>
-                <Typography variant="h5">{wave}</Typography>
+                <Typography variant="h5">{formatNumber(wave, 1)}</Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">m</Typography>
@@ -107,7 +114,9 @@ const Tooltip = ({
                 <Typography variant="caption">AT</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">{wavePeriod}</Typography>
+                <Typography variant="h5">
+                  {formatNumber(wavePeriod, 0)}
+                </Typography>
               </Box>
               <Box ml={0.2}>
                 <Typography variant="subtitle2">s</Typography>
@@ -116,7 +125,9 @@ const Tooltip = ({
                 <Typography variant="overline">FROM</Typography>
               </Box>
               <Box ml={0.5}>
-                <Typography variant="h5">{waveDirection} &#176;</Typography>
+                <Typography variant="h5">
+                  {formatNumber(waveDirection, 0)} &#176;
+                </Typography>
               </Box>
             </Typography>
           </Grid>
