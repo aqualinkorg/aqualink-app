@@ -25,7 +25,7 @@ async function run() {
     await Promise.all(
       backlogArray.map(async (past) => {
         const date = new Date(today);
-        date.setDate(today.getDate() - past);
+        date.setDate(today.getDate() - past - 1);
         try {
           await getReefsDailyData(connection, date);
         } catch (error) {

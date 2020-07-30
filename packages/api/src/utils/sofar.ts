@@ -36,7 +36,7 @@ export async function sofarHindcast(
     .catch((error) => {
       if (error.response) {
         console.error(
-          `Sofar API responded with a ${error.response.status} status.`,
+          `Sofar API responded with a ${error.response.status} status. ${error.response.message}`,
         );
       } else {
         console.error(`An error occured accessing the Sofar API - ${error}`);
