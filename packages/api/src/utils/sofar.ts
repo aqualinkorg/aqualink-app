@@ -94,9 +94,12 @@ export async function getSpotterData(
 }
 
 /** Utility function to get the closest available data given a date in UTC. */
-export function getValueClosestToDate(sofarValues: SofarValue[], date: Date) {
+export function getValueClosestToDate(
+  sofarValues: SofarValue[],
+  utcDate: Date,
+) {
   const timeDiff = (timestamp: string) =>
-    Math.abs(new Date(timestamp).getTime() - date.getTime());
+    Math.abs(new Date(timestamp).getTime() - utcDate.getTime());
 
   return sofarValues.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.timestamp) > timeDiff(nextPoint.timestamp)
