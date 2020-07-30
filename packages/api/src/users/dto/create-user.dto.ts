@@ -4,8 +4,6 @@ import {
   IsOptional,
   IsUrl,
   IsEmail,
-  MinLength,
-  MaxLength,
 } from 'class-validator';
 import { GeoJSON } from 'geojson';
 
@@ -17,11 +15,6 @@ export class CreateUserDto {
 
   @IsEmail()
   readonly email: string;
-
-  @IsString()
-  @MinLength(1)
-  @MaxLength(128)
-  readonly firebaseUid: string;
 
   @IsOptional()
   @IsString()
