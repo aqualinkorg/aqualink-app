@@ -5,12 +5,11 @@ import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { EntityExists } from '../validations/entity-exists.constraint';
-import { UsersService } from '../users/users.service';
-import { User } from '../users/users.entity';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Reef, User, DailyData])],
+  imports: [AuthModule, TypeOrmModule.forFeature([Reef, DailyData])],
   controllers: [ReefsController],
-  providers: [ReefsService, UsersService, EntityExists],
+  providers: [ReefsService, EntityExists],
 })
 export class ReefsModule {}

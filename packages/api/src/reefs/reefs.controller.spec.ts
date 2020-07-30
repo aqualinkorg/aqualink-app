@@ -5,8 +5,6 @@ import { ReefsController } from './reefs.controller';
 import { Reef } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { ReefsService } from './reefs.service';
-import { UsersService } from '../users/users.service';
-import { User } from '../users/users.entity';
 
 describe('Reefs Controller', () => {
   let controller: ReefsController;
@@ -18,10 +16,8 @@ describe('Reefs Controller', () => {
       // mock implementations there.
       providers: [
         ReefsService,
-        UsersService,
         { provide: getRepositoryToken(Reef), useClass: Repository },
         { provide: getRepositoryToken(DailyData), useClass: Repository },
-        { provide: getRepositoryToken(User), useClass: Repository },
       ],
       // You could also provide it the real ReefRepository, but then you'll also have to take care of providing *its*
       // dependencies too (e.g. with an `imports` block.
