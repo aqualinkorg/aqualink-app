@@ -69,6 +69,7 @@
     "@types/jest": "24.9.0",
     "@types/node": "^13.9.1",
     "@types/passport": "^1.0.4",
+    "@types/passport-strategy": "^0.2.35",
     "@types/supertest": "^2.0.8",
     "csv-parser": "^2.3.3",
     "faker": "^4.1.0",
