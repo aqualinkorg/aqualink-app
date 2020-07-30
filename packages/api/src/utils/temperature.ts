@@ -26,7 +26,7 @@ export async function getMMM(long: number, lat: number) {
   const tiff = await GeoTIFF.fromUrl(MMMFileUrl);
   const image = await tiff.getImage();
 
-  const gdalNoData = image.getGDALNoData()
+  const gdalNoData = image.getGDALNoData();
   const boundingBox = image.getBoundingBox();
   const width = image.getWidth();
   const height = image.getHeight();

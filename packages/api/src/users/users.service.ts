@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthRequest } from '../auth/auth.types';
+import { extractAndVerifyToken } from '../auth/firebase-auth.strategy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
 
@@ -16,15 +17,26 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const { firebaseUid } = createUserDto;
+  async create(req: any, createUserDto: CreateUserDto): Promise<User> {
+    const firebaseUser = await extractAndVerifyToken(req);
+    if (!firebaseUser) {
+      throw new BadRequestException('Invalid Firebase token.');
+    }
+    if (firebaseUser.email !== createUserDto.email) {
+      throw new BadRequestException('Invalid user email.');
+    }
+    const firebaseUid = firebaseUser.uid;
     const alreadyExists = await this.findByFirebaseUid(firebaseUid);
     if (alreadyExists) {
       throw new BadRequestException(
         `User with firebaseUid ${firebaseUid} already exists.`,
       );
     }
-    return this.usersRepository.save(createUserDto);
+    const user = {
+      ...createUserDto,
+      firebaseUid,
+    };
+    return this.usersRepository.save(user);
   }
 
   async getSelf(req: AuthRequest): Promise<User | undefined> {
