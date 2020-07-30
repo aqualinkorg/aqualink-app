@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AuthRequest } from '../auth/auth.types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
 
@@ -24,6 +25,10 @@ export class UsersService {
       );
     }
     return this.usersRepository.save(createUserDto);
+  }
+
+  async getSelf(req: AuthRequest): Promise<User | undefined> {
+    return req.user;
   }
 
   async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
