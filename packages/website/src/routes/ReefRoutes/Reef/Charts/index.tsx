@@ -20,8 +20,6 @@ import "../../../../helpers/thresholdPlugin";
 
 const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
-  const windChartRef = useRef<Line>(null);
-  const waveChartRef = useRef<Line>(null);
   const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
