@@ -3,10 +3,10 @@ import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import { Reef } from "../../../../store/Reefs/types";
+import { Reef, Position } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
-const marker = require("../../../../assets/marker.png");
+import marker from "../../../../assets/marker.png";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -18,13 +18,17 @@ const pinIcon = L.icon({
 const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   const mapRef = useRef<Map>(null);
 
+  const reverseCoords = (coordArray: Position[]): [Position[]] => {
+    return [coordArray.map((coords) => [coords[1], coords[0]])];
+  };
+
   useEffect(() => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
       const map = current.leafletElement;
       // Initialize map's position to fit the given polygon
       if (polygon.type === "Polygon") {
-        map.fitBounds(mapBounds(polygon), { padding: [150, 150] });
+        map.fitBounds(mapBounds(polygon));
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
       }
@@ -40,10 +44,15 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   }, [mapRef, polygon]);
 
   return (
-    <Map ref={mapRef} dragging={false} className={classes.map}>
+    <Map
+      ref={mapRef}
+      dragging={false}
+      scrollWheelZoom={false}
+      className={classes.map}
+    >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {polygon.type === "Polygon" ? (
-        <Polygon positions={polygon.coordinates} />
+        <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (
         <Marker
           icon={pinIcon}

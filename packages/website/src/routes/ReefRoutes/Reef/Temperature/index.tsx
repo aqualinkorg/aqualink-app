@@ -13,14 +13,15 @@ import {
 import ErrorIcon from "@material-ui/icons/Error";
 import Alert from "@material-ui/lab/Alert";
 import type { Data } from "../../../../store/Reefs/types";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
 
 const Temperature = ({ dailyData, classes }: TemperatureProps) => {
-  if (dailyData.length === 0) {
-    return null;
-  }
-
-  const bottomTemperature = dailyData[0].maxBottomTemperature;
-  const date = new Date(dailyData[0].date);
+  const sortByDate = sortDailyData(dailyData, "desc");
+  const bottomTemperature = sortByDate[0].maxBottomTemperature;
+  const date = new Date(sortByDate[0].date)
+    .toLocaleString()
+    .replace(/:\d{2}\s/, " ")
+    .split(", ");
 
   const {
     surfaceTemperature,
@@ -29,7 +30,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
     maxWaveHeight,
     wavePeriod,
     waveDirection,
-  } = dailyData[0];
+  } = sortByDate[0];
 
   return (
     <Card className={classes.card}>
@@ -41,9 +42,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
               <Typography variant="h6">CURRENT CONDITIONS</Typography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle2">{`(${date.toLocaleDateString(
-                "en-US"
-              )} 8:16AM PST)`}</Typography>
+              <Typography variant="subtitle2">{`${date[0]} ${date[1]}`}</Typography>
             </Grid>
           </Grid>
         }
@@ -90,7 +89,7 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
             >
               <Typography variant="caption">SURFACE TEMP</Typography>
               {surfaceTemperature && (
-                <Typography gutterBottom variant="h5">
+                <Typography gutterBottom variant="h4">
                   {surfaceTemperature} &#8451;
                 </Typography>
               )}
@@ -101,16 +100,16 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{maxWindSpeed}</Typography>
+                    <Typography variant="h4">{maxWindSpeed}</Typography>
                   </Box>
-                  <Box ml={0}>
+                  <Box ml={0.2}>
                     <Typography variant="subtitle2">kph</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{windDirection} &#176;</Typography>
+                    <Typography variant="h4">{windDirection}&#176;</Typography>
                   </Box>
                 </Typography>
               )}
@@ -154,25 +153,25 @@ const Temperature = ({ dailyData, classes }: TemperatureProps) => {
                   component="div"
                 >
                   <Box>
-                    <Typography variant="h5">{maxWaveHeight}</Typography>
+                    <Typography variant="h4">{maxWaveHeight}</Typography>
                   </Box>
-                  <Box ml={0}>
+                  <Box ml={0.2}>
                     <Typography variant="subtitle2">m</Typography>
                   </Box>
                   <Box ml={0.5}>
                     <Typography variant="caption">AT</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="h5">{wavePeriod}</Typography>
+                    <Typography variant="h4">{wavePeriod}</Typography>
+                  </Box>
+                  <Box ml={0.2}>
+                    <Typography variant="subtitle2">s</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="subtitle2">S</Typography>
+                    <Typography variant="caption">FROM</Typography>
                   </Box>
                   <Box ml={0.5}>
-                    <Typography variant="overline">FROM</Typography>
-                  </Box>
-                  <Box ml={0.5}>
-                    <Typography variant="h5">{waveDirection} &#176;</Typography>
+                    <Typography variant="h4">{waveDirection}&#176;</Typography>
                   </Box>
                 </Typography>
               )}

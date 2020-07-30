@@ -14,7 +14,8 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import { colorCode } from "../../../../assets/colorCode";
 import bottom from "../../../../assets/bottom.svg";
-import { Reef } from "../../../../store/Reefs/types";
+import type { Data } from "../../../../store/Reefs/types";
+import { sortDailyData } from "../../../../helpers/sortDailyData";
 
 const colorFinder = (value: number) => {
   const len = colorCode.length;
@@ -29,22 +30,19 @@ const colorFinder = (value: number) => {
 };
 
 const Stats = ({ dailyData, classes }: StatsProps) => {
-  if (dailyData.length === 0) {
-    return null;
-  }
-
-  const { degreeHeatingDays } = dailyData[0];
+  const sortByDate = sortDailyData(dailyData, "desc");
+  const { degreeHeatingDays } = sortByDate[0];
 
   const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;
 
   const colorItem = colorFinder(degreeHeatingWeeks);
 
-  const weekSurfaceTemperatures = dailyData
+  const weekSurfaceTemperatures = sortByDate
     .slice(0, 7)
     .map((item) => item.surfaceTemperature);
   const weekMaxSurfaceTemperature = Math.max(...weekSurfaceTemperatures);
 
-  const weekBottomTemperatures = dailyData
+  const weekBottomTemperatures = sortByDate
     .slice(0, 7)
     .map((item) => item.maxBottomTemperature);
   const weekMaxBottomTemperature = Math.max(...weekBottomTemperatures);
@@ -54,10 +52,9 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
       className={classes.root}
       container
       direction="row"
-      justify="center"
-      spacing={9}
+      justify="space-between"
     >
-      <Grid className={classes.item} item xs={6}>
+      <Grid className={classes.item} item xs={5}>
         <Card style={{ height: "inherit" }}>
           <CardMedia className={classes.card} image={bottom}>
             <CardHeader
@@ -69,7 +66,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
               }
             />
             <CardContent
-              style={{ flex: "1 1 auto", padding: "0 1rem 1rem 1rem" }}
+              style={{ flex: "1 1 auto", padding: "0rem 1rem 2rem 1rem" }}
             >
               <Grid
                 container
@@ -110,7 +107,7 @@ const Stats = ({ dailyData, classes }: StatsProps) => {
           </CardMedia>
         </Card>
       </Grid>
-      <Grid className={classes.item} item xs={6}>
+      <Grid className={classes.item} item xs={5}>
         <Card className={classes.card}>
           <CardHeader
             style={{ flex: "0 1 auto" }}
@@ -202,7 +199,7 @@ const styles = () =>
   });
 
 interface StatsIncomingProps {
-  dailyData: Reef["dailyData"];
+  dailyData: Data[];
 }
 
 type StatsProps = WithStyles<typeof styles> & StatsIncomingProps;
