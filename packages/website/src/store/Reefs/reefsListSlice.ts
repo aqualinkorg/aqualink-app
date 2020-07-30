@@ -15,7 +15,7 @@ const reefsListInitialState: ReefsListState = {
 const getReefs = async () => {
   try {
     const { data } = await reefServices.getReefs();
-    return data.filter((reef) => reef && reef.name);
+    return data;
   } catch (err) {
     const error: AxiosError<ReefsListState["error"]> = err;
     return Promise.reject(error.message);
