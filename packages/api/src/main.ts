@@ -14,10 +14,9 @@ try {
 async function bootstrap() {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT ||
-    'firebase.json');
+    '../firebase.json');
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DATABASE_URL || '',
   });
   const app = await NestFactory.create(AppModule);
   app.enableCors();
