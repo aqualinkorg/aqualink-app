@@ -40,20 +40,6 @@ exports[`renders as expected 1`] = `
         MEAN DAILY WATER TEMPERATURE AT 25M (C°)
       </h6>
       Mock-Line
-      <h6
-        class="MuiTypography-root MuiTypography-h6"
-        style="margin: 2rem 0px 0px 4rem; font-weight: normal;"
-      >
-        MEAN DAILY WIND SPEED (KPH)
-      </h6>
-      Mock-Line
-      <h6
-        class="MuiTypography-root MuiTypography-h6"
-        style="margin: 2rem 0px 0px 4rem; font-weight: normal;"
-      >
-        MEAN DAILY WAVE HEIGHT (M)
-      </h6>
-      Mock-Line
     </div>
   </div>
 </div>

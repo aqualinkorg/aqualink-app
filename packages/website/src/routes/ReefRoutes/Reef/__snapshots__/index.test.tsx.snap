@@ -167,7 +167,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          Currently no spotter deployed at this reef location. All data values values are derived from a combination of NOAA satellite readings weather models.
+          Currently no spotter deployed at this reef location. All data values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </div>
@@ -291,7 +291,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
                         >
-                          9
+                          9.00
                         </h4>
                       </div>
                       <div
@@ -378,7 +378,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         <h4
                           class="MuiTypography-root MuiTypography-h4"
                         >
-                          5
+                          5.00
                         </h4>
                       </div>
                       <div
