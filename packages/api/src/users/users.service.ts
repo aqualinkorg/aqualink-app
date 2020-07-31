@@ -26,14 +26,22 @@ export class UsersService {
       throw new BadRequestException('Invalid user email.');
     }
     const firebaseUid = firebaseUser.uid;
-    const alreadyExists = await this.findByFirebaseUid(firebaseUid);
-    if (alreadyExists) {
+    const uidExists = await this.findByFirebaseUid(firebaseUid);
+    if (uidExists) {
       throw new BadRequestException(
         `User with firebaseUid ${firebaseUid} already exists.`,
       );
     }
+    const { email } = firebaseUser;
+    const priorAccount = await this.findByEmail(email);
+    if (priorAccount && priorAccount.firebaseUid) {
+      throw new BadRequestException(
+        `Email ${email} is already connected to a different firebaseUid.`,
+      );
+    }
+    const data = priorAccount || createUserDto;
     const user = {
-      ...createUserDto,
+      ...data,
       firebaseUid,
     };
     return this.usersRepository.save(user);
@@ -41,6 +49,10 @@ export class UsersService {
 
   async getSelf(req: AuthRequest): Promise<User | undefined> {
     return req.user;
+  }
+
+  async findByEmail(email: string): Promise<User | undefined> {
+    return this.usersRepository.findOne({ where: { email } });
   }
 
   async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
