@@ -5,12 +5,13 @@ import {
   withStyles,
   WithStyles,
   Theme,
+  Typography,
 } from "@material-ui/core";
 
 import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
-import Temperature from "./Temperature";
-import Stats from "./Stats";
+import Satellite from "./Satellite";
+import Sensor from "./Sensor";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
@@ -18,33 +19,58 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   // console.log(reef);
   return (
     <Grid container justify="center" className={classes.root}>
-      <Grid container justify="space-around" item xs={10}>
-        <Grid key={1} item xs={11} md={reef.videoStream ? 5 : 11}>
+      <Grid container justify="space-around" item xs={10} spacing={4}>
+        <Grid item xs={11} md={reef.videoStream ? 6 : 9}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        {reef.videoStream && (
-          <Grid key={2} item xs={11} md={5}>
-            <div className={classes.container}>
-              <FeatureVideo url={reef.videoStream} />
-            </div>
-          </Grid>
-        )}
-      </Grid>
-      <Grid container justify="space-around" item xs={10}>
-        <Grid key={3} item xs={11} md={5}>
-          <div className={classes.smallContainer}>
-            <Temperature dailyData={reef.dailyData} />
+        <Grid item xs={11} md={reef.videoStream ? 6 : 3}>
+          <div className={classes.container}>
+            <FeatureVideo url={reef.videoStream} />
           </div>
         </Grid>
-        <Grid key={4} item xs={11} md={5}>
+      </Grid>
+      <Grid container justify="space-around" item xs={10} spacing={4}>
+        <Grid item xs={11} md={3}>
+          <Typography className={classes.cardTitles} variant="h6">
+            SATELLITE OBSERVATION
+          </Typography>
+          <div className={classes.smallContainer}>
+            <Satellite dailyData={reef.dailyData} />
+          </div>
+        </Grid>
+        <Grid item xs={11} md={3}>
+          <Typography className={classes.cardTitles} variant="h6">
+            SENSOR OBSERVATION
+          </Typography>
+          <div className={classes.smallContainer}>
+            <Sensor reef={reef} />
+          </div>
+        </Grid>
+        <Grid item xs={11} md={3}>
+          <Typography className={classes.cardTitles} variant="h6">
+            WIND
+          </Typography>
+          <div className={classes.smallContainer}>
+            <Satellite dailyData={reef.dailyData} />
+          </div>
+        </Grid>
+        <Grid item xs={11} md={3}>
+          <Typography className={classes.cardTitles} variant="h6">
+            WAVES
+          </Typography>
+          <div className={classes.smallContainer}>
+            <Satellite dailyData={reef.dailyData} />
+          </div>
+        </Grid>
+        {/* <Grid key={4} item xs={11} md={5}>
           <div
             className={`${classes.smallContainer} ${classes.statsContainer}`}
           >
             <Stats dailyData={reef.dailyData} />
           </div>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Grid container justify="center" item xs={12}>
         <Charts
@@ -63,9 +89,18 @@ const styles = (theme: Theme) =>
       flexGrow: 1,
       marginTop: "2rem",
     },
+    cardTitles: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      color: "#2f2f2f",
+      margin: "0 0 0.5rem 1rem",
+    },
     container: {
-      height: "48vh",
-      marginBottom: "4rem",
+      height: "50vh",
+      marginBottom: "3rem",
       [theme.breakpoints.between("md", "lg")]: {
         height: "35vh",
       },

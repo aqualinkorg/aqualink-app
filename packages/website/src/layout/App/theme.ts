@@ -45,8 +45,12 @@ const theme: any = createMuiTheme({
       },
     },
     MuiTypography: {
-      h2: {
+      h1: {
         fontSize: 52,
+        fontFamily,
+      },
+      h2: {
+        fontSize: 48,
         fontFamily,
       },
       h3: {
