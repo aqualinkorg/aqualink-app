@@ -4,17 +4,9 @@ import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
 import { GlobalValidationPipe } from './validations/global-validation.pipe';
 
-try {
-  // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
-} catch {
-  // Pass
-}
+const serviceAccount = require('../firebase');
 
 async function bootstrap() {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
-  const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT ||
-    '../firebase.json');
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
