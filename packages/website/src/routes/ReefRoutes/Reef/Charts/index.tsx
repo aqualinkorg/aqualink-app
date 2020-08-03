@@ -98,7 +98,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   }, [onResize]);
 
   return (
-    <Grid item xs={10}>
+    <Grid item xs={11}>
       <div className={classes.root}>
         <Typography className={classes.graphTitle} variant="h6">
           DAILY WATER TEMPERATURE (C&deg;)

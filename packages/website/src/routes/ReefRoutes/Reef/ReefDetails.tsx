@@ -23,7 +23,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
 
   return (
     <Grid container justify="center" className={classes.root}>
-      <Grid container item xs={10} alignItems="baseline">
+      <Grid container item xs={11} alignItems="baseline">
         <Typography
           style={{ marginLeft: "2rem" }}
           className={classes.cardTitles}
@@ -38,7 +38,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           LONG: {lng}
         </Typography>
       </Grid>
-      <Grid container justify="space-around" item xs={10} spacing={4}>
+      <Grid container justify="space-around" item xs={11} spacing={2}>
         <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
@@ -50,7 +50,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           </div>
         </Grid>
       </Grid>
-      <Grid container justify="space-around" item xs={10} spacing={4}>
+      <Grid container justify="space-around" item xs={11} spacing={2}>
         <Grid item xs={6} md={3}>
           <Typography className={classes.cardTitles} variant="h6">
             SATELLITE OBSERVATION
@@ -118,7 +118,7 @@ const styles = (theme: Theme) =>
       },
     },
     smallContainer: {
-      height: "30vh",
+      height: "35vh",
       marginBottom: "5rem",
     },
     statsContainer: {
