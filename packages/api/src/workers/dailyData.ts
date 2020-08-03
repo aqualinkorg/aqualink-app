@@ -5,6 +5,7 @@ import { Point } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
+import { calculateDegreeHeatingDays } from '../utils/temperature';
 // import { calculateDegreeHeatingDays } from '../utils/temperature';
 
 const getAverage = (numbers: number[]) => {
@@ -14,7 +15,7 @@ const getAverage = (numbers: number[]) => {
 };
 
 async function getDailyData(reef: Reef, date: Date) {
-  const { polygon, spotterId, timezone: localTimezone } = reef;
+  const { polygon, spotterId, maxMonthlyMean, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -35,11 +36,27 @@ async function getDailyData(reef: Reef, date: Date) {
 
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
-  // TODO - Get data for the past 84 days.
-  // const seaSurfaceTemperatures = [] as number[];
-  // TODO - Add NOAA MMM to the reef table.
-  // const MMM = 28;
-  const degreeHeatingDays = 0; // calculateDegreeHeatingDays(seaSurfaceTemperatures, MMM);
+  let degreeHeatingDays: number;
+  try {
+    // TODO - Get data for the past 84 days.
+    const seaSurfaceTemperatures = [] as number[];
+    degreeHeatingDays = calculateDegreeHeatingDays(
+      seaSurfaceTemperatures,
+      maxMonthlyMean,
+    );
+  } catch {
+    const degreeHeatingWeek = await getSofarDailyData(
+      'NOAACoralReefWatch',
+      'degreeHeatingWeek',
+      latitude,
+      longitude,
+      localTimezone,
+      date,
+    );
+
+    degreeHeatingDays =
+      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : 0;
+  }
 
   const satelliteTemperatureData = await getSofarDailyData(
     'HYCOM',
