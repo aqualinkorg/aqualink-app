@@ -35,7 +35,6 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [updateChart, setUpdateChart] = useState<boolean>(false);
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
-  const [thresholdTextPosition, setThresholdTextPosition] = useState<number>(0);
 
   // Sort daily data by date
   const sortByDate = sortDailyData(dailyData);
@@ -83,24 +82,14 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
     }
   };
 
-  const setThreshold = (value: number | null) => {
-    const chart = temperatureChartRef.current;
-
-    if (chart) {
-      const yScale = chart.chartInstance.scales["y-axis-0"];
-      setThresholdTextPosition(yScale.getPixelForValue(value));
-    }
-  };
-
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
       setUpdateChart(false);
-      setThreshold(temperatureThreshold);
     }, 1);
-  }, [temperatureThreshold]);
+  }, []);
 
-  // Update chart and set temperature threshold position when window is resized
+  // Update chart when window is resized
   useEffect(() => {
     window.addEventListener("resize", onResize);
     return () => {
@@ -108,135 +97,121 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
     };
   }, [onResize]);
 
-  // Set temperature threshold position on first render
-  useEffect(() => {
-    setThreshold(temperatureThreshold);
-  }, [temperatureThreshold]);
-
   return (
-    <>
-      <Grid id="threshold-text-container" item>
-        <Grid
-          style={{ position: "relative", top: thresholdTextPosition }}
-          direction="column"
-          container
-        >
-          <Typography variant="caption">Bleaching</Typography>
-          <Typography variant="caption">Threshold</Typography>
-          <Typography variant="caption">(Mean)</Typography>
-        </Grid>
-      </Grid>
-      <Grid item xs={9}>
-        <div className={classes.root}>
-          <Typography
-            style={{ marginLeft: "4rem", fontWeight: "normal" }}
-            variant="h6"
-          >
-            MEAN DAILY WATER TEMPERATURE AT 25M (C&deg;)
-          </Typography>
-          <Line
-            ref={temperatureChartRef}
-            options={{
-              plugins: {
-                chartJsPluginBarchartBackground: {
-                  color: "rgb(158, 166, 170, 0.07)",
-                },
-                fillPlugin: {
-                  datasetIndex: 0,
-                  zeroLevel: temperatureThreshold,
-                  bottom: 0,
-                  top: 35,
-                  color: "rgba(250, 141, 0, 1)",
-                  updateChart,
-                },
-                sliceDrawPlugin: {
-                  sliceAtLabel,
-                  datasetIndex: 0,
-                },
-                thresholdPlugin: {
-                  threshold: temperatureThreshold,
-                },
+    <Grid item xs={10}>
+      <div className={classes.root}>
+        <Typography className={classes.graphTitle} variant="h6">
+          DAILY WATER TEMPERATURE (C&deg;)
+        </Typography>
+        <Line
+          ref={temperatureChartRef}
+          options={{
+            plugins: {
+              chartJsPluginBarchartBackground: {
+                color: "rgb(158, 166, 170, 0.07)",
               },
-              tooltips: {
-                filter: (tooltipItem: any) => {
-                  return tooltipItem.datasetIndex === 0;
-                },
-                enabled: false,
-                custom: customTooltip(temperatureChartRef),
+              fillPlugin: {
+                datasetIndex: 0,
+                zeroLevel: temperatureThreshold,
+                bottom: 0,
+                top: 35,
+                color: "rgba(250, 141, 0, 0.5)",
+                updateChart,
               },
-              legend: {
-                display: false,
+              sliceDrawPlugin: {
+                sliceAtLabel,
+                datasetIndex: 0,
               },
-              scales: {
-                xAxes: [
-                  {
-                    type: "time",
-                    time: {
-                      displayFormats: {
-                        hour: "MMM D h:mm a",
-                      },
-                    },
-                    ticks: {
-                      display: false,
-                      min: xAxisMin,
-                      max: xAxisMax,
-                    },
-                    gridLines: {
-                      display: false,
-                      drawTicks: false,
+              thresholdPlugin: {
+                threshold: temperatureThreshold,
+              },
+            },
+            tooltips: {
+              filter: (tooltipItem: any) => {
+                return tooltipItem.datasetIndex === 0;
+              },
+              enabled: false,
+              custom: customTooltip(temperatureChartRef),
+            },
+            legend: {
+              display: true,
+              rtl: true,
+              labels: {
+                fontSize: 14,
+                fontStyle: "normal",
+                fontColor: "#9ea6aa",
+              },
+            },
+            scales: {
+              xAxes: [
+                {
+                  type: "time",
+                  time: {
+                    displayFormats: {
+                      hour: "MMM D h:mm a",
                     },
                   },
-                ],
-                yAxes: [
-                  {
-                    gridLines: {
-                      drawTicks: false,
-                    },
-                    display: true,
-                    ticks: {
-                      min: 0,
-                      stepSize: 5,
-                      max: 40,
-                      callback: (value: number) => {
-                        return `  ${value}\u00B0   `;
-                      },
+                  ticks: {
+                    display: false,
+                    min: xAxisMin,
+                    max: xAxisMax,
+                  },
+                  gridLines: {
+                    display: false,
+                    drawTicks: false,
+                  },
+                },
+              ],
+              yAxes: [
+                {
+                  gridLines: {
+                    drawTicks: false,
+                  },
+                  display: true,
+                  ticks: {
+                    min: 0,
+                    stepSize: 5,
+                    max: 40,
+                    callback: (value: number) => {
+                      return `  ${value}\u00B0   `;
                     },
                   },
-                ],
-              },
+                },
+              ],
+            },
+          }}
+          height={chartHeight}
+          data={createChartData(
+            chartLabels,
+            surfaceTemperatureData,
+            0.6,
+            5,
+            true,
+            "SURFACE TEMP"
+          )}
+        />
+        {showTooltip ? (
+          <div
+            onMouseLeave={() => {
+              setShowTooltip(false);
+              setSliceAtLabel(null);
             }}
-            height={chartHeight}
-            data={createChartData(
-              chartLabels,
-              surfaceTemperatureData,
-              0.6,
-              3,
-              true
-            )}
-          />
-          {showTooltip ? (
-            <div
-              onMouseLeave={() => {
-                setShowTooltip(false);
-                setSliceAtLabel(null);
-              }}
-              className="chart-tooltip"
-              id="chart-tooltip"
-              style={{
-                position: "fixed",
-                top: tooltipPosition.top,
-                left: tooltipPosition.left,
-              }}
-            >
-              <>
-                <Tooltip {...tooltipData} />
-                <div className="tooltip-arrow" />
-              </>
-            </div>
-          ) : null}
-        </div>
-      </Grid>
-    </>
+            className="chart-tooltip"
+            id="chart-tooltip"
+            style={{
+              position: "fixed",
+              top: tooltipPosition.top,
+              left: tooltipPosition.left,
+            }}
+          >
+            <>
+              <Tooltip {...tooltipData} />
+              <div className="tooltip-arrow" />
+            </>
+          </div>
+        ) : null}
+      </div>
+    </Grid>
   );
 };
 
@@ -244,6 +219,14 @@ const styles = () =>
   createStyles({
     root: {
       height: "100%",
+    },
+    graphTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      marginLeft: "4rem",
     },
   });
 

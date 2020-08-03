@@ -3,7 +3,8 @@ export const createChartData = (
   dataArray: number[],
   gradientPercenage: number,
   pointRadius: number,
-  fill: boolean
+  fill: boolean,
+  title: string
 ) => (canvas: HTMLCanvasElement) => {
   const ctx = canvas.getContext("2d");
   let gradient;
@@ -17,21 +18,22 @@ export const createChartData = (
     labels,
     datasets: [
       {
-        label: "overflow-dataset",
+        label: "BLEACHING THRESHOLD",
         data: dataArray,
         fill,
-        borderColor: "#168dbd",
-        borderWidth: 1.5,
+        borderColor: "#6bc1e1",
+        borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,
         pointRadius,
         cubicInterpolationMode: "monotone",
       },
       {
-        label: "gradient-dataset",
+        label: title,
         data: dataArray,
-        backgroundColor: gradient,
-        borderColor: "#168dbd",
+        backgroundColor: "rgb(107,193,225,0.4)",
+        borderColor: "#6bc1e1",
+        borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 0,
         pointRadius: 0,
