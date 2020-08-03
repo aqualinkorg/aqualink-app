@@ -111,10 +111,10 @@ const styles = (theme: Theme) =>
       margin: "0 0 0.5rem 1rem",
     },
     container: {
-      height: "50vh",
+      height: "55vh",
       marginBottom: "3rem",
       [theme.breakpoints.between("md", "lg")]: {
-        height: "35vh",
+        height: "50vh",
       },
     },
     smallContainer: {
