@@ -13,6 +13,7 @@ import FeatureVideo from "./FeatureVideo";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import Wind from "./Wind";
+import Waves from "./Waves";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
@@ -21,19 +22,19 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid container justify="space-around" item xs={10} spacing={4}>
-        <Grid item xs={11} md={reef.videoStream ? 6 : 9}>
+        <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid item xs={11} md={reef.videoStream ? 6 : 3}>
+        <Grid item xs={12} md={reef.videoStream ? 6 : 3}>
           <div className={classes.container}>
             <FeatureVideo url={reef.videoStream} />
           </div>
         </Grid>
       </Grid>
       <Grid container justify="space-around" item xs={10} spacing={4}>
-        <Grid item xs={11} md={3}>
+        <Grid item xs={6} md={3}>
           <Typography className={classes.cardTitles} variant="h6">
             SATELLITE OBSERVATION
           </Typography>
@@ -41,7 +42,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
             <Satellite dailyData={reef.dailyData} />
           </div>
         </Grid>
-        <Grid item xs={11} md={3}>
+        <Grid item xs={6} md={3}>
           <Typography className={classes.cardTitles} variant="h6">
             SENSOR OBSERVATION
           </Typography>
@@ -49,7 +50,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
             <Sensor reef={reef} />
           </div>
         </Grid>
-        <Grid item xs={11} md={3}>
+        <Grid item xs={6} md={3}>
           <Typography className={classes.cardTitles} variant="h6">
             WIND
           </Typography>
@@ -57,21 +58,14 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
             <Wind dailyData={reef.dailyData} />
           </div>
         </Grid>
-        <Grid item xs={11} md={3}>
+        <Grid item xs={6} md={3}>
           <Typography className={classes.cardTitles} variant="h6">
             WAVES
           </Typography>
           <div className={classes.smallContainer}>
-            <Satellite dailyData={reef.dailyData} />
+            <Waves dailyData={reef.dailyData} />
           </div>
         </Grid>
-        {/* <Grid key={4} item xs={11} md={5}>
-          <div
-            className={`${classes.smallContainer} ${classes.statsContainer}`}
-          >
-            <Stats dailyData={reef.dailyData} />
-          </div>
-        </Grid> */}
       </Grid>
       <Grid container justify="center" item xs={12}>
         <Charts

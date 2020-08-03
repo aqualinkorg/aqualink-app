@@ -13,13 +13,13 @@ import {
 import type { Data } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import wind from "../../../../assets/wind.svg";
-import clouds from "../../../../assets/clouds.svg";
+import waves from "../../../../assets/waves.svg";
+import wave from "../../../../assets/wave.svg";
 import arrow from "../../../../assets/arrow.svg";
 
-const Wind = ({ dailyData, classes }: WindProps) => {
+const Waves = ({ dailyData, classes }: WavesProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
-  const { maxWindSpeed, windDirection } = sortByDate[0];
+  const { maxWaveHeight, waveDirection, wavePeriod } = sortByDate[0];
 
   return (
     <Card className={classes.card}>
@@ -28,7 +28,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
         title={
           <Grid container justify="flex-end">
             <Grid item xs={2}>
-              <img alt="wind" src={wind} />
+              <img alt="waves" src={waves} />
             </Grid>
           </Grid>
         }
@@ -40,14 +40,14 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           container
           justify="space-between"
         >
-          <Grid container item xs={6}>
+          <Grid container item xs={12} spacing={4}>
             <Grid item xs={12}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
-                SPEED
+                HEIGHT
               </Typography>
               <Grid container alignItems="baseline">
                 <Typography
@@ -55,44 +55,73 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                   style={{ fontSize: 42, marginRight: "0.25rem" }}
                   color="textSecondary"
                 >
-                  {formatNumber(maxWindSpeed, 1)}
+                  {formatNumber(maxWaveHeight, 1)}
                 </Typography>
                 <Typography
+                  style={{ fontWeight: "normal" }}
                   className={classes.contentUnits}
                   color="textSecondary"
                   variant="h6"
                 >
-                  KM/H
+                  Μ
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography
-                className={classes.contentTitles}
-                color="textSecondary"
-                variant="subtitle2"
-              >
-                DIRECTION
-              </Typography>
-              <Grid container alignItems="baseline">
-                <img
-                  style={{ transform: `rotate(${windDirection}deg)` }}
-                  className={classes.arrow}
-                  alt="arrow"
-                  src={arrow}
-                />
+            <Grid container item xs={12}>
+              <Grid item xs={4}>
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTitles}
                   color="textSecondary"
-                  variant="h3"
+                  variant="subtitle2"
                 >
-                  {windDirection}&#176;
+                  PERIOD
                 </Typography>
+                <Grid container alignItems="baseline">
+                  <Typography
+                    className={classes.contentValues}
+                    color="textSecondary"
+                    variant="h3"
+                  >
+                    {wavePeriod}
+                  </Typography>
+                  <Typography
+                    style={{ fontWeight: "normal" }}
+                    className={classes.contentUnits}
+                    color="textSecondary"
+                    variant="h6"
+                  >
+                    S
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography
+                  className={classes.contentTitles}
+                  color="textSecondary"
+                  variant="subtitle2"
+                >
+                  DIRECTION
+                </Typography>
+                <Grid container alignItems="baseline">
+                  <img
+                    style={{ transform: `rotate(${waveDirection}deg)` }}
+                    className={classes.arrow}
+                    alt="arrow"
+                    src={arrow}
+                  />
+                  <Typography
+                    className={classes.contentValues}
+                    color="textSecondary"
+                    variant="h3"
+                  >
+                    {waveDirection}&#176;
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={5} alignItems="flex-end">
-            <img alt="clouds" src={clouds} />
+          <Grid container item xs={12} alignItems="flex-end" justify="center">
+            <img alt="wave" src={wave} />
           </Grid>
         </Grid>
       </CardContent>
@@ -118,7 +147,7 @@ const styles = () =>
       padding: 0,
     },
     content: {
-      padding: "0 0 2rem 2rem",
+      padding: "0 2rem 2rem 2rem",
     },
     contentTitles: {
       fontWeight: "normal",
@@ -148,10 +177,10 @@ const styles = () =>
     },
   });
 
-interface WindIncomingProps {
+interface WavesIncomingProps {
   dailyData: Data[];
 }
 
-type WindProps = WithStyles<typeof styles> & WindIncomingProps;
+type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;
 
-export default withStyles(styles)(Wind);
+export default withStyles(styles)(Waves);
