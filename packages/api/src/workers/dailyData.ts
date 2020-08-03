@@ -170,32 +170,28 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
-  return Promise.all(
-    allReefs.map(async (reef) => {
-      const dailyDataInput = await getDailyData(reef, date);
-      const entity = dailyDataRepository.create(dailyDataInput);
-      try {
-        const res = await dailyDataRepository.save(entity);
-        return res;
-      } catch (err) {
-        // Update instead of insert
-        if (err.constraint === 'no_duplicated_date') {
-          const res = await dailyDataRepository.update(
-            {
-              reef,
-              date: entity.date,
-            },
-            entity,
-          );
-          return res;
-        }
-        console.error(
-          `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
+  for (const reef of allReefs) {
+    const dailyDataInput = await getDailyData(reef, date);
+    const entity = dailyDataRepository.create(dailyDataInput);
+    try {
+      await dailyDataRepository.save(entity);
+    } catch (err) {
+      // Update instead of insert
+      if (err.constraint === 'no_duplicated_date') {
+        await dailyDataRepository.update(
+          {
+            reef,
+            date: entity.date,
+          },
+          entity,
         );
-        return undefined;
+        continue;
       }
-    }),
-  );
+      console.error(
+        `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
+      );
+    }
+  }
 }
 
 /* eslint-disable no-console */

@@ -37,7 +37,7 @@ const {
 
 // Start a daily update for each reefs.
 exports.dailyUpdate = functions
-  .runWith({ timeoutSeconds: 120 })
+  .runWith({ timeoutSeconds: 540 })
   .https.onRequest(async (req, res) => {
     const dbUrl = functions.config().database.url;
     // eslint-disable-next-line fp/no-mutation
