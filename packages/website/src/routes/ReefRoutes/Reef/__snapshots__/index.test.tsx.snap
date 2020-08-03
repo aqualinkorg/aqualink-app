@@ -176,6 +176,28 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     class="MuiGrid-root ReefDetails-root-91 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-grid-xs-10"
+    >
+      <h6
+        class="MuiTypography-root ReefDetails-cardTitles-92 MuiTypography-h6"
+        style="margin-left: 2rem;"
+      >
+        LOCATION:
+      </h6>
+      <h6
+        class="MuiTypography-root ReefDetails-cardTitles-92 MuiTypography-subtitle2"
+      >
+        LAT: 
+        0
+      </h6>
+      <h6
+        class="MuiTypography-root ReefDetails-cardTitles-92 MuiTypography-subtitle2"
+      >
+        LONG: 
+        0
+      </h6>
+    </div>
+    <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-item MuiGrid-justify-xs-space-around MuiGrid-grid-xs-10"
     >
       <div

@@ -16,11 +16,28 @@ import Wind from "./Wind";
 import Waves from "./Waves";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
+import { locationCalculator } from "../../../helpers/locationCalculator";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
-  // console.log(reef);
+  const [lng, lat] = locationCalculator(reef.polygon);
+
   return (
     <Grid container justify="center" className={classes.root}>
+      <Grid container item xs={10} alignItems="baseline">
+        <Typography
+          style={{ marginLeft: "2rem" }}
+          className={classes.cardTitles}
+          variant="h6"
+        >
+          LOCATION:
+        </Typography>
+        <Typography className={classes.cardTitles} variant="subtitle2">
+          LAT: {lat}
+        </Typography>
+        <Typography className={classes.cardTitles} variant="subtitle2">
+          LONG: {lng}
+        </Typography>
+      </Grid>
       <Grid container justify="space-around" item xs={10} spacing={4}>
         <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
           <div className={classes.container}>
