@@ -50,24 +50,17 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           alignItems="center"
           justify="space-between"
         >
-          <Grid
-            className={classes.contentText}
-            container
-            direction="column"
-            spacing={5}
-            item
-            xs={7}
-          >
+          <Grid container direction="column" spacing={3} item xs={6}>
             <Grid item>
               <Typography
-                className={classes.contentTextTitles}
+                className={classes.contentTitles}
                 color="textPrimary"
                 variant="subtitle2"
               >
                 SURFACE TEMP
               </Typography>
               <Typography
-                className={classes.contentTextValues}
+                className={classes.contentValues}
                 color="textPrimary"
                 variant="h2"
               >
@@ -76,14 +69,14 @@ const Sensor = ({ reef, classes }: SensorProps) => {
             </Grid>
             <Grid item>
               <Typography
-                className={classes.contentTextTitles}
+                className={classes.contentTitles}
                 color="textPrimary"
                 variant="subtitle2"
               >
                 {`TEMP AT ${reef.depth}M`}
               </Typography>
               <Typography
-                className={classes.contentTextValues}
+                className={classes.contentValues}
                 color="textPrimary"
                 variant="h2"
               >
@@ -91,7 +84,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <img alt="sensor" src={sensor} />
           </Grid>
         </Grid>
@@ -114,23 +107,20 @@ const styles = () =>
     },
     content: {
       flex: "1 1 auto",
-      padding: "0 1rem 1rem 1rem",
+      padding: "0 1rem 1rem 2.5rem",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
       borderRadius: 4,
     },
-    contentText: {
-      paddingLeft: "1.5rem",
-    },
-    contentTextTitles: {
+    contentTitles: {
       fontWeight: "normal",
       fontStretch: "normal",
       fontStyle: "normal",
       lineHeight: 1.33,
       letterSpacing: "normal",
     },
-    contentTextValues: {
+    contentValues: {
       fontWeight: 300,
       fontStretch: "normal",
       fontStyle: "normal",

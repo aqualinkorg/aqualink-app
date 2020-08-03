@@ -12,6 +12,7 @@ import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
+import Wind from "./Wind";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
@@ -53,7 +54,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
             WIND
           </Typography>
           <div className={classes.smallContainer}>
-            <Satellite dailyData={reef.dailyData} />
+            <Wind dailyData={reef.dailyData} />
           </div>
         </Grid>
         <Grid item xs={11} md={3}>

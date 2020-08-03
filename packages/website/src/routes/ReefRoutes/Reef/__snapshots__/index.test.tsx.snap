@@ -3,7 +3,7 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-50 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-56 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -97,7 +97,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </header>
   <div
-    class="MuiGrid-root ReefNavBar-root-74 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+    class="MuiGrid-root ReefNavBar-root-80 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
@@ -141,7 +141,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     />
   </div>
   <div
-    class="MuiGrid-root Reef-spotterAlert-49 MuiGrid-container MuiGrid-justify-xs-center"
+    class="MuiGrid-root Reef-spotterAlert-55 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
@@ -173,7 +173,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </div>
   <div
-    class="MuiGrid-root ReefDetails-root-76 MuiGrid-container MuiGrid-justify-xs-center"
+    class="MuiGrid-root ReefDetails-root-82 MuiGrid-container MuiGrid-justify-xs-center"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-item MuiGrid-justify-xs-space-around MuiGrid-grid-xs-10"
@@ -182,7 +182,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-9"
       >
         <div
-          class="ReefDetails-container-78"
+          class="ReefDetails-container-84"
         >
           <mock-map
             polygon="[object Object]"
@@ -193,7 +193,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-3"
       >
         <div
-          class="ReefDetails-container-78"
+          class="ReefDetails-container-84"
         >
           <mock-featurevideo />
         </div>
@@ -206,18 +206,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-3"
       >
         <h6
-          class="MuiTypography-root ReefDetails-cardTitles-77 MuiTypography-h6"
+          class="MuiTypography-root ReefDetails-cardTitles-83 MuiTypography-h6"
         >
           SATELLITE OBSERVATION
         </h6>
         <div
-          class="ReefDetails-smallContainer-79"
+          class="ReefDetails-smallContainer-85"
         >
           <div
-            class="MuiPaper-root MuiCard-root Satellite-card-81 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Satellite-card-87 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Satellite-header-82"
+              class="MuiCardHeader-root Satellite-header-88"
             >
               <div
                 class="MuiCardHeader-content"
@@ -241,14 +241,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Satellite-content-83"
+              class="MuiCardContent-root Satellite-content-89"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-between"
                 style="height: 100%;"
               >
                 <div
-                  class="MuiGrid-root Satellite-contentText-84 MuiGrid-item"
+                  class="MuiGrid-root Satellite-contentText-90 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
@@ -257,14 +257,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextTitles-91 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
                         SURFACE TEMP
                       </h6>
                       <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextValues-92 MuiTypography-h2 MuiTypography-colorTextPrimary"
                       >
-                        30.0
+                        26.0
                          °C
                       </h2>
                     </div>
@@ -272,12 +272,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextTitles-91 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
                         DEGREE HEATING WEEKS
                       </h6>
                       <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextValues-92 MuiTypography-h2 MuiTypography-colorTextPrimary"
                       >
                         0.1
                       </h2>
@@ -465,18 +465,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-3"
       >
         <h6
-          class="MuiTypography-root ReefDetails-cardTitles-77 MuiTypography-h6"
+          class="MuiTypography-root ReefDetails-cardTitles-83 MuiTypography-h6"
         >
           SENSOR OBSERVATION
         </h6>
         <div
-          class="ReefDetails-smallContainer-79"
+          class="ReefDetails-smallContainer-85"
         >
           <div
-            class="MuiPaper-root MuiCard-root Sensor-card-87 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Sensor-card-93 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Sensor-header-88"
+              class="MuiCardHeader-root Sensor-header-94"
             >
               <div
                 class="MuiCardHeader-content"
@@ -488,7 +488,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root Sensor-noSensorAlert-90 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-7"
+                      class="MuiGrid-root Sensor-noSensorAlert-96 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-7"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary"
@@ -509,25 +509,25 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Sensor-content-89"
+              class="MuiCardContent-root Sensor-content-95"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 style="height: 100%;"
               >
                 <div
-                  class="MuiGrid-root Sensor-contentText-91 MuiGrid-container MuiGrid-spacing-xs-5 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-7"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-6"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <h6
-                      class="MuiTypography-root Sensor-contentTextTitles-92 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                      class="MuiTypography-root Sensor-contentTitles-97 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                     >
                       SURFACE TEMP
                     </h6>
                     <h2
-                      class="MuiTypography-root Sensor-contentTextValues-93 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                      class="MuiTypography-root Sensor-contentValues-98 MuiTypography-h2 MuiTypography-colorTextPrimary"
                     >
                       - -
                     </h2>
@@ -536,19 +536,19 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <h6
-                      class="MuiTypography-root Sensor-contentTextTitles-92 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                      class="MuiTypography-root Sensor-contentTitles-97 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                     >
                       TEMP AT 4M
                     </h6>
                     <h2
-                      class="MuiTypography-root Sensor-contentTextValues-93 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                      class="MuiTypography-root Sensor-contentValues-98 MuiTypography-h2 MuiTypography-colorTextPrimary"
                     >
                       - -
                     </h2>
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
                 >
                   <img
                     alt="sensor"
@@ -564,18 +564,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-3"
       >
         <h6
-          class="MuiTypography-root ReefDetails-cardTitles-77 MuiTypography-h6"
+          class="MuiTypography-root ReefDetails-cardTitles-83 MuiTypography-h6"
         >
           WIND
         </h6>
         <div
-          class="ReefDetails-smallContainer-79"
+          class="ReefDetails-smallContainer-85"
         >
           <div
-            class="MuiPaper-root MuiCard-root Satellite-card-81 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Wind-card-99 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Satellite-header-82"
+              class="MuiCardHeader-root Wind-header-100"
             >
               <div
                 class="MuiCardHeader-content"
@@ -590,8 +590,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
                     >
                       <img
-                        alt="satellite"
-                        src="satellite.svg"
+                        alt="wind"
+                        src="wind.svg"
                       />
                     </div>
                   </div>
@@ -599,220 +599,72 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Satellite-content-83"
+              class="MuiCardContent-root Wind-contentWrapper-101"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-between"
+                class="MuiGrid-root Wind-content-102 MuiGrid-container MuiGrid-justify-xs-space-between"
                 style="height: 100%;"
               >
                 <div
-                  class="MuiGrid-root Satellite-contentText-84 MuiGrid-item"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    <h6
+                      class="MuiTypography-root Wind-contentTitles-103 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
                     >
+                      SPEED
+                    </h6>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <p
+                        class="MuiTypography-root Wind-contentValues-104 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                        style="font-size: 42px; margin-right: 0.25rem;"
+                      >
+                        9.0
+                      </p>
                       <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Wind-contentValues-104 MuiTypography-h6 MuiTypography-colorTextSecondary"
                       >
-                        SURFACE TEMP
+                        KM/H
                       </h6>
-                      <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
-                      >
-                        30.0
-                         °C
-                      </h2>
                     </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <h6
+                      class="MuiTypography-root Wind-contentTitles-103 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
                     >
-                      <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                      DIRECTION
+                    </h6>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <img
+                        alt="arrow"
+                        class="Wind-arrow-105"
+                        src="arrow.svg"
+                        style="transform: rotate(180deg);"
+                      />
+                      <h3
+                        class="MuiTypography-root Wind-contentValues-104 MuiTypography-h3 MuiTypography-colorTextSecondary"
                       >
-                        DEGREE HEATING WEEKS
-                      </h6>
-                      <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
-                      >
-                        0.1
-                      </h2>
+                        180
+                        °
+                      </h3>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-grid-xs-5"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(8, 91, 163); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        0
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(12, 157, 165); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        2
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(117, 180, 114); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        4
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(123, 217, 37); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        6
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(193, 229, 34); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        8
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(229, 187, 43); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        10
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(230, 121, 40); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        12
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(232, 79, 46); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        14
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(216, 69, 36); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        16
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(128, 58, 32); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        18
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(185, 41, 68); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        20
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
-                      style="background-color: rgb(128, 48, 126); height: 2rem;"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-caption"
-                      >
-                        25
-                      </span>
-                    </div>
-                  </div>
+                  <img
+                    alt="clouds"
+                    src="clouds.svg"
+                  />
                 </div>
               </div>
             </div>
@@ -823,18 +675,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-3"
       >
         <h6
-          class="MuiTypography-root ReefDetails-cardTitles-77 MuiTypography-h6"
+          class="MuiTypography-root ReefDetails-cardTitles-83 MuiTypography-h6"
         >
           WAVES
         </h6>
         <div
-          class="ReefDetails-smallContainer-79"
+          class="ReefDetails-smallContainer-85"
         >
           <div
-            class="MuiPaper-root MuiCard-root Satellite-card-81 MuiPaper-elevation1 MuiPaper-rounded"
+            class="MuiPaper-root MuiCard-root Satellite-card-87 MuiPaper-elevation1 MuiPaper-rounded"
           >
             <div
-              class="MuiCardHeader-root Satellite-header-82"
+              class="MuiCardHeader-root Satellite-header-88"
             >
               <div
                 class="MuiCardHeader-content"
@@ -858,14 +710,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <div
-              class="MuiCardContent-root Satellite-content-83"
+              class="MuiCardContent-root Satellite-content-89"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-between"
                 style="height: 100%;"
               >
                 <div
-                  class="MuiGrid-root Satellite-contentText-84 MuiGrid-item"
+                  class="MuiGrid-root Satellite-contentText-90 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
@@ -874,14 +726,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextTitles-91 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
                         SURFACE TEMP
                       </h6>
                       <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextValues-92 MuiTypography-h2 MuiTypography-colorTextPrimary"
                       >
-                        30.0
+                        26.0
                          °C
                       </h2>
                     </div>
@@ -889,12 +741,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <h6
-                        class="MuiTypography-root Satellite-contentTextTitles-85 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextTitles-91 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
                         DEGREE HEATING WEEKS
                       </h6>
                       <h2
-                        class="MuiTypography-root Satellite-contentTextValues-86 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                        class="MuiTypography-root Satellite-contentTextValues-92 MuiTypography-h2 MuiTypography-colorTextPrimary"
                       >
                         0.1
                       </h2>
@@ -1089,7 +941,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </div>
   </div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-94 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-106 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"

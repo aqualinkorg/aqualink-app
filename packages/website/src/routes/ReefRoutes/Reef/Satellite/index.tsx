@@ -57,7 +57,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {formatNumber(sortByDate[0].maxBottomTemperature, 1)} &#176;C
+                  {formatNumber(sortByDate[0].satelliteTemperature, 1)} &#176;C
                 </Typography>
               </Grid>
               <Grid item xs={12}>
