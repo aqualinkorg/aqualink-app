@@ -6,7 +6,6 @@ import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
-// import { calculateDegreeHeatingDays } from '../utils/temperature';
 
 const getAverage = (numbers: number[]) => {
   return numbers.length > 0
@@ -170,21 +169,24 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
+  // eslint-disable-next-line no-restricted-syntax
   for (const reef of allReefs) {
+    // eslint-disable-next-line no-await-in-loop
     const dailyDataInput = await getDailyData(reef, date);
     const entity = dailyDataRepository.create(dailyDataInput);
     try {
-      await dailyDataRepository.save(entity);
+      dailyDataRepository.save(entity);
     } catch (err) {
       // Update instead of insert
       if (err.constraint === 'no_duplicated_date') {
-        await dailyDataRepository.update(
+        dailyDataRepository.update(
           {
             reef,
             date: entity.date,
           },
           entity,
         );
+        // eslint-disable-next-line no-continue
         continue;
       }
       console.error(
