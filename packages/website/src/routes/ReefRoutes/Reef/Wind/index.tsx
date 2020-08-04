@@ -55,15 +55,17 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                   style={{ fontSize: 42, marginRight: "0.25rem" }}
                   color="textSecondary"
                 >
-                  {formatNumber(maxWindSpeed, 1)}
+                  {maxWindSpeed ? `${formatNumber(maxWindSpeed, 1)}` : "- -"}
                 </Typography>
-                <Typography
-                  className={classes.contentUnits}
-                  color="textSecondary"
-                  variant="h6"
-                >
-                  KM/H
-                </Typography>
+                {maxWindSpeed && (
+                  <Typography
+                    className={classes.contentUnits}
+                    color="textSecondary"
+                    variant="h6"
+                  >
+                    KM/H
+                  </Typography>
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -75,18 +77,20 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                <img
-                  style={{ transform: `rotate(${windDirection}deg)` }}
-                  className={classes.arrow}
-                  alt="arrow"
-                  src={arrow}
-                />
+                {windDirection && (
+                  <img
+                    style={{ transform: `rotate(${windDirection}deg)` }}
+                    className={classes.arrow}
+                    alt="arrow"
+                    src={arrow}
+                  />
+                )}
                 <Typography
                   className={classes.contentValues}
                   color="textSecondary"
                   variant="h3"
                 >
-                  {windDirection}&#176;
+                  {windDirection ? `${windDirection}\u00B0` : "- -"}
                 </Typography>
               </Grid>
             </Grid>

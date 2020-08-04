@@ -286,8 +286,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <h2
                         class="MuiTypography-root Satellite-contentTextValues-105 MuiTypography-h2 MuiTypography-colorTextPrimary"
                       >
-                        26.0
-                         °C
+                        26.0 ℃
                       </h2>
                     </div>
                     <div
@@ -674,8 +673,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <h3
                         class="MuiTypography-root Wind-contentValues-117 MuiTypography-h3 MuiTypography-colorTextSecondary"
                       >
-                        180
-                        °
+                        180°
                       </h3>
                     </div>
                   </div>
@@ -813,8 +811,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         <h3
                           class="MuiTypography-root Waves-contentValues-125 MuiTypography-h3 MuiTypography-colorTextSecondary"
                         >
-                          180
-                          °
+                          180°
                         </h3>
                       </div>
                     </div>

@@ -55,16 +55,18 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   style={{ fontSize: 42, marginRight: "0.25rem" }}
                   color="textSecondary"
                 >
-                  {formatNumber(maxWaveHeight, 1)}
+                  {maxWaveHeight ? `${formatNumber(maxWaveHeight, 1)}` : "- -"}
                 </Typography>
-                <Typography
-                  style={{ fontWeight: "normal" }}
-                  className={classes.contentUnits}
-                  color="textSecondary"
-                  variant="h6"
-                >
-                  Μ
-                </Typography>
+                {maxWaveHeight && (
+                  <Typography
+                    style={{ fontWeight: "normal" }}
+                    className={classes.contentUnits}
+                    color="textSecondary"
+                    variant="h6"
+                  >
+                    Μ
+                  </Typography>
+                )}
               </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -82,16 +84,18 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h3"
                   >
-                    {wavePeriod}
+                    {wavePeriod || "- -"}
                   </Typography>
-                  <Typography
-                    style={{ fontWeight: "normal" }}
-                    className={classes.contentUnits}
-                    color="textSecondary"
-                    variant="h6"
-                  >
-                    S
-                  </Typography>
+                  {wavePeriod && (
+                    <Typography
+                      style={{ fontWeight: "normal" }}
+                      className={classes.contentUnits}
+                      color="textSecondary"
+                      variant="h6"
+                    >
+                      S
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs={8}>
@@ -103,18 +107,20 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   DIRECTION
                 </Typography>
                 <Grid container alignItems="baseline">
-                  <img
-                    style={{ transform: `rotate(${waveDirection}deg)` }}
-                    className={classes.arrow}
-                    alt="arrow"
-                    src={arrow}
-                  />
+                  {waveDirection && (
+                    <img
+                      style={{ transform: `rotate(${waveDirection}deg)` }}
+                      className={classes.arrow}
+                      alt="arrow"
+                      src={arrow}
+                    />
+                  )}
                   <Typography
                     className={classes.contentValues}
                     color="textSecondary"
                     variant="h3"
                   >
-                    {waveDirection}&#176;
+                    {waveDirection ? `${waveDirection}\u00B0` : "- -"}
                   </Typography>
                 </Grid>
               </Grid>

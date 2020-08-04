@@ -7,21 +7,23 @@ export const createDatasets = (dailyData: Data[]) => {
   const surfaceTemperature = dailyData.map(
     (item) => item.surfaceTemperature || item.satelliteTemperature
   );
-  const windSpeed = dailyData.map((item) => item.avgWindSpeed);
-  const waveHeight = dailyData.map((item) => item.avgWaveHeight);
 
   const meanBottomTemperature =
     bottomTemperature.reduce((a, b) => a + b) / dailyDataLen;
   const meanSurfaceTemperature =
     surfaceTemperature.reduce((a, b) => a + b) / dailyDataLen;
-  const meanWindSpeed = windSpeed.reduce((a, b) => a + b) / dailyDataLen;
-  const meanWaveHeight = waveHeight.reduce((a, b) => a + b) / dailyDataLen;
 
   return {
-    bottomTemperatureData: [...bottomTemperature, meanBottomTemperature],
-    surfaceTemperatureData: [...surfaceTemperature, meanSurfaceTemperature],
-    windSpeedData: [...windSpeed, meanWindSpeed],
-    waveHeightData: [...waveHeight, meanWaveHeight],
+    bottomTemperatureData: [
+      meanBottomTemperature,
+      ...bottomTemperature,
+      meanBottomTemperature,
+    ],
+    surfaceTemperatureData: [
+      meanSurfaceTemperature,
+      ...surfaceTemperature,
+      meanSurfaceTemperature,
+    ],
   };
 };
 
@@ -34,11 +36,12 @@ export const calculateAxisLimits = (dailyData: Data[]) => {
   ).toISOString();
 
   const xAxisMin = new Date(
-    new Date(xAxisMax).setHours(-7 * 24, 0, 0, 0)
+    new Date(dates[0]).setHours(-1, 0, 0, 0)
   ).toISOString();
 
   // Add an extra date one day after the final daily data date
   const chartLabels = [
+    new Date(new Date(xAxisMin).setHours(3, 0, 0, 0)).toISOString(),
     ...dates,
     new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
   ];

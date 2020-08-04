@@ -83,8 +83,7 @@ exports[`renders as expected 1`] = `
               <h3
                 class="MuiTypography-root Wind-contentValues-6 MuiTypography-h3 MuiTypography-colorTextSecondary"
               >
-                96
-                °
+                96°
               </h3>
             </div>
           </div>

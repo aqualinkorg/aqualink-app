@@ -48,34 +48,48 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <span
-              class="MuiTypography-root MuiTypography-caption"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
-              TEMP AT 0M
-            </span>
-            <h5
-              class="MuiTypography-root MuiTypography-h5"
+              <span
+                class="MuiTypography-root MuiTypography-caption"
+              >
+                TEMP AT 0M
+              </span>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
-              0
-               ℃
-            </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5"
+              >
+                - -
+              </h5>
+            </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <span
-              class="MuiTypography-root MuiTypography-caption"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
             >
-              SURFACE TEMP
-            </span>
-            <h5
-              class="MuiTypography-root MuiTypography-h5"
+              <span
+                class="MuiTypography-root MuiTypography-caption"
+              >
+                SURFACE TEMP
+              </span>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
             >
-              0
-               ℃
-            </h5>
+              <h5
+                class="MuiTypography-root MuiTypography-h5"
+              >
+                -
+              </h5>
+            </div>
           </div>
         </div>
       </div>

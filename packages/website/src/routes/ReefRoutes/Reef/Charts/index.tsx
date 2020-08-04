@@ -56,7 +56,7 @@ const Charts = ({
       return;
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 120;
+    const left = position.left + tooltipModel.caretX - 100;
     const top = position.top + tooltipModel.caretY - 50;
     const date =
       tooltipModel.dataPoints &&
@@ -178,7 +178,6 @@ const Charts = ({
           data={createChartData(
             chartLabels,
             surfaceTemperatureData,
-            0.6,
             5,
             true,
             "SURFACE TEMP"

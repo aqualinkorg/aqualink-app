@@ -18,7 +18,7 @@ import satellite from "../../../../assets/satellite.svg";
 
 const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
-  const { degreeHeatingDays } = sortByDate[0];
+  const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
 
   const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;
 
@@ -57,7 +57,9 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {formatNumber(sortByDate[0].satelliteTemperature, 1)} &#176;C
+                  {satelliteTemperature
+                    ? `${formatNumber(satelliteTemperature, 1)} \u2103`
+                    : "- -"}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -73,7 +75,9 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {formatNumber(degreeHeatingWeeks, 1)}
+                  {degreeHeatingWeeks
+                    ? `${formatNumber(degreeHeatingWeeks, 1)}`
+                    : "- -"}
                 </Typography>
               </Grid>
             </Grid>
