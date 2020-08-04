@@ -5,6 +5,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import SelectedReefCard from ".";
 import { Reef } from "../../../../store/Reefs/types";
 
+jest.mock("react-chartjs-2", () => ({
+  Line: () => "Mock-Line",
+  Chart: {
+    pluginService: {
+      register: jest.fn(),
+    },
+  },
+}));
+
 test("renders as expected", () => {
   const reef: Reef = {
     id: 0,

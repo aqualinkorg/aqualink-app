@@ -52,10 +52,7 @@ exports[`renders as expected 1`] = `
               >
                 MEAN DAILY SURFACE TEMPERATURE (C°)
               </h6>
-              <canvas
-                height="100"
-                width="300"
-              />
+              Mock-Line
             </div>
           </div>
           <div

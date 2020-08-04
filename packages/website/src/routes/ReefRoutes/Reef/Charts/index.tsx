@@ -36,6 +36,7 @@ const Charts = ({
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [updateChart, setUpdateChart] = useState<boolean>(false);
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
+  const [xTickShift, setXTickShift] = useState<number>(0);
 
   // Sort daily data by date
   const sortByDate = sortDailyData(dailyData);
@@ -76,10 +77,22 @@ const Charts = ({
     }
   };
 
+  const changeXTickShift = () => {
+    const { current } = temperatureChartRef;
+    if (current) {
+      const xScale = current.chartInstance.scales["x-axis-0"];
+      const ticksPositions = xScale.ticks.map((_: any, index: number) =>
+        xScale.getPixelForTick(index)
+      );
+      setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
+    }
+  };
+
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
       setUpdateChart(false);
+      changeXTickShift();
     }, 1);
   }, []);
 
@@ -90,6 +103,10 @@ const Charts = ({
       window.removeEventListener("resize", onResize);
     };
   }, [onResize]);
+
+  useEffect(() => {
+    changeXTickShift();
+  });
 
   return (
     <Grid item xs={11}>
@@ -148,6 +165,7 @@ const Charts = ({
                   },
                   display: true,
                   ticks: {
+                    labelOffset: xTickShift,
                     min: xAxisMin,
                     max: xAxisMax,
                     padding: 10,
@@ -173,7 +191,7 @@ const Charts = ({
                     stepSize: 5,
                     max: 40,
                     callback: (value: number) => {
-                      return `  ${value}\u00B0   `;
+                      return `${value}\u00B0  `;
                     },
                   },
                 },
