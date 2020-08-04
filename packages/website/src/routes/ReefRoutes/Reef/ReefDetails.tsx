@@ -87,6 +87,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
       <Grid container justify="center" item xs={12}>
         <Charts
           dailyData={reef.dailyData}
+          depth={reef.depth}
           // TODO - Remove default
           temperatureThreshold={reef.temperatureThreshold || 20}
         />

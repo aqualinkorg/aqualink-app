@@ -18,19 +18,20 @@ import "../../../../helpers/fillPlugin";
 import "../../../../helpers/slicePlugin";
 import "../../../../helpers/thresholdPlugin";
 
-const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
+const Charts = ({
+  classes,
+  depth,
+  dailyData,
+  temperatureThreshold,
+}: ChartsProps) => {
   const temperatureChartRef = useRef<Line>(null);
   const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     date: "",
+    depth,
     bottomTemperature: 0,
     surfaceTemperature: 0,
-    wind: 0,
-    windDirection: 0,
-    wave: 0,
-    wavePeriod: 0,
-    waveDirection: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [updateChart, setUpdateChart] = useState<boolean>(false);
@@ -39,12 +40,9 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
   // Sort daily data by date
   const sortByDate = sortDailyData(dailyData);
 
-  const {
-    bottomTemperatureData,
-    surfaceTemperatureData,
-    windSpeedData,
-    waveHeightData,
-  } = createDatasets(sortByDate);
+  const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
+    sortByDate
+  );
 
   const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
 
@@ -59,7 +57,7 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 120;
-    const top = position.bottom - 300;
+    const top = position.top + tooltipModel.caretY - 50;
     const date =
       tooltipModel.dataPoints &&
       tooltipModel.dataPoints[0] &&
@@ -69,13 +67,9 @@ const Charts = ({ classes, dailyData, temperatureThreshold }: ChartsProps) => {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,
+        depth,
         bottomTemperature: bottomTemperatureData[index],
         surfaceTemperature: surfaceTemperatureData[index],
-        wind: windSpeedData[index],
-        windDirection: sortByDate[index].windDirection,
-        wave: waveHeightData[index],
-        wavePeriod: sortByDate[index].wavePeriod,
-        waveDirection: sortByDate[index].waveDirection,
       });
       setShowTooltip(true);
       setSliceAtLabel(date);
@@ -233,6 +227,7 @@ const styles = () =>
 interface ChartsIncomingProps {
   dailyData: Data[];
   temperatureThreshold: number | null;
+  depth: number | null;
 }
 
 type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
