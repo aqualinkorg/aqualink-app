@@ -144,11 +144,17 @@ const Charts = ({
                     displayFormats: {
                       hour: "MMM D h:mm a",
                     },
+                    unit: "week",
                   },
+                  display: true,
                   ticks: {
-                    display: false,
                     min: xAxisMin,
                     max: xAxisMax,
+                    padding: 10,
+                    maxRotation: 0,
+                    callback: (value: string) => {
+                      return value.split(", ")[0].toUpperCase();
+                    },
                   },
                   gridLines: {
                     display: false,

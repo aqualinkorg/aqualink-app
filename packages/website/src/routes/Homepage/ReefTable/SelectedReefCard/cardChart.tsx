@@ -18,7 +18,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
   // Sort daily data by date
   const sortByDate = sortDailyData(dailyData);
 
-  const { bottomTemperatureData } = createDatasets(sortByDate);
+  const { surfaceTemperatureData } = createDatasets(sortByDate);
 
   const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
 
@@ -68,6 +68,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
                 displayFormats: {
                   hour: "MMM D h:mm a",
                 },
+                unit: "month",
               },
               ticks: {
                 min: xAxisMin,
@@ -75,11 +76,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
                 padding: 10,
                 maxRotation: 0,
                 callback: (value: string) => {
-                  const splitDate = value.split(" ");
-                  if (splitDate[2] === "12:00" && splitDate[3] === "pm") {
-                    return `${splitDate[0]} ${splitDate[1]}`;
-                  }
-                  return null;
+                  return value.split(", ")[0].toUpperCase();
                 },
               },
               gridLines: {
@@ -107,7 +104,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
         },
       }}
       height={100}
-      data={createChartData(chartLabels, bottomTemperatureData, 0, true)}
+      data={createChartData(chartLabels, surfaceTemperatureData, 0, true)}
     />
   );
 };

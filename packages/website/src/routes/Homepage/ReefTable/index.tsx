@@ -133,8 +133,7 @@ const ReefTable = () => {
     <>
       {selectedReef &&
         selectedReef.dailyData &&
-        selectedReef.dailyData.length > 0 &&
-        selectedReef.temperatureThreshold && (
+        selectedReef.dailyData.length > 0 && (
           <SelectedReefCard reef={selectedReef} />
         )}
       {reefsList && reefsList.length > 0 && (
