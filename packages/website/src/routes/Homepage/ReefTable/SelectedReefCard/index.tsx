@@ -88,7 +88,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                 >
                   {formatNumber(
                     sortByDate[dailyDataLen - 1].maxBottomTemperature,
-                    2
+                    1
                   )}
                   &#8451;
                 </Typography>
@@ -104,7 +104,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                 >
                   {formatNumber(
                     sortByDate[dailyDataLen - 1].surfaceTemperature,
-                    2
+                    1
                   )}
                   &#8451;
                 </Typography>
@@ -120,7 +120,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                 >
                   {formatNumber(
                     sortByDate[dailyDataLen - 1].degreeHeatingDays,
-                    2
+                    1
                   )}
                 </Typography>
               </Grid>

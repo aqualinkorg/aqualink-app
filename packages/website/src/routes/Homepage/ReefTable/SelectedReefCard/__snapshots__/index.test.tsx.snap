@@ -73,7 +73,7 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
-                39.00
+                39.0
                 ℃
               </h4>
             </div>
@@ -88,7 +88,7 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
-                29.00
+                29.0
                 ℃
               </h4>
             </div>
@@ -103,7 +103,7 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
-                34.00
+                34.0
               </h4>
             </div>
             <div

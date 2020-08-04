@@ -155,13 +155,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                 )}
                 <Grid container justify="flex-end" item xs={6}>
                   <IconButton>
-                    <NotificationsIcon />
+                    <NotificationsIcon className={classes.notificationIcon} />
                   </IconButton>
                   <IconButton>
                     <Avatar />
                   </IconButton>
                   <IconButton onClick={handleClick}>
-                    <ExpandMoreIcon />
+                    <ExpandMoreIcon className={classes.expandIcon} />
                   </IconButton>
                   <Menu
                     key="user-menu"
@@ -256,6 +256,12 @@ const styles = (theme: Theme) =>
       },
       height: "100%",
       width: "100%",
+    },
+    notificationIcon: {
+      color: "#a9e6ff",
+    },
+    expandIcon: {
+      color: "#ffffff",
     },
   });
 
