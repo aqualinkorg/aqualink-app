@@ -4,9 +4,12 @@ export const createDatasets = (dailyData: Data[]) => {
   const dailyDataLen = dailyData.length;
 
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
-  const surfaceTemperature = dailyData.map(
-    (item) => item.surfaceTemperature || item.satelliteTemperature
-  );
+  const surfaceTemperature = dailyData
+    .filter(
+      (item) =>
+        item.surfaceTemperature !== null || item.satelliteTemperature !== null
+    )
+    .map((item) => item.surfaceTemperature || item.satelliteTemperature);
 
   const meanBottomTemperature =
     bottomTemperature.reduce((a, b) => a + b) / dailyDataLen;
@@ -28,8 +31,13 @@ export const createDatasets = (dailyData: Data[]) => {
 };
 
 export const calculateAxisLimits = (dailyData: Data[]) => {
-  const dates = dailyData.map((item) => item.date);
-  const dailyDataLen = dailyData.length;
+  const dates = dailyData
+    .filter(
+      (item) =>
+        item.surfaceTemperature !== null || item.satelliteTemperature !== null
+    )
+    .map((item) => item.date);
+  const dailyDataLen = dates.length;
 
   const xAxisMax = new Date(
     new Date(dates[dailyDataLen - 1]).setHours(24, 0, 0, 0)

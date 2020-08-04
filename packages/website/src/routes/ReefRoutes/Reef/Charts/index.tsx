@@ -175,13 +175,7 @@ const Charts = ({
             },
           }}
           height={chartHeight}
-          data={createChartData(
-            chartLabels,
-            surfaceTemperatureData,
-            5,
-            true,
-            "SURFACE TEMP"
-          )}
+          data={createChartData(chartLabels, surfaceTemperatureData, 5, true)}
         />
         {showTooltip ? (
           <div

@@ -8,7 +8,7 @@ import ReefTable from "./ReefTable";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
 import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 
-const featuredReefId = "15";
+const featuredReefId = "127";
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();

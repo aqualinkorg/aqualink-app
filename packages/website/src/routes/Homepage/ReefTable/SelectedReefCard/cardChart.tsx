@@ -107,7 +107,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
         },
       }}
       height={100}
-      data={createChartData(chartLabels, bottomTemperatureData, 0, true, "")}
+      data={createChartData(chartLabels, bottomTemperatureData, 0, true)}
     />
   );
 };
