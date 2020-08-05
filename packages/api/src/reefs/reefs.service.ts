@@ -57,9 +57,9 @@ export class ReefsService {
     query.leftJoinAndSelect('reef.admin', 'admin');
     query.leftJoinAndSelect('reef.stream', 'stream');
     query.leftJoinAndSelect(
-      'reef.dailyData',
-      'dailyData',
-      `(dailyData.date, dailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
+      'reef.latestDailyData',
+      'latestDailyData',
+      `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
     );
     return query.getMany();
   }

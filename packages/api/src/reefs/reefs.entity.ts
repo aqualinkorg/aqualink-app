@@ -7,7 +7,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Region } from '../regions/regions.entity';
 import { User } from '../users/users.entity';
@@ -58,6 +58,6 @@ export class Reef {
   @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
   stream?: VideoStream;
 
-  @OneToMany(() => DailyData, (dailyData) => dailyData.reef)
-  dailyData?: DailyData[];
+  @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)
+  latestDailyData?: DailyData;
 }
