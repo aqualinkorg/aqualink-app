@@ -58,12 +58,14 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 
       // Add Sofar Tiles
       const layerControl = L.control.layers(undefined).addTo(map);
+      const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
+      const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
       sofarLayers.forEach((layer) => {
         mapServices.getModelTimes(layer.model).then(({ data }) => {
           const timestamp = data.outputTimes[0];
           layerControl.addOverlay(
             L.tileLayer(
-              `${process.env.REACT_APP_SOFAR_API_BASE_URL}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=383d59964809ca8c6438867e590f16&variableID=${layer.variableID}&timestamp=${timestamp}`,
+              `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}&timestamp=${timestamp}`,
               { opacity: 0.5 }
             ),
             layer.name
