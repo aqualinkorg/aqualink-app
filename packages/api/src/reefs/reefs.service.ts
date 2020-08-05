@@ -21,6 +21,14 @@ export class ReefsService {
     private dailyDataRepository: Repository<DailyData>,
   ) {}
 
+  latestDailyDataSubquery(): string {
+    const query = this.dailyDataRepository.createQueryBuilder('dailyData');
+    query.select('MAX(date)', 'date');
+    query.addSelect('reef_id');
+    query.groupBy('reef_id');
+    return query.getQuery();
+  }
+
   async create(createReefDto: CreateReefDto): Promise<Reef> {
     return this.reefsRepository.save(createReefDto);
   }
@@ -48,6 +56,11 @@ export class ReefsService {
     query.leftJoinAndSelect('reef.region', 'region');
     query.leftJoinAndSelect('reef.admin', 'admin');
     query.leftJoinAndSelect('reef.stream', 'stream');
+    query.leftJoinAndSelect(
+      'reef.dailyData',
+      'dailyData',
+      `(dailyData.date, dailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
+    );
     return query.getMany();
   }
 
