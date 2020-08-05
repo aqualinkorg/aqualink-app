@@ -105,7 +105,7 @@ async function getDailyData(reef: Reef, date: Date) {
   const meanPeriodWindWaves = (
     await getSofarDailyData(
       'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-meanPeriodWindWaves',
+      'NOAAOperationalWaveModel-peakPeriod',
       latitude,
       longitude,
       localTimezone,
