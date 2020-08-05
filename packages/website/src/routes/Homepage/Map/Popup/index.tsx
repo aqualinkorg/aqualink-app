@@ -27,7 +27,7 @@ const Popup = ({ reef, classes }: PopupProps) => (
       <Grid container item xs={12}>
         <Grid container justify="flex-start" item xs={6}>
           <Typography variant="caption" color="textSecondary">
-            TEMP AT 25M
+            {`TEMP AT ${reef.depth}M`}
           </Typography>
           <Typography
             style={{ color: colors.lightBlue }}

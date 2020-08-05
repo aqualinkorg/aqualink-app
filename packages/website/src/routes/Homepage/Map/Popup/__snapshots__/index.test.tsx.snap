@@ -31,7 +31,7 @@ exports[`renders as expected 1`] = `
           <span
             class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
           >
-            TEMP AT 25M
+            TEMP AT 0M
           </span>
           <h5
             class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"

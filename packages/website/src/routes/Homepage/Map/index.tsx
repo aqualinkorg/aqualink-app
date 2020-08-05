@@ -9,6 +9,7 @@ import {
   reefOnMapSelector,
   unsetReefOnMap,
 } from "../../../store/Homepage/homepageSlice";
+import mapServices from "../../../services/mapServices";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./Popup";
 
@@ -30,6 +31,10 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
 
+  const surfaceTemperatureModel = "HYCOM";
+  const surfaceTemperatureVariable = "seaSurfaceTemperature";
+  const surfaceTemperatureCmap = "turbo";
+
   useEffect(() => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
@@ -39,6 +44,17 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       const bounds = L.latLngBounds(southWest, northEast);
       map.setMaxBounds(bounds);
       map.flyTo(center, zoom, { duration: 1 });
+
+      // Get sea surface temperature tile
+      mapServices.getModelTimes(surfaceTemperatureModel).then(({ data }) => {
+        const timestamp = data.outputTimes[0];
+        const layer = {
+          "Sea Surface Temperature": L.tileLayer(
+            `${process.env.REACT_APP_SOFAR_API_BASE_URL}${surfaceTemperatureModel}/tile/{z}/{x}/{y}.png?colormap=${surfaceTemperatureCmap}&token=${process.env.REACT_APP_SOFAR_API_TOKEN}&variableID=${surfaceTemperatureVariable}&timestamp=${timestamp}`
+          ),
+        };
+        L.control.layers(undefined, layer).addTo(map);
+      });
     }
   }, [center, zoom, mapRef]);
 
