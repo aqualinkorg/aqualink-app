@@ -31,9 +31,20 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
 
-  const surfaceTemperatureModel = "HYCOM";
-  const surfaceTemperatureVariable = "seaSurfaceTemperature";
-  const surfaceTemperatureCmap = "turbo";
+  const sofarLayers = [
+    {
+      name: "Sea Surface Temperature",
+      model: "HYCOM",
+      variableID: "seaSurfaceTemperature",
+      cmap: "turbo",
+    },
+    {
+      name: "NOAA Degree Heating Week",
+      model: "NOAACoralReefWatch",
+      variableID: "degreeHeatingWeek",
+      cmap: "noaacoral",
+    },
+  ];
 
   useEffect(() => {
     const { current } = mapRef;
@@ -45,15 +56,19 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       map.setMaxBounds(bounds);
       map.flyTo(center, zoom, { duration: 1 });
 
-      // Get sea surface temperature tile
-      mapServices.getModelTimes(surfaceTemperatureModel).then(({ data }) => {
-        const timestamp = data.outputTimes[0];
-        const layer = {
-          "Sea Surface Temperature": L.tileLayer(
-            `${process.env.REACT_APP_SOFAR_API_BASE_URL}${surfaceTemperatureModel}/tile/{z}/{x}/{y}.png?colormap=${surfaceTemperatureCmap}&token=${process.env.REACT_APP_SOFAR_API_TOKEN}&variableID=${surfaceTemperatureVariable}&timestamp=${timestamp}`
-          ),
-        };
-        L.control.layers(undefined, layer).addTo(map);
+      // Add Sofar Tiles
+      const layerControl = L.control.layers(undefined).addTo(map);
+      sofarLayers.forEach((layer) => {
+        mapServices.getModelTimes(layer.model).then(({ data }) => {
+          const timestamp = data.outputTimes[0];
+          layerControl.addOverlay(
+            L.tileLayer(
+              `${process.env.REACT_APP_SOFAR_API_BASE_URL}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=383d59964809ca8c6438867e590f16&variableID=${layer.variableID}&timestamp=${timestamp}`,
+              { opacity: 0.5 }
+            ),
+            layer.name
+          );
+        });
       });
     }
   }, [center, zoom, mapRef]);
