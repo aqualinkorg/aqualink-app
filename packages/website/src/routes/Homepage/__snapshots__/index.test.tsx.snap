@@ -204,7 +204,32 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             </div>
             <div
               class="leaflet-top leaflet-right"
-            />
+            >
+              <div
+                aria-haspopup="true"
+                class="leaflet-control-layers leaflet-control"
+              >
+                <a
+                  class="leaflet-control-layers-toggle"
+                  href="#"
+                  title="Layers"
+                />
+                <section
+                  class="leaflet-control-layers-list"
+                >
+                  <div
+                    class="leaflet-control-layers-base"
+                  />
+                  <div
+                    class="leaflet-control-layers-separator"
+                    style="display: none;"
+                  />
+                  <div
+                    class="leaflet-control-layers-overlays"
+                  />
+                </section>
+              </div>
+            </div>
             <div
               class="leaflet-bottom leaflet-left"
             />
