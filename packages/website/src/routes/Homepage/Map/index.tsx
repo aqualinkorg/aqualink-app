@@ -31,21 +31,6 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [center, setCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
 
-  const sofarLayers = [
-    {
-      name: "Sea Surface Temperature",
-      model: "HYCOM",
-      variableID: "seaSurfaceTemperature",
-      cmap: "turbo",
-    },
-    {
-      name: "NOAA Degree Heating Week",
-      model: "NOAACoralReefWatch",
-      variableID: "degreeHeatingWeek",
-      cmap: "noaacoral",
-    },
-  ];
-
   useEffect(() => {
     const { current } = mapRef;
     if (current && current.leafletElement) {
@@ -58,6 +43,21 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 
       // Add Sofar Tiles
       const layerControl = L.control.layers(undefined).addTo(map);
+      const sofarLayers = [
+        {
+          name: "Sea Surface Temperature",
+          model: "HYCOM",
+          variableID: "seaSurfaceTemperature",
+          cmap: "turbo",
+        },
+        {
+          name: "NOAA Degree Heating Week",
+          model: "NOAACoralReefWatch",
+          variableID: "degreeHeatingWeek",
+          cmap: "noaacoral",
+        },
+      ];
+
       const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
       const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
       sofarLayers.forEach((layer) => {
