@@ -39,7 +39,10 @@ export class UsersService {
         `Email ${email} is already connected to a different firebaseUid.`,
       );
     }
-    const data = priorAccount || createUserDto;
+    const data = {
+      ...priorAccount,
+      ...createUserDto,
+    };
     const user = {
       ...data,
       firebaseUid,
