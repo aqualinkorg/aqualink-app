@@ -44,3 +44,7 @@ html, body { height: 100vh }
 .MuiAutocomplete-option {
   color: #168dbd;
 }
+
+.marker-icon {
+  background-color: transparent;
+}

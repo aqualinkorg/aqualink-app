@@ -20,7 +20,7 @@ const storeUser = (fullName: string, email: string, token?: string) =>
 const getSelf = (token?: string) =>
   requests.send<User>({
     method: "GET",
-    url: "users/self",
+    url: "users/current",
     token,
   });
 

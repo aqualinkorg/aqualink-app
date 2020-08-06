@@ -12,14 +12,14 @@ import {
 import mapServices from "../../../services/mapServices";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./Popup";
+import { coloredBuoy } from "./utils";
 
-import pin from "../../../assets/buoy.png";
-
-const pinIcon = L.icon({
-  iconUrl: pin,
+const pinIcon = L.divIcon({
   iconSize: [24, 24],
   iconAnchor: [8, 48],
   popupAnchor: [3, -48],
+  html: `${coloredBuoy("#80307e")}`,
+  className: "marker-icon",
 });
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
