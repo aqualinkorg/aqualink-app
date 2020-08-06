@@ -40,8 +40,15 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       const bounds = L.latLngBounds(southWest, northEast);
       map.setMaxBounds(bounds);
       map.flyTo(center, zoom, { duration: 1 });
+    }
+  }, [center, zoom, mapRef]);
 
-      // Add Sofar Tiles
+  // Add Sofar Tiles
+  useEffect(() => {
+    const { current } = mapRef;
+    if (current && current.leafletElement) {
+      const map = current.leafletElement;
+
       const layerControl = L.control.layers(undefined).addTo(map);
       const sofarLayers = [
         {
@@ -73,7 +80,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
         });
       });
     }
-  }, [center, zoom, mapRef]);
+  }, []);
 
   useEffect(() => {
     const markerCurrent = markerRef.current;
