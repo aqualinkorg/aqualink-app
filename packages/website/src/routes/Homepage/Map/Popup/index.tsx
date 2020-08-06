@@ -39,7 +39,10 @@ const Popup = ({ reef, classes }: PopupProps) => (
             variant="h5"
             color="textSecondary"
           >
-            {formatNumber(reef.latestDailyData.maxBottomTemperature, 1)} &#8451;
+            {reef.latestDailyData.maxBottomTemperature
+              ? `${formatNumber(reef.latestDailyData.maxBottomTemperature, 1)}`
+              : "- -"}{" "}
+            &#8451;
           </Typography>
         </Grid>
         <Grid container justify="flex-end" item xs={6}>
@@ -57,7 +60,7 @@ const Popup = ({ reef, classes }: PopupProps) => (
             variant="h5"
             color="textSecondary"
           >
-            {reef.latestDailyData.degreeHeatingDays}
+            {formatNumber(reef.latestDailyData.degreeHeatingDays, 1)}
           </Typography>
         </Grid>
       </Grid>

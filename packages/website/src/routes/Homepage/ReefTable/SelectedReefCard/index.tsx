@@ -25,9 +25,11 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const {
     maxBottomTemperature,
     surfaceTemperature,
+    satelliteTemperature,
     degreeHeatingDays,
   } = sortByDate[dailyDataLen - 1];
 
+  const surfTemp = surfaceTemperature || satelliteTemperature;
   return (
     <div className={classes.root}>
       <Typography
@@ -105,9 +107,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {surfaceTemperature
-                    ? `${formatNumber(surfaceTemperature, 1)} \u2103`
-                    : "- -"}
+                  {surfTemp ? `${formatNumber(surfTemp, 1)} \u2103` : "- -"}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
