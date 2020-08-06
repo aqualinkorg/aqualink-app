@@ -1,3 +1,4 @@
+import { GeoJSON } from 'geojson';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -21,21 +22,26 @@ export class User {
 
   @Exclude()
   @Column({ nullable: true })
-  firebaseUid: string;
+  firebaseUid?: string;
 
   @Column({ nullable: true })
-  fullName: string;
+  fullName?: string;
 
   @Column()
   @Index({ unique: true })
   email: string;
 
   @Column({ nullable: true })
-  organization: string;
+  organization?: string;
 
-  @Column({ type: 'point', nullable: true })
+  @Column({
+    type: 'geometry',
+    spatialFeatureType: 'Point',
+    nullable: true,
+    srid: 4326,
+  })
   @Index({ spatial: true })
-  location?: string;
+  location?: GeoJSON;
 
   @Column({ nullable: true })
   country?: string;
