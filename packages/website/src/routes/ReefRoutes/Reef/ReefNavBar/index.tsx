@@ -23,7 +23,7 @@ const ReefNavBar = ({
   <AppBar className={classes.appBar} position="static">
     <Toolbar>
       <Grid item container justify="space-between" alignItems="center" xs={12}>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <Grid alignItems="center" direction="row" container spacing={1}>
             <Grid item>
               <Link style={{ color: "inherit" }} to="/reefs">
@@ -33,7 +33,7 @@ const ReefNavBar = ({
               </Link>
             </Grid>
             {reefName && lastSurvey && (
-              <Grid item xs={11} direction="column" container>
+              <Grid item xs={7} direction="column" container>
                 <Grid item>
                   <Typography variant="h4">{reefName}</Typography>
                 </Grid>
@@ -44,7 +44,7 @@ const ReefNavBar = ({
             )}
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           {managerName && (
             <Grid container justify="flex-end" alignItems="center" spacing={2}>
               <Grid item>

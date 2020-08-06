@@ -1,9 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
+import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
 import { GlobalValidationPipe } from './validations/global-validation.pipe';
 
+const serviceAccount = require('../firebase');
+
 async function bootstrap() {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useGlobalPipes(

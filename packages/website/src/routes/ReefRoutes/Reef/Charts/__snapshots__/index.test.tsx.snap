@@ -28,7 +28,7 @@ exports[`renders as expected 1`] = `
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-9"
+    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9"
   >
     <div
       class="Charts-root-1"

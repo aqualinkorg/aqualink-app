@@ -9,9 +9,15 @@ const plugin = {
     );
     const { ctx, chartArea } = chart;
     const chartHeight = chartArea.bottom - chartArea.top;
+    const chartWidth = chartArea.right - chartArea.left;
     const day = 24;
     ctx.save();
     ctx.fillStyle = options.color;
+    if (options.xTicksFontWeight) {
+      // eslint-disable-next-line no-param-reassign
+      chart.scales["x-axis-0"].options.ticks.fontSize =
+        (chartWidth * options.xTicksFontWeight) / 100;
+    }
     for (let i = 0; i < ticksPositions.length; i += 2 * day) {
       const start = ticksPositions[i];
       const end = ticksPositions[i + day];

@@ -4,6 +4,8 @@ import { configService } from './config/config.service';
 import { ReefApplicationsModule } from './reef-applications/reef-applications.module';
 import { ReefsModule } from './reefs/reefs.module';
 import { RegionsModule } from './regions/regions.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { RegionsModule } from './regions/regions.module';
     ReefsModule,
     RegionsModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

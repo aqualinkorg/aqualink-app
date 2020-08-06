@@ -6,7 +6,7 @@ import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 import { Reef, Position } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
-const marker = require("../../../../assets/marker.png");
+import marker from "../../../../assets/marker.png";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -44,7 +44,12 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   }, [mapRef, polygon]);
 
   return (
-    <Map ref={mapRef} dragging={false} className={classes.map}>
+    <Map
+      ref={mapRef}
+      dragging={false}
+      scrollWheelZoom={false}
+      className={classes.map}
+    >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {polygon.type === "Polygon" ? (
         <Polygon positions={reverseCoords(...polygon.coordinates)} />

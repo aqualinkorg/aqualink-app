@@ -54,6 +54,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface ReefsListProps extends WithStyles<typeof styles> {}
+type ReefsListProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(ReefsList);
