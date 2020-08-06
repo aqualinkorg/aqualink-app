@@ -38,7 +38,8 @@ exports[`renders as expected 1`] = `
             style="color: rgb(22, 141, 189);"
           >
             10.0
-             ℃
+             
+            ℃
           </h5>
         </div>
         <div
@@ -53,7 +54,7 @@ exports[`renders as expected 1`] = `
             class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
             style="color: rgb(8, 91, 163);"
           >
-            10
+            10.0
           </h5>
         </div>
       </div>
