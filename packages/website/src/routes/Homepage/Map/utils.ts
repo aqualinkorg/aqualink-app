@@ -2,7 +2,7 @@ export const coloredBuoy = (color: string) =>
   `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="100%" height="100%" viewBox="0 0 32 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <title>69379530-2B49-4321-8056-E32BA8116E48</title>
-      <g id="Page-1" stroke="${color}" stroke-width="2" fill="none" fill-rule="evenodd">
+      <g id="Page-1" stroke="${color}" stroke-width="3" fill="none" fill-rule="evenodd">
           <g id="Reef-Detail-full---no-live-feed-Copy-2" transform="translate(-654.000000, -873.000000)">
               <g id="iconsensor" transform="translate(655.000000, 873.000000)">
                   <polygon id="Fill-1" fill="#FFFFFF" points="21.9741995 3.24837284 17.8485497 3.24837284 17.8485497 4.00788128 12.78516 4.00788128 12.78516 3.24837284 8.40608754 3.24837284 7.34201621 4.89397447 23.038524 4.89397447"></polygon>

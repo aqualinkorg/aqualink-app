@@ -65,7 +65,7 @@ exports[`renders as expected 1`] = `
               <span
                 class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
               >
-                TEMP AT 25M
+                TEMP AT 0M
               </span>
               <h4
                 class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"

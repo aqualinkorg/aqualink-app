@@ -15,6 +15,11 @@ import { Link } from "react-router-dom";
 
 import { Reef } from "../../../../store/Reefs/types";
 import { colors } from "../../../../layout/App/theme";
+import { formatNumber } from "../../../../helpers/numberUtils";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../../helpers/degreeHeatingWeeks";
 
 const Popup = ({ reef, classes }: PopupProps) => (
   <Card>
@@ -34,7 +39,7 @@ const Popup = ({ reef, classes }: PopupProps) => (
             variant="h5"
             color="textSecondary"
           >
-            31.8 &#8451;
+            {formatNumber(reef.latestDailyData.maxBottomTemperature, 1)} &#8451;
           </Typography>
         </Grid>
         <Grid container justify="flex-end" item xs={6}>
@@ -42,11 +47,17 @@ const Popup = ({ reef, classes }: PopupProps) => (
             DEG. HEAT. DAYS
           </Typography>
           <Typography
-            style={{ color: "purple" }}
+            style={{
+              color: `${colorFinder(
+                degreeHeatingWeeksCalculator(
+                  reef.latestDailyData.degreeHeatingDays
+                )
+              )}`,
+            }}
             variant="h5"
             color="textSecondary"
           >
-            58
+            {reef.latestDailyData.degreeHeatingDays}
           </Typography>
         </Grid>
       </Grid>

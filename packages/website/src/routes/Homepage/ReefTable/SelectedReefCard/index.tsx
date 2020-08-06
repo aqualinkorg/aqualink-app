@@ -84,7 +84,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
             >
               <Grid item xs={12}>
                 <Typography variant="caption" color="textSecondary">
-                  TEMP AT 25M
+                  {`TEMP AT ${reef.depth}M`}
                 </Typography>
                 <Typography
                   className={classes.cardMetrics}

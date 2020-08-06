@@ -24,6 +24,10 @@ describe("ReefTable", () => {
       region: null,
       admin: null,
       stream: null,
+      latestDailyData: {
+        maxBottomTemperature: 10,
+        degreeHeatingDays: 20,
+      },
     };
     const store = mockStore({
       reefsList: {

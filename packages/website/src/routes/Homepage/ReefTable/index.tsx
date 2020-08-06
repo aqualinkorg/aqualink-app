@@ -10,10 +10,11 @@ import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { colors } from "../../../layout/App/theme";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 interface Row {
   locationName: string | null;
-  temp: number | null;
+  temp?: string | 0;
   depth: number | null;
   dhd: number | null;
   alert: string | null;
@@ -119,9 +120,9 @@ const ReefTable = () => {
   const tableData: Row[] = Object.entries(reefsList).map(([key, value]) => {
     return {
       locationName: value.name,
-      temp: 28.6,
+      temp: formatNumber(value.latestDailyData.maxBottomTemperature, 1),
       depth: value.depth,
-      dhd: 14,
+      dhd: value.latestDailyData.degreeHeatingDays,
       alert: "warning",
       tableData: {
         id: parseFloat(key),

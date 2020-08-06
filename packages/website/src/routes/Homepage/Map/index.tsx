@@ -13,14 +13,18 @@ import mapServices from "../../../services/mapServices";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./Popup";
 import { coloredBuoy } from "./utils";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../helpers/degreeHeatingWeeks";
 
-const pinIcon = L.divIcon({
-  iconSize: [24, 24],
-  iconAnchor: [8, 48],
-  popupAnchor: [3, -48],
-  html: `${coloredBuoy("#80307e")}`,
-  className: "marker-icon",
-});
+// const pinIcon = L.divIcon({
+//   iconSize: [24, 24],
+//   iconAnchor: [8, 48],
+//   popupAnchor: [3, -48],
+//   html: `${coloredBuoy("#80307e")}`,
+//   className: "marker-icon",
+// });
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const mapRef = useRef<Map>(null);
@@ -116,7 +120,19 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       {reefOnMap && reefOnMap.polygon.type === "Point" && (
         <Marker
           ref={markerRef}
-          icon={pinIcon}
+          icon={L.divIcon({
+            iconSize: [24, 24],
+            iconAnchor: [8, 48],
+            popupAnchor: [3, -48],
+            html: `${coloredBuoy(
+              colorFinder(
+                degreeHeatingWeeksCalculator(
+                  reefOnMap.latestDailyData.degreeHeatingDays
+                )
+              )
+            )}`,
+            className: "marker-icon",
+          })}
           position={[
             reefOnMap.polygon.coordinates[1],
             reefOnMap.polygon.coordinates[0],
@@ -131,6 +147,10 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
         reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
+            const { degreeHeatingDays } = reef.latestDailyData;
+            const color = colorFinder(
+              degreeHeatingWeeksCalculator(degreeHeatingDays)
+            );
             return (
               <Marker
                 onClick={() => {
@@ -139,7 +159,13 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
                   dispatch(unsetReefOnMap());
                 }}
                 key={reef.id}
-                icon={pinIcon}
+                icon={L.divIcon({
+                  iconSize: [24, 24],
+                  iconAnchor: [8, 48],
+                  popupAnchor: [3, -48],
+                  html: `${coloredBuoy(color)}`,
+                  className: "marker-icon",
+                })}
                 position={[
                   reef.polygon.coordinates[1],
                   reef.polygon.coordinates[0],

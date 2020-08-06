@@ -15,12 +15,13 @@ import type { Data } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import satellite from "../../../../assets/satellite.svg";
+import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
 const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
   const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
 
-  const degreeHeatingWeeks = Math.round((degreeHeatingDays / 7) * 10) / 10;
+  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
   return (
     <Card className={classes.card}>
