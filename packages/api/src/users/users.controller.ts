@@ -25,16 +25,16 @@ export class UsersController {
   }
 
   @Auth()
-  @Get('self')
+  @Get('current')
   getSelf(@Req() req: AuthRequest): Promise<User | undefined> {
     return this.usersService.getSelf(req);
   }
 
   @Auth(AdminLevel.SuperAdmin)
-  @Put(':id/level/:level')
+  @Put(':id/level')
   setAdminLevel(
     @Param('id', ParseIntPipe) id: number,
-    @Param('level') adminLevel: AdminLevel,
+    @Body('level') adminLevel: AdminLevel,
   ): Promise<void> {
     return this.usersService.setAdminLevel(id, adminLevel);
   }
