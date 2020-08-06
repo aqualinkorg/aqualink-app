@@ -1,15 +1,17 @@
 import axios from "axios";
 import moment from "moment";
 
-const getModelTimes = (modelName: string) =>
-  axios({
+const getModelTimes = (modelName: string) => {
+  const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
+  const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
+  return axios({
     method: "GET",
-    url: `${
-      process.env.REACT_APP_SOFAR_API_BASE_URL
-    }${modelName}/outputTimes?token=${
-      process.env.REACT_APP_SOFAR_API_TOKEN
-    }&closest=${moment.utc().startOf("hour").toISOString()}`,
+    url: `${sofarUrl}${modelName}/outputTimes?token=${token}&closest=${moment
+      .utc()
+      .startOf("hour")
+      .toISOString()}`,
   });
+};
 
 export default {
   getModelTimes,
