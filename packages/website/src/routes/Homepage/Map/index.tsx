@@ -18,14 +18,6 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
 
-// const pinIcon = L.divIcon({
-//   iconSize: [24, 24],
-//   iconAnchor: [8, 48],
-//   popupAnchor: [3, -48],
-//   html: `${coloredBuoy("#80307e")}`,
-//   className: "marker-icon",
-// });
-
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
