@@ -7,9 +7,12 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 import { Region } from '../regions/regions.entity';
 import { User } from '../users/users.entity';
+// eslint-disable-next-line import/no-cycle
+import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
 
 @Entity()
@@ -54,4 +57,7 @@ export class Reef {
 
   @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
   stream?: VideoStream;
+
+  @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)
+  latestDailyData?: DailyData;
 }
