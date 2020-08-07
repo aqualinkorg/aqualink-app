@@ -16,6 +16,7 @@ import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import wind from "../../../../assets/wind.svg";
 import clouds from "../../../../assets/clouds.svg";
+import clouds2 from "../../../../assets/clouds2.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 
 const Wind = ({ dailyData, classes }: WindProps) => {
@@ -105,7 +106,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
             </Grid>
           </Grid>
           <Grid container justify="flex-start" item xs={7}>
-            <img alt="clouds" src={clouds} />
+            <img alt="clouds" src={clouds2} />
           </Grid>
         </Grid>
       </CardContent>
