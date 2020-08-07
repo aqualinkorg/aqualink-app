@@ -97,7 +97,7 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
           >
             <h6
               class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"

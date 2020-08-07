@@ -103,7 +103,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={5}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"

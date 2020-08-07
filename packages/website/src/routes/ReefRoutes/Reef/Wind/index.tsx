@@ -51,7 +51,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           <Grid container justify="flex-end" item xs={9}>
             <img alt="clouds" src={clouds} />
           </Grid>
-          <Grid container justify="flex-start" item xs={9}>
+          <Grid container justify="flex-start" item xs={10}>
             <Grid item xs={5}>
               <Typography
                 className={classes.contentTitles}
@@ -78,7 +78,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
