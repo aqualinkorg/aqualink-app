@@ -1,7 +1,6 @@
 export const coloredBuoy = (color: string) =>
   `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="34px" height="40px" viewBox="0 0 29 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <title>icon_buoy</title>
       <defs>
           <path d="M10.0023993,-6.25277607e-13 C17.4094117,-6.25277607e-13 22.207967,7.82436546 18.9739831,14.3966715 C17.4094871,17.7347423 12.1924976,22.7424773 10.0023993,25.1417547 C7.70723368,22.5332976 2.80456638,17.9439217 1.13490246,14.5007584 C-2.30725517,8.03253919 2.49117441,-6.25277607e-13 10.0023993,-6.25277607e-13 Z" id="path-1"></path>
           <filter x="-35.0%" y="-19.9%" width="170.0%" height="155.7%" filterUnits="objectBoundingBox" id="filter-2">
