@@ -77,7 +77,7 @@ exports[`renders as expected 1`] = `
               <img
                 alt="arrow"
                 class="Wind-arrow-8"
-                src="arrow.svg"
+                src="directioncircle.svg"
                 style="transform: rotate(96deg);"
               />
               <h3

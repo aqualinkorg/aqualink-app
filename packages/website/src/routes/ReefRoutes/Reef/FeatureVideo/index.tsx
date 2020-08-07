@@ -10,11 +10,11 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
-import BackupOutlinedIcon from "@material-ui/icons/BackupOutlined";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReactPlayer from "react-player";
 
 import reefImage from "../../../../assets/reef-image.jpg";
+import uploadIcon from "../../../../assets/icon_upload.svg";
 
 const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
   return (
@@ -41,7 +41,7 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
               </Grid>
               <Grid container justify="center" item xs={12}>
                 <IconButton>
-                  <BackupOutlinedIcon className={classes.uploadIcon} />
+                  <img src={uploadIcon} alt="upload" />
                 </IconButton>
               </Grid>
             </Grid>
@@ -89,11 +89,6 @@ const styles = (theme: Theme) => {
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: "blur(2px)",
-    },
-    uploadIcon: {
-      opacity: 0.5,
-      color: theme.palette.primary.light,
-      fontSize: "2.5rem",
     },
     playIconWrapper: {
       position: "absolute",

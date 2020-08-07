@@ -4,7 +4,7 @@ import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
 import { GlobalValidationPipe } from './validations/global-validation.pipe';
 
-const serviceAccount = require('../firebase');
+const serviceAccount = require('../firebase.ts');
 
 async function bootstrap() {
   admin.initializeApp({

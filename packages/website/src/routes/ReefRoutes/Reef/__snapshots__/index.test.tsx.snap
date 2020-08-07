@@ -667,7 +667,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <img
                         alt="arrow"
                         class="Wind-arrow-119"
-                        src="arrow.svg"
+                        src="directioncircle.svg"
                         style="transform: rotate(180deg);"
                       />
                       <h3
@@ -805,7 +805,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         <img
                           alt="arrow"
                           class="Waves-arrow-127"
-                          src="arrow.svg"
+                          src="directioncircle.svg"
                           style="transform: rotate(180deg);"
                         />
                         <h3

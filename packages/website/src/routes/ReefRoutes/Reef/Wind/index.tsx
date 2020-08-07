@@ -15,7 +15,7 @@ import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import wind from "../../../../assets/wind.svg";
 import clouds from "../../../../assets/clouds.svg";
-import arrow from "../../../../assets/arrow.svg";
+import arrow from "../../../../assets/directioncircle.svg";
 
 const Wind = ({ dailyData, classes }: WindProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
