@@ -1,4 +1,5 @@
 # Aqualink - API
+
 The primary purpose of the API is to serve Aqualink data to the website. In thre future, we will also thrive to make the API open and avilable for developers.
 
 ### Installation
@@ -8,6 +9,7 @@ $ yarn install
 ```
 
 ### Settings
+
 The database connection must be configured before you can run the app. Configuration is sourced from environment
 variables. You can either specify a Postgres connection URL using `DATABASE_URL`, or individual options:
 
@@ -63,4 +65,24 @@ $ yarn test:e2e
 
 # test coverage
 $ yarn test:cov
+```
+
+### Daily Updates
+
+We run daily updates using Firebase Cloud Functions.
+
+#### Prerequisite
+
+Before running daily updates for the first time, you will need to augment your reef table with timezone and maximum monthly mean temperature. To do so, you can simply use the convenience script `yarn augment-reefs`.
+
+In addition, you will need to set the environment variables in Firebase:
+
+```
+export $(grep -v '^#' .env.staging | xargs) && firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
+```
+
+#### Deploy
+
+```
+yarn deploy:cloud-functions
 ```
