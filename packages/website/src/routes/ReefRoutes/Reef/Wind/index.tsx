@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -26,22 +27,31 @@ const Wind = ({ dailyData, classes }: WindProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="flex-end">
+          <Grid container justify="flex-start">
             <Grid item xs={2}>
               <img alt="wind" src={wind} />
+            </Grid>
+            <Grid item xs={8}>
+              <Typography className={classes.cardTitle} variant="h6">
+                WIND
+              </Typography>
             </Grid>
           </Grid>
         }
       />
       <CardContent className={classes.contentWrapper}>
         <Grid
-          className={classes.content}
           style={{ height: "100%" }}
           container
-          justify="space-between"
+          justify="center"
+          item
+          xs={12}
         >
-          <Grid container item xs={6}>
-            <Grid item xs={12}>
+          <Grid container justify="flex-end" item xs={9}>
+            <img alt="clouds" src={clouds} />
+          </Grid>
+          <Grid container justify="flex-start" item xs={9}>
+            <Grid item xs={5}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
@@ -52,7 +62,6 @@ const Wind = ({ dailyData, classes }: WindProps) => {
               <Grid container alignItems="baseline">
                 <Typography
                   className={classes.contentValues}
-                  style={{ fontSize: 42, marginRight: "0.25rem" }}
                   color="textSecondary"
                 >
                   {maxWindSpeed ? `${formatNumber(maxWindSpeed, 1)}` : "- -"}
@@ -68,7 +77,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={5}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
@@ -95,7 +104,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={5} alignItems="flex-end">
+          <Grid container justify="flex-start" item xs={7}>
             <img alt="clouds" src={clouds} />
           </Grid>
         </Grid>
@@ -104,7 +113,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     card: {
       height: "100%",
@@ -113,9 +122,19 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
     },
+    cardTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      margin: "0 0 0.5rem 1rem",
+      color: theme.palette.primary.main,
+    },
     header: {
       flex: "0 1 auto",
-      padding: "1rem 0 0 0",
+      paddingLeft: "2rem",
+      paddingBottom: 0,
     },
     contentWrapper: {
       flex: "1 1 auto",
@@ -132,6 +151,8 @@ const styles = () =>
       letterSpacing: "normal",
     },
     contentValues: {
+      fontSize: 42,
+      marginRight: "0.25rem",
       fontWeight: 300,
       fontStretch: "normal",
       fontStyle: "normal",

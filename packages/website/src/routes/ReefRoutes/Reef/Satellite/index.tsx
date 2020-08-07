@@ -28,8 +28,13 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="flex-end">
-            <Grid item xs={2}>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item xs={8}>
+              <Typography className={classes.cardTitle} variant="h6">
+                SATELLITE OBSERVATION
+              </Typography>
+            </Grid>
+            <Grid item xs={1}>
               <img alt="satellite" src={satellite} />
             </Grid>
           </Grid>
@@ -120,16 +125,24 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
     },
+    cardTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      margin: "0 0 0.5rem 1rem",
+    },
     header: {
       flex: "0 1 auto",
-      padding: "0.5rem 0 0 0",
+      padding: "0.5rem 1.5rem 0 1rem",
     },
     content: {
       flex: "1 1 auto",
       padding: 0,
     },
     contentText: {
-      padding: "0 2rem 0 2rem",
+      padding: "2rem 3rem 0 3rem",
     },
     contentTextTitles: {
       fontWeight: "normal",

@@ -22,21 +22,12 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between">
-            {!sensorExists && (
-              <Grid
-                className={classes.noSensorAlert}
-                container
-                alignItems="center"
-                justify="center"
-                item
-                xs={7}
-              >
-                <Typography variant="subtitle1" color="textPrimary">
-                  Not Installed Yet
-                </Typography>
-              </Grid>
-            )}
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item xs={8}>
+              <Typography className={classes.cardTitle} variant="h6">
+                SENSOR OBSERVATION
+              </Typography>
+            </Grid>
             <Grid item xs={1}>
               <img alt="buoy" src={buoy} />
             </Grid>
@@ -50,6 +41,22 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           alignItems="center"
           justify="space-between"
         >
+          {!sensorExists && (
+            <Grid item xs={12}>
+              <Grid
+                className={classes.noSensorAlert}
+                container
+                alignItems="center"
+                justify="center"
+                item
+                xs={6}
+              >
+                <Typography variant="subtitle1" color="textPrimary">
+                  Not Installed Yet
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
           <Grid container direction="column" spacing={3} item xs={6}>
             <Grid item>
               <Typography
@@ -102,16 +109,26 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
     },
+    cardTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      margin: "0 0 0.5rem 1rem",
+    },
     header: {
       flex: "0 1 auto",
+      paddingBottom: 0,
     },
     content: {
       flex: "1 1 auto",
-      padding: "0 1rem 1rem 2.5rem",
+      padding: "0 1rem 1rem 2rem",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
       borderRadius: 4,
+      height: "2rem",
     },
     contentTitles: {
       fontWeight: "normal",
@@ -119,6 +136,7 @@ const styles = () =>
       fontStyle: "normal",
       lineHeight: 1.33,
       letterSpacing: "normal",
+      paddingLeft: "1rem",
     },
     contentValues: {
       fontWeight: 300,
@@ -126,6 +144,7 @@ const styles = () =>
       fontStyle: "normal",
       lineHeight: "normal",
       letterSpacing: "normal",
+      paddingLeft: "1rem",
     },
   });
 

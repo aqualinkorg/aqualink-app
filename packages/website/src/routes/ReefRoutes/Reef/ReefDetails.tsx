@@ -38,7 +38,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           LONG: {lng}
         </Typography>
       </Grid>
-      <Grid container justify="space-around" item xs={11} spacing={2}>
+      <Grid container justify="space-between" item xs={11} spacing={4}>
         <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
@@ -50,35 +50,23 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           </div>
         </Grid>
       </Grid>
-      <Grid container justify="space-around" item xs={11} spacing={2}>
+      <Grid container justify="space-between" item xs={11} spacing={4}>
         <Grid item xs={6} md={3}>
-          <Typography className={classes.cardTitles} variant="h6">
-            SATELLITE OBSERVATION
-          </Typography>
           <div className={classes.smallContainer}>
             <Satellite dailyData={reef.dailyData} />
           </div>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Typography className={classes.cardTitles} variant="h6">
-            SENSOR OBSERVATION
-          </Typography>
           <div className={classes.smallContainer}>
             <Sensor reef={reef} />
           </div>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Typography className={classes.cardTitles} variant="h6">
-            WIND
-          </Typography>
           <div className={classes.smallContainer}>
             <Wind dailyData={reef.dailyData} />
           </div>
         </Grid>
         <Grid item xs={6} md={3}>
-          <Typography className={classes.cardTitles} variant="h6">
-            WAVES
-          </Typography>
           <div className={classes.smallContainer}>
             <Waves dailyData={reef.dailyData} />
           </div>

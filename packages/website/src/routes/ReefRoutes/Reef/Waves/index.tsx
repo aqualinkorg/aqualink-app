@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -26,9 +27,14 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="flex-end">
+          <Grid container justify="flex-start">
             <Grid item xs={2}>
               <img alt="waves" src={waves} />
+            </Grid>
+            <Grid item xs={8}>
+              <Typography className={classes.cardTitle} variant="h6">
+                WAVES
+              </Typography>
             </Grid>
           </Grid>
         }
@@ -38,10 +44,12 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
           className={classes.content}
           style={{ height: "100%" }}
           container
-          justify="space-between"
+          justify="center"
+          item
+          xs={12}
         >
-          <Grid container item xs={12} spacing={4}>
-            <Grid item xs={12}>
+          <Grid item xs={12} container justify="space-around">
+            <Grid item xs={3}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
@@ -52,7 +60,6 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               <Grid container alignItems="baseline">
                 <Typography
                   className={classes.contentValues}
-                  style={{ fontSize: 42, marginRight: "0.25rem" }}
                   color="textSecondary"
                 >
                   {maxWaveHeight ? `${formatNumber(maxWaveHeight, 1)}` : "- -"}
@@ -69,64 +76,60 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid container item xs={12}>
-              <Grid item xs={4}>
+            <Grid item xs={3}>
+              <Typography
+                className={classes.contentTitles}
+                color="textSecondary"
+                variant="subtitle2"
+              >
+                PERIOD
+              </Typography>
+              <Grid container alignItems="baseline">
                 <Typography
-                  className={classes.contentTitles}
+                  className={classes.contentValues}
                   color="textSecondary"
-                  variant="subtitle2"
                 >
-                  PERIOD
+                  {wavePeriod || "- -"}
                 </Typography>
-                <Grid container alignItems="baseline">
+                {wavePeriod && (
                   <Typography
-                    className={classes.contentValues}
+                    style={{ fontWeight: "normal" }}
+                    className={classes.contentUnits}
                     color="textSecondary"
-                    variant="h3"
+                    variant="h6"
                   >
-                    {wavePeriod || "- -"}
+                    S
                   </Typography>
-                  {wavePeriod && (
-                    <Typography
-                      style={{ fontWeight: "normal" }}
-                      className={classes.contentUnits}
-                      color="textSecondary"
-                      variant="h6"
-                    >
-                      S
-                    </Typography>
-                  )}
-                </Grid>
+                )}
               </Grid>
-              <Grid item xs={8}>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography
+                className={classes.contentTitles}
+                color="textSecondary"
+                variant="subtitle2"
+              >
+                DIRECTION
+              </Typography>
+              <Grid container alignItems="baseline">
+                {waveDirection && (
+                  <img
+                    style={{ transform: `rotate(${waveDirection}deg)` }}
+                    className={classes.arrow}
+                    alt="arrow"
+                    src={arrow}
+                  />
+                )}
                 <Typography
-                  className={classes.contentTitles}
+                  className={classes.contentValues}
                   color="textSecondary"
-                  variant="subtitle2"
                 >
-                  DIRECTION
+                  {waveDirection ? `${waveDirection}\u00B0` : "- -"}
                 </Typography>
-                <Grid container alignItems="baseline">
-                  {waveDirection && (
-                    <img
-                      style={{ transform: `rotate(${waveDirection}deg)` }}
-                      className={classes.arrow}
-                      alt="arrow"
-                      src={arrow}
-                    />
-                  )}
-                  <Typography
-                    className={classes.contentValues}
-                    color="textSecondary"
-                    variant="h3"
-                  >
-                    {waveDirection ? `${waveDirection}\u00B0` : "- -"}
-                  </Typography>
-                </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12} alignItems="flex-end" justify="center">
+          <Grid container justify="center" item xs={12}>
             <img alt="wave" src={wave} />
           </Grid>
         </Grid>
@@ -135,7 +138,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     card: {
       height: "100%",
@@ -146,14 +149,24 @@ const styles = () =>
     },
     header: {
       flex: "0 1 auto",
-      padding: "1rem 0 0 0",
+      paddingLeft: "2rem",
+      paddingBottom: 0,
+    },
+    cardTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.5,
+      letterSpacing: "normal",
+      margin: "0 0 0.5rem 1rem",
+      color: theme.palette.primary.main,
     },
     contentWrapper: {
       flex: "1 1 auto",
       padding: 0,
     },
     content: {
-      padding: "0 2rem 2rem 2rem",
+      padding: "5rem 1rem 1rem 1rem",
     },
     contentTitles: {
       fontWeight: "normal",
@@ -163,6 +176,8 @@ const styles = () =>
       letterSpacing: "normal",
     },
     contentValues: {
+      fontSize: 42,
+      marginRight: "0.25rem",
       fontWeight: 300,
       fontStretch: "normal",
       fontStyle: "normal",
