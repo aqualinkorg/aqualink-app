@@ -706,7 +706,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 >
                   <img
                     alt="clouds"
-                    src="clouds.svg"
+                    src="clouds2.svg"
                   />
                 </div>
               </div>

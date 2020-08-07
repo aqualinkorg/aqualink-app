@@ -109,7 +109,7 @@ exports[`renders as expected 1`] = `
         >
           <img
             alt="clouds"
-            src="clouds.svg"
+            src="clouds2.svg"
           />
         </div>
       </div>
