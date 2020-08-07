@@ -11,6 +11,10 @@ import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { colors } from "../../../layout/App/theme";
 import { formatNumber } from "../../../helpers/numberUtils";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../helpers/degreeHeatingWeeks";
 
 interface Row {
   locationName: string | null;
@@ -92,9 +96,13 @@ const ReefTable = () => {
       cellStyle,
       render: (rowData) => (
         <Typography
-          style={{ paddingLeft: "2rem" }}
+          style={{
+            paddingLeft: "2rem",
+            color: rowData.dhd
+              ? `${colorFinder(degreeHeatingWeeksCalculator(rowData.dhd))}`
+              : "black",
+          }}
           variant="subtitle1"
-          color="textSecondary"
         >
           {rowData.dhd && formatNumber(rowData.dhd, 1)}
         </Typography>

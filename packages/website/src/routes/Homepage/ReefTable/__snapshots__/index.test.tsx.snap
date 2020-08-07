@@ -258,8 +258,8 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                       value="20"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
-                        style="padding-left: 2rem;"
+                        class="MuiTypography-root MuiTypography-subtitle1"
+                        style="padding-left: 2rem; color: rgb(12, 157, 165);"
                       >
                         20.0
                       </h6>
