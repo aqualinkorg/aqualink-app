@@ -22,7 +22,7 @@ test("renders as expected", () => {
       coordinates: [0, 0],
       type: "Point",
     },
-    temperatureThreshold: 0,
+    maxMonthlyMean: 0,
     depth: 0,
     status: 0,
     videoStream: null,

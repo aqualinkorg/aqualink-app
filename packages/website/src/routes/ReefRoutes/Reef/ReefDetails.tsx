@@ -77,7 +77,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           dailyData={reef.dailyData}
           depth={reef.depth}
           // TODO - Remove default
-          temperatureThreshold={reef.temperatureThreshold || 20}
+          temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
         />
       </Grid>
     </Grid>

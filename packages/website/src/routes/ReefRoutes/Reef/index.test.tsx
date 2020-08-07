@@ -24,7 +24,7 @@ describe("Reef Detail Page", () => {
         type: "Polygon",
         coordinates: [[[0, 0]]],
       },
-      temperatureThreshold: 22,
+      maxMonthlyMean: 22,
       depth: 4,
       status: 1,
       region: "Hawaii",

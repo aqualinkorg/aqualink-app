@@ -72,7 +72,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                 </Typography>
                 <CardChart
                   dailyData={reef.dailyData}
-                  temperatureThreshold={reef.temperatureThreshold || 22}
+                  temperatureThreshold={(reef.maxMonthlyMean || 22) + 1}
                 />
               </Grid>
             </Grid>
