@@ -54,10 +54,10 @@ exports[`renders as expected 1`] = `
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-10"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <h6
               class="MuiTypography-root Wind-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"

@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -116,7 +117,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     card: {
       height: "100%",
@@ -157,6 +158,9 @@ const styles = () =>
       fontStyle: "normal",
       lineHeight: "normal",
       letterSpacing: "normal",
+      [theme.breakpoints.between("md", "lg")]: {
+        fontSize: 32,
+      },
     },
   });
 

@@ -51,8 +51,8 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           <Grid container justify="flex-end" item xs={9}>
             <img alt="clouds" src={clouds} />
           </Grid>
-          <Grid container justify="flex-start" item xs={10}>
-            <Grid item xs={5}>
+          <Grid container justify="center" item xs={10}>
+            <Grid item xs={6}>
               <Typography
                 className={classes.contentTitles}
                 color="textSecondary"
@@ -153,6 +153,9 @@ const styles = (theme: Theme) =>
     },
     contentValues: {
       fontSize: 42,
+      [theme.breakpoints.between("md", "lg")]: {
+        fontSize: 32,
+      },
       marginRight: "0.25rem",
       fontWeight: 300,
       fontStretch: "normal",
@@ -166,11 +169,17 @@ const styles = (theme: Theme) =>
       fontStyle: "normal",
       lineHeight: "normal",
       letterSpacing: "normal",
+      [theme.breakpoints.between("md", "lg")]: {
+        fontSize: 12,
+      },
     },
     arrow: {
-      width: 23,
-      height: 23,
-      marginRight: "0.5rem",
+      width: 20,
+      height: 20,
+      [theme.breakpoints.between("md", "lg")]: {
+        width: 14,
+        height: 14,
+      },
     },
   });
 

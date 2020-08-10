@@ -51,22 +51,22 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Grid>
       </Grid>
       <Grid container justify="space-between" item xs={11} spacing={4}>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
             <Satellite dailyData={reef.dailyData} />
           </div>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
             <Sensor reef={reef} />
           </div>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
             <Wind dailyData={reef.dailyData} />
           </div>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
             <Waves dailyData={reef.dailyData} />
           </div>
@@ -109,13 +109,8 @@ const styles = (theme: Theme) =>
     smallContainer: {
       height: "35vh",
       marginBottom: "5rem",
-    },
-    statsContainer: {
-      [theme.breakpoints.down("sm")]: {
-        height: "35vh",
-      },
       [theme.breakpoints.down("xs")]: {
-        height: "28vh",
+        height: "48vh",
       },
     },
   });
