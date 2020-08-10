@@ -15,6 +15,7 @@ import Sensor from "./Sensor";
 import Wind from "./Wind";
 import Waves from "./Waves";
 import Charts from "./Charts";
+import Surveys from "./Surveys";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 
@@ -80,6 +81,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
         />
       </Grid>
+      <Surveys />
     </Grid>
   );
 };
