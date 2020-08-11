@@ -9,6 +9,7 @@ import {
 
 import type { Reef } from "../../../store/Reefs/types";
 import Map from "./Map";
+import Form from "./Form";
 
 const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   return (
@@ -26,7 +27,10 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         xs={10}
       >
         <Grid item xs={12}>
-          <Typography style={{ fontWeight: "normal" }} variant="h6">
+          <Typography
+            style={{ fontWeight: "normal", marginBottom: "0.5rem" }}
+            variant="h6"
+          >
             Choose survey location from map
           </Typography>
         </Grid>
@@ -34,7 +38,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
           <Map polygon={reef.polygon} />
         </Grid>
         <Grid item xs={5}>
-          Hello
+          <Form />
         </Grid>
       </Grid>
     </Grid>
