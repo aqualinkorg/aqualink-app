@@ -1,0 +1,442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders-as-expected 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="SurveyTimeline-root-1"
+      >
+        <ul
+          class="MuiTimeline-root MuiTimeline-alignLeft"
+        >
+          <li
+            class="MuiTimelineItem-root MuiTimelineItem-alignLeft MuiTimelineItem-missingOppositeContent"
+          >
+            <div
+              class="MuiTimelineSeparator-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiIconButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiIconButton-label"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root SurveyTimeline-addNewButton-5"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiTimelineContent-root MuiTimelineItem-content"
+              style="padding: 12px 16px;"
+            >
+              <h6
+                class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+              >
+                ADD NEW SURVEY
+              </h6>
+            </div>
+          </li>
+          <li
+            class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-3"
+          >
+            <div
+              class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
+            >
+              <h6
+                class="MuiTypography-root SurveyTimeline-dates-4 MuiTypography-h6"
+              >
+                05/10/2020
+              </h6>
+            </div>
+            <div
+              class="MuiTimelineSeparator-root"
+            >
+              <hr
+                class="SurveyTimeline-connector-2"
+              />
+              <span
+                class="MuiTimelineDot-root SurveyTimeline-dot-6 MuiTimelineDot-outlinedGrey"
+              />
+              <hr
+                class="SurveyTimeline-connector-2"
+              />
+            </div>
+            <div
+              class="MuiTimelineContent-root MuiTimelineItem-content"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiPaper-root SurveyTimeline-surveyCard-7 MuiPaper-elevation0 MuiPaper-rounded"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                      style="height: 100%;"
+                    >
+                      <div
+                        class="MuiCardMedia-root SurveyTimeline-cardImage-8"
+                        style="background-image: url(reef-image.jpg);"
+                      />
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-7"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                          >
+                            User:
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                          >
+                            Dr. Rory Kreiger
+                          </h6>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                          >
+                            Comments:
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                          >
+                            Severe bleaching
+                          </h6>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                          >
+                            Temp:
+                          </h6>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                        >
+                          <h6
+                            class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                          >
+                            30.1 ℃
+                          </h6>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                      >
+                        <button
+                          class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                          tabindex="0"
+                          type="button"
+                        >
+                          <span
+                            class="MuiButton-label"
+                          >
+                            VIEW DETAILS
+                          </span>
+                          <span
+                            class="MuiTouchRipple-root"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="SurveyTimeline-root-1"
+    >
+      <ul
+        class="MuiTimeline-root MuiTimeline-alignLeft"
+      >
+        <li
+          class="MuiTimelineItem-root MuiTimelineItem-alignLeft MuiTimelineItem-missingOppositeContent"
+        >
+          <div
+            class="MuiTimelineSeparator-root"
+          >
+            <button
+              class="MuiButtonBase-root MuiIconButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root SurveyTimeline-addNewButton-5"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiTimelineContent-root MuiTimelineItem-content"
+            style="padding: 12px 16px;"
+          >
+            <h6
+              class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+            >
+              ADD NEW SURVEY
+            </h6>
+          </div>
+        </li>
+        <li
+          class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-3"
+        >
+          <div
+            class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
+          >
+            <h6
+              class="MuiTypography-root SurveyTimeline-dates-4 MuiTypography-h6"
+            >
+              05/10/2020
+            </h6>
+          </div>
+          <div
+            class="MuiTimelineSeparator-root"
+          >
+            <hr
+              class="SurveyTimeline-connector-2"
+            />
+            <span
+              class="MuiTimelineDot-root SurveyTimeline-dot-6 MuiTimelineDot-outlinedGrey"
+            />
+            <hr
+              class="SurveyTimeline-connector-2"
+            />
+          </div>
+          <div
+            class="MuiTimelineContent-root MuiTimelineItem-content"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiPaper-root SurveyTimeline-surveyCard-7 MuiPaper-elevation0 MuiPaper-rounded"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                  style="height: 100%;"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiCardMedia-root SurveyTimeline-cardImage-8"
+                      style="background-image: url(reef-image.jpg);"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-7"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                        >
+                          User:
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                        >
+                          Dr. Rory Kreiger
+                        </h6>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                        >
+                          Comments:
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                        >
+                          Severe bleaching
+                        </h6>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardFields-9 MuiTypography-h6"
+                        >
+                          Temp:
+                        </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                      >
+                        <h6
+                          class="MuiTypography-root SurveyTimeline-cardValues-10 MuiTypography-h6"
+                        >
+                          30.1 ℃
+                        </h6>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                    >
+                      <button
+                        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <span
+                          class="MuiButton-label"
+                        >
+                          VIEW DETAILS
+                        </span>
+                        <span
+                          class="MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

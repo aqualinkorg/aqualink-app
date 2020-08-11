@@ -4,7 +4,6 @@ import {
   Grid,
   withStyles,
   WithStyles,
-  Theme,
   Typography,
 } from "@material-ui/core";
 
@@ -86,7 +85,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -98,18 +97,12 @@ const styles = (theme: Theme) =>
       margin: "0 0 0.5rem 1rem",
     },
     container: {
-      height: "55vh",
+      height: "35rem",
       marginBottom: "3rem",
-      [theme.breakpoints.between("md", "lg")]: {
-        height: "50vh",
-      },
     },
     smallContainer: {
-      height: "35vh",
+      height: "20rem",
       marginBottom: "5rem",
-      [theme.breakpoints.down("xs")]: {
-        height: "48vh",
-      },
     },
   });
 
