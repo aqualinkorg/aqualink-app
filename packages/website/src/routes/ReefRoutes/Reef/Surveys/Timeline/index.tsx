@@ -21,17 +21,24 @@ import {
   TimelineOppositeContent,
 } from "@material-ui/lab";
 
+import { Link } from "react-router-dom";
+
 import reefImage from "../../../../../assets/reef-image.jpg";
 
-const SurveyTimeline = ({ classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({ reefId, classes }: SurveyTimelineProps) => {
   return (
     <div className={classes.root}>
       <Timeline>
         <TimelineItem>
           <TimelineSeparator>
-            <IconButton>
-              <AddCircleOutlineIcon className={classes.addNewButton} />
-            </IconButton>
+            <Link
+              style={{ color: "inherit", textDecoration: "none" }}
+              to={`/reefs/${reefId}/new_survey`}
+            >
+              <IconButton>
+                <AddCircleOutlineIcon className={classes.addNewButton} />
+              </IconButton>
+            </Link>
           </TimelineSeparator>
           <TimelineContent style={{ padding: "12px 16px" }}>
             <Typography className={classes.cardFields} variant="h6">
@@ -187,6 +194,11 @@ const styles = (theme: Theme) =>
     },
   });
 
-type SurveyTimelineProps = WithStyles<typeof styles>;
+interface SurveyTimelineIncomingProps {
+  reefId: number;
+}
+
+type SurveyTimelineProps = SurveyTimelineIncomingProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(SurveyTimeline);
