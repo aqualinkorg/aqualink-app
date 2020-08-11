@@ -49,7 +49,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/typeorm": "^7.0.0",
     "axios": "^0.19.2",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "geo-tz": "^6.0.0",
     "firebase-admin": "^9.0.0",
