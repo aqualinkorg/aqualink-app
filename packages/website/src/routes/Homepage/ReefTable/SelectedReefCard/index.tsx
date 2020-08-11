@@ -119,9 +119,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {degreeHeatingDays
-                    ? `${formatNumber(degreeHeatingDays, 1)}`
-                    : "- -"}
+                  {formatNumber(degreeHeatingDays, 1) || "- -"}
                 </Typography>
               </Grid>
               <Grid item xs={12}>

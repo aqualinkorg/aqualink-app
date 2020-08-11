@@ -65,7 +65,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
                   className={classes.contentValues}
                   color="textSecondary"
                 >
-                  {maxWindSpeed ? `${formatNumber(maxWindSpeed, 1)}` : "- -"}
+                  {formatNumber(maxWindSpeed, 1) || "- -"}
                 </Typography>
                 {maxWindSpeed && (
                   <Typography

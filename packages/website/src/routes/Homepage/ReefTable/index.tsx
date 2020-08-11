@@ -104,7 +104,7 @@ const ReefTable = () => {
           }}
           variant="subtitle1"
         >
-          {rowData.dhd && formatNumber(rowData.dhd, 1)}
+          {formatNumber(rowData.dhd, 1)}
         </Typography>
       ),
     },
@@ -128,7 +128,9 @@ const ReefTable = () => {
   const tableData: Row[] = Object.entries(reefsList).map(([key, value]) => {
     return {
       locationName: value.name,
-      temp: formatNumber(value.latestDailyData.satelliteTemperature, 1),
+      temp:
+        formatNumber(value.latestDailyData.satelliteTemperature, 1) ||
+        undefined,
       depth: value.depth,
       dhd: value.latestDailyData.degreeHeatingDays,
       alert: "warning",
