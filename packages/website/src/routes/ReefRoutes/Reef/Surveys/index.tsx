@@ -11,6 +11,8 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
+import Timeline from "./Timeline";
+
 const Surveys = ({ classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
@@ -29,7 +31,14 @@ const Surveys = ({ classes }: SurveysProps) => {
 
   return (
     <Grid className={classes.root} container justify="center" item xs={12}>
-      <Grid container justify="center" item xs={10} alignItems="center">
+      <Grid
+        className={classes.surveyWrapper}
+        container
+        justify="center"
+        item
+        xs={6}
+        alignItems="center"
+      >
         <Grid container justify="center" item xs={4}>
           <Typography className={classes.title}>Survey History</Typography>
         </Grid>
@@ -84,6 +93,9 @@ const Surveys = ({ classes }: SurveysProps) => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid container justify="center" item xs={10}>
+        <Timeline />
+      </Grid>
     </Grid>
   );
 };
@@ -92,6 +104,9 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: "#f5f6f6",
+      marginTop: "5rem",
+    },
+    surveyWrapper: {
       marginTop: "5rem",
     },
     title: {
