@@ -13,7 +13,7 @@ import {
 
 import Timeline from "./Timeline";
 
-const Surveys = ({ reefId, classes }: SurveysProps) => {
+const Surveys = ({ addNew, reefId, classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
 
@@ -94,7 +94,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         </Grid>
       </Grid>
       <Grid container justify="center" item xs={10}>
-        <Timeline reefId={reefId} />
+        <Timeline addNew={addNew} reefId={reefId} />
       </Grid>
     </Grid>
   );
@@ -140,6 +140,7 @@ const styles = (theme: Theme) =>
 
 interface SurveyIncomingProps {
   reefId: number;
+  addNew: boolean;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;
