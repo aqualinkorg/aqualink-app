@@ -49,7 +49,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           xs={12}
         >
           <Grid container justify="flex-end" item xs={9}>
-            <img alt="clouds" src={clouds} />
+            <img style={{ height: "5rem" }} alt="clouds" src={clouds} />
           </Grid>
           <Grid container justify="center" item xs={10}>
             <Grid item xs={6}>
@@ -105,8 +105,14 @@ const Wind = ({ dailyData, classes }: WindProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container justify="flex-start" item xs={7}>
-            <img alt="clouds" src={clouds2} />
+          <Grid
+            style={{ height: "5rem" }}
+            container
+            justify="flex-start"
+            item
+            xs={7}
+          >
+            <img style={{ height: "100%" }} alt="clouds" src={clouds2} />
           </Grid>
         </Grid>
       </CardContent>

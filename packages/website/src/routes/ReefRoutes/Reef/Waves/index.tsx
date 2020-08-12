@@ -127,7 +127,14 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container justify="center" item lg={10} md={10}>
+          <Grid
+            style={{ height: "1rem" }}
+            container
+            justify="center"
+            item
+            lg={10}
+            md={10}
+          >
             <img style={{ width: "100%" }} alt="wave" src={wave} />
           </Grid>
         </Grid>

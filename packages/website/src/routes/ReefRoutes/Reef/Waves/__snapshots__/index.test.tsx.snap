@@ -121,6 +121,7 @@ exports[`renders as expected 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-10 MuiGrid-grid-lg-10"
+          style="height: 1rem;"
         >
           <img
             alt="wave"

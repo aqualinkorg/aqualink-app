@@ -51,6 +51,7 @@ exports[`renders as expected 1`] = `
           <img
             alt="clouds"
             src="clouds.svg"
+            style="height: 5rem;"
           />
         </div>
         <div
@@ -106,10 +107,12 @@ exports[`renders as expected 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-7"
+          style="height: 5rem;"
         >
           <img
             alt="clouds"
             src="clouds2.svg"
+            style="height: 100%;"
           />
         </div>
       </div>
