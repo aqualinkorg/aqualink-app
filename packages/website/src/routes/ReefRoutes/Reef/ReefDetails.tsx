@@ -80,7 +80,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
         />
       </Grid>
-      <Surveys reefId={reef.id} />
+      <Surveys addNew reefId={reef.id} />
     </Grid>
   );
 };

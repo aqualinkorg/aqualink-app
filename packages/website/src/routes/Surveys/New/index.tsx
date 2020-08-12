@@ -10,6 +10,7 @@ import {
 import type { Reef } from "../../../store/Reefs/types";
 import Map from "./Map";
 import Form from "./Form";
+import SurveyHistory from "../../ReefRoutes/Reef/Surveys";
 
 const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   return (
@@ -40,6 +41,9 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         <Grid item xs={5}>
           <Form />
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <SurveyHistory addNew={false} reefId={reef.id} />
       </Grid>
     </Grid>
   );

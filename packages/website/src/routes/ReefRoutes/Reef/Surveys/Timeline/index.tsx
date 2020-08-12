@@ -25,27 +25,29 @@ import { Link } from "react-router-dom";
 
 import reefImage from "../../../../../assets/reef-image.jpg";
 
-const SurveyTimeline = ({ reefId, classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
   return (
     <div className={classes.root}>
       <Timeline>
-        <TimelineItem>
-          <TimelineSeparator>
-            <Link
-              style={{ color: "inherit", textDecoration: "none" }}
-              to={`/reefs/${reefId}/new_survey`}
-            >
-              <IconButton>
-                <AddCircleOutlineIcon className={classes.addNewButton} />
-              </IconButton>
-            </Link>
-          </TimelineSeparator>
-          <TimelineContent style={{ padding: "12px 16px" }}>
-            <Typography className={classes.cardFields} variant="h6">
-              ADD NEW SURVEY
-            </Typography>
-          </TimelineContent>
-        </TimelineItem>
+        {addNew && (
+          <TimelineItem>
+            <TimelineSeparator>
+              <Link
+                style={{ color: "inherit", textDecoration: "none" }}
+                to={`/reefs/${reefId}/new_survey`}
+              >
+                <IconButton>
+                  <AddCircleOutlineIcon className={classes.addNewButton} />
+                </IconButton>
+              </Link>
+            </TimelineSeparator>
+            <TimelineContent style={{ padding: "12px 16px" }}>
+              <Typography className={classes.cardFields} variant="h6">
+                ADD NEW SURVEY
+              </Typography>
+            </TimelineContent>
+          </TimelineItem>
+        )}
         <TimelineItem className={classes.timelineItem}>
           <TimelineOppositeContent>
             <Typography variant="h6" className={classes.dates}>
@@ -196,6 +198,7 @@ const styles = (theme: Theme) =>
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
+  addNew: boolean;
 }
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &

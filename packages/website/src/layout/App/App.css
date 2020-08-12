@@ -48,3 +48,13 @@ html, body { height: 100vh }
 .marker-icon {
   background-color: transparent;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersDay-day,
+.MuiPickersCalendarHeader-switchHeader {
+  color: black;
+}
+
+.MuiTypography-root.MuiPickersClockNumber-clockNumber.MuiTypography-body1 {
+  color: black;
+}
+

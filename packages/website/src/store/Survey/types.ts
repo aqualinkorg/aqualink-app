@@ -4,5 +4,8 @@ interface DiveLocation {
 }
 
 export interface SurveyState {
-  diveLocation: DiveLocation | null;
+  diveLocation?: DiveLocation | null;
+  diveDateTime?: string | null;
+  weatherConditions?: string;
+  comments?: string;
 }

@@ -18,6 +18,12 @@ const surveySlice = createSlice({
       ...state,
       diveLocation: action.payload,
     }),
+    setSurveyData: (state, action: PayloadAction<SurveyState>) => ({
+      ...state,
+      diveDateTime: action.payload.diveDateTime,
+      comments: action.payload.comments,
+      weatherConditions: action.payload.weatherConditions,
+    }),
   },
 });
 
@@ -25,6 +31,6 @@ export const diveLocationSelector = (
   state: RootState
 ): SurveyState["diveLocation"] => state.survey.diveLocation;
 
-export const { setDiveLocation } = surveySlice.actions;
+export const { setDiveLocation, setSurveyData } = surveySlice.actions;
 
 export default surveySlice.reducer;
