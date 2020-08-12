@@ -13,7 +13,7 @@ import {
 
 import Timeline from "./Timeline";
 
-const Surveys = ({ addNew, reefId, classes }: SurveysProps) => {
+const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
 
@@ -40,58 +40,64 @@ const Surveys = ({ addNew, reefId, classes }: SurveysProps) => {
         alignItems="center"
       >
         <Grid container justify="center" item xs={4}>
-          <Typography className={classes.title}>Survey History</Typography>
+          <Typography className={classes.title}>
+            {user ? "Your survey history" : "Survey History"}
+          </Typography>
         </Grid>
-        <Grid container alignItems="center" justify="center" item xs={4}>
-          <Grid item>
-            <Typography variant="h6" className={classes.subTitle}>
-              Survey History:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-history"
-                id="survey-history"
-                name="survey-history"
-                value={history}
-                onChange={handleHistoryChange}
-                className={classes.selectedItem}
-              >
-                <MenuItem value="all">
-                  <Typography className={classes.menuItem} variant="h6">
-                    All
-                  </Typography>
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container alignItems="center" justify="center" item xs={4}>
-          <Grid item>
-            <Typography variant="h6" className={classes.subTitle}>
-              Observation:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-observation"
-                id="survey-observation"
-                name="survey-observation"
-                value={observation}
-                onChange={handleObservationChange}
-                className={classes.selectedItem}
-              >
-                <MenuItem value="any">
-                  <Typography className={classes.menuItem} variant="h6">
-                    Any
-                  </Typography>
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        {!user && (
+          <>
+            <Grid container alignItems="center" justify="center" item xs={4}>
+              <Grid item>
+                <Typography variant="h6" className={classes.subTitle}>
+                  Survey History:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-history"
+                    id="survey-history"
+                    name="survey-history"
+                    value={history}
+                    onChange={handleHistoryChange}
+                    className={classes.selectedItem}
+                  >
+                    <MenuItem value="all">
+                      <Typography className={classes.menuItem} variant="h6">
+                        All
+                      </Typography>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center" justify="center" item xs={4}>
+              <Grid item>
+                <Typography variant="h6" className={classes.subTitle}>
+                  Observation:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-observation"
+                    id="survey-observation"
+                    name="survey-observation"
+                    value={observation}
+                    onChange={handleObservationChange}
+                    className={classes.selectedItem}
+                  >
+                    <MenuItem value="any">
+                      <Typography className={classes.menuItem} variant="h6">
+                        Any
+                      </Typography>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </>
+        )}
       </Grid>
       <Grid container justify="center" item xs={10}>
         <Timeline addNew={addNew} reefId={reefId} />
@@ -141,6 +147,7 @@ const styles = (theme: Theme) =>
 interface SurveyIncomingProps {
   reefId: number;
   addNew: boolean;
+  user: boolean;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;

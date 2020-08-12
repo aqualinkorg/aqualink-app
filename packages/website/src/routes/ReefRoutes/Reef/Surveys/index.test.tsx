@@ -7,7 +7,7 @@ import Surveys from ".";
 test("renders-as-expected", () => {
   const container = render(
     <Router>
-      <Surveys reefId={0} />
+      <Surveys user addNew={false} reefId={0} />
     </Router>
   );
   expect(container).toMatchSnapshot();
