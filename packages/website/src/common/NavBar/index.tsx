@@ -1,11 +1,10 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Grid,
   IconButton,
   Typography,
-  TextField,
   Avatar,
   Button,
   Menu,
@@ -16,52 +15,21 @@ import {
   Theme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
+import Search from "../Search";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
-import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
-import { setReefOnMap } from "../../store/Homepage/homepageSlice";
-import type { Reef } from "../../store/Reefs/types";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
-  const reefs = useSelector(reefsListSelector);
   const dispatch = useDispatch();
-  const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
-  const onChangeSearchText = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const searchValue = event.target.value;
-    const index = reefs.findIndex(
-      (reef) => reef.name?.toLowerCase() === searchValue.toLowerCase()
-    );
-    if (index > -1) {
-      setSearchedReef(reefs[index]);
-    }
-  };
-
-  const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
-    if (value) {
-      setSearchedReef(value);
-      dispatch(setReefOnMap(value));
-    }
-  };
-
-  const onSearchSubmit = () => {
-    if (searchedReef) {
-      dispatch(setReefOnMap(searchedReef));
-    }
-  };
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
   const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
@@ -98,61 +66,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                 item
                 xs={6}
               >
-                {searchLocation && (
-                  <Grid container justify="flex-end" item xs={6}>
-                    <Grid
-                      className={classes.searchBar}
-                      container
-                      alignItems="center"
-                      item
-                      xs={8}
-                    >
-                      <Grid
-                        className={classes.searchBarIcon}
-                        item
-                        xs={2}
-                        container
-                        alignItems="center"
-                        justify="center"
-                      >
-                        <IconButton size="small" onClick={onSearchSubmit}>
-                          <SearchIcon />
-                        </IconButton>
-                      </Grid>
-                      <Grid
-                        className={classes.searchBarText}
-                        item
-                        xs={10}
-                        container
-                        alignItems="center"
-                      >
-                        <Autocomplete
-                          id="location"
-                          className={classes.searchBarInput}
-                          options={reefs}
-                          getOptionLabel={(reef) => reef.name || ""}
-                          value={searchedReef}
-                          onChange={onDropdownItemSelect}
-                          onInputChange={(event, value, reason) =>
-                            reason === "clear" && setSearchedReef(null)
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              onChange={onChangeSearchText}
-                              style={{ height: "100%" }}
-                              placeholder="Search Location"
-                              variant="outlined"
-                              InputLabelProps={{
-                                shrink: false,
-                              }}
-                            />
-                          )}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                )}
+                {searchLocation && <Search />}
                 <Grid container justify="flex-end" item xs={6}>
                   <IconButton>
                     <NotificationsIcon className={classes.notificationIcon} />
@@ -222,20 +136,6 @@ const styles = (theme: Theme) =>
         backgroundColor: theme.palette.primary.main,
       },
     },
-    searchBar: {
-      height: 42,
-    },
-    searchBarIcon: {
-      backgroundColor: "#6ba8c0",
-      borderRadius: "4px 0 0 4px",
-      height: "100%",
-    },
-    searchBarText: {
-      paddingLeft: "0.5rem",
-      backgroundColor: "#469abb",
-      borderRadius: "0 4px 4px 0",
-      height: "100%",
-    },
     userMenu: {
       marginTop: "3rem",
     },
@@ -243,19 +143,6 @@ const styles = (theme: Theme) =>
       margin: 0,
       backgroundColor: theme.palette.grey[500],
       color: theme.palette.text.secondary,
-    },
-    searchBarInput: {
-      "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderWidth: 0,
-      },
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderWidth: 0,
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderWidth: 0,
-      },
-      height: "100%",
-      width: "100%",
     },
     notificationIcon: {
       color: "#a9e6ff",

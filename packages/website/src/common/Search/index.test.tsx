@@ -3,16 +3,16 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
-import HomePageNavBar from ".";
+import Search from ".";
 
 const mockStore = configureStore([]);
 
-describe("NavBar", () => {
+describe("Search", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
-      user: {
-        userInfo: null,
+      reefsList: {
+        list: [],
         loading: false,
         error: null,
       },
@@ -22,7 +22,7 @@ describe("NavBar", () => {
 
     element = render(
       <Provider store={store}>
-        <HomePageNavBar searchLocation={false} />
+        <Search />
       </Provider>
     ).container;
   });
