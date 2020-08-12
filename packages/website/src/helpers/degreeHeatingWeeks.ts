@@ -1,7 +1,7 @@
 import { colorCode } from "../assets/colorCode";
 
-export const degreeHeatingWeeksCalculator = (value: number): number =>
-  Math.round((value / 7) * 10) / 10;
+export const degreeHeatingWeeksCalculator = (value?: number): number =>
+  value ? Math.round((value / 7) * 10) / 10 : 0;
 
 export const colorFinder = (value: number): string => {
   const len = colorCode.length;

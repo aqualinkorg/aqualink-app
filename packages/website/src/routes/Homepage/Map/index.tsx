@@ -154,7 +154,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
             reefsList.map((reef: Reef) => {
               if (reef.polygon.type === "Point") {
                 const [lng, lat] = reef.polygon.coordinates;
-                const { degreeHeatingDays } = reef.latestDailyData;
+                const { degreeHeatingDays } = reef.latestDailyData || {};
                 const color = colorFinder(
                   degreeHeatingWeeksCalculator(degreeHeatingDays)
                 );

@@ -126,13 +126,13 @@ const ReefTable = () => {
   ];
 
   const tableData: Row[] = Object.entries(reefsList).map(([key, value]) => {
+    const { degreeHeatingDays, satelliteTemperature } =
+      value.latestDailyData || {};
     return {
       locationName: value.name,
-      temp:
-        formatNumber(value.latestDailyData.satelliteTemperature, 1) ||
-        undefined,
+      temp: formatNumber(satelliteTemperature, 1) || undefined,
       depth: value.depth,
-      dhd: value.latestDailyData.degreeHeatingDays,
+      dhd: degreeHeatingDays,
       alert: "warning",
       tableData: {
         id: parseFloat(key),
