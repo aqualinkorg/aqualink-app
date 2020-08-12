@@ -31,6 +31,17 @@ export const diveLocationSelector = (
   state: RootState
 ): SurveyState["diveLocation"] => state.survey.diveLocation;
 
+export const diveDateTimeSelector = (
+  state: RootState
+): SurveyState["diveDateTime"] => state.survey.diveDateTime;
+
+export const commentsSelector = (state: RootState): SurveyState["comments"] =>
+  state.survey.comments;
+
+export const weatherConditionsSelector = (
+  state: RootState
+): SurveyState["weatherConditions"] => state.survey.weatherConditions;
+
 export const { setDiveLocation, setSurveyData } = surveySlice.actions;
 
 export default surveySlice.reducer;
