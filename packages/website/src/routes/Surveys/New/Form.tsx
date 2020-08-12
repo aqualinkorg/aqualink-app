@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -23,14 +23,24 @@ import { useForm } from "react-hook-form";
 import {
   diveLocationSelector,
   setSurveyData,
+  commentsSelector,
+  diveDateTimeSelector,
+  weatherConditionsSelector,
 } from "../../../store/Survey/surveySlice";
 
-const SurveyForm = ({ classes }: SurveyFormProps) => {
+const SurveyForm = ({ changeTab, classes }: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
+  const surveyDiveDateTime = useSelector(diveDateTimeSelector);
+  const surveyWeatherConditions = useSelector(weatherConditionsSelector);
+  const surveyComments = useSelector(commentsSelector);
   const [diveDate, setDiveDate] = useState<string | null>(null);
   const [diveTime, setDiveTime] = useState<string | null>(null);
   const [weather, setWeather] = useState<string>("calm");
   const dispatch = useDispatch();
+
+  const { register, errors, handleSubmit, reset, setValue } = useForm({
+    reValidateMode: "onSubmit",
+  });
 
   const onSubmit = useCallback(
     (data: any) => {
@@ -46,13 +56,10 @@ const SurveyForm = ({ classes }: SurveyFormProps) => {
           weatherConditions,
         })
       );
+      changeTab(1);
     },
-    [dispatch, weather]
+    [dispatch, weather, changeTab]
   );
-
-  const { register, errors, handleSubmit, reset } = useForm({
-    reValidateMode: "onSubmit",
-  });
 
   const handleDiveDateChange = (date: Date | null) => {
     setDiveDate(
@@ -74,6 +81,20 @@ const SurveyForm = ({ classes }: SurveyFormProps) => {
       comments: "",
     });
   };
+
+  useEffect(() => {
+    if (surveyWeatherConditions) {
+      setWeather(surveyWeatherConditions);
+    }
+    if (surveyComments) {
+      setValue("comments", surveyComments);
+    }
+    if (surveyDiveDateTime) {
+      const date = new Date(surveyDiveDateTime);
+      setDiveDate(`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`);
+      setDiveTime(`${date.getHours()}:${date.getMinutes()}`);
+    }
+  }, [surveyWeatherConditions, surveyComments, surveyDiveDateTime, setValue]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -133,7 +154,7 @@ const SurveyForm = ({ classes }: SurveyFormProps) => {
                 required: "This is a required field",
               })}
               error={!!errors.diveTime}
-              format="hh:mm"
+              format="H:mm"
               value={
                 // eslint-disable-next-line no-nested-ternary
                 diveTime
@@ -262,6 +283,10 @@ const styles = () =>
     },
   });
 
-type SurveyFormProps = WithStyles<typeof styles>;
+interface SurveyFormIncomingProps {
+  changeTab: (index: number) => void;
+}
+
+type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(SurveyForm);

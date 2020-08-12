@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
@@ -8,7 +8,10 @@ import { Reef } from "../../../store/Reefs/types";
 import { mapBounds } from "../../../helpers/mapBounds";
 
 import marker from "../../../assets/marker.png";
-import { setDiveLocation } from "../../../store/Survey/surveySlice";
+import {
+  setDiveLocation,
+  diveLocationSelector,
+} from "../../../store/Survey/surveySlice";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -19,6 +22,7 @@ const pinIcon = L.icon({
 
 const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   const mapRef = useRef<Map>(null);
+  const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
   const [markerLng, setMarkerLng] = useState<number | null>(null);
   const dispatch = useDispatch();
@@ -62,7 +66,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (polygon.type === "Point") {
+    if (polygon.type === "Point" && !diveLocation) {
       setMarkerLat(polygon.coordinates[1]);
       setMarkerLng(polygon.coordinates[0]);
       dispatch(
@@ -72,7 +76,14 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
         })
       );
     }
-  }, [polygon, dispatch]);
+  }, [polygon, diveLocation, dispatch]);
+
+  useEffect(() => {
+    if (diveLocation) {
+      setMarkerLat(diveLocation.lat);
+      setMarkerLng(diveLocation.lng);
+    }
+  }, [diveLocation]);
 
   return (
     <Map ref={mapRef} className={classes.map}>
