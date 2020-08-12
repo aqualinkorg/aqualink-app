@@ -110,11 +110,7 @@ const styles = () =>
       flexDirection: "column",
     },
     cardTitle: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.5,
-      letterSpacing: "normal",
       margin: "0 0 0.5rem 1rem",
     },
     header: {
@@ -131,19 +127,11 @@ const styles = () =>
       height: "2rem",
     },
     contentTitles: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.33,
-      letterSpacing: "normal",
       paddingLeft: "1rem",
     },
     contentValues: {
       fontWeight: 300,
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: "normal",
-      letterSpacing: "normal",
       paddingLeft: "1rem",
     },
   });

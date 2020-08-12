@@ -149,7 +149,6 @@ const Charts = ({
               rtl: true,
               labels: {
                 fontSize: 14,
-                fontStyle: "normal",
                 fontColor: "#9ea6aa",
               },
             },
@@ -232,11 +231,7 @@ const styles = () =>
       height: "100%",
     },
     graphTitle: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.5,
-      letterSpacing: "normal",
       marginLeft: "4rem",
     },
   });

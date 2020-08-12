@@ -91,11 +91,7 @@ const styles = (theme: Theme) =>
       marginTop: "2rem",
     },
     cardTitles: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.5,
-      letterSpacing: "normal",
       color: "#2f2f2f",
       margin: "0 0 0.5rem 1rem",
     },

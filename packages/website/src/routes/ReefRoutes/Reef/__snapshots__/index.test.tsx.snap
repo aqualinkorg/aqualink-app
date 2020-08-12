@@ -784,7 +784,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       </p>
                       <h6
                         class="MuiTypography-root Waves-contentUnits-132 MuiTypography-h6 MuiTypography-colorTextSecondary"
-                        style="font-weight: normal;"
                       >
                         Μ
                       </h6>
@@ -808,7 +807,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       </p>
                       <h6
                         class="MuiTypography-root Waves-contentUnits-132 MuiTypography-h6 MuiTypography-colorTextSecondary"
-                        style="font-weight: normal;"
                       >
                         S
                       </h6>

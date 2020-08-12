@@ -124,11 +124,7 @@ const styles = (theme: Theme) =>
       flexDirection: "column",
     },
     cardTitle: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.5,
-      letterSpacing: "normal",
       margin: "0 0 0.5rem 1rem",
       color: theme.palette.primary.main,
     },
@@ -145,11 +141,7 @@ const styles = (theme: Theme) =>
       padding: "0 0 2rem 2rem",
     },
     contentTitles: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.33,
-      letterSpacing: "normal",
     },
     contentValues: {
       fontSize: 42,
@@ -158,17 +150,8 @@ const styles = (theme: Theme) =>
       },
       marginRight: "0.25rem",
       fontWeight: 300,
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: "normal",
-      letterSpacing: "normal",
     },
     contentUnits: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: "normal",
-      letterSpacing: "normal",
       [theme.breakpoints.between("md", "lg")]: {
         fontSize: 12,
       },

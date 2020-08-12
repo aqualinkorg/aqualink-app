@@ -66,7 +66,6 @@ exports[`renders as expected 1`] = `
               </p>
               <h6
                 class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
-                style="font-weight: normal;"
               >
                 Μ
               </h6>
@@ -90,7 +89,6 @@ exports[`renders as expected 1`] = `
               </p>
               <h6
                 class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
-                style="font-weight: normal;"
               >
                 S
               </h6>
