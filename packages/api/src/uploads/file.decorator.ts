@@ -15,7 +15,7 @@ export function assignName(folder: string, prefix: string) {
     const type = validateMimetype(file.mimetype);
     const randomString = Array(16)
       .fill(null)
-      .map(() => Math.round(Math.random() * 16).toString(16))
+      .map(() => Math.round(Math.random() * 15).toString(16))
       .join('');
     const fullname = `${prefix}-${type}-${randomString}${extension}`;
     const relativePath = path.join(folder, fullname);
