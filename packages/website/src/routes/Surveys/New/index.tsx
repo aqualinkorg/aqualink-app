@@ -25,7 +25,7 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState<number>(1);
 
   const onPanelIndexChange = (index: number) => {
     setValue(index);
@@ -68,7 +68,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UploadMedia changeTab={onPanelIndexChange} />
+        <UploadMedia reefName={reef.name} changeTab={onPanelIndexChange} />
       </TabPanel>
     </SwipeableViews>
   );
