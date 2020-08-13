@@ -175,7 +175,8 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     const dailyDataInput = await getDailyData(reef, date);
     const entity = dailyDataRepository.create(dailyDataInput);
     try {
-      dailyDataRepository.save(entity);
+      // eslint-disable-next-line no-await-in-loop
+      await dailyDataRepository.save(entity);
     } catch (err) {
       // Update instead of insert
       if (err.constraint === 'no_duplicated_date') {

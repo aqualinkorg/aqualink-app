@@ -15,6 +15,11 @@ import { Link } from "react-router-dom";
 
 import { Reef } from "../../../../store/Reefs/types";
 import { colors } from "../../../../layout/App/theme";
+import { formatNumber } from "../../../../helpers/numberUtils";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../../helpers/degreeHeatingWeeks";
 
 const Popup = ({ reef, classes }: PopupProps) => (
   <Card>
@@ -25,29 +30,45 @@ const Popup = ({ reef, classes }: PopupProps) => (
     />
     <CardContent>
       <Grid container item xs={12}>
-        <Grid container justify="flex-start" item xs={6}>
-          <Typography variant="caption" color="textSecondary">
-            TEMP AT 25M
-          </Typography>
-          <Typography
-            style={{ color: colors.lightBlue }}
-            variant="h5"
-            color="textSecondary"
-          >
-            31.8 &#8451;
-          </Typography>
+        <Grid item xs={6}>
+          <Grid container justify="flex-start" item xs={12}>
+            <Typography variant="caption" color="textSecondary">
+              {`TEMP AT ${reef.depth}M`}
+            </Typography>
+          </Grid>
+          <Grid container justify="flex-start" item xs={12}>
+            <Typography
+              style={{ color: colors.lightBlue }}
+              variant="h5"
+              color="textSecondary"
+            >
+              {formatNumber(reef.latestDailyData.maxBottomTemperature, 1) ||
+                "- -"}{" "}
+              &#8451;
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid container justify="flex-end" item xs={6}>
-          <Typography variant="caption" color="textSecondary">
-            DEG. HEAT. DAYS
-          </Typography>
-          <Typography
-            style={{ color: "purple" }}
-            variant="h5"
-            color="textSecondary"
-          >
-            58
-          </Typography>
+        <Grid item xs={6}>
+          <Grid container justify="flex-end" item xs={12}>
+            <Typography variant="caption" color="textSecondary">
+              DEG. HEAT. DAYS
+            </Typography>
+          </Grid>
+          <Grid container justify="flex-end" item xs={12}>
+            <Typography
+              style={{
+                color: `${colorFinder(
+                  degreeHeatingWeeksCalculator(
+                    reef.latestDailyData.degreeHeatingDays
+                  )
+                )}`,
+              }}
+              variant="h5"
+              color="textSecondary"
+            >
+              {formatNumber(reef.latestDailyData.degreeHeatingDays, 1)}
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Grid
