@@ -5,6 +5,7 @@ import { ReefApplicationsModule } from './reef-applications/reef-applications.mo
 import { ReefsModule } from './reefs/reefs.module';
 import { ReefPoisModule } from './reef-pois/reef-pois.module';
 import { RegionsModule } from './regions/regions.module';
+import { SurveysModule } from './surveys/surveys.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
@@ -14,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
     ReefsModule,
     ReefPoisModule,
     RegionsModule,
+    SurveysModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     UsersModule,
     AuthModule,
