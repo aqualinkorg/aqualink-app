@@ -193,6 +193,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
                   variant="outlined"
                   multiline
                   name="comments"
+                  placeholder="Comments"
                   onChange={handleCommentsChange(index)}
                   value={(metadata[index] && metadata[index].comments) || ""}
                   size="medium"
