@@ -115,7 +115,13 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
             xs={12}
           >
             <Grid style={{ height: "100%" }} item xs={3}>
-              <CardMedia className={classes.cardImage} image={preview} />
+              <CardMedia
+                className={classes.cardImage}
+                component={
+                  files[index].type.startsWith("video") ? "video" : "image"
+                }
+                image={preview}
+              />
             </Grid>
             <Grid container justify="center" item xs={3}>
               <Grid style={{ marginBottom: "1rem" }} item xs={10}>
@@ -229,7 +235,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
       </Grid>
       <Grid container justify="center" item xs={4}>
         <Dropzone
-          accept="image/png, image/jpeg, image/gif"
+          accept="image/png, image/jpeg, image/gif, video/mp4"
           onDrop={handleFileDrop}
         >
           {({ getRootProps, getInputProps }) => (
