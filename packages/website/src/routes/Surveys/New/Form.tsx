@@ -246,6 +246,7 @@ const SurveyForm = ({ changeTab, classes }: SurveyFormProps) => {
           variant="outlined"
           multiline
           name="comments"
+          placeholder="Did anything stand out during this survey"
           inputRef={register()}
           fullWidth
           inputProps={{
