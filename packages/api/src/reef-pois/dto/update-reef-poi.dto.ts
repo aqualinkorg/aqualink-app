@@ -13,7 +13,7 @@ export class UpdateReefPoiDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly name: string;
+  readonly name?: string;
 
   @IsOptional()
   @IsInt()
@@ -26,5 +26,5 @@ export class UpdateReefPoiDto {
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [Reef])
-  readonly reef: Reef;
+  readonly reef?: Reef;
 }

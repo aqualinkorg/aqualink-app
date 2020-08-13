@@ -6,10 +6,10 @@ export class FilterReefPoiDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly name: string;
+  readonly name?: string;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  readonly reef: Reef;
+  readonly reef?: Reef;
 }
