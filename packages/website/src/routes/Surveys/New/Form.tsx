@@ -210,6 +210,7 @@ const SurveyForm = ({ changeTab, classes }: SurveyFormProps) => {
           />
         </Grid>
       </Grid>
+      {/* Weather Conditions */}
       <Grid style={{ marginBottom: "1rem" }} item xs={12}>
         <Typography variant="h6">Weather Conditions</Typography>
       </Grid>
