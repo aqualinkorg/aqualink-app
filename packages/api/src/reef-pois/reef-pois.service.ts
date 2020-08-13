@@ -36,7 +36,6 @@ export class ReefPoisService {
       });
     }
     query.leftJoinAndSelect('poi.reef', 'reef');
-    query.printSql();
     return query.getMany();
   }
 
