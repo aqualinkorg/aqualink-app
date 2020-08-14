@@ -183,12 +183,12 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
               </Grid>
             </Grid>
             <Grid container justify="center" item xs={5}>
-              <Grid style={{ marginBottom: "1rem" }} item xs={10}>
+              <Grid style={{ marginBottom: "1rem" }} item xs={12}>
                 <Typography color="textSecondary" variant="h6">
                   Comments
                 </Typography>
               </Grid>
-              <Grid style={{ marginBottom: "2rem" }} item xs={10}>
+              <Grid style={{ marginBottom: "2rem" }} item xs={12}>
                 <TextField
                   variant="outlined"
                   multiline
@@ -196,7 +196,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
                   placeholder="Comments"
                   onChange={handleCommentsChange(index)}
                   value={(metadata[index] && metadata[index].comments) || ""}
-                  size="medium"
+                  rows="8"
                   fullWidth
                   inputProps={{
                     className: classes.textField,
@@ -204,7 +204,14 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={1}>
+            <Grid
+              style={{ height: "100%" }}
+              container
+              justify="flex-end"
+              alignItems="flex-end"
+              item
+              xs={1}
+            >
               <IconButton onClick={() => deleteCard(index)}>
                 <DeleteOutlineOutlined />
               </IconButton>
