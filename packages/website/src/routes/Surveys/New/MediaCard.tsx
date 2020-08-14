@@ -21,7 +21,6 @@ import {
 
 const MediaCard = ({
   preview,
-  file,
   surveyPoint,
   observation,
   comments,
@@ -44,11 +43,7 @@ const MediaCard = ({
           xs={12}
         >
           <Grid style={{ height: "100%" }} item xs={3}>
-            <CardMedia
-              className={classes.cardImage}
-              component={file.type.startsWith("video") ? "video" : "img"}
-              image={preview}
-            />
+            <CardMedia className={classes.cardImage} image={preview} />
           </Grid>
           <Grid container justify="center" item xs={3}>
             <Grid style={{ marginBottom: "1rem" }} item xs={10}>
@@ -175,7 +170,6 @@ const styles = () =>
 interface MediaCardIncomingProps {
   index: number;
   preview: string;
-  file: File;
   surveyPoint: string;
   observation: string;
   comments: string;

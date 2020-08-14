@@ -261,10 +261,14 @@ const SurveyForm = ({ changeTab, classes }: SurveyFormProps) => {
         justify="flex-end"
         item
         xs={12}
-        spacing={3}
       >
         <Grid item xs={2}>
-          <Button onClick={resetForm} color="primary" variant="outlined">
+          <Button
+            style={{ marginRight: "1rem" }}
+            onClick={resetForm}
+            color="primary"
+            variant="outlined"
+          >
             Cancel
           </Button>
         </Grid>
