@@ -180,13 +180,14 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     } catch (err) {
       // Update instead of insert
       if (err.constraint === 'no_duplicated_date') {
-        const filteredReef = pickBy(reef);
+        const filteredData = pickBy(entity);
+
         dailyDataRepository.update(
           {
             reef,
             date: entity.date,
           },
-          filteredReef,
+          filteredData,
         );
         // eslint-disable-next-line no-continue
         continue;
