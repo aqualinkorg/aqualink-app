@@ -1,5 +1,5 @@
 /** Worker to process daily data for all reefs. */
-import { sum } from 'lodash';
+import { pickBy, sum } from 'lodash';
 import { Connection } from 'typeorm';
 import { Point } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
@@ -180,12 +180,13 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     } catch (err) {
       // Update instead of insert
       if (err.constraint === 'no_duplicated_date') {
+        const filteredReef = pickBy(reef);
         dailyDataRepository.update(
           {
             reef,
             date: entity.date,
           },
-          entity,
+          filteredReef,
         );
         // eslint-disable-next-line no-continue
         continue;
