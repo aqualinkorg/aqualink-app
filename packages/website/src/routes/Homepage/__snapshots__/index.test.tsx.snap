@@ -226,7 +226,30 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                   />
                   <div
                     class="leaflet-control-layers-overlays"
-                  />
+                  >
+                    <label>
+                      <div>
+                        <input
+                          class="leaflet-control-layers-selector"
+                          type="checkbox"
+                        />
+                        <span>
+                           Sea Surface Temperature
+                        </span>
+                      </div>
+                    </label>
+                    <label>
+                      <div>
+                        <input
+                          class="leaflet-control-layers-selector"
+                          type="checkbox"
+                        />
+                        <span>
+                           NOAA Degree Heating Week
+                        </span>
+                      </div>
+                    </label>
+                  </div>
                 </section>
               </div>
             </div>
