@@ -118,7 +118,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
               <CardMedia
                 className={classes.cardImage}
                 component={
-                  files[index].type.startsWith("video") ? "video" : "image"
+                  files[index].type.startsWith("video") ? "video" : "img"
                 }
                 image={preview}
               />
