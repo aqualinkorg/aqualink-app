@@ -25,12 +25,15 @@ const MediaCard = ({
   observation,
   comments,
   index,
+  file,
   deleteCard,
   handleCommentsChange,
   handleObservationChange,
   handleSurveyPointChange,
   classes,
 }: MediaCardProps) => {
+  const size = (file && file.size && file.size / 1000000)?.toFixed(2);
+
   return (
     <Grid style={{ marginTop: "2rem" }} container item xs={12}>
       <Paper elevation={0} className={classes.mediaCardWrapper}>
@@ -43,7 +46,29 @@ const MediaCard = ({
           xs={12}
         >
           <Grid style={{ height: "100%" }} item xs={3}>
-            <CardMedia className={classes.cardImage} image={preview} />
+            <CardMedia className={classes.cardImage} image={preview}>
+              <Grid
+                style={{ height: "100%" }}
+                container
+                item
+                xs={12}
+                alignItems="flex-end"
+                justify="flex-end"
+              >
+                {size && (
+                  <Grid
+                    className={classes.mediaSize}
+                    container
+                    alignItems="center"
+                    justify="center"
+                    item
+                    xs={3}
+                  >
+                    <Typography variant="subtitle2">{size} MB</Typography>
+                  </Grid>
+                )}
+              </Grid>
+            </CardMedia>
           </Grid>
           <Grid container justify="center" item xs={3}>
             <Grid style={{ marginBottom: "1rem" }} item xs={10}>
@@ -158,12 +183,14 @@ const styles = () =>
       height: "100%",
       width: "100%",
       borderRadius: "2px 0 0 2px",
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "flex-end",
     },
     textField: {
       color: "black",
+    },
+    mediaSize: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      height: "2rem",
+      borderRadius: "2px 0 0 2px",
     },
   });
 
@@ -173,6 +200,7 @@ interface MediaCardIncomingProps {
   surveyPoint: string;
   observation: string;
   comments: string;
+  file?: File;
   deleteCard: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;
   handleObservationChange: (event: ChangeEvent<{ value: unknown }>) => void;

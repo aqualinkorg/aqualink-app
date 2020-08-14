@@ -141,6 +141,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
         key={preview}
         index={index}
         preview={preview}
+        file={files[index]}
         surveyPoint={
           (metadata && metadata[index] && metadata[index].surveyPoint) || ""
         }
