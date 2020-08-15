@@ -1,3 +1,4 @@
+import { pickBy } from 'lodash';
 import { Connection, createConnection } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
@@ -18,10 +19,13 @@ async function augmentReefs(connection: Connection) {
           `Max Monthly Mean appears to be null for Reef ${reef.name} at (lat, lon): (${latitude}, ${longitude}) `,
         );
       }
-      const res = await reefRepository.update(reef.id, {
-        timezone: geoTz(latitude, longitude)[0],
-        maxMonthlyMean: MMM,
-      });
+      const res = await reefRepository.update(
+        reef.id,
+        pickBy({
+          timezone: geoTz(latitude, longitude)[0],
+          maxMonthlyMean: MMM,
+        }),
+      );
       return res;
     }),
   );
