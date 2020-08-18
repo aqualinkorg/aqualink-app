@@ -17,7 +17,6 @@ import {
   reefOnMapSelector,
   unsetReefOnMap,
 } from "../../../store/Homepage/homepageSlice";
-import mapServices from "../../../services/mapServices";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./Popup";
 import { coloredBuoy } from "./utils";
@@ -73,16 +72,13 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
       const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
       sofarLayers.forEach((layer) => {
-        mapServices.getModelTimes(layer.model).then(({ data }) => {
-          const timestamp = data.outputTimes[0];
-          layerControl.addOverlay(
-            L.tileLayer(
-              `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}&timestamp=${timestamp}`,
-              { opacity: 0.5 }
-            ),
-            layer.name
-          );
-        });
+        layerControl.addOverlay(
+          L.tileLayer(
+            `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}`,
+            { opacity: 0.5 }
+          ),
+          layer.name
+        );
       });
     }
   }, [loading]);
