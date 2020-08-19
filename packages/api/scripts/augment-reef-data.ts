@@ -1,4 +1,4 @@
-import { pickBy } from 'lodash';
+import { isNil, omitBy } from 'lodash';
 import { Connection, createConnection } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
@@ -21,10 +21,13 @@ async function augmentReefs(connection: Connection) {
       }
       const res = await reefRepository.update(
         reef.id,
-        pickBy({
-          timezone: geoTz(latitude, longitude)[0],
-          maxMonthlyMean: MMM,
-        }),
+        omitBy(
+          {
+            timezone: geoTz(latitude, longitude)[0],
+            maxMonthlyMean: MMM,
+          },
+          isNil,
+        ),
       );
       return res;
     }),
