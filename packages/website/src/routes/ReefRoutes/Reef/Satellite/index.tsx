@@ -64,9 +64,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {satelliteTemperature
-                    ? `${formatNumber(satelliteTemperature, 1)} \u2103`
-                    : "- -"}
+                  {`${formatNumber(satelliteTemperature, 1)} \u2103`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -82,7 +80,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {formatNumber(degreeHeatingWeeks, 1) || "- -"}
+                  {formatNumber(degreeHeatingWeeks, 1)}
                 </Typography>
               </Grid>
             </Grid>

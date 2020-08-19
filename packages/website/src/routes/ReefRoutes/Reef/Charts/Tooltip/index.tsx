@@ -70,9 +70,7 @@ const Tooltip = ({
               </Grid>
               <Grid container justify="flex-start" item xs={12}>
                 <Typography variant="h5">
-                  {bottomTemperature
-                    ? `${formatNumber(bottomTemperature, 1)} \u2103`
-                    : "- -"}
+                  {`${formatNumber(bottomTemperature, 1)} \u2103`}
                 </Typography>
               </Grid>
             </Grid>
@@ -82,9 +80,7 @@ const Tooltip = ({
               </Grid>
               <Grid container justify="flex-end" item xs={12}>
                 <Typography variant="h5">
-                  {surfaceTemperature
-                    ? `${formatNumber(surfaceTemperature, 1)} \u2103`
-                    : "-"}
+                  {`${formatNumber(surfaceTemperature, 1)} \u2103`}
                 </Typography>
               </Grid>
             </Grid>

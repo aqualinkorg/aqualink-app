@@ -130,7 +130,7 @@ const ReefTable = () => {
       value.latestDailyData || {};
     return {
       locationName: value.name,
-      temp: formatNumber(satelliteTemperature, 1) || undefined,
+      temp: formatNumber(satelliteTemperature, 1),
       depth: value.depth,
       dhd: degreeHeatingDays,
       alert: "warning",
