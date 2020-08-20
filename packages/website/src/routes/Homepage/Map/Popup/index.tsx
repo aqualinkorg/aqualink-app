@@ -45,7 +45,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
                 variant="h5"
                 color="textSecondary"
               >
-                {formatNumber(maxBottomTemperature, 1) || "- -"} &#8451;
+                {formatNumber(maxBottomTemperature, 1)} &#8451;
               </Typography>
             </Grid>
           </Grid>

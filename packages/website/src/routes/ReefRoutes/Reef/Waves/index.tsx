@@ -62,7 +62,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentValues}
                   color="textSecondary"
                 >
-                  {maxWaveHeight ? `${formatNumber(maxWaveHeight, 1)}` : "- -"}
+                  {formatNumber(maxWaveHeight, 1)}
                 </Typography>
                 {maxWaveHeight && (
                   <Typography

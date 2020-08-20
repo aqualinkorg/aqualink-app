@@ -93,9 +93,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {maxBottomTemperature
-                    ? `${formatNumber(maxBottomTemperature, 1)} \u2103`
-                    : "- -"}
+                  {`${formatNumber(maxBottomTemperature, 1)} \u2103`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -107,7 +105,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {surfTemp ? `${formatNumber(surfTemp, 1)} \u2103` : "- -"}
+                  {`${formatNumber(surfTemp, 1)} \u2103`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -119,7 +117,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   variant="h4"
                   color="textSecondary"
                 >
-                  {formatNumber(degreeHeatingDays, 1) || "- -"}
+                  {formatNumber(degreeHeatingDays, 1)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
