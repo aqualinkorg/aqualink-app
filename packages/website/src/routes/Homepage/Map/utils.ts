@@ -1,3 +1,9 @@
+import { L, DivIconOptions } from "leaflet";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../helpers/degreeHeatingWeeks";
+
 export const coloredBuoy = (color: string) =>
   `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="29px" height="35px" viewBox="0 0 29 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -21,3 +27,14 @@ export const coloredBuoy = (color: string) =>
           </g>
       </g>
   </svg>`;
+
+export const coloredBuoyIcon = (degreeHeatingDays: number) => {
+  const color = colorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
+  return L.divIcon({
+    iconSize: [24, 24],
+    iconAnchor: [24, 12],
+    popupAnchor: [-10, -12],
+    html: `${coloredBuoy(color)}`,
+    className: "marker-icon",
+  });
+};
