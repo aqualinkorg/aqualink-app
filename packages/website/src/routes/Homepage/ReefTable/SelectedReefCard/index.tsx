@@ -18,6 +18,7 @@ import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
+import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
 const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const sortByDate = sortDailyData(reef.dailyData);
@@ -110,14 +111,17 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="caption" color="textSecondary">
-                  DEG. HEAT. DAYS
+                  D. H. WEEKS
                 </Typography>
                 <Typography
                   className={classes.cardMetrics}
                   variant="h4"
                   color="textSecondary"
                 >
-                  {formatNumber(degreeHeatingDays, 1)}
+                  {formatNumber(
+                    degreeHeatingWeeksCalculator(degreeHeatingDays),
+                    1
+                  )}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
