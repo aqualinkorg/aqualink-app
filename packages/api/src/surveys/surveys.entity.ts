@@ -10,28 +10,39 @@ import {
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 
+export enum WeatherConditions {
+  Calm = 'calm',
+  Wavy = 'wavy',
+  Stormy = 'stormy',
+}
+
 @Entity()
 export class Survey {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('float')
+  @Column({
+    name: 'weather_conditions',
+    type: 'enum',
+    enum: WeatherConditions,
+  })
+  weatherConditions: WeatherConditions;
+
+  @Column('float', { nullable: true })
   temperature: number;
 
-  @Column('text')
-  observations: string;
+  @Column('text', { nullable: true })
+  comments: string;
 
   @Column()
   diveDate: Date;
-
-  @Column()
-  uploadDate: Date;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   userId: User;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'reef_id' })
   reef: Reef;
 
   @CreateDateColumn()
