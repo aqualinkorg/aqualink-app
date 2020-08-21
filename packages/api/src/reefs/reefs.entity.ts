@@ -8,12 +8,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Region } from '../regions/regions.entity';
 import { User } from '../users/users.entity';
 // eslint-disable-next-line import/no-cycle
 import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
+// eslint-disable-next-line import/no-cycle
+import { Survey } from '../surveys/surveys.entity';
 
 @Entity()
 export class Reef {
@@ -69,4 +72,7 @@ export class Reef {
 
   @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)
   latestDailyData?: DailyData;
+
+  @OneToMany(() => Survey, (survey) => survey.reef)
+  surveys?: Survey;
 }
