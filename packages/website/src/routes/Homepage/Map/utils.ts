@@ -1,4 +1,4 @@
-import { L, DivIconOptions } from "leaflet";
+import L from "leaflet";
 import {
   colorFinder,
   degreeHeatingWeeksCalculator,
