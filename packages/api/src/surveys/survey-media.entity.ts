@@ -2,43 +2,36 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Index,
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { GeoJSON } from 'geojson';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Survey } from './surveys.entity';
-import { User } from '../users/users.entity';
+import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+
+export enum Observations {
+  Healthy = 'healthy',
+  PossibleDisease = 'possible-disease',
+  EvidentDisease = 'evident-disease',
+  Mortality = 'mortality',
+  Environmental = 'environmental',
+  Anthropogenic = 'anthropogenic',
+}
 
 @Entity()
-export class SurveyVideo {
+export class SurveyMedia {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('point')
-  @Index({ spatial: true })
-  location: GeoJSON;
-
   @Column()
   url: string;
-
-  @Column()
-  startTimestamp: Date;
-
-  @Column()
-  endTimestamp: Date;
-
-  @Column()
-  uploadTimestamp: Date;
 
   @Column({ default: 1 })
   quality: number;
 
   @Column()
-  important: boolean;
+  featured: boolean;
 
   @Column()
   hidden: boolean;
@@ -46,13 +39,18 @@ export class SurveyVideo {
   @Column('json')
   metadata: string;
 
+  @Column({
+    type: 'enum',
+    enum: Observations,
+  })
+  observations: string;
+
+  @Column()
+  comments: string;
+
   @ManyToOne(() => Survey, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'survey_id' })
   surveyId: Survey;
-
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
-  userId: User;
 
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'poi_id' })
