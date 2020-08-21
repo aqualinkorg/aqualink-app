@@ -32,8 +32,8 @@ export const coloredBuoyIcon = (degreeHeatingDays: number) => {
   const color = colorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
   return L.divIcon({
     iconSize: [24, 24],
-    iconAnchor: [24, 12],
-    popupAnchor: [-10, -12],
+    iconAnchor: [12, 28],
+    popupAnchor: [3, -24],
     html: `${coloredBuoy(color)}`,
     className: "marker-icon",
   });
