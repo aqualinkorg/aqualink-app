@@ -59,7 +59,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
               <Map polygon={reef.polygon} />
             </Grid>
             <Grid item xs={5}>
-              <Form changeTab={onPanelIndexChange} />
+              <Form reefId={reef.id} changeTab={onPanelIndexChange} />
             </Grid>
           </Grid>
           <Grid item xs={12}>
