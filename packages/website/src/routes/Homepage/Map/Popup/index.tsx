@@ -52,7 +52,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
           <Grid item xs={6}>
             <Grid container justify="flex-end" item xs={12}>
               <Typography variant="caption" color="textSecondary">
-                DEG. HEAT. DAYS
+                D. H. WEEKS
               </Typography>
             </Grid>
             <Grid container justify="flex-end" item xs={12}>
@@ -65,7 +65,10 @@ const Popup = ({ reef, classes }: PopupProps) => {
                 variant="h5"
                 color="textSecondary"
               >
-                {formatNumber(degreeHeatingDays, 1)}
+                {formatNumber(
+                  degreeHeatingWeeksCalculator(degreeHeatingDays),
+                  1
+                )}
               </Typography>
             </Grid>
           </Grid>

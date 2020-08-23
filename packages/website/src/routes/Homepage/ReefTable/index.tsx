@@ -20,7 +20,7 @@ interface Row {
   locationName: string | null;
   temp?: string | 0;
   depth: number | null;
-  dhd: number | null;
+  dhw: number | null;
   alert: string | null;
   tableData: {
     id: number;
@@ -90,21 +90,19 @@ const ReefTable = () => {
       ),
     },
     {
-      title: "DHD",
-      field: "dhd",
+      title: "DHW",
+      field: "dhw",
       type: "numeric",
       cellStyle,
       render: (rowData) => (
         <Typography
           style={{
             paddingLeft: "2rem",
-            color: rowData.dhd
-              ? `${colorFinder(degreeHeatingWeeksCalculator(rowData.dhd))}`
-              : "black",
+            color: rowData.dhw ? `${colorFinder(rowData.dhw)}` : "black",
           }}
           variant="subtitle1"
         >
-          {formatNumber(rowData.dhd, 1)}
+          {formatNumber(rowData.dhw, 1)}
         </Typography>
       ),
     },
@@ -132,7 +130,7 @@ const ReefTable = () => {
       locationName: value.name,
       temp: formatNumber(satelliteTemperature, 1),
       depth: value.depth,
-      dhd: degreeHeatingDays,
+      dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
       alert: "warning",
       tableData: {
         id: parseFloat(key),
