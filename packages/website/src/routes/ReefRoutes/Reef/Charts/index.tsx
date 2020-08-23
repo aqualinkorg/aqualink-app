@@ -58,7 +58,7 @@ const Charts = ({
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 130;
+    const top = position.top + tooltipModel.caretY - 110;
     const date =
       tooltipModel.dataPoints &&
       tooltipModel.dataPoints[0] &&
@@ -187,9 +187,13 @@ const Charts = ({
                   },
                   display: true,
                   ticks: {
-                    min: 0,
+                    min: temperatureThreshold
+                      ? Math.round(temperatureThreshold) - 5
+                      : null,
                     stepSize: 5,
-                    max: 40,
+                    max: temperatureThreshold
+                      ? Math.round(temperatureThreshold) + 5
+                      : null,
                     callback: (value: number) => {
                       return `${value}\u00B0  `;
                     },
