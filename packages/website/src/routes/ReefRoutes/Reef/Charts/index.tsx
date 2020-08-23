@@ -58,7 +58,7 @@ const Charts = ({
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 50;
+    const top = position.top + tooltipModel.caretY - 130;
     const date =
       tooltipModel.dataPoints &&
       tooltipModel.dataPoints[0] &&
@@ -198,7 +198,7 @@ const Charts = ({
             },
           }}
           height={chartHeight}
-          data={createChartData(chartLabels, surfaceTemperatureData, 5, true)}
+          data={createChartData(chartLabels, surfaceTemperatureData, true)}
         />
         {showTooltip ? (
           <div
