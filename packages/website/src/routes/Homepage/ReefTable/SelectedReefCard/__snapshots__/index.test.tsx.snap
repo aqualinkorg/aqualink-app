@@ -18,7 +18,139 @@ exports[`renders as expected 1`] = `
         class="MuiPaper-root SelectedReefCard-selectedReef-2 MuiPaper-elevation3 MuiPaper-rounded"
       >
         <div
-          class="SelectedReefCard-loading-3"
+          class="MuiGrid-root SelectedReefCard-card-4 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+          >
+            <div
+              class="MuiCardMedia-root SelectedReefCard-cardImage-5"
+              style="background-image: url(reef-image.jpg);"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+                style="padding: 0.5rem 0px 0px 0.5rem;"
+              />
+              <h6
+                class="MuiTypography-root MuiTypography-h6 MuiTypography-colorTextSecondary"
+                style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
+              />
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
+                style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
+              >
+                MEAN DAILY SURFACE TEMPERATURE (C°)
+              </h6>
+              Mock-Line
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2"
+            style="padding-left: 2rem;"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <span
+                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              >
+                TEMP AT 0M
+              </span>
+              <h4
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
+              >
+                39.0 ℃
+              </h4>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <span
+                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              >
+                SURFACE TEMP
+              </span>
+              <h4
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
+              >
+                29.0 ℃
+              </h4>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <span
+                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              >
+                D. H. WEEKS
+              </span>
+              <h4
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
+              >
+                4.9
+              </h4>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <a
+                href="/reefs/2"
+                style="text-decoration: none;"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label"
+                  >
+                    EXPLORE
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders loading as expected 1`] = `
+<div>
+  <div
+    class="SelectedReefCard-root-7"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+      style="margin: 0px 0px 0.5rem 1.5rem;"
+    >
+      Featured Reef
+    </h5>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+    >
+      <div
+        class="MuiPaper-root SelectedReefCard-selectedReef-8 MuiPaper-elevation3 MuiPaper-rounded"
+      >
+        <div
+          class="SelectedReefCard-loading-9"
         >
           <div
             class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
