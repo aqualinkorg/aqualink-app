@@ -16,7 +16,10 @@ import type { Data } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import satellite from "../../../../assets/satellite.svg";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
+import {
+  colorFinder,
+  degreeHeatingWeeksCalculator,
+} from "../../../../helpers/degreeHeatingWeeks";
 
 const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
@@ -25,7 +28,10 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
   return (
-    <Card className={classes.card}>
+    <Card
+      className={classes.card}
+      style={{ backgroundColor: colorFinder(degreeHeatingWeeks) }}
+    >
       <CardHeader
         className={classes.header}
         title={
@@ -118,7 +124,6 @@ const styles = (theme: Theme) =>
     card: {
       height: "100%",
       width: "100%",
-      backgroundColor: "#0c9da5",
       display: "flex",
       flexDirection: "column",
     },
