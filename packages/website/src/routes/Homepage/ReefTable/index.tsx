@@ -146,7 +146,7 @@ const ReefTable = () => {
           <SelectedReefCard reef={selectedReef} />
         )}
       {reefsList && reefsList.length > 0 && (
-        <Grid style={{ marginTop: "2rem" }} item xs={12}>
+        <Grid item xs={12}>
           <MaterialTable
             icons={{
               SortArrow: forwardRef((props, ref) => (

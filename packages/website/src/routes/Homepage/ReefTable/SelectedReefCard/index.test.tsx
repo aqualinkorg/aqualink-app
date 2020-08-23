@@ -16,7 +16,7 @@ jest.mock("react-chartjs-2", () => ({
 
 test("renders as expected", () => {
   const reef: Reef = {
-    id: 0,
+    id: 2,
     name: "",
     polygon: {
       coordinates: [0, 0],

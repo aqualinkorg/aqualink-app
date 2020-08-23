@@ -18,112 +18,26 @@ exports[`renders as expected 1`] = `
         class="MuiPaper-root SelectedReefCard-selectedReef-2 MuiPaper-elevation3 MuiPaper-rounded"
       >
         <div
-          class="MuiGrid-root SelectedReefCard-card-3 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="SelectedReefCard-loading-3"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+            class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+            role="progressbar"
+            style="width: 6rem; height: 6rem;"
           >
-            <div
-              class="MuiCardMedia-root SelectedReefCard-cardImage-4"
-              style="background-image: url(reef-image.jpg);"
-            />
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            <svg
+              class="MuiCircularProgress-svg"
+              viewBox="22 22 44 44"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
-                style="padding: 0.5rem 0px 0px 0.5rem;"
+              <circle
+                class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                cx="44"
+                cy="44"
+                fill="none"
+                r="21.5"
+                stroke-width="1"
               />
-              <h6
-                class="MuiTypography-root MuiTypography-h6 MuiTypography-colorTextSecondary"
-                style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
-              />
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <h6
-                class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
-                style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
-              >
-                MEAN DAILY SURFACE TEMPERATURE (C°)
-              </h6>
-              Mock-Line
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2"
-            style="padding-left: 2rem;"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
-              >
-                TEMP AT 0M
-              </span>
-              <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
-              >
-                39.0 ℃
-              </h4>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
-              >
-                SURFACE TEMP
-              </span>
-              <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
-              >
-                29.0 ℃
-              </h4>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
-              >
-                D. H. WEEKS
-              </span>
-              <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
-              >
-                4.9
-              </h4>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <a
-                href="/reefs/0"
-                style="text-decoration: none;"
-              >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
-                  tabindex="0"
-                  type="button"
-                >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    EXPLORE
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
-                </button>
-              </a>
-            </div>
+            </svg>
           </div>
         </div>
       </div>
