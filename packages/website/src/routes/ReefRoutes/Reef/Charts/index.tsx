@@ -117,6 +117,7 @@ const Charts = ({
         <Line
           ref={temperatureChartRef}
           options={{
+            maintainAspectRatio: false,
             plugins: {
               chartJsPluginBarchartBackground: {
                 color: "rgb(158, 166, 170, 0.07)",
@@ -228,7 +229,7 @@ const Charts = ({
 const styles = () =>
   createStyles({
     root: {
-      height: "100%",
+      height: "16rem",
     },
     graphTitle: {
       lineHeight: 1.5,
