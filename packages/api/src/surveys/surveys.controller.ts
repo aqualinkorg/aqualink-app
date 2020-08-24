@@ -7,6 +7,7 @@ import {
   Param,
   ParseIntPipe,
   Get,
+  Put,
 } from '@nestjs/common';
 import { AcceptFile } from '../uploads/file.decorator';
 import { Auth } from '../auth/auth.decorator';
@@ -16,6 +17,8 @@ import { Survey } from './surveys.entity';
 import { SurveysService } from './surveys.service';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { SurveyMedia } from './survey-media.entity';
+import { EditSurveyDto } from './dto/edit-survey.dto';
+import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 
 @Controller('surveys')
 export class SurveysController {
@@ -54,5 +57,21 @@ export class SurveysController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) surveyId: number): Promise<Survey> {
     return this.surveyService.findOne(surveyId);
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) surveyId: number,
+    @Body() editSurveyDto: EditSurveyDto,
+  ): Promise<Survey> {
+    return this.surveyService.update(editSurveyDto, surveyId);
+  }
+
+  @Put('media/:id')
+  updateMedia(
+    @Param('id', ParseIntPipe) mediaId: number,
+    @Body() editSurveyMediaDto: EditSurveyMediaDto,
+  ): Promise<SurveyMedia> {
+    return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
   }
 }

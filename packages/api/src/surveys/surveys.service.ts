@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Survey } from './surveys.entity';
@@ -7,6 +11,8 @@ import { User } from '../users/users.entity';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { SurveyMedia, MediaType } from './survey-media.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { EditSurveyDto } from './dto/edit-survey.dto';
+import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 
 @Injectable()
 export class SurveysService {
@@ -21,6 +27,7 @@ export class SurveysService {
     private poiRepository: Repository<ReefPointOfInterest>,
   ) {}
 
+  // Create a survey
   async create(createSurveyDto: CreateSurveyDto, user: User): Promise<Survey> {
     const survey = await this.surveyRepository.save({
       userId: user,
@@ -32,6 +39,7 @@ export class SurveysService {
     return survey;
   }
 
+  // Create a survey media (video or image)
   async createMedia(
     createSurveyMediaDto: CreateSurveyMediaDto,
     surveyId: number,
@@ -48,6 +56,7 @@ export class SurveysService {
     });
   }
 
+  // Find all surveys related to a specific reef.
   async find(reefId: number): Promise<Survey[]> {
     const surveyHistoryQuery = await this.surveyRepository
       .createQueryBuilder('survey')
@@ -67,6 +76,7 @@ export class SurveysService {
         diveDate: survey.diveDate,
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
+        // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
           (surveyDailyData && surveyDailyData.avgBottomTemperature),
@@ -74,6 +84,8 @@ export class SurveysService {
     });
   }
 
+  // Find one survey provided its id
+  // Include its surveyMedia grouped by reefPointOfInterest
   async findOne(surveyId: number): Promise<Survey> {
     const survey = await this.surveyRepository.findOne(surveyId);
     const reefPointsOfInterest = await this.poiRepository
@@ -101,5 +113,40 @@ export class SurveysService {
     };
 
     return returnValue;
+  }
+
+  async update(editSurveyDto: EditSurveyDto, surveyId: number) {
+    const result = await this.surveyRepository.update(surveyId, editSurveyDto);
+
+    if (!result.affected) {
+      throw new NotFoundException(`Survey with id ${surveyId} was not found`);
+    }
+    const updated = await this.surveyRepository.findOne(surveyId);
+
+    if (!updated) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
+
+    return updated;
+  }
+
+  async updateMedia(editSurveyMediaDto: EditSurveyMediaDto, mediaId: number) {
+    const result = await this.surveyMediaRepository.update(
+      mediaId,
+      editSurveyMediaDto,
+    );
+
+    if (!result.affected) {
+      throw new NotFoundException(
+        `Survey media with id ${mediaId} was not found`,
+      );
+    }
+    const updated = await this.surveyMediaRepository.findOne(mediaId);
+
+    if (!updated) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
+
+    return updated;
   }
 }
