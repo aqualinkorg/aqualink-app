@@ -7,7 +7,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import { Survey } from './surveys.entity';
+// eslint-disable-next-line import/no-cycle
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
 export enum Observations {
@@ -17,6 +19,11 @@ export enum Observations {
   Mortality = 'mortality',
   Environmental = 'environmental',
   Anthropogenic = 'anthropogenic',
+}
+
+export enum MediaType {
+  Video = 'video',
+  Image = 'image',
 }
 
 @Entity()
@@ -43,7 +50,7 @@ export class SurveyMedia {
     type: 'enum',
     enum: Observations,
   })
-  observations: string;
+  observations: Observations;
 
   @Column()
   comments: string;
@@ -51,6 +58,12 @@ export class SurveyMedia {
   @ManyToOne(() => Survey, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'survey_id' })
   surveyId: Survey;
+
+  @Column({
+    type: 'enum',
+    enum: MediaType,
+  })
+  type: MediaType;
 
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'poi_id' })

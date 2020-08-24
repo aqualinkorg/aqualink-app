@@ -47,7 +47,12 @@ export class SurveysController {
   }
 
   @Get('reefs/:id')
-  findOne(@Param('id', ParseIntPipe) reefId: number): Promise<any> {
+  find(@Param('id', ParseIntPipe) reefId: number): Promise<Survey[]> {
     return this.surveyService.find(reefId);
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) surveyId: number): Promise<Survey> {
+    return this.surveyService.findOne(surveyId);
   }
 }

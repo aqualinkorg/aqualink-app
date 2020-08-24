@@ -5,9 +5,8 @@ import { Survey } from './surveys.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { User } from '../users/users.entity';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
-import { SurveyMedia } from './survey-media.entity';
-import { Reef } from '../reefs/reefs.entity';
-import { DailyData } from '../reefs/daily-data.entity';
+import { SurveyMedia, MediaType } from './survey-media.entity';
+import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
 @Injectable()
 export class SurveysService {
@@ -18,8 +17,8 @@ export class SurveysService {
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository: Repository<SurveyMedia>,
 
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
+    @InjectRepository(ReefPointOfInterest)
+    private poiRepository: Repository<ReefPointOfInterest>,
   ) {}
 
   async create(createSurveyDto: CreateSurveyDto, user: User): Promise<Survey> {
@@ -43,7 +42,8 @@ export class SurveysService {
     }
 
     return this.surveyMediaRepository.save({
-      survey,
+      surveyId: survey,
+      type: MediaType.Image,
       ...createSurveyMediaDto,
     });
   }
@@ -63,6 +63,7 @@ export class SurveysService {
     return surveyHistoryQuery.map((survey) => {
       const surveyDailyData = survey.latestDailyData;
       return {
+        id: survey.id,
         diveDate: survey.diveDate,
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
@@ -71,5 +72,34 @@ export class SurveysService {
           (surveyDailyData && surveyDailyData.avgBottomTemperature),
       };
     });
+  }
+
+  async findOne(surveyId: number): Promise<Survey> {
+    const survey = await this.surveyRepository.findOne(surveyId);
+    const reefPointsOfInterest = await this.poiRepository
+      .createQueryBuilder('poi')
+      .leftJoinAndSelect('poi.surveyMedia', 'surveyMedia')
+      .where('surveyMedia.surveyId = :surveyId', { surveyId })
+      .select([
+        'surveyMedia.url',
+        'surveyMedia.id',
+        'surveyMedia.featured',
+        'surveyMedia.type',
+        'surveyMedia.observations',
+        'surveyMedia.comments',
+      ])
+      .addSelect(['poi.id', 'poi.imageUrl', 'poi.name'])
+      .getMany();
+
+    if (!survey) {
+      throw new NotFoundException(`Survey with id ${surveyId} was not found`);
+    }
+
+    const returnValue: Survey = {
+      surveyPoints: reefPointsOfInterest,
+      ...survey,
+    };
+
+    return returnValue;
   }
 }

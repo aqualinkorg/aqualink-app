@@ -15,6 +15,9 @@ export class MergeSurveyMediaTables1597997348694 implements MigrationInterface {
       `,
     );
     await queryRunner.query(
+      `CREATE TYPE "survey_media_type_enum" AS ENUM('video', 'image')`,
+    );
+    await queryRunner.query(
       `
       CREATE TABLE "survey_media" (
         "id" SERIAL NOT NULL,
@@ -25,6 +28,7 @@ export class MergeSurveyMediaTables1597997348694 implements MigrationInterface {
         "metadata" json NOT NULL,
         "observations" "survey_media_observations_enum" NOT NULL,
         "comments" character varying NOT NULL,
+        "type" "survey_media_type_enum" NOT NULL,
         "created_at" TIMESTAMP NOT NULL DEFAULT now(),
         "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
         "survey_id" integer,
@@ -61,7 +65,7 @@ export class MergeSurveyMediaTables1597997348694 implements MigrationInterface {
     );
     await queryRunner.query(`DROP TABLE "survey_media"`);
     await queryRunner.query(`DROP TYPE "survey_media_observations_enum"`);
-
+    await queryRunner.query(`DROP TYPE "survey_media_type_enum"`);
     await queryRunner.query(
       `
       CREATE TABLE "survey_image" (
