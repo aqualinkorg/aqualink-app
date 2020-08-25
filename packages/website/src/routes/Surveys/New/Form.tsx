@@ -66,7 +66,9 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
 
   const handleDiveDateChange = (date: Date | null) => {
     setDiveDate(
-      `${date?.getMonth()}/${date?.getDate()}/${date?.getFullYear()}`
+      `${
+        date ? date.getMonth() + 1 : ""
+      }/${date?.getDate()}/${date?.getFullYear()}`
     );
   };
   const handleDiveTimeChange = (date: Date | null) => {
