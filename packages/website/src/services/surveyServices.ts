@@ -7,6 +7,12 @@ const getSurvey = (surveyId: string) =>
     method: "GET",
   });
 
+const getSurveys = (reefId: string) =>
+  requests.send<SurveyState[]>({
+    url: `surveys/reefs/${reefId}`,
+    method: "GET",
+  });
+
 const addSurvey = (surveyData: SurveyData) => {
   return requests.send<SurveyState>({
     url: `surveys`,
@@ -16,4 +22,4 @@ const addSurvey = (surveyData: SurveyData) => {
   });
 };
 
-export default { addSurvey, getSurvey };
+export default { addSurvey, getSurvey, getSurveys };
