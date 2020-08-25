@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const addSurvey = (surveyData: SurveyData, token?: string | null) =>
   axios({
@@ -11,10 +11,10 @@ const addSurvey = (surveyData: SurveyData, token?: string | null) =>
   });
 
 export interface SurveyData {
-  reef: number,
-  diveDate: string,
-  weatherConditions: string,
-  comments?: string
+  reef: number;
+  diveDate: string;
+  weatherConditions: string;
+  comments?: string;
 }
 
 export default { addSurvey };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
-import surveyServices, { SurveyData } from "../../../services/surveyServices";
 import {
   withStyles,
   WithStyles,
@@ -24,6 +23,7 @@ import Alert from "@material-ui/lab/Alert";
 import CloseIcon from "@material-ui/icons/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import surveyServices, { SurveyData } from "../../../services/surveyServices";
 
 import {
   diveLocationSelector,
@@ -65,7 +65,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
         reef: reefId,
         diveDate: diveDateTime,
         weatherConditions,
-        comments
+        comments,
       };
       surveyServices
         .addSurvey(surveyData, user?.token)
@@ -341,7 +341,7 @@ const styles = () =>
 
 interface SurveyFormIncomingProps {
   changeTab: (index: number) => void;
-  reefId: (number);
+  reefId: number;
 }
 
 type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
