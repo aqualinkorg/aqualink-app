@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { NotFound } from "../../routes/NotFound";
 import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
+import Monitoring from "../../routes/Monitoring";
 import theme from "./theme";
 import "./App.css";
 import { getSelf } from "../../store/User/userSlice";
@@ -34,6 +35,7 @@ function App() {
           {render && (
             <Switch>
               <Route exact path="/" component={HomePage} />
+              <Route exact path="/monitoring" component={Monitoring} />
               <Route path="/reefs" component={ReefRoutes} />
               <Route default component={NotFound} />
             </Switch>
