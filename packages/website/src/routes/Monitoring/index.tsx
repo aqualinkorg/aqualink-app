@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Grid, withStyles, WithStyles, createStyles } from "@material-ui/core";
+import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
 import { reefRequest } from "../../store/Reefs/selectedReefSlice";
+
+import fullDiagramBuoy from "../../assets/img/fulldiag3_1.svg";
+import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
+import reefdetailpage from "../../assets/img/reefdetailpage.jpg";
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
@@ -23,7 +27,7 @@ const Monitoring = ({ classes }: MonitoringProps) => {
         <div className="container bloc-md">
           <div className="row align-items-center">
             <div className="lcolpad col-12 col">
-              <h4 className="mg-md">Aqualink Monitoring System</h4>
+              <h4 className="mg-md">Monitoring System</h4>
               <p className="text-lg-left">
                 Current global ocean temperature monitoring systems are
                 restricted to satellite-derived surface temperatures which only
@@ -43,8 +47,7 @@ const Monitoring = ({ classes }: MonitoringProps) => {
             </div>
             <div className="col-lg-12 offset-lg-0">
               <img
-                src="../img/lazyload-ph.png"
-                data-src="../img/fulldiag3_1.svg"
+                src={fullDiagramBuoy}
                 className="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
                 alt="bouydiagram2"
               />
@@ -70,8 +73,7 @@ const Monitoring = ({ classes }: MonitoringProps) => {
               <div className="row">
                 <div className="order-1 col-12 col-lg-8">
                   <img
-                    src="../img/lazyload-ph.png"
-                    data-src="../img/reefdetailpage.jpg"
+                    src={reefdetailpage}
                     className="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
                     alt="bouydiagram2"
                   />
@@ -147,8 +149,7 @@ const Monitoring = ({ classes }: MonitoringProps) => {
             </div>
             <div className="col-lg-12">
               <img
-                src="../img/lazyload-ph.png"
-                data-src="../img/fulldiag3.svg"
+                src={fullDiagramInfra}
                 className="img-fluid mx-auto d-block img-responsive diagram lazyload"
                 alt="Asset%204"
               />
@@ -163,6 +164,7 @@ const Monitoring = ({ classes }: MonitoringProps) => {
 const styles = () =>
   createStyles({
     root: {
+      top: 10,
       height: "100%",
     },
     map: {

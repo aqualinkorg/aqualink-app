@@ -9,6 +9,9 @@ import ReefRoutes from "../../routes/ReefRoutes";
 import Monitoring from "../../routes/Monitoring";
 import theme from "./theme";
 import "./App.css";
+import "../../assets/css/bootstrap.css";
+import "../../assets/css/font-awesome.min.css";
+import "../../assets/css/leaflet.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
 
