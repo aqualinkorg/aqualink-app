@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Get,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { AcceptFile } from '../uploads/file.decorator';
 import { Auth } from '../auth/auth.decorator';
@@ -73,5 +74,15 @@ export class SurveysController {
     @Body() editSurveyMediaDto: EditSurveyMediaDto,
   ): Promise<SurveyMedia> {
     return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIntPipe) surveyId: number): Promise<void> {
+    return this.surveyService.delete(surveyId);
+  }
+
+  @Delete('media/:id')
+  deleteMedia(@Param('id', ParseIntPipe) mediaId: number): Promise<void> {
+    return this.surveyService.deleteMedia(mediaId);
   }
 }

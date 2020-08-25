@@ -115,7 +115,10 @@ export class SurveysService {
     return returnValue;
   }
 
-  async update(editSurveyDto: EditSurveyDto, surveyId: number) {
+  async update(
+    editSurveyDto: EditSurveyDto,
+    surveyId: number,
+  ): Promise<Survey> {
     const result = await this.surveyRepository.update(surveyId, editSurveyDto);
 
     if (!result.affected) {
@@ -130,7 +133,10 @@ export class SurveysService {
     return updated;
   }
 
-  async updateMedia(editSurveyMediaDto: EditSurveyMediaDto, mediaId: number) {
+  async updateMedia(
+    editSurveyMediaDto: EditSurveyMediaDto,
+    mediaId: number,
+  ): Promise<SurveyMedia> {
     const result = await this.surveyMediaRepository.update(
       mediaId,
       editSurveyMediaDto,
@@ -148,5 +154,23 @@ export class SurveysService {
     }
 
     return updated;
+  }
+
+  async delete(surveyId: number): Promise<void> {
+    const result = await this.surveyRepository.delete(surveyId);
+
+    if (!result.affected) {
+      throw new NotFoundException(`Survey with id ${surveyId} was not found`);
+    }
+  }
+
+  async deleteMedia(mediaId: number): Promise<void> {
+    const result = await this.surveyMediaRepository.delete(mediaId);
+
+    if (!result.affected) {
+      throw new NotFoundException(
+        `Survey media with id ${mediaId} was not found`,
+      );
+    }
   }
 }
