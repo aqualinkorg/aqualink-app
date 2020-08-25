@@ -1,20 +1,19 @@
-import axios from 'axios';
+import type { SurveyState, SurveyData } from "../store/Survey/types";
+import requests from "../helpers/requests";
 
-const addSurvey = (surveyData: SurveyData, token?: string | null) =>
-  axios({
-    method: "POST",
-    url: `${process.env.REACT_APP_API_BASE_URL}surveys`,
-    data: surveyData,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+const getSurvey = (surveyId: string) =>
+  requests.send<SurveyState>({
+    url: `surveys/${surveyId}`,
+    method: "GET",
   });
 
-export interface SurveyData {
-  reef: number,
-  diveDate: string,
-  weatherConditions: string,
-  comments?: string
-}
+const addSurvey = (surveyData: SurveyData) => {
+  return requests.send<SurveyState>({
+    url: `surveys`,
+    method: "POST",
+    data: { ...surveyData, token: undefined },
+    token: surveyData.token === null ? undefined : surveyData.token,
+  });
+};
 
-export default { addSurvey };
+export default { addSurvey, getSurvey };

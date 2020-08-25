@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
-import surveyServices, { SurveyData } from "../../../services/surveyServices";
+import React, { useState, useCallback, ChangeEvent } from "react";
+
 import {
   withStyles,
   WithStyles,
@@ -21,36 +21,27 @@ import {
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import DateFnsUtils from "@date-io/date-fns";
 import Alert from "@material-ui/lab/Alert";
-import CloseIcon from "@material-ui/icons/Close";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-
+import { SurveyData } from "../../../store/Survey/types";
 import {
   diveLocationSelector,
-  setSurveyData,
-  commentsSelector,
-  diveDateTimeSelector,
-  weatherConditionsSelector,
+  surveyErrorSelector,
+  surveyAddRequest,
 } from "../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 
 const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
-  const surveyDiveDateTime = useSelector(diveDateTimeSelector);
-  const surveyWeatherConditions = useSelector(weatherConditionsSelector);
-  const surveyComments = useSelector(commentsSelector);
   const user = useSelector(userInfoSelector);
   const [diveDate, setDiveDate] = useState<string | null>(null);
   const [diveTime, setDiveTime] = useState<string | null>(null);
   const [weather, setWeather] = useState<string>("calm");
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertSeverity, setAlertSeverity] = useState<
-    "success" | "error" | "info" | "warning" | undefined
-  >(undefined);
-  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const surveyError = useSelector(surveyErrorSelector);
+
   const dispatch = useDispatch();
 
-  const { register, errors, handleSubmit, reset, setValue } = useForm({
+  const { register, errors, handleSubmit, reset } = useForm({
     reValidateMode: "onSubmit",
   });
 
@@ -65,25 +56,10 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
         reef: reefId,
         diveDate: diveDateTime,
         weatherConditions,
-        comments
+        comments,
+        token: user?.token,
       };
-      surveyServices
-        .addSurvey(surveyData, user?.token)
-        .then(() => {
-          dispatch(
-            setSurveyData({
-              diveDateTime,
-              comments,
-              weatherConditions,
-            })
-          );
-          changeTab(1);
-        })
-        .catch((err) => {
-          setAlertMessage("There was an error creating the survey.");
-          setAlertSeverity("error");
-          setAlertOpen(true);
-        });
+      dispatch(surveyAddRequest({ surveyData, changeTab }));
     },
     [dispatch, weather, changeTab, user, reefId]
   );
@@ -109,40 +85,17 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
     });
   };
 
-  useEffect(() => {
-    if (surveyWeatherConditions) {
-      setWeather(surveyWeatherConditions);
-    }
-    if (surveyComments) {
-      setValue("comments", surveyComments);
-    }
-    if (surveyDiveDateTime) {
-      const date = new Date(surveyDiveDateTime);
-      setDiveDate(`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`);
-      setDiveTime(`${date.getHours()}:${date.getMinutes()}`);
-    }
-  }, [surveyWeatherConditions, surveyComments, surveyDiveDateTime, setValue]);
-
   return (
     <>
       <Grid item xs={12}>
-        <Collapse in={alertOpen}>
+        <Collapse in={!!surveyError}>
           <Alert
-            severity={alertSeverity}
+            severity="error"
             action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  setAlertOpen(false);
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
+              <IconButton aria-label="close" color="inherit" size="small" />
             }
           >
-            {alertMessage}
+            There was an error creating the survey.
           </Alert>
         </Collapse>
       </Grid>
@@ -341,7 +294,7 @@ const styles = () =>
 
 interface SurveyFormIncomingProps {
   changeTab: (index: number) => void;
-  reefId: (number);
+  reefId: number;
 }
 
 type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
