@@ -4,10 +4,12 @@ interface DiveLocation {
 }
 
 export interface SurveyState {
+  id?: number;
   diveLocation?: DiveLocation | null;
-  diveDateTime?: string | null;
+  diveDate?: string | null;
   weatherConditions?: string;
   comments?: string;
+  temperature?: string;
 }
 
 export interface SurveyData {

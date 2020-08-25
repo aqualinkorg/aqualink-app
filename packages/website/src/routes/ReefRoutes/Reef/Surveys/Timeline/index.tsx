@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -21,11 +23,23 @@ import {
   TimelineOppositeContent,
 } from "@material-ui/lab";
 
+import {
+  surveyListSelector,
+  surveysRequest,
+} from "../../../../../store/Survey/surveyListSlice";
+
 import { Link } from "react-router-dom";
 
 import reefImage from "../../../../../assets/reef-image.jpg";
 
 const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
+  const dispatch = useDispatch();
+  const surveyList = useSelector(surveyListSelector);
+
+  useEffect(() => {
+    dispatch(surveysRequest(`${reefId}`));
+  }, [dispatch, reefId]);
+
   return (
     <div className={classes.root}>
       <Timeline>
@@ -48,82 +62,113 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
             </TimelineContent>
           </TimelineItem>
         )}
-        <TimelineItem className={classes.timelineItem}>
-          <TimelineOppositeContent>
-            <Typography variant="h6" className={classes.dates}>
-              05/10/2020
-            </Typography>
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <hr className={classes.connector} />
-            <TimelineDot variant="outlined" className={classes.dot} />
-            <hr className={classes.connector} />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Grid container item xs={12}>
-              <Paper elevation={0} className={classes.surveyCard}>
-                <Grid
-                  style={{ height: "100%" }}
-                  container
-                  alignItems="center"
-                  justify="space-between"
-                  item
-                  xs={12}
-                >
-                  <Grid style={{ height: "100%" }} item xs={4}>
-                    <CardMedia
-                      className={classes.cardImage}
-                      image={reefImage}
-                    />
-                  </Grid>
-                  <Grid container item xs={7} spacing={1}>
-                    <Grid container alignItems="center" item xs={12}>
-                      <Grid item xs={5}>
-                        <Typography className={classes.cardFields} variant="h6">
-                          User:
-                        </Typography>
+        {surveyList &&
+          surveyList.map((survey) => (
+            <TimelineItem key={survey.id} className={classes.timelineItem}>
+              {survey.diveDate && (
+                <TimelineOppositeContent>
+                  <Typography variant="h6" className={classes.dates}>
+                    {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
+                  </Typography>
+                </TimelineOppositeContent>
+              )}
+              <TimelineSeparator>
+                <hr className={classes.connector} />
+                <TimelineDot variant="outlined" className={classes.dot} />
+                <hr className={classes.connector} />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Grid container item xs={12}>
+                  <Paper elevation={0} className={classes.surveyCard}>
+                    <Grid
+                      style={{ height: "100%" }}
+                      container
+                      alignItems="center"
+                      justify="space-between"
+                      item
+                      xs={12}
+                    >
+                      <Grid style={{ height: "100%" }} item xs={4}>
+                        <CardMedia
+                          className={classes.cardImage}
+                          image={reefImage}
+                        />
                       </Grid>
-                      <Grid item xs={6}>
-                        <Typography className={classes.cardValues} variant="h6">
-                          Dr. Rory Kreiger
-                        </Typography>
+                      <Grid container item xs={7} spacing={1}>
+                        <Grid container alignItems="center" item xs={12}>
+                          <Grid item xs={5}>
+                            <Typography
+                              className={classes.cardFields}
+                              variant="h6"
+                            >
+                              User:
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography
+                              className={classes.cardValues}
+                              variant="h6"
+                            >
+                              Dr. Rory Kreiger
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        {survey.comments && (
+                          <Grid container alignItems="center" item xs={12}>
+                            <Grid item xs={5}>
+                              <Typography
+                                className={classes.cardFields}
+                                variant="h6"
+                              >
+                                Comments:
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography
+                                className={classes.cardValues}
+                                variant="h6"
+                              >
+                                {survey.comments}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        )}
+                        {survey.temperature && (
+                          <Grid container alignItems="center" item xs={12}>
+                            <Grid item xs={5}>
+                              <Typography
+                                className={classes.cardFields}
+                                variant="h6"
+                              >
+                                Temp:
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography
+                                className={classes.cardValues}
+                                variant="h6"
+                              >
+                                {`${survey.temperature} \u2103`}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        )}
+                        <Grid item xs={5}>
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            color="primary"
+                          >
+                            VIEW DETAILS
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Grid>
-                    <Grid container alignItems="center" item xs={12}>
-                      <Grid item xs={5}>
-                        <Typography className={classes.cardFields} variant="h6">
-                          Comments:
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography className={classes.cardValues} variant="h6">
-                          Severe bleaching
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid container alignItems="center" item xs={12}>
-                      <Grid item xs={5}>
-                        <Typography className={classes.cardFields} variant="h6">
-                          Temp:
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Typography className={classes.cardValues} variant="h6">
-                          {"30.1 \u2103"}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Button size="small" variant="outlined" color="primary">
-                        VIEW DETAILS
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  </Paper>
                 </Grid>
-              </Paper>
-            </Grid>
-          </TimelineContent>
-        </TimelineItem>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
       </Timeline>
     </div>
   );
