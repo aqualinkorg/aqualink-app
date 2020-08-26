@@ -50,7 +50,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          LOCATION NAME
+                          REEF NAME
                         </div>
                         <svg
                           aria-hidden="true"
@@ -214,15 +214,17 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     index="0"
                     level="0"
                     path="0"
+                    scrollwidth="0"
                     style="transition: all ease 300ms; cursor: pointer;"
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
                       value="Mock Reef Hartmann"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary MuiTypography-alignLeft"
                         style="padding-right: 1.5rem;"
                       >
                         Mock Reef Hartmann
@@ -230,6 +232,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
                       value="- -"
                     >
@@ -243,6 +246,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
                       value="19"
                     >
@@ -256,6 +260,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
                       value="2.857142857142857"
                     >
@@ -268,14 +273,15 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
-                      value="warning"
+                      value="2.857142857142857"
                     >
                       <svg
                         aria-hidden="true"
                         class="MuiSvgIcon-root"
                         focusable="false"
-                        style="color: rgb(22, 141, 189); padding-right: 2rem;"
+                        style="color: rgb(12, 157, 165); padding-right: 2rem;"
                         viewBox="0 0 24 24"
                       >
                         <path
