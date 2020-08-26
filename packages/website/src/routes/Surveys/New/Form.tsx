@@ -234,10 +234,10 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
             <MenuItem className={classes.textField} value="calm">
               Calm
             </MenuItem>
-            <MenuItem className={classes.textField} value="wavy">
+            <MenuItem className={classes.textField} value="waves">
               Waves
             </MenuItem>
-            <MenuItem className={classes.textField} value="stormy">
+            <MenuItem className={classes.textField} value="storm">
               Stormy
             </MenuItem>
           </Select>
