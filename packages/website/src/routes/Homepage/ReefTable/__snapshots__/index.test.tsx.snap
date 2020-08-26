@@ -176,7 +176,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          DHD
+                          DHW
                         </div>
                         <svg
                           aria-hidden="true"
@@ -252,11 +252,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
+                      value="- -"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-h6"
                         style="color: rgb(22, 141, 189); padding-left: 2rem;"
                       >
+                        - -
                          ℃
                       </h6>
                     </td>
@@ -276,13 +278,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: center;"
-                      value="20"
+                      value="2.857142857142857"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1"
                         style="padding-left: 2rem; color: rgb(12, 157, 165);"
                       >
-                        20.0
+                        2.9
                       </h6>
                     </td>
                     <td

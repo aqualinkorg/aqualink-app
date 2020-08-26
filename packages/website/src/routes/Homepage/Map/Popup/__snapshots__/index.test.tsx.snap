@@ -58,7 +58,7 @@ exports[`renders as expected 1`] = `
             <span
               class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
             >
-              DEG. HEAT. DAYS
+              D. H. WEEKS
             </span>
           </div>
           <div
@@ -68,7 +68,7 @@ exports[`renders as expected 1`] = `
               class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
               style="color: rgb(8, 91, 163);"
             >
-              10.0
+              1.4
             </h5>
           </div>
         </div>
