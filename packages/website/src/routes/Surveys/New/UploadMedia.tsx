@@ -20,7 +20,12 @@ import MediaCard from "./MediaCard";
 import uploadServices from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 
-const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
+const UploadMedia = ({
+  reefId,
+  reefName,
+  changeTab,
+  classes,
+}: UploadMediaProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
@@ -68,6 +73,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
       const formData = new FormData();
       formData.append("file", file);
       setLoading(true);
+      // Should grab response and implement post to survey media here
       uploadServices
         .uploadMedia(formData, user?.token)
         .then(() => {
@@ -138,6 +144,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
+        reefId={reefId}
         key={preview}
         index={index}
         preview={preview}
@@ -278,6 +285,7 @@ const styles = () =>
 interface UploadMediaIncomingProps {
   changeTab: (index: number) => void;
   reefName: string | null;
+  reefId: number;
 }
 
 interface Metadata {

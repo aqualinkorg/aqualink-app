@@ -1,34 +1,3 @@
-const surveyPointOptions = [
-  {
-    key: "left",
-    value: "Left reef mass",
-  },
-  {
-    key: "right",
-    value: "Right reef mass",
-  },
-  {
-    key: "center",
-    value: "Center area",
-  },
-  {
-    key: "A",
-    value: "Point of interest A",
-  },
-  {
-    key: "B",
-    value: "Point of interest B",
-  },
-  {
-    key: "C",
-    value: "Point of interest C",
-  },
-  {
-    key: "D",
-    value: "Point of interest D",
-  },
-];
-
 const observationOptions = [
   {
     key: "healthy",
@@ -57,4 +26,4 @@ const observationOptions = [
   },
 ];
 
-export { surveyPointOptions, observationOptions };
+export default observationOptions;

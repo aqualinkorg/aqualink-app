@@ -68,7 +68,11 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UploadMedia reefName={reef.name} changeTab={onPanelIndexChange} />
+        <UploadMedia
+          reefName={reef.name}
+          reefId={reef.id}
+          changeTab={onPanelIndexChange}
+        />
       </TabPanel>
     </SwipeableViews>
   );
