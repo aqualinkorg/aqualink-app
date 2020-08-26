@@ -21,7 +21,6 @@ interface Row {
   temp?: string | 0;
   depth: number | null;
   dhw: number | null;
-  alert: string | null;
   tableData: {
     id: number;
   };
@@ -36,13 +35,13 @@ const ReefTable = () => {
   const headerStyle: CSSProperties = {
     backgroundColor: "#cacbd1",
     color: "black",
-    textAlign: "center",
+    textAlign: "left",
   };
 
   const cellStyle: CSSProperties = {
     color: "black",
     alignItems: "center",
-    textAlign: "center",
+    textAlign: "left",
   };
 
   const tableColumns: Array<Column<Row>> = [
@@ -114,7 +113,7 @@ const ReefTable = () => {
       render: (rowData) => {
         return (
           <ErrorIcon
-            style={{ color: colorFinder(rowData.dhw), paddingRight: "2rem" }}
+            style={{ color: colorFinder(rowData.dhw), paddingLeft: "1rem" }}
           />
         );
       },
@@ -129,7 +128,6 @@ const ReefTable = () => {
       temp: formatNumber(satelliteTemperature, 1),
       depth: value.depth,
       dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
-      alert: "warning",
       tableData: {
         id: parseFloat(key),
       },
