@@ -20,6 +20,15 @@ export interface SurveyData {
   token?: string | null;
 }
 
+export interface SurveyMediaData {
+  url: string;
+  poiId: number;
+  observations: string;
+  comments?: string;
+  metadata?: string;
+  token?: string | null;
+}
+
 export interface SurveyListState {
   list: SurveyState[];
   loading: boolean;

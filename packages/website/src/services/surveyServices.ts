@@ -1,4 +1,8 @@
-import type { SurveyState, SurveyData } from "../store/Survey/types";
+import type {
+  SurveyState,
+  SurveyData,
+  SurveyMediaData,
+} from "../store/Survey/types";
 import requests from "../helpers/requests";
 
 const getSurvey = (surveyId: string) =>
@@ -22,4 +26,13 @@ const addSurvey = (surveyData: SurveyData) => {
   });
 };
 
-export default { addSurvey, getSurvey, getSurveys };
+const addSurveyMedia = (surveyId: string, mediaData: SurveyMediaData) => {
+  return requests.send<[]>({
+    url: `surveys/${surveyId}/media`,
+    method: "POST",
+    data: { ...mediaData, token: undefined },
+    token: mediaData.token === null ? undefined : mediaData.token,
+  });
+};
+
+export default { addSurvey, addSurveyMedia, getSurvey, getSurveys };

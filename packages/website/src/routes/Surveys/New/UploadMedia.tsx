@@ -18,7 +18,10 @@ import { useSelector } from "react-redux";
 
 import MediaCard from "./MediaCard";
 import uploadServices from "../../../services/uploadServices";
+import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
+import { SurveyMediaData } from "../../../store/Survey/types";
 
 const UploadMedia = ({
   reefId,
@@ -30,6 +33,7 @@ const UploadMedia = ({
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
+  const survey = useSelector(surveyDetailsSelector);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertSeverity, setAlertSeverity] = useState<
     "success" | "error" | "info" | "warning" | undefined
@@ -69,27 +73,45 @@ const UploadMedia = ({
   };
 
   const onMediaSubmit = () => {
-    files.forEach((file) => {
+    files.forEach((file, index) => {
       const formData = new FormData();
       formData.append("file", file);
       setLoading(true);
-      // Should grab response and implement post to survey media here
       uploadServices
         .uploadMedia(formData, user?.token)
-        .then(() => {
-          setFiles([]);
-          setMetadata([]);
-          setPreviews([]);
-          setAlertMessage("Successfully uploaded media");
-          setAlertSeverity("success");
-          setAlertOpen(true);
+        .then((response) => {
+          const url = response.data;
+          const surveyId = survey?.id;
+          const surveyMediaData: SurveyMediaData = {
+            url,
+            poiId: (metadata[index].surveyPoint as unknown) as number,
+            observations: metadata[index].observation,
+            comments: metadata[index].comments,
+            metadata: "{}",
+            token: user?.token,
+          };
+          surveyServices
+            .addSurveyMedia(`${surveyId}`, surveyMediaData)
+            .then(() => {
+              setFiles([]);
+              setMetadata([]);
+              setPreviews([]);
+              setAlertMessage("Successfully uploaded media");
+              setAlertSeverity("success");
+              setAlertOpen(true);
+            })
+            .catch((err) => {
+              setAlertMessage(err.message);
+              setAlertSeverity("error");
+              setAlertOpen(true);
+            })
+            .finally(() => setLoading(false));
         })
         .catch((err) => {
           setAlertMessage(err.message);
           setAlertSeverity("error");
           setAlertOpen(true);
-        })
-        .finally(() => setLoading(false));
+        });
     });
   };
 
