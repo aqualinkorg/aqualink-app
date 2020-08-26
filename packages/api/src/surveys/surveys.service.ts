@@ -102,6 +102,7 @@ export class SurveysService {
       .createQueryBuilder('poi')
       .leftJoinAndSelect('poi.surveyMedia', 'surveyMedia')
       .where('surveyMedia.surveyId = :surveyId', { surveyId })
+      .andWhere('surveyMedia.hidden = False')
       .select([
         'surveyMedia.url',
         'surveyMedia.id',
