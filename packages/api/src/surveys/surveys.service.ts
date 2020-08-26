@@ -13,6 +13,7 @@ import { SurveyMedia, MediaType } from './survey-media.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
+import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 
 @Injectable()
 export class SurveysService {
@@ -25,6 +26,8 @@ export class SurveysService {
 
     @InjectRepository(ReefPointOfInterest)
     private poiRepository: Repository<ReefPointOfInterest>,
+
+    private googleCloudService: GoogleCloudService,
   ) {}
 
   // Create a survey
@@ -172,6 +175,22 @@ export class SurveysService {
   }
 
   async delete(surveyId: number): Promise<void> {
+    // The current user does not have enough access to perform a file deletion
+    // Uncomment the below code when the permissions have changed.
+    // ------------------------------------------------------------
+    // const surveyMedia = await this.surveyMediaRepository.find({
+    //   where: { surveyId },
+    // });
+
+    // await Promise.all(
+    //   surveyMedia.map((media) => {
+    //     We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
+    //     return this.googleCloudService.deleteFile(
+    //       media.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    //     );
+    //   }),
+    // );
+
     const result = await this.surveyRepository.delete(surveyId);
 
     if (!result.affected) {
@@ -180,12 +199,23 @@ export class SurveysService {
   }
 
   async deleteMedia(mediaId: number): Promise<void> {
-    const result = await this.surveyMediaRepository.delete(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
 
-    if (!result.affected) {
+    if (!surveyMedia) {
       throw new NotFoundException(
         `Survey media with id ${mediaId} was not found`,
       );
     }
+
+    // The current user does not have enough access to perform a file deletion
+    // Uncomment the below code when the permissions have changed.
+    // ------------------------------------------------------------
+    // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
+    // and grab the second element of the resulting array which is the path we need
+    // await this.googleCloudService.deleteFile(
+    //   surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    // );
+
+    await this.surveyMediaRepository.delete(surveyMedia);
   }
 }
