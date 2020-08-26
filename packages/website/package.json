@@ -78,5 +78,8 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "devDependencies": {
+    "canvas": "^2.6.1"
   }
 }
