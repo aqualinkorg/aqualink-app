@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Apply should render with given state from Redux store 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+        >
+          <button
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div>
+    <meta
+      charset="utf-8"
+    />
+    <meta
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+      name="viewport"
+    />
+    <link
+      href="../favicon.png"
+      rel="shortcut icon"
+      type="image/png"
+    />
+    <link
+      href="../css/bootstrap.css?8692"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../style.css?1685"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../css/custom.css?9549"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../css/leaflet.css?3998"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <title>
+      Apply
+    </title>
+    <div
+      class="page-container"
+    >
+      <div
+        class="bloc l-bloc"
+        id="bloc-3"
+      >
+        <div
+          class="container bloc-md"
+        >
+          <div
+            class="row no-gutters"
+          >
+            <div
+              class="lcolpad col-lg-6"
+            >
+              <h4
+                class="mg-md"
+              >
+                Manage your local reef
+              </h4>
+              <p
+                class="mg-lg"
+              >
+                We will be starting with our deployments in August and would love to have you apply to get free access to our system. We'll have more information coming shortly. Submitting the application form doesn't obligate you, if you have questions please first take a look at our 
+                <a
+                  class="ltc-blue-green"
+                  href="../faq/"
+                >
+                  FAQ 
+                </a>
+                 page and if you don't get the answer you're looking for then email 
+                <a
+                  class="ltc-blue-green"
+                  href="mailto:info@aqualink.org"
+                >
+                  info@aqualink.org
+                </a>
+                .
+                <br />
+              </p>
+              <img
+                alt="reemimage"
+                class="img-fluid mx-auto d-block lazyload"
+                src="reemimage.jpg"
+              />
+            </div>
+            <div
+              class="offset-lg-1 col-lg-5"
+            >
+              <div
+                class="detailsbox"
+              >
+                <h5
+                  class="mg-md"
+                >
+                  Your Obligations
+                </h5>
+                <p>
+                  You will be given a free smart buoy but there are some things you will be expected to do or provide:
+                </p>
+                <ol>
+                  <li>
+                    <p>
+                      Pay for shipping and any applicable duties
+                      <br />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Obtain any necessary permits (if applicable)
+                      <br />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Provide and attach a ballast (e.g. 60lb kettlebell)
+                       
+                      <br />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Deploy spotter with mooring weight (can be done from a kayak)
+                      <br />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Maintain spotter (inspect and clean every 6 months)
+                      <br />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Conduct initial and periodic photographic surveys and upload imagery to our website 
+                      <br />
+                    </p>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bloc bgc-white-smoke l-bloc none applyblock "
+        id="bloc-3"
+      >
+        <div
+          class="container bloc-xl"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-6"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="row no-gutters"
+                >
+                  <div
+                    class="col-lg-9"
+                  >
+                    <input
+                      class="form-control field-style"
+                      id="search-input"
+                    />
+                  </div>
+                  <div
+                    class="offset-lg-1 col-lg-2"
+                  >
+                    <a
+                      class="btn btn-d btn-sq btn-lg searchbttn btn-outline-primary"
+                      id="search"
+                    >
+                      Search
+                      <br />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="map"
+              >
+                <div
+                  class="osm-map"
+                  data-enableinfobox="1"
+                  data-height="350px"
+                  data-iconsrc="../img/lazyload-ph.png"
+                  data-icontext="Some info"
+                  data-positionlat="49"
+                  data-positionlng="6"
+                  data-setownicon="0"
+                  data-src="true"
+                  data-zoom="13"
+                  id="be-mapid"
+                />
+              </div>
+            </div>
+            <div
+              class="col-md-6 col-lg-5 offset-lg-1 formcard"
+            >
+              <form
+                data-clean-url-used="true"
+                data-fail-msg="Sorry it seems that our server is not responding."
+                data-form-type="blocs-form"
+                data-success-msg="Your application has been submitted."
+                id="form_1"
+                novalidate=""
+              >
+                <h4
+                  class="mg-md"
+                >
+                  Application Form
+                </h4>
+                <div
+                  class="form-group"
+                >
+                  <label>
+                    Name
+                  </label>
+                  <input
+                    class="form-control"
+                    id="name"
+                    required=""
+                  />
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label>
+                    Organization
+                  </label>
+                  <input
+                    class="form-control"
+                    id="org"
+                    required=""
+                  />
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label>
+                    Email
+                  </label>
+                  <input
+                    class="form-control"
+                    data-error-validation-msg="Not a valid email address"
+                    id="email"
+                    required=""
+                    type="email"
+                  />
+                </div>
+                <div
+                  class="clm"
+                >
+                  <label
+                    class="label-style"
+                  >
+                    Location: Select point on map
+                  </label>
+                  <div
+                    class="form-group shortform"
+                  >
+                    <label>
+                      Latitude
+                    </label>
+                    <input
+                      class="form-control"
+                      id="lat"
+                    />
+                  </div>
+                  <div
+                    class="form-group shortform"
+                  >
+                    <label>
+                      Longitude
+                    </label>
+                    <input
+                      class="form-control"
+                      id="lng"
+                    />
+                  </div>
+                  <div
+                    class="form-group shortform"
+                  >
+                    <label>
+                      Depth (m)
+                    </label>
+                    <input
+                      class="form-control"
+                      id="depth"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="label-style"
+                  >
+                    Agree to:
+                  </label>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      data-validation-minchecked-message="You must agree to this before we can take your information."
+                      data-validation-minchecked-minchecked="1"
+                      id="shipping"
+                      name="optin"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                    >
+                      Handle any shipping and permitting charges
+                    </label>
+                  </div>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      data-validation-minchecked-message="You must agree to this before we can take your information."
+                      data-validation-minchecked-minchecked="1"
+                      id="mooring"
+                      name="optin"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                    >
+                      Provide mooring and deploy buoy
+                    </label>
+                  </div>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      data-validation-minchecked-message="You must agree to this before we can take your information."
+                      data-validation-minchecked-minchecked="1"
+                      id="survey"
+                      name="optin"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                    >
+                      Conduct initial survey
+                    </label>
+                  </div>
+                  <button
+                    class="bloc-button btn-d btn-lg cta"
+                    id="submit"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
