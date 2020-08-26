@@ -232,6 +232,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           <div
             class="MuiPaper-root MuiCard-root Satellite-card-111 MuiPaper-elevation1 MuiPaper-rounded"
+            style="background-color: rgb(8, 91, 163);"
           >
             <div
               class="MuiCardHeader-root Satellite-header-113"
