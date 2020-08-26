@@ -2,72 +2,141 @@
 
 exports[`Homepage should render with given state from Redux store 1`] = `
 <div>
-  <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
+  <mock-hidden
+    smup="true"
   >
     <div
-      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+      role="presentation"
     >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+      <header
+        class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-7 MuiPaper-elevation4"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
-        >
-          <button
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
-            tabindex="0"
-            type="button"
-          >
-            <span
-              class="MuiIconButton-label"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-                />
-              </svg>
-            </span>
-            <span
-              class="MuiTouchRipple-root"
-            />
-          </button>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
-        >
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
-          >
-            Aqua
-          </h4>
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
-            style="color: rgb(138, 198, 222);"
-          >
-            link
-          </h4>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+          class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+            >
+              <button
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiIconButton-label"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4"
+              >
+                Aqua
+              </h4>
+              <h4
+                class="MuiTypography-root MuiTypography-h4"
+                style="color: rgb(138, 198, 222);"
+              >
+                link
+              </h4>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label"
+                  >
+                    SIGN IN
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-label"
+                  >
+                    REGISTER
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  </mock-hidden>
+  <mock-hidden
+    xsdown="true"
+  >
+    <header
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-7 MuiPaper-elevation4"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
               tabindex="0"
               type="button"
             >
               <span
-                class="MuiButton-label"
+                class="MuiIconButton-label"
               >
-                SIGN IN
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  />
+                </svg>
               </span>
               <span
                 class="MuiTouchRipple-root"
@@ -75,27 +144,64 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             </button>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
           >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text"
-              tabindex="0"
-              type="button"
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
             >
-              <span
-                class="MuiButton-label"
+              Aqua
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+              style="color: rgb(138, 198, 222);"
+            >
+              link
+            </h4>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text"
+                tabindex="0"
+                type="button"
               >
-                REGISTER
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
+                <span
+                  class="MuiButton-label"
+                >
+                  SIGN IN
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  REGISTER
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
+  </mock-hidden>
   <div
     class="Homepage-root-1"
   >
@@ -104,11 +210,11 @@ exports[`Homepage should render with given state from Redux store 1`] = `
       style="height: 100%;"
     >
       <div
-        class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-6"
+        class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
       >
         <div
-          class="HomepageMap-map-26 leaflet-container leaflet-grab leaflet-touch-drag"
-          style="position: relative;"
+          class="HomepageMap-map-29 leaflet-container leaflet-grab leaflet-touch-drag"
+          style="height: 100%; width: 100%; position: relative;"
           tabindex="0"
         >
           <div
@@ -273,11 +379,32 @@ exports[`Homepage should render with given state from Redux store 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-xs-6"
+      <mock-hidden
+        xsdown="true"
       >
-        <mock-reeftable />
-      </div>
+        <div
+          class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-sm-6"
+        >
+          <mock-reeftable />
+        </div>
+      </mock-hidden>
+      <mock-hidden
+        smup="true"
+      >
+        <div
+          class="MuiDrawer-root MuiDrawer-docked Homepage-closedDrawer-6"
+        >
+          <div
+            class="MuiPaper-root MuiDrawer-paper Homepage-drawer-4 Homepage-closedDrawer-6 MuiDrawer-paperAnchorBottom MuiDrawer-paperAnchorDockedBottom MuiPaper-elevation0"
+          >
+            <div
+              role="presentation"
+            >
+              <mock-reeftable />
+            </div>
+          </div>
+        </div>
+      </mock-hidden>
     </div>
   </div>
 </div>

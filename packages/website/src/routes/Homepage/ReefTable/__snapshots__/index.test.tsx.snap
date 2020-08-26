@@ -2,6 +2,27 @@
 
 exports[`ReefTable should render with given state from Redux store 1`] = `
 <div>
+  <mock-hidden
+    smup="true"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      style="margin-bottom: -1rem;"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiChip-root"
+          style="height: 3px; width: 36px; color: rgb(158, 166, 170);"
+        >
+          <span
+            class="MuiChip-label"
+          />
+        </div>
+      </div>
+    </div>
+  </mock-hidden>
   <div
     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     style="margin-top: 2rem;"
