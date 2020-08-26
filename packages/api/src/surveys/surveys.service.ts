@@ -175,21 +175,18 @@ export class SurveysService {
   }
 
   async delete(surveyId: number): Promise<void> {
-    // The current user does not have enough access to perform a file deletion
-    // Uncomment the below code when the permissions have changed.
-    // ------------------------------------------------------------
-    // const surveyMedia = await this.surveyMediaRepository.find({
-    //   where: { surveyId },
-    // });
+    const surveyMedia = await this.surveyMediaRepository.find({
+      where: { surveyId },
+    });
 
-    // await Promise.all(
-    //   surveyMedia.map((media) => {
-    //     We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
-    //     return this.googleCloudService.deleteFile(
-    //       media.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    //     );
-    //   }),
-    // );
+    await Promise.all(
+      surveyMedia.map((media) => {
+        // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
+        return this.googleCloudService.deleteFile(
+          media.url.split(`${process.env.GCS_BUCKET}/`)[1],
+        );
+      }),
+    );
 
     const result = await this.surveyRepository.delete(surveyId);
 
@@ -207,15 +204,12 @@ export class SurveysService {
       );
     }
 
-    // The current user does not have enough access to perform a file deletion
-    // Uncomment the below code when the permissions have changed.
-    // ------------------------------------------------------------
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    // await this.googleCloudService.deleteFile(
-    //   surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    // );
+    await this.googleCloudService.deleteFile(
+      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    );
 
-    await this.surveyMediaRepository.delete(surveyMedia);
+    await this.surveyMediaRepository.delete(mediaId);
   }
 }

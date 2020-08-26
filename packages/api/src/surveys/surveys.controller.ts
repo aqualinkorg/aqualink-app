@@ -68,6 +68,7 @@ export class SurveysController {
     return this.surveyService.findMedia(surveyId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) surveyId: number,
@@ -76,6 +77,7 @@ export class SurveysController {
     return this.surveyService.update(editSurveyDto, surveyId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put('media/:id')
   updateMedia(
     @Param('id', ParseIntPipe) mediaId: number,
@@ -84,11 +86,13 @@ export class SurveysController {
     return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) surveyId: number): Promise<void> {
     return this.surveyService.delete(surveyId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete('media/:id')
   deleteMedia(@Param('id', ParseIntPipe) mediaId: number): Promise<void> {
     return this.surveyService.deleteMedia(mediaId);
