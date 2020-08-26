@@ -5,8 +5,12 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import { Reef } from '../reefs/reefs.entity';
+// eslint-disable-next-line import/no-cycle
+import { SurveyMedia } from '../surveys/survey-media.entity';
 
 @Entity()
 export class ReefPointOfInterest {
@@ -30,4 +34,7 @@ export class ReefPointOfInterest {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => SurveyMedia, (surveyMedia) => surveyMedia.poiId)
+  surveyMedia: SurveyMedia[];
 }
