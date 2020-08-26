@@ -74,5 +74,5 @@ export class Reef {
   latestDailyData?: DailyData;
 
   @OneToMany(() => Survey, (survey) => survey.reef)
-  surveys?: Survey;
+  surveys?: Survey[];
 }

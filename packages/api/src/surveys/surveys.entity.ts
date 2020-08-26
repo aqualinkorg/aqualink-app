@@ -17,14 +17,14 @@ import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
 export enum WeatherConditions {
   Calm = 'calm',
-  Wavy = 'wavy',
-  Stormy = 'stormy',
+  Wavy = 'waves',
+  Stormy = 'storm',
 }
 
 @Entity()
 export class Survey {
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
 
   @Column({
     name: 'weather_conditions',

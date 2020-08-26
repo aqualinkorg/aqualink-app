@@ -88,6 +88,10 @@ export class SurveysService {
   // Include its surveyMedia grouped by reefPointOfInterest
   async findOne(surveyId: number): Promise<Survey> {
     const survey = await this.surveyRepository.findOne(surveyId);
+    if (!survey) {
+      throw new NotFoundException(`Survey with id ${surveyId} was not found`);
+    }
+
     const reefPointsOfInterest = await this.poiRepository
       .createQueryBuilder('poi')
       .leftJoinAndSelect('poi.surveyMedia', 'surveyMedia')
@@ -102,10 +106,6 @@ export class SurveysService {
       ])
       .addSelect(['poi.id', 'poi.imageUrl', 'poi.name'])
       .getMany();
-
-    if (!survey) {
-      throw new NotFoundException(`Survey with id ${surveyId} was not found`);
-    }
 
     const returnValue: Survey = {
       surveyPoints: reefPointsOfInterest,

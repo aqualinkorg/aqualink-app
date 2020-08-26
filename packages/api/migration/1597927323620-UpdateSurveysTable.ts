@@ -7,7 +7,7 @@ export class UpdateSurveysTable1597927323620 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE "survey" DROP COLUMN "observations"`);
     await queryRunner.query(`ALTER TABLE "survey" DROP COLUMN "upload_date"`);
     await queryRunner.query(
-      `CREATE TYPE "survey_weather_conditions_enum" AS ENUM('calm', 'wavy', 'stormy')`,
+      `CREATE TYPE "survey_weather_conditions_enum" AS ENUM('calm', 'waves', 'storm')`,
     );
     await queryRunner.query(
       `ALTER TABLE "survey" ADD "weather_conditions" "survey_weather_conditions_enum" NOT NULL`,
