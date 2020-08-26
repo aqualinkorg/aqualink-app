@@ -6,7 +6,11 @@ import { useDispatch } from "react-redux";
 import { NotFound } from "../../routes/NotFound";
 import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
-import Monitoring from "../../routes/Monitoring";
+import About from "../../routes/About";
+import Apply from "../../routes/Apply";
+import Buoy from "../../routes/Buoy";
+import Drones from "../../routes/Drones";
+import Faq from "../../routes/Faq";
 import theme from "./theme";
 import "./App.css";
 import "../../assets/css/bootstrap.css";
@@ -38,7 +42,11 @@ function App() {
           {render && (
             <Switch>
               <Route exact path="/" component={HomePage} />
-              <Route exact path="/monitoring" component={Monitoring} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/apply" component={Apply} />
+              <Route exact path="/buoy" component={Buoy} />
+              <Route exact path="/drones" component={Drones} />
+              <Route exact path="/faq" component={Faq} />
               <Route path="/reefs" component={ReefRoutes} />
               <Route default component={NotFound} />
             </Switch>

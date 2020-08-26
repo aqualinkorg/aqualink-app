@@ -1,0 +1,163 @@
+import React from "react";
+import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+
+import NavBar from "../../common/NavBar";
+
+import reef1b from "../../assets/img/reef1b.jpg";
+import peter from "../../assets/img/peter.jpg";
+import lyndon from "../../assets/img/LYNDON1.jpg";
+import drew from "../../assets/img/drew.jpg";
+
+const About = ({ classes }: AboutProps) => {
+  return (
+    <>
+      <NavBar searchLocation />
+      <div>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="../css/bootstrap.css?8432"
+        />
+        <link rel="stylesheet" type="text/css" href="../style.css?3017" />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="../css/font-awesome.min.css"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
+          rel="stylesheet"
+          type="text/css"
+        />
+        <title>About Us</title>
+        <div className="page-container">
+          <div className="bloc l-bloc" id="bloc-0">
+            {/* bloc-1 */}
+            <div className="bloc l-bloc" id="bloc-1">
+              <div className="container bloc-md mobilecentered">
+                <div className="row">
+                  <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
+                    <h4 className="mg-md">About Us</h4>
+                    <p>
+                      Aqualink is a philanthropic engineering organization
+                      working on Ocean conservation problems.
+                      <br />
+                    </p>
+                  </div>
+                  <div className="offset-lg-0 col-lg-12 order-lg-1">
+                    <img
+                      src={reef1b}
+                      className="img-fluid mx-auto d-block imagepaddingtop img-responsive lazyload"
+                      alt="reef1b"
+                    />
+                  </div>
+                </div>
+                <div className="row voffset-lg">
+                  <div className="centered col-lg-8 offset-lg-2">
+                    <h4 className="mg-lg">The Team</h4>
+                    <p>
+                      We have been working in rapid development and
+                      entrepreneurial businesses that scale and hope to bring a
+                      similar mindset to Ocean conservation.
+                      <br />
+                      <br />
+                      We have an extended team of engineering contractors in a
+                      variety of disciplines all of whom embrace open source
+                      philosophies and want to help build Ocean conservation
+                      tools.&nbsp;
+                      <br />
+                    </p>
+                  </div>
+                </div>
+                <div className="row voffset-md">
+                  <div className="col-lg-4 col-md-4">
+                    <div className="card border-0">
+                      <div className="card-body team-card">
+                        <img
+                          src={peter}
+                          className="rounded-circle mx-auto d-block mt-5 img-style lazyload"
+                          width={100}
+                          alt="placeholder user"
+                        />
+                        <h5 className="text-center mg-sm">Peter Rive</h5>
+                        <p className="text-lg-center">
+                          Co-founder of SolarCity, a pioneer in making solar
+                          energy an affordable alternative to fossil fuels for
+                          homeowners.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-4 mt-3 mt-md-0">
+                    <div className="card border-0">
+                      <div className="card-body team-card">
+                        <img
+                          src={lyndon}
+                          className="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
+                          width={100}
+                          alt="placeholder user"
+                        />
+                        <h5 className="text-center mg-sm">Lyndon Rive</h5>
+                        <p className="text-lg-center">
+                          Also a co-founder of SolarCity, current National
+                          Geographic board member, and member of the USA
+                          underwater hockey team.
+                          <br />
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-4 col-md-4 mt-3 mt-md-0">
+                    <div className="card border-0">
+                      <div className="card-body team-card">
+                        <img
+                          src={drew}
+                          className="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
+                          width={100}
+                          alt="placeholder user"
+                        />
+                        <h5 className="text-center mg-sm">Drew Gray</h5>
+                        <p className="text-lg-center">
+                          Engineer and executive with experience building
+                          autonomous systems at Tesla, Cruise, Uber, and Voyage.
+                          Instrumental in pushing the state-of-the-art in
+                          self-driving cars using computer vision and deep
+                          learning.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const styles = () =>
+  createStyles({
+    root: {
+      top: 10,
+      height: "100%",
+    },
+    map: {
+      height: "100%",
+    },
+    reefTable: {
+      height: "calc(100vh - 64px)",
+      overflowY: "auto",
+    },
+  });
+
+type AboutProps = WithStyles<typeof styles>;
+
+export default withStyles(styles)(About);

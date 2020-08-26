@@ -1,25 +1,17 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
-import { reefsRequest } from "../../store/Reefs/reefsListSlice";
-import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 
 import fullDiagramBuoy from "../../assets/img/fulldiag3_1.svg";
 import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
 import reefdetailpage from "../../assets/img/reefdetailpage.jpg";
 
-const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+import "../../assets/css/bootstrap.css";
+import "../../assets/css/font-awesome.min.css";
+import "../../assets/css/leaflet.css";
 
-const Monitoring = ({ classes }: MonitoringProps) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(reefsRequest());
-    dispatch(reefRequest(featuredReefId));
-  }, [dispatch]);
-
+const Buoy = ({ classes }: BuoyProps) => {
   return (
     <>
       <NavBar searchLocation />
@@ -167,15 +159,8 @@ const styles = () =>
       top: 10,
       height: "100%",
     },
-    map: {
-      height: "100%",
-    },
-    reefTable: {
-      height: "calc(100vh - 64px)",
-      overflowY: "auto",
-    },
   });
 
-type MonitoringProps = WithStyles<typeof styles>;
+type BuoyProps = WithStyles<typeof styles>;
 
-export default withStyles(styles)(Monitoring);
+export default withStyles(styles)(Buoy);
