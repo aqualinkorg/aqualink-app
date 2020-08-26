@@ -1,7 +1,7 @@
 import React, { CSSProperties, forwardRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MaterialTable, { Column } from "material-table";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography, Chip, Hidden } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ErrorIcon from "@material-ui/icons/Error";
 
@@ -142,6 +142,13 @@ const ReefTable = () => {
 
   return (
     <>
+      <Hidden smUp>
+        <Grid container justify="center" style={{ marginBottom: "-1rem" }}>
+          <Grid item>
+            <Chip style={{ height: "3px", width: "36px", color: "#9ea6aa" }} />
+          </Grid>
+        </Grid>
+      </Hidden>
       {selectedReef &&
         selectedReef.dailyData &&
         selectedReef.dailyData.length > 0 && (

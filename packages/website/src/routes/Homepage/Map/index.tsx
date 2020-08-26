@@ -196,6 +196,7 @@ const styles = () =>
     },
     popup: {
       width: "12vw",
+      minWidth: "100px",
     },
     loading: {
       height: "100%",
