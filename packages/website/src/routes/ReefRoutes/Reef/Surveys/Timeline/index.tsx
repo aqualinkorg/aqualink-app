@@ -23,12 +23,11 @@ import {
   TimelineOppositeContent,
 } from "@material-ui/lab";
 
+import { Link } from "react-router-dom";
 import {
   surveyListSelector,
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
-
-import { Link } from "react-router-dom";
 
 import reefImage from "../../../../../assets/reef-image.jpg";
 
