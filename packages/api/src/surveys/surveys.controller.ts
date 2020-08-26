@@ -63,6 +63,11 @@ export class SurveysController {
     return this.surveyService.findOne(surveyId);
   }
 
+  @Get(':id/media')
+  findMedia(@Param('id', ParseIntPipe) surveyId): Promise<SurveyMedia[]> {
+    return this.surveyService.findMedia(surveyId);
+  }
+
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) surveyId: number,

@@ -66,6 +66,11 @@ export class SurveysService {
         'data',
         'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
+      .leftJoinAndSelect(
+        'survey.featuredSurveyMedia',
+        'featuredSurveyMedia',
+        'featuredSurveyMedia.featured = True',
+      )
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 
@@ -80,6 +85,7 @@ export class SurveysService {
         temperature:
           survey.temperature ||
           (surveyDailyData && surveyDailyData.avgBottomTemperature),
+        featuredSurveyMedia: survey.featuredSurveyMedia,
       };
     });
   }
@@ -113,6 +119,14 @@ export class SurveysService {
     };
 
     return returnValue;
+  }
+
+  async findMedia(surveyId: number): Promise<SurveyMedia[]> {
+    return this.surveyMediaRepository
+      .createQueryBuilder('surveyMedia')
+      .leftJoinAndSelect('surveyMedia.poiId', 'poi')
+      .where('surveyMedia.surveyId = :surveyId', { surveyId })
+      .getMany();
   }
 
   async update(
