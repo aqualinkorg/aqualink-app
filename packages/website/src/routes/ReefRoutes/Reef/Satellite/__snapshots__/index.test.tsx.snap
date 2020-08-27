@@ -4,6 +4,7 @@ exports[`renders as expected 1`] = `
 <div>
   <div
     class="MuiPaper-root MuiCard-root Satellite-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+    style="background-color: rgb(117, 180, 114);"
   >
     <div
       class="MuiCardHeader-root Satellite-header-3"

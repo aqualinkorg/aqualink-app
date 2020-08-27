@@ -65,7 +65,7 @@ exports[`renders as expected 1`] = `
               <h5
                 class="MuiTypography-root MuiTypography-h5"
               >
-                - -
+                0.0 ℃
               </h5>
             </div>
           </div>
@@ -87,7 +87,7 @@ exports[`renders as expected 1`] = `
               <h5
                 class="MuiTypography-root MuiTypography-h5"
               >
-                -
+                10.0 ℃
               </h5>
             </div>
           </div>

@@ -58,7 +58,7 @@ const Charts = ({
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 50;
+    const top = position.top + tooltipModel.caretY - 110;
     const date =
       tooltipModel.dataPoints &&
       tooltipModel.dataPoints[0] &&
@@ -117,6 +117,7 @@ const Charts = ({
         <Line
           ref={temperatureChartRef}
           options={{
+            maintainAspectRatio: false,
             plugins: {
               chartJsPluginBarchartBackground: {
                 color: "rgb(158, 166, 170, 0.07)",
@@ -186,9 +187,13 @@ const Charts = ({
                   },
                   display: true,
                   ticks: {
-                    min: 0,
+                    min: temperatureThreshold
+                      ? Math.round(temperatureThreshold) - 5
+                      : null,
                     stepSize: 5,
-                    max: 40,
+                    max: temperatureThreshold
+                      ? Math.round(temperatureThreshold) + 5
+                      : null,
                     callback: (value: number) => {
                       return `${value}\u00B0  `;
                     },
@@ -198,7 +203,7 @@ const Charts = ({
             },
           }}
           height={chartHeight}
-          data={createChartData(chartLabels, surfaceTemperatureData, 5, true)}
+          data={createChartData(chartLabels, surfaceTemperatureData, true)}
         />
         {showTooltip ? (
           <div
@@ -228,7 +233,7 @@ const Charts = ({
 const styles = () =>
   createStyles({
     root: {
-      height: "100%",
+      height: "16rem",
     },
     graphTitle: {
       lineHeight: 1.5,

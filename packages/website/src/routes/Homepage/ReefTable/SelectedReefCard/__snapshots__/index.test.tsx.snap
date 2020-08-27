@@ -93,12 +93,12 @@ exports[`renders as expected 1`] = `
               <span
                 class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
               >
-                DEG. HEAT. DAYS
+                D. H. WEEKS
               </span>
               <h4
                 class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
-                34.0
+                4.9
               </h4>
             </div>
             <div

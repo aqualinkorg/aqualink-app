@@ -8,7 +8,7 @@ test("renders as expected", () => {
     date: "",
     depth: 0,
     bottomTemperature: 0,
-    surfaceTemperature: 0,
+    surfaceTemperature: 10,
   };
   const { container } = render(<Tooltip {...tooltipData} />);
   expect(container).toMatchSnapshot();
