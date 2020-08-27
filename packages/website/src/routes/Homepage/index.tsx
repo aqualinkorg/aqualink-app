@@ -47,7 +47,6 @@ const Homepage = ({ classes }: HomepageProps) => {
       </Hidden>
       <div className={classes.root}>
         <Grid
-          style={{ height: "100%" }}
           container
           direction="row"
           justify="flex-start"
@@ -58,7 +57,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
-              <ReefTable />
+              <ReefTable openDrawer={openDrawer} />
             </Grid>
           </Hidden>
           <Hidden smUp>
@@ -79,7 +78,7 @@ const Homepage = ({ classes }: HomepageProps) => {
               }}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <ReefTable />
+                <ReefTable openDrawer={openDrawer} />
               </div>
             </Drawer>
           </Hidden>
@@ -92,10 +91,12 @@ const Homepage = ({ classes }: HomepageProps) => {
 const styles = () =>
   createStyles({
     root: {
-      height: "100%",
+      display: "flex",
+      flexGrow: 1,
     },
     map: {
       height: "100%",
+      display: "flex",
     },
     reefTable: {
       height: "calc(100vh - 64px)",
@@ -106,7 +107,7 @@ const styles = () =>
       borderTopRightRadius: "15px",
     },
     openDrawer: {
-      height: "calc(100% - 64px);", // subtract height of the navbar
+      height: "calc(95% - 64px);", // subtract height of the navbar
     },
     closedDrawer: {
       height: "50px",

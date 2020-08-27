@@ -1,8 +1,9 @@
 import React, { CSSProperties, forwardRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MaterialTable, { Column } from "material-table";
-import { Grid, Paper, Typography, Chip, Hidden } from "@material-ui/core";
+import { Grid, Paper, Typography, IconButton, Hidden } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ErrorIcon from "@material-ui/icons/Error";
 
 import SelectedReefCard from "./SelectedReefCard";
@@ -27,7 +28,7 @@ interface Row {
   };
 }
 
-const ReefTable = () => {
+const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
   const dispatch = useDispatch();
@@ -143,9 +144,11 @@ const ReefTable = () => {
   return (
     <>
       <Hidden smUp>
-        <Grid container justify="center" style={{ marginBottom: "-1rem" }}>
+        <Grid container justify="center" style={{ marginBottom: "-3rem" }}>
           <Grid item>
-            <Chip style={{ height: "3px", width: "36px", color: "#9ea6aa" }} />
+            <IconButton>
+              {openDrawer ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
+            </IconButton>
           </Grid>
         </Grid>
       </Hidden>
@@ -191,5 +194,9 @@ const ReefTable = () => {
     </>
   );
 };
+
+interface ReefTableProps {
+  openDrawer: boolean;
+}
 
 export default ReefTable;

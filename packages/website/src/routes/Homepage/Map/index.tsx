@@ -118,7 +118,6 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
           center={center}
           zoom={zoom}
           minZoom={2}
-          style={{ height: "100%", width: "100%", position: "relative" }}
         >
           <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
           {reefOnMap && reefOnMap.polygon.type === "Point" && (
@@ -192,8 +191,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 const styles = () =>
   createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      flex: 1,
     },
     popup: {
       width: "12vw",

@@ -7,19 +7,34 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
-      style="margin-bottom: -1rem;"
+      style="margin-bottom: -3rem;"
     >
       <div
         class="MuiGrid-root MuiGrid-item"
       >
-        <div
-          class="MuiChip-root"
-          style="height: 3px; width: 36px; color: rgb(158, 166, 170);"
+        <button
+          class="MuiButtonBase-root MuiIconButton-root"
+          tabindex="0"
+          type="button"
         >
           <span
-            class="MuiChip-label"
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+              />
+            </svg>
+          </span>
+          <span
+            class="MuiTouchRipple-root"
           />
-        </div>
+        </button>
       </div>
     </div>
   </mock-hidden>

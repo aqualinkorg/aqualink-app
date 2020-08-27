@@ -207,14 +207,13 @@ exports[`Homepage should render with given state from Redux store 1`] = `
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
-      style="height: 100%;"
     >
       <div
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
       >
         <div
           class="HomepageMap-map-29 leaflet-container leaflet-grab leaflet-touch-drag"
-          style="height: 100%; width: 100%; position: relative;"
+          style="position: relative;"
           tabindex="0"
         >
           <div
@@ -385,7 +384,9 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         <div
           class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-sm-6"
         >
-          <mock-reeftable />
+          <mock-reeftable
+            opendrawer="false"
+          />
         </div>
       </mock-hidden>
       <mock-hidden
@@ -400,7 +401,9 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             <div
               role="presentation"
             >
-              <mock-reeftable />
+              <mock-reeftable
+                opendrawer="false"
+              />
             </div>
           </div>
         </div>
