@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   AppBar,
+  Drawer,
   Toolbar,
   Grid,
   IconButton,
@@ -9,6 +10,7 @@ import {
   Button,
   Menu,
   MenuItem,
+  Link,
   withStyles,
   WithStyles,
   createStyles,
@@ -29,6 +31,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
+  const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
@@ -42,16 +45,56 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     setAnchorEl(null);
   };
 
+  const menuRoutes = [
+    {
+      text: "Home",
+      href: "/",
+    },
+    {
+      text: "Buoy",
+      href: "/buoy",
+    },
+    {
+      text: "Drone",
+      href: "/drones",
+    },
+    {
+      text: "About",
+      href: "/about",
+    },
+    {
+      text: "FAQ",
+      href: "/faq",
+    },
+    {
+      text: "Apply",
+      href: "/apply",
+    },
+  ];
+
   return (
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
         <Toolbar>
           <Grid container alignItems="center" item xs={12}>
             <Grid item xs={1}>
-              <IconButton edge="start" color="inherit">
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={() => setMenuDrawerOpen(true)}
+              >
                 <MenuIcon />
               </IconButton>
             </Grid>
+            <Drawer
+              anchor="left"
+              open={menuDrawerOpen}
+              onClose={() => setMenuDrawerOpen(false)}
+            >
+              {menuRoutes.map(({ text, href }) => (
+                <Link href={href}>{text}</Link>
+              ))}
+            </Drawer>
             <Grid container item xs={5}>
               <Typography variant="h4">Aqua</Typography>
               <Typography style={{ color: "#8AC6DE" }} variant="h4">
