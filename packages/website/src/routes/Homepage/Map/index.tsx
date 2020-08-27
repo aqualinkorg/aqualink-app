@@ -28,8 +28,8 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const reefsList = useSelector(reefsListSelector);
   const loading = useSelector(reefsListLoadingSelector);
-  const [center, setCenter] = useState<[number, number]>([0, 0]);
-  const [zoom, setZoom] = useState<number>(2);
+  const [center, setCenter] = useState<[number, number]>([37.9, -75.3]);
+  const [zoom, setZoom] = useState<number>(5);
 
   useEffect(() => {
     const { current } = mapRef;
