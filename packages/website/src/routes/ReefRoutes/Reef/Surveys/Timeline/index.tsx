@@ -153,13 +153,18 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                           </Grid>
                         )}
                         <Grid item xs={5}>
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            color="primary"
+                          <Link
+                            style={{ color: "inherit", textDecoration: "none" }}
+                            to={`/reefs/${reefId}/survey_details/${survey.id}`}
                           >
-                            VIEW DETAILS
-                          </Button>
+                            <Button
+                              size="small"
+                              variant="outlined"
+                              color="primary"
+                            >
+                              VIEW DETAILS
+                            </Button>
+                          </Link>
                         </Grid>
                       </Grid>
                     </Grid>

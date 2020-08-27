@@ -27,7 +27,7 @@ export const surveyGetRequest = createAsyncThunk<
   async (surveyId: string, { rejectWithValue }) => {
     try {
       const { data } = await surveyServices.getSurvey(surveyId);
-      return { ...data };
+      return data;
     } catch (err) {
       const error: AxiosError<SelectedSurveyState["error"]> = err;
       return rejectWithValue(error.message);
