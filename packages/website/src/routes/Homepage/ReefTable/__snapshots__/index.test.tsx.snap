@@ -214,10 +214,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     index="0"
                     level="0"
                     path="0"
+                    scrollwidth="0"
                     style="transition: all ease 300ms; cursor: pointer;"
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="Mock Reef Hartmann"
                     >
@@ -230,6 +232,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="- -"
                     >
@@ -243,6 +246,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="19"
                     >
@@ -256,6 +260,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="2.857142857142857"
                     >
@@ -268,6 +273,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      scrollwidth="0"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="2.857142857142857"
                     >
