@@ -3,7 +3,7 @@
 exports[`Search should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
   >
     <div
       class="MuiGrid-root Search-searchBar-1 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-8"
@@ -57,7 +57,7 @@ exports[`Search should render with given state from Redux store 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                 id="location"
-                placeholder="Search Location"
+                placeholder="Search reef by name"
                 spellcheck="false"
                 type="text"
                 value=""

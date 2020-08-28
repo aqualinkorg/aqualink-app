@@ -41,11 +41,13 @@ describe("ReefTable", () => {
       },
     });
 
+    const openDrawer = false;
+
     store.dispatch = jest.fn();
 
     element = render(
       <Provider store={store}>
-        <ReefTable />
+        <ReefTable openDrawer={openDrawer} />
       </Provider>
     ).container;
   });

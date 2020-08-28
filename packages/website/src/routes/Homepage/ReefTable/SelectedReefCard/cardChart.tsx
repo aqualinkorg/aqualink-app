@@ -111,9 +111,13 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
               },
               display: true,
               ticks: {
-                min: 0,
-                stepSize: 20,
-                max: 40,
+                min: temperatureThreshold
+                  ? Math.round(temperatureThreshold) - 5
+                  : null,
+                stepSize: 5,
+                max: temperatureThreshold
+                  ? Math.round(temperatureThreshold) + 5
+                  : null,
                 callback: (value: number) => {
                   return `${value}\u00B0 `;
                 },
