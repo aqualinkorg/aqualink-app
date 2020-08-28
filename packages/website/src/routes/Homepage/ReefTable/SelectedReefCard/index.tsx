@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Typography,
-  Paper,
   Grid,
   Button,
   CardMedia,
@@ -10,6 +9,8 @@ import {
   createStyles,
   Theme,
   CircularProgress,
+  Card,
+  Hidden,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -41,116 +42,169 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
 
   return (
     <div className={classes.root}>
-      <Typography
-        style={{ margin: "0 0 0.5rem 1.5rem" }}
-        variant="h5"
-        color="textSecondary"
-      >
-        Featured Reef
-      </Typography>
-      <Grid container justify="center">
-        <Paper elevation={3} className={classes.selectedReef}>
-          {`${reef.id}` === featuredReefId ? (
-            <Grid className={classes.card} container item xs={12}>
-              <Grid item xs={4}>
-                <CardMedia className={classes.cardImage} image={reefImage} />
-              </Grid>
-              <Grid container item xs={6}>
-                <Grid item xs={12}>
-                  <Typography
-                    style={{ padding: "0.5rem 0 0 0.5rem" }}
-                    color="textSecondary"
-                    variant="h5"
+      <Grid container spacing={2}>
+        <Grid container item xs={12}>
+          <Typography variant="h5" color="textSecondary">
+            Featured Reef
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container justify="center">
+            <Card>
+              {`${reef.id}` === featuredReefId ? (
+                <Grid container item xs={12} spacing={1}>
+                  <Grid item xs={12} sm={4} style={{ position: "relative" }}>
+                    <CardMedia
+                      className={classes.cardImage}
+                      image={reefImage}
+                    />
+                    <Hidden smUp>
+                      <Grid item xs={12} className={classes.mobileTitle}>
+                        <Typography
+                          style={{ padding: "0.5rem 0 0 0.5rem" }}
+                          color="textPrimary"
+                          variant="h5"
+                        >
+                          {reef.name}
+                        </Typography>
+                        <Typography
+                          style={{
+                            padding: "0 0 0.5rem 0.5rem",
+                            fontWeight: 400,
+                          }}
+                          color="textPrimary"
+                          variant="h6"
+                        >
+                          {reef.region}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
+                    <Grid item className={classes.exploreButton}>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to={`/reefs/${reef.id}`}
+                      >
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="primary"
+                        >
+                          EXPLORE
+                        </Button>
+                      </Link>
+                    </Grid>
+                  </Grid>
+                  <Grid container item xs={12} sm={6}>
+                    <Hidden xsDown>
+                      <Grid item xs={12}>
+                        <Typography
+                          style={{ padding: "0.5rem 0 0 0.5rem" }}
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          {reef.name}
+                        </Typography>
+                        <Typography
+                          style={{
+                            padding: "0 0 0.5rem 0.5rem",
+                            fontWeight: 400,
+                          }}
+                          color="textSecondary"
+                          variant="h6"
+                        >
+                          {reef.region}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
+                    <Grid item xs={12}>
+                      <Typography
+                        style={{
+                          padding: "0 0 0.5rem 0.5rem",
+                          fontWeight: 400,
+                        }}
+                        color="textSecondary"
+                        variant="subtitle1"
+                      >
+                        MEAN DAILY SURFACE TEMPERATURE (C&deg;)
+                      </Typography>
+                      <CardChart
+                        dailyData={reef.dailyData}
+                        temperatureThreshold={(reef.maxMonthlyMean || 22) + 1}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    alignItems="center"
+                    item
+                    xs={12}
+                    sm={2}
                   >
-                    {reef.name}
-                  </Typography>
-                  <Typography
-                    style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
-                    color="textSecondary"
-                    variant="h6"
-                  >
-                    {reef.region}
-                  </Typography>
+                    <Grid
+                      item
+                      xs={4}
+                      sm={12}
+                      className={classes.metricsContainer}
+                    >
+                      <Typography variant="caption" color="textSecondary">
+                        {`TEMP AT ${reef.depth}M`}
+                      </Typography>
+                      <Typography
+                        className={classes.cardMetrics}
+                        variant="h4"
+                        color="textSecondary"
+                      >
+                        {`${formatNumber(maxBottomTemperature, 1)} \u2103`}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={4}
+                      sm={12}
+                      className={classes.metricsContainer}
+                    >
+                      <Typography variant="caption" color="textSecondary">
+                        SURFACE TEMP
+                      </Typography>
+                      <Typography
+                        className={classes.cardMetrics}
+                        variant="h4"
+                        color="textSecondary"
+                      >
+                        {`${formatNumber(surfTemp, 1)} \u2103`}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={4}
+                      sm={12}
+                      className={classes.metricsContainer}
+                    >
+                      <Typography variant="caption" color="textSecondary">
+                        D. H. WEEKS
+                      </Typography>
+                      <Typography
+                        className={classes.cardMetrics}
+                        variant="h4"
+                        color="textSecondary"
+                      >
+                        {formatNumber(
+                          degreeHeatingWeeksCalculator(degreeHeatingDays),
+                          1
+                        )}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography
-                    style={{ padding: "0 0 0.5rem 0.5rem", fontWeight: 400 }}
-                    color="textSecondary"
-                    variant="subtitle1"
-                  >
-                    MEAN DAILY SURFACE TEMPERATURE (C&deg;)
-                  </Typography>
-                  <CardChart
-                    dailyData={reef.dailyData}
-                    temperatureThreshold={(reef.maxMonthlyMean || 22) + 1}
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                style={{ paddingLeft: "2rem" }}
-                container
-                direction="row"
-                alignItems="center"
-                item
-                xs={2}
-              >
-                <Grid item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    {`TEMP AT ${reef.depth}M`}
-                  </Typography>
-                  <Typography
-                    className={classes.cardMetrics}
-                    variant="h4"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(maxBottomTemperature, 1)} \u2103`}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    SURFACE TEMP
-                  </Typography>
-                  <Typography
-                    className={classes.cardMetrics}
-                    variant="h4"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(surfTemp, 1)} \u2103`}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    D. H. WEEKS
-                  </Typography>
-                  <Typography
-                    className={classes.cardMetrics}
-                    variant="h4"
-                    color="textSecondary"
-                  >
-                    {formatNumber(
-                      degreeHeatingWeeksCalculator(degreeHeatingDays),
-                      1
-                    )}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Link
-                    style={{ color: "inherit", textDecoration: "none" }}
-                    to={`/reefs/${reef.id}`}
-                  >
-                    <Button size="small" variant="contained" color="primary">
-                      EXPLORE
-                    </Button>
-                  </Link>
-                </Grid>
-              </Grid>
-            </Grid>
-          ) : (
-            <div className={classes.loading}>
-              <CircularProgress size="6rem" thickness={1} />
-            </div>
-          )}
-        </Paper>
+              ) : (
+                <div className={classes.loading}>
+                  <CircularProgress size="6rem" thickness={1} />
+                </div>
+              )}
+            </Card>
+          </Grid>
+        </Grid>
       </Grid>
     </div>
   );
@@ -159,12 +213,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      marginTop: "1rem",
-      marginBottom: "2rem",
-    },
-    selectedReef: {
-      width: "48vw",
-      height: "28vh",
+      padding: "8px",
     },
     loading: {
       height: "100%",
@@ -173,15 +222,30 @@ const styles = (theme: Theme) =>
       justifyContent: "center",
       alignItems: "center",
     },
-    card: {
-      height: "100%",
-    },
     cardImage: {
       borderRadius: "4px 0 0 4px",
-      height: "100%",
+      minHeight: "200px",
+    },
+    exploreButton: {
+      position: "absolute",
+      bottom: "16px",
+      right: "16px",
+    },
+    mobileTitle: {
+      position: "absolute",
+      top: "8px",
+      left: "8px",
     },
     cardMetrics: {
       color: theme.palette.primary.main,
+      [theme.breakpoints.down("xs")]: {
+        textAlign: "center",
+      },
+    },
+    metricsContainer: {
+      [theme.breakpoints.down("xs")]: {
+        textAlign: "center",
+      },
     },
   });
 
