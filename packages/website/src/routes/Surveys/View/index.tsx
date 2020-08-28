@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
@@ -8,9 +8,14 @@ import {
   Grid,
   IconButton,
   Box,
-  CardMedia,
   Typography,
 } from "@material-ui/core";
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  surveyDetailsSelector,
+  surveyGetRequest,
+} from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 
 import Map from "../../ReefRoutes/Reef/Map";
@@ -20,6 +25,15 @@ import reefImage from "../../../assets/reef-image.jpg";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const surveyDetails = useSelector(surveyDetailsSelector);
+
+  useEffect(() => {
+    if (!surveyDetails) {
+      dispatch(surveyGetRequest(surveyId));
+    }
+  }, [dispatch, surveyId, surveyDetails]);
+
   return (
     <div className={classes.outerDiv}>
       <Grid alignItems="flex-start" container direction="column" spacing={1}>
@@ -46,7 +60,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             xs={10}
             className={classes.surveyDetails}
           >
-            <SurveyDetails reef={reef} surveyId={surveyId} />
+            <SurveyDetails reef={reef} survey={surveyDetails} />
             <Typography variant="body2">
               {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (C°)`}
             </Typography>
@@ -114,7 +128,7 @@ const styles = () =>
 
 interface SurveyViewPageIncomingProps {
   reef: Reef;
-  surveyId?: string;
+  surveyId: string;
 }
 
 type SurveyViewPageProps = SurveyViewPageIncomingProps &

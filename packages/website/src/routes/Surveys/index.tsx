@@ -80,8 +80,7 @@ interface SurveysIncomingProps {
   isView?: boolean;
 }
 
-interface MatchProps
-  extends RouteComponentProps<{ id: string; sid?: string }> {}
+interface MatchProps extends RouteComponentProps<{ id: string; sid: string }> {}
 
 type SurveysProps = MatchProps &
   SurveysIncomingProps &
