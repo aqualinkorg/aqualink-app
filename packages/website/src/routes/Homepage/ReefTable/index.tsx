@@ -145,6 +145,18 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
             </IconButton>
           </Grid>
         </Grid>
+        {openDrawer ? null : (
+          <Typography
+            style={{
+              position: "relative",
+              margin: "1rem 0 0.5rem 1rem",
+            }}
+            variant="h5"
+            color="textSecondary"
+          >
+            All Reefs
+          </Typography>
+        )}
       </Hidden>
       {selectedReef &&
         selectedReef.dailyData &&
