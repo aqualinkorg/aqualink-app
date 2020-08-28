@@ -4,3 +4,13 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom/extend-expect";
 import "mutationobserver-shim";
+
+function stubMuiComponent(componentName: string, namedExports: any = {}) {
+  jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
+    __esModule: true,
+    default: `mock-${componentName}`,
+    ...namedExports,
+  }));
+}
+
+stubMuiComponent("Hidden");

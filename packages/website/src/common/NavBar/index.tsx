@@ -101,15 +101,16 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                 link
               </Typography>
             </Grid>
-            {user ? (
-              <Grid
-                container
-                alignItems="center"
-                justify="flex-end"
-                item
-                xs={6}
-              >
-                {searchLocation && <Search />}
+
+            <Grid
+              container
+              alignItems="flex-start"
+              justify="flex-start"
+              item
+              xs={6}
+            >
+              {searchLocation && <Search />}
+              {user ? (
                 <Grid container justify="flex-end" item xs={6}>
                   <IconButton>
                     <NotificationsIcon className={classes.notificationIcon} />
@@ -139,21 +140,21 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                     </MenuItem>
                   </Menu>
                 </Grid>
-              </Grid>
-            ) : (
-              <Grid container justify="flex-end" item xs={6}>
-                <Grid item>
-                  <Button onClick={() => handleSignInDialog(true)}>
-                    SIGN IN
-                  </Button>
+              ) : (
+                <Grid container justify="flex-end" item xs={6}>
+                  <Grid item>
+                    <Button onClick={() => handleSignInDialog(true)}>
+                      SIGN IN
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button onClick={() => handleRegisterDialog(true)}>
+                      REGISTER
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button onClick={() => handleRegisterDialog(true)}>
-                    REGISTER
-                  </Button>
-                </Grid>
-              </Grid>
-            )}
+              )}
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
