@@ -93,7 +93,7 @@ const SurveyDetails = ({ reef, surveyId, classes }: SurveyDetailsProps) => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid item xs={6} sm={4} md={3} lg={3}>
+      <Grid item xs={12} md={6} lg={2}>
         <ObservationBox depth={reef.depth} dailyData={reef.dailyData} />
       </Grid>
     </Grid>

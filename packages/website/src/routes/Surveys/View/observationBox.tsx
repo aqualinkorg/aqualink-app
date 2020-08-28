@@ -75,9 +75,8 @@ const styles = () =>
       backgroundColor: "#128cc0",
       borderRadius: "0.4rem",
       display: "flex",
-      padding: "0.5rem 0rem 1rem 1rem",
+      padding: "1rem",
       flexGrow: 1,
-      width: "85%",
     },
   });
 

@@ -14,6 +14,7 @@ import {
 import SurveyDetails from "./SurveyDetails";
 
 import Map from "../../ReefRoutes/Reef/Map";
+import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 import reefImage from "../../../assets/reef-image.jpg";
 
@@ -38,18 +39,33 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
       </Grid>
       <Box boxShadow={3} className={classes.shadowBox}>
         <Grid container>
-          <Grid item xs={10} className={classes.surveyDetails}>
-            <SurveyDetails reef={reef} surveyId={surveyId} />
-          </Grid>
           <Grid
             container
-            direction="column"
             item
-            className={classes.image}
-            xs={2}
+            direction="column"
+            xs={10}
+            className={classes.surveyDetails}
           >
-            <Map polygon={reef.polygon} />
-            <CardMedia className={classes.image} image={reefImage} />
+            <SurveyDetails reef={reef} surveyId={surveyId} />
+            <Typography variant="body2">
+              {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (C°)`}
+            </Typography>
+            <Grid item xs={12}>
+              <Charts
+                dailyData={reef.dailyData}
+                depth={reef.depth}
+                // TODO - Remove default
+                temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item direction="column" md={12} lg={2}>
+            <Grid item className={classes.image}>
+              <Map polygon={reef.polygon} />
+            </Grid>
+            <Grid item>
+              <CardMedia className={classes.image} image={reefImage} />
+            </Grid>
           </Grid>
         </Grid>
       </Box>
@@ -61,7 +77,7 @@ const styles = () =>
   createStyles({
     outerDiv: {
       backgroundColor: "#f5f6f6",
-      height: "45%",
+      height: "auto",
       padding: "3rem 3.2rem 2rem 1rem",
     },
     shadowBox: {
@@ -73,9 +89,8 @@ const styles = () =>
     surveyDetails: {
       marginTop: "2rem",
     },
-    imageContainer: {},
     image: {
-      height: "20rem",
+      height: "14.5rem",
     },
   });
 
