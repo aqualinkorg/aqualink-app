@@ -6,7 +6,7 @@ import NavBar from "../../common/NavBar";
 const Faq = ({ classes }: FaqProps) => {
   return (
     <>
-      <NavBar searchLocation />
+      <NavBar />
 
       <div>
         <meta charSet="utf-8" />

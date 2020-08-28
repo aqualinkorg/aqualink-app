@@ -14,7 +14,7 @@ import "../../assets/css/leaflet.css";
 const Buoy = ({ classes }: BuoyProps) => {
   return (
     <>
-      <NavBar searchLocation />
+      <NavBar />
       <div className="bloc l-bloc" id="bloc-6">
         <div className="container bloc-md">
           <div className="row align-items-center">

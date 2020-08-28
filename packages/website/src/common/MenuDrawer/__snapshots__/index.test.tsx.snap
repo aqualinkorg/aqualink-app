@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuDrawer closed should render with given state from Redux store 1`] = `<div />`;
+
+exports[`MenuDrawer open should render with given state from Redux store 1`] = `<div />`;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   AppBar,
-  Drawer,
   Toolbar,
   Grid,
   IconButton,
@@ -10,7 +9,6 @@ import {
   Button,
   Menu,
   MenuItem,
-  Link,
   withStyles,
   WithStyles,
   createStyles,
@@ -24,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import Search from "../Search";
+import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
@@ -45,33 +44,6 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     setAnchorEl(null);
   };
 
-  const menuRoutes = [
-    {
-      text: "Home",
-      href: "/",
-    },
-    {
-      text: "Buoy",
-      href: "/buoy",
-    },
-    {
-      text: "Drone",
-      href: "/drones",
-    },
-    {
-      text: "About",
-      href: "/about",
-    },
-    {
-      text: "FAQ",
-      href: "/faq",
-    },
-    {
-      text: "Apply",
-      href: "/apply",
-    },
-  ];
-
   return (
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
@@ -86,15 +58,10 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                 <MenuIcon />
               </IconButton>
             </Grid>
-            <Drawer
-              anchor="left"
+            <MenuDrawer
               open={menuDrawerOpen}
               onClose={() => setMenuDrawerOpen(false)}
-            >
-              {menuRoutes.map(({ text, href }) => (
-                <Link href={href}>{text}</Link>
-              ))}
-            </Drawer>
+            />
             <Grid container item xs={5}>
               <Typography variant="h4">Aqua</Typography>
               <Typography style={{ color: "#8AC6DE" }} variant="h4">

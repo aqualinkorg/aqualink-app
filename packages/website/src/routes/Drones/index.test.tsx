@@ -16,6 +16,9 @@ describe("Drones", () => {
         loading: false,
         error: null,
       },
+      reefsList: {
+        list: [],
+      },
     });
 
     store.dispatch = jest.fn();
