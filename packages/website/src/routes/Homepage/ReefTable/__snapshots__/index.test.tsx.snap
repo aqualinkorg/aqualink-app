@@ -37,10 +37,15 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         </button>
       </div>
     </div>
+    <h5
+      class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+      style="position: relative; margin: 1rem 0px 0.5rem 1rem;"
+    >
+      All Reefs
+    </h5>
   </mock-hidden>
   <div
     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-    style="margin-top: 2rem;"
   >
     <div
       class="MuiPaper-root MuiPaper-elevation0 MuiPaper-rounded"
