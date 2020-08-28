@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -7,92 +7,96 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+import {
+  getNumberOfImages,
+  getNumberOfVideos,
+} from "../../../helpers/surveyMedia";
 
 import type { Reef } from "../../../store/Reefs/types";
+import type { SurveyState } from "../../../store/Survey/types";
 import ObservationBox from "./observationBox";
 
-const SurveyDetails = ({ reef, surveyId, classes }: SurveyDetailsProps) => {
+const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   return (
     <Grid container item direction="row" spacing={2}>
-      <Grid container item direction="column" spacing={3} xs={12} lg={9}>
-        <Grid item>
-          <Typography color="initial" variant="h6">
-            06/10/2020 at 8:47AM
-          </Typography>
+      {survey && (
+        <Grid container item direction="column" spacing={3} xs={12} lg={9}>
+          <Grid item>
+            <Typography color="initial" variant="h6">
+              {moment
+                .parseZone(survey.diveDate)
+                .format("MM/DD/YYYY [at] h:mm A")}
+            </Typography>
+          </Grid>
+          <Grid container item direction="row">
+            <Grid container item direction="column" xs={12} md={3}>
+              <Typography color="initial" variant="h5">
+                Reef Zone 18B
+              </Typography>
+              <Typography color="initial" variant="body1">
+                Palancar Reef, Conzumel, Mexico
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Typography
+                color="primary"
+                variant="h4"
+                className={classes.inlineText}
+              >
+                {survey.surveyPoints?.length}
+              </Typography>
+              <Typography
+                color="initial"
+                variant="body1"
+                className={classes.inlineText}
+              >
+                SURVEY POINTS
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Typography
+                color="primary"
+                variant="h4"
+                className={classes.inlineText}
+              >
+                {survey.surveyPoints && getNumberOfImages(survey.surveyPoints)}
+              </Typography>
+              <Typography
+                color="initial"
+                variant="body1"
+                className={classes.inlineText}
+              >
+                IMAGES
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Typography
+                color="primary"
+                variant="h4"
+                className={classes.inlineText}
+              >
+                {survey.surveyPoints && getNumberOfVideos(survey.surveyPoints)}
+              </Typography>
+              <Typography
+                color="initial"
+                variant="body1"
+                className={classes.inlineText}
+              >
+                VIDEOS
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container item direction="column">
+            <Typography color="initial" variant="h6">
+              Comments
+            </Typography>
+            <Typography color="initial" variant="body2">
+              {survey.comments}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid container item direction="row">
-          <Grid container item direction="column" xs={12} md={3}>
-            <Typography color="initial" variant="h5">
-              Reef Zone 18B
-            </Typography>
-            <Typography color="initial" variant="body1">
-              Palancar Reef, Conzumel, Mexico
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography
-              color="primary"
-              variant="h4"
-              className={classes.inlineText}
-            >
-              5
-            </Typography>
-            <Typography
-              color="initial"
-              variant="body1"
-              className={classes.inlineText}
-            >
-              SURVEY POINTS
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography
-              color="primary"
-              variant="h4"
-              className={classes.inlineText}
-            >
-              21
-            </Typography>
-            <Typography
-              color="initial"
-              variant="body1"
-              className={classes.inlineText}
-            >
-              IMAGES
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography
-              color="primary"
-              variant="h4"
-              className={classes.inlineText}
-            >
-              4
-            </Typography>
-            <Typography
-              color="initial"
-              variant="body1"
-              className={classes.inlineText}
-            >
-              VIDEOS
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container item direction="column">
-          <Typography color="initial" variant="h6">
-            Comments
-          </Typography>
-          <Typography color="initial" variant="body2">
-            Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat.
-          </Typography>
-        </Grid>
-      </Grid>
+      )}
+
       <Grid item xs={12} md={6} lg={2}>
         <ObservationBox depth={reef.depth} dailyData={reef.dailyData} />
       </Grid>
@@ -110,7 +114,7 @@ const styles = () =>
 
 interface SurveyDetailsIncomingProps {
   reef: Reef;
-  surveyId?: string;
+  survey?: SurveyState;
 }
 
 type SurveyDetailsProps = SurveyDetailsIncomingProps &

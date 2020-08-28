@@ -3,6 +3,19 @@ interface DiveLocation {
   lng: number;
 }
 
+export interface SurveyMedia {
+  url: string;
+  featured: boolean;
+  observations: string;
+  comments: string | null;
+  type: string;
+}
+
+export interface SurveyPoint {
+  name: string;
+  surveyMedia: SurveyMedia[];
+}
+
 export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;
@@ -10,6 +23,7 @@ export interface SurveyState {
   weatherConditions?: string;
   comments?: string;
   temperature?: string;
+  surveyPoints?: SurveyPoint[];
 }
 
 export interface SurveyData {
