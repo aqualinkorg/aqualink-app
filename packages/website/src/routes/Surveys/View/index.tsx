@@ -59,12 +59,23 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               />
             </Grid>
           </Grid>
-          <Grid container item direction="column" md={12} lg={2}>
-            <Grid item className={classes.image}>
+          {/* The grid breakpoints have no effect on items of a container with direction column and
+           this is why they must not be added. 
+           See corresponding material ui documentation:
+            https://material-ui.com/components/grid/#direction-column-column-reverse */}
+          <Grid
+            container
+            alignItems="flex-end"
+            item
+            direction="column"
+            md={12}
+            lg={2}
+          >
+            <Grid item className={classes.imageContainer}>
               <Map polygon={reef.polygon} />
             </Grid>
-            <Grid item>
-              <CardMedia className={classes.image} image={reefImage} />
+            <Grid item className={classes.imageContainer}>
+              <img className={classes.image} src={reefImage} alt="reef" />
             </Grid>
           </Grid>
         </Grid>
@@ -90,7 +101,14 @@ const styles = () =>
       marginTop: "2rem",
     },
     image: {
-      height: "14.5rem",
+      height: "100%",
+      width: "100%",
+      objectFit: "cover",
+    },
+    imageContainer: {
+      flex: "1 0 auto",
+      width: "100%",
+      height: "50%",
     },
   });
 
