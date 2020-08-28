@@ -165,11 +165,11 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 const styles = () =>
   createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      flex: 1,
     },
     popup: {
       width: "12vw",
+      minWidth: "100px",
     },
     loading: {
       height: "100%",
