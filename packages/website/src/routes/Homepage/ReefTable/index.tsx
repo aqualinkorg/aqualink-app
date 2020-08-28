@@ -1,8 +1,9 @@
 import React, { CSSProperties, forwardRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MaterialTable, { Column } from "material-table";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper, Typography, IconButton, Hidden } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ErrorIcon from "@material-ui/icons/Error";
 
 import SelectedReefCard from "./SelectedReefCard";
@@ -26,7 +27,7 @@ interface Row {
   };
 }
 
-const ReefTable = () => {
+const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
   const dispatch = useDispatch();
@@ -136,13 +137,34 @@ const ReefTable = () => {
 
   return (
     <>
+      <Hidden smUp>
+        <Grid container justify="center" style={{ marginBottom: "-3rem" }}>
+          <Grid item>
+            <IconButton>
+              {openDrawer ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
+            </IconButton>
+          </Grid>
+        </Grid>
+        {openDrawer ? null : (
+          <Typography
+            style={{
+              position: "relative",
+              margin: "1rem 0 0.5rem 1rem",
+            }}
+            variant="h5"
+            color="textSecondary"
+          >
+            All Reefs
+          </Typography>
+        )}
+      </Hidden>
       {selectedReef &&
         selectedReef.dailyData &&
         selectedReef.dailyData.length > 0 && (
           <SelectedReefCard reef={selectedReef} />
         )}
       {reefsList && reefsList.length > 0 && (
-        <Grid style={{ marginTop: "2rem" }} item xs={12}>
+        <Grid item xs={12}>
           <MaterialTable
             icons={{
               SortArrow: forwardRef((props, ref) => (
@@ -178,5 +200,9 @@ const ReefTable = () => {
     </>
   );
 };
+
+interface ReefTableProps {
+  openDrawer: boolean;
+}
 
 export default ReefTable;

@@ -30,7 +30,7 @@ test("renders as expected", () => {
   const reef: Reef = {
     id: 16,
     name: "Mock Reef Friesen",
-    temperatureThreshold: 25,
+    maxMonthlyMean: 25,
     depth: 24,
     status: 1,
     videoStream: null,

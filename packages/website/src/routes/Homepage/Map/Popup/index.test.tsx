@@ -7,13 +7,13 @@ import { Reef } from "../../../../store/Reefs/types";
 
 test("renders as expected", () => {
   const reef: Reef = {
-    id: 0,
+    id: 2,
     name: "",
     polygon: {
       coordinates: [0, 0],
       type: "Point",
     },
-    temperatureThreshold: 0,
+    maxMonthlyMean: 0,
     depth: 0,
     status: 0,
     videoStream: null,
