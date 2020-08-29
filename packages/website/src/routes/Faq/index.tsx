@@ -1,5 +1,10 @@
 import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Typography,
+} from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 
@@ -31,7 +36,6 @@ const Faq = ({ classes }: FaqProps) => {
           rel="stylesheet"
           type="text/css"
         />
-        <title>FAQ</title>
         {/* Main container */}
         <div className="page-container">
           {/* bloc-11 */}
@@ -39,15 +43,17 @@ const Faq = ({ classes }: FaqProps) => {
             <div className="container bloc-lg">
               <div className="row">
                 <div className="col">
-                  <h3 className="mg-md">Frequently Asked Questions</h3>
+                  <Typography className={classes.title} variant="h4">
+                    Frequently Asked Questions
+                  </Typography>
                 </div>
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     I am managing a large area and would like more than one
                     spotter, can I get multiple?
-                  </h4>
+                  </Typography>
                   <p>
                     Please submit an application for each reef or location you
                     would like a spotter for and we’ll be in touch to figure out
@@ -57,9 +63,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     Who is responsible for the satellite communication costs?
-                  </h4>
+                  </Typography>
                   <p>
                     Aqualink will be responsible for any satellite communication
                     costs.
@@ -68,19 +74,19 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     What is the maximum depth a temperature sensor on the smart
                     mooring can be deployed?
-                  </h4>
+                  </Typography>
                   <p>100 meters.</p>
                 </div>
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     What are the shipping costs?
                     <br />
-                  </h4>
+                  </Typography>
                   <p>
                     Shipping cost will vary greatly depending on your location.
                     To get an idea of shipping costs you can visit
@@ -129,9 +135,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     Am I responsible for customs / duties / taxes?
-                  </h4>
+                  </Typography>
                   <p>
                     Yes. As the recipient of the equipment you will need to
                     determine if you need to pay these to receive your equipment
@@ -141,9 +147,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     How big is the smart mooring and spotter buoy?
-                  </h4>
+                  </Typography>
                   <p>
                     The total smart mooring system is small enough for regular
                     shipping such as UPS, DHL, FedEx, etc. The dimensions and
@@ -167,9 +173,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     Can I see more specification for the spotter buoy?
-                  </h4>
+                  </Typography>
                   <p>
                     You can see some of the specifications&nbsp;
                     <a
@@ -187,10 +193,10 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     How is the smart mooring moored? Does it come with a mooring
                     anchor?
-                  </h4>
+                  </Typography>
                   <p>
                     The smart mooring does not come with an anchor. It
                     terminates in a stainless steel shackle with a chain. This
@@ -204,9 +210,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     Am I responsible for permitting and permissions to install?
-                  </h4>
+                  </Typography>
                   <p>
                     Yes. You will need to know the regulations for your
                     installation site and ensure you have the proper permits and
@@ -217,9 +223,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     How do I receive data from the smart mooring?
-                  </h4>
+                  </Typography>
                   <p>
                     Data will be available in an open-source dashboard provided
                     by aqualink.org.
@@ -229,7 +235,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">How often will I receive data?</h4>
+                  <Typography className={classes.question} variant="h5">
+                    How often will I receive data?
+                  </Typography>
                   <p>
                     Data will be real time transmitted every 30-45 minutes.
                     <br />
@@ -238,9 +246,9 @@ const Faq = ({ classes }: FaqProps) => {
               </div>
               <div className="row faqq">
                 <div className="col">
-                  <h4 className="mg-md">
+                  <Typography className={classes.question} variant="h5">
                     What data will I receive from the smart mooring?
-                  </h4>
+                  </Typography>
                   <p>
                     The planned data available will be:
                     <br />
@@ -283,6 +291,15 @@ const Faq = ({ classes }: FaqProps) => {
 
 const styles = () =>
   createStyles({
+    title: {
+      marginTop: "1rem",
+      marginBottom: "1rem",
+    },
+    question: {
+      marginTop: "1rem",
+      marginBottom: "1rem",
+      fontWeight: "bold",
+    },
     root: {
       top: 10,
       height: "100%",

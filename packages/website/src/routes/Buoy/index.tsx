@@ -1,5 +1,10 @@
 import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Typography,
+} from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 
@@ -15,11 +20,13 @@ const Buoy = ({ classes }: BuoyProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <div className="bloc l-bloc" id="bloc-6">
+      <div className={classes.root} id="bloc-6">
         <div className="container bloc-md">
           <div className="row align-items-center">
             <div className="lcolpad col-12 col">
-              <h4 className="mg-md">Monitoring System</h4>
+              <Typography className={classes.title} variant="h4">
+                Monitoring System
+              </Typography>
               <p className="text-lg-left">
                 Current global ocean temperature monitoring systems are
                 restricted to satellite-derived surface temperatures which only
@@ -47,7 +54,9 @@ const Buoy = ({ classes }: BuoyProps) => {
           </div>
           <div className="row align-items-center">
             <div className="lcolpad col-12 col">
-              <h4 className="mg-md">Web Application</h4>
+              <Typography className={classes.title} variant="h4">
+                Web Application
+              </Typography>
               <p className="text-lg-left">
                 An essential component of the monitoring system is the website
                 where data and imagery can be accessed and uploaded. The website
@@ -127,7 +136,9 @@ const Buoy = ({ classes }: BuoyProps) => {
           </div>
           <div className="row voffset-lg">
             <div className="col-lg-12">
-              <h4 className="mg-md">System Architecture</h4>
+              <Typography className={classes.title} variant="h4">
+                System Architecture
+              </Typography>
               <p className="text-lg-left">
                 The real-time temperature information is transmitted to our
                 servers where a monitoring system combines that data with survey
@@ -155,9 +166,12 @@ const Buoy = ({ classes }: BuoyProps) => {
 
 const styles = () =>
   createStyles({
+    title: {
+      marginTop: "1rem",
+      marginBottom: "1rem",
+    },
     root: {
-      top: 10,
-      height: "100%",
+      marginTop: "1rem",
     },
   });
 

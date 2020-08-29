@@ -1,5 +1,10 @@
 import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Typography,
+} from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 
@@ -43,7 +48,9 @@ const About = ({ classes }: AboutProps) => {
               <div className="container bloc-md mobilecentered">
                 <div className="row">
                   <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
-                    <h4 className="mg-md">About Us</h4>
+                    <Typography className={classes.title} variant="h4">
+                      About Us
+                    </Typography>
                     <p>
                       Aqualink is a philanthropic engineering organization
                       working on Ocean conservation problems.
@@ -59,8 +66,10 @@ const About = ({ classes }: AboutProps) => {
                   </div>
                 </div>
                 <div className="row voffset-lg">
-                  <div className="centered col-lg-8 offset-lg-2">
-                    <h4 className="mg-lg">The Team</h4>
+                  <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
+                    <Typography className={classes.title} variant="h4">
+                      The Team
+                    </Typography>
                     <p>
                       We have been working in rapid development and
                       entrepreneurial businesses that scale and hope to bring a
@@ -145,6 +154,10 @@ const About = ({ classes }: AboutProps) => {
 
 const styles = () =>
   createStyles({
+    title: {
+      marginTop: "1rem",
+      marginBottom: "1rem",
+    },
     root: {
       top: 10,
       height: "100%",

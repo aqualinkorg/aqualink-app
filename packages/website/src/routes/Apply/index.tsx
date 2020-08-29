@@ -1,5 +1,10 @@
 import React from "react";
-import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Typography,
+} from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 
@@ -43,7 +48,9 @@ const Apply = ({ classes }: ApplyProps) => {
             <div className="container bloc-md">
               <div className="row no-gutters">
                 <div className="lcolpad col-lg-6">
-                  <h4 className="mg-md">Manage your local reef</h4>
+                  <Typography className={classes.title} variant="h4">
+                    Manage your local reef
+                  </Typography>
                   <p className="mg-lg">
                     We will be starting with our deployments in August and would
                     love to have you apply to get free access to our system.
@@ -173,7 +180,9 @@ const Apply = ({ classes }: ApplyProps) => {
                     data-success-msg="Your application has been submitted."
                     data-fail-msg="Sorry it seems that our server is not responding."
                   >
-                    <h4 className="mg-md">Application Form</h4>
+                    <Typography className={classes.title} variant="h4">
+                      Application Form
+                    </Typography>
                     <div className="form-group">
                       <label>Name</label>
                       <input id="name" className="form-control" required />
@@ -271,6 +280,10 @@ const Apply = ({ classes }: ApplyProps) => {
 
 const styles = () =>
   createStyles({
+    title: {
+      marginTop: "1rem",
+      marginBottom: "1rem",
+    },
     root: {
       top: 10,
       height: "100%",

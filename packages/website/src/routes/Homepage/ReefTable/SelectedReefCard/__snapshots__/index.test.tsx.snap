@@ -71,7 +71,7 @@ exports[`renders as expected 1`] = `
                 class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
                 39.0 ℃
-              </h4>
+              </Typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -85,7 +85,7 @@ exports[`renders as expected 1`] = `
                 class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
                 29.0 ℃
-              </h4>
+              </Typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -99,7 +99,7 @@ exports[`renders as expected 1`] = `
                 class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
                 4.9
-              </h4>
+              </Typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"

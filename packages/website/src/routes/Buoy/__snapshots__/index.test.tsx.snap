@@ -45,13 +45,13 @@ exports[`Buoy should render with given state from Redux store 1`] = `
             class="MuiTypography-root MuiTypography-h4"
           >
             Aqua
-          </h4>
+          </Typography>
           <h4
             class="MuiTypography-root MuiTypography-h4"
             style="color: rgb(138, 198, 222);"
           >
             link
-          </h4>
+          </Typography>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
@@ -117,7 +117,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
             class="mg-md"
           >
             Monitoring System
-          </h4>
+          </Typography>
           <p
             class="text-lg-left"
           >
@@ -145,7 +145,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
             class="mg-md"
           >
             Web Application
-          </h4>
+          </Typography>
           <p
             class="text-lg-left"
           >
@@ -263,7 +263,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
             class="mg-md"
           >
             System Architecture
-          </h4>
+          </Typography>
           <p
             class="text-lg-left"
           >

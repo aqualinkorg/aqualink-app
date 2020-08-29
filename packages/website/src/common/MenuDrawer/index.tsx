@@ -5,7 +5,9 @@ import {
   createStyles,
   Link,
   Drawer,
+  IconButton,
 } from "@material-ui/core";
+import { Clear } from "@material-ui/icons";
 
 const menuRoutes = [
   {
@@ -40,10 +42,29 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       anchor="left"
       open={open}
       onClose={onClose}
-      className={classes.drawer}
+      classes={{ paper: classes.paper }}
     >
+      <IconButton
+        onClick={onClose}
+        style={{
+          alignSelf: "flex-end",
+          marginRight: 5,
+          marginTop: 5,
+        }}
+      >
+        <Clear />
+      </IconButton>
       {menuRoutes.map(({ text, href }) => (
-        <Link href={href}>{text}</Link>
+        <Link
+          href={href}
+          style={{
+            margin: "1rem 2rem 2rem",
+            fontSize: "1.5rem",
+            color: "white",
+          }}
+        >
+          {text}
+        </Link>
       ))}
     </Drawer>
   );
@@ -51,8 +72,11 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 
 const styles = () =>
   createStyles({
-    drawer: {
-      width: 200,
+    paper: {
+      width: "12rem",
+      alignItems: "center",
+      // paddingTop: "2rem",
+      backgroundColor: "#095877",
     },
   });
 
