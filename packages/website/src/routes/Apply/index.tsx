@@ -78,7 +78,7 @@ const Apply = ({ classes }: ApplyProps) => {
                 </div>
                 <div className="offset-lg-1 col-lg-5">
                   <div className="detailsbox">
-                    <h5 className="mg-md">Your Obligations</h5>
+                    <h5 className={classes.title}>Your Obligations</h5>
                     <p>
                       You will be given a free smart buoy but there are some
                       things you will be expected to do or provide:
