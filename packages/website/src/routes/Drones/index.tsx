@@ -16,7 +16,7 @@ import dronebottom from "../../assets/img/dronebottom.jpg";
 const Drones = ({ classes }: DronesProps) => {
   return (
     <>
-      <NavBar />
+      <NavBar searchLocation={false} />
       <div>
         <meta charSet="utf-8" />
         <meta

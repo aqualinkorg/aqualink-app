@@ -11,7 +11,7 @@ import drew from "../../assets/img/drew.jpg";
 const About = ({ classes }: AboutProps) => {
   return (
     <>
-      <NavBar />
+      <NavBar searchLocation={false} />
       <div>
         <meta charSet="utf-8" />
         <meta

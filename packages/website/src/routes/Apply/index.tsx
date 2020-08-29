@@ -8,7 +8,7 @@ import reemimage from "../../assets/img/reemimage.jpg";
 const Apply = ({ classes }: ApplyProps) => {
   return (
     <>
-      <NavBar />
+      <NavBar searchLocation={false} />
 
       <div>
         <meta charSet="utf-8" />
