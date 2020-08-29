@@ -209,6 +209,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         textAlign: "center",
       },
+      marginTop: "1rem",
     },
   });
 
