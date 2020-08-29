@@ -11,11 +11,24 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+        <mock-hidden
+          xsdown="true"
         >
-          Featured Reef
-        </h5>
+          <h5
+            class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+          >
+            Featured - 
+          </h5>
+        </mock-hidden>
+        <mock-hidden
+          smup="true"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+          >
+            Featured Reef
+          </h5>
+        </mock-hidden>
       </div>
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -31,7 +44,7 @@ exports[`renders as expected 1`] = `
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
-                style="position: relative;"
+                style="height: 8rem; position: relative;"
               >
                 <div
                   class="MuiCardMedia-root SelectedReefCard-cardImage-3"
@@ -78,41 +91,26 @@ exports[`renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8"
               >
-                <mock-hidden
-                  xsdown="true"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-                  >
-                    <h5
-                      class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
-                      style="padding: 0.5rem 0px 0px 0.5rem;"
-                    />
-                    <h6
-                      class="MuiTypography-root MuiTypography-h6 MuiTypography-colorTextSecondary"
-                      style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
-                    />
-                  </div>
-                </mock-hidden>
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  style="height: 8rem;"
                 >
                   <h6
                     class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
                     style="padding: 0px 0px 0.5rem 0.5rem; font-weight: 400;"
                   >
-                    MEAN DAILY SURFACE TEMPERATURE (C°)
+                    MEAN DAILY SURFACE TEMP. (C°)
                   </h6>
                   Mock-Line
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-sm-2"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-sm-8"
               >
                 <div
-                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-12"
+                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-4"
                 >
                   <span
                     class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
@@ -126,7 +124,7 @@ exports[`renders as expected 1`] = `
                   </h4>
                 </div>
                 <div
-                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-12"
+                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-4"
                 >
                   <span
                     class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
@@ -140,7 +138,7 @@ exports[`renders as expected 1`] = `
                   </h4>
                 </div>
                 <div
-                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-12"
+                  class="MuiGrid-root SelectedReefCard-metricsContainer-7 MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-4"
                 >
                   <span
                     class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
@@ -174,11 +172,24 @@ exports[`renders loading as expected 1`] = `
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+        <mock-hidden
+          xsdown="true"
         >
-          Featured Reef
-        </h5>
+          <h5
+            class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+          >
+            Featured - 
+          </h5>
+        </mock-hidden>
+        <mock-hidden
+          smup="true"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+          >
+            Featured Reef
+          </h5>
+        </mock-hidden>
       </div>
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"

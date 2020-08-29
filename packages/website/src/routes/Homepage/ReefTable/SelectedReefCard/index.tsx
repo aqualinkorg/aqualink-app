@@ -44,9 +44,16 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
     <div className={classes.root}>
       <Grid container spacing={2}>
         <Grid container item xs={12}>
-          <Typography variant="h5" color="textSecondary">
-            {`Featured - ${reef.name}`}
-          </Typography>
+          <Hidden xsDown>
+            <Typography variant="h5" color="textSecondary">
+              {`Featured - ${reef.name}`}
+            </Typography>
+          </Hidden>
+          <Hidden smUp>
+            <Typography variant="h5" color="textSecondary">
+              Featured Reef
+            </Typography>
+          </Hidden>
         </Grid>
         <Grid item xs={12}>
           <Grid container justify="center">
@@ -63,6 +70,27 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                       className={classes.cardImage}
                       image={reefImage}
                     />
+                    <Hidden smUp>
+                      <Grid item xs={12} className={classes.mobileTitle}>
+                        <Typography
+                          style={{ padding: "0.5rem 0 0 0.5rem" }}
+                          color="textPrimary"
+                          variant="h5"
+                        >
+                          {reef.name}
+                        </Typography>
+                        <Typography
+                          style={{
+                            padding: "0 0 0.5rem 0.5rem",
+                            fontWeight: 400,
+                          }}
+                          color="textPrimary"
+                          variant="h6"
+                        >
+                          {reef.region}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
                     <Grid item className={classes.exploreButton}>
                       <Link
                         style={{ color: "inherit", textDecoration: "none" }}
