@@ -58,6 +58,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
     <Line
       ref={chartRef}
       options={{
+        maintainAspectRatio: false,
         plugins: {
           chartJsPluginBarchartBackground: {
             color: "rgb(158, 166, 170, 0.07)",

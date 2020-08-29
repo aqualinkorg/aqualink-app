@@ -45,7 +45,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
       <Grid container spacing={2}>
         <Grid container item xs={12}>
           <Typography variant="h5" color="textSecondary">
-            Featured Reef
+            {`Featured - ${reef.name}`}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -53,32 +53,16 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
             <Card>
               {`${reef.id}` === featuredReefId ? (
                 <Grid container item xs={12} spacing={1}>
-                  <Grid item xs={12} sm={4} style={{ position: "relative" }}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                    style={{ height: "8rem", position: "relative" }}
+                  >
                     <CardMedia
                       className={classes.cardImage}
                       image={reefImage}
                     />
-                    <Hidden smUp>
-                      <Grid item xs={12} className={classes.mobileTitle}>
-                        <Typography
-                          style={{ padding: "0.5rem 0 0 0.5rem" }}
-                          color="textPrimary"
-                          variant="h5"
-                        >
-                          {reef.name}
-                        </Typography>
-                        <Typography
-                          style={{
-                            padding: "0 0 0.5rem 0.5rem",
-                            fontWeight: 400,
-                          }}
-                          color="textPrimary"
-                          variant="h6"
-                        >
-                          {reef.region}
-                        </Typography>
-                      </Grid>
-                    </Hidden>
                     <Grid item className={classes.exploreButton}>
                       <Link
                         style={{ color: "inherit", textDecoration: "none" }}
@@ -94,29 +78,8 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                       </Link>
                     </Grid>
                   </Grid>
-                  <Grid container item xs={12} sm={6}>
-                    <Hidden xsDown>
-                      <Grid item xs={12}>
-                        <Typography
-                          style={{ padding: "0.5rem 0 0 0.5rem" }}
-                          color="textSecondary"
-                          variant="h5"
-                        >
-                          {reef.name}
-                        </Typography>
-                        <Typography
-                          style={{
-                            padding: "0 0 0.5rem 0.5rem",
-                            fontWeight: 400,
-                          }}
-                          color="textSecondary"
-                          variant="h6"
-                        >
-                          {reef.region}
-                        </Typography>
-                      </Grid>
-                    </Hidden>
-                    <Grid item xs={12}>
+                  <Grid container item xs={12} sm={8}>
+                    <Grid item xs={12} style={{ height: "8rem" }}>
                       <Typography
                         style={{
                           padding: "0 0 0.5rem 0.5rem",
@@ -125,7 +88,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                         color="textSecondary"
                         variant="subtitle1"
                       >
-                        MEAN DAILY SURFACE TEMPERATURE (C&deg;)
+                        MEAN DAILY SURFACE TEMP. (C&deg;)
                       </Typography>
                       <CardChart
                         dailyData={reef.dailyData}
@@ -139,12 +102,12 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                     alignItems="center"
                     item
                     xs={12}
-                    sm={2}
+                    sm={8}
                   >
                     <Grid
                       item
                       xs={4}
-                      sm={12}
+                      sm={4}
                       className={classes.metricsContainer}
                     >
                       <Typography variant="caption" color="textSecondary">
@@ -161,7 +124,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                     <Grid
                       item
                       xs={4}
-                      sm={12}
+                      sm={4}
                       className={classes.metricsContainer}
                     >
                       <Typography variant="caption" color="textSecondary">
@@ -178,7 +141,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                     <Grid
                       item
                       xs={4}
-                      sm={12}
+                      sm={4}
                       className={classes.metricsContainer}
                     >
                       <Typography variant="caption" color="textSecondary">
