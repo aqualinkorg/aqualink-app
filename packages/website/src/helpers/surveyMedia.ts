@@ -1,9 +1,13 @@
 import type { SurveyPoint } from "../store/Survey/types";
 
-export const getFeaturedImage = (point: SurveyPoint) => {
-  point.surveyMedia.find((media) => {
-    return media.featured;
-  });
+export const getFeaturedMedia = (points: SurveyPoint[]) => {
+  let featuredMedia;
+  for (let i = 0; i < points.length; i += 1) {
+    featuredMedia = points[i].surveyMedia.find((media) => {
+      return media.featured;
+    });
+  }
+  return featuredMedia?.url;
 };
 
 export const getNumberOfImages = (points: SurveyPoint[]) => {
