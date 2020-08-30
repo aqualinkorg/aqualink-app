@@ -51,8 +51,11 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
       value: `${formatNumber(surfTemp, 1)} \u2103`,
     },
     {
-      label: "D. H. WEEKS",
-      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+      label: "HEAT STRESS",
+      value: `${formatNumber(
+        degreeHeatingWeeksCalculator(degreeHeatingDays),
+        1
+      )} DHW`,
     },
   ];
 

@@ -10,6 +10,7 @@ import {
   Grid,
   Typography,
   Button,
+  Tooltip,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -52,10 +53,16 @@ const Popup = ({ reef, classes }: PopupProps) => {
           <Grid item xs={6}>
             <Grid container justify="flex-end" item xs={12}>
               <Typography variant="caption" color="textSecondary">
-                D. H. WEEKS
+                HEAT STRESS
               </Typography>
             </Grid>
-            <Grid container justify="flex-end" item xs={12}>
+            <Grid
+              container
+              alignItems="flex-end"
+              justify="flex-end"
+              item
+              xs={12}
+            >
               <Typography
                 style={{
                   color: `${colorFinder(
@@ -69,7 +76,23 @@ const Popup = ({ reef, classes }: PopupProps) => {
                   degreeHeatingWeeksCalculator(degreeHeatingDays),
                   1
                 )}
+                &nbsp;
               </Typography>
+              <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
+                <Typography
+                  style={{
+                    color: `${colorFinder(
+                      degreeHeatingWeeksCalculator(degreeHeatingDays)
+                    )}`,
+                    position: "relative",
+                    bottom: 0,
+                  }}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  DHW
+                </Typography>
+              </Tooltip>
             </Grid>
           </Grid>
         </Grid>

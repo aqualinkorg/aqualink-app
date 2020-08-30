@@ -125,12 +125,12 @@ exports[`renders as expected 1`] = `
               <span
                 class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
               >
-                D. H. WEEKS
+                HEAT STRESS
               </span>
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                4.9
+                4.9 DHW
               </h4>
             </div>
           </div>
