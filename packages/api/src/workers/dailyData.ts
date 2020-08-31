@@ -18,7 +18,10 @@ async function getDailyData(reef: Reef, date: Date) {
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
-  const spotterData = await getSpotterData(spotterId, date);
+  const spotterData = spotterId
+    ? await getSpotterData(spotterId, localTimezone, date)
+    : { surfaceTemperature: undefined, bottomTemperature: [0] };
+
   const minBottomTemperature = spotterId
     ? Math.min(...spotterData.bottomTemperature)
     : undefined;
