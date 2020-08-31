@@ -111,9 +111,18 @@ export async function getSofarDailyData(
 }
 
 type SpotterData = {
-  surfaceTemperature: number;
+  surfaceTemperature: number[];
   bottomTemperature: number[];
 };
+
+type SensorData = {
+  sensorPosition: number;
+  degrees: number;
+};
+
+function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
+  return data.find((d) => d.sensorPosition === sensorPosition);
+}
 
 export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
@@ -122,14 +131,28 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   date: Date,
 ): Promise<SpotterData> {
-  // TODO - Implement Spotter Data Retrieval
-  // https://docs.sofarocean.com/spotter-sensor
-  // getSofarSpotterData()
-  // using SOFAR_SPOTTER_URL
+  // TODO - Get waves data from spotters.
   const [start, end] = getStartEndDate(date, localTimezone);
-  const data = await sofarSpotter(spotterId, start, end);
-  console.log(JSON.stringify(data));
-  return { surfaceTemperature: 20, bottomTemperature: [0] };
+  const {
+    data: { smartMooringData = [] },
+  } = await sofarSpotter(spotterId, start, end);
+
+  const filteredSmartMooringData = smartMooringData.filter(
+    (data) => data.timestamp && data.timestamp > start && data.timestamp < end,
+  );
+
+  const [
+    bottomTemperature,
+    surfaceTemperature,
+  ] = filteredSmartMooringData.reduce(
+    ([sensor0Data, sensor1Data], data) => [
+      sensor0Data.concat(getDataBySensorPosition(data.sensorData, 0)),
+      sensor1Data.concat(getDataBySensorPosition(data.sensorData, 1)),
+    ],
+    [[], []],
+  );
+
+  return { surfaceTemperature, bottomTemperature };
 }
 
 /** Utility function to get the closest available data given a date in UTC. */

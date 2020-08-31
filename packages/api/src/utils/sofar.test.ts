@@ -31,5 +31,5 @@ test('It processes Sofar Spotter API for daily data.', async () => {
     new Date('2020-07-07'),
   );
 
-  expect(values).toEqual({ surfaceTemperature: 20, bottomTemperature: [0] });
+  expect(values).toEqual({ surfaceTemperature: [], bottomTemperature: [] });
 });
