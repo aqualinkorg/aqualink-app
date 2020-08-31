@@ -10,16 +10,17 @@ import {
   Typography,
   CardMedia,
 } from "@material-ui/core";
+import Carousel from "react-material-ui-carousel";
 import { SurveyPoint } from "../../../store/Survey/types";
 
 const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
   return (
     <>
       {points &&
-        points.map((point) => (
-          <>
+        points.map((point, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={index}>
             <Grid
-              key={point.name}
               className={classes.title}
               container
               justify="flex-start"
@@ -33,49 +34,61 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Card key={point.name} elevation={3} className={classes.shadowBox}>
-              <Grid container justify="space-between">
-                <Grid style={{ height: "100%" }} item xs={6}>
-                  <CardMedia
-                    className={classes.cardImage}
-                    image={point.surveyMedia[0].url}
-                  />
-                </Grid>
-                <Grid
-                  container
-                  item
-                  direction="column"
-                  xs={6}
-                  justify="space-between"
-                  className={classes.mediaInfo}
-                >
-                  <Grid container item direction="column" spacing={1}>
-                    <Grid container item direction="column">
-                      <Typography variant="h6">Image Observation</Typography>
-                      <Typography variant="subtitle1">
-                        {point.surveyMedia[0].observations}
-                      </Typography>
+            <Carousel autoPlay={false} navButtonsAlwaysVisible>
+              {point.surveyMedia.map((media) => {
+                return (
+                  <Card
+                    key={media.url}
+                    elevation={3}
+                    className={classes.shadowBox}
+                  >
+                    <Grid container justify="space-between">
+                      <Grid style={{ width: "100%" }} item xs={6}>
+                        <CardMedia
+                          className={classes.cardImage}
+                          image={point.surveyMedia[0].url}
+                        />
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        direction="column"
+                        xs={6}
+                        justify="space-between"
+                        className={classes.mediaInfo}
+                      >
+                        <Grid container item direction="column" spacing={1}>
+                          <Grid container item direction="column">
+                            <Typography variant="h6">
+                              Image Observation
+                            </Typography>
+                            <Typography variant="subtitle1">
+                              {point.surveyMedia[0].observations}
+                            </Typography>
+                          </Grid>
+                          <Grid container item direction="column">
+                            <Typography variant="h6">Image Comments</Typography>
+                            <Typography variant="subtitle1">
+                              {point.surveyMedia[0].comments}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                          >
+                            All Photos From Survey Point
+                          </Button>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                    <Grid container item direction="column">
-                      <Typography variant="h6">Image Comments</Typography>
-                      <Typography variant="subtitle1">
-                        {point.surveyMedia[0].comments}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                    >
-                      All Photos From Survey Point
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Card>
-          </>
+                  </Card>
+                );
+              })}
+            </Carousel>
+          </div>
         ))}
     </>
   );
@@ -103,7 +116,7 @@ const styles = (theme: Theme) =>
     },
     cardImage: {
       width: "100%",
-      height: "20rem",
+      height: "100%",
     },
     mediaInfo: {
       padding: "3rem 3rem 3rem 5rem",

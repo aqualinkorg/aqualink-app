@@ -95,7 +95,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               <Grid item className={classes.imageContainer}>
                 <Map polygon={reef.polygon} />
               </Grid>
-              {surveyDetails?.surveyPoints && (
+              {surveyDetails && surveyDetails.surveyPoints && (
                 <Grid item className={classes.imageContainer}>
                   <img
                     className={classes.image}
