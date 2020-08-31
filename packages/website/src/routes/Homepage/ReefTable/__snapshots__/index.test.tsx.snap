@@ -91,7 +91,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          REEF NAME
+                          REEF
                         </div>
                         <svg
                           aria-hidden="true"
@@ -276,10 +276,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-h6"
-                        style="color: rgb(22, 141, 189); padding-left: 2rem;"
+                        style="color: rgb(22, 141, 189); padding-left: 1rem;"
                       >
                         - -
-                         ℃
+                        ℃
                       </h6>
                     </td>
                     <td
