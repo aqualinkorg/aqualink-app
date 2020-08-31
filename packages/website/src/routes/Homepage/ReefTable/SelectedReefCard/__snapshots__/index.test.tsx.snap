@@ -3,10 +3,10 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiBox-root MuiBox-root-2"
+    class="MuiBox-root MuiBox-root-3"
   >
     <div
-      class="MuiBox-root MuiBox-root-3"
+      class="MuiBox-root MuiBox-root-4"
     >
       <h5
         class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
@@ -30,10 +30,10 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
         >
           <div
-            class="MuiBox-root MuiBox-root-4"
+            class="MuiBox-root MuiBox-root-5"
           >
             <div
               class="MuiCardMedia-root SelectedReefCard-cardImage-1"
@@ -43,7 +43,7 @@ exports[`renders as expected 1`] = `
               smup="true"
             >
               <div
-                class="MuiBox-root MuiBox-root-5"
+                class="MuiBox-root MuiBox-root-6"
               >
                 <h5
                   class="MuiTypography-root MuiTypography-h5"
@@ -52,7 +52,7 @@ exports[`renders as expected 1`] = `
               </div>
             </mock-hidden>
             <div
-              class="MuiBox-root MuiBox-root-6"
+              class="MuiBox-root MuiBox-root-7"
             >
               <a
                 href="/reefs/2"
@@ -77,11 +77,10 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8"
-          style="max-height: 14rem;"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
         >
           <div
-            class="MuiBox-root MuiBox-root-7"
+            class="MuiBox-root MuiBox-root-8"
           >
             <h6
               class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
@@ -92,10 +91,11 @@ exports[`renders as expected 1`] = `
           Mock-Line
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-3"
+          style="display: flex;"
         >
           <div
-            class="MuiBox-root MuiBox-root-8"
+            class="SelectedReefCard-metricsContainer-2"
           >
             <div>
               <span
@@ -144,10 +144,10 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <div
-    class="MuiBox-root MuiBox-root-10"
+    class="MuiBox-root MuiBox-root-11"
   >
     <div
-      class="MuiBox-root MuiBox-root-11"
+      class="MuiBox-root MuiBox-root-12"
     >
       <h5
         class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
@@ -168,7 +168,7 @@ exports[`renders loading as expected 1`] = `
       class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
     >
       <div
-        class="MuiBox-root MuiBox-root-12"
+        class="MuiBox-root MuiBox-root-13"
       >
         <div
           class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"

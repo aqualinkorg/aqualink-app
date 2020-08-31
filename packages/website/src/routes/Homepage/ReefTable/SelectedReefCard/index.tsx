@@ -71,7 +71,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
       <Card>
         {`${reef.id}` === featuredReefId ? (
           <Grid container spacing={1}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={4} lg={3}>
               <Box position="relative" height="100%">
                 <CardMedia className={classes.cardImage} image={reefImage} />
 
@@ -100,7 +100,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={8} style={{ maxHeight: "14rem" }}>
+            <Grid item xs={12} sm={8} lg={6}>
               <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
                 <Typography color="textSecondary" variant="subtitle1">
                   MEAN DAILY SURFACE TEMP. (C&deg;)
@@ -112,8 +112,8 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               />
             </Grid>
 
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="space-around" my={1}>
+            <Grid item xs={12} lg={3} style={{ display: "flex" }}>
+              <div className={classes.metricsContainer}>
                 {metrics.map(({ label, value }) => (
                   <div key={label}>
                     <Typography variant="caption" color="textSecondary">
@@ -124,7 +124,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                     </Typography>
                   </div>
                 ))}
-              </Box>
+              </div>
             </Grid>
           </Grid>
         ) : (
@@ -143,8 +143,20 @@ const styles = (theme: Theme) =>
       borderRadius: "4px 0 0 4px",
       height: "100%",
 
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         height: 300,
+      },
+    },
+    metricsContainer: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      flexDirection: "row",
+      margin: theme.spacing(1),
+      width: "100%",
+
+      [theme.breakpoints.up("lg")]: {
+        flexDirection: "column",
       },
     },
   });
