@@ -43,12 +43,12 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
 
   const metrics = [
     {
-      label: `TEMP AT ${reef.depth}M`,
-      value: `${formatNumber(maxBottomTemperature, 1)} \u2103`,
-    },
-    {
       label: "SURFACE TEMP",
       value: `${formatNumber(surfTemp, 1)} \u2103`,
+    },
+    {
+      label: `TEMP AT ${reef.depth}M`,
+      value: `${formatNumber(maxBottomTemperature, 1)} \u2103`,
     },
     {
       label: "HEAT STRESS",
@@ -100,7 +100,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={8} lg={6}>
+            <Grid item xs={12} sm={8} lg={6} style={{ maxHeight: "14rem" }}>
               <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
                 <Typography color="textSecondary" variant="subtitle1">
                   MEAN DAILY SURFACE TEMP. (C&deg;)
@@ -112,7 +112,14 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               />
             </Grid>
 
-            <Grid item xs={12} lg={3} style={{ display: "flex" }}>
+            <Grid
+              item
+              xs={12}
+              lg={3}
+              style={{
+                display: "flex",
+              }}
+            >
               <div className={classes.metricsContainer}>
                 {metrics.map(({ label, value }) => (
                   <div key={label}>
@@ -152,11 +159,12 @@ const styles = (theme: Theme) =>
       justifyContent: "space-around",
       alignItems: "center",
       flexDirection: "row",
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
       width: "100%",
 
       [theme.breakpoints.up("lg")]: {
         flexDirection: "column",
+        alignItems: "start",
       },
     },
   });

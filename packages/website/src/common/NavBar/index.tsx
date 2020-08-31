@@ -13,6 +13,7 @@ import {
   WithStyles,
   createStyles,
   Theme,
+  Hidden,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -66,7 +67,11 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               item
               xs={6}
             >
-              {searchLocation && <Search />}
+              {searchLocation && (
+                <Hidden xsDown>
+                  <Search />
+                </Hidden>
+              )}
               {user ? (
                 <Grid container justify="flex-end" item xs={6}>
                   <IconButton>
