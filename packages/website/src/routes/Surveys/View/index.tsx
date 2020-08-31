@@ -37,7 +37,13 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   return (
     <>
       <div className={classes.surveyOuterDiv}>
-        <Grid alignItems="flex-start" container direction="column" spacing={1}>
+        <Grid
+          style={{ marginBottom: "2rem" }}
+          alignItems="flex-start"
+          container
+          direction="column"
+          spacing={1}
+        >
           <Grid alignItems="center" container direction="row">
             <IconButton
               edge="start"
@@ -130,7 +136,7 @@ const styles = () =>
     surveyOuterDiv: {
       backgroundColor: "#f5f6f6",
       height: "auto",
-      padding: "1rem 3.2rem 2rem 1rem",
+      padding: "4rem 3.2rem 2rem 1rem",
     },
     shadowBox: {
       backgroundColor: "white",

@@ -85,11 +85,11 @@ const styles = (theme: Theme) =>
   createStyles({
     shadowBox: {
       backgroundColor: "#f5f6f6",
-      flexGrow: 1,
       color: theme.palette.text.secondary,
+      marginBottom: "4rem",
     },
     title: {
-      marginBottom: "1rem",
+      marginBottom: "0.5rem",
       marginLeft: "1rem",
     },
     titleName: {
