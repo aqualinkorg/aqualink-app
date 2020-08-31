@@ -109,7 +109,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           spacing={2}
           className={classes.mediaContainer}
         >
-          <Grid item>
+          <Grid style={{ marginBottom: "5rem" }} item>
             <Typography variant="h5">
               {`${moment
                 .parseZone(surveyDetails?.diveDate)
