@@ -3,12 +3,12 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Grid,
   Paper,
   Typography,
   IconButton,
   CardMedia,
-  Select,
   MenuItem,
   TextField,
 } from "@material-ui/core";
@@ -83,7 +83,9 @@ const MediaCard = ({
               </Typography>
             </Grid>
             <Grid style={{ marginBottom: "2rem" }} item xs={10}>
-              <Select
+              <TextField
+                className={classes.textField}
+                select
                 id="surveyPoint"
                 name="surveyPoint"
                 onChange={handleSurveyPointChange}
@@ -103,7 +105,7 @@ const MediaCard = ({
                     {item.name}
                   </MenuItem>
                 ))}
-              </Select>
+              </TextField>
             </Grid>
 
             <Grid style={{ marginBottom: "1rem" }} item xs={10}>
@@ -112,7 +114,9 @@ const MediaCard = ({
               </Typography>
             </Grid>
             <Grid style={{ marginBottom: "2rem" }} item xs={10}>
-              <Select
+              <TextField
+                className={classes.textField}
+                select
                 id="observation"
                 name="observation"
                 onChange={handleObservationChange}
@@ -133,7 +137,7 @@ const MediaCard = ({
                     {item.value}
                   </MenuItem>
                 ))}
-              </Select>
+              </TextField>
             </Grid>
           </Grid>
           <Grid container justify="center" item xs={5}>
@@ -144,6 +148,7 @@ const MediaCard = ({
             </Grid>
             <Grid style={{ marginBottom: "2rem" }} item xs={12}>
               <TextField
+                className={classes.textField}
                 variant="outlined"
                 multiline
                 name="comments"
@@ -176,7 +181,7 @@ const MediaCard = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     mediaCardWrapper: {
       width: "100%",
@@ -193,6 +198,12 @@ const styles = () =>
     },
     textField: {
       color: "black",
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(0, 0, 0, 0.23)",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: theme.palette.primary.main,
+      },
     },
     mediaSize: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
