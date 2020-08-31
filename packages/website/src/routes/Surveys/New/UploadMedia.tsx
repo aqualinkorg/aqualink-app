@@ -18,13 +18,22 @@ import { useSelector } from "react-redux";
 
 import MediaCard from "./MediaCard";
 import uploadServices from "../../../services/uploadServices";
+import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
+import { SurveyMediaData } from "../../../store/Survey/types";
 
-const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
+const UploadMedia = ({
+  reefId,
+  reefName,
+  changeTab,
+  classes,
+}: UploadMediaProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
+  const survey = useSelector(surveyDetailsSelector);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertSeverity, setAlertSeverity] = useState<
     "success" | "error" | "info" | "warning" | undefined
@@ -64,26 +73,45 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
   };
 
   const onMediaSubmit = () => {
-    files.forEach((file) => {
+    files.forEach((file, index) => {
       const formData = new FormData();
       formData.append("file", file);
       setLoading(true);
       uploadServices
         .uploadMedia(formData, user?.token)
-        .then(() => {
-          setFiles([]);
-          setMetadata([]);
-          setPreviews([]);
-          setAlertMessage("Successfully uploaded media");
-          setAlertSeverity("success");
-          setAlertOpen(true);
+        .then((response) => {
+          const url = response.data;
+          const surveyId = survey?.id;
+          const surveyMediaData: SurveyMediaData = {
+            url,
+            poiId: (metadata[index].surveyPoint as unknown) as number,
+            observations: metadata[index].observation,
+            comments: metadata[index].comments,
+            metadata: "{}",
+            token: user?.token,
+          };
+          surveyServices
+            .addSurveyMedia(`${surveyId}`, surveyMediaData)
+            .then(() => {
+              setFiles([]);
+              setMetadata([]);
+              setPreviews([]);
+              setAlertMessage("Successfully uploaded media");
+              setAlertSeverity("success");
+              setAlertOpen(true);
+            })
+            .catch((err) => {
+              setAlertMessage(err.message);
+              setAlertSeverity("error");
+              setAlertOpen(true);
+            })
+            .finally(() => setLoading(false));
         })
         .catch((err) => {
           setAlertMessage(err.message);
           setAlertSeverity("error");
           setAlertOpen(true);
-        })
-        .finally(() => setLoading(false));
+        });
     });
   };
 
@@ -138,6 +166,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
+        reefId={reefId}
         key={preview}
         index={index}
         preview={preview}
@@ -223,7 +252,7 @@ const UploadMedia = ({ reefName, changeTab, classes }: UploadMediaProps) => {
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Typography variant="subtitle2">
-                    Supported formats: .jpg .mpeg .png .gif. mov
+                    Supported formats: .jpg .mpeg .png .gif. mov. Max 10mb.
                   </Typography>
                 </Grid>
               </Grid>
@@ -278,6 +307,7 @@ const styles = () =>
 interface UploadMediaIncomingProps {
   changeTab: (index: number) => void;
   reefName: string | null;
+  reefId: number;
 }
 
 interface Metadata {

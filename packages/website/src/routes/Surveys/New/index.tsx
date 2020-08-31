@@ -59,7 +59,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
               <Map polygon={reef.polygon} />
             </Grid>
             <Grid item xs={5}>
-              <Form changeTab={onPanelIndexChange} />
+              <Form reefId={reef.id} changeTab={onPanelIndexChange} />
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -68,7 +68,11 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UploadMedia reefName={reef.name} changeTab={onPanelIndexChange} />
+        <UploadMedia
+          reefName={reef.name}
+          reefId={reef.id}
+          changeTab={onPanelIndexChange}
+        />
       </TabPanel>
     </SwipeableViews>
   );

@@ -71,6 +71,11 @@ describe("Reef Detail Page", () => {
         loading: false,
         error: null,
       },
+      surveyList: {
+        list: [],
+        loading: false,
+        error: null,
+      },
     });
 
     const fullStore = mockStore({
@@ -88,6 +93,11 @@ describe("Reef Detail Page", () => {
         loading: false,
       },
       reefsList: {
+        list: [],
+        loading: false,
+        error: null,
+      },
+      surveyList: {
         list: [],
         loading: false,
         error: null,

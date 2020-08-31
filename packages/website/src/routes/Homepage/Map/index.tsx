@@ -17,14 +17,9 @@ import {
   reefOnMapSelector,
   unsetReefOnMap,
 } from "../../../store/Homepage/homepageSlice";
-import mapServices from "../../../services/mapServices";
 import { Reef } from "../../../store/Reefs/types";
 import Popup from "./Popup";
-import { coloredBuoy } from "./utils";
-import {
-  colorFinder,
-  degreeHeatingWeeksCalculator,
-} from "../../../helpers/degreeHeatingWeeks";
+import { coloredBuoyIcon } from "./utils";
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const mapRef = useRef<Map>(null);
@@ -33,8 +28,8 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const reefsList = useSelector(reefsListSelector);
   const loading = useSelector(reefsListLoadingSelector);
-  const [center, setCenter] = useState<[number, number]>([0, 0]);
-  const [zoom, setZoom] = useState<number>(2);
+  const [center, setCenter] = useState<[number, number]>([37.9, -75.3]);
+  const [zoom, setZoom] = useState<number>(5);
 
   useEffect(() => {
     const { current } = mapRef;
@@ -73,16 +68,13 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
       const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
       sofarLayers.forEach((layer) => {
-        mapServices.getModelTimes(layer.model).then(({ data }) => {
-          const timestamp = data.outputTimes[0];
-          layerControl.addOverlay(
-            L.tileLayer(
-              `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}&timestamp=${timestamp}`,
-              { opacity: 0.5 }
-            ),
-            layer.name
-          );
-        });
+        layerControl.addOverlay(
+          L.tileLayer(
+            `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}`,
+            { opacity: 0.5 }
+          ),
+          layer.name
+        );
       });
     }
   }, [loading]);
@@ -127,19 +119,9 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
           {reefOnMap && reefOnMap.polygon.type === "Point" && (
             <Marker
               ref={markerRef}
-              icon={L.divIcon({
-                iconSize: [24, 24],
-                iconAnchor: [8, 48],
-                popupAnchor: [3, -48],
-                html: `${coloredBuoy(
-                  colorFinder(
-                    degreeHeatingWeeksCalculator(
-                      reefOnMap.latestDailyData.degreeHeatingDays
-                    )
-                  )
-                )}`,
-                className: "marker-icon",
-              })}
+              icon={coloredBuoyIcon(
+                reefOnMap.latestDailyData.degreeHeatingDays
+              )}
               position={[
                 reefOnMap.polygon.coordinates[1],
                 reefOnMap.polygon.coordinates[0],
@@ -155,9 +137,6 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
               if (reef.polygon.type === "Point") {
                 const [lng, lat] = reef.polygon.coordinates;
                 const { degreeHeatingDays } = reef.latestDailyData || {};
-                const color = colorFinder(
-                  degreeHeatingWeeksCalculator(degreeHeatingDays)
-                );
                 return (
                   <Marker
                     onClick={() => {
@@ -166,17 +145,8 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
                       dispatch(unsetReefOnMap());
                     }}
                     key={reef.id}
-                    icon={L.divIcon({
-                      iconSize: [24, 24],
-                      iconAnchor: [8, 48],
-                      popupAnchor: [3, -48],
-                      html: `${coloredBuoy(color)}`,
-                      className: "marker-icon",
-                    })}
-                    position={[
-                      reef.polygon.coordinates[1],
-                      reef.polygon.coordinates[0],
-                    ]}
+                    icon={coloredBuoyIcon(degreeHeatingDays)}
+                    position={[lat, lng]}
                   >
                     <LeafletPopup closeButton={false} className={classes.popup}>
                       <Popup reef={reef} />
@@ -195,11 +165,11 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 const styles = () =>
   createStyles({
     map: {
-      height: "100%",
-      width: "100%",
+      flex: 1,
     },
     popup: {
       width: "12vw",
+      minWidth: "100px",
     },
     loading: {
       height: "100%",

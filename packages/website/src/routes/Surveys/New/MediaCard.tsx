@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -13,13 +13,12 @@ import {
   TextField,
 } from "@material-ui/core";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
-
-import {
-  surveyPointOptions,
-  observationOptions,
-} from "../../../constants/uploadDropdowns";
+import observationOptions from "../../../constants/uploadDropdowns";
+import reefServices from "../../../services/reefServices";
+import { Pois } from "../../../store/Reefs/types";
 
 const MediaCard = ({
+  reefId,
   preview,
   surveyPoint,
   observation,
@@ -33,6 +32,13 @@ const MediaCard = ({
   classes,
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
+  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
+
+  useEffect(() => {
+    reefServices
+      .getReefPois(`${reefId}`)
+      .then((response) => setSurveyPointOptions(response.data));
+  }, [setSurveyPointOptions, reefId]);
 
   return (
     <Grid style={{ marginTop: "2rem" }} container item xs={12}>
@@ -91,14 +97,15 @@ const MediaCard = ({
                 {surveyPointOptions.map((item) => (
                   <MenuItem
                     className={classes.textField}
-                    value={item.key}
-                    key={item.key}
+                    value={item.id}
+                    key={item.id}
                   >
-                    {item.value}
+                    {item.name}
                   </MenuItem>
                 ))}
               </Select>
             </Grid>
+
             <Grid style={{ marginBottom: "1rem" }} item xs={10}>
               <Typography color="textSecondary" variant="h6">
                 Observation
@@ -195,6 +202,7 @@ const styles = () =>
   });
 
 interface MediaCardIncomingProps {
+  reefId: number;
   index: number;
   preview: string;
   surveyPoint: string;

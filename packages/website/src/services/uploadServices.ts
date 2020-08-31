@@ -9,6 +9,8 @@ const uploadMedia = (formData: FormData, token?: string | null) =>
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
+  }).then((response) => {
+    return response;
   });
 
 export default { uploadMedia };

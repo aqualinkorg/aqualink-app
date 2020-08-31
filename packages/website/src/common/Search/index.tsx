@@ -46,7 +46,7 @@ const Search = ({ classes }: SearchProps) => {
   };
 
   return (
-    <Grid container justify="flex-end" item xs={6}>
+    <Grid container justify="flex-start" item xs={6}>
       <Grid
         className={classes.searchBar}
         container
@@ -88,7 +88,7 @@ const Search = ({ classes }: SearchProps) => {
                 {...params}
                 onChange={onChangeSearchText}
                 style={{ height: "100%" }}
-                placeholder="Search Location"
+                placeholder="Search reef by name"
                 variant="outlined"
                 InputLabelProps={{
                   shrink: false,

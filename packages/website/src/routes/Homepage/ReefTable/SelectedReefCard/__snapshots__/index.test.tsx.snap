@@ -18,13 +18,13 @@ exports[`renders as expected 1`] = `
         class="MuiPaper-root SelectedReefCard-selectedReef-2 MuiPaper-elevation3 MuiPaper-rounded"
       >
         <div
-          class="MuiGrid-root SelectedReefCard-card-3 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root SelectedReefCard-card-4 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
           >
             <div
-              class="MuiCardMedia-root SelectedReefCard-cardImage-4"
+              class="MuiCardMedia-root SelectedReefCard-cardImage-5"
               style="background-image: url(reef-image.jpg);"
             />
           </div>
@@ -68,7 +68,7 @@ exports[`renders as expected 1`] = `
                 TEMP AT 0M
               </span>
               <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
                 39.0 ℃
               </h4>
@@ -82,7 +82,7 @@ exports[`renders as expected 1`] = `
                 SURFACE TEMP
               </span>
               <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
                 29.0 ℃
               </h4>
@@ -93,19 +93,19 @@ exports[`renders as expected 1`] = `
               <span
                 class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
               >
-                DEG. HEAT. DAYS
+                D. H. WEEKS
               </span>
               <h4
-                class="MuiTypography-root SelectedReefCard-cardMetrics-5 MuiTypography-h4 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root SelectedReefCard-cardMetrics-6 MuiTypography-h4 MuiTypography-colorTextSecondary"
               >
-                34.0
+                4.9
               </h4>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
             >
               <a
-                href="/reefs/0"
+                href="/reefs/2"
                 style="text-decoration: none;"
               >
                 <button
@@ -124,6 +124,52 @@ exports[`renders as expected 1`] = `
                 </button>
               </a>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders loading as expected 1`] = `
+<div>
+  <div
+    class="SelectedReefCard-root-7"
+  >
+    <h5
+      class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+      style="margin: 0px 0px 0.5rem 1.5rem;"
+    >
+      Featured Reef
+    </h5>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+    >
+      <div
+        class="MuiPaper-root SelectedReefCard-selectedReef-8 MuiPaper-elevation3 MuiPaper-rounded"
+      >
+        <div
+          class="SelectedReefCard-loading-9"
+        >
+          <div
+            class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+            role="progressbar"
+            style="width: 6rem; height: 6rem;"
+          >
+            <svg
+              class="MuiCircularProgress-svg"
+              viewBox="22 22 44 44"
+            >
+              <circle
+                class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                cx="44"
+                cy="44"
+                fill="none"
+                r="21.5"
+                stroke-width="1"
+              />
+            </svg>
           </div>
         </div>
       </div>

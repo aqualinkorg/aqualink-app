@@ -45,8 +45,7 @@ exports[`renders as expected 1`] = `
               style="color: rgb(22, 141, 189);"
             >
               10.0
-               
-              ℃
+               ℃
             </h5>
           </div>
         </div>
@@ -59,7 +58,7 @@ exports[`renders as expected 1`] = `
             <span
               class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
             >
-              DEG. HEAT. DAYS
+              D. H. WEEKS
             </span>
           </div>
           <div
@@ -69,7 +68,7 @@ exports[`renders as expected 1`] = `
               class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
               style="color: rgb(8, 91, 163);"
             >
-              10.0
+              1.4
             </h5>
           </div>
         </div>
@@ -82,7 +81,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item"
         >
           <a
-            href="/reefs/0"
+            href="/reefs/2"
             style="text-decoration: none;"
           >
             <button

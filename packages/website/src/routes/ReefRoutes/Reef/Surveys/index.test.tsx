@@ -1,14 +1,36 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
+import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Surveys from ".";
 
-test("renders-as-expected", () => {
-  const container = render(
-    <Router>
-      <Surveys user addNew={false} reefId={0} />
-    </Router>
-  );
-  expect(container).toMatchSnapshot();
+const mockStore = configureStore([]);
+
+describe("ReefRoutes Surveys", () => {
+  let element: HTMLElement;
+  beforeEach(() => {
+    const store = mockStore({
+      surveyList: {
+        list: [],
+        loading: false,
+        error: null,
+      },
+    });
+
+    store.dispatch = jest.fn();
+
+    element = render(
+      <Provider store={store}>
+        <Router>
+          <Surveys user addNew={false} reefId={0} />
+        </Router>
+      </Provider>
+    ).container;
+  });
+
+  it("should render with given state from Redux store", () => {
+    expect(element).toMatchSnapshot();
+  });
 });
