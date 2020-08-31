@@ -12,7 +12,7 @@ import {
   MenuItem,
   TextField,
 } from "@material-ui/core";
-import { DeleteOutlineOutlined } from "@material-ui/icons";
+import { DeleteOutlineOutlined, Visibility } from "@material-ui/icons";
 import observationOptions from "../../../constants/uploadDropdowns";
 import reefServices from "../../../services/reefServices";
 import { Pois } from "../../../store/Reefs/types";
@@ -25,7 +25,9 @@ const MediaCard = ({
   comments,
   index,
   file,
+  featuredFile,
   deleteCard,
+  setFeatured,
   handleCommentsChange,
   handleObservationChange,
   handleSurveyPointChange,
@@ -158,17 +160,31 @@ const MediaCard = ({
               />
             </Grid>
           </Grid>
-          <Grid
-            style={{ height: "100%" }}
-            container
-            justify="flex-end"
-            alignItems="flex-end"
-            item
-            xs={1}
-          >
-            <IconButton onClick={() => deleteCard(index)}>
-              <DeleteOutlineOutlined />
-            </IconButton>
+          <Grid style={{ height: "100%" }} container item xs={1}>
+            <Grid
+              container
+              item
+              alignItems="flex-start"
+              justify="flex-end"
+              xs={12}
+            >
+              <IconButton onClick={() => setFeatured(index)}>
+                <Visibility
+                  color={featuredFile === index ? "primary" : "inherit"}
+                />
+              </IconButton>
+            </Grid>
+            <Grid
+              container
+              item
+              alignItems="flex-end"
+              justify="flex-end"
+              xs={12}
+            >
+              <IconButton onClick={() => deleteCard(index)}>
+                <DeleteOutlineOutlined />
+              </IconButton>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
@@ -209,7 +225,9 @@ interface MediaCardIncomingProps {
   observation: string;
   comments: string;
   file?: File;
+  featuredFile: number | null;
   deleteCard: (index: number) => void;
+  setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;
   handleObservationChange: (event: ChangeEvent<{ value: unknown }>) => void;
   handleSurveyPointChange: (event: ChangeEvent<{ value: unknown }>) => void;

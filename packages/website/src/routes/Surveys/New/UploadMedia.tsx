@@ -40,6 +40,7 @@ const UploadMedia = ({
   >(undefined);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [featuredFile, setFeaturedFile] = useState<number | null>(null);
 
   const handleFileDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -72,6 +73,10 @@ const UploadMedia = ({
     setPreviews([]);
   };
 
+  const setFeatured = (index: number) => {
+    setFeaturedFile(index);
+  };
+
   const onMediaSubmit = () => {
     files.forEach((file, index) => {
       const formData = new FormData();
@@ -89,6 +94,7 @@ const UploadMedia = ({
             comments: metadata[index].comments,
             metadata: "{}",
             token: user?.token,
+            featured: index === featuredFile,
           };
           surveyServices
             .addSurveyMedia(`${surveyId}`, surveyMediaData)
@@ -181,6 +187,8 @@ const UploadMedia = ({
           (metadata && metadata[index] && metadata[index].comments) || ""
         }
         deleteCard={deleteCard}
+        setFeatured={setFeatured}
+        featuredFile={featuredFile}
         handleCommentsChange={handleCommentsChange(index)}
         handleObservationChange={handleObservationChange(index)}
         handleSurveyPointChange={handleSurveyPointChange(index)}

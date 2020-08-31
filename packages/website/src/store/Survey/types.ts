@@ -41,6 +41,7 @@ export interface SurveyMediaData {
   comments?: string;
   metadata?: string;
   token?: string | null;
+  featured: boolean;
 }
 
 export interface SurveyListState {
