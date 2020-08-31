@@ -56,6 +56,8 @@ export async function sofarSpotter(
         start,
         end,
         token: process.env.SOFAR_API_TOKEN,
+        includeSmartMooringData: true,
+        includeSurfaceTempData: true,
       },
     })
     .then((response) => {
@@ -126,7 +128,7 @@ export async function getSpotterData(
   // using SOFAR_SPOTTER_URL
   const [start, end] = getStartEndDate(date, localTimezone);
   const data = await sofarSpotter(spotterId, start, end);
-  console.log(data);
+  console.log(JSON.stringify(data));
   return { surfaceTemperature: 20, bottomTemperature: [0] };
 }
 
