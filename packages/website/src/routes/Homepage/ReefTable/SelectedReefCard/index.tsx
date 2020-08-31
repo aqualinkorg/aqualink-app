@@ -100,7 +100,13 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               </Box>
             </Grid>
 
-            <Grid item xs={12} sm={8} lg={6} style={{ maxHeight: "14rem" }}>
+            <Grid
+              item
+              xs={12}
+              sm={8}
+              lg={6}
+              style={{ marginBottom: "1rem", maxHeight: "14rem" }}
+            >
               <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
                 <Typography color="textSecondary" variant="subtitle1">
                   MEAN DAILY SURFACE TEMP. (C&deg;)

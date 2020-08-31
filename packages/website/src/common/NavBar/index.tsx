@@ -63,7 +63,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             <Grid
               container
               alignItems="flex-start"
-              justify="flex-start"
+              justify="flex-end"
               item
               xs={6}
             >
