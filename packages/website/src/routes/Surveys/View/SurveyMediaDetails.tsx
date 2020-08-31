@@ -34,7 +34,11 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Carousel autoPlay={false} navButtonsAlwaysVisible>
+            <Carousel
+              className={classes.carousel}
+              autoPlay={false}
+              navButtonsAlwaysVisible
+            >
               {point.surveyMedia.map((media) => {
                 return (
                   <Card
@@ -122,12 +126,16 @@ const styles = (theme: Theme) =>
       padding: "3rem 3rem 3rem 5rem",
     },
     button: {
+      marginTop: "1rem",
       textTransform: "none",
       fontWeight: "bold",
       border: "2px solid",
       "&:hover": {
         border: "2px solid",
       },
+    },
+    carousel: {
+      marginBottom: "2rem",
     },
   });
 

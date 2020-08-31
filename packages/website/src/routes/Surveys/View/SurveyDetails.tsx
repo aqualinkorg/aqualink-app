@@ -18,11 +18,11 @@ import ObservationBox from "./observationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   return (
-    <Grid container item direction="row" spacing={2}>
+    <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={9}>
           <Grid item>
-            <Typography color="initial" variant="h6">
+            <Typography variant="subtitle1">
               {moment
                 .parseZone(survey.diveDate)
                 .format("MM/DD/YYYY [at] h:mm A")}
@@ -30,12 +30,8 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           </Grid>
           <Grid container item direction="row">
             <Grid container item direction="column" xs={12} md={3}>
-              <Typography color="initial" variant="h5">
-                Reef Zone 18B
-              </Typography>
-              <Typography color="initial" variant="body1">
-                Palancar Reef, Conzumel, Mexico
-              </Typography>
+              <Typography style={{ fontSize: 18 }}>{reef.region}</Typography>
+              <Typography variant="subtitle1">{reef.name}</Typography>
             </Grid>
             <Grid item xs={12} md={3}>
               <Typography
@@ -47,7 +43,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               </Typography>
               <Typography
                 color="initial"
-                variant="body1"
+                variant="h6"
                 className={classes.inlineText}
               >
                 SURVEY POINTS
@@ -63,7 +59,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               </Typography>
               <Typography
                 color="initial"
-                variant="body1"
+                variant="h6"
                 className={classes.inlineText}
               >
                 IMAGES
@@ -79,7 +75,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               </Typography>
               <Typography
                 color="initial"
-                variant="body1"
+                variant="h6"
                 className={classes.inlineText}
               >
                 VIDEOS
@@ -87,17 +83,13 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
             </Grid>
           </Grid>
           <Grid container item direction="column">
-            <Typography color="initial" variant="h6">
-              Comments
-            </Typography>
-            <Typography color="initial" variant="body2">
-              {survey.comments}
-            </Typography>
+            <Typography variant="h6">Comments</Typography>
+            <Typography variant="subtitle1">{survey.comments}</Typography>
           </Grid>
         </Grid>
       )}
 
-      <Grid item xs={12} md={6} lg={2}>
+      <Grid item xs={12} md={6} lg={3}>
         <ObservationBox depth={reef.depth} dailyData={reef.dailyData} />
       </Grid>
     </Grid>
@@ -108,6 +100,7 @@ const styles = () =>
   createStyles({
     inlineText: {
       display: "inline",
+      fontWeight: "normal",
       marginLeft: "0.5rem",
     },
   });

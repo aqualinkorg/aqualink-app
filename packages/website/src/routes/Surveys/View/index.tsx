@@ -8,8 +8,10 @@ import {
   createStyles,
   Grid,
   IconButton,
-  Box,
+  Theme,
+  Paper,
   Typography,
+  CardMedia,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { getFeaturedMedia } from "../../../helpers/surveyMedia";
@@ -36,87 +38,80 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
 
   return (
     <>
-      <div className={classes.surveyOuterDiv}>
+      <Grid
+        style={{ backgroundColor: "#f5f6f6" }}
+        container
+        justify="center"
+        item
+        xs={12}
+      >
         <Grid
-          style={{ marginBottom: "2rem" }}
-          alignItems="flex-start"
+          style={{ margin: "4rem 0 1rem 0" }}
           container
-          direction="column"
-          spacing={1}
+          alignItems="center"
+          item
+          xs={11}
         >
-          <Grid alignItems="center" container direction="row">
-            <IconButton
-              edge="start"
-              onClick={history.goBack}
-              color="primary"
-              aria-label="menu"
-            >
-              <ArrowBack />
-            </IconButton>
-            <Typography color="primary" variant="h5">
-              All Surveys
-            </Typography>
-          </Grid>
+          <IconButton
+            edge="start"
+            onClick={history.goBack}
+            color="primary"
+            aria-label="menu"
+          >
+            <ArrowBack />
+          </IconButton>
+          <Typography color="primary" variant="h5">
+            All Surveys
+          </Typography>
         </Grid>
-        <Box boxShadow={3} className={classes.shadowBox}>
-          <Grid container>
+        <Grid style={{ marginBottom: "6rem" }} item xs={11}>
+          <Paper elevation={3} className={classes.surveyDetailsCard}>
             <Grid
+              style={{ height: "100%" }}
               container
+              justify="space-between"
               item
-              direction="column"
-              xs={10}
-              className={classes.surveyDetails}
+              xs={12}
             >
-              <SurveyDetails reef={reef} survey={surveyDetails} />
-              <Typography variant="body2">
-                {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (C°)`}
-              </Typography>
-              <Grid item xs={12}>
-                <Charts
-                  dailyData={reef.dailyData}
-                  depth={reef.depth}
-                  // TODO - Remove default
-                  temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
-                />
-              </Grid>
-            </Grid>
-            {/* The grid breakpoints have no effect on items of a container with direction column and
-           this is why they must not be added. 
-           See corresponding material ui documentation:
-            https://material-ui.com/components/grid/#direction-column-column-reverse */}
-            <Grid
-              container
-              alignItems="flex-end"
-              item
-              direction="column"
-              md={12}
-              lg={2}
-            >
-              <Grid item className={classes.imageContainer}>
-                <Map polygon={reef.polygon} />
-              </Grid>
-              {surveyDetails && surveyDetails.surveyPoints && (
-                <Grid item className={classes.imageContainer}>
-                  <img
-                    className={classes.image}
-                    src={getFeaturedMedia(surveyDetails.surveyPoints)}
-                    alt="reef"
+              <Grid container justify="center" item xs={9}>
+                <Grid container item xs={11}>
+                  <SurveyDetails reef={reef} survey={surveyDetails} />
+                </Grid>
+                <Grid container alignItems="center" item xs={11}>
+                  <Typography variant="subtitle2">
+                    {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (\u2103)`}
+                  </Typography>
+                </Grid>
+                <Grid container justify="center" item xs={12}>
+                  <Charts
+                    dailyData={reef.dailyData}
+                    depth={reef.depth}
+                    // TODO - Remove default
+                    temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
                   />
                 </Grid>
-              )}
+              </Grid>
+              <Grid container item xs={3}>
+                <Grid item xs={12}>
+                  <Map polygon={reef.polygon} />
+                </Grid>
+                <Grid item xs={12}>
+                  {surveyDetails && surveyDetails.surveyPoints && (
+                    <CardMedia
+                      style={{ height: "100%" }}
+                      image={getFeaturedMedia(surveyDetails.surveyPoints)}
+                    />
+                  )}
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      </div>
-      <div className={classes.mediaOuterDiv}>
-        <Grid
-          container
-          direction="column"
-          spacing={2}
-          className={classes.mediaContainer}
-        >
-          <Grid style={{ marginBottom: "5rem" }} item>
-            <Typography variant="h5">
+          </Paper>
+        </Grid>
+      </Grid>
+      <Grid container justify="center" item xs={12}>
+        <Grid container item xs={9}>
+          <Grid style={{ margin: "5rem 0 5rem 0" }} item>
+            <Typography style={{ fontSize: 18 }}>
               {`${moment
                 .parseZone(surveyDetails?.diveDate)
                 .format("MM/DD/YYYY")} Survey Media`}
@@ -126,44 +121,23 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             <SurveyMediaDetails points={surveyDetails?.surveyPoints} />
           </Grid>
         </Grid>
-      </div>
+      </Grid>
     </>
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
-    surveyOuterDiv: {
-      backgroundColor: "#f5f6f6",
-      height: "auto",
-      padding: "4rem 3.2rem 2rem 1rem",
-    },
-    shadowBox: {
-      backgroundColor: "white",
+    surveyDetailsCard: {
       width: "100%",
-      padding: "0rem 0rem 0rem 2rem",
-      flexGrow: 1,
-    },
-    surveyDetails: {
-      marginTop: "2rem",
-    },
-    image: {
-      height: "100%",
-      width: "100%",
-      objectFit: "cover",
-    },
-    imageContainer: {
-      flex: "1 0 auto",
-      width: "100%",
-      height: "50%",
-    },
-    mediaOuterDiv: {
-      padding: "2rem",
-      display: "flex",
-      justifyContent: "center",
-    },
-    mediaContainer: {
-      width: "80%",
+      height: "35rem",
+      color: theme.palette.text.secondary,
+      [theme.breakpoints.down("md")]: {
+        height: "40rem",
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: "45rem",
+      },
     },
   });
 
