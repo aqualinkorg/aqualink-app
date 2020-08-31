@@ -31,10 +31,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyDetails = useSelector(surveyDetailsSelector);
 
   useEffect(() => {
-    if (!surveyDetails) {
-      dispatch(surveyGetRequest(surveyId));
-    }
-  }, [dispatch, surveyId, surveyDetails]);
+    dispatch(surveyGetRequest(surveyId));
+  }, [dispatch, surveyId]);
 
   return (
     <>
