@@ -29,8 +29,6 @@ import {
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 
-import reefImage from "../../../../../assets/reef-image.jpg";
-
 const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
@@ -88,10 +86,12 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                       xs={12}
                     >
                       <Grid style={{ height: "100%" }} item xs={4}>
-                        <CardMedia
-                          className={classes.cardImage}
-                          image={reefImage}
-                        />
+                        {survey.featuredSurveyMedia && (
+                          <CardMedia
+                            className={classes.cardImage}
+                            image={survey.featuredSurveyMedia?.url}
+                          />
+                        )}
                       </Grid>
                       <Grid container item xs={7} spacing={1}>
                         <Grid container alignItems="center" item xs={12}>

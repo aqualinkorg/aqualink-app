@@ -24,6 +24,7 @@ export interface SurveyState {
   comments?: string;
   temperature?: string;
   surveyPoints?: SurveyPoint[];
+  featuredSurveyMedia?: SurveyMedia;
 }
 
 export interface SurveyData {
