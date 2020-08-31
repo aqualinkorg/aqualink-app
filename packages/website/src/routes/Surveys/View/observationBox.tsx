@@ -25,12 +25,12 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
         <Grid container item direction="column" spacing={4}>
           <Grid container item direction="column" spacing={1}>
             <Grid item>
-              <Typography color="textPrimary" variant="body1">
+              <Typography color="textPrimary" variant="subtitle1">
                 SATELLITE OBSERVATION
               </Typography>
             </Grid>
             <Grid container item direction="column">
-              <Typography color="textPrimary" variant="body2">
+              <Typography color="textPrimary" variant="overline">
                 SURFACE TEMP
               </Typography>
               <Typography color="textPrimary" variant="h4">
@@ -40,13 +40,13 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
           </Grid>
           <Grid container item direction="column" spacing={1}>
             <Grid item>
-              <Typography color="textPrimary" variant="body1">
+              <Typography color="textPrimary" variant="subtitle1">
                 SENSOR OBSERVATION
               </Typography>
             </Grid>
             <Grid container item spacing={2}>
               <Grid container item direction="column" xs={6}>
-                <Typography color="textPrimary" variant="body2">
+                <Typography color="textPrimary" variant="overline">
                   SURFACE TEMP
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
@@ -54,7 +54,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                 </Typography>
               </Grid>
               <Grid container item direction="column" xs={6}>
-                <Typography color="textPrimary" variant="body2">
+                <Typography color="textPrimary" variant="overline">
                   {`TEMP AT ${depth}M`}
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
