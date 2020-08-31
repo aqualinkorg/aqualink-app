@@ -252,7 +252,7 @@ const UploadMedia = ({
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Typography variant="subtitle2">
-                    Supported formats: .jpg .mpeg .png .gif. mov
+                    Supported formats: .jpg .mpeg .png .gif. mov. Max 10mb.
                   </Typography>
                 </Grid>
               </Grid>
