@@ -72,12 +72,13 @@ exports[`renders as expected 1`] = `
               <h6
                 class="MuiTypography-root Satellite-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
               >
-                DEGREE HEATING WEEKS
+                HEAT STRESS
               </h6>
               <h2
                 class="MuiTypography-root Satellite-contentTextValues-7 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
               >
-                4.1
+                4.1 DHW
               </h2>
             </div>
           </div>
