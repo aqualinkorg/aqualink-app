@@ -160,7 +160,7 @@ const styles = () =>
     },
     mediaContainer: {
       width: "80%",
-    }
+    },
   });
 
 interface SurveyViewPageIncomingProps {
