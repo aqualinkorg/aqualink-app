@@ -13,6 +13,7 @@ import { SurveyMedia, MediaType } from './survey-media.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
+import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 
 @Injectable()
 export class SurveysService {
@@ -25,6 +26,8 @@ export class SurveysService {
 
     @InjectRepository(ReefPointOfInterest)
     private poiRepository: Repository<ReefPointOfInterest>,
+
+    private googleCloudService: GoogleCloudService,
   ) {}
 
   // Create a survey
@@ -66,6 +69,11 @@ export class SurveysService {
         'data',
         'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
+      .leftJoinAndSelect(
+        'survey.featuredSurveyMedia',
+        'featuredSurveyMedia',
+        'featuredSurveyMedia.featured = True',
+      )
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 
@@ -80,6 +88,7 @@ export class SurveysService {
         temperature:
           survey.temperature ||
           (surveyDailyData && surveyDailyData.avgBottomTemperature),
+        featuredSurveyMedia: survey.featuredSurveyMedia,
       };
     });
   }
@@ -96,6 +105,7 @@ export class SurveysService {
       .createQueryBuilder('poi')
       .leftJoinAndSelect('poi.surveyMedia', 'surveyMedia')
       .where('surveyMedia.surveyId = :surveyId', { surveyId })
+      .andWhere('surveyMedia.hidden = False')
       .select([
         'surveyMedia.url',
         'surveyMedia.id',
@@ -113,6 +123,14 @@ export class SurveysService {
     };
 
     return returnValue;
+  }
+
+  async findMedia(surveyId: number): Promise<SurveyMedia[]> {
+    return this.surveyMediaRepository
+      .createQueryBuilder('surveyMedia')
+      .leftJoinAndSelect('surveyMedia.poiId', 'poi')
+      .where('surveyMedia.surveyId = :surveyId', { surveyId })
+      .getMany();
   }
 
   async update(
@@ -157,6 +175,19 @@ export class SurveysService {
   }
 
   async delete(surveyId: number): Promise<void> {
+    const surveyMedia = await this.surveyMediaRepository.find({
+      where: { surveyId },
+    });
+
+    await Promise.all(
+      surveyMedia.map((media) => {
+        // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
+        return this.googleCloudService.deleteFile(
+          media.url.split(`${process.env.GCS_BUCKET}/`)[1],
+        );
+      }),
+    );
+
     const result = await this.surveyRepository.delete(surveyId);
 
     if (!result.affected) {
@@ -165,12 +196,20 @@ export class SurveysService {
   }
 
   async deleteMedia(mediaId: number): Promise<void> {
-    const result = await this.surveyMediaRepository.delete(mediaId);
+    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
 
-    if (!result.affected) {
+    if (!surveyMedia) {
       throw new NotFoundException(
         `Survey media with id ${mediaId} was not found`,
       );
     }
+
+    // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
+    // and grab the second element of the resulting array which is the path we need
+    await this.googleCloudService.deleteFile(
+      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    );
+
+    await this.surveyMediaRepository.delete(mediaId);
   }
 }
