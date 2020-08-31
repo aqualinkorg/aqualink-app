@@ -86,7 +86,7 @@ const UploadMedia = ({
             url,
             poiId: (metadata[index].surveyPoint ||
               (undefined as unknown)) as number,
-            observations: metadata[index].observation || undefined,
+            observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
             metadata: "{}",
             token: user?.token,

@@ -72,6 +72,7 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
               </Grid>
             </Grid>
             <Grid container alignItems="center" justify="center" item xs={4}>
+              {/* TODO - Make observation a required field. */}
               <Grid item>
                 <Typography variant="h6" className={classes.subTitle}>
                   Observation:
