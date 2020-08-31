@@ -28,8 +28,11 @@ export class SurveysController {
   @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Post('upload')
   @AcceptFile('file', ['image', 'video'], 'surveys', 'reef')
-  upload(@UploadedFile('file') file: any): Promise<string> {
-    return file.path;
+  upload(@UploadedFile('file') file: any): string {
+    // Override file path because file.path provided an invalid google cloud format and HTTPS is not working correctly
+    // Correct format of a URL pointing to a google cloud object should be
+    // https://storage.googleapis.com/{bucketName}/path/to/object/in/bucket
+    return `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file.filename}`;
   }
 
   @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
@@ -60,6 +63,12 @@ export class SurveysController {
     return this.surveyService.findOne(surveyId);
   }
 
+  @Get(':id/media')
+  findMedia(@Param('id', ParseIntPipe) surveyId): Promise<SurveyMedia[]> {
+    return this.surveyService.findMedia(surveyId);
+  }
+
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) surveyId: number,
@@ -68,6 +77,7 @@ export class SurveysController {
     return this.surveyService.update(editSurveyDto, surveyId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put('media/:id')
   updateMedia(
     @Param('id', ParseIntPipe) mediaId: number,
@@ -76,11 +86,13 @@ export class SurveysController {
     return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) surveyId: number): Promise<void> {
     return this.surveyService.delete(surveyId);
   }
 
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete('media/:id')
   deleteMedia(@Param('id', ParseIntPipe) mediaId: number): Promise<void> {
     return this.surveyService.deleteMedia(mediaId);
