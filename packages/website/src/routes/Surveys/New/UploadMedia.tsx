@@ -84,9 +84,10 @@ const UploadMedia = ({
           const surveyId = survey?.id;
           const surveyMediaData: SurveyMediaData = {
             url,
-            poiId: (metadata[index].surveyPoint as unknown) as number,
-            observations: metadata[index].observation,
-            comments: metadata[index].comments,
+            poiId: (metadata[index].surveyPoint ||
+              (undefined as unknown)) as number,
+            observations: metadata[index].observation || undefined,
+            comments: metadata[index].comments || undefined,
             metadata: "{}",
             token: user?.token,
           };

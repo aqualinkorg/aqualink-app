@@ -22,7 +22,7 @@ export interface SurveyData {
 
 export interface SurveyMediaData {
   url: string;
-  poiId: number;
+  poiId?: number;
   observations: string;
   comments?: string;
   metadata?: string;
