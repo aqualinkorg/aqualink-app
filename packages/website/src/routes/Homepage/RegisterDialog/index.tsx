@@ -86,25 +86,25 @@ const RegisterDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container justify="flex-end" item xs={12}>
+            <Grid container justify="center" item xs={12}>
               <Grid
                 container
                 alignItems="center"
-                justify="space-between"
+                justify="space-around"
                 item
-                xs={11}
+                xs={12}
               >
-                <Grid container item xs={4}>
+                <Grid container item xs={10}>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
                   </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid container justify="flex-end" item xs={1}>
                   <IconButton
                     className={classes.closeButton}
                     size="small"
-                    onClick={() => handleRegisterOpen(false)}
+                    onClick={() => handleSignInOpen(false)}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -135,9 +135,9 @@ const RegisterDialog = ({
             </Alert>
           </Collapse>
         )}
-        <CardContent>
+        <CardContent style={{ padding: 0 }}>
           <Grid container justify="center" item xs={12}>
-            <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={10}>
+            <Grid style={{ marginTop: "0.5rem" }} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
                   Create an account
@@ -226,23 +226,27 @@ const RegisterDialog = ({
                     variant="outlined"
                   />
                 </Grid>
-                <Grid container item xs={12}>
-                  <Checkbox
-                    className={classes.termsCheckbox}
-                    checked={readTerms}
-                    onChange={() => setReadTerms(!readTerms)}
-                    color="primary"
-                  />
-                  <Typography
-                    className={classes.termsText}
-                    variant="subtitle1"
-                    color="textSecondary"
-                  >
-                    I have read the{" "}
-                    <Link style={{ color: "black" }} to="/">
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
+                <Grid container justify="space-around" item xs={11}>
+                  <Grid item xs={1}>
+                    <Checkbox
+                      className={classes.termsCheckbox}
+                      checked={readTerms}
+                      onChange={() => setReadTerms(!readTerms)}
+                      color="primary"
+                    />
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography
+                      className={classes.termsText}
+                      variant="subtitle1"
+                      color="textSecondary"
+                    >
+                      I have read the{" "}
+                      <Link style={{ color: "black" }} to="/">
+                        Terms and Conditions
+                      </Link>
+                    </Typography>
+                  </Grid>
                 </Grid>
                 <Grid className={classes.button} item xs={12}>
                   <Button
@@ -288,6 +292,16 @@ const styles = (theme: Theme) =>
     root: {
       height: "72vh",
       width: "30vw",
+      [theme.breakpoints.down("md")]: {
+        width: "40vw",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "50vw",
+      },
+      [theme.breakpoints.down("xs")]: {
+        width: "80vw",
+        height: "100vh",
+      },
     },
     closeButton: {
       color: theme.palette.primary.light,
@@ -313,7 +327,7 @@ const styles = (theme: Theme) =>
       fontWeight: 400,
     },
     button: {
-      marginBottom: "1rem",
+      marginBottom: "0.5rem",
     },
   });
 

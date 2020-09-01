@@ -82,21 +82,21 @@ const SignInDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container justify="flex-end" item xs={12}>
+            <Grid container justify="center" item xs={12}>
               <Grid
                 container
                 alignItems="center"
-                justify="space-between"
+                justify="space-around"
                 item
-                xs={11}
+                xs={12}
               >
-                <Grid container item xs={4}>
+                <Grid container item xs={10}>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
                   </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid container justify="flex-end" item xs={1}>
                   <IconButton
                     className={classes.closeButton}
                     size="small"
@@ -240,6 +240,18 @@ const styles = (theme: Theme) =>
     root: {
       height: "70vh",
       width: "30vw",
+      [theme.breakpoints.down("md")]: {
+        width: "40vw",
+        height: "100vh",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "50vw",
+        height: "100vh",
+      },
+      [theme.breakpoints.down("xs")]: {
+        width: "80vw",
+        height: "100vh",
+      },
     },
     closeButton: {
       color: theme.palette.primary.light,
