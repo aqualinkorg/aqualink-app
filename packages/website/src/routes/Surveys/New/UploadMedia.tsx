@@ -73,8 +73,8 @@ const UploadMedia = ({
     setAnchorEl(null);
   };
 
-  const missingSurveyPoint = () => {
-    const index = metadata.findIndex((item) => item.surveyPoint === "");
+  const missingObservations = () => {
+    const index = metadata.findIndex((item) => item.observation === "");
 
     return index > -1;
   };
@@ -299,7 +299,7 @@ const UploadMedia = ({
             <Popover
               id="mouse-over-popover"
               className={classes.popover}
-              open={Boolean(anchorEl) && missingSurveyPoint()}
+              open={Boolean(anchorEl) && missingObservations()}
               anchorEl={anchorEl}
               classes={{
                 paper: classes.paper,
@@ -322,7 +322,7 @@ const UploadMedia = ({
                 alignItems="center"
               >
                 <Typography color="textSecondary">
-                  Missing Survey Points
+                  Missing Observation Info
                 </Typography>
               </Grid>
             </Popover>
@@ -339,7 +339,7 @@ const UploadMedia = ({
               onMouseLeave={handlePopoverClose}
             >
               <Button
-                disabled={missingSurveyPoint()}
+                disabled={missingObservations()}
                 onClick={onMediaSubmit}
                 color="primary"
                 variant="contained"
