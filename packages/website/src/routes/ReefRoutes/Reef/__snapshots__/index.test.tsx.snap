@@ -54,7 +54,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           </h4>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
@@ -304,12 +304,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <h6
                         class="MuiTypography-root Satellite-contentTextTitles-116 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
-                        DEGREE HEATING WEEKS
+                        HEAT STRESS
                       </h6>
                       <h2
                         class="MuiTypography-root Satellite-contentTextValues-117 MuiTypography-h2 MuiTypography-colorTextPrimary"
+                        title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                       >
-                        0.1
+                        0.1 DHW
                       </h2>
                     </div>
                   </div>
@@ -1142,7 +1143,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           </h4>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-6"
