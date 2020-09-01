@@ -46,7 +46,7 @@ const SignInDialog = ({
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
-  const [passwordResetOpen, setPasswordResetOpen] = useState<string>("");
+  const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -86,7 +86,7 @@ const SignInDialog = ({
         event.preventDefault();
       }
       dispatch(resetPassword({ email: data.emailAddress }));
-      setPasswordResetOpen(data.emailAddress);
+      setPasswordResetEmail(data.emailAddress);
     },
     [dispatch]
   );
@@ -146,7 +146,7 @@ const SignInDialog = ({
             </Alert>
           </Collapse>
         )}
-        <Collapse in={passwordResetOpen !== ""}>
+        <Collapse in={passwordResetEmail !== ""}>
           <Alert
             severity="success"
             action={
@@ -155,14 +155,14 @@ const SignInDialog = ({
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setPasswordResetOpen("");
+                  setPasswordResetEmail("");
                 }}
               >
                 <CloseIcon fontSize="inherit" />
               </IconButton>
             }
           >
-            {`Password reset email sent to ${passwordResetOpen}.`}
+            {`Password reset email sent to ${passwordResetEmail}.`}
           </Alert>
         </Collapse>
         <CardContent>
