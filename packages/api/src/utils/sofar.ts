@@ -2,10 +2,7 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import moment from 'moment-timezone';
-import {
-  SOFAR_MARINE_URL,
-  // SOFAR_SPOTTER_URL,
-} from './constants';
+import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
 
 type SofarValue = {
   timestamp: string;
@@ -47,6 +44,43 @@ export async function sofarHindcast(
     });
 }
 
+export async function sofarSpotter(
+  spotterId: string,
+  start: string,
+  end: string,
+) {
+  return axios
+    .get(SOFAR_SPOTTER_URL, {
+      params: {
+        spotterId,
+        start,
+        end,
+        token: process.env.SOFAR_API_TOKEN,
+        includeSmartMooringData: true,
+        includeSurfaceTempData: true,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error(
+          `Sofar API responded with a ${error.response.status} status. ${error.response.message}`,
+        );
+      } else {
+        console.error(`An error occured accessing the Sofar API - ${error}`);
+      }
+    });
+}
+
+function getStartEndDate(date: Date, localTimezone: string) {
+  const m = moment.tz(date, localTimezone);
+  const start = m.clone().startOf('day').utc().format();
+  const end = m.clone().endOf('day').utc().format();
+  return [start, end];
+}
+
 export async function getSofarDailyData(
   modelId: string,
   variableID: string,
@@ -57,9 +91,7 @@ export async function getSofarDailyData(
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const m = moment.tz(date, localTimezone);
-  const start = m.clone().startOf('day').utc().format();
-  const end = m.clone().endOf('day').utc().format();
+  const [start, end] = getStartEndDate(date, localTimezone);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(
     modelId,
@@ -79,21 +111,48 @@ export async function getSofarDailyData(
 }
 
 type SpotterData = {
-  surfaceTemperature: number;
+  surfaceTemperature: number[];
   bottomTemperature: number[];
 };
+
+type SensorData = {
+  sensorPosition: number;
+  degrees: number;
+};
+
+function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
+  return data.find((d) => d.sensorPosition === sensorPosition);
+}
 
 export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   spotterId: string,
+  localTimezone: string,
   // eslint-disable-next-line no-unused-vars
   date: Date,
 ): Promise<SpotterData> {
-  // TODO - Implement Spotter Data Retrieval
-  // https://docs.sofarocean.com/spotter-sensor
-  // getSofarSpotterData()
-  // using SOFAR_SPOTTER_URL
-  return { surfaceTemperature: 20, bottomTemperature: [0] };
+  // TODO - Get waves data from spotters.
+  const [start, end] = getStartEndDate(date, localTimezone);
+  const {
+    data: { smartMooringData = [] },
+  } = await sofarSpotter(spotterId, start, end);
+
+  const filteredSmartMooringData = smartMooringData.filter(
+    (data) => data.timestamp && data.timestamp > start && data.timestamp < end,
+  );
+
+  const [
+    bottomTemperature,
+    surfaceTemperature,
+  ] = filteredSmartMooringData.reduce(
+    ([sensor0Data, sensor1Data], data) => [
+      sensor0Data.concat(getDataBySensorPosition(data.sensorData, 0)),
+      sensor1Data.concat(getDataBySensorPosition(data.sensorData, 1)),
+    ],
+    [[], []],
+  );
+
+  return { surfaceTemperature, bottomTemperature };
 }
 
 /** Utility function to get the closest available data given a date in UTC. */

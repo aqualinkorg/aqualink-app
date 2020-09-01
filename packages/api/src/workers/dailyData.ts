@@ -13,25 +13,25 @@ const getAverage = (numbers: number[]) => {
     : undefined;
 };
 
-async function getDailyData(reef: Reef, date: Date) {
+export async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId, maxMonthlyMean, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
-  const spotterData = await getSpotterData(spotterId, date);
+  const spotterData = spotterId
+    ? await getSpotterData(spotterId, localTimezone, date)
+    : { surfaceTemperature: [], bottomTemperature: [] };
+
   const minBottomTemperature = spotterId
     ? Math.min(...spotterData.bottomTemperature)
     : undefined;
   const maxBottomTemperature = spotterId
     ? Math.max(...spotterData.bottomTemperature)
     : undefined;
-  const avgBottomTemperature = spotterId
-    ? getAverage(spotterData.bottomTemperature)
-    : undefined;
 
-  const surfaceTemperature = spotterId
-    ? spotterData.surfaceTemperature
-    : undefined;
+  const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
+
+  const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
 
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
@@ -145,7 +145,7 @@ async function getDailyData(reef: Reef, date: Date) {
   const windDirection = getAverage(windDirections);
 
   return {
-    reef,
+    reef: { id: reef.id },
     date,
     minBottomTemperature,
     maxBottomTemperature,
