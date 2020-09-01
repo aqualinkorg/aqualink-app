@@ -11,11 +11,20 @@ import {
   CardMedia,
   MenuItem,
   TextField,
+  Button,
+  Dialog,
+  Card,
+  CardContent,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined, Visibility } from "@material-ui/icons";
+
 import observationOptions from "../../../constants/uploadDropdowns";
 import reefServices from "../../../services/reefServices";
 import { Pois } from "../../../store/Reefs/types";
+import surveyServices from "../../../services/surveyServices";
+import { userInfoSelector } from "../../../store/User/userSlice";
 
 const MediaCard = ({
   reefId,
@@ -35,6 +44,15 @@ const MediaCard = ({
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
   const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
+  const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
+  const [newPoiName, setNewPoiName] = useState<string>("");
+  const user = useSelector(userInfoSelector);
+
+  const handleNewPoiNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setNewPoiName(event.target.value);
+  };
 
   useEffect(() => {
     reefServices
@@ -43,157 +61,212 @@ const MediaCard = ({
   }, [setSurveyPointOptions, reefId]);
 
   return (
-    <Grid style={{ marginTop: "2rem" }} container item xs={12}>
-      <Paper elevation={0} className={classes.mediaCardWrapper}>
-        <Grid
-          style={{ height: "100%" }}
-          container
-          alignItems="center"
-          justify="space-between"
-          item
-          xs={12}
-        >
-          <Grid style={{ height: "100%" }} item xs={3}>
-            <CardMedia className={classes.cardImage} image={preview}>
+    <>
+      <Dialog
+        onClose={() => setAddPoiDialogOpen(false)}
+        open={addPoiDialogOpen}
+      >
+        <Card className={classes.newPoiDialog}>
+          <CardContent>
+            <Grid container justify="center" item xs={12}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  inputProps={{ className: classes.textField }}
+                  fullWidth
+                  placeholder="Point of interest"
+                  value={newPoiName}
+                  onChange={handleNewPoiNameChange}
+                />
+              </Grid>
               <Grid
-                style={{ height: "100%" }}
+                style={{ marginTop: "2rem" }}
                 container
+                justify="flex-end"
                 item
                 xs={12}
+              >
+                <Button
+                  disabled={newPoiName === ""}
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => {
+                    setSurveyPointOptions([
+                      ...surveyPointOptions,
+                      { id: surveyPointOptions.length + 1, name: newPoiName },
+                    ]);
+                    surveyServices.addNewPoi(reefId, newPoiName, user?.token);
+                    setAddPoiDialogOpen(false);
+                  }}
+                >
+                  Add
+                </Button>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Dialog>
+      <Grid style={{ marginTop: "2rem" }} container item xs={12}>
+        <Paper elevation={0} className={classes.mediaCardWrapper}>
+          <Grid
+            style={{ height: "100%" }}
+            container
+            alignItems="center"
+            justify="space-between"
+            item
+            xs={12}
+          >
+            <Grid style={{ height: "100%" }} item xs={3}>
+              <CardMedia className={classes.cardImage} image={preview}>
+                <Grid
+                  style={{ height: "100%" }}
+                  container
+                  item
+                  xs={12}
+                  alignItems="flex-end"
+                  justify="flex-end"
+                >
+                  {size && (
+                    <Grid
+                      className={classes.mediaSize}
+                      container
+                      alignItems="center"
+                      justify="center"
+                      item
+                      xs={3}
+                    >
+                      <Typography variant="subtitle2">{size} MB</Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              </CardMedia>
+            </Grid>
+            <Grid container justify="center" item xs={3}>
+              <Grid style={{ marginBottom: "1rem" }} item xs={10}>
+                <Typography color="textSecondary" variant="h6">
+                  Survey Point
+                </Typography>
+              </Grid>
+              <Grid style={{ marginBottom: "2rem" }} item xs={10}>
+                <TextField
+                  className={classes.textField}
+                  select
+                  id="surveyPoint"
+                  name="surveyPoint"
+                  onChange={handleSurveyPointChange}
+                  value={surveyPoint}
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                >
+                  {surveyPointOptions.map((item) => (
+                    <MenuItem
+                      className={classes.textField}
+                      value={item.id}
+                      key={item.id}
+                    >
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                  <MenuItem className={classes.textField}>
+                    <AddIcon />
+                    <Button
+                      style={{ color: "black" }}
+                      onClick={() => setAddPoiDialogOpen(true)}
+                    >
+                      Add new survey point
+                    </Button>
+                  </MenuItem>
+                </TextField>
+              </Grid>
+
+              <Grid style={{ marginBottom: "1rem" }} item xs={10}>
+                <Typography color="textSecondary" variant="h6">
+                  Observation
+                </Typography>
+              </Grid>
+              <Grid style={{ marginBottom: "2rem" }} item xs={10}>
+                <TextField
+                  className={classes.textField}
+                  select
+                  id="observation"
+                  name="observation"
+                  onChange={handleObservationChange}
+                  value={observation}
+                  placeholder="Select One"
+                  fullWidth
+                  variant="outlined"
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                >
+                  {observationOptions.map((item) => (
+                    <MenuItem
+                      className={classes.textField}
+                      value={item.key}
+                      key={item.key}
+                    >
+                      {item.value}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            <Grid container justify="center" item xs={5}>
+              <Grid style={{ marginBottom: "1rem" }} item xs={12}>
+                <Typography color="textSecondary" variant="h6">
+                  Comments
+                </Typography>
+              </Grid>
+              <Grid style={{ marginBottom: "2rem" }} item xs={12}>
+                <TextField
+                  className={classes.textField}
+                  variant="outlined"
+                  multiline
+                  name="comments"
+                  placeholder="Comments"
+                  onChange={handleCommentsChange}
+                  value={comments}
+                  rows="8"
+                  fullWidth
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Grid style={{ height: "100%" }} container item xs={1}>
+              <Grid
+                container
+                item
+                alignItems="flex-start"
+                justify="flex-end"
+                xs={12}
+              >
+                <IconButton onClick={() => setFeatured(index)}>
+                  <Visibility
+                    color={featuredFile === index ? "primary" : "inherit"}
+                  />
+                </IconButton>
+              </Grid>
+              <Grid
+                container
+                item
                 alignItems="flex-end"
                 justify="flex-end"
+                xs={12}
               >
-                {size && (
-                  <Grid
-                    className={classes.mediaSize}
-                    container
-                    alignItems="center"
-                    justify="center"
-                    item
-                    xs={3}
-                  >
-                    <Typography variant="subtitle2">{size} MB</Typography>
-                  </Grid>
-                )}
+                <IconButton onClick={() => deleteCard(index)}>
+                  <DeleteOutlineOutlined />
+                </IconButton>
               </Grid>
-            </CardMedia>
-          </Grid>
-          <Grid container justify="center" item xs={3}>
-            <Grid style={{ marginBottom: "1rem" }} item xs={10}>
-              <Typography color="textSecondary" variant="h6">
-                Survey Point
-              </Typography>
-            </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={10}>
-              <TextField
-                className={classes.textField}
-                select
-                id="surveyPoint"
-                name="surveyPoint"
-                onChange={handleSurveyPointChange}
-                value={surveyPoint}
-                fullWidth
-                variant="outlined"
-                inputProps={{
-                  className: classes.textField,
-                }}
-              >
-                {surveyPointOptions.map((item) => (
-                  <MenuItem
-                    className={classes.textField}
-                    value={item.id}
-                    key={item.id}
-                  >
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-
-            <Grid style={{ marginBottom: "1rem" }} item xs={10}>
-              <Typography color="textSecondary" variant="h6">
-                Observation
-              </Typography>
-            </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={10}>
-              <TextField
-                className={classes.textField}
-                select
-                id="observation"
-                name="observation"
-                onChange={handleObservationChange}
-                value={observation}
-                placeholder="Select One"
-                fullWidth
-                variant="outlined"
-                inputProps={{
-                  className: classes.textField,
-                }}
-              >
-                {observationOptions.map((item) => (
-                  <MenuItem
-                    className={classes.textField}
-                    value={item.key}
-                    key={item.key}
-                  >
-                    {item.value}
-                  </MenuItem>
-                ))}
-              </TextField>
             </Grid>
           </Grid>
-          <Grid container justify="center" item xs={5}>
-            <Grid style={{ marginBottom: "1rem" }} item xs={12}>
-              <Typography color="textSecondary" variant="h6">
-                Comments
-              </Typography>
-            </Grid>
-            <Grid style={{ marginBottom: "2rem" }} item xs={12}>
-              <TextField
-                className={classes.textField}
-                variant="outlined"
-                multiline
-                name="comments"
-                placeholder="Comments"
-                onChange={handleCommentsChange}
-                value={comments}
-                rows="8"
-                fullWidth
-                inputProps={{
-                  className: classes.textField,
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid style={{ height: "100%" }} container item xs={1}>
-            <Grid
-              container
-              item
-              alignItems="flex-start"
-              justify="flex-end"
-              xs={12}
-            >
-              <IconButton onClick={() => setFeatured(index)}>
-                <Visibility
-                  color={featuredFile === index ? "primary" : "inherit"}
-                />
-              </IconButton>
-            </Grid>
-            <Grid
-              container
-              item
-              alignItems="flex-end"
-              justify="flex-end"
-              xs={12}
-            >
-              <IconButton onClick={() => deleteCard(index)}>
-                <DeleteOutlineOutlined />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Grid>
+        </Paper>
+      </Grid>
+    </>
   );
 };
 
@@ -225,6 +298,10 @@ const styles = (theme: Theme) =>
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       height: "2rem",
       borderRadius: "2px 0 0 2px",
+    },
+    newPoiDialog: {
+      height: "10rem",
+      width: "20rem",
     },
   });
 

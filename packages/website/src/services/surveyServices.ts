@@ -35,4 +35,16 @@ const addSurveyMedia = (surveyId: string, mediaData: SurveyMediaData) => {
   });
 };
 
-export default { addSurvey, addSurveyMedia, getSurvey, getSurveys };
+const addNewPoi = (reefId: number, name: string, token?: string | null) => {
+  return requests.send({
+    url: "pois",
+    method: "POST",
+    data: {
+      reef: reefId,
+      name,
+    },
+    token: token === null ? undefined : token,
+  });
+};
+
+export default { addSurvey, addSurveyMedia, getSurvey, getSurveys, addNewPoi };
