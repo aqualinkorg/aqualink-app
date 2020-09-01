@@ -15,8 +15,11 @@ export const thresholdPlugin = {
     while (xCoord < right - 5) {
       ctx.moveTo(xCoord, yCoord);
       ctx.lineTo(xCoord + 5, yCoord);
+
+      // eslint-disable-next-line fp/no-mutation
       ctx.strokeStyle = "#ff8d00";
       ctx.fill();
+      // eslint-disable-next-line fp/no-mutation
       xCoord += 10;
     }
     ctx.closePath();

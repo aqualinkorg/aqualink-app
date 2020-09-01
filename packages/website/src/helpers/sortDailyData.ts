@@ -1,6 +1,7 @@
 import type { Data } from "../store/Reefs/types";
 
 export const sortDailyData = (dailyData: Data[], order?: string) => {
+  // eslint-disable-next-line fp/no-mutating-methods
   return Object.values(dailyData).sort((item1, item2) => {
     const date1 = new Date(item1.date).getTime();
     const date2 = new Date(item2.date).getTime();

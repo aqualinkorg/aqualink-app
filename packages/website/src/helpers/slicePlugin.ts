@@ -13,6 +13,7 @@ export const sliceDrawPLugin = {
     if (options.sliceAtLabel) {
       ctx.beginPath();
       ctx.moveTo(xCoord, top);
+      // eslint-disable-next-line fp/no-mutation
       ctx.strokeStyle = "#777777";
       ctx.lineTo(xCoord, bottom);
       ctx.stroke();
