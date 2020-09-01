@@ -5,6 +5,7 @@ import {
   createStyles,
   Grid,
   Typography,
+  Theme,
 } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
@@ -55,10 +56,10 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
                 Choose survey location from map
               </Typography>
             </Grid>
-            <Grid className={classes.mapContainer} item xs={6}>
+            <Grid className={classes.mapContainer} item xs={12} lg={6}>
               <Map polygon={reef.polygon} />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12} lg={5}>
               <Form reefId={reef.id} changeTab={onPanelIndexChange} />
             </Grid>
           </Grid>
@@ -78,13 +79,19 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       marginTop: "2rem",
     },
     mapContainer: {
       height: "30rem",
+      [theme.breakpoints.down("lg")]: {
+        marginBottom: "3rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "15rem",
+      },
     },
   });
 
