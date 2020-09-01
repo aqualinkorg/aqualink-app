@@ -47,7 +47,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
 
   const tableColumns: Array<Column<Row>> = [
     {
-      title: "REEF NAME",
+      title: "REEF",
       field: "locationName",
       cellStyle,
       render: (rowData) => (
@@ -68,10 +68,10 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       cellStyle,
       render: (rowData) => (
         <Typography
-          style={{ color: colors.lightBlue, paddingLeft: "2rem" }}
+          style={{ color: colors.lightBlue, paddingLeft: "1rem" }}
           variant="h6"
         >
-          {rowData.temp} &#8451;
+          {rowData.temp}&#8451;
         </Typography>
       ),
     },

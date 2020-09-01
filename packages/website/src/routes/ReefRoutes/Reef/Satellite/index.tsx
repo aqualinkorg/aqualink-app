@@ -9,6 +9,7 @@ import {
   Typography,
   CardHeader,
   Grid,
+  Tooltip,
 } from "@material-ui/core";
 
 import { colorCode } from "../../../../assets/colorCode";
@@ -79,15 +80,17 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="subtitle2"
                 >
-                  DEGREE HEATING WEEKS
+                  HEAT STRESS
                 </Typography>
-                <Typography
-                  className={classes.contentTextValues}
-                  color="textPrimary"
-                  variant="h2"
-                >
-                  {formatNumber(degreeHeatingWeeks, 1)}
-                </Typography>
+                <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
+                  <Typography
+                    className={classes.contentTextValues}
+                    color="textPrimary"
+                    variant="h2"
+                  >
+                    {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
+                  </Typography>
+                </Tooltip>
               </Grid>
             </Grid>
           </Grid>

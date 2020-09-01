@@ -52,10 +52,30 @@ export class SurveysService {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
     }
 
+    // Check if a featured media already exists for this survey
+    const featuredMedia = await this.surveyMediaRepository.findOne({
+      where: {
+        featured: true,
+        surveyId: survey,
+      },
+    });
+
+    const newFeatured =
+      featuredMedia &&
+      createSurveyMediaDto.featured &&
+      !createSurveyMediaDto.hidden;
+
+    if (featuredMedia && newFeatured) {
+      await this.surveyMediaRepository.update(featuredMedia.id, {
+        featured: false,
+      });
+    }
+
     return this.surveyMediaRepository.save({
-      surveyId: survey,
-      type: MediaType.Image,
       ...createSurveyMediaDto,
+      featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
+      type: MediaType.Image,
+      surveyId: survey,
     });
   }
 
@@ -69,11 +89,13 @@ export class SurveysService {
         'data',
         'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
+      .innerJoin('survey.userId', 'users')
       .leftJoinAndSelect(
         'survey.featuredSurveyMedia',
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
+      .addSelect(['users.fullName', 'users.email', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 
@@ -84,6 +106,7 @@ export class SurveysService {
         diveDate: survey.diveDate,
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
+        userId: survey.userId,
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
@@ -155,16 +178,40 @@ export class SurveysService {
     editSurveyMediaDto: EditSurveyMediaDto,
     mediaId: number,
   ): Promise<SurveyMedia> {
-    const result = await this.surveyMediaRepository.update(
-      mediaId,
-      editSurveyMediaDto,
-    );
+    const surveyMedia = await this.surveyMediaRepository.findOne(mediaId);
 
-    if (!result.affected) {
+    if (!surveyMedia) {
       throw new NotFoundException(
         `Survey media with id ${mediaId} was not found`,
       );
     }
+
+    if (
+      surveyMedia.featured &&
+      (editSurveyMediaDto.hidden || !editSurveyMediaDto.featured)
+    ) {
+      await this.assignFeaturedMedia(surveyMedia.surveyId.id, mediaId);
+    }
+
+    if (
+      !surveyMedia.featured &&
+      !editSurveyMediaDto.hidden &&
+      editSurveyMediaDto.featured
+    ) {
+      await this.surveyMediaRepository.update(
+        {
+          surveyId: surveyMedia.surveyId,
+          featured: true,
+        },
+        { featured: false },
+      );
+    }
+
+    await this.surveyMediaRepository.update(mediaId, {
+      ...editSurveyMediaDto,
+      featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
+    });
+
     const updated = await this.surveyMediaRepository.findOne(mediaId);
 
     if (!updated) {
@@ -204,12 +251,31 @@ export class SurveysService {
       );
     }
 
+    if (surveyMedia.featured) {
+      await this.assignFeaturedMedia(surveyMedia.surveyId.id, mediaId);
+    }
+
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    await this.googleCloudService.deleteFile(
-      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    );
+    // await this.googleCloudService.deleteFile(
+    //   surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    // );
 
     await this.surveyMediaRepository.delete(mediaId);
+  }
+
+  private async assignFeaturedMedia(surveyId: number, mediaId: number) {
+    const surveyMedia = await this.surveyMediaRepository
+      .createQueryBuilder('surveyMedia')
+      .where('surveyMedia.surveyId = :surveyId ', { surveyId })
+      .andWhere('id != :mediaId', { mediaId })
+      .andWhere('hidden != True')
+      .getOne();
+
+    if (!surveyMedia) {
+      return;
+    }
+
+    await this.surveyMediaRepository.update(surveyMedia.id, { featured: true });
   }
 }
