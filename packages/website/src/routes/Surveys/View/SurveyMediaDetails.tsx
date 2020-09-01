@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { SurveyPoint } from "../../../store/Survey/types";
+import { findOption } from "../../../constants/uploadDropdowns";
 
 const carouselSettings = {
   dots: true,
@@ -22,6 +23,14 @@ const carouselSettings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1280,
+      settings: {
+        arrows: false,
+      },
+    },
+  ],
 };
 
 const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
@@ -53,7 +62,11 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                     elevation={3}
                     className={classes.shadowBox}
                   >
-                    <Grid container justify="space-between">
+                    <Grid
+                      style={{ height: "100%" }}
+                      container
+                      justify="space-between"
+                    >
                       <Grid style={{ width: "100%" }} item xs={6}>
                         <CardMedia
                           className={classes.cardImage}
@@ -61,23 +74,24 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                         />
                       </Grid>
                       <Grid
+                        style={{ height: "100%", overflowY: "auto" }}
                         container
                         item
-                        direction="column"
+                        wrap="wrap"
                         xs={6}
                         justify="space-between"
                         className={classes.mediaInfo}
                       >
-                        <Grid container item direction="column" spacing={1}>
-                          <Grid container item direction="column">
+                        <Grid container item spacing={1}>
+                          <Grid item>
                             <Typography variant="h6">
                               Image Observation
                             </Typography>
                             <Typography variant="subtitle1">
-                              {point.surveyMedia[0].observations}
+                              {findOption(point.surveyMedia[0].observations)}
                             </Typography>
                           </Grid>
-                          <Grid container item direction="column">
+                          <Grid item>
                             <Typography variant="h6">Image Comments</Typography>
                             <Typography variant="subtitle1">
                               {point.surveyMedia[0].comments}
@@ -111,6 +125,10 @@ const styles = (theme: Theme) =>
       backgroundColor: "#f5f6f6",
       color: theme.palette.text.secondary,
       marginBottom: "4rem",
+      height: "28rem",
+      [theme.breakpoints.down("xs")]: {
+        height: "14rem",
+      },
     },
     title: {
       marginBottom: "0.5rem",
@@ -130,7 +148,7 @@ const styles = (theme: Theme) =>
       height: "100%",
     },
     mediaInfo: {
-      padding: "3rem 3rem 3rem 5rem",
+      padding: "0.5rem",
     },
     button: {
       marginTop: "1rem",

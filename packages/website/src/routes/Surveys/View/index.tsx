@@ -73,7 +73,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               item
               xs={12}
             >
-              <Grid container justify="center" item xs={9}>
+              <Grid container justify="center" item md={9}>
                 <Grid container item xs={11}>
                   <SurveyDetails reef={reef} survey={surveyDetails} />
                 </Grid>
@@ -91,11 +91,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container item xs={3}>
-                <Grid item xs={12}>
+              <Grid container item md={3}>
+                <Grid item md={12} xs={6}>
                   <Map polygon={reef.polygon} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item md={12} xs={6}>
                   {surveyDetails && surveyDetails.surveyPoints && (
                     <CardMedia
                       style={{ height: "100%" }}
@@ -109,7 +109,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         </Grid>
       </Grid>
       <Grid container justify="center" item xs={12}>
-        <Grid container item xs={9}>
+        <Grid container item xs={11}>
           <Grid style={{ margin: "5rem 0 5rem 0" }} item>
             <Typography style={{ fontSize: 18 }}>
               {`${moment
@@ -136,7 +136,7 @@ const styles = (theme: Theme) =>
         height: "40rem",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "45rem",
+        height: "70rem",
       },
     },
   });
