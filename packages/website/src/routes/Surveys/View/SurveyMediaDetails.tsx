@@ -10,8 +10,19 @@ import {
   Typography,
   CardMedia,
 } from "@material-ui/core";
-import Carousel from "react-material-ui-carousel";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { SurveyPoint } from "../../../store/Survey/types";
+
+const carouselSettings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
   return (
@@ -34,11 +45,7 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Carousel
-              className={classes.carousel}
-              autoPlay={false}
-              navButtonsAlwaysVisible
-            >
+            <Slider className={classes.carousel} {...carouselSettings}>
               {point.surveyMedia.map((media) => {
                 return (
                   <Card
@@ -91,7 +98,7 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                   </Card>
                 );
               })}
-            </Carousel>
+            </Slider>
           </div>
         ))}
     </>

@@ -117,7 +117,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 .format("MM/DD/YYYY")} Survey Media`}
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid style={{ width: "100%" }} item>
             <SurveyMediaDetails points={surveyDetails?.surveyPoints} />
           </Grid>
         </Grid>
