@@ -69,11 +69,13 @@ export class SurveysService {
         'data',
         'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
+      .innerJoin('survey.userId', 'users')
       .leftJoinAndSelect(
         'survey.featuredSurveyMedia',
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
+      .addSelect(['users.fullName', 'users.email', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 
@@ -84,6 +86,7 @@ export class SurveysService {
         diveDate: survey.diveDate,
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
+        userId: survey.userId,
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
