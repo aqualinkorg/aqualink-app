@@ -13,7 +13,7 @@ const getAverage = (numbers: number[]) => {
     : undefined;
 };
 
-async function getDailyData(reef: Reef, date: Date) {
+export async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId, maxMonthlyMean, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
@@ -145,7 +145,7 @@ async function getDailyData(reef: Reef, date: Date) {
   const windDirection = getAverage(windDirections);
 
   return {
-    reef,
+    reef: { id: reef.id },
     date,
     minBottomTemperature,
     maxBottomTemperature,
