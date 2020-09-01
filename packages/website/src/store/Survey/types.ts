@@ -3,6 +3,11 @@ interface DiveLocation {
   lng: number;
 }
 
+interface publicUser {
+  id: number;
+  fullName?: string;
+}
+
 export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;
@@ -10,6 +15,8 @@ export interface SurveyState {
   weatherConditions?: string;
   comments?: string;
   temperature?: string;
+  userId?: publicUser;
+  featuredSurveyMedia?: string;
 }
 
 export interface SurveyData {

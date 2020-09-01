@@ -90,28 +90,31 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                       <Grid style={{ height: "100%" }} item xs={4}>
                         <CardMedia
                           className={classes.cardImage}
-                          image={reefImage}
+                          image={survey.featuredSurveyMedia || reefImage}
                         />
                       </Grid>
+
                       <Grid container item xs={7} spacing={1}>
-                        <Grid container alignItems="center" item xs={12}>
-                          <Grid item xs={5}>
-                            <Typography
-                              className={classes.cardFields}
-                              variant="h6"
-                            >
-                              User:
-                            </Typography>
+                        {survey.userId!.fullName && (
+                          <Grid container alignItems="center" item xs={12}>
+                            <Grid item xs={5}>
+                              <Typography
+                                className={classes.cardFields}
+                                variant="h6"
+                              >
+                                User:
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Typography
+                                className={classes.cardValues}
+                                variant="h6"
+                              >
+                                {survey.userId!.fullName}
+                              </Typography>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              className={classes.cardValues}
-                              variant="h6"
-                            >
-                              Dr. Rory Kreiger
-                            </Typography>
-                          </Grid>
-                        </Grid>
+                        )}
                         {survey.comments && (
                           <Grid container alignItems="center" item xs={12}>
                             <Grid item xs={5}>
