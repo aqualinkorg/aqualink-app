@@ -69,21 +69,21 @@ export class SurveysController {
   }
 
   @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) surveyId: number,
-    @Body() editSurveyDto: EditSurveyDto,
-  ): Promise<Survey> {
-    return this.surveyService.update(editSurveyDto, surveyId);
-  }
-
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put('media/:id')
   updateMedia(
     @Param('id', ParseIntPipe) mediaId: number,
     @Body() editSurveyMediaDto: EditSurveyMediaDto,
   ): Promise<SurveyMedia> {
     return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
+  }
+
+  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) surveyId: number,
+    @Body() editSurveyDto: EditSurveyDto,
+  ): Promise<Survey> {
+    return this.surveyService.update(editSurveyDto, surveyId);
   }
 
   @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
