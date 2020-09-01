@@ -117,7 +117,7 @@ exports[`renders as expected 1`] = `
                 <h4
                   class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
                 >
-                  Your Obligations
+                  Application Form
                 </h4>
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
