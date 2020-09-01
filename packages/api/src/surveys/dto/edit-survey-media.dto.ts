@@ -11,13 +11,11 @@ import { EntityExists } from '../../validations/entity-exists.constraint';
 import { ReefPointOfInterest } from '../../reef-pois/reef-pois.entity';
 
 export class EditSurveyMediaDto {
-  @IsOptional()
   @IsBoolean()
-  readonly featured: boolean = false;
+  readonly featured: boolean;
 
-  @IsOptional()
   @IsBoolean()
-  readonly hidden: boolean = false;
+  readonly hidden: boolean;
 
   @IsOptional()
   @IsEnum(Observations)
