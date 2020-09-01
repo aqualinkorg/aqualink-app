@@ -38,6 +38,9 @@ exports[`NavBar should render with given state from Redux store 1`] = `
             />
           </button>
         </div>
+        <mock-menudrawer
+          open="false"
+        />
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-5"
         >
@@ -45,13 +48,13 @@ exports[`NavBar should render with given state from Redux store 1`] = `
             class="MuiTypography-root MuiTypography-h4"
           >
             Aqua
-          </Typography>
+          </h4>
           <h4
             class="MuiTypography-root MuiTypography-h4"
             style="color: rgb(138, 198, 222);"
           >
             link
-          </Typography>
+          </h4>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
@@ -100,5 +103,11 @@ exports[`NavBar should render with given state from Redux store 1`] = `
       </div>
     </div>
   </header>
+  <mock-registerdialog
+    open="false"
+  />
+  <mock-signindialog
+    open="false"
+  />
 </div>
 `;

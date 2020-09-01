@@ -41,6 +41,7 @@
     "enzyme-to-json": "^3.4.4",
     "firebase": "^7.16.1",
     "firebase-tools": "^8.4.3",
+    "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "material-table": "^1.65.0",
@@ -80,6 +81,7 @@
     "node": "12.x"
   },
   "devDependencies": {
+    "@types/immutable": "^3.8.7",
     "canvas": "^2.6.1"
   }
 }

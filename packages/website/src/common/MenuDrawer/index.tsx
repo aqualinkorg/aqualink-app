@@ -56,6 +56,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       </IconButton>
       {menuRoutes.map(({ text, href }) => (
         <Link
+          key={text}
           href={href}
           style={{
             margin: "1rem 2rem 2rem",

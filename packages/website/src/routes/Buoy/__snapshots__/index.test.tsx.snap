@@ -3,7 +3,7 @@
 exports[`Buoy should render with given state from Redux store 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-2 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-3 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -45,13 +45,13 @@ exports[`Buoy should render with given state from Redux store 1`] = `
             class="MuiTypography-root MuiTypography-h4"
           >
             Aqua
-          </Typography>
+          </h4>
           <h4
             class="MuiTypography-root MuiTypography-h4"
             style="color: rgb(138, 198, 222);"
           >
             link
-          </Typography>
+          </h4>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
@@ -101,7 +101,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
     </div>
   </header>
   <div
-    class="bloc l-bloc"
+    class="Buoy-root-2"
     id="bloc-6"
   >
     <div
@@ -114,10 +114,10 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           class="lcolpad col-12 col"
         >
           <h4
-            class="mg-md"
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
           >
             Monitoring System
-          </Typography>
+          </h4>
           <p
             class="text-lg-left"
           >
@@ -142,10 +142,10 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           class="lcolpad col-12 col"
         >
           <h4
-            class="mg-md"
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
           >
             Web Application
-          </Typography>
+          </h4>
           <p
             class="text-lg-left"
           >
@@ -260,10 +260,10 @@ exports[`Buoy should render with given state from Redux store 1`] = `
           class="col-lg-12"
         >
           <h4
-            class="mg-md"
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
           >
             System Architecture
-          </Typography>
+          </h4>
           <p
             class="text-lg-left"
           >

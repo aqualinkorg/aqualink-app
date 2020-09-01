@@ -3,7 +3,7 @@
 exports[`About should render with given state from Redux store 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-5 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -45,13 +45,13 @@ exports[`About should render with given state from Redux store 1`] = `
             class="MuiTypography-root MuiTypography-h4"
           >
             Aqua
-          </Typography>
+          </h4>
           <h4
             class="MuiTypography-root MuiTypography-h4"
             style="color: rgb(138, 198, 222);"
           >
             link
-          </Typography>
+          </h4>
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-6"
@@ -157,10 +157,10 @@ exports[`About should render with given state from Redux store 1`] = `
                 class="centered order-lg-0 order-1 order-md-0 order-sm-0 col"
               >
                 <h4
-                  class="mg-md"
+                  class="MuiTypography-root About-title-1 MuiTypography-h4"
                 >
                   About Us
-                </Typography>
+                </h4>
                 <p>
                   Aqualink is a philanthropic engineering organization working on Ocean conservation problems.
                   <br />
@@ -180,13 +180,13 @@ exports[`About should render with given state from Redux store 1`] = `
               class="row voffset-lg"
             >
               <div
-                class="centered col-lg-8 offset-lg-2"
+                class="centered order-lg-0 order-1 order-md-0 order-sm-0 col"
               >
                 <h4
-                  class="mg-lg"
+                  class="MuiTypography-root About-title-1 MuiTypography-h4"
                 >
                   The Team
-                </Typography>
+                </h4>
                 <p>
                   We have been working in rapid development and entrepreneurial businesses that scale and hope to bring a similar mindset to Ocean conservation.
                   <br />
