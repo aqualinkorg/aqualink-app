@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Map } from "immutable";
-import { pick } from "lodash";
+import { Map, fromJS } from "immutable";
+import { pick, some, isEmpty } from "lodash";
 import L from "leaflet";
+import isEmail from "validator/lib/isEmail";
+import isNumeric from "validator/lib/isNumeric";
+import isLatLong from "validator/lib/isLatLong";
 import {
   Typography,
   Grid,
@@ -13,11 +16,13 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  Snackbar,
   withStyles,
   WithStyles,
   createStyles,
   Theme,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 import NavBar from "../../common/NavBar";
 import LocationMap from "./LocationMap";
@@ -35,13 +40,12 @@ const obligations = [
 const contactFormElements = [
   { id: "name", label: "Name" },
   { id: "org", label: "Organization" },
-  { id: "Email", label: "Email" },
-];
-
-const locationFormElements = [
-  { id: "lat", label: "Latitude" },
-  { id: "lng", label: "Longitude" },
-  { id: "depth", label: "Depth (m)" },
+  {
+    id: "email",
+    label: "Email",
+    validator: (email: string) => isEmail(email),
+    errorMessage: "Enter a valid email",
+  },
 ];
 
 const agreements = [
@@ -51,14 +55,105 @@ const agreements = [
 ];
 
 const Apply = ({ classes }: ApplyProps) => {
-  const [formModel, setFormModel] = useState(Map<String, String | boolean>());
-  const [markerPosition, setMarkerPosition] = useState<L.LatLngTuple>([
-    37.773972,
-    -122.431297,
-  ]);
+  const [formModel, setFormModel] = useState(Map<string, string | boolean>());
+  const [formErrors, setFormErrors] = useState(Map<string, string>());
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false);
 
-  function updateFormElement(id: String, value: String | boolean) {
+  const locationFormElements = [
+    {
+      id: "lat",
+      label: "Latitude",
+      validator: (lat: string) => isLatLong(`${lat},${formModel.get("lng")}`),
+      errorMessage: "Enter a valid lat/lng",
+    },
+    { id: "lng", label: "Longitude" },
+    {
+      id: "depth",
+      label: "Depth (m)",
+      validator: isNumeric,
+      errorMessage: "Depth should be a number",
+    },
+  ];
+
+  const joinedFormElements = locationFormElements
+    .concat(contactFormElements)
+    .concat(agreements);
+
+  function updateFormElement(id: string, value: string | boolean) {
     setFormModel(formModel.set(id, value));
+  }
+
+  function updateMarkerPosition(position: L.LatLngTuple) {
+    const [lat, lng] = position;
+    setFormModel(
+      formModel.set("lat", lat.toString()).set("lng", lng.toString())
+    );
+  }
+
+  function handleFormSubmission() {
+    const errors = joinedFormElements.reduce(
+      (acc, { id, label, validator, errorMessage }) => {
+        const value = formModel.get(id);
+        if (!value) {
+          return { ...acc, [id]: `"${label}" is required` };
+        }
+
+        if (validator && !validator(value as string)) {
+          return { ...acc, [id]: errorMessage };
+        }
+
+        return acc;
+      },
+      {}
+    );
+
+    setFormErrors(fromJS(errors));
+
+    if (isEmpty(errors)) {
+      const time = new Date().getTime();
+      const date = new Date(time);
+
+      const { name, org, email, lat, lng, depth } = formModel.toJS() as {
+        [key: string]: string;
+      };
+
+      // Add to Firestore
+      fetch(
+        `https://us-central1-ocean-systems.cloudfunctions.net/addSite?name=${name}&org=${org}&email=${email}&lat=${lat}&lng=${lng}&depth=${depth}&date=${date}`
+      )
+        .then((response) => {
+          setIsSuccessfullySubmitted(response.ok);
+          setSnackbarOpen(true);
+        })
+        .catch((error) => {
+          setIsSuccessfullySubmitted(false);
+          setSnackbarOpen(true);
+          console.error(error);
+        });
+
+      // Add to Carto
+      const { REACT_APP_CARTO_API_KEY } = process.env;
+      const position = JSON.stringify({
+        type: "Point",
+        coordinates: [lng, lat],
+      });
+
+      const sql = `INSERT INTO proposed_sites (the_geom, name, org, email, lat, lng, depth, date)
+        VALUES (ST_SetSRID(ST_GeomFromGeoJSON('${position}'),4326),'${name}','${org}','${email}','${lat}','${lng}','${depth}','${date}')`;
+      fetch(
+        `https://drewjgray.carto.com/api/v2/sql?&q=${sql}&api_key=${REACT_APP_CARTO_API_KEY}`
+      )
+        .then((response) => {
+          setIsSuccessfullySubmitted(response.ok);
+          setSnackbarOpen(true);
+        })
+        .catch((error) => {
+          setIsSuccessfullySubmitted(false);
+          setSnackbarOpen(true);
+          console.error(error);
+        });
+    }
   }
 
   const textFieldProps = {
@@ -74,7 +169,7 @@ const Apply = ({ classes }: ApplyProps) => {
       <Box py={4}>
         <Container>
           <Grid container spacing={6}>
-            <Grid item xs={7}>
+            <Grid item xs={12} md={7}>
               <Typography variant="h3" gutterBottom>
                 Manage your local reef
               </Typography>
@@ -94,7 +189,7 @@ const Apply = ({ classes }: ApplyProps) => {
               </Box>
             </Grid>
 
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
               <Box bgcolor="grey.100" p={4}>
                 <Typography variant="h4" gutterBottom>
                   Your Obligations
@@ -116,17 +211,18 @@ const Apply = ({ classes }: ApplyProps) => {
           </Grid>
         </Container>
 
-        <Box bgcolor="grey.100" mt={8} p={4}>
+        <Box bgcolor="grey.100" mt={8} p={{ xs: 0, md: 4 }}>
           <Container>
             <Grid container spacing={6}>
-              <Grid item xs={7}>
+              <Grid item xs={12} md={7}>
                 <LocationMap
-                  markerPosition={markerPosition}
-                  setMarkerPosition={setMarkerPosition}
+                  markerPositionLat={formModel.get("lat", "") as string}
+                  markerPositionLng={formModel.get("lng", "") as string}
+                  updateMarkerPosition={updateMarkerPosition}
                 />
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={12} md={5}>
                 <Paper elevation={2}>
                   <Box color="text.secondary" p={4}>
                     <Typography variant="h4" gutterBottom>
@@ -140,6 +236,8 @@ const Apply = ({ classes }: ApplyProps) => {
                             <TextField
                               id={id}
                               label={label}
+                              error={formErrors.get(id, "").length !== 0}
+                              helperText={formErrors.get(id, "")}
                               value={formModel.get(id, "")}
                               onChange={(e) =>
                                 updateFormElement(id, e.target.value)
@@ -158,6 +256,8 @@ const Apply = ({ classes }: ApplyProps) => {
                             <TextField
                               id={id}
                               label={label}
+                              error={formErrors.get(id, "").length !== 0}
+                              helperText={formErrors.get(id, "")}
                               value={formModel.get(id, "")}
                               onChange={(e) =>
                                 updateFormElement(id, e.target.value)
@@ -190,10 +290,20 @@ const Apply = ({ classes }: ApplyProps) => {
                               />
                             ))}
                           </FormGroup>
+                          {some(agreements, ({ id }) => formErrors.get(id)) && (
+                            <Typography color="error">
+                              The agreements are required
+                            </Typography>
+                          )}
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Button fullWidth variant="contained" color="primary">
+                          <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={handleFormSubmission}
+                          >
                             Submit
                           </Button>
                         </Grid>
@@ -206,6 +316,23 @@ const Apply = ({ classes }: ApplyProps) => {
           </Container>
         </Box>
       </Box>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={isSuccessfullySubmitted ? "success" : "error"}
+          elevation={6}
+          variant="filled"
+        >
+          {isSuccessfullySubmitted
+            ? "Application successfully submitted."
+            : "Something went wrong, please try again"}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

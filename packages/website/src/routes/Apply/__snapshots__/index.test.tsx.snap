@@ -15,7 +15,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
         >
           <h3
             class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom"
@@ -38,7 +38,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
         >
           <div
             class="MuiBox-root MuiBox-root-7"
@@ -99,14 +99,15 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
           >
             <mock-locationmap
-              markerposition="37.773972,-122.431297"
+              markerpositionlat=""
+              markerpositionlng=""
             />
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
           >
             <div
               class="MuiPaper-root MuiPaper-elevation2 MuiPaper-rounded"
@@ -159,6 +160,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
@@ -198,6 +200,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
@@ -209,8 +212,8 @@ exports[`renders as expected 1`] = `
                       <label
                         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
                         data-shrink="false"
-                        for="Email"
-                        id="Email-label"
+                        for="email"
+                        id="email-label"
                       >
                         Email
                       </label>
@@ -220,7 +223,7 @@ exports[`renders as expected 1`] = `
                         <input
                           aria-invalid="false"
                           class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="Email"
+                          id="email"
                           type="text"
                           value=""
                         />
@@ -237,6 +240,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
@@ -285,6 +289,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
@@ -324,6 +329,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
@@ -363,6 +369,7 @@ exports[`renders as expected 1`] = `
                           </legend>
                         </fieldset>
                       </div>
+                      
                     </div>
                   </div>
                   <div
