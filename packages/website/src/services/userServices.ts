@@ -17,6 +17,10 @@ const storeUser = (fullName: string, email: string, token?: string) =>
     token,
   });
 
+const resetPassword = (email: string) => {
+  app.auth().sendPasswordResetEmail(email, { url: "https://aqualink.org" });
+};
+
 const getSelf = (token?: string) =>
   requests.send<User>({
     method: "GET",
@@ -33,6 +37,7 @@ export default {
   createUser,
   storeUser,
   getSelf,
+  resetPassword,
   signInUser,
   signOutUser,
 };
