@@ -62,7 +62,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       ),
     },
     {
-      title: "TEMP",
+      title: "TEMP (℃)",
       field: "temp",
       type: "numeric",
       cellStyle,
@@ -71,12 +71,12 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
           style={{ color: colors.lightBlue, paddingLeft: "1rem" }}
           variant="h6"
         >
-          {rowData.temp}&#8451;
+          {rowData.temp}
         </Typography>
       ),
     },
     {
-      title: "DEPTH",
+      title: "DEPTH (m)",
       field: "depth",
       type: "numeric",
       cellStyle,
@@ -86,7 +86,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
           variant="subtitle1"
           color="textSecondary"
         >
-          {rowData.depth} m
+          {rowData.depth}
         </Typography>
       ),
     },

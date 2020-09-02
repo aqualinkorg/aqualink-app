@@ -126,7 +126,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          TEMP
+                          TEMP (℃)
                         </div>
                         <svg
                           aria-hidden="true"
@@ -161,7 +161,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          DEPTH
+                          DEPTH (m)
                         </div>
                         <svg
                           aria-hidden="true"
@@ -279,7 +279,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         style="color: rgb(22, 141, 189); padding-left: 1rem;"
                       >
                         - -
-                        ℃
                       </h6>
                     </td>
                     <td
@@ -292,7 +291,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         style="padding-left: 2rem;"
                       >
                         19
-                         m
                       </h6>
                     </td>
                     <td

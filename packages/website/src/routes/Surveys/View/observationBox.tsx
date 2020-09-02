@@ -35,7 +35,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                 SURFACE TEMP
               </Typography>
               <Typography color="textPrimary" variant="h4">
-                {`${formatNumber(satelliteTemperature)} \u2103`}
+                {`${formatNumber(satelliteTemperature)}  ℃`}
               </Typography>
             </Grid>
           </Grid>
