@@ -3,7 +3,7 @@
 exports[`About should render with given state from Redux store 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-5 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-2 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -101,41 +101,6 @@ exports[`About should render with given state from Redux store 1`] = `
     </div>
   </header>
   <div>
-    <meta
-      charset="utf-8"
-    />
-    <meta
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-      name="viewport"
-    />
-    <link
-      href="../favicon.png"
-      rel="shortcut icon"
-      type="image/png"
-    />
-    <link
-      href="../css/bootstrap.css?8432"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../style.css?3017"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../css/font-awesome.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <title>
-      About Us
-    </title>
     <div
       class="page-container"
     >

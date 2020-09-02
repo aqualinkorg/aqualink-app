@@ -13,7 +13,6 @@ import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
 import reefdetailpage from "../../assets/img/reefdetailpage.jpg";
 
 import "../../assets/css/bootstrap.css";
-import "../../assets/css/font-awesome.min.css";
 import "../../assets/css/leaflet.css";
 
 const Buoy = ({ classes }: BuoyProps) => {

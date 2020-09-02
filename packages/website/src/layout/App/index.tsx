@@ -14,7 +14,6 @@ import Faq from "../../routes/Faq";
 import theme from "./theme";
 import "./App.css";
 import "../../assets/css/bootstrap.css";
-import "../../assets/css/font-awesome.min.css";
 import "../../assets/css/leaflet.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";

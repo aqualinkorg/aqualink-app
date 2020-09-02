@@ -18,29 +18,6 @@ const About = ({ classes }: AboutProps) => {
     <>
       <NavBar searchLocation={false} />
       <div>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        />
-        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="../css/bootstrap.css?8432"
-        />
-        <link rel="stylesheet" type="text/css" href="../style.css?3017" />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="../css/font-awesome.min.css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
-          rel="stylesheet"
-          type="text/css"
-        />
-        <title>About Us</title>
         <div className="page-container">
           <div className="bloc l-bloc" id="bloc-0">
             {/* bloc-1 */}
@@ -157,17 +134,6 @@ const styles = () =>
     title: {
       marginTop: "1rem",
       marginBottom: "1rem",
-    },
-    root: {
-      top: 10,
-      height: "100%",
-    },
-    map: {
-      height: "100%",
-    },
-    reefTable: {
-      height: "calc(100vh - 64px)",
-      overflowY: "auto",
     },
   });
 

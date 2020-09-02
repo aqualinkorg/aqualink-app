@@ -3,7 +3,7 @@
 exports[`Drones should render with given state from Redux store 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-1 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -101,57 +101,6 @@ exports[`Drones should render with given state from Redux store 1`] = `
     </div>
   </header>
   <div>
-    <meta
-      charset="utf-8"
-    />
-    <meta
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-      name="viewport"
-    />
-    <meta
-      content="Drones"
-      property="og:title"
-    />
-    <meta
-      content="dronepersp.jpg"
-      property="og:image"
-    />
-    <meta
-      content="https://www.aqualink.org/drones/"
-      property="og:url"
-    />
-    <meta
-      content="Drones - An Affordable Autonomous Surface Vehicle"
-      property="og:description"
-    />
-    <link
-      href="../favicon.png"
-      rel="shortcut icon"
-      type="image/png"
-    />
-    <link
-      href="../css/bootstrap.css?9840"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../style.css?1797"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../css/font-awesome.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <title>
-      Drones
-    </title>
     <div
       class="page-container"
     >

@@ -12,30 +12,7 @@ const Faq = ({ classes }: FaqProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-
       <div>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        />
-        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="../css/bootstrap.css?8406"
-        />
-        <link rel="stylesheet" type="text/css" href="../style.css?7858" />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="../css/font-awesome.min.css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap&subset=latin,latin-ext"
-          rel="stylesheet"
-          type="text/css"
-        />
         {/* Main container */}
         <div className="page-container">
           {/* bloc-11 */}
