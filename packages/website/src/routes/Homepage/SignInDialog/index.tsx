@@ -92,8 +92,8 @@ const SignInDialog = ({
   );
 
   return (
-    <Dialog open={open}>
-      <Card className={classes.root}>
+    <Dialog open={open} maxWidth="md">
+      <Card>
         <CardHeader
           className={classes.dialogHeader}
           title={
@@ -105,7 +105,7 @@ const SignInDialog = ({
                 item
                 xs={11}
               >
-                <Grid container item xs={4}>
+                <Grid container item xs={6}>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
@@ -271,10 +271,6 @@ const SignInDialog = ({
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {
-      height: "70vh",
-      width: "30vw",
-    },
     closeButton: {
       color: theme.palette.primary.light,
     },
