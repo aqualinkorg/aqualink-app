@@ -6,6 +6,7 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 // eslint-disable-next-line import/no-cycle
 import { Reef } from '../reefs/reefs.entity';
@@ -14,6 +15,8 @@ import { User } from '../users/users.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 // eslint-disable-next-line import/no-cycle
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+// eslint-disable-next-line import/no-cycle
+import { SurveyMedia } from './survey-media.entity';
 
 export enum WeatherConditions {
   Calm = 'calm',
@@ -55,6 +58,9 @@ export class Survey {
 
   @UpdateDateColumn()
   updatedAt?: Date;
+
+  @OneToOne(() => SurveyMedia, (surveyMedia) => surveyMedia.surveyId)
+  featuredSurveyMedia?: SurveyMedia;
 
   latestDailyData?: DailyData;
 

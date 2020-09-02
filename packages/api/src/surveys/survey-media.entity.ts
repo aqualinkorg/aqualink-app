@@ -55,7 +55,7 @@ export class SurveyMedia {
   @Column()
   comments: string;
 
-  @ManyToOne(() => Survey, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Survey, { onDelete: 'CASCADE', eager: true })
   @JoinColumn({ name: 'survey_id' })
   surveyId: Survey;
 
