@@ -10,12 +10,17 @@ import {
   Grid,
 } from "@material-ui/core";
 
+import { formatNumber } from "../../../../helpers/numberUtils";
 import type { Reef } from "../../../../store/Reefs/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
 
 const Sensor = ({ reef, classes }: SensorProps) => {
-  const sensorExists = false;
+  const { surfaceTemperature, avgBottomTemperature } =
+    reef.latestDailyData || {};
+
+  const sensorExists =
+    surfaceTemperature !== undefined || avgBottomTemperature !== undefined;
 
   return (
     <Card className={classes.card}>
@@ -71,7 +76,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 color="textPrimary"
                 variant="h2"
               >
-                {sensorExists ? "0.0" : "- -"}
+                {formatNumber(surfaceTemperature)}
               </Typography>
             </Grid>
             <Grid item>
@@ -87,7 +92,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 color="textPrimary"
                 variant="h2"
               >
-                {sensorExists ? "0.0" : "- -"}
+                {formatNumber(avgBottomTemperature)}
               </Typography>
             </Grid>
           </Grid>
