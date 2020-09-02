@@ -1,4 +1,4 @@
-import { getSofarDailyData } from './sofar';
+import { getSofarDailyData, getSpotterData } from './sofar';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
@@ -21,4 +21,15 @@ test('It processes Sofar API for daily data.', async () => {
     { timestamp: '2020-07-07T06:00:00.000Z', value: 29.4029998779297 },
     { timestamp: '2020-07-07T09:00:00.000Z', value: 29.423999786377 },
   ]);
+});
+
+test('It processes Sofar Spotter API for daily data.', async () => {
+  jest.setTimeout(30000);
+  const values = await getSpotterData(
+    'SPOT-300434063450120',
+    'Etc/GMT+12',
+    new Date('2020-07-07'),
+  );
+
+  expect(values).toEqual({ surfaceTemperature: [], bottomTemperature: [] });
 });

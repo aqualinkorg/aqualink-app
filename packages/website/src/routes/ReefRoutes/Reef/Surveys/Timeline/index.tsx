@@ -65,7 +65,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
               {survey.diveDate && (
                 <TimelineOppositeContent>
                   <Typography variant="h6" className={classes.dates}>
-                    {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
+                    {moment(survey.diveDate).format("MM/DD/YYYY")}
                   </Typography>
                 </TimelineOppositeContent>
               )}
