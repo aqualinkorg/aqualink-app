@@ -84,7 +84,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         />
       </Grid>
       <Surveys
-        user={false}
+        user={Boolean(user)}
         addNew={
           user?.adminLevel
             ? user.adminLevel === "reef_manager" ||

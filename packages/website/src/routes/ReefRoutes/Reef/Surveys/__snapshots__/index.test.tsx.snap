@@ -6,10 +6,10 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
     class="MuiGrid-root Surveys-root-1 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
   >
     <div
-      class="MuiGrid-root Surveys-surveyWrapper-2 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-6"
+      class="MuiGrid-root Surveys-surveyWrapper-2 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-6"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-4"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
       >
         <p
           class="MuiTypography-root Surveys-title-3 MuiTypography-body1"
@@ -19,15 +19,11 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-10"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-10"
     >
       <div
-        class="SurveyTimeline-root-8"
-      >
-        <ul
-          class="MuiTimeline-root MuiTimeline-alignLeft"
-        />
-      </div>
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      />
     </div>
   </div>
 </div>

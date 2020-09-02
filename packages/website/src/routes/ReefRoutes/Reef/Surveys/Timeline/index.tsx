@@ -95,7 +95,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                       </Grid>
                       <Grid container item xs={7} spacing={1}>
                         {survey.userId!.fullName && (
-                          <Grid container alignItems="center" item xs={12}>
+                          <Grid container alignItems="flex-start" item xs={12}>
                             <Grid item xs={5}>
                               <Typography
                                 className={classes.cardFields}
@@ -115,7 +115,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                           </Grid>
                         )}
                         {survey.comments && (
-                          <Grid container alignItems="center" item xs={12}>
+                          <Grid container alignItems="flex-start" item xs={12}>
                             <Grid item xs={5}>
                               <Typography
                                 className={classes.cardFields}

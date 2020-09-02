@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -12,10 +12,23 @@ import {
 } from "@material-ui/core";
 
 import Timeline from "./Timeline";
+import TimelineMobile from "./TimelineMobile";
 
 const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+  const onResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [onResize]);
 
   const handleHistoryChange = (
     event: React.ChangeEvent<{ value: unknown }>
@@ -36,17 +49,31 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
         container
         justify="center"
         item
-        xs={6}
+        lg={6}
+        xs={11}
         alignItems="center"
       >
-        <Grid container justify="center" item xs={4}>
+        <Grid
+          container
+          justify={windowWidth < 1280 ? "flex-start" : "center"}
+          item
+          md={12}
+          lg={4}
+        >
           <Typography className={classes.title}>
             {user ? "Your survey history" : "Survey History"}
           </Typography>
         </Grid>
         {!user && (
           <>
-            <Grid container alignItems="center" justify="center" item xs={4}>
+            <Grid
+              container
+              alignItems="center"
+              justify={windowWidth < 1280 ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={4}
+            >
               <Grid item>
                 <Typography variant="h6" className={classes.subTitle}>
                   Survey History:
@@ -71,7 +98,14 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
                 </FormControl>
               </Grid>
             </Grid>
-            <Grid container alignItems="center" justify="center" item xs={4}>
+            <Grid
+              container
+              alignItems="center"
+              justify={windowWidth < 1280 ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={4}
+            >
               {/* TODO - Make observation a required field. */}
               <Grid item>
                 <Typography variant="h6" className={classes.subTitle}>
@@ -100,8 +134,12 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
           </>
         )}
       </Grid>
-      <Grid container justify="center" item xs={10}>
-        <Timeline addNew={addNew} reefId={reefId} />
+      <Grid container justify="center" item xs={11} lg={10}>
+        {windowWidth < 1280 ? (
+          <TimelineMobile addNew={addNew} reefId={reefId} />
+        ) : (
+          <Timeline addNew={addNew} reefId={reefId} />
+        )}
       </Grid>
     </Grid>
   );
