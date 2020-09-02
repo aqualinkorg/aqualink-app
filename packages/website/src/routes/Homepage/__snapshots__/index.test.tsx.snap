@@ -12,7 +12,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-8 MuiToolbar-gutters"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
@@ -238,6 +238,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              style="margin: 0px; padding-top: 0px;"
             >
               <div
                 class="Search-searchBar-15"
@@ -384,7 +385,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
       >
         <div
-          class="HomepageMap-map-40 leaflet-container leaflet-grab leaflet-touch-drag"
+          class="HomepageMap-map-38 leaflet-container leaflet-grab leaflet-touch-drag"
           style="position: relative;"
           tabindex="0"
         >
