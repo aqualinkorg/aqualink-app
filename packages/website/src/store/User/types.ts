@@ -20,3 +20,7 @@ export interface UserSignInParams {
   email: string;
   password: string;
 }
+
+export interface PasswordResetParams {
+  email: string;
+}
