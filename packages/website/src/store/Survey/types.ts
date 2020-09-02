@@ -7,6 +7,18 @@ interface publicUser {
   id: number;
   fullName?: string;
 }
+export interface SurveyMedia {
+  url: string;
+  featured: boolean;
+  observations: string;
+  comments: string | null;
+  type: string;
+}
+
+export interface SurveyPoint {
+  name: string;
+  surveyMedia: SurveyMedia[];
+}
 
 export interface SurveyState {
   id?: number;
@@ -16,7 +28,8 @@ export interface SurveyState {
   comments?: string;
   temperature?: string;
   userId?: publicUser;
-  featuredSurveyMedia?: string;
+  surveyPoints?: SurveyPoint[];
+  featuredSurveyMedia?: SurveyMedia;
 }
 
 export interface SurveyData {
@@ -34,6 +47,7 @@ export interface SurveyMediaData {
   comments?: string;
   metadata?: string;
   token?: string | null;
+  featured: boolean;
 }
 
 export interface SurveyListState {

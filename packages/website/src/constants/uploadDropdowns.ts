@@ -26,4 +26,10 @@ const observationOptions = [
   },
 ];
 
+export const findOption = (key: string) => {
+  const option = observationOptions.find((item) => item.key === key);
+
+  return option?.value;
+};
+
 export default observationOptions;

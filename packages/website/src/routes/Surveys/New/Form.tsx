@@ -4,13 +4,13 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Grid,
   TextField,
   Typography,
   Button,
   Collapse,
   IconButton,
-  Select,
   MenuItem,
 } from "@material-ui/core";
 import {
@@ -127,6 +127,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           <Grid item xs={5}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardDatePicker
+                className={classes.textField}
                 disableToolbar
                 format="MM/dd/yyyy"
                 id="dive-date"
@@ -151,6 +152,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           <Grid item xs={5}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <KeyboardTimePicker
+                className={classes.textField}
                 id="time-picker"
                 name="diveTime"
                 helperText={errors.diveTime ? errors.diveTime.message : ""}
@@ -219,7 +221,9 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           <Typography variant="h6">Weather Conditions</Typography>
         </Grid>
         <Grid style={{ marginBottom: "2rem" }} item xs={12}>
-          <Select
+          <TextField
+            className={classes.textField}
+            select
             id="weather"
             name="weather"
             value={weather}
@@ -240,13 +244,14 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
             <MenuItem className={classes.textField} value="storm">
               Stormy
             </MenuItem>
-          </Select>
+          </TextField>
         </Grid>
         <Grid style={{ marginBottom: "1rem" }} item xs={12}>
           <Typography variant="h6">Comments</Typography>
         </Grid>
         <Grid style={{ marginBottom: "2rem" }} item xs={12}>
           <TextField
+            className={classes.textField}
             variant="outlined"
             multiline
             name="comments"
@@ -266,13 +271,8 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           item
           xs={12}
         >
-          <Grid item xs={2}>
-            <Button
-              style={{ marginRight: "1rem" }}
-              onClick={resetForm}
-              color="primary"
-              variant="outlined"
-            >
+          <Grid style={{ marginRight: "3rem" }} item xs={2}>
+            <Button onClick={resetForm} color="primary" variant="outlined">
               Cancel
             </Button>
           </Grid>
@@ -287,10 +287,16 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     textField: {
       color: "black",
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(0, 0, 0, 0.23)",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: theme.palette.primary.main,
+      },
     },
   });
 

@@ -18,13 +18,15 @@ import {
 } from "../../store/Reefs/selectedReefSlice";
 import NavBar from "../../common/NavBar";
 import NewSurvey from "./New";
+import ViewSurvey from "./View";
 
-const Surveys = ({ match, classes }: SurveysProps) => {
+const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
+  const surveyId = match.params.sid;
 
   useEffect(() => {
     if (!reefDetails) {
@@ -38,8 +40,13 @@ const Surveys = ({ match, classes }: SurveysProps) => {
       {/* eslint-disable-next-line no-nested-ternary */}
       {loading ? (
         <LinearProgress />
-      ) : reefDetails && !error ? (
-        <NewSurvey reef={reefDetails} />
+      ) : // eslint-disable-next-line no-nested-ternary
+      reefDetails && !error ? (
+        isView ? (
+          <ViewSurvey reef={reefDetails} surveyId={surveyId} />
+        ) : (
+          <NewSurvey reef={reefDetails} />
+        )
       ) : (
         <div className={classes.noData}>
           <Grid
@@ -69,8 +76,14 @@ const styles = () =>
     },
   });
 
-interface MatchProps extends RouteComponentProps<{ id: string }> {}
+interface SurveysIncomingProps {
+  isView?: boolean;
+}
 
-type SurveysProps = MatchProps & WithStyles<typeof styles>;
+interface MatchProps extends RouteComponentProps<{ id: string; sid: string }> {}
+
+type SurveysProps = MatchProps &
+  SurveysIncomingProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(Surveys);

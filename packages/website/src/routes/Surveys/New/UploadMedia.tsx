@@ -9,6 +9,7 @@ import {
   Button,
   Collapse,
   LinearProgress,
+  Popover,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
@@ -40,6 +41,8 @@ const UploadMedia = ({
   >(undefined);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [featuredFile, setFeaturedFile] = useState<number | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleFileDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -60,6 +63,22 @@ const UploadMedia = ({
     [files, previews, metadata]
   );
 
+  const handlePopoverOpen = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const missingObservations = () => {
+    const index = metadata.findIndex((item) => item.observation === "");
+
+    return index > -1;
+  };
+
   const deleteCard = (index: number) => {
     setPreviews(previews.filter((item, key) => key !== index));
     setFiles(files.filter((item, key) => key !== index));
@@ -70,6 +89,10 @@ const UploadMedia = ({
     setFiles([]);
     setMetadata([]);
     setPreviews([]);
+  };
+
+  const setFeatured = (index: number) => {
+    setFeaturedFile(index);
   };
 
   const onMediaSubmit = () => {
@@ -90,6 +113,7 @@ const UploadMedia = ({
             comments: metadata[index].comments || undefined,
             metadata: "{}",
             token: user?.token,
+            featured: index === featuredFile,
           };
           surveyServices
             .addSurveyMedia(`${surveyId}`, surveyMediaData)
@@ -182,6 +206,8 @@ const UploadMedia = ({
           (metadata && metadata[index] && metadata[index].comments) || ""
         }
         deleteCard={deleteCard}
+        setFeatured={setFeatured}
+        featuredFile={featuredFile}
         handleCommentsChange={handleCommentsChange(index)}
         handleObservationChange={handleObservationChange(index)}
         handleSurveyPointChange={handleSurveyPointChange(index)}
@@ -265,12 +291,42 @@ const UploadMedia = ({
         </Grid>
         {files && files.length > 0 && (
           <Grid
-            style={{ marginBottom: "2rem" }}
+            style={{ margin: "4rem 0 2rem 0" }}
             container
             justify="flex-end"
             item
             xs={9}
           >
+            <Popover
+              id="mouse-over-popover"
+              className={classes.popover}
+              open={Boolean(anchorEl) && missingObservations()}
+              anchorEl={anchorEl}
+              classes={{
+                paper: classes.paper,
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              onClose={handlePopoverClose}
+              disableRestoreFocus
+            >
+              <Grid
+                className={classes.popoverText}
+                container
+                justify="center"
+                alignItems="center"
+              >
+                <Typography color="textSecondary">
+                  Missing Observation Info
+                </Typography>
+              </Grid>
+            </Popover>
             <Button
               style={{ marginRight: "1rem" }}
               color="primary"
@@ -279,9 +335,19 @@ const UploadMedia = ({
             >
               Cancel
             </Button>
-            <Button onClick={onMediaSubmit} color="primary" variant="contained">
-              Save
-            </Button>
+            <div
+              onMouseEnter={handlePopoverOpen}
+              onMouseLeave={handlePopoverClose}
+            >
+              <Button
+                disabled={missingObservations()}
+                onClick={onMediaSubmit}
+                color="primary"
+                variant="contained"
+              >
+                Save
+              </Button>
+            </div>
           </Grid>
         )}
       </Grid>
@@ -302,6 +368,16 @@ const styles = () =>
       backgroundColor: "#fafafa",
       height: "8rem",
       width: "100%",
+    },
+    popover: {
+      pointerEvents: "none",
+    },
+    popoverText: {
+      height: "3rem",
+      width: "12rem",
+    },
+    paper: {
+      backgroundColor: "rgba(22, 141, 189, 0.3)",
     },
   });
 

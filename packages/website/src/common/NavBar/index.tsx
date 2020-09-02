@@ -60,13 +60,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               </Typography>
             </Grid>
 
-            <Grid
-              container
-              alignItems="flex-start"
-              justify="flex-end"
-              item
-              xs={6}
-            >
+            <Grid container alignItems="center" justify="flex-end" item xs={6}>
               {searchLocation && (
                 <Hidden xsDown>
                   <Search />
