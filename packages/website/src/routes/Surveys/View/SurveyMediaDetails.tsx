@@ -62,50 +62,51 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                     elevation={3}
                     className={classes.shadowBox}
                   >
-                    <Grid
-                      style={{ height: "100%" }}
-                      container
-                      justify="space-between"
-                    >
+                    <Grid style={{ height: "100%" }} container>
                       <Grid style={{ width: "100%" }} item xs={6}>
                         <CardMedia
                           className={classes.cardImage}
-                          image={point.surveyMedia[0].url}
+                          image={media.url}
                         />
                       </Grid>
                       <Grid
                         style={{ height: "100%", overflowY: "auto" }}
                         container
+                        justify="center"
                         item
-                        wrap="wrap"
                         xs={6}
-                        justify="space-between"
-                        className={classes.mediaInfo}
                       >
-                        <Grid container item spacing={1}>
+                        <Grid
+                          container
+                          item
+                          xs={11}
+                          justify="space-around"
+                          direction="column"
+                          alignItems="flex-start"
+                        >
                           <Grid item>
                             <Typography variant="h6">
                               Image Observation
                             </Typography>
                             <Typography variant="subtitle1">
-                              {findOption(point.surveyMedia[0].observations)}
+                              {findOption(media.observations)}
                             </Typography>
                           </Grid>
                           <Grid item>
                             <Typography variant="h6">Image Comments</Typography>
                             <Typography variant="subtitle1">
-                              {point.surveyMedia[0].comments}
+                              {media.comments}
                             </Typography>
                           </Grid>
-                        </Grid>
-                        <Grid item>
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            className={classes.button}
-                          >
-                            All Photos From Survey Point
-                          </Button>
+                          <Grid item>
+                            <Button
+                              variant="outlined"
+                              color="primary"
+                              className={classes.button}
+                            >
+                              All Photos From Survey Point
+                            </Button>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -146,9 +147,6 @@ const styles = (theme: Theme) =>
     cardImage: {
       width: "100%",
       height: "100%",
-    },
-    mediaInfo: {
-      padding: "0.5rem",
     },
     button: {
       marginTop: "1rem",
