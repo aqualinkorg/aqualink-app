@@ -3,6 +3,7 @@ import { FirebaseError } from "firebase";
 import type { AxiosError } from "axios";
 
 import type {
+  PasswordResetParams,
   User,
   UserState,
   UserRegisterParams,
@@ -74,6 +75,20 @@ export const signInUser = createAsyncThunk<
     }
   }
 );
+
+export const resetPassword = createAsyncThunk<
+  PasswordResetParams,
+  PasswordResetParams,
+  CreateAsyncThunkTypes
+>("user/reset", async ({ email }: PasswordResetParams, { rejectWithValue }) => {
+  try {
+    await userServices.resetPassword(email);
+    return { email };
+  } catch (err) {
+    const error: FirebaseError = err;
+    return rejectWithValue(error.message);
+  }
+});
 
 export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   "user/getSelf",

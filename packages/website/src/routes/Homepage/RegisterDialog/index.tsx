@@ -81,8 +81,8 @@ const RegisterDialog = ({
   }, [user, handleRegisterOpen, error]);
 
   return (
-    <Dialog open={open}>
-      <Card className={classes.root}>
+    <Dialog open={open} maxWidth="md">
+      <Card>
         <CardHeader
           className={classes.dialogHeader}
           title={
@@ -94,7 +94,7 @@ const RegisterDialog = ({
                 item
                 xs={12}
               >
-                <Grid container item xs={10}>
+                <Grid container item xs={6}>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
@@ -289,20 +289,6 @@ const RegisterDialog = ({
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {
-      height: "72vh",
-      width: "30vw",
-      [theme.breakpoints.down("md")]: {
-        width: "40vw",
-      },
-      [theme.breakpoints.down("sm")]: {
-        width: "50vw",
-      },
-      [theme.breakpoints.down("xs")]: {
-        width: "80vw",
-        height: "100vh",
-      },
-    },
     closeButton: {
       color: theme.palette.primary.light,
     },
