@@ -50,6 +50,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           alignSelf: "flex-end",
           marginRight: 5,
           marginTop: 5,
+          color: "white",
         }}
       >
         <Clear />
@@ -60,7 +61,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           href={href}
           style={{
             margin: "1rem 2rem 2rem",
-            fontSize: "1.5rem",
+            fontSize: "1rem",
             color: "white",
           }}
         >
