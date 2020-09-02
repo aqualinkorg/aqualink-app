@@ -23,7 +23,7 @@ import {
 } from "../../../../helpers/degreeHeatingWeeks";
 
 const Popup = ({ reef, classes }: PopupProps) => {
-  const { degreeHeatingDays, maxBottomTemperature } =
+  const { degreeHeatingDays, maxBottomTemperature, satelliteTemperature } =
     reef.latestDailyData || {};
   return (
     <Card>
@@ -34,22 +34,41 @@ const Popup = ({ reef, classes }: PopupProps) => {
       />
       <CardContent>
         <Grid container item xs={12}>
-          <Grid item xs={6}>
-            <Grid container justify="flex-start" item xs={12}>
-              <Typography variant="caption" color="textSecondary">
-                {`TEMP AT ${reef.depth}M`}
-              </Typography>
+          {maxBottomTemperature ? (
+            <Grid item xs={6}>
+              <Grid container justify="flex-start" item xs={12}>
+                <Typography variant="caption" color="textSecondary">
+                  {`TEMP AT ${reef.depth}M`}
+                </Typography>
+              </Grid>
+              <Grid container justify="flex-start" item xs={12}>
+                <Typography
+                  style={{ color: colors.lightBlue }}
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  {formatNumber(maxBottomTemperature, 1)} &#8451;
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid container justify="flex-start" item xs={12}>
-              <Typography
-                style={{ color: colors.lightBlue }}
-                variant="h5"
-                color="textSecondary"
-              >
-                {formatNumber(maxBottomTemperature, 1)} &#8451;
-              </Typography>
+          ) : (
+            <Grid item xs={6}>
+              <Grid container justify="flex-start" item xs={12}>
+                <Typography variant="caption" color="textSecondary">
+                  SAT. TEMP.
+                </Typography>
+              </Grid>
+              <Grid container justify="flex-start" item xs={12}>
+                <Typography
+                  style={{ color: colors.lightBlue }}
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  {formatNumber(satelliteTemperature, 1)} &#8451;
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          )}
           <Grid item xs={6}>
             <Grid container justify="flex-end" item xs={12}>
               <Typography variant="caption" color="textSecondary">
