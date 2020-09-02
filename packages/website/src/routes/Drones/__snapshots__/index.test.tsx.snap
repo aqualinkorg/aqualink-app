@@ -100,7 +100,9 @@ exports[`Drones should render with given state from Redux store 1`] = `
       </div>
     </div>
   </header>
-  <div>
+  <div
+    class="MuiBox-root MuiBox-root-24"
+  >
     <div
       class="page-container"
     >
@@ -124,7 +126,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
                   class="row dronecardrow align-items-center"
                 >
                   <div
-                    class="col-sm-12 order-sm-1 col-lg-7 col-md-10 offset-md-1 offset-lg-0"
+                    class="col-sm-12 order-sm-1 col-lg-10 offset-md-0"
                   >
                     <h5
                       class="mg-md"
@@ -136,7 +138,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
                     </p>
                   </div>
                   <div
-                    class="order-sm-2 offset-lg-1 offset-md-4 col-md-4 col-sm-6 offset-sm-3 col-10 offset-1 col-lg-3"
+                    class="order-sm-2 offset-lg-0 offset-md-4 col-md-4 col-sm-6 offset-sm-3 col-10 offset-1 col-lg-2"
                   >
                     <a
                       href="https://github.com/aqualinkorg/asv"
@@ -144,7 +146,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
                       target="_blank"
                     >
                       <img
-                        alt="ghbttn"
+                        alt="Start button"
                         class="img-fluid mx-auto d-block img-ghbt-style lazyload"
                         src="ghbttn.png"
                       />
@@ -221,7 +223,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
         </div>
       </div>
       <div
-        class="bloc l-bloc"
+        class="bloc l-bloc mt-4"
         id="hullconcept8"
       >
         <div

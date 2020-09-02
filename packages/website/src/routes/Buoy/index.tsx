@@ -4,6 +4,8 @@ import {
   WithStyles,
   createStyles,
   Typography,
+  Theme,
+  Grid,
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
@@ -78,58 +80,55 @@ const Buoy = ({ classes }: BuoyProps) => {
                     alt="bouydiagram2"
                   />
                 </div>
-                <div className="col-lg-4 callouts">
-                  <div className="row scroll-fx-left-in-fade">
-                    <div className="col calloutboxes">
-                      <h5 className="mg-clear">
-                        <strong>1</strong>
-                      </h5>
-                      <p>
-                        A quick video captured during a survey that provides a
-                        broad overview of the reef.
-                      </p>
-                    </div>
+                <Grid
+                  container
+                  direction="column"
+                  justify="space-evenly"
+                  className="col-lg-4"
+                >
+                  <div className={classes.listItem}>
+                    <h5 className="mg-clear">
+                      <strong>1</strong>
+                    </h5>
+                    <p>
+                      A quick video captured during a survey that provides a
+                      broad overview of the reef.
+                    </p>
                   </div>
-                  <div className="row scroll-fx-left-in-fade">
-                    <div className="col calloutboxes">
-                      <h5 className="mg-clear">
-                        <strong>2</strong>
-                      </h5>
-                      <p>
-                        Real-time conditions and a summary of the past 7 days at
-                        the surface and underwater temperature sensors. Degree
-                        heating days is an important measure of prolonged heat
-                        stress and is the primary way the application creates
-                        alert levels for a reef.
-                      </p>
-                    </div>
+                  <div className={classes.listItem}>
+                    <h5 className="mg-clear">
+                      <strong>2</strong>
+                    </h5>
+                    <p>
+                      Real-time conditions and a summary of the past 7 days at
+                      the surface and underwater temperature sensors. Degree
+                      heating days is an important measure of prolonged heat
+                      stress and is the primary way the application creates
+                      alert levels for a reef.
+                    </p>
                   </div>
-                  <div className="row scroll-fx-left-in-fade">
-                    <div className="col calloutboxes">
-                      <h5 className="mg-clear">
-                        <strong>3</strong>
-                      </h5>
-                      <p>
-                        Historical information on temperatures, wind, and waves
-                        are displayed and easily downloadable for a more
-                        detailed analysis.
-                      </p>
-                    </div>
+                  <div className={classes.listItem}>
+                    <h5 className="mg-clear">
+                      <strong>3</strong>
+                    </h5>
+                    <p>
+                      Historical information on temperatures, wind, and waves
+                      are displayed and easily downloadable for a more detailed
+                      analysis.
+                    </p>
                   </div>
-                  <div className="row scroll-fx-left-in-fade">
-                    <div className="col calloutboxes">
-                      <h5 className="mg-clear">
-                        <strong>4</strong>
-                      </h5>
-                      <p>
-                        Multiple points of interest on the reef can be
-                        configured and the associated survey images give you the
-                        ability to understand changes to the reef over time and
-                        at different temperature profiles.
-                      </p>
-                    </div>
+                  <div className={classes.listItem}>
+                    <h5 className="mg-clear">
+                      <strong>4</strong>
+                    </h5>
+                    <p>
+                      Multiple points of interest on the reef can be configured
+                      and the associated survey images give you the ability to
+                      understand changes to the reef over time and at different
+                      temperature profiles.
+                    </p>
                   </div>
-                </div>
+                </Grid>
               </div>
             </div>
           </div>
@@ -163,7 +162,7 @@ const Buoy = ({ classes }: BuoyProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     title: {
       marginTop: "1rem",
@@ -171,6 +170,15 @@ const styles = () =>
     },
     root: {
       marginTop: "1rem",
+    },
+
+    listItem: {
+      backgroundColor: theme.palette.grey[100],
+      padding: theme.spacing(3),
+
+      [theme.breakpoints.down("md")]: {
+        margin: theme.spacing(3, 0),
+      },
     },
   });
 

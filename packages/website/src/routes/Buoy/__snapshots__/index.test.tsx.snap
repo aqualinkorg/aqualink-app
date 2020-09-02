@@ -3,7 +3,7 @@
 exports[`Buoy should render with given state from Redux store 1`] = `
 <div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-3 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
@@ -175,79 +175,63 @@ exports[`Buoy should render with given state from Redux store 1`] = `
               />
             </div>
             <div
-              class="col-lg-4 callouts"
+              class="MuiGrid-root col-lg-4 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-evenly"
             >
               <div
-                class="row scroll-fx-left-in-fade"
+                class="Buoy-listItem-3"
               >
-                <div
-                  class="col calloutboxes"
+                <h5
+                  class="mg-clear"
                 >
-                  <h5
-                    class="mg-clear"
-                  >
-                    <strong>
-                      1
-                    </strong>
-                  </h5>
-                  <p>
-                    A quick video captured during a survey that provides a broad overview of the reef.
-                  </p>
-                </div>
+                  <strong>
+                    1
+                  </strong>
+                </h5>
+                <p>
+                  A quick video captured during a survey that provides a broad overview of the reef.
+                </p>
               </div>
               <div
-                class="row scroll-fx-left-in-fade"
+                class="Buoy-listItem-3"
               >
-                <div
-                  class="col calloutboxes"
+                <h5
+                  class="mg-clear"
                 >
-                  <h5
-                    class="mg-clear"
-                  >
-                    <strong>
-                      2
-                    </strong>
-                  </h5>
-                  <p>
-                    Real-time conditions and a summary of the past 7 days at the surface and underwater temperature sensors. Degree heating days is an important measure of prolonged heat stress and is the primary way the application creates alert levels for a reef.
-                  </p>
-                </div>
+                  <strong>
+                    2
+                  </strong>
+                </h5>
+                <p>
+                  Real-time conditions and a summary of the past 7 days at the surface and underwater temperature sensors. Degree heating days is an important measure of prolonged heat stress and is the primary way the application creates alert levels for a reef.
+                </p>
               </div>
               <div
-                class="row scroll-fx-left-in-fade"
+                class="Buoy-listItem-3"
               >
-                <div
-                  class="col calloutboxes"
+                <h5
+                  class="mg-clear"
                 >
-                  <h5
-                    class="mg-clear"
-                  >
-                    <strong>
-                      3
-                    </strong>
-                  </h5>
-                  <p>
-                    Historical information on temperatures, wind, and waves are displayed and easily downloadable for a more detailed analysis.
-                  </p>
-                </div>
+                  <strong>
+                    3
+                  </strong>
+                </h5>
+                <p>
+                  Historical information on temperatures, wind, and waves are displayed and easily downloadable for a more detailed analysis.
+                </p>
               </div>
               <div
-                class="row scroll-fx-left-in-fade"
+                class="Buoy-listItem-3"
               >
-                <div
-                  class="col calloutboxes"
+                <h5
+                  class="mg-clear"
                 >
-                  <h5
-                    class="mg-clear"
-                  >
-                    <strong>
-                      4
-                    </strong>
-                  </h5>
-                  <p>
-                    Multiple points of interest on the reef can be configured and the associated survey images give you the ability to understand changes to the reef over time and at different temperature profiles.
-                  </p>
-                </div>
+                  <strong>
+                    4
+                  </strong>
+                </h5>
+                <p>
+                  Multiple points of interest on the reef can be configured and the associated survey images give you the ability to understand changes to the reef over time and at different temperature profiles.
+                </p>
               </div>
             </div>
           </div>

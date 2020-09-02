@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
 
@@ -15,7 +16,7 @@ import dronebottom from "../../assets/img/dronebottom.jpg";
 const Drones = () => (
   <>
     <NavBar searchLocation={false} />
-    <div>
+    <Box py={6}>
       {/* Main container */}
       <div className="page-container">
         {/* topbox9 */}
@@ -25,7 +26,7 @@ const Drones = () => (
               <div className="col bgc-white-smoke">
                 <div className="dronecard">
                   <div className="row dronecardrow align-items-center">
-                    <div className="col-sm-12 order-sm-1 col-lg-7 col-md-10 offset-md-1 offset-lg-0">
+                    <div className="col-sm-12 order-sm-1 col-lg-10 offset-md-0">
                       <h5 className="mg-md">
                         An Affordable Autonomous Surface Vehicle
                       </h5>
@@ -39,7 +40,7 @@ const Drones = () => (
                         cameras.
                       </p>
                     </div>
-                    <div className="order-sm-2 offset-lg-1 offset-md-4 col-md-4 col-sm-6 offset-sm-3 col-10 offset-1 col-lg-3">
+                    <div className="order-sm-2 offset-lg-0 offset-md-4 col-md-4 col-sm-6 offset-sm-3 col-10 offset-1 col-lg-2">
                       <a
                         href="https://github.com/aqualinkorg/asv"
                         target="_blank"
@@ -48,7 +49,7 @@ const Drones = () => (
                         <img
                           src={ghbttn}
                           className="img-fluid mx-auto d-block img-ghbt-style lazyload"
-                          alt="ghbttn"
+                          alt="Start button"
                         />
                       </a>
                     </div>
@@ -114,7 +115,7 @@ const Drones = () => (
         </div>
         {/* topbox9 END */}
         {/* hullconcept8 */}
-        <div className="bloc l-bloc" id="hullconcept8">
+        <div className="bloc l-bloc mt-4" id="hullconcept8">
           <div className="container bloc-sm">
             <div className="row">
               <div className="col">
@@ -289,7 +290,7 @@ const Drones = () => (
         </div>
         {/* bloc-10 END */}
       </div>
-    </div>
+    </Box>
   </>
 );
 
