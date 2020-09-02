@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
+import Footer from "../../common/Footer";
 
 const Faq = ({ classes }: FaqProps) => {
   return (
@@ -262,6 +263,7 @@ const Faq = ({ classes }: FaqProps) => {
           {/* bloc-11 END */}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

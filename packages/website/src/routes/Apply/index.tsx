@@ -25,6 +25,7 @@ import {
 import Alert from "@material-ui/lab/Alert";
 
 import NavBar from "../../common/NavBar";
+import Footer from "../../common/Footer";
 import LocationMap from "./LocationMap";
 import reemimage from "../../assets/img/reemimage.jpg";
 
@@ -333,6 +334,7 @@ const Apply = ({ classes }: ApplyProps) => {
             : "Something went wrong, please try again"}
         </Alert>
       </Snackbar>
+      <Footer />
     </>
   );
 };

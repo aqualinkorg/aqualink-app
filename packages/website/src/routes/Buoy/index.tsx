@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
+import Footer from "../../common/Footer";
 
 import fullDiagramBuoy from "../../assets/img/fulldiag3_1.svg";
 import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
@@ -158,6 +159,7 @@ const Buoy = ({ classes }: BuoyProps) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

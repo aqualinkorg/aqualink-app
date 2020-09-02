@@ -414,5 +414,32 @@ exports[`Faq should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-29 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+      </div>
+    </div>
+  </header>
 </div>
 `;

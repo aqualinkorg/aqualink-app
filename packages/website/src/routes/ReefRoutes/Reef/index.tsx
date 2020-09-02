@@ -11,8 +11,9 @@ import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 import ReefNavBar from "../../../common/NavBar";
+import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
-import ReefFooter from "./Footer";
+
 import {
   reefDetailsSelector,
   reefLoadingSelector,

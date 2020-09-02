@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
+import Footer from "../../common/Footer";
 
 import reef1b from "../../assets/img/reef1b.jpg";
 import peter from "../../assets/img/peter.jpg";
@@ -125,6 +126,7 @@ const About = ({ classes }: AboutProps) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
