@@ -16,7 +16,7 @@ import {
 const pinIcon = L.icon({
   iconUrl: marker,
   iconSize: [20, 30],
-  iconAnchor: [12, 41],
+  iconAnchor: [10, 30],
   popupAnchor: [0, -41],
 });
 
