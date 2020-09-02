@@ -92,7 +92,8 @@ const CardChart = ({
               scaleID: "y-axis-0",
               value: maxMonthlyMean,
               borderColor: "rgb(75, 192, 192)",
-              borderWidth: 1,
+              borderWidth: 2,
+              borderDash: [5, 5],
               label: {
                 enabled: false,
                 content: "Maximum Monthly Mean",
