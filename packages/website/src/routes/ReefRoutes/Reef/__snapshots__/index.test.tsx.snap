@@ -9,7 +9,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-77 MuiToolbar-gutters"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
@@ -1019,7 +1019,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-4 MuiToolbar-gutters"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
