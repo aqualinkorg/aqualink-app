@@ -11,6 +11,7 @@ import {
 
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
+import "chartjs-plugin-annotation";
 
 const CardChart = ({
   dailyData,
