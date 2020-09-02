@@ -48,7 +48,12 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
         <Toolbar className={classes.toolbar}>
-          <Grid container alignItems="center" spacing={1}>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="center"
+            spacing={1}
+          >
             <Grid item xs={5} sm={4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton edge="start" color="inherit">
