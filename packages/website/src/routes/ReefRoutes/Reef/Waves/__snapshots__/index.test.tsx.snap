@@ -6,53 +6,113 @@ exports[`renders as expected 1`] = `
     class="MuiPaper-root MuiCard-root Waves-card-1 MuiPaper-elevation1 MuiPaper-rounded"
   >
     <div
-      class="MuiCardHeader-root Waves-header-2"
+      class="MuiCardContent-root Waves-contentWrapper-3"
     >
       <div
-        class="MuiCardHeader-content"
-      >
-        <span
-          class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
-            >
-              <img
-                alt="waves"
-                src="waves.svg"
-              />
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
-            >
-              <h6
-                class="MuiTypography-root Waves-cardTitle-3 MuiTypography-h6"
-              >
-                WAVES
-              </h6>
-            </div>
-          </div>
-        </span>
-      </div>
-    </div>
-    <div
-      class="MuiCardContent-root Waves-contentWrapper-4"
-    >
-      <div
-        class="MuiGrid-root Waves-content-5 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root Waves-content-4 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         style="height: 100%;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+          >
+            <h6
+              class="MuiTypography-root Waves-cardTitle-2 MuiTypography-h6"
+            >
+              WIND
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+          >
+            <img
+              alt="wind"
+              src="wind.svg"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <h6
+              class="MuiTypography-root Waves-contentTitles-5 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+            >
+              SPEED
+            </h6>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+            >
+              <p
+                class="MuiTypography-root Waves-contentValues-6 MuiTypography-body1 MuiTypography-colorTextSecondary"
+              >
+                5.0
+              </p>
+              <h6
+                class="MuiTypography-root Waves-contentUnits-7 MuiTypography-h6 MuiTypography-colorTextSecondary"
+              >
+                KM/H
+              </h6>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <h6
+              class="MuiTypography-root Waves-contentTitles-5 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+            >
+              DIRECTION
+            </h6>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+            >
+              <img
+                alt="arrow"
+                class="Waves-arrow-8"
+                src="directioncircle.svg"
+                style="transform: rotate(96deg);"
+              />
+              <h3
+                class="MuiTypography-root Waves-contentValues-6 MuiTypography-h3 MuiTypography-colorTextSecondary"
+              >
+                96°
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+          >
+            <h6
+              class="MuiTypography-root Waves-cardTitle-2 MuiTypography-h6"
+            >
+              WAVES
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+          >
+            <img
+              alt="waves"
+              src="waves.svg"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTitles-5 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               HEIGHT
             </h6>
@@ -60,12 +120,12 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentValues-6 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 3.0
               </p>
               <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentUnits-7 MuiTypography-h6 MuiTypography-colorTextSecondary"
               >
                 Μ
               </h6>
@@ -75,7 +135,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTitles-5 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               PERIOD
             </h6>
@@ -83,12 +143,12 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentValues-6 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 15
               </p>
               <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentUnits-7 MuiTypography-h6 MuiTypography-colorTextSecondary"
               >
                 S
               </h6>
@@ -98,7 +158,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTitles-5 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               DIRECTION
             </h6>
@@ -107,27 +167,17 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-9"
+                class="Waves-arrow-8"
                 src="directioncircle.svg"
                 style="transform: rotate(136deg);"
               />
               <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentValues-6 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 136°
               </p>
             </div>
           </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-10 MuiGrid-grid-lg-10"
-          style="height: 1rem;"
-        >
-          <img
-            alt="wave"
-            src="wave.svg"
-            style="width: 100%;"
-          />
         </div>
       </div>
     </div>
