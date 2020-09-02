@@ -34,17 +34,9 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   return (
     <>
-      <Hidden smUp>
-        <div
-          role="presentation"
-          onClick={openDrawer ? toggleDrawer : () => null}
-        >
-          <HomepageNavBar searchLocation />
-        </div>
-      </Hidden>
-      <Hidden xsDown>
+      <div role="presentation" onClick={openDrawer ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation />
-      </Hidden>
+      </div>
       <div className={classes.root}>
         <Grid
           container
