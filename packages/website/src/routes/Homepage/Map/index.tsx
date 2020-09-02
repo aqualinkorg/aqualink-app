@@ -169,7 +169,7 @@ const styles = () =>
     },
     popup: {
       width: "12vw",
-      minWidth: "100px",
+      minWidth: "200px",
     },
     loading: {
       height: "100%",
