@@ -268,7 +268,7 @@ exports[`Buoy should render with given state from Redux store 1`] = `
     </div>
   </div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-27 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-25 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"

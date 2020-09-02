@@ -101,7 +101,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
     </div>
   </header>
   <div
-    class="MuiBox-root MuiBox-root-24"
+    class="MuiBox-root MuiBox-root-22"
   >
     <div
       class="page-container"
@@ -449,7 +449,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
     </div>
   </div>
   <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-25 MuiPaper-elevation4"
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-23 MuiPaper-elevation4"
   >
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
