@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Data } from "../../../store/Reefs/types";
 import { sortDailyData } from "../../../helpers/sortDailyData";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
   const sortByDate = sortDailyData(dailyData);
@@ -34,7 +35,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                 SURFACE TEMP
               </Typography>
               <Typography color="textPrimary" variant="h4">
-                {`${satelliteTemperature} \u2103`}
+                {`${formatNumber(satelliteTemperature)} \u2103`}
               </Typography>
             </Grid>
           </Grid>
@@ -50,7 +51,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                   SURFACE TEMP
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${surfaceTemperature} \u2103`}
+                  {`${formatNumber(surfaceTemperature)} \u2103`}
                 </Typography>
               </Grid>
               <Grid container item direction="column" xs={6}>
@@ -58,7 +59,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                   {`TEMP AT ${depth}M`}
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${avgBottomTemperature} \u2103`}
+                  {`${formatNumber(avgBottomTemperature)} \u2103`}
                 </Typography>
               </Grid>
             </Grid>
