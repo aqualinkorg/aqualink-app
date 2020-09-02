@@ -12,7 +12,11 @@ import {
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
 
-const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
+const CardChart = ({
+  dailyData,
+  temperatureThreshold,
+  maxMonthlyMean,
+}: CardChartProps) => {
   const [updateChart, setUpdateChart] = useState<boolean>(false);
   const chartRef = useRef<Line>(null);
   const [xTickShift, setXTickShift] = useState<number>(0);
@@ -79,6 +83,22 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
         legend: {
           display: false,
         },
+        annotation: {
+          annotations: [
+            {
+              type: "line",
+              mode: "horizontal",
+              scaleID: "y-axis-0",
+              value: maxMonthlyMean,
+              borderColor: "rgb(75, 192, 192)",
+              borderWidth: 1,
+              label: {
+                enabled: false,
+                content: "Maximum Monthly Mean",
+              },
+            },
+          ],
+        },
         scales: {
           xAxes: [
             {
@@ -136,6 +156,7 @@ const CardChart = ({ dailyData, temperatureThreshold }: CardChartProps) => {
 interface CardChartProps {
   dailyData: Data[];
   temperatureThreshold: number | null;
+  maxMonthlyMean: number | null;
 }
 
 export default CardChart;

@@ -868,6 +868,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       <mock-charts
         dailydata="[object Object]"
         depth="4"
+        maxmonthlymean="22"
         temperaturethreshold="23"
       />
     </div>
