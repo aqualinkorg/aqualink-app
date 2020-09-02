@@ -2,17 +2,12 @@ import React from "react";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import HomePageNavBar from ".";
-
-jest.mock("../../routes/Homepage/RegisterDialog", () => "Mock-RegisterDialog");
-jest.mock("../../routes/Homepage/SignInDialog", () => "Mock-SignInDialog");
-jest.mock("../Search", () => "Mock-Search");
-jest.mock("../MenuDrawer", () => "Mock-MenuDrawer");
+import Drones from ".";
 
 const mockStore = configureStore([]);
-
-describe("NavBar", () => {
+describe("Drones", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -21,13 +16,18 @@ describe("NavBar", () => {
         loading: false,
         error: null,
       },
+      reefsList: {
+        list: [],
+      },
     });
 
     store.dispatch = jest.fn();
 
     element = render(
       <Provider store={store}>
-        <HomePageNavBar searchLocation={false} />
+        <Router>
+          <Drones />
+        </Router>
       </Provider>
     ).container;
   });

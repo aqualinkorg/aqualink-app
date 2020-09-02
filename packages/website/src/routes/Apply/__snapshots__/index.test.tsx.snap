@@ -1,0 +1,552 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-navbar
+    searchlocation="false"
+  />
+  <div
+    class="MuiBox-root MuiBox-root-5"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+        >
+          <h3
+            class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom"
+          >
+            Manage your local reef
+          </h3>
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            We will be starting with our deployments in August and would love to have you apply to get free access to our system. We'll have more more more information coming shortly. Submitting the application doesn't obligate you, if you have questions please first take a look at our FAQ page and if you don't get the answer you're looking for then email info@aqualink.org.
+          </p>
+          <div
+            class="MuiBox-root MuiBox-root-6"
+          >
+            <img
+              alt="Reefs"
+              src="reemimage.jpg"
+              style="width: 100%;"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-7"
+          >
+            <h4
+              class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
+            >
+              Your Obligations
+            </h4>
+            <div
+              class="MuiTypography-root MuiTypography-body1"
+            >
+              You will be given a free smart buoy but there are some things you will be expected to do or provide:
+              <ol>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Pay for shipping and any applicable duties
+                </li>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Obtain any necessary permits (if applicable)
+                </li>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Provide and attach a ballast (e.g. 60lb kettlebell)
+                </li>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Deploy spotter with mooring weight (can be done from a kayak)
+                </li>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Maintain spotter (inspect and clean every 6 months)
+                </li>
+                <li
+                  class="Apply-listItem-1"
+                >
+                  Conduct initial and periodic photographic surveys and upload imagery to our website
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root MuiBox-root-8"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+          >
+            <mock-locationmap
+              markerpositionlat=""
+              markerpositionlng=""
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation2 MuiPaper-rounded"
+            >
+              <div
+                class="MuiBox-root MuiBox-root-9"
+              >
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
+                >
+                  Application Form
+                </h4>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="name"
+                        id="name-label"
+                      >
+                        Name
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="name"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Name
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="org"
+                        id="org-label"
+                      >
+                        Organization
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="org"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Organization
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="email"
+                        id="email-label"
+                      >
+                        Email
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="email"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Email
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1"
+                    >
+                      Location: Select point on map
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="lat"
+                        id="lat-label"
+                      >
+                        Latitude
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="lat"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Latitude
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="lng"
+                        id="lng-label"
+                      >
+                        Longitude
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="lng"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Longitude
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                    >
+                      <label
+                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                        data-shrink="false"
+                        for="depth"
+                        id="depth-label"
+                      >
+                        Depth (m)
+                      </label>
+                      <div
+                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                      >
+                        <input
+                          aria-invalid="false"
+                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                          id="depth"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
+                        >
+                          <legend
+                            class="PrivateNotchedOutline-legendLabelled-12"
+                          >
+                            <span>
+                              Depth (m)
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    Agree to:
+                    <div
+                      class="MuiFormGroup-root"
+                    >
+                      <label
+                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
+                      >
+                        <span
+                          aria-disabled="false"
+                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                        >
+                          <span
+                            class="MuiIconButton-label"
+                          >
+                            <input
+                              class="PrivateSwitchBase-input-17"
+                              data-indeterminate="false"
+                              name="checkedA"
+                              type="checkbox"
+                              value=""
+                            />
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            class="MuiTouchRipple-root"
+                          />
+                        </span>
+                        <span
+                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        >
+                          Handle any shipping and permitting charges
+                        </span>
+                      </label>
+                      <label
+                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
+                      >
+                        <span
+                          aria-disabled="false"
+                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                        >
+                          <span
+                            class="MuiIconButton-label"
+                          >
+                            <input
+                              class="PrivateSwitchBase-input-17"
+                              data-indeterminate="false"
+                              name="checkedA"
+                              type="checkbox"
+                              value=""
+                            />
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            class="MuiTouchRipple-root"
+                          />
+                        </span>
+                        <span
+                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        >
+                          Provide mooring and deploy buoy
+                        </span>
+                      </label>
+                      <label
+                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
+                      >
+                        <span
+                          aria-disabled="false"
+                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
+                        >
+                          <span
+                            class="MuiIconButton-label"
+                          >
+                            <input
+                              class="PrivateSwitchBase-input-17"
+                              data-indeterminate="false"
+                              name="checkedA"
+                              type="checkbox"
+                              value=""
+                            />
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            class="MuiTouchRipple-root"
+                          />
+                        </span>
+                        <span
+                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        >
+                          Conduct initial survey
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="MuiButton-label"
+                      >
+                        Submit
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-18 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;

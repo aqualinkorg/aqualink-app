@@ -8,6 +8,9 @@ exports[`NavBar should render with given state from Redux store 1`] = `
     <div
       class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-2 MuiToolbar-gutters"
     >
+      <mock-menudrawer
+        open="false"
+      />
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
       >
@@ -96,5 +99,11 @@ exports[`NavBar should render with given state from Redux store 1`] = `
       </div>
     </div>
   </header>
+  <mock-registerdialog
+    open="false"
+  />
+  <mock-signindialog
+    open="false"
+  />
 </div>
 `;

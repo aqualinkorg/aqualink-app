@@ -1,0 +1,294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Buoy should render with given state from Redux store 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-4 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-5 MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-12"
+          >
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+            >
+              Aqua
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+              style="color: rgb(138, 198, 222);"
+            >
+              link
+            </h4>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div
+    class="Buoy-root-2"
+    id="bloc-6"
+  >
+    <div
+      class="container bloc-md"
+    >
+      <div
+        class="row align-items-center"
+      >
+        <div
+          class="lcolpad col-12 col"
+        >
+          <h4
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
+          >
+            Monitoring System
+          </h4>
+          <p
+            class="text-lg-left"
+          >
+            Current global ocean temperature monitoring systems are restricted to satellite-derived surface temperatures which only capture the skin temperature of the water. The temperatures at greater depths, where coral reefs can be found, are mostly unknown. Scientists will study those temperatures by installing local data loggers which have to be physically retrieved from the reef to have their data accessed. Once the loggers have been retrieved the findings will be published in a paper but it’s rare to get continuous real-time readings of those temperatures. The monitoring system we are deploying includes a solar-powered smart buoy that relays temperature information in real-time, giving us some of the needed data to detect potential coral bleaching events early and put response plans in place.
+            <br />
+          </p>
+        </div>
+        <div
+          class="col-lg-12 offset-lg-0"
+        >
+          <img
+            alt="bouydiagram2"
+            class="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
+            src="fulldiag3_1.svg"
+          />
+        </div>
+      </div>
+      <div
+        class="row align-items-center"
+      >
+        <div
+          class="lcolpad col-12 col"
+        >
+          <h4
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
+          >
+            Web Application
+          </h4>
+          <p
+            class="text-lg-left"
+          >
+            An essential component of the monitoring system is the website where data and imagery can be accessed and uploaded. The website is designed as a tool to help you understand and manage heat stress on your local reef and make collaboration with other conservation scientists easier. A sample screen is below which shows all of the critical information for a particular reef. We’d love to get your feedback on this so please email 
+            <a
+              href="mailto:info@aqualink.org"
+            >
+              info@aqualink.org
+            </a>
+             and let us know what you think.
+            <br />
+          </p>
+        </div>
+        <div
+          class="col-lg-12 offset-lg-0"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="order-1 col-12 col-lg-8"
+            >
+              <img
+                alt="bouydiagram2"
+                class="img-fluid mg-lg mx-auto d-block img-responsive diagram lazyload"
+                src="reefdetailpage.jpg"
+              />
+            </div>
+            <div
+              class="MuiGrid-root col-lg-4 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-evenly"
+            >
+              <div
+                class="Buoy-listItem-3"
+              >
+                <h5
+                  class="mg-clear"
+                >
+                  <strong>
+                    1
+                  </strong>
+                </h5>
+                <p>
+                  A quick video captured during a survey that provides a broad overview of the reef.
+                </p>
+              </div>
+              <div
+                class="Buoy-listItem-3"
+              >
+                <h5
+                  class="mg-clear"
+                >
+                  <strong>
+                    2
+                  </strong>
+                </h5>
+                <p>
+                  Real-time conditions and a summary of the past 7 days at the surface and underwater temperature sensors. Degree heating days is an important measure of prolonged heat stress and is the primary way the application creates alert levels for a reef.
+                </p>
+              </div>
+              <div
+                class="Buoy-listItem-3"
+              >
+                <h5
+                  class="mg-clear"
+                >
+                  <strong>
+                    3
+                  </strong>
+                </h5>
+                <p>
+                  Historical information on temperatures, wind, and waves are displayed and easily downloadable for a more detailed analysis.
+                </p>
+              </div>
+              <div
+                class="Buoy-listItem-3"
+              >
+                <h5
+                  class="mg-clear"
+                >
+                  <strong>
+                    4
+                  </strong>
+                </h5>
+                <p>
+                  Multiple points of interest on the reef can be configured and the associated survey images give you the ability to understand changes to the reef over time and at different temperature profiles.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row voffset-lg"
+      >
+        <div
+          class="col-lg-12"
+        >
+          <h4
+            class="MuiTypography-root Buoy-title-1 MuiTypography-h4"
+          >
+            System Architecture
+          </h4>
+          <p
+            class="text-lg-left"
+          >
+            The real-time temperature information is transmitted to our servers where a monitoring system combines that data with survey imagery to help understand the cause-and-effect of increasing temperatures on the local marine ecosystem. We are working with coral scientists to create easy-to-use instruction manuals for conducting reef surveys and implementing response plans, all of which will be facilitated through our monitoring system.
+            <br />
+          </p>
+        </div>
+        <div
+          class="col-lg-12"
+        >
+          <img
+            alt="Asset%204"
+            class="img-fluid mx-auto d-block img-responsive diagram lazyload"
+            src="fulldiag3.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-28 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;

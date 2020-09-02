@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import Search from "../Search";
+import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
@@ -31,6 +32,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
+  const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
@@ -48,10 +50,18 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
         <Toolbar className={classes.toolbar}>
+          <MenuDrawer
+            open={menuDrawerOpen}
+            onClose={() => setMenuDrawerOpen(false)}
+          />
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs={5} sm={4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
-                <IconButton edge="start" color="inherit">
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={() => setMenuDrawerOpen(true)}
+                >
                   <MenuIcon />
                 </IconButton>
 
