@@ -7,8 +7,10 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 
-const getAverage = (numbers: number[]) => {
-  return numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
+const getAverage = (numbers: number[], round = false) => {
+  const average =
+    numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
+  return average !== undefined && round ? Math.round(average) : average;
 };
 
 const getMin = (numbers: number[]) => {
@@ -101,7 +103,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const waveDirection = getAverage(meanDirectionWindWaves);
+  const waveDirection = getAverage(meanDirectionWindWaves, true);
 
   const meanPeriodWindWaves = (
     await getSofarDailyData(
@@ -114,7 +116,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const wavePeriod = getAverage(meanPeriodWindWaves);
+  const wavePeriod = getAverage(meanPeriodWindWaves, true);
 
   // Get NOAA GFS wind data
   const windVelocities = (
@@ -143,7 +145,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const windDirection = getAverage(windDirections);
+  const windDirection = getAverage(windDirections, true);
 
   return {
     reef: { id: reef.id },
