@@ -114,7 +114,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       render: (rowData) => {
         return (
           <ErrorIcon
-            style={{ color: colorFinder(rowData.dhw), paddingLeft: "1rem" }}
+            style={{ color: colorFinder(rowData.dhw), marginLeft: "1rem" }}
           />
         );
       },
