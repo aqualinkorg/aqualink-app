@@ -10,6 +10,7 @@ import { createDatasets, calculateAxisLimits } from "./utils";
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
 import "../../../../helpers/slicePlugin";
+import "../../../../helpers/thresholdPlugin";
 
 const Charts = ({
   classes,
@@ -17,7 +18,6 @@ const Charts = ({
   dailyData,
   temperatureThreshold,
 }: ChartsProps) => {
-  const maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null;
   const temperatureChartRef = useRef<Line>(null);
   const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -125,6 +125,9 @@ const Charts = ({
                 sliceAtLabel,
                 datasetIndex: 0,
               },
+              thresholdPlugin: {
+                threshold: temperatureThreshold,
+              },
             },
             tooltips: {
               filter: (tooltipItem: any) => {
@@ -133,24 +136,6 @@ const Charts = ({
               enabled: false,
               custom: customTooltip(temperatureChartRef),
             },
-            annotations: [
-              {
-                type: "line",
-                mode: "horizontal",
-                scaleID: "y-axis-0",
-                value: maxMonthlyMean,
-                borderColor: "rgb(75, 192, 192)",
-                borderWidth: 2,
-                borderDash: [5, 5],
-                label: {
-                  enabled: true,
-                  backgroundColor: "rgb(169,169,169)",
-                  position: "left",
-                  xAdjust: 10,
-                  content: "Maximum Monthly Temperature",
-                },
-              },
-            ],
             legend: {
               display: true,
               rtl: true,
