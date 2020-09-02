@@ -13,6 +13,14 @@ const getAverage = (numbers: number[]) => {
     : undefined;
 };
 
+const getMin = (numbers: number[]) => {
+  return numbers.length > 0 ? Math.min(...numbers) : undefined;
+};
+
+const getMax = (numbers: number[]) => {
+  return numbers.length > 0 ? Math.max(...numbers) : undefined;
+};
+
 export async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId, maxMonthlyMean, timezone: localTimezone } = reef;
   // TODO - Accept Polygon option
@@ -22,13 +30,8 @@ export async function getDailyData(reef: Reef, date: Date) {
     ? await getSpotterData(spotterId, localTimezone, date)
     : { surfaceTemperature: [], bottomTemperature: [] };
 
-  const minBottomTemperature = spotterId
-    ? Math.min(...spotterData.bottomTemperature)
-    : undefined;
-  const maxBottomTemperature = spotterId
-    ? Math.max(...spotterData.bottomTemperature)
-    : undefined;
-
+  const minBottomTemperature = getMin(spotterData.bottomTemperature);
+  const maxBottomTemperature = getMax(spotterData.bottomTemperature);
   const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
 
   const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
@@ -85,8 +88,8 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const minWaveHeight = Math.min(...significantWaveHeights);
-  const maxWaveHeight = Math.max(...significantWaveHeights);
+  const minWaveHeight = getMin(significantWaveHeights);
+  const maxWaveHeight = getMax(significantWaveHeights);
   const avgWaveHeight = getAverage(significantWaveHeights);
 
   const meanDirectionWindWaves = (
@@ -127,8 +130,8 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const minWindSpeed = Math.min(...windVelocities);
-  const maxWindSpeed = Math.max(...windVelocities);
+  const minWindSpeed = getMin(windVelocities);
+  const maxWindSpeed = getMax(windVelocities);
   const avgWindSpeed = getAverage(windVelocities);
 
   const windDirections = (
