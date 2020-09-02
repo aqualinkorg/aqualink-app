@@ -10,12 +10,18 @@ import {
   Typography,
   CardMedia,
 } from "@material-ui/core";
+import PermMediaIcon from "@material-ui/icons/PermMedia";
+import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { SurveyPoint } from "../../../store/Survey/types";
 import { findOption } from "../../../constants/uploadDropdowns";
+import {
+  getNumberOfImages,
+  getNumberOfVideos,
+} from "../../../helpers/surveyMedia";
 
 const carouselSettings = {
   dots: true,
@@ -47,11 +53,49 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
               item
               xs={12}
             >
-              <Grid container alignItems="baseline" item>
-                <Typography variant="h6">Survey Point: </Typography>
-                <Typography className={classes.titleName} variant="h6">
-                  {point.name}
-                </Typography>
+              <Grid
+                container
+                item
+                alignItems="baseline"
+                xs={12}
+                md={6}
+                lg={4}
+                spacing={2}
+              >
+                <Grid item>
+                  <Typography variant="h6">Survey Point: </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.titleName} variant="h6">
+                    {point.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} md={6} lg={2} spacing={2}>
+                {getNumberOfImages([point]) > 0 && (
+                  <Grid container item xs={6} spacing={1}>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        {`${getNumberOfImages([point])} images`}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <PermMediaIcon />
+                    </Grid>
+                  </Grid>
+                )}
+                {getNumberOfVideos([point]) > 0 && (
+                  <Grid container item xs={6} spacing={1}>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        {`${getNumberOfVideos([point])} videos`}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <VideoLibraryIcon />
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
             <Slider className={classes.carousel} {...carouselSettings}>
@@ -136,7 +180,6 @@ const styles = (theme: Theme) =>
       marginLeft: "1rem",
     },
     titleName: {
-      marginLeft: "1.5rem",
       fontSize: 18,
       fontWeight: "normal",
       fontStretch: "normal",
