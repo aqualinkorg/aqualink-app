@@ -20,6 +20,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
+import classNames from "classnames";
 
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
@@ -48,7 +49,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
 
   return (
     <>
-      <AppBar className={classes.appBar} position="static" color="primary">
+      <AppBar
+        className={classNames(classes.appBar, {
+          [classes.appBarXs]: searchLocation,
+        })}
+        position="static"
+        color="primary"
+      >
         <Toolbar className={classes.toolbar}>
           <MenuDrawer
             open={menuDrawerOpen}
@@ -80,7 +87,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               </Hidden>
             )}
 
-            <Grid container justify="flex-end" item xs={7} sm={4}>
+            <Grid
+              container
+              justify="flex-end"
+              item
+              xs={7}
+              sm={searchLocation ? 4 : 8}
+            >
               {user ? (
                 <>
                   <IconButton className={classes.button}>
@@ -158,7 +171,8 @@ const styles = (theme: Theme) =>
       "&.MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
       },
-
+    },
+    appBarXs: {
       [theme.breakpoints.only("xs")]: {
         height: 122,
       },

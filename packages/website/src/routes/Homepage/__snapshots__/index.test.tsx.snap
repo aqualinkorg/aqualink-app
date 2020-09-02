@@ -6,10 +6,10 @@ exports[`Homepage should render with given state from Redux store 1`] = `
     role="presentation"
   >
     <header
-      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-7 MuiPaper-elevation4"
+      class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-7 NavBar-appBarXs-8 MuiPaper-elevation4"
     >
       <div
-        class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-8 MuiToolbar-gutters"
+        class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-9 MuiToolbar-gutters"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
@@ -18,7 +18,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
           >
             <div
-              class="MuiBox-root MuiBox-root-15"
+              class="MuiBox-root MuiBox-root-16"
             >
               <button
                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
@@ -63,10 +63,10 @@ exports[`Homepage should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4"
             >
               <div
-                class="Search-searchBar-16"
+                class="Search-searchBar-17"
               >
                 <div
-                  class="Search-searchBarIcon-17"
+                  class="Search-searchBarIcon-18"
                 >
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
@@ -93,11 +93,11 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                   </button>
                 </div>
                 <div
-                  class="Search-searchBarText-18"
+                  class="Search-searchBarText-19"
                 >
                   <div
                     aria-expanded="false"
-                    class="MuiAutocomplete-root Search-searchBarInput-19 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                    class="MuiAutocomplete-root Search-searchBarInput-20 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                     role="combobox"
                   >
                     <div
@@ -174,11 +174,11 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                         </div>
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-20 MuiOutlinedInput-notchedOutline"
+                          class="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
                           style="padding-left: 8px;"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legend-21"
+                            class="PrivateNotchedOutline-legend-22"
                             style="width: 0.01px;"
                           >
                             <span>
@@ -241,10 +241,10 @@ exports[`Homepage should render with given state from Redux store 1`] = `
               style="margin: 0px; padding-top: 0px;"
             >
               <div
-                class="Search-searchBar-16"
+                class="Search-searchBar-17"
               >
                 <div
-                  class="Search-searchBarIcon-17"
+                  class="Search-searchBarIcon-18"
                 >
                   <button
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
@@ -271,11 +271,11 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                   </button>
                 </div>
                 <div
-                  class="Search-searchBarText-18"
+                  class="Search-searchBarText-19"
                 >
                   <div
                     aria-expanded="false"
-                    class="MuiAutocomplete-root Search-searchBarInput-19 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                    class="MuiAutocomplete-root Search-searchBarInput-20 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                     role="combobox"
                   >
                     <div
@@ -352,11 +352,11 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                         </div>
                         <fieldset
                           aria-hidden="true"
-                          class="PrivateNotchedOutline-root-20 MuiOutlinedInput-notchedOutline"
+                          class="PrivateNotchedOutline-root-21 MuiOutlinedInput-notchedOutline"
                           style="padding-left: 8px;"
                         >
                           <legend
-                            class="PrivateNotchedOutline-legend-21"
+                            class="PrivateNotchedOutline-legend-22"
                             style="width: 0.01px;"
                           >
                             <span>
@@ -385,7 +385,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
       >
         <div
-          class="HomepageMap-map-39 leaflet-container leaflet-grab leaflet-touch-drag"
+          class="HomepageMap-map-40 leaflet-container leaflet-grab leaflet-touch-drag"
           style="position: relative;"
           tabindex="0"
         >

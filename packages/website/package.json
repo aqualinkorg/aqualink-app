@@ -82,6 +82,7 @@
     "node": "12.x"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.10",
     "@types/immutable": "^3.8.7",
     "@types/validator": "^13.1.0",
     "canvas": "^2.6.1"
