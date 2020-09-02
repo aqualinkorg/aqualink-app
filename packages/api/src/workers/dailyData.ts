@@ -8,9 +8,7 @@ import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 
 const getAverage = (numbers: number[]) => {
-  return numbers.length > 0
-    ? Math.round(sum(numbers) / numbers.length)
-    : undefined;
+  return numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
 };
 
 const getMin = (numbers: number[]) => {

@@ -53,8 +53,9 @@ export async function sofarSpotter(
     .get(SOFAR_SPOTTER_URL, {
       params: {
         spotterId,
-        start,
-        end,
+        startDate: start,
+        endDate: end,
+        limit: 500,
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
@@ -121,7 +122,7 @@ type SensorData = {
 };
 
 function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
-  return data.find((d) => d.sensorPosition === sensorPosition);
+  return data.find((d) => d.sensorPosition === sensorPosition)?.degrees;
 }
 
 export async function getSpotterData(
@@ -137,20 +138,33 @@ export async function getSpotterData(
     data: { smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
 
-  const filteredSmartMooringData = smartMooringData.filter(
-    (data) => data.timestamp && data.timestamp > start && data.timestamp < end,
-  );
-
-  const [
-    bottomTemperature,
-    surfaceTemperature,
-  ] = filteredSmartMooringData.reduce(
-    ([sensor0Data, sensor1Data], data) => [
-      sensor0Data.concat(getDataBySensorPosition(data.sensorData, 0)),
-      sensor1Data.concat(getDataBySensorPosition(data.sensorData, 1)),
-    ],
+  const [sofarBottomTemperature, sofarSurfaceTemperature]: [
+    SofarValue[],
+    SofarValue[],
+  ] = smartMooringData.reduce(
+    ([sensor0Data, sensor1Data], data) => {
+      getDataBySensorPosition(data.sensorData, 0);
+      return [
+        sensor0Data.concat({
+          timestamp: data.timestamp,
+          value: getDataBySensorPosition(data.sensorData, 0),
+        }),
+        sensor1Data.concat({
+          timestamp: data.timestamp,
+          value: getDataBySensorPosition(data.sensorData, 1),
+        }),
+      ];
+    },
     [[], []],
   );
+
+  const bottomTemperature = sofarBottomTemperature
+    .filter((data) => data.value !== undefined)
+    .map(({ value }) => value);
+
+  const surfaceTemperature = sofarSurfaceTemperature
+    .filter((data) => data.value !== undefined)
+    .map(({ value }) => value);
 
   return { surfaceTemperature, bottomTemperature };
 }
