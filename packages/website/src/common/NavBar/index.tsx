@@ -9,11 +9,12 @@ import {
   Button,
   Menu,
   MenuItem,
+  Box,
+  Hidden,
   withStyles,
   WithStyles,
   createStyles,
   Theme,
-  Hidden,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -46,41 +47,39 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   return (
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
-        <Toolbar>
-          <Grid container alignItems="center" item xs={12}>
-            <Grid item xs={1}>
-              <IconButton edge="start" color="inherit">
-                <MenuIcon />
-              </IconButton>
-            </Grid>
-            <Grid container item xs={5}>
-              <Typography variant="h4">Aqua</Typography>
-              <Typography style={{ color: "#8AC6DE" }} variant="h4">
-                link
-              </Typography>
+        <Toolbar className={classes.toolbar}>
+          <Grid container alignItems="center" spacing={1}>
+            <Grid item xs={5} sm={4}>
+              <Box display="flex" flexWrap="nowrap" alignItems="center">
+                <IconButton edge="start" color="inherit">
+                  <MenuIcon />
+                </IconButton>
+
+                <Typography variant="h4">Aqua</Typography>
+                <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                  link
+                </Typography>
+              </Box>
             </Grid>
 
-            <Grid
-              container
-              alignItems="flex-start"
-              justify="flex-end"
-              item
-              xs={6}
-            >
-              {searchLocation && (
-                <Hidden xsDown>
+            {searchLocation && (
+              <Hidden xsDown>
+                <Grid item sm={4}>
                   <Search />
-                </Hidden>
-              )}
+                </Grid>
+              </Hidden>
+            )}
+
+            <Grid container justify="flex-end" item xs={7} sm={4}>
               {user ? (
-                <Grid container justify="flex-end" item xs={6}>
-                  <IconButton>
+                <>
+                  <IconButton className={classes.button}>
                     <NotificationsIcon className={classes.notificationIcon} />
                   </IconButton>
-                  <IconButton>
+                  <IconButton className={classes.button}>
                     <Avatar />
                   </IconButton>
-                  <IconButton onClick={handleClick}>
+                  <IconButton className={classes.button} onClick={handleClick}>
                     <ExpandMoreIcon className={classes.expandIcon} />
                   </IconButton>
                   <Menu
@@ -101,9 +100,9 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       Logout
                     </MenuItem>
                   </Menu>
-                </Grid>
+                </>
               ) : (
-                <Grid container justify="flex-end" item xs={6}>
+                <>
                   <Grid item>
                     <Button onClick={() => handleSignInDialog(true)}>
                       SIGN IN
@@ -114,9 +113,17 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       REGISTER
                     </Button>
                   </Grid>
-                </Grid>
+                </>
               )}
             </Grid>
+
+            {searchLocation && (
+              <Hidden smUp>
+                <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
+                  <Search />
+                </Grid>
+              </Hidden>
+            )}
           </Grid>
         </Toolbar>
       </AppBar>
@@ -141,6 +148,13 @@ const styles = (theme: Theme) =>
       "&.MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
       },
+
+      [theme.breakpoints.only("xs")]: {
+        height: 122,
+      },
+    },
+    toolbar: {
+      padding: theme.spacing(0, 1),
     },
     userMenu: {
       marginTop: "3rem",
@@ -155,6 +169,9 @@ const styles = (theme: Theme) =>
     },
     expandIcon: {
       color: "#ffffff",
+    },
+    button: {
+      padding: theme.spacing(1),
     },
   });
 
