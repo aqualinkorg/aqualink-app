@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import {
   Grid,
   Typography,
@@ -13,6 +14,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({
   reefName,
+  lastDailyDataDate,
   lastSurvey,
   managerName,
   classes,
@@ -46,10 +48,16 @@ const ReefNavBar = ({
                 <Typography variant="h4">{reefName}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1">05/12/20 8:16AM PST</Typography>
+                <Typography variant="subtitle1">
+                  {`Latest data: ${moment(lastDailyDataDate).format(
+                    "MMM DD[,] YYYY"
+                  )}`}
+                </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="subtitle1">{`Last surveyed: ${lastSurvey}`}</Typography>
+                <Typography variant="subtitle1">{`Last surveyed: ${moment(
+                  lastSurvey
+                ).format("MMM DD[,] YYYY")}`}</Typography>
               </Grid>
             </Grid>
           )}
@@ -97,7 +105,8 @@ const styles = () =>
 
 interface ReefNavBarIncomingProps {
   reefName?: string;
-  lastSurvey?: string;
+  lastDailyDataDate?: string;
+  lastSurvey?: string | null;
   managerName?: string;
 }
 
