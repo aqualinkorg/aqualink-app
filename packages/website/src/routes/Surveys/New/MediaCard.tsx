@@ -18,7 +18,8 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
-import { DeleteOutlineOutlined, Visibility } from "@material-ui/icons";
+import { DeleteOutlineOutlined } from "@material-ui/icons";
+import StarIcon from "@material-ui/icons/Star";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import reefServices from "../../../services/reefServices";
@@ -246,7 +247,7 @@ const MediaCard = ({
                 xs={12}
               >
                 <IconButton onClick={() => setFeatured(index)}>
-                  <Visibility
+                  <StarIcon
                     color={featuredFile === index ? "primary" : "inherit"}
                   />
                 </IconButton>
