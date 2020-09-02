@@ -11,19 +11,19 @@ import { Clear } from "@material-ui/icons";
 
 const menuRoutes = [
   {
-    text: "Home",
+    text: "HOME",
     href: "/",
   },
   {
-    text: "Buoy",
+    text: "BUOY",
     href: "/buoy",
   },
   {
-    text: "Drone",
+    text: "DRONE",
     href: "/drones",
   },
   {
-    text: "About",
+    text: "ABOUT",
     href: "/about",
   },
   {
@@ -31,7 +31,7 @@ const menuRoutes = [
     href: "/faq",
   },
   {
-    text: "Apply",
+    text: "APPLY",
     href: "/apply",
   },
 ];
