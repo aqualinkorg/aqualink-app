@@ -174,7 +174,7 @@ const Charts = ({
                   mode: "horizontal",
                   scaleID: "y-axis-0",
                   value: temperatureThreshold,
-                  borderColor: "ff8d00",
+                  borderColor: "#ff8d00",
                   borderWidth: 2,
                   borderDash: [5, 5],
                   label: {
