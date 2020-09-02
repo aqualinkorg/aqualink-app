@@ -38,13 +38,19 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
           item
           xs={12}
         >
-          <Grid container alignItems="center" justify="flex-start" item xs={12}>
+          <Grid
+            container
+            alignItems="center"
+            justify="space-between"
+            item
+            xs={12}
+          >
             <Grid item xs={2}>
               <Typography className={classes.cardTitle} variant="h6">
                 WIND
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <img alt="wind" src={wind} />
             </Grid>
           </Grid>
@@ -102,13 +108,19 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container alignItems="center" justify="flex-start" item xs={12}>
+          <Grid
+            container
+            alignItems="center"
+            justify="space-between"
+            item
+            xs={12}
+          >
             <Grid item xs={2}>
               <Typography className={classes.cardTitle} variant="h6">
                 WAVES
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={9}>
               <img alt="waves" src={waves} />
             </Grid>
           </Grid>

@@ -12,7 +12,7 @@ import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
-import Wind from "./Wind";
+import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
@@ -66,7 +66,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
-            <Wind dailyData={reef.dailyData} />
+            <CoralBleaching dailyData={reef.dailyData} />
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
