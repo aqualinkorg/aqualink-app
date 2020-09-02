@@ -48,7 +48,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     <>
       <AppBar className={classes.appBar} position="static" color="primary">
         <Toolbar className={classes.toolbar}>
-          <Grid container alignItems="center" spacing={2}>
+          <Grid container alignItems="center" spacing={1}>
             <Grid item xs={5} sm={4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton edge="start" color="inherit">
@@ -119,7 +119,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
 
             {searchLocation && (
               <Hidden smUp>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
                   <Search />
                 </Grid>
               </Hidden>
