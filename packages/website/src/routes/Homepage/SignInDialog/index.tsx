@@ -24,10 +24,10 @@ import {
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
+  resetPassword,
   signInUser,
   userInfoSelector,
   userLoadingSelector,
@@ -46,6 +46,7 @@ const SignInDialog = ({
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
+  const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -75,6 +76,20 @@ const SignInDialog = ({
       setErrorAlertOpen(true);
     }
   }, [user, handleSignInOpen, error]);
+
+  const onResetPassword = useCallback(
+    (
+      data: any,
+      event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+    ) => {
+      if (event) {
+        event.preventDefault();
+      }
+      dispatch(resetPassword({ email: data.emailAddress }));
+      setPasswordResetEmail(data.emailAddress);
+    },
+    [dispatch]
+  );
 
   return (
     <Dialog open={open}>
@@ -131,6 +146,25 @@ const SignInDialog = ({
             </Alert>
           </Collapse>
         )}
+        <Collapse in={passwordResetEmail !== ""}>
+          <Alert
+            severity="success"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setPasswordResetEmail("");
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            {`Password reset email sent to ${passwordResetEmail}.`}
+          </Alert>
+        </Collapse>
         <CardContent>
           <Grid container justify="center" item xs={12}>
             <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={10}>
@@ -188,14 +222,14 @@ const SignInDialog = ({
                   />
                 </Grid>
                 <Grid container item xs={12}>
-                  <Typography variant="subtitle2" color="textSecondary">
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to="/"
-                    >
+                  <Button
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    onClick={handleSubmit(onResetPassword)}
+                  >
+                    <Typography variant="subtitle2" color="textSecondary">
                       Forgot your password?
-                    </Link>
-                  </Typography>
+                    </Typography>
+                  </Button>
                 </Grid>
                 <Grid className={classes.button} item xs={12}>
                   <Button
