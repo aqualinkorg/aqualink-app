@@ -5,7 +5,7 @@ import {
   LatLng,
 } from '@googlemaps/google-maps-services-js';
 import { Connection, createConnection, Repository } from 'typeorm';
-import { Point } from 'geojson';
+import { Point, GeoJSON } from 'geojson';
 import geoTz from 'geo-tz';
 import { Reef } from '../src/reefs/reefs.entity';
 import { Region } from '../src/regions/regions.entity';
@@ -48,7 +48,10 @@ async function getRegionId(
   return country
     ? regionRepository.save({
         name: country,
-        polygon: { coordinates: [latitude, longitude] },
+        polygon: {
+          coordinates: [latitude, longitude],
+          type: 'Point',
+        } as GeoJSON,
       })
     : undefined;
 }
@@ -68,7 +71,6 @@ async function getAugmentedData(
     );
   }
 
-  console.log('region', region);
   return omitBy(
     {
       region,
@@ -82,7 +84,7 @@ async function getAugmentedData(
 async function augmentReefs(connection: Connection) {
   const reefRepository = connection.getRepository(Reef);
   const regionRepository = connection.getRepository(Region);
-  const allReefs = (await reefRepository.find()).slice(1, 3);
+  const allReefs = await reefRepository.find();
   return Promise.all(
     allReefs.map(async (reef) => {
       const augmentedData = await getAugmentedData(reef, regionRepository);
