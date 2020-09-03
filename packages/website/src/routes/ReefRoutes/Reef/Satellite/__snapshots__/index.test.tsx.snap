@@ -72,7 +72,7 @@ exports[`renders as expected 1`] = `
               <h6
                 class="MuiTypography-root Satellite-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
               >
-                HISTORICAL TEMP
+                HISTORICAL MAX
               </h6>
               <p
                 class="MuiTypography-root Satellite-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextPrimary"
