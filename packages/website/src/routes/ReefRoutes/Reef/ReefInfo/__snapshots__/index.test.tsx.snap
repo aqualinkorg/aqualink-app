@@ -39,7 +39,29 @@ exports[`renders as expected 1`] = `
             />
           </button>
         </div>
-        
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-7"
+        >
+          
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1"
+            >
+              Latest data: Sep 03, 2020
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1"
+            >
+              Last surveyed: May 10, 2020
+            </h6>
+          </div>
+        </div>
       </div>
     </div>
     <div
