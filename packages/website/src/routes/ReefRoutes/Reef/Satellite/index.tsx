@@ -79,7 +79,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="subtitle2"
                 >
-                  HISTORICAL TEMP
+                  HISTORICAL MAX
                 </Typography>
                 <Typography
                   className={classes.contentTextValues}

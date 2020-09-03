@@ -30,6 +30,7 @@ async function augmentReefs(connection: Connection) {
   return Promise.all(
     allReefs.map(async (reef) => {
       const augmentedData = await getAugmentedData(reef);
+      console.log(augmentedData);
       const res = await reefRepository.update(reef.id, augmentedData);
       return res;
     }),
