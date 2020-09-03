@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -105,7 +106,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     card: {
       height: "100%",
@@ -138,6 +139,9 @@ const styles = () =>
     contentValues: {
       fontWeight: 300,
       paddingLeft: "1rem",
+      [theme.breakpoints.between("md", "lg")]: {
+        fontSize: 32,
+      },
     },
   });
 
