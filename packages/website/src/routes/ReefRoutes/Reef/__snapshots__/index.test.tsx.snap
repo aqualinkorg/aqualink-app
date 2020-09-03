@@ -272,7 +272,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <p
                         class="MuiTypography-root Satellite-contentTextValues-116 MuiTypography-body1 MuiTypography-colorTextPrimary"
                       >
-                        26.0 ℃
+                        26.0 °C
                       </p>
                     </div>
                     <div
@@ -281,12 +281,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <h6
                         class="MuiTypography-root Satellite-contentTextTitles-115 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
-                        HISTORICAL AUG TEMP
+                        HISTORICAL TEMP
                       </h6>
                       <p
                         class="MuiTypography-root Satellite-contentTextValues-116 MuiTypography-body1 MuiTypography-colorTextPrimary"
                       >
-                        23.0 ℃
+                        22.0 °C
                       </p>
                     </div>
                     <div
@@ -295,13 +295,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <h6
                         class="MuiTypography-root Satellite-contentTextTitles-115 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
                       >
-                        DEGREE HEATING WEEKS
+                        HEAT STRESS
                       </h6>
                       <h2
                         class="MuiTypography-root Satellite-contentTextValues-116 MuiTypography-h2 MuiTypography-colorTextPrimary"
                         title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                       >
-                        0.1
+                        0.1 DHW
                       </h2>
                     </div>
                   </div>
@@ -807,7 +807,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       <p
                         class="MuiTypography-root Waves-contentValues-132 MuiTypography-body1 MuiTypography-colorTextSecondary"
                       >
-                        180°
+                        180
+                        °
                       </p>
                     </div>
                   </div>

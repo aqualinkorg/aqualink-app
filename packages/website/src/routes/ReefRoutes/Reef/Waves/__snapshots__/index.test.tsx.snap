@@ -174,7 +174,8 @@ exports[`renders as expected 1`] = `
               <p
                 class="MuiTypography-root Waves-contentValues-6 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
-                136°
+                136
+                °
               </p>
             </div>
           </div>
