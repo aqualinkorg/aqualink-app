@@ -28,8 +28,8 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item xs={8}>
+          <Grid container justify="flex-start" alignItems="center">
+            <Grid item xs={7}>
               <Typography className={classes.cardTitle} variant="h6">
                 SENSOR OBSERVATION
               </Typography>
@@ -117,7 +117,6 @@ const styles = (theme: Theme) =>
     },
     cardTitle: {
       lineHeight: 1.5,
-      margin: "0 0 0.5rem 1rem",
     },
     header: {
       flex: "0 1 auto",

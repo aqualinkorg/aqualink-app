@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -31,6 +31,10 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   const onPanelIndexChange = (index: number) => {
     setValue(index);
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   return (
     <SwipeableViews index={value} axis="x">

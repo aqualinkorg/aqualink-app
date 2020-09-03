@@ -12,9 +12,9 @@ import Buoy from "../../routes/Buoy";
 import Drones from "../../routes/Drones";
 import Faq from "../../routes/Faq";
 import theme from "./theme";
+import "leaflet/dist/leaflet.css";
 import "./App.css";
 import "../../assets/css/bootstrap.css";
-import "../../assets/css/leaflet.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
 

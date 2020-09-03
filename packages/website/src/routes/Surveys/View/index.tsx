@@ -31,6 +31,10 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const surveyDetails = useSelector(surveyDetailsSelector);
+  const featuredMedia =
+    surveyDetails &&
+    surveyDetails.surveyPoints &&
+    getFeaturedMedia(surveyDetails.surveyPoints);
 
   useEffect(() => {
     dispatch(surveyGetRequest(surveyId));
@@ -96,10 +100,10 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   <Map polygon={reef.polygon} />
                 </Grid>
                 <Grid item md={12} xs={6}>
-                  {surveyDetails && surveyDetails.surveyPoints && (
+                  {featuredMedia && (
                     <CardMedia
                       style={{ height: "100%" }}
-                      image={getFeaturedMedia(surveyDetails.surveyPoints)}
+                      image={featuredMedia}
                     />
                   )}
                 </Grid>

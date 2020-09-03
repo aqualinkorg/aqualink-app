@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Card,
   CardContent,
   Typography,
@@ -22,7 +21,11 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 
-const Satellite = ({ dailyData, classes }: SatelliteProps) => {
+const Satellite = ({
+  historicalAugTemp,
+  dailyData,
+  classes,
+}: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
   const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
 
@@ -36,13 +39,13 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item xs={8}>
+          <Grid container alignItems="center" justify="flex-start">
+            <Grid item xs={7}>
               <Typography className={classes.cardTitle} variant="h6">
                 SATELLITE OBSERVATION
               </Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={5}>
               <img alt="satellite" src={satellite} />
             </Grid>
           </Grid>
@@ -58,7 +61,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
         >
           <Grid className={classes.contentText} item>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <Typography
                   className={classes.contentTextTitles}
                   color="textPrimary"
@@ -69,9 +72,23 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textPrimary"
-                  variant="h2"
                 >
                   {`${formatNumber(satelliteTemperature, 1)} ℃`}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  className={classes.contentTextTitles}
+                  color="textPrimary"
+                  variant="subtitle2"
+                >
+                  HISTORICAL AUG TEMP
+                </Typography>
+                <Typography
+                  className={classes.contentTextValues}
+                  color="textPrimary"
+                >
+                  {`${formatNumber((historicalAugTemp || 20) + 1, 1)} \u2103`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -80,7 +97,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="subtitle2"
                 >
-                  HEAT STRESS
+                  DEGREE HEATING WEEKS
                 </Typography>
                 <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                   <Typography
@@ -88,7 +105,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
+                    {`${formatNumber(degreeHeatingWeeks, 1)}`}
                   </Typography>
                 </Tooltip>
               </Grid>
@@ -122,7 +139,7 @@ const Satellite = ({ dailyData, classes }: SatelliteProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     card: {
       height: "100%",
@@ -132,7 +149,6 @@ const styles = (theme: Theme) =>
     },
     cardTitle: {
       lineHeight: 1.5,
-      margin: "0 0 0.5rem 1rem",
     },
     header: {
       flex: "0 1 auto",
@@ -143,20 +159,20 @@ const styles = (theme: Theme) =>
       padding: 0,
     },
     contentText: {
-      padding: "2rem 3rem 0 3rem",
+      marginTop: "1rem",
+      padding: "0 1rem 0 1rem",
     },
     contentTextTitles: {
       lineHeight: 1.33,
     },
     contentTextValues: {
       fontWeight: 300,
-      [theme.breakpoints.between("md", "lg")]: {
-        fontSize: 32,
-      },
+      fontSize: 36,
     },
   });
 
 interface SatelliteIncomingProps {
+  historicalAugTemp: number | null;
   dailyData: Data[];
 }
 

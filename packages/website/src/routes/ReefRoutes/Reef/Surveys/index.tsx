@@ -162,6 +162,7 @@ const styles = (theme: Theme) =>
       lineHeight: 1.45,
       letterSpacing: "normal",
       color: "#2a2a2a",
+      marginBottom: "1rem",
     },
     subTitle: {
       fontWeight: "normal",

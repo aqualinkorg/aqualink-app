@@ -42,6 +42,7 @@ const UploadMedia = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number | null>(null);
+  const [hidden, setHidden] = useState<boolean[]>([]);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleFileDrop = useCallback(
@@ -59,8 +60,9 @@ const UploadMedia = ({
           comments: "",
         })),
       ]);
+      setHidden([...hidden, ...acceptedFiles.map(() => true)]);
     },
-    [files, previews, metadata]
+    [files, previews, metadata, hidden]
   );
 
   const handlePopoverOpen = (
@@ -91,9 +93,17 @@ const UploadMedia = ({
     setPreviews([]);
   };
 
-  const setFeatured = (index: number) => {
-    setFeaturedFile(index);
-  };
+  const setFeatured = useCallback(
+    (index: number) => {
+      if (featuredFile === index) {
+        // If file is already selected, uncheck it
+        setFeaturedFile(null);
+      } else {
+        setFeaturedFile(index);
+      }
+    },
+    [featuredFile]
+  );
 
   const onMediaSubmit = () => {
     files.forEach((file, index) => {
@@ -114,6 +124,7 @@ const UploadMedia = ({
             metadata: "{}",
             token: user?.token,
             featured: index === featuredFile,
+            hidden: hidden[index],
           };
           surveyServices
             .addSurveyMedia(`${surveyId}`, surveyMediaData)
@@ -121,6 +132,8 @@ const UploadMedia = ({
               setFiles([]);
               setMetadata([]);
               setPreviews([]);
+              setHidden([]);
+              setFeaturedFile(null);
               setAlertMessage("Successfully uploaded media");
               setAlertSeverity("success");
               setAlertOpen(true);
@@ -188,6 +201,16 @@ const UploadMedia = ({
     };
   };
 
+  const handleHiddenChange = (index: number) => {
+    const newHidden = hidden.map((item, key) => {
+      if (key === index) {
+        return !item;
+      }
+      return item;
+    });
+    setHidden(newHidden);
+  };
+
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
@@ -208,6 +231,8 @@ const UploadMedia = ({
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}
+        hidden={hidden[index]}
+        handleHiddenChange={handleHiddenChange}
         handleCommentsChange={handleCommentsChange(index)}
         handleObservationChange={handleObservationChange(index)}
         handleSurveyPointChange={handleSurveyPointChange(index)}
@@ -286,7 +311,7 @@ const UploadMedia = ({
             )}
           </Dropzone>
         </Grid>
-        <Grid style={{ marginBottom: "2rem" }} container item xs={9}>
+        <Grid style={{ marginBottom: "2rem" }} container item xs={11} lg={9}>
           {fileCards}
         </Grid>
         {files && files.length > 0 && (
