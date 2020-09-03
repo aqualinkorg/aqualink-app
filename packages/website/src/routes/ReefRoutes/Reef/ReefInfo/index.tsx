@@ -42,25 +42,28 @@ const ReefNavBar = ({
               <ArrowBack />
             </IconButton>
           </Grid>
-          {reefName && lastSurvey && (
-            <Grid item xs={7} direction="column" container>
+
+          <Grid item xs={7} direction="column" container>
+            {reefName && (
               <Grid item>
                 <Typography variant="h4">{reefName}</Typography>
               </Grid>
-              <Grid item>
-                <Typography variant="subtitle1">
-                  {`Latest data: ${moment(lastDailyDataDate).format(
-                    "MMM DD[,] YYYY"
-                  )}`}
-                </Typography>
-              </Grid>
+            )}
+            <Grid item>
+              <Typography variant="subtitle1">
+                {`Latest data: ${moment(lastDailyDataDate).format(
+                  "MMM DD[,] YYYY"
+                )}`}
+              </Typography>
+            </Grid>
+            {lastSurvey && (
               <Grid item>
                 <Typography variant="subtitle1">{`Last surveyed: ${moment(
                   lastSurvey
                 ).format("MMM DD[,] YYYY")}`}</Typography>
               </Grid>
-            </Grid>
-          )}
+            )}
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={5}>

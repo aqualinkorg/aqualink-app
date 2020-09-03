@@ -34,7 +34,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const hasSpotter = false;
+  const { surfaceTemperature } = reefDetails?.latestDailyData || {};
+  const hasSpotter = surfaceTemperature !== undefined;
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
