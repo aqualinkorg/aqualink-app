@@ -40,6 +40,10 @@ export interface Data {
   wavePeriod: number;
 }
 
+interface Region {
+  name: string | null;
+}
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -48,7 +52,7 @@ export interface Reef {
   depth: number | null;
   status: number;
   videoStream: string | null;
-  region: string | null;
+  region: Region;
   admin: string | null;
   stream: string | null;
   dailyData: Data[];

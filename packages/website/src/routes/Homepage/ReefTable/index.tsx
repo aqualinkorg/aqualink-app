@@ -124,8 +124,9 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const tableData: Row[] = Object.entries(reefsList).map(([key, value]) => {
     const { degreeHeatingDays, satelliteTemperature } =
       value.latestDailyData || {};
+    const locationName = value.name || value.region?.name;
     return {
-      locationName: value.name,
+      locationName,
       temp: formatNumber(satelliteTemperature, 1),
       depth: value.depth,
       dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
