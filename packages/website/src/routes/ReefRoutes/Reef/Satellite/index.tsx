@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -97,7 +98,7 @@ const Satellite = ({
                   color="textPrimary"
                   variant="subtitle2"
                 >
-                  DEGREE HEATING WEEKS
+                  HEAT STRESS
                 </Typography>
                 <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                   <Typography
@@ -105,7 +106,7 @@ const Satellite = ({
                     color="textPrimary"
                     variant="h2"
                   >
-                    {`${formatNumber(degreeHeatingWeeks, 1)}`}
+                    {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
                   </Typography>
                 </Tooltip>
               </Grid>
@@ -139,7 +140,7 @@ const Satellite = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     card: {
       height: "100%",
@@ -149,6 +150,7 @@ const styles = () =>
     },
     cardTitle: {
       lineHeight: 1.5,
+      margin: "0 0 0.5rem 1rem",
     },
     header: {
       flex: "0 1 auto",
@@ -167,7 +169,9 @@ const styles = () =>
     },
     contentTextValues: {
       fontWeight: 300,
-      fontSize: 36,
+      [theme.breakpoints.between("md", "lg")]: {
+        fontSize: 32,
+      },
     },
   });
 
