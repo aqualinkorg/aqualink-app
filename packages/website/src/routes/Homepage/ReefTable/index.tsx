@@ -62,7 +62,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       ),
     },
     {
-      title: "TEMP (℃)",
+      title: "TEMP (°C)",
       field: "temp",
       type: "numeric",
       cellStyle,

@@ -44,11 +44,11 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: `${formatNumber(surfTemp, 1)} ℃`,
+      value: `${formatNumber(surfTemp, 1)} °C`,
     },
     {
       label: `TEMP AT ${reef.depth}M`,
-      value: `${formatNumber(maxBottomTemperature, 1)} ℃`,
+      value: `${formatNumber(maxBottomTemperature, 1)} °C`,
     },
     {
       label: "HEAT STRESS",
@@ -109,7 +109,7 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
             >
               <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
                 <Typography color="textSecondary" variant="subtitle1">
-                  MEAN DAILY SURFACE TEMP. (C&deg;)
+                  MEAN DAILY SURFACE TEMP. (°C)
                 </Typography>
               </Box>
               <CardChart

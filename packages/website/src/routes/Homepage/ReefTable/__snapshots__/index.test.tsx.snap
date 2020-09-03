@@ -126,7 +126,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          TEMP (℃)
+                          TEMP (°C)
                         </div>
                         <svg
                           aria-hidden="true"

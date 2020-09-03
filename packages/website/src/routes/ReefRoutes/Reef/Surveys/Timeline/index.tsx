@@ -149,7 +149,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                                 className={classes.cardValues}
                                 variant="h6"
                               >
-                                {`${survey.temperature} \u2103`}
+                                {`${survey.temperature} °C`}
                               </Typography>
                             </Grid>
                           </Grid>

@@ -79,7 +79,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 </Grid>
                 <Grid container alignItems="center" item xs={11}>
                   <Typography variant="subtitle2">
-                    {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (\u2103)`}
+                    {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (°C)`}
                   </Typography>
                 </Grid>
                 <Grid container justify="center" item xs={12}>

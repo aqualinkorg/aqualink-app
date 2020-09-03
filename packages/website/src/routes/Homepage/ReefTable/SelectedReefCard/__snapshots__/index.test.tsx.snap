@@ -86,7 +86,7 @@ exports[`renders as expected 1`] = `
             <h6
               class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
             >
-              MEAN DAILY SURFACE TEMP. (C°)
+              MEAN DAILY SURFACE TEMP. (°C)
             </h6>
           </div>
           Mock-Line
@@ -107,7 +107,7 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                29.0 ℃
+                29.0 °C
               </h4>
             </div>
             <div>
@@ -119,7 +119,7 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                39.0 ℃
+                39.0 °C
               </h4>
             </div>
             <div>
