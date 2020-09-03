@@ -63,7 +63,7 @@ exports[`renders as expected 1`] = `
               <h2
                 class="MuiTypography-root Satellite-contentTextValues-7 MuiTypography-h2 MuiTypography-colorTextPrimary"
               >
-                20.0 ℃
+                20.0 °C
               </h2>
             </div>
             <div

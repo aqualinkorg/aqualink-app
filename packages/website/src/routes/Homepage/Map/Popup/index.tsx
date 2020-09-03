@@ -47,7 +47,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
                   variant="h5"
                   color="textSecondary"
                 >
-                  {`${formatNumber(maxBottomTemperature, 1)}  ℃`}
+                  {`${formatNumber(maxBottomTemperature, 1)}  °C`}
                 </Typography>
               </Grid>
             </Grid>
@@ -64,7 +64,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
                   variant="h5"
                   color="textSecondary"
                 >
-                  {`${formatNumber(satelliteTemperature, 1)}  ℃`}
+                  {`${formatNumber(satelliteTemperature, 1)}  °C`}
                 </Typography>
               </Grid>
             </Grid>
