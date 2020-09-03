@@ -34,8 +34,14 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { surfaceTemperature } = reefDetails?.latestDailyData || {};
-  const hasSpotter = surfaceTemperature !== undefined;
+
+  const latestDailyData =
+    reefDetails && reefDetails.dailyData.length > 0
+      ? sortDailyData(reefDetails.dailyData)[reefDetails.dailyData.length - 1]
+      : undefined;
+
+  const hasSpotter =
+    latestDailyData && latestDailyData.surfaceTemperature !== undefined;
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -48,15 +54,11 @@ const Reef = ({ match, classes }: ReefProps) => {
       {/* eslint-disable-next-line no-nested-ternary */}
       {loading ? (
         <LinearProgress />
-      ) : reefDetails && reefDetails.dailyData.length > 0 && !error ? (
+      ) : reefDetails && latestDailyData && !error ? (
         <>
           <ReefInfo
             reefName={reefDetails?.name || ""}
-            lastDailyDataDate={
-              sortDailyData(reefDetails.dailyData)[
-                reefDetails.dailyData.length - 1
-              ].date
-            }
+            lastDailyDataDate={latestDailyData?.date}
             lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
             managerName={reefDetails?.admin || ""}
           />
@@ -71,7 +73,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               </Grid>
             </Grid>
           )}
-          <ReefDetails reef={reefDetails} />
+          <ReefDetails reef={{ ...reefDetails, latestDailyData }} />
           <ReefFooter />
         </>
       ) : (
