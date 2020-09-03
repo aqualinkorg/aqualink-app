@@ -164,7 +164,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentValues}
                   color="textSecondary"
                 >
-                  {wavePeriod || "- -"}
+                  {formatNumber(wavePeriod)}
                 </Typography>
                 {wavePeriod && (
                   <Typography
@@ -198,7 +198,8 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentValues}
                   color="textSecondary"
                 >
-                  {waveDirection ? `${waveDirection}\u00B0` : "- -"}
+                  {formatNumber(waveDirection)}
+                  {waveDirection ? "\u00B0" : ""}
                 </Typography>
               </Grid>
             </Grid>
