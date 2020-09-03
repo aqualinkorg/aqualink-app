@@ -73,6 +73,7 @@ exports[`renders as expected 1`] = `
               class="MuiTypography-root Sensor-contentValues-7 MuiTypography-h2 MuiTypography-colorTextPrimary"
             >
               - -
+               ℃
             </h2>
           </div>
           <div
@@ -87,6 +88,7 @@ exports[`renders as expected 1`] = `
               class="MuiTypography-root Sensor-contentValues-7 MuiTypography-h2 MuiTypography-colorTextPrimary"
             >
               - -
+               ℃
             </h2>
           </div>
         </div>

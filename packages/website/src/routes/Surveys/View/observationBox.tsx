@@ -51,7 +51,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                   SURFACE TEMP
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(surfaceTemperature)} \u2103`}
+                  {`${formatNumber(surfaceTemperature)} ℃`}
                 </Typography>
               </Grid>
               <Grid container item direction="column" xs={6}>
@@ -59,7 +59,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
                   {`TEMP AT ${depth}M`}
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(avgBottomTemperature)} \u2103`}
+                  {`${formatNumber(avgBottomTemperature)} ℃`}
                 </Typography>
               </Grid>
             </Grid>

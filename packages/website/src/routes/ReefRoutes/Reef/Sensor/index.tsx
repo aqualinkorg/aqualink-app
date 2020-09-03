@@ -76,7 +76,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 color="textPrimary"
                 variant="h2"
               >
-                {formatNumber(surfaceTemperature, 1)}
+                {formatNumber(surfaceTemperature, 1)} ℃
               </Typography>
             </Grid>
             <Grid item>
@@ -92,7 +92,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 color="textPrimary"
                 variant="h2"
               >
-                {formatNumber(avgBottomTemperature, 1)}
+                {formatNumber(avgBottomTemperature, 1)} ℃
               </Typography>
             </Grid>
           </Grid>

@@ -533,6 +533,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiTypography-root Sensor-contentValues-121 MuiTypography-h2 MuiTypography-colorTextPrimary"
                     >
                       25.0
+                       ℃
                     </h2>
                   </div>
                   <div
@@ -547,6 +548,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiTypography-root Sensor-contentValues-121 MuiTypography-h2 MuiTypography-colorTextPrimary"
                     >
                       25.0
+                       ℃
                     </h2>
                   </div>
                 </div>
