@@ -17,7 +17,6 @@ import {
   Theme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
@@ -101,9 +100,6 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             >
               {user ? (
                 <>
-                  {/* <IconButton className={classes.button}>
-                    <NotificationsIcon className={classes.notificationIcon} />
-                  </IconButton> */}
                   <IconButton className={classes.button}>
                     <Avatar />
                   </IconButton>
