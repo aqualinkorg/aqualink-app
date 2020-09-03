@@ -52,7 +52,7 @@ export class SurveyMedia {
   })
   observations: Observations;
 
-  @Column()
+  @Column({ nullable: true })
   comments: string;
 
   @ManyToOne(() => Survey, { onDelete: 'CASCADE', eager: true })

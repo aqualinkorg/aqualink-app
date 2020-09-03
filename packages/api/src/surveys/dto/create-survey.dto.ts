@@ -19,7 +19,7 @@ export class CreateSurveyDto {
 
   @IsString()
   @IsOptional()
-  readonly comments: string;
+  readonly comments?: string;
 
   @IsInt()
   @Validate(EntityExists, [Reef])
