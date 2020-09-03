@@ -56,7 +56,10 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
       <Grid container justify="space-between" item xs={11} spacing={4}>
         <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
-            <Satellite dailyData={reef.dailyData} />
+            <Satellite
+              historicalAugTemp={reef.maxMonthlyMean}
+              dailyData={reef.dailyData}
+            />
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
