@@ -10,7 +10,6 @@ import { createDatasets, calculateAxisLimits } from "./utils";
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
 import "../../../../helpers/slicePlugin";
-import "../../../../helpers/thresholdPlugin";
 
 const Charts = ({
   classes,
@@ -124,9 +123,6 @@ const Charts = ({
               sliceDrawPlugin: {
                 sliceAtLabel,
                 datasetIndex: 0,
-              },
-              thresholdPlugin: {
-                threshold: temperatureThreshold,
               },
             },
             tooltips: {
