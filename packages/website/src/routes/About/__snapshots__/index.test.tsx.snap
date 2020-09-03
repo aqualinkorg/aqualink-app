@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About should render with given state from Redux store 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-2 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-4 MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-11"
+          >
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+            >
+              Aqua
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+              style="color: rgb(138, 198, 222);"
+            >
+              link
+            </h4>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div>
+    <div
+      class="page-container"
+    >
+      <div
+        class="bloc l-bloc"
+        id="bloc-0"
+      >
+        <div
+          class="bloc l-bloc"
+          id="bloc-1"
+        >
+          <div
+            class="container bloc-md mobilecentered"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="centered order-lg-0 order-1 order-md-0 order-sm-0 col"
+              >
+                <h4
+                  class="MuiTypography-root About-title-1 MuiTypography-h4"
+                >
+                  About Us
+                </h4>
+                <p>
+                  Aqualink is a philanthropic engineering organization working on Ocean conservation problems.
+                  <br />
+                </p>
+              </div>
+              <div
+                class="offset-lg-0 col-lg-12 order-lg-1"
+              >
+                <img
+                  alt="reef1b"
+                  class="img-fluid mx-auto d-block imagepaddingtop img-responsive lazyload"
+                  src="reef1b.jpg"
+                />
+              </div>
+            </div>
+            <div
+              class="row voffset-lg"
+            >
+              <div
+                class="centered order-lg-0 order-1 order-md-0 order-sm-0 col"
+              >
+                <h4
+                  class="MuiTypography-root About-title-1 MuiTypography-h4"
+                >
+                  The Team
+                </h4>
+                <p>
+                  We have been working in rapid development and entrepreneurial businesses that scale and hope to bring a similar mindset to Ocean conservation.
+                  <br />
+                  <br />
+                  We have an extended team of engineering contractors in a variety of disciplines all of whom embrace open source philosophies and want to help build Ocean conservation tools. 
+                  <br />
+                </p>
+              </div>
+            </div>
+            <div
+              class="row voffset-md"
+            >
+              <div
+                class="col-lg-4 col-md-4"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="placeholder user"
+                      class="rounded-circle mx-auto d-block mt-5 img-style lazyload"
+                      src="peter.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      Peter Rive
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Co-founder of SolarCity, a pioneer in making solar energy an affordable alternative to fossil fuels for homeowners.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-4 mt-3 mt-md-0"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="placeholder user"
+                      class="rounded-circle mx-auto d-block mt-5 img-placeholder-us-style lazyload"
+                      src="LYNDON1.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      Lyndon Rive
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Also a co-founder of SolarCity, current National Geographic board member, and member of the USA underwater hockey team.
+                      <br />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-lg-4 col-md-4 mt-3 mt-md-0"
+              >
+                <div
+                  class="card border-0"
+                >
+                  <div
+                    class="card-body team-card"
+                  >
+                    <img
+                      alt="placeholder user"
+                      class="rounded-circle mx-auto d-block mt-5 img-3-style lazyload"
+                      src="drew.jpg"
+                      width="100"
+                    />
+                    <h5
+                      class="text-center mg-sm"
+                    >
+                      Drew Gray
+                    </h5>
+                    <p
+                      class="text-lg-center"
+                    >
+                      Engineer and executive with experience building autonomous systems at Tesla, Cruise, Uber, and Voyage. Instrumental in pushing the state-of-the-art in self-driving cars using computer vision and deep learning.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-27 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;

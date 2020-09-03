@@ -42,6 +42,7 @@
     "enzyme-to-json": "^3.4.4",
     "firebase": "^7.16.1",
     "firebase-tools": "^8.4.3",
+    "immutable": "^4.0.0-rc.12",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "material-table": "^1.65.0",
@@ -58,7 +59,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-mock-store": "^1.5.4",
-    "typescript": "~3.8.2"
+    "typescript": "~3.8.2",
+    "validator": "^13.1.1"
   },
   "jest": {
     "snapshotSerializers": [
@@ -81,6 +83,9 @@
     "node": "12.x"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/immutable": "^3.8.7",
+    "@types/validator": "^13.1.0",
     "canvas": "^2.6.1"
   }
 }
