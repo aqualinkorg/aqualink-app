@@ -57,7 +57,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
             <Satellite
-              historicalAugTemp={reef.maxMonthlyMean}
+              maxMonthlyMean={reef.maxMonthlyMean}
               dailyData={reef.dailyData}
             />
           </div>

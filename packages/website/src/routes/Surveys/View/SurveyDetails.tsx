@@ -28,7 +28,9 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           </Grid>
           <Grid container item direction="row">
             <Grid container item direction="column" xs={12} md={3}>
-              <Typography style={{ fontSize: 18 }}>{reef.region}</Typography>
+              <Typography style={{ fontSize: 18 }}>
+                {reef.region?.name}
+              </Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>
             </Grid>
             <Grid item xs={12} md={3}>

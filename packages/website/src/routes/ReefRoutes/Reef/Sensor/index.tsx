@@ -20,8 +20,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, avgBottomTemperature } =
     reef.latestDailyData || {};
 
-  const sensorExists =
-    surfaceTemperature !== undefined || avgBottomTemperature !== undefined;
+  const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
 
   return (
     <Card className={classes.card}>
@@ -124,7 +123,7 @@ const styles = (theme: Theme) =>
     },
     content: {
       flex: "1 1 auto",
-      padding: "0 1rem 1rem 2rem",
+      padding: "0 0rem 0rem 2rem",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",

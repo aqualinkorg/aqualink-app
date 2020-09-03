@@ -22,11 +22,7 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 
-const Satellite = ({
-  historicalAugTemp,
-  dailyData,
-  classes,
-}: SatelliteProps) => {
+const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
   const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
 
@@ -74,7 +70,7 @@ const Satellite = ({
                   className={classes.contentTextValues}
                   color="textPrimary"
                 >
-                  {`${formatNumber(satelliteTemperature, 1)} ℃`}
+                  {`${formatNumber(satelliteTemperature, 1)} °C`}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -83,13 +79,13 @@ const Satellite = ({
                   color="textPrimary"
                   variant="subtitle2"
                 >
-                  HISTORICAL AUG TEMP
+                  HISTORICAL TEMP
                 </Typography>
                 <Typography
                   className={classes.contentTextValues}
                   color="textPrimary"
                 >
-                  {`${formatNumber((historicalAugTemp || 20) + 1, 1)} \u2103`}
+                  {`${formatNumber(maxMonthlyMean, 1)} °C`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -176,7 +172,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SatelliteIncomingProps {
-  historicalAugTemp: number | null;
+  maxMonthlyMean: number | null;
   dailyData: Data[];
 }
 

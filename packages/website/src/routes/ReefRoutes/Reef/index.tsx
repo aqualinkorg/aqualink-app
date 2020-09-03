@@ -40,8 +40,9 @@ const Reef = ({ match, classes }: ReefProps) => {
       ? sortDailyData(reefDetails.dailyData)[reefDetails.dailyData.length - 1]
       : undefined;
 
-  const hasSpotter =
-    latestDailyData && latestDailyData.surfaceTemperature !== undefined;
+  const hasSpotter = Boolean(
+    latestDailyData && latestDailyData.surfaceTemperature
+  );
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
