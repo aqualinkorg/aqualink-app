@@ -43,123 +43,130 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
   return (
     <>
       {points &&
-        points.map((point, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>
-            <Grid
-              className={classes.title}
-              container
-              justify="flex-start"
-              item
-              xs={12}
-            >
+        points.map((point, index) => {
+          const images = getNumberOfImages([point]);
+          const videos = getNumberOfVideos([point]);
+
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index}>
               <Grid
+                className={classes.title}
                 container
+                justify="flex-start"
                 item
-                alignItems="baseline"
                 xs={12}
-                md={6}
-                lg={4}
-                spacing={2}
               >
-                <Grid item>
-                  <Typography variant="h6">Survey Point: </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography className={classes.titleName} variant="h6">
-                    {point.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container item xs={12} md={6} lg={2} spacing={2}>
-                {getNumberOfImages([point]) > 0 && (
-                  <Grid container item xs={6} spacing={1}>
-                    <Grid item>
-                      <Typography variant="subtitle1">
-                        {`${getNumberOfImages([point])} images`}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <PermMediaIcon />
-                    </Grid>
+                <Grid
+                  container
+                  item
+                  alignItems="baseline"
+                  xs={12}
+                  md={6}
+                  lg={4}
+                  spacing={2}
+                >
+                  <Grid item>
+                    <Typography variant="h6">Survey Point: </Typography>
                   </Grid>
-                )}
-                {getNumberOfVideos([point]) > 0 && (
-                  <Grid container item xs={6} spacing={1}>
-                    <Grid item>
-                      <Typography variant="subtitle1">
-                        {`${getNumberOfVideos([point])} videos`}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <VideoLibraryIcon />
-                    </Grid>
+                  <Grid item>
+                    <Typography className={classes.titleName} variant="h6">
+                      {point.name}
+                    </Typography>
                   </Grid>
-                )}
-              </Grid>
-            </Grid>
-            <Slider className={classes.carousel} {...carouselSettings}>
-              {point.surveyMedia.map((media) => {
-                return (
-                  <Card
-                    key={media.url}
-                    elevation={3}
-                    className={classes.shadowBox}
-                  >
-                    <Grid style={{ height: "100%" }} container>
-                      <Grid style={{ width: "100%" }} item xs={6}>
-                        <CardMedia
-                          className={classes.cardImage}
-                          image={media.url}
-                        />
+                </Grid>
+                <Grid container item xs={12} md={6} lg={2} spacing={2}>
+                  {images > 0 && (
+                    <Grid container item xs={6} spacing={1}>
+                      <Grid item>
+                        <Typography variant="subtitle1">
+                          {`${images} images`}
+                        </Typography>
                       </Grid>
-                      <Grid
-                        style={{ height: "100%", overflowY: "auto" }}
-                        container
-                        justify="center"
-                        item
-                        xs={6}
-                      >
+                      <Grid item>
+                        <PermMediaIcon />
+                      </Grid>
+                    </Grid>
+                  )}
+                  {videos > 0 && (
+                    <Grid container item xs={6} spacing={1}>
+                      <Grid item>
+                        <Typography variant="subtitle1">
+                          {`${videos} videos`}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <VideoLibraryIcon />
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+              <Slider className={classes.carousel} {...carouselSettings}>
+                {point.surveyMedia.map((media) => {
+                  return (
+                    <Card
+                      key={media.url}
+                      elevation={3}
+                      className={classes.shadowBox}
+                    >
+                      <Grid style={{ height: "100%" }} container>
+                        <Grid style={{ width: "100%" }} item xs={6}>
+                          <CardMedia
+                            className={classes.cardImage}
+                            image={media.url}
+                          />
+                        </Grid>
                         <Grid
+                          style={{ height: "100%", overflowY: "auto" }}
                           container
+                          justify="center"
                           item
-                          xs={11}
-                          justify="space-around"
-                          direction="column"
-                          alignItems="flex-start"
+                          xs={6}
                         >
-                          <Grid item>
-                            <Typography variant="h6">
-                              Image Observation
-                            </Typography>
-                            <Typography variant="subtitle1">
-                              {findOption(media.observations)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Typography variant="h6">Image Comments</Typography>
-                            <Typography variant="subtitle1">
-                              {media.comments}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Button
-                              variant="outlined"
-                              color="primary"
-                              className={classes.button}
-                            >
-                              All Photos From Survey Point
-                            </Button>
+                          <Grid
+                            container
+                            item
+                            xs={11}
+                            justify="space-around"
+                            direction="column"
+                            alignItems="flex-start"
+                          >
+                            <Grid item>
+                              <Typography variant="h6">
+                                Image Observation
+                              </Typography>
+                              <Typography variant="subtitle1">
+                                {findOption(media.observations)}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Typography variant="h6">
+                                Image Comments
+                              </Typography>
+                              <Typography variant="subtitle1">
+                                {media.comments}
+                              </Typography>
+                            </Grid>
+                            <Grid item>
+                              <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.button}
+                              >
+                                All Photos From Survey Point
+                              </Button>
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  </Card>
-                );
-              })}
-            </Slider>
-          </div>
-        ))}
+                    </Card>
+                  );
+                })}
+              </Slider>
+            </div>
+          );
+        })}
     </>
   );
 };

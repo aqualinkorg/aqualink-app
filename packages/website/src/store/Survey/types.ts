@@ -49,6 +49,7 @@ export interface SurveyMediaData {
   metadata?: string;
   token?: string | null;
   featured: boolean;
+  hidden: boolean;
 }
 
 export interface SurveyListState {

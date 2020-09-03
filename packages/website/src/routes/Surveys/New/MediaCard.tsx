@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -19,6 +19,7 @@ import {
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 import StarIcon from "@material-ui/icons/Star";
 
 import observationOptions from "../../../constants/uploadDropdowns";
@@ -36,6 +37,8 @@ const MediaCard = ({
   index,
   file,
   featuredFile,
+  hidden,
+  handleHiddenChange,
   deleteCard,
   setFeatured,
   handleCommentsChange,
@@ -60,6 +63,10 @@ const MediaCard = ({
       .getReefPois(`${reefId}`)
       .then((response) => setSurveyPointOptions(response.data));
   }, [setSurveyPointOptions, reefId]);
+
+  const onImageClick = useCallback(() => {
+    setFeatured(index);
+  }, [index, setFeatured]);
 
   return (
     <>
@@ -119,27 +126,45 @@ const MediaCard = ({
           >
             <Grid style={{ height: "100%" }} item xs={3}>
               <CardMedia className={classes.cardImage} image={preview}>
-                <Grid
-                  style={{ height: "100%" }}
-                  container
-                  item
-                  xs={12}
-                  alignItems="flex-end"
-                  justify="flex-end"
+                <div
+                  tabIndex={-1}
+                  role="button"
+                  onClick={onImageClick}
+                  onKeyDown={() => {}}
+                  style={{ height: "100%", cursor: "pointer", outline: "none" }}
                 >
-                  {size && (
-                    <Grid
-                      className={classes.mediaSize}
-                      container
-                      alignItems="center"
-                      justify="center"
-                      item
-                      xs={3}
-                    >
-                      <Typography variant="subtitle2">{size} MB</Typography>
-                    </Grid>
-                  )}
-                </Grid>
+                  <Grid
+                    style={{ height: "50%" }}
+                    container
+                    item
+                    xs={12}
+                    alignItems="flex-start"
+                    justify="flex-start"
+                  >
+                    {index === featuredFile && <StarIcon color="primary" />}
+                  </Grid>
+                  <Grid
+                    style={{ height: "50%" }}
+                    container
+                    item
+                    xs={12}
+                    alignItems="flex-end"
+                    justify="flex-end"
+                  >
+                    {size && (
+                      <Grid
+                        className={classes.mediaSize}
+                        container
+                        alignItems="center"
+                        justify="center"
+                        item
+                        xs={3}
+                      >
+                        <Typography variant="subtitle2">{size} MB</Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                </div>
               </CardMedia>
             </Grid>
             <Grid container justify="center" item xs={3}>
@@ -246,10 +271,8 @@ const MediaCard = ({
                 justify="flex-end"
                 xs={12}
               >
-                <IconButton onClick={() => setFeatured(index)}>
-                  <StarIcon
-                    color={featuredFile === index ? "primary" : "inherit"}
-                  />
+                <IconButton onClick={() => handleHiddenChange(index)}>
+                  <VisibilityIcon color={!hidden ? "primary" : "inherit"} />
                 </IconButton>
               </Grid>
               <Grid
@@ -315,6 +338,8 @@ interface MediaCardIncomingProps {
   comments: string;
   file?: File;
   featuredFile: number | null;
+  hidden: boolean;
+  handleHiddenChange: (index: number) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;

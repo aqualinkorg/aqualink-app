@@ -15,7 +15,7 @@ export const getNumberOfImages = (points: SurveyPoint[]) => {
     return point.surveyMedia.filter((media) => media.type === "image").length;
   });
 
-  return imageMedia.reduce((a, b) => a + b);
+  return imageMedia.reduce((a, b) => a + b, 0);
 };
 
 export const getNumberOfVideos = (points: SurveyPoint[]) => {
@@ -23,5 +23,5 @@ export const getNumberOfVideos = (points: SurveyPoint[]) => {
     return point.surveyMedia.filter((media) => media.type === "video").length;
   });
 
-  return videoMedia.reduce((a, b) => a + b);
+  return videoMedia.reduce((a, b) => a + b, 0);
 };
