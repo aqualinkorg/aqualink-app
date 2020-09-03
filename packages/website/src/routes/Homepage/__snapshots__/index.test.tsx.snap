@@ -502,7 +502,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                           type="checkbox"
                         />
                         <span>
-                           NOAA Degree Heating Week
+                           Heat Stress
                         </span>
                       </div>
                     </label>

@@ -58,7 +58,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
           cmap: "turbo",
         },
         {
-          name: "NOAA Degree Heating Week",
+          name: "Heat Stress",
           model: "NOAACoralReefWatch",
           variableID: "degreeHeatingWeek",
           cmap: "noaacoral",
