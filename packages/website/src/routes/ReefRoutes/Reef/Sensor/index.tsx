@@ -46,7 +46,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           alignItems="center"
           justify="space-between"
         >
-          {!sensorExists && (
+          {!hasSpotter && (
             <Grid item xs={12}>
               <Grid
                 className={classes.noSensorAlert}
