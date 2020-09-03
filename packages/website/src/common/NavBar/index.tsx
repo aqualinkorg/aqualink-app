@@ -101,9 +101,9 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             >
               {user ? (
                 <>
-                  <IconButton className={classes.button}>
+                  {/* <IconButton className={classes.button}>
                     <NotificationsIcon className={classes.notificationIcon} />
-                  </IconButton>
+                  </IconButton> */}
                   <IconButton className={classes.button}>
                     <Avatar />
                   </IconButton>
