@@ -25,10 +25,13 @@ async function getCountry(longitude, latitude): Promise<string | undefined> {
       },
     })
     .then((r) => {
-      return r.data.results[0].formatted_address;
+      const { results } = r.data;
+      return results.length > 0 ? results[0].formatted_address : undefined;
     })
     .catch((e) => {
-      console.log(e.response.data.error_message);
+      console.log(
+        e.response ? e.response.data.error_message : 'An unkown error occured.',
+      );
       return undefined;
     });
 }

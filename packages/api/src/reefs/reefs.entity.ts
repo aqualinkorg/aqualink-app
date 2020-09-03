@@ -61,7 +61,7 @@ export class Reef {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => Region, { nullable: true })
   region?: Region;
 
   @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
