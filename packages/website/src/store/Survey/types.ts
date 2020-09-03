@@ -35,6 +35,7 @@ export interface SurveyState {
 export interface SurveyData {
   reef: number;
   diveDate: string;
+  diveLocation?: DiveLocation | null;
   weatherConditions: string;
   comments?: string;
   token?: string | null;

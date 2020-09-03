@@ -55,13 +55,14 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
       const surveyData: SurveyData = {
         reef: reefId,
         diveDate: diveDateTime,
+        diveLocation,
         weatherConditions,
         comments,
         token: user?.token,
       };
       dispatch(surveyAddRequest({ surveyData, changeTab }));
     },
-    [dispatch, weather, changeTab, user, reefId]
+    [dispatch, weather, diveLocation, changeTab, user, reefId]
   );
 
   const handleDiveDateChange = (date: Date | null) => {
