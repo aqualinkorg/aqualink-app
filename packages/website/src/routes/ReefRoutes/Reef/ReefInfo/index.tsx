@@ -49,13 +49,15 @@ const ReefNavBar = ({
                 <Typography variant="h4">{reefName}</Typography>
               </Grid>
             )}
-            <Grid item>
-              <Typography variant="subtitle1">
-                {`Latest data: ${moment(lastDailyDataDate).format(
-                  "MMM DD[,] YYYY"
-                )}`}
-              </Typography>
-            </Grid>
+            {lastDailyDataDate && (
+              <Grid item>
+                <Typography variant="subtitle1">
+                  {`Latest data: ${moment(lastDailyDataDate).format(
+                    "MMM DD[,] YYYY"
+                  )}`}
+                </Typography>
+              </Grid>
+            )}
             {lastSurvey && (
               <Grid item>
                 <Typography variant="subtitle1">{`Last surveyed: ${moment(
