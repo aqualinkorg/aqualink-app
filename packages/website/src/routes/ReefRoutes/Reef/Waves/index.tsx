@@ -216,8 +216,11 @@ const styles = (theme: Theme) =>
     },
     contentTextTitles: {
       lineHeight: 1.33,
-      [theme.breakpoints.between("sm", 730)]: {
+      [theme.breakpoints.between("sm", 740)]: {
         fontSize: 9,
+      },
+      [theme.breakpoints.down(380)]: {
+        fontSize: 11,
       },
     },
     contentTextValues: {
@@ -226,7 +229,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.between("md", 1350)]: {
         fontSize: 24,
       },
-      [theme.breakpoints.between("sm", 730)]: {
+      [theme.breakpoints.between("sm", 740)]: {
         fontSize: 24,
       },
     },
@@ -234,7 +237,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.between("md", 1350)]: {
         fontSize: 12,
       },
-      [theme.breakpoints.between("sm", 730)]: {
+      [theme.breakpoints.between("sm", 740)]: {
         fontSize: 12,
       },
     },

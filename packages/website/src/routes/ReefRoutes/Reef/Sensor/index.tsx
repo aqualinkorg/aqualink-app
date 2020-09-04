@@ -139,11 +139,14 @@ const styles = (theme: Theme) =>
     },
     contentTextTitles: {
       lineHeight: 1.33,
-      [theme.breakpoints.between("sm", 730)]: {
+      [theme.breakpoints.between("sm", 740)]: {
         fontSize: 9,
       },
       [theme.breakpoints.between("md", 1350)]: {
         fontSize: 9,
+      },
+      [theme.breakpoints.down(380)]: {
+        fontSize: 11,
       },
     },
     alertText: {
@@ -154,7 +157,7 @@ const styles = (theme: Theme) =>
     contentTextValues: {
       fontWeight: 300,
       fontSize: 32,
-      [theme.breakpoints.between("sm", 730)]: {
+      [theme.breakpoints.between("sm", 740)]: {
         fontSize: 28,
       },
       [theme.breakpoints.between("md", 1350)]: {
