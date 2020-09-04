@@ -35,6 +35,7 @@ export const createUser = createAsyncThunk<
         const { data } = await userServices.storeUser(fullName, email, token);
         return {
           email: data.email,
+          fullName: data.fullName,
           firebaseUid: data.firebaseUid,
           token: await user?.getIdToken(),
         };
@@ -97,6 +98,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
       const { data } = await userServices.getSelf(token);
       return {
         email: data.email,
+        fullName: data.fullName,
         adminLevel: data.adminLevel,
         firebaseUid: data.firebaseUid,
         token,

@@ -5,7 +5,6 @@ import {
   Grid,
   IconButton,
   Typography,
-  Avatar,
   Button,
   Menu,
   MenuItem,
@@ -100,30 +99,33 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             >
               {user ? (
                 <>
-                  <IconButton className={classes.button}>
-                    <Avatar />
-                  </IconButton>
-                  <IconButton className={classes.button} onClick={handleClick}>
-                    <ExpandMoreIcon className={classes.expandIcon} />
-                  </IconButton>
-                  <Menu
-                    key="user-menu"
-                    className={classes.userMenu}
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                  >
-                    <MenuItem
-                      className={classes.menuItem}
-                      onClick={() => {
-                        dispatch(signOutUser());
-                        handleMenuClose();
-                      }}
+                  <Box display="flex" flexWrap="nowrap" alignItems="center">
+                    {`Hi ${user.fullName}`}
+                    <IconButton
+                      className={classes.button}
+                      onClick={handleClick}
                     >
-                      Logout
-                    </MenuItem>
-                  </Menu>
+                      <ExpandMoreIcon className={classes.expandIcon} />
+                    </IconButton>
+                    <Menu
+                      key="user-menu"
+                      className={classes.userMenu}
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem
+                        className={classes.menuItem}
+                        onClick={() => {
+                          dispatch(signOutUser());
+                          handleMenuClose();
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </Box>
                 </>
               ) : (
                 <>
