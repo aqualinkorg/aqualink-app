@@ -10,7 +10,6 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReactPlayer from "react-player";
 
 import reefImage from "../../../../assets/reef-image.jpg";
