@@ -274,7 +274,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
         >
           <Grid style={{ marginRight: "3rem" }} item xs={2}>
             <Button onClick={resetForm} color="primary" variant="outlined">
-              Cancel
+              Clear
             </Button>
           </Grid>
           <Grid item xs={2}>
