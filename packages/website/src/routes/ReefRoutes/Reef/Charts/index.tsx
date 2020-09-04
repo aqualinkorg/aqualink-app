@@ -140,6 +140,7 @@ const Charts = ({
               filter: (tooltipItem: any) => {
                 return tooltipItem.datasetIndex === 0;
               },
+              intersect: false,
               enabled: false,
               custom: customTooltip(temperatureChartRef),
             },
