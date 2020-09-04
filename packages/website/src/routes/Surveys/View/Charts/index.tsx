@@ -131,6 +131,7 @@ const Charts = ({
                 return tooltipItem.datasetIndex === 0;
               },
               enabled: false,
+              intersect: false,
               custom: customTooltip(temperatureChartRef),
             },
             annotations: [
