@@ -14,7 +14,6 @@ import { Reef } from './reefs.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
-import surveys from '../../mock_response/survey_data.json';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 
@@ -42,17 +41,6 @@ export class ReefsController {
   // eslint-disable-next-line no-unused-vars
   findDailyData(@Param('id') id: number) {
     return this.reefsService.findDailyData(id);
-  }
-
-  @Get(':id/surveys/:poi')
-  findSurveys(@Param('id') id: string, @Param('poi') poi: string) {
-    return surveys.map((survey) => ({
-      ...survey,
-      images: survey.images.filter(
-        (image) => image.poi_label_id === parseInt(poi, 10),
-      ),
-    }));
-    // return this.reefRepository.findOneReef(id);
   }
 
   @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)

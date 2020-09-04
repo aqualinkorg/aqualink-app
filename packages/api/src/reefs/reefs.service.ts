@@ -49,12 +49,16 @@ export class ReefsService {
       });
     }
     if (filter.admin) {
-      query.andWhere('reef.admin = :admin', {
-        admin: filter.admin,
-      });
+      query.innerJoin(
+        'reef.reefToAdmin',
+        'reefToAdminAssociation',
+        'reefToAdminAssociation.admin = :admin',
+        { admin: filter.admin },
+      );
     }
     query.leftJoinAndSelect('reef.region', 'region');
-    query.leftJoinAndSelect('reef.admin', 'admin');
+    query.leftJoinAndSelect('reef.reefToAdmin', 'reefToAdmin');
+    query.leftJoinAndSelect('reefToAdmin.admin', 'admin');
     query.leftJoinAndSelect('reef.stream', 'stream');
     query.leftJoinAndSelect(
       'reef.latestDailyData',
@@ -66,7 +70,7 @@ export class ReefsService {
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
-      relations: ['region', 'admin', 'stream'],
+      relations: ['region', 'reefToAdmin', 'stream', 'reefToAdmin.admin'],
     });
     if (!found) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);

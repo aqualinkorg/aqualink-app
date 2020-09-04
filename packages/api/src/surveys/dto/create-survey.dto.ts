@@ -1,14 +1,5 @@
-import {
-  IsDateString,
-  IsEnum,
-  IsString,
-  IsOptional,
-  IsInt,
-  Validate,
-} from 'class-validator';
+import { IsDateString, IsEnum, IsString, IsOptional } from 'class-validator';
 import { WeatherConditions } from '../surveys.entity';
-import { EntityExists } from '../../validations/entity-exists.constraint';
-import { Reef } from '../../reefs/reefs.entity';
 
 export class CreateSurveyDto {
   @IsDateString()
@@ -20,8 +11,4 @@ export class CreateSurveyDto {
   @IsString()
   @IsOptional()
   readonly comments?: string;
-
-  @IsInt()
-  @Validate(EntityExists, [Reef])
-  readonly reef: Reef;
 }

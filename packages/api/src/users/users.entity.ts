@@ -6,8 +6,11 @@ import {
   Index,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+// eslint-disable-next-line import/no-cycle
+import { Reef } from '../reefs/reefs.entity';
 
 export enum AdminLevel {
   Default = 'default',
@@ -58,6 +61,9 @@ export class User {
 
   @Column({ nullable: true })
   imageUrl?: string;
+
+  @ManyToMany(() => Reef, (reef) => reef.admins)
+  administeredReefs: Reef[];
 
   @CreateDateColumn()
   createdAt: Date;

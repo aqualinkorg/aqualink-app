@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 // eslint-disable-next-line import/no-cycle
 import { Reef } from '../reefs/reefs.entity';
+// eslint-disable-next-line import/no-cycle
 import { User } from '../users/users.entity';
 // eslint-disable-next-line import/no-cycle
 import { DailyData } from '../reefs/daily-data.entity';
