@@ -63,8 +63,7 @@ const styles = () =>
     },
     header: {
       flex: "0 1 auto",
-      paddingLeft: "2rem",
-      paddingBottom: 0,
+      padding: "1rem 1rem 0 1rem",
     },
     contentWrapper: {
       flex: "1 1 auto",

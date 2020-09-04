@@ -5,6 +5,7 @@ import {
   withStyles,
   WithStyles,
   Typography,
+  Theme,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -102,7 +103,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -116,6 +117,12 @@ const styles = () =>
     container: {
       height: "35rem",
       marginBottom: "3rem",
+      [theme.breakpoints.between("md", 1440)]: {
+        height: "28rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "25rem",
+      },
     },
     smallContainer: {
       height: "20rem",

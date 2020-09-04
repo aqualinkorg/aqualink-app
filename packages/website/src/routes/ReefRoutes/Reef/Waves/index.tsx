@@ -38,26 +38,16 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
           item
           xs={12}
         >
-          <Grid
-            container
-            alignItems="center"
-            justify="space-between"
-            item
-            xs={12}
-          >
-            <Grid item xs={2}>
-              <Typography className={classes.cardTitle} variant="h6">
-                WIND
-              </Typography>
-            </Grid>
-            <Grid item xs={9}>
-              <img alt="wind" src={wind} />
-            </Grid>
+          <Grid container item xs={12}>
+            <Typography className={classes.cardTitle} variant="h6">
+              WIND
+            </Typography>
+            <img className={classes.titleImages} alt="wind" src={wind} />
           </Grid>
           <Grid container justify="flex-start" item xs={12}>
             <Grid item xs={6}>
               <Typography
-                className={classes.contentTitles}
+                className={classes.contentTextTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
@@ -65,7 +55,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Typography>
               <Grid container alignItems="baseline">
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTextValues}
                   color="textSecondary"
                 >
                   {formatNumber(maxWindSpeed, 1)}
@@ -83,7 +73,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
             </Grid>
             <Grid item xs={6}>
               <Typography
-                className={classes.contentTitles}
+                className={classes.contentTextTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
@@ -99,7 +89,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   />
                 )}
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTextValues}
                   color="textSecondary"
                   variant="h3"
                 >
@@ -108,26 +98,16 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            container
-            alignItems="center"
-            justify="space-between"
-            item
-            xs={12}
-          >
-            <Grid item xs={2}>
-              <Typography className={classes.cardTitle} variant="h6">
-                WAVES
-              </Typography>
-            </Grid>
-            <Grid item xs={9}>
-              <img alt="waves" src={waves} />
-            </Grid>
+          <Grid container item xs={12}>
+            <Typography className={classes.cardTitle} variant="h6">
+              WAVES
+            </Typography>
+            <img className={classes.titleImages} alt="waves" src={waves} />
           </Grid>
           <Grid item xs={12} container justify="space-between">
             <Grid item lg={4}>
               <Typography
-                className={classes.contentTitles}
+                className={classes.contentTextTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
@@ -135,7 +115,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Typography>
               <Grid container alignItems="baseline">
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTextValues}
                   color="textSecondary"
                 >
                   {formatNumber(maxWaveHeight, 1)}
@@ -151,9 +131,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item lg={4}>
+            <Grid item lg={3}>
               <Typography
-                className={classes.contentTitles}
+                className={classes.contentTextTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
@@ -161,7 +141,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               </Typography>
               <Grid container alignItems="baseline">
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTextValues}
                   color="textSecondary"
                 >
                   {formatNumber(wavePeriod)}
@@ -177,9 +157,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item lg={4}>
+            <Grid item lg={5}>
               <Typography
-                className={classes.contentTitles}
+                className={classes.contentTextTitles}
                 color="textSecondary"
                 variant="subtitle2"
               >
@@ -195,7 +175,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   />
                 )}
                 <Typography
-                  className={classes.contentValues}
+                  className={classes.contentTextValues}
                   color="textSecondary"
                 >
                   {formatNumber(waveDirection)}
@@ -223,6 +203,10 @@ const styles = (theme: Theme) =>
       lineHeight: 1.5,
       color: theme.palette.primary.main,
     },
+    titleImages: {
+      height: 24,
+      marginLeft: "0.5rem",
+    },
     contentWrapper: {
       flex: "1 1 auto",
       padding: 0,
@@ -230,28 +214,36 @@ const styles = (theme: Theme) =>
     content: {
       padding: "1rem",
     },
-    contentTitles: {
+    contentTextTitles: {
       lineHeight: 1.33,
-    },
-    contentValues: {
-      fontSize: 42,
-      [theme.breakpoints.between("md", "lg")]: {
-        fontSize: 32,
+      [theme.breakpoints.between("sm", 730)]: {
+        fontSize: 9,
       },
-      marginRight: "0.25rem",
+    },
+    contentTextValues: {
       fontWeight: 300,
+      fontSize: 36,
+      [theme.breakpoints.between("md", 1350)]: {
+        fontSize: 24,
+      },
+      [theme.breakpoints.between("sm", 730)]: {
+        fontSize: 24,
+      },
     },
     contentUnits: {
-      [theme.breakpoints.between("md", "lg")]: {
+      [theme.breakpoints.between("md", 1350)]: {
+        fontSize: 12,
+      },
+      [theme.breakpoints.between("sm", 730)]: {
         fontSize: 12,
       },
     },
     arrow: {
-      width: 20,
-      height: 20,
-      [theme.breakpoints.between("md", "lg")]: {
-        width: 14,
-        height: 14,
+      width: 15,
+      height: 15,
+      [theme.breakpoints.between("md", 1350)]: {
+        width: 10,
+        height: 10,
       },
     },
   });

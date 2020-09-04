@@ -36,79 +36,75 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container alignItems="center" justify="flex-start">
-            <Grid item xs={7}>
+          <Grid container justify="space-between">
+            <Grid item xs={9}>
               <Typography className={classes.cardTitle} variant="h6">
                 SATELLITE OBSERVATION
               </Typography>
             </Grid>
-            <Grid item xs={5}>
-              <img alt="satellite" src={satellite} />
+            <Grid item xs={1}>
+              <img
+                className={classes.titleImage}
+                alt="satellite"
+                src={satellite}
+              />
             </Grid>
           </Grid>
         }
       />
       <CardContent className={classes.content}>
-        <Grid
-          container
-          direction="column"
-          alignItems="stretch"
-          justify="space-between"
-          style={{ height: "100%" }}
-        >
-          <Grid className={classes.contentText} item>
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
-                <Typography
-                  className={classes.contentTextTitles}
-                  color="textPrimary"
-                  variant="subtitle2"
-                >
-                  SURFACE TEMP
-                </Typography>
+        <Grid container justify="space-between" style={{ height: "100%" }}>
+          <Grid className={classes.contentTextWrapper} container item xs={12}>
+            <Grid item xs={6} md={12} lg={12} xl={6}>
+              <Typography
+                className={classes.contentTextTitles}
+                color="textPrimary"
+                variant="subtitle2"
+              >
+                SURFACE TEMP
+              </Typography>
+              <Typography
+                className={classes.contentTextValues}
+                color="textPrimary"
+              >
+                {`${formatNumber(satelliteTemperature, 1)} °C`}
+              </Typography>
+            </Grid>
+            <Grid item xs={6} md={12} lg={12} xl={6}>
+              <Typography
+                className={classes.contentTextTitles}
+                color="textPrimary"
+                variant="subtitle2"
+              >
+                HISTORICAL AUG TEMP
+              </Typography>
+              <Typography
+                className={classes.contentTextValues}
+                color="textPrimary"
+              >
+                {`${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography
+                className={classes.contentTextTitles}
+                color="textPrimary"
+                variant="subtitle2"
+              >
+                DEGREE HEATING WEEKS
+              </Typography>
+              <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                 <Typography
                   className={classes.contentTextValues}
                   color="textPrimary"
+                  variant="h2"
                 >
-                  {`${formatNumber(satelliteTemperature, 1)} °C`}
+                  {`${formatNumber(degreeHeatingWeeks, 1)}`}
                 </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  className={classes.contentTextTitles}
-                  color="textPrimary"
-                  variant="subtitle2"
-                >
-                  HISTORICAL MAX
-                </Typography>
-                <Typography
-                  className={classes.contentTextValues}
-                  color="textPrimary"
-                >
-                  {`${formatNumber(maxMonthlyMean, 1)} °C`}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  className={classes.contentTextTitles}
-                  color="textPrimary"
-                  variant="subtitle2"
-                >
-                  HEAT STRESS
-                </Typography>
-                <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
-                  <Typography
-                    className={classes.contentTextValues}
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
-                  </Typography>
-                </Tooltip>
-              </Grid>
+              </Tooltip>
             </Grid>
           </Grid>
-          <Grid item container>
+          <Grid item container alignItems="flex-end">
             {colorCode.map((elem) => (
               <Grid
                 container
@@ -148,13 +144,20 @@ const styles = (theme: Theme) =>
       lineHeight: 1.5,
       margin: "0 0 0.5rem 1rem",
     },
+    titleImage: {
+      height: 35,
+      width: 35,
+    },
     header: {
       flex: "0 1 auto",
-      padding: "0.5rem 1.5rem 0 1rem",
+      padding: "1rem 1rem 0 1rem",
     },
     content: {
       flex: "1 1 auto",
-      padding: 0,
+      padding: "1rem 0 0 0",
+    },
+    contentTextWrapper: {
+      padding: "0 1rem 0 1rem",
     },
     contentText: {
       marginTop: "1rem",
@@ -162,11 +165,21 @@ const styles = (theme: Theme) =>
     },
     contentTextTitles: {
       lineHeight: 1.33,
+      [theme.breakpoints.between("sm", 730)]: {
+        fontSize: 9,
+      },
+      [theme.breakpoints.between("md", 1350)]: {
+        fontSize: 9,
+      },
     },
     contentTextValues: {
       fontWeight: 300,
-      [theme.breakpoints.between("md", "lg")]: {
-        fontSize: 32,
+      fontSize: 36,
+      [theme.breakpoints.between("sm", 730)]: {
+        fontSize: 28,
+      },
+      [theme.breakpoints.between("md", 1350)]: {
+        fontSize: 24,
       },
     },
   });
