@@ -20,7 +20,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, avgBottomTemperature } =
     reef.latestDailyData || {};
 
-  const hasSpotter = false;
+  const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
 
   return (
     <Card className={classes.card}>
