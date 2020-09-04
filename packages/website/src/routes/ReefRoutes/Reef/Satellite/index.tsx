@@ -173,7 +173,7 @@ const styles = (theme: Theme) =>
     },
     contentTextValues: {
       fontWeight: 300,
-      fontSize: 36,
+      fontSize: 32,
       [theme.breakpoints.between("sm", 730)]: {
         fontSize: 28,
       },
