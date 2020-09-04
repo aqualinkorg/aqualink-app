@@ -34,11 +34,9 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       }
       const zoom = map.getZoom();
       if (zoom < Infinity) {
-        // User can't zoom out from the initial frame
         map.setMinZoom(zoom);
       } else {
-        map.setZoom(8);
-        map.setMinZoom(8);
+        map.setZoom(13);
       }
     }
   }, [mapRef, polygon]);
