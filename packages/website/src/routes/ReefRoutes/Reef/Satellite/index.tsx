@@ -37,7 +37,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
         className={classes.header}
         title={
           <Grid container justify="space-between">
-            <Grid item xs={9}>
+            <Grid container item xs={8}>
               <Typography className={classes.cardTitle} variant="h6">
                 SATELLITE OBSERVATION
               </Typography>
@@ -76,7 +76,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                 color="textPrimary"
                 variant="subtitle2"
               >
-                HISTORICAL AUG TEMP
+                HISTORICAL MAX TEMP
               </Typography>
               <Typography
                 className={classes.contentTextValues}
@@ -99,7 +99,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                   color="textPrimary"
                   variant="h2"
                 >
-                  {`${formatNumber(degreeHeatingWeeks, 1)}`}
+                  {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
                 </Typography>
               </Tooltip>
             </Grid>
@@ -142,7 +142,6 @@ const styles = (theme: Theme) =>
     },
     cardTitle: {
       lineHeight: 1.5,
-      margin: "0 0 0.5rem 1rem",
     },
     titleImage: {
       height: 35,

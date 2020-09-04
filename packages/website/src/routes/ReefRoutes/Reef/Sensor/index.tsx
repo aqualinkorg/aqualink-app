@@ -20,7 +20,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, avgBottomTemperature } =
     reef.latestDailyData || {};
 
-  const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
+  const hasSpotter = false;
 
   return (
     <Card className={classes.card}>
@@ -41,7 +41,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       />
       <CardContent className={classes.content}>
         <Grid style={{ height: "100%" }} container justify="space-between">
-          <Grid container item xs={6}>
+          <Grid container item xs={7}>
             <Grid item xs={12}>
               <Typography
                 className={classes.contentTextTitles}
@@ -74,12 +74,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 {formatNumber(avgBottomTemperature, 1)} °C
               </Typography>
             </Grid>
-          </Grid>
-          <Grid container item xs={6}>
-            <img className={classes.contentImage} alt="sensor" src={sensor} />
-          </Grid>
-          {!hasSpotter && (
-            <Grid className={classes.noSensorAlertWrapper} item xs={12}>
+            {!hasSpotter && (
               <Grid
                 className={classes.noSensorAlert}
                 container
@@ -88,12 +83,19 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 item
                 xs={12}
               >
-                <Typography variant="subtitle1" color="textPrimary">
+                <Typography
+                  className={classes.alertText}
+                  variant="subtitle1"
+                  color="textPrimary"
+                >
                   Not Installed Yet
                 </Typography>
               </Grid>
-            </Grid>
-          )}
+            )}
+          </Grid>
+          <Grid container alignItems="flex-end" item xs={5}>
+            <img className={classes.contentImage} alt="sensor" src={sensor} />
+          </Grid>
         </Grid>
       </CardContent>
     </Card>
@@ -122,16 +124,13 @@ const styles = (theme: Theme) =>
     },
     content: {
       flex: "1 1 auto",
-      padding: "1rem 1rem 0 2rem",
+      padding: "1rem 1rem 0 1rem",
       [theme.breakpoints.between("md", 1350)]: {
         padding: "1rem 1rem 0 1rem",
       },
     },
     contentImage: {
-      height: "12rem",
-    },
-    noSensorAlertWrapper: {
-      paddingRight: "1rem",
+      height: "15rem",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
@@ -145,6 +144,11 @@ const styles = (theme: Theme) =>
       },
       [theme.breakpoints.between("md", 1350)]: {
         fontSize: 9,
+      },
+    },
+    alertText: {
+      [theme.breakpoints.between("md", 1080)]: {
+        fontSize: 11,
       },
     },
     contentTextValues: {
