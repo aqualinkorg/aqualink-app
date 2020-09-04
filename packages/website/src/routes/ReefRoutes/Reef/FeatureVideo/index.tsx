@@ -36,7 +36,7 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
             <Grid container item spacing={2}>
               <Grid container justify="center" item xs={12}>
                 <Typography style={{ opacity: 0.5 }} variant="h5">
-                  VIDEO TO BE UPLOADED
+                  IMAGE TO BE UPLOADED
                 </Typography>
               </Grid>
               <Grid container justify="center" item xs={12}>
@@ -47,9 +47,6 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
             </Grid>
           </div>
           <div className={classes.noVideoCardContent} />
-          <IconButton className={classes.playIconWrapper}>
-            <PlayArrowIcon className={classes.playIcon} />
-          </IconButton>
         </div>
       )}
     </Card>

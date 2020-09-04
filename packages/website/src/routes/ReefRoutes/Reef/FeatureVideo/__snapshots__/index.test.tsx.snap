@@ -21,7 +21,7 @@ exports[`renders as expected 1`] = `
               class="MuiTypography-root MuiTypography-h5"
               style="opacity: 0.5;"
             >
-              VIDEO TO BE UPLOADED
+              IMAGE TO BE UPLOADED
             </h5>
           </div>
           <div
@@ -50,29 +50,6 @@ exports[`renders as expected 1`] = `
       <div
         class="FeatureVideo-noVideoCardContent-5"
       />
-      <button
-        class="MuiButtonBase-root MuiIconButton-root FeatureVideo-playIconWrapper-6"
-        tabindex="0"
-        type="button"
-      >
-        <span
-          class="MuiIconButton-label"
-        >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root FeatureVideo-playIcon-7"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M8 5v14l11-7z"
-            />
-          </svg>
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
-      </button>
     </div>
   </div>
 </div>
