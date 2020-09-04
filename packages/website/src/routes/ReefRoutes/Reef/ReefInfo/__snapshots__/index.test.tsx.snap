@@ -49,7 +49,7 @@ exports[`renders as expected 1`] = `
             <h6
               class="MuiTypography-root MuiTypography-subtitle1"
             >
-              Latest data: Sep 04, 2020
+              Latest data: May 10, 2020
             </h6>
           </div>
           <div
