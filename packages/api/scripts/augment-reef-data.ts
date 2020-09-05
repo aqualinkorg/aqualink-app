@@ -99,7 +99,6 @@ async function augmentReefs(connection: Connection) {
     allReefs,
     async (reef) => {
       const augmentedData = await getAugmentedData(reef, regionRepository);
-      // eslint-disable-next-line no-await-in-loop
       await reefRepository.update(reef.id, augmentedData);
     },
     { concurrency: 1 },
