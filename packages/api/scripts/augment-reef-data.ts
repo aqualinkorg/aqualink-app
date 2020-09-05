@@ -65,7 +65,8 @@ async function getAugmentedData(
 ) {
   const [longitude, latitude] = (reef.polygon as Point).coordinates;
 
-  const region = await getRegion(longitude, latitude, regionRepository);
+  const region =
+    reef.region || (await getRegion(longitude, latitude, regionRepository));
 
   const MMM = await getMMM(longitude, latitude);
   if (MMM === null) {
