@@ -45,7 +45,7 @@ export async function getDailyData(reef: Reef, date: Date) {
 
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
-  let degreeHeatingDays: number;
+  let degreeHeatingDays: number | undefined;
   try {
     // TODO - Get data for the past 84 days.
     const seaSurfaceTemperatures = [] as number[];
@@ -64,7 +64,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     );
 
     degreeHeatingDays =
-      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : 0;
+      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : undefined;
   }
 
   const satelliteTemperatureData = await getSofarDailyData(
