@@ -9,6 +9,24 @@ type SofarValue = {
   value: number;
 };
 
+type SpotterData = {
+  surfaceTemperature: number[];
+  bottomTemperature: number[];
+  significantWaveHeight: number[];
+  wavePeakPeriod: number[];
+  waveMeanDirection: number[];
+};
+
+type SensorData = {
+  sensorPosition: number;
+  degrees: number;
+};
+
+const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
+  sofarValues
+    .filter((data) => data.value !== undefined)
+    .map(({ value }) => value);
+
 axiosRetry(axios, { retries: 3 });
 
 export async function sofarHindcast(
@@ -111,16 +129,6 @@ export async function getSofarDailyData(
     : []) as SofarValue[];
 }
 
-type SpotterData = {
-  surfaceTemperature: number[];
-  bottomTemperature: number[];
-};
-
-type SensorData = {
-  sensorPosition: number;
-  degrees: number;
-};
-
 function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
   return data.find((d) => d.sensorPosition === sensorPosition)?.degrees;
 }
@@ -132,11 +140,34 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   date: Date,
 ): Promise<SpotterData> {
-  // TODO - Get waves data from spotters.
   const [start, end] = getStartEndDate(date, localTimezone);
   const {
-    data: { smartMooringData = [] },
+    data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
+
+  const [sofarSignificantWaveHeight, sofarPeakPeriod, sofarMeanDirection]: [
+    SofarValue[],
+    SofarValue[],
+    SofarValue[],
+  ] = waves.reduce(
+    ([significantWaveHeights, peakPeriods, meanDirections], data) => {
+      return [
+        significantWaveHeights.concat({
+          timestamp: data.timestamp,
+          value: data.significantWaveHeight,
+        }),
+        peakPeriods.concat({
+          timestamp: data.timestamp,
+          value: data.peakPeriod,
+        }),
+        meanDirections.concat({
+          timestamp: data.timestamp,
+          value: data.meanDirection,
+        }),
+      ];
+    },
+    [[], [], []],
+  );
 
   const [sofarBottomTemperature, sofarSurfaceTemperature]: [
     SofarValue[],
@@ -158,15 +189,13 @@ export async function getSpotterData(
     [[], []],
   );
 
-  const bottomTemperature = sofarBottomTemperature
-    .filter((data) => data.value !== undefined)
-    .map(({ value }) => value);
-
-  const surfaceTemperature = sofarSurfaceTemperature
-    .filter((data) => data.value !== undefined)
-    .map(({ value }) => value);
-
-  return { surfaceTemperature, bottomTemperature };
+  return {
+    surfaceTemperature: extractSofarValues(sofarBottomTemperature),
+    bottomTemperature: extractSofarValues(sofarSurfaceTemperature),
+    significantWaveHeight: extractSofarValues(sofarSignificantWaveHeight),
+    wavePeakPeriod: extractSofarValues(sofarPeakPeriod),
+    waveMeanDirection: extractSofarValues(sofarMeanDirection),
+  };
 }
 
 /** Utility function to get the closest available data given a date in UTC. */

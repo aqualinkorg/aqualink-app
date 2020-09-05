@@ -29,7 +29,13 @@ export async function getDailyData(reef: Reef, date: Date) {
 
   const spotterData = spotterId
     ? await getSpotterData(spotterId, localTimezone, date)
-    : { surfaceTemperature: [], bottomTemperature: [] };
+    : {
+        surfaceTemperature: [],
+        bottomTemperature: [],
+        significantWaveHeight: [],
+        wavePeakPeriod: [],
+        waveMeanDirection: [],
+      };
 
   const minBottomTemperature = getMin(spotterData.bottomTemperature);
   const maxBottomTemperature = getMax(spotterData.bottomTemperature);
@@ -77,47 +83,57 @@ export async function getDailyData(reef: Reef, date: Date) {
       satelliteTemperatureData.slice(-1)[0].value) ||
     undefined;
 
-  // Get NOAA waves data
-  const significantWaveHeights = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-significantWaveHeight',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  // Get waves data if unavailable through a spotter
+
+  const significantWaveHeights =
+    spotterData.significantWaveHeight.length > 0
+      ? spotterData.significantWaveHeight
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-significantWaveHeight',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
 
   const minWaveHeight = getMin(significantWaveHeights);
   const maxWaveHeight = getMax(significantWaveHeights);
   const avgWaveHeight = getAverage(significantWaveHeights);
 
-  const meanDirectionWindWaves = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-meanDirectionWindWaves',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  const meanDirectionWindWaves =
+    spotterData.waveMeanDirection.length > 0
+      ? spotterData.waveMeanDirection
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-meanDirectionWindWaves',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
 
   const waveDirection = getAverage(meanDirectionWindWaves, true);
 
-  const meanPeriodWindWaves = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-peakPeriod',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  const peakPeriodWindWaves =
+    spotterData.wavePeakPeriod.length > 0
+      ? spotterData.wavePeakPeriod
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-peakPeriod',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
 
-  const wavePeriod = getAverage(meanPeriodWindWaves, true);
+  const wavePeriod = getAverage(peakPeriodWindWaves, true);
 
   // Get NOAA GFS wind data
   const windVelocities = (
