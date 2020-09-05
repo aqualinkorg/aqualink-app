@@ -79,9 +79,9 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                   <Box position="absolute" top={16} left={16}>
                     <Typography variant="h5">{reef.name}</Typography>
 
-                    {reef.region && (
+                    {reef.region?.name && (
                       <Typography variant="h6" style={{ fontWeight: 400 }}>
-                        {reef.region}
+                        {reef.region.name}
                       </Typography>
                     )}
                   </Box>

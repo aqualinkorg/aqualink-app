@@ -61,13 +61,13 @@ export class Reef {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => Region, { nullable: true })
   region?: Region;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   admin?: User;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => VideoStream, { nullable: true })
   stream?: VideoStream;
 
   @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)

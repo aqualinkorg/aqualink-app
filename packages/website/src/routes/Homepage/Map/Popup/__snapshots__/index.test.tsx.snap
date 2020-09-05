@@ -2,114 +2,121 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+  <mock-leafletpopup
+    classname="Popup-popup-2"
+    closebutton="false"
   >
     <div
-      class="MuiCardHeader-root Popup-popupHeader-1"
+      class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
     >
       <div
-        class="MuiCardHeader-content"
-      >
-        <span
-          class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
-        />
-        <span
-          class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body1 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-        />
-      </div>
-    </div>
-    <div
-      class="MuiCardContent-root"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        class="MuiCardHeader-root Popup-popupHeader-1"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          class="MuiCardHeader-content"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          <span
+            class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+          />
+          <span
+            class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body1 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
           >
-            <span
-              class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
-            >
-              TEMP AT 0M
-            </span>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-          >
-            <h5
-              class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
-              style="color: rgb(22, 141, 189);"
-            >
-              10.0
-               ℃
-            </h5>
-          </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
-          >
-            <span
-              class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
-            >
-              HEAT STRESS
-            </span>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
-          >
-            <h5
-              class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
-              style="color: rgb(8, 91, 163);"
-            >
-              1.4
-               
-            </h5>
-            <h6
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-colorTextSecondary"
-              style="color: rgb(8, 91, 163); position: relative; bottom: 0px;"
-              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-            >
-              DHW
-            </h6>
-          </div>
+            Hawai
+          </span>
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-        style="margin: 1rem 0px 1rem 0px;"
+        class="MuiCardContent-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
-          <a
-            href="/reefs/2"
-            style="text-decoration: none;"
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
-              tabindex="0"
-              type="button"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
               <span
-                class="MuiButton-label"
+                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
               >
-                EXPLORE
+                TEMP AT 0M
               </span>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+                style="color: rgb(22, 141, 189);"
+              >
+                10.0
+                 ℃
+              </h5>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
+            >
               <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </a>
+                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              >
+                HEAT STRESS
+              </span>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+                style="color: rgb(8, 91, 163);"
+              >
+                1.4
+                 
+              </h5>
+              <h6
+                class="MuiTypography-root MuiTypography-h6 MuiTypography-colorTextSecondary"
+                style="color: rgb(8, 91, 163); position: relative; bottom: 0px;"
+                title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+              >
+                DHW
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          style="margin: 1rem 0px 1rem 0px;"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <a
+              href="/reefs/2"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  EXPLORE
+                </span>
+                <span
+                  class="MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </mock-leafletpopup>
 </div>
 `;
