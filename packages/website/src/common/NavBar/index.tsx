@@ -20,10 +20,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
+import classNames from "classnames";
 
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
 import SignInDialog from "../../routes/Homepage/SignInDialog";
 import Search from "../Search";
+import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
 const NavBar = ({ searchLocation, classes }: NavBarProps) => {
@@ -31,6 +33,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
+  const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
@@ -46,12 +49,26 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
 
   return (
     <>
-      <AppBar className={classes.appBar} position="static" color="primary">
+      <AppBar
+        className={classNames(classes.appBar, {
+          [classes.appBarXs]: searchLocation,
+        })}
+        position="static"
+        color="primary"
+      >
         <Toolbar className={classes.toolbar}>
+          <MenuDrawer
+            open={menuDrawerOpen}
+            onClose={() => setMenuDrawerOpen(false)}
+          />
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs={5} sm={4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
-                <IconButton edge="start" color="inherit">
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={() => setMenuDrawerOpen(true)}
+                >
                   <MenuIcon />
                 </IconButton>
 
@@ -70,7 +87,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               </Hidden>
             )}
 
-            <Grid container justify="flex-end" item xs={7} sm={4}>
+            <Grid
+              container
+              justify="flex-end"
+              item
+              xs={7}
+              sm={searchLocation ? 4 : 8}
+            >
               {user ? (
                 <>
                   <IconButton className={classes.button}>
@@ -148,7 +171,8 @@ const styles = (theme: Theme) =>
       "&.MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
       },
-
+    },
+    appBarXs: {
       [theme.breakpoints.only("xs")]: {
         height: 122,
       },

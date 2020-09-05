@@ -1,0 +1,441 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Faq should render with given state from Redux store 1`] = `
+<div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-6 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-8 MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-15"
+          >
+            <button
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+            >
+              Aqua
+            </h4>
+            <h4
+              class="MuiTypography-root MuiTypography-h4"
+              style="color: rgb(138, 198, 222);"
+            >
+              link
+            </h4>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                SIGN IN
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-text"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiButton-label"
+              >
+                REGISTER
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div>
+    <div
+      class="page-container"
+    >
+      <div
+        class="bloc l-bloc"
+        id="bloc-11"
+      >
+        <div
+          class="container bloc-lg"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <h4
+                class="MuiTypography-root Faq-title-1 MuiTypography-h4"
+              >
+                Frequently Asked Questions
+              </h4>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                I am managing a large area and would like more than one spotter, can I get multiple?
+              </h5>
+              <p>
+                Please submit an application for each reef or location you would like a spotter for and we’ll be in touch to figure out a staged roll out with you.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                Who is responsible for the satellite communication costs?
+              </h5>
+              <p>
+                Aqualink will be responsible for any satellite communication costs.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                What is the maximum depth a temperature sensor on the smart mooring can be deployed?
+              </h5>
+              <p>
+                100 meters.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                What are the shipping costs?
+                <br />
+              </h5>
+              <p>
+                Shipping cost will vary greatly depending on your location. To get an idea of shipping costs you can visit https://onlineshippingcalculator.com/ and enter the following:
+                <br />
+              </p>
+              <ul>
+                <li>
+                  <p>
+                    Set ship from location to San Francisco CA USA
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Set ship to location to your location
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Weight will be 22lbs
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Dimension will be 18 inches x 18 inches x 14 inches.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Because our shipment will arrive in two boxes and using our negotiated rates you will need to multiply this result by 1.5x. 
+                    <br />
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    This should be a rough estimate.
+                    <br />
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    This does not include total landed costs for international shipping (see below).
+                    <br />
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                Am I responsible for customs / duties / taxes?
+              </h5>
+              <p>
+                Yes. As the recipient of the equipment you will need to determine if you need to pay these to receive your equipment at customs.
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                How big is the smart mooring and spotter buoy?
+              </h5>
+              <p>
+                The total smart mooring system is small enough for regular shipping such as UPS, DHL, FedEx, etc. The dimensions and weight of the buoy are:
+                <br />
+                <br />
+                42cm diameter
+                <br />
+                31cm height
+                <br />
+                5.4 KG
+                <br />
+                <br />
+                There is a ballast chain and smart mooring cable, the weight and dimensions are still TBD but depending on the length of cable needed for your target depth this should be around the same dimensions and less than 15kg.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                Can I see more specification for the spotter buoy?
+              </h5>
+              <p>
+                You can see some of the specifications 
+                <a
+                  href="https://content.sofarocean.com/hubfs/Spotter%20product%20documentation%20page/Sofar_Spotter_Specs_8_30_19.pdf"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  here
+                </a>
+                :
+                <br />
+                More specifications will be released soon.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                How is the smart mooring moored? Does it come with a mooring anchor?
+              </h5>
+              <p>
+                The smart mooring does not come with an anchor. It terminates in a stainless steel shackle with a chain. This can be attached to an existing mooring. We will work with you to determine the best arrangement for mooring at your site as factors like depth, wind, current, wave action, and storms may determine the configuration of the mooring.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                Am I responsible for permitting and permissions to install?
+              </h5>
+              <p>
+                Yes. You will need to know the regulations for your installation site and ensure you have the proper permits and permissions.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                How do I receive data from the smart mooring?
+              </h5>
+              <p>
+                Data will be available in an open-source dashboard provided by aqualink.org.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                How often will I receive data?
+              </h5>
+              <p>
+                Data will be real time transmitted every 30-45 minutes.
+                <br />
+              </p>
+            </div>
+          </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <h5
+                class="MuiTypography-root Faq-question-2 MuiTypography-h5"
+              >
+                What data will I receive from the smart mooring?
+              </h5>
+              <p>
+                The planned data available will be:
+                <br />
+                <br />
+                significant wave height
+                <br />
+                peak period
+                <br />
+                mean period
+                <br />
+                peak direction
+                <br />
+                mean direction
+                <br />
+                peak directional spread
+                <br />
+                mean directional spread
+                <br />
+                wind speed
+                <br />
+                wind direction
+                <br />
+                GPS coordinates
+                <br />
+                surface temperature (placement configurable)
+                <br />
+                subsurface temperature (placement configurable)
+                <br />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-31 MuiPaper-elevation4"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+          >
+            Aqua
+          </h4>
+          <h4
+            class="MuiTypography-root MuiTypography-h4"
+            style="color: rgb(138, 198, 222);"
+          >
+            link
+          </h4>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
