@@ -4,6 +4,7 @@ import {
   AddressType,
   LatLng,
 } from '@googlemaps/google-maps-services-js';
+import Bluebird from 'bluebird';
 import { Connection, createConnection, Repository } from 'typeorm';
 import { Point, GeoJSON } from 'geojson';
 import geoTz from 'geo-tz';
@@ -91,12 +92,22 @@ async function augmentReefs(connection: Connection) {
   const reefRepository = connection.getRepository(Reef);
   const regionRepository = connection.getRepository(Region);
   const allReefs = await reefRepository.find();
-  return Promise.all(
-    allReefs.map(async (reef) => {
+
+  const start = new Date();
+  console.log(`Augmenting ${allReefs.length} reefs...`);
+  await Bluebird.map(
+    allReefs,
+    async (reef) => {
       const augmentedData = await getAugmentedData(reef, regionRepository);
-      const res = await reefRepository.update(reef.id, augmentedData);
-      return res;
-    }),
+      // eslint-disable-next-line no-await-in-loop
+      await reefRepository.update(reef.id, augmentedData);
+    },
+    { concurrency: 1 },
+  );
+  console.log(
+    `Augmented ${allReefs.length} reefs in ${
+      (new Date().valueOf() - start.valueOf()) / 1000
+    } seconds`,
   );
 }
 
