@@ -51,6 +51,7 @@
     "@nestjs/typeorm": "^7.0.0",
     "axios": "^0.19.2",
     "axios-retry": "^3.1.8",
+    "bluebird": "^3.7.2",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "firebase-admin": "^9.0.0",
