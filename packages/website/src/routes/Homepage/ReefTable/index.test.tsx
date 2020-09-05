@@ -21,7 +21,7 @@ describe("ReefTable", () => {
       depth: 19,
       status: 0,
       videoStream: null,
-      region: null,
+      region: { name: "Hawai" },
       admin: null,
       stream: null,
       latestDailyData: {

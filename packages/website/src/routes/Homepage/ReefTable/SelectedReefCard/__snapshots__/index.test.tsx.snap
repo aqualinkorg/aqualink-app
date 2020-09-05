@@ -48,7 +48,6 @@ exports[`renders as expected 1`] = `
                 <h5
                   class="MuiTypography-root MuiTypography-h5"
                 />
-                
               </div>
             </mock-hidden>
             <div

@@ -16,7 +16,9 @@ exports[`renders as expected 1`] = `
         />
         <span
           class="MuiTypography-root MuiCardHeader-subheader MuiTypography-body1 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-        />
+        >
+          Hawai
+        </span>
       </div>
     </div>
     <div

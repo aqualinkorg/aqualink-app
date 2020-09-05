@@ -30,7 +30,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
       <CardHeader
         className={classes.popupHeader}
         title={reef.name}
-        subheader={reef.region}
+        subheader={reef.region?.name}
       />
       <CardContent>
         <Grid container item xs={12}>

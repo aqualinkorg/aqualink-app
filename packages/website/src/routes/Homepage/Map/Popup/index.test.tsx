@@ -17,7 +17,7 @@ test("renders as expected", () => {
     depth: 0,
     status: 0,
     videoStream: null,
-    region: "",
+    region: { name: "Hawai" },
     admin: null,
     stream: null,
     dailyData: [],
