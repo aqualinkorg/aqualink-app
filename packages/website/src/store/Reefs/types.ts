@@ -52,7 +52,7 @@ export interface Reef {
   depth: number | null;
   status: number;
   videoStream: string | null;
-  region: Region;
+  region: Region | null;
   admin: string | null;
   stream: string | null;
   dailyData: Data[];

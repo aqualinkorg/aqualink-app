@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Map, TileLayer, Marker, Popup as LeafletPopup } from "react-leaflet";
-import L from "leaflet";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Map, TileLayer } from "react-leaflet";
+import { LatLng } from "leaflet";
 import {
   createStyles,
   withStyles,
@@ -9,156 +9,32 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 
-import {
-  reefsListSelector,
-  reefsListLoadingSelector,
-} from "../../../store/Reefs/reefsListSlice";
-import {
-  reefOnMapSelector,
-  unsetReefOnMap,
-} from "../../../store/Homepage/homepageSlice";
-import { Reef } from "../../../store/Reefs/types";
-import Popup from "./Popup";
-import { coloredBuoyIcon } from "./utils";
+import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
+import { ReefMarkers } from "./markers";
+import { SofarLayers } from "./sofarLayers";
+
+const INITIAL_CENTER = new LatLng(37.9, -75.3);
+const INITIAL_ZOOM = 5;
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
-  const mapRef = useRef<Map>(null);
-  const markerRef = useRef<Marker>(null);
-  const dispatch = useDispatch();
-  const reefOnMap = useSelector(reefOnMapSelector);
-  const reefsList = useSelector(reefsListSelector);
   const loading = useSelector(reefsListLoadingSelector);
-  const [center, setCenter] = useState<[number, number]>([37.9, -75.3]);
-  const [zoom, setZoom] = useState<number>(5);
 
-  useEffect(() => {
-    const { current } = mapRef;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
-      const southWest = L.latLng(-90, -240);
-      const northEast = L.latLng(90, 240);
-      const bounds = L.latLngBounds(southWest, northEast);
-      map.setMaxBounds(bounds);
-      map.flyTo(center, zoom, { duration: 1 });
-    }
-  }, [center, zoom, mapRef]);
-
-  // Add Sofar Tiles
-  useEffect(() => {
-    const { current } = mapRef;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
-
-      const layerControl = L.control.layers(undefined).addTo(map);
-      const sofarLayers = [
-        {
-          name: "Sea Surface Temperature",
-          model: "HYCOM",
-          variableID: "seaSurfaceTemperature",
-          cmap: "turbo",
-        },
-        {
-          name: "Heat Stress",
-          model: "NOAACoralReefWatch",
-          variableID: "degreeHeatingWeek",
-          cmap: "noaacoral",
-        },
-      ];
-
-      const sofarUrl = "https://api.sofarocean.com/marine-weather/v1/models/";
-      const { REACT_APP_SOFAR_API_TOKEN: token } = process.env;
-      sofarLayers.forEach((layer) => {
-        layerControl.addOverlay(
-          L.tileLayer(
-            `${sofarUrl}${layer.model}/tile/{z}/{x}/{y}.png?colormap=${layer.cmap}&token=${token}&variableID=${layer.variableID}`,
-            { opacity: 0.5 }
-          ),
-          layer.name
-        );
-      });
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    const markerCurrent = markerRef.current;
-    const mapCurrent = mapRef.current;
-    if (
-      markerCurrent &&
-      markerCurrent.leafletElement &&
-      mapCurrent &&
-      mapCurrent.leafletElement &&
-      reefOnMap?.polygon?.type === "Point"
-    ) {
-      const map = mapCurrent.leafletElement;
-      const marker = markerCurrent.leafletElement;
-      map.flyTo(
-        [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
-        6,
-        { duration: 1 }
-      );
-      marker.openPopup();
-    }
-  }, [reefOnMap, markerRef, mapRef]);
-
-  return (
-    <>
-      {loading ? (
-        <div className={classes.loading}>
-          <CircularProgress size="10rem" thickness={1} />
-        </div>
-      ) : (
-        <Map
-          maxBoundsViscosity={1.0}
-          className={classes.map}
-          ref={mapRef}
-          center={center}
-          zoom={zoom}
-          minZoom={2}
-        >
-          <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-          {reefOnMap && reefOnMap.polygon.type === "Point" && (
-            <Marker
-              ref={markerRef}
-              icon={coloredBuoyIcon(
-                reefOnMap.latestDailyData.degreeHeatingDays
-              )}
-              position={[
-                reefOnMap.polygon.coordinates[1],
-                reefOnMap.polygon.coordinates[0],
-              ]}
-            >
-              <LeafletPopup closeButton={false} className={classes.popup}>
-                <Popup reef={reefOnMap} />
-              </LeafletPopup>
-            </Marker>
-          )}
-          {reefsList.length > 0 &&
-            reefsList.map((reef: Reef) => {
-              if (reef.polygon.type === "Point") {
-                const [lng, lat] = reef.polygon.coordinates;
-                const { degreeHeatingDays } = reef.latestDailyData || {};
-                return (
-                  <Marker
-                    onClick={() => {
-                      setZoom(6);
-                      setCenter([lat, lng]);
-                      dispatch(unsetReefOnMap());
-                    }}
-                    key={reef.id}
-                    icon={coloredBuoyIcon(degreeHeatingDays)}
-                    position={[lat, lng]}
-                  >
-                    <LeafletPopup closeButton={false} className={classes.popup}>
-                      <Popup reef={reef} />
-                    </LeafletPopup>
-                  </Marker>
-                );
-              }
-              return null;
-            })}
-        </Map>
-      )}
-    </>
+  return loading ? (
+    <div className={classes.loading}>
+      <CircularProgress size="10rem" thickness={1} />
+    </div>
+  ) : (
+    <Map
+      maxBoundsViscosity={1.0}
+      className={classes.map}
+      center={INITIAL_CENTER}
+      zoom={INITIAL_ZOOM}
+      minZoom={2}
+    >
+      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <SofarLayers />
+      <ReefMarkers />
+    </Map>
   );
 };
 
@@ -166,10 +42,6 @@ const styles = () =>
   createStyles({
     map: {
       flex: 1,
-    },
-    popup: {
-      width: "12vw",
-      minWidth: "200px",
     },
     loading: {
       height: "100%",

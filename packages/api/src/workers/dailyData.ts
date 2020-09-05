@@ -2,6 +2,7 @@
 import { isNil, omitBy, sum } from 'lodash';
 import { Connection } from 'typeorm';
 import { Point } from 'geojson';
+import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
@@ -172,34 +173,41 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
-  // eslint-disable-next-line no-restricted-syntax
-  for (const reef of allReefs) {
-    // eslint-disable-next-line no-await-in-loop
-    const dailyDataInput = await getDailyData(reef, date);
-    const entity = dailyDataRepository.create(dailyDataInput);
-    try {
-      // eslint-disable-next-line no-await-in-loop
-      await dailyDataRepository.save(entity);
-    } catch (err) {
-      // Update instead of insert
-      if (err.constraint === 'no_duplicated_date') {
-        const filteredData = omitBy(entity, isNil);
+  const start = new Date();
+  console.log(`Updating ${allReefs.length} reefs.`);
+  await Bluebird.map(
+    allReefs,
+    async (reef) => {
+      const dailyDataInput = await getDailyData(reef, date);
+      const entity = dailyDataRepository.create(dailyDataInput);
+      try {
+        await dailyDataRepository.save(entity);
+      } catch (err) {
+        // Update instead of insert
+        if (err.constraint === 'no_duplicated_date') {
+          const filteredData = omitBy(entity, isNil);
 
-        dailyDataRepository.update(
-          {
-            reef,
-            date: entity.date,
-          },
-          filteredData,
+          await dailyDataRepository.update(
+            {
+              reef,
+              date: entity.date,
+            },
+            filteredData,
+          );
+          return;
+        }
+        console.error(
+          `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
         );
-        // eslint-disable-next-line no-continue
-        continue;
       }
-      console.error(
-        `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
-      );
-    }
-  }
+    },
+    { concurrency: 8 },
+  );
+  console.log(
+    `Updated ${allReefs.length} in ${
+      (new Date().valueOf() - start.valueOf()) / 1000
+    } seconds`,
+  );
 }
 
 /* eslint-disable no-console */
