@@ -13,9 +13,10 @@ import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { colors } from "../../../layout/App/theme";
 import { formatNumber } from "../../../helpers/numberUtils";
 import {
-  colorFinder,
+  dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
+import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 
 interface Row {
   locationName: string | null;
@@ -99,7 +100,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
         <Typography
           style={{
             paddingLeft: "2rem",
-            color: rowData.dhw ? `${colorFinder(rowData.dhw)}` : "black",
+            color: rowData.dhw ? `${dhwColorFinder(rowData.dhw)}` : "black",
           }}
           variant="subtitle1"
         >
@@ -114,7 +115,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       render: (rowData) => {
         return (
           <ErrorIcon
-            style={{ color: colorFinder(rowData.dhw), marginLeft: "1rem" }}
+            style={{ color: alertColorFinder(rowData.dhw), marginLeft: "1rem" }}
           />
         );
       },

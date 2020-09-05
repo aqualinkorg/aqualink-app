@@ -12,13 +12,13 @@ import {
   Tooltip,
 } from "@material-ui/core";
 
-import { colorCode } from "../../../../assets/colorCode";
+import { dhwColorCode } from "../../../../assets/colorCode";
 import type { Data } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import satellite from "../../../../assets/satellite.svg";
 import {
-  colorFinder,
+  dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 
@@ -31,7 +31,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
   return (
     <Card
       className={classes.card}
-      style={{ backgroundColor: colorFinder(degreeHeatingWeeks) }}
+      style={{ backgroundColor: dhwColorFinder(degreeHeatingWeeks) }}
     >
       <CardHeader
         className={classes.header}
@@ -105,7 +105,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
             </Grid>
           </Grid>
           <Grid item container alignItems="flex-end">
-            {colorCode.map((elem) => (
+            {dhwColorCode.map((elem) => (
               <Grid
                 container
                 justify="center"

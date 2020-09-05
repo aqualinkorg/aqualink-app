@@ -1,5 +1,3 @@
-import { isNil } from "lodash";
-
 import noStress from "../assets/alert_nostress.svg";
 import warning from "../assets/alert_warning.svg";
 import watch from "../assets/alert_watch.svg";
@@ -8,43 +6,53 @@ import lvl2 from "../assets/alert_lvl2.svg";
 
 const bleachingAlertIntervals = [
   {
-    min: 0,
+    max: 5,
     image: noStress,
+    color: "#C6E5FA",
   },
   {
-    min: 5,
+    max: 10,
     image: warning,
+    color: "#FFF200",
   },
   {
-    min: 10,
+    max: 15,
     image: watch,
+    color: "#F8AB00",
   },
   {
-    min: 15,
+    max: 20,
     image: lvl1,
+    color: "#EF0000",
   },
   {
-    min: 20,
+    max: Infinity,
     image: lvl2,
+    color: "#940000",
   },
 ];
 
-export const alertFinder = (degreeHeatingWeeks?: number | null): string => {
-  const len = bleachingAlertIntervals.length;
-
-  if (
-    isNil(degreeHeatingWeeks) ||
-    degreeHeatingWeeks < bleachingAlertIntervals[0].min
-  ) {
-    return bleachingAlertIntervals[0].image;
-  }
-  if (degreeHeatingWeeks > bleachingAlertIntervals[len - 1].min) {
-    return bleachingAlertIntervals[len - 1].image;
-  }
-  const index = bleachingAlertIntervals.findIndex(
-    (item) => degreeHeatingWeeks < item.min
-  );
-  return bleachingAlertIntervals[index - 1].image;
+type Interval = {
+  max: number;
+  image: string;
+  color: string;
 };
 
-export default { alertFinder };
+const findInterval = (degreeHeatingWeeks?: number | null): Interval => {
+  const interval = bleachingAlertIntervals.find(
+    (item) => (degreeHeatingWeeks || 0) < item.max
+  );
+  return interval || bleachingAlertIntervals[0];
+};
+
+export const alertFinder = (degreeHeatingWeeks?: number | null): string => {
+  return findInterval(degreeHeatingWeeks).image;
+};
+
+export const alertColorFinder = (
+  degreeHeatingWeeks?: number | null
+): string => {
+  return findInterval(degreeHeatingWeeks).color;
+};
+
+export default { alertFinder, alertColorFinder };

@@ -19,7 +19,7 @@ import { Reef } from "../../../../store/Reefs/types";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import {
-  colorFinder,
+  dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 
@@ -87,7 +87,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
               >
                 <Typography
                   style={{
-                    color: `${colorFinder(
+                    color: `${dhwColorFinder(
                       degreeHeatingWeeksCalculator(degreeHeatingDays)
                     )}`,
                   }}
@@ -103,7 +103,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
                 <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                   <Typography
                     style={{
-                      color: `${colorFinder(
+                      color: `${dhwColorFinder(
                         degreeHeatingWeeksCalculator(degreeHeatingDays)
                       )}`,
                       position: "relative",
