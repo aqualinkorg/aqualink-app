@@ -36,7 +36,7 @@ async function getCountry(longitude, latitude): Promise<string | undefined> {
     });
 }
 
-async function getRegionId(
+async function getRegion(
   longitude: number,
   latitude: number,
   regionRepository: Repository<Region>,
@@ -65,7 +65,7 @@ async function getAugmentedData(
 ) {
   const [longitude, latitude] = (reef.polygon as Point).coordinates;
 
-  const region = await getRegionId(longitude, latitude, regionRepository);
+  const region = await getRegion(longitude, latitude, regionRepository);
 
   const MMM = await getMMM(longitude, latitude);
   if (MMM === null) {
