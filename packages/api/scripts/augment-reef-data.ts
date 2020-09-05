@@ -74,10 +74,12 @@ async function getAugmentedData(
     );
   }
 
+  const timezones = geoTz(latitude, longitude);
+
   return omitBy(
     {
       region,
-      timezone: geoTz(latitude, longitude),
+      timezone: timezones.length > 0 ? timezones[0] : null,
       maxMonthlyMean: MMM,
     },
     isNil,
