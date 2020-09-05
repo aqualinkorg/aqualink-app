@@ -75,6 +75,7 @@
     "typeorm-naming-strategies": "^1.1.0"
   },
   "devDependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.6",
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
