@@ -220,7 +220,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     { concurrency: 8 },
   );
   console.log(
-    `Updated ${allReefs.length} in ${
+    `Updated ${allReefs.length} reefs in ${
       (new Date().valueOf() - start.valueOf()) / 1000
     } seconds`,
   );
