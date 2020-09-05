@@ -284,8 +284,15 @@ const UploadMedia = ({
         </Grid>
         <Grid container justify="center" item xs={4}>
           <Dropzone
-            accept="image/png, image/jpeg, image/gif, video/mp4"
+            accept={[
+              "image/png",
+              "image/jpeg",
+              "image/gif",
+              "video/mp4",
+              "video/mpeg",
+            ]}
             onDrop={handleFileDrop}
+            maxSize={40}
           >
             {({ getRootProps, getInputProps }) => (
               <Grid
@@ -304,7 +311,7 @@ const UploadMedia = ({
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Typography variant="subtitle2">
-                    Supported formats: .jpg .mpeg .png .gif. mov. Max 10mb.
+                    Supported formats: .jpg .png. .gif .mp4 .mpeg. Max 40mb.
                   </Typography>
                 </Grid>
               </Grid>
