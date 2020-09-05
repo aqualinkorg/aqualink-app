@@ -1,9 +1,15 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
 
+import { BrowserRouter as Router } from "react-router-dom";
 import Popup from ".";
 import { Reef } from "../../../../store/Reefs/types";
+
+jest.mock("react-leaflet", () => ({
+  __esModule: true,
+  Popup: (props: any) =>
+    jest.requireActual("react").createElement("mock-LeafletPopup", props),
+}));
 
 test("renders as expected", () => {
   const reef: Reef = {
