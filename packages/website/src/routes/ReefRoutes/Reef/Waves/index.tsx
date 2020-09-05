@@ -242,11 +242,13 @@ const styles = (theme: Theme) =>
       },
     },
     arrow: {
-      width: 15,
-      height: 15,
+      width: 20,
+      height: 20,
+      marginRight: "1rem",
+      marginBottom: 10,
       [theme.breakpoints.between("md", 1350)]: {
-        width: 10,
-        height: 10,
+        width: 15,
+        height: 15,
       },
     },
   });
