@@ -14,7 +14,7 @@ import {
 import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
-import Dropzone from "react-dropzone";
+import Dropzone, { FileRejection } from "react-dropzone";
 import { useSelector } from "react-redux";
 
 import MediaCard from "./MediaCard";
@@ -23,6 +23,8 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
+
+const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
 const UploadMedia = ({
   reefId,
@@ -46,7 +48,11 @@ const UploadMedia = ({
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleFileDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[], fileRejections) => {
+      // TODO - add explicit error warnings.
+      fileRejections.forEach((rejection: FileRejection) => {
+        console.log(rejection.errors, rejection.file);
+      });
       setFiles([...files, ...acceptedFiles]);
       setPreviews([
         ...previews,
@@ -292,7 +298,7 @@ const UploadMedia = ({
               "video/mpeg",
             ]}
             onDrop={handleFileDrop}
-            maxSize={40}
+            maxSize={maxUploadSize}
           >
             {({ getRootProps, getInputProps }) => (
               <Grid
@@ -311,7 +317,7 @@ const UploadMedia = ({
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Typography variant="subtitle2">
-                    Supported formats: .jpg .png. .gif .mp4 .mpeg. Max 40mb.
+                    Supported formats: .jpg .png .gif .mp4 .mpeg. Max 40mb.
                   </Typography>
                 </Grid>
               </Grid>
