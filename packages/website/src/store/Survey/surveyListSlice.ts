@@ -39,7 +39,7 @@ const surveyListSlice = createSlice({
       (state, action: PayloadAction<SurveyListState["list"]>) => {
         return {
           ...state,
-          list: action.payload,
+          list: action.payload.filter((survey) => survey.featuredSurveyMedia),
           loading: false,
         };
       }
