@@ -699,7 +699,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         alt="arrow"
                         class="Waves-arrow-146"
                         src="directioncircle.svg"
-                        style="transform: rotate(180deg);"
+                        style="transform: rotate(360deg);"
                       />
                       <h3
                         class="MuiTypography-root Waves-contentTextValues-144 MuiTypography-h3 MuiTypography-colorTextSecondary"
@@ -787,7 +787,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         alt="arrow"
                         class="Waves-arrow-146"
                         src="directioncircle.svg"
-                        style="transform: rotate(180deg);"
+                        style="transform: rotate(360deg);"
                       />
                       <p
                         class="MuiTypography-root Waves-contentTextValues-144 MuiTypography-body1 MuiTypography-colorTextSecondary"

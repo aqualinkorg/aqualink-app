@@ -67,7 +67,7 @@ exports[`renders as expected 1`] = `
                 alt="arrow"
                 class="Waves-arrow-9"
                 src="directioncircle.svg"
-                style="transform: rotate(96deg);"
+                style="transform: rotate(276deg);"
               />
               <h3
                 class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-h3 MuiTypography-colorTextSecondary"
@@ -155,7 +155,7 @@ exports[`renders as expected 1`] = `
                 alt="arrow"
                 class="Waves-arrow-9"
                 src="directioncircle.svg"
-                style="transform: rotate(136deg);"
+                style="transform: rotate(316deg);"
               />
               <p
                 class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"

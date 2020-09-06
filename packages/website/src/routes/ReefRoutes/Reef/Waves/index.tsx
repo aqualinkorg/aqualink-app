@@ -82,7 +82,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               <Grid container alignItems="baseline">
                 {windDirection && (
                   <img
-                    style={{ transform: `rotate(${windDirection}deg)` }}
+                    style={{ transform: `rotate(${windDirection + 180}deg)` }}
                     className={classes.arrow}
                     alt="arrow"
                     src={arrow}
@@ -168,7 +168,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
               <Grid container alignItems="baseline">
                 {waveDirection && (
                   <img
-                    style={{ transform: `rotate(${waveDirection}deg)` }}
+                    style={{ transform: `rotate(${waveDirection + 180}deg)` }}
                     className={classes.arrow}
                     alt="arrow"
                     src={arrow}
