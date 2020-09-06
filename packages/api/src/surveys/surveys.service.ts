@@ -35,6 +35,7 @@ export class SurveysService {
     const survey = await this.surveyRepository.save({
       userId: user,
       ...createSurveyDto,
+      comments: this.transformComments(createSurveyDto.comments),
     });
 
     // eslint-disable-next-line fp/no-delete
@@ -76,6 +77,7 @@ export class SurveysService {
       featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
       type: MediaType.Image,
       surveyId: survey,
+      comments: this.transformComments(createSurveyMediaDto.comments),
     });
   }
 
@@ -160,7 +162,10 @@ export class SurveysService {
     editSurveyDto: EditSurveyDto,
     surveyId: number,
   ): Promise<Survey> {
-    const result = await this.surveyRepository.update(surveyId, editSurveyDto);
+    const result = await this.surveyRepository.update(surveyId, {
+      ...editSurveyDto,
+      comments: this.transformComments(editSurveyDto.comments),
+    });
 
     if (!result.affected) {
       throw new NotFoundException(`Survey with id ${surveyId} was not found`);
@@ -210,6 +215,7 @@ export class SurveysService {
     await this.surveyMediaRepository.update(mediaId, {
       ...editSurveyMediaDto,
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
+      comments: this.transformComments(editSurveyMediaDto.comments),
     });
 
     const updated = await this.surveyMediaRepository.findOne(mediaId);
@@ -257,13 +263,24 @@ export class SurveysService {
 
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    // await this.googleCloudService.deleteFile(
-    //   surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    // );
+    await this.googleCloudService.deleteFile(
+      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
+    );
 
     await this.surveyMediaRepository.delete(mediaId);
   }
 
+  /**
+   * Assign a random survey media as the featured media of the survey,
+   * because the current one will be unset.
+   *
+   * The new media should be not hidden.
+   *
+   * If no such media exists no featured media is assigned.
+   *
+   * @param surveyId The survey id
+   * @param mediaId The media id that was previously featured and should be excluded
+   */
   private async assignFeaturedMedia(surveyId: number, mediaId: number) {
     const surveyMedia = await this.surveyMediaRepository
       .createQueryBuilder('surveyMedia')
@@ -277,5 +294,19 @@ export class SurveysService {
     }
 
     await this.surveyMediaRepository.update(surveyMedia.id, { featured: true });
+  }
+
+  /**
+   * Transform all empty-like comments to null values to not have to deal with different types of empty comments
+   *
+   * @param comments The comments to transform
+   */
+  private transformComments(comments?: string) {
+    if (comments === undefined) {
+      return undefined;
+    }
+
+    const trimmedComments = comments.trim();
+    return trimmedComments === '' ? undefined : trimmedComments;
   }
 }

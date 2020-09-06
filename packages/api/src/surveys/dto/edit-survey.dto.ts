@@ -4,13 +4,13 @@ import { WeatherConditions } from '../surveys.entity';
 export class EditSurveyDto {
   @IsOptional()
   @IsDateString()
-  readonly diveDate: Date;
+  readonly diveDate?: Date;
 
   @IsOptional()
   @IsEnum(WeatherConditions)
-  readonly weatherConditions: WeatherConditions;
+  readonly weatherConditions?: WeatherConditions;
 
   @IsOptional()
   @IsString()
-  readonly comments: string;
+  readonly comments?: string;
 }

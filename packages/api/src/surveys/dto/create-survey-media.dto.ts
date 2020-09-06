@@ -37,7 +37,7 @@ export class CreateSurveyMediaDto {
 
   @IsString()
   @IsOptional()
-  readonly comments: string;
+  readonly comments?: string;
 
   @IsInt()
   @IsOptional()
