@@ -62,7 +62,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             onClose={() => setMenuDrawerOpen(false)}
           />
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs={5} sm={4}>
+            <Grid item xs={5} sm={6}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
                   edge="start"
@@ -81,7 +81,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
 
             {searchLocation && (
               <Hidden xsDown>
-                <Grid item sm={4}>
+                <Grid item sm={3}>
                   <Search />
                 </Grid>
               </Hidden>
@@ -92,7 +92,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               justify="flex-end"
               item
               xs={7}
-              sm={searchLocation ? 4 : 8}
+              sm={searchLocation ? 3 : 8}
             >
               {user ? (
                 <>
