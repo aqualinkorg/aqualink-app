@@ -68,8 +68,8 @@ export async function getDailyData(reef: Reef, date: Date) {
   }
 
   const satelliteTemperatureData = await getSofarDailyData(
-    'HYCOM',
-    'HYCOM-seaSurfaceTemperature',
+    'NOAACoralReefWatch',
+    'analysedSeaSurfaceTemperature',
     latitude,
     longitude,
     localTimezone,

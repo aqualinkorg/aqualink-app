@@ -44,23 +44,23 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: `${formatNumber(surfTemp, 1)} °C`,
+      value: formatNumber(surfTemp, 1),
+      unit: " °C",
     },
     {
       label: `TEMP AT ${reef.depth}M`,
-      value: `${formatNumber(maxBottomTemperature, 1)} °C`,
+      value: formatNumber(maxBottomTemperature, 1),
+      unit: " °C",
     },
     {
       label: "HEAT STRESS",
-      value: `${formatNumber(
-        degreeHeatingWeeksCalculator(degreeHeatingDays),
-        1
-      )} DHW`,
+      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+      unit: " DHW",
     },
   ];
 
   return (
-    <Box p={1}>
+    <Box className={classes.card}>
       <Box mb={2}>
         <Typography variant="h5" color="textSecondary">
           <Hidden xsDown>{`Featured - ${reef.name}`}</Hidden>
@@ -130,14 +130,17 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               }}
             >
               <div className={classes.metricsContainer}>
-                {metrics.map(({ label, value }) => (
+                {metrics.map(({ label, value, unit }) => (
                   <div key={label}>
                     <Typography variant="caption" color="textSecondary">
                       {label}
                     </Typography>
-                    <Typography variant="h4" color="primary">
-                      {value}
-                    </Typography>
+                    <>
+                      <Typography variant="h4" color="primary">
+                        {value}
+                        {unit}
+                      </Typography>
+                    </>
                   </div>
                 ))}
               </div>
@@ -155,6 +158,12 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
+    card: {
+      padding: 40,
+      [theme.breakpoints.down("xs")]: {
+        padding: 10,
+      },
+    },
     cardImage: {
       borderRadius: "4px 0 0 4px",
       height: "100%",
