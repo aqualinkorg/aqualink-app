@@ -139,7 +139,7 @@ const styles = (theme: Theme) =>
       },
     },
     contentImage: {
-      height: "15rem",
+      height: "75%",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
