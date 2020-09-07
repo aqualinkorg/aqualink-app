@@ -5,7 +5,13 @@ import { ConnectionOptions } from 'typeorm';
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-  require('dotenv').config();
+  const dotenv = require('dotenv').config();
+  // By default, dotenv does not override parent environment variables.
+  const { parsed: dotenvConfig } = dotenv;
+  Object.keys(dotenvConfig).forEach((key) => {
+    // eslint-disable-next-line
+    process.env[key] = dotenvConfig[key];
+  });
 } catch {
   // Pass
 }
