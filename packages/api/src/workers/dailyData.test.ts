@@ -7,11 +7,11 @@ test('It processes Sofar API for daily data.', async () => {
   const reef = {
     id: 1,
     name: null,
-    spotterId: null,
     polygon: {
       type: 'Polygon',
       coordinates: [0, 0],
     },
+    spotterId: 'SPOT-300434063450120',
     temperatureThreshold: null,
     depth: null,
     maxMonthlyMean: 22,
@@ -24,26 +24,26 @@ test('It processes Sofar API for daily data.', async () => {
 
   const values = await getDailyData(
     (reef as unknown) as Reef,
-    new Date('2020-07-07'),
+    new Date('2020-09-01'),
   );
 
   expect(values).toEqual({
     reef: { id: 1 },
-    date: new Date('2020-07-07'),
-    minBottomTemperature: undefined,
-    maxBottomTemperature: undefined,
-    avgBottomTemperature: undefined,
-    surfaceTemperature: undefined,
-    satelliteTemperature: 25.3570003509521,
+    date: new Date('2020-09-01'),
+    minBottomTemperature: 14.880000000000003,
+    maxBottomTemperature: 16.119999999999997,
+    avgBottomTemperature: 15.535833333333345,
+    surfaceTemperature: 15.903611111111116,
+    satelliteTemperature: undefined,
     degreeHeatingDays: undefined,
-    minWaveHeight: 1.54999995231628,
-    maxWaveHeight: 1.76999998092651,
-    avgWaveHeight: 1.6612500001986812,
-    waveDirection: undefined,
-    wavePeriod: 16,
-    minWindSpeed: 3.30057072639465,
-    maxWindSpeed: 5.5790114402771,
-    avgWindSpeed: 4.660314430793126,
-    windDirection: 5,
+    minWaveHeight: 0.38,
+    maxWaveHeight: 0.6,
+    avgWaveHeight: 0.5129166666666666,
+    waveDirection: 165,
+    wavePeriod: 14,
+    minWindSpeed: 4.13175916671753,
+    maxWindSpeed: 7.06709051132202,
+    avgWindSpeed: 5.892412106196086,
+    windDirection: 6,
   });
 });
