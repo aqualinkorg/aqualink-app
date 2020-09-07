@@ -30,7 +30,7 @@ const ReefNavBar = ({
       alignItems="center"
       xs={12}
     >
-      <Grid item xs={5}>
+      <Grid item xs={11}>
         <Grid alignItems="center" direction="row" container spacing={1}>
           <Grid item>
             <IconButton
@@ -43,7 +43,7 @@ const ReefNavBar = ({
             </IconButton>
           </Grid>
 
-          <Grid item xs={7} direction="column" container>
+          <Grid item xs={9} direction="column" container>
             {reefName && (
               <Grid item>
                 <Typography variant="h4">{reefName}</Typography>
