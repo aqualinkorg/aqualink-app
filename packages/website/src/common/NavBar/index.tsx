@@ -62,7 +62,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             onClose={() => setMenuDrawerOpen(false)}
           />
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs={5} sm={6}>
+            <Grid item xs={5} sm={searchLocation ? 6 : 4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
                   edge="start"
