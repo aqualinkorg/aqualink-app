@@ -44,18 +44,21 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: `${formatNumber(surfTemp, 1)} \u2103`,
+      value: `${formatNumber(surfTemp, 1)}`,
+      unit: "\u2103",
     },
     {
       label: `TEMP AT ${reef.depth}M`,
-      value: `${formatNumber(maxBottomTemperature, 1)} \u2103`,
+      value: `${formatNumber(maxBottomTemperature, 1)}`,
+      unit: "\u2103",
     },
     {
       label: "HEAT STRESS",
       value: `${formatNumber(
         degreeHeatingWeeksCalculator(degreeHeatingDays),
         1
-      )} DHW`,
+      )}`,
+      unit: "DHW",
     },
   ];
 
@@ -130,13 +133,17 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
               }}
             >
               <div className={classes.metricsContainer}>
-                {metrics.map(({ label, value }) => (
+                {metrics.map(({ label, value, unit }) => (
                   <div key={label}>
                     <Typography variant="caption" color="textSecondary">
                       {label}
                     </Typography>
                     <Typography variant="h4" color="primary">
                       {value}
+                      &nbsp;
+                      <Typography variant="h6" component="span">
+                        {unit}
+                      </Typography>
                     </Typography>
                   </div>
                 ))}

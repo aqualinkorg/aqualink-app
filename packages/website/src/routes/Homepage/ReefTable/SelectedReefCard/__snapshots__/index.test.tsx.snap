@@ -106,7 +106,13 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                29.0 ℃
+                29.0
+                 
+                <span
+                  class="MuiTypography-root MuiTypography-h6"
+                >
+                  ℃
+                </span>
               </h4>
             </div>
             <div>
@@ -118,7 +124,13 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                39.0 ℃
+                39.0
+                 
+                <span
+                  class="MuiTypography-root MuiTypography-h6"
+                >
+                  ℃
+                </span>
               </h4>
             </div>
             <div>
@@ -130,7 +142,13 @@ exports[`renders as expected 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
               >
-                4.9 DHW
+                4.9
+                 
+                <span
+                  class="MuiTypography-root MuiTypography-h6"
+                >
+                  DHW
+                </span>
               </h4>
             </div>
           </div>
