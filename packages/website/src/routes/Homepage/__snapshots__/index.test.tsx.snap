@@ -15,7 +15,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-6"
           >
             <div
               class="MuiBox-root MuiBox-root-16"
@@ -60,7 +60,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             xsdown="true"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-3"
             >
               <div
                 class="Search-searchBar-17"
@@ -194,7 +194,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
             </div>
           </mock-hidden>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
           >
             <div
               class="MuiGrid-root MuiGrid-item"

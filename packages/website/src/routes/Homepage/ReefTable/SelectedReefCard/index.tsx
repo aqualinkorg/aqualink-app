@@ -135,12 +135,13 @@ const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
                     <Typography variant="caption" color="textSecondary">
                       {label}
                     </Typography>
-                    <>
-                      <Typography variant="h4" color="primary">
-                        {value}
+                    <Typography variant="h4" color="primary">
+                      {value}
+                      &nbsp;
+                      <Typography variant="h6" component="span">
                         {unit}
                       </Typography>
-                    </>
+                    </Typography>
                   </div>
                 ))}
               </div>
