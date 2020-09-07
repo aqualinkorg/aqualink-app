@@ -27,9 +27,21 @@ interface Row {
     id: number;
   };
 }
-const columnTitle = (title: string) => (
-  <Typography style={{ color: "black" }}>{title}</Typography>
+const columnTitle = (title: string, unit?: string) => (
+  <>
+    <Typography variant="h6" style={{ color: "black" }}>
+      {title}
+      {unit && (
+        <Typography
+          variant="subtitle2"
+          style={{ color: "black" }}
+          component="span"
+        >{`\u00a0 (${unit})`}</Typography>
+      )}
+    </Typography>
+  </>
 );
+
 const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
@@ -45,7 +57,8 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const cellStyle: CSSProperties = {
     color: "black",
     alignItems: "center",
-    textAlign: "left",
+    justifyItems: "center",
+    textAlign: "center",
   };
 
   const tableColumns: Array<Column<Row>> = [
@@ -54,54 +67,41 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       field: "locationName",
       cellStyle,
       render: (rowData) => (
-        <Typography
-          align="left"
-          style={{ paddingRight: "1.5rem" }}
-          variant="subtitle1"
-          color="textSecondary"
-        >
+        <Typography align="left" variant="subtitle1" color="textSecondary">
           {rowData.locationName}
         </Typography>
       ),
     },
     {
-      title: columnTitle("TEMP (°C)"),
+      title: columnTitle("TEMP", "°C"),
       field: "temp",
       type: "numeric",
       cellStyle,
       render: (rowData) => (
-        <Typography
-          style={{ color: colors.lightBlue, paddingLeft: "1rem" }}
-          variant="subtitle1"
-        >
+        <Typography style={{ color: colors.lightBlue }} variant="subtitle1">
           {rowData.temp}
         </Typography>
       ),
     },
     {
-      title: columnTitle("DEPTH (m)"),
+      title: columnTitle("DEPTH", "m"),
       field: "depth",
       type: "numeric",
       cellStyle,
       render: (rowData) => (
-        <Typography
-          style={{ paddingLeft: "2rem" }}
-          variant="subtitle1"
-          color="textSecondary"
-        >
+        <Typography variant="subtitle1" color="textSecondary">
           {rowData.depth}
         </Typography>
       ),
     },
     {
-      title: columnTitle("DHW"),
+      title: columnTitle("STRESS", "DHW"),
       field: "dhw",
       type: "numeric",
       cellStyle,
       render: (rowData) => (
         <Typography
           style={{
-            paddingLeft: "2rem",
             color: rowData.dhw ? `${dhwColorFinder(rowData.dhw)}` : "black",
           }}
           variant="subtitle1"
@@ -112,12 +112,16 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
     },
     {
       title: columnTitle("ALERT"),
+      width: "10%",
       field: "dhw",
       cellStyle,
       render: (rowData) => {
         return (
           <ErrorIcon
-            style={{ color: alertColorFinder(rowData.dhw), marginLeft: "1rem" }}
+            style={{
+              color: alertColorFinder(rowData.dhw),
+              marginRight: "1rem",
+            }}
           />
         );
       },

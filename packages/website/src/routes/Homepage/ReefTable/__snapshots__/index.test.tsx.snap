@@ -91,12 +91,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1"
+                          <h6
+                            class="MuiTypography-root MuiTypography-h6"
                             style="color: black;"
                           >
                             REEF
-                          </p>
+                          </h6>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -131,12 +131,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1"
+                          <h6
+                            class="MuiTypography-root MuiTypography-h6"
                             style="color: black;"
                           >
-                            TEMP (°C)
-                          </p>
+                            TEMP
+                            <span
+                              class="MuiTypography-root MuiTypography-subtitle2"
+                              style="color: black;"
+                            >
+                                (°C)
+                            </span>
+                          </h6>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -171,12 +177,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1"
+                          <h6
+                            class="MuiTypography-root MuiTypography-h6"
                             style="color: black;"
                           >
-                            DEPTH (m)
-                          </p>
+                            DEPTH
+                            <span
+                              class="MuiTypography-root MuiTypography-subtitle2"
+                              style="color: black;"
+                            >
+                                (m)
+                            </span>
+                          </h6>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -211,12 +223,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1"
+                          <h6
+                            class="MuiTypography-root MuiTypography-h6"
                             style="color: black;"
                           >
-                            DHW
-                          </p>
+                            STRESS
+                            <span
+                              class="MuiTypography-root MuiTypography-subtitle2"
+                              style="color: black;"
+                            >
+                                (DHW)
+                            </span>
+                          </h6>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -233,7 +251,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignLeft"
                       scope="col"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box; width: 10%;"
                     >
                       <span
                         aria-disabled="false"
@@ -251,12 +269,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1"
+                          <h6
+                            class="MuiTypography-root MuiTypography-h6"
                             style="color: black;"
                           >
                             ALERT
-                          </p>
+                          </h6>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -284,62 +302,60 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
+                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
                       value="Mock Reef Hartmann"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary MuiTypography-alignLeft"
-                        style="padding-right: 1.5rem;"
                       >
                         Mock Reef Hartmann
                       </h6>
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
+                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
                       value="- -"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1"
-                        style="color: rgb(22, 141, 189); padding-left: 1rem;"
+                        style="color: rgb(22, 141, 189);"
                       >
                         - -
                       </h6>
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
+                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
                       value="19"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
-                        style="padding-left: 2rem;"
                       >
                         19
                       </h6>
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
+                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
                       value="2.857142857142857"
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1"
-                        style="padding-left: 2rem; color: rgb(12, 157, 165);"
+                        style="color: rgb(12, 157, 165);"
                       >
                         2.9
                       </h6>
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
+                      style="color: black; width: 10%; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
                       value="2.857142857142857"
                     >
                       <svg
                         aria-hidden="true"
                         class="MuiSvgIcon-root"
                         focusable="false"
-                        style="color: rgb(198, 229, 250); margin-left: 1rem;"
+                        style="color: rgb(198, 229, 250); margin-right: 1rem;"
                         viewBox="0 0 24 24"
                       >
                         <path
