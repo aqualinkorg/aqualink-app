@@ -3,26 +3,26 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiCard-root Waves-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+    class="MuiPaper-root MuiCard-root Waves-card-5 MuiPaper-elevation1 MuiPaper-rounded"
   >
     <div
-      class="MuiCardContent-root Waves-contentWrapper-4"
+      class="MuiCardContent-root Waves-contentWrapper-8"
     >
       <div
-        class="MuiGrid-root Waves-content-5 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root Waves-content-9 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         style="height: 100%;"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <h6
-            class="MuiTypography-root Waves-cardTitle-2 MuiTypography-h6"
+            class="MuiTypography-root Waves-cardTitle-6 MuiTypography-h6"
           >
             WIND
           </h6>
           <img
             alt="wind"
-            class="Waves-titleImages-3"
+            class="Waves-titleImages-7"
             src="wind.svg"
           />
         </div>
@@ -33,7 +33,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <h6
-              class="MuiTypography-root Waves-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               SPEED
             </h6>
@@ -41,12 +41,12 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <p
-                class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 5.0
               </p>
               <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentUnits-3 MuiTypography-h6 MuiTypography-colorTextSecondary"
               >
                 KM/H
               </h6>
@@ -56,7 +56,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <h6
-              class="MuiTypography-root Waves-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               DIRECTION
             </h6>
@@ -65,12 +65,12 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-9"
+                class="Waves-arrow-10"
                 src="directioncircle.svg"
                 style="transform: rotate(276deg);"
               />
               <h3
-                class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-h3 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentTextValues-2 MuiTypography-h3 MuiTypography-colorTextSecondary"
               >
                 96°
               </h3>
@@ -81,13 +81,13 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <h6
-            class="MuiTypography-root Waves-cardTitle-2 MuiTypography-h6"
+            class="MuiTypography-root Waves-cardTitle-6 MuiTypography-h6"
           >
             WAVES
           </h6>
           <img
             alt="waves"
-            class="Waves-titleImages-3"
+            class="Waves-titleImages-7"
             src="waves.svg"
           />
         </div>
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <h6
-              class="MuiTypography-root Waves-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               HEIGHT
             </h6>
@@ -106,12 +106,12 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <p
-                class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 3.0
               </p>
               <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentUnits-3 MuiTypography-h6 MuiTypography-colorTextSecondary"
               >
                 Μ
               </h6>
@@ -121,7 +121,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
           >
             <h6
-              class="MuiTypography-root Waves-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               PERIOD
             </h6>
@@ -129,12 +129,12 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <p
-                class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 15
               </p>
               <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentUnits-3 MuiTypography-h6 MuiTypography-colorTextSecondary"
               >
                 S
               </h6>
@@ -144,7 +144,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
           >
             <h6
-              class="MuiTypography-root Waves-contentTextTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+              class="MuiTypography-root Waves-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
             >
               DIRECTION
             </h6>
@@ -153,12 +153,12 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-9"
+                class="Waves-arrow-10"
                 src="directioncircle.svg"
                 style="transform: rotate(316deg);"
               />
               <p
-                class="MuiTypography-root Waves-contentTextValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+                class="MuiTypography-root Waves-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextSecondary"
               >
                 136
                 °

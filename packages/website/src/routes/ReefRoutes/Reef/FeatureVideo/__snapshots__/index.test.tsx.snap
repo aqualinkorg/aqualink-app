@@ -18,8 +18,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
           >
             <h5
-              class="MuiTypography-root MuiTypography-h5"
-              style="opacity: 0.5;"
+              class="MuiTypography-root FeatureVideo-noVideoCardHeaderText-5 MuiTypography-h5"
             >
               IMAGE TO BE UPLOADED
             </h5>
@@ -48,7 +47,7 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="FeatureVideo-noVideoCardContent-5"
+        class="FeatureVideo-noVideoCardContent-6"
       />
     </div>
   </div>

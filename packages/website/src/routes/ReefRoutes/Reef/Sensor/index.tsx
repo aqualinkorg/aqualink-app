@@ -15,12 +15,13 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import type { Reef } from "../../../../store/Reefs/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
+import { styles as incomingStyles } from "../styles";
 
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, avgBottomTemperature } =
     reef.latestDailyData || {};
 
-  const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
+  const hasSpotter = false;
 
   return (
     <Card className={classes.card}>
@@ -41,8 +42,8 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       />
       <CardContent className={classes.content}>
         <Grid style={{ height: "100%" }} container justify="space-between">
-          <Grid container item xs={7}>
-            <Grid item xs={12}>
+          <Grid alignContent="flex-start" container item xs={7}>
+            <Grid className={classes.contentMeasure} item xs={12}>
               <Typography
                 className={classes.contentTextTitles}
                 color="textPrimary"
@@ -53,12 +54,11 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               <Typography
                 className={classes.contentTextValues}
                 color="textPrimary"
-                variant="h2"
               >
                 {formatNumber(surfaceTemperature, 1)} °C
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid className={classes.contentMeasure} item xs={12}>
               <Typography
                 className={classes.contentTextTitles}
                 color="textPrimary"
@@ -69,7 +69,6 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               <Typography
                 className={classes.contentTextValues}
                 color="textPrimary"
-                variant="h2"
               >
                 {formatNumber(avgBottomTemperature, 1)} °C
               </Typography>
@@ -104,6 +103,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
+    ...incomingStyles,
     card: {
       height: "100%",
       width: "100%",
@@ -113,6 +113,15 @@ const styles = (theme: Theme) =>
     },
     cardTitle: {
       lineHeight: 1.5,
+      [theme.breakpoints.between("md", 1544)]: {
+        width: "10rem",
+      },
+      [theme.breakpoints.between("sm", 780)]: {
+        width: "10rem",
+      },
+      [theme.breakpoints.down(398)]: {
+        width: "10rem",
+      },
     },
     titleImage: {
       height: 35,
@@ -136,32 +145,14 @@ const styles = (theme: Theme) =>
       backgroundColor: "#edb86f",
       borderRadius: 4,
       height: "2rem",
-    },
-    contentTextTitles: {
-      lineHeight: 1.33,
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 9,
-      },
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 9,
-      },
-      [theme.breakpoints.down(380)]: {
-        fontSize: 11,
+      marginTop: "2rem",
+      [theme.breakpoints.between("md", "lg")]: {
+        marginTop: "3rem",
       },
     },
     alertText: {
       [theme.breakpoints.between("md", 1080)]: {
         fontSize: 11,
-      },
-    },
-    contentTextValues: {
-      fontWeight: 300,
-      fontSize: 32,
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 28,
-      },
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 24,
       },
     },
   });

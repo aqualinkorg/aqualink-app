@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Card,
   CardContent,
   Typography,
@@ -21,6 +20,7 @@ import {
   dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
+import { styles as incomingStyles } from "../styles";
 
 const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
@@ -54,8 +54,21 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
       />
       <CardContent className={classes.content}>
         <Grid container justify="space-between" style={{ height: "100%" }}>
-          <Grid className={classes.contentTextWrapper} container item xs={12}>
-            <Grid item xs={6} md={12} lg={12} xl={6}>
+          <Grid
+            className={classes.contentTextWrapper}
+            alignContent="flex-start"
+            container
+            item
+            xs={12}
+          >
+            <Grid
+              className={classes.contentMeasure}
+              item
+              xs={6}
+              md={12}
+              lg={12}
+              xl={6}
+            >
               <Typography
                 className={classes.contentTextTitles}
                 color="textPrimary"
@@ -70,7 +83,14 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                 {`${formatNumber(satelliteTemperature, 1)} °C`}
               </Typography>
             </Grid>
-            <Grid item xs={6} md={12} lg={12} xl={6}>
+            <Grid
+              className={classes.contentMeasure}
+              item
+              xs={6}
+              md={12}
+              lg={12}
+              xl={6}
+            >
               <Typography
                 className={classes.contentTextTitles}
                 color="textPrimary"
@@ -97,7 +117,6 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textPrimary"
-                  variant="h2"
                 >
                   {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
                 </Typography>
@@ -132,8 +151,9 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
+    ...incomingStyles,
     card: {
       height: "100%",
       width: "100%",
@@ -161,28 +181,6 @@ const styles = (theme: Theme) =>
     contentText: {
       marginTop: "1rem",
       padding: "0 1rem 0 1rem",
-    },
-    contentTextTitles: {
-      lineHeight: 1.33,
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 9,
-      },
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 9,
-      },
-      [theme.breakpoints.down(380)]: {
-        fontSize: 11,
-      },
-    },
-    contentTextValues: {
-      fontWeight: 300,
-      fontSize: 32,
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 28,
-      },
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 24,
-      },
     },
   });
 

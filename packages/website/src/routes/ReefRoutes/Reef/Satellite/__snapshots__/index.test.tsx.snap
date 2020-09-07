@@ -3,11 +3,11 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiCard-root Satellite-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+    class="MuiPaper-root MuiCard-root Satellite-card-5 MuiPaper-elevation1 MuiPaper-rounded"
     style="background-color: rgb(117, 180, 114);"
   >
     <div
-      class="MuiCardHeader-root Satellite-header-4"
+      class="MuiCardHeader-root Satellite-header-8"
     >
       <div
         class="MuiCardHeader-content"
@@ -22,7 +22,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
             >
               <h6
-                class="MuiTypography-root Satellite-cardTitle-2 MuiTypography-h6"
+                class="MuiTypography-root Satellite-cardTitle-6 MuiTypography-h6"
               >
                 SATELLITE OBSERVATION
               </h6>
@@ -32,7 +32,7 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="satellite"
-                class="Satellite-titleImage-3"
+                class="Satellite-titleImage-7"
                 src="satellite.svg"
               />
             </div>
@@ -41,39 +41,39 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="MuiCardContent-root Satellite-content-5"
+      class="MuiCardContent-root Satellite-content-9"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
         style="height: 100%;"
       >
         <div
-          class="MuiGrid-root Satellite-contentTextWrapper-6 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root Satellite-contentTextWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
+            class="MuiGrid-root Satellite-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-8 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               SURFACE TEMP
             </h6>
             <p
-              class="MuiTypography-root Satellite-contentTextValues-9 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               20.0 °C
             </p>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
+            class="MuiGrid-root Satellite-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-8 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               HISTORICAL MAX TEMP
             </h6>
             <p
-              class="MuiTypography-root Satellite-contentTextValues-9 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               21.0 °C
             </p>
@@ -82,16 +82,16 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-8 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               DEGREE HEATING WEEKS
             </h6>
-            <h2
-              class="MuiTypography-root Satellite-contentTextValues-9 MuiTypography-h2 MuiTypography-colorTextPrimary"
+            <p
+              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
               title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
             >
               4.1 DHW
-            </h2>
+            </p>
           </div>
         </div>
         <div

@@ -16,6 +16,7 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
+import { styles as incomingStyles } from "../styles";
 
 const Waves = ({ dailyData, classes }: WavesProps) => {
   const sortByDate = sortDailyData(dailyData, "desc");
@@ -192,6 +193,7 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
+    ...incomingStyles,
     card: {
       height: "100%",
       width: "100%",
@@ -213,33 +215,6 @@ const styles = (theme: Theme) =>
     },
     content: {
       padding: "1rem",
-    },
-    contentTextTitles: {
-      lineHeight: 1.33,
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 9,
-      },
-      [theme.breakpoints.down(380)]: {
-        fontSize: 11,
-      },
-    },
-    contentTextValues: {
-      fontWeight: 300,
-      fontSize: 36,
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 24,
-      },
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 24,
-      },
-    },
-    contentUnits: {
-      [theme.breakpoints.between("md", 1350)]: {
-        fontSize: 12,
-      },
-      [theme.breakpoints.between("sm", 740)]: {
-        fontSize: 12,
-      },
     },
     arrow: {
       width: 20,
