@@ -27,7 +27,9 @@ interface Row {
     id: number;
   };
 }
-
+const columnTitle = (title: string) => (
+  <Typography style={{ color: "black" }}>{title}</Typography>
+);
 const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
@@ -35,7 +37,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   const headerStyle: CSSProperties = {
-    backgroundColor: "#cacbd1",
+    backgroundColor: "rgb(244, 244, 244)",
     color: "black",
     textAlign: "left",
   };
@@ -48,7 +50,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
 
   const tableColumns: Array<Column<Row>> = [
     {
-      title: "REEF",
+      title: columnTitle("REEF"),
       field: "locationName",
       cellStyle,
       render: (rowData) => (
@@ -63,21 +65,21 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       ),
     },
     {
-      title: "TEMP (°C)",
+      title: columnTitle("TEMP (°C)"),
       field: "temp",
       type: "numeric",
       cellStyle,
       render: (rowData) => (
         <Typography
           style={{ color: colors.lightBlue, paddingLeft: "1rem" }}
-          variant="h6"
+          variant="subtitle1"
         >
           {rowData.temp}
         </Typography>
       ),
     },
     {
-      title: "DEPTH (m)",
+      title: columnTitle("DEPTH (m)"),
       field: "depth",
       type: "numeric",
       cellStyle,
@@ -92,7 +94,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       ),
     },
     {
-      title: "DHW",
+      title: columnTitle("DHW"),
       field: "dhw",
       type: "numeric",
       cellStyle,
@@ -109,7 +111,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       ),
     },
     {
-      title: "ALERT",
+      title: columnTitle("ALERT"),
       field: "dhw",
       cellStyle,
       render: (rowData) => {
@@ -170,7 +172,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
           <MaterialTable
             icons={{
               SortArrow: forwardRef((props, ref) => (
-                <ArrowUpwardIcon {...props} ref={ref} />
+                <ArrowDownwardIcon {...props} ref={ref} />
               )),
             }}
             columns={tableColumns}

@@ -73,7 +73,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignLeft"
                       scope="col"
-                      style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
                     >
                       <span
                         aria-disabled="false"
@@ -91,7 +91,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          REEF
+                          <p
+                            class="MuiTypography-root MuiTypography-body1"
+                            style="color: black;"
+                          >
+                            REEF
+                          </p>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -100,7 +105,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                            d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
                           />
                         </svg>
                       </span>
@@ -108,7 +113,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
                       scope="col"
-                      style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
                     >
                       <span
                         aria-disabled="false"
@@ -126,7 +131,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          TEMP (°C)
+                          <p
+                            class="MuiTypography-root MuiTypography-body1"
+                            style="color: black;"
+                          >
+                            TEMP (°C)
+                          </p>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -135,7 +145,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                            d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
                           />
                         </svg>
                       </span>
@@ -143,7 +153,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
                       scope="col"
-                      style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
                     >
                       <span
                         aria-disabled="false"
@@ -161,7 +171,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          DEPTH (m)
+                          <p
+                            class="MuiTypography-root MuiTypography-body1"
+                            style="color: black;"
+                          >
+                            DEPTH (m)
+                          </p>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -170,7 +185,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                            d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
                           />
                         </svg>
                       </span>
@@ -178,7 +193,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
                       scope="col"
-                      style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
                     >
                       <span
                         aria-disabled="false"
@@ -196,7 +211,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          DHW
+                          <p
+                            class="MuiTypography-root MuiTypography-body1"
+                            style="color: black;"
+                          >
+                            DHW
+                          </p>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -205,7 +225,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                            d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
                           />
                         </svg>
                       </span>
@@ -213,7 +233,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     <th
                       class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignLeft"
                       scope="col"
-                      style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
+                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
                     >
                       <span
                         aria-disabled="false"
@@ -231,7 +251,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          ALERT
+                          <p
+                            class="MuiTypography-root MuiTypography-body1"
+                            style="color: black;"
+                          >
+                            ALERT
+                          </p>
                         </div>
                         <svg
                           aria-hidden="true"
@@ -240,7 +265,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+                            d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
                           />
                         </svg>
                       </span>
@@ -275,7 +300,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                       value="- -"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-h6"
+                        class="MuiTypography-root MuiTypography-subtitle1"
                         style="color: rgb(22, 141, 189); padding-left: 1rem;"
                       >
                         - -
