@@ -7,7 +7,11 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ErrorIcon from "@material-ui/icons/Error";
 
 import SelectedReefCard from "./SelectedReefCard";
-import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
+import {
+  reefsListSelector,
+  orderList,
+  reefOrderedListSelector,
+} from "../../../store/Reefs/reefsListSlice";
 import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { colors } from "../../../layout/App/theme";
@@ -42,8 +46,9 @@ const columnTitle = (title: string, unit?: string) => (
   </>
 );
 
-const ReefTable = ({ openDrawer }: ReefTableProps) => {
+const ReefTable = React.memo(({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
+  const orderedList = useSelector(reefOrderedListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
   const dispatch = useDispatch();
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
@@ -145,6 +150,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
 
   return (
     <>
+      {console.log(orderedList)}
       <Hidden smUp>
         <Grid container justify="center" style={{ marginBottom: "-3rem" }}>
           <Grid item>
@@ -174,6 +180,9 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       {reefsList && reefsList.length > 0 && (
         <Grid item xs={12}>
           <MaterialTable
+            onOrderChange={(orderBy, orderDirection) => {
+              dispatch(orderList({ orderBy, orderDirection }));
+            }}
             icons={{
               SortArrow: forwardRef((props, ref) => (
                 <ArrowDownwardIcon {...props} ref={ref} />
@@ -207,7 +216,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       )}
     </>
   );
-};
+});
 
 interface ReefTableProps {
   openDrawer: boolean;
