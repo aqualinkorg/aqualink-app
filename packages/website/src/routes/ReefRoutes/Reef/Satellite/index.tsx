@@ -160,9 +160,6 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
     },
-    cardTitle: {
-      lineHeight: 1.5,
-    },
     titleImage: {
       height: 35,
       width: 35,

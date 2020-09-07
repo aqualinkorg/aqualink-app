@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiCard-root Satellite-card-5 MuiPaper-elevation1 MuiPaper-rounded"
+    class="MuiPaper-root MuiCard-root Satellite-card-6 MuiPaper-elevation1 MuiPaper-rounded"
     style="background-color: rgb(117, 180, 114);"
   >
     <div
@@ -22,7 +22,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
             >
               <h6
-                class="MuiTypography-root Satellite-cardTitle-6 MuiTypography-h6"
+                class="MuiTypography-root Satellite-cardTitle-1 MuiTypography-h6"
               >
                 SATELLITE OBSERVATION
               </h6>
@@ -51,29 +51,29 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root Satellite-contentTextWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root Satellite-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
+            class="MuiGrid-root Satellite-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               SURFACE TEMP
             </h6>
             <p
-              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               20.0 °C
             </p>
           </div>
           <div
-            class="MuiGrid-root Satellite-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
+            class="MuiGrid-root Satellite-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               HISTORICAL MAX TEMP
             </h6>
             <p
-              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               21.0 °C
             </p>
@@ -82,12 +82,12 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <h6
-              class="MuiTypography-root Satellite-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               DEGREE HEATING WEEKS
             </h6>
             <p
-              class="MuiTypography-root Satellite-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Satellite-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
               title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
             >
               4.1 DHW

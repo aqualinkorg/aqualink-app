@@ -111,18 +111,6 @@ const styles = (theme: Theme) =>
       display: "flex",
       flexDirection: "column",
     },
-    cardTitle: {
-      lineHeight: 1.5,
-      [theme.breakpoints.between("md", 1544)]: {
-        width: "10rem",
-      },
-      [theme.breakpoints.between("sm", 780)]: {
-        width: "10rem",
-      },
-      [theme.breakpoints.down(398)]: {
-        width: "10rem",
-      },
-    },
     titleImage: {
       height: 35,
       width: 35,

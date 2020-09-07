@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiCard-root Sensor-card-5 MuiPaper-elevation1 MuiPaper-rounded"
+    class="MuiPaper-root MuiCard-root Sensor-card-6 MuiPaper-elevation1 MuiPaper-rounded"
   >
     <div
       class="MuiCardHeader-root Sensor-header-8"
@@ -21,7 +21,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
             >
               <h6
-                class="MuiTypography-root Sensor-cardTitle-6 MuiTypography-h6"
+                class="MuiTypography-root Sensor-cardTitle-1 MuiTypography-h6"
               >
                 SENSOR OBSERVATION
               </h6>
@@ -50,30 +50,30 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-7"
         >
           <div
-            class="MuiGrid-root Sensor-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
           >
             <h6
-              class="MuiTypography-root Sensor-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Sensor-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               SURFACE TEMP
             </h6>
             <p
-              class="MuiTypography-root Sensor-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Sensor-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               - -
                °C
             </p>
           </div>
           <div
-            class="MuiGrid-root Sensor-contentMeasure-4 MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
           >
             <h6
-              class="MuiTypography-root Sensor-contentTextTitles-1 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Sensor-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
             >
               TEMP AT 24M
             </h6>
             <p
-              class="MuiTypography-root Sensor-contentTextValues-2 MuiTypography-body1 MuiTypography-colorTextPrimary"
+              class="MuiTypography-root Sensor-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
             >
               - -
                °C
