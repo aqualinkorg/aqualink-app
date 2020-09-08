@@ -1,156 +1,103 @@
-import React, { CSSProperties, forwardRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import MaterialTable, { Column } from "material-table";
-import { Grid, Paper, Typography, IconButton, Hidden } from "@material-ui/core";
+
+import {
+  Grid,
+  Typography,
+  IconButton,
+  Hidden,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ErrorIcon from "@material-ui/icons/Error";
 
 import SelectedReefCard from "./SelectedReefCard";
-import {
-  reefsListSelector,
-  orderList,
-  reefOrderedListSelector,
-} from "../../../store/Reefs/reefsListSlice";
+import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
+import { constructTableData } from "../../../store/Reefs/helpers";
+import { colors } from "../../../layout/App/theme";
 import { reefDetailsSelector } from "../../../store/Reefs/selectedReefSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
-import { colors } from "../../../layout/App/theme";
+import type { TableRow as Row } from "../../../store/Homepage/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import {
   dhwColorFinder,
-  degreeHeatingWeeksCalculator,
+  // degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
+import type { Order } from "./types";
+import EnhancedTableHead from "./tableHead";
 
-interface Row {
-  locationName: string | null;
-  temp?: string | 0;
-  depth: number | null;
-  dhw: number | null;
-  tableData: {
-    id: number;
-  };
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
 }
-const columnTitle = (title: string, unit?: string) => (
-  <>
-    <Typography variant="h6" style={{ color: "black" }}>
-      {title}
-      {unit && (
-        <Typography
-          variant="subtitle2"
-          style={{ color: "black" }}
-          component="span"
-        >{`\u00a0 (${unit})`}</Typography>
-      )}
-    </Typography>
-  </>
-);
 
-const ReefTable = React.memo(({ openDrawer }: ReefTableProps) => {
+function getComparator(
+  order: Order,
+  orderBy: "locationName" | "temp" | "depth" | "dhw"
+): (
+  a: {
+    [key in "locationName" | "temp" | "depth" | "dhw"]: number | string | null;
+  },
+  b: {
+    [key in "locationName" | "temp" | "depth" | "dhw"]: number | string | null;
+  }
+) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const reefsList = useSelector(reefsListSelector);
-  const orderedList = useSelector(reefOrderedListSelector);
   const selectedReef = useSelector(reefDetailsSelector);
   const dispatch = useDispatch();
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const [order, setOrder] = useState<Order>(undefined);
+  const [orderBy, setOrderBy] = useState<
+    "locationName" | "temp" | "depth" | "dhw"
+  >("locationName");
 
-  const headerStyle: CSSProperties = {
-    backgroundColor: "rgb(244, 244, 244)",
-    color: "black",
-    textAlign: "left",
+  const handleClick = (
+    event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
+    reef: Row
+  ) => {
+    console.log(reef.tableData.id);
+    setSelectedRow(reef.tableData.id);
+    dispatch(setReefOnMap(reefsList[reef.tableData.id]));
   };
 
-  const cellStyle: CSSProperties = {
-    color: "black",
-    alignItems: "center",
-    justifyItems: "center",
-    textAlign: "center",
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: "locationName" | "temp" | "depth" | "dhw"
+  ) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
   };
-
-  const tableColumns: Array<Column<Row>> = [
-    {
-      title: columnTitle("REEF"),
-      field: "locationName",
-      cellStyle,
-      render: (rowData) => (
-        <Typography align="left" variant="subtitle1" color="textSecondary">
-          {rowData.locationName}
-        </Typography>
-      ),
-    },
-    {
-      title: columnTitle("TEMP", "°C"),
-      field: "temp",
-      type: "numeric",
-      cellStyle,
-      render: (rowData) => (
-        <Typography style={{ color: colors.lightBlue }} variant="subtitle1">
-          {rowData.temp}
-        </Typography>
-      ),
-    },
-    {
-      title: columnTitle("DEPTH", "m"),
-      field: "depth",
-      type: "numeric",
-      cellStyle,
-      render: (rowData) => (
-        <Typography variant="subtitle1" color="textSecondary">
-          {rowData.depth}
-        </Typography>
-      ),
-    },
-    {
-      title: columnTitle("STRESS", "DHW"),
-      field: "dhw",
-      type: "numeric",
-      cellStyle,
-      render: (rowData) => (
-        <Typography
-          style={{
-            color: rowData.dhw ? `${dhwColorFinder(rowData.dhw)}` : "black",
-          }}
-          variant="subtitle1"
-        >
-          {formatNumber(rowData.dhw, 1)}
-        </Typography>
-      ),
-    },
-    {
-      title: columnTitle("ALERT"),
-      width: "10%",
-      field: "dhw",
-      cellStyle,
-      render: (rowData) => {
-        return (
-          <ErrorIcon
-            style={{
-              color: alertColorFinder(rowData.dhw),
-              marginRight: "1rem",
-            }}
-          />
-        );
-      },
-    },
-  ];
-
-  const tableData: Row[] = Object.entries(reefsList).map(([key, value]) => {
-    const { degreeHeatingDays, satelliteTemperature } =
-      value.latestDailyData || {};
-    const locationName = value.name || value.region?.name || null;
-    return {
-      locationName,
-      temp: formatNumber(satelliteTemperature, 1),
-      depth: value.depth,
-      dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
-      tableData: {
-        id: parseFloat(key),
-      },
-    };
-  });
 
   return (
     <>
-      {console.log(orderedList)}
       <Hidden smUp>
         <Grid container justify="center" style={{ marginBottom: "-3rem" }}>
           <Grid item>
@@ -179,44 +126,87 @@ const ReefTable = React.memo(({ openDrawer }: ReefTableProps) => {
         )}
       {reefsList && reefsList.length > 0 && (
         <Grid item xs={12}>
-          <MaterialTable
-            onOrderChange={(orderBy, orderDirection) => {
-              dispatch(orderList({ orderBy, orderDirection }));
-            }}
-            icons={{
-              SortArrow: forwardRef((props, ref) => (
-                <ArrowDownwardIcon {...props} ref={ref} />
-              )),
-            }}
-            columns={tableColumns}
-            data={tableData}
-            onRowClick={(event, row) => {
-              if (row && row.tableData) {
-                setSelectedRow(row.tableData.id);
-                dispatch(setReefOnMap(reefsList[row.tableData.id]));
-              }
-            }}
-            options={{
-              rowStyle: (rowData) => ({
-                backgroundColor:
-                  selectedRow === rowData.tableData.id
-                    ? colors.lighterBlue
-                    : "none",
-              }),
-              paging: false,
-              headerStyle,
-            }}
-            components={{
-              Container: (props) => <Paper {...props} elevation={0} />,
-              Toolbar: () => null,
-              Pagination: () => null,
-            }}
-          />
+          <TableContainer>
+            <Table>
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+              <TableBody>
+                {stableSort<Row>(
+                  constructTableData(reefsList),
+                  getComparator(order, orderBy)
+                ).map((reef, index) => {
+                  return (
+                    <TableRow
+                      hover
+                      style={{
+                        backgroundColor:
+                          reef.tableData.id === selectedRow
+                            ? colors.lighterBlue
+                            : "white",
+                        cursor: "pointer",
+                      }}
+                      onClick={(event) => handleClick(event, reef)}
+                      role="button"
+                      tabIndex={-1}
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={`${reef.locationName}-${index}`}
+                    >
+                      <TableCell>
+                        <Typography
+                          align="left"
+                          variant="subtitle1"
+                          color="textSecondary"
+                        >
+                          {reef.locationName}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          style={{ color: colors.lightBlue }}
+                          variant="subtitle1"
+                        >
+                          {reef.temp}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography variant="subtitle1" color="textSecondary">
+                          {reef.depth}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          style={{
+                            color: reef.dhw
+                              ? `${dhwColorFinder(reef.dhw)}`
+                              : "black",
+                          }}
+                          variant="subtitle1"
+                        >
+                          {formatNumber(reef.dhw, 1)}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <ErrorIcon
+                          style={{
+                            color: alertColorFinder(reef.dhw),
+                            marginRight: "1rem",
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Grid>
       )}
     </>
   );
-});
+};
 
 interface ReefTableProps {
   openDrawer: boolean;

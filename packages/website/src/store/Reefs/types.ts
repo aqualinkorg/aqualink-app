@@ -61,7 +61,6 @@ export interface Reef {
 
 export interface ReefsListState {
   list: Reef[];
-  orderedList: Reef[];
   loading: boolean;
   error?: string | null;
 }
@@ -70,9 +69,4 @@ export interface SelectedReefState {
   details?: Reef;
   loading: boolean;
   error?: string | null;
-}
-
-export interface OrderParams {
-  orderBy: number;
-  orderDirection: "asc" | "desc" | "";
 }
