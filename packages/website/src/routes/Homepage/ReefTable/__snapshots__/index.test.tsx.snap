@@ -55,12 +55,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
       >
         <thead
           class="MuiTableHead-root"
+          style="background-color: rgb(202, 203, 209);"
         >
           <tr
             class="MuiTableRow-root MuiTableRow-head"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-paddingNone"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter MuiTableCell-paddingNone"
               scope="col"
             >
               <span
@@ -75,9 +76,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 >
                   REEF
                 </h6>
-                <span>
-                  sorted ascending
-                </span>
                 <svg
                   aria-hidden="true"
                   class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
@@ -91,7 +89,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </span>
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
               scope="col"
             >
               <span
@@ -125,7 +123,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </span>
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
               scope="col"
             >
               <span
@@ -159,7 +157,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </span>
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
               scope="col"
             >
               <span
@@ -193,7 +191,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </span>
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter"
               scope="col"
             >
               <span
@@ -235,13 +233,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               class="MuiTableCell-root MuiTableCell-body"
             >
               <h6
-                class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary MuiTypography-alignLeft"
+                class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary MuiTypography-alignCenter"
               >
                 Mock Reef Hartmann
               </h6>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
             >
               <h6
                 class="MuiTypography-root MuiTypography-subtitle1"
@@ -251,7 +249,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </h6>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
             >
               <h6
                 class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
@@ -260,7 +258,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </h6>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
             >
               <h6
                 class="MuiTypography-root MuiTypography-subtitle1"
@@ -270,7 +268,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </h6>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
             >
               <svg
                 aria-hidden="true"
