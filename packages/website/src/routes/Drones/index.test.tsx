@@ -6,6 +6,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import Drones from ".";
 
+jest.mock("../../common/NavBar", () => "Mock-NavBar");
+jest.mock("../../common/Footer", () => "Mock-Footer");
+
 const mockStore = configureStore([]);
 describe("Drones", () => {
   let element: HTMLElement;
