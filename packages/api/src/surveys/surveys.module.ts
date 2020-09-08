@@ -10,19 +10,12 @@ import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Reef } from '../reefs/reefs.entity';
-import { ReefToAdmin } from '../reefs/reef-to-admin.entity';
 
 @Module({
   imports: [
     AuthModule,
     GoogleCloudModule,
-    TypeOrmModule.forFeature([
-      Survey,
-      SurveyMedia,
-      ReefPointOfInterest,
-      Reef,
-      ReefToAdmin,
-    ]),
+    TypeOrmModule.forFeature([Survey, SurveyMedia, ReefPointOfInterest, Reef]),
   ],
   controllers: [SurveysController],
   providers: [EntityExists, SurveysService, GoogleCloudService],

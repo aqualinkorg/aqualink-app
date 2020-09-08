@@ -1,35 +1,36 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ReefToAdmin } from '../reefs/reef-to-admin.entity';
 import { User, AdminLevel } from '../users/users.entity';
+import { Reef } from '../reefs/reefs.entity';
 
 export class IsReefAdminGuard implements CanActivate {
   constructor(
-    @InjectRepository(ReefToAdmin)
-    private reefToAdminRepository: Repository<ReefToAdmin>,
+    @InjectRepository(Reef)
+    private reefRepository: Repository<Reef>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const { user }: { user: User } = request;
-    const reefId: number = request.params.reef_id;
+    const reefId = parseInt(request.params.reef_id, 10);
 
     if (user.adminLevel === AdminLevel.SuperAdmin) {
       return true;
     }
 
-    if (reefId) {
-      const isReefAdmin = await this.reefToAdminRepository.findOne({
-        where: {
-          reefId,
-          adminId: user.id,
-        },
-      });
+    if (!Number.isNaN(reefId)) {
+      const isReefAdmin = await this.reefRepository
+        .createQueryBuilder('reef')
+        .innerJoin('reef.admins', 'admins', 'admins.id = :userId', {
+          userId: user.id,
+        })
+        .andWhere('reef.id = :reefId', { reefId })
+        .getOne();
 
       return !!isReefAdmin;
     }
 
-    return true;
+    return false;
   }
 }
