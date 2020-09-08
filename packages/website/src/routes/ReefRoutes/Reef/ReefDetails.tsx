@@ -43,12 +43,12 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Typography>
       </Grid>
       <Grid container justify="space-between" item xs={11} spacing={4}>
-        <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
+        <Grid item xs={12} md={6}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid item xs={12} md={reef.videoStream ? 6 : 3}>
+        <Grid item xs={12} md={6}>
           <div className={classes.container}>
             <FeatureVideo url={reef.videoStream} />
           </div>
@@ -106,7 +106,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      // flexGrow: 1,
       marginTop: "2rem",
     },
     cardTitles: {
@@ -116,7 +116,7 @@ const styles = (theme: Theme) =>
     },
     container: {
       height: "30rem",
-      marginBottom: "3rem",
+      marginBottom: "2rem",
       [theme.breakpoints.between("md", 1440)]: {
         height: "25rem",
       },
@@ -126,7 +126,7 @@ const styles = (theme: Theme) =>
     },
     smallContainer: {
       height: "20rem",
-      marginBottom: "5rem",
+      marginBottom: "2rem",
     },
   });
 
