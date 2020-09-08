@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class ReefAdminManyToMany1599556648784 implements MigrationInterface {
-  name = 'ReefAdminManyToMany1599556648784';
+export class ReefAdminManyToMany1599586648784 implements MigrationInterface {
+  name = 'ReefAdminManyToMany1599586648784';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(

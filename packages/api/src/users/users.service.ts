@@ -67,6 +67,19 @@ export class UsersService {
     return req.user;
   }
 
+  async getAdministratedReefs(req: AuthRequest): Promise<Reef[]> {
+    const user = await this.usersRepository.findOne({
+      where: { id: req.user.id },
+      relations: ['administeredReefs'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${req.user.id} not found.`);
+    }
+
+    return user.administeredReefs;
+  }
+
   async findByEmail(email: string): Promise<User | undefined> {
     return this.usersRepository.findOne({ where: { email } });
   }

@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AdminLevel } from '../users/users.entity';
+import { AuthRequest } from './auth.types';
 
 @Injectable()
 export class LevelsGuard implements CanActivate {
@@ -14,7 +15,7 @@ export class LevelsGuard implements CanActivate {
     if (!levels || !levels.length) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<AuthRequest>();
     const { user } = request;
     const hasAccess = levels.findIndex((l) => l === user.adminLevel) !== -1;
     return hasAccess;

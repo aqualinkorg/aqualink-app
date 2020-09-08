@@ -22,6 +22,7 @@ import { SurveyMedia } from './survey-media.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
+import { AuthRequest } from '../auth/auth.types';
 
 @Controller('reefs/:reef_id/surveys')
 export class SurveysController {
@@ -44,7 +45,7 @@ export class SurveysController {
   create(
     @Body() createSurveyDto: CreateSurveyDto,
     @Param('reef_id', ParseIntPipe) reefId: number,
-    @Req() req: any,
+    @Req() req: AuthRequest,
   ): Promise<Survey> {
     return this.surveyService.create(createSurveyDto, req.user, reefId);
   }

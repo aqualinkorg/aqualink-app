@@ -14,6 +14,7 @@ import { AdminLevel, User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Auth } from '../auth/auth.decorator';
 import { AuthRequest } from '../auth/auth.types';
+import { Reef } from '../reefs/reefs.entity';
 
 @Controller('users')
 export class UsersController {
@@ -43,5 +44,11 @@ export class UsersController {
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.usersService.delete(id);
+  }
+
+  @Auth()
+  @Get('current/administrated-reefs')
+  getAdministratedReefs(@Req() req: AuthRequest): Promise<Reef[]> {
+    return this.usersService.getAdministratedReefs(req);
   }
 }
