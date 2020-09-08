@@ -60,7 +60,13 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
         comments,
         token: user?.token,
       };
-      dispatch(surveyAddRequest({ surveyData, changeTab }));
+      dispatch(
+        surveyAddRequest({
+          reefId: `${reefId}`,
+          surveyData,
+          changeTab,
+        })
+      );
     },
     [dispatch, weather, diveLocation, changeTab, user, reefId]
   );
