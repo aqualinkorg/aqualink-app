@@ -12,37 +12,27 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
       <div
         class="MuiGrid-root MuiGrid-item"
       >
-        <button
-          class="MuiButtonBase-root MuiIconButton-root"
-          tabindex="0"
-          type="button"
-        >
-          <span
-            class="MuiIconButton-label"
+        <mock-iconbutton>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-              />
-            </svg>
-          </span>
-          <span
-            class="MuiTouchRipple-root"
-          />
-        </button>
+            <path
+              d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </mock-iconbutton>
       </div>
     </div>
-    <h5
-      class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+    <mock-typography
+      color="textSecondary"
       style="position: relative; margin: 1rem 0px 0.5rem 1rem;"
+      variant="h5"
     >
       All Reefs
-    </h5>
+    </mock-typography>
   </mock-hidden>
   <div
     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -60,26 +50,21 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             style="overflow-y: auto;"
           >
             <div>
-              <table
-                class="MuiTable-root"
+              <mock-table
                 style="table-layout: auto;"
               >
-                <thead
-                  class="MuiTableHead-root"
-                >
-                  <tr
-                    class="MuiTableRow-root MuiTableRow-head"
-                  >
-                    <th
-                      class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignLeft"
-                      scope="col"
+                <mock-tablehead>
+                  <mock-tablerow>
+                    <mock-tablecell
+                      align="left"
+                      classname="MTableHeader-header-6"
+                      size="medium"
                       style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
                     >
-                      <span
-                        aria-disabled="false"
-                        class="MuiButtonBase-root MuiTableSortLabel-root"
-                        role="button"
-                        tabindex="0"
+                      <mock-tablesortlabel
+                        active="false"
+                        direction="asc"
+                        iconcomponent="[object Object]"
                       >
                         <div
                           aria-describedby="rbd-hidden-text-0-hidden-text-0"
@@ -93,28 +78,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         >
                           REEF
                         </div>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-                          />
-                        </svg>
-                      </span>
-                    </th>
-                    <th
-                      class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
-                      scope="col"
+                      </mock-tablesortlabel>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      classname="MTableHeader-header-6"
+                      size="medium"
                       style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
                     >
-                      <span
-                        aria-disabled="false"
-                        class="MuiButtonBase-root MuiTableSortLabel-root"
-                        role="button"
-                        tabindex="0"
+                      <mock-tablesortlabel
+                        active="false"
+                        direction="asc"
+                        iconcomponent="[object Object]"
                       >
                         <div
                           aria-describedby="rbd-hidden-text-0-hidden-text-0"
@@ -128,28 +103,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         >
                           TEMP
                         </div>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-                          />
-                        </svg>
-                      </span>
-                    </th>
-                    <th
-                      class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
-                      scope="col"
+                      </mock-tablesortlabel>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      classname="MTableHeader-header-6"
+                      size="medium"
                       style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
                     >
-                      <span
-                        aria-disabled="false"
-                        class="MuiButtonBase-root MuiTableSortLabel-root"
-                        role="button"
-                        tabindex="0"
+                      <mock-tablesortlabel
+                        active="false"
+                        direction="asc"
+                        iconcomponent="[object Object]"
                       >
                         <div
                           aria-describedby="rbd-hidden-text-0-hidden-text-0"
@@ -163,28 +128,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         >
                           DEPTH
                         </div>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-                          />
-                        </svg>
-                      </span>
-                    </th>
-                    <th
-                      class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignRight"
-                      scope="col"
+                      </mock-tablesortlabel>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      classname="MTableHeader-header-6"
+                      size="medium"
                       style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
                     >
-                      <span
-                        aria-disabled="false"
-                        class="MuiButtonBase-root MuiTableSortLabel-root"
-                        role="button"
-                        tabindex="0"
+                      <mock-tablesortlabel
+                        active="false"
+                        direction="asc"
+                        iconcomponent="[object Object]"
                       >
                         <div
                           aria-describedby="rbd-hidden-text-0-hidden-text-0"
@@ -198,28 +153,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         >
                           DHW
                         </div>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-                          />
-                        </svg>
-                      </span>
-                    </th>
-                    <th
-                      class="MuiTableCell-root MuiTableCell-head MTableHeader-header-6 MuiTableCell-alignLeft"
-                      scope="col"
+                      </mock-tablesortlabel>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="left"
+                      classname="MTableHeader-header-6"
+                      size="medium"
                       style="background-color: rgb(202, 203, 209); color: black; text-align: left; box-sizing: border-box;"
                     >
-                      <span
-                        aria-disabled="false"
-                        class="MuiButtonBase-root MuiTableSortLabel-root"
-                        role="button"
-                        tabindex="0"
+                      <mock-tablesortlabel
+                        active="false"
+                        direction="asc"
+                        iconcomponent="[object Object]"
                       >
                         <div
                           aria-describedby="rbd-hidden-text-0-hidden-text-0"
@@ -233,82 +178,79 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                         >
                           ALERT
                         </div>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
-                          />
-                        </svg>
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  class="MuiTableBody-root"
-                >
-                  <tr
-                    class="MuiTableRow-root MuiTableRow-hover"
+                      </mock-tablesortlabel>
+                    </mock-tablecell>
+                  </mock-tablerow>
+                </mock-tablehead>
+                <mock-tablebody>
+                  <mock-tablerow
+                    hover="true"
                     index="0"
                     level="0"
                     path="0"
+                    selected="false"
                     style="transition: all ease 300ms; cursor: pointer;"
                   >
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    <mock-tablecell
+                      align="left"
+                      size="medium"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="Mock Reef Hartmann"
                     >
-                      <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary MuiTypography-alignLeft"
+                      <mock-typography
+                        align="left"
+                        color="textSecondary"
                         style="padding-right: 1.5rem;"
+                        variant="subtitle1"
                       >
                         Mock Reef Hartmann
-                      </h6>
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      </mock-typography>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      size="medium"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="- -"
                     >
-                      <h6
-                        class="MuiTypography-root MuiTypography-h6"
+                      <mock-typography
                         style="color: rgb(22, 141, 189); padding-left: 1rem;"
+                        variant="h6"
                       >
                         - -
                         ℃
-                      </h6>
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      </mock-typography>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      size="medium"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="19"
                     >
-                      <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
+                      <mock-typography
+                        color="textSecondary"
                         style="padding-left: 2rem;"
+                        variant="subtitle1"
                       >
                         19
                          m
-                      </h6>
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      </mock-typography>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="right"
+                      size="medium"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="2.857142857142857"
                     >
-                      <h6
-                        class="MuiTypography-root MuiTypography-subtitle1"
+                      <mock-typography
                         style="padding-left: 2rem; color: rgb(12, 157, 165);"
+                        variant="subtitle1"
                       >
                         2.9
-                      </h6>
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      </mock-typography>
+                    </mock-tablecell>
+                    <mock-tablecell
+                      align="left"
+                      size="medium"
                       style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; text-align: left;"
                       value="2.857142857142857"
                     >
@@ -323,10 +265,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                           d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
                         />
                       </svg>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </mock-tablecell>
+                  </mock-tablerow>
+                </mock-tablebody>
+              </mock-table>
             </div>
           </div>
         </div>
