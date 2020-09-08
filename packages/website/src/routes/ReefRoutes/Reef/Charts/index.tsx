@@ -4,7 +4,6 @@ import {
   WithStyles,
   createStyles,
   Typography,
-  Grid,
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
@@ -106,160 +105,158 @@ const Charts = ({
   });
 
   return (
-    <Grid item xs={11}>
-      <div
-        className={classes.root}
-        onMouseLeave={() => {
-          setShowTooltip(false);
-          setSliceAtLabel(null);
+    <div
+      className={classes.root}
+      onMouseLeave={() => {
+        setShowTooltip(false);
+        setSliceAtLabel(null);
+      }}
+    >
+      <Typography className={classes.graphTitle} variant="h6">
+        DAILY WATER TEMPERATURE (°C)
+      </Typography>
+      <Line
+        ref={temperatureChartRef}
+        options={{
+          maintainAspectRatio: false,
+          plugins: {
+            chartJsPluginBarchartBackground: {
+              color: "rgb(158, 166, 170, 0.07)",
+            },
+            fillPlugin: {
+              datasetIndex: 0,
+              zeroLevel: temperatureThreshold,
+              bottom: 0,
+              top: 35,
+              color: "rgba(250, 141, 0, 0.5)",
+              updateChart,
+            },
+            sliceDrawPlugin: {
+              sliceAtLabel,
+              datasetIndex: 0,
+            },
+          },
+          tooltips: {
+            filter: (tooltipItem: any) => {
+              return tooltipItem.datasetIndex === 0;
+            },
+            intersect: false,
+            enabled: false,
+            custom: customTooltip(temperatureChartRef),
+          },
+          legend: {
+            display: true,
+            rtl: true,
+            labels: {
+              fontSize: 14,
+              fontColor: "#9ea6aa",
+            },
+          },
+          annotation: {
+            annotations: [
+              {
+                type: "line",
+                mode: "horizontal",
+                scaleID: "y-axis-0",
+                value: maxMonthlyMean,
+                borderColor: "rgb(75, 192, 192)",
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: {
+                  enabled: true,
+                  backgroundColor: "rgb(169,169,169)",
+                  position: "left",
+                  xAdjust: 10,
+                  content: "Maximum Monthly Temperature",
+                },
+              },
+              {
+                type: "line",
+                mode: "horizontal",
+                scaleID: "y-axis-0",
+                value: temperatureThreshold,
+                borderColor: "#ff8d00",
+                borderWidth: 2,
+                borderDash: [5, 5],
+                label: {
+                  backgroundColor: "rgb(169,169,169)",
+                  enabled: false,
+                  position: "left",
+                  xAdjust: 10,
+                  content: "Bleaching Threshold",
+                },
+              },
+            ],
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  displayFormats: {
+                    hour: "MMM D h:mm a",
+                  },
+                  unit: "week",
+                },
+                display: true,
+                ticks: {
+                  labelOffset: xTickShift,
+                  min: xAxisMin,
+                  max: xAxisMax,
+                  padding: 10,
+                  maxRotation: 0,
+                  callback: (value: string) => {
+                    return value.split(", ")[0].toUpperCase();
+                  },
+                },
+                gridLines: {
+                  display: false,
+                  drawTicks: false,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  drawTicks: false,
+                },
+                display: true,
+                ticks: {
+                  min: temperatureThreshold
+                    ? Math.round(temperatureThreshold) - 5
+                    : null,
+                  stepSize: 5,
+                  max: temperatureThreshold
+                    ? Math.round(temperatureThreshold) + 5
+                    : null,
+                  callback: (value: number) => {
+                    return `${value}\u00B0  `;
+                  },
+                },
+              },
+            ],
+          },
         }}
-      >
-        <Typography className={classes.graphTitle} variant="h6">
-          DAILY WATER TEMPERATURE (°C)
-        </Typography>
-        <Line
-          ref={temperatureChartRef}
-          options={{
-            maintainAspectRatio: false,
-            plugins: {
-              chartJsPluginBarchartBackground: {
-                color: "rgb(158, 166, 170, 0.07)",
-              },
-              fillPlugin: {
-                datasetIndex: 0,
-                zeroLevel: temperatureThreshold,
-                bottom: 0,
-                top: 35,
-                color: "rgba(250, 141, 0, 0.5)",
-                updateChart,
-              },
-              sliceDrawPlugin: {
-                sliceAtLabel,
-                datasetIndex: 0,
-              },
-            },
-            tooltips: {
-              filter: (tooltipItem: any) => {
-                return tooltipItem.datasetIndex === 0;
-              },
-              intersect: false,
-              enabled: false,
-              custom: customTooltip(temperatureChartRef),
-            },
-            legend: {
-              display: true,
-              rtl: true,
-              labels: {
-                fontSize: 14,
-                fontColor: "#9ea6aa",
-              },
-            },
-            annotation: {
-              annotations: [
-                {
-                  type: "line",
-                  mode: "horizontal",
-                  scaleID: "y-axis-0",
-                  value: maxMonthlyMean,
-                  borderColor: "rgb(75, 192, 192)",
-                  borderWidth: 2,
-                  borderDash: [5, 5],
-                  label: {
-                    enabled: true,
-                    backgroundColor: "rgb(169,169,169)",
-                    position: "left",
-                    xAdjust: 10,
-                    content: "Maximum Monthly Temperature",
-                  },
-                },
-                {
-                  type: "line",
-                  mode: "horizontal",
-                  scaleID: "y-axis-0",
-                  value: temperatureThreshold,
-                  borderColor: "#ff8d00",
-                  borderWidth: 2,
-                  borderDash: [5, 5],
-                  label: {
-                    backgroundColor: "rgb(169,169,169)",
-                    enabled: false,
-                    position: "left",
-                    xAdjust: 10,
-                    content: "Bleaching Threshold",
-                  },
-                },
-              ],
-            },
-            scales: {
-              xAxes: [
-                {
-                  type: "time",
-                  time: {
-                    displayFormats: {
-                      hour: "MMM D h:mm a",
-                    },
-                    unit: "week",
-                  },
-                  display: true,
-                  ticks: {
-                    labelOffset: xTickShift,
-                    min: xAxisMin,
-                    max: xAxisMax,
-                    padding: 10,
-                    maxRotation: 0,
-                    callback: (value: string) => {
-                      return value.split(", ")[0].toUpperCase();
-                    },
-                  },
-                  gridLines: {
-                    display: false,
-                    drawTicks: false,
-                  },
-                },
-              ],
-              yAxes: [
-                {
-                  gridLines: {
-                    drawTicks: false,
-                  },
-                  display: true,
-                  ticks: {
-                    min: temperatureThreshold
-                      ? Math.round(temperatureThreshold) - 5
-                      : null,
-                    stepSize: 5,
-                    max: temperatureThreshold
-                      ? Math.round(temperatureThreshold) + 5
-                      : null,
-                    callback: (value: number) => {
-                      return `${value}\u00B0  `;
-                    },
-                  },
-                },
-              ],
-            },
+        height={chartHeight}
+        data={createChartData(chartLabels, surfaceTemperatureData, true)}
+      />
+      {showTooltip ? (
+        <div
+          className="chart-tooltip"
+          id="chart-tooltip"
+          style={{
+            position: "fixed",
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
           }}
-          height={chartHeight}
-          data={createChartData(chartLabels, surfaceTemperatureData, true)}
-        />
-        {showTooltip ? (
-          <div
-            className="chart-tooltip"
-            id="chart-tooltip"
-            style={{
-              position: "fixed",
-              top: tooltipPosition.top,
-              left: tooltipPosition.left,
-            }}
-          >
-            <>
-              <Tooltip {...tooltipData} />
-              <div className="tooltip-arrow" />
-            </>
-          </div>
-        ) : null}
-      </div>
-    </Grid>
+        >
+          <>
+            <Tooltip {...tooltipData} />
+            <div className="tooltip-arrow" />
+          </>
+        </div>
+      ) : null}
+    </div>
   );
 };
 

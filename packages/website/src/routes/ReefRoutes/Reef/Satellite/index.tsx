@@ -9,6 +9,7 @@ import {
   CardHeader,
   Grid,
   Tooltip,
+  Box,
 } from "@material-ui/core";
 
 import { dhwColorCode } from "../../../../assets/colorCode";
@@ -27,6 +28,25 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
+
+  const metrics = [
+    {
+      label: "SURFACE TEMP",
+      value: `${formatNumber(satelliteTemperature, 1)} \u2103`,
+    },
+    {
+      label: "HISTORICAL MAX TEMP",
+      value: `${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`,
+      tooltipTitle:
+        "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
+    },
+    {
+      label: "HEAT STRESS",
+      value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
+      tooltipTitle:
+        "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
+    },
+  ];
 
   return (
     <Card
@@ -52,99 +72,57 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
           </Grid>
         }
       />
+
       <CardContent className={classes.content}>
-        <Grid container justify="space-between" style={{ height: "100%" }}>
-          <Grid
-            className={classes.contentTextWrapper}
-            alignContent="flex-start"
-            container
-            item
-            xs={12}
-          >
-            <Grid
-              className={classes.contentMeasure}
-              item
-              xs={6}
-              md={12}
-              lg={12}
-              xl={6}
-            >
-              <Typography
-                className={classes.contentTextTitles}
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                SURFACE TEMP
-              </Typography>
-              <Typography
-                className={classes.contentTextValues}
-                color="textPrimary"
-              >
-                {`${formatNumber(satelliteTemperature, 1)} °C`}
-              </Typography>
-            </Grid>
-            <Grid
-              className={classes.contentMeasure}
-              item
-              xs={6}
-              md={12}
-              lg={12}
-              xl={6}
-            >
-              <Typography
-                className={classes.contentTextTitles}
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                HISTORICAL MAX TEMP
-              </Typography>
-              <Typography
-                className={classes.contentTextValues}
-                color="textPrimary"
-              >
-                {`${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography
-                className={classes.contentTextTitles}
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                DEGREE HEATING WEEKS
-              </Typography>
-              <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
-                <Typography
-                  className={classes.contentTextValues}
-                  color="textPrimary"
-                >
-                  {`${formatNumber(degreeHeatingWeeks, 1)} DHW`}
-                </Typography>
-              </Tooltip>
-            </Grid>
-          </Grid>
-          <Grid item container alignItems="flex-end">
-            {dhwColorCode.map((elem) => (
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                key={elem.value}
-                item
-                xs={1}
-              >
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  item
-                  style={{ backgroundColor: `${elem.color}`, height: "2rem" }}
-                >
-                  <Typography variant="caption">{elem.value}</Typography>
-                </Grid>
+        <Box p="1rem 1rem 1rem 2rem">
+          <Grid container direction="column" spacing={3}>
+            {metrics.map(({ label, value, tooltipTitle }) => (
+              <Grid key={label} item>
+                <Box pl="1rem">
+                  <Typography
+                    className={classes.contentTextTitles}
+                    variant="subtitle2"
+                  >
+                    {label}
+                  </Typography>
+                  {tooltipTitle ? (
+                    <Tooltip title={tooltipTitle}>
+                      <Typography
+                        className={classes.contentTextValues}
+                        variant="h2"
+                      >
+                        {value}
+                      </Typography>
+                    </Tooltip>
+                  ) : (
+                    <Typography
+                      className={classes.contentTextValues}
+                      variant="h2"
+                    >
+                      {value}
+                    </Typography>
+                  )}
+                </Box>
               </Grid>
             ))}
           </Grid>
+        </Box>
+
+        <Grid container>
+          {dhwColorCode.map(({ value, color }) => (
+            <Grid
+              key={value}
+              item
+              xs={1}
+              style={{ backgroundColor: `${color}`, height: "2rem" }}
+            >
+              <Box textAlign="center">
+                <Typography variant="caption" align="center">
+                  {value}
+                </Typography>
+              </Box>
+            </Grid>
+          ))}
         </Grid>
       </CardContent>
     </Card>
@@ -155,25 +133,26 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
-      height: "100%",
-      width: "100%",
       display: "flex",
       flexDirection: "column",
+      height: "100%",
     },
     titleImage: {
       height: 35,
       width: 35,
     },
     header: {
-      flex: "0 1 auto",
-      padding: "1rem 1rem 0 1rem",
+      padding: "0.5rem 1.5rem 0 1rem",
     },
     content: {
-      flex: "1 1 auto",
-      padding: "1rem 0 0 0",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      flexGrow: 1,
+      padding: 0,
     },
-    contentTextWrapper: {
-      padding: "0 1rem 0 1rem",
+    contentTextTitles: {
+      lineHeight: 1.33,
     },
     contentText: {
       marginTop: "1rem",
