@@ -9,7 +9,6 @@ export interface TableRow {
   temp: string | 0;
   depth: number | null;
   dhw: number | null;
-  alert?: string;
   tableData: {
     id: number;
   };
