@@ -2,14 +2,15 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiBox-root MuiBox-root-3"
+  <mock-box
+    p="1"
   >
-    <div
-      class="MuiBox-root MuiBox-root-4"
+    <mock-box
+      mb="2"
     >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+      <mock-typography
+        color="textSecondary"
+        variant="h5"
       >
         <mock-hidden
           xsdown="true"
@@ -21,19 +22,18 @@ exports[`renders as expected 1`] = `
         >
           Featured Reef
         </mock-hidden>
-      </h5>
-    </div>
-    <div
-      class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
-    >
+      </mock-typography>
+    </mock-box>
+    <mock-card>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
         >
-          <div
-            class="MuiBox-root MuiBox-root-5"
+          <mock-box
+            height="100%"
+            position="relative"
           >
             <div
               class="MuiCardMedia-root SelectedReefCard-cardImage-1"
@@ -42,52 +42,52 @@ exports[`renders as expected 1`] = `
             <mock-hidden
               smup="true"
             >
-              <div
-                class="MuiBox-root MuiBox-root-6"
+              <mock-box
+                left="16"
+                position="absolute"
+                top="16"
               >
-                <h5
-                  class="MuiTypography-root MuiTypography-h5"
+                <mock-typography
+                  variant="h5"
                 />
-              </div>
+              </mock-box>
             </mock-hidden>
-            <div
-              class="MuiBox-root MuiBox-root-7"
+            <mock-box
+              bottom="16"
+              position="absolute"
+              right="16"
             >
               <a
                 href="/reefs/2"
                 style="text-decoration: none;"
               >
-                <button
-                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
-                  tabindex="0"
-                  type="button"
+                <mock-button
+                  color="primary"
+                  size="small"
+                  variant="contained"
                 >
-                  <span
-                    class="MuiButton-label"
-                  >
-                    EXPLORE
-                  </span>
-                  <span
-                    class="MuiTouchRipple-root"
-                  />
-                </button>
+                  EXPLORE
+                </mock-button>
               </a>
-            </div>
-          </div>
+            </mock-box>
+          </mock-box>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
           style="margin-bottom: 1rem; max-height: 14rem;"
         >
-          <div
-            class="MuiBox-root MuiBox-root-8"
+          <mock-box
+            fontweight="400"
+            pb="0.5rem"
+            pl="0.5rem"
           >
-            <h6
-              class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextSecondary"
+            <mock-typography
+              color="textSecondary"
+              variant="subtitle1"
             >
               MEAN DAILY SURFACE TEMP. (C°)
-            </h6>
-          </div>
+            </mock-typography>
+          </mock-box>
           Mock-Line
         </div>
         <div
@@ -98,77 +98,87 @@ exports[`renders as expected 1`] = `
             class="SelectedReefCard-metricsContainer-2"
           >
             <div>
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
               >
                 SURFACE TEMP
-              </span>
-              <h4
-                class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
               >
                 29.0
                  
-                <span
-                  class="MuiTypography-root MuiTypography-h6"
+                <mock-typography
+                  component="span"
+                  variant="h6"
                 >
                   ℃
-                </span>
-              </h4>
+                </mock-typography>
+              </mock-typography>
             </div>
             <div>
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
               >
                 TEMP AT 0M
-              </span>
-              <h4
-                class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
               >
                 39.0
                  
-                <span
-                  class="MuiTypography-root MuiTypography-h6"
+                <mock-typography
+                  component="span"
+                  variant="h6"
                 >
                   ℃
-                </span>
-              </h4>
+                </mock-typography>
+              </mock-typography>
             </div>
             <div>
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextSecondary"
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
               >
                 HEAT STRESS
-              </span>
-              <h4
-                class="MuiTypography-root MuiTypography-h4 MuiTypography-colorPrimary"
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
               >
                 4.9
                  
-                <span
-                  class="MuiTypography-root MuiTypography-h6"
+                <mock-typography
+                  component="span"
+                  variant="h6"
                 >
                   DHW
-                </span>
-              </h4>
+                </mock-typography>
+              </mock-typography>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mock-card>
+  </mock-box>
 </div>
 `;
 
 exports[`renders loading as expected 1`] = `
 <div>
-  <div
-    class="MuiBox-root MuiBox-root-11"
+  <mock-box
+    p="1"
   >
-    <div
-      class="MuiBox-root MuiBox-root-12"
+    <mock-box
+      mb="2"
     >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-colorTextSecondary"
+      <mock-typography
+        color="textSecondary"
+        variant="h5"
       >
         <mock-hidden
           xsdown="true"
@@ -180,35 +190,19 @@ exports[`renders loading as expected 1`] = `
         >
           Featured Reef
         </mock-hidden>
-      </h5>
-    </div>
-    <div
-      class="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
-    >
-      <div
-        class="MuiBox-root MuiBox-root-13"
+      </mock-typography>
+    </mock-box>
+    <mock-card>
+      <mock-box
+        p="4"
+        textalign="center"
       >
-        <div
-          class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-          role="progressbar"
-          style="width: 6rem; height: 6rem;"
-        >
-          <svg
-            class="MuiCircularProgress-svg"
-            viewBox="22 22 44 44"
-          >
-            <circle
-              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
-              cx="44"
-              cy="44"
-              fill="none"
-              r="21.5"
-              stroke-width="1"
-            />
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
+        <mock-circularprogress
+          size="6rem"
+          thickness="1"
+        />
+      </mock-box>
+    </mock-card>
+  </mock-box>
 </div>
 `;

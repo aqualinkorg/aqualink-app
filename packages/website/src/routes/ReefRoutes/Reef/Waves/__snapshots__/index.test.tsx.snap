@@ -2,8 +2,8 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiPaper-root MuiCard-root Waves-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+  <mock-card
+    classname="Waves-card-1"
   >
     <div
       class="MuiCardHeader-root Waves-header-2"
@@ -11,8 +11,11 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiCardHeader-content"
       >
-        <span
-          class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+        <mock-typography
+          classname="MuiCardHeader-title"
+          component="span"
+          display="block"
+          variant="h5"
         >
           <div
             class="MuiGrid-root MuiGrid-container"
@@ -28,18 +31,19 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
             >
-              <h6
-                class="MuiTypography-root Waves-cardTitle-3 MuiTypography-h6"
+              <mock-typography
+                classname="Waves-cardTitle-3"
+                variant="h6"
               >
                 WAVES
-              </h6>
+              </mock-typography>
             </div>
           </div>
-        </span>
+        </mock-typography>
       </div>
     </div>
-    <div
-      class="MuiCardContent-root Waves-contentWrapper-4"
+    <mock-cardcontent
+      classname="Waves-contentWrapper-4"
     >
       <div
         class="MuiGrid-root Waves-content-5 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
@@ -51,57 +55,69 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
-            <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+            <mock-typography
+              classname="Waves-contentTitles-6"
+              color="textSecondary"
+              variant="subtitle2"
             >
               HEIGHT
-            </h6>
+            </mock-typography>
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
-              <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+              <mock-typography
+                classname="Waves-contentValues-7"
+                color="textSecondary"
               >
                 3.0
-              </p>
-              <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+              </mock-typography>
+              <mock-typography
+                classname="Waves-contentUnits-8"
+                color="textSecondary"
+                variant="h6"
               >
                 Μ
-              </h6>
+              </mock-typography>
             </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
-            <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+            <mock-typography
+              classname="Waves-contentTitles-6"
+              color="textSecondary"
+              variant="subtitle2"
             >
               PERIOD
-            </h6>
+            </mock-typography>
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
-              <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+              <mock-typography
+                classname="Waves-contentValues-7"
+                color="textSecondary"
               >
                 15
-              </p>
-              <h6
-                class="MuiTypography-root Waves-contentUnits-8 MuiTypography-h6 MuiTypography-colorTextSecondary"
+              </mock-typography>
+              <mock-typography
+                classname="Waves-contentUnits-8"
+                color="textSecondary"
+                variant="h6"
               >
                 S
-              </h6>
+              </mock-typography>
             </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
-            <h6
-              class="MuiTypography-root Waves-contentTitles-6 MuiTypography-subtitle2 MuiTypography-colorTextSecondary"
+            <mock-typography
+              classname="Waves-contentTitles-6"
+              color="textSecondary"
+              variant="subtitle2"
             >
               DIRECTION
-            </h6>
+            </mock-typography>
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
@@ -111,11 +127,12 @@ exports[`renders as expected 1`] = `
                 src="directioncircle.svg"
                 style="transform: rotate(136deg);"
               />
-              <p
-                class="MuiTypography-root Waves-contentValues-7 MuiTypography-body1 MuiTypography-colorTextSecondary"
+              <mock-typography
+                classname="Waves-contentValues-7"
+                color="textSecondary"
               >
                 136°
-              </p>
+              </mock-typography>
             </div>
           </div>
         </div>
@@ -130,7 +147,7 @@ exports[`renders as expected 1`] = `
           />
         </div>
       </div>
-    </div>
-  </div>
+    </mock-cardcontent>
+  </mock-card>
 </div>
 `;
