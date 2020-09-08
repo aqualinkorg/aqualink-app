@@ -4,13 +4,13 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { AuthRequest } from '../auth/auth.types';
 import { extractAndVerifyToken } from '../auth/firebase-auth.strategy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
-import { ReefToAdmin } from '../reefs/reef-to-admin.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { Reef } from '../reefs/reefs.entity';
 
 @Injectable()
 export class UsersService {
@@ -18,8 +18,8 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
 
-    @InjectRepository(ReefToAdmin)
-    private reefToAdminRepository: Repository<ReefToAdmin>,
+    @InjectRepository(Reef)
+    private reefRepository: Repository<Reef>,
 
     @InjectRepository(ReefApplication)
     private reefApplicationRepository: Repository<ReefApplication>,
@@ -95,30 +95,34 @@ export class UsersService {
   private async migrateUserAssociations(user: User) {
     const reefAssociations = await this.reefApplicationRepository.find({
       where: { user },
-      relations: ['reef'],
+      relations: ['reef', 'reef.admins'],
     });
 
-    const reefToAdminEntities: Promise<ReefToAdmin | void>[] = reefAssociations.map(
+    const reefEntities: Promise<UpdateResult | null>[] = reefAssociations.map(
       async (reefAssociation) => {
-        const relationshipExists = await this.reefToAdminRepository.find({
-          where: {
-            adminId: user.id,
-            reefId: reefAssociation.reef.id,
-          },
+        const { reef } = reefAssociation;
+
+        const relationshipExists = reef.admins.find((admin) => {
+          return admin.id === user.id;
         });
 
         // If relationship already exists, skip
         if (relationshipExists) {
-          return Promise.resolve();
+          return null;
         }
 
-        return this.reefToAdminRepository.save({
-          adminId: user.id,
-          reefId: reefAssociation.reef.id,
-        });
+        // Add new user as admin
+        return this.reefRepository.update(
+          {
+            id: reef.id,
+          },
+          {
+            admins: [...reef.admins, user],
+          },
+        );
       },
     );
 
-    return Promise.all(reefToAdminEntities);
+    return Promise.all(reefEntities);
   }
 }
