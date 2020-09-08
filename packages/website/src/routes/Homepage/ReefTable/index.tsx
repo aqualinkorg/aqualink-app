@@ -29,7 +29,7 @@ import {
   // degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
-import type { Order } from "./types";
+import type { Order, OrderKeys } from "./types";
 import EnhancedTableHead from "./tableHead";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -44,13 +44,13 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 function getComparator(
   order: Order,
-  orderBy: "locationName" | "temp" | "depth" | "dhw"
+  orderBy: OrderKeys
 ): (
   a: {
-    [key in "locationName" | "temp" | "depth" | "dhw"]: number | string | null;
+    [key in OrderKeys]: number | string | null;
   },
   b: {
-    [key in "locationName" | "temp" | "depth" | "dhw"]: number | string | null;
+    [key in OrderKeys]: number | string | null;
   }
 ) => number {
   return order === "desc"
@@ -74,22 +74,19 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const dispatch = useDispatch();
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
   const [order, setOrder] = useState<Order>(undefined);
-  const [orderBy, setOrderBy] = useState<
-    "locationName" | "temp" | "depth" | "dhw"
-  >("locationName");
+  const [orderBy, setOrderBy] = useState<OrderKeys>("locationName");
 
   const handleClick = (
     event: React.MouseEvent<HTMLTableRowElement, MouseEvent>,
     reef: Row
   ) => {
-    console.log(reef.tableData.id);
     setSelectedRow(reef.tableData.id);
     dispatch(setReefOnMap(reefsList[reef.tableData.id]));
   };
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: "locationName" | "temp" | "depth" | "dhw"
+    property: OrderKeys
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -156,14 +153,14 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
                     >
                       <TableCell>
                         <Typography
-                          align="left"
+                          align="center"
                           variant="subtitle1"
                           color="textSecondary"
                         >
                           {reef.locationName}
                         </Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography
                           style={{ color: colors.lightBlue }}
                           variant="subtitle1"
@@ -171,12 +168,12 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
                           {reef.temp}
                         </Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography variant="subtitle1" color="textSecondary">
                           {reef.depth}
                         </Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography
                           style={{
                             color: reef.dhw
@@ -188,7 +185,7 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
                           {formatNumber(reef.dhw, 1)}
                         </Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <ErrorIcon
                           style={{
                             color: alertColorFinder(reef.dhw),

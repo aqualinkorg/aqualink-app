@@ -6,7 +6,7 @@ import {
   TableSortLabel,
   Typography,
 } from "@material-ui/core";
-import type { Order } from "./types";
+import type { Order, OrderKeys } from "./types";
 
 const columnTitle = (title: string, unit?: string) => (
   <>
@@ -24,9 +24,9 @@ const columnTitle = (title: string, unit?: string) => (
 );
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const createSortHandler = (
-    property: "locationName" | "temp" | "depth" | "dhw"
-  ) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: OrderKeys) => (
+    event: React.MouseEvent<unknown>
+  ) => {
     props.onRequestSort(event, property);
   };
 
@@ -59,7 +59,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
       unit: "DHW",
     },
     {
-      id: "dhw",
+      id: "alert",
       numeric: true,
       disablePadding: false,
       label: "ALERT",
@@ -67,28 +67,25 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   ];
 
   return (
-    <TableHead>
+    <TableHead style={{ backgroundColor: "#cacbd1" }}>
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align="center"
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={props.orderBy === headCell.id ? props.order : false}
           >
             <TableSortLabel
               active={props.orderBy === headCell.id}
               direction={props.orderBy === headCell.id ? props.order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+              onClick={
+                headCell.id !== "alert"
+                  ? createSortHandler(headCell.id)
+                  : () => {}
+              }
             >
               {columnTitle(headCell.label, headCell.unit)}
-              {props.orderBy === headCell.id ? (
-                <span>
-                  {props.order === "desc"
-                    ? "sorted descending"
-                    : "sorted ascending"}
-                </span>
-              ) : null}
             </TableSortLabel>
           </TableCell>
         ))}
@@ -99,7 +96,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 
 interface HeadCell {
   disablePadding: boolean;
-  id: "locationName" | "temp" | "depth" | "dhw";
+  id: OrderKeys | "alert";
   label: string;
   numeric: boolean;
   unit?: string;
@@ -108,7 +105,7 @@ interface HeadCell {
 interface EnhancedTableProps {
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: "locationName" | "temp" | "depth" | "dhw"
+    property: OrderKeys
   ) => void;
   order: Order;
   orderBy: string;
