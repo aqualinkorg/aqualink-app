@@ -49,7 +49,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
           >
             <TableCell>
               <Typography
-                align="center"
+                align="left"
                 variant="subtitle1"
                 color="textSecondary"
               >

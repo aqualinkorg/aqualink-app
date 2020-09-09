@@ -6,7 +6,7 @@ export interface HomePageState {
 
 export interface TableRow {
   locationName: string | null;
-  temp: number | 0;
+  temp: number | null;
   depth: number | null;
   dhw: number | null;
   tableData: {

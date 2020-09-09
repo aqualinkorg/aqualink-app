@@ -160,7 +160,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
           >
             <mock-tablecell>
               <mock-typography
-                align="center"
+                align="left"
                 color="textSecondary"
                 variant="subtitle1"
               >
