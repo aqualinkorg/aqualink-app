@@ -12,4 +12,5 @@ export interface TableRow {
   tableData: {
     id: number;
   };
+  alert: number | null;
 }
