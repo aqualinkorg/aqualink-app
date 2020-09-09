@@ -10,7 +10,7 @@ import Reef from ".";
 const mockStore = configureStore([]);
 
 jest.mock("./Map", () => "Mock-Map");
-jest.mock("./FeatureVideo", () => "Mock-FeatureVideo");
+jest.mock("./FeaturedMedia", () => "Mock-FeaturedMedia");
 jest.mock("./Charts", () => "Mock-Charts");
 
 describe("Reef Detail Page", () => {

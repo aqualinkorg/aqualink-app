@@ -3,13 +3,13 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="FeatureVideo-card-1"
+    classname="FeaturedMedia-card-1"
   >
     <div
-      class="FeatureVideo-noVideoCard-3"
+      class="FeaturedMedia-noVideoCard-3"
     >
       <div
-        class="FeatureVideo-noVideoCardHeader-4"
+        class="FeaturedMedia-noVideoCardHeader-4"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item"
@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="FeatureVideo-noVideoCardHeaderText-5"
+              classname="FeaturedMedia-noVideoCardHeaderText-5"
               variant="h5"
             >
               IMAGE TO BE UPLOADED
@@ -37,7 +37,7 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="FeatureVideo-noVideoCardContent-6"
+        class="FeaturedMedia-noVideoCardContent-6"
       />
     </div>
   </mock-card>

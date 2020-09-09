@@ -4,6 +4,7 @@ import {
   WithStyles,
   createStyles,
   Card,
+  CardMedia,
   CardContent,
   Grid,
   Typography,
@@ -15,10 +16,12 @@ import ReactPlayer from "react-player";
 import reefImage from "../../../../assets/reef-image.jpg";
 import uploadIcon from "../../../../assets/icon_upload.svg";
 
-const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
-  return (
-    <Card className={classes.card}>
-      {url ? (
+const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
+  console.log(featuredImage);
+
+  if (url) {
+    return (
+      <Card className={classes.card}>
         <CardContent className={classes.content}>
           <ReactPlayer
             height="100%"
@@ -29,28 +32,42 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
             url={`${url}`}
           />
         </CardContent>
-      ) : (
-        <div className={classes.noVideoCard}>
-          <div className={classes.noVideoCardHeader}>
-            <Grid container item spacing={2}>
-              <Grid container justify="center" item xs={12}>
-                <Typography
-                  className={classes.noVideoCardHeaderText}
-                  variant="h5"
-                >
-                  IMAGE TO BE UPLOADED
-                </Typography>
-              </Grid>
-              <Grid container justify="center" item xs={12}>
-                <IconButton>
-                  <img src={uploadIcon} alt="upload" />
-                </IconButton>
-              </Grid>
+      </Card>
+    );
+  }
+
+  if (featuredImage) {
+    return (
+      <CardMedia
+        className={classes.card}
+        style={{ height: "100%" }}
+        image={featuredImage}
+      />
+    );
+  }
+
+  return (
+    <Card className={classes.card}>
+      <div className={classes.noVideoCard}>
+        <div className={classes.noVideoCardHeader}>
+          <Grid container item spacing={2}>
+            <Grid container justify="center" item xs={12}>
+              <Typography
+                className={classes.noVideoCardHeaderText}
+                variant="h5"
+              >
+                IMAGE TO BE UPLOADED
+              </Typography>
             </Grid>
-          </div>
-          <div className={classes.noVideoCardContent} />
+            <Grid container justify="center" item xs={12}>
+              <IconButton>
+                <img src={uploadIcon} alt="upload" />
+              </IconButton>
+            </Grid>
+          </Grid>
         </div>
-      )}
+        <div className={classes.noVideoCardContent} />
+      </div>
     </Card>
   );
 };
@@ -61,6 +78,7 @@ const styles = (theme: Theme) => {
       height: "100%",
       width: "100%",
       display: "flex",
+      borderRadius: 4,
     },
     content: {
       height: "100%",
@@ -109,10 +127,12 @@ const styles = (theme: Theme) => {
   });
 };
 
-interface FeatureVideoIncomingProps {
-  url: string | null;
+interface FeaturedMediaIncomingProps {
+  url?: string | null;
+  featuredImage?: string | null;
 }
 
-type FeatureVideoProps = WithStyles<typeof styles> & FeatureVideoIncomingProps;
+type FeaturedMediaProps = WithStyles<typeof styles> &
+  FeaturedMediaIncomingProps;
 
-export default withStyles(styles)(FeatureVideo);
+export default withStyles(styles)(FeaturedMedia);
