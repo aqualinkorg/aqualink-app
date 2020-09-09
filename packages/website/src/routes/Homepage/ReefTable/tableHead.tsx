@@ -8,20 +8,22 @@ import {
 } from "@material-ui/core";
 import type { Order, OrderKeys } from "./utils";
 
-const columnTitle = (title: string, unit?: string) => (
-  <>
-    <Typography variant="h6" style={{ color: "black" }}>
-      {title}
-      {unit && (
-        <Typography
-          variant="subtitle2"
-          style={{ color: "black" }}
-          component="span"
-        >{`\u00a0 (${unit})`}</Typography>
-      )}
-    </Typography>
-  </>
+const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
+  <Typography variant="h6" style={{ color: "black" }}>
+    {title}
+    {unit && (
+      <Typography
+        variant="subtitle2"
+        style={{ color: "black" }}
+        component="span"
+      >{`\u00a0 (${unit})`}</Typography>
+    )}
+  </Typography>
 );
+
+ColumnTitle.defaultProps = {
+  unit: undefined,
+};
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
   const createSortHandler = (property: OrderKeys) => (
@@ -85,7 +87,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
                   : () => {}
               }
             >
-              {columnTitle(headCell.label, headCell.unit)}
+              <ColumnTitle title={headCell.label} unit={headCell.unit} />
             </TableSortLabel>
           </TableCell>
         ))}
