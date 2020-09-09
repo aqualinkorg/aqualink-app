@@ -170,13 +170,15 @@ const SelectedReefContent = withStyles(styles)(
   }
 );
 
-const SelectedReefCard = () => {
+type SelectedReefProps = WithStyles<typeof styles>;
+
+const SelectedReefCard = ({ classes }: SelectedReefProps) => {
   const reef = useSelector(reefDetailsSelector);
 
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
   return featuredReefId ? (
-    <Box p={1}>
+    <Box className={classes.card}>
       <Box mb={2}>
         <Typography variant="h5" color="textSecondary">
           <Hidden xsDown>{`Featured ${
