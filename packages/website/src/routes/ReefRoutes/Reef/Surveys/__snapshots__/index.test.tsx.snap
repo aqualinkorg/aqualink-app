@@ -14,8 +14,166 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
         <mock-typography
           classname="Surveys-title-3"
         >
-          Your survey history
+          Survey History
         </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-typography
+            classname="Surveys-subTitle-4"
+            variant="h6"
+          >
+            Survey History:
+          </mock-typography>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiFormControl-root Surveys-formControl-5"
+          >
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-6 MuiInputBase-formControl MuiInput-formControl"
+            >
+              <div
+                aria-haspopup="listbox"
+                aria-labelledby="survey-history survey-history"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                id="survey-history"
+                role="button"
+                tabindex="0"
+              >
+                <mock-typography
+                  classname="Surveys-menuItem-7"
+                  variant="h6"
+                >
+                  All
+                </mock-typography>
+              </div>
+              <input
+                aria-hidden="true"
+                class="MuiSelect-nativeInput"
+                name="survey-history"
+                tabindex="-1"
+                value="all"
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSelect-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+              <mock-menu
+                anchorel="[object HTMLDivElement]"
+                id="menu-survey-history"
+                menulistprops="[object Object]"
+                open="false"
+                paperprops="[object Object]"
+              >
+                <mock-menuitem
+                  aria-selected="true"
+                  data-value="all"
+                  role="option"
+                  selected="true"
+                >
+                  <mock-typography
+                    classname="Surveys-menuItem-7"
+                    variant="h6"
+                  >
+                    All
+                  </mock-typography>
+                </mock-menuitem>
+              </mock-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-typography
+            classname="Surveys-subTitle-4"
+            variant="h6"
+          >
+            Observation:
+          </mock-typography>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiFormControl-root Surveys-formControl-5"
+          >
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-6 MuiInputBase-formControl MuiInput-formControl"
+            >
+              <div
+                aria-haspopup="listbox"
+                aria-labelledby="survey-observation survey-observation"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                id="survey-observation"
+                role="button"
+                tabindex="0"
+              >
+                <mock-typography
+                  classname="Surveys-menuItem-7"
+                  variant="h6"
+                >
+                  Any
+                </mock-typography>
+              </div>
+              <input
+                aria-hidden="true"
+                class="MuiSelect-nativeInput"
+                name="survey-observation"
+                tabindex="-1"
+                value="any"
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSelect-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+              <mock-menu
+                anchorel="[object HTMLDivElement]"
+                id="menu-survey-observation"
+                menulistprops="[object Object]"
+                open="false"
+                paperprops="[object Object]"
+              >
+                <mock-menuitem
+                  aria-selected="true"
+                  data-value="any"
+                  role="option"
+                  selected="true"
+                >
+                  <mock-typography
+                    classname="Surveys-menuItem-7"
+                    variant="h6"
+                  >
+                    Any
+                  </mock-typography>
+                </mock-menuitem>
+              </mock-menu>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div

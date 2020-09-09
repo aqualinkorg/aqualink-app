@@ -14,7 +14,7 @@ import {
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
 
-const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
+const Surveys = ({ isAdmin, reefId, classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
@@ -61,10 +61,10 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
           lg={4}
         >
           <Typography className={classes.title}>
-            {user ? "Your survey history" : "Survey History"}
+            {isAdmin ? "Your survey history" : "Survey History"}
           </Typography>
         </Grid>
-        {!user && (
+        {!isAdmin && (
           <>
             <Grid
               container
@@ -136,9 +136,9 @@ const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
       </Grid>
       <Grid container justify="center" item xs={11} lg={10}>
         {windowWidth < 1280 ? (
-          <TimelineMobile addNew={addNew} reefId={reefId} />
+          <TimelineMobile isAdmin={isAdmin} reefId={reefId} />
         ) : (
-          <Timeline addNew={addNew} reefId={reefId} />
+          <Timeline isAdmin={isAdmin} reefId={reefId} />
         )}
       </Grid>
     </Grid>
@@ -186,8 +186,7 @@ const styles = (theme: Theme) =>
 
 interface SurveyIncomingProps {
   reefId: number;
-  addNew: boolean;
-  user: boolean;
+  isAdmin: boolean;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;

@@ -22,7 +22,7 @@ import {
 } from "../../../../../store/Survey/surveyListSlice";
 import DeleteButton from "../DeleteButton";
 
-const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
+const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -32,7 +32,7 @@ const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
 
   return (
     <Grid container justify="flex-start" item xs={12}>
-      {addNew && (
+      {isAdmin && (
         <Grid
           style={{ marginBottom: "1rem" }}
           container
@@ -187,11 +187,13 @@ const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
                     item
                     xs={1}
                   >
-                    <DeleteButton
-                      reefId={reefId}
-                      surveyId={survey.id}
-                      diveDate={survey.diveDate}
-                    />
+                    {isAdmin && (
+                      <DeleteButton
+                        reefId={reefId}
+                        surveyId={survey.id}
+                        diveDate={survey.diveDate}
+                      />
+                    )}
                   </Grid>
                 </Grid>
               </Paper>
@@ -275,7 +277,7 @@ const styles = (theme: Theme) =>
 
 interface TimelineMobileIncomingProps {
   reefId: number;
-  addNew: boolean;
+  isAdmin: boolean;
 }
 
 type TimelineMobileProps = TimelineMobileIncomingProps &
