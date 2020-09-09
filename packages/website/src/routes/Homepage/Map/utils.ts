@@ -1,6 +1,6 @@
 import L from "leaflet";
 import {
-  colorFinder,
+  dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
 

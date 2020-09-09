@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    p="1"
+    classname="SelectedReefCard-card-1"
   >
     <mock-box
       mb="2"
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
             position="relative"
           >
             <div
-              class="MuiCardMedia-root Component-cardImage-3"
+              class="MuiCardMedia-root Component-cardImage-5"
               style="background-image: url(reef-image.jpg);"
             />
             <mock-hidden
@@ -74,6 +74,7 @@ exports[`renders as expected 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
+          style="margin-bottom: 1rem; max-height: 14rem;"
         >
           <mock-box
             fontweight="400"
@@ -84,7 +85,7 @@ exports[`renders as expected 1`] = `
               color="textSecondary"
               variant="subtitle1"
             >
-              MEAN DAILY SURFACE TEMP. (C°)
+              MEAN DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
           Mock-Line
@@ -94,7 +95,7 @@ exports[`renders as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="Component-metricsContainer-4"
+            class="Component-metricsContainer-6"
           >
             <div>
               <mock-typography
@@ -113,7 +114,7 @@ exports[`renders as expected 1`] = `
                   component="span"
                   variant="h6"
                 >
-                  ℃
+                   °C
                 </mock-typography>
               </mock-typography>
             </div>
@@ -134,7 +135,7 @@ exports[`renders as expected 1`] = `
                   component="span"
                   variant="h6"
                 >
-                  ℃
+                   °C
                 </mock-typography>
               </mock-typography>
             </div>
@@ -155,7 +156,7 @@ exports[`renders as expected 1`] = `
                   component="span"
                   variant="h6"
                 >
-                  DHW
+                   DHW
                 </mock-typography>
               </mock-typography>
             </div>
@@ -170,7 +171,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    p="1"
+    classname="SelectedReefCard-card-7"
   >
     <mock-box
       mb="2"

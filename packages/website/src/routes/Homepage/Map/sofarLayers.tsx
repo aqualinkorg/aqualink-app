@@ -11,12 +11,12 @@ type SofarLayerDefinition = {
 const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
     name: "Sea Surface Temperature",
-    model: "HYCOM",
-    variableId: "seaSurfaceTemperature",
+    model: "NOAACoralReefWatch",
+    variableId: "analysedSeaSurfaceTemperature",
     cmap: "turbo",
   },
   {
-    name: "NOAA Degree Heating Week",
+    name: "Heat Stress",
     model: "NOAACoralReefWatch",
     variableId: "degreeHeatingWeek",
     cmap: "noaacoral",

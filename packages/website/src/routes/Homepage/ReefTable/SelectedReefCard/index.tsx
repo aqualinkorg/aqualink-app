@@ -27,6 +27,12 @@ import { Reef } from "../../../../store/Reefs/types";
 
 const styles = (theme: Theme) =>
   createStyles({
+    card: {
+      padding: 40,
+      [theme.breakpoints.down("xs")]: {
+        padding: 10,
+      },
+    },
     cardImage: {
       borderRadius: "4px 0 0 4px",
       height: "100%",
@@ -68,21 +74,18 @@ const SelectedReefContent = withStyles(styles)(
     const metrics = [
       {
         label: "SURFACE TEMP",
-        value: `${formatNumber(surfTemp, 1)}`,
-        unit: "\u2103",
+        value: formatNumber(surfTemp, 1),
+        unit: " °C",
       },
       {
         label: `TEMP AT ${reef.depth}M`,
-        value: `${formatNumber(maxBottomTemperature, 1)}`,
-        unit: "\u2103",
+        value: formatNumber(maxBottomTemperature, 1),
+        unit: " °C",
       },
       {
         label: "HEAT STRESS",
-        value: `${formatNumber(
-          degreeHeatingWeeksCalculator(degreeHeatingDays),
-          1
-        )}`,
-        unit: "DHW",
+        value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+        unit: " DHW",
       },
     ];
 
@@ -91,7 +94,6 @@ const SelectedReefContent = withStyles(styles)(
         <Grid item xs={12} sm={4} lg={3}>
           <Box position="relative" height="100%">
             <CardMedia className={classes.cardImage} image={reefImage} />
-
             <Hidden smUp>
               <Box position="absolute" top={16} left={16}>
                 <Typography variant="h5">{reef.name}</Typography>
@@ -117,10 +119,16 @@ const SelectedReefContent = withStyles(styles)(
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={8} lg={6}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          lg={6}
+          style={{ marginBottom: "1rem", maxHeight: "14rem" }}
+        >
           <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
             <Typography color="textSecondary" variant="subtitle1">
-              MEAN DAILY SURFACE TEMP. (C&deg;)
+              MEAN DAILY SURFACE TEMP. (°C)
             </Typography>
           </Box>
           <CardChart
@@ -162,13 +170,15 @@ const SelectedReefContent = withStyles(styles)(
   }
 );
 
-const SelectedReefCard = () => {
+type SelectedReefProps = WithStyles<typeof styles>;
+
+const SelectedReefCard = ({ classes }: SelectedReefProps) => {
   const reef = useSelector(reefDetailsSelector);
 
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
   return featuredReefId ? (
-    <Box p={1}>
+    <Box className={classes.card}>
       <Box mb={2}>
         <Typography variant="h5" color="textSecondary">
           <Hidden xsDown>{`Featured ${

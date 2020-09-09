@@ -12,7 +12,7 @@ exports[`renders as expected 1`] = `
         classname="Charts-graphTitle-2"
         variant="h6"
       >
-        DAILY WATER TEMPERATURE (C°)
+        DAILY WATER TEMPERATURE (°C)
       </mock-typography>
       Mock-Line
     </div>

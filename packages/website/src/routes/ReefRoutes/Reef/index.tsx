@@ -20,18 +20,33 @@ import {
   reefErrorSelector,
   reefRequest,
 } from "../../../store/Reefs/selectedReefSlice";
+import {
+  surveysRequest,
+  surveyListSelector,
+} from "../../../store/Survey/surveyListSlice";
+import { sortDailyData } from "../../../helpers/sortDailyData";
 import ReefDetails from "./ReefDetails";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
+  const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const hasSpotter = false;
+
+  const latestDailyData =
+    reefDetails && reefDetails.dailyData.length > 0
+      ? sortDailyData(reefDetails.dailyData)[reefDetails.dailyData.length - 1]
+      : undefined;
+
+  const hasSpotter = Boolean(
+    latestDailyData && latestDailyData.surfaceTemperature
+  );
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
+    dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 
   return (
@@ -40,11 +55,12 @@ const Reef = ({ match, classes }: ReefProps) => {
       {/* eslint-disable-next-line no-nested-ternary */}
       {loading ? (
         <LinearProgress />
-      ) : reefDetails && reefDetails.dailyData.length > 0 && !error ? (
+      ) : reefDetails && latestDailyData && !error ? (
         <>
           <ReefInfo
             reefName={reefDetails?.name || ""}
-            lastSurvey="May 10, 2020"
+            lastDailyDataDate={latestDailyData?.date}
+            lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
             managerName={reefDetails?.admin || ""}
           />
           {!hasSpotter && (
@@ -58,7 +74,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               </Grid>
             </Grid>
           )}
-          <ReefDetails reef={reefDetails} />
+          <ReefDetails reef={{ ...reefDetails, latestDailyData }} />
           <ReefFooter />
         </>
       ) : (

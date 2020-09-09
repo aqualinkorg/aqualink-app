@@ -10,7 +10,6 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import ReactPlayer from "react-player";
 
 import reefImage from "../../../../assets/reef-image.jpg";
@@ -35,8 +34,11 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
           <div className={classes.noVideoCardHeader}>
             <Grid container item spacing={2}>
               <Grid container justify="center" item xs={12}>
-                <Typography style={{ opacity: 0.5 }} variant="h5">
-                  VIDEO TO BE UPLOADED
+                <Typography
+                  className={classes.noVideoCardHeaderText}
+                  variant="h5"
+                >
+                  IMAGE TO BE UPLOADED
                 </Typography>
               </Grid>
               <Grid container justify="center" item xs={12}>
@@ -47,9 +49,6 @@ const FeatureVideo = ({ url, classes }: FeatureVideoProps) => {
             </Grid>
           </div>
           <div className={classes.noVideoCardContent} />
-          <IconButton className={classes.playIconWrapper}>
-            <PlayArrowIcon className={classes.playIcon} />
-          </IconButton>
         </div>
       )}
     </Card>
@@ -81,6 +80,12 @@ const styles = (theme: Theme) => {
       width: "100%",
       padding: "2rem 0 1rem",
       zIndex: 1,
+    },
+    noVideoCardHeaderText: {
+      opacity: 0.5,
+      [theme.breakpoints.between("md", 1350)]: {
+        fontSize: 15,
+      },
     },
     noVideoCardContent: {
       width: "100%",

@@ -5,17 +5,19 @@ import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const { degreeHeatingDays, satelliteTemperature } =
+    const { degreeHeatingDays, satelliteTemperature, maxBottomTemperature } =
       value.latestDailyData || {};
+    const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const locationName = value.name || value.region?.name || null;
     return {
       locationName,
-      temp: satelliteTemperature,
+      temp: maxBottomTemperature || satelliteTemperature,
       depth: value.depth,
-      dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
+      dhw,
       tableData: {
         id: key,
       },
+      alert: dhw,
     };
   });
 };
