@@ -78,17 +78,17 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={props.orderBy === headCell.id ? props.order : false}
           >
-            <TableSortLabel
-              active={props.orderBy === headCell.id}
-              direction={props.orderBy === headCell.id ? props.order : "asc"}
-              onClick={
-                headCell.id !== "alert"
-                  ? createSortHandler(headCell.id)
-                  : () => {}
-              }
-            >
+            {headCell.id !== "alert" ? (
+              <TableSortLabel
+                active={props.orderBy === headCell.id}
+                direction={props.orderBy === headCell.id ? props.order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                <ColumnTitle title={headCell.label} unit={headCell.unit} />
+              </TableSortLabel>
+            ) : (
               <ColumnTitle title={headCell.label} unit={headCell.unit} />
-            </TableSortLabel>
+            )}
           </TableCell>
         ))}
       </TableRow>
