@@ -1,6 +1,6 @@
 import L from "leaflet";
 import {
-  colorFinder,
+  dhwColorFinder,
   degreeHeatingWeeksCalculator,
 } from "../../../helpers/degreeHeatingWeeks";
 
@@ -29,7 +29,7 @@ export const coloredBuoy = (color: string) =>
   </svg>`;
 
 export const coloredBuoyIcon = (degreeHeatingDays: number) => {
-  const color = colorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
+  const color = dhwColorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
   return L.divIcon({
     iconSize: [24, 24],
     iconAnchor: [12, 28],

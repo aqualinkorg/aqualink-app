@@ -30,7 +30,6 @@ const Footer = ({ classes }: FooterProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     appBar: {
-      marginTop: "2rem",
       "&.MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
       },

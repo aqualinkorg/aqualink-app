@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
 import { colors } from "../../../layout/App/theme";
-import { colorFinder } from "../../../helpers/degreeHeatingWeeks";
+import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
+import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
@@ -72,7 +73,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             <TableCell align="center">
               <Typography
                 style={{
-                  color: reef.dhw ? `${colorFinder(reef.dhw)}` : "black",
+                  color: reef.dhw ? `${dhwColorFinder(reef.dhw)}` : "black",
                 }}
                 variant="subtitle1"
               >
@@ -82,7 +83,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             <TableCell align="center">
               <ErrorIcon
                 style={{
-                  color: colorFinder(reef.dhw),
+                  color: alertColorFinder(reef.dhw),
                 }}
               />
             </TableCell>

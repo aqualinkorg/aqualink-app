@@ -1,6 +1,6 @@
 export type Order = "asc" | "desc";
 
-export type OrderKeys = "locationName" | "temp" | "depth" | "dhw";
+export type OrderKeys = "locationName" | "temp" | "depth" | "dhw" | "alert";
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return b[orderBy] >= a[orderBy] ? 1 : -1;

@@ -1,5 +1,5 @@
 import requests from "../helpers/requests";
-import type { Data, Reef } from "../store/Reefs/types";
+import type { Data, Reef, Pois } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
   requests.send<Reef>({
@@ -19,8 +19,15 @@ const getReefs = () =>
     method: "GET",
   });
 
+const getReefPois = (id: string) =>
+  requests.send<Pois[]>({
+    url: `pois?reef=${id}`,
+    method: "GET",
+  });
+
 export default {
   getReef,
   getReefs,
   getReefDailyData,
+  getReefPois,
 };

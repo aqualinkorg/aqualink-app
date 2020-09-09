@@ -97,7 +97,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
-      .addSelect(['users.fullName', 'users.email', 'users.id'])
+      .addSelect(['users.fullName', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 

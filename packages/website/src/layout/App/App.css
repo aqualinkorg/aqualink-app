@@ -57,3 +57,33 @@ body {
 .marker-icon {
   background-color: transparent;
 }
+
+.MuiButtonBase-root.MuiIconButton-root.MuiPickersDay-day,
+.MuiPickersCalendarHeader-switchHeader {
+  color: black;
+}
+
+.MuiTypography-root.MuiPickersClockNumber-clockNumber.MuiTypography-body1 {
+  color: black;
+}
+
+.slick-arrow:hover {
+  background-color: rgba(22, 141, 189, 0.5);
+  border-radius: 40px;
+}
+
+.slick-arrow.slick-prev {
+  background-color: rgba(22, 141, 189, 0.5);
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
+  left: -45px;
+}
+
+.slick-arrow.slick-next {
+  background-color: rgba(22, 141, 189, 0.5);
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
+  right: -45px;
+}

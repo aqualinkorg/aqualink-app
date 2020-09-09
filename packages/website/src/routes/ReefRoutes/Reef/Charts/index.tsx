@@ -53,10 +53,6 @@ const Charts = ({
     if (!chart) {
       return;
     }
-    if (showTooltip) {
-      setShowTooltip(false);
-      return;
-    }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
     const top = position.top + tooltipModel.caretY - 110;
@@ -111,9 +107,15 @@ const Charts = ({
 
   return (
     <Grid item xs={11}>
-      <div className={classes.root}>
+      <div
+        className={classes.root}
+        onMouseLeave={() => {
+          setShowTooltip(false);
+          setSliceAtLabel(null);
+        }}
+      >
         <Typography className={classes.graphTitle} variant="h6">
-          DAILY WATER TEMPERATURE (C&deg;)
+          DAILY WATER TEMPERATURE (°C)
         </Typography>
         <Line
           ref={temperatureChartRef}
@@ -140,6 +142,7 @@ const Charts = ({
               filter: (tooltipItem: any) => {
                 return tooltipItem.datasetIndex === 0;
               },
+              intersect: false,
               enabled: false,
               custom: customTooltip(temperatureChartRef),
             },
@@ -241,10 +244,6 @@ const Charts = ({
         />
         {showTooltip ? (
           <div
-            onMouseLeave={() => {
-              setShowTooltip(false);
-              setSliceAtLabel(null);
-            }}
             className="chart-tooltip"
             id="chart-tooltip"
             style={{

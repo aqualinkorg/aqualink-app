@@ -70,7 +70,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 variant="h5"
               >
-                0.0 ℃
+                0.0 °C
               </mock-typography>
             </div>
           </div>
@@ -92,7 +92,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 variant="h5"
               >
-                10.0 ℃
+                10.0 °C
               </mock-typography>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import {
   Grid,
   Typography,
@@ -13,6 +14,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({
   reefName,
+  lastDailyDataDate,
   lastSurvey,
   managerName,
   classes,
@@ -28,7 +30,7 @@ const ReefNavBar = ({
       alignItems="center"
       xs={12}
     >
-      <Grid item xs={5}>
+      <Grid item xs={11}>
         <Grid alignItems="center" direction="row" container spacing={1}>
           <Grid item>
             <IconButton
@@ -40,19 +42,30 @@ const ReefNavBar = ({
               <ArrowBack />
             </IconButton>
           </Grid>
-          {reefName && lastSurvey && (
-            <Grid item xs={7} direction="column" container>
+
+          <Grid item xs={9} direction="column" container>
+            {reefName && (
               <Grid item>
                 <Typography variant="h4">{reefName}</Typography>
               </Grid>
+            )}
+            {lastDailyDataDate && (
               <Grid item>
-                <Typography variant="subtitle1">05/12/20 8:16AM PST</Typography>
+                <Typography variant="subtitle1">
+                  {`Latest data: ${moment(lastDailyDataDate).format(
+                    "MMM DD[,] YYYY"
+                  )}`}
+                </Typography>
               </Grid>
+            )}
+            {lastSurvey && (
               <Grid item>
-                <Typography variant="subtitle1">{`Last surveyed: ${lastSurvey}`}</Typography>
+                <Typography variant="subtitle1">{`Last surveyed: ${moment(
+                  lastSurvey
+                ).format("MMM DD[,] YYYY")}`}</Typography>
               </Grid>
-            </Grid>
-          )}
+            )}
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={5}>
@@ -97,7 +110,8 @@ const styles = () =>
 
 interface ReefNavBarIncomingProps {
   reefName?: string;
-  lastSurvey?: string;
+  lastDailyDataDate?: string;
+  lastSurvey?: string | null;
   managerName?: string;
 }
 
