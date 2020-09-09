@@ -45,8 +45,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             onClick={(event) => handleClick(event, reef)}
             role="button"
             tabIndex={-1}
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${reef.locationName}-${index}`}
+            key={reef.tableData.id}
           >
             <TableCell>
               <Typography
