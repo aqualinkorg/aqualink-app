@@ -78,7 +78,7 @@ export const ReefMarkers = () => {
 
   return (
     <LayerGroup>
-      <MarkerClusterGroup>
+      <MarkerClusterGroup disableClusteringAtZoom={6}>
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
