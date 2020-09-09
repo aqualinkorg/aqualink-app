@@ -1,4 +1,13 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import { MuiPickersOverrides } from "@material-ui/pickers/typings/overrides";
+
+type OverridesNameToClassKey = {
+  [P in keyof Required<MuiPickersOverrides>]: keyof MuiPickersOverrides[P];
+};
+
+declare module "@material-ui/core/styles/overrides" {
+  export interface ComponentNameToClassKey extends OverridesNameToClassKey {}
+}
 
 const skyBlue = "#009ee0";
 const lightBlue = "#168dbd";
@@ -142,6 +151,21 @@ const theme: any = createMuiTheme({
     MuiInputBase: {
       root: {
         height: "100%",
+      },
+    },
+    MuiPickersDay: {
+      day: {
+        color: "black",
+      },
+    },
+    MuiPickersCalendarHeader: {
+      switchHeader: {
+        color: "black",
+      },
+    },
+    MuiPickersClockNumber: {
+      clockNumber: {
+        color: "black",
       },
     },
     MuiOutlinedInput: {
