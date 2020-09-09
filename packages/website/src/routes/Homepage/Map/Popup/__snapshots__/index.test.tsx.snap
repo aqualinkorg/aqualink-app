@@ -55,8 +55,7 @@ exports[`renders as expected 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="h5"
               >
-                10.0
-                 ℃
+                10.0  °C
               </mock-typography>
             </div>
           </div>

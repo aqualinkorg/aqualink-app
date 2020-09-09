@@ -45,7 +45,7 @@ exports[`renders as expected 1`] = `
           alt=""
           class="leaflet-marker-icon leaflet-zoom-hide leaflet-interactive"
           src="marker.png"
-          style="margin-left: -12px; margin-top: -41px; width: 20px; height: 30px; left: 0px; top: 0px; z-index: 0;"
+          style="margin-left: -10px; margin-top: -30px; width: 20px; height: 30px; left: 0px; top: 0px; z-index: 0;"
           tabindex="0"
         />
       </div>

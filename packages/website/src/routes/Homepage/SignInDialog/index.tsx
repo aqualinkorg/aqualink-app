@@ -97,13 +97,13 @@ const SignInDialog = ({
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container justify="flex-end" item xs={12}>
+            <Grid container justify="center" item xs={12}>
               <Grid
                 container
                 alignItems="center"
-                justify="space-between"
+                justify="space-around"
                 item
-                xs={11}
+                xs={12}
               >
                 <Grid container item xs={6}>
                   <Typography variant="h4">Aqua</Typography>
@@ -111,7 +111,7 @@ const SignInDialog = ({
                     link
                   </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid container justify="flex-end" item xs={1}>
                   <IconButton
                     className={classes.closeButton}
                     size="small"

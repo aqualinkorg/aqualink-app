@@ -4,22 +4,26 @@ import {
   Grid,
   withStyles,
   WithStyles,
-  Theme,
   Typography,
+  Theme,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
-import Wind from "./Wind";
+import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import Charts from "./Charts";
+import Surveys from "./Surveys";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
+import { userInfoSelector } from "../../../store/User/userSlice";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
+  const user = useSelector(userInfoSelector);
 
   return (
     <Grid container justify="center" className={classes.root}>
@@ -39,12 +43,12 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Typography>
       </Grid>
       <Grid container justify="space-between" item xs={11} spacing={4}>
-        <Grid item xs={12} md={reef.videoStream ? 6 : 9}>
+        <Grid item xs={12} md={6}>
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid item xs={12} md={reef.videoStream ? 6 : 3}>
+        <Grid item xs={12} md={6}>
           <div className={classes.container}>
             <FeatureVideo url={reef.videoStream} />
           </div>
@@ -53,7 +57,10 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
       <Grid container justify="space-between" item xs={11} spacing={4}>
         <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
-            <Satellite dailyData={reef.dailyData} />
+            <Satellite
+              maxMonthlyMean={reef.maxMonthlyMean}
+              dailyData={reef.dailyData}
+            />
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -63,7 +70,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <div className={classes.smallContainer}>
-            <Wind dailyData={reef.dailyData} />
+            <CoralBleaching dailyData={reef.dailyData} />
           </div>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
@@ -82,6 +89,16 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           }
         />
       </Grid>
+      <Surveys
+        user={Boolean(user)}
+        addNew={
+          user?.adminLevel
+            ? user.adminLevel === "reef_manager" ||
+              user.adminLevel === "super_admin"
+            : false
+        }
+        reefId={reef.id}
+      />
     </Grid>
   );
 };
@@ -89,7 +106,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      // flexGrow: 1,
       marginTop: "2rem",
     },
     cardTitles: {
@@ -98,18 +115,18 @@ const styles = (theme: Theme) =>
       margin: "0 0 0.5rem 1rem",
     },
     container: {
-      height: "55vh",
-      marginBottom: "3rem",
-      [theme.breakpoints.between("md", "lg")]: {
-        height: "50vh",
+      height: "30rem",
+      marginBottom: "2rem",
+      [theme.breakpoints.between("md", 1440)]: {
+        height: "25rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "20rem",
       },
     },
     smallContainer: {
-      height: "35vh",
-      marginBottom: "5rem",
-      [theme.breakpoints.down("xs")]: {
-        height: "48vh",
-      },
+      height: "20rem",
+      marginBottom: "2rem",
     },
   });
 

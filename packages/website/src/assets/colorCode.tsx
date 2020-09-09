@@ -1,4 +1,4 @@
-export const colorCode = [
+export const dhwColorCode = [
   {
     value: 0,
     color: "#085ba3",

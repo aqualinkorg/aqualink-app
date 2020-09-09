@@ -11,6 +11,11 @@ export interface Point {
   type: "Point";
 }
 
+export interface Pois {
+  id: number;
+  name: string | null;
+}
+
 export interface Data {
   id: number;
   date: string;
