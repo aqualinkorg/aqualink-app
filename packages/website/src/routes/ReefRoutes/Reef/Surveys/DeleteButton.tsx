@@ -35,6 +35,9 @@ const DeleteButton = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const visible =
+    user &&
+    (user.adminLevel === "super_admin" || user.adminLevel === "reef_manager");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,7 +67,7 @@ const DeleteButton = ({
 
   return (
     <>
-      {user && (
+      {visible && (
         <IconButton onClick={handleClickOpen}>
           <DeleteOutlineIcon color="primary" />
         </IconButton>
