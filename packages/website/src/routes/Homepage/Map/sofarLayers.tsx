@@ -34,6 +34,7 @@ export const SofarLayers = () => {
       {SOFAR_LAYERS.map((def) => (
         <LayersControl.Overlay name={def.name} key={def.name}>
           <TileLayer
+            // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
             url={sofarUrlFromDef(def)}
             key={def.variableId}
