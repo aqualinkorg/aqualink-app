@@ -2,7 +2,6 @@
 import type { TableRow } from "../Homepage/types";
 import type { Reef } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
-import { formatNumber } from "../../helpers/numberUtils";
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
@@ -11,7 +10,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
     const locationName = value.name || value.region?.name || null;
     return {
       locationName,
-      temp: formatNumber(satelliteTemperature, 1),
+      temp: satelliteTemperature,
       depth: value.depth,
       dhw: degreeHeatingWeeksCalculator(degreeHeatingDays),
       tableData: {

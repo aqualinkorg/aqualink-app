@@ -38,12 +38,7 @@ const Homepage = ({ classes }: HomepageProps) => {
         <HomepageNavBar searchLocation />
       </div>
       <div className={classes.root}>
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="center"
-        >
+        <Grid container direction="row">
           <Grid className={classes.map} item xs={12} sm={6}>
             <HomepageMap />
           </Grid>
@@ -87,12 +82,13 @@ const styles = () =>
       flexGrow: 1,
     },
     map: {
-      height: "100%",
       display: "flex",
     },
     reefTable: {
-      height: "calc(100vh - 64px)",
       overflowY: "auto",
+      display: "flex",
+      flexDirection: "column",
+      height: "calc(100vh - 64px);", // subtract height of the navbar
     },
     drawer: {
       borderTopLeftRadius: "15px",

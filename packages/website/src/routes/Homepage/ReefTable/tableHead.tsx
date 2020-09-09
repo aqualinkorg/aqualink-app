@@ -6,7 +6,7 @@ import {
   TableSortLabel,
   Typography,
 } from "@material-ui/core";
-import type { Order, OrderKeys } from "./types";
+import type { Order, OrderKeys } from "./utils";
 
 const columnTitle = (title: string, unit?: string) => (
   <>

@@ -15,15 +15,22 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
 import CardChart from "./cardChart";
-import { Reef } from "../../../../store/Reefs/types";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
+import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
 
-const SelectedReefCard = ({ classes, reef }: SelectedReefCardProps) => {
+const SelectedReefCard = ({ classes }: SelectedReefCardProps) => {
+  const reef = useSelector(reefDetailsSelector);
+
+  if (!reef) {
+    return null;
+  }
+
   const sortByDate = sortDailyData(reef.dailyData);
   const dailyDataLen = sortByDate.length;
   const {
@@ -185,11 +192,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface selectedReefCardIncomingProps {
-  reef: Reef;
-}
-
-type SelectedReefCardProps = selectedReefCardIncomingProps &
-  WithStyles<typeof styles>;
+type SelectedReefCardProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(SelectedReefCard);
