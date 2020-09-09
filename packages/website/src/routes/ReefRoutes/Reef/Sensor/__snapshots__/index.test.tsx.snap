@@ -2,8 +2,8 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiPaper-root MuiCard-root Sensor-card-6 MuiPaper-elevation1 MuiPaper-rounded"
+  <mock-card
+    classname="Sensor-card-6"
   >
     <div
       class="MuiCardHeader-root Sensor-header-8"
@@ -11,8 +11,11 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiCardHeader-content"
       >
-        <span
-          class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+        <mock-typography
+          classname="MuiCardHeader-title"
+          component="span"
+          display="block"
+          variant="h5"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
@@ -20,11 +23,12 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
             >
-              <h6
-                class="MuiTypography-root Sensor-cardTitle-1 MuiTypography-h6"
+              <mock-typography
+                classname="Sensor-cardTitle-1"
+                variant="h6"
               >
                 SENSOR OBSERVATION
-              </h6>
+              </mock-typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
@@ -36,11 +40,11 @@ exports[`renders as expected 1`] = `
               />
             </div>
           </div>
-        </span>
+        </mock-typography>
       </div>
     </div>
-    <div
-      class="MuiCardContent-root Sensor-content-9"
+    <mock-cardcontent
+      classname="Sensor-content-9"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
@@ -52,41 +56,49 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <h6
-              class="MuiTypography-root Sensor-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+            <mock-typography
+              classname="Sensor-contentTextTitles-2"
+              color="textPrimary"
+              variant="subtitle2"
             >
               SURFACE TEMP
-            </h6>
-            <p
-              class="MuiTypography-root Sensor-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
+            </mock-typography>
+            <mock-typography
+              classname="Sensor-contentTextValues-3"
+              color="textPrimary"
             >
               - -
                °C
-            </p>
+            </mock-typography>
           </div>
           <div
             class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <h6
-              class="MuiTypography-root Sensor-contentTextTitles-2 MuiTypography-subtitle2 MuiTypography-colorTextPrimary"
+            <mock-typography
+              classname="Sensor-contentTextTitles-2"
+              color="textPrimary"
+              variant="subtitle2"
             >
               TEMP AT 24M
-            </h6>
-            <p
-              class="MuiTypography-root Sensor-contentTextValues-3 MuiTypography-body1 MuiTypography-colorTextPrimary"
+            </mock-typography>
+            <mock-typography
+              classname="Sensor-contentTextValues-3"
+              color="textPrimary"
             >
               - -
                °C
-            </p>
+            </mock-typography>
           </div>
           <div
             class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
           >
-            <h6
-              class="MuiTypography-root Sensor-alertText-12 MuiTypography-subtitle1 MuiTypography-colorTextPrimary"
+            <mock-typography
+              classname="Sensor-alertText-12"
+              color="textPrimary"
+              variant="subtitle1"
             >
               Not Installed Yet
-            </h6>
+            </mock-typography>
           </div>
         </div>
         <div
@@ -99,7 +111,7 @@ exports[`renders as expected 1`] = `
           />
         </div>
       </div>
-    </div>
-  </div>
+    </mock-cardcontent>
+  </mock-card>
 </div>
 `;

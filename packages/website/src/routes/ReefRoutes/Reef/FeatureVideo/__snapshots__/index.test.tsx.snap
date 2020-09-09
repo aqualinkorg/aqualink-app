@@ -2,8 +2,8 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiPaper-root MuiCard-root FeatureVideo-card-1 MuiPaper-elevation1 MuiPaper-rounded"
+  <mock-card
+    classname="FeatureVideo-card-1"
   >
     <div
       class="FeatureVideo-noVideoCard-3"
@@ -17,32 +17,22 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
           >
-            <h5
-              class="MuiTypography-root FeatureVideo-noVideoCardHeaderText-5 MuiTypography-h5"
+            <mock-typography
+              classname="FeatureVideo-noVideoCardHeaderText-5"
+              variant="h5"
             >
               IMAGE TO BE UPLOADED
-            </h5>
+            </mock-typography>
           </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
           >
-            <button
-              class="MuiButtonBase-root MuiIconButton-root"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiIconButton-label"
-              >
-                <img
-                  alt="upload"
-                  src="icon_upload.svg"
-                />
-              </span>
-              <span
-                class="MuiTouchRipple-root"
+            <mock-iconbutton>
+              <img
+                alt="upload"
+                src="icon_upload.svg"
               />
-            </button>
+            </mock-iconbutton>
           </div>
         </div>
       </div>
@@ -50,6 +40,6 @@ exports[`renders as expected 1`] = `
         class="FeatureVideo-noVideoCardContent-6"
       />
     </div>
-  </div>
+  </mock-card>
 </div>
 `;

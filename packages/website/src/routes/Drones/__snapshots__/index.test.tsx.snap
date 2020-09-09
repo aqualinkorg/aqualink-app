@@ -2,102 +2,11 @@
 
 exports[`Drones should render with given state from Redux store 1`] = `
 <div>
-  <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary NavBar-appBar-1 MuiPaper-elevation4"
-  >
-    <div
-      class="MuiToolbar-root MuiToolbar-regular NavBar-toolbar-3 MuiToolbar-gutters"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
-        >
-          <div
-            class="MuiBox-root MuiBox-root-10"
-          >
-            <button
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiIconButton-label"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-                  />
-                </svg>
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-            <h4
-              class="MuiTypography-root MuiTypography-h4"
-            >
-              Aqua
-            </h4>
-            <h4
-              class="MuiTypography-root MuiTypography-h4"
-              style="color: rgb(138, 198, 222);"
-            >
-              link
-            </h4>
-          </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                SIGN IN
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text"
-              tabindex="0"
-              type="button"
-            >
-              <span
-                class="MuiButton-label"
-              >
-                REGISTER
-              </span>
-              <span
-                class="MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div
-    class="MuiBox-root MuiBox-root-26"
+  <mock-navbar
+    searchlocation="false"
+  />
+  <mock-box
+    py="6"
   >
     <div
       class="page-container"
@@ -443,33 +352,7 @@ exports[`Drones should render with given state from Redux store 1`] = `
         </div>
       </div>
     </div>
-  </div>
-  <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-27 MuiPaper-elevation4"
-  >
-    <div
-      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
-        >
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
-          >
-            Aqua
-          </h4>
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
-            style="color: rgb(138, 198, 222);"
-          >
-            link
-          </h4>
-        </div>
-      </div>
-    </div>
-  </header>
+  </mock-box>
+  <mock-footer />
 </div>
 `;

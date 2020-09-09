@@ -11,11 +11,11 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
       >
-        <p
-          class="MuiTypography-root Surveys-title-3 MuiTypography-body1"
+        <mock-typography
+          classname="Surveys-title-3"
         >
           Your survey history
-        </p>
+        </mock-typography>
       </div>
     </div>
     <div

@@ -2,8 +2,8 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div
-    class="MuiPaper-root MuiCard-root Tooltip-tooltip-1 MuiPaper-elevation1 MuiPaper-rounded"
+  <mock-card
+    classname="Tooltip-tooltip-1"
   >
     <div
       class="MuiCardHeader-root Tooltip-tooltipHeader-2"
@@ -11,8 +11,11 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiCardHeader-content"
       >
-        <span
-          class="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+        <mock-typography
+          classname="MuiCardHeader-title"
+          component="span"
+          display="block"
+          variant="h5"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
@@ -20,25 +23,27 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-item"
             >
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextPrimary"
+              <mock-typography
+                color="textPrimary"
+                variant="caption"
               >
                 Invalid Date
-              </span>
+              </mock-typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item"
             >
-              <span
-                class="MuiTypography-root MuiTypography-caption MuiTypography-colorTextPrimary"
+              <mock-typography
+                color="textPrimary"
+                variant="caption"
               />
             </div>
           </div>
-        </span>
+        </mock-typography>
       </div>
     </div>
-    <div
-      class="MuiCardContent-root Tooltip-tooltipContent-3"
+    <mock-cardcontent
+      classname="Tooltip-tooltipContent-3"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between"
@@ -53,20 +58,20 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
-              <span
-                class="MuiTypography-root MuiTypography-caption"
+              <mock-typography
+                variant="caption"
               >
                 TEMP AT 0M
-              </span>
+              </mock-typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5"
+              <mock-typography
+                variant="h5"
               >
                 0.0 °C
-              </h5>
+              </mock-typography>
             </div>
           </div>
           <div
@@ -75,25 +80,25 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
             >
-              <span
-                class="MuiTypography-root MuiTypography-caption"
+              <mock-typography
+                variant="caption"
               >
                 SURFACE TEMP
-              </span>
+              </mock-typography>
             </div>
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5"
+              <mock-typography
+                variant="h5"
               >
                 10.0 °C
-              </h5>
+              </mock-typography>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mock-cardcontent>
+  </mock-card>
 </div>
 `;

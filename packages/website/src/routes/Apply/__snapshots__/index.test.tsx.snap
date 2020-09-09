@@ -5,8 +5,8 @@ exports[`renders as expected 1`] = `
   <mock-navbar
     searchlocation="false"
   />
-  <div
-    class="MuiBox-root MuiBox-root-5"
+  <mock-box
+    py="4"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -17,39 +17,40 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
         >
-          <h3
-            class="MuiTypography-root MuiTypography-h3 MuiTypography-gutterBottom"
+          <mock-typography
+            gutterbottom="true"
+            variant="h3"
           >
             Manage your local reef
-          </h3>
-          <p
-            class="MuiTypography-root MuiTypography-body1"
-          >
+          </mock-typography>
+          <mock-typography>
             We will be starting with our deployments in August and would love to have you apply to get free access to our system. We'll have more more more information coming shortly. Submitting the application doesn't obligate you, if you have questions please first take a look at our FAQ page and if you don't get the answer you're looking for then email info@aqualink.org.
-          </p>
-          <div
-            class="MuiBox-root MuiBox-root-6"
+          </mock-typography>
+          <mock-box
+            mt="4"
           >
             <img
               alt="Reefs"
               src="reemimage.jpg"
               style="width: 100%;"
             />
-          </div>
+          </mock-box>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
         >
-          <div
-            class="MuiBox-root MuiBox-root-7"
+          <mock-box
+            bgcolor="grey.100"
+            p="4"
           >
-            <h4
-              class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
+            <mock-typography
+              gutterbottom="true"
+              variant="h4"
             >
               Your Obligations
-            </h4>
-            <div
-              class="MuiTypography-root MuiTypography-body1"
+            </mock-typography>
+            <mock-typography
+              component="div"
             >
               You will be given a free smart buoy but there are some things you will be expected to do or provide:
               <ol>
@@ -84,13 +85,15 @@ exports[`renders as expected 1`] = `
                   Conduct initial and periodic photographic surveys and upload imagery to our website
                 </li>
               </ol>
-            </div>
-          </div>
+            </mock-typography>
+          </mock-box>
         </div>
       </div>
     </div>
-    <div
-      class="MuiBox-root MuiBox-root-8"
+    <mock-box
+      bgcolor="grey.100"
+      mt="8"
+      p="[object Object]"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -112,265 +115,115 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiPaper-root MuiPaper-elevation2 MuiPaper-rounded"
             >
-              <div
-                class="MuiBox-root MuiBox-root-9"
+              <mock-box
+                color="text.secondary"
+                p="4"
               >
-                <h4
-                  class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom"
+                <mock-typography
+                  gutterbottom="true"
+                  variant="h4"
                 >
                   Application Form
-                </h4>
+                </mock-typography>
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="name"
-                        id="name-label"
-                      >
-                        Name
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="name"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Name
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="name"
+                      inputprops="[object Object]"
+                      label="Name"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="org"
-                        id="org-label"
-                      >
-                        Organization
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="org"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Organization
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="org"
+                      inputprops="[object Object]"
+                      label="Organization"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="email"
-                        id="email-label"
-                      >
-                        Email
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="email"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Email
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="email"
+                      inputprops="[object Object]"
+                      label="Email"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1"
-                    >
+                    <mock-typography>
                       Location: Select point on map
-                    </p>
+                    </mock-typography>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="lat"
-                        id="lat-label"
-                      >
-                        Latitude
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="lat"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Latitude
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="lat"
+                      inputprops="[object Object]"
+                      label="Latitude"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="lng"
-                        id="lng-label"
-                      >
-                        Longitude
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="lng"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Longitude
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="lng"
+                      inputprops="[object Object]"
+                      label="Longitude"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
-                    <div
-                      class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                    >
-                      <label
-                        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
-                        data-shrink="false"
-                        for="depth"
-                        id="depth-label"
-                      >
-                        Depth (m)
-                      </label>
-                      <div
-                        class="MuiInputBase-root MuiOutlinedInput-root Apply-root-2 MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-                      >
-                        <input
-                          aria-invalid="false"
-                          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-                          id="depth"
-                          type="text"
-                          value=""
-                        />
-                        <fieldset
-                          aria-hidden="true"
-                          class="PrivateNotchedOutline-root-10 MuiOutlinedInput-notchedOutline Apply-notchedOutline-3"
-                        >
-                          <legend
-                            class="PrivateNotchedOutline-legendLabelled-12"
-                          >
-                            <span>
-                              Depth (m)
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      
-                    </div>
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="depth"
+                      inputprops="[object Object]"
+                      label="Depth (m)"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -382,171 +235,145 @@ exports[`renders as expected 1`] = `
                       <label
                         class="MuiFormControlLabel-root Apply-formControlLabel-4"
                       >
-                        <span
-                          aria-disabled="false"
-                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
-                        >
-                          <span
-                            class="MuiIconButton-label"
-                          >
-                            <input
-                              class="PrivateSwitchBase-input-17"
-                              data-indeterminate="false"
-                              name="checkedA"
-                              type="checkbox"
-                              value=""
-                            />
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                              />
-                            </svg>
-                          </span>
-                          <span
-                            class="MuiTouchRipple-root"
-                          />
-                        </span>
-                        <span
-                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        <mock-checkbox
+                          checked="false"
+                          color="primary"
+                          name="checkedA"
+                        />
+                        <mock-typography
+                          classname="MuiFormControlLabel-label"
+                          component="span"
                         >
                           Handle any shipping and permitting charges
-                        </span>
+                        </mock-typography>
                       </label>
                       <label
                         class="MuiFormControlLabel-root Apply-formControlLabel-4"
                       >
-                        <span
-                          aria-disabled="false"
-                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
-                        >
-                          <span
-                            class="MuiIconButton-label"
-                          >
-                            <input
-                              class="PrivateSwitchBase-input-17"
-                              data-indeterminate="false"
-                              name="checkedA"
-                              type="checkbox"
-                              value=""
-                            />
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                              />
-                            </svg>
-                          </span>
-                          <span
-                            class="MuiTouchRipple-root"
-                          />
-                        </span>
-                        <span
-                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        <mock-checkbox
+                          checked="false"
+                          color="primary"
+                          name="checkedA"
+                        />
+                        <mock-typography
+                          classname="MuiFormControlLabel-label"
+                          component="span"
                         >
                           Provide mooring and deploy buoy
-                        </span>
+                        </mock-typography>
                       </label>
                       <label
                         class="MuiFormControlLabel-root Apply-formControlLabel-4"
                       >
-                        <span
-                          aria-disabled="false"
-                          class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-14 MuiCheckbox-root MuiCheckbox-colorPrimary MuiIconButton-colorPrimary"
-                        >
-                          <span
-                            class="MuiIconButton-label"
-                          >
-                            <input
-                              class="PrivateSwitchBase-input-17"
-                              data-indeterminate="false"
-                              name="checkedA"
-                              type="checkbox"
-                              value=""
-                            />
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                              />
-                            </svg>
-                          </span>
-                          <span
-                            class="MuiTouchRipple-root"
-                          />
-                        </span>
-                        <span
-                          class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+                        <mock-checkbox
+                          checked="false"
+                          color="primary"
+                          name="checkedA"
+                        />
+                        <mock-typography
+                          classname="MuiFormControlLabel-label"
+                          component="span"
                         >
                           Conduct initial survey
-                        </span>
+                        </mock-typography>
                       </label>
                     </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <button
-                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth"
-                      tabindex="0"
-                      type="button"
+                    <mock-button
+                      color="primary"
+                      fullwidth="true"
+                      variant="contained"
                     >
-                      <span
-                        class="MuiButton-label"
-                      >
-                        Submit
-                      </span>
-                      <span
-                        class="MuiTouchRipple-root"
-                      />
-                    </button>
+                      Submit
+                    </mock-button>
                   </div>
                 </div>
-              </div>
+              </mock-box>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <header
-    class="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorPrimary Footer-appBar-18 MuiPaper-elevation4"
+    </mock-box>
+  </mock-box>
+  <mock-snackbar
+    anchororigin="[object Object]"
+    autohideduration="4000"
+    open="false"
   >
     <div
-      class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledError MuiPaper-elevation6"
+      role="alert"
     >
+      <div
+        class="MuiAlert-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiAlert-message"
+      >
+        Something went wrong, please try again
+      </div>
+      <div
+        class="MuiAlert-action"
+      >
+        <mock-iconbutton
+          aria-label="Close"
+          color="inherit"
+          size="small"
+          title="Close"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </mock-iconbutton>
+      </div>
+    </div>
+  </mock-snackbar>
+  <mock-appbar
+    classname="Footer-appBar-5"
+    position="static"
+  >
+    <mock-toolbar>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
+          <mock-typography
+            variant="h4"
           >
             Aqua
-          </h4>
-          <h4
-            class="MuiTypography-root MuiTypography-h4"
+          </mock-typography>
+          <mock-typography
             style="color: rgb(138, 198, 222);"
+            variant="h4"
           >
             link
-          </h4>
+          </mock-typography>
         </div>
       </div>
-    </div>
-  </header>
+    </mock-toolbar>
+  </mock-appbar>
 </div>
 `;

@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 
 import ReefTable from ".";
 
+jest.mock("./SelectedReefCard", () => "Mock-SelectedReefCard");
+
 const mockStore = configureStore([]);
 
 describe("ReefTable", () => {
