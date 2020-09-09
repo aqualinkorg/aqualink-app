@@ -35,9 +35,6 @@ const DeleteButton = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const visible =
-    user &&
-    (user.adminLevel === "super_admin" || user.adminLevel === "reef_manager");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,11 +64,9 @@ const DeleteButton = ({
 
   return (
     <>
-      {visible && (
-        <IconButton onClick={handleClickOpen}>
-          <DeleteOutlineIcon color="primary" />
-        </IconButton>
-      )}
+      <IconButton onClick={handleClickOpen}>
+        <DeleteOutlineIcon color="primary" />
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle className={classes.dialogTitle}>
           <Typography color="textSecondary">
@@ -127,7 +122,6 @@ const styles = () =>
   createStyles({
     dialogTitle: {
       backgroundColor: "#F4F4F4",
-      borderBottom: "1px solid black",
     },
     dialogContent: {
       padding: 0,

@@ -30,7 +30,7 @@ import {
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 
-const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -41,7 +41,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
   return (
     <div className={classes.root}>
       <Timeline>
-        {addNew && (
+        {isAdmin && (
           <TimelineItem>
             <TimelineSeparator>
               <Link
@@ -184,11 +184,13 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                         item
                         xs={1}
                       >
-                        <DeleteButton
-                          reefId={reefId}
-                          surveyId={survey.id}
-                          diveDate={survey.diveDate}
-                        />
+                        {isAdmin && (
+                          <DeleteButton
+                            reefId={reefId}
+                            surveyId={survey.id}
+                            diveDate={survey.diveDate}
+                          />
+                        )}
                       </Grid>
                     </Grid>
                   </Paper>
@@ -277,7 +279,7 @@ const styles = (theme: Theme) =>
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
-  addNew: boolean;
+  isAdmin: boolean;
 }
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &
