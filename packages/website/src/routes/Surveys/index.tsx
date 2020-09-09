@@ -18,6 +18,7 @@ import {
   reefRequest,
 } from "../../store/Reefs/selectedReefSlice";
 import NavBar from "../../common/NavBar";
+import Footer from "../../common/Footer";
 import NewSurvey from "./New";
 import ViewSurvey from "./View";
 
@@ -72,6 +73,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
           </div>
         )}
       </Container>
+      <Footer />
     </>
   );
 };
