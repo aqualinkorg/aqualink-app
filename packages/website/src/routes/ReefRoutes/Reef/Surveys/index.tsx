@@ -1,0 +1,195 @@
+import React, { useState, useCallback, useEffect } from "react";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Theme,
+  Grid,
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+} from "@material-ui/core";
+
+import Timeline from "./Timeline";
+import TimelineMobile from "./TimelineMobile";
+
+const Surveys = ({ user, addNew, reefId, classes }: SurveysProps) => {
+  const [history, setHistory] = useState<string>("all");
+  const [observation, setObservation] = useState<string>("any");
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+  const onResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [onResize]);
+
+  const handleHistoryChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setHistory(event.target.value as string);
+  };
+
+  const handleObservationChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setObservation(event.target.value as string);
+  };
+
+  return (
+    <Grid className={classes.root} container justify="center" item xs={12}>
+      <Grid
+        className={classes.surveyWrapper}
+        container
+        justify="center"
+        item
+        lg={6}
+        xs={11}
+        alignItems="center"
+      >
+        <Grid
+          container
+          justify={windowWidth < 1280 ? "flex-start" : "center"}
+          item
+          md={12}
+          lg={4}
+        >
+          <Typography className={classes.title}>
+            {user ? "Your survey history" : "Survey History"}
+          </Typography>
+        </Grid>
+        {!user && (
+          <>
+            <Grid
+              container
+              alignItems="center"
+              justify={windowWidth < 1280 ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={4}
+            >
+              <Grid item>
+                <Typography variant="h6" className={classes.subTitle}>
+                  Survey History:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-history"
+                    id="survey-history"
+                    name="survey-history"
+                    value={history}
+                    onChange={handleHistoryChange}
+                    className={classes.selectedItem}
+                  >
+                    <MenuItem value="all">
+                      <Typography className={classes.menuItem} variant="h6">
+                        All
+                      </Typography>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              alignItems="center"
+              justify={windowWidth < 1280 ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={4}
+            >
+              {/* TODO - Make observation a required field. */}
+              <Grid item>
+                <Typography variant="h6" className={classes.subTitle}>
+                  Observation:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-observation"
+                    id="survey-observation"
+                    name="survey-observation"
+                    value={observation}
+                    onChange={handleObservationChange}
+                    className={classes.selectedItem}
+                  >
+                    <MenuItem value="any">
+                      <Typography className={classes.menuItem} variant="h6">
+                        Any
+                      </Typography>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </>
+        )}
+      </Grid>
+      <Grid container justify="center" item xs={11} lg={10}>
+        {windowWidth < 1280 ? (
+          <TimelineMobile addNew={addNew} reefId={reefId} />
+        ) : (
+          <Timeline addNew={addNew} reefId={reefId} />
+        )}
+      </Grid>
+    </Grid>
+  );
+};
+
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: "#f5f6f6",
+      marginTop: "5rem",
+    },
+    surveyWrapper: {
+      marginTop: "5rem",
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1.45,
+      letterSpacing: "normal",
+      color: "#2a2a2a",
+      marginBottom: "1rem",
+    },
+    subTitle: {
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: 1,
+      letterSpacing: "normal",
+      color: "#474747",
+      marginRight: "1rem",
+    },
+    formControl: {
+      minWidth: 120,
+    },
+    selectedItem: {
+      color: theme.palette.primary.main,
+    },
+    menuItem: {
+      color: theme.palette.primary.main,
+    },
+  });
+
+interface SurveyIncomingProps {
+  reefId: number;
+  addNew: boolean;
+  user: boolean;
+}
+
+type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;
+
+export default withStyles(styles)(Surveys);

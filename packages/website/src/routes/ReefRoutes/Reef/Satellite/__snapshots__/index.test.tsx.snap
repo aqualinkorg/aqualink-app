@@ -3,11 +3,11 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Satellite-card-1"
+    classname="Satellite-card-6"
     style="background-color: rgb(117, 180, 114);"
   >
     <div
-      class="MuiCardHeader-root Satellite-header-3"
+      class="MuiCardHeader-root Satellite-header-8"
     >
       <div
         class="MuiCardHeader-content"
@@ -19,13 +19,13 @@ exports[`renders as expected 1`] = `
           variant="h5"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+            class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
             >
               <mock-typography
-                classname="Satellite-cardTitle-2"
+                classname="Satellite-cardTitle-1"
                 variant="h6"
               >
                 SATELLITE OBSERVATION
@@ -36,6 +36,7 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="satellite"
+                class="Satellite-titleImage-7"
                 src="satellite.svg"
               />
             </div>
@@ -44,62 +45,73 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="Satellite-content-4"
+      classname="Satellite-content-9"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
         style="height: 100%;"
       >
         <div
-          class="MuiGrid-root Satellite-contentText-5 MuiGrid-item"
+          class="MuiGrid-root Satellite-contentTextWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+            class="MuiGrid-root Satellite-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
           >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              color="textPrimary"
+              variant="subtitle2"
+            >
+              SURFACE TEMP
+            </mock-typography>
+            <mock-typography
+              classname="Satellite-contentTextValues-3"
+              color="textPrimary"
+            >
+              20.0 °C
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root Satellite-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-12 MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              color="textPrimary"
+              variant="subtitle2"
+            >
+              HISTORICAL MAX TEMP
+            </mock-typography>
+            <mock-typography
+              classname="Satellite-contentTextValues-3"
+              color="textPrimary"
+            >
+              21.0 °C
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              color="textPrimary"
+              variant="subtitle2"
+            >
+              DEGREE HEATING WEEKS
+            </mock-typography>
+            <mock-tooltip
+              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
             >
               <mock-typography
-                classname="Satellite-contentTextTitles-6"
+                classname="Satellite-contentTextValues-3"
                 color="textPrimary"
-                variant="subtitle2"
               >
-                SURFACE TEMP
+                4.1 DHW
               </mock-typography>
-              <mock-typography
-                classname="Satellite-contentTextValues-7"
-                color="textPrimary"
-                variant="h2"
-              >
-                20.0 ℃
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            >
-              <mock-typography
-                classname="Satellite-contentTextTitles-6"
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                HEAT STRESS
-              </mock-typography>
-              <mock-tooltip
-                title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-              >
-                <mock-typography
-                  classname="Satellite-contentTextValues-7"
-                  color="textPrimary"
-                  variant="h2"
-                >
-                  4.1 DHW
-                </mock-typography>
-              </mock-tooltip>
-            </div>
+            </mock-tooltip>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-1"

@@ -11,12 +11,12 @@ type SofarLayerDefinition = {
 const SOFAR_LAYERS: SofarLayerDefinition[] = [
   {
     name: "Sea Surface Temperature",
-    model: "HYCOM",
-    variableId: "seaSurfaceTemperature",
+    model: "NOAACoralReefWatch",
+    variableId: "analysedSeaSurfaceTemperature",
     cmap: "turbo",
   },
   {
-    name: "NOAA Degree Heating Week",
+    name: "Heat Stress",
     model: "NOAACoralReefWatch",
     variableId: "degreeHeatingWeek",
     cmap: "noaacoral",
@@ -34,6 +34,8 @@ export const SofarLayers = () => {
       {SOFAR_LAYERS.map((def) => (
         <LayersControl.Overlay name={def.name} key={def.name}>
           <TileLayer
+            // Sofar tiles have a max native zoom of 9
+            maxNativeZoom={9}
             url={sofarUrlFromDef(def)}
             key={def.variableId}
             opacity={0.5}

@@ -27,7 +27,7 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
     ) {
       map.flyTo(
         [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
-        6
+        Math.max(6, map.getZoom())
       );
       popupContainer.openPopup();
     }
@@ -41,7 +41,9 @@ export const ReefMarkers = () => {
   const { map } = useLeaflet();
 
   const setCenter = (latLng: [number, number], zoom: number) =>
-    map?.flyTo(latLng, zoom, { duration: 1 });
+    map?.flyTo(latLng, map ? Math.max(zoom, map.getZoom()) : zoom, {
+      duration: 1,
+    });
 
   return (
     <LayerGroup>
