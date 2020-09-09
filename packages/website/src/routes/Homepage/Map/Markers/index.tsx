@@ -12,11 +12,11 @@ import {
   unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import { colorFinder } from "../../../../helpers/degreeHeatingWeeks";
+import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { ReactComponent as BuoySvg } from "./buoy.svg";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
-import { colorCode } from "../../../../assets/colorCode";
+import { dhwColorCode } from "../../../../assets/colorCode";
 
 /**
  * Dummy component to listen for changes in the active reef/reefOnMap state and initiate the popup/fly-to. This is a
@@ -45,7 +45,7 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
 
 const colorClassName = (color: string) => `icon-${color}`;
 const useStyles = makeStyles(() =>
-  colorCode.reduce(
+  dhwColorCode.reduce(
     (acc, { color }) => ({
       ...acc,
       [colorClassName(color)]: {
@@ -91,7 +91,7 @@ export const ReefMarkers = () => {
                 }}
                 key={reef.id}
                 icon={buoyIcon(
-                  iconColors[colorClassName(colorFinder(degreeHeatingDays))]
+                  iconColors[colorClassName(dhwColorFinder(degreeHeatingDays))]
                 )}
                 position={[lat, lng]}
               >
