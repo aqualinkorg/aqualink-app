@@ -4,10 +4,12 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Typography,
   IconButton,
-  Popover,
-  Grid,
   Button,
   Collapse,
 } from "@material-ui/core";
@@ -28,16 +30,16 @@ const DeleteButton = ({
 }: DeleteButtonProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>("");
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
     setAlertOpen(false);
     setAlertText("");
   };
@@ -47,7 +49,6 @@ const DeleteButton = ({
       surveyServices
         .deleteSurvey(surveyId, user.token)
         .then(() => {
-          setAnchorEl(null);
           dispatch(surveysRequest(`${reefId}`));
         })
         .catch((error) => {
@@ -60,45 +61,18 @@ const DeleteButton = ({
   return (
     <>
       {user && (
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClickOpen}>
           <DeleteOutlineIcon color="primary" />
         </IconButton>
       )}
-      <Popover
-        elevation={3}
-        open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <Grid
-          className={classes.popoverContent}
-          container
-          justify="center"
-          item
-          xs={12}
-        >
-          <Grid
-            className={classes.popoverTitle}
-            container
-            justify="center"
-            item
-            xs={12}
-          >
-            <Grid item xs={11}>
-              <Typography color="textSecondary">
-                Are you sure you would like to delete the survey for{" "}
-                {moment(diveDate).format("MM/DD/YYYY")}?
-              </Typography>
-            </Grid>
-          </Grid>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle className={classes.dialogTitle}>
+          <Typography color="textSecondary">
+            Are you sure you would like to delete the survey for{" "}
+            {moment(diveDate).format("MM/DD/YYYY")}?
+          </Typography>
+        </DialogTitle>
+        <DialogContent className={classes.dialogContent}>
           <Collapse className={classes.alert} in={alertOpen}>
             <Alert
               severity="error"
@@ -117,47 +91,38 @@ const DeleteButton = ({
               {alertText}
             </Alert>
           </Collapse>
-          <Grid container alignItems="center" justify="flex-end" item xs={11}>
-            <Grid container justify="space-between" item xs={6}>
-              <Button
-                className={classes.popoverButton}
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={onSurveyDelete}
-              >
-                Yes
-              </Button>
-              <Button
-                className={classes.popoverButton}
-                size="small"
-                variant="contained"
-                color="secondary"
-                onClick={handleClose}
-              >
-                No
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Popover>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={handleClose}
+          >
+            No
+          </Button>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={onSurveyDelete}
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
 
 const styles = () =>
   createStyles({
-    popoverContent: {
-      height: "12rem",
-      width: "20rem",
-      border: "1px solid black",
-    },
-    popoverTitle: {
+    dialogTitle: {
       backgroundColor: "#F4F4F4",
       borderBottom: "1px solid black",
     },
-    popoverButton: {
-      height: "2rem",
+    dialogContent: {
+      padding: 0,
     },
     alert: {
       width: "100%",
