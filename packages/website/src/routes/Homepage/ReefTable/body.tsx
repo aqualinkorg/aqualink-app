@@ -83,7 +83,6 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               <ErrorIcon
                 style={{
                   color: colorFinder(reef.dhw),
-                  marginRight: "1rem",
                 }}
               />
             </TableCell>

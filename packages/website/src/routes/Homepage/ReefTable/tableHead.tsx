@@ -36,46 +36,45 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     {
       id: "locationName",
       numeric: false,
-      disablePadding: true,
       label: "REEF",
+      align: "left",
+      width: "30%",
     },
     {
       id: "temp",
       numeric: false,
-      disablePadding: false,
       label: "TEMP",
       unit: "°C",
     },
     {
       id: "depth",
       numeric: true,
-      disablePadding: false,
       label: "DEPTH",
       unit: "m",
     },
     {
       id: "dhw",
       numeric: true,
-      disablePadding: false,
       label: "STRESS",
       unit: "DHW",
     },
     {
       id: "alert",
       numeric: true,
-      disablePadding: false,
       label: "ALERT",
+      width: "10%",
     },
   ];
 
   return (
-    <TableHead style={{ backgroundColor: "#cacbd1" }}>
+    <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "default"}
+            width={headCell.width}
+            align={headCell.align || "center"}
+            padding="default"
             sortDirection={props.orderBy === headCell.id ? props.order : false}
           >
             {headCell.id !== "alert" ? (
@@ -97,11 +96,12 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 };
 
 interface HeadCell {
-  disablePadding: boolean;
   id: OrderKeys | "alert";
   label: string;
   numeric: boolean;
   unit?: string;
+  align?: "center" | "left" | "right";
+  width?: string;
 }
 
 interface EnhancedTableProps {
