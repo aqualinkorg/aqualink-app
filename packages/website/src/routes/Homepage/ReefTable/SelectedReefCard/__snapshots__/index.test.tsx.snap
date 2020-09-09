@@ -15,7 +15,7 @@ exports[`renders as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          Featured - 
+          Featured Reef
         </mock-hidden>
         <mock-hidden
           smup="true"
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
             position="relative"
           >
             <div
-              class="MuiCardMedia-root SelectedReefCard-cardImage-1"
+              class="MuiCardMedia-root Component-cardImage-3"
               style="background-image: url(reef-image.jpg);"
             />
             <mock-hidden
@@ -74,7 +74,6 @@ exports[`renders as expected 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
-          style="margin-bottom: 1rem; max-height: 14rem;"
         >
           <mock-box
             fontweight="400"
@@ -95,7 +94,7 @@ exports[`renders as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="SelectedReefCard-metricsContainer-2"
+            class="Component-metricsContainer-4"
           >
             <div>
               <mock-typography
@@ -183,7 +182,7 @@ exports[`renders loading as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          Featured - 
+          Featured Reef
         </mock-hidden>
         <mock-hidden
           smup="true"

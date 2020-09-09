@@ -13,7 +13,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
     class="Homepage-root-1"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+      class="MuiGrid-root MuiGrid-container"
     >
       <div
         class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"

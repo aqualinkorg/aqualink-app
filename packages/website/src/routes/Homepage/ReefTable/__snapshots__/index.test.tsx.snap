@@ -34,8 +34,11 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
       All Reefs
     </mock-typography>
   </mock-hidden>
-  <div
-    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  <mock-selectedreefcard />
+  <mock-box
+    display="flex"
+    flex="1"
+    flexdirection="column"
   >
     <mock-tablecontainer>
       <mock-table>
@@ -46,9 +49,11 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             <mock-tablecell
               align="center"
               padding="none"
+              sortdirection="asc"
             >
               <mock-tablesortlabel
                 active="true"
+                direction="asc"
               >
                 <mock-typography
                   style="color: black;"
@@ -135,17 +140,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               padding="default"
               sortdirection="false"
             >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
+              <mock-typography
+                style="color: black;"
+                variant="h6"
               >
-                <mock-typography
-                  style="color: black;"
-                  variant="h6"
-                >
-                  ALERT
-                </mock-typography>
-              </mock-tablesortlabel>
+                ALERT
+              </mock-typography>
             </mock-tablecell>
           </mock-tablerow>
         </mock-tablehead>
@@ -214,6 +214,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         </mock-tablebody>
       </mock-table>
     </mock-tablecontainer>
-  </div>
+  </mock-box>
 </div>
 `;
