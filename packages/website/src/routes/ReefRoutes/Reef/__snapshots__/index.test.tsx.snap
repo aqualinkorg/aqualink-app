@@ -690,11 +690,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       />
     </div>
     <mock-box
-      mt="2rem"
+      mt="1rem"
     >
-      <mock-box
-        ml="2rem"
-      >
+      <mock-box>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-baseline"
         >
@@ -714,7 +712,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               variant="subtitle2"
             >
               LAT: 
-              0
+              0.000
             </mock-typography>
           </div>
           <div
@@ -724,7 +722,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               variant="subtitle2"
             >
               LONG: 
-              0
+              0.000
             </mock-typography>
           </div>
         </div>

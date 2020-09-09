@@ -19,6 +19,7 @@ import Charts from "./Charts";
 import Surveys from "./Surveys";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
@@ -44,17 +45,21 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   ];
 
   return (
-    <Box mt="2rem">
-      <Box ml="2rem">
+    <Box mt="1rem">
+      <Box>
         <Grid container alignItems="baseline" spacing={2}>
           <Grid item>
             <Typography variant="h6">LOCATION:</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle2">LAT: {lat}</Typography>
+            <Typography variant="subtitle2">
+              LAT: {formatNumber(lat, 3)}
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle2">LONG: {lng}</Typography>
+            <Typography variant="subtitle2">
+              LONG: {formatNumber(lng, 3)}
+            </Typography>
           </Grid>
         </Grid>
       </Box>
