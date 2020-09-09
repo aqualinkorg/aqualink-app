@@ -28,13 +28,4 @@ export const coloredBuoy = (color: string) =>
       </g>
   </svg>`;
 
-export const coloredBuoyIcon = (degreeHeatingDays: number) => {
-  const color = colorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
-  return L.divIcon({
-    iconSize: [24, 24],
-    iconAnchor: [12, 28],
-    popupAnchor: [3, -24],
-    html: `${coloredBuoy(color)}`,
-    className: "marker-icon",
-  });
-};
+export const coloredBuoyIcon = (degreeHeatingDays: number) => {};
