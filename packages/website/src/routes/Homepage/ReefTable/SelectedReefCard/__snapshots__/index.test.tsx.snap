@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    classname="SelectedReefCard-card-1"
+    p="1"
   >
     <mock-box
       mb="2"
@@ -15,7 +15,7 @@ exports[`renders as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          Featured - 
+          Featured Reef
         </mock-hidden>
         <mock-hidden
           smup="true"
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
             position="relative"
           >
             <div
-              class="MuiCardMedia-root SelectedReefCard-cardImage-2"
+              class="MuiCardMedia-root Component-cardImage-5"
               style="background-image: url(reef-image.jpg);"
             />
             <mock-hidden
@@ -95,7 +95,7 @@ exports[`renders as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="SelectedReefCard-metricsContainer-3"
+            class="Component-metricsContainer-6"
           >
             <div>
               <mock-typography
@@ -171,7 +171,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="SelectedReefCard-card-4"
+    p="1"
   >
     <mock-box
       mb="2"
@@ -183,7 +183,7 @@ exports[`renders loading as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          Featured - 
+          Featured Reef
         </mock-hidden>
         <mock-hidden
           smup="true"
