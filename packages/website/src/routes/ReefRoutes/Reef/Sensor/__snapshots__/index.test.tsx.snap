@@ -48,6 +48,7 @@ exports[`renders as expected 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        style="position: relative;"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-7"
@@ -59,13 +60,13 @@ exports[`renders as expected 1`] = `
               pl="1rem"
             >
               <mock-typography
-                classname="Sensor-contentTitles-11"
+                classname="Sensor-contentTextTitles-2"
                 variant="subtitle2"
               >
                 SURFACE TEMP
               </mock-typography>
               <mock-typography
-                classname="Sensor-contentValues-12"
+                classname="Sensor-contentTextValues-3"
                 variant="h2"
               >
                 - - °C
@@ -79,13 +80,13 @@ exports[`renders as expected 1`] = `
               pl="1rem"
             >
               <mock-typography
-                classname="Sensor-contentTitles-11"
+                classname="Sensor-contentTextTitles-2"
                 variant="subtitle2"
               >
                 TEMP AT 24M
               </mock-typography>
               <mock-typography
-                classname="Sensor-contentValues-12"
+                classname="Sensor-contentTextValues-3"
                 variant="h2"
               >
                 - - °C
@@ -101,14 +102,16 @@ exports[`renders as expected 1`] = `
             label="Not Installed Yet"
           />
         </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+        <mock-box
+          position="absolute"
+          right="0"
+          top="0"
         >
           <img
             alt="sensor"
             src="sensor.svg"
           />
-        </div>
+        </mock-box>
       </div>
     </mock-cardcontent>
   </mock-card>

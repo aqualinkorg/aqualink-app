@@ -9,6 +9,7 @@ import {
   Select,
   FormControl,
   MenuItem,
+  Box,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -51,7 +52,14 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   };
 
   return (
-    <Grid className={classes.root} container justify="center" item xs={12}>
+    <Grid className={classes.root} container justify="center" spacing={2}>
+      <Box
+        bgcolor="#f5f6f6"
+        position="absolute"
+        height="100%"
+        width="100vw"
+        zIndex="-1"
+      />
       <Grid
         className={classes.surveyWrapper}
         container
@@ -154,6 +162,7 @@ const styles = (theme: Theme) =>
     root: {
       backgroundColor: "#f5f6f6",
       marginTop: "5rem",
+      position: "relative",
     },
     surveyWrapper: {
       marginTop: "5rem",

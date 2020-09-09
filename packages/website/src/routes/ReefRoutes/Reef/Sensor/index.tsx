@@ -55,18 +55,27 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       />
 
       <CardContent className={classes.content}>
-        <Grid container alignItems="center" justify="space-between" spacing={1}>
+        <Grid
+          container
+          alignItems="center"
+          justify="space-between"
+          spacing={1}
+          style={{ position: "relative" }}
+        >
           <Grid container direction="column" spacing={3} item xs={7}>
             {metrics.map(({ label, value }) => (
               <Grid key={label} item>
                 <Box pl="1rem">
                   <Typography
-                    className={classes.contentTitles}
+                    className={classes.contentTextTitles}
                     variant="subtitle2"
                   >
                     {label}
                   </Typography>
-                  <Typography className={classes.contentValues} variant="h2">
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h2"
+                  >
                     {value}
                   </Typography>
                 </Box>
@@ -82,10 +91,9 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               />
             </Grid>
           )}
-
-          <Grid item xs={5}>
+          <Box position="absolute" top={0} right={0}>
             <img alt="sensor" src={sensor} />
-          </Grid>
+          </Box>
         </Grid>
       </CardContent>
     </Card>
@@ -118,12 +126,6 @@ const styles = (theme: Theme) =>
       backgroundColor: "#edb86f",
       borderRadius: 4,
       color: "white",
-    },
-    contentTitles: {
-      lineHeight: 1.33,
-    },
-    contentValues: {
-      fontWeight: 300,
     },
   });
 

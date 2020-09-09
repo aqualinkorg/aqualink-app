@@ -6,6 +6,7 @@ import {
   LinearProgress,
   Grid,
   Typography,
+  Container,
 } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,35 +35,43 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
     }
   }, [dispatch, reefId, reefDetails]);
 
+  if (loading) {
+    return (
+      <>
+        <NavBar searchLocation={false} />
+        <LinearProgress />
+      </>
+    );
+  }
+
   return (
     <>
       <NavBar searchLocation={false} />
-      {/* eslint-disable-next-line no-nested-ternary */}
-      {loading ? (
-        <LinearProgress />
-      ) : // eslint-disable-next-line no-nested-ternary
-      reefDetails && !error ? (
-        isView ? (
-          <ViewSurvey reef={reefDetails} surveyId={surveyId} />
+      <Container>
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {reefDetails && !error ? (
+          isView ? (
+            <ViewSurvey reef={reefDetails} surveyId={surveyId} />
+          ) : (
+            <NewSurvey reef={reefDetails} />
+          )
         ) : (
-          <NewSurvey reef={reefDetails} />
-        )
-      ) : (
-        <div className={classes.noData}>
-          <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Grid item>
-              <Typography gutterBottom color="primary" variant="h2">
-                No Data Found
-              </Typography>
+          <div className={classes.noData}>
+            <Grid
+              container
+              direction="column"
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item>
+                <Typography gutterBottom color="primary" variant="h2">
+                  No Data Found
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </div>
-      )}
+          </div>
+        )}
+      </Container>
     </>
   );
 };

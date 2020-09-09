@@ -151,9 +151,6 @@ const styles = () =>
       flexGrow: 1,
       padding: 0,
     },
-    contentTextTitles: {
-      lineHeight: 1.33,
-    },
     contentText: {
       marginTop: "1rem",
       padding: "0 1rem 0 1rem",

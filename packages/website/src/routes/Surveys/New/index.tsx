@@ -37,7 +37,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   }, []);
 
   return (
-    <SwipeableViews index={value} axis="x">
+    <SwipeableViews index={value} axis="x" slideStyle={{ overflow: "hidden" }}>
       <TabPanel value={value} index={0}>
         <Grid className={classes.root} container justify="center">
           <Grid item xs={10}>
