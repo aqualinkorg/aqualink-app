@@ -24,6 +24,9 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
   const user = useSelector(userInfoSelector);
+  const isAdmin = user
+    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
+    : false;
 
   return (
     <Grid container justify="center" className={classes.root}>
@@ -89,16 +92,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           }
         />
       </Grid>
-      <Surveys
-        user={Boolean(user)}
-        addNew={
-          user?.adminLevel
-            ? user.adminLevel === "reef_manager" ||
-              user.adminLevel === "super_admin"
-            : false
-        }
-        reefId={reef.id}
-      />
+      <Surveys isAdmin={isAdmin} reefId={reef.id} />
     </Grid>
   );
 };
