@@ -1,4 +1,4 @@
-export type Order = "asc" | "desc" | undefined;
+export type Order = "asc" | "desc";
 
 export type OrderKeys = "locationName" | "temp" | "depth" | "dhw";
 

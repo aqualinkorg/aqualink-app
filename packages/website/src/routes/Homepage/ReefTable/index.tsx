@@ -21,7 +21,7 @@ import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 
 const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
-  const [order, setOrder] = useState<Order>(undefined);
+  const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("locationName");
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
