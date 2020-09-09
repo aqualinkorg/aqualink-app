@@ -8,10 +8,18 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 
-const getAverage = (numbers: number[]) => {
-  return numbers.length > 0
-    ? Math.round(sum(numbers) / numbers.length)
-    : undefined;
+const getAverage = (numbers: number[], round = false) => {
+  const average =
+    numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
+  return average !== undefined && round ? Math.round(average) : average;
+};
+
+const getMin = (numbers: number[]) => {
+  return numbers.length > 0 ? Math.min(...numbers) : undefined;
+};
+
+const getMax = (numbers: number[]) => {
+  return numbers.length > 0 ? Math.max(...numbers) : undefined;
 };
 
 export async function getDailyData(reef: Reef, date: Date) {
@@ -21,22 +29,23 @@ export async function getDailyData(reef: Reef, date: Date) {
 
   const spotterData = spotterId
     ? await getSpotterData(spotterId, localTimezone, date)
-    : { surfaceTemperature: [], bottomTemperature: [] };
+    : {
+        surfaceTemperature: [],
+        bottomTemperature: [],
+        significantWaveHeight: [],
+        wavePeakPeriod: [],
+        waveMeanDirection: [],
+      };
 
-  const minBottomTemperature = spotterId
-    ? Math.min(...spotterData.bottomTemperature)
-    : undefined;
-  const maxBottomTemperature = spotterId
-    ? Math.max(...spotterData.bottomTemperature)
-    : undefined;
-
+  const minBottomTemperature = getMin(spotterData.bottomTemperature);
+  const maxBottomTemperature = getMax(spotterData.bottomTemperature);
   const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
 
   const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
 
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
-  let degreeHeatingDays: number;
+  let degreeHeatingDays: number | undefined;
   try {
     // TODO - Get data for the past 84 days.
     const seaSurfaceTemperatures = [] as number[];
@@ -55,12 +64,12 @@ export async function getDailyData(reef: Reef, date: Date) {
     );
 
     degreeHeatingDays =
-      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : 0;
+      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : undefined;
   }
 
   const satelliteTemperatureData = await getSofarDailyData(
-    'HYCOM',
-    'HYCOM-seaSurfaceTemperature',
+    'NOAACoralReefWatch',
+    'analysedSeaSurfaceTemperature',
     latitude,
     longitude,
     localTimezone,
@@ -74,47 +83,57 @@ export async function getDailyData(reef: Reef, date: Date) {
       satelliteTemperatureData.slice(-1)[0].value) ||
     undefined;
 
-  // Get NOAA waves data
-  const significantWaveHeights = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-significantWaveHeight',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  // Get waves data if unavailable through a spotter
 
-  const minWaveHeight = Math.min(...significantWaveHeights);
-  const maxWaveHeight = Math.max(...significantWaveHeights);
+  const significantWaveHeights =
+    spotterData.significantWaveHeight.length > 0
+      ? spotterData.significantWaveHeight
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-significantWaveHeight',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
+
+  const minWaveHeight = getMin(significantWaveHeights);
+  const maxWaveHeight = getMax(significantWaveHeights);
   const avgWaveHeight = getAverage(significantWaveHeights);
 
-  const meanDirectionWindWaves = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-meanDirectionWindWaves',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  const meanDirectionWindWaves =
+    spotterData.waveMeanDirection.length > 0
+      ? spotterData.waveMeanDirection
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-meanDirectionWindWaves',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
 
-  const waveDirection = getAverage(meanDirectionWindWaves);
+  const waveDirection = getAverage(meanDirectionWindWaves, true);
 
-  const meanPeriodWindWaves = (
-    await getSofarDailyData(
-      'NOAAOperationalWaveModel',
-      'NOAAOperationalWaveModel-peakPeriod',
-      latitude,
-      longitude,
-      localTimezone,
-      date,
-    )
-  ).map(({ value }) => value);
+  const peakPeriodWindWaves =
+    spotterData.wavePeakPeriod.length > 0
+      ? spotterData.wavePeakPeriod
+      : (
+          await getSofarDailyData(
+            'NOAAOperationalWaveModel',
+            'NOAAOperationalWaveModel-peakPeriod',
+            latitude,
+            longitude,
+            localTimezone,
+            date,
+          )
+        ).map(({ value }) => value);
 
-  const wavePeriod = getAverage(meanPeriodWindWaves);
+  const wavePeriod = getAverage(peakPeriodWindWaves, true);
 
   // Get NOAA GFS wind data
   const windVelocities = (
@@ -128,8 +147,8 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const minWindSpeed = Math.min(...windVelocities);
-  const maxWindSpeed = Math.max(...windVelocities);
+  const minWindSpeed = getMin(windVelocities);
+  const maxWindSpeed = getMax(windVelocities);
   const avgWindSpeed = getAverage(windVelocities);
 
   const windDirections = (
@@ -143,7 +162,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     )
   ).map(({ value }) => value);
 
-  const windDirection = getAverage(windDirections);
+  const windDirection = getAverage(windDirections, true);
 
   return {
     reef: { id: reef.id },
@@ -201,7 +220,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     { concurrency: 8 },
   );
   console.log(
-    `Updated ${allReefs.length} in ${
+    `Updated ${allReefs.length} reefs in ${
       (new Date().valueOf() - start.valueOf()) / 1000
     } seconds`,
   );

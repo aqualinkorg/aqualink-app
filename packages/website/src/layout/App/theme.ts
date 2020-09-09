@@ -13,6 +13,17 @@ const fontFamily =
 
 export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue };
 
+declare module "@material-ui/core/styles/createBreakpoints" {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    xxl: true;
+  }
+}
+
 const theme: any = createMuiTheme({
   palette: {
     primary: {
@@ -26,6 +37,16 @@ const theme: any = createMuiTheme({
     },
     grey: {
       500: lightGray,
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1460,
+      xxl: 1920,
     },
   },
   overrides: {

@@ -9,6 +9,24 @@ type SofarValue = {
   value: number;
 };
 
+type SpotterData = {
+  surfaceTemperature: number[];
+  bottomTemperature: number[];
+  significantWaveHeight: number[];
+  wavePeakPeriod: number[];
+  waveMeanDirection: number[];
+};
+
+type SensorData = {
+  sensorPosition: number;
+  degrees: number;
+};
+
+const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
+  sofarValues
+    .filter((data) => data.value !== undefined)
+    .map(({ value }) => value);
+
 axiosRetry(axios, { retries: 3 });
 
 export async function sofarHindcast(
@@ -53,8 +71,9 @@ export async function sofarSpotter(
     .get(SOFAR_SPOTTER_URL, {
       params: {
         spotterId,
-        start,
-        end,
+        startDate: start,
+        endDate: end,
+        limit: 500,
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
@@ -110,18 +129,8 @@ export async function getSofarDailyData(
     : []) as SofarValue[];
 }
 
-type SpotterData = {
-  surfaceTemperature: number[];
-  bottomTemperature: number[];
-};
-
-type SensorData = {
-  sensorPosition: number;
-  degrees: number;
-};
-
 function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
-  return data.find((d) => d.sensorPosition === sensorPosition);
+  return data.find((d) => d.sensorPosition === sensorPosition)?.degrees;
 }
 
 export async function getSpotterData(
@@ -131,28 +140,62 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   date: Date,
 ): Promise<SpotterData> {
-  // TODO - Get waves data from spotters.
   const [start, end] = getStartEndDate(date, localTimezone);
   const {
-    data: { smartMooringData = [] },
+    data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
 
-  const filteredSmartMooringData = smartMooringData.filter(
-    (data) => data.timestamp && data.timestamp > start && data.timestamp < end,
+  const [sofarSignificantWaveHeight, sofarPeakPeriod, sofarMeanDirection]: [
+    SofarValue[],
+    SofarValue[],
+    SofarValue[],
+  ] = waves.reduce(
+    ([significantWaveHeights, peakPeriods, meanDirections], data) => {
+      return [
+        significantWaveHeights.concat({
+          timestamp: data.timestamp,
+          value: data.significantWaveHeight,
+        }),
+        peakPeriods.concat({
+          timestamp: data.timestamp,
+          value: data.peakPeriod,
+        }),
+        meanDirections.concat({
+          timestamp: data.timestamp,
+          value: data.meanDirection,
+        }),
+      ];
+    },
+    [[], [], []],
   );
 
-  const [
-    bottomTemperature,
-    surfaceTemperature,
-  ] = filteredSmartMooringData.reduce(
-    ([sensor0Data, sensor1Data], data) => [
-      sensor0Data.concat(getDataBySensorPosition(data.sensorData, 0)),
-      sensor1Data.concat(getDataBySensorPosition(data.sensorData, 1)),
-    ],
+  const [sofarBottomTemperature, sofarSurfaceTemperature]: [
+    SofarValue[],
+    SofarValue[],
+  ] = smartMooringData.reduce(
+    ([sensor0Data, sensor1Data], data) => {
+      getDataBySensorPosition(data.sensorData, 0);
+      return [
+        sensor0Data.concat({
+          timestamp: data.timestamp,
+          value: getDataBySensorPosition(data.sensorData, 0),
+        }),
+        sensor1Data.concat({
+          timestamp: data.timestamp,
+          value: getDataBySensorPosition(data.sensorData, 1),
+        }),
+      ];
+    },
     [[], []],
   );
 
-  return { surfaceTemperature, bottomTemperature };
+  return {
+    surfaceTemperature: extractSofarValues(sofarBottomTemperature),
+    bottomTemperature: extractSofarValues(sofarSurfaceTemperature),
+    significantWaveHeight: extractSofarValues(sofarSignificantWaveHeight),
+    wavePeakPeriod: extractSofarValues(sofarPeakPeriod),
+    waveMeanDirection: extractSofarValues(sofarMeanDirection),
+  };
 }
 
 /** Utility function to get the closest available data given a date in UTC. */

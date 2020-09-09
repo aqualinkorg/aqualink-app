@@ -5,7 +5,6 @@ import {
   Grid,
   IconButton,
   Typography,
-  Avatar,
   Button,
   Menu,
   MenuItem,
@@ -17,7 +16,6 @@ import {
   Theme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
@@ -61,7 +59,12 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             open={menuDrawerOpen}
             onClose={() => setMenuDrawerOpen(false)}
           />
-          <Grid container alignItems="center" spacing={1}>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="center"
+            spacing={1}
+          >
             <Grid item xs={5} sm={searchLocation ? 6 : 4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
@@ -96,33 +99,33 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             >
               {user ? (
                 <>
-                  <IconButton className={classes.button}>
-                    <NotificationsIcon className={classes.notificationIcon} />
-                  </IconButton>
-                  <IconButton className={classes.button}>
-                    <Avatar />
-                  </IconButton>
-                  <IconButton className={classes.button} onClick={handleClick}>
-                    <ExpandMoreIcon className={classes.expandIcon} />
-                  </IconButton>
-                  <Menu
-                    key="user-menu"
-                    className={classes.userMenu}
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                  >
-                    <MenuItem
-                      className={classes.menuItem}
-                      onClick={() => {
-                        dispatch(signOutUser());
-                        handleMenuClose();
-                      }}
+                  <Box display="flex" flexWrap="nowrap" alignItems="center">
+                    {`Hi ${user.fullName}`}
+                    <IconButton
+                      className={classes.button}
+                      onClick={handleClick}
                     >
-                      Logout
-                    </MenuItem>
-                  </Menu>
+                      <ExpandMoreIcon className={classes.expandIcon} />
+                    </IconButton>
+                    <Menu
+                      key="user-menu"
+                      className={classes.userMenu}
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleMenuClose}
+                    >
+                      <MenuItem
+                        className={classes.menuItem}
+                        onClick={() => {
+                          dispatch(signOutUser());
+                          handleMenuClose();
+                        }}
+                      >
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </Box>
                 </>
               ) : (
                 <>
