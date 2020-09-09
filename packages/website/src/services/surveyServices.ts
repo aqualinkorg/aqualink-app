@@ -26,6 +26,14 @@ const addSurvey = (surveyData: SurveyData) => {
   });
 };
 
+const deleteSurvey = (surveyId: number, token: string) => {
+  return requests.send({
+    url: `surveys/${surveyId}`,
+    method: "DELETE",
+    token,
+  });
+};
+
 const addSurveyMedia = (surveyId: string, mediaData: SurveyMediaData) => {
   return requests.send<[]>({
     url: `surveys/${surveyId}/media`,
@@ -47,4 +55,11 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
   });
 };
 
-export default { addSurvey, addSurveyMedia, getSurvey, getSurveys, addNewPoi };
+export default {
+  addSurvey,
+  deleteSurvey,
+  addSurveyMedia,
+  getSurvey,
+  getSurveys,
+  addNewPoi,
+};
