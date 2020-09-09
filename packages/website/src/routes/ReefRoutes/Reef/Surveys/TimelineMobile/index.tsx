@@ -20,6 +20,7 @@ import {
   surveyListSelector,
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
+import DeleteButton from "../DeleteButton";
 
 const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
   const dispatch = useDispatch();
@@ -55,7 +56,14 @@ const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
       )}
       {surveyList &&
         surveyList.map((survey) => (
-          <Grid key={survey.id} container justify="center" item xs={12}>
+          <Grid
+            key={survey.id}
+            className={classes.surveyWrapper}
+            container
+            justify="center"
+            item
+            xs={12}
+          >
             <Grid style={{ marginBottom: "1rem" }} item xs={11}>
               <Typography variant="h6" className={classes.dates}>
                 {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
@@ -90,8 +98,8 @@ const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
                     alignItems="center"
                     justify="center"
                     item
-                    xs={12}
-                    md={7}
+                    xs={11}
+                    md={6}
                     spacing={1}
                   >
                     <Grid container alignItems="center" item xs={11}>
@@ -171,6 +179,20 @@ const TimelineMobile = ({ reefId, addNew, classes }: TimelineMobileProps) => {
                       </Grid>
                     </Grid>
                   </Grid>
+                  <Grid
+                    className={classes.buttonContainer}
+                    container
+                    alignContent="flex-end"
+                    justify="flex-end"
+                    item
+                    xs={1}
+                  >
+                    <DeleteButton
+                      reefId={reefId}
+                      surveyId={survey.id}
+                      diveDate={survey.diveDate}
+                    />
+                  </Grid>
                 </Grid>
               </Paper>
             </Grid>
@@ -195,6 +217,9 @@ const styles = (theme: Theme) =>
       letterSpacing: "normal",
       color: "#757575",
     },
+    surveyWrapper: {
+      marginTop: "2rem",
+    },
     surveyCard: {
       width: "100%",
       backgroundColor: theme.palette.primary.light,
@@ -218,9 +243,11 @@ const styles = (theme: Theme) =>
       width: "100%",
     },
     infoWrapper: {
+      height: "100%",
       [theme.breakpoints.down("sm")]: {
         height: "50%",
       },
+      overflowY: "auto",
     },
     cardFields: {
       fontWeight: 500,
@@ -237,6 +264,12 @@ const styles = (theme: Theme) =>
       lineHeight: 2,
       letterSpacing: "normal",
       color: "#2f2f2f",
+    },
+    buttonContainer: {
+      height: "100%",
+      [theme.breakpoints.down("sm")]: {
+        height: "50%",
+      },
     },
   });
 
