@@ -73,7 +73,9 @@ const SelectedReefCard = ({ classes }: SelectedReefCardProps) => {
     <Box p={1}>
       <Box mb={2}>
         <Typography variant="h5" color="textSecondary">
-          <Hidden xsDown>{`Featured - ${reef.name}`}</Hidden>
+          <Hidden xsDown>{`Featured ${
+            reef.name ? `- ${reef.name}` : "Reef"
+          }`}</Hidden>
           <Hidden smUp>Featured Reef</Hidden>
         </Typography>
       </Box>
@@ -110,13 +112,7 @@ const SelectedReefCard = ({ classes }: SelectedReefCardProps) => {
               </Box>
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={8}
-              lg={6}
-              style={{ marginBottom: "1rem", maxHeight: "14rem" }}
-            >
+            <Grid item xs={12} sm={8} lg={6}>
               <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
                 <Typography color="textSecondary" variant="subtitle1">
                   MEAN DAILY SURFACE TEMP. (C&deg;)

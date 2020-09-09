@@ -31,7 +31,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
       {stableSort<Row>(
         constructTableData(reefsList),
         getComparator(order, orderBy)
-      ).map((reef, index) => {
+      ).map((reef) => {
         return (
           <TableRow
             hover
