@@ -10,14 +10,20 @@ import {
   FormControl,
   MenuItem,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
+import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const Surveys = ({ isAdmin, reefId, classes }: SurveysProps) => {
+const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [history, setHistory] = useState<string>("all");
   const [observation, setObservation] = useState<string>("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const user = useSelector(userInfoSelector);
+  const isAdmin = user
+    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
+    : false;
 
   const onResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -51,7 +57,7 @@ const Surveys = ({ isAdmin, reefId, classes }: SurveysProps) => {
         item
         lg={6}
         xs={11}
-        alignItems="center"
+        alignItems="baseline"
       >
         <Grid
           container
@@ -64,75 +70,71 @@ const Surveys = ({ isAdmin, reefId, classes }: SurveysProps) => {
             {isAdmin ? "Your survey history" : "Survey History"}
           </Typography>
         </Grid>
-        {!isAdmin && (
-          <>
-            <Grid
-              container
-              alignItems="center"
-              justify={windowWidth < 1280 ? "flex-start" : "center"}
-              item
-              md={12}
-              lg={4}
-            >
-              <Grid item>
-                <Typography variant="h6" className={classes.subTitle}>
-                  Survey History:
-                </Typography>
-              </Grid>
-              <Grid item>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    labelId="survey-history"
-                    id="survey-history"
-                    name="survey-history"
-                    value={history}
-                    onChange={handleHistoryChange}
-                    className={classes.selectedItem}
-                  >
-                    <MenuItem value="all">
-                      <Typography className={classes.menuItem} variant="h6">
-                        All
-                      </Typography>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              alignItems="center"
-              justify={windowWidth < 1280 ? "flex-start" : "center"}
-              item
-              md={12}
-              lg={4}
-            >
-              {/* TODO - Make observation a required field. */}
-              <Grid item>
-                <Typography variant="h6" className={classes.subTitle}>
-                  Observation:
-                </Typography>
-              </Grid>
-              <Grid item>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    labelId="survey-observation"
-                    id="survey-observation"
-                    name="survey-observation"
-                    value={observation}
-                    onChange={handleObservationChange}
-                    className={classes.selectedItem}
-                  >
-                    <MenuItem value="any">
-                      <Typography className={classes.menuItem} variant="h6">
-                        Any
-                      </Typography>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </>
-        )}
+        <Grid
+          container
+          alignItems="center"
+          justify={windowWidth < 1280 ? "flex-start" : "center"}
+          item
+          md={12}
+          lg={4}
+        >
+          <Grid item>
+            <Typography variant="h6" className={classes.subTitle}>
+              Survey History:
+            </Typography>
+          </Grid>
+          <Grid item>
+            <FormControl className={classes.formControl}>
+              <Select
+                labelId="survey-history"
+                id="survey-history"
+                name="survey-history"
+                value={history}
+                onChange={handleHistoryChange}
+                className={classes.selectedItem}
+              >
+                <MenuItem value="all">
+                  <Typography className={classes.menuItem} variant="h6">
+                    All
+                  </Typography>
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          alignItems="center"
+          justify={windowWidth < 1280 ? "flex-start" : "center"}
+          item
+          md={12}
+          lg={4}
+        >
+          {/* TODO - Make observation a required field. */}
+          <Grid item>
+            <Typography variant="h6" className={classes.subTitle}>
+              Observation:
+            </Typography>
+          </Grid>
+          <Grid item>
+            <FormControl className={classes.formControl}>
+              <Select
+                labelId="survey-observation"
+                id="survey-observation"
+                name="survey-observation"
+                value={observation}
+                onChange={handleObservationChange}
+                className={classes.selectedItem}
+              >
+                <MenuItem value="any">
+                  <Typography className={classes.menuItem} variant="h6">
+                    Any
+                  </Typography>
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid container justify="center" item xs={11} lg={10}>
         {windowWidth < 1280 ? (
@@ -186,7 +188,6 @@ const styles = (theme: Theme) =>
 
 interface SurveyIncomingProps {
   reefId: number;
-  isAdmin: boolean;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;

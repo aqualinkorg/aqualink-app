@@ -17,6 +17,11 @@ describe("ReefRoutes Surveys", () => {
         loading: false,
         error: null,
       },
+      user: {
+        userInfo: null,
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();
@@ -24,7 +29,7 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Surveys user addNew={false} reefId={0} />
+          <Surveys reefId={0} />
         </Router>
       </Provider>
     ).container;

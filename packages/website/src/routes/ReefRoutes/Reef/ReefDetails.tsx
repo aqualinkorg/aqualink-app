@@ -7,7 +7,6 @@ import {
   Typography,
   Theme,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeatureVideo from "./FeatureVideo";
@@ -19,14 +18,9 @@ import Charts from "./Charts";
 import Surveys from "./Surveys";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
-import { userInfoSelector } from "../../../store/User/userSlice";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
-  const user = useSelector(userInfoSelector);
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
-    : false;
 
   return (
     <Grid container justify="center" className={classes.root}>
@@ -92,7 +86,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           }
         />
       </Grid>
-      <Surveys isAdmin={isAdmin} reefId={reef.id} />
+      <Surveys reefId={reef.id} />
     </Grid>
   );
 };
