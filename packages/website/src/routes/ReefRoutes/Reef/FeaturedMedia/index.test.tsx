@@ -1,9 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import FeatureVideo from ".";
+import FeaturedMedia from ".";
 
 test("renders as expected", () => {
-  const { container } = render(<FeatureVideo url={null} />);
+  const { container } = render(<FeaturedMedia url={null} />);
   expect(container).toMatchSnapshot();
 });

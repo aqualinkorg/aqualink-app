@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 
 import Map from "./Map";
-import FeatureVideo from "./FeatureVideo";
+import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
@@ -53,7 +53,10 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <div className={classes.container}>
-            <FeatureVideo url={reef.videoStream} />
+            <FeaturedMedia
+              url={reef.videoStream}
+              featuredImage={reef.featuredImage}
+            />
           </div>
         </Grid>
       </Grid>
