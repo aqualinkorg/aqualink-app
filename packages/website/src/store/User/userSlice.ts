@@ -9,7 +9,6 @@ import type {
   UserRegisterParams,
   UserSignInParams,
 } from "./types";
-import type { Reef } from "../Reefs/types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import userServices from "../../services/userServices";
 
@@ -39,7 +38,7 @@ export const createUser = createAsyncThunk<
           email: data.email,
           fullName: data.fullName,
           firebaseUid: data.firebaseUid,
-          reefs,
+          administeredReefs: reefs,
           token: await user?.getIdToken(),
         };
       } catch (err) {
@@ -105,7 +104,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
         fullName: userData.fullName,
         adminLevel: userData.adminLevel,
         firebaseUid: userData.firebaseUid,
-        reefs,
+        administeredReefs: reefs,
         token,
       };
     } catch (err) {

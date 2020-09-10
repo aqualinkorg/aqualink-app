@@ -8,6 +8,7 @@ import {
   Button,
   Menu,
   MenuItem,
+  Link,
   Box,
   Hidden,
   withStyles,
@@ -44,8 +45,6 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-  console.log(user);
 
   return (
     <>
@@ -117,7 +116,22 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
+                      {user.administeredReefs?.map((reef, index) => {
+                        const reefIdentifier = reef.name || reef.region;
+                        return (
+                          <Link
+                            href={`reefs/${reef.id}`}
+                            key={`reef-link-${reef.id}`}
+                          >
+                            <MenuItem className={classes.menuItem}>
+                              {`Reef ${index}`}
+                              {reefIdentifier ? ` - ${reefIdentifier}` : ""}
+                            </MenuItem>
+                          </Link>
+                        );
+                      })}
                       <MenuItem
+                        key="user-menu-logout"
                         className={classes.menuItem}
                         onClick={() => {
                           dispatch(signOutUser());
@@ -190,7 +204,6 @@ const styles = (theme: Theme) =>
     },
     menuItem: {
       margin: 0,
-      backgroundColor: theme.palette.grey[500],
       color: theme.palette.text.secondary,
     },
     notificationIcon: {
