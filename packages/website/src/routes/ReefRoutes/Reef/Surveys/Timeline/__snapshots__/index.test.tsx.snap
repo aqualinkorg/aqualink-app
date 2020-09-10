@@ -3,19 +3,19 @@
 exports[`ReefRoutes Surveys should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="SurveyTimeline-root-1"
+    class="SurveyTimeline-root-8"
   >
     <ul
       class="MuiTimeline-root MuiTimeline-alignLeft"
     >
       <li
-        class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-3"
+        class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-10"
       >
         <div
           class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
         >
           <mock-typography
-            classname="SurveyTimeline-dates-4"
+            classname="SurveyTimeline-dates-1"
             variant="h6"
           >
             09/10/2020
@@ -25,20 +25,20 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
           class="MuiTimelineSeparator-root"
         >
           <hr
-            class="SurveyTimeline-connector-2"
+            class="SurveyTimeline-connector-9"
           />
           <span
-            class="MuiTimelineDot-root SurveyTimeline-dot-6 MuiTimelineDot-outlinedGrey"
+            class="MuiTimelineDot-root SurveyTimeline-dot-11 MuiTimelineDot-outlinedGrey"
           />
           <hr
-            class="SurveyTimeline-connector-2"
+            class="SurveyTimeline-connector-9"
           />
         </div>
         <div
           class="MuiTimelineContent-root MuiTimelineItem-content"
         >
           <div
-            class="MuiPaper-root SurveyTimeline-surveyCard-7 MuiPaper-elevation0 MuiPaper-rounded"
+            class="MuiPaper-root SurveyTimeline-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
@@ -49,11 +49,11 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                 style="height: 100%;"
               >
                 <div
-                  class="MuiCardMedia-root SurveyTimeline-cardImage-9"
+                  class="MuiCardMedia-root SurveyTimeline-cardImage-4"
                 />
               </div>
               <div
-                class="MuiGrid-root SurveyTimeline-surveyInfo-8 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
+                class="MuiGrid-root SurveyTimeline-surveyInfo-12 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
@@ -62,7 +62,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
                   >
                     <mock-typography
-                      classname="SurveyTimeline-cardFields-10"
+                      classname="SurveyTimeline-cardFields-5"
                       variant="h6"
                     >
                       Comments:
@@ -72,7 +72,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="SurveyTimeline-cardValues-11"
+                      classname="SurveyTimeline-cardValues-6"
                       variant="h6"
                     >
                       No comments
@@ -97,7 +97,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                 </div>
               </div>
               <div
-                class="MuiGrid-root SurveyTimeline-buttonContainer-12 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
+                class="MuiGrid-root SurveyTimeline-buttonContainer-7 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
               />
             </div>
           </div>
