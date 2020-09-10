@@ -78,9 +78,13 @@ const Charts = ({
     }
   };
 
+  /*
+    Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
+  */
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
+      // Resize has stopped so stop updating the chart
       setUpdateChart(false);
       changeXTickShift();
     }, 1);
