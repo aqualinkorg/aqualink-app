@@ -31,17 +31,17 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
 
   const metrics = [
     {
-      label: "SURFACE TEMP",
+      label: "Surface temp",
       value: `${formatNumber(satelliteTemperature, 1)} \u2103`,
     },
     {
-      label: "HISTORICAL MAX TEMP",
+      label: "Historical max temp",
       value: `${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`,
       tooltipTitle:
         "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
     },
     {
-      label: "HEAT STRESS",
+      label: "Degree heating weeks",
       value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
       tooltipTitle:
         "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
@@ -74,35 +74,33 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
       />
 
       <CardContent className={classes.content}>
-        <Box p="1rem 1rem 1rem 2rem">
-          <Grid container direction="column" spacing={3}>
+        <Box p="1rem" display="flex" flexGrow={1}>
+          <Grid container spacing={3}>
             {metrics.map(({ label, value, tooltipTitle }) => (
-              <Grid key={label} item>
-                <Box pl="1rem">
-                  <Typography
-                    className={classes.contentTextTitles}
-                    variant="subtitle2"
-                  >
-                    {label}
-                  </Typography>
-                  {tooltipTitle ? (
-                    <Tooltip title={tooltipTitle}>
-                      <Typography
-                        className={classes.contentTextValues}
-                        variant="h2"
-                      >
-                        {value}
-                      </Typography>
-                    </Tooltip>
-                  ) : (
+              <Grid key={label} item xs={6}>
+                <Typography
+                  className={classes.contentTextTitles}
+                  variant="subtitle2"
+                >
+                  {label}
+                </Typography>
+                {tooltipTitle ? (
+                  <Tooltip title={tooltipTitle}>
                     <Typography
                       className={classes.contentTextValues}
                       variant="h2"
                     >
                       {value}
                     </Typography>
-                  )}
-                </Box>
+                  </Tooltip>
+                ) : (
+                  <Typography
+                    className={classes.contentTextValues}
+                    variant="h2"
+                  >
+                    {value}
+                  </Typography>
+                )}
               </Grid>
             ))}
           </Grid>

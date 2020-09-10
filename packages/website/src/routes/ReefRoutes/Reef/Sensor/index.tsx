@@ -26,11 +26,11 @@ const Sensor = ({ reef, classes }: SensorProps) => {
 
   const metrics = [
     {
-      label: "SURFACE TEMP",
+      label: "Surface temp",
       value: `${formatNumber(surfaceTemperature, 1)} °C`,
     },
     {
-      label: `TEMP AT ${reef.depth}M`,
+      label: `Temp at ${reef.depth}m`,
       value: `${formatNumber(avgBottomTemperature, 1)} °C`,
     },
   ];
@@ -64,20 +64,15 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           <Grid container direction="column" spacing={3} item xs={7}>
             {metrics.map(({ label, value }) => (
               <Grid key={label} item>
-                <Box pl="1rem">
-                  <Typography
-                    className={classes.contentTextTitles}
-                    variant="subtitle2"
-                  >
-                    {label}
-                  </Typography>
-                  <Typography
-                    className={classes.contentTextValues}
-                    variant="h2"
-                  >
-                    {value}
-                  </Typography>
-                </Box>
+                <Typography
+                  className={classes.contentTextTitles}
+                  variant="subtitle2"
+                >
+                  {label}
+                </Typography>
+                <Typography className={classes.contentTextValues} variant="h2">
+                  {value}
+                </Typography>
               </Grid>
             ))}
           </Grid>
@@ -90,6 +85,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               />
             </Grid>
           )}
+
           <Box position="absolute" top={0} right={0}>
             <img alt="sensor" src={sensor} />
           </Box>
@@ -117,6 +113,8 @@ const styles = () =>
       paddingBottom: 0,
     },
     content: {
+      display: "flex",
+      flexGrow: 1,
       padding: "1rem 1rem 0 1rem",
     },
     noSensorAlert: {

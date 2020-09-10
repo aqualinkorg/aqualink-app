@@ -14,6 +14,7 @@ export const styles = {
     },
   },
   contentTextTitles: {
+    textTransform: "uppercase" as "uppercase",
     lineHeight: 1.33,
     [theme.breakpoints.between("sm", 740)]: {
       fontSize: 9,

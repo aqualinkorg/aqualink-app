@@ -56,42 +56,34 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-item"
           >
-            <mock-box
-              pl="1rem"
+            <mock-typography
+              classname="Sensor-contentTextTitles-2"
+              variant="subtitle2"
             >
-              <mock-typography
-                classname="Sensor-contentTextTitles-2"
-                variant="subtitle2"
-              >
-                SURFACE TEMP
-              </mock-typography>
-              <mock-typography
-                classname="Sensor-contentTextValues-3"
-                variant="h2"
-              >
-                - - °C
-              </mock-typography>
-            </mock-box>
+              Surface temp
+            </mock-typography>
+            <mock-typography
+              classname="Sensor-contentTextValues-3"
+              variant="h2"
+            >
+              - - °C
+            </mock-typography>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item"
           >
-            <mock-box
-              pl="1rem"
+            <mock-typography
+              classname="Sensor-contentTextTitles-2"
+              variant="subtitle2"
             >
-              <mock-typography
-                classname="Sensor-contentTextTitles-2"
-                variant="subtitle2"
-              >
-                TEMP AT 24M
-              </mock-typography>
-              <mock-typography
-                classname="Sensor-contentTextValues-3"
-                variant="h2"
-              >
-                - - °C
-              </mock-typography>
-            </mock-box>
+              Temp at 24m
+            </mock-typography>
+            <mock-typography
+              classname="Sensor-contentTextValues-3"
+              variant="h2"
+            >
+              - - °C
+            </mock-typography>
           </div>
         </div>
         <div

@@ -863,9 +863,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
 >>>>>>> b66f944... Fix safari bugs on surveys
             >
               <mock-box
-                p="1rem 1rem 1rem 2rem"
+                display="flex"
+                flexgrow="1"
+                p="1rem"
               >
                 <div
+<<<<<<< HEAD
                   class="MuiGrid-root Satellite-contentTextWrapper-142 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-12"
                 >
                   <div
@@ -933,54 +936,65 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         26.0 ℃
                       </mock-typography>
                     </mock-box>
+=======
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-110"
+                      variant="subtitle2"
+                    >
+                      Surface temp
+                    </mock-typography>
+                    <mock-typography
+                      classname="Satellite-contentTextValues-111"
+                      variant="h2"
+                    >
+                      26.0 ℃
+                    </mock-typography>
+>>>>>>> a5d9481... Fix design breaks after rebasing
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
-                    <mock-box
-                      pl="1rem"
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-110"
+                      variant="subtitle2"
+                    >
+                      Historical max temp
+                    </mock-typography>
+                    <mock-tooltip
+                      title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-110"
-                        variant="subtitle2"
+                        classname="Satellite-contentTextValues-111"
+                        variant="h2"
                       >
-                        HISTORICAL MAX TEMP
+                        23.0 °C
                       </mock-typography>
-                      <mock-tooltip
-                        title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-                      >
-                        <mock-typography
-                          classname="Satellite-contentTextValues-111"
-                          variant="h2"
-                        >
-                          23.0 °C
-                        </mock-typography>
-                      </mock-tooltip>
-                    </mock-box>
+                    </mock-tooltip>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
-                    <mock-box
-                      pl="1rem"
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-110"
+                      variant="subtitle2"
+                    >
+                      Degree heating weeks
+                    </mock-typography>
+                    <mock-tooltip
+                      title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-110"
-                        variant="subtitle2"
+                        classname="Satellite-contentTextValues-111"
+                        variant="h2"
                       >
-                        HEAT STRESS
+                        0.1 DHW
                       </mock-typography>
-                      <mock-tooltip
-                        title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-                      >
-                        <mock-typography
-                          classname="Satellite-contentTextValues-111"
-                          variant="h2"
-                        >
-                          0.1 DHW
-                        </mock-typography>
-                      </mock-tooltip>
-                    </mock-box>
+                    </mock-tooltip>
                   </div>
                 </div>
               </mock-box>
@@ -1248,6 +1262,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root Sensor-contentMeasure-148 MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
+<<<<<<< HEAD
                       classname="Sensor-contentTextTitles-145"
                       color="textPrimary"
                       variant="subtitle2"
@@ -1277,11 +1292,25 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       </mock-typography>
                     </mock-box>
 >>>>>>> b66f944... Fix safari bugs on surveys
+=======
+                      classname="Sensor-contentTextTitles-120"
+                      variant="subtitle2"
+                    >
+                      Surface temp
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-121"
+                      variant="h2"
+                    >
+                      25.0 °C
+                    </mock-typography>
+>>>>>>> a5d9481... Fix design breaks after rebasing
                   </div>
                   <div
                     class="MuiGrid-root Sensor-contentMeasure-148 MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
+<<<<<<< HEAD
                       classname="Sensor-contentTextTitles-145"
                       color="textPrimary"
                       variant="subtitle2"
@@ -1291,20 +1320,19 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     <mock-typography
                       classname="Sensor-contentTextValues-146"
                       color="textPrimary"
+=======
+                      classname="Sensor-contentTextTitles-120"
+                      variant="subtitle2"
+>>>>>>> a5d9481... Fix design breaks after rebasing
                     >
-                      <mock-typography
-                        classname="Sensor-contentTextTitles-120"
-                        variant="subtitle2"
-                      >
-                        TEMP AT 4M
-                      </mock-typography>
-                      <mock-typography
-                        classname="Sensor-contentTextValues-121"
-                        variant="h2"
-                      >
-                        25.0 °C
-                      </mock-typography>
-                    </mock-box>
+                      Temp at 4m
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-121"
+                      variant="h2"
+                    >
+                      25.0 °C
+                    </mock-typography>
                   </div>
                 </div>
                 <mock-box

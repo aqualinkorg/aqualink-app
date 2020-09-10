@@ -48,78 +48,68 @@ exports[`renders as expected 1`] = `
       classname="Satellite-content-9"
     >
       <mock-box
-        p="1rem 1rem 1rem 2rem"
+        display="flex"
+        flexgrow="1"
+        p="1rem"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <mock-box
-              pl="1rem"
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              variant="subtitle2"
             >
-              <mock-typography
-                classname="Satellite-contentTextTitles-2"
-                variant="subtitle2"
-              >
-                SURFACE TEMP
-              </mock-typography>
+              Surface temp
+            </mock-typography>
+            <mock-typography
+              classname="Satellite-contentTextValues-3"
+              variant="h2"
+            >
+              20.0 ℃
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              variant="subtitle2"
+            >
+              Historical max temp
+            </mock-typography>
+            <mock-tooltip
+              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+            >
               <mock-typography
                 classname="Satellite-contentTextValues-3"
                 variant="h2"
               >
-                20.0 ℃
+                21.0 °C
               </mock-typography>
-            </mock-box>
+            </mock-tooltip>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
-            <mock-box
-              pl="1rem"
+            <mock-typography
+              classname="Satellite-contentTextTitles-2"
+              variant="subtitle2"
+            >
+              Degree heating weeks
+            </mock-typography>
+            <mock-tooltip
+              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
             >
               <mock-typography
-                classname="Satellite-contentTextTitles-2"
-                variant="subtitle2"
+                classname="Satellite-contentTextValues-3"
+                variant="h2"
               >
-                HISTORICAL MAX TEMP
+                4.1 DHW
               </mock-typography>
-              <mock-tooltip
-                title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-              >
-                <mock-typography
-                  classname="Satellite-contentTextValues-3"
-                  variant="h2"
-                >
-                  21.0 °C
-                </mock-typography>
-              </mock-tooltip>
-            </mock-box>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <mock-box
-              pl="1rem"
-            >
-              <mock-typography
-                classname="Satellite-contentTextTitles-2"
-                variant="subtitle2"
-              >
-                HEAT STRESS
-              </mock-typography>
-              <mock-tooltip
-                title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
-              >
-                <mock-typography
-                  classname="Satellite-contentTextValues-3"
-                  variant="h2"
-                >
-                  4.1 DHW
-                </mock-typography>
-              </mock-tooltip>
-            </mock-box>
+            </mock-tooltip>
           </div>
         </div>
       </mock-box>

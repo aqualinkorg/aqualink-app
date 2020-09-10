@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Typography,
 } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
@@ -260,7 +261,7 @@ const Charts = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       height: "16rem",
@@ -268,6 +269,10 @@ const styles = () =>
     graphTitle: {
       lineHeight: 1.5,
       marginLeft: "4rem",
+
+      [theme.breakpoints.down("xs")]: {
+        marginLeft: 0,
+      },
     },
   });
 
