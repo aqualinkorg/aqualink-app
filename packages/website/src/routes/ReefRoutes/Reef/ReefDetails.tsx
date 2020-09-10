@@ -7,7 +7,6 @@ import {
   Typography,
   Theme,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -19,11 +18,9 @@ import Charts from "./Charts";
 import Surveys from "./Surveys";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
-import { userInfoSelector } from "../../../store/User/userSlice";
 
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
-  const user = useSelector(userInfoSelector);
 
   return (
     <Grid container justify="center" className={classes.root}>
@@ -92,16 +89,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
           }
         />
       </Grid>
-      <Surveys
-        user={Boolean(user)}
-        addNew={
-          user?.adminLevel
-            ? user.adminLevel === "reef_manager" ||
-              user.adminLevel === "super_admin"
-            : false
-        }
-        reefId={reef.id}
-      />
+      <Surveys reefId={reef.id} />
     </Grid>
   );
 };

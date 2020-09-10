@@ -110,6 +110,11 @@ interface FeaturedMediaIncomingProps {
   featuredImage?: string | null;
 }
 
+FeaturedMedia.defaultProps = {
+  url: null,
+  featuredImage: null,
+};
+
 type FeaturedMediaProps = WithStyles<typeof styles> &
   FeaturedMediaIncomingProps;
 

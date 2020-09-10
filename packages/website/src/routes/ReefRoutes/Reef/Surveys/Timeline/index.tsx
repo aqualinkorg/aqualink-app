@@ -22,14 +22,15 @@ import {
   TimelineContent,
   TimelineOppositeContent,
 } from "@material-ui/lab";
-
 import { Link } from "react-router-dom";
+
+import DeleteButton from "../DeleteButton";
 import {
   surveyListSelector,
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 
-const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -40,7 +41,7 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
   return (
     <div className={classes.root}>
       <Timeline>
-        {addNew && (
+        {isAdmin && (
           <TimelineItem>
             <TimelineSeparator>
               <Link
@@ -93,7 +94,13 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                           />
                         )}
                       </Grid>
-                      <Grid container item xs={7} spacing={1}>
+                      <Grid
+                        className={classes.surveyInfo}
+                        container
+                        item
+                        xs={6}
+                        spacing={1}
+                      >
                         {survey.userId!.fullName && (
                           <Grid container alignItems="flex-start" item xs={12}>
                             <Grid item xs={5}>
@@ -169,6 +176,22 @@ const SurveyTimeline = ({ addNew, reefId, classes }: SurveyTimelineProps) => {
                           </Link>
                         </Grid>
                       </Grid>
+                      {isAdmin && (
+                        <Grid
+                          className={classes.buttonContainer}
+                          container
+                          alignContent="flex-end"
+                          justify="flex-end"
+                          item
+                          xs={1}
+                        >
+                          <DeleteButton
+                            reefId={reefId}
+                            surveyId={survey.id}
+                            diveDate={survey.diveDate}
+                          />
+                        </Grid>
+                      )}
                     </Grid>
                   </Paper>
                 </Grid>
@@ -225,6 +248,10 @@ const styles = (theme: Theme) =>
       borderRadius: 2,
       height: "14rem",
     },
+    surveyInfo: {
+      height: "10rem",
+      overflowY: "auto",
+    },
     cardImage: {
       height: "100%",
       width: "100%",
@@ -245,11 +272,14 @@ const styles = (theme: Theme) =>
       letterSpacing: "normal",
       color: "#2f2f2f",
     },
+    buttonContainer: {
+      height: "100%",
+    },
   });
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
-  addNew: boolean;
+  isAdmin: boolean;
 }
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &

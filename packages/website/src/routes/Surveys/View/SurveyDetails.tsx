@@ -107,8 +107,12 @@ const styles = () =>
 
 interface SurveyDetailsIncomingProps {
   reef: Reef;
-  survey?: SurveyState;
+  survey?: SurveyState | null;
 }
+
+SurveyDetails.defaultProps = {
+  survey: null,
+};
 
 type SurveyDetailsProps = SurveyDetailsIncomingProps &
   WithStyles<typeof styles>;

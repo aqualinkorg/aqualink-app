@@ -336,7 +336,7 @@ interface MediaCardIncomingProps {
   surveyPoint: string;
   observation: string;
   comments: string;
-  file?: File;
+  file?: File | null;
   featuredFile: number | null;
   hidden: boolean;
   handleHiddenChange: (index: number) => void;
@@ -346,6 +346,10 @@ interface MediaCardIncomingProps {
   handleObservationChange: (event: ChangeEvent<{ value: unknown }>) => void;
   handleSurveyPointChange: (event: ChangeEvent<{ value: unknown }>) => void;
 }
+
+MediaCard.defaultProps = {
+  file: null,
+};
 
 type MediaCardProps = MediaCardIncomingProps & WithStyles<typeof styles>;
 
