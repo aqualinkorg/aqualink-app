@@ -60,10 +60,10 @@ export class Reef {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Region, { nullable: true })
+  @ManyToOne(() => Region, { onDelete: 'SET NULL', nullable: true })
   region?: Region;
 
-  @ManyToOne(() => VideoStream, { nullable: true })
+  @ManyToOne(() => VideoStream, { onDelete: 'SET NULL', nullable: true })
   stream?: VideoStream;
 
   @ManyToMany(() => User, (user) => user.administeredReefs)
