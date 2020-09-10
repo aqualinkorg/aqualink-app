@@ -57,6 +57,7 @@ export interface Reef {
   stream: string | null;
   dailyData: Data[];
   latestDailyData: Data;
+  featuredImage?: string;
 }
 
 export interface ReefsListState {

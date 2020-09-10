@@ -663,7 +663,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="ReefDetails-container-115"
         >
-          <mock-featurevideo />
+          <mock-featuredmedia />
         </div>
       </div>
     </div>
