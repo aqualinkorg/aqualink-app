@@ -13,12 +13,9 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Region } from '../regions/regions.entity';
-// eslint-disable-next-line import/no-cycle
 import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
-// eslint-disable-next-line import/no-cycle
 import { Survey } from '../surveys/surveys.entity';
-// eslint-disable-next-line import/no-cycle
 import { User } from '../users/users.entity';
 
 @Entity()

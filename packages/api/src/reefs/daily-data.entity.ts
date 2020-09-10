@@ -6,7 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-// eslint-disable-next-line import/no-cycle
 import { Reef } from './reefs.entity';
 
 @Entity()

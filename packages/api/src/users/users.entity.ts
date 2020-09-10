@@ -9,7 +9,6 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-// eslint-disable-next-line import/no-cycle
 import { Reef } from '../reefs/reefs.entity';
 
 export enum AdminLevel {
