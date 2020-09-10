@@ -224,10 +224,8 @@ const Charts = ({
               left: tooltipPosition.left,
             }}
           >
-            <>
-              <Tooltip {...tooltipData} />
-              <div className="tooltip-arrow" />
-            </>
+            <Tooltip {...tooltipData} />
+            <div className="tooltip-arrow" />
           </div>
         ) : null}
       </div>
