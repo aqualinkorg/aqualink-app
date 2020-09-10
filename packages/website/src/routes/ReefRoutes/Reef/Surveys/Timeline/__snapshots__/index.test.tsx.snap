@@ -7,7 +7,107 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
   >
     <ul
       class="MuiTimeline-root MuiTimeline-alignLeft"
-    />
+    >
+      <li
+        class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-3"
+      >
+        <div
+          class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
+        >
+          <mock-typography
+            classname="SurveyTimeline-dates-4"
+            variant="h6"
+          >
+            09/10/2020
+          </mock-typography>
+        </div>
+        <div
+          class="MuiTimelineSeparator-root"
+        >
+          <hr
+            class="SurveyTimeline-connector-2"
+          />
+          <span
+            class="MuiTimelineDot-root SurveyTimeline-dot-6 MuiTimelineDot-outlinedGrey"
+          />
+          <hr
+            class="SurveyTimeline-connector-2"
+          />
+        </div>
+        <div
+          class="MuiTimelineContent-root MuiTimelineItem-content"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiPaper-root SurveyTimeline-surveyCard-7 MuiPaper-elevation0 MuiPaper-rounded"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                style="height: 100%;"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                  style="height: 100%;"
+                >
+                  <div
+                    class="MuiCardMedia-root SurveyTimeline-cardImage-9"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root SurveyTimeline-surveyInfo-8 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                    >
+                      <mock-typography
+                        classname="SurveyTimeline-cardFields-10"
+                        variant="h6"
+                      >
+                        Comments:
+                      </mock-typography>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                    >
+                      <mock-typography
+                        classname="SurveyTimeline-cardValues-11"
+                        variant="h6"
+                      >
+                        No comments
+                      </mock-typography>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                  >
+                    <a
+                      href="/reefs/0/survey_details/46"
+                      style="text-decoration: none;"
+                    >
+                      <mock-button
+                        color="primary"
+                        size="small"
+                        variant="outlined"
+                      >
+                        VIEW DETAILS
+                      </mock-button>
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root SurveyTimeline-buttonContainer-12 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 `;

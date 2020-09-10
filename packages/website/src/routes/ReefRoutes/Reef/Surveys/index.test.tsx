@@ -24,7 +24,7 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Surveys user addNew={false} reefId={0} />
+          <Surveys isAdmin={false} reefId={0} />
         </Router>
       </Provider>
     ).container;
