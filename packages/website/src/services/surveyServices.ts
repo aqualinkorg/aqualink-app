@@ -49,7 +49,7 @@ const addSurveyMedia = (
 
 const addNewPoi = (reefId: number, name: string, token?: string | null) => {
   return requests.send({
-    url: `pois`,
+    url: "pois",
     method: "POST",
     data: {
       reef: reefId,
