@@ -1,9 +1,3 @@
-import L from "leaflet";
-import {
-  dhwColorFinder,
-  degreeHeatingWeeksCalculator,
-} from "../../../helpers/degreeHeatingWeeks";
-
 export const coloredBuoy = (color: string) =>
   `<?xml version="1.0" encoding="UTF-8"?>
   <svg width="29px" height="35px" viewBox="0 0 29 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -28,13 +22,4 @@ export const coloredBuoy = (color: string) =>
       </g>
   </svg>`;
 
-export const coloredBuoyIcon = (degreeHeatingDays: number) => {
-  const color = dhwColorFinder(degreeHeatingWeeksCalculator(degreeHeatingDays));
-  return L.divIcon({
-    iconSize: [24, 24],
-    iconAnchor: [12, 28],
-    popupAnchor: [3, -24],
-    html: `${coloredBuoy(color)}`,
-    className: "marker-icon",
-  });
-};
+export const coloredBuoyIcon = (degreeHeatingDays: number) => {};
