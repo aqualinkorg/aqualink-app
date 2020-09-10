@@ -19,7 +19,7 @@ const getSurveys = (reefId: string) =>
 
 const addSurvey = (surveyData: SurveyData) => {
   return requests.send<SurveyState>({
-    url: `surveys`,
+    url: "surveys",
     method: "POST",
     data: { ...surveyData, token: undefined },
     token: surveyData.token === null ? undefined : surveyData.token,
