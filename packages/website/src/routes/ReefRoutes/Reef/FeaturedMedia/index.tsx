@@ -17,8 +17,6 @@ import reefImage from "../../../../assets/reef-image.jpg";
 import uploadIcon from "../../../../assets/icon_upload.svg";
 
 const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
-  console.log(featuredImage);
-
   if (url) {
     return (
       <Card className={classes.card}>
