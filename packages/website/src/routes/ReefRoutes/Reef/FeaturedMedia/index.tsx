@@ -46,26 +46,21 @@ const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
 
   return (
     <Card className={classes.card}>
-      <div className={classes.noVideoCard}>
-        <div className={classes.noVideoCardHeader}>
-          <Grid container item spacing={2}>
-            <Grid container justify="center" item xs={12}>
-              <Typography
-                className={classes.noVideoCardHeaderText}
-                variant="h5"
-              >
-                IMAGE TO BE UPLOADED
-              </Typography>
-            </Grid>
-            <Grid container justify="center" item xs={12}>
-              <IconButton>
-                <img src={uploadIcon} alt="upload" />
-              </IconButton>
-            </Grid>
+      <div className={classes.noVideoCardHeader}>
+        <Grid container direction="column" alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography className={classes.noVideoCardHeaderText} variant="h5">
+              IMAGE TO BE UPLOADED
+            </Typography>
           </Grid>
-        </div>
-        <div className={classes.noVideoCardContent} />
+          <Grid item>
+            <IconButton>
+              <img src={uploadIcon} alt="upload" />
+            </IconButton>
+          </Grid>
+        </Grid>
       </div>
+      <div className={classes.noVideoCardContent} />
     </Card>
   );
 };
@@ -77,16 +72,12 @@ const styles = (theme: Theme) => {
       width: "100%",
       display: "flex",
       borderRadius: 4,
+      position: "relative",
     },
     content: {
       height: "100%",
       width: "100%",
       padding: "0",
-    },
-    noVideoCard: {
-      position: "relative",
-      height: "100%",
-      width: "100%",
     },
     noVideoCardHeader: {
       backgroundColor: "#033042",
@@ -110,17 +101,6 @@ const styles = (theme: Theme) => {
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: "blur(2px)",
-    },
-    playIconWrapper: {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, 0)",
-    },
-    playIcon: {
-      opacity: 0.5,
-      color: theme.palette.primary.light,
-      fontSize: "8rem",
     },
   });
 };
