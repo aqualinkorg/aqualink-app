@@ -76,125 +76,123 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                 <hr className={classes.connector} />
               </TimelineSeparator>
               <TimelineContent>
-                <Grid container item xs={12}>
-                  <Paper elevation={0} className={classes.surveyCard}>
+                <Paper elevation={0} className={classes.surveyCard}>
+                  <Grid
+                    style={{ height: "100%" }}
+                    container
+                    alignItems="center"
+                    justify="space-between"
+                    item
+                    xs={12}
+                  >
+                    <Grid style={{ height: "100%" }} item xs={4}>
+                      {survey.featuredSurveyMedia && (
+                        <CardMedia
+                          className={classes.cardImage}
+                          image={survey.featuredSurveyMedia?.url}
+                        />
+                      )}
+                    </Grid>
                     <Grid
-                      style={{ height: "100%" }}
+                      className={classes.surveyInfo}
                       container
-                      alignItems="center"
-                      justify="space-between"
                       item
-                      xs={12}
+                      xs={6}
+                      spacing={1}
                     >
-                      <Grid style={{ height: "100%" }} item xs={4}>
-                        {survey.featuredSurveyMedia && (
-                          <CardMedia
-                            className={classes.cardImage}
-                            image={survey.featuredSurveyMedia?.url}
-                          />
-                        )}
-                      </Grid>
-                      <Grid
-                        className={classes.surveyInfo}
-                        container
-                        item
-                        xs={6}
-                        spacing={1}
-                      >
-                        {survey.userId!.fullName && (
-                          <Grid container alignItems="flex-start" item xs={12}>
-                            <Grid item xs={5}>
-                              <Typography
-                                className={classes.cardFields}
-                                variant="h6"
-                              >
-                                User:
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                className={classes.cardValues}
-                                variant="h6"
-                              >
-                                {survey.userId!.fullName}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        )}
-                        {survey.comments && (
-                          <Grid container alignItems="flex-start" item xs={12}>
-                            <Grid item xs={5}>
-                              <Typography
-                                className={classes.cardFields}
-                                variant="h6"
-                              >
-                                Comments:
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                className={classes.cardValues}
-                                variant="h6"
-                              >
-                                {survey.comments}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        )}
-                        {survey.temperature && (
-                          <Grid container alignItems="center" item xs={12}>
-                            <Grid item xs={5}>
-                              <Typography
-                                className={classes.cardFields}
-                                variant="h6"
-                              >
-                                Temp:
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Typography
-                                className={classes.cardValues}
-                                variant="h6"
-                              >
-                                {`${survey.temperature} °C`}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                        )}
-                        <Grid item xs={5}>
-                          <Link
-                            style={{ color: "inherit", textDecoration: "none" }}
-                            to={`/reefs/${reefId}/survey_details/${survey.id}`}
-                          >
-                            <Button
-                              size="small"
-                              variant="outlined"
-                              color="primary"
+                      {survey.userId!.fullName && (
+                        <Grid container alignItems="flex-start" item xs={12}>
+                          <Grid item xs={5}>
+                            <Typography
+                              className={classes.cardFields}
+                              variant="h6"
                             >
-                              VIEW DETAILS
-                            </Button>
-                          </Link>
+                              User:
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography
+                              className={classes.cardValues}
+                              variant="h6"
+                            >
+                              {survey.userId!.fullName}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                      <Grid
-                        className={classes.buttonContainer}
-                        container
-                        alignContent="flex-end"
-                        justify="flex-end"
-                        item
-                        xs={1}
-                      >
-                        {isAdmin && (
-                          <DeleteButton
-                            reefId={reefId}
-                            surveyId={survey.id}
-                            diveDate={survey.diveDate}
-                          />
-                        )}
+                      )}
+                      {survey.comments && (
+                        <Grid container alignItems="flex-start" item xs={12}>
+                          <Grid item xs={5}>
+                            <Typography
+                              className={classes.cardFields}
+                              variant="h6"
+                            >
+                              Comments:
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography
+                              className={classes.cardValues}
+                              variant="h6"
+                            >
+                              {survey.comments}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      )}
+                      {survey.temperature && (
+                        <Grid container alignItems="center" item xs={12}>
+                          <Grid item xs={5}>
+                            <Typography
+                              className={classes.cardFields}
+                              variant="h6"
+                            >
+                              Temp:
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography
+                              className={classes.cardValues}
+                              variant="h6"
+                            >
+                              {`${survey.temperature} °C`}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      )}
+                      <Grid item xs={5}>
+                        <Link
+                          style={{ color: "inherit", textDecoration: "none" }}
+                          to={`/reefs/${reefId}/survey_details/${survey.id}`}
+                        >
+                          <Button
+                            size="small"
+                            variant="outlined"
+                            color="primary"
+                          >
+                            VIEW DETAILS
+                          </Button>
+                        </Link>
                       </Grid>
                     </Grid>
-                  </Paper>
-                </Grid>
+                    <Grid
+                      className={classes.buttonContainer}
+                      container
+                      alignContent="flex-end"
+                      justify="flex-end"
+                      item
+                      xs={1}
+                    >
+                      {isAdmin && (
+                        <DeleteButton
+                          reefId={reefId}
+                          surveyId={survey.id}
+                          diveDate={survey.diveDate}
+                        />
+                      )}
+                    </Grid>
+                  </Grid>
+                </Paper>
               </TimelineContent>
             </TimelineItem>
           ))}
