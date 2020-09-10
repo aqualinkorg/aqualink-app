@@ -77,7 +77,7 @@ const styles = () =>
   });
 
 interface SurveysIncomingProps {
-  isView?: boolean;
+  isView: boolean;
 }
 
 interface MatchProps extends RouteComponentProps<{ id: string; sid: string }> {}

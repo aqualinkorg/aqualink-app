@@ -176,22 +176,22 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                         </Link>
                       </Grid>
                     </Grid>
-                    <Grid
-                      className={classes.buttonContainer}
-                      container
-                      alignContent="flex-end"
-                      justify="flex-end"
-                      item
-                      xs={1}
-                    >
-                      {isAdmin && (
+                    {isAdmin && (
+                      <Grid
+                        className={classes.buttonContainer}
+                        container
+                        alignContent="flex-end"
+                        justify="flex-end"
+                        item
+                        xs={1}
+                      >
                         <DeleteButton
                           reefId={reefId}
                           surveyId={survey.id}
                           diveDate={survey.diveDate}
                         />
-                      )}
-                    </Grid>
+                      </Grid>
+                    )}
                   </Grid>
                 </Paper>
               </TimelineContent>

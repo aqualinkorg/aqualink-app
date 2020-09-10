@@ -1,5 +1,4 @@
 import React, { useState, ReactNode, useEffect } from "react";
-import { useSelector } from "react-redux";
 import {
   withStyles,
   WithStyles,
@@ -15,7 +14,6 @@ import Map from "./Map";
 import Form from "./Form";
 import SurveyHistory from "../../ReefRoutes/Reef/Surveys";
 import UploadMedia from "./UploadMedia";
-import { userInfoSelector } from "../../../store/User/userSlice";
 
 const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
@@ -28,10 +26,6 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
-  const user = useSelector(userInfoSelector);
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
-    : false;
   const [value, setValue] = useState<number>(0);
 
   const onPanelIndexChange = (index: number) => {
@@ -74,7 +68,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <SurveyHistory isAdmin={isAdmin} reefId={reef.id} />
+            <SurveyHistory reefId={reef.id} />
           </Grid>
         </Grid>
       </TabPanel>

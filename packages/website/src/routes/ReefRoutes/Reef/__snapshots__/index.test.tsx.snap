@@ -1335,7 +1335,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       class="MuiGrid-root Surveys-root-169 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
     >
       <div
-        class="MuiGrid-root Surveys-surveyWrapper-170 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-6"
+        class="MuiGrid-root Surveys-surveyWrapper-170 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-6"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-4"

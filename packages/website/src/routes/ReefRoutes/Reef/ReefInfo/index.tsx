@@ -13,7 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({
-  reefName,
+  reefName = "",
   lastDailyDataDate,
   lastSurvey,
   managerName,
@@ -114,6 +114,13 @@ interface ReefNavBarIncomingProps {
   lastSurvey?: string | null;
   managerName?: string;
 }
+
+ReefNavBar.defaultProps = {
+  reefName: "",
+  lastDailyDataDate: "",
+  lastSurvey: null,
+  managerName: "",
+};
 
 type ReefNavBarProps = ReefNavBarIncomingProps & WithStyles<typeof styles>;
 

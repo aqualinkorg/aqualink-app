@@ -132,10 +132,15 @@ const styles = () =>
   });
 
 interface DeleteButtonIncomingProps {
-  surveyId?: number;
+  surveyId?: number | null;
   diveDate?: string | null;
   reefId: number;
 }
+
+DeleteButton.defaultProps = {
+  surveyId: null,
+  diveDate: null,
+};
 
 type DeleteButtonProps = DeleteButtonIncomingProps & WithStyles<typeof styles>;
 

@@ -10,7 +10,11 @@ const ReefRoutes = () => {
     <Switch>
       <Route exact path="/reefs" component={ReefsList} />
       <Route exact path="/reefs/:id" component={Reef} />
-      <Route exact path="/reefs/:id/new_survey" component={Surveys} />
+      <Route
+        exact
+        path="/reefs/:id/new_survey"
+        render={(props) => <Surveys {...props} isView={false} />}
+      />
       <Route
         exact
         path="/reefs/:id/survey_details/:sid"
