@@ -4,7 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 import { AuthRequest } from '../auth/auth.types';
 import { extractAndVerifyToken } from '../auth/firebase-auth.strategy';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,9 +17,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
 
     @InjectRepository(ReefApplication)
     private reefApplicationRepository: Repository<ReefApplication>,
@@ -108,34 +105,38 @@ export class UsersService {
   private async migrateUserAssociations(user: User) {
     const reefAssociations = await this.reefApplicationRepository.find({
       where: { user },
-      relations: ['reef', 'reef.admins'],
+      relations: ['reef'],
     });
 
-    const reefEntities: Promise<UpdateResult | null>[] = reefAssociations.map(
-      async (reefAssociation) => {
-        const { reef } = reefAssociation;
+    // User has associations so we have to explicitly change their admin level to reef manager
+    if (reefAssociations.length) {
+      await this.usersRepository.update(user.id, {
+        adminLevel: AdminLevel.ReefManager,
+      });
+    }
 
-        const relationshipExists = reef.admins.find((admin) => {
-          return admin.id === user.id;
-        });
+    const newAdministeredReefs: Reef[] = [];
 
-        // If relationship already exists, skip
-        if (relationshipExists) {
-          return null;
-        }
+    reefAssociations.forEach((reefAssociation) => {
+      const { reef } = reefAssociation;
 
-        // Add new user as admin
-        return this.reefRepository.update(
-          {
-            id: reef.id,
-          },
-          {
-            admins: [...reef.admins, user],
-          },
-        );
-      },
-    );
+      const relationshipExists = newAdministeredReefs.find((newReef) => {
+        return newReef.id === reef.id;
+      });
 
-    return Promise.all(reefEntities);
+      // If relationship already exists, skip
+      if (relationshipExists) {
+        return;
+      }
+
+      // eslint-disable-next-line fp/no-mutating-methods
+      newAdministeredReefs.push(reef);
+    });
+
+    const newUser: User = {
+      ...user,
+      administeredReefs: newAdministeredReefs,
+    };
+    return this.usersRepository.save(newUser);
   }
 }

@@ -10,7 +10,6 @@ import {
   OneToOne,
   OneToMany,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import { Region } from '../regions/regions.entity';
 import { DailyData } from './daily-data.entity';
@@ -67,8 +66,7 @@ export class Reef {
   @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
   stream?: VideoStream;
 
-  @ManyToMany(() => User, (user) => user.administeredReefs, { cascade: true })
-  @JoinTable()
+  @ManyToMany(() => User, (user) => user.administeredReefs)
   admins: User[];
 
   @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)
