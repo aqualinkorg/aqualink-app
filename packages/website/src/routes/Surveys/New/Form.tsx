@@ -36,7 +36,9 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);
   const [diveDate, setDiveDate] = useState<string | null>(null);
   const [diveTime, setDiveTime] = useState<string | null>(null);
-  const [weather, setWeather] = useState<string>("calm");
+  const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
+    "calm"
+  );
   const surveyError = useSelector(surveyErrorSelector);
 
   const dispatch = useDispatch();
@@ -77,7 +79,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
   };
 
   const handleWeatherChange = (event: ChangeEvent<{ value: unknown }>) => {
-    setWeather(event.target.value as string);
+    setWeather(event.target.value as SurveyData["weatherConditions"]);
   };
 
   const resetForm = () => {

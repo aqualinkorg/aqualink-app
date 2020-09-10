@@ -30,7 +30,7 @@ export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;
   diveDate?: string | null;
-  weatherConditions?: string;
+  weatherConditions?: "calm" | "waves" | "storm";
   comments?: string;
   temperature?: number;
   userId?: publicUser;
@@ -42,7 +42,7 @@ export interface SurveyData {
   reef: number;
   diveDate: string;
   diveLocation?: DiveLocation | null;
-  weatherConditions: string;
+  weatherConditions: "calm" | "waves" | "storm";
   comments?: string;
   token?: string | null;
 }
