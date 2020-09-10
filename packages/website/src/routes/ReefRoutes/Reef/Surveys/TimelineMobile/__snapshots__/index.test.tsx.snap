@@ -85,9 +85,6 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                 </div>
               </div>
             </div>
-            <div
-              class="MuiGrid-root TimelineMobile-buttonContainer-7 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
-            />
           </div>
         </div>
       </div>
