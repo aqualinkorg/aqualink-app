@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
-import { ReefMarkers } from "./markers";
+import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 
 const INITIAL_CENTER = new LatLng(37.9, -75.3);
