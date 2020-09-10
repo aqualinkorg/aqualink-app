@@ -37,7 +37,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
   }, []);
 
   return (
-    <SwipeableViews index={value} axis="x" slideStyle={{ overflow: "hidden" }}>
+    <SwipeableViews index={value} axis="x">
       <TabPanel value={value} index={0}>
         <Grid className={classes.root} container justify="center">
           <Grid item xs={10}>
@@ -87,6 +87,7 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       marginTop: "2rem",
+      overflow: "hidden",
     },
     mapContainer: {
       height: "30rem",

@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Card,
   CardContent,
   Typography,
@@ -100,7 +99,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
@@ -108,6 +107,7 @@ const styles = (theme: Theme) =>
       flexDirection: "column",
       height: "100%",
       backgroundColor: "#128cc0",
+      paddingBottom: "1rem",
     },
     titleImage: {
       height: 35,
@@ -118,9 +118,6 @@ const styles = (theme: Theme) =>
     },
     content: {
       padding: "1rem 1rem 0 1rem",
-      [theme.breakpoints.between("md", 1350)]: {
-        padding: "1rem 1rem 0 1rem",
-      },
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",

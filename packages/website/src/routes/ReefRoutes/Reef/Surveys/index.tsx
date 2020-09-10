@@ -160,7 +160,6 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      backgroundColor: "#f5f6f6",
       marginTop: "5rem",
       position: "relative",
     },
