@@ -89,7 +89,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                       {survey.featuredSurveyMedia && (
                         <CardMedia
                           className={classes.cardImage}
-                          image={survey.featuredSurveyMedia?.url}
+                          image={survey.featuredSurveyMedia.url}
                         />
                       )}
                     </Grid>

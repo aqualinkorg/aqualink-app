@@ -88,7 +88,7 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                     {survey.featuredSurveyMedia && (
                       <CardMedia
                         className={classes.cardImage}
-                        image={survey.featuredSurveyMedia?.url}
+                        image={survey.featuredSurveyMedia.url}
                       />
                     )}
                   </Grid>
