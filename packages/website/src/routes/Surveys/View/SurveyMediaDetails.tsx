@@ -43,13 +43,12 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
   return (
     <>
       {points &&
-        points.map((point, index) => {
+        points.map((point) => {
           const images = getNumberOfImages([point]);
           const videos = getNumberOfVideos([point]);
 
           return (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index}>
+            <div key={point.name}>
               <Grid
                 className={classes.title}
                 container
