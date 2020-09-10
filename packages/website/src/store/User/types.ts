@@ -1,8 +1,11 @@
+import type { Reef } from "../Reefs/types";
+
 export interface User {
   email?: string | null;
   fullName?: string | null;
   adminLevel?: "default" | "reef_manager" | "super_admin";
   firebaseUid?: string | null;
+  administeredReefs?: Reef[];
   token?: string | null;
 }
 

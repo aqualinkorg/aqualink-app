@@ -45,6 +45,8 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
     setAnchorEl(null);
   };
 
+  console.log(user);
+
   return (
     <>
       <AppBar
