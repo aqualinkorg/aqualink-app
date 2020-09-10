@@ -35,6 +35,11 @@ const Reef = ({ match, classes }: ReefProps) => {
   const dispatch = useDispatch();
   const reefId = match.params.id;
 
+  const featuredMedia = surveyList.find(
+    (survey) =>
+      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
+  )?.featuredSurveyMedia;
+
   const latestDailyData =
     reefDetails && reefDetails.dailyData.length > 0
       ? sortDailyData(reefDetails.dailyData)[reefDetails.dailyData.length - 1]
@@ -74,7 +79,13 @@ const Reef = ({ match, classes }: ReefProps) => {
               </Grid>
             </Grid>
           )}
-          <ReefDetails reef={{ ...reefDetails, latestDailyData }} />
+          <ReefDetails
+            reef={{
+              ...reefDetails,
+              latestDailyData,
+              featuredImage: featuredMedia?.url,
+            }}
+          />
           <ReefFooter />
         </>
       ) : (
