@@ -32,7 +32,7 @@ const getSelf = (token?: string) =>
 const getAdministeredReefs = (token?: string) =>
   requests.send<Reef[]>({
     method: "GET",
-    url: "users/current/administrated-reefs",
+    url: "users/current/administered-reefs",
     token,
   });
 

@@ -49,7 +49,7 @@ export class UsersController {
     return this.usersService.delete(id);
   }
 
-  @Get('current/administrated-reefs')
+  @Get('current/administered-reefs')
   getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
     return this.usersService.getAdministeredReefs(req);
   }
