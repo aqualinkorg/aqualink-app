@@ -61,7 +61,7 @@ const UploadMedia = ({
       setMetadata([
         ...metadata,
         ...acceptedFiles.map(() => ({
-          observation: "",
+          observation: null,
           surveyPoint: "",
           comments: "",
         })),
@@ -82,7 +82,7 @@ const UploadMedia = ({
   };
 
   const missingObservations = () => {
-    const index = metadata.findIndex((item) => item.observation === "");
+    const index = metadata.findIndex((item) => item.observation === null);
 
     return index > -1;
   };
@@ -177,7 +177,7 @@ const UploadMedia = ({
 
   const handleObservationChange = (index: number) => {
     return (event: ChangeEvent<{ value: unknown }>) => {
-      const observation = event.target.value as string;
+      const observation = event.target.value as SurveyMediaData["observations"];
       const newMetadata = metadata.map((item, key) => {
         if (key === index) {
           return {
@@ -427,7 +427,7 @@ interface UploadMediaIncomingProps {
 
 interface Metadata {
   surveyPoint: string;
-  observation: string;
+  observation: SurveyMediaData["observations"];
   comments: string;
 }
 
