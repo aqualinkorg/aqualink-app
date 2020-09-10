@@ -34,288 +34,193 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
       All Reefs
     </mock-typography>
   </mock-hidden>
-  <div
-    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  <mock-selectedreefcard />
+  <mock-box
+    display="flex"
+    flex="1"
+    flexdirection="column"
   >
-    <div
-      class="MuiPaper-root MuiPaper-elevation0 MuiPaper-rounded"
-      style="position: relative;"
-    >
-      <div
-        class="Component-horizontalScrollContainer-5"
-        style="overflow-x: auto; position: relative;"
-      >
-        <div>
-          <div
-            style="overflow-y: auto;"
-          >
-            <div>
-              <mock-table
-                style="table-layout: auto;"
+    <mock-tablecontainer>
+      <mock-table>
+        <mock-tablehead
+          style="background-color: rgb(244, 244, 244);"
+        >
+          <mock-tablerow>
+            <mock-tablecell
+              align="left"
+              padding="default"
+              sortdirection="asc"
+              width="30%"
+            >
+              <mock-tablesortlabel
+                active="true"
+                direction="asc"
               >
-                <mock-tablehead>
-                  <mock-tablerow>
-                    <mock-tablecell
-                      align="left"
-                      classname="MTableHeader-header-6"
-                      size="medium"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
-                    >
-                      <mock-tablesortlabel
-                        active="false"
-                        direction="asc"
-                        iconcomponent="[object Object]"
-                      >
-                        <div
-                          aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                          data-rbd-drag-handle-context-id="0"
-                          data-rbd-drag-handle-draggable-id="0"
-                          data-rbd-draggable-context-id="0"
-                          data-rbd-draggable-id="0"
-                          draggable="false"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            style="color: black;"
-                            variant="h6"
-                          >
-                            REEF
-                          </mock-typography>
-                        </div>
-                      </mock-tablesortlabel>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      classname="MTableHeader-header-6"
-                      size="medium"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
-                    >
-                      <mock-tablesortlabel
-                        active="false"
-                        direction="asc"
-                        iconcomponent="[object Object]"
-                      >
-                        <div
-                          aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                          data-rbd-drag-handle-context-id="0"
-                          data-rbd-drag-handle-draggable-id="1"
-                          data-rbd-draggable-context-id="0"
-                          data-rbd-draggable-id="1"
-                          draggable="false"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            style="color: black;"
-                            variant="h6"
-                          >
-                            TEMP
-                            <mock-typography
-                              component="span"
-                              style="color: black;"
-                              variant="subtitle2"
-                            >
-                                (°C)
-                            </mock-typography>
-                          </mock-typography>
-                        </div>
-                      </mock-tablesortlabel>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      classname="MTableHeader-header-6"
-                      size="medium"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
-                    >
-                      <mock-tablesortlabel
-                        active="false"
-                        direction="asc"
-                        iconcomponent="[object Object]"
-                      >
-                        <div
-                          aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                          data-rbd-drag-handle-context-id="0"
-                          data-rbd-drag-handle-draggable-id="2"
-                          data-rbd-draggable-context-id="0"
-                          data-rbd-draggable-id="2"
-                          draggable="false"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            style="color: black;"
-                            variant="h6"
-                          >
-                            DEPTH
-                            <mock-typography
-                              component="span"
-                              style="color: black;"
-                              variant="subtitle2"
-                            >
-                                (m)
-                            </mock-typography>
-                          </mock-typography>
-                        </div>
-                      </mock-tablesortlabel>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      classname="MTableHeader-header-6"
-                      size="medium"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box;"
-                    >
-                      <mock-tablesortlabel
-                        active="false"
-                        direction="asc"
-                        iconcomponent="[object Object]"
-                      >
-                        <div
-                          aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                          data-rbd-drag-handle-context-id="0"
-                          data-rbd-drag-handle-draggable-id="3"
-                          data-rbd-draggable-context-id="0"
-                          data-rbd-draggable-id="3"
-                          draggable="false"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            style="color: black;"
-                            variant="h6"
-                          >
-                            STRESS
-                            <mock-typography
-                              component="span"
-                              style="color: black;"
-                              variant="subtitle2"
-                            >
-                                (DHW)
-                            </mock-typography>
-                          </mock-typography>
-                        </div>
-                      </mock-tablesortlabel>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="left"
-                      classname="MTableHeader-header-6"
-                      size="medium"
-                      style="background-color: rgb(244, 244, 244); color: black; text-align: left; box-sizing: border-box; width: 10%;"
-                    >
-                      <mock-tablesortlabel
-                        active="false"
-                        direction="asc"
-                        iconcomponent="[object Object]"
-                      >
-                        <div
-                          aria-describedby="rbd-hidden-text-0-hidden-text-0"
-                          data-rbd-drag-handle-context-id="0"
-                          data-rbd-drag-handle-draggable-id="4"
-                          data-rbd-draggable-context-id="0"
-                          data-rbd-draggable-id="4"
-                          draggable="false"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <mock-typography
-                            style="color: black;"
-                            variant="h6"
-                          >
-                            ALERT
-                          </mock-typography>
-                        </div>
-                      </mock-tablesortlabel>
-                    </mock-tablecell>
-                  </mock-tablerow>
-                </mock-tablehead>
-                <mock-tablebody>
-                  <mock-tablerow
-                    hover="true"
-                    index="0"
-                    level="0"
-                    path="0"
-                    selected="false"
-                    style="transition: all ease 300ms; cursor: pointer;"
+                <mock-typography
+                  style="color: black;"
+                  variant="h6"
+                >
+                  REEF
+                </mock-typography>
+              </mock-tablesortlabel>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+              padding="default"
+              sortdirection="false"
+            >
+              <mock-tablesortlabel
+                active="false"
+                direction="asc"
+              >
+                <mock-typography
+                  style="color: black;"
+                  variant="h6"
+                >
+                  TEMP
+                  <mock-typography
+                    component="span"
+                    style="color: black;"
+                    variant="subtitle2"
                   >
-                    <mock-tablecell
-                      align="left"
-                      size="medium"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
-                      value="Mock Reef Hartmann"
-                    >
-                      <mock-typography
-                        align="left"
-                        color="textSecondary"
-                        variant="subtitle1"
-                      >
-                        Mock Reef Hartmann
-                      </mock-typography>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      size="medium"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
-                      value="- -"
-                    >
-                      <mock-typography
-                        style="color: rgb(22, 141, 189);"
-                        variant="subtitle1"
-                      >
-                        - -
-                      </mock-typography>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      size="medium"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
-                      value="19"
-                    >
-                      <mock-typography
-                        color="textSecondary"
-                        variant="subtitle1"
-                      >
-                        19
-                      </mock-typography>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="right"
-                      size="medium"
-                      style="color: black; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
-                      value="2.857142857142857"
-                    >
-                      <mock-typography
-                        style="color: rgb(12, 157, 165);"
-                        variant="subtitle1"
-                      >
-                        2.9
-                      </mock-typography>
-                    </mock-tablecell>
-                    <mock-tablecell
-                      align="left"
-                      size="medium"
-                      style="color: black; width: 10%; box-sizing: border-box; font-size: inherit; font-family: inherit; font-weight: inherit; align-items: center; justify-items: center; text-align: center;"
-                      value="2.857142857142857"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root"
-                        focusable="false"
-                        style="color: rgb(198, 229, 250); margin-right: 1rem;"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                        />
-                      </svg>
-                    </mock-tablecell>
-                  </mock-tablerow>
-                </mock-tablebody>
-              </mock-table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                      (°C)
+                  </mock-typography>
+                </mock-typography>
+              </mock-tablesortlabel>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+              padding="default"
+              sortdirection="false"
+            >
+              <mock-tablesortlabel
+                active="false"
+                direction="asc"
+              >
+                <mock-typography
+                  style="color: black;"
+                  variant="h6"
+                >
+                  DEPTH
+                  <mock-typography
+                    component="span"
+                    style="color: black;"
+                    variant="subtitle2"
+                  >
+                      (m)
+                  </mock-typography>
+                </mock-typography>
+              </mock-tablesortlabel>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+              padding="default"
+              sortdirection="false"
+            >
+              <mock-tablesortlabel
+                active="false"
+                direction="asc"
+              >
+                <mock-typography
+                  style="color: black;"
+                  variant="h6"
+                >
+                  STRESS
+                  <mock-typography
+                    component="span"
+                    style="color: black;"
+                    variant="subtitle2"
+                  >
+                      (DHW)
+                  </mock-typography>
+                </mock-typography>
+              </mock-tablesortlabel>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+              padding="default"
+              sortdirection="false"
+              width="10%"
+            >
+              <mock-tablesortlabel
+                active="false"
+                direction="asc"
+              >
+                <mock-typography
+                  style="color: black;"
+                  variant="h6"
+                >
+                  ALERT
+                </mock-typography>
+              </mock-tablesortlabel>
+            </mock-tablecell>
+          </mock-tablerow>
+        </mock-tablehead>
+        <mock-tablebody>
+          <mock-tablerow
+            hover="true"
+            role="button"
+            style="background-color: white; cursor: pointer;"
+            tabindex="-1"
+          >
+            <mock-tablecell>
+              <mock-typography
+                align="left"
+                color="textSecondary"
+                variant="subtitle1"
+              >
+                Mock Reef Hartmann
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+            >
+              <mock-typography
+                style="color: rgb(22, 141, 189);"
+                variant="subtitle1"
+              >
+                10.0
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="subtitle1"
+              >
+                19
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+            >
+              <mock-typography
+                style="color: rgb(12, 157, 165);"
+                variant="subtitle1"
+              >
+                2.9
+              </mock-typography>
+            </mock-tablecell>
+            <mock-tablecell
+              align="center"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                style="color: rgb(198, 229, 250);"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                />
+              </svg>
+            </mock-tablecell>
+          </mock-tablerow>
+        </mock-tablebody>
+      </mock-table>
+    </mock-tablecontainer>
+  </mock-box>
 </div>
 `;
