@@ -67,7 +67,7 @@ export class UsersService {
     return req.user;
   }
 
-  async getAdministratedReefs(req: AuthRequest): Promise<Reef[]> {
+  async getAdministeredReefs(req: AuthRequest): Promise<Reef[]> {
     const user = await this.usersRepository.findOne({
       where: { id: req.user.id },
       relations: ['administeredReefs'],

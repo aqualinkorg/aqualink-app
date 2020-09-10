@@ -48,7 +48,7 @@ export class UsersController {
 
   @Auth()
   @Get('current/administrated-reefs')
-  getAdministratedReefs(@Req() req: AuthRequest): Promise<Reef[]> {
-    return this.usersService.getAdministratedReefs(req);
+  getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
+    return this.usersService.getAdministeredReefs(req);
   }
 }
