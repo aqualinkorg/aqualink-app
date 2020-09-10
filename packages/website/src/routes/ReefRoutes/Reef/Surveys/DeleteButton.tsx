@@ -50,7 +50,7 @@ const DeleteButton = ({
     if (surveyId && user && user.token) {
       setLoading(true);
       surveyServices
-        .deleteSurvey(surveyId, user.token)
+        .deleteSurvey(reefId, surveyId, user.token)
         .then(() => {
           dispatch(surveysRequest(`${reefId}`));
         })

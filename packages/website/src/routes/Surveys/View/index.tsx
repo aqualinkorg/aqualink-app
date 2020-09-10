@@ -37,8 +37,13 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
     getFeaturedMedia(surveyDetails.surveyPoints);
 
   useEffect(() => {
-    dispatch(surveyGetRequest(surveyId));
-  }, [dispatch, surveyId]);
+    dispatch(
+      surveyGetRequest({
+        reefId: `${reef.id}`,
+        surveyId,
+      })
+    );
+  }, [dispatch, reef.id, surveyId]);
 
   return (
     <>
