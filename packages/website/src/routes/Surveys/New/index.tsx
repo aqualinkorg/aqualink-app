@@ -68,7 +68,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <SurveyHistory user addNew={false} reefId={reef.id} />
+            <SurveyHistory reefId={reef.id} />
           </Grid>
         </Grid>
       </TabPanel>

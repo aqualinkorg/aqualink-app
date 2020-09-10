@@ -12,7 +12,10 @@ import {
   unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
+import {
+  degreeHeatingWeeksCalculator,
+  dhwColorFinder,
+} from "../../../../helpers/degreeHeatingWeeks";
 import { ReactComponent as BuoySvg } from "./buoy.svg";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
@@ -91,7 +94,13 @@ export const ReefMarkers = () => {
                 }}
                 key={reef.id}
                 icon={buoyIcon(
-                  iconColors[colorClassName(dhwColorFinder(degreeHeatingDays))]
+                  iconColors[
+                    colorClassName(
+                      dhwColorFinder(
+                        degreeHeatingWeeksCalculator(degreeHeatingDays)
+                      )
+                    )
+                  ]
                 )}
                 position={[lat, lng]}
               >
