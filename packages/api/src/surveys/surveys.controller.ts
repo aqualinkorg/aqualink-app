@@ -23,13 +23,14 @@ import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { AuthRequest } from '../auth/auth.types';
+import { Public } from '../auth/public.decorator';
 
+@UseGuards(IsReefAdminGuard)
+@Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs/:reef_id/surveys')
 export class SurveysController {
   constructor(private surveyService: SurveysService) {}
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Post('upload')
   @AcceptFile('file', ['image', 'video'], 'surveys', 'reef')
   upload(@UploadedFile('file') file: any): string {
@@ -39,8 +40,6 @@ export class SurveysController {
     return `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file.filename}`;
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Post()
   create(
     @Body() createSurveyDto: CreateSurveyDto,
@@ -50,8 +49,6 @@ export class SurveysController {
     return this.surveyService.create(createSurveyDto, req.user, reefId);
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Post(':id/media')
   createMedia(
     @Body() createSurveyMediaDto: CreateSurveyMediaDto,
@@ -60,23 +57,24 @@ export class SurveysController {
     return this.surveyService.createMedia(createSurveyMediaDto, surveyId);
   }
 
+  @Public()
   @Get()
   find(@Param('reef_id', ParseIntPipe) reefId: number): Promise<Survey[]> {
     return this.surveyService.find(reefId);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) surveyId: number): Promise<Survey> {
     return this.surveyService.findOne(surveyId);
   }
 
+  @Public()
   @Get(':id/media')
   findMedia(@Param('id', ParseIntPipe) surveyId): Promise<SurveyMedia[]> {
     return this.surveyService.findMedia(surveyId);
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put('media/:id')
   updateMedia(
     @Param('id', ParseIntPipe) mediaId: number,
@@ -85,8 +83,6 @@ export class SurveysController {
     return this.surveyService.updateMedia(editSurveyMediaDto, mediaId);
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) surveyId: number,
@@ -95,15 +91,11 @@ export class SurveysController {
     return this.surveyService.update(editSurveyDto, surveyId);
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) surveyId: number): Promise<void> {
     return this.surveyService.delete(surveyId);
   }
 
-  @UseGuards(IsReefAdminGuard)
-  @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Delete('media/:id')
   deleteMedia(@Param('id', ParseIntPipe) mediaId: number): Promise<void> {
     return this.surveyService.deleteMedia(mediaId);

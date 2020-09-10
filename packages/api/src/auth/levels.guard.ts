@@ -8,6 +8,13 @@ export class LevelsGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.get<boolean>(
+      'isPublic',
+      context.getHandler(),
+    );
+    if (isPublic) {
+      return true;
+    }
     const levels = this.reflector.get<AdminLevel[]>(
       'levels',
       context.getHandler(),

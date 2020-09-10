@@ -63,7 +63,7 @@ export class Reef {
   @ManyToOne(() => Region, { nullable: true })
   region?: Region;
 
-  @ManyToOne(() => VideoStream, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => VideoStream, { nullable: true })
   stream?: VideoStream;
 
   @ManyToMany(() => User, (user) => user.administeredReefs)
