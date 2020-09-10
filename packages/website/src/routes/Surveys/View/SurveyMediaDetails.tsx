@@ -213,8 +213,12 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyMediaDetailsIncomingProps {
-  points?: SurveyPoint[];
+  points?: SurveyPoint[] | null;
 }
+
+SurveyMediaDetails.defaultProps = {
+  points: null,
+};
 
 type SurveyMediaDetailsProps = SurveyMediaDetailsIncomingProps &
   WithStyles<typeof styles>;
