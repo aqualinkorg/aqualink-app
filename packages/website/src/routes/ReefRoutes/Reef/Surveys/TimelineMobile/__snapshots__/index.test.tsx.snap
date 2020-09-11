@@ -3,57 +3,45 @@
 exports[`ReefRoutes Surveys should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="SurveyTimeline-root-8"
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
   >
-    <ul
-      class="MuiTimeline-root MuiTimeline-alignLeft"
+    <div
+      class="MuiGrid-root TimelineMobile-surveyWrapper-8 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
     >
-      <li
-        class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-10"
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11"
+        style="margin-bottom: 1rem;"
+      >
+        <mock-typography
+          classname="TimelineMobile-dates-1"
+          variant="h6"
+        >
+          09/10/2020
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        style="margin-bottom: 2rem;"
       >
         <div
-          class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
-        >
-          <mock-typography
-            classname="SurveyTimeline-dates-1"
-            variant="h6"
-          >
-            09/10/2020
-          </mock-typography>
-        </div>
-        <div
-          class="MuiTimelineSeparator-root"
-        >
-          <hr
-            class="SurveyTimeline-connector-9"
-          />
-          <span
-            class="MuiTimelineDot-root SurveyTimeline-dot-11 MuiTimelineDot-outlinedGrey"
-          />
-          <hr
-            class="SurveyTimeline-connector-9"
-          />
-        </div>
-        <div
-          class="MuiTimelineContent-root MuiTimelineItem-content"
+          class="MuiPaper-root TimelineMobile-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
         >
           <div
-            class="MuiPaper-root SurveyTimeline-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+            style="height: 100%;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
-              style="height: 100%;"
+              class="MuiGrid-root TimelineMobile-cardImageWrapper-9 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
-                style="height: 100%;"
-              >
-                <div
-                  class="MuiCardMedia-root SurveyTimeline-cardImage-4"
-                />
-              </div>
+                class="MuiCardMedia-root TimelineMobile-cardImage-4"
+              />
+            </div>
+            <div
+              class="MuiGrid-root TimelineMobile-infoWrapper-10 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
+            >
               <div
-                class="MuiGrid-root SurveyTimeline-surveyInfo-12 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-11"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
@@ -62,7 +50,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
                   >
                     <mock-typography
-                      classname="SurveyTimeline-cardFields-5"
+                      classname="TimelineMobile-cardFields-5"
                       variant="h6"
                     >
                       Comments:
@@ -72,7 +60,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="SurveyTimeline-cardValues-6"
+                      classname="TimelineMobile-cardValues-6"
                       variant="h6"
                     >
                       No comments
@@ -99,8 +87,8 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
             </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </div>
 `;

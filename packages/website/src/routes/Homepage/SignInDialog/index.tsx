@@ -8,7 +8,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Dialog,
   Card,
   CardHeader,
@@ -34,6 +33,7 @@ import {
   userErrorSelector,
 } from "../../../store/User/userSlice";
 import { UserSignInParams } from "../../../store/User/types";
+import incomingStyles from "../styles";
 
 const SignInDialog = ({
   open,
@@ -107,7 +107,10 @@ const SignInDialog = ({
               >
                 <Grid container item xs={6}>
                   <Typography variant="h4">Aqua</Typography>
-                  <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                  <Typography
+                    className={classes.dialogHeaderSecondPart}
+                    variant="h4"
+                  >
                     link
                   </Typography>
                 </Grid>
@@ -167,7 +170,7 @@ const SignInDialog = ({
         </Collapse>
         <CardContent>
           <Grid container justify="center" item xs={12}>
-            <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={10}>
+            <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
                   Sign In
@@ -175,10 +178,7 @@ const SignInDialog = ({
               </Grid>
             </Grid>
             <Grid container item xs={10}>
-              <form
-                className={classes.signInForm}
-                onSubmit={handleSubmit(onSubmit)}
-              >
+              <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
                   <Typography className={classes.formText} variant="subtitle2">
                     or login with email address
@@ -223,7 +223,7 @@ const SignInDialog = ({
                 </Grid>
                 <Grid container item xs={12}>
                   <Button
-                    style={{ color: "inherit", textDecoration: "none" }}
+                    className={classes.forgotPasswordButton}
                     onClick={handleSubmit(onResetPassword)}
                   >
                     <Typography variant="subtitle2" color="textSecondary">
@@ -269,30 +269,16 @@ const SignInDialog = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
-    closeButton: {
-      color: theme.palette.primary.light,
-    },
-    dialogHeader: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    signInForm: {
-      width: "100%",
-    },
-    textFieldWrapper: {
-      margin: "1rem 0 1rem 0",
-    },
-    textField: {
-      color: "black",
-    },
+    ...incomingStyles,
     formText: {
-      color: theme.palette.grey[500],
-      fontWeight: 400,
+      ...incomingStyles.formText,
       marginBottom: "1rem",
     },
-    button: {
-      margin: "2rem 0 1rem 0",
+    forgotPasswordButton: {
+      color: "inherit",
+      textDecoration: "none",
     },
   });
 

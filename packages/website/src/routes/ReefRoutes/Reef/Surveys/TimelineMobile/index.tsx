@@ -21,6 +21,7 @@ import {
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 import DeleteButton from "../DeleteButton";
+import incomingStyles from "../styles";
 
 const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
   const dispatch = useDispatch();
@@ -76,8 +77,6 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                   container
                   alignItems="center"
                   justify="space-between"
-                  item
-                  xs={12}
                 >
                   <Grid
                     className={classes.cardImageWrapper}
@@ -88,7 +87,7 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                     {survey.featuredSurveyMedia && (
                       <CardMedia
                         className={classes.cardImage}
-                        image={survey.featuredSurveyMedia?.url}
+                        image={survey.featuredSurveyMedia.url}
                       />
                     )}
                   </Grid>
@@ -179,22 +178,15 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid
-                    className={classes.buttonContainer}
-                    container
-                    alignContent="flex-end"
-                    justify="flex-end"
-                    item
-                    xs={1}
-                  >
-                    {isAdmin && (
+                  {isAdmin && (
+                    <Grid className={classes.buttonContainer} item xs={1}>
                       <DeleteButton
                         reefId={reefId}
                         surveyId={survey.id}
                         diveDate={survey.diveDate}
                       />
-                    )}
-                  </Grid>
+                    </Grid>
+                  )}
                 </Grid>
               </Paper>
             </Grid>
@@ -206,30 +198,12 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
-    addNewButton: {
-      color: "#979797",
-      height: "2rem",
-      width: "2rem",
-    },
-    dates: {
-      fontWeight: 500,
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: 0.81,
-      letterSpacing: "normal",
-      color: "#757575",
-    },
+    ...incomingStyles,
     surveyWrapper: {
       marginTop: "2rem",
     },
     surveyCard: {
-      width: "100%",
-      backgroundColor: theme.palette.primary.light,
-      border: 1,
-      borderStyle: "solid",
-      borderColor: "#dddddd",
-      borderRadius: 2,
-      height: "14rem",
+      ...incomingStyles.surveyCard,
       [theme.breakpoints.down("sm")]: {
         height: "25rem",
       },
@@ -240,10 +214,6 @@ const styles = (theme: Theme) =>
         height: "50%",
       },
     },
-    cardImage: {
-      height: "100%",
-      width: "100%",
-    },
     infoWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {
@@ -251,24 +221,12 @@ const styles = (theme: Theme) =>
       },
       overflowY: "auto",
     },
-    cardFields: {
-      fontWeight: 500,
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: 2,
-      letterSpacing: "normal",
-      color: "#9ea6aa",
-    },
     cardValues: {
+      ...incomingStyles.cardValues,
       fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
-      lineHeight: 2,
-      letterSpacing: "normal",
-      color: "#2f2f2f",
     },
     buttonContainer: {
-      height: "100%",
+      ...incomingStyles.buttonContainer,
       [theme.breakpoints.down("sm")]: {
         height: "50%",
       },
