@@ -4,6 +4,8 @@ import { Reef } from '../reefs/reefs.entity';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
 
+  const date = new Date('2020-09-01');
+  date.setUTCHours(0, 0, 0, 0);
   const reef = {
     id: 1,
     name: null,
@@ -22,14 +24,11 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData(
-    (reef as unknown) as Reef,
-    new Date('2020-09-01'),
-  );
+  const values = await getDailyData((reef as unknown) as Reef, date);
 
   expect(values).toEqual({
     reef: { id: 1 },
-    date: new Date('2020-09-01'),
+    date,
     minBottomTemperature: 14.880000000000003,
     maxBottomTemperature: 15.96,
     avgBottomTemperature: 15.316388888888895,

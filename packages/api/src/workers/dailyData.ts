@@ -181,7 +181,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
   const start = new Date();
-  console.log(`Updating ${allReefs.length} reefs.`);
+  console.log(`Updating ${allReefs.length} reefs for ${date.toDateString()}.`);
   await Bluebird.map(
     allReefs,
     async (reef) => {
