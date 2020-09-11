@@ -93,7 +93,6 @@ const Reef = ({ match, classes }: ReefProps) => {
                 featuredImage: featuredMedia?.url,
               }}
             />
-            <ReefFooter />
           </>
         ) : (
           <div className={classes.noData}>
