@@ -102,7 +102,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
-                    {user.fullName ? `Hi ${user.fullName}` : "My Profile"}
+                    {user.fullName ? user.fullName : "My Profile"}
                     <IconButton
                       className={classes.button}
                       onClick={handleClick}
@@ -117,14 +117,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
-                      {sortBy(user.administeredReefs).map(
+                      {sortBy(user.administeredReefs, "id").map(
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (
                             <Link href={`reefs/${id}`} key={`reef-link-${id}`}>
                               <MenuItem className={classes.menuItem}>
-                                {`Reef ${index + 1}`}
-                                {reefIdentifier ? ` - ${reefIdentifier}` : ""}
+                                {reefIdentifier || `Reef ${index + 1}`}
                               </MenuItem>
                             </Link>
                           );
