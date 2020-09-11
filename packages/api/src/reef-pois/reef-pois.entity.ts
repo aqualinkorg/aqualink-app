@@ -7,9 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-// eslint-disable-next-line import/no-cycle
 import { Reef } from '../reefs/reefs.entity';
-// eslint-disable-next-line import/no-cycle
 import { SurveyMedia } from '../surveys/survey-media.entity';
 
 @Entity()

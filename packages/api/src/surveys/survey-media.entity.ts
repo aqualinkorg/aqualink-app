@@ -7,9 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-// eslint-disable-next-line import/no-cycle
 import { Survey } from './surveys.entity';
-// eslint-disable-next-line import/no-cycle
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
 export enum Observations {
