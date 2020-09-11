@@ -116,20 +116,19 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
-                      {user.administeredReefs?.map((reef, index) => {
-                        const reefIdentifier = reef.name || reef.region;
-                        return (
-                          <Link
-                            href={`reefs/${reef.id}`}
-                            key={`reef-link-${reef.id}`}
-                          >
-                            <MenuItem className={classes.menuItem}>
-                              {`Reef ${index}`}
-                              {reefIdentifier ? ` - ${reefIdentifier}` : ""}
-                            </MenuItem>
-                          </Link>
-                        );
-                      })}
+                      {user.administeredReefs?.map(
+                        ({ id, name, region }, index) => {
+                          const reefIdentifier = name || region;
+                          return (
+                            <Link href={`reefs/${id}`} key={`reef-link-${id}`}>
+                              <MenuItem className={classes.menuItem}>
+                                {`Reef ${index}`}
+                                {reefIdentifier ? ` - ${reefIdentifier}` : ""}
+                              </MenuItem>
+                            </Link>
+                          );
+                        }
+                      )}
                       <MenuItem
                         key="user-menu-logout"
                         className={classes.menuItem}
