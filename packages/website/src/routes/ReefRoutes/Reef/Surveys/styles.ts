@@ -35,6 +35,9 @@ const styles = {
   },
   buttonContainer: {
     height: "100%",
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
   },
 };
 

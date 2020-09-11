@@ -41,7 +41,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
             class="MuiPaper-root SurveyTimeline-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
               style="height: 100%;"
             >
               <div

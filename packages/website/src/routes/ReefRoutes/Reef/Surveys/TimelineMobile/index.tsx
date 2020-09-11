@@ -77,8 +77,6 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                   container
                   alignItems="center"
                   justify="space-between"
-                  item
-                  xs={12}
                 >
                   <Grid
                     className={classes.cardImageWrapper}
@@ -181,14 +179,7 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                     </Grid>
                   </Grid>
                   {isAdmin && (
-                    <Grid
-                      className={classes.buttonContainer}
-                      container
-                      alignContent="flex-end"
-                      justify="flex-end"
-                      item
-                      xs={1}
-                    >
+                    <Grid className={classes.buttonContainer} item xs={1}>
                       <DeleteButton
                         reefId={reefId}
                         surveyId={survey.id}

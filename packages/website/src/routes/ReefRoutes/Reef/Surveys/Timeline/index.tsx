@@ -83,8 +83,6 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                     container
                     alignItems="center"
                     justify="space-between"
-                    item
-                    xs={12}
                   >
                     <Grid style={{ height: "100%" }} item xs={4}>
                       {survey.featuredSurveyMedia && (
@@ -177,14 +175,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                       </Grid>
                     </Grid>
                     {isAdmin && (
-                      <Grid
-                        className={classes.buttonContainer}
-                        container
-                        alignContent="flex-end"
-                        justify="flex-end"
-                        item
-                        xs={1}
-                      >
+                      <Grid className={classes.buttonContainer} item xs={1}>
                         <DeleteButton
                           reefId={reefId}
                           surveyId={survey.id}
