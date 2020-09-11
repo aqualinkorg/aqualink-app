@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { FirebaseError } from "firebase";
-import type { AxiosError } from "axios";
 
 import type {
   PasswordResetParams,
@@ -28,32 +27,25 @@ export const createUser = createAsyncThunk<
     { fullName, email, password }: UserRegisterParams,
     { rejectWithValue }
   ) => {
+    let user;
     try {
-      const { user } = await userServices.createUser(email, password);
+      user = (await userServices.createUser(email, password)).user;
       const token = await user?.getIdToken();
-      try {
-        const { data } = await userServices.storeUser(fullName, email, token);
-        const { data: reefs } = await userServices.getAdministeredReefs(token);
-        return {
-          email: data.email,
-          fullName: data.fullName,
-          firebaseUid: data.firebaseUid,
-          administeredReefs: reefs,
-          token: await user?.getIdToken(),
-        };
-      } catch (err) {
-        try {
-          await user?.delete();
-        } catch (errDelete) {
-          const error: FirebaseError = errDelete;
-          return rejectWithValue(error.message);
-        }
-        const error: AxiosError<UserState["error"]> = err;
-        return rejectWithValue(error.message);
-      }
+
+      const { data } = await userServices.storeUser(fullName, email, token);
+      const { data: reefs } = await userServices.getAdministeredReefs(token);
+
+      return {
+        email: data.email,
+        fullName: data.fullName,
+        firebaseUid: data.firebaseUid,
+        administeredReefs: reefs,
+        token: await user?.getIdToken(),
+      };
     } catch (err) {
-      const error: FirebaseError = err;
-      return rejectWithValue(error.message);
+      // Delete the user from Firebase if it exists, then rethrow the error
+      await user?.delete();
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -73,8 +65,7 @@ export const signInUser = createAsyncThunk<
         token: await user?.getIdToken(),
       };
     } catch (err) {
-      const error: FirebaseError = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -88,8 +79,7 @@ export const resetPassword = createAsyncThunk<
     await userServices.resetPassword(email);
     return { email };
   } catch (err) {
-    const error: FirebaseError = err;
-    return rejectWithValue(error.message);
+    return rejectWithValue(err.message);
   }
 });
 
@@ -108,9 +98,17 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
         token,
       };
     } catch (err) {
-      const error: AxiosError<UserState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(err.message);
     }
+  },
+  {
+    // If another user action is pending, cancel this request before it starts.
+    condition(arg: string, { getState }) {
+      const {
+        user: { loading },
+      } = getState();
+      return !loading;
+    },
   }
 );
 
