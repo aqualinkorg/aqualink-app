@@ -18,15 +18,20 @@ const surveyInitialState: SurveyState = {
   diveLocation: null,
 };
 
+interface GetSurveyParams {
+  surveyId: string;
+  reefId: string;
+}
+
 export const surveyGetRequest = createAsyncThunk<
   SelectedSurveyState["details"],
-  string,
+  GetSurveyParams,
   CreateAsyncThunkTypes
 >(
   "selectedSurvey/getRequest",
-  async (surveyId: string, { rejectWithValue }) => {
+  async ({ surveyId, reefId }, { rejectWithValue }) => {
     try {
-      const { data } = await surveyServices.getSurvey(surveyId);
+      const { data } = await surveyServices.getSurvey(reefId, surveyId);
       return data;
     } catch (err) {
       const error: AxiosError<SelectedSurveyState["error"]> = err;
@@ -35,21 +40,22 @@ export const surveyGetRequest = createAsyncThunk<
   }
 );
 
-interface userAttributes {
+interface UserAttributes {
+  reefId: string;
   surveyData: SurveyData;
   changeTab: (index: number) => void;
 }
 
 export const surveyAddRequest = createAsyncThunk<
   SelectedSurveyState["details"],
-  userAttributes,
+  UserAttributes,
   CreateAsyncThunkTypes
 >(
   "selectedSurvey/addRequest",
-  async ({ surveyData, changeTab }, { rejectWithValue }) => {
+  async ({ surveyData, reefId, changeTab }, { rejectWithValue }) => {
     try {
       const { data } = await surveyServices
-        .addSurvey(surveyData)
+        .addSurvey(reefId, surveyData)
         .then((res) => {
           changeTab(1);
           return res;

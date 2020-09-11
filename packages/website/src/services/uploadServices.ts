@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const uploadMedia = (formData: FormData, token?: string | null) =>
+const uploadMedia = (
+  formData: FormData,
+  reefId: string,
+  token?: string | null
+) =>
   axios({
     method: "POST",
-    url: `${process.env.REACT_APP_API_BASE_URL}surveys/upload`,
+    url: `${process.env.REACT_APP_API_BASE_URL}reefs/${reefId}/surveys/upload`,
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",
