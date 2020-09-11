@@ -1,7 +1,6 @@
 import { Injectable, ExecutionContext } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
-import { of } from 'rxjs';
 
 @Injectable()
 export class FirebaseAuthGuard extends AuthGuard('custom') {
@@ -16,7 +15,7 @@ export class FirebaseAuthGuard extends AuthGuard('custom') {
     );
 
     if (isPublic) {
-      return of(true);
+      return true;
     }
 
     return super.canActivate(context);
