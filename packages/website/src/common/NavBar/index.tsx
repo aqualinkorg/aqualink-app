@@ -101,7 +101,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               {user ? (
                 <>
                   <Box display="flex" flexWrap="nowrap" alignItems="center">
-                    {`Hi ${user.fullName}`}
+                    {user.fullName ? `Hi ${user.fullName}` : "My Profile"}
                     <IconButton
                       className={classes.button}
                       onClick={handleClick}
