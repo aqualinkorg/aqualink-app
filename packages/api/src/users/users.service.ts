@@ -46,7 +46,10 @@ export class UsersService {
     }
 
     if (priorAccount && !uidExists) {
-      await this.migrateUserAssociations(priorAccount);
+      const newUser = await this.migrateUserAssociations(priorAccount);
+      // override adminLevel of priorAccount
+      // eslint-disable-next-line fp/no-mutation
+      priorAccount.adminLevel = newUser.adminLevel;
     }
 
     const data = {
@@ -109,7 +112,7 @@ export class UsersService {
     });
 
     // User has associations so we have to explicitly change their admin level to reef manager
-    if (reefAssociations.length) {
+    if (reefAssociations.length && user.adminLevel !== AdminLevel.SuperAdmin) {
       await this.usersRepository.update(user.id, {
         adminLevel: AdminLevel.ReefManager,
       });
@@ -133,8 +136,8 @@ export class UsersService {
       newAdministeredReefs.push(reef);
     });
 
-    const newUser: User = {
-      ...user,
+    const newUser = {
+      id: user.id,
       administeredReefs: newAdministeredReefs,
     };
     return this.usersRepository.save(newUser);
