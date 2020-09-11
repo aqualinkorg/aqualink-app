@@ -40,7 +40,11 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
         [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
         6
       );
-      popupContainer.openPopup();
+      const openPopup = () => {
+        popupContainer.openPopup();
+        map.off("moveend", openPopup);
+      };
+      map.on("moveend", openPopup);
     }
   }, [reefOnMap, reef.id, map, popupContainer]);
   return null;
