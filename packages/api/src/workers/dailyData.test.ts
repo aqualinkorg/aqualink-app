@@ -2,7 +2,7 @@ import { getDailyData } from './dailyData';
 import { Reef } from '../reefs/reefs.entity';
 
 test('It processes Sofar API for daily data.', async () => {
-  jest.setTimeout(30000);
+  jest.setTimeout(60000);
 
   const date = new Date('2020-09-01');
   date.setUTCHours(0, 0, 0, 0);
@@ -29,20 +29,20 @@ test('It processes Sofar API for daily data.', async () => {
   expect(values).toEqual({
     reef: { id: 1 },
     date,
-    minBottomTemperature: 14.880000000000003,
-    maxBottomTemperature: 15.96,
-    avgBottomTemperature: 15.316388888888895,
-    surfaceTemperature: 15.654583333333344,
-    satelliteTemperature: 15.5299997329712,
-    degreeHeatingDays: 33.879997730255106,
-    minWaveHeight: 0.41,
-    maxWaveHeight: 0.58,
-    avgWaveHeight: 0.48270833333333335,
-    waveDirection: 165,
+    minBottomTemperature: 15.119999999999997,
+    maxBottomTemperature: 16.520000000000003,
+    avgBottomTemperature: 15.743888888888888,
+    surfaceTemperature: 16.41305555555556,
+    satelliteTemperature: 15.1800003051758,
+    degreeHeatingDays: 32.61999893188477,
+    minWaveHeight: 0.38,
+    maxWaveHeight: 0.61,
+    avgWaveHeight: 0.5035416666666668,
+    waveDirection: 166,
     wavePeriod: 14,
-    minWindSpeed: 1.03203940391541,
-    maxWindSpeed: 3.70362329483032,
-    avgWindSpeed: 2.200415010253588,
-    windDirection: 35,
+    minWindSpeed: 0.938294887542725,
+    maxWindSpeed: 3.89210629463196,
+    avgWindSpeed: 2.1961769064267473,
+    windDirection: 91,
   });
 });

@@ -13,10 +13,9 @@ export async function getDailyData(reef: Reef, date: Date) {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
-  const timezone = '';
 
   const spotterData = spotterId
-    ? await getSpotterData(spotterId, timezone, date)
+    ? await getSpotterData(spotterId, date)
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -47,7 +46,6 @@ export async function getDailyData(reef: Reef, date: Date) {
       'degreeHeatingWeek',
       latitude,
       longitude,
-      timezone,
       date,
       96,
     );
@@ -63,7 +61,6 @@ export async function getDailyData(reef: Reef, date: Date) {
     'analysedSeaSurfaceTemperature',
     latitude,
     longitude,
-    timezone,
     date,
     48,
   );
@@ -85,7 +82,6 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-significantWaveHeight',
             latitude,
             longitude,
-            timezone,
             date,
           )
         ).map(({ value }) => value);
@@ -103,7 +99,6 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-meanDirectionWindWaves',
             latitude,
             longitude,
-            timezone,
             date,
           )
         ).map(({ value }) => value);
@@ -119,7 +114,6 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-peakPeriod',
             latitude,
             longitude,
-            timezone,
             date,
           )
         ).map(({ value }) => value);
@@ -133,7 +127,6 @@ export async function getDailyData(reef: Reef, date: Date) {
       'GFS-magnitude10MeterWind',
       latitude,
       longitude,
-      timezone,
       date,
     )
   ).map(({ value }) => value);
@@ -148,7 +141,6 @@ export async function getDailyData(reef: Reef, date: Date) {
       'GFS-direction10MeterWind',
       latitude,
       longitude,
-      timezone,
       date,
     )
   ).map(({ value }) => value);

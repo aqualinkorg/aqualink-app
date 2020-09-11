@@ -1,12 +1,7 @@
 import moment from 'moment-timezone';
 
-export function getStartEndDate(
-  endDate: Date,
-  localTimezone?: string,
-  hours: number = 24,
-) {
-  const m = localTimezone ? moment.tz(endDate, localTimezone) : moment(endDate);
-  const endMoment = m.endOf('day').utc();
+export function getStartEndDate(endDate: Date, hours: number = 24) {
+  const endMoment = moment(endDate);
   const startMoment = endMoment.clone().subtract(hours, 'hours');
   return [startMoment.format(), endMoment.format()];
 }
