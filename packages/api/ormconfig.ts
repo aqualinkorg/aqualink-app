@@ -6,7 +6,6 @@ import { ConnectionOptions } from 'typeorm';
 try {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
   require('dotenv').config();
-    // eslint-disable-next-line
 } catch {
   // Pass
 }
