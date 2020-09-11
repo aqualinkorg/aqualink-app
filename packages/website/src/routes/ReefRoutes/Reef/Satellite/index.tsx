@@ -111,7 +111,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
                 color="textPrimary"
                 variant="subtitle2"
               >
-                DEGREE HEATING WEEKS
+                HEAT STRESS
               </Typography>
               <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                 <Typography

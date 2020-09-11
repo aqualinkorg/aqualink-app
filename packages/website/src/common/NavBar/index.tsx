@@ -213,6 +213,7 @@ const styles = (theme: Theme) =>
     },
     button: {
       padding: theme.spacing(1),
+      marginLeft: "1rem",
     },
   });
 
