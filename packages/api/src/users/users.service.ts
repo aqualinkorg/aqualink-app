@@ -45,19 +45,21 @@ export class UsersService {
       );
     }
 
-    if (priorAccount && !uidExists) {
+    if (priorAccount) {
       const newUser = await this.migrateUserAssociations(priorAccount);
-      // override adminLevel of priorAccount
-      // eslint-disable-next-line fp/no-mutation
-      priorAccount.adminLevel = newUser.adminLevel;
+      // User has associations so we have to explicitly change their admin level to reef manager
+      if (
+        newUser.administeredReefs.length &&
+        priorAccount.adminLevel !== AdminLevel.SuperAdmin
+      ) {
+        // eslint-disable-next-line fp/no-mutation
+        priorAccount.adminLevel = AdminLevel.ReefManager;
+      }
     }
 
-    const data = {
+    const user = {
       ...priorAccount,
       ...createUserDto,
-    };
-    const user = {
-      ...data,
       firebaseUid,
     };
     return this.usersRepository.save(user);
@@ -110,13 +112,6 @@ export class UsersService {
       where: { user },
       relations: ['reef'],
     });
-
-    // User has associations so we have to explicitly change their admin level to reef manager
-    if (reefAssociations.length && user.adminLevel !== AdminLevel.SuperAdmin) {
-      await this.usersRepository.update(user.id, {
-        adminLevel: AdminLevel.ReefManager,
-      });
-    }
 
     const newAdministeredReefs: Reef[] = [];
 
