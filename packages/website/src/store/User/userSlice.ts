@@ -33,10 +33,12 @@ export const createUser = createAsyncThunk<
       const token = await user?.getIdToken();
       try {
         const { data } = await userServices.storeUser(fullName, email, token);
+        const { data: reefs } = await userServices.getAdministeredReefs(token);
         return {
           email: data.email,
           fullName: data.fullName,
           firebaseUid: data.firebaseUid,
+          administeredReefs: reefs,
           token: await user?.getIdToken(),
         };
       } catch (err) {
@@ -95,12 +97,14 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   "user/getSelf",
   async (token: string, { rejectWithValue }) => {
     try {
-      const { data } = await userServices.getSelf(token);
+      const { data: userData } = await userServices.getSelf(token);
+      const { data: reefs } = await userServices.getAdministeredReefs(token);
       return {
-        email: data.email,
-        fullName: data.fullName,
-        adminLevel: data.adminLevel,
-        firebaseUid: data.firebaseUid,
+        email: userData.email,
+        fullName: userData.fullName,
+        adminLevel: userData.adminLevel,
+        firebaseUid: userData.firebaseUid,
+        administeredReefs: reefs,
         token,
       };
     } catch (err) {
