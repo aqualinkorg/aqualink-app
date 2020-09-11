@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import {
   getNumberOfImages,
-  getNumberOfVideos,
+  // getNumberOfVideos,
 } from "../../../helpers/surveyMedia";
 
 import type { Reef } from "../../../store/Reefs/types";
