@@ -22,7 +22,8 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
   const isAdmin = user
-    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
+    ? user.adminLevel === "super_admin" ||
+      Boolean(user.administeredReefs?.find((reef) => reef.id === reefId))
     : false;
 
   const onResize = useCallback(() => {
