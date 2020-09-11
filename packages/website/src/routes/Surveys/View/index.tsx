@@ -95,7 +95,6 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   <Charts
                     dailyData={reef.dailyData}
                     depth={reef.depth}
-                    // TODO - Remove default
                     temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
                   />
                 </Grid>

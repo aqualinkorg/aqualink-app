@@ -9,7 +9,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Dialog,
   Card,
   CardHeader,
@@ -35,6 +34,7 @@ import {
   userErrorSelector,
 } from "../../../store/User/userSlice";
 import { UserRegisterParams } from "../../../store/User/types";
+import incomingStyles from "../styles";
 
 const RegisterDialog = ({
   open,
@@ -96,7 +96,10 @@ const RegisterDialog = ({
               >
                 <Grid container item xs={6}>
                   <Typography variant="h4">Aqua</Typography>
-                  <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                  <Typography
+                    className={classes.dialogHeaderSecondPart}
+                    variant="h4"
+                  >
                     link
                   </Typography>
                 </Grid>
@@ -135,9 +138,9 @@ const RegisterDialog = ({
             </Alert>
           </Collapse>
         )}
-        <CardContent style={{ padding: 0 }}>
+        <CardContent className={classes.contentWrapper}>
           <Grid container justify="center" item xs={12}>
-            <Grid style={{ marginTop: "0.5rem" }} container item xs={10}>
+            <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
                   Create an account
@@ -145,10 +148,7 @@ const RegisterDialog = ({
               </Grid>
             </Grid>
             <Grid container item xs={10}>
-              <form
-                className={classes.registerForm}
-                onSubmit={handleSubmit(onSubmit)}
-              >
+              <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
                   <TextField
                     id="firstName"
@@ -237,12 +237,12 @@ const RegisterDialog = ({
                   </Grid>
                   <Grid item xs={10}>
                     <Typography
-                      className={classes.termsText}
+                      className={classes.formText}
                       variant="subtitle1"
                       color="textSecondary"
                     >
                       I have read the{" "}
-                      <Link style={{ color: "black" }} to="/">
+                      <Link className={classes.termsLink} to="/">
                         Terms and Conditions
                       </Link>
                     </Typography>
@@ -262,7 +262,7 @@ const RegisterDialog = ({
                 </Grid>
                 <Grid container item xs={12}>
                   <Typography
-                    className={classes.termsText}
+                    className={classes.formText}
                     variant="subtitle1"
                     color="textSecondary"
                   >
@@ -287,33 +287,18 @@ const RegisterDialog = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
-    closeButton: {
-      color: theme.palette.primary.light,
-    },
-    dialogHeader: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    registerForm: {
-      width: "100%",
-    },
-    textFieldWrapper: {
-      margin: "1rem 0 1rem 0",
-    },
-    textField: {
-      color: "black",
+    ...incomingStyles,
+    contentWrapper: {
+      padding: 0,
     },
     termsCheckbox: {
       padding: 0,
       margin: "0 0 1rem 0",
     },
-    termsText: {
-      color: theme.palette.grey[500],
-      fontWeight: 400,
-    },
-    button: {
-      marginBottom: "0.5rem",
+    termsLink: {
+      color: "black",
     },
   });
 

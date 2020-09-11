@@ -10,9 +10,15 @@ interface publicUser {
 export interface SurveyMedia {
   url: string;
   featured: boolean;
-  observations: string;
+  observations:
+    | "healthy"
+    | "possible-disease"
+    | "evident-disease"
+    | "mortality"
+    | "environmental"
+    | "anthropogenic";
   comments: string | null;
-  type: string;
+  type: "image" | "video";
 }
 
 export interface SurveyPoint {
@@ -24,9 +30,9 @@ export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;
   diveDate?: string | null;
-  weatherConditions?: string;
+  weatherConditions?: "calm" | "waves" | "storm";
   comments?: string;
-  temperature?: string;
+  temperature?: number;
   userId?: publicUser;
   surveyPoints?: SurveyPoint[];
   featuredSurveyMedia?: SurveyMedia;
@@ -36,7 +42,7 @@ export interface SurveyData {
   reef: number;
   diveDate: string;
   diveLocation?: DiveLocation | null;
-  weatherConditions: string;
+  weatherConditions: "calm" | "waves" | "storm";
   comments?: string;
   token?: string | null;
 }
@@ -44,7 +50,14 @@ export interface SurveyData {
 export interface SurveyMediaData {
   url: string;
   poiId?: number;
-  observations: string;
+  observations:
+    | "healthy"
+    | "possible-disease"
+    | "evident-disease"
+    | "mortality"
+    | "environmental"
+    | "anthropogenic"
+    | null;
   comments?: string;
   metadata?: string;
   token?: string | null;

@@ -34,7 +34,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    style="color: rgb(138, 198, 222);"
+                    classname="SignInDialog-dialogHeaderSecondPart-3"
                     variant="h4"
                   >
                     link
@@ -126,8 +126,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
-            style="margin: 1rem 0px 1rem 0px;"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-4 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -144,13 +143,13 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-signInForm-3"
+              class="SignInDialog-form-5"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-4 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-6"
+                  classname="SignInDialog-formText-8"
                   variant="subtitle2"
                 >
                   or login with email address
@@ -168,7 +167,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-4 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -187,7 +186,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  style="text-decoration: none;"
+                  classname="SignInDialog-forgotPasswordButton-10"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -198,7 +197,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-7 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-9 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -214,7 +213,7 @@ exports[`SignInDialog should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-6"
+                  classname="SignInDialog-formText-8"
                   color="textSecondary"
                   variant="subtitle1"
                 >

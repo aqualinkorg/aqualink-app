@@ -4,7 +4,7 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Timeline from ".";
+import TimelineMobile from ".";
 
 const mockStore = configureStore([]);
 
@@ -47,7 +47,7 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Timeline isAdmin={false} reefId={0} />
+          <TimelineMobile isAdmin={false} reefId={0} />
         </Router>
       </Provider>
     ).container;
