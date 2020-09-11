@@ -65,7 +65,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
                 IMAGES
               </Typography>
             </Grid>
-            <Grid item xs={12} md={3}>
+            {/* <Grid item xs={12} md={3}>
               <Typography
                 color="primary"
                 variant="h4"
@@ -80,7 +80,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               >
                 VIDEOS
               </Typography>
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid container item direction="column">
             <Typography variant="h6">Comments</Typography>
