@@ -117,7 +117,7 @@ const UploadMedia = ({
       formData.append("file", file);
       setLoading(true);
       uploadServices
-        .uploadMedia(formData, user?.token)
+        .uploadMedia(formData, `${reefId}`, user?.token)
         .then((response) => {
           const url = response.data;
           const surveyId = survey?.id;
@@ -133,7 +133,7 @@ const UploadMedia = ({
             hidden: hidden[index],
           };
           surveyServices
-            .addSurveyMedia(`${surveyId}`, surveyMediaData)
+            .addSurveyMedia(`${reefId}`, `${surveyId}`, surveyMediaData)
             .then(() => {
               setFiles([]);
               setMetadata([]);

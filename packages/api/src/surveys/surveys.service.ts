@@ -14,6 +14,7 @@ import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
+import { Reef } from '../reefs/reefs.entity';
 
 @Injectable()
 export class SurveysService {
@@ -27,13 +28,27 @@ export class SurveysService {
     @InjectRepository(ReefPointOfInterest)
     private poiRepository: Repository<ReefPointOfInterest>,
 
+    @InjectRepository(Reef)
+    private reefRepository: Repository<Reef>,
+
     private googleCloudService: GoogleCloudService,
   ) {}
 
   // Create a survey
-  async create(createSurveyDto: CreateSurveyDto, user: User): Promise<Survey> {
+  async create(
+    createSurveyDto: CreateSurveyDto,
+    user: User,
+    reefId: number,
+  ): Promise<Survey> {
+    const reef = await this.reefRepository.findOne(reefId);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with id ${reefId} was not found.`);
+    }
+
     const survey = await this.surveyRepository.save({
       userId: user,
+      reef,
       ...createSurveyDto,
       comments: this.transformComments(createSurveyDto.comments),
     });
