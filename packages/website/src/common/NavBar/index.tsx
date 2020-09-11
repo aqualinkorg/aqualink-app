@@ -19,6 +19,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
+import { sortBy } from "lodash";
 import classNames from "classnames";
 
 import RegisterDialog from "../../routes/Homepage/RegisterDialog";
@@ -116,13 +117,13 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
-                      {user.administeredReefs?.map(
+                      {sortBy(user.administeredReefs).map(
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (
                             <Link href={`reefs/${id}`} key={`reef-link-${id}`}>
                               <MenuItem className={classes.menuItem}>
-                                {`Reef ${index}`}
+                                {`Reef ${index + 1}`}
                                 {reefIdentifier ? ` - ${reefIdentifier}` : ""}
                               </MenuItem>
                             </Link>
