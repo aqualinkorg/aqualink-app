@@ -22,6 +22,7 @@ import {
 } from "../../../../../store/Survey/surveyListSlice";
 import DeleteButton from "../DeleteButton";
 import incomingStyles from "../styles";
+import { formatNumber } from "../../../../../helpers/numberUtils";
 
 const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
   const dispatch = useDispatch();
@@ -157,7 +158,7 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
                               className={classes.cardValues}
                               variant="h6"
                             >
-                              {`${survey.temperature} °C`}
+                              {`${formatNumber(survey.temperature, 1)} °C`}
                             </Typography>
                           </Grid>
                         </Grid>
