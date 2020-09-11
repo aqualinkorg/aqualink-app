@@ -1,7 +1,7 @@
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import moment from 'moment-timezone';
+import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
 
 type SofarValue = {
@@ -93,13 +93,6 @@ export async function sofarSpotter(
     });
 }
 
-function getStartEndDate(date: Date, localTimezone: string) {
-  const m = moment.tz(date, localTimezone);
-  const start = m.clone().startOf('day').utc().format();
-  const end = m.clone().endOf('day').utc().format();
-  return [start, end];
-}
-
 export async function getSofarDailyData(
   modelId: string,
   variableID: string,
@@ -107,10 +100,11 @@ export async function getSofarDailyData(
   longitude: number,
   localTimezone: string,
   date: Date,
+  hours?: number,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const [start, end] = getStartEndDate(date, localTimezone);
+  const [start, end] = getStartEndDate(date, localTimezone, hours);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(
     modelId,

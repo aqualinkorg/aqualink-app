@@ -19,7 +19,7 @@ async function run() {
   const { days } = argv;
   const backlogArray = Array.from(Array(days).keys());
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
 
   createConnection(dbConfig).then(async (connection) => {
     await Promise.all(
