@@ -113,27 +113,23 @@ export class UsersService {
       relations: ['reef'],
     });
 
-    const newAdministeredReefs: Reef[] = [];
+    const { administeredReefs: existingReefs = [] } =
+      (await this.usersRepository.findOne(user.id, {
+        relations: ['administeredReefs'],
+      })) || {};
 
-    reefAssociations.forEach((reefAssociation) => {
-      const { reef } = reefAssociation;
-
-      const relationshipExists = newAdministeredReefs.find((newReef) => {
-        return newReef.id === reef.id;
-      });
-
-      // If relationship already exists, skip
-      if (relationshipExists) {
-        return;
-      }
-
-      // eslint-disable-next-line fp/no-mutating-methods
-      newAdministeredReefs.push(reef);
-    });
+    const administeredReefs = reefAssociations.reduce(
+      (reefs, reefAssociation) => {
+        const { reef } = reefAssociation;
+        const alreadyExists = reefs.some(({ id }) => reef.id === id);
+        return alreadyExists ? reefs : reefs.concat(reef);
+      },
+      existingReefs,
+    );
 
     const newUser = {
       id: user.id,
-      administeredReefs: newAdministeredReefs,
+      administeredReefs,
     };
     return this.usersRepository.save(newUser);
   }
