@@ -6,6 +6,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Container,
   Grid,
   IconButton,
   Theme,
@@ -47,7 +48,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   }, [dispatch, reef.id, surveyId]);
 
   return (
-    <>
+    <Container>
       <Grid
         style={{ position: "relative" }}
         container
@@ -138,7 +139,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };
 

@@ -48,7 +48,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Container>
+      <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {reefDetails && !error ? (
           isView ? (
@@ -57,7 +57,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
             <NewSurvey reef={reefDetails} />
           )
         ) : (
-          <div className={classes.noData}>
+          <Container className={classes.noData}>
             <Grid
               container
               direction="column"
@@ -70,9 +70,9 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
                 </Typography>
               </Grid>
             </Grid>
-          </div>
+          </Container>
         )}
-      </Container>
+      </>
       <Footer />
     </>
   );
