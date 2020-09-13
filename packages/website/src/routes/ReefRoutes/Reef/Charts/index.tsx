@@ -74,6 +74,11 @@ const Charts = ({
     }
   };
 
+  const hideTooltip = () => {
+    setShowTooltip(false);
+    setSliceAtLabel(null);
+  };
+
   const changeXTickShift = () => {
     const { current } = temperatureChartRef;
     if (current) {
@@ -105,14 +110,13 @@ const Charts = ({
     changeXTickShift();
   });
 
+  // Hide tooltip on scroll to avoid dragging it on the page.
+  if (showTooltip) {
+    window.addEventListener("scroll", hideTooltip);
+  }
+
   return (
-    <div
-      className={classes.root}
-      onMouseLeave={() => {
-        setShowTooltip(false);
-        setSliceAtLabel(null);
-      }}
-    >
+    <div className={classes.root} onMouseLeave={hideTooltip}>
       <Typography className={classes.graphTitle} variant="h6">
         DAILY WATER TEMPERATURE (°C)
       </Typography>
@@ -253,7 +257,6 @@ const Charts = ({
         >
           <>
             <Tooltip {...tooltipData} />
-            <div className="tooltip-arrow" />
           </>
         </div>
       ) : null}
