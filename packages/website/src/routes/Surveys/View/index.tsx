@@ -6,12 +6,14 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Container,
   Grid,
   IconButton,
   Theme,
   Paper,
   Typography,
   CardMedia,
+  Box,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { getFeaturedMedia } from "../../../helpers/surveyMedia";
@@ -46,14 +48,21 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   }, [dispatch, reef.id, surveyId]);
 
   return (
-    <>
+    <Container>
       <Grid
-        style={{ backgroundColor: "#f5f6f6" }}
+        style={{ position: "relative" }}
         container
         justify="center"
         item
         xs={12}
       >
+        <Box
+          bgcolor="#f5f6f6"
+          position="absolute"
+          height="100%"
+          width="100vw"
+          zIndex="-1"
+        />
         <Grid
           style={{ margin: "4rem 0 1rem 0" }}
           container
@@ -130,7 +139,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           </Grid>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };
 

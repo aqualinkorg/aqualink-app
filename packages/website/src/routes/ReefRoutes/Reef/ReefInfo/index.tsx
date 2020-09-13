@@ -24,11 +24,9 @@ const ReefNavBar = ({
   return (
     <Grid
       className={classes.root}
-      item
       container
-      justify="space-around"
+      justify="space-between"
       alignItems="center"
-      xs={12}
     >
       <Grid item xs={11}>
         <Grid alignItems="center" direction="row" container spacing={1}>

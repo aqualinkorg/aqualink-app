@@ -9,6 +9,7 @@ import {
   Grid,
   Typography,
   CardMedia,
+  Box,
 } from "@material-ui/core";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
 import VideoLibraryIcon from "@material-ui/icons/VideoLibrary";
@@ -76,15 +77,13 @@ const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
                 </Grid>
                 <Grid container item xs={12} md={6} lg={2} spacing={2}>
                   {images > 0 && (
-                    <Grid container item xs={6} spacing={1}>
-                      <Grid item>
-                        <Typography variant="subtitle1">
-                          {`${images} images`}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
+                    <Grid item xs={6} className={classes.imageLabel}>
+                      <Typography variant="subtitle1">
+                        {`${images} images`}
+                      </Typography>
+                      <Box pl={2}>
                         <PermMediaIcon />
-                      </Grid>
+                      </Box>
                     </Grid>
                   )}
                   {videos > 0 && (
@@ -192,6 +191,10 @@ const styles = (theme: Theme) =>
       fontStyle: "normal",
       lineHeight: 1.56,
       letterSpacing: "normal",
+    },
+    imageLabel: {
+      display: "flex",
+      whiteSpace: "pre",
     },
     cardImage: {
       width: "100%",
