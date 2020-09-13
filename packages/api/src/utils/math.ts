@@ -1,9 +1,11 @@
 import { sum } from 'lodash';
 
 export const getAverage = (numbers: number[], round = false) => {
-  const average =
-    numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
-  return average !== undefined && round ? Math.round(average) : average;
+  if (numbers.length === 0) {
+    return undefined;
+  }
+  const average = sum(numbers) / numbers.length;
+  return round ? Math.round(average) : average;
 };
 
 export const getMin = (numbers: number[]) => {
