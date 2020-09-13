@@ -27,7 +27,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                CORAL BLEACHING ALERT LEVEL
+                CORAL BLEACHING ALERT
               </mock-typography>
             </div>
           </div>
