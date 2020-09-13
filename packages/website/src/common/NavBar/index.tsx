@@ -117,7 +117,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
                     >
-                      {sortBy(user.administeredReefs).map(
+                      {sortBy(user.administeredReefs, "id").map(
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (

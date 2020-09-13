@@ -1,3 +1,4 @@
+import Bluebird from 'bluebird';
 import { createConnection } from 'typeorm';
 import yargs from 'yargs';
 import { getReefsDailyData } from '../src/workers/dailyData';
@@ -19,11 +20,12 @@ async function run() {
   const { days } = argv;
   const backlogArray = Array.from(Array(days).keys());
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
 
   createConnection(dbConfig).then(async (connection) => {
-    await Promise.all(
-      backlogArray.map(async (past) => {
+    await Bluebird.map(
+      backlogArray,
+      async (past) => {
         const date = new Date(today);
         date.setDate(today.getDate() - past - 1);
         try {
@@ -31,7 +33,8 @@ async function run() {
         } catch (error) {
           console.error(error);
         }
-      }),
+      },
+      { concurrency: 2 },
     );
   });
 }

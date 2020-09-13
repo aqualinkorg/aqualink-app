@@ -1,34 +1,25 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, omitBy, sum } from 'lodash';
+import { isNil, omitBy } from 'lodash';
 import { Connection } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
+import { getMin, getMax, getAverage } from '../utils/math';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 
-const getAverage = (numbers: number[], round = false) => {
-  const average =
-    numbers.length > 0 ? sum(numbers) / numbers.length : undefined;
-  return average !== undefined && round ? Math.round(average) : average;
-};
-
-const getMin = (numbers: number[]) => {
-  return numbers.length > 0 ? Math.min(...numbers) : undefined;
-};
-
-const getMax = (numbers: number[]) => {
-  return numbers.length > 0 ? Math.max(...numbers) : undefined;
-};
-
 export async function getDailyData(reef: Reef, date: Date) {
-  const { polygon, spotterId, maxMonthlyMean, timezone: localTimezone } = reef;
+  const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
+  // Get the end of the day for the date.
+  const endOfDate = new Date(date);
+  endOfDate.setUTCHours(23, 59, 59, 59);
+
   const spotterData = spotterId
-    ? await getSpotterData(spotterId, localTimezone, date)
+    ? await getSpotterData(spotterId, endOfDate)
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -59,12 +50,14 @@ export async function getDailyData(reef: Reef, date: Date) {
       'degreeHeatingWeek',
       latitude,
       longitude,
-      localTimezone,
-      date,
+      endOfDate,
+      96,
     );
 
     degreeHeatingDays =
-      degreeHeatingWeek.length > 0 ? degreeHeatingWeek[0].value * 7 : undefined;
+      degreeHeatingWeek.length > 0
+        ? degreeHeatingWeek.slice(-1)[0].value * 7
+        : undefined;
   }
 
   const satelliteTemperatureData = await getSofarDailyData(
@@ -72,11 +65,11 @@ export async function getDailyData(reef: Reef, date: Date) {
     'analysedSeaSurfaceTemperature',
     latitude,
     longitude,
-    localTimezone,
-    date,
+    endOfDate,
+    48,
   );
 
-  // Get satelliteTemperature closest to midnight local time by grabbing the last datapoint.
+  // Get satelliteTemperature
   const satelliteTemperature =
     (satelliteTemperatureData &&
       satelliteTemperatureData.length > 0 &&
@@ -84,7 +77,6 @@ export async function getDailyData(reef: Reef, date: Date) {
     undefined;
 
   // Get waves data if unavailable through a spotter
-
   const significantWaveHeights =
     spotterData.significantWaveHeight.length > 0
       ? spotterData.significantWaveHeight
@@ -94,8 +86,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-significantWaveHeight',
             latitude,
             longitude,
-            localTimezone,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -112,8 +103,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-meanDirectionWindWaves',
             latitude,
             longitude,
-            localTimezone,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -128,8 +118,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-peakPeriod',
             latitude,
             longitude,
-            localTimezone,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -142,8 +131,7 @@ export async function getDailyData(reef: Reef, date: Date) {
       'GFS-magnitude10MeterWind',
       latitude,
       longitude,
-      localTimezone,
-      date,
+      endOfDate,
     )
   ).map(({ value }) => value);
 
@@ -154,11 +142,10 @@ export async function getDailyData(reef: Reef, date: Date) {
   const windDirections = (
     await getSofarDailyData(
       'GFS',
-      'GFS-magnitude10MeterWind',
+      'GFS-direction10MeterWind',
       latitude,
       longitude,
-      localTimezone,
-      date,
+      endOfDate,
     )
   ).map(({ value }) => value);
 
@@ -190,7 +177,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
   const dailyDataRepository = connection.getRepository(DailyData);
   const allReefs = await reefRepository.find();
   const start = new Date();
-  console.log(`Updating ${allReefs.length} reefs.`);
+  console.log(`Updating ${allReefs.length} reefs for ${date.toDateString()}.`);
   await Bluebird.map(
     allReefs,
     async (reef) => {
@@ -229,7 +216,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
 /* eslint-disable no-console */
 export async function runDailyUpdate(conn: Connection) {
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  today.setUTCHours(0, 0, 0, 0);
 
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
