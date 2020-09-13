@@ -66,7 +66,7 @@ const UploadMedia = ({
           comments: "",
         })),
       ]);
-      setHidden([...hidden, ...acceptedFiles.map(() => true)]);
+      setHidden([...hidden, ...acceptedFiles.map(() => false)]);
     },
     [files, previews, metadata, hidden]
   );

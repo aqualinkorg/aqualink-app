@@ -48,7 +48,7 @@ const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
             <Grid container item spacing={2}>
               <Grid container item direction="column" xs={6}>
                 <Typography color="textPrimary" variant="overline">
-                  SURFACE TEMP
+                  SURF. TEMP
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
                   {`${formatNumber(surfaceTemperature, 1)} °C`}

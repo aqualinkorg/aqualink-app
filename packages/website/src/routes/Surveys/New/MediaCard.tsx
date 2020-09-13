@@ -15,11 +15,13 @@ import {
   Dialog,
   Card,
   CardContent,
+  Tooltip,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import StarIcon from "@material-ui/icons/Star";
 
 import observationOptions from "../../../constants/uploadDropdowns";
@@ -271,9 +273,19 @@ const MediaCard = ({
                 justify="flex-end"
                 xs={12}
               >
-                <IconButton onClick={() => handleHiddenChange(index)}>
-                  <VisibilityIcon color={!hidden ? "primary" : "inherit"} />
-                </IconButton>
+                <Tooltip
+                  title={
+                    hidden ? "Make this image visible" : "Hide image from users"
+                  }
+                >
+                  <IconButton onClick={() => handleHiddenChange(index)}>
+                    {hidden ? (
+                      <VisibilityOffIcon color="inherit" />
+                    ) : (
+                      <VisibilityIcon color="primary" />
+                    )}
+                  </IconButton>
+                </Tooltip>
               </Grid>
               <Grid
                 container
