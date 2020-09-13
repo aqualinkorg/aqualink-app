@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import { withStyles, WithStyles, createStyles, Grid } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
 
-import Tooltip, { TooltipData } from "./Tooltip";
+import Tooltip, { TooltipData } from "../../../ReefRoutes/Reef/Charts/Tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
@@ -70,6 +70,11 @@ const Charts = ({
     }
   };
 
+  const hideTooltip = () => {
+    setShowTooltip(false);
+    setSliceAtLabel(null);
+  };
+
   const changeXTickShift = () => {
     const { current } = temperatureChartRef;
     if (current) {
@@ -105,15 +110,14 @@ const Charts = ({
     changeXTickShift();
   });
 
+  // Hide tooltip on scroll to avoid dragging it on the page.
+  if (showTooltip) {
+    window.addEventListener("scroll", hideTooltip);
+  }
+
   return (
     <Grid item xs={11}>
-      <div
-        onMouseLeave={() => {
-          setShowTooltip(false);
-          setSliceAtLabel(null);
-        }}
-        className={classes.root}
-      >
+      <div onMouseLeave={hideTooltip} className={classes.root}>
         <Line
           ref={temperatureChartRef}
           options={{
@@ -232,7 +236,6 @@ const Charts = ({
             }}
           >
             <Tooltip {...tooltipData} />
-            <div className="tooltip-arrow" />
           </div>
         ) : null}
       </div>
