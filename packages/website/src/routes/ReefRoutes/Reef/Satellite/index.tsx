@@ -31,17 +31,16 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
 
   const metrics = [
     {
-      label: "Surface temp",
-      value: `${formatNumber(satelliteTemperature, 1)} \u2103`,
+      label: "Surface Temp",
+      value: `${formatNumber(satelliteTemperature, 1)} °C`,
     },
     {
-      label: "Historical max temp",
+      label: "Historical Max",
       value: `${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`,
-      tooltipTitle:
-        "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
+      tooltipTitle: "Historical maximum monthly average over the past 7 years",
     },
     {
-      label: "Degree heating weeks",
+      label: "Heat Stress",
       value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
       tooltipTitle:
         "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
