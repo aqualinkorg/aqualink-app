@@ -57,7 +57,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
                 {reef.locationName}
               </Typography>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               <Typography
                 style={{ color: colors.lightBlue }}
                 variant="subtitle1"
@@ -65,12 +65,12 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
                 {formatNumber(reef.temp, 1)}
               </Typography>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               <Typography variant="subtitle1" color="textSecondary">
                 {reef.depth}
               </Typography>
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="left">
               <Typography
                 style={{
                   color: reef.dhw ? `${dhwColorFinder(reef.dhw)}` : "black",

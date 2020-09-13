@@ -16,7 +16,7 @@ const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
         variant="subtitle2"
         style={{ color: "black" }}
         component="span"
-      >{`\u00a0 (${unit})`}</Typography>
+      >{` (${unit})`}</Typography>
     )}
   </Typography>
 );
@@ -37,8 +37,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
       id: "locationName",
       numeric: false,
       label: "REEF",
-      align: "left",
-      width: "30%",
+      width: "25%",
     },
     {
       id: "temp",
@@ -62,7 +61,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
       id: "alert",
       numeric: true,
       label: "ALERT",
-      width: "10%",
+      width: "5%",
     },
   ];
 
@@ -73,7 +72,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
           <TableCell
             key={headCell.id}
             width={headCell.width}
-            align={headCell.align || "center"}
+            align="left"
             padding="default"
             sortDirection={props.orderBy === headCell.id ? props.order : false}
           >
@@ -96,7 +95,6 @@ interface HeadCell {
   label: string;
   numeric: boolean;
   unit?: string;
-  align?: "center" | "left" | "right";
   width?: string;
 }
 

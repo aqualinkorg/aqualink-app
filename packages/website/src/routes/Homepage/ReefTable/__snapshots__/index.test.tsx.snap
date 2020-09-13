@@ -50,7 +50,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="asc"
-              width="30%"
+              width="25%"
             >
               <mock-tablesortlabel
                 active="true"
@@ -65,7 +65,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablesortlabel>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
               padding="default"
               sortdirection="false"
             >
@@ -83,13 +83,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     style="color: black;"
                     variant="subtitle2"
                   >
-                      (°C)
+                     (°C)
                   </mock-typography>
                 </mock-typography>
               </mock-tablesortlabel>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
               padding="default"
               sortdirection="false"
             >
@@ -107,13 +107,13 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     style="color: black;"
                     variant="subtitle2"
                   >
-                      (m)
+                     (m)
                   </mock-typography>
                 </mock-typography>
               </mock-tablesortlabel>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
               padding="default"
               sortdirection="false"
             >
@@ -131,16 +131,16 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     style="color: black;"
                     variant="subtitle2"
                   >
-                      (DHW)
+                     (DHW)
                   </mock-typography>
                 </mock-typography>
               </mock-tablesortlabel>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
               padding="default"
               sortdirection="false"
-              width="10%"
+              width="5%"
             >
               <mock-tablesortlabel
                 active="false"
@@ -173,7 +173,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
             >
               <mock-typography
                 style="color: rgb(22, 141, 189);"
@@ -183,7 +183,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
             >
               <mock-typography
                 color="textSecondary"
@@ -193,7 +193,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              align="center"
+              align="left"
             >
               <mock-typography
                 style="color: rgb(12, 157, 165);"

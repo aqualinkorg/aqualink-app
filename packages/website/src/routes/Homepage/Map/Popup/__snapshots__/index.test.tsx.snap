@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-leafletpopup
-    classname="Popup-popup-2"
+    classname="Popup-popup-3"
     closebutton="false"
   >
     <mock-card>
@@ -20,7 +20,7 @@ exports[`renders as expected 1`] = `
             variant="h5"
           />
           <mock-typography
-            classname="MuiCardHeader-subheader"
+            classname="MuiCardHeader-subheader Popup-subheader-2"
             color="textSecondary"
             component="span"
             display="block"

@@ -32,6 +32,9 @@ const Popup = ({ reef, classes }: PopupProps) => {
       <Card>
         <CardHeader
           className={classes.popupHeader}
+          classes={{
+            subheader: classes.subheader,
+          }}
           title={reef.name}
           subheader={reef.region?.name}
         />
@@ -141,6 +144,11 @@ const styles = (theme: Theme) =>
     popupHeader: {
       backgroundColor: theme.palette.primary.main,
     },
+
+    subheader: {
+      color: "white",
+    },
+
     popup: {
       width: "12vw",
       minWidth: 200,
