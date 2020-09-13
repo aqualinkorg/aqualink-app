@@ -5,7 +5,7 @@ import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
-import { getMin, getMax, getAverage } from '../utils/maths';
+import { getMin, getMax, getAverage } from '../utils/math';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 
