@@ -14,8 +14,12 @@ export async function getDailyData(reef: Reef, date: Date) {
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
+  // Get the end of the day for the date.
+  const endOfDate = new Date(date);
+  endOfDate.setUTCHours(23, 59, 59, 59);
+
   const spotterData = spotterId
-    ? await getSpotterData(spotterId, date)
+    ? await getSpotterData(spotterId, endOfDate)
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -46,7 +50,7 @@ export async function getDailyData(reef: Reef, date: Date) {
       'degreeHeatingWeek',
       latitude,
       longitude,
-      date,
+      endOfDate,
       96,
     );
 
@@ -61,7 +65,7 @@ export async function getDailyData(reef: Reef, date: Date) {
     'analysedSeaSurfaceTemperature',
     latitude,
     longitude,
-    date,
+    endOfDate,
     48,
   );
 
@@ -82,7 +86,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-significantWaveHeight',
             latitude,
             longitude,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -99,7 +103,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-meanDirectionWindWaves',
             latitude,
             longitude,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -114,7 +118,7 @@ export async function getDailyData(reef: Reef, date: Date) {
             'NOAAOperationalWaveModel-peakPeriod',
             latitude,
             longitude,
-            date,
+            endOfDate,
           )
         ).map(({ value }) => value);
 
@@ -127,7 +131,7 @@ export async function getDailyData(reef: Reef, date: Date) {
       'GFS-magnitude10MeterWind',
       latitude,
       longitude,
-      date,
+      endOfDate,
     )
   ).map(({ value }) => value);
 
@@ -141,7 +145,7 @@ export async function getDailyData(reef: Reef, date: Date) {
       'GFS-direction10MeterWind',
       latitude,
       longitude,
-      date,
+      endOfDate,
     )
   ).map(({ value }) => value);
 

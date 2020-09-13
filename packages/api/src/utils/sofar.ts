@@ -98,12 +98,12 @@ export async function getSofarDailyData(
   variableID: string,
   latitude: number,
   longitude: number,
-  date: Date,
+  endDate: Date,
   hours?: number,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const [start, end] = getStartEndDate(date, hours);
+  const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(
     modelId,
@@ -130,9 +130,9 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   spotterId: string,
   // eslint-disable-next-line no-unused-vars
-  date: Date,
+  endDate: Date,
 ): Promise<SpotterData> {
-  const [start, end] = getStartEndDate(date);
+  const [start, end] = getStartEndDate(endDate);
   const {
     data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
