@@ -3,12 +3,13 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Card,
   CardContent,
   Typography,
   CardHeader,
   Grid,
+  Chip,
+  Box,
 } from "@material-ui/core";
 
 import { formatNumber } from "../../../../helpers/numberUtils";
@@ -22,6 +23,17 @@ const Sensor = ({ reef, classes }: SensorProps) => {
     reef.latestDailyData || {};
 
   const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
+
+  const metrics = [
+    {
+      label: "Surface temp",
+      value: `${formatNumber(surfaceTemperature, 1)} °C`,
+    },
+    {
+      label: `Temp at ${reef.depth}m`,
+      value: `${formatNumber(avgBottomTemperature, 1)} °C`,
+    },
+  ];
 
   return (
     <Card className={classes.card}>
@@ -40,108 +52,75 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           </Grid>
         }
       />
+
       <CardContent className={classes.content}>
-        <Grid style={{ height: "100%" }} container justify="space-between">
-          <Grid alignContent="flex-start" container item xs={7}>
-            <Grid className={classes.contentMeasure} item xs={12}>
-              <Typography
-                className={classes.contentTextTitles}
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                SURFACE TEMP
-              </Typography>
-              <Typography
-                className={classes.contentTextValues}
-                color="textPrimary"
-              >
-                {formatNumber(surfaceTemperature, 1)} °C
-              </Typography>
-            </Grid>
-            <Grid className={classes.contentMeasure} item xs={12}>
-              <Typography
-                className={classes.contentTextTitles}
-                color="textPrimary"
-                variant="subtitle2"
-              >
-                {`TEMP AT ${reef.depth}M`}
-              </Typography>
-              <Typography
-                className={classes.contentTextValues}
-                color="textPrimary"
-              >
-                {formatNumber(avgBottomTemperature, 1)} °C
-              </Typography>
-            </Grid>
-            {!hasSpotter && (
-              <Grid
-                className={classes.noSensorAlert}
-                container
-                alignItems="center"
-                justify="center"
-                item
-                xs={12}
-              >
+        <Grid
+          container
+          alignItems="center"
+          justify="space-between"
+          spacing={1}
+          style={{ position: "relative" }}
+        >
+          <Grid container direction="column" spacing={3} item xs={7}>
+            {metrics.map(({ label, value }) => (
+              <Grid key={label} item>
                 <Typography
-                  className={classes.alertText}
-                  variant="subtitle1"
-                  color="textPrimary"
+                  className={classes.contentTextTitles}
+                  variant="subtitle2"
                 >
-                  Not Installed Yet
+                  {label}
+                </Typography>
+                <Typography className={classes.contentTextValues} variant="h2">
+                  {value}
                 </Typography>
               </Grid>
-            )}
+            ))}
           </Grid>
-          <Grid container alignItems="flex-end" item xs={5}>
-            <img className={classes.contentImage} alt="sensor" src={sensor} />
-          </Grid>
+
+          {!hasSpotter && (
+            <Grid item xs={12}>
+              <Chip
+                className={classes.noSensorAlert}
+                label="Not Installed Yet"
+              />
+            </Grid>
+          )}
+
+          <Box position="absolute" top={0} right={0}>
+            <img alt="sensor" src={sensor} />
+          </Box>
         </Grid>
       </CardContent>
     </Card>
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
-      height: "100%",
-      width: "100%",
-      backgroundColor: "#128cc0",
       display: "flex",
       flexDirection: "column",
+      height: "100%",
+      backgroundColor: "#128cc0",
+      paddingBottom: "1rem",
     },
     titleImage: {
       height: 35,
       width: 35,
     },
     header: {
-      flex: "0 1 auto",
-      padding: "1rem 1rem 0 1rem",
+      paddingBottom: 0,
     },
     content: {
-      flex: "1 1 auto",
+      display: "flex",
+      flexGrow: 1,
       padding: "1rem 1rem 0 1rem",
-      [theme.breakpoints.between("md", 1350)]: {
-        padding: "1rem 1rem 0 1rem",
-      },
-    },
-    contentImage: {
-      height: "75%",
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
       borderRadius: 4,
-      height: "2rem",
-      marginTop: "2rem",
-      [theme.breakpoints.between("md", "lg")]: {
-        marginTop: "3rem",
-      },
-    },
-    alertText: {
-      [theme.breakpoints.between("md", 1080)]: {
-        fontSize: 11,
-      },
+      color: "white",
     },
   });
 

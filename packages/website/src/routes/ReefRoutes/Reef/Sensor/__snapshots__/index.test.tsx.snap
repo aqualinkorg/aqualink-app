@@ -47,69 +47,63 @@ exports[`renders as expected 1`] = `
       classname="Sensor-content-9"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
-        style="height: 100%;"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        style="position: relative;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-flex-start MuiGrid-grid-xs-7"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-7"
         >
           <div
-            class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-item"
           >
             <mock-typography
               classname="Sensor-contentTextTitles-2"
-              color="textPrimary"
               variant="subtitle2"
             >
-              SURFACE TEMP
+              Surface temp
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-3"
-              color="textPrimary"
+              variant="h2"
             >
-              - -
-               °C
+              - - °C
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root Sensor-contentMeasure-5 MuiGrid-item MuiGrid-grid-xs-12"
+            class="MuiGrid-root MuiGrid-item"
           >
             <mock-typography
               classname="Sensor-contentTextTitles-2"
-              color="textPrimary"
               variant="subtitle2"
             >
-              TEMP AT 24M
+              Temp at 24m
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-3"
-              color="textPrimary"
+              variant="h2"
             >
-              - -
-               °C
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root Sensor-noSensorAlert-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
-          >
-            <mock-typography
-              classname="Sensor-alertText-12"
-              color="textPrimary"
-              variant="subtitle1"
-            >
-              Not Installed Yet
+              - - °C
             </mock-typography>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-grid-xs-5"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <mock-chip
+            classname="Sensor-noSensorAlert-10"
+            label="Not Installed Yet"
+          />
+        </div>
+        <mock-box
+          position="absolute"
+          right="0"
+          top="0"
         >
           <img
             alt="sensor"
-            class="Sensor-contentImage-10"
             src="sensor.svg"
           />
-        </div>
+        </mock-box>
       </div>
     </mock-cardcontent>
   </mock-card>

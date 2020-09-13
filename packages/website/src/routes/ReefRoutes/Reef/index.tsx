@@ -3,7 +3,9 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Container,
   Grid,
+  Box,
   Typography,
   LinearProgress,
 } from "@material-ui/core";
@@ -54,56 +56,62 @@ const Reef = ({ match, classes }: ReefProps) => {
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 
+  if (loading) {
+    return (
+      <>
+        <ReefNavBar searchLocation={false} />
+        <LinearProgress />
+      </>
+    );
+  }
+
   return (
     <>
       <ReefNavBar searchLocation={false} />
-      {/* eslint-disable-next-line no-nested-ternary */}
-      {loading ? (
-        <LinearProgress />
-      ) : reefDetails && latestDailyData && !error ? (
-        <>
-          <ReefInfo
-            reefName={reefDetails?.name || ""}
-            lastDailyDataDate={latestDailyData?.date}
-            lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-            managerName={reefDetails?.admin || ""}
-          />
-          {!hasSpotter && (
-            <Grid className={classes.spotterAlert} container justify="center">
-              <Grid item xs={11}>
+      <Container>
+        {reefDetails && latestDailyData && !error ? (
+          <>
+            <ReefInfo
+              reefName={reefDetails?.name || ""}
+              lastDailyDataDate={latestDailyData?.date}
+              lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+              managerName={reefDetails?.admin || ""}
+            />
+            {!hasSpotter && (
+              <Box mt="1rem">
                 <Alert severity="info">
-                  Currently no spotter deployed at this reef location. All data
+                  Currently no spotter deployed at this reef location. All
                   values are derived from a combination of NOAA satellite
                   readings and weather models.
                 </Alert>
+              </Box>
+            )}
+            <ReefDetails
+              reef={{
+                ...reefDetails,
+                latestDailyData,
+                featuredImage: featuredMedia?.url,
+              }}
+            />
+          </>
+        ) : (
+          <div className={classes.noData}>
+            <Grid
+              container
+              direction="column"
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item>
+                <Typography gutterBottom color="primary" variant="h2">
+                  No Data Found
+                </Typography>
               </Grid>
             </Grid>
-          )}
-          <ReefDetails
-            reef={{
-              ...reefDetails,
-              latestDailyData,
-              featuredImage: featuredMedia?.url,
-            }}
-          />
-          <ReefFooter />
-        </>
-      ) : (
-        <div className={classes.noData}>
-          <Grid
-            container
-            direction="column"
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Grid item>
-              <Typography gutterBottom color="primary" variant="h2">
-                No Data Found
-              </Typography>
-            </Grid>
-          </Grid>
-        </div>
-      )}
+          </div>
+        )}
+      </Container>
+      <ReefFooter />
     </>
   );
 };
@@ -114,9 +122,6 @@ const styles = () =>
       display: "flex",
       alignItems: "center",
       height: "100%",
-    },
-    spotterAlert: {
-      marginTop: "1rem",
     },
   });
 
