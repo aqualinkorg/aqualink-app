@@ -744,13 +744,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       classname="Satellite-contentTextTitles-126"
                       variant="subtitle2"
                     >
-                      Surface temp
+                      Surface Temp
                     </mock-typography>
                     <mock-typography
                       classname="Satellite-contentTextValues-127"
                       variant="h2"
                     >
-                      26.0 ℃
+                      26.0 °C
                     </mock-typography>
                   </div>
                   <div
@@ -760,10 +760,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       classname="Satellite-contentTextTitles-126"
                       variant="subtitle2"
                     >
-                      Historical max temp
+                      Historical Max
                     </mock-typography>
                     <mock-tooltip
-                      title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+                      title="Historical maximum monthly average over the past 7 years"
                     >
                       <mock-typography
                         classname="Satellite-contentTextValues-127"
@@ -780,7 +780,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       classname="Satellite-contentTextTitles-126"
                       variant="subtitle2"
                     >
-                      Degree heating weeks
+                      Heat Stress
                     </mock-typography>
                     <mock-tooltip
                       title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"

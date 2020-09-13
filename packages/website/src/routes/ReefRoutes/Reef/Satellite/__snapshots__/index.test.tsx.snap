@@ -62,13 +62,13 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-2"
               variant="subtitle2"
             >
-              Surface temp
+              Surface Temp
             </mock-typography>
             <mock-typography
               classname="Satellite-contentTextValues-3"
               variant="h2"
             >
-              20.0 ℃
+              20.0 °C
             </mock-typography>
           </div>
           <div
@@ -78,10 +78,10 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-2"
               variant="subtitle2"
             >
-              Historical max temp
+              Historical Max
             </mock-typography>
             <mock-tooltip
-              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+              title="Historical maximum monthly average over the past 7 years"
             >
               <mock-typography
                 classname="Satellite-contentTextValues-3"
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-2"
               variant="subtitle2"
             >
-              Degree heating weeks
+              Heat Stress
             </mock-typography>
             <mock-tooltip
               title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
