@@ -7,10 +7,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import {
-  getNumberOfImages,
-  // getNumberOfVideos,
-} from "../../../helpers/surveyMedia";
+import { getNumberOfImages } from "../../../helpers/surveyMedia";
 
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
@@ -65,22 +62,6 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
                 IMAGES
               </Typography>
             </Grid>
-            {/* <Grid item xs={12} md={3}>
-              <Typography
-                color="primary"
-                variant="h4"
-                className={classes.inlineText}
-              >
-                {survey.surveyPoints && getNumberOfVideos(survey.surveyPoints)}
-              </Typography>
-              <Typography
-                color="initial"
-                variant="h6"
-                className={classes.inlineText}
-              >
-                VIDEOS
-              </Typography>
-            </Grid> */}
           </Grid>
           <Grid container item direction="column">
             <Typography variant="h6">Comments</Typography>
