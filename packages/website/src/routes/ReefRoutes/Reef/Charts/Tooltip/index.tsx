@@ -25,81 +25,99 @@ const Tooltip = ({
   const splitDate = dateWithoutSeconds.split(", ");
 
   return (
-    <Card className={classes.tooltip}>
-      <CardHeader
-        className={classes.tooltipHeader}
-        title={
+    <div className={classes.tooltip}>
+      <Card className={classes.tooltipCard}>
+        <CardHeader
+          className={classes.tooltipHeader}
+          title={
+            <Grid
+              alignItems="center"
+              justify="space-between"
+              item
+              container
+              xs={12}
+            >
+              <Grid item>
+                <Typography color="textPrimary" variant="caption">
+                  {splitDate[0]}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography color="textPrimary" variant="caption">
+                  {splitDate[1]}
+                </Typography>
+              </Grid>
+            </Grid>
+          }
+        />
+        <CardContent className={classes.tooltipContent}>
           <Grid
-            alignItems="center"
-            justify="space-between"
+            style={{ height: "100%" }}
             item
             container
-            xs={12}
+            direction="row"
+            justify="space-between"
           >
-            <Grid item>
-              <Typography color="textPrimary" variant="caption">
-                {splitDate[0]}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography color="textPrimary" variant="caption">
-                {splitDate[1]}
-              </Typography>
+            <Grid
+              container
+              justify="space-between"
+              alignItems="center"
+              item
+              xs={12}
+            >
+              {bottomTemperature && (
+                <Grid item xs={6} className={classes.tooltipContentItem}>
+                  <Grid container justify="flex-start" item xs={12}>
+                    <Typography variant="caption">{`TEMP AT ${depth}M`}</Typography>
+                  </Grid>
+                  <Grid container justify="flex-start" item xs={12}>
+                    <Typography variant="h5">
+                      {`${formatNumber(bottomTemperature, 1)} °C`}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={bottomTemperature ? 6 : 12}
+                className={classes.tooltipContentItem}
+              >
+                <Grid container justify="flex-start" item xs={12}>
+                  <Typography variant="caption">SURFACE TEMP</Typography>
+                </Grid>
+                <Grid container justify="flex-start" item xs={12}>
+                  <Typography variant="h5">
+                    {`${formatNumber(surfaceTemperature, 1)} °C`}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        }
+        </CardContent>
+      </Card>
+      <div
+        className={classes.tooltipArrow}
+        style={{
+          borderColor: "#095877 transparent transparent transparent",
+        }}
       />
-      <CardContent className={classes.tooltipContent}>
-        <Grid
-          style={{ height: "100%" }}
-          item
-          container
-          direction="row"
-          justify="space-between"
-        >
-          <Grid
-            container
-            justify="space-between"
-            alignItems="center"
-            item
-            xs={12}
-          >
-            <Grid item xs={6}>
-              <Grid container justify="flex-start" item xs={12}>
-                <Typography variant="caption">{`TEMP AT ${depth}M`}</Typography>
-              </Grid>
-              <Grid container justify="flex-start" item xs={12}>
-                <Typography variant="h5">
-                  {`${formatNumber(bottomTemperature, 1)} °C`}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <Grid container justify="flex-end" item xs={12}>
-                <Typography variant="caption">SURFACE TEMP</Typography>
-              </Grid>
-              <Grid container justify="flex-end" item xs={12}>
-                <Typography variant="h5">
-                  {`${formatNumber(surfaceTemperature, 1)} °C`}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+    </div>
   );
 };
 
 const styles = () =>
   createStyles({
     tooltip: {
+      display: "flex",
+      justifyContent: "center",
       height: 100,
       width: 200,
+    },
+    tooltipCard: {
       display: "flex",
       flexFlow: "column",
-      backgroundColor: "#404b6b",
-      opacity: 0.9,
+      backgroundColor: "#095877",
+      borderRadius: 8,
     },
     tooltipHeader: {
       flex: "0 1 auto",
@@ -107,11 +125,21 @@ const styles = () =>
     },
     tooltipContent: {
       flex: "1 1 auto",
-      padding: "0.5rem 1rem 0.5rem 1rem",
+      padding: "0rem 1rem 0.5rem 1rem",
     },
-    tooltipContentRow: {
-      display: "flex",
-      alignItems: "baseline",
+    tooltipContentItem: {
+      width: "100px",
+      margin: "0",
+    },
+    tooltipArrow: {
+      content: " ",
+      position: "absolute",
+      top: "100%" /* At the bottom of the tooltip */,
+      left: "50%",
+      marginLeft: "-10px",
+      borderWidth: "10px",
+      borderStyle: "solid",
+      borderColor: "#095877 transparent transparent transparent",
     },
   });
 
