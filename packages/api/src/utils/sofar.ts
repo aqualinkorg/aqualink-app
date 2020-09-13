@@ -1,7 +1,7 @@
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
-import moment from 'moment-timezone';
+import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
 
 type SofarValue = {
@@ -93,24 +93,17 @@ export async function sofarSpotter(
     });
 }
 
-function getStartEndDate(date: Date, localTimezone: string) {
-  const m = moment.tz(date, localTimezone);
-  const start = m.clone().startOf('day').utc().format();
-  const end = m.clone().endOf('day').utc().format();
-  return [start, end];
-}
-
 export async function getSofarDailyData(
   modelId: string,
   variableID: string,
   latitude: number,
   longitude: number,
-  localTimezone: string,
-  date: Date,
+  endDate: Date,
+  hours?: number,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const [start, end] = getStartEndDate(date, localTimezone);
+  const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(
     modelId,
@@ -136,11 +129,10 @@ function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
 export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   spotterId: string,
-  localTimezone: string,
   // eslint-disable-next-line no-unused-vars
-  date: Date,
+  endDate: Date,
 ): Promise<SpotterData> {
-  const [start, end] = getStartEndDate(date, localTimezone);
+  const [start, end] = getStartEndDate(endDate);
   const {
     data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
