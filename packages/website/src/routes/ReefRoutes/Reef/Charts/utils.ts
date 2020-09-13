@@ -5,11 +5,8 @@ export const createDatasets = (dailyData: Data[]) => {
 
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
   const surfaceTemperature = dailyData
-    .filter(
-      (item) =>
-        item.surfaceTemperature !== null || item.satelliteTemperature !== null
-    )
-    .map((item) => item.surfaceTemperature || item.satelliteTemperature);
+    .filter((item) => item.satelliteTemperature !== null)
+    .map((item) => item.satelliteTemperature);
 
   const meanBottomTemperature =
     bottomTemperature.reduce((a, b) => a + b) / dailyDataLen;

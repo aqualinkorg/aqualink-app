@@ -82,7 +82,7 @@ const MediaCard = ({
                   variant="outlined"
                   inputProps={{ className: classes.textField }}
                   fullWidth
-                  placeholder="Point of interest"
+                  placeholder="Survey Point"
                   value={newPoiName}
                   onChange={handleNewPoiNameChange}
                 />
