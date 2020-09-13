@@ -30,7 +30,7 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           <Grid container justify="flex-start">
             <Grid item xs={12}>
               <Typography color="textSecondary" variant="h6">
-                CORAL BLEACHING ALERT LEVEL
+                CORAL BLEACHING ALERT
               </Typography>
             </Grid>
           </Grid>

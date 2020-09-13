@@ -121,7 +121,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (
-                            <Link href={`reefs/${id}`} key={`reef-link-${id}`}>
+                            <Link href={`/reefs/${id}`} key={`reef-link-${id}`}>
                               <MenuItem className={classes.menuItem}>
                                 {`Reef ${index + 1}`}
                                 {reefIdentifier ? ` - ${reefIdentifier}` : ""}
