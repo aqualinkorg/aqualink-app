@@ -30,6 +30,7 @@ import {
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
+import { formatNumber } from "../../../../../helpers/numberUtils";
 
 const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
   const dispatch = useDispatch();
@@ -154,7 +155,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                               className={classes.cardValues}
                               variant="h6"
                             >
-                              {`${survey.temperature} °C`}
+                              {`${formatNumber(survey.temperature, 1)} °C`}
                             </Typography>
                           </Grid>
                         </Grid>

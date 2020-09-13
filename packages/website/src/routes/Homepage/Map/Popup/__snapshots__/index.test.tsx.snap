@@ -63,7 +63,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
             >
               <mock-typography
                 color="textSecondary"
@@ -73,7 +73,7 @@ exports[`renders as expected 1`] = `
               </mock-typography>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-end MuiGrid-grid-xs-12"
             >
               <mock-typography
                 color="textSecondary"

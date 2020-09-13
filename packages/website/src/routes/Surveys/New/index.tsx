@@ -57,7 +57,7 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
                 style={{ fontWeight: "normal", marginBottom: "0.5rem" }}
                 variant="h6"
               >
-                Choose survey location from map
+                Select your survey location by clicking on the map.
               </Typography>
             </Grid>
             <Grid className={classes.mapContainer} item xs={12} lg={6}>
