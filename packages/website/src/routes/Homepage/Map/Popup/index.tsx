@@ -73,18 +73,12 @@ const Popup = ({ reef, classes }: PopupProps) => {
               </Grid>
             )}
             <Grid item xs={6}>
-              <Grid container justify="flex-end" item xs={12}>
+              <Grid container justify="flex-start" item xs={12}>
                 <Typography variant="caption" color="textSecondary">
                   HEAT STRESS
                 </Typography>
               </Grid>
-              <Grid
-                container
-                alignItems="flex-end"
-                justify="flex-end"
-                item
-                xs={12}
-              >
+              <Grid container alignItems="flex-end" item xs={12}>
                 <Typography
                   style={{
                     color: `${dhwColorFinder(

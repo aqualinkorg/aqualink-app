@@ -6,7 +6,10 @@ import Tooltip, { TooltipData } from "./Tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortDailyData } from "../../../../helpers/sortDailyData";
-import { createDatasets, calculateAxisLimits } from "./utils";
+import {
+  createDatasets,
+  calculateAxisLimits,
+} from "../../../ReefRoutes/Reef/Charts/utils";
 import "../../../../helpers/backgroundPlugin";
 import "../../../../helpers/fillPlugin";
 import "../../../../helpers/slicePlugin";
