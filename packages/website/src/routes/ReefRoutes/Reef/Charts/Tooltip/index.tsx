@@ -19,34 +19,20 @@ const Tooltip = ({
   classes,
 }: TooltipProps) => {
   // Remove seconds from date
-  const dateWithoutSeconds = new Date(date)
-    .toLocaleString()
-    .replace(/:\d{2}\s/, " ");
-  const splitDate = dateWithoutSeconds.split(", ");
+  const dateString = new Date(date).toLocaleString("en", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  });
 
   return (
     <Card className={classes.tooltip}>
       <CardHeader
         className={classes.tooltipHeader}
         title={
-          <Grid
-            alignItems="center"
-            justify="space-between"
-            item
-            container
-            xs={12}
-          >
-            <Grid item>
-              <Typography color="textPrimary" variant="caption">
-                {splitDate[0]}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography color="textPrimary" variant="caption">
-                {splitDate[1]}
-              </Typography>
-            </Grid>
-          </Grid>
+          <Typography color="textPrimary" variant="caption">
+            {dateString}
+          </Typography>
         }
       />
       <CardContent className={classes.tooltipContent}>
