@@ -71,7 +71,11 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
       )}
 
       <Grid item xs={12} md={6} lg={3}>
-        <ObservationBox depth={reef.depth} dailyData={reef.dailyData} />
+        <ObservationBox
+          depth={reef.depth}
+          date={survey?.diveDate ? new Date(survey?.diveDate) : new Date()}
+          dailyData={reef.dailyData}
+        />
       </Grid>
     </Grid>
   );
