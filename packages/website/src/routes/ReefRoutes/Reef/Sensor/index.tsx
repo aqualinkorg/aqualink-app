@@ -54,16 +54,15 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       />
 
       <CardContent className={classes.content}>
-        <Grid
-          container
-          alignItems="center"
-          justify="space-between"
-          spacing={1}
+        <Box
+          p="1rem"
+          display="flex"
+          flexGrow={1}
           style={{ position: "relative" }}
         >
-          <Grid container direction="column" spacing={3} item xs={7}>
+          <Grid container direction="row" spacing={3} xs={8}>
             {metrics.map(({ label, value }) => (
-              <Grid key={label} item>
+              <Grid key={label} item xs={12}>
                 <Typography
                   className={classes.contentTextTitles}
                   variant="subtitle2"
@@ -75,21 +74,20 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 </Typography>
               </Grid>
             ))}
+            {!hasSpotter && (
+              <Grid item xs={12}>
+                <Chip
+                  className={classes.noSensorAlert}
+                  label="Not Installed Yet"
+                />
+              </Grid>
+            )}
           </Grid>
 
-          {!hasSpotter && (
-            <Grid item xs={12}>
-              <Chip
-                className={classes.noSensorAlert}
-                label="Not Installed Yet"
-              />
-            </Grid>
-          )}
-
-          <Box position="absolute" top={0} right={0}>
+          <Box position="absolute" bottom={0} right={0}>
             <img alt="sensor" src={sensor} />
           </Box>
-        </Grid>
+        </Box>
       </CardContent>
     </Card>
   );
@@ -109,13 +107,12 @@ const styles = () =>
       height: 35,
       width: 35,
     },
-    header: {
-      paddingBottom: 0,
-    },
     content: {
       display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
       flexGrow: 1,
-      padding: "1rem 1rem 0 1rem",
+      padding: 0,
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",

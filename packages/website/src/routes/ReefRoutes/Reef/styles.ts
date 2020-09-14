@@ -13,6 +13,9 @@ export const styles = {
       width: "10rem",
     },
   },
+  header: {
+    padding: "0.5rem 1.5rem 0 1rem",
+  },
   contentTextTitles: {
     textTransform: "uppercase" as "uppercase",
     lineHeight: 1.33,
