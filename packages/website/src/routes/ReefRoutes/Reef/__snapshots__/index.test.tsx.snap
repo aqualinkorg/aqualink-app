@@ -1347,7 +1347,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             bgcolor="#f5f6f6"
             height="100%"
             position="absolute"
-            width="100vw"
+            width="99vw"
             zindex="-1"
           />
           <div
