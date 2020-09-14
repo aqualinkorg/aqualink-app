@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -23,6 +23,8 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
+import { Pois } from "../../../store/Reefs/types";
+import reefServices from "../../../services/reefServices";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -46,6 +48,7 @@ const UploadMedia = ({
   const [featuredFile, setFeaturedFile] = useState<number | null>(null);
   const [hidden, setHidden] = useState<boolean[]>([]);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
 
   const handleFileDrop = useCallback(
     (acceptedFiles: File[], fileRejections) => {
@@ -70,6 +73,29 @@ const UploadMedia = ({
     },
     [files, previews, metadata, hidden]
   );
+
+  useEffect(() => {
+    reefServices
+      .getReefPois(`${reefId}`)
+      .then((response) => setSurveyPointOptions(response.data));
+  }, [setSurveyPointOptions, reefId]);
+
+  const handlePoiOptionAdd = (index: number, name: string) => {
+    setSurveyPointOptions([
+      ...surveyPointOptions,
+      { id: surveyPointOptions.length + 1, name },
+    ]);
+    const newMetadata = metadata.map((item, key) => {
+      if (key === index) {
+        return {
+          ...item,
+          surveyPoint: name,
+        };
+      }
+      return item;
+    });
+    setMetadata(newMetadata);
+  };
 
   const handlePopoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
@@ -225,6 +251,8 @@ const UploadMedia = ({
         index={index}
         preview={preview}
         file={files[index]}
+        surveyPointOptions={surveyPointOptions}
+        handlePoiOptionAdd={handlePoiOptionAdd}
         surveyPoint={
           (metadata && metadata[index] && metadata[index].surveyPoint) || ""
         }

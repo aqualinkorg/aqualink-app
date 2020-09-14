@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useCallback } from "react";
+import React, { ChangeEvent, useState, useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -25,7 +25,6 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import StarIcon from "@material-ui/icons/Star";
 
 import observationOptions from "../../../constants/uploadDropdowns";
-import reefServices from "../../../services/reefServices";
 import { Pois } from "../../../store/Reefs/types";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
@@ -36,11 +35,13 @@ const MediaCard = ({
   surveyPoint,
   observation,
   comments,
+  surveyPointOptions,
   index,
   file,
   featuredFile,
   hidden,
   handleHiddenChange,
+  handlePoiOptionAdd,
   deleteCard,
   setFeatured,
   handleCommentsChange,
@@ -49,7 +50,6 @@ const MediaCard = ({
   classes,
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
-  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
   const [newPoiName, setNewPoiName] = useState<string>("");
   const user = useSelector(userInfoSelector);
@@ -59,12 +59,6 @@ const MediaCard = ({
   ) => {
     setNewPoiName(event.target.value);
   };
-
-  useEffect(() => {
-    reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setSurveyPointOptions(response.data));
-  }, [setSurveyPointOptions, reefId]);
 
   const onImageClick = useCallback(() => {
     setFeatured(index);
@@ -101,10 +95,7 @@ const MediaCard = ({
                   variant="outlined"
                   color="primary"
                   onClick={() => {
-                    setSurveyPointOptions([
-                      ...surveyPointOptions,
-                      { id: surveyPointOptions.length + 1, name: newPoiName },
-                    ]);
+                    handlePoiOptionAdd(index, newPoiName);
                     surveyServices.addNewPoi(reefId, newPoiName, user?.token);
                     setAddPoiDialogOpen(false);
                   }}
@@ -192,7 +183,7 @@ const MediaCard = ({
                   {surveyPointOptions.map((item) => (
                     <MenuItem
                       className={classes.textField}
-                      value={item.id}
+                      value={item.name || ""}
                       key={item.id}
                     >
                       {item.name}
@@ -348,10 +339,12 @@ interface MediaCardIncomingProps {
   surveyPoint: string;
   observation: string;
   comments: string;
+  surveyPointOptions: Pois[];
   file?: File | null;
   featuredFile: number | null;
   hidden: boolean;
   handleHiddenChange: (index: number) => void;
+  handlePoiOptionAdd: (index: number, name: string) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;

@@ -30,7 +30,7 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState<number>(1);
 
   const onPanelIndexChange = (index: number) => {
     setValue(index);
