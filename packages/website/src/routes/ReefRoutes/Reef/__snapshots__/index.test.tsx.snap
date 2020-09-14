@@ -2129,7 +2129,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     class="MuiContainer-root MuiContainer-maxWidthLg"
   >
     <div
-      class="Reef-noData-1"
+      class="MuiContainer-root Reef-noData-1 MuiContainer-maxWidthLg"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"

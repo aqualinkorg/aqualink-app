@@ -95,7 +95,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             />
           </>
         ) : (
-          <div className={classes.noData}>
+          <Container className={classes.noData}>
             <Grid
               container
               direction="column"
@@ -108,7 +108,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 </Typography>
               </Grid>
             </Grid>
-          </div>
+          </Container>
         )}
       </Container>
       <ReefFooter />
@@ -121,7 +121,7 @@ const styles = () =>
     noData: {
       display: "flex",
       alignItems: "center",
-      height: "100%",
+      height: "80vh",
     },
   });
 
