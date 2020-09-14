@@ -53,7 +53,7 @@ exports[`renders as expected 1`] = `
         style="position: relative;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-grid-xs-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
