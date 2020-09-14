@@ -22,12 +22,12 @@ import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import StarIcon from "@material-ui/icons/Star";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import StarIcon from "../../../assets/star2.svg";
 
 const MediaCard = ({
   reefId,
@@ -134,7 +134,13 @@ const MediaCard = ({
                     alignItems="flex-start"
                     justify="flex-start"
                   >
-                    {index === featuredFile && <StarIcon color="primary" />}
+                    {index === featuredFile && (
+                      <img
+                        className={classes.starIcon}
+                        src={StarIcon}
+                        alt="featured"
+                      />
+                    )}
                   </Grid>
                   <Grid
                     style={{ height: "50%" }}
@@ -329,6 +335,10 @@ const styles = (theme: Theme) =>
     newPoiDialog: {
       height: "10rem",
       width: "20rem",
+    },
+    starIcon: {
+      height: 42,
+      padding: 8,
     },
   });
 

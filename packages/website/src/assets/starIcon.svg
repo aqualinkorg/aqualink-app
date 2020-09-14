@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="53px" height="52px" viewBox="0 0 53 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>starIcon</title>
+    <defs>
+        <circle id="path-1" cx="22" cy="22" r="22"></circle>
+        <filter x="-15.9%" y="-11.4%" width="131.8%" height="131.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="starIcon" transform="translate(4.000000, 2.000000)">
+            <g id="Shadow" transform="translate(0.687682, 0.000000)" fill-rule="nonzero">
+                <g id="path-1">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#4BB5DF" xlink:href="#path-1"></use>
+                </g>
+            </g>
+            <g id="Group-Clipped" transform="translate(10.687682, 10.000000)">
+                <g id="Icon" transform="translate(0.000000, 0.000000)">
+                    <polygon id="24pt-Bounding-Box" opacity="0" points="0 0 24 0 24 24 0 24"></polygon>
+                    <path d="M17.56,21 L17.5599999,21 C17.4000769,21.0006435 17.2423319,20.9629218 17.0999999,20.89 L11.9999999,18.22 L6.89999994,20.89 L6.9,20.89 C6.411177,21.147042 5.80653,20.9591458 5.54949,20.470323 C5.446173,20.273842 5.41117,20.048568 5.4499976,19.83 L6.4499976,14.2 L2.3299976,10.2 L2.32999765,10.2 C2.06805365,9.93860103 1.97188165,9.55391403 2.07999765,9.20000003 L2.07999761,9.20000015 C2.19824161,8.83742215 2.51242061,8.57366715 2.88999761,8.52000015 L8.58999761,7.69000015 L11.0999976,2.56000015 L11.0999976,2.56000014 C11.3407326,2.06294414 11.9388316,1.85515514 12.4358876,2.09589014 C12.6384006,2.19397174 12.8019166,2.35748714 12.8999976,2.56000014 L15.4399976,7.68000014 L21.1399976,8.51000014 L21.1399977,8.51000015 C21.5175747,8.56366705 21.8317537,8.82742215 21.9499977,9.19000015 L21.9499977,9.19000014 C22.0581137,9.54391414 21.9619415,9.92860114 21.6999977,10.1900001 L17.5799977,14.1900001 L18.5799977,19.8200001 L18.5799977,19.8200002 C18.6528906,20.2027972 18.4967802,20.5930732 18.1799977,20.8200002 L18.1799977,20.8200002 C17.9989157,20.9468972 17.7808817,21.0101972 17.5599977,21.0000002 L17.56,21 Z" id="Fill" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
