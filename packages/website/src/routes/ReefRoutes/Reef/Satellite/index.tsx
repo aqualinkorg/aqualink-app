@@ -41,6 +41,7 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
     },
     {
       label: "Heat Stress",
+      large: true,
       value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
       tooltipTitle:
         "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
@@ -75,8 +76,8 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
           <Grid container spacing={3}>
-            {metrics.map(({ label, value, tooltipTitle }) => (
-              <Grid key={label} item xs={6}>
+            {metrics.map(({ label, large, value, tooltipTitle }) => (
+              <Grid key={label} item xs={large ? 12 : 6}>
                 <Typography
                   className={classes.contentTextTitles}
                   variant="subtitle2"
@@ -138,9 +139,6 @@ const styles = () =>
       height: 35,
       width: 35,
     },
-    header: {
-      padding: "0.5rem 1.5rem 0 1rem",
-    },
     content: {
       display: "flex",
       flexDirection: "column",
@@ -150,7 +148,7 @@ const styles = () =>
     },
     contentText: {
       marginTop: "1rem",
-      padding: "0 1rem 0 1rem",
+      padding: "0 1rem",
     },
   });
 
