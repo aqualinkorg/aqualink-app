@@ -34,7 +34,7 @@ async function run() {
           console.error(error);
         }
       },
-      { concurrency: 2 },
+      { concurrency: 4 },
     );
   });
 }
