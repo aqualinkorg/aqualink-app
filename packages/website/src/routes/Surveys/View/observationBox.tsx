@@ -8,17 +8,21 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Data } from "../../../store/Reefs/types";
-import { sortDailyData } from "../../../helpers/sortDailyData";
+import { getDailyDataClosestToDate } from "../../../helpers/sortDailyData";
 import { formatNumber } from "../../../helpers/numberUtils";
 
-const ObservationBox = ({ depth, dailyData, classes }: ObservationBoxProps) => {
-  const sortByDate = sortDailyData(dailyData);
-  const dailyDataLen = sortByDate.length;
+const ObservationBox = ({
+  depth,
+  dailyData,
+  date,
+  classes,
+}: ObservationBoxProps) => {
+  const data = getDailyDataClosestToDate(dailyData, date);
   const {
     avgBottomTemperature,
     surfaceTemperature,
     satelliteTemperature,
-  } = sortByDate[dailyDataLen - 1];
+  } = data;
 
   return (
     <div className={classes.outerDiv}>
@@ -84,6 +88,7 @@ const styles = () =>
 interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: Data[];
+  date: Date;
 }
 
 type ObservationBoxProps = ObservationBoxIncomingProps &

@@ -3,13 +3,13 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Waves-card-6"
+    classname="Waves-card-7"
   >
     <mock-cardcontent
-      classname="Waves-contentWrapper-8"
+      classname="Waves-contentWrapper-9"
     >
       <div
-        class="MuiGrid-root Waves-content-9 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root Waves-content-10 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         style="height: 100%;"
       >
         <div
@@ -23,7 +23,7 @@ exports[`renders as expected 1`] = `
           </mock-typography>
           <img
             alt="wind"
-            class="Waves-titleImages-7"
+            class="Waves-titleImages-8"
             src="wind.svg"
           />
         </div>
@@ -34,7 +34,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-2"
+              classname="Waves-contentTextTitles-3"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -44,13 +44,13 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-3"
+                classname="Waves-contentTextValues-4"
                 color="textSecondary"
               >
                 5.0
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-4"
+                classname="Waves-contentUnits-5"
                 color="textSecondary"
                 variant="h6"
               >
@@ -62,7 +62,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-2"
+              classname="Waves-contentTextTitles-3"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -73,12 +73,12 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-10"
+                class="Waves-arrow-11"
                 src="directioncircle.svg"
                 style="transform: rotate(276deg);"
               />
               <mock-typography
-                classname="Waves-contentTextValues-3"
+                classname="Waves-contentTextValues-4"
                 color="textSecondary"
                 variant="h3"
               >
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
           </mock-typography>
           <img
             alt="waves"
-            class="Waves-titleImages-7"
+            class="Waves-titleImages-8"
             src="waves.svg"
           />
         </div>
@@ -109,7 +109,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-2"
+              classname="Waves-contentTextTitles-3"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -119,13 +119,13 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-3"
+                classname="Waves-contentTextValues-4"
                 color="textSecondary"
               >
                 3.0
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-4"
+                classname="Waves-contentUnits-5"
                 color="textSecondary"
                 variant="h6"
               >
@@ -137,7 +137,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-2"
+              classname="Waves-contentTextTitles-3"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -147,13 +147,13 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-3"
+                classname="Waves-contentTextValues-4"
                 color="textSecondary"
               >
                 15
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-4"
+                classname="Waves-contentUnits-5"
                 color="textSecondary"
                 variant="h6"
               >
@@ -165,7 +165,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-2"
+              classname="Waves-contentTextTitles-3"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -176,12 +176,12 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-10"
+                class="Waves-arrow-11"
                 src="directioncircle.svg"
                 style="transform: rotate(316deg);"
               />
               <mock-typography
-                classname="Waves-contentTextValues-3"
+                classname="Waves-contentTextValues-4"
                 color="textSecondary"
               >
                 136
