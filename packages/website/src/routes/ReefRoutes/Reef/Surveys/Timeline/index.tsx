@@ -43,25 +43,26 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
   return (
     <div className={classes.root}>
       <Timeline>
-        {isAdmin && (
-          <TimelineItem>
-            <TimelineSeparator>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to={`/reefs/${reefId}/new_survey`}
-              >
-                <IconButton>
-                  <AddCircleOutlineIcon className={classes.addNewButton} />
-                </IconButton>
-              </Link>
-            </TimelineSeparator>
-            <TimelineContent style={{ padding: "12px 16px" }}>
-              <Typography className={classes.cardFields} variant="h6">
-                ADD NEW SURVEY
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-        )}
+        {isAdmin &&
+          !(window && window.location.pathname.includes("new_survey")) && (
+            <TimelineItem>
+              <TimelineSeparator>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to={`/reefs/${reefId}/new_survey`}
+                >
+                  <IconButton>
+                    <AddCircleOutlineIcon className={classes.addNewButton} />
+                  </IconButton>
+                </Link>
+              </TimelineSeparator>
+              <TimelineContent style={{ padding: "12px 16px" }}>
+                <Typography className={classes.cardFields} variant="h6">
+                  ADD NEW SURVEY
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+          )}
         {surveyList &&
           surveyList.map((survey) => (
             <TimelineItem key={survey.id} className={classes.timelineItem}>
