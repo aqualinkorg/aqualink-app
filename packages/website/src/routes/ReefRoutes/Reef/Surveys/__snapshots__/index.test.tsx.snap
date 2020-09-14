@@ -13,7 +13,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       zindex="-1"
     />
     <div
-      class="MuiGrid-root Surveys-surveyWrapper-2 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-6"
+      class="MuiGrid-root Surveys-surveyWrapper-2 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
@@ -34,7 +34,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
             classname="Surveys-subTitle-4"
             variant="h6"
           >
-            Survey History:
+            Survey Point:
           </mock-typography>
         </div>
         <div
@@ -48,9 +48,9 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
             >
               <div
                 aria-haspopup="listbox"
-                aria-labelledby="survey-history survey-history"
+                aria-labelledby="survey-point survey-point"
                 class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                id="survey-history"
+                id="survey-point"
                 role="button"
                 tabindex="0"
               >
@@ -64,7 +64,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
               <input
                 aria-hidden="true"
                 class="MuiSelect-nativeInput"
-                name="survey-history"
+                name="survey-point"
                 tabindex="-1"
                 value="all"
               />
@@ -80,7 +80,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
               </svg>
               <mock-menu
                 anchorel="[object HTMLDivElement]"
-                id="menu-survey-history"
+                id="menu-survey-point"
                 menulistprops="[object Object]"
                 open="false"
                 paperprops="[object Object]"
@@ -128,7 +128,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
               <div
                 aria-haspopup="listbox"
                 aria-labelledby="survey-observation survey-observation"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Surveys-textField-8"
                 id="survey-observation"
                 role="button"
                 tabindex="0"
@@ -176,6 +176,54 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                   >
                     Any
                   </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="healthy"
+                  role="option"
+                  selected="false"
+                >
+                  Appears healthy
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="possible-disease"
+                  role="option"
+                  selected="false"
+                >
+                  Showing possible signs of disease
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="evident-disease"
+                  role="option"
+                  selected="false"
+                >
+                  Signs of disease are evident
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="mortality"
+                  role="option"
+                  selected="false"
+                >
+                  Signs of mortality are evident
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="environmental"
+                  role="option"
+                  selected="false"
+                >
+                  Signs of environmental disturbance are evident (e.g.,storm damage)
+                </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-7"
+                  data-value="anthropogenic"
+                  role="option"
+                  selected="false"
+                >
+                  Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
                 </mock-menuitem>
               </mock-menu>
             </div>
