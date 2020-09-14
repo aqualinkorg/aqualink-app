@@ -161,7 +161,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
                           </Grid>
                         </Grid>
                       )}
-                      <Grid item xs={5}>
+                      <Grid item xs={6}>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
                           to={`/reefs/${reefId}/survey_details/${survey.id}`}
@@ -220,7 +220,7 @@ const styles = (theme: Theme) =>
       margin: 0,
     },
     surveyInfo: {
-      height: "10rem",
+      height: "12rem",
       overflowY: "auto",
     },
     cardValues: {
