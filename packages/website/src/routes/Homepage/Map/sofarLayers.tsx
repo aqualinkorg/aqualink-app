@@ -31,8 +31,11 @@ const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
 export const SofarLayers = () => {
   return (
     <LayersControl position="topright">
+      <LayersControl.BaseLayer name="No Overlay" key="no-verlay">
+        <TileLayer url="" key="no-overlay" />
+      </LayersControl.BaseLayer>
       {SOFAR_LAYERS.map((def) => (
-        <LayersControl.Overlay name={def.name} key={def.name}>
+        <LayersControl.BaseLayer name={def.name} key={def.name}>
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
@@ -40,7 +43,7 @@ export const SofarLayers = () => {
             key={def.variableId}
             opacity={0.5}
           />
-        </LayersControl.Overlay>
+        </LayersControl.BaseLayer>
       ))}
     </LayersControl>
   );
