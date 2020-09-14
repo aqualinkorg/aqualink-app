@@ -27,7 +27,7 @@ import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
-import StarIcon from "../../../assets/star2.svg";
+import StarIcon from "../../../assets/starIcon.svg";
 
 const MediaCard = ({
   reefId,
