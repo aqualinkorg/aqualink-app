@@ -1,5 +1,6 @@
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import axios from 'axios';
+import { isNil } from 'lodash';
 import axiosRetry from 'axios-retry';
 import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
@@ -23,9 +24,7 @@ type SensorData = {
 };
 
 const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
-  sofarValues
-    .filter((data) => data.value !== undefined)
-    .map(({ value }) => value);
+  sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);
 
 axiosRetry(axios, { retries: 3 });
 
@@ -117,7 +116,7 @@ export async function getSofarDailyData(
   // Filter out unkown values
   return (hindcastVariables
     ? hindcastVariables.values.filter(
-        (data: SofarValue) => data.value && data.value !== 9999,
+        (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
       )
     : []) as SofarValue[];
 }
