@@ -9,7 +9,7 @@ import {
 import type { Order, OrderKeys } from "./utils";
 
 const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
-  <Typography variant="h6" style={{ color: "black" }}>
+  <Typography variant="h6" style={{ color: "black" }} noWrap>
     {title}
     {unit && (
       <Typography
@@ -71,7 +71,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            width={headCell.width}
+            style={{ width: headCell.width, paddingRight: 0 }}
             align="left"
             padding="default"
             sortDirection={props.orderBy === headCell.id ? props.order : false}
