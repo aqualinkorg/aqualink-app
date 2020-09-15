@@ -132,7 +132,7 @@ const styles = () =>
 export interface TooltipData {
   date: string;
   depth: number | null;
-  bottomTemperature: number;
+  bottomTemperature: number | null;
   surfaceTemperature: number;
 }
 
