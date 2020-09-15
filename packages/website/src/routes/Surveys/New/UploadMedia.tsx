@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -9,7 +9,7 @@ import {
   Button,
   Collapse,
   LinearProgress,
-  Popover,
+  Tooltip,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
@@ -23,6 +23,8 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
+import { Pois } from "../../../store/Reefs/types";
+import reefServices from "../../../services/reefServices";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -45,7 +47,9 @@ const UploadMedia = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number | null>(null);
   const [hidden, setHidden] = useState<boolean[]>([]);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
+  const missingObservations =
+    metadata.findIndex((item) => item.observation === null) > -1;
 
   const handleFileDrop = useCallback(
     (acceptedFiles: File[], fileRejections) => {
@@ -66,25 +70,41 @@ const UploadMedia = ({
           comments: "",
         })),
       ]);
-      setHidden([...hidden, ...acceptedFiles.map(() => true)]);
+      setHidden([...hidden, ...acceptedFiles.map(() => false)]);
     },
     [files, previews, metadata, hidden]
   );
 
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    setAnchorEl(event.currentTarget);
-  };
+  useEffect(() => {
+    reefServices
+      .getReefPois(`${reefId}`)
+      .then((response) => setSurveyPointOptions(response.data));
+  }, [setSurveyPointOptions, reefId]);
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  const handlePoiOptionAdd = (index: number, name: string) => {
+    surveyServices
+      .addNewPoi(reefId, name, user?.token)
+      .then(() => {
+        return reefServices.getReefPois(`${reefId}`);
+      })
+      .then((response) => {
+        const points = response.data;
+        setSurveyPointOptions(points);
 
-  const missingObservations = () => {
-    const index = metadata.findIndex((item) => item.observation === null);
-
-    return index > -1;
+        return points.find((point) => point.name === name)?.id;
+      })
+      .then((id) => {
+        const newMetadata = metadata.map((item, key) => {
+          if (key === index) {
+            return {
+              ...item,
+              surveyPoint: `${id}`,
+            };
+          }
+          return item;
+        });
+        setMetadata(newMetadata);
+      });
   };
 
   const deleteCard = (index: number) => {
@@ -123,8 +143,9 @@ const UploadMedia = ({
           const surveyId = survey?.id;
           const surveyMediaData: SurveyMediaData = {
             url,
-            poiId: (metadata[index].surveyPoint ||
-              (undefined as unknown)) as number,
+            poiId: metadata[index].surveyPoint
+              ? parseInt(metadata[index].surveyPoint, 10)
+              : ((undefined as unknown) as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
             metadata: "{}",
@@ -220,11 +241,12 @@ const UploadMedia = ({
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
-        reefId={reefId}
         key={preview}
         index={index}
         preview={preview}
         file={files[index]}
+        surveyPointOptions={surveyPointOptions}
+        handlePoiOptionAdd={handlePoiOptionAdd}
         surveyPoint={
           (metadata && metadata[index] && metadata[index].surveyPoint) || ""
         }
@@ -329,36 +351,6 @@ const UploadMedia = ({
             item
             xs={9}
           >
-            <Popover
-              id="mouse-over-popover"
-              className={classes.popover}
-              open={Boolean(anchorEl) && missingObservations()}
-              anchorEl={anchorEl}
-              classes={{
-                paper: classes.paper,
-              }}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-              onClose={handlePopoverClose}
-              disableRestoreFocus
-            >
-              <Grid
-                className={classes.popoverText}
-                container
-                justify="center"
-                alignItems="center"
-              >
-                <Typography color="textSecondary">
-                  Missing Observation Info
-                </Typography>
-              </Grid>
-            </Popover>
             <Button
               style={{ marginRight: "1rem" }}
               color="primary"
@@ -367,19 +359,20 @@ const UploadMedia = ({
             >
               Cancel
             </Button>
-            <div
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+            <Tooltip
+              title={missingObservations ? "Missing Observation Info" : ""}
             >
-              <Button
-                disabled={missingObservations()}
-                onClick={onMediaSubmit}
-                color="primary"
-                variant="contained"
-              >
-                Save
-              </Button>
-            </div>
+              <div>
+                <Button
+                  disabled={missingObservations}
+                  onClick={onMediaSubmit}
+                  color="primary"
+                  variant="contained"
+                >
+                  Save
+                </Button>
+              </div>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
