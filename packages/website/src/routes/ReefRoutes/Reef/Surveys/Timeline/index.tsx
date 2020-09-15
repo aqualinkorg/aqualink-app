@@ -45,7 +45,11 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
       <Timeline>
         {isAdmin &&
           !(window && window.location.pathname.includes("new_survey")) && (
-            <TimelineItem>
+            <TimelineItem className={classes.timelineItem}>
+              <TimelineOppositeContent
+                className={classes.timelineOppositeContent}
+                style={{ padding: "0 10px" }}
+              />
               <TimelineSeparator>
                 <Link
                   style={{ color: "inherit", textDecoration: "none" }}
@@ -67,7 +71,9 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
           surveyList.map((survey) => (
             <TimelineItem key={survey.id} className={classes.timelineItem}>
               {survey.diveDate && (
-                <TimelineOppositeContent>
+                <TimelineOppositeContent
+                  className={classes.timelineOppositeContent}
+                >
                   <Typography variant="h6" className={classes.dates}>
                     {moment(survey.diveDate).format("MM/DD/YYYY")}
                   </Typography>
@@ -210,6 +216,9 @@ const styles = (theme: Theme) =>
     },
     timelineItem: {
       alignItems: "center",
+    },
+    timelineOppositeContent: {
+      flex: 0.5,
     },
     dot: {
       border: "solid 1px #979797",

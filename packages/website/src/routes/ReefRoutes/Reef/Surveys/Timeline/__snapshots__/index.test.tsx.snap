@@ -12,7 +12,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
         class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-10"
       >
         <div
-          class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent"
+          class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-11"
         >
           <mock-typography
             classname="SurveyTimeline-dates-1"
@@ -28,7 +28,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
             class="SurveyTimeline-connector-9"
           />
           <span
-            class="MuiTimelineDot-root SurveyTimeline-dot-11 MuiTimelineDot-outlinedGrey"
+            class="MuiTimelineDot-root SurveyTimeline-dot-12 MuiTimelineDot-outlinedGrey"
           />
           <hr
             class="SurveyTimeline-connector-9"
@@ -39,6 +39,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
         >
           <div
             class="MuiPaper-root SurveyTimeline-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
+            style="width: 75%;"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -53,7 +54,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                 />
               </div>
               <div
-                class="MuiGrid-root SurveyTimeline-surveyInfo-12 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
+                class="MuiGrid-root SurveyTimeline-surveyInfo-13 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-grid-xs-6"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
