@@ -19,9 +19,11 @@ export interface SurveyMedia {
     | "anthropogenic";
   comments: string | null;
   type: "image" | "video";
+  poiId?: SurveyPoint;
 }
 
 export interface SurveyPoint {
+  id?: number;
   name: string;
   surveyMedia: SurveyMedia[];
 }
@@ -34,7 +36,7 @@ export interface SurveyState {
   comments?: string;
   temperature?: number;
   userId?: publicUser;
-  surveyPoints?: SurveyPoint[];
+  surveyMedia?: SurveyMedia[];
   featuredSurveyMedia?: SurveyMedia;
 }
 

@@ -35,8 +35,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyDetails = useSelector(surveyDetailsSelector);
   const featuredMedia =
     surveyDetails &&
-    surveyDetails.surveyPoints &&
-    getFeaturedMedia(surveyDetails.surveyPoints);
+    surveyDetails.surveyMedia &&
+    getFeaturedMedia(surveyDetails.surveyMedia);
 
   useEffect(() => {
     dispatch(
@@ -135,7 +135,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>
-            <SurveyMediaDetails points={surveyDetails?.surveyPoints} />
+            <SurveyMediaDetails surveyMedia={surveyDetails?.surveyMedia} />
           </Grid>
         </Grid>
       </Grid>

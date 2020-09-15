@@ -17,11 +17,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { SurveyPoint } from "../../../store/Survey/types";
+import { SurveyMedia } from "../../../store/Survey/types";
 import { findOption } from "../../../constants/uploadDropdowns";
 import {
   getNumberOfImages,
   getNumberOfVideos,
+  getSurveyPointsByName,
 } from "../../../helpers/surveyMedia";
 
 const carouselSettings = {
@@ -40,13 +41,22 @@ const carouselSettings = {
   ],
 };
 
-const SurveyMediaDetails = ({ points, classes }: SurveyMediaDetailsProps) => {
+const SurveyMediaDetails = ({
+  surveyMedia,
+  classes,
+}: SurveyMediaDetailsProps) => {
+  if (!surveyMedia) {
+    return <></>;
+  }
+
+  const points = getSurveyPointsByName(surveyMedia);
+
   return (
     <>
       {points &&
         points.map((point) => {
-          const images = getNumberOfImages([point]);
-          const videos = getNumberOfVideos([point]);
+          const images = getNumberOfImages(point.surveyMedia);
+          const videos = getNumberOfVideos(point.surveyMedia);
 
           return (
             <div key={point.name}>
@@ -215,11 +225,11 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyMediaDetailsIncomingProps {
-  points?: SurveyPoint[] | null;
+  surveyMedia?: SurveyMedia[] | null;
 }
 
 SurveyMediaDetails.defaultProps = {
-  points: null,
+  surveyMedia: null,
 };
 
 type SurveyMediaDetailsProps = SurveyMediaDetailsIncomingProps &

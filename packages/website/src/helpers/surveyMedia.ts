@@ -1,27 +1,38 @@
-import type { SurveyPoint } from "../store/Survey/types";
+import { groupBy } from "lodash";
+import type { SurveyMedia } from "../store/Survey/types";
 
-export const getFeaturedMedia = (points: SurveyPoint[]) => {
-  const point = points.find((pointItem) => {
-    return pointItem.surveyMedia.find((media) => media.featured);
-  });
-
-  const media = point?.surveyMedia.find((mediaItem) => mediaItem.featured);
-
+export const getFeaturedMedia = (surveyMedia: SurveyMedia[]) => {
+  const media = surveyMedia.find((mediaItem) => mediaItem.featured);
   return media?.url;
 };
 
-export const getNumberOfImages = (points: SurveyPoint[]) => {
-  const imageMedia = points.map((point) => {
-    return point.surveyMedia.filter((media) => media.type === "image").length;
-  });
-
-  return imageMedia.reduce((a, b) => a + b, 0);
+export const getNumberOfImages = (surveyMedia: SurveyMedia[]) => {
+  return surveyMedia.filter((media) => media.type === "image").length;
 };
 
-export const getNumberOfVideos = (points: SurveyPoint[]) => {
-  const videoMedia = points.map((point) => {
-    return point.surveyMedia.filter((media) => media.type === "video").length;
-  });
+export const getNumberOfVideos = (surveyMedia: SurveyMedia[]) => {
+  return surveyMedia.filter((media) => media.type === "video").length;
+};
 
-  return videoMedia.reduce((a, b) => a + b, 0);
+export const getSurveyPointNames = (surveyMedia: SurveyMedia[]) => {
+  return [...new Set(surveyMedia.map((media) => media.poiId?.name))].filter(
+    (value) => value
+  );
+};
+
+export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) => {
+  return getSurveyPointNames(surveyMedia).length;
+};
+
+export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
+  const groupedMedia = groupBy(
+    surveyMedia.map(
+      (media) => ({ ...media, poiName: media.poiId?.name || "Other" }),
+      "poiName"
+    )
+  );
+  return Object.entries(groupedMedia).map(([k, v]) => ({
+    name: k,
+    surveyMedia: v,
+  }));
 };

@@ -16,6 +16,7 @@ const selectedSurveyInitialState: SelectedSurveyState = {
 
 const surveyInitialState: SurveyState = {
   diveLocation: null,
+  surveyMedia: [],
 };
 
 interface GetSurveyParams {
