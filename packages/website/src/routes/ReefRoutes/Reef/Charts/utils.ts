@@ -67,13 +67,17 @@ export const calculateAxisLimits = (
 
   const yAxisMaxTemp = Math.max(...temperatureData) + 2;
 
-  const yAxisMin = temperatureThreshold
-    ? Math.min(yAxisMinTemp, Math.round(temperatureThreshold) - 5)
-    : Math.round(yAxisMinTemp);
+  const yAxisMin = Math.round(
+    temperatureThreshold
+      ? Math.min(yAxisMinTemp, temperatureThreshold - 5)
+      : Math.round(yAxisMinTemp)
+  );
 
-  const yAxisMax = temperatureThreshold
-    ? Math.max(yAxisMaxTemp, Math.round(temperatureThreshold) + 5)
-    : Math.round(yAxisMaxTemp);
+  const yAxisMax = Math.round(
+    temperatureThreshold
+      ? Math.max(yAxisMaxTemp, temperatureThreshold + 5)
+      : Math.round(yAxisMaxTemp)
+  );
 
   return {
     xAxisMax,
