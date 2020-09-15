@@ -88,10 +88,10 @@ const UploadMedia = ({
         return reefServices.getReefPois(`${reefId}`);
       })
       .then((response) => {
-        const len = response.data.length;
-        setSurveyPointOptions(response.data);
+        const points = response.data;
+        setSurveyPointOptions(points);
 
-        return response.data[len - 1].id;
+        return points.find((point) => point.name === name)?.id;
       })
       .then((id) => {
         const newMetadata = metadata.map((item, key) => {
