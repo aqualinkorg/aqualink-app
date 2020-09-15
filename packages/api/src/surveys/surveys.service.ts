@@ -158,7 +158,9 @@ export class SurveysService {
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
-          (surveyDailyData && surveyDailyData.avgBottomTemperature),
+          (surveyDailyData &&
+            (surveyDailyData.avgBottomTemperature ||
+              surveyDailyData.satelliteTemperature)),
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],

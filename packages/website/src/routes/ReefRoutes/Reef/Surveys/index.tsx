@@ -68,7 +68,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         bgcolor="#f5f6f6"
         position="absolute"
         height="100%"
-        width="100vw"
+        width="99vw"
         zIndex="-1"
       />
       <Grid
@@ -76,6 +76,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         container
         justify="space-between"
         item
+        lg={12}
         xs={11}
         alignItems="baseline"
       >
@@ -171,7 +172,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container justify="center" item xs={11} lg={10}>
+      <Grid container justify="center" item xs={11} lg={12}>
         {windowWidth < 1280 ? (
           <TimelineMobile
             isAdmin={isAdmin}

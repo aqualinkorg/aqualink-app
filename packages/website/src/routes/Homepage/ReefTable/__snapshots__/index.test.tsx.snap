@@ -50,13 +50,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="asc"
-              width="25%"
+              style="width: 25%; padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="true"
                 direction="asc"
               >
                 <mock-typography
+                  nowrap="true"
                   style="color: black;"
                   variant="h6"
                 >
@@ -68,12 +69,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="false"
+              style="padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
                 direction="asc"
               >
                 <mock-typography
+                  nowrap="true"
                   style="color: black;"
                   variant="h6"
                 >
@@ -92,12 +95,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="false"
+              style="padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
                 direction="asc"
               >
                 <mock-typography
+                  nowrap="true"
                   style="color: black;"
                   variant="h6"
                 >
@@ -116,12 +121,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="false"
+              style="padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
                 direction="asc"
               >
                 <mock-typography
+                  nowrap="true"
                   style="color: black;"
                   variant="h6"
                 >
@@ -140,13 +147,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
               padding="default"
               sortdirection="false"
-              width="5%"
+              style="width: 5%; padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
                 direction="asc"
               >
                 <mock-typography
+                  nowrap="true"
                   style="color: black;"
                   variant="h6"
                 >

@@ -3,11 +3,11 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Satellite-card-6"
+    classname="Satellite-card-7"
     style="background-color: rgb(117, 180, 114);"
   >
     <div
-      class="MuiCardHeader-root Satellite-header-8"
+      class="MuiCardHeader-root Satellite-header-2"
     >
       <div
         class="MuiCardHeader-content"
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="satellite"
-                class="Satellite-titleImage-7"
+                class="Satellite-titleImage-8"
                 src="satellite.svg"
               />
             </div>
@@ -59,13 +59,13 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Satellite-contentTextTitles-2"
+              classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
               Surface Temp
             </mock-typography>
             <mock-typography
-              classname="Satellite-contentTextValues-3"
+              classname="Satellite-contentTextValues-4"
               variant="h2"
             >
               20.0 °C
@@ -75,7 +75,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Satellite-contentTextTitles-2"
+              classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
               Historical Max
@@ -84,7 +84,7 @@ exports[`renders as expected 1`] = `
               title="Historical maximum monthly average over the past 7 years"
             >
               <mock-typography
-                classname="Satellite-contentTextValues-3"
+                classname="Satellite-contentTextValues-4"
                 variant="h2"
               >
                 21.0 °C
@@ -92,10 +92,10 @@ exports[`renders as expected 1`] = `
             </mock-tooltip>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="Satellite-contentTextTitles-2"
+              classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
               Heat Stress
@@ -104,7 +104,7 @@ exports[`renders as expected 1`] = `
               title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
             >
               <mock-typography
-                classname="Satellite-contentTextValues-3"
+                classname="Satellite-contentTextValues-4"
                 variant="h2"
               >
                 4.1 DHW
