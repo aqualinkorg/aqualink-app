@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
   withStyles,
@@ -30,13 +30,16 @@ import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const surveyDetails = useSelector(surveyDetailsSelector);
   const featuredMedia =
     surveyDetails &&
     surveyDetails.surveyPoints &&
     getFeaturedMedia(surveyDetails.surveyPoints);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -70,14 +73,14 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           item
           xs={11}
         >
-          <IconButton
-            edge="start"
-            onClick={history.goBack}
-            color="primary"
-            aria-label="menu"
+          <Link
+            style={{ color: "inherit", textDecoration: "none" }}
+            to={`/reefs/${reef.id}`}
           >
-            <ArrowBack />
-          </IconButton>
+            <IconButton edge="start" color="primary" aria-label="menu">
+              <ArrowBack />
+            </IconButton>
+          </Link>
           <Typography color="primary" variant="h5">
             All Surveys
           </Typography>

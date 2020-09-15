@@ -18,6 +18,7 @@ import Dropzone, { FileRejection } from "react-dropzone";
 import { useSelector } from "react-redux";
 
 import MediaCard from "./MediaCard";
+import SuccessDialog from "./SuccessDialog";
 import uploadServices from "../../../services/uploadServices";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
@@ -44,6 +45,7 @@ const UploadMedia = ({
     "success" | "error" | "info" | "warning" | undefined
   >(undefined);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number | null>(null);
   const [hidden, setHidden] = useState<boolean[]>([]);
@@ -55,6 +57,7 @@ const UploadMedia = ({
     (acceptedFiles: File[], fileRejections) => {
       // TODO - add explicit error warnings.
       fileRejections.forEach((rejection: FileRejection) => {
+        // eslint-disable-next-line no-console
         console.log(rejection.errors, rejection.file);
       });
       setFiles([...files, ...acceptedFiles]);
@@ -164,6 +167,7 @@ const UploadMedia = ({
               setAlertMessage("Successfully uploaded media");
               setAlertSeverity("success");
               setAlertOpen(true);
+              setSuccessDialogOpen(true);
             })
             .catch((err) => {
               setAlertMessage(err.message);
@@ -271,6 +275,13 @@ const UploadMedia = ({
   return (
     <>
       {loading && <LinearProgress />}
+      {survey && survey.id && (
+        <SuccessDialog
+          open={successDialogOpen}
+          reefId={reefId}
+          surveyId={survey.id}
+        />
+      )}
       <Grid item xs={12}>
         <Collapse in={alertOpen}>
           <Alert
