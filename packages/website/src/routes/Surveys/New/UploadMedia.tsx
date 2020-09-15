@@ -47,7 +47,7 @@ const UploadMedia = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [featuredFile, setFeaturedFile] = useState<number | null>(null);
+  const [featuredFile, setFeaturedFile] = useState<number>(0);
   const [hidden, setHidden] = useState<boolean[]>([]);
   const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const missingObservations =
@@ -122,17 +122,9 @@ const UploadMedia = ({
     setPreviews([]);
   };
 
-  const setFeatured = useCallback(
-    (index: number) => {
-      if (featuredFile === index) {
-        // If file is already selected, uncheck it
-        setFeaturedFile(null);
-      } else {
-        setFeaturedFile(index);
-      }
-    },
-    [featuredFile]
-  );
+  const setFeatured = useCallback((index: number) => {
+    setFeaturedFile(index);
+  }, []);
 
   const onMediaSubmit = () => {
     files.forEach((file, index) => {
@@ -163,7 +155,7 @@ const UploadMedia = ({
               setMetadata([]);
               setPreviews([]);
               setHidden([]);
-              setFeaturedFile(null);
+              setFeaturedFile(0);
               setAlertMessage("Successfully uploaded media");
               setAlertSeverity("success");
               setAlertOpen(true);

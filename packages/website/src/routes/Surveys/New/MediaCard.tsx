@@ -129,11 +129,13 @@ const MediaCard = ({
                     justify="flex-start"
                   >
                     {index === featuredFile && (
-                      <img
-                        className={classes.starIcon}
-                        src={StarIcon}
-                        alt="featured"
-                      />
+                      <Tooltip title="Featured image">
+                        <img
+                          className={classes.starIcon}
+                          src={StarIcon}
+                          alt="featured"
+                        />
+                      </Tooltip>
                     )}
                   </Grid>
                   <Grid
