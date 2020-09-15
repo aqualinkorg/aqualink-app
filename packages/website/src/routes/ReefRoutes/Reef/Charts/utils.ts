@@ -62,7 +62,7 @@ export const calculateAxisLimits = (
   const temperatureData = [
     ...bottomTemperatureData,
     ...surfaceTemperatureData,
-  ].filter((value) => !isNil(value));
+  ].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - 2;
 
