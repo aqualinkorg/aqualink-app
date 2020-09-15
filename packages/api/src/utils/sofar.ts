@@ -53,18 +53,52 @@ export async function sofarHindcast(
     .catch((error) => {
       if (error.response) {
         console.error(
-          `Sofar API responded with a ${error.response.status} status. ${error.response.message}`,
+          `Sofar Hindcast API responded with a ${error.response.status} status. ${error.response.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(
+          `An error occurred accessing the Sofar Hindcast API - ${error}`,
+        );
+      }
+    });
+}
+
+export async function sofarForecast(
+  modelId: string,
+  variableID: string,
+  latitude: number,
+  longitude: number,
+) {
+  return axios
+    .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
+      params: {
+        variableIDs: [variableID],
+        latitude,
+        longitude,
+        token: process.env.SOFAR_API_TOKEN,
+      },
+    })
+    .then((response) => {
+      // Get latest live (forecast) data
+      return response.data.forecastVariables[0];
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error(
+          `Sofar Forecast API responded with a ${error.response.status} status. ${error.response.message}`,
+        );
+      } else {
+        console.error(
+          `An error occurred accessing the Sofar Forecast API - ${error}`,
+        );
       }
     });
 }
 
 export async function sofarSpotter(
   spotterId: string,
-  start: string,
-  end: string,
+  start?: string,
+  end?: string,
 ) {
   return axios
     .get(SOFAR_SPOTTER_URL, {
@@ -97,21 +131,16 @@ export async function getSofarDailyData(
   variableID: string,
   latitude: number,
   longitude: number,
-  endDate: Date,
+  endDate?: Date,
   hours?: number,
 ) {
   // Get day equivalent in timezone using geo-tz to compute "start" and "end".
   // We fetch daily data from midnight to midnight LOCAL time.
-  const [start, end] = getStartEndDate(endDate, hours);
+  const [start, end] = endDate ? getStartEndDate(endDate, hours) : [];
   // Get data for model and return values
-  const hindcastVariables = await sofarHindcast(
-    modelId,
-    variableID,
-    latitude,
-    longitude,
-    start,
-    end,
-  );
+  const hindcastVariables = endDate
+    ? await sofarHindcast(modelId, variableID, latitude, longitude, start, end)
+    : await sofarForecast(modelId, variableID, latitude, longitude);
 
   // Filter out unkown values
   return (hindcastVariables
@@ -129,9 +158,9 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   spotterId: string,
   // eslint-disable-next-line no-unused-vars
-  endDate: Date,
+  endDate?: Date,
 ): Promise<SpotterData> {
-  const [start, end] = getStartEndDate(endDate);
+  const [start, end] = endDate ? getStartEndDate(endDate) : [];
   const {
     data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);

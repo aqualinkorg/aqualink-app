@@ -42,9 +42,14 @@ export class ReefsController {
 
   @Public()
   @Get(':id/daily_data')
-  // eslint-disable-next-line no-unused-vars
   findDailyData(@Param('id') id: number) {
     return this.reefsService.findDailyData(id);
+  }
+
+  @Public()
+  @Get(':id/live_data')
+  findLiveData(@Param('id') id: number) {
+    return this.reefsService.findLiveData(id);
   }
 
   @Put(':id')

@@ -8,18 +8,59 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { getMin, getMax, getAverage } from '../utils/math';
 import { getSofarDailyData, getSpotterData } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
+import { SofarModels } from '../utils/sofar.types';
+import { sofarVariableIDs } from '../utils/constants';
 
-export async function getDailyData(reef: Reef, date: Date) {
+async function getDegreeHeatingDays(
+  maxMonthlyMean: number,
+  latitude: number,
+  longitude: number,
+  endOfDate?: Date,
+): Promise<number | undefined> {
+  try {
+    // TODO - Get data for the past 84 days.
+    const seaSurfaceTemperatures = [] as number[];
+    return calculateDegreeHeatingDays(seaSurfaceTemperatures, maxMonthlyMean);
+  } catch {
+    const degreeHeatingWeek = await getSofarDailyData(
+      SofarModels.NOAACoralReefWatch,
+      sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
+      latitude,
+      longitude,
+      endOfDate,
+      endOfDate && 96,
+    );
+
+    // Check if there are any data returned
+    // Grab the last one and convert it to degreeHeatingDays
+    return degreeHeatingWeek.length > 0
+      ? degreeHeatingWeek.slice(-1)[0].value * 7
+      : undefined;
+  }
+}
+
+export async function getDailyData(reef: Reef, date?: Date) {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
   // Get the end of the day for the date.
-  const endOfDate = new Date(date);
-  endOfDate.setUTCHours(23, 59, 59, 59);
+  const endOfDate =
+    date &&
+    new Date(
+      Date.UTC(
+        date.getUTCFullYear(),
+        date.getUTCMonth(),
+        date.getUTCDate(),
+        23,
+        59,
+        59,
+        59,
+      ),
+    );
 
   const spotterData = spotterId
-    ? await getSpotterData(spotterId, endOfDate)
+    ? await getSpotterData(spotterId, date && endOfDate)
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -36,37 +77,21 @@ export async function getDailyData(reef: Reef, date: Date) {
 
   // Calculate Degree Heating Days
   // Calculating Degree Heating Days requires exactly 84 days of data.
-  let degreeHeatingDays: number | undefined;
-  try {
-    // TODO - Get data for the past 84 days.
-    const seaSurfaceTemperatures = [] as number[];
-    degreeHeatingDays = calculateDegreeHeatingDays(
-      seaSurfaceTemperatures,
-      maxMonthlyMean,
-    );
-  } catch {
-    const degreeHeatingWeek = await getSofarDailyData(
-      'NOAACoralReefWatch',
-      'degreeHeatingWeek',
-      latitude,
-      longitude,
-      endOfDate,
-      96,
-    );
-
-    degreeHeatingDays =
-      degreeHeatingWeek.length > 0
-        ? degreeHeatingWeek.slice(-1)[0].value * 7
-        : undefined;
-  }
-
-  const satelliteTemperatureData = await getSofarDailyData(
-    'NOAACoralReefWatch',
-    'analysedSeaSurfaceTemperature',
+  const degreeHeatingDays: number | undefined = await getDegreeHeatingDays(
+    maxMonthlyMean,
     latitude,
     longitude,
     endOfDate,
-    48,
+  );
+
+  const satelliteTemperatureData = await getSofarDailyData(
+    SofarModels.NOAACoralReefWatch,
+    sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+      .analysedSeaSurfaceTemperature,
+    latitude,
+    longitude,
+    endOfDate,
+    endOfDate && 48,
   );
 
   // Get satelliteTemperature
@@ -82,8 +107,9 @@ export async function getDailyData(reef: Reef, date: Date) {
       ? spotterData.significantWaveHeight
       : (
           await getSofarDailyData(
-            'NOAAOperationalWaveModel',
-            'NOAAOperationalWaveModel-significantWaveHeight',
+            SofarModels.NOAAOperationalWaveModel,
+            sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+              .significantWaveHeight,
             latitude,
             longitude,
             endOfDate,
@@ -99,8 +125,9 @@ export async function getDailyData(reef: Reef, date: Date) {
       ? spotterData.waveMeanDirection
       : (
           await getSofarDailyData(
-            'NOAAOperationalWaveModel',
-            'NOAAOperationalWaveModel-meanDirectionWindWaves',
+            SofarModels.NOAAOperationalWaveModel,
+            sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+              .meanDirectionWindWaves,
             latitude,
             longitude,
             endOfDate,
@@ -114,8 +141,8 @@ export async function getDailyData(reef: Reef, date: Date) {
       ? spotterData.wavePeakPeriod
       : (
           await getSofarDailyData(
-            'NOAAOperationalWaveModel',
-            'NOAAOperationalWaveModel-peakPeriod',
+            SofarModels.NOAAOperationalWaveModel,
+            sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
             latitude,
             longitude,
             endOfDate,
@@ -127,8 +154,8 @@ export async function getDailyData(reef: Reef, date: Date) {
   // Get NOAA GFS wind data
   const windVelocities = (
     await getSofarDailyData(
-      'GFS',
-      'GFS-magnitude10MeterWind',
+      SofarModels.GFS,
+      sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
       latitude,
       longitude,
       endOfDate,
@@ -141,8 +168,8 @@ export async function getDailyData(reef: Reef, date: Date) {
 
   const windDirections = (
     await getSofarDailyData(
-      'GFS',
-      'GFS-direction10MeterWind',
+      SofarModels.GFS,
+      sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
       latitude,
       longitude,
       endOfDate,
@@ -152,7 +179,7 @@ export async function getDailyData(reef: Reef, date: Date) {
   const windDirection = getAverage(windDirections, true);
 
   return {
-    reef: { id: reef.id },
+    reef,
     date,
     minBottomTemperature,
     maxBottomTemperature,
