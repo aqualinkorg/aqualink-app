@@ -1,4 +1,3 @@
-import { isNil } from "lodash";
 import type { Data } from "../../../../store/Reefs/types";
 
 export const createDatasets = (dailyData: Data[]) => {
