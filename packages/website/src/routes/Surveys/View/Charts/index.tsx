@@ -22,6 +22,7 @@ const Charts = ({
 }: ChartsProps) => {
   const maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null;
   const temperatureChartRef = useRef<Line>(null);
+
   const chartHeight = 60;
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
