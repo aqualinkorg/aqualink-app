@@ -17,7 +17,6 @@ import {
   CardContent,
   Tooltip,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -25,12 +24,9 @@ import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
 import StarIcon from "../../../assets/starIcon.svg";
 
 const MediaCard = ({
-  reefId,
   preview,
   surveyPoint,
   observation,
@@ -52,7 +48,6 @@ const MediaCard = ({
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
   const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
   const [newPoiName, setNewPoiName] = useState<string>("");
-  const user = useSelector(userInfoSelector);
 
   const handleNewPoiNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -96,7 +91,6 @@ const MediaCard = ({
                   color="primary"
                   onClick={() => {
                     handlePoiOptionAdd(index, newPoiName);
-                    surveyServices.addNewPoi(reefId, newPoiName, user?.token);
                     setAddPoiDialogOpen(false);
                   }}
                 >
@@ -189,7 +183,7 @@ const MediaCard = ({
                   {surveyPointOptions.map((item) => (
                     <MenuItem
                       className={classes.textField}
-                      value={item.name || ""}
+                      value={item.id}
                       key={item.id}
                     >
                       {item.name}
@@ -343,7 +337,6 @@ const styles = (theme: Theme) =>
   });
 
 interface MediaCardIncomingProps {
-  reefId: number;
   index: number;
   preview: string;
   surveyPoint: string;

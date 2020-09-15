@@ -81,20 +81,29 @@ const UploadMedia = ({
   }, [setSurveyPointOptions, reefId]);
 
   const handlePoiOptionAdd = (index: number, name: string) => {
-    setSurveyPointOptions([
-      ...surveyPointOptions,
-      { id: surveyPointOptions.length + 1, name },
-    ]);
-    const newMetadata = metadata.map((item, key) => {
-      if (key === index) {
-        return {
-          ...item,
-          surveyPoint: name,
-        };
-      }
-      return item;
-    });
-    setMetadata(newMetadata);
+    surveyServices
+      .addNewPoi(reefId, name, user?.token)
+      .then(() => {
+        return reefServices.getReefPois(`${reefId}`);
+      })
+      .then((response) => {
+        const len = response.data.length;
+        setSurveyPointOptions(response.data);
+
+        return response.data[len - 1].id;
+      })
+      .then((id) => {
+        const newMetadata = metadata.map((item, key) => {
+          if (key === index) {
+            return {
+              ...item,
+              surveyPoint: `${id}`,
+            };
+          }
+          return item;
+        });
+        setMetadata(newMetadata);
+      });
   };
 
   const handlePopoverOpen = (
@@ -149,8 +158,9 @@ const UploadMedia = ({
           const surveyId = survey?.id;
           const surveyMediaData: SurveyMediaData = {
             url,
-            poiId: (metadata[index].surveyPoint ||
-              (undefined as unknown)) as number,
+            poiId: metadata[index].surveyPoint
+              ? parseInt(metadata[index].surveyPoint, 10)
+              : ((undefined as unknown) as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
             metadata: "{}",
@@ -246,7 +256,6 @@ const UploadMedia = ({
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
-        reefId={reefId}
         key={preview}
         index={index}
         preview={preview}
