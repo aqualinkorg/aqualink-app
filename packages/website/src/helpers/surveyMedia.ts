@@ -31,8 +31,8 @@ export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
       "poiName"
     )
   );
-  return Object.entries(groupedMedia).map(([k, v]) => ({
-    name: k,
-    surveyMedia: v,
+  return Object.entries(groupedMedia).map(([name, pointSurveyMedia]) => ({
+    name,
+    surveyMedia: pointSurveyMedia,
   }));
 };
