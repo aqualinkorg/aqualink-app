@@ -80,7 +80,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                 >
                   <a
                     href="/reefs/0/survey_details/46"

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState, useCallback } from "react";
+import React, { ChangeEvent, useState, useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -15,30 +15,29 @@ import {
   Dialog,
   Card,
   CardContent,
+  Tooltip,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import StarIcon from "@material-ui/icons/Star";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import observationOptions from "../../../constants/uploadDropdowns";
-import reefServices from "../../../services/reefServices";
 import { Pois } from "../../../store/Reefs/types";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
+import StarIcon from "../../../assets/starIcon.svg";
 
 const MediaCard = ({
-  reefId,
   preview,
   surveyPoint,
   observation,
   comments,
+  surveyPointOptions,
   index,
   file,
   featuredFile,
   hidden,
   handleHiddenChange,
+  handlePoiOptionAdd,
   deleteCard,
   setFeatured,
   handleCommentsChange,
@@ -47,22 +46,14 @@ const MediaCard = ({
   classes,
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
-  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
   const [newPoiName, setNewPoiName] = useState<string>("");
-  const user = useSelector(userInfoSelector);
 
   const handleNewPoiNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setNewPoiName(event.target.value);
   };
-
-  useEffect(() => {
-    reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setSurveyPointOptions(response.data));
-  }, [setSurveyPointOptions, reefId]);
 
   const onImageClick = useCallback(() => {
     setFeatured(index);
@@ -99,11 +90,7 @@ const MediaCard = ({
                   variant="outlined"
                   color="primary"
                   onClick={() => {
-                    setSurveyPointOptions([
-                      ...surveyPointOptions,
-                      { id: surveyPointOptions.length + 1, name: newPoiName },
-                    ]);
-                    surveyServices.addNewPoi(reefId, newPoiName, user?.token);
+                    handlePoiOptionAdd(index, newPoiName);
                     setAddPoiDialogOpen(false);
                   }}
                 >
@@ -141,7 +128,13 @@ const MediaCard = ({
                     alignItems="flex-start"
                     justify="flex-start"
                   >
-                    {index === featuredFile && <StarIcon color="primary" />}
+                    {index === featuredFile && (
+                      <img
+                        className={classes.starIcon}
+                        src={StarIcon}
+                        alt="featured"
+                      />
+                    )}
                   </Grid>
                   <Grid
                     style={{ height: "50%" }}
@@ -271,9 +264,19 @@ const MediaCard = ({
                 justify="flex-end"
                 xs={12}
               >
-                <IconButton onClick={() => handleHiddenChange(index)}>
-                  <VisibilityIcon color={!hidden ? "primary" : "inherit"} />
-                </IconButton>
+                <Tooltip
+                  title={
+                    hidden ? "Make this image visible" : "Hide image from users"
+                  }
+                >
+                  <IconButton onClick={() => handleHiddenChange(index)}>
+                    {hidden ? (
+                      <VisibilityOffIcon color="inherit" />
+                    ) : (
+                      <VisibilityIcon color="primary" />
+                    )}
+                  </IconButton>
+                </Tooltip>
               </Grid>
               <Grid
                 container
@@ -327,19 +330,24 @@ const styles = (theme: Theme) =>
       height: "10rem",
       width: "20rem",
     },
+    starIcon: {
+      height: 42,
+      padding: 8,
+    },
   });
 
 interface MediaCardIncomingProps {
-  reefId: number;
   index: number;
   preview: string;
   surveyPoint: string;
   observation: string;
   comments: string;
+  surveyPointOptions: Pois[];
   file?: File | null;
   featuredFile: number | null;
   hidden: boolean;
   handleHiddenChange: (index: number) => void;
+  handlePoiOptionAdd: (index: number, name: string) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;
