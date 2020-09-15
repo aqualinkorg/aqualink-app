@@ -39,7 +39,6 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
         >
           <div
             class="MuiPaper-root SurveyTimeline-surveyCard-3 MuiPaper-elevation0 MuiPaper-rounded"
-            style="width: 75%;"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
