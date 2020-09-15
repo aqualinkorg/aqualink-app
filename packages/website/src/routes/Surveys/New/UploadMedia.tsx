@@ -9,7 +9,7 @@ import {
   Button,
   Collapse,
   LinearProgress,
-  Popover,
+  Tooltip,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
@@ -47,8 +47,9 @@ const UploadMedia = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number | null>(null);
   const [hidden, setHidden] = useState<boolean[]>([]);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
+  const missingObservations =
+    metadata.findIndex((item) => item.observation === null) > -1;
 
   const handleFileDrop = useCallback(
     (acceptedFiles: File[], fileRejections) => {
@@ -104,22 +105,6 @@ const UploadMedia = ({
         });
         setMetadata(newMetadata);
       });
-  };
-
-  const handlePopoverOpen = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const missingObservations = () => {
-    const index = metadata.findIndex((item) => item.observation === null);
-
-    return index > -1;
   };
 
   const deleteCard = (index: number) => {
@@ -366,36 +351,6 @@ const UploadMedia = ({
             item
             xs={9}
           >
-            <Popover
-              id="mouse-over-popover"
-              className={classes.popover}
-              open={Boolean(anchorEl) && missingObservations()}
-              anchorEl={anchorEl}
-              classes={{
-                paper: classes.paper,
-              }}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-              onClose={handlePopoverClose}
-              disableRestoreFocus
-            >
-              <Grid
-                className={classes.popoverText}
-                container
-                justify="center"
-                alignItems="center"
-              >
-                <Typography color="textSecondary">
-                  Missing Observation Info
-                </Typography>
-              </Grid>
-            </Popover>
             <Button
               style={{ marginRight: "1rem" }}
               color="primary"
@@ -404,19 +359,20 @@ const UploadMedia = ({
             >
               Cancel
             </Button>
-            <div
-              onMouseEnter={handlePopoverOpen}
-              onMouseLeave={handlePopoverClose}
+            <Tooltip
+              title={missingObservations ? "Missing Observation Info" : ""}
             >
-              <Button
-                disabled={missingObservations()}
-                onClick={onMediaSubmit}
-                color="primary"
-                variant="contained"
-              >
-                Save
-              </Button>
-            </div>
+              <div>
+                <Button
+                  disabled={missingObservations}
+                  onClick={onMediaSubmit}
+                  color="primary"
+                  variant="contained"
+                >
+                  Save
+                </Button>
+              </div>
+            </Tooltip>
           </Grid>
         )}
       </Grid>
