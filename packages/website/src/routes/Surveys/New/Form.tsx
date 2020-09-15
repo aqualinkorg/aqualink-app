@@ -66,6 +66,7 @@ const SurveyForm = ({ reefId, changeTab }: SurveyFormProps) => {
         </Collapse>
       </Grid>
       <Form
+        reefId={reefId}
         onSubmit={onSubmit}
         handleWeatherChange={handleWeatherChange}
         weather={weather}

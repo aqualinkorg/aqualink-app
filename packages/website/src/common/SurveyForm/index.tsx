@@ -10,6 +10,7 @@ import {
   MenuItem,
   TextField,
   Button,
+  Link,
 } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import {
@@ -24,6 +25,7 @@ import { diveLocationSelector } from "../../store/Survey/surveySlice";
 import { SurveyData } from "../../store/Survey/types";
 
 const SurveyForm = ({
+  reefId,
   onSubmit,
   handleWeatherChange,
   weather,
@@ -228,6 +230,13 @@ const SurveyForm = ({
         xs={12}
       >
         <Grid style={{ marginRight: "3rem" }} item xs={2}>
+          <Link href={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
+            <Button onClick={resetForm} color="primary" variant="outlined">
+              Cancel
+            </Button>
+          </Link>
+        </Grid>
+        <Grid style={{ marginRight: "3rem" }} item xs={2}>
           <Button onClick={resetForm} color="primary" variant="outlined">
             Clear
           </Button>
@@ -256,6 +265,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyFormIncomingProps {
+  reefId: number;
   onSubmit: (data: any) => void;
   handleWeatherChange: (
     event: ChangeEvent<{
