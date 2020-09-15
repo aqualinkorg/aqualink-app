@@ -282,7 +282,7 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           xs={12}
         >
           <Grid style={{ marginRight: "3rem" }} item xs={2}>
-            <Link href={`/reefs/${reefId}`}>
+            <Link href={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
               <Button onClick={resetForm} color="primary" variant="outlined">
                 Cancel
               </Button>
