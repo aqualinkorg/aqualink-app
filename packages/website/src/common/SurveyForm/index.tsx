@@ -68,7 +68,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
     reset({
       diveTime: null,
       diveDate: null,
-      comments: "",
+      comments: null,
     });
   };
 
