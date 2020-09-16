@@ -17,6 +17,9 @@ import type { SurveyState } from "../../../store/Survey/types";
 import ObservationBox from "./observationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
+  const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
+  const nImages = getNumberOfImages(survey?.surveyMedia || []);
+
   return (
     <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
       {survey && (
@@ -39,14 +42,14 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
                 variant="h4"
                 className={classes.inlineText}
               >
-                {getNumberOfSurveyPoints(survey.surveyMedia || [])}
+                {nSurveyPoints}
               </Typography>
               <Typography
                 color="initial"
                 variant="h6"
                 className={classes.inlineText}
               >
-                SURVEY POINTS
+                SURVEY POINT{nSurveyPoints === 1 ? "" : "S"}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -55,14 +58,14 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
                 variant="h4"
                 className={classes.inlineText}
               >
-                {getNumberOfImages(survey.surveyMedia || [])}
+                {nImages}
               </Typography>
               <Typography
                 color="initial"
                 variant="h6"
                 className={classes.inlineText}
               >
-                IMAGES
+                IMAGE{nImages === 1 ? "" : "S"}
               </Typography>
             </Grid>
           </Grid>

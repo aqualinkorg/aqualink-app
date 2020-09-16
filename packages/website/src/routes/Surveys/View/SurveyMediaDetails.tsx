@@ -86,21 +86,21 @@ const SurveyMediaDetails = ({
                   </Grid>
                 </Grid>
                 <Grid container item xs={12} md={6} lg={2} spacing={2}>
-                  {images > 0 && (
-                    <Grid item xs={6} className={classes.imageLabel}>
-                      <Typography variant="subtitle1">
-                        {`${images} images`}
-                      </Typography>
-                      <Box pl={2}>
-                        <PermMediaIcon />
-                      </Box>
-                    </Grid>
-                  )}
+                  <Grid item xs={6} className={classes.imageLabel}>
+                    <Typography variant="subtitle1">
+                      {`${images} image`}
+                      {images === 1 ? "" : "s"}
+                    </Typography>
+                    <Box pl={2}>
+                      <PermMediaIcon />
+                    </Box>
+                  </Grid>
                   {videos > 0 && (
                     <Grid container item xs={6} spacing={1}>
                       <Grid item>
                         <Typography variant="subtitle1">
-                          {`${videos} videos`}
+                          {`${videos} video`}
+                          {videos === 1 ? "" : "s"}
                         </Typography>
                       </Grid>
                       <Grid item>
