@@ -48,6 +48,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
             <TimelineItem className={classes.timelineItem}>
               <TimelineOppositeContent
                 className={classes.timelineOppositeContent}
+                // Modify padding to center the Add survey symbol.
                 style={{ padding: "0 10px" }}
               />
               <TimelineSeparator>
