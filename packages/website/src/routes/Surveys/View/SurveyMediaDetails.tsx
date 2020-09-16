@@ -5,7 +5,6 @@ import {
   createStyles,
   Theme,
   Card,
-  Button,
   Grid,
   Typography,
   CardMedia,
