@@ -26,8 +26,7 @@ import { SurveyData, SurveyState } from "../../store/Survey/types";
 
 const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
-  const [diveDate, setDiveDate] = useState<string | null>(null);
-  const [diveTime, setDiveTime] = useState<string | null>(null);
+  const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
     "calm"
   );
@@ -36,16 +35,10 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
     reValidateMode: "onSubmit",
   });
 
-  const handleDiveDateChange = (date: Date | null) => {
-    setDiveDate(
-      `${
-        date ? date.getMonth() + 1 : ""
-      }/${date?.getDate()}/${date?.getFullYear()}`
-    );
-  };
-
-  const handleDiveTimeChange = (date: Date | null) => {
-    setDiveTime(`${date?.getHours()}:${date?.getMinutes()}`);
+  const handleDiveDateTimeChange = (date: Date | null) => {
+    if (date) {
+      setDiveDateTime(date);
+    }
   };
 
   const handleWeatherChange = (event: ChangeEvent<{ value: unknown }>) => {
@@ -54,14 +47,14 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
 
   const nativeSubmit = useCallback(
     (data: any) => {
-      const diveDateTime = new Date(
-        `${data.diveDate}, ${data.diveTime}`
-      ).toISOString();
-      const weatherConditions = weather;
-      const { comments } = data;
-      onSubmit(diveDateTime, diveLocation, weatherConditions, comments);
+      if (diveDateTime) {
+        const dateTime = diveDateTime.toISOString();
+        const weatherConditions = weather;
+        const { comments } = data;
+        onSubmit(dateTime, diveLocation, weatherConditions, comments);
+      }
     },
-    [onSubmit, weather, diveLocation]
+    [onSubmit, diveDateTime, weather, diveLocation]
   );
 
   const resetForm = () => {
@@ -70,8 +63,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
       diveDate: null,
       comments: null,
     });
-    setDiveDate(null);
-    setDiveTime(null);
+    setDiveDateTime(null);
     setWeather("calm");
   };
 
@@ -110,10 +102,14 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
+                pattern: {
+                  value: /(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d/i,
+                  message: "Invalid date format",
+                },
               })}
               error={!!errors.diveDate}
-              value={diveDate ? new Date(diveDate) : null}
-              onChange={handleDiveDateChange}
+              value={diveDateTime}
+              onChange={handleDiveDateTimeChange}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
@@ -133,18 +129,15 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               helperText={errors?.diveTime?.message || ""}
               inputRef={register({
                 required: "This is a required field",
+                pattern: {
+                  value: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
+                  message: "Invalid time format",
+                },
               })}
               error={!!errors.diveTime}
               format="H:mm"
-              value={
-                // eslint-disable-next-line no-nested-ternary
-                diveTime
-                  ? diveDate
-                    ? new Date(`${diveDate}, ${diveTime}`)
-                    : new Date(`08/12/2020, ${diveTime}`)
-                  : null
-              }
-              onChange={handleDiveTimeChange}
+              value={diveDateTime}
+              onChange={handleDiveDateTimeChange}
               KeyboardButtonProps={{
                 "aria-label": "change time",
               }}
