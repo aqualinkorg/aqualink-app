@@ -70,6 +70,9 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
       diveDate: null,
       comments: null,
     });
+    setDiveDate(null);
+    setDiveTime(null);
+    setWeather("calm");
   };
 
   return (
