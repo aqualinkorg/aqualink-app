@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
@@ -57,6 +58,9 @@ export class Survey {
 
   @OneToOne(() => SurveyMedia, (surveyMedia) => surveyMedia.surveyId)
   featuredSurveyMedia?: SurveyMedia;
+
+  @OneToMany(() => SurveyMedia, (surveyMedia) => surveyMedia.surveyId)
+  surveyMedia?: SurveyMedia[];
 
   latestDailyData?: DailyData;
 
