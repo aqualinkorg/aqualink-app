@@ -1,15 +1,23 @@
-import { SurveyState, SurveyMedia } from "../../../../store/Survey/types";
+import { SurveyListState, Observations } from "../../../../store/Survey/types";
 
 const filterSurveys = (
-  list: SurveyState[],
-  observation: SurveyMedia["observations"] | "any",
-  point: string
-): SurveyState[] => {
-  if (observation === "any") {
+  list: SurveyListState["list"],
+  observation: Observations | "any",
+  point: number
+): SurveyListState["list"] => {
+  if (observation === "any" && point === -1) {
     return list;
   }
+  if (observation === "any") {
+    return list.filter((survey) => survey.surveyPoints?.includes(point));
+  }
+  if (point === -1) {
+    return list.filter((survey) => survey.observations?.includes(observation));
+  }
   return list.filter(
-    (survey) => survey.featuredSurveyMedia?.observations === observation
+    (survey) =>
+      survey.observations?.includes(observation) &&
+      survey.surveyPoints?.includes(point)
   );
 };
 

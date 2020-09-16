@@ -4,5 +4,5 @@ export interface TimelineProps {
   reefId: number;
   isAdmin: boolean;
   observation: SurveyMedia["observations"] | "any";
-  point: string;
+  point: number;
 }
