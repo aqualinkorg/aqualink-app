@@ -107,7 +107,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               format="MM/dd/yyyy"
               id="dive-date"
               name="diveDate"
-              helperText={errors.diveDate ? errors.diveDate.message : ""}
+              helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
               })}
@@ -130,7 +130,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               className={classes.textField}
               id="time-picker"
               name="diveTime"
-              helperText={errors.diveTime ? errors.diveTime.message : ""}
+              helperText={errors?.diveTime?.message || ""}
               inputRef={register({
                 required: "This is a required field",
               })}
@@ -175,7 +175,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
             fullWidth
             placeholder="LAT"
             label="Latitude"
-            value={diveLocation ? diveLocation.lat : ""}
+            value={diveLocation?.lat || ""}
             disabled
           />
         </Grid>
@@ -186,7 +186,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
             fullWidth
             placeholder="LONG"
             label="Longitude"
-            value={diveLocation ? diveLocation.lng : ""}
+            value={diveLocation?.lng || ""}
             disabled
           />
         </Grid>
