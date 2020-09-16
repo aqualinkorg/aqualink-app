@@ -267,7 +267,7 @@ const UploadMedia = ({
   return (
     <>
       {loading && <LinearProgress />}
-      {survey && survey.id && (
+      {survey?.id && (
         <SuccessDialog
           open={successDialogOpen}
           reefId={reefId}

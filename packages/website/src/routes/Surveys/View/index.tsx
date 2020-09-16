@@ -33,9 +33,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
   const surveyDetails = useSelector(surveyDetailsSelector);
   const featuredMedia =
-    surveyDetails &&
-    surveyDetails.surveyPoints &&
-    getFeaturedMedia(surveyDetails.surveyPoints);
+    surveyDetails?.surveyPoints && getFeaturedMedia(surveyDetails.surveyPoints);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
