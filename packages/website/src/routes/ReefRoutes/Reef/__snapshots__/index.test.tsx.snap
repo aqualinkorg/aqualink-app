@@ -763,13 +763,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       Historical Max
                     </mock-typography>
                     <mock-tooltip
-                      title="Historical maximum monthly average over the past 7 years"
+                      title="Historical maximum monthly average over the past 20 years"
                     >
                       <mock-typography
                         classname="Satellite-contentTextValues-130"
                         variant="h2"
                       >
-                        23.0 °C
+                        22.0 °C
                       </mock-typography>
                     </mock-tooltip>
                   </div>
