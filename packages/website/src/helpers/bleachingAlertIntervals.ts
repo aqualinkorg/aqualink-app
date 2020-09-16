@@ -4,55 +4,83 @@ import watch from "../assets/alert_watch.svg";
 import lvl1 from "../assets/alert_lvl1.svg";
 import lvl2 from "../assets/alert_lvl2.svg";
 
-const bleachingAlertIntervals = [
-  {
-    max: 5,
-    image: noStress,
-    color: "#C6E5FA",
-  },
-  {
-    max: 10,
-    image: warning,
-    color: "#FFF200",
-  },
-  {
-    max: 15,
-    image: watch,
-    color: "#F8AB00",
-  },
-  {
-    max: 20,
-    image: lvl1,
-    color: "#EF0000",
-  },
-  {
-    max: Infinity,
-    image: lvl2,
-    color: "#940000",
-  },
-];
-
 type Interval = {
-  max: number;
   image: string;
   color: string;
 };
 
-const findInterval = (degreeHeatingWeeks?: number | null): Interval => {
-  const interval = bleachingAlertIntervals.find(
-    (item) => (degreeHeatingWeeks || 0) < item.max
-  );
-  return interval || bleachingAlertIntervals[0];
+/**
+ * Calculating bleaching alert level based on NOAA defintions:
+ * available at https://coralreefwatch.noaa.gov/subscriptions/vs.php
+ * @param temperatureThreshold
+ * @param satelliteTemperature
+ * @param degreeHeatingWeeks
+ */
+const findInterval = (
+  maxMonthlyMean: number | null,
+  satelliteTemperature: number | null,
+  degreeHeatingWeeks?: number | null
+): Interval => {
+  if (
+    satelliteTemperature &&
+    maxMonthlyMean &&
+    satelliteTemperature < maxMonthlyMean
+  ) {
+    return {
+      image: noStress,
+      color: "#C6E5FA",
+    };
+  }
+  if (
+    satelliteTemperature &&
+    maxMonthlyMean &&
+    satelliteTemperature < maxMonthlyMean + 1
+  ) {
+    return {
+      image: watch,
+      color: "#FFF200",
+    };
+  }
+  if (degreeHeatingWeeks || 0 < 4) {
+    return {
+      image: warning,
+      color: "#F8AB00",
+    };
+  }
+  if (degreeHeatingWeeks || 0 < 8) {
+    return {
+      image: lvl1,
+      color: "#EF0000",
+    };
+  }
+  if (degreeHeatingWeeks || 0 > 8) {
+    return {
+      image: lvl2,
+      color: "#940000",
+    };
+  }
+  return {
+    image: noStress,
+    color: "#C6E5FA",
+  };
 };
 
-export const alertFinder = (degreeHeatingWeeks?: number | null): string => {
-  return findInterval(degreeHeatingWeeks).image;
+export const alertFinder = (
+  maxMonthlyMean: number | null,
+  satelliteTemperature: number | null,
+  degreeHeatingWeeks?: number | null
+): string => {
+  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)
+    .image;
 };
 
 export const alertColorFinder = (
+  maxMonthlyMean: number | null,
+  satelliteTemperature: number | null,
   degreeHeatingWeeks?: number | null
 ): string => {
-  return findInterval(degreeHeatingWeeks).color;
+  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)
+    .color;
 };
 
 export default { alertFinder, alertColorFinder };
