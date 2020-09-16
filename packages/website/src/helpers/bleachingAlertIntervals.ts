@@ -21,21 +21,17 @@ const findInterval = (
   satelliteTemperature: number | null,
   degreeHeatingWeeks?: number | null
 ): Interval => {
-  if (
+  const hotSpot =
     satelliteTemperature &&
     maxMonthlyMean &&
-    satelliteTemperature < maxMonthlyMean
-  ) {
+    satelliteTemperature - maxMonthlyMean;
+  if (hotSpot && hotSpot < 0) {
     return {
       image: noStress,
       color: "#C6E5FA",
     };
   }
-  if (
-    satelliteTemperature &&
-    maxMonthlyMean &&
-    satelliteTemperature < maxMonthlyMean + 1
-  ) {
+  if (hotSpot && hotSpot < 1) {
     return {
       image: watch,
       color: "#FFF200",
