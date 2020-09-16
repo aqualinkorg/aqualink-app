@@ -16,10 +16,17 @@ import { useSelector } from "react-redux";
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
 import { userInfoSelector } from "../../../../store/User/userSlice";
+import observationOptions from "../../../../constants/uploadDropdowns";
+import { SurveyMedia } from "../../../../store/Survey/types";
+import reefServices from "../../../../services/reefServices";
+import { Pois } from "../../../../store/Reefs/types";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
-  const [history, setHistory] = useState<string>("all");
-  const [observation, setObservation] = useState<string>("any");
+  const [point, setPoint] = useState<string>("all");
+  const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const [observation, setObservation] = useState<
+    SurveyMedia["observations"] | "any"
+  >("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
   const isAdmin = user
@@ -27,6 +34,12 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       (user.adminLevel === "reef_manager" &&
         Boolean(user.administeredReefs?.find((reef) => reef.id === reefId)))
     : false;
+
+  useEffect(() => {
+    reefServices
+      .getReefPois(`${reefId}`)
+      .then((response) => setPointOptions(response.data));
+  }, [setPointOptions, reefId]);
 
   const onResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -39,16 +52,18 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     };
   }, [onResize]);
 
-  const handleHistoryChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    setHistory(event.target.value as string);
+  const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPoint(event.target.value as string);
   };
 
   const handleObservationChange = (
     event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setObservation(event.target.value as string);
+    setObservation(event.target.value as SurveyMedia["observations"] | "any");
+  };
+
+  const pointIdFinder = (name: string) => {
+    return pointOptions.find((option) => option.name === name)?.id || -1;
   };
 
   return (
@@ -63,7 +78,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       <Grid
         className={classes.surveyWrapper}
         container
-        justify="center"
+        justify="space-between"
         item
         lg={12}
         xs={11}
@@ -80,27 +95,20 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
             {isAdmin ? "Your survey history" : "Survey History"}
           </Typography>
         </Grid>
-        <Grid
-          container
-          alignItems="center"
-          justify={windowWidth < 1280 ? "flex-start" : "center"}
-          item
-          md={12}
-          lg={4}
-        >
+        <Grid container alignItems="center" item md={12} lg={4}>
           <Grid item>
             <Typography variant="h6" className={classes.subTitle}>
-              Survey History:
+              Survey Point:
             </Typography>
           </Grid>
           <Grid item>
             <FormControl className={classes.formControl}>
               <Select
-                labelId="survey-history"
-                id="survey-history"
-                name="survey-history"
-                value={history}
-                onChange={handleHistoryChange}
+                labelId="survey-point"
+                id="survey-point"
+                name="survey-point"
+                value={point}
+                onChange={handlePointChange}
                 className={classes.selectedItem}
               >
                 <MenuItem value="all">
@@ -108,6 +116,18 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                     All
                   </Typography>
                 </MenuItem>
+                {pointOptions.map(
+                  (item) =>
+                    item.name !== null && (
+                      <MenuItem
+                        className={classes.menuItem}
+                        value={item.name}
+                        key={item.name}
+                      >
+                        {item.name}
+                      </MenuItem>
+                    )
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -135,12 +155,22 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                 value={observation}
                 onChange={handleObservationChange}
                 className={classes.selectedItem}
+                inputProps={{ className: classes.textField }}
               >
                 <MenuItem value="any">
                   <Typography className={classes.menuItem} variant="h6">
                     Any
                   </Typography>
                 </MenuItem>
+                {observationOptions.map((item) => (
+                  <MenuItem
+                    className={classes.menuItem}
+                    value={item.key}
+                    key={item.key}
+                  >
+                    {item.value}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -148,9 +178,19 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       </Grid>
       <Grid container justify="center" item xs={11} lg={12}>
         {windowWidth < 1280 ? (
-          <TimelineMobile isAdmin={isAdmin} reefId={reefId} />
+          <TimelineMobile
+            isAdmin={isAdmin}
+            reefId={reefId}
+            observation={observation}
+            point={pointIdFinder(point)}
+          />
         ) : (
-          <Timeline isAdmin={isAdmin} reefId={reefId} />
+          <Timeline
+            isAdmin={isAdmin}
+            reefId={reefId}
+            observation={observation}
+            point={pointIdFinder(point)}
+          />
         )}
       </Grid>
     </Grid>
@@ -187,12 +227,19 @@ const styles = (theme: Theme) =>
     },
     formControl: {
       minWidth: 120,
+      maxWidth: 240,
     },
     selectedItem: {
       color: theme.palette.primary.main,
     },
     menuItem: {
       color: theme.palette.primary.main,
+    },
+    textField: {
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "block",
     },
   });
 
