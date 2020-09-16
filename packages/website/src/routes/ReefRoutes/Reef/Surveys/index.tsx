@@ -62,13 +62,8 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     setObservation(event.target.value as SurveyMedia["observations"] | "any");
   };
 
-  const pointFinder = () => {
-    return (
-      pointOptions.find((option) => option.name === point) || {
-        id: -1,
-        name: "all",
-      }
-    );
+  const pointIdFinder = (name: string) => {
+    return pointOptions.find((option) => option.name === name)?.id || -1;
   };
 
   return (
@@ -187,14 +182,14 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
             isAdmin={isAdmin}
             reefId={reefId}
             observation={observation}
-            point={pointFinder().id}
+            point={pointIdFinder(point)}
           />
         ) : (
           <Timeline
             isAdmin={isAdmin}
             reefId={reefId}
             observation={observation}
-            point={pointFinder().id}
+            point={pointIdFinder(point)}
           />
         )}
       </Grid>
