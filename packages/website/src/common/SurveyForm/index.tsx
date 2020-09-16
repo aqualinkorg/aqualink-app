@@ -1,5 +1,6 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
+import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -102,6 +103,11 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
+                validate: {
+                  validDate: (value) =>
+                    moment(value, "MM/DD/YYYY", true).isValid() ||
+                    "Invalid date",
+                },
                 pattern: {
                   value: /(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d/i,
                   message: "Invalid date format",
@@ -135,7 +141,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
                 },
               })}
               error={!!errors.diveTime}
-              format="H:mm"
+              format="HH:mm"
               value={diveDateTime}
               onChange={handleDiveDateTimeChange}
               KeyboardButtonProps={{
