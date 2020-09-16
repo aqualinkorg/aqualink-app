@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useCallback, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import {
   withStyles,
@@ -10,9 +10,9 @@ import {
   MenuItem,
   TextField,
   Button,
-  Link,
 } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import { Link } from "react-router-dom";
 import {
   KeyboardDatePicker,
   KeyboardTimePicker,
@@ -22,18 +22,15 @@ import DateFnsUtils from "@date-io/date-fns";
 import { useForm } from "react-hook-form";
 
 import { diveLocationSelector } from "../../store/Survey/surveySlice";
-import { SurveyData } from "../../store/Survey/types";
+import { SurveyData, SurveyState } from "../../store/Survey/types";
 
-const SurveyForm = ({
-  reefId,
-  onSubmit,
-  handleWeatherChange,
-  weather,
-  classes,
-}: SurveyFormProps) => {
+const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDate, setDiveDate] = useState<string | null>(null);
   const [diveTime, setDiveTime] = useState<string | null>(null);
+  const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
+    "calm"
+  );
 
   const { register, errors, handleSubmit, reset } = useForm({
     reValidateMode: "onSubmit",
@@ -46,9 +43,26 @@ const SurveyForm = ({
       }/${date?.getDate()}/${date?.getFullYear()}`
     );
   };
+
   const handleDiveTimeChange = (date: Date | null) => {
     setDiveTime(`${date?.getHours()}:${date?.getMinutes()}`);
   };
+
+  const handleWeatherChange = (event: ChangeEvent<{ value: unknown }>) => {
+    setWeather(event.target.value as SurveyData["weatherConditions"]);
+  };
+
+  const nativeSubmit = useCallback(
+    (data: any) => {
+      const diveDateTime = new Date(
+        `${data.diveDate}, ${data.diveTime}`
+      ).toISOString();
+      const weatherConditions = weather;
+      const { comments } = data;
+      onSubmit(diveDateTime, diveLocation, weatherConditions, comments);
+    },
+    [onSubmit, weather, diveLocation]
+  );
 
   const resetForm = () => {
     reset({
@@ -59,7 +73,7 @@ const SurveyForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(nativeSubmit)}>
       {/* Dive Date and Time */}
       <Grid
         style={{ marginBottom: "1rem" }}
@@ -230,7 +244,7 @@ const SurveyForm = ({
         xs={12}
       >
         <Grid style={{ marginRight: "3rem" }} item xs={2}>
-          <Link href={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
+          <Link to={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
             <Button onClick={resetForm} color="primary" variant="outlined">
               Cancel
             </Button>
@@ -266,13 +280,12 @@ const styles = (theme: Theme) =>
 
 interface SurveyFormIncomingProps {
   reefId: number;
-  onSubmit: (data: any) => void;
-  handleWeatherChange: (
-    event: ChangeEvent<{
-      value: unknown;
-    }>
+  onSubmit: (
+    diveDateTime: string,
+    diveLocation: SurveyState["diveLocation"],
+    weatherConditions: SurveyData["weatherConditions"],
+    comments: string
   ) => void;
-  weather: SurveyData["weatherConditions"];
 }
 
 type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
