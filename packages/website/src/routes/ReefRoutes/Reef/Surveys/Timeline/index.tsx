@@ -48,6 +48,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
             <TimelineItem className={classes.timelineItem}>
               <TimelineOppositeContent
                 className={classes.timelineOppositeContent}
+                style={{ padding: "0 10px" }}
               />
               <TimelineSeparator>
                 <Link
@@ -218,7 +219,6 @@ const styles = (theme: Theme) =>
     },
     timelineOppositeContent: {
       flex: 0.5,
-      padding: "0 10px",
     },
     dot: {
       border: "solid 1px #979797",
