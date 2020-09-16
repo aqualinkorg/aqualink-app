@@ -42,7 +42,7 @@ const TimelineMobile = ({
 
   return (
     <Grid container justify="flex-start" item xs={12}>
-      {isAdmin && (
+      {isAdmin && !(window && window.location.pathname.includes("new_survey")) && (
         <Grid
           style={{ marginBottom: "1rem" }}
           container

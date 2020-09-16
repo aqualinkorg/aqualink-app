@@ -51,25 +51,26 @@ const SurveyTimeline = ({
   return (
     <div className={classes.root}>
       <Timeline>
-        {isAdmin && (
-          <TimelineItem>
-            <TimelineSeparator>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to={`/reefs/${reefId}/new_survey`}
-              >
-                <IconButton>
-                  <AddCircleOutlineIcon className={classes.addNewButton} />
-                </IconButton>
-              </Link>
-            </TimelineSeparator>
-            <TimelineContent style={{ padding: "12px 16px" }}>
-              <Typography className={classes.cardFields} variant="h6">
-                ADD NEW SURVEY
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-        )}
+        {isAdmin &&
+          !(window && window.location.pathname.includes("new_survey")) && (
+            <TimelineItem>
+              <TimelineSeparator>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to={`/reefs/${reefId}/new_survey`}
+                >
+                  <IconButton>
+                    <AddCircleOutlineIcon className={classes.addNewButton} />
+                  </IconButton>
+                </Link>
+              </TimelineSeparator>
+              <TimelineContent style={{ padding: "12px 16px" }}>
+                <Typography className={classes.cardFields} variant="h6">
+                  ADD NEW SURVEY
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+          )}
         {surveyList &&
           filterSurveys(surveyList, observation, point).map((survey) => (
             <TimelineItem key={survey.id} className={classes.timelineItem}>
@@ -168,7 +169,7 @@ const SurveyTimeline = ({
                           </Grid>
                         </Grid>
                       )}
-                      <Grid item xs={5}>
+                      <Grid item xs={6}>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
                           to={`/reefs/${reefId}/survey_details/${survey.id}`}
@@ -227,7 +228,7 @@ const styles = (theme: Theme) =>
       margin: 0,
     },
     surveyInfo: {
-      height: "10rem",
+      height: "12rem",
       overflowY: "auto",
     },
     cardValues: {

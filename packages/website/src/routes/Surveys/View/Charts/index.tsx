@@ -27,7 +27,7 @@ const Charts = ({
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     date: "",
     depth,
-    bottomTemperature: 0,
+    bottomTemperature: null,
     surfaceTemperature: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -42,7 +42,13 @@ const Charts = ({
     sortByDate
   );
 
-  const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
+  const {
+    xAxisMax,
+    xAxisMin,
+    yAxisMax,
+    yAxisMin,
+    chartLabels,
+  } = calculateAxisLimits(sortByDate, temperatureThreshold);
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
@@ -207,13 +213,9 @@ const Charts = ({
                   },
                   display: true,
                   ticks: {
-                    min: temperatureThreshold
-                      ? Math.round(temperatureThreshold) - 5
-                      : null,
+                    min: yAxisMin,
                     stepSize: 5,
-                    max: temperatureThreshold
-                      ? Math.round(temperatureThreshold) + 5
-                      : null,
+                    max: yAxisMax,
                     callback: (value: number) => {
                       return `${value}\u00B0  `;
                     },

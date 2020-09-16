@@ -27,7 +27,13 @@ const CardChart = ({
 
   const { surfaceTemperatureData } = createDatasets(sortByDate);
 
-  const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
+  const {
+    xAxisMax,
+    xAxisMin,
+    yAxisMax,
+    yAxisMin,
+    chartLabels,
+  } = calculateAxisLimits(sortByDate, temperatureThreshold);
 
   const changeXTickShift = () => {
     const { current } = chartRef;
@@ -134,13 +140,9 @@ const CardChart = ({
               },
               display: true,
               ticks: {
-                min: temperatureThreshold
-                  ? Math.round(temperatureThreshold) - 5
-                  : null,
+                min: yAxisMin,
                 stepSize: 5,
-                max: temperatureThreshold
-                  ? Math.round(temperatureThreshold) + 5
-                  : null,
+                max: yAxisMax,
                 callback: (value: number) => {
                   return `${value}\u00B0 `;
                 },
