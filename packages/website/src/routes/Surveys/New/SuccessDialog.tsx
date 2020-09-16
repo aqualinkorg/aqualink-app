@@ -25,10 +25,10 @@ const SuccessDialog = ({ reefId, surveyId, open }: SuccessDialogProps) => {
   return (
     <Dialog
       open={open}
-      header="Media successfully uploaded"
+      header="Media upload successful"
       content={
         <Typography color="textSecondary">
-          Your media upload was successful. Where would you like to go next?
+          Where would you like to go next?
         </Typography>
       }
       actions={actions}
