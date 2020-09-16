@@ -12,6 +12,7 @@ import {
   Collapse,
   IconButton,
   MenuItem,
+  Link,
 } from "@material-ui/core";
 import {
   KeyboardDatePicker,
@@ -280,6 +281,13 @@ const SurveyForm = ({ reefId, changeTab, classes }: SurveyFormProps) => {
           item
           xs={12}
         >
+          <Grid style={{ marginRight: "3rem" }} item xs={2}>
+            <Link href={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
+              <Button onClick={resetForm} color="primary" variant="outlined">
+                Cancel
+              </Button>
+            </Link>
+          </Grid>
           <Grid style={{ marginRight: "3rem" }} item xs={2}>
             <Button onClick={resetForm} color="primary" variant="outlined">
               Clear

@@ -7,16 +7,21 @@ interface publicUser {
   id: number;
   fullName?: string;
 }
+
+export type Observations =
+  | "healthy"
+  | "possible-disease"
+  | "evident-disease"
+  | "mortality"
+  | "environmental"
+  | "anthropogenic";
+
+type WeatherConditions = "calm" | "waves" | "storm";
+
 export interface SurveyMedia {
   url: string;
   featured: boolean;
-  observations:
-    | "healthy"
-    | "possible-disease"
-    | "evident-disease"
-    | "mortality"
-    | "environmental"
-    | "anthropogenic";
+  observations: Observations;
   comments: string | null;
   type: "image" | "video";
   poiId?: SurveyPoint;
@@ -32,7 +37,7 @@ export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;
   diveDate?: string | null;
-  weatherConditions?: "calm" | "waves" | "storm";
+  weatherConditions?: WeatherConditions;
   comments?: string;
   temperature?: number;
   userId?: publicUser;
@@ -40,11 +45,24 @@ export interface SurveyState {
   featuredSurveyMedia?: SurveyMedia;
 }
 
+export interface SurveyListItem {
+  id?: number;
+  diveLocation?: DiveLocation | null;
+  diveDate?: string | null;
+  weatherConditions?: WeatherConditions;
+  observations: Observations[];
+  comments?: string;
+  temperature?: number;
+  userId?: publicUser;
+  surveyPoints?: number[];
+  featuredSurveyMedia?: SurveyMedia;
+}
+
 export interface SurveyData {
   reef: number;
   diveDate: string;
   diveLocation?: DiveLocation | null;
-  weatherConditions: "calm" | "waves" | "storm";
+  weatherConditions: WeatherConditions;
   comments?: string;
   token?: string | null;
 }
@@ -52,14 +70,7 @@ export interface SurveyData {
 export interface SurveyMediaData {
   url: string;
   poiId?: number;
-  observations:
-    | "healthy"
-    | "possible-disease"
-    | "evident-disease"
-    | "mortality"
-    | "environmental"
-    | "anthropogenic"
-    | null;
+  observations: Observations | null;
   comments?: string;
   metadata?: string;
   token?: string | null;
@@ -68,7 +79,7 @@ export interface SurveyMediaData {
 }
 
 export interface SurveyListState {
-  list: SurveyState[];
+  list: SurveyListItem[];
   loading: boolean;
   error?: string | null;
 }

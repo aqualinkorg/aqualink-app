@@ -1,4 +1,3 @@
-import { isNil } from "lodash";
 import type { Data } from "../../../../store/Reefs/types";
 
 export const createDatasets = (dailyData: Data[]) => {
@@ -62,7 +61,7 @@ export const calculateAxisLimits = (
   const temperatureData = [
     ...bottomTemperatureData,
     ...surfaceTemperatureData,
-  ].filter((value) => !isNil(value));
+  ].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - 2;
 
