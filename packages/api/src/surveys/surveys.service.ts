@@ -53,8 +53,6 @@ export class SurveysService {
       comments: this.transformComments(createSurveyDto.comments),
     });
 
-    // eslint-disable-next-line fp/no-delete
-    delete survey.userId;
     return survey;
   }
 
@@ -116,6 +114,39 @@ export class SurveysService {
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
 
+    const surveyObservationsQuery = await this.surveyMediaRepository
+      .createQueryBuilder('surveyMedia')
+      .innerJoin(
+        'surveyMedia.surveyId',
+        'surveys',
+        'surveys.reef_id = :reefId',
+        { reefId },
+      )
+      .groupBy('surveyMedia.surveyId, surveyMedia.observations')
+      .select(['surveyMedia.surveyId', 'surveyMedia.observations'])
+      .getRawMany();
+
+    const surveyPointsQuery = await this.surveyMediaRepository
+      .createQueryBuilder('surveyMedia')
+      .innerJoin(
+        'surveyMedia.surveyId',
+        'surveys',
+        'surveys.reef_id = :reefId',
+        { reefId },
+      )
+      .groupBy('surveyMedia.surveyId, surveyMedia.poiId')
+      .select(['surveyMedia.surveyId', 'surveyMedia.poiId'])
+      .getRawMany();
+
+    const observationsGroupedBySurveyId = this.groupBySurveyId(
+      surveyObservationsQuery,
+      'surveyMedia_observations',
+    );
+    const poiIdGroupedBySurveyId = this.groupBySurveyId(
+      surveyPointsQuery,
+      'poi_id',
+    );
+
     return surveyHistoryQuery.map((survey) => {
       const surveyDailyData = survey.latestDailyData;
       return {
@@ -131,6 +162,8 @@ export class SurveysService {
             (surveyDailyData.avgBottomTemperature ||
               surveyDailyData.satelliteTemperature)),
         featuredSurveyMedia: survey.featuredSurveyMedia,
+        observations: observationsGroupedBySurveyId[survey.id] || [],
+        surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],
       };
     });
   }
@@ -325,5 +358,14 @@ export class SurveysService {
 
     const trimmedComments = comments.trim();
     return trimmedComments === '' ? undefined : trimmedComments;
+  }
+
+  private groupBySurveyId(object: any[], key: string) {
+    return object.reduce((rv, x) => {
+      return {
+        ...rv,
+        [x.survey_id]: [...(rv[x.survey_id] || []), x[key]],
+      };
+    }, {});
   }
 }

@@ -2,6 +2,7 @@ import type {
   SurveyState,
   SurveyData,
   SurveyMediaData,
+  SurveyListItem,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
 
@@ -12,7 +13,7 @@ const getSurvey = (reefId: string, surveyId: string) =>
   });
 
 const getSurveys = (reefId: string) =>
-  requests.send<SurveyState[]>({
+  requests.send<SurveyListItem[]>({
     url: `reefs/${reefId}/surveys`,
     method: "GET",
   });
