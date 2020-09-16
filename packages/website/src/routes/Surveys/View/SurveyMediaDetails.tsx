@@ -45,16 +45,10 @@ const SurveyMediaDetails = ({
   surveyMedia,
   classes,
 }: SurveyMediaDetailsProps) => {
-  if (!surveyMedia) {
-    return <></>;
-  }
-
-  const points = getSurveyPointsByName(surveyMedia);
-
   return (
     <>
-      {points &&
-        points.map((point) => {
+      {surveyMedia &&
+        getSurveyPointsByName(surveyMedia).map((point) => {
           const images = getNumberOfImages(point.surveyMedia);
           const videos = getNumberOfVideos(point.surveyMedia);
 
