@@ -16,9 +16,9 @@ import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import Dropzone, { FileRejection } from "react-dropzone";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import MediaCard from "./MediaCard";
-import SuccessDialog from "./SuccessDialog";
 import uploadServices from "../../../services/uploadServices";
 import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
@@ -35,6 +35,7 @@ const UploadMedia = ({
   changeTab,
   classes,
 }: UploadMediaProps) => {
+  const history = useHistory();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
@@ -42,7 +43,6 @@ const UploadMedia = ({
   const survey = useSelector(surveyDetailsSelector);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [successDialogOpen, setSuccessDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number>(0);
   const [hidden, setHidden] = useState<boolean[]>([]);
@@ -159,7 +159,7 @@ const UploadMedia = ({
         setPreviews([]);
         setHidden([]);
         setFeaturedFile(0);
-        setSuccessDialogOpen(true);
+        history.push(`/reefs/${reefId}/survey_details/${survey?.id}`);
       })
       .catch((err) => {
         setAlertMessage(err.message);
@@ -259,13 +259,6 @@ const UploadMedia = ({
   return (
     <>
       {loading && <LinearProgress />}
-      {survey?.id && (
-        <SuccessDialog
-          open={successDialogOpen}
-          reefId={reefId}
-          surveyId={survey.id}
-        />
-      )}
       <Grid item xs={12}>
         <Collapse in={alertOpen}>
           <Alert
