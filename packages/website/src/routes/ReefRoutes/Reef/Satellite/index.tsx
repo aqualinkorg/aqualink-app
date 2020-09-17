@@ -36,8 +36,8 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
     },
     {
       label: "Historical Max",
-      value: `${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`,
-      tooltipTitle: "Historical maximum monthly average over the past 7 years",
+      value: `${formatNumber(maxMonthlyMean || 20, 1)} °C`,
+      tooltipTitle: "Historical maximum monthly average over the past 20 years",
     },
     {
       label: "Heat Stress",

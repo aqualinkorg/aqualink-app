@@ -5,7 +5,6 @@ import {
   createStyles,
   Theme,
   Card,
-  Button,
   Grid,
   Typography,
   CardMedia,
@@ -149,15 +148,6 @@ const SurveyMediaDetails = ({
                               <Typography variant="subtitle1">
                                 {media.comments}
                               </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Button
-                                variant="outlined"
-                                color="primary"
-                                className={classes.button}
-                              >
-                                All Photos From Survey Point
-                              </Button>
                             </Grid>
                           </Grid>
                         </Grid>

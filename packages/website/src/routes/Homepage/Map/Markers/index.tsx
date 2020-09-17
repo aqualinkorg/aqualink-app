@@ -80,8 +80,10 @@ export const ReefMarkers = () => {
   const { map } = useLeaflet();
   const iconColors: Record<string, string> = useStyles();
 
-  const setCenter = (latLng: [number, number], zoom: number) =>
-    map?.flyTo(latLng, zoom, { duration: 1 });
+  const setCenter = (latLng: [number, number], zoom: number) => {
+    const newZoom = Math.max(map?.getZoom() || 5, zoom);
+    return map?.flyTo(latLng, newZoom, { duration: 1 });
+  };
 
   return (
     <LayerGroup>
