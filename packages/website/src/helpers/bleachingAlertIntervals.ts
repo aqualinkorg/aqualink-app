@@ -1,3 +1,4 @@
+import { isNumber } from "lodash";
 import noStress from "../assets/alert_nostress.svg";
 import warning from "../assets/alert_warning.svg";
 import watch from "../assets/alert_watch.svg";
@@ -25,13 +26,13 @@ const findInterval = (
     satelliteTemperature &&
     maxMonthlyMean &&
     satelliteTemperature - maxMonthlyMean;
-  if (hotSpot && hotSpot < 0) {
+  if (isNumber(hotSpot) && hotSpot <= 0) {
     return {
       image: noStress,
       color: "#C6E5FA",
     };
   }
-  if (hotSpot && hotSpot < 1) {
+  if (isNumber(hotSpot) && hotSpot < 1) {
     return {
       image: watch,
       color: "#FFF200",
