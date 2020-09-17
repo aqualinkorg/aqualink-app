@@ -100,6 +100,8 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               format="MM/dd/yyyy"
               id="dive-date"
               name="diveDate"
+              autoOk
+              okLabel=""
               helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
@@ -128,6 +130,8 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               className={classes.textField}
               id="time-picker"
               name="diveTime"
+              autoOk
+              okLabel=""
               helperText={errors?.diveTime?.message || ""}
               inputRef={register({
                 required: "This is a required field",
