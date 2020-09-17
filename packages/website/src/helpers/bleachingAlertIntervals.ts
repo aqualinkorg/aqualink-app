@@ -59,7 +59,7 @@ const findInterval = (
         color: "#EF0000",
       };
 
-    case degreeHeatingWeeks! > 8:
+    case degreeHeatingWeeks! >= 8:
       return {
         image: lvl2,
         color: "#940000",
