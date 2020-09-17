@@ -45,7 +45,6 @@ const UploadMedia = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number>(0);
-  const [hidden, setHidden] = useState<boolean[]>([]);
   const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const missingObservations =
     metadata.findIndex((item) => item.observation === null) > -1;
@@ -70,9 +69,8 @@ const UploadMedia = ({
           comments: "",
         })),
       ]);
-      setHidden([...hidden, ...acceptedFiles.map(() => false)]);
     },
-    [files, previews, metadata, hidden]
+    [files, previews, metadata]
   );
 
   useEffect(() => {
@@ -142,7 +140,7 @@ const UploadMedia = ({
             metadata: "{}",
             token: user?.token,
             featured: index === featuredFile,
-            hidden: hidden[index],
+            hidden: false,
           };
           return surveyServices.addSurveyMedia(
             `${reefId}`,
@@ -157,7 +155,6 @@ const UploadMedia = ({
         setFiles([]);
         setMetadata([]);
         setPreviews([]);
-        setHidden([]);
         setFeaturedFile(0);
         history.push(`/reefs/${reefId}/survey_details/${survey?.id}`);
       })
@@ -216,16 +213,6 @@ const UploadMedia = ({
     };
   };
 
-  const handleHiddenChange = (index: number) => {
-    const newHidden = hidden.map((item, key) => {
-      if (key === index) {
-        return !item;
-      }
-      return item;
-    });
-    setHidden(newHidden);
-  };
-
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
@@ -247,8 +234,6 @@ const UploadMedia = ({
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}
-        hidden={hidden[index]}
-        handleHiddenChange={handleHiddenChange}
         handleCommentsChange={handleCommentsChange(index)}
         handleObservationChange={handleObservationChange(index)}
         handleSurveyPointChange={handleSurveyPointChange(index)}

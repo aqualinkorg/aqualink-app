@@ -19,8 +19,6 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
@@ -35,8 +33,6 @@ const MediaCard = ({
   index,
   file,
   featuredFile,
-  hidden,
-  handleHiddenChange,
   handlePoiOptionAdd,
   deleteCard,
   setFeatured,
@@ -262,27 +258,6 @@ const MediaCard = ({
               <Grid
                 container
                 item
-                alignItems="flex-start"
-                justify="flex-end"
-                xs={12}
-              >
-                <Tooltip
-                  title={
-                    hidden ? "Make this image visible" : "Hide image from users"
-                  }
-                >
-                  <IconButton onClick={() => handleHiddenChange(index)}>
-                    {hidden ? (
-                      <VisibilityOffIcon color="inherit" />
-                    ) : (
-                      <VisibilityIcon color="primary" />
-                    )}
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid
-                container
-                item
                 alignItems="flex-end"
                 justify="flex-end"
                 xs={12}
@@ -356,8 +331,6 @@ interface MediaCardIncomingProps {
   surveyPointOptions: Pois[];
   file?: File | null;
   featuredFile: number | null;
-  hidden: boolean;
-  handleHiddenChange: (index: number) => void;
   handlePoiOptionAdd: (index: number, name: string) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;

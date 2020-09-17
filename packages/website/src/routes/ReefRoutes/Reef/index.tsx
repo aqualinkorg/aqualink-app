@@ -52,9 +52,13 @@ const Reef = ({ match, classes }: ReefProps) => {
   );
 
   useEffect(() => {
-    dispatch(reefRequest(reefId));
-    dispatch(surveysRequest(reefId));
-  }, [dispatch, reefId]);
+    if (!reefDetails) {
+      dispatch(reefRequest(reefId));
+    }
+    if (surveyList) {
+      dispatch(surveysRequest(reefId));
+    }
+  }, [dispatch, reefId, reefDetails, surveyList]);
 
   if (loading) {
     return (
