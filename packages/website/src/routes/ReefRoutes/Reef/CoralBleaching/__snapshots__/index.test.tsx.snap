@@ -43,7 +43,7 @@ exports[`renders as expected 1`] = `
       >
         <img
           alt="alert-level"
-          src="alert_warning.svg"
+          src="alert_lvl1.svg"
         />
       </div>
     </mock-cardcontent>
