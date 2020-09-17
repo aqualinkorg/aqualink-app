@@ -1,21 +1,39 @@
+export interface SofarValue {
+  timestamp: string;
+  value: number;
+}
+
 export interface SofarDailyData {
-  reef: number;
+  reef: { id: number };
   date: Date;
-  minBottomTemperature: number;
-  maxBottomTemperature: number;
-  avgBottomTemperature: number;
-  surfaceTemperature: number;
-  satelliteTemperature: number;
-  degreeHeatingDays: number;
-  minWaveHeight: number;
-  maxWaveHeight: number;
-  avgWaveHeight: number;
-  waveDirection: number;
-  wavePeriod: number;
-  minWindSpeed: number;
-  maxWindSpeed: number;
-  avgWindSpeed: number;
-  windDirection: number;
+  minBottomTemperature?: number;
+  maxBottomTemperature?: number;
+  avgBottomTemperature?: number;
+  surfaceTemperature?: number;
+  satelliteTemperature?: number;
+  degreeHeatingDays?: number;
+  minWaveHeight?: number;
+  maxWaveHeight?: number;
+  avgWaveHeight?: number;
+  waveDirection?: number;
+  wavePeriod?: number;
+  minWindSpeed?: number;
+  maxWindSpeed?: number;
+  avgWindSpeed?: number;
+  windDirection?: number;
+}
+
+export interface SofarLiveData {
+  reef: { id: number };
+  bottomTemperature?: SofarValue;
+  surfaceTemperature?: SofarValue;
+  satelliteTemperature?: SofarValue;
+  degreeHeatingDays?: SofarValue;
+  waveHeight?: SofarValue;
+  waveDirection?: SofarValue;
+  wavePeriod?: SofarValue;
+  windSpeed?: SofarValue;
+  windDirection?: SofarValue;
 }
 
 export enum SofarModels {
