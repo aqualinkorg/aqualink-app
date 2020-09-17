@@ -108,10 +108,6 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
                     moment(value, "MM/DD/YYYY", true).isValid() ||
                     "Invalid date",
                 },
-                pattern: {
-                  value: /(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d/i,
-                  message: "Invalid date format",
-                },
               })}
               error={!!errors.diveDate}
               value={diveDateTime}
