@@ -1,4 +1,4 @@
-import { isNumber } from "lodash";
+import { isNil, isNumber, inRange } from "lodash";
 import noStress from "../assets/alert_nostress.svg";
 import warning from "../assets/alert_warning.svg";
 import watch from "../assets/alert_watch.svg";
@@ -26,40 +26,51 @@ const findInterval = (
     satelliteTemperature &&
     maxMonthlyMean &&
     satelliteTemperature - maxMonthlyMean;
-  if (isNumber(hotSpot) && hotSpot <= 0) {
-    return {
-      image: noStress,
-      color: "#C6E5FA",
-    };
+
+  switch (true) {
+    case isNumber(hotSpot) && hotSpot <= 0:
+      return {
+        image: noStress,
+        color: "#C6E5FA",
+      };
+
+    case isNumber(hotSpot) && hotSpot < 1:
+      return {
+        image: watch,
+        color: "#FFF200",
+      };
+
+    // Hotspot >=1 or nil past this point, start dhw checks.
+    case isNil(degreeHeatingWeeks):
+      return {
+        image: noStress,
+        color: "#C6E5FA",
+      };
+
+    case inRange(degreeHeatingWeeks!, 0, 4):
+      return {
+        image: warning,
+        color: "#F8AB00",
+      };
+
+    case inRange(degreeHeatingWeeks!, 4, 8):
+      return {
+        image: lvl1,
+        color: "#EF0000",
+      };
+
+    case degreeHeatingWeeks! > 8:
+      return {
+        image: lvl2,
+        color: "#940000",
+      };
+
+    default:
+      return {
+        image: noStress,
+        color: "#C6E5FA",
+      };
   }
-  if (isNumber(hotSpot) && hotSpot < 1) {
-    return {
-      image: watch,
-      color: "#FFF200",
-    };
-  }
-  if (degreeHeatingWeeks || 0 < 4) {
-    return {
-      image: warning,
-      color: "#F8AB00",
-    };
-  }
-  if (degreeHeatingWeeks || 0 < 8) {
-    return {
-      image: lvl1,
-      color: "#EF0000",
-    };
-  }
-  if (degreeHeatingWeeks || 0 > 8) {
-    return {
-      image: lvl2,
-      color: "#940000",
-    };
-  }
-  return {
-    image: noStress,
-    color: "#C6E5FA",
-  };
 };
 
 export const alertFinder = (
