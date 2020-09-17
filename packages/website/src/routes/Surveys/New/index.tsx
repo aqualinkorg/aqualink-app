@@ -14,7 +14,6 @@ import SwipeableViews from "react-swipeable-views";
 import type { Reef } from "../../../store/Reefs/types";
 import Map from "./Map";
 import Form from "./Form";
-import SurveyHistory from "../../ReefRoutes/Reef/Surveys";
 import UploadMedia from "./UploadMedia";
 
 const TabPanel = (props: TabPanelProps) => {
@@ -71,9 +70,6 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
               <Grid item xs={12} lg={5}>
                 <Form reefId={reef.id} changeTab={onPanelIndexChange} />
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <SurveyHistory reefId={reef.id} />
             </Grid>
           </Grid>
         </TabPanel>
