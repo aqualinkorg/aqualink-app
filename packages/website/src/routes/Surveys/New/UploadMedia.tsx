@@ -41,9 +41,6 @@ const UploadMedia = ({
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertSeverity, setAlertSeverity] = useState<
-    "success" | "error" | "info" | "warning" | undefined
-  >(undefined);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -127,11 +124,10 @@ const UploadMedia = ({
   }, []);
 
   const onMediaSubmit = () => {
-    files.forEach((file, index) => {
+    const promises = files.map((file, index) => {
       const formData = new FormData();
       formData.append("file", file);
-      setLoading(true);
-      uploadServices
+      return uploadServices
         .uploadMedia(formData, `${reefId}`, user?.token)
         .then((response) => {
           const url = response.data;
@@ -148,32 +144,28 @@ const UploadMedia = ({
             featured: index === featuredFile,
             hidden: hidden[index],
           };
-          surveyServices
-            .addSurveyMedia(`${reefId}`, `${surveyId}`, surveyMediaData)
-            .then(() => {
-              setFiles([]);
-              setMetadata([]);
-              setPreviews([]);
-              setHidden([]);
-              setFeaturedFile(0);
-              setAlertMessage("Successfully uploaded media");
-              setAlertSeverity("success");
-              setAlertOpen(true);
-              setSuccessDialogOpen(true);
-            })
-            .catch((err) => {
-              setAlertMessage(err.message);
-              setAlertSeverity("error");
-              setAlertOpen(true);
-            })
-            .finally(() => setLoading(false));
-        })
-        .catch((err) => {
-          setAlertMessage(err.message);
-          setAlertSeverity("error");
-          setAlertOpen(true);
+          return surveyServices.addSurveyMedia(
+            `${reefId}`,
+            `${surveyId}`,
+            surveyMediaData
+          );
         });
     });
+    setLoading(true);
+    Promise.all(promises)
+      .then(() => {
+        setFiles([]);
+        setMetadata([]);
+        setPreviews([]);
+        setHidden([]);
+        setFeaturedFile(0);
+        setSuccessDialogOpen(true);
+      })
+      .catch((err) => {
+        setAlertMessage(err.message);
+        setAlertOpen(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleSurveyPointChange = (index: number) => {
@@ -277,7 +269,7 @@ const UploadMedia = ({
       <Grid item xs={12}>
         <Collapse in={alertOpen}>
           <Alert
-            severity={alertSeverity}
+            severity="error"
             action={
               <IconButton
                 aria-label="close"

@@ -118,7 +118,7 @@ const MediaCard = ({
                   role="button"
                   onClick={onImageClick}
                   onKeyDown={() => {}}
-                  style={{ height: "100%", cursor: "pointer", outline: "none" }}
+                  className={classes.image}
                 >
                   <Grid
                     style={{ height: "50%" }}
@@ -313,6 +313,10 @@ const styles = (theme: Theme) =>
       height: "100%",
       width: "100%",
       borderRadius: "2px 0 0 2px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        filter: "brightness(70%)",
+      },
     },
     textField: {
       color: "black",
@@ -335,6 +339,11 @@ const styles = (theme: Theme) =>
     starIcon: {
       height: 42,
       padding: 8,
+    },
+    image: {
+      height: "100%",
+      cursor: "pointer",
+      outline: "none",
     },
   });
 
