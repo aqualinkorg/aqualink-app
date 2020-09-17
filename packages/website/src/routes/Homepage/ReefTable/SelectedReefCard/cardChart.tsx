@@ -102,7 +102,7 @@ const CardChart = ({
               borderDash: [5, 5],
               label: {
                 enabled: false,
-                content: "Maximum Monthly Mean",
+                content: "Historical Max",
               },
             },
           ],

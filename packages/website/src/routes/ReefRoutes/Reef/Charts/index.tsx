@@ -178,7 +178,7 @@ const Charts = ({
                   backgroundColor: "rgb(169,169,169)",
                   position: "left",
                   xAdjust: 10,
-                  content: "Maximum Monthly Temperature",
+                  content: "Historical Max",
                 },
               },
               {
