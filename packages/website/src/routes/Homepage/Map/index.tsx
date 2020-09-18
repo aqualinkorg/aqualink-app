@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Map, TileLayer } from "react-leaflet";
 import { LatLng } from "leaflet";
@@ -12,6 +12,7 @@ import {
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
+import { seaSurfaceTemperatureLegend } from "./legend";
 
 const INITIAL_CENTER = new LatLng(37.9, -75.3);
 const INITIAL_ZOOM = 5;
@@ -23,6 +24,15 @@ const tileURL = accessToken
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const ref = useRef<Map>(null);
+
+  useEffect(() => {
+    const { current } = ref;
+    if (current && current.leafletElement) {
+      const map = current.leafletElement;
+      seaSurfaceTemperatureLegend.addTo(map);
+    }
+  });
 
   return loading ? (
     <div className={classes.loading}>
@@ -30,6 +40,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     </div>
   ) : (
     <Map
+      ref={ref}
       preferCanvas
       maxBoundsViscosity={1.0}
       className={classes.map}
