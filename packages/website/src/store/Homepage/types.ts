@@ -7,6 +7,7 @@ export interface HomePageState {
 export interface TableRow {
   locationName: string | null;
   temp: number | null;
+  maxMonthlyMean: number | null;
   depth: number | null;
   dhw: number | null;
   tableData: {

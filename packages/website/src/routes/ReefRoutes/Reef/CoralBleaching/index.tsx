@@ -16,9 +16,9 @@ import { sortByDate } from "../../../../helpers/sortDailyData";
 import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
-const Wind = ({ dailyData, classes }: WindProps) => {
+const Bleaching = ({ dailyData, maxMonthlyMean, classes }: BleachingProps) => {
   const sortedDailyData = sortByDate(dailyData, "date", "desc");
-  const { degreeHeatingDays } = sortedDailyData[0];
+  const { degreeHeatingDays, satelliteTemperature } = sortedDailyData[0];
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
@@ -45,7 +45,14 @@ const Wind = ({ dailyData, classes }: WindProps) => {
           item
           xs={12}
         >
-          <img src={alertFinder(degreeHeatingWeeks)} alt="alert-level" />
+          <img
+            src={alertFinder(
+              maxMonthlyMean,
+              satelliteTemperature,
+              degreeHeatingWeeks
+            )}
+            alt="alert-level"
+          />
         </Grid>
       </CardContent>
     </Card>
@@ -71,10 +78,11 @@ const styles = () =>
     },
   });
 
-interface WindIncomingProps {
+interface BleachingIncomingProps {
   dailyData: Data[];
+  maxMonthlyMean: number | null;
 }
 
-type WindProps = WithStyles<typeof styles> & WindIncomingProps;
+type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;
 
-export default withStyles(styles)(Wind);
+export default withStyles(styles)(Bleaching);
