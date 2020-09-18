@@ -12,7 +12,7 @@ export function getDailyDataClosestToDate(dailyData: Data[], date: Date) {
   );
 }
 
-/** Utility function to data by date */
+/** Utility function to sort data by date */
 export const sortByDate = (
   list: any[],
   dateFieldName: string,
