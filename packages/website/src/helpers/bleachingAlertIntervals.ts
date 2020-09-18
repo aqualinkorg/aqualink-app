@@ -28,6 +28,7 @@ const findInterval = (
     satelliteTemperature - maxMonthlyMean;
 
   switch (true) {
+    case isNil(hotSpot):
     case isNumber(hotSpot) && hotSpot <= 0:
       return {
         image: noStress,
