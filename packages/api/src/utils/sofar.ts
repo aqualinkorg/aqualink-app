@@ -4,23 +4,21 @@ import { isNil } from 'lodash';
 import axiosRetry from 'axios-retry';
 import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
-import { SofarValue } from './sofar.types';
-
-type SpotterData = {
-  surfaceTemperature: SofarValue[];
-  bottomTemperature: SofarValue[];
-  significantWaveHeight: SofarValue[];
-  wavePeakPeriod: SofarValue[];
-  waveMeanDirection: SofarValue[];
-};
+import { SofarValue, SpotterData } from './sofar.types';
 
 type SensorData = {
   sensorPosition: number;
   degrees: number;
 };
 
-export const getLatestDailyData = (sofarValues: SofarValue[]): SofarValue =>
-  sofarValues.slice(-1)[0];
+export const getLatestData = (
+  sofarValues: SofarValue[],
+): SofarValue | undefined =>
+  sofarValues.reduce(
+    (max, entry) =>
+      new Date(entry.timestamp) > new Date(max.timestamp) ? entry : max,
+    sofarValues[0],
+  );
 
 export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
   sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);

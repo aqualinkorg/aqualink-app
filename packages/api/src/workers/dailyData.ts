@@ -8,13 +8,13 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { getMin, getMax, getAverage } from '../utils/math';
 import {
   extractSofarValues,
-  getLatestDailyData,
+  getLatestData,
   getSofarDailyData,
   getSpotterData,
 } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
-import { SofarDailyData, SofarModels, SofarValue } from '../utils/sofar.types';
-import { sofarVariableIDs } from '../utils/constants';
+import { SofarDailyData, SofarValue } from '../utils/sofar.types';
+import { SofarModels, sofarVariableIDs } from '../utils/constants';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -41,12 +41,13 @@ export async function getDegreeHeatingDays(
 
     // Check if there are any data returned
     // Grab the last one and convert it to degreeHeatingDays
-    return degreeHeatingWeek.length > 0
-      ? {
-          value: getLatestDailyData(degreeHeatingWeek).value * 7,
-          timestamp: getLatestDailyData(degreeHeatingWeek).timestamp,
-        }
-      : undefined;
+    const latestDegreeHeatingWeek = getLatestData(degreeHeatingWeek);
+    return (
+      latestDegreeHeatingWeek && {
+        value: latestDegreeHeatingWeek.value * 7,
+        timestamp: latestDegreeHeatingWeek.timestamp,
+      }
+    );
   }
 }
 
@@ -105,10 +106,9 @@ export async function getDailyData(
   );
 
   // Get satelliteTemperature
+  const latestSatelliteTemperature = getLatestData(satelliteTemperatureData);
   const satelliteTemperature =
-    satelliteTemperatureData.length > 0
-      ? getLatestDailyData(satelliteTemperatureData).value
-      : undefined;
+    latestSatelliteTemperature && latestSatelliteTemperature.value;
 
   // Get waves data if unavailable through a spotter
   const significantWaveHeights =

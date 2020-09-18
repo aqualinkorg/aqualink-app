@@ -1,13 +1,13 @@
 import { Point } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
-import { sofarVariableIDs } from './constants';
+import { SofarModels, sofarVariableIDs } from './constants';
 import {
-  getLatestDailyData,
+  getLatestData,
   getSofarDailyData,
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData, SofarModels } from './sofar.types';
+import { SofarLiveData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 
 export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
@@ -15,7 +15,7 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
-  const endOfDate = new Date();
+  const now = new Date();
 
   const spotterRawData = spotterId
     ? await getSpotterData(spotterId)
@@ -28,31 +28,29 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
       };
 
   const spotterData = {
-    surfaceTemperature: getLatestDailyData(spotterRawData.surfaceTemperature),
-    bottomTemperature: getLatestDailyData(spotterRawData.bottomTemperature),
-    significantWaveHeight: getLatestDailyData(
-      spotterRawData.significantWaveHeight,
-    ),
-    wavePeakPeriod: getLatestDailyData(spotterRawData.wavePeakPeriod),
-    waveMeanDirection: getLatestDailyData(spotterRawData.waveMeanDirection),
+    surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
+    bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
+    significantWaveHeight: getLatestData(spotterRawData.significantWaveHeight),
+    wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
+    waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
   };
 
   const degreeHeatingDays = await getDegreeHeatingDays(
     maxMonthlyMean,
     latitude,
     longitude,
-    endOfDate,
+    now,
   );
 
-  const satelliteTemperature = getLatestDailyData(
+  const satelliteTemperature = getLatestData(
     await getSofarDailyData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,
       latitude,
       longitude,
-      endOfDate,
-      96,
+      now,
+      72,
     ),
   );
 

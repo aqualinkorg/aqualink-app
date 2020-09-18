@@ -36,8 +36,10 @@ export interface SofarLiveData {
   windDirection?: SofarValue;
 }
 
-export enum SofarModels {
-  NOAAOperationalWaveModel = 'NOAAOperationalWaveModel',
-  NOAACoralReefWatch = 'NOAACoralReefWatch',
-  GFS = 'GFS',
+export interface SpotterData {
+  surfaceTemperature: SofarValue[];
+  bottomTemperature: SofarValue[];
+  significantWaveHeight: SofarValue[];
+  wavePeakPeriod: SofarValue[];
+  waveMeanDirection: SofarValue[];
 }

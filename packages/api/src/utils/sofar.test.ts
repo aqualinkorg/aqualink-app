@@ -1,4 +1,5 @@
-import { getSofarDailyData, getSpotterData } from './sofar';
+import { SofarModels, sofarVariableIDs } from './constants';
+import { getSofarDailyData, getSpotterData, sofarForecast } from './sofar';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
@@ -31,4 +32,19 @@ test('It processes Sofar Spotter API for daily data.', async () => {
 
   expect(values.bottomTemperature.length).toEqual(144);
   expect(values.surfaceTemperature.length).toEqual(144);
+});
+
+test('it process Sofar Forecast API for live data', async () => {
+  jest.setTimeout(30000);
+  const now = new Date();
+  const values = await sofarForecast(
+    SofarModels.GFS,
+    sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
+    -3.5976336810301888,
+    -178.0000002552476,
+  );
+
+  expect(new Date(values.timestamp).getTime()).toBeLessThanOrEqual(
+    now.getTime(),
+  );
 });
