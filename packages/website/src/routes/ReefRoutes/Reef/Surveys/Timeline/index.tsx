@@ -31,8 +31,16 @@ import {
 } from "../../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
 import { formatNumber } from "../../../../../helpers/numberUtils";
+import { TimelineProps } from "../types";
+import filterSurveys from "../helpers";
 
-const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({
+  isAdmin,
+  reefId,
+  observation,
+  point,
+  classes,
+}: SurveyTimelineProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -69,7 +77,7 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
             </TimelineItem>
           )}
         {surveyList &&
-          surveyList.map((survey) => (
+          filterSurveys(surveyList, observation, point).map((survey) => (
             <TimelineItem key={survey.id} className={classes.timelineItem}>
               {survey.diveDate && (
                 <TimelineOppositeContent
@@ -239,12 +247,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface SurveyTimelineIncomingProps {
-  reefId: number;
-  isAdmin: boolean;
-}
-
-type SurveyTimelineProps = SurveyTimelineIncomingProps &
-  WithStyles<typeof styles>;
+type SurveyTimelineProps = TimelineProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(SurveyTimeline);

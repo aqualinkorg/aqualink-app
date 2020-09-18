@@ -7,70 +7,78 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { getNumberOfImages } from "../../../helpers/surveyMedia";
+import {
+  getNumberOfImages,
+  getNumberOfSurveyPoints,
+} from "../../../helpers/surveyMedia";
 
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
 import ObservationBox from "./observationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
+  const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
+  const nImages = getNumberOfImages(survey?.surveyMedia || []);
+
   return (
     <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
       {survey && (
-        <Grid container item direction="column" spacing={3} xs={12} lg={9}>
+        <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
             <Typography variant="subtitle1">
               {moment(survey.diveDate).format("MM/DD/YYYY [at] h:mm A")}
             </Typography>
           </Grid>
           <Grid container item direction="row">
-            <Grid container item direction="column" xs={12} md={3}>
+            <Grid container item direction="column" xs={12} md={4}>
               <Typography style={{ fontSize: 18 }}>
                 {reef.region?.name}
               </Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <Typography
                 color="primary"
                 variant="h4"
                 className={classes.inlineText}
               >
-                {survey.surveyPoints?.length}
+                {nSurveyPoints}
               </Typography>
               <Typography
                 color="initial"
                 variant="h6"
                 className={classes.inlineText}
               >
-                SURVEY POINTS
+                SURVEY POINT{nSurveyPoints === 1 ? "" : "S"}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={4}>
               <Typography
                 color="primary"
                 variant="h4"
                 className={classes.inlineText}
               >
-                {survey.surveyPoints && getNumberOfImages(survey.surveyPoints)}
+                {nImages}
               </Typography>
               <Typography
                 color="initial"
                 variant="h6"
                 className={classes.inlineText}
               >
-                IMAGES
+                IMAGE{nImages === 1 ? "" : "S"}
               </Typography>
             </Grid>
           </Grid>
-          <Grid container item direction="column">
-            <Typography variant="h6">Comments</Typography>
-            <Typography variant="subtitle1">{survey.comments}</Typography>
-          </Grid>
+          {survey.comments && (
+            <Grid container item direction="column">
+              <Typography variant="h6">Comments</Typography>
+              <Typography variant="subtitle1">{survey.comments}</Typography>
+            </Grid>
+          )}
         </Grid>
       )}
 
-      <Grid item xs={12} md={6} lg={3}>
+      <Grid item xs={12} md={6} lg={4}>
         <ObservationBox
           depth={reef.depth}
           date={survey?.diveDate ? new Date(survey?.diveDate) : new Date()}

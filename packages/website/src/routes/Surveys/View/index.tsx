@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
   withStyles,
@@ -30,13 +30,14 @@ import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const surveyDetails = useSelector(surveyDetailsSelector);
   const featuredMedia =
-    surveyDetails &&
-    surveyDetails.surveyPoints &&
-    getFeaturedMedia(surveyDetails.surveyPoints);
+    surveyDetails?.surveyMedia && getFeaturedMedia(surveyDetails.surveyMedia);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -70,16 +71,16 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           item
           xs={11}
         >
-          <IconButton
-            edge="start"
-            onClick={history.goBack}
-            color="primary"
-            aria-label="menu"
+          <Link
+            style={{ color: "inherit", textDecoration: "none" }}
+            to={`/reefs/${reef.id}`}
           >
-            <ArrowBack />
-          </IconButton>
+            <IconButton edge="start" color="primary" aria-label="menu">
+              <ArrowBack />
+            </IconButton>
+          </Link>
           <Typography color="primary" variant="h5">
-            All Surveys
+            Back to reef
           </Typography>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>
@@ -97,7 +98,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 </Grid>
                 <Grid container alignItems="center" item xs={11}>
                   <Typography variant="subtitle2">
-                    {`MEAN DAILY WATER TEMPERATURE AT ${reef.depth}M (°C)`}
+                    DAILY WATER TEMPERATURE (°C)
                   </Typography>
                 </Grid>
                 <Grid container justify="center" item xs={12}>
@@ -135,7 +136,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>
-            <SurveyMediaDetails points={surveyDetails?.surveyPoints} />
+            <SurveyMediaDetails surveyMedia={surveyDetails?.surveyMedia} />
           </Grid>
         </Grid>
       </Grid>

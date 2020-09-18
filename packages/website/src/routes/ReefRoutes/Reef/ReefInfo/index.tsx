@@ -9,7 +9,7 @@ import {
   WithStyles,
   createStyles,
 } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 const ReefNavBar = ({
@@ -19,8 +19,6 @@ const ReefNavBar = ({
   managerName,
   classes,
 }: ReefNavBarProps) => {
-  const history = useHistory();
-
   return (
     <Grid
       className={classes.root}
@@ -31,14 +29,11 @@ const ReefNavBar = ({
       <Grid item xs={11}>
         <Grid alignItems="center" direction="row" container spacing={1}>
           <Grid item>
-            <IconButton
-              edge="start"
-              onClick={history.goBack}
-              color="primary"
-              aria-label="menu"
-            >
-              <ArrowBack />
-            </IconButton>
+            <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
+              <IconButton edge="start" color="primary" aria-label="menu">
+                <ArrowBack />
+              </IconButton>
+            </Link>
           </Grid>
 
           <Grid item xs={9} direction="column" container>

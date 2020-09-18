@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import Tooltip, { TooltipData } from "../../../ReefRoutes/Reef/Charts/Tooltip";
 import type { Data } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import {
   createDatasets,
   calculateAxisLimits,
@@ -36,10 +36,10 @@ const Charts = ({
   const [xTickShift, setXTickShift] = useState<number>(0);
 
   // Sort daily data by date
-  const sortByDate = sortDailyData(dailyData);
+  const sortedDailyData = sortByDate(dailyData, "date");
 
   const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
-    sortByDate
+    sortedDailyData
   );
 
   const {
@@ -48,7 +48,7 @@ const Charts = ({
     yAxisMax,
     yAxisMin,
     chartLabels,
-  } = calculateAxisLimits(sortByDate, temperatureThreshold);
+  } = calculateAxisLimits(sortedDailyData, temperatureThreshold);
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
@@ -167,7 +167,7 @@ const Charts = ({
                   backgroundColor: "rgb(169,169,169)",
                   position: "left",
                   xAdjust: 10,
-                  content: "Maximum Monthly Temperature",
+                  content: "Historical Max",
                 },
               },
             ],
