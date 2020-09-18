@@ -19,8 +19,6 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { DeleteOutlineOutlined } from "@material-ui/icons";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
@@ -35,8 +33,6 @@ const MediaCard = ({
   index,
   file,
   featuredFile,
-  hidden,
-  handleHiddenChange,
   handlePoiOptionAdd,
   deleteCard,
   setFeatured,
@@ -118,7 +114,7 @@ const MediaCard = ({
                   role="button"
                   onClick={onImageClick}
                   onKeyDown={() => {}}
-                  style={{ height: "100%", cursor: "pointer", outline: "none" }}
+                  className={classes.image}
                 >
                   <Grid
                     style={{ height: "50%" }}
@@ -129,11 +125,13 @@ const MediaCard = ({
                     justify="flex-start"
                   >
                     {index === featuredFile && (
-                      <img
-                        className={classes.starIcon}
-                        src={StarIcon}
-                        alt="featured"
-                      />
+                      <Tooltip title="Featured image">
+                        <img
+                          className={classes.starIcon}
+                          src={StarIcon}
+                          alt="featured"
+                        />
+                      </Tooltip>
                     )}
                   </Grid>
                   <Grid
@@ -260,27 +258,6 @@ const MediaCard = ({
               <Grid
                 container
                 item
-                alignItems="flex-start"
-                justify="flex-end"
-                xs={12}
-              >
-                <Tooltip
-                  title={
-                    hidden ? "Make this image visible" : "Hide image from users"
-                  }
-                >
-                  <IconButton onClick={() => handleHiddenChange(index)}>
-                    {hidden ? (
-                      <VisibilityOffIcon color="inherit" />
-                    ) : (
-                      <VisibilityIcon color="primary" />
-                    )}
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid
-                container
-                item
                 alignItems="flex-end"
                 justify="flex-end"
                 xs={12}
@@ -311,6 +288,10 @@ const styles = (theme: Theme) =>
       height: "100%",
       width: "100%",
       borderRadius: "2px 0 0 2px",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        filter: "brightness(70%)",
+      },
     },
     textField: {
       color: "black",
@@ -334,6 +315,11 @@ const styles = (theme: Theme) =>
       height: 42,
       padding: 8,
     },
+    image: {
+      height: "100%",
+      cursor: "pointer",
+      outline: "none",
+    },
   });
 
 interface MediaCardIncomingProps {
@@ -345,8 +331,6 @@ interface MediaCardIncomingProps {
   surveyPointOptions: Pois[];
   file?: File | null;
   featuredFile: number | null;
-  hidden: boolean;
-  handleHiddenChange: (index: number) => void;
   handlePoiOptionAdd: (index: number, name: string) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;

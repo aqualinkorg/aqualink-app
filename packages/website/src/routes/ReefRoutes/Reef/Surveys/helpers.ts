@@ -1,20 +1,27 @@
 import { SurveyListState, Observations } from "../../../../store/Survey/types";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 
 const filterSurveys = (
   list: SurveyListState["list"],
   observation: Observations | "any",
   point: number
 ): SurveyListState["list"] => {
+  const sortedSurveys = sortByDate(list, "diveDate", "desc");
+
   if (observation === "any" && point === -1) {
-    return list;
+    return sortedSurveys;
   }
   if (observation === "any") {
-    return list.filter((survey) => survey.surveyPoints?.includes(point));
+    return sortedSurveys.filter((survey) =>
+      survey.surveyPoints?.includes(point)
+    );
   }
   if (point === -1) {
-    return list.filter((survey) => survey.observations?.includes(observation));
+    return sortedSurveys.filter((survey) =>
+      survey.observations?.includes(observation)
+    );
   }
-  return list.filter(
+  return sortedSurveys.filter(
     (survey) =>
       survey.observations?.includes(observation) &&
       survey.surveyPoints?.includes(point)
