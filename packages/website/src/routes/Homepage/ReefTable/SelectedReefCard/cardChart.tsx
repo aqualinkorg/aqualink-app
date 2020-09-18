@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Line } from "react-chartjs-2";
 
 import { createChartData } from "../../../../helpers/createChartData";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import type { Data } from "../../../../store/Reefs/types";
 import {
   createDatasets,
@@ -23,9 +23,9 @@ const CardChart = ({
   const [xTickShift, setXTickShift] = useState<number>(0);
 
   // Sort daily data by date
-  const sortByDate = sortDailyData(dailyData);
+  const sortedDailyData = sortByDate(dailyData, "date");
 
-  const { surfaceTemperatureData } = createDatasets(sortByDate);
+  const { surfaceTemperatureData } = createDatasets(sortedDailyData);
 
   const {
     xAxisMax,
@@ -33,7 +33,7 @@ const CardChart = ({
     yAxisMax,
     yAxisMin,
     chartLabels,
-  } = calculateAxisLimits(sortByDate, temperatureThreshold);
+  } = calculateAxisLimits(sortedDailyData, temperatureThreshold);
 
   const changeXTickShift = () => {
     const { current } = chartRef;

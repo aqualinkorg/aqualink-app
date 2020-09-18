@@ -11,14 +11,14 @@ import {
 } from "@material-ui/core";
 
 import type { Data } from "../../../../store/Reefs/types";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 
 import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
 const Bleaching = ({ dailyData, maxMonthlyMean, classes }: BleachingProps) => {
-  const sortByDate = sortDailyData(dailyData, "desc");
-  const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
+  const sortedDailyData = sortByDate(dailyData, "date", "desc");
+  const { degreeHeatingDays, satelliteTemperature } = sortedDailyData[0];
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
