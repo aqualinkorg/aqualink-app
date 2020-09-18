@@ -11,14 +11,14 @@ import {
 } from "@material-ui/core";
 
 import type { Data } from "../../../../store/Reefs/types";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 
 import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
 const Wind = ({ dailyData, classes }: WindProps) => {
-  const sortByDate = sortDailyData(dailyData, "desc");
-  const { degreeHeatingDays } = sortByDate[0];
+  const sortedDailyData = sortByDate(dailyData, "date", "desc");
+  const { degreeHeatingDays } = sortedDailyData[0];
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 

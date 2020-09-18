@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import type { Data } from "../../../../store/Reefs/types";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
@@ -19,14 +19,14 @@ import wind from "../../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
 const Waves = ({ dailyData, classes }: WavesProps) => {
-  const sortByDate = sortDailyData(dailyData, "desc");
+  const sortedDailyData = sortByDate(dailyData, "date", "desc");
   const {
     maxWaveHeight,
     waveDirection,
     wavePeriod,
     maxWindSpeed,
     windDirection,
-  } = sortByDate[0];
+  } = sortedDailyData[0];
 
   return (
     <Card className={classes.card}>
