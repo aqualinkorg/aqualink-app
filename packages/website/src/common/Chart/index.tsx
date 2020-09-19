@@ -16,7 +16,7 @@ import "../../helpers/slicePlugin";
 import Tooltip, {
   TooltipData,
 } from "../../routes/ReefRoutes/Reef/Charts/Tooltip";
-import { sortDailyData } from "../../helpers/sortDailyData";
+import { sortByDate } from "../../helpers/sortDailyData";
 import {
   calculateAxisLimits,
   createDatasets,
@@ -64,13 +64,19 @@ function Chart({
   const [xTickShift, setXTickShift] = useState<number>(0);
 
   // Sort daily data by date
-  const sortByDate = sortDailyData(dailyData);
+  const sortedDailyData = sortByDate(dailyData, "date");
 
   const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
-    sortByDate
+    sortedDailyData
   );
 
-  const { xAxisMax, xAxisMin, chartLabels } = calculateAxisLimits(sortByDate);
+  const {
+    xAxisMax,
+    xAxisMin,
+    yAxisMax,
+    yAxisMin,
+    chartLabels,
+  } = calculateAxisLimits(sortedDailyData, temperatureThreshold);
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
@@ -198,7 +204,7 @@ function Chart({
                   backgroundColor: "rgb(169,169,169)",
                   position: "left",
                   xAdjust: 10,
-                  content: "Maximum Monthly Temperature",
+                  content: "Historical Max",
                 },
               },
               ...chartAnnotations,
@@ -238,13 +244,9 @@ function Chart({
                 },
                 display: true,
                 ticks: {
-                  min: temperatureThreshold
-                    ? Math.round(temperatureThreshold) - 5
-                    : null,
+                  min: yAxisMin,
                   stepSize: 5,
-                  max: temperatureThreshold
-                    ? Math.round(temperatureThreshold) + 5
-                    : null,
+                  max: yAxisMax,
                   callback: (value: number) => {
                     return `${value}\u00B0  `;
                   },
