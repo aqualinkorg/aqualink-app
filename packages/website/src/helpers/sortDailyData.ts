@@ -12,10 +12,15 @@ export function getDailyDataClosestToDate(dailyData: Data[], date: Date) {
   );
 }
 
-export const sortDailyData = (dailyData: Data[], order?: string) => {
-  return Object.values(dailyData).sort((item1, item2) => {
-    const date1 = new Date(item1.date).getTime();
-    const date2 = new Date(item2.date).getTime();
+/** Utility function to sort data by date */
+export const sortByDate = (
+  list: any[],
+  dateFieldName: string,
+  order?: string
+) => {
+  return Object.values(list).sort((item1, item2) => {
+    const date1 = new Date(item1[dateFieldName]).getTime();
+    const date2 = new Date(item2[dateFieldName]).getTime();
 
     switch (order) {
       case "desc":

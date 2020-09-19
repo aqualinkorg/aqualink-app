@@ -26,7 +26,7 @@ import {
   surveysRequest,
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { sortDailyData } from "../../../helpers/sortDailyData";
+import { sortByDate } from "../../../helpers/sortDailyData";
 import ReefDetails from "./ReefDetails";
 
 const Reef = ({ match, classes }: ReefProps) => {
@@ -44,7 +44,9 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const latestDailyData =
     reefDetails && reefDetails.dailyData.length > 0
-      ? sortDailyData(reefDetails.dailyData)[reefDetails.dailyData.length - 1]
+      ? sortByDate(reefDetails.dailyData, "date")[
+          reefDetails.dailyData.length - 1
+        ]
       : undefined;
 
   const hasSpotter = Boolean(

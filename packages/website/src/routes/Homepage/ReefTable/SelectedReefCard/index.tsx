@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import CardChart from "./cardChart";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
@@ -60,14 +60,14 @@ type SelectedReefContentProps = WithStyles<typeof styles> & { reef: Reef };
 
 const SelectedReefContent = withStyles(styles)(
   ({ classes, reef }: SelectedReefContentProps) => {
-    const sortByDate = sortDailyData(reef.dailyData);
-    const dailyDataLen = sortByDate.length;
+    const sortedDailyData = sortByDate(reef.dailyData, "date");
+    const dailyDataLen = sortedDailyData.length;
     const {
       maxBottomTemperature,
       surfaceTemperature,
       satelliteTemperature,
       degreeHeatingDays,
-    } = sortByDate[dailyDataLen - 1];
+    } = sortedDailyData[dailyDataLen - 1];
 
     const surfTemp = surfaceTemperature || satelliteTemperature;
 

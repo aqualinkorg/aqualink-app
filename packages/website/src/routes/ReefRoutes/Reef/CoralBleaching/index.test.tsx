@@ -1,9 +1,10 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Wind from ".";
+import Bleaching from ".";
 
 test("renders as expected", () => {
+  const maxMonthlyMean = 18;
   const dailyData = [
     {
       id: 1,
@@ -25,6 +26,8 @@ test("renders as expected", () => {
       windDirection: 96,
     },
   ];
-  const { container } = render(<Wind dailyData={dailyData} />);
+  const { container } = render(
+    <Bleaching dailyData={dailyData} maxMonthlyMean={maxMonthlyMean} />
+  );
   expect(container).toMatchSnapshot();
 });
