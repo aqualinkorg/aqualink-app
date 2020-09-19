@@ -1,15 +1,15 @@
 import React from "react";
 import { createStyles, Grid, withStyles, WithStyles } from "@material-ui/core";
 import type { Data } from "../../../../store/Reefs/types";
-import "../../../../helpers/backgroundPlugin";
-import "../../../../helpers/fillPlugin";
-import "../../../../helpers/slicePlugin";
-import Chart from "../../../../common/Chart";
+import "../../../../common/Chart/backgroundPlugin";
+import "../../../../common/Chart/fillPlugin";
+import "../../../../common/Chart/slicePlugin";
+import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 
 const Charts = ({ classes, ...rest }: ChartsProps) => {
   return (
     <Grid item xs={11}>
-      <Chart {...rest} className={classes.root} />
+      <ChartWithTooltip {...rest} className={classes.root} />
     </Grid>
   );
 };

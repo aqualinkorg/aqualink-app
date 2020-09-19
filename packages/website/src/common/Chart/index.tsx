@@ -1,8 +1,5 @@
 import React, {
-  CSSProperties,
   MutableRefObject,
-  PropsWithChildren,
-  RefObject,
   useCallback,
   useEffect,
   useRef,
@@ -11,26 +8,13 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { merge } from "lodash";
 import type { Data } from "../../store/Reefs/types";
-
-import "../../helpers/backgroundPlugin";
-import "../../helpers/fillPlugin";
-import "../../helpers/slicePlugin";
-import Tooltip, {
-  TooltipData,
-} from "../../routes/ReefRoutes/Reef/Charts/Tooltip";
-import { sortByDate } from "../../helpers/sortDailyData";
-import {
-  calculateAxisLimits,
-  createDatasets,
-} from "../../routes/ReefRoutes/Reef/Charts/utils";
+import "./backgroundPlugin";
+import "./fillPlugin";
+import "./slicePlugin";
+import "chartjs-plugin-annotation";
 import { createChartData } from "../../helpers/createChartData";
+import { useProcessedChartData } from "./useProcessedChartData";
 
-export type ChartDataRef = MutableRefObject<{
-  chartRef: RefObject<Line>;
-  sortedDailyData: ReturnType<typeof sortByDate>;
-  datasets: ReturnType<typeof createDatasets>;
-  axisLimits: ReturnType<typeof calculateAxisLimits>;
-} | null>;
 export interface ChartProps {
   dailyData: Data[];
   temperatureThreshold: number | null;
@@ -38,7 +22,7 @@ export interface ChartProps {
 
   chartHeight?: number;
   chartSettings?: {};
-  chartDataRef?: ChartDataRef;
+  chartRef?: MutableRefObject<Line | null>;
 }
 
 function Chart({
@@ -47,25 +31,27 @@ function Chart({
   maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
   chartHeight = 100,
   chartSettings = {},
-  chartDataRef,
+  chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
-
+  if (forwardRef) {
+    // this might be doable with forwardRef or callbacks, but its a little hard since we need to
+    // use it in two places
+    // eslint-disable-next-line no-param-reassign
+    forwardRef.current = chartRef.current;
+  }
   const [updateChart, setUpdateChart] = useState<boolean>(false);
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
-  // Sort daily data by date
-  const sortedDailyData = sortByDate(dailyData, "date");
-
-  const datasets = createDatasets(sortedDailyData);
-  const { surfaceTemperatureData } = datasets;
-  const axisLimits = calculateAxisLimits(sortedDailyData, temperatureThreshold);
-  const { xAxisMax, xAxisMin, yAxisMax, yAxisMin, chartLabels } = axisLimits;
-
-  if (chartDataRef)
-    // eslint-disable-next-line no-param-reassign
-    chartDataRef.current = { chartRef, sortedDailyData, datasets, axisLimits };
+  const {
+    xAxisMax,
+    xAxisMin,
+    yAxisMax,
+    yAxisMin,
+    surfaceTemperatureData,
+    chartLabels,
+  } = useProcessedChartData(dailyData, temperatureThreshold);
 
   const changeXTickShift = () => {
     const { current } = chartRef;

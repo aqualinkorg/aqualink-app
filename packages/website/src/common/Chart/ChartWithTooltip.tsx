@@ -1,17 +1,20 @@
-import React, { PropsWithChildren, useRef, useState } from "react";
+import React, {
+  CSSProperties,
+  PropsWithChildren,
+  useRef,
+  useState,
+} from "react";
 import { Line } from "react-chartjs-2";
-import Chart, { ChartDataRef, ChartProps } from "./index";
+import Chart, { ChartProps } from "./index";
 import Tooltip, {
   TooltipData,
 } from "../../routes/ReefRoutes/Reef/Charts/Tooltip";
-import { sortByDate } from "../../helpers/sortDailyData";
-import {
-  calculateAxisLimits,
-  createDatasets,
-} from "../../routes/ReefRoutes/Reef/Charts/utils";
+import { useProcessedChartData } from "./useProcessedChartData";
 
 interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
+  className?: string;
+  style?: CSSProperties;
 }
 
 function ChartWithTooltip({
@@ -19,26 +22,16 @@ function ChartWithTooltip({
   dailyData,
   temperatureThreshold,
   children,
+  className,
+  style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const chartDataRef: ChartDataRef = useRef(null);
-
-  // start dup
-  // Sort daily data by date
-  const sortedDailyData = sortByDate(dailyData, "date");
-
-  const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
-    sortedDailyData
-  );
-
+  const chartDataRef = useRef<Line>(null);
   const {
-    xAxisMax,
-    xAxisMin,
-    yAxisMax,
-    yAxisMin,
     chartLabels,
-  } = calculateAxisLimits(sortedDailyData, temperatureThreshold);
-  // end dup
+    bottomTemperatureData,
+    surfaceTemperatureData,
+  } = useProcessedChartData(dailyData, temperatureThreshold);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -86,10 +79,10 @@ function ChartWithTooltip({
   }
 
   return (
-    <div className="" style={{}} onMouseLeave={hideTooltip}>
+    <div className={className} style={style} onMouseLeave={hideTooltip}>
       {children}
       <Chart
-        chartDataRef={chartDataRef}
+        {...rest}
         dailyData={dailyData}
         temperatureThreshold={temperatureThreshold}
         chartHeight={60}
@@ -105,9 +98,7 @@ function ChartWithTooltip({
               },
               enabled: false,
               intersect: false,
-              custom: customTooltip(
-                chartDataRef.current?.chartRef || { current: null }
-              ),
+              custom: customTooltip(chartDataRef),
             },
             legend: {
               display: true,
