@@ -7,12 +7,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
-import { SurveyMedia } from './survey-media.entity';
+import { Observations, SurveyMedia } from './survey-media.entity';
 
 export enum WeatherConditions {
   Calm = 'calm',
@@ -58,7 +59,12 @@ export class Survey {
   @OneToOne(() => SurveyMedia, (surveyMedia) => surveyMedia.surveyId)
   featuredSurveyMedia?: SurveyMedia;
 
+  @OneToMany(() => SurveyMedia, (surveyMedia) => surveyMedia.surveyId)
+  surveyMedia?: SurveyMedia[];
+
   latestDailyData?: DailyData;
 
   surveyPoints?: ReefPointOfInterest[];
+
+  observations?: Observations[];
 }

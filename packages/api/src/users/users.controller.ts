@@ -49,6 +49,7 @@ export class UsersController {
     return this.usersService.delete(id);
   }
 
+  @OverrideLevelAccess(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Get('current/administered-reefs')
   getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
     return this.usersService.getAdministeredReefs(req);

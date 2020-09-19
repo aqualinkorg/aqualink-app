@@ -54,14 +54,9 @@ export const calculateAxisLimits = (
     new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
   ];
 
-  const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
-    dailyData
-  );
+  const { surfaceTemperatureData } = createDatasets(dailyData);
 
-  const temperatureData = [
-    ...bottomTemperatureData,
-    ...surfaceTemperatureData,
-  ].filter((value) => value);
+  const temperatureData = [...surfaceTemperatureData].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - 2;
 
@@ -69,13 +64,13 @@ export const calculateAxisLimits = (
 
   const yAxisMin = Math.round(
     temperatureThreshold
-      ? Math.min(yAxisMinTemp, temperatureThreshold - 5)
+      ? Math.min(yAxisMinTemp, temperatureThreshold - 2)
       : yAxisMinTemp
   );
 
   const yAxisMax = Math.round(
     temperatureThreshold
-      ? Math.max(yAxisMaxTemp, temperatureThreshold + 5)
+      ? Math.max(yAxisMaxTemp, temperatureThreshold + 2)
       : yAxisMaxTemp
   );
 

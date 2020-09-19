@@ -23,8 +23,16 @@ import {
 import DeleteButton from "../DeleteButton";
 import incomingStyles from "../styles";
 import { formatNumber } from "../../../../../helpers/numberUtils";
+import { TimelineProps } from "../types";
+import filterSurveys from "../helpers";
 
-const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
+const TimelineMobile = ({
+  reefId,
+  isAdmin,
+  point,
+  observation,
+  classes,
+}: TimelineMobileProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -57,7 +65,7 @@ const TimelineMobile = ({ reefId, isAdmin, classes }: TimelineMobileProps) => {
         </Grid>
       )}
       {surveyList &&
-        surveyList.map((survey) => (
+        filterSurveys(surveyList, observation, point).map((survey) => (
           <Grid
             key={survey.id}
             className={classes.surveyWrapper}
@@ -205,6 +213,7 @@ const styles = (theme: Theme) =>
     },
     surveyCard: {
       ...incomingStyles.surveyCard,
+      width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: "25rem",
       },
@@ -234,12 +243,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface TimelineMobileIncomingProps {
-  reefId: number;
-  isAdmin: boolean;
-}
-
-type TimelineMobileProps = TimelineMobileIncomingProps &
-  WithStyles<typeof styles>;
+type TimelineMobileProps = TimelineProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(TimelineMobile);

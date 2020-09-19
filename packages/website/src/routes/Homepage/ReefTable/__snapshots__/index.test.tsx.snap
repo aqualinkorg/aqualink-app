@@ -49,11 +49,11 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             <mock-tablecell
               align="left"
               padding="default"
-              sortdirection="asc"
+              sortdirection="false"
               style="width: 25%; padding-right: 0px;"
             >
               <mock-tablesortlabel
-                active="true"
+                active="false"
                 direction="asc"
               >
                 <mock-typography
@@ -120,12 +120,12 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             <mock-tablecell
               align="left"
               padding="default"
-              sortdirection="false"
+              sortdirection="desc"
               style="padding-right: 0px;"
             >
               <mock-tablesortlabel
-                active="false"
-                direction="asc"
+                active="true"
+                direction="desc"
               >
                 <mock-typography
                   nowrap="true"
@@ -217,7 +217,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 aria-hidden="true"
                 class="MuiSvgIcon-root"
                 focusable="false"
-                style="color: rgb(198, 229, 250);"
+                style="color: rgb(248, 171, 0);"
                 viewBox="0 0 24 24"
               >
                 <path

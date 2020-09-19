@@ -14,7 +14,7 @@ import {
 
 import { dhwColorCode } from "../../../../assets/colorCode";
 import type { Data } from "../../../../store/Reefs/types";
-import { sortDailyData } from "../../../../helpers/sortDailyData";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import satellite from "../../../../assets/satellite.svg";
 import {
@@ -24,8 +24,8 @@ import {
 import { styles as incomingStyles } from "../styles";
 
 const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
-  const sortByDate = sortDailyData(dailyData, "desc");
-  const { degreeHeatingDays, satelliteTemperature } = sortByDate[0];
+  const sortedDailyData = sortByDate(dailyData, "date", "desc");
+  const { degreeHeatingDays, satelliteTemperature } = sortedDailyData[0];
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
@@ -36,8 +36,8 @@ const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
     },
     {
       label: "Historical Max",
-      value: `${formatNumber((maxMonthlyMean || 20) + 1, 1)} °C`,
-      tooltipTitle: "Historical maximum monthly average over the past 7 years",
+      value: `${formatNumber(maxMonthlyMean || 20, 1)} °C`,
+      tooltipTitle: "Historical maximum monthly average over the past 20 years",
     },
     {
       label: "Heat Stress",

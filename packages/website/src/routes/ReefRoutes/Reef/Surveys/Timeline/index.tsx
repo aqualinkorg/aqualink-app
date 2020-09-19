@@ -31,8 +31,16 @@ import {
 } from "../../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
 import { formatNumber } from "../../../../../helpers/numberUtils";
+import { TimelineProps } from "../types";
+import filterSurveys from "../helpers";
 
-const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
+const SurveyTimeline = ({
+  isAdmin,
+  reefId,
+  observation,
+  point,
+  classes,
+}: SurveyTimelineProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
 
@@ -45,7 +53,12 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
       <Timeline>
         {isAdmin &&
           !(window && window.location.pathname.includes("new_survey")) && (
-            <TimelineItem>
+            <TimelineItem className={classes.timelineItem}>
+              <TimelineOppositeContent
+                className={classes.timelineOppositeContent}
+                // Modify padding to center the Add survey symbol.
+                style={{ padding: "0 10px" }}
+              />
               <TimelineSeparator>
                 <Link
                   style={{ color: "inherit", textDecoration: "none" }}
@@ -64,10 +77,12 @@ const SurveyTimeline = ({ isAdmin, reefId, classes }: SurveyTimelineProps) => {
             </TimelineItem>
           )}
         {surveyList &&
-          surveyList.map((survey) => (
+          filterSurveys(surveyList, observation, point).map((survey) => (
             <TimelineItem key={survey.id} className={classes.timelineItem}>
               {survey.diveDate && (
-                <TimelineOppositeContent>
+                <TimelineOppositeContent
+                  className={classes.timelineOppositeContent}
+                >
                   <Typography variant="h6" className={classes.dates}>
                     {moment(survey.diveDate).format("MM/DD/YYYY")}
                   </Typography>
@@ -211,6 +226,9 @@ const styles = (theme: Theme) =>
     timelineItem: {
       alignItems: "center",
     },
+    timelineOppositeContent: {
+      flex: 0.5,
+    },
     dot: {
       border: "solid 1px #979797",
       backgroundColor: theme.palette.primary.light,
@@ -229,12 +247,6 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface SurveyTimelineIncomingProps {
-  reefId: number;
-  isAdmin: boolean;
-}
-
-type SurveyTimelineProps = SurveyTimelineIncomingProps &
-  WithStyles<typeof styles>;
+type SurveyTimelineProps = TimelineProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(SurveyTimeline);
