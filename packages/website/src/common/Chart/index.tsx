@@ -1,13 +1,15 @@
 import React, {
   CSSProperties,
+  MutableRefObject,
   PropsWithChildren,
+  RefObject,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { Line } from "react-chartjs-2";
-
+import { merge } from "lodash";
 import type { Data } from "../../store/Reefs/types";
 
 import "../../helpers/backgroundPlugin";
@@ -23,94 +25,50 @@ import {
 } from "../../routes/ReefRoutes/Reef/Charts/utils";
 import { createChartData } from "../../helpers/createChartData";
 
-interface ChartProps {
+export type ChartDataRef = MutableRefObject<{
+  chartRef: RefObject<Line>;
+  sortedDailyData: ReturnType<typeof sortByDate>;
+  datasets: ReturnType<typeof createDatasets>;
+  axisLimits: ReturnType<typeof calculateAxisLimits>;
+} | null>;
+export interface ChartProps {
   dailyData: Data[];
   temperatureThreshold: number | null;
-  // this rule doesn't support defining defaults in object destructuring
-  // eslint-disable-next-line react/require-default-props
   maxMonthlyMean?: number | null;
-  includeTooltip?: boolean;
-  depth?: number | null;
-  chartAnnotations?: object[];
-  // eslint-disable-next-line react/require-default-props
-  className?: string;
-  // eslint-disable-next-line react/require-default-props
-  style?: CSSProperties;
+
+  chartHeight?: number;
+  chartSettings?: {};
+  chartDataRef?: ChartDataRef;
 }
 
 function Chart({
   dailyData,
   temperatureThreshold,
-  includeTooltip, // TODO implement
   maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
-  depth = null,
-  chartAnnotations,
-  children,
-  ...rest
-}: PropsWithChildren<ChartProps>) {
-  const temperatureChartRef = useRef<Line>(null);
+  chartHeight = 100,
+  chartSettings = {},
+  chartDataRef,
+}: ChartProps) {
+  const chartRef = useRef<Line>(null);
 
-  const chartHeight = 60;
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  const [tooltipData, setTooltipData] = useState<TooltipData>({
-    date: "",
-    depth,
-    bottomTemperature: 0,
-    surfaceTemperature: 0,
-  });
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [updateChart, setUpdateChart] = useState<boolean>(false);
-  const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
+
   const [xTickShift, setXTickShift] = useState<number>(0);
 
   // Sort daily data by date
   const sortedDailyData = sortByDate(dailyData, "date");
 
-  const { bottomTemperatureData, surfaceTemperatureData } = createDatasets(
-    sortedDailyData
-  );
+  const datasets = createDatasets(sortedDailyData);
+  const { surfaceTemperatureData } = datasets;
+  const axisLimits = calculateAxisLimits(sortedDailyData, temperatureThreshold);
+  const { xAxisMax, xAxisMin, yAxisMax, yAxisMin, chartLabels } = axisLimits;
 
-  const {
-    xAxisMax,
-    xAxisMin,
-    yAxisMax,
-    yAxisMin,
-    chartLabels,
-  } = calculateAxisLimits(sortedDailyData, temperatureThreshold);
-
-  const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
-    const chart = ref.current;
-    if (!chart) {
-      return;
-    }
-    const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 110;
-    const date =
-      tooltipModel.dataPoints &&
-      tooltipModel.dataPoints[0] &&
-      tooltipModel.dataPoints[0].xLabel;
-    const index = date && chartLabels.findIndex((item) => item === date);
-    if (index > -1) {
-      setTooltipPosition({ top, left });
-      setTooltipData({
-        date,
-        depth,
-        bottomTemperature: bottomTemperatureData[index],
-        surfaceTemperature: surfaceTemperatureData[index],
-      });
-      setShowTooltip(true);
-      setSliceAtLabel(date);
-    }
-  };
-
-  const hideTooltip = () => {
-    setShowTooltip(false);
-    setSliceAtLabel(null);
-  };
+  if (chartDataRef)
+    // eslint-disable-next-line no-param-reassign
+    chartDataRef.current = { chartRef, sortedDailyData, datasets, axisLimits };
 
   const changeXTickShift = () => {
-    const { current } = temperatureChartRef;
+    const { current } = chartRef;
     if (current) {
       const xScale = current.chartInstance.scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
@@ -144,17 +102,11 @@ function Chart({
     changeXTickShift();
   });
 
-  // Hide tooltip on scroll to avoid dragging it on the page.
-  if (showTooltip) {
-    window.addEventListener("scroll", hideTooltip);
-  }
-
   return (
-    <div {...rest} onMouseLeave={hideTooltip}>
-      {children}
-      <Line
-        ref={temperatureChartRef}
-        options={{
+    <Line
+      ref={chartRef}
+      options={merge(
+        {
           maintainAspectRatio: false,
           plugins: {
             chartJsPluginBarchartBackground: {
@@ -168,27 +120,14 @@ function Chart({
               color: "rgba(250, 141, 0, 0.5)",
               updateChart,
             },
-            sliceDrawPlugin: {
-              sliceAtLabel,
-              datasetIndex: 0,
-            },
           },
           tooltips: {
-            filter: (tooltipItem: any) => {
-              return tooltipItem.datasetIndex === 0;
-            },
             enabled: false,
-            intersect: false,
-            custom: customTooltip(temperatureChartRef),
           },
           legend: {
-            display: true,
-            rtl: true,
-            labels: {
-              fontSize: 14,
-              fontColor: "#9ea6aa",
-            },
+            display: false,
           },
+
           annotation: {
             annotations: [
               {
@@ -207,7 +146,6 @@ function Chart({
                   content: "Historical Max",
                 },
               },
-              ...chartAnnotations,
             ],
           },
           scales: {
@@ -254,28 +192,12 @@ function Chart({
               },
             ],
           },
-        }}
-        height={chartHeight}
-        data={createChartData(chartLabels, surfaceTemperatureData, true)}
-      />
-      {showTooltip ? (
-        <div
-          className="chart-tooltip"
-          id="chart-tooltip"
-          style={{
-            position: "fixed",
-            top: tooltipPosition.top,
-            left: tooltipPosition.left,
-          }}
-        >
-          <Tooltip {...tooltipData} />
-        </div>
-      ) : null}
-    </div>
+        },
+        chartSettings
+      )}
+      height={chartHeight}
+      data={createChartData(chartLabels, surfaceTemperatureData, true)}
+    />
   );
 }
-Chart.defaultProps = {
-  includeTooltip: false,
-  chartAnnotations: [],
-};
 export default Chart;
