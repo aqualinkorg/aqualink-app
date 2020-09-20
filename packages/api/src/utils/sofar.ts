@@ -4,26 +4,23 @@ import { isNil } from 'lodash';
 import axiosRetry from 'axios-retry';
 import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
-
-type SofarValue = {
-  timestamp: string;
-  value: number;
-};
-
-type SpotterData = {
-  surfaceTemperature: number[];
-  bottomTemperature: number[];
-  significantWaveHeight: number[];
-  wavePeakPeriod: number[];
-  waveMeanDirection: number[];
-};
+import { SofarValue, SpotterData } from './sofar.types';
 
 type SensorData = {
   sensorPosition: number;
   degrees: number;
 };
 
-const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
+export const getLatestData = (
+  sofarValues: SofarValue[],
+): SofarValue | undefined =>
+  sofarValues.reduce(
+    (max, entry) =>
+      new Date(entry.timestamp) > new Date(max.timestamp) ? entry : max,
+    sofarValues[0],
+  );
+
+export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
   sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);
 
 axiosRetry(axios, { retries: 3 });
@@ -53,18 +50,52 @@ export async function sofarHindcast(
     .catch((error) => {
       if (error.response) {
         console.error(
-          `Sofar API responded with a ${error.response.status} status. ${error.response.message}`,
+          `Sofar Hindcast API responded with a ${error.response.status} status. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(
+          `An error occurred accessing the Sofar Hindcast API - ${error}`,
+        );
+      }
+    });
+}
+
+export async function sofarForecast(
+  modelId: string,
+  variableID: string,
+  latitude: number,
+  longitude: number,
+): Promise<SofarValue> {
+  return axios
+    .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
+      params: {
+        variableIDs: [variableID],
+        latitude,
+        longitude,
+        token: process.env.SOFAR_API_TOKEN,
+      },
+    })
+    .then((response) => {
+      // Get latest live (forecast) data
+      return response.data.forecastVariables[0].values[0];
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error(
+          `Sofar Forecast API responded with a ${error.response.status} status. ${error.response.data.message}`,
+        );
+      } else {
+        console.error(
+          `An error occurred accessing the Sofar Forecast API - ${error}`,
+        );
       }
     });
 }
 
 export async function sofarSpotter(
   spotterId: string,
-  start: string,
-  end: string,
+  start?: string,
+  end?: string,
 ) {
   return axios
     .get(SOFAR_SPOTTER_URL, {
@@ -72,7 +103,7 @@ export async function sofarSpotter(
         spotterId,
         startDate: start,
         endDate: end,
-        limit: 500,
+        limit: start && end ? 500 : 1,
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
@@ -92,7 +123,7 @@ export async function sofarSpotter(
     });
 }
 
-export async function getSofarDailyData(
+export async function getSofarHindcastData(
   modelId: string,
   variableID: string,
   latitude: number,
@@ -100,8 +131,6 @@ export async function getSofarDailyData(
   endDate: Date,
   hours?: number,
 ) {
-  // Get day equivalent in timezone using geo-tz to compute "start" and "end".
-  // We fetch daily data from midnight to midnight LOCAL time.
   const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(
@@ -129,9 +158,9 @@ export async function getSpotterData(
   // eslint-disable-next-line no-unused-vars
   spotterId: string,
   // eslint-disable-next-line no-unused-vars
-  endDate: Date,
+  endDate?: Date,
 ): Promise<SpotterData> {
-  const [start, end] = getStartEndDate(endDate);
+  const [start, end] = endDate ? getStartEndDate(endDate) : [];
   const {
     data: { waves = [], smartMooringData = [] },
   } = await sofarSpotter(spotterId, start, end);
@@ -181,11 +210,11 @@ export async function getSpotterData(
   );
 
   return {
-    surfaceTemperature: extractSofarValues(sofarBottomTemperature),
-    bottomTemperature: extractSofarValues(sofarSurfaceTemperature),
-    significantWaveHeight: extractSofarValues(sofarSignificantWaveHeight),
-    wavePeakPeriod: extractSofarValues(sofarPeakPeriod),
-    waveMeanDirection: extractSofarValues(sofarMeanDirection),
+    surfaceTemperature: sofarBottomTemperature,
+    bottomTemperature: sofarSurfaceTemperature,
+    significantWaveHeight: sofarSignificantWaveHeight,
+    wavePeakPeriod: sofarPeakPeriod,
+    waveMeanDirection: sofarMeanDirection,
   };
 }
 

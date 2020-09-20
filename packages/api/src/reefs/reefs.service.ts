@@ -10,6 +10,8 @@ import { DailyData } from './daily-data.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
+import { getLiveData } from '../utils/liveData';
+import { SofarLiveData } from '../utils/sofar.types';
 
 @Injectable()
 export class ReefsService {
@@ -98,5 +100,15 @@ export class ReefsService {
 
   async findDailyData(id: number): Promise<DailyData[]> {
     return this.dailyDataRepository.find({ where: { reef: id } });
+  }
+
+  async findLiveData(id: number): Promise<SofarLiveData> {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
+    return getLiveData(reef);
   }
 }
