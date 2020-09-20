@@ -85,6 +85,7 @@ function ChartWithTooltip({
       <Chart
         {...rest}
         dailyData={dailyData}
+        chartRef={chartDataRef}
         temperatureThreshold={temperatureThreshold}
         chartHeight={60}
         chartSettings={{
