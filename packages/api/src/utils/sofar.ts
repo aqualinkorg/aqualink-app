@@ -123,7 +123,7 @@ export async function sofarSpotter(
     });
 }
 
-export async function getSofarDailyData(
+export async function getSofarHindcastData(
   modelId: string,
   variableID: string,
   latitude: number,
@@ -131,8 +131,6 @@ export async function getSofarDailyData(
   endDate: Date,
   hours?: number,
 ) {
-  // Get day equivalent in timezone using geo-tz to compute "start" and "end".
-  // We fetch daily data from midnight to midnight LOCAL time.
   const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
   const hindcastVariables = await sofarHindcast(

@@ -3,7 +3,7 @@ import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
   getLatestData,
-  getSofarDailyData,
+  getSofarHindcastData,
   getSpotterData,
   sofarForecast,
 } from './sofar';
@@ -43,7 +43,7 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
   );
 
   const satelliteTemperature = getLatestData(
-    await getSofarDailyData(
+    await getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,

@@ -9,7 +9,7 @@ import { getMin, getMax, getAverage } from '../utils/math';
 import {
   extractSofarValues,
   getLatestData,
-  getSofarDailyData,
+  getSofarHindcastData,
   getSpotterData,
 } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
@@ -30,7 +30,7 @@ export async function getDegreeHeatingDays(
       timestamp: endOfDate.toISOString(),
     };
   } catch {
-    const degreeHeatingWeek = await getSofarDailyData(
+    const degreeHeatingWeek = await getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
       latitude,
@@ -95,7 +95,7 @@ export async function getDailyData(
     await getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, endOfDate)
   )?.value;
 
-  const satelliteTemperatureData = await getSofarDailyData(
+  const satelliteTemperatureData = await getSofarHindcastData(
     SofarModels.NOAACoralReefWatch,
     sofarVariableIDs[SofarModels.NOAACoralReefWatch]
       .analysedSeaSurfaceTemperature,
@@ -115,7 +115,7 @@ export async function getDailyData(
     spotterData.significantWaveHeight.length > 0
       ? spotterData.significantWaveHeight
       : (
-          await getSofarDailyData(
+          await getSofarHindcastData(
             SofarModels.NOAAOperationalWaveModel,
             sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
               .significantWaveHeight,
@@ -133,7 +133,7 @@ export async function getDailyData(
     spotterData.waveMeanDirection.length > 0
       ? spotterData.waveMeanDirection
       : (
-          await getSofarDailyData(
+          await getSofarHindcastData(
             SofarModels.NOAAOperationalWaveModel,
             sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
               .meanDirectionWindWaves,
@@ -149,7 +149,7 @@ export async function getDailyData(
     spotterData.wavePeakPeriod.length > 0
       ? spotterData.wavePeakPeriod
       : (
-          await getSofarDailyData(
+          await getSofarHindcastData(
             SofarModels.NOAAOperationalWaveModel,
             sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
             latitude,
@@ -162,7 +162,7 @@ export async function getDailyData(
 
   // Get NOAA GFS wind data
   const windVelocities = (
-    await getSofarDailyData(
+    await getSofarHindcastData(
       SofarModels.GFS,
       sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
       latitude,
@@ -176,7 +176,7 @@ export async function getDailyData(
   const avgWindSpeed = getAverage(windVelocities);
 
   const windDirections = (
-    await getSofarDailyData(
+    await getSofarHindcastData(
       SofarModels.GFS,
       sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
       latitude,

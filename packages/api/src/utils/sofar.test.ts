@@ -1,9 +1,9 @@
 import { SofarModels, sofarVariableIDs } from './constants';
-import { getSofarDailyData, getSpotterData, sofarForecast } from './sofar';
+import { getSofarHindcastData, getSpotterData, sofarForecast } from './sofar';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
-  const values = await getSofarDailyData(
+  const values = await getSofarHindcastData(
     'HYCOM',
     'HYCOM-seaSurfaceTemperature',
     -3.5976336810301888,
