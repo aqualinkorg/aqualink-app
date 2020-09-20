@@ -21,6 +21,7 @@ function ChartWithTooltip({
   depth,
   dailyData,
   temperatureThreshold,
+  chartSettings,
   children,
   className,
   style,
@@ -92,23 +93,24 @@ function ChartWithTooltip({
               sliceAtLabel,
               datasetIndex: 0,
             },
-            tooltips: {
-              filter: (tooltipItem: any) => {
-                return tooltipItem.datasetIndex === 0;
-              },
-              enabled: false,
-              intersect: false,
-              custom: customTooltip(chartDataRef),
+          },
+          tooltips: {
+            filter: (tooltipItem: any) => {
+              return tooltipItem.datasetIndex === 0;
             },
-            legend: {
-              display: true,
-              rtl: true,
-              labels: {
-                fontSize: 14,
-                fontColor: "#9ea6aa",
-              },
+            enabled: false,
+            intersect: false,
+            custom: customTooltip(chartDataRef),
+          },
+          legend: {
+            display: true,
+            rtl: true,
+            labels: {
+              fontSize: 14,
+              fontColor: "#9ea6aa",
             },
           },
+          ...chartSettings,
         }}
       />
       {showTooltip ? (
