@@ -26,8 +26,6 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     windDirection,
   } = liveData;
 
-  console.log(liveData);
-
   return (
     <Card className={classes.card}>
       <CardContent className={classes.contentWrapper}>

@@ -163,7 +163,7 @@ export async function getSpotterData(
   const [start, end] = endDate ? getStartEndDate(endDate) : [];
   const {
     data: { waves = [], smartMooringData = [] },
-  } = await sofarSpotter(spotterId, start, end);
+  } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
 
   const [sofarSignificantWaveHeight, sofarPeakPeriod, sofarMeanDirection]: [
     SofarValue[],
