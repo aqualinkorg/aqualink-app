@@ -46,15 +46,6 @@ exports[`renders as expected 1`] = `
             <mock-typography
               variant="subtitle1"
             >
-              Latest data: May 10, 2020
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <mock-typography
-              variant="subtitle1"
-            >
               Last surveyed: May 10, 2020
             </mock-typography>
           </div>

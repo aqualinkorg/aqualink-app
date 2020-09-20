@@ -7,7 +7,7 @@ import {
   WithStyles,
   Typography,
 } from "@material-ui/core";
-import { Data } from "../../../store/Reefs/types";
+import { DailyData } from "../../../store/Reefs/types";
 import { getDailyDataClosestToDate } from "../../../helpers/sortDailyData";
 import { formatNumber } from "../../../helpers/numberUtils";
 
@@ -87,7 +87,7 @@ const styles = () =>
 
 interface ObservationBoxIncomingProps {
   depth: number | null;
-  dailyData: Data[];
+  dailyData: DailyData[];
   date: Date;
 }
 

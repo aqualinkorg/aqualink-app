@@ -19,7 +19,7 @@ type Interval = {
  */
 const findInterval = (
   maxMonthlyMean: number | null,
-  satelliteTemperature: number | null,
+  satelliteTemperature?: number | null,
   degreeHeatingWeeks?: number | null
 ): Interval => {
   const hotSpot =
@@ -76,7 +76,7 @@ const findInterval = (
 
 export const alertFinder = (
   maxMonthlyMean: number | null,
-  satelliteTemperature: number | null,
+  satelliteTemperature?: number | null,
   degreeHeatingWeeks?: number | null
 ): string => {
   return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)

@@ -26,7 +26,6 @@ import {
   surveysRequest,
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { sortByDate } from "../../../helpers/sortDailyData";
 import ReefDetails from "./ReefDetails";
 
 const Reef = ({ match, classes }: ReefProps) => {
@@ -42,16 +41,9 @@ const Reef = ({ match, classes }: ReefProps) => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   )?.featuredSurveyMedia;
 
-  const latestDailyData =
-    reefDetails && reefDetails.dailyData.length > 0
-      ? sortByDate(reefDetails.dailyData, "date")[
-          reefDetails.dailyData.length - 1
-        ]
-      : undefined;
+  const { liveData } = reefDetails || {};
 
-  const hasSpotter = Boolean(
-    latestDailyData && latestDailyData.surfaceTemperature
-  );
+  const hasSpotter = Boolean(liveData?.surfaceTemperature);
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -71,11 +63,10 @@ const Reef = ({ match, classes }: ReefProps) => {
     <>
       <ReefNavBar searchLocation={false} />
       <Container>
-        {reefDetails && latestDailyData && !error ? (
+        {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
               reefName={reefDetails?.name || ""}
-              lastDailyDataDate={latestDailyData?.date}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               managerName={reefDetails?.admin || ""}
             />
@@ -91,7 +82,6 @@ const Reef = ({ match, classes }: ReefProps) => {
             <ReefDetails
               reef={{
                 ...reefDetails,
-                latestDailyData,
                 featuredImage: featuredMedia?.url,
               }}
             />

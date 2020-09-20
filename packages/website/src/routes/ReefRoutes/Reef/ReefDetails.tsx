@@ -24,11 +24,11 @@ import { formatNumber } from "../../../helpers/numberUtils";
 const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { dailyData, maxMonthlyMean } = reef;
+  const { liveData, maxMonthlyMean } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
-      props: { dailyData, maxMonthlyMean },
+      props: { liveData, maxMonthlyMean },
     },
     {
       Component: Sensor as ElementType,
@@ -36,11 +36,11 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
     },
     {
       Component: CoralBleaching as ElementType,
-      props: { dailyData, maxMonthlyMean },
+      props: { liveData, maxMonthlyMean },
     },
     {
       Component: Waves as ElementType,
-      props: { dailyData },
+      props: { liveData },
     },
   ];
 

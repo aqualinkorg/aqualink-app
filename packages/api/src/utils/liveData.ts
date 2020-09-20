@@ -1,4 +1,5 @@
 import { Point } from 'geojson';
+import { isNil, omitBy } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
@@ -97,16 +98,23 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     longitude,
   );
 
+  const filteredValues = omitBy(
+    {
+      bottomTemperature: spotterData.bottomTemperature,
+      surfaceTemperature: spotterData.surfaceTemperature,
+      degreeHeatingDays,
+      satelliteTemperature,
+      waveHeight,
+      waveDirection,
+      wavePeriod,
+      windSpeed,
+      windDirection,
+    },
+    (data) => isNil(data?.value) || data?.value === 9999,
+  );
+
   return {
     reef: { id: reef.id },
-    bottomTemperature: spotterData.bottomTemperature,
-    surfaceTemperature: spotterData.surfaceTemperature,
-    degreeHeatingDays,
-    satelliteTemperature,
-    waveHeight,
-    waveDirection,
-    wavePeriod,
-    windSpeed,
-    windDirection,
+    ...filteredValues,
   };
 };

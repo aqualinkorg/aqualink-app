@@ -1,6 +1,6 @@
-import type { Data } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 
-export const createDatasets = (dailyData: Data[]) => {
+export const createDatasets = (dailyData: DailyData[]) => {
   const dailyDataLen = dailyData.length;
 
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
@@ -28,7 +28,7 @@ export const createDatasets = (dailyData: Data[]) => {
 };
 
 export const calculateAxisLimits = (
-  dailyData: Data[],
+  dailyData: DailyData[],
   temperatureThreshold: number | null
 ) => {
   const dates = dailyData
