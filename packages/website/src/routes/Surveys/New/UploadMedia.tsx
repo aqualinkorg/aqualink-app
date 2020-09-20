@@ -16,6 +16,7 @@ import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import Dropzone, { FileRejection } from "react-dropzone";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import MediaCard from "./MediaCard";
 import uploadServices from "../../../services/uploadServices";
@@ -34,19 +35,16 @@ const UploadMedia = ({
   changeTab,
   classes,
 }: UploadMediaProps) => {
+  const history = useHistory();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [alertSeverity, setAlertSeverity] = useState<
-    "success" | "error" | "info" | "warning" | undefined
-  >(undefined);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [featuredFile, setFeaturedFile] = useState<number | null>(null);
-  const [hidden, setHidden] = useState<boolean[]>([]);
+  const [featuredFile, setFeaturedFile] = useState<number>(0);
   const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const missingObservations =
     metadata.findIndex((item) => item.observation === null) > -1;
@@ -55,6 +53,7 @@ const UploadMedia = ({
     (acceptedFiles: File[], fileRejections) => {
       // TODO - add explicit error warnings.
       fileRejections.forEach((rejection: FileRejection) => {
+        // eslint-disable-next-line no-console
         console.log(rejection.errors, rejection.file);
       });
       setFiles([...files, ...acceptedFiles]);
@@ -70,9 +69,8 @@ const UploadMedia = ({
           comments: "",
         })),
       ]);
-      setHidden([...hidden, ...acceptedFiles.map(() => false)]);
     },
-    [files, previews, metadata, hidden]
+    [files, previews, metadata]
   );
 
   useEffect(() => {
@@ -119,24 +117,15 @@ const UploadMedia = ({
     setPreviews([]);
   };
 
-  const setFeatured = useCallback(
-    (index: number) => {
-      if (featuredFile === index) {
-        // If file is already selected, uncheck it
-        setFeaturedFile(null);
-      } else {
-        setFeaturedFile(index);
-      }
-    },
-    [featuredFile]
-  );
+  const setFeatured = useCallback((index: number) => {
+    setFeaturedFile(index);
+  }, []);
 
   const onMediaSubmit = () => {
-    files.forEach((file, index) => {
+    const promises = files.map((file, index) => {
       const formData = new FormData();
       formData.append("file", file);
-      setLoading(true);
-      uploadServices
+      return uploadServices
         .uploadMedia(formData, `${reefId}`, user?.token)
         .then((response) => {
           const url = response.data;
@@ -151,33 +140,29 @@ const UploadMedia = ({
             metadata: "{}",
             token: user?.token,
             featured: index === featuredFile,
-            hidden: hidden[index],
+            hidden: false,
           };
-          surveyServices
-            .addSurveyMedia(`${reefId}`, `${surveyId}`, surveyMediaData)
-            .then(() => {
-              setFiles([]);
-              setMetadata([]);
-              setPreviews([]);
-              setHidden([]);
-              setFeaturedFile(null);
-              setAlertMessage("Successfully uploaded media");
-              setAlertSeverity("success");
-              setAlertOpen(true);
-            })
-            .catch((err) => {
-              setAlertMessage(err.message);
-              setAlertSeverity("error");
-              setAlertOpen(true);
-            })
-            .finally(() => setLoading(false));
-        })
-        .catch((err) => {
-          setAlertMessage(err.message);
-          setAlertSeverity("error");
-          setAlertOpen(true);
+          return surveyServices.addSurveyMedia(
+            `${reefId}`,
+            `${surveyId}`,
+            surveyMediaData
+          );
         });
     });
+    setLoading(true);
+    Promise.all(promises)
+      .then(() => {
+        setFiles([]);
+        setMetadata([]);
+        setPreviews([]);
+        setFeaturedFile(0);
+        history.push(`/reefs/${reefId}/survey_details/${survey?.id}`);
+      })
+      .catch((err) => {
+        setAlertMessage(err.message);
+        setAlertOpen(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleSurveyPointChange = (index: number) => {
@@ -228,16 +213,6 @@ const UploadMedia = ({
     };
   };
 
-  const handleHiddenChange = (index: number) => {
-    const newHidden = hidden.map((item, key) => {
-      if (key === index) {
-        return !item;
-      }
-      return item;
-    });
-    setHidden(newHidden);
-  };
-
   const fileCards = previews.map((preview, index) => {
     return (
       <MediaCard
@@ -259,8 +234,6 @@ const UploadMedia = ({
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}
-        hidden={hidden[index]}
-        handleHiddenChange={handleHiddenChange}
         handleCommentsChange={handleCommentsChange(index)}
         handleObservationChange={handleObservationChange(index)}
         handleSurveyPointChange={handleSurveyPointChange(index)}
@@ -274,7 +247,7 @@ const UploadMedia = ({
       <Grid item xs={12}>
         <Collapse in={alertOpen}>
           <Alert
-            severity={alertSeverity}
+            severity="error"
             action={
               <IconButton
                 aria-label="close"

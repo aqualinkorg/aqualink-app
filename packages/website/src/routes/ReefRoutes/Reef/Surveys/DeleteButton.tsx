@@ -4,13 +4,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
   IconButton,
-  Button,
   Collapse,
   LinearProgress,
 } from "@material-ui/core";
@@ -22,6 +16,7 @@ import moment from "moment";
 import surveyServices from "../../../../services/surveyServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
+import DeleteDialog, { Action } from "../../../../common/Dialog";
 
 const DeleteButton = ({
   reefId,
@@ -62,70 +57,65 @@ const DeleteButton = ({
     }
   };
 
+  const dialogActions: Action[] = [
+    {
+      size: "small",
+      variant: "contained",
+      color: "secondary",
+      text: "No",
+      action: handleClose,
+    },
+    {
+      size: "small",
+      variant: "contained",
+      color: "primary",
+      text: "Yes",
+      action: onSurveyDelete,
+    },
+  ];
+
   return (
     <>
       <IconButton onClick={handleClickOpen}>
         <DeleteOutlineIcon color="primary" />
       </IconButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle className={classes.dialogTitle}>
-          <Typography color="textSecondary">
-            Are you sure you would like to delete the survey for{" "}
-            {moment(diveDate).format("MM/DD/YYYY")}?
-          </Typography>
-        </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          {loading && <LinearProgress />}
-          <Collapse className={classes.alert} in={alertOpen}>
-            <Alert
-              severity="error"
-              action={
-                <IconButton
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setAlertOpen(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-            >
-              {alertText}
-            </Alert>
-          </Collapse>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            size="small"
-            variant="contained"
-            color="secondary"
-            onClick={handleClose}
-          >
-            No
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            onClick={onSurveyDelete}
-          >
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteDialog
+        open={open}
+        onClose={handleClose}
+        header={`Are you sure you would like to delete the survey for ${moment(
+          diveDate
+        ).format("MM/DD/YYYY")}?`}
+        content={
+          <>
+            {loading && <LinearProgress />}
+            <Collapse className={classes.alert} in={alertOpen}>
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setAlertOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {alertText}
+              </Alert>
+            </Collapse>
+          </>
+        }
+        actions={dialogActions}
+      />
     </>
   );
 };
 
 const styles = () =>
   createStyles({
-    dialogTitle: {
-      backgroundColor: "#F4F4F4",
-    },
-    dialogContent: {
-      padding: 0,
-    },
     alert: {
       width: "100%",
     },
