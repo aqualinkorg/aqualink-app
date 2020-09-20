@@ -36,67 +36,63 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
   };
 
-  const degreeHeatingDays = await getDegreeHeatingDays(
-    maxMonthlyMean,
-    latitude,
-    longitude,
-    now,
-  );
-
-  const satelliteTemperature = getLatestData(
-    await getSofarHindcastData(
-      SofarModels.NOAACoralReefWatch,
-      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-        .analysedSeaSurfaceTemperature,
-      latitude,
-      longitude,
-      now,
-      72,
+  const [
+    degreeHeatingDays,
+    satelliteTemperature,
+    waveHeight,
+    waveDirection,
+    wavePeriod,
+    windSpeed,
+    windDirection,
+  ] = await Promise.all([
+    getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
+    getLatestData(
+      await getSofarHindcastData(
+        SofarModels.NOAACoralReefWatch,
+        sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+          .analysedSeaSurfaceTemperature,
+        latitude,
+        longitude,
+        now,
+        72,
+      ),
     ),
-  );
-
-  const waveHeight =
     spotterData.significantWaveHeight ||
-    (await sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
-        .significantWaveHeight,
-      latitude,
-      longitude,
-    ));
-
-  const waveDirection =
+      sofarForecast(
+        SofarModels.NOAAOperationalWaveModel,
+        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+          .significantWaveHeight,
+        latitude,
+        longitude,
+      ),
     spotterData.waveMeanDirection ||
-    (await sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
-        .meanDirectionWindWaves,
-      latitude,
-      longitude,
-    ));
-
-  const wavePeriod =
+      sofarForecast(
+        SofarModels.NOAAOperationalWaveModel,
+        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+          .meanDirectionWindWaves,
+        latitude,
+        longitude,
+      ),
     spotterData.wavePeakPeriod ||
-    (await sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
+      sofarForecast(
+        SofarModels.NOAAOperationalWaveModel,
+        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
+        latitude,
+        longitude,
+      ),
+    sofarForecast(
+      SofarModels.GFS,
+      sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
       latitude,
       longitude,
-    ));
-
-  const windSpeed = await sofarForecast(
-    SofarModels.GFS,
-    sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
-    latitude,
-    longitude,
-  );
-
-  const windDirection = await sofarForecast(
-    SofarModels.GFS,
-    sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
-    latitude,
-    longitude,
-  );
+    ),
+    sofarForecast(
+      SofarModels.GFS,
+      sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
+      latitude,
+      longitude,
+    ),
+  ]);
 
   const filteredValues = omitBy(
     {
