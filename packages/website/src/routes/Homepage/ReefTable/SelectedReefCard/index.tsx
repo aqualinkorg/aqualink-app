@@ -1,22 +1,21 @@
 import React from "react";
 import {
-  Typography,
-  Grid,
+  Box,
   Button,
+  Card,
   CardMedia,
+  CircularProgress,
+  createStyles,
+  Grid,
+  Hidden,
+  Theme,
+  Typography,
   withStyles,
   WithStyles,
-  createStyles,
-  Theme,
-  CircularProgress,
-  Card,
-  Hidden,
-  Box,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import CardChart from "./cardChart";
 import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
@@ -24,6 +23,7 @@ import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../../store/Reefs/types";
+import Chart from "../../../../common/Chart";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -131,7 +131,7 @@ const SelectedReefContent = withStyles(styles)(
               MEAN DAILY SURFACE TEMP. (°C)
             </Typography>
           </Box>
-          <CardChart
+          <Chart
             dailyData={reef.dailyData}
             temperatureThreshold={
               reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null

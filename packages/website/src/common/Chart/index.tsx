@@ -176,6 +176,7 @@ function Chart({
       },
     },
     chartSettings,
+    // makes sure arrays are merged correctly
     (el: any, toMerge: any) => {
       if (Array.isArray(el)) {
         return el.concat(toMerge);
@@ -183,7 +184,6 @@ function Chart({
       return undefined;
     }
   );
-  // TODO remove console.log(settings, chartSettings);
   return (
     <Line
       ref={chartRef}

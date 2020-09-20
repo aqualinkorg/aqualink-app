@@ -111,6 +111,7 @@ function ChartWithTooltip({
               fontColor: "#9ea6aa",
             },
           },
+          // we could use mergeWith here too, but currently nothing would use it.
           ...chartSettings,
         }}
       />
