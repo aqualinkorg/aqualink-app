@@ -46,11 +46,13 @@ const Bleaching = ({ dailyData, maxMonthlyMean, classes }: BleachingProps) => {
           xs={12}
         >
           <img
-            src={alertFinder(
-              maxMonthlyMean,
-              satelliteTemperature,
-              degreeHeatingWeeks
-            )}
+            src={
+              alertFinder(
+                maxMonthlyMean,
+                satelliteTemperature,
+                degreeHeatingWeeks
+              ).image
+            }
             alt="alert-level"
           />
         </Grid>

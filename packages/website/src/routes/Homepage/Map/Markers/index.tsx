@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { renderToString } from "react-dom/server";
 import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useEffect } from "react";
@@ -12,14 +11,11 @@ import {
   unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import {
-  degreeHeatingWeeksCalculator,
-  dhwColorFinder,
-} from "../../../../helpers/degreeHeatingWeeks";
-import { ReactComponent as BuoySvg } from "./buoy.svg";
+import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import { dhwColorCode } from "../../../../assets/colorCode";
+import { alertIconFinder } from "../../../../helpers/bleachingAlertIntervals";
 
 /**
  * Dummy component to listen for changes in the active reef/reefOnMap state and initiate the popup/fly-to. This is a
@@ -65,13 +61,12 @@ const useStyles = makeStyles(() =>
   )
 );
 
-const buoyIcon = (colorClass: string) =>
-  L.divIcon({
-    iconSize: [28, 28],
+const buoyIcon = (iconUrl: string) =>
+  new L.Icon({
+    iconUrl,
+    iconSize: [24, 28],
     iconAnchor: [12, 28],
     popupAnchor: [3, -24],
-    html: renderToString(<BuoySvg />),
-    className: `marker-icon ${colorClass}`,
   });
 
 export const ReefMarkers = () => {
@@ -87,11 +82,13 @@ export const ReefMarkers = () => {
 
   return (
     <LayerGroup>
-      <MarkerClusterGroup disableClusteringAtZoom={6}>
+      <MarkerClusterGroup disableClusteringAtZoom={4}>
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { degreeHeatingDays } = reef.latestDailyData || {};
+            const { maxMonthlyMean } = reef;
+            const { degreeHeatingDays, satelliteTemperature } =
+              reef.latestDailyData || {};
             return (
               <Marker
                 onClick={() => {
@@ -100,13 +97,11 @@ export const ReefMarkers = () => {
                 }}
                 key={reef.id}
                 icon={buoyIcon(
-                  iconColors[
-                    colorClassName(
-                      dhwColorFinder(
-                        degreeHeatingWeeksCalculator(degreeHeatingDays)
-                      )
-                    )
-                  ]
+                  alertIconFinder(
+                    maxMonthlyMean,
+                    satelliteTemperature,
+                    degreeHeatingWeeksCalculator(degreeHeatingDays)
+                  )
                 )}
                 position={[lat, lng]}
               >
