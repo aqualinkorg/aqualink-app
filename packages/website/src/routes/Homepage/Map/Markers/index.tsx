@@ -47,9 +47,9 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
-    iconSize: [28, 30],
-    iconAnchor: [14, 26],
-    popupAnchor: [3, -24],
+    iconSize: [28, 32],
+    iconAnchor: [14, 32],
+    popupAnchor: [0, -30],
   });
 
 export const ReefMarkers = () => {
@@ -64,7 +64,7 @@ export const ReefMarkers = () => {
 
   return (
     <LayerGroup>
-      <MarkerClusterGroup disableClusteringAtZoom={4}>
+      <MarkerClusterGroup disableClusteringAtZoom={2}>
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;

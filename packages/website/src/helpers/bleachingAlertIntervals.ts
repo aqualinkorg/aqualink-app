@@ -4,11 +4,11 @@ import warning from "../assets/alerts/alert_warning.svg";
 import watch from "../assets/alerts/alert_watch.svg";
 import lvl1 from "../assets/alerts/alert_lvl1.svg";
 import lvl2 from "../assets/alerts/alert_lvl2.svg";
-import pinNoStress from "../assets/alerts/pin_nostress.png";
-import pinWatch from "../assets/alerts/pin_watch.png";
-import pinWarning from "../assets/alerts/pin_warning.png";
-import pinLvl1 from "../assets/alerts/pin_lvl1.png";
-import pinLvl2 from "../assets/alerts/pin_lvl2.png";
+import pinNoStress from "../assets/alerts/pin_nostress@2x.png";
+import pinWatch from "../assets/alerts/pin_watch@2x.png";
+import pinWarning from "../assets/alerts/pin_warning@2x.png";
+import pinLvl1 from "../assets/alerts/pin_lvl1@2x.png";
+import pinLvl2 from "../assets/alerts/pin_lvl2@2x.png";
 
 type Interval = {
   image: string;
