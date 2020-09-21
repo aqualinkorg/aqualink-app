@@ -3,7 +3,6 @@ import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useEffect } from "react";
 import L from "leaflet";
-import { makeStyles } from "@material-ui/core/styles";
 import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
@@ -14,7 +13,6 @@ import Popup from "../Popup";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
-import { dhwColorCode } from "../../../../assets/colorCode";
 import { alertIconFinder } from "../../../../helpers/bleachingAlertIntervals";
 
 /**
@@ -49,8 +47,8 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
-    iconSize: [24, 28],
-    iconAnchor: [12, 28],
+    iconSize: [28, 30],
+    iconAnchor: [14, 26],
     popupAnchor: [3, -24],
   });
 
