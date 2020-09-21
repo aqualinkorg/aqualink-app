@@ -46,21 +46,6 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
   return null;
 };
 
-const colorClassName = (color: string) => `icon-${color}`;
-const useStyles = makeStyles(() =>
-  dhwColorCode.reduce(
-    (acc, { color }) => ({
-      ...acc,
-      [colorClassName(color)]: {
-        "& g#c": {
-          fill: color,
-        },
-      },
-    }),
-    {}
-  )
-);
-
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
@@ -73,7 +58,6 @@ export const ReefMarkers = () => {
   const reefsList = useSelector(reefsListSelector);
   const dispatch = useDispatch();
   const { map } = useLeaflet();
-  const iconColors: Record<string, string> = useStyles();
 
   const setCenter = (latLng: [number, number], zoom: number) => {
     const newZoom = Math.max(map?.getZoom() || 5, zoom);
