@@ -1094,10 +1094,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <mock-card
-            classname="Wind-card-147"
+            classname="Bleaching-card-147"
           >
             <div
-              class="MuiCardHeader-root Wind-header-148"
+              class="MuiCardHeader-root Bleaching-header-148"
             >
               <div
                 class="MuiCardHeader-content"
@@ -1126,7 +1126,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <mock-cardcontent
-              classname="Wind-contentWrapper-149"
+              classname="Bleaching-contentWrapper-149"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
@@ -1134,7 +1134,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               >
                 <img
                   alt="alert-level"
-                  src="alert_nostress.svg"
+                  src="alert_warning.svg"
                 />
               </div>
             </mock-cardcontent>

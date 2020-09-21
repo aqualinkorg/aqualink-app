@@ -213,6 +213,7 @@ const styles = (theme: Theme) =>
     },
     surveyCard: {
       ...incomingStyles.surveyCard,
+      width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: "25rem",
       },

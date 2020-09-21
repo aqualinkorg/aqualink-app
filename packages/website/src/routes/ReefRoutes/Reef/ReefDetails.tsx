@@ -36,7 +36,7 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
     },
     {
       Component: CoralBleaching as ElementType,
-      props: { dailyData },
+      props: { dailyData, maxMonthlyMean },
     },
     {
       Component: Waves as ElementType,

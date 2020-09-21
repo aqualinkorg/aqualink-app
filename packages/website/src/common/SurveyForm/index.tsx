@@ -101,7 +101,7 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               id="dive-date"
               name="diveDate"
               autoOk
-              okLabel=""
+              showTodayButton
               helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
@@ -131,7 +131,6 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
               id="time-picker"
               name="diveTime"
               autoOk
-              okLabel=""
               helperText={errors?.diveTime?.message || ""}
               inputRef={register({
                 required: "This is a required field",
