@@ -47,8 +47,8 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
-    iconSize: [28, 32],
-    iconAnchor: [14, 32],
+    iconSize: [24, 27],
+    iconAnchor: [12, 27],
     popupAnchor: [0, -30],
   });
 
