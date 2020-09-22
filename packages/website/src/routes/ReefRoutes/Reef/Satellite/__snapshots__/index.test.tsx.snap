@@ -68,7 +68,7 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextValues-4"
               variant="h2"
             >
-              20.0 °C
+              26.0 °C
             </mock-typography>
           </div>
           <div
@@ -87,7 +87,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-4"
                 variant="h2"
               >
-                20.0 °C
+                24.0 °C
               </mock-typography>
             </mock-tooltip>
           </div>
@@ -107,7 +107,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-4"
                 variant="h2"
               >
-                4.1 DHW
+                4.6 DHW
               </mock-typography>
             </mock-tooltip>
           </div>

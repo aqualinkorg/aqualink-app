@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import CardChart from "./cardChart";
-import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
@@ -60,16 +59,14 @@ type SelectedReefContentProps = WithStyles<typeof styles> & { reef: Reef };
 
 const SelectedReefContent = withStyles(styles)(
   ({ classes, reef }: SelectedReefContentProps) => {
-    const sortedDailyData = sortByDate(reef.dailyData, "date");
-    const dailyDataLen = sortedDailyData.length;
     const {
-      maxBottomTemperature,
+      bottomTemperature,
+      degreeHeatingDays,
       surfaceTemperature,
       satelliteTemperature,
-      degreeHeatingDays,
-    } = sortedDailyData[dailyDataLen - 1];
+    } = reef.liveData;
 
-    const surfTemp = surfaceTemperature || satelliteTemperature;
+    const surfTemp = surfaceTemperature?.value || satelliteTemperature?.value;
 
     const metrics = [
       {
@@ -79,12 +76,15 @@ const SelectedReefContent = withStyles(styles)(
       },
       {
         label: `TEMP AT ${reef.depth}M`,
-        value: formatNumber(maxBottomTemperature, 1),
+        value: formatNumber(bottomTemperature?.value, 1),
         unit: " °C",
       },
       {
         label: "HEAT STRESS",
-        value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+        value: formatNumber(
+          degreeHeatingWeeksCalculator(degreeHeatingDays?.value),
+          1
+        ),
         unit: " DHW",
       },
     ];

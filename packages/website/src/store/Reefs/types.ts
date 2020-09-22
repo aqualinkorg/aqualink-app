@@ -16,7 +16,25 @@ export interface Pois {
   name: string | null;
 }
 
-export interface Data {
+export interface SofarValue {
+  timestamp: string;
+  value: number;
+}
+
+export interface LiveData {
+  reef: { id: number };
+  bottomTemperature?: SofarValue;
+  surfaceTemperature?: SofarValue;
+  satelliteTemperature?: SofarValue;
+  degreeHeatingDays?: SofarValue;
+  waveHeight?: SofarValue;
+  waveDirection?: SofarValue;
+  wavePeriod?: SofarValue;
+  windSpeed?: SofarValue;
+  windDirection?: SofarValue;
+}
+
+export interface DailyData {
   id: number;
   date: string;
 
@@ -55,8 +73,9 @@ export interface Reef {
   region: Region | null;
   admin: string | null;
   stream: string | null;
-  dailyData: Data[];
-  latestDailyData: Data;
+  dailyData: DailyData[];
+  liveData: LiveData;
+  latestDailyData: DailyData;
   featuredImage?: string;
 }
 
