@@ -20,6 +20,10 @@ import { ReactComponent as BuoySvg } from "./buoy.svg";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import { dhwColorCode } from "../../../../assets/colorCode";
+import {
+  findInterval,
+  Interval,
+} from "../../../../helpers/bleachingAlertIntervals";
 
 /**
  * Dummy component to listen for changes in the active reef/reefOnMap state and initiate the popup/fly-to. This is a
@@ -75,22 +79,28 @@ const buoyIcon = (colorClass: string) =>
   });
 
 const clusterIcon = (cluster: any) => {
-  const clusterDhds = cluster
-    .getAllChildMarkers()
-    .map(
-      (marker: any) =>
-        marker.options.children[0].props.reef.latestDailyData.degreeHeatingDays
+  const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
+    const { reef } = marker.options.children[0].props;
+    const { maxMonthlyMean } = reef;
+    const { satelliteTemperature, degreeHeatingDays } = reef.latestDailyData;
+    const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
+    return findInterval(
+      maxMonthlyMean,
+      satelliteTemperature,
+      degreeHeatingWeeks
     );
-  const clusterDhWs = clusterDhds.map((value: number) =>
-    degreeHeatingWeeksCalculator(value)
+  });
+  const { color } = alerts.reduce(
+    (prev, current) => (prev.level > current.level ? prev : current),
+    {
+      image: "",
+      color: "#C6E5FA",
+      level: 1,
+    }
   );
-  const clusterAvg =
-    clusterDhWs.reduce((a: number, b: number) => a + b, 0) / clusterDhWs.length;
   const count = cluster.getChildCount();
   return L.divIcon({
-    html: `<div style="background-color: ${dhwColorFinder(
-      clusterAvg
-    )}"><span>${count}</span></div>`,
+    html: `<div style="background-color: ${color}"><span>${count}</span></div>`,
     className: `leaflet-marker-icon marker-cluster custom-cluster-icon marker-cluster-small leaflet-zoom-animated leaflet-interactive`,
     iconSize: L.point(40, 40, true),
   });

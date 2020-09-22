@@ -5,9 +5,10 @@ import watch from "../assets/alert_watch.svg";
 import lvl1 from "../assets/alert_lvl1.svg";
 import lvl2 from "../assets/alert_lvl2.svg";
 
-type Interval = {
+export type Interval = {
   image: string;
   color: string;
+  level: number;
 };
 
 /**
@@ -17,7 +18,7 @@ type Interval = {
  * @param satelliteTemperature
  * @param degreeHeatingWeeks
  */
-const findInterval = (
+export const findInterval = (
   maxMonthlyMean: number | null,
   satelliteTemperature: number | null,
   degreeHeatingWeeks?: number | null
@@ -33,12 +34,14 @@ const findInterval = (
       return {
         image: noStress,
         color: "#C6E5FA",
+        level: 1,
       };
 
     case isNumber(hotSpot) && hotSpot < 1:
       return {
         image: watch,
         color: "#FFF200",
+        level: 2,
       };
 
     // Hotspot >=1 or nil past this point, start dhw checks.
@@ -46,30 +49,35 @@ const findInterval = (
       return {
         image: noStress,
         color: "#C6E5FA",
+        level: 1,
       };
 
     case inRange(degreeHeatingWeeks!, 0, 4):
       return {
         image: warning,
         color: "#F8AB00",
+        level: 3,
       };
 
     case inRange(degreeHeatingWeeks!, 4, 8):
       return {
         image: lvl1,
         color: "#EF0000",
+        level: 4,
       };
 
     case degreeHeatingWeeks! >= 8:
       return {
         image: lvl2,
         color: "#940000",
+        level: 5,
       };
 
     default:
       return {
         image: noStress,
         color: "#C6E5FA",
+        level: 1,
       };
   }
 };
