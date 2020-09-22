@@ -103,7 +103,7 @@ export async function sofarSpotter(
         spotterId,
         startDate: start,
         endDate: end,
-        limit: start && end ? 500 : 1,
+        limit: start && end ? 500 : 100,
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
