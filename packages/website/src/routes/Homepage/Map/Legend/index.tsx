@@ -12,7 +12,7 @@ const legends = [
   },
   {
     name: "Heat Stress",
-    element: <CustomLegend colorCode={dhwColorCode} />,
+    element: <CustomLegend unit="DHW" colorCode={dhwColorCode} />,
   },
 ];
 

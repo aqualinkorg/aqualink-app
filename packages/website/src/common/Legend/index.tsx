@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-const Legend = ({ colorCode, image, classes }: LegendProps) => {
+const Legend = ({ unit, colorCode, image, classes }: LegendProps) => {
   const gradientColors = colorCode.map((item) => item.color).join(", ");
 
   if (image) {
@@ -9,15 +9,28 @@ const Legend = ({ colorCode, image, classes }: LegendProps) => {
   }
 
   return (
-    <div
-      className={classes.root}
-      style={{ background: `linear-gradient(to right, ${gradientColors})` }}
-    >
-      {colorCode.map((item) => (
-        <div key={item.color} className={classes.codeItem}>
-          {item.value}
+    <div className={classes.root}>
+      {unit && (
+        <div
+          className={`${classes.unit} ${classes.codeItem} ${classes.text}`}
+          style={{ backgroundColor: colorCode[0].color }}
+        >
+          {unit}
         </div>
-      ))}
+      )}
+      <div
+        className={classes.legendWrapper}
+        style={{ background: `linear-gradient(to right, ${gradientColors})` }}
+      >
+        {colorCode.map((item) => (
+          <div
+            key={item.color}
+            className={`${classes.value} ${classes.codeItem} ${classes.text}`}
+          >
+            {item.value}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -26,15 +39,26 @@ const styles = () =>
   createStyles({
     root: {
       display: "flex",
-      borderRadius: 4,
+    },
+    legendWrapper: {
+      display: "flex",
+      borderRadius: "0 4px 4px 0",
     },
     codeItem: {
-      display: "flex",
-      fontSize: 9,
-      width: "1.3rem",
       height: 17,
+      display: "flex",
       alignItems: "center",
       justifyContent: "center",
+    },
+    unit: {
+      borderRadius: "4px 0 0 4px",
+      width: "2rem",
+    },
+    value: {
+      width: "1.3rem",
+    },
+    text: {
+      fontSize: 9,
       color: "white",
     },
   });
@@ -45,12 +69,14 @@ interface ColorItem {
 }
 
 interface LegendIncomingProps {
+  unit?: string | null;
   colorCode: ColorItem[];
   image?: string | null;
 }
 
 Legend.defaultProps = {
   image: null,
+  unit: null,
 };
 
 type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
