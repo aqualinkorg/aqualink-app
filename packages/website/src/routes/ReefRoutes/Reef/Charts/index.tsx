@@ -9,7 +9,7 @@ import {
 import { Line } from "react-chartjs-2";
 
 import Tooltip, { TooltipData } from "./Tooltip";
-import type { Data } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortByDate } from "../../../../helpers/sortDailyData";
 import { createDatasets, calculateAxisLimits } from "./utils";
@@ -282,7 +282,7 @@ const styles = (theme: Theme) =>
   });
 
 interface ChartsIncomingProps {
-  dailyData: Data[];
+  dailyData: DailyData[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;

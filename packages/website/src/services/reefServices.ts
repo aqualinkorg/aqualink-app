@@ -1,5 +1,5 @@
 import requests from "../helpers/requests";
-import type { Data, Reef, Pois } from "../store/Reefs/types";
+import type { DailyData, LiveData, Reef, Pois } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
   requests.send<Reef>({
@@ -8,8 +8,14 @@ const getReef = (id: string) =>
   });
 
 const getReefDailyData = (id: string) =>
-  requests.send<Data[]>({
+  requests.send<DailyData[]>({
     url: `reefs/${id}/daily_data`,
+    method: "GET",
+  });
+
+const getReefLiveData = (id: string) =>
+  requests.send<LiveData>({
+    url: `reefs/${id}/live_data`,
     method: "GET",
   });
 
@@ -29,5 +35,6 @@ export default {
   getReef,
   getReefs,
   getReefDailyData,
+  getReefLiveData,
   getReefPois,
 };

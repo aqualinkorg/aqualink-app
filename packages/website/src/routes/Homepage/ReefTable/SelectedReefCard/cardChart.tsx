@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 
 import { createChartData } from "../../../../helpers/createChartData";
 import { sortByDate } from "../../../../helpers/sortDailyData";
-import type { Data } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 import {
   createDatasets,
   calculateAxisLimits,
@@ -158,7 +158,7 @@ const CardChart = ({
 };
 
 interface CardChartProps {
-  dailyData: Data[];
+  dailyData: DailyData[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
 }
