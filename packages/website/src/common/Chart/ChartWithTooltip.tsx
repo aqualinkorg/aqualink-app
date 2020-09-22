@@ -6,10 +6,8 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import Chart, { ChartProps } from "./index";
-import Tooltip, {
-  TooltipData,
-} from "../../routes/ReefRoutes/Reef/Charts/Tooltip";
-import { useProcessedChartData } from "./useProcessedChartData";
+import Tooltip, { TooltipData } from "./Tooltip";
+import { useProcessedChartData } from "./utils";
 
 interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;

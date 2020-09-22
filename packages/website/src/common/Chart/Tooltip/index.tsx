@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { formatNumber } from "../../../../../helpers/numberUtils";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 const Tooltip = ({
   date,

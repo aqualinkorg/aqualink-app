@@ -8,12 +8,12 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { mergeWith } from "lodash";
 import type { Data } from "../../store/Reefs/types";
-import "./backgroundPlugin";
-import "./fillPlugin";
-import "./slicePlugin";
+import "./plugins/backgroundPlugin";
+import "./plugins/fillPlugin";
+import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData } from "../../helpers/createChartData";
-import { useProcessedChartData } from "./useProcessedChartData";
+import { useProcessedChartData } from "./utils";
 
 export interface ChartProps {
   dailyData: Data[];

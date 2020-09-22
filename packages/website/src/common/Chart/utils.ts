@@ -1,6 +1,8 @@
-import type { Data } from "../../../../store/Reefs/types";
+import type { Data } from "../../store/Reefs/types";
+import type { ChartProps } from ".";
+import { sortByDate } from "../../helpers/sortDailyData";
 
-export const createDatasets = (dailyData: Data[]) => {
+const createDatasets = (dailyData: Data[]) => {
   const dailyDataLen = dailyData.length;
 
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
@@ -27,7 +29,7 @@ export const createDatasets = (dailyData: Data[]) => {
   };
 };
 
-export const calculateAxisLimits = (
+const calculateAxisLimits = (
   dailyData: Data[],
   temperatureThreshold: number | null
 ) => {
@@ -82,3 +84,16 @@ export const calculateAxisLimits = (
     chartLabels,
   };
 };
+
+export function useProcessedChartData(
+  dailyData: ChartProps["dailyData"],
+  temperatureThreshold: ChartProps["temperatureThreshold"]
+) {
+  // Sort daily data by date
+  const sortedDailyData = sortByDate(dailyData, "date");
+
+  const datasets = createDatasets(sortedDailyData);
+
+  const axisLimits = calculateAxisLimits(sortedDailyData, temperatureThreshold);
+  return { sortedDailyData, ...axisLimits, ...datasets };
+}
