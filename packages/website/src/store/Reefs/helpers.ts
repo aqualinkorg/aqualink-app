@@ -5,7 +5,7 @@ import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 import { alertFinder } from "../../helpers/bleachingAlertIntervals";
 
 const longDHW = (dhw: number | null): string =>
-  `000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-3);
+  `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
