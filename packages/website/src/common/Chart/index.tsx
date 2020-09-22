@@ -34,13 +34,14 @@ function Chart({
   chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
+
   if (forwardRef) {
     // this might be doable with forwardRef or callbacks, but its a little hard since we need to
     // use it in two places
     // eslint-disable-next-line no-param-reassign
     forwardRef.current = chartRef.current;
   }
-  const [updateChart, setUpdateChart] = useState<boolean>(false);
+  const [updateChart, setUpdateChart] = useState<boolean>(true);
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
