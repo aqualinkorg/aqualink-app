@@ -13,8 +13,7 @@ import {
 } from "@material-ui/core";
 
 import { dhwColorCode } from "../../../../assets/colorCode";
-import type { Data } from "../../../../store/Reefs/types";
-import { sortByDate } from "../../../../helpers/sortDailyData";
+import type { LiveData } from "../../../../store/Reefs/types";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import satellite from "../../../../assets/satellite.svg";
 import {
@@ -23,20 +22,21 @@ import {
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
 
-const Satellite = ({ maxMonthlyMean, dailyData, classes }: SatelliteProps) => {
-  const sortedDailyData = sortByDate(dailyData, "date", "desc");
-  const { degreeHeatingDays, satelliteTemperature } = sortedDailyData[0];
+const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
+  const { degreeHeatingDays, satelliteTemperature } = liveData;
 
-  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
+  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
+    degreeHeatingDays?.value
+  );
 
   const metrics = [
     {
       label: "Surface Temp",
-      value: `${formatNumber(satelliteTemperature, 1)} °C`,
+      value: `${formatNumber(satelliteTemperature?.value, 1)} °C`,
     },
     {
       label: "Historical Max",
-      value: `${formatNumber(maxMonthlyMean || 20, 1)} °C`,
+      value: `${formatNumber(maxMonthlyMean, 1)} °C`,
       tooltipTitle: "Historical maximum monthly average over the past 20 years",
     },
     {
@@ -154,7 +154,7 @@ const styles = () =>
 
 interface SatelliteIncomingProps {
   maxMonthlyMean: number | null;
-  dailyData: Data[];
+  liveData: LiveData;
 }
 
 type SatelliteProps = WithStyles<typeof styles> & SatelliteIncomingProps;

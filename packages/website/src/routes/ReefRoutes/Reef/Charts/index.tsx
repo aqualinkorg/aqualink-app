@@ -6,7 +6,7 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
-import type { Data } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 
@@ -62,7 +62,7 @@ const styles = (theme: Theme) =>
   });
 
 interface ChartsIncomingProps {
-  dailyData: Data[];
+  dailyData: DailyData[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;

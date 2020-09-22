@@ -10,17 +10,17 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import type { Data } from "../../../../store/Reefs/types";
-import { sortByDate } from "../../../../helpers/sortDailyData";
+import type { LiveData } from "../../../../store/Reefs/types";
 
 import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 
-const Bleaching = ({ dailyData, maxMonthlyMean, classes }: BleachingProps) => {
-  const sortedDailyData = sortByDate(dailyData, "date", "desc");
-  const { degreeHeatingDays, satelliteTemperature } = sortedDailyData[0];
+const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
+  const { degreeHeatingDays, satelliteTemperature } = liveData;
 
-  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
+  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
+    degreeHeatingDays?.value
+  );
 
   return (
     <Card className={classes.card}>
@@ -46,11 +46,13 @@ const Bleaching = ({ dailyData, maxMonthlyMean, classes }: BleachingProps) => {
           xs={12}
         >
           <img
-            src={alertFinder(
-              maxMonthlyMean,
-              satelliteTemperature,
-              degreeHeatingWeeks
-            )}
+            src={
+              alertFinder(
+                maxMonthlyMean,
+                satelliteTemperature?.value,
+                degreeHeatingWeeks
+              ).image
+            }
             alt="alert-level"
           />
         </Grid>
@@ -79,7 +81,7 @@ const styles = () =>
   });
 
 interface BleachingIncomingProps {
-  dailyData: Data[];
+  liveData: LiveData;
   maxMonthlyMean: number | null;
 }
 

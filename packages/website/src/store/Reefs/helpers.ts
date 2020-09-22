@@ -2,6 +2,10 @@
 import type { TableRow } from "../Homepage/types";
 import type { Reef } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
+import { alertFinder } from "../../helpers/bleachingAlertIntervals";
+
+const longDHW = (dhw: number | null): string =>
+  `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
@@ -20,7 +24,9 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: dhw,
+      alert: `${
+        alertFinder(maxMonthlyMean, satelliteTemperature, dhw).level
+      },${longDHW(dhw)}`,
     };
   });
 };

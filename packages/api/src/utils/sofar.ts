@@ -103,7 +103,7 @@ export async function sofarSpotter(
         spotterId,
         startDate: start,
         endDate: end,
-        limit: start && end ? 500 : 1,
+        limit: start && end ? 500 : 100,
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
@@ -163,7 +163,7 @@ export async function getSpotterData(
   const [start, end] = endDate ? getStartEndDate(endDate) : [];
   const {
     data: { waves = [], smartMooringData = [] },
-  } = await sofarSpotter(spotterId, start, end);
+  } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
 
   const [sofarSignificantWaveHeight, sofarPeakPeriod, sofarMeanDirection]: [
     SofarValue[],

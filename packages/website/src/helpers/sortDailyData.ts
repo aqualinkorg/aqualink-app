@@ -1,7 +1,7 @@
-import type { Data } from "../store/Reefs/types";
+import type { DailyData } from "../store/Reefs/types";
 
 /** Utility function to get the closest available data given a date in UTC. */
-export function getDailyDataClosestToDate(dailyData: Data[], date: Date) {
+export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
   const timeDiff = (incomingDate: string) =>
     Math.abs(new Date(incomingDate).getTime() - date.getTime());
 
