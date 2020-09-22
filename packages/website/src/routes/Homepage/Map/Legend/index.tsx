@@ -1,8 +1,9 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
 
-import HeatStressLegend from "./heatStressLegend";
+import GradientLegend from "./gradientLegend";
 import SeaSurfaceTemperatureLegend from "./seaSurfaceLegend";
+import { dhwColorCode } from "../../../../assets/colorCode";
 
 const legends = [
   {
@@ -11,7 +12,7 @@ const legends = [
   },
   {
     name: "Heat Stress",
-    element: <HeatStressLegend />,
+    element: <GradientLegend colorCode={dhwColorCode} />,
   },
 ];
 
@@ -23,7 +24,6 @@ const Legend = ({ legendName, classes }: LegendProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
       zIndex: 401,
       position: "absolute",
       bottom: 0,
