@@ -36,6 +36,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       center={INITIAL_CENTER}
       zoom={INITIAL_ZOOM}
       minZoom={2}
+      worldCopyJump
     >
       <TileLayer url={tileURL} />
       <SofarLayers />

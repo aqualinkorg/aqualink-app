@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { renderToString } from "react-dom/server";
 import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useEffect } from "react";
 import L from "leaflet";
-import { makeStyles } from "@material-ui/core/styles";
 import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
@@ -12,14 +10,10 @@ import {
   unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import {
-  degreeHeatingWeeksCalculator,
-  dhwColorFinder,
-} from "../../../../helpers/degreeHeatingWeeks";
-import { ReactComponent as BuoySvg } from "./buoy.svg";
+import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
-import { dhwColorCode } from "../../../../assets/colorCode";
+import { alertIconFinder } from "../../../../helpers/bleachingAlertIntervals";
 
 /**
  * Dummy component to listen for changes in the active reef/reefOnMap state and initiate the popup/fly-to. This is a
@@ -50,70 +44,58 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
   return null;
 };
 
-const colorClassName = (color: string) => `icon-${color}`;
-const useStyles = makeStyles(() =>
-  dhwColorCode.reduce(
-    (acc, { color }) => ({
-      ...acc,
-      [colorClassName(color)]: {
-        "& g#c": {
-          fill: color,
-        },
-      },
-    }),
-    {}
-  )
-);
-
-const buoyIcon = (colorClass: string) =>
-  L.divIcon({
-    iconSize: [28, 28],
-    iconAnchor: [12, 28],
-    popupAnchor: [3, -24],
-    html: renderToString(<BuoySvg />),
-    className: `marker-icon ${colorClass}`,
+const buoyIcon = (iconUrl: string) =>
+  new L.Icon({
+    iconUrl,
+    iconSize: [24, 27],
+    iconAnchor: [12, 27],
+    popupAnchor: [0, -30],
   });
 
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsListSelector);
   const dispatch = useDispatch();
   const { map } = useLeaflet();
-  const iconColors: Record<string, string> = useStyles();
 
   const setCenter = (latLng: [number, number], zoom: number) => {
     const newZoom = Math.max(map?.getZoom() || 5, zoom);
     return map?.flyTo(latLng, newZoom, { duration: 1 });
   };
 
+  // To make sure we can see all the reefs all the time, and especially
+  // around -180/+180, we create dummy copies of each reef.
+  const lngOffsets = [-360, 0, 360];
+
   return (
     <LayerGroup>
-      <MarkerClusterGroup disableClusteringAtZoom={6}>
+      <MarkerClusterGroup disableClusteringAtZoom={2}>
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { degreeHeatingDays } = reef.latestDailyData || {};
-            return (
+            const { maxMonthlyMean } = reef;
+            const { degreeHeatingDays, satelliteTemperature } =
+              reef.latestDailyData || {};
+
+            return lngOffsets.map((offset) => (
               <Marker
                 onClick={() => {
-                  setCenter([lat, lng], 6);
+                  setCenter([lat, lng + offset], 6);
                   dispatch(unsetReefOnMap());
                 }}
                 key={reef.id}
                 icon={buoyIcon(
-                  iconColors[
-                    colorClassName(
-                      dhwColorFinder(
-                        degreeHeatingWeeksCalculator(degreeHeatingDays)
-                      )
-                    )
-                  ]
+                  alertIconFinder(
+                    maxMonthlyMean,
+                    satelliteTemperature,
+                    degreeHeatingWeeksCalculator(degreeHeatingDays)
+                  )
                 )}
-                position={[lat, lng]}
+                position={[lat, lng + offset]}
               >
                 <ActiveReefListener reef={reef} />
                 <Popup reef={reef} />
               </Marker>
-            );
+            ));
           }
           return null;
         })}
