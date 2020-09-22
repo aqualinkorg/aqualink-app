@@ -18,25 +18,8 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
 
   const now = new Date();
 
-  const spotterRawData = spotterId
-    ? await getSpotterData(spotterId)
-    : {
-        surfaceTemperature: [],
-        bottomTemperature: [],
-        significantWaveHeight: [],
-        wavePeakPeriod: [],
-        waveMeanDirection: [],
-      };
-
-  const spotterData = {
-    surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
-    bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
-    significantWaveHeight: getLatestData(spotterRawData.significantWaveHeight),
-    wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
-    waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
-  };
-
   const [
+    spotterRawData,
     degreeHeatingDays,
     satelliteTemperature,
     waveHeight,
@@ -45,41 +28,45 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     windSpeed,
     windDirection,
   ] = await Promise.all([
+    spotterId
+      ? getSpotterData(spotterId)
+      : {
+          surfaceTemperature: [],
+          bottomTemperature: [],
+          significantWaveHeight: [],
+          wavePeakPeriod: [],
+          waveMeanDirection: [],
+        },
     getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
-    getLatestData(
-      await getSofarHindcastData(
-        SofarModels.NOAACoralReefWatch,
-        sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-          .analysedSeaSurfaceTemperature,
-        latitude,
-        longitude,
-        now,
-        72,
-      ),
+    getSofarHindcastData(
+      SofarModels.NOAACoralReefWatch,
+      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+        .analysedSeaSurfaceTemperature,
+      latitude,
+      longitude,
+      now,
+      72,
     ),
-    spotterData.significantWaveHeight ||
-      sofarForecast(
-        SofarModels.NOAAOperationalWaveModel,
-        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
-          .significantWaveHeight,
-        latitude,
-        longitude,
-      ),
-    spotterData.waveMeanDirection ||
-      sofarForecast(
-        SofarModels.NOAAOperationalWaveModel,
-        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
-          .meanDirectionWindWaves,
-        latitude,
-        longitude,
-      ),
-    spotterData.wavePeakPeriod ||
-      sofarForecast(
-        SofarModels.NOAAOperationalWaveModel,
-        sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
-        latitude,
-        longitude,
-      ),
+    sofarForecast(
+      SofarModels.NOAAOperationalWaveModel,
+      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+        .significantWaveHeight,
+      latitude,
+      longitude,
+    ),
+    sofarForecast(
+      SofarModels.NOAAOperationalWaveModel,
+      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+        .meanDirectionWindWaves,
+      latitude,
+      longitude,
+    ),
+    sofarForecast(
+      SofarModels.NOAAOperationalWaveModel,
+      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
+      latitude,
+      longitude,
+    ),
     sofarForecast(
       SofarModels.GFS,
       sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
@@ -94,15 +81,27 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     ),
   ]);
 
+  const spotterData = spotterRawData
+    ? {
+        surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
+        bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
+        significantWaveHeight: getLatestData(
+          spotterRawData.significantWaveHeight,
+        ),
+        wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
+        waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
+      }
+    : {};
+
   const filteredValues = omitBy(
     {
       bottomTemperature: spotterData.bottomTemperature,
       surfaceTemperature: spotterData.surfaceTemperature,
       degreeHeatingDays,
-      satelliteTemperature,
-      waveHeight,
-      waveDirection,
-      wavePeriod,
+      satelliteTemperature: satelliteTemperature && getLatestData(satelliteTemperature),
+      waveHeight: spotterData.significantWaveHeight || waveHeight,
+      waveDirection: spotterData.waveMeanDirection || waveDirection,
+      wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
       windSpeed,
       windDirection,
     },
