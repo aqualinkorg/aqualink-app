@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Grid, withStyles, WithStyles } from "@material-ui/core";
-import type { Data } from "../../../store/Reefs/types";
+import type { DailyData } from "../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
 
@@ -20,7 +20,7 @@ const styles = () =>
   });
 
 interface ChartsIncomingProps {
-  dailyData: Data[];
+  dailyData: DailyData[];
   temperatureThreshold: number | null;
   depth: number | null;
 }
