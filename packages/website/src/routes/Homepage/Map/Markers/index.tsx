@@ -62,6 +62,10 @@ export const ReefMarkers = () => {
     return map?.flyTo(latLng, newZoom, { duration: 1 });
   };
 
+  // To make sure we can see all the reefs all the time, and especially
+  // around -180/+180, we create dummy copies of each reef.
+  const lngOffsets = [-360, 0, 360];
+
   return (
     <LayerGroup>
       <MarkerClusterGroup disableClusteringAtZoom={2}>
@@ -71,10 +75,11 @@ export const ReefMarkers = () => {
             const { maxMonthlyMean } = reef;
             const { degreeHeatingDays, satelliteTemperature } =
               reef.latestDailyData || {};
-            return (
+
+            return lngOffsets.map((offset) => (
               <Marker
                 onClick={() => {
-                  setCenter([lat, lng], 6);
+                  setCenter([lat, lng + offset], 6);
                   dispatch(unsetReefOnMap());
                 }}
                 key={reef.id}
@@ -85,12 +90,12 @@ export const ReefMarkers = () => {
                     degreeHeatingWeeksCalculator(degreeHeatingDays)
                   )
                 )}
-                position={[lat, lng]}
+                position={[lat, lng + offset]}
               >
                 <ActiveReefListener reef={reef} />
                 <Popup reef={reef} />
               </Marker>
-            );
+            ));
           }
           return null;
         })}
