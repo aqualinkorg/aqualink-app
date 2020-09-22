@@ -121,7 +121,7 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
         xs={12}
         sm={8}
         lg={6}
-        style={{ marginBottom: "1rem", maxHeight: "14rem" }}
+        style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
           <Typography color="textSecondary" variant="subtitle1">
