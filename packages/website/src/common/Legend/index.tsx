@@ -1,26 +1,20 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-const GradientLegend = ({ colorCode, classes }: GradientLegendProps) => {
+const Legend = ({ colorCode, image, classes }: LegendProps) => {
   const gradientColors = colorCode.map((item) => item.color).join(", ");
+
+  if (image) {
+    return <img src={image} alt="surface-temperature-legend" />;
+  }
 
   return (
     <div
       className={classes.root}
       style={{ background: `linear-gradient(to right, ${gradientColors})` }}
     >
-      {colorCode.map((item, index) => (
-        <div
-          key={item.color}
-          className={`${classes.codeItem} ${
-            // eslint-disable-next-line no-nested-ternary
-            index === 0
-              ? classes.firstChild
-              : index === colorCode.length - 1
-              ? classes.lastChild
-              : ""
-          }`}
-        >
+      {colorCode.map((item) => (
+        <div key={item.color} className={classes.codeItem}>
           {item.value}
         </div>
       ))}
@@ -43,12 +37,6 @@ const styles = () =>
       justifyContent: "center",
       color: "white",
     },
-    firstChild: {
-      borderRadius: "4px 0 0 4px",
-    },
-    lastChild: {
-      borderRadius: "0 4px 4px 0",
-    },
   });
 
 interface ColorItem {
@@ -56,11 +44,15 @@ interface ColorItem {
   value: number;
 }
 
-interface GradientLegendIncomingProps {
+interface LegendIncomingProps {
   colorCode: ColorItem[];
+  image?: string | null;
 }
 
-type GradientLegendProps = GradientLegendIncomingProps &
-  WithStyles<typeof styles>;
+Legend.defaultProps = {
+  image: null,
+};
 
-export default withStyles(styles)(GradientLegend);
+type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
+
+export default withStyles(styles)(Legend);

@@ -1,18 +1,18 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
 
-import GradientLegend from "./gradientLegend";
-import SeaSurfaceTemperatureLegend from "./seaSurfaceLegend";
+import CustomLegend from "../../../../common/Legend";
 import { dhwColorCode } from "../../../../assets/colorCode";
+import celsiusLegend from "../../../../assets/celsiusLegend.png";
 
 const legends = [
   {
     name: "Sea Surface Temperature",
-    element: <SeaSurfaceTemperatureLegend />,
+    element: <CustomLegend colorCode={[]} image={celsiusLegend} />,
   },
   {
     name: "Heat Stress",
-    element: <GradientLegend colorCode={dhwColorCode} />,
+    element: <CustomLegend colorCode={dhwColorCode} />,
   },
 ];
 
