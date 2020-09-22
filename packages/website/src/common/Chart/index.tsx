@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import { mergeWith } from "lodash";
-import type { Data } from "../../store/Reefs/types";
+import type { DailyData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
@@ -16,7 +16,7 @@ import { createChartData } from "../../helpers/createChartData";
 import { useProcessedChartData } from "./utils";
 
 export interface ChartProps {
-  dailyData: Data[];
+  dailyData: DailyData[];
   temperatureThreshold: number | null;
   maxMonthlyMean?: number | null;
 
