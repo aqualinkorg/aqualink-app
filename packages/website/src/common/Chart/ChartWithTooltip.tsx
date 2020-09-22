@@ -50,12 +50,10 @@ function ChartWithTooltip({
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
     const top = position.top + tooltipModel.caretY - 110;
-    const date =
-      tooltipModel.dataPoints &&
-      tooltipModel.dataPoints[0] &&
-      tooltipModel.dataPoints[0].xLabel;
+    const date = tooltipModel.dataPoints && tooltipModel.dataPoints[0]?.xLabel;
     const index = date && chartLabels.findIndex((item) => item === date);
-    if (index > -1) {
+
+    if (index > -1 && index !== 0 && index !== chartLabels.length - 1) {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,

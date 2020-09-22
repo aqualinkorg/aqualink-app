@@ -74,7 +74,7 @@ const Reef = ({ match, classes }: ReefProps) => {
         {reefDetails && latestDailyData && !error ? (
           <>
             <ReefInfo
-              reefName={reefDetails?.name || ""}
+              reefName={reefDetails?.name || reefDetails?.region?.name || ""}
               lastDailyDataDate={latestDailyData?.date}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               managerName={reefDetails?.admin || ""}
