@@ -56,6 +56,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textSecondary"
+                  variant="h3"
                 >
                   {formatNumber(windSpeed?.value, 1)}
                 </Typography>
@@ -120,6 +121,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textSecondary"
+                  variant="h3"
                 >
                   {formatNumber(waveHeight?.value, 1)}
                 </Typography>
@@ -146,6 +148,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textSecondary"
+                  variant="h3"
                 >
                   {formatNumber(wavePeriod?.value)}
                 </Typography>
@@ -182,6 +185,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 <Typography
                   className={classes.contentTextValues}
                   color="textSecondary"
+                  variant="h3"
                 >
                   {formatNumber(waveDirection?.value)}
                   {waveDirection?.value ? "\u00B0" : ""}
