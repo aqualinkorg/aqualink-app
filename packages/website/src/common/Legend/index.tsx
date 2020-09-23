@@ -1,12 +1,8 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-const Legend = ({ unit, colorCode, image, classes }: LegendProps) => {
+const Legend = ({ unit, colorCode, classes }: LegendProps) => {
   const gradientColors = colorCode.map((item) => item.color).join(", ");
-
-  if (image) {
-    return <img src={image} alt="surface-temperature-legend" />;
-  }
 
   return (
     <div className={classes.root}>
