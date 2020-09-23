@@ -22,7 +22,7 @@ import { DeleteOutlineOutlined } from "@material-ui/icons";
 
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
-import StarIcon from "../../../assets/starIcon.svg";
+import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
 
 const MediaCard = ({
   preview,
@@ -109,53 +109,27 @@ const MediaCard = ({
           >
             <Grid style={{ height: "100%" }} item xs={3}>
               <CardMedia className={classes.cardImage} image={preview}>
-                <div
-                  tabIndex={-1}
-                  role="button"
-                  onClick={onImageClick}
-                  onKeyDown={() => {}}
-                  className={classes.image}
-                >
+                {size && (
                   <Grid
-                    style={{ height: "50%" }}
-                    container
-                    item
-                    xs={12}
-                    alignItems="flex-start"
-                    justify="flex-start"
-                  >
-                    {index === featuredFile && (
-                      <Tooltip title="Featured image">
-                        <img
-                          className={classes.starIcon}
-                          src={StarIcon}
-                          alt="featured"
-                        />
-                      </Tooltip>
-                    )}
-                  </Grid>
-                  <Grid
-                    style={{ height: "50%" }}
+                    className={classes.mediaSizeWrapper}
                     container
                     item
                     xs={12}
                     alignItems="flex-end"
                     justify="flex-end"
                   >
-                    {size && (
-                      <Grid
-                        className={classes.mediaSize}
-                        container
-                        alignItems="center"
-                        justify="center"
-                        item
-                        xs={3}
-                      >
-                        <Typography variant="subtitle2">{size} MB</Typography>
-                      </Grid>
-                    )}
+                    <Grid
+                      className={classes.mediaSize}
+                      container
+                      alignItems="center"
+                      justify="center"
+                      item
+                      xs={3}
+                    >
+                      <Typography variant="subtitle2">{size} MB</Typography>
+                    </Grid>
                   </Grid>
-                </div>
+                )}
               </CardMedia>
             </Grid>
             <Grid container justify="center" item xs={3}>
@@ -258,10 +232,24 @@ const MediaCard = ({
               <Grid
                 container
                 item
-                alignItems="flex-end"
+                alignContent="space-between"
                 justify="flex-end"
                 xs={12}
               >
+                <IconButton onClick={onImageClick}>
+                  <Tooltip
+                    title={
+                      index === featuredFile
+                        ? "Featured image"
+                        : "Set this image as featured"
+                    }
+                  >
+                    <StarIcon
+                      fill={index === featuredFile ? "#168dbd" : "#939393"}
+                      className={classes.starIcon}
+                    />
+                  </Tooltip>
+                </IconButton>
                 <IconButton onClick={() => deleteCard(index)}>
                   <DeleteOutlineOutlined />
                 </IconButton>
@@ -282,16 +270,13 @@ const styles = (theme: Theme) =>
       borderStyle: "solid",
       borderColor: "#dddddd",
       borderRadius: 2,
-      height: "18rem",
+      height: "17rem",
     },
     cardImage: {
       height: "100%",
       width: "100%",
       borderRadius: "2px 0 0 2px",
       transition: "all 0.3s ease",
-      "&:hover": {
-        filter: "brightness(70%)",
-      },
     },
     textField: {
       color: "black",
@@ -301,6 +286,9 @@ const styles = (theme: Theme) =>
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: theme.palette.primary.main,
       },
+    },
+    mediaSizeWrapper: {
+      height: "100%",
     },
     mediaSize: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
