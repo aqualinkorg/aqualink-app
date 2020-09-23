@@ -98,6 +98,7 @@ const theme: any = createMuiTheme({
       h6: {
         fontSize: 16,
         fontFamily,
+        fontWeight: 400,
       },
       subtitle1: {
         fontSize: 14,
