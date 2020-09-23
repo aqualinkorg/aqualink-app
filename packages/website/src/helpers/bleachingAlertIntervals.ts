@@ -10,7 +10,7 @@ import pinWarning from "../assets/alerts/pin_warning@2x.png";
 import pinLvl1 from "../assets/alerts/pin_lvl1@2x.png";
 import pinLvl2 from "../assets/alerts/pin_lvl2@2x.png";
 
-type Interval = {
+export type Interval = {
   image: string;
   color: string;
   icon: string;
@@ -24,7 +24,7 @@ type Interval = {
  * @param satelliteTemperature
  * @param degreeHeatingWeeks
  */
-const findInterval = (
+export const findInterval = (
   maxMonthlyMean: number | null,
   satelliteTemperature?: number | null,
   degreeHeatingWeeks?: number | null
@@ -92,6 +92,28 @@ const findInterval = (
         icon: pinNoStress,
         level: 0,
       };
+  }
+};
+
+export const findMaxLevel = (intervals: Interval[]): number => {
+  const levels = intervals.map((item) => item.level);
+  return Math.max(...levels);
+};
+
+export const getColorByLevel = (level: number): string => {
+  switch (level) {
+    case 0:
+      return "#C6E5FA";
+    case 1:
+      return "#FFF200";
+    case 2:
+      return "#F8AB00";
+    case 3:
+      return "#EF0000";
+    case 4:
+      return "#940000";
+    default:
+      return "#C6E5FA";
   }
 };
 

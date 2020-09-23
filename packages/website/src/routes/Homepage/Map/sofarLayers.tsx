@@ -31,7 +31,7 @@ const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
 export const SofarLayers = () => {
   return (
     <LayersControl position="topright">
-      <LayersControl.BaseLayer name="Satellite Imagery" key="no-verlay">
+      <LayersControl.BaseLayer checked name="Satellite Imagery" key="no-verlay">
         <TileLayer url="" key="no-overlay" />
       </LayersControl.BaseLayer>
       {SOFAR_LAYERS.map((def) => (

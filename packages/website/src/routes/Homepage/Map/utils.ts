@@ -21,5 +21,3 @@ export const coloredBuoy = (color: string) =>
           </g>
       </g>
   </svg>`;
-
-export const coloredBuoyIcon = (degreeHeatingDays: number) => {};
