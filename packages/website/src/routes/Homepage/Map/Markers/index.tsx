@@ -112,7 +112,7 @@ export const ReefMarkers = () => {
                   setCenter([lat, lng + offset], 6);
                   dispatch(unsetReefOnMap());
                 }}
-                key={reef.id}
+                key={`${reef.id}-${offset}`}
                 icon={buoyIcon(
                   alertIconFinder(
                     maxMonthlyMean,
