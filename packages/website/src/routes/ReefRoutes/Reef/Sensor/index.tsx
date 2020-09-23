@@ -19,19 +19,20 @@ import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
 
 const Sensor = ({ reef, classes }: SensorProps) => {
-  const { surfaceTemperature, avgBottomTemperature } =
-    reef.latestDailyData || {};
+  const { surfaceTemperature, bottomTemperature } = reef.liveData;
 
-  const hasSpotter = Boolean(surfaceTemperature || avgBottomTemperature);
+  const hasSpotter = Boolean(
+    surfaceTemperature?.value || bottomTemperature?.value
+  );
 
   const metrics = [
     {
       label: "Surface temp",
-      value: `${formatNumber(surfaceTemperature, 1)} °C`,
+      value: `${formatNumber(surfaceTemperature?.value, 1)} °C`,
     },
     {
       label: `Temp at ${reef.depth}m`,
-      value: `${formatNumber(avgBottomTemperature, 1)} °C`,
+      value: `${formatNumber(bottomTemperature?.value, 1)} °C`,
     },
   ];
 

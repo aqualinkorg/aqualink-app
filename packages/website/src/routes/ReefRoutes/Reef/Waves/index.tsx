@@ -10,23 +10,21 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import type { Data } from "../../../../store/Reefs/types";
-import { sortByDate } from "../../../../helpers/sortDailyData";
+import type { LiveData } from "../../../../store/Reefs/types";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ dailyData, classes }: WavesProps) => {
-  const sortedDailyData = sortByDate(dailyData, "date", "desc");
+const Waves = ({ liveData, classes }: WavesProps) => {
   const {
-    maxWaveHeight,
+    waveHeight,
     waveDirection,
     wavePeriod,
-    maxWindSpeed,
+    windSpeed,
     windDirection,
-  } = sortedDailyData[0];
+  } = liveData;
 
   return (
     <Card className={classes.card}>
@@ -59,9 +57,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentTextValues}
                   color="textSecondary"
                 >
-                  {formatNumber(maxWindSpeed, 1)}
+                  {formatNumber(windSpeed?.value, 1)}
                 </Typography>
-                {maxWindSpeed && (
+                {windSpeed?.value && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -81,9 +79,11 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {windDirection && (
+                {windDirection?.value && (
                   <img
-                    style={{ transform: `rotate(${windDirection + 180}deg)` }}
+                    style={{
+                      transform: `rotate(${windDirection?.value + 180}deg)`,
+                    }}
                     className={classes.arrow}
                     alt="arrow"
                     src={arrow}
@@ -94,7 +94,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {windDirection ? `${windDirection}\u00B0` : "- -"}
+                  {windDirection?.value
+                    ? `${formatNumber(windDirection?.value)}\u00B0`
+                    : "- -"}
                 </Typography>
               </Grid>
             </Grid>
@@ -119,9 +121,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentTextValues}
                   color="textSecondary"
                 >
-                  {formatNumber(maxWaveHeight, 1)}
+                  {formatNumber(waveHeight?.value, 1)}
                 </Typography>
-                {maxWaveHeight && (
+                {waveHeight?.value && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -145,9 +147,9 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentTextValues}
                   color="textSecondary"
                 >
-                  {formatNumber(wavePeriod)}
+                  {formatNumber(wavePeriod?.value)}
                 </Typography>
-                {wavePeriod && (
+                {wavePeriod?.value && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -167,9 +169,11 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {waveDirection && (
+                {waveDirection?.value && (
                   <img
-                    style={{ transform: `rotate(${waveDirection + 180}deg)` }}
+                    style={{
+                      transform: `rotate(${waveDirection?.value + 180}deg)`,
+                    }}
                     className={classes.arrow}
                     alt="arrow"
                     src={arrow}
@@ -179,8 +183,8 @@ const Waves = ({ dailyData, classes }: WavesProps) => {
                   className={classes.contentTextValues}
                   color="textSecondary"
                 >
-                  {formatNumber(waveDirection)}
-                  {waveDirection ? "\u00B0" : ""}
+                  {formatNumber(waveDirection?.value)}
+                  {waveDirection?.value ? "\u00B0" : ""}
                 </Typography>
               </Grid>
             </Grid>
@@ -229,7 +233,7 @@ const styles = (theme: Theme) =>
   });
 
 interface WavesIncomingProps {
-  dailyData: Data[];
+  liveData: LiveData;
 }
 
 type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;

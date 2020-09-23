@@ -1,13 +1,19 @@
 import { isNil, isNumber, inRange } from "lodash";
-import noStress from "../assets/alert_nostress.svg";
-import warning from "../assets/alert_warning.svg";
-import watch from "../assets/alert_watch.svg";
-import lvl1 from "../assets/alert_lvl1.svg";
-import lvl2 from "../assets/alert_lvl2.svg";
+import noStress from "../assets/alerts/alert_nostress.svg";
+import warning from "../assets/alerts/alert_warning.svg";
+import watch from "../assets/alerts/alert_watch.svg";
+import lvl1 from "../assets/alerts/alert_lvl1.svg";
+import lvl2 from "../assets/alerts/alert_lvl2.svg";
+import pinNoStress from "../assets/alerts/pin_nostress@2x.png";
+import pinWatch from "../assets/alerts/pin_watch@2x.png";
+import pinWarning from "../assets/alerts/pin_warning@2x.png";
+import pinLvl1 from "../assets/alerts/pin_lvl1@2x.png";
+import pinLvl2 from "../assets/alerts/pin_lvl2@2x.png";
 
 export type Interval = {
   image: string;
   color: string;
+  icon: string;
   level: number;
 };
 
@@ -20,7 +26,7 @@ export type Interval = {
  */
 export const findInterval = (
   maxMonthlyMean: number | null,
-  satelliteTemperature: number | null,
+  satelliteTemperature?: number | null,
   degreeHeatingWeeks?: number | null
 ): Interval => {
   const hotSpot =
@@ -34,14 +40,16 @@ export const findInterval = (
       return {
         image: noStress,
         color: "#C6E5FA",
-        level: 1,
+        icon: pinNoStress,
+        level: 0,
       };
 
     case isNumber(hotSpot) && hotSpot < 1:
       return {
         image: watch,
         color: "#FFF200",
-        level: 2,
+        icon: pinWatch,
+        level: 1,
       };
 
     // Hotspot >=1 or nil past this point, start dhw checks.
@@ -49,46 +57,59 @@ export const findInterval = (
       return {
         image: noStress,
         color: "#C6E5FA",
-        level: 1,
+        icon: pinNoStress,
+        level: 0,
       };
 
     case inRange(degreeHeatingWeeks!, 0, 4):
       return {
         image: warning,
         color: "#F8AB00",
-        level: 3,
+        icon: pinWarning,
+        level: 2,
       };
 
     case inRange(degreeHeatingWeeks!, 4, 8):
       return {
         image: lvl1,
         color: "#EF0000",
-        level: 4,
+        icon: pinLvl1,
+        level: 3,
       };
 
     case degreeHeatingWeeks! >= 8:
       return {
         image: lvl2,
         color: "#940000",
-        level: 5,
+        icon: pinLvl2,
+        level: 4,
       };
 
     default:
       return {
         image: noStress,
         color: "#C6E5FA",
-        level: 1,
+        icon: pinNoStress,
+        level: 0,
       };
   }
 };
 
 export const alertFinder = (
   maxMonthlyMean: number | null,
+  satelliteTemperature?: number | null,
+  degreeHeatingWeeks?: number | null
+): Interval => {
+  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks);
+};
+
+export const alertIconFinder = (
+  maxMonthlyMean: number | null,
   satelliteTemperature: number | null,
   degreeHeatingWeeks?: number | null
 ): string => {
   return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)
-    .image;
+    .icon;
 };
 
 export const alertColorFinder = (
@@ -100,4 +121,4 @@ export const alertColorFinder = (
     .color;
 };
 
-export default { alertFinder, alertColorFinder };
+export default { alertFinder, alertColorFinder, alertIconFinder };
