@@ -48,3 +48,42 @@ export const dhwColorCode = [
     color: "#80307e",
   },
 ];
+
+export const surfaceTempColorCode = [
+  {
+    value: -2,
+    color: "#140d20",
+  },
+  {
+    value: 3,
+    color: "#1d2967",
+  },
+  {
+    value: 7,
+    color: "#164669",
+  },
+  {
+    value: 12,
+    color: "#196a45",
+  },
+  {
+    value: 17,
+    color: "#446f1c",
+  },
+  {
+    value: 21,
+    color: "#796424",
+  },
+  {
+    value: 26,
+    color: "#7f461d",
+  },
+  {
+    value: 30,
+    color: "#763214",
+  },
+  {
+    value: 35,
+    color: "#611c14",
+  },
+];

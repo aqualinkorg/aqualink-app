@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Map, TileLayer } from "react-leaflet";
 import { LatLng } from "leaflet";
@@ -12,6 +12,7 @@ import {
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
+import Legend from "./Legend";
 
 const INITIAL_CENTER = new LatLng(37.9, -75.3);
 const INITIAL_ZOOM = 5;
@@ -22,7 +23,19 @@ const tileURL = accessToken
   : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x";
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
+  const [legendName, setLegendName] = useState<string>("");
   const loading = useSelector(reefsListLoadingSelector);
+  const ref = useRef<Map>(null);
+
+  useEffect(() => {
+    const { current } = ref;
+    if (current && current.leafletElement) {
+      const map = current.leafletElement;
+      map.on("baselayerchange", (layer: any) => {
+        setLegendName(layer.name);
+      });
+    }
+  });
 
   return loading ? (
     <div className={classes.loading}>
@@ -30,6 +43,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     </div>
   ) : (
     <Map
+      ref={ref}
       preferCanvas
       maxBoundsViscosity={1.0}
       className={classes.map}
@@ -41,6 +55,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       <TileLayer url={tileURL} />
       <SofarLayers />
       <ReefMarkers />
+      <Legend legendName={legendName} />
     </Map>
   );
 };
