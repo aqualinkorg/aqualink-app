@@ -95,6 +95,28 @@ export const findInterval = (
   }
 };
 
+export const findMaxLevel = (intervals: Interval[]): number => {
+  const levels = intervals.map((item) => item.level);
+  return Math.max(...levels);
+};
+
+export const getColorByLevel = (level: number): string => {
+  switch (level) {
+    case 0:
+      return "#C6E5FA";
+    case 1:
+      return "#FFF200";
+    case 2:
+      return "#F8AB00";
+    case 3:
+      return "#EF0000";
+    case 4:
+      return "#940000";
+    default:
+      return "#C6E5FA";
+  }
+};
+
 export const alertFinder = (
   maxMonthlyMean: number | null,
   satelliteTemperature?: number | null,

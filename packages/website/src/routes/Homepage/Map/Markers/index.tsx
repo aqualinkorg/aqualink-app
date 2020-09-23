@@ -16,6 +16,8 @@ import "react-leaflet-markercluster/dist/styles.min.css";
 import {
   findInterval,
   alertIconFinder,
+  findMaxLevel,
+  getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
 
@@ -68,14 +70,7 @@ const clusterIcon = (cluster: any) => {
       degreeHeatingWeeks
     );
   });
-  const { color } = alerts.reduce(
-    (prev, current) => (prev.level > current.level ? prev : current),
-    {
-      image: "",
-      color: "#C6E5FA",
-      level: 0,
-    }
-  );
+  const color = getColorByLevel(findMaxLevel(alerts));
   const count = cluster.getChildCount();
   return L.divIcon({
     html: `<div style="background-color: ${color}"><span>${count}</span></div>`,
