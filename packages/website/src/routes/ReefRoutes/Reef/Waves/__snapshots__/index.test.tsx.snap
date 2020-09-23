@@ -46,6 +46,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 classname="Waves-contentTextValues-4"
                 color="textSecondary"
+                variant="h3"
               >
                 5.0
               </mock-typography>
@@ -121,6 +122,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 classname="Waves-contentTextValues-4"
                 color="textSecondary"
+                variant="h3"
               >
                 3.0
               </mock-typography>
@@ -149,6 +151,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 classname="Waves-contentTextValues-4"
                 color="textSecondary"
+                variant="h3"
               >
                 15
               </mock-typography>
@@ -183,6 +186,7 @@ exports[`renders as expected 1`] = `
               <mock-typography
                 classname="Waves-contentTextValues-4"
                 color="textSecondary"
+                variant="h3"
               >
                 136
                 °
