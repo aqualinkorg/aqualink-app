@@ -55,7 +55,7 @@ const buoyIcon = (iconUrl: string) =>
     iconUrl,
     iconSize: [24, 27],
     iconAnchor: [12, 27],
-    popupAnchor: [0, -30],
+    popupAnchor: [0, -28],
   });
 
 const clusterIcon = (cluster: any) => {

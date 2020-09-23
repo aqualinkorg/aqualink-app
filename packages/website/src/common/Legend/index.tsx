@@ -67,11 +67,9 @@ interface ColorItem {
 interface LegendIncomingProps {
   unit?: string | null;
   colorCode: ColorItem[];
-  image?: string | null;
 }
 
 Legend.defaultProps = {
-  image: null,
   unit: null,
 };
 
