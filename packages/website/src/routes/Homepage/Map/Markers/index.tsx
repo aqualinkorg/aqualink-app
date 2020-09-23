@@ -73,7 +73,7 @@ const clusterIcon = (cluster: any) => {
     {
       image: "",
       color: "#C6E5FA",
-      level: 1,
+      level: 0,
     }
   );
   const count = cluster.getChildCount();
