@@ -84,7 +84,9 @@ const SurveyTimeline = ({
                   className={classes.timelineOppositeContent}
                 >
                   <Typography variant="h6" className={classes.dates}>
-                    {moment(survey.diveDate).format("MM/DD/YYYY")}
+                    {moment(new Date(survey.diveDate).toISOString()).format(
+                      "MM/DD/YYYY"
+                    )}
                   </Typography>
                 </TimelineOppositeContent>
               )}

@@ -44,7 +44,7 @@ const ReefNavBar = ({
             {lastSurvey && (
               <Grid item>
                 <Typography variant="subtitle1">{`Last surveyed: ${moment(
-                  lastSurvey
+                  new Date(lastSurvey).toISOString()
                 ).format("MMM DD[,] YYYY")}`}</Typography>
               </Grid>
             )}

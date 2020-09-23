@@ -74,11 +74,15 @@ const TimelineMobile = ({
             item
             xs={12}
           >
-            <Grid style={{ marginBottom: "1rem" }} item xs={11}>
-              <Typography variant="h6" className={classes.dates}>
-                {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
-              </Typography>
-            </Grid>
+            {survey?.diveDate && (
+              <Grid style={{ marginBottom: "1rem" }} item xs={11}>
+                <Typography variant="h6" className={classes.dates}>
+                  {moment(new Date(survey.diveDate).toISOString()).format(
+                    "MM/DD/YYYY"
+                  )}
+                </Typography>
+              </Grid>
+            )}
             <Grid style={{ marginBottom: "2rem" }} container item xs={12}>
               <Paper elevation={0} className={classes.surveyCard}>
                 <Grid

@@ -130,9 +130,12 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         <Grid container item xs={11}>
           <Grid style={{ margin: "5rem 0 5rem 0" }} item>
             <Typography style={{ fontSize: 18 }}>
-              {`${moment(surveyDetails?.diveDate).format(
-                "MM/DD/YYYY"
-              )} Survey Media`}
+              {`${
+                surveyDetails?.diveDate &&
+                moment(new Date(surveyDetails.diveDate).toISOString()).format(
+                  "MM/DD/YYYY"
+                )
+              } Survey Media`}
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>

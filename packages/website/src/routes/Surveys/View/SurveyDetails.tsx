@@ -24,11 +24,15 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
     <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
-          <Grid item>
-            <Typography variant="subtitle1">
-              {moment(survey.diveDate).format("MM/DD/YYYY [at] h:mm A")}
-            </Typography>
-          </Grid>
+          {survey.diveDate && (
+            <Grid item>
+              <Typography variant="subtitle1">
+                {moment(new Date(survey.diveDate).toISOString()).format(
+                  "MM/DD/YYYY [at] h:mm A"
+                )}
+              </Typography>
+            </Grid>
+          )}
           <Grid container item direction="row">
             <Grid container item direction="column" xs={12} md={4}>
               <Typography style={{ fontSize: 18 }}>
