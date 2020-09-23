@@ -109,6 +109,9 @@ const UploadMedia = ({
     setPreviews(previews.filter((item, key) => key !== index));
     setFiles(files.filter((item, key) => key !== index));
     setMetadata(metadata.filter((item, key) => key !== index));
+    if (index === featuredFile) {
+      setFeaturedFile(0);
+    }
   };
 
   const removeCards = () => {
@@ -366,6 +369,10 @@ const styles = () =>
       backgroundColor: "#fafafa",
       height: "8rem",
       width: "100%",
+      cursor: "pointer",
+      "&:focus": {
+        outline: "none",
+      },
     },
     popover: {
       pointerEvents: "none",

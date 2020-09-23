@@ -136,6 +136,13 @@ const theme: any = createMuiTheme({
         backgroundColor: darkGreyBlue,
       },
     },
+    MuiButtonBase: {
+      root: {
+        "&:focus": {
+          outline: "none",
+        },
+      },
+    },
     MuiCardContent: {
       root: {
         "&:last-child": {
