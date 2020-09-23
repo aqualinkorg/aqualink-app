@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Tooltip from "./index";
+import Tooltip from ".";
 
 test("renders as expected", () => {
   const tooltipData = {
