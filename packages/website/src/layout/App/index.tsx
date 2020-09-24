@@ -17,12 +17,11 @@ import "./App.css";
 import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
-import googleAnalytics from "../../utils/google-analytics";
+import { initGA } from "../../utils/google-analytics";
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
   const dispatch = useDispatch();
-  googleAnalytics();
 
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
@@ -34,6 +33,7 @@ function App() {
       }
       setRender(true);
     });
+    initGA();
   }, [dispatch]);
 
   return (

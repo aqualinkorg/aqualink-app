@@ -1,6 +1,6 @@
 import ReactGA from "react-ga";
 
-const GA_TRACKING_ID = process.env.GA_TRACKING_ID || "";
+const GA_TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID || "";
 if (process.env.IS_PROD && !GA_TRACKING_ID) {
   throw new Error(
     "You appear to be trying to do a production build, but no Google Analytics" +
@@ -9,4 +9,6 @@ if (process.env.IS_PROD && !GA_TRACKING_ID) {
   );
 }
 
-export default () => ReactGA.initialize(GA_TRACKING_ID);
+export const initGA = () => {
+  ReactGA.initialize(GA_TRACKING_ID); // put your tracking id here
+};
