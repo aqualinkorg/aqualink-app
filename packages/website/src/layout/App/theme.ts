@@ -115,6 +115,7 @@ const theme: any = createMuiTheme({
       overline: {
         fontSize: 8.5,
         fontFamily,
+        textTransform: "none",
       },
       gutterBottom: {
         marginBottom: "1rem",
