@@ -15,6 +15,7 @@ import { Region } from '../regions/regions.entity';
 import { getRegion, getTimezones } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { User } from '../users/users.entity';
+import { backfillReefData } from '../workers/backfill-reef-data';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -55,6 +56,8 @@ export class ReefApplicationsService {
         `Max Monthly Mean appears to be null for Reef ${reef.id} at (lat, lon): (${latitude}, ${longitude}) `,
       );
     }
+
+    backfillReefData(reef.id);
 
     return this.reefApplicationRepository.save({
       ...appParams,

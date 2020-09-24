@@ -1,6 +1,6 @@
 /** Worker to process daily data for all reefs. */
 import { isNil, isNumber, omitBy } from 'lodash';
-import { Connection, Repository } from 'typeorm';
+import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
@@ -256,10 +256,22 @@ export function getMaxAlert(
 }
 
 /* eslint-disable no-console */
-export async function getReefsDailyData(connection: Connection, date: Date) {
+export async function getReefsDailyData(
+  connection: Connection,
+  date: Date,
+  reefIds?: number[],
+) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
-  const allReefs = await reefRepository.find();
+  const allReefs = await reefRepository.find(
+    reefIds && reefIds.length > 0
+      ? {
+          where: {
+            id: In(reefIds),
+          },
+        }
+      : {},
+  );
   const start = new Date();
   console.log(`Updating ${allReefs.length} reefs for ${date.toDateString()}.`);
   await Bluebird.map(

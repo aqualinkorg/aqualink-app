@@ -50,6 +50,7 @@
     "@nestjs/passport": "^7.1.0",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/typeorm": "^7.0.0",
+    "@types/bluebird": "^3.5.32",
     "axios": "^0.19.2",
     "axios-retry": "^3.1.8",
     "bluebird": "^3.7.2",
