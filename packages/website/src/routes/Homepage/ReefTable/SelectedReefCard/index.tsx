@@ -75,7 +75,7 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
       unit: " °C",
     },
     {
-      label: `TEMP AT ${reef.depth}M`,
+      label: `TEMP AT ${reef.depth}m`,
       value: formatNumber(maxBottomTemperature, 1),
       unit: " °C",
     },

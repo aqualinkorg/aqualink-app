@@ -67,7 +67,7 @@ const Search = ({ classes }: SearchProps) => {
             <TextField
               {...params}
               onChange={onChangeSearchText}
-              placeholder="Search reef by name"
+              placeholder="Search by site name"
               variant="outlined"
               InputLabelProps={{
                 shrink: false,

@@ -31,16 +31,16 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
 
   const metrics = [
     {
-      label: "Surface Temp",
+      label: "SURFACE TEMP",
       value: `${formatNumber(satelliteTemperature?.value, 1)} °C`,
     },
     {
-      label: "Historical Max",
+      label: "HISTORICAL MAX",
       value: `${formatNumber(maxMonthlyMean, 1)} °C`,
       tooltipTitle: "Historical maximum monthly average over the past 20 years",
     },
     {
-      label: "Heat Stress",
+      label: "HEAT STRESS",
       large: true,
       value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
       tooltipTitle:

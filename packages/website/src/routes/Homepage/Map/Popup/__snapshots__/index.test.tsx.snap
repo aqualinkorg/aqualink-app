@@ -44,7 +44,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="caption"
               >
-                TEMP AT 0M
+                TEMP AT 0m
               </mock-typography>
             </div>
             <div
