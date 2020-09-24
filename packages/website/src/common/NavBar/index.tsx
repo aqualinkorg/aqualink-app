@@ -77,10 +77,12 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                   <MenuIcon />
                 </IconButton>
 
-                <Typography variant="h4">Aqua</Typography>
-                <Typography style={{ color: "#8AC6DE" }} variant="h4">
-                  link
-                </Typography>
+                <Link className={classes.navBarLink} href="/">
+                  <Typography variant="h4">Aqua</Typography>
+                  <Typography style={{ color: "#8AC6DE" }} variant="h4">
+                    link
+                  </Typography>
+                </Link>
               </Box>
             </Grid>
 
@@ -188,6 +190,15 @@ const styles = (theme: Theme) =>
       height: 64,
       "&.MuiPaper-root": {
         backgroundColor: theme.palette.primary.main,
+      },
+    },
+    navBarLink: {
+      display: "flex",
+      color: "inherit",
+      textDecoration: "none",
+      "&:hover": {
+        textDecoration: "none",
+        color: "inherit",
       },
     },
     appBarXs: {

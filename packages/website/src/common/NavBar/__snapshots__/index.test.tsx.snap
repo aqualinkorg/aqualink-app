@@ -8,7 +8,7 @@ exports[`NavBar should render with given state from Redux store 1`] = `
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-3"
+      classname="NavBar-toolbar-4"
     >
       <mock-menudrawer
         open="false"
@@ -39,17 +39,22 @@ exports[`NavBar should render with given state from Redux store 1`] = `
                 />
               </svg>
             </mock-iconbutton>
-            <mock-typography
-              variant="h4"
+            <mock-link
+              classname="NavBar-navBarLink-2"
+              href="/"
             >
-              Aqua
-            </mock-typography>
-            <mock-typography
-              style="color: rgb(138, 198, 222);"
-              variant="h4"
-            >
-              link
-            </mock-typography>
+              <mock-typography
+                variant="h4"
+              >
+                Aqua
+              </mock-typography>
+              <mock-typography
+                style="color: rgb(138, 198, 222);"
+                variant="h4"
+              >
+                link
+              </mock-typography>
+            </mock-link>
           </mock-box>
         </div>
         <div
