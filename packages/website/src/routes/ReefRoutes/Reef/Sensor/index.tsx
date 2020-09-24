@@ -27,7 +27,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
 
   const metrics = [
     {
-      label: "Surface temp",
+      label: "TEMP AT 1m",
       value: `${formatNumber(surfaceTemperature?.value, 1)} °C`,
     },
     {
