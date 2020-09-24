@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { formatNumber } from "../../../../../helpers/numberUtils";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 const Tooltip = ({
   date,
@@ -54,7 +54,7 @@ const Tooltip = ({
               {bottomTemperature && (
                 <Grid item xs={6} className={classes.tooltipContentItem}>
                   <Grid container justify="flex-start" item xs={12}>
-                    <Typography variant="caption">{`TEMP AT ${depth}M`}</Typography>
+                    <Typography variant="caption">{`TEMP AT ${depth}m`}</Typography>
                   </Grid>
                   <Grid container justify="flex-start" item xs={12}>
                     <Typography variant="h5">

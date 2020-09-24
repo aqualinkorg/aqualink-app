@@ -52,7 +52,7 @@ const ObservationBox = ({
             <Grid container item spacing={2}>
               <Grid container item direction="column" xs={6}>
                 <Typography color="textPrimary" variant="overline">
-                  SURF. TEMP
+                  TEMP AT 1m
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
                   {`${formatNumber(surfaceTemperature, 1)} °C`}
@@ -60,7 +60,7 @@ const ObservationBox = ({
               </Grid>
               <Grid container item direction="column" xs={6}>
                 <Typography color="textPrimary" variant="overline">
-                  {`TEMP AT ${depth}M`}
+                  {`TEMP AT ${depth}m`}
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
                   {`${formatNumber(avgBottomTemperature, 1)} °C`}
