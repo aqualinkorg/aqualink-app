@@ -11,7 +11,7 @@ import type { Order, OrderKeys } from "./utils";
 const headCells: HeadCell[] = [
   {
     id: "locationName",
-    label: "REEF",
+    label: "SITE",
     width: "25%",
   },
   {
