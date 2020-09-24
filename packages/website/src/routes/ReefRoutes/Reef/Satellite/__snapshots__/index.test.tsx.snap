@@ -62,7 +62,7 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
-              Surface Temp
+              SURFACE TEMP
             </mock-typography>
             <mock-typography
               classname="Satellite-contentTextValues-4"
@@ -78,7 +78,7 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
-              Historical Max
+              HISTORICAL MAX
             </mock-typography>
             <mock-tooltip
               title="Historical maximum monthly average over the past 20 years"
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
               classname="Satellite-contentTextTitles-3"
               variant="subtitle2"
             >
-              Heat Stress
+              HEAT STRESS
             </mock-typography>
             <mock-tooltip
               title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"

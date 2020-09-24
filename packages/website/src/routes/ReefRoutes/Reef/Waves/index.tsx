@@ -31,7 +31,6 @@ const Waves = ({ liveData, classes }: WavesProps) => {
       <CardContent className={classes.contentWrapper}>
         <Grid
           className={classes.content}
-          style={{ height: "100%" }}
           container
           justify="center"
           item
@@ -66,7 +65,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h6"
                   >
-                    KM/H
+                    km/h
                   </Typography>
                 )}
               </Grid>
@@ -131,7 +130,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h6"
                   >
-                    Μ
+                    m
                   </Typography>
                 )}
               </Grid>
@@ -158,7 +157,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h6"
                   >
-                    S
+                    s
                   </Typography>
                 )}
               </Grid>
@@ -223,6 +222,7 @@ const styles = (theme: Theme) =>
     },
     content: {
       padding: "1rem",
+      height: "100%",
     },
     arrow: {
       width: 20,

@@ -13,7 +13,13 @@ import Popup from "../Popup";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
-import { alertIconFinder } from "../../../../helpers/bleachingAlertIntervals";
+import {
+  findInterval,
+  alertIconFinder,
+  findMaxLevel,
+  getColorByLevel,
+  Interval,
+} from "../../../../helpers/bleachingAlertIntervals";
 
 /**
  * Dummy component to listen for changes in the active reef/reefOnMap state and initiate the popup/fly-to. This is a
@@ -49,8 +55,29 @@ const buoyIcon = (iconUrl: string) =>
     iconUrl,
     iconSize: [24, 27],
     iconAnchor: [12, 27],
-    popupAnchor: [0, -30],
+    popupAnchor: [0, -28],
   });
+
+const clusterIcon = (cluster: any) => {
+  const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
+    const { reef } = marker.options.children[0].props;
+    const { maxMonthlyMean } = reef;
+    const { satelliteTemperature, degreeHeatingDays } = reef.latestDailyData;
+    const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
+    return findInterval(
+      maxMonthlyMean,
+      satelliteTemperature,
+      degreeHeatingWeeks
+    );
+  });
+  const color = getColorByLevel(findMaxLevel(alerts));
+  const count = cluster.getChildCount();
+  return L.divIcon({
+    html: `<div style="background-color: ${color}"><span>${count}</span></div>`,
+    className: `leaflet-marker-icon marker-cluster custom-cluster-icon marker-cluster-small leaflet-zoom-animated leaflet-interactive`,
+    iconSize: L.point(40, 40, true),
+  });
+};
 
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsListSelector);
@@ -68,7 +95,10 @@ export const ReefMarkers = () => {
 
   return (
     <LayerGroup>
-      <MarkerClusterGroup disableClusteringAtZoom={2}>
+      <MarkerClusterGroup
+        iconCreateFunction={clusterIcon}
+        disableClusteringAtZoom={2}
+      >
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
@@ -82,7 +112,7 @@ export const ReefMarkers = () => {
                   setCenter([lat, lng + offset], 6);
                   dispatch(unsetReefOnMap());
                 }}
-                key={reef.id}
+                key={`${reef.id}-${offset}`}
                 icon={buoyIcon(
                   alertIconFinder(
                     maxMonthlyMean,

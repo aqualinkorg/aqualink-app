@@ -62,7 +62,7 @@ exports[`renders as expected 1`] = `
               classname="Sensor-contentTextTitles-3"
               variant="subtitle2"
             >
-              Surface temp
+              TEMP AT 1m
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-4"
@@ -78,7 +78,7 @@ exports[`renders as expected 1`] = `
               classname="Sensor-contentTextTitles-3"
               variant="subtitle2"
             >
-              Temp at 24m
+              TEMP AT 24m
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-4"

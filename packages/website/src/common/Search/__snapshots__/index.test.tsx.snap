@@ -37,7 +37,7 @@ exports[`Search should render with given state from Redux store 1`] = `
           id="location"
           inputlabelprops="[object Object]"
           inputprops="[object Object]"
-          placeholder="Search reef by name"
+          placeholder="Search by site name"
           variant="outlined"
         />
       </div>

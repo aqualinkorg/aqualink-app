@@ -5,7 +5,6 @@ import configureStore from "redux-mock-store";
 import { Provider } from "react-redux";
 
 import SelectedReefCard from ".";
-import { Reef } from "../../../../store/Reefs/types";
 
 jest.mock("react-chartjs-2", () => ({
   Line: () => "Mock-Line",

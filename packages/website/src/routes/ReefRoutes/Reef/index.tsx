@@ -27,6 +27,7 @@ import {
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
 import ReefDetails from "./ReefDetails";
+import { sortByDate } from "../../../helpers/sortDailyData";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
@@ -36,7 +37,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   const dispatch = useDispatch();
   const reefId = match.params.id;
 
-  const featuredMedia = surveyList.find(
+  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   )?.featuredSurveyMedia;
