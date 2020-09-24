@@ -10,7 +10,6 @@ exports[`renders as expected 1`] = `
     >
       <div
         class="MuiGrid-root Waves-content-10 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
-        style="height: 100%;"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -55,7 +54,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                KM/H
+                km/h
               </mock-typography>
             </div>
           </div>
@@ -131,7 +130,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                Μ
+                m
               </mock-typography>
             </div>
           </div>
@@ -160,7 +159,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                S
+                s
               </mock-typography>
             </div>
           </div>
