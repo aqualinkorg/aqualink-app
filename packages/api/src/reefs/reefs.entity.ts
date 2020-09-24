@@ -54,6 +54,9 @@ export class Reef {
   @Column({ nullable: true })
   timezone: string;
 
+  @Column({ default: true })
+  approved: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

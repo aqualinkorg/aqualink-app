@@ -67,11 +67,13 @@ export class ReefsService {
       'latestDailyData',
       `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
     );
+    query.andWhere('approved = true');
     return query.getMany();
   }
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
+      where: { approved: true },
       relations: ['region', 'admins', 'stream'],
     });
     if (!found) {

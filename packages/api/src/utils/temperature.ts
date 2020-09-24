@@ -47,7 +47,7 @@ export async function getMMM(long: number, lat: number) {
     row.filter((value) => value !== gdalNoData),
   );
 
-  return filteredData[0][0] ? filteredData[0][0] / 100 : null;
+  return filteredData[0][0] ? filteredData[0][0] / 100 : undefined;
 }
 
 /**

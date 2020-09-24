@@ -10,7 +10,6 @@ import { CreateSurveyDto } from './dto/create-survey.dto';
 import { User } from '../users/users.entity';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { SurveyMedia, MediaType } from './survey-media.entity';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
@@ -24,9 +23,6 @@ export class SurveysService {
 
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository: Repository<SurveyMedia>,
-
-    @InjectRepository(ReefPointOfInterest)
-    private poiRepository: Repository<ReefPointOfInterest>,
 
     @InjectRepository(Reef)
     private reefRepository: Repository<Reef>,
