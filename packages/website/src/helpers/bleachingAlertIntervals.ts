@@ -134,13 +134,4 @@ export const alertIconFinder = (
     .icon;
 };
 
-export const alertColorFinder = (
-  maxMonthlyMean: number | null,
-  satelliteTemperature: number | null,
-  degreeHeatingWeeks?: number | null
-): string => {
-  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)
-    .color;
-};
-
-export default { alertFinder, alertColorFinder, alertIconFinder };
+export default { alertFinder, alertIconFinder };

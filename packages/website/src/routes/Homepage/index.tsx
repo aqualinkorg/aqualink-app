@@ -25,8 +25,8 @@ const Homepage = ({ classes }: HomepageProps) => {
     dispatch(reefsRequest());
     dispatch(reefRequest(featuredReefId));
   }, [dispatch]);
-
-  const [openDrawer, setOpenDrawer] = useState(false);
+  // TODO only true to help make testing easier
+  const [openDrawer, setOpenDrawer] = useState(true);
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);

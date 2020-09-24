@@ -8,6 +8,29 @@ import {
 } from "@material-ui/core";
 import type { Order, OrderKeys } from "./utils";
 
+const headCells: HeadCell[] = [
+  {
+    id: "locationName",
+    label: "REEF",
+    width: "25%",
+  },
+  {
+    id: "temp",
+    label: "TEMP",
+    unit: "°C",
+  },
+  {
+    id: "depth",
+    label: "DEPTH",
+    unit: "m",
+  },
+  {
+    id: "dhw",
+    label: "STRESS",
+    unit: "DHW",
+  },
+];
+
 const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
   <Typography variant="h6" style={{ color: "black" }} noWrap>
     {title}
@@ -31,39 +54,6 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   ) => {
     props.onRequestSort(event, property);
   };
-
-  const headCells: HeadCell[] = [
-    {
-      id: "locationName",
-      numeric: false,
-      label: "REEF",
-      width: "25%",
-    },
-    {
-      id: "temp",
-      numeric: false,
-      label: "TEMP",
-      unit: "°C",
-    },
-    {
-      id: "depth",
-      numeric: true,
-      label: "DEPTH",
-      unit: "m",
-    },
-    {
-      id: "dhw",
-      numeric: true,
-      label: "STRESS",
-      unit: "DHW",
-    },
-    {
-      id: "alert",
-      numeric: true,
-      label: "ALERT",
-      width: "5%",
-    },
-  ];
 
   return (
     <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
@@ -91,9 +81,8 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 };
 
 interface HeadCell {
-  id: OrderKeys | "alert";
+  id: OrderKeys;
   label: string;
-  numeric: boolean;
   unit?: string;
   width?: string;
 }
@@ -104,7 +93,7 @@ interface EnhancedTableProps {
     property: OrderKeys
   ) => void;
   order: Order;
-  orderBy: string;
+  orderBy: OrderKeys;
 }
 
 export default EnhancedTableHead;

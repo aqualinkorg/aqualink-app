@@ -21,6 +21,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       maxMonthlyMean,
       depth: value.depth,
       dhw,
+      region: value.region?.name,
       tableData: {
         id: key,
       },

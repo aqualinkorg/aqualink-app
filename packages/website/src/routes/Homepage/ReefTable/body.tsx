@@ -6,7 +6,7 @@ import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
 import { colors } from "../../../layout/App/theme";
 import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
-import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
+import { alertFinder } from "../../../helpers/bleachingAlertIntervals";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
@@ -15,6 +15,27 @@ import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 type ReefTableBodyProps = {
   order: Order;
   orderBy: OrderKeys;
+};
+
+const RowReefName = ({
+  reef: { dhw, locationName, maxMonthlyMean, region, temp },
+}: {
+  reef: Row;
+}) => {
+  const { color, level } = alertFinder(maxMonthlyMean, temp, dhw);
+  return (
+    <Typography align="left" variant="subtitle1" color="textSecondary">
+      {locationName}
+      <p>{region}</p>
+      {level !== 0 && (
+        <ErrorIcon
+          style={{
+            color,
+          }}
+        />
+      )}
+    </Typography>
+  );
 };
 
 const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
@@ -49,13 +70,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             key={reef.tableData.id}
           >
             <TableCell>
-              <Typography
-                align="left"
-                variant="subtitle1"
-                color="textSecondary"
-              >
-                {reef.locationName}
-              </Typography>
+              <RowReefName reef={reef} />
             </TableCell>
             <TableCell align="left">
               <Typography
@@ -79,17 +94,6 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               >
                 {formatNumber(reef.dhw, 1)}
               </Typography>
-            </TableCell>
-            <TableCell align="center">
-              <ErrorIcon
-                style={{
-                  color: alertColorFinder(
-                    reef.maxMonthlyMean,
-                    reef.temp,
-                    reef.dhw
-                  ),
-                }}
-              />
             </TableCell>
           </TableRow>
         );
