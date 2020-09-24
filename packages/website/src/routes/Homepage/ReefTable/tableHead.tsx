@@ -36,7 +36,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     {
       id: "locationName",
       numeric: false,
-      label: "REEF",
+      label: "SITE",
       width: "25%",
     },
     {

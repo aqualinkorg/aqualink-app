@@ -61,7 +61,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                   style="color: black;"
                   variant="h6"
                 >
-                  REEF
+                  SITE
                 </mock-typography>
               </mock-tablesortlabel>
             </mock-tablecell>
