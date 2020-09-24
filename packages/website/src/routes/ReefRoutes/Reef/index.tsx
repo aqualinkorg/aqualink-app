@@ -67,7 +67,7 @@ const Reef = ({ match, classes }: ReefProps) => {
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
-              reefName={reefDetails?.name || ""}
+              reefName={reefDetails?.name || reefDetails?.region?.name || ""}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               managerName={reefDetails?.admin || ""}
             />
