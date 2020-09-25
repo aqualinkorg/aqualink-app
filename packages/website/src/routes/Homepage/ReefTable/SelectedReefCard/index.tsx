@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable no-nested-ternary */
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -11,16 +12,21 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
-import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
+import {
+  reefDetailsSelector,
+  reefLoadingSelector,
+  reefRequest,
+} from "../../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
+import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -169,10 +175,19 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
 const SelectedReefCard = () => {
   const classes = useStyles();
   const reef = useSelector(reefDetailsSelector);
+  const loading = useSelector(reefLoadingSelector);
+  const reefOnMap = useSelector(reefOnMapSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (reefOnMap) {
+      dispatch(reefRequest(`${reefOnMap.id}`));
+    }
+  }, [dispatch, reefOnMap]);
 
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
-  return featuredReefId ? (
+  return featuredReefId || (reefOnMap && reefOnMap.id) ? (
     <Box className={classes.card}>
       <Box mb={2}>
         <Typography variant="h5" color="textSecondary">
@@ -184,13 +199,13 @@ const SelectedReefCard = () => {
       </Box>
 
       <Card>
-        {reef && `${reef?.id}` === featuredReefId ? (
-          <SelectedReefContent reef={reef} />
-        ) : (
+        {loading ? (
           <Box textAlign="center" p={4}>
             <CircularProgress size="6rem" thickness={1} />
           </Box>
-        )}
+        ) : reef ? (
+          <SelectedReefContent reef={reef} />
+        ) : null}
       </Card>
     </Box>
   ) : null;

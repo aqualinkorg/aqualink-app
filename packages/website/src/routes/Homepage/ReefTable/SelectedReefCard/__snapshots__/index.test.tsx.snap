@@ -193,15 +193,144 @@ exports[`renders loading as expected 1`] = `
       </mock-typography>
     </mock-box>
     <mock-card>
-      <mock-box
-        p="4"
-        textalign="center"
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
-        <mock-circularprogress
-          size="6rem"
-          thickness="1"
-        />
-      </mock-box>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+        >
+          <mock-box
+            height="100%"
+            position="relative"
+          >
+            <div
+              class="MuiCardMedia-root makeStyles-cardImage-5"
+              style="background-image: url(reef-image.jpg);"
+            />
+            <mock-hidden
+              smup="true"
+            >
+              <mock-box
+                left="16"
+                position="absolute"
+                top="16"
+              >
+                <mock-typography
+                  variant="h5"
+                />
+              </mock-box>
+            </mock-hidden>
+            <mock-box
+              bottom="16"
+              position="absolute"
+              right="16"
+            >
+              <a
+                href="/reefs/2"
+                style="text-decoration: none;"
+              >
+                <mock-button
+                  color="primary"
+                  size="small"
+                  variant="contained"
+                >
+                  EXPLORE
+                </mock-button>
+              </a>
+            </mock-box>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
+          style="margin-bottom: 2rem; max-height: 14rem;"
+        >
+          <mock-box
+            fontweight="400"
+            pb="0.5rem"
+            pl="0.5rem"
+          >
+            <mock-typography
+              color="textSecondary"
+              variant="subtitle1"
+            >
+              MEAN DAILY SURFACE TEMP. (°C)
+            </mock-typography>
+          </mock-box>
+          Mock-Line
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-3"
+          style="display: flex;"
+        >
+          <div
+            class="makeStyles-metricsContainer-6"
+          >
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                SURFACE TEMP
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                29.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                TEMP AT 0m
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                39.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                HEAT STRESS
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                4.9
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   DHW
+                </mock-typography>
+              </mock-typography>
+            </div>
+          </div>
+        </div>
+      </div>
     </mock-card>
   </mock-box>
 </div>
