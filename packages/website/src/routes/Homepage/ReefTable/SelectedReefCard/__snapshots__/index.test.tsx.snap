@@ -16,11 +16,45 @@ exports[`renders as expected 1`] = `
           xsdown="true"
         >
           Featured Reef
+          <a
+            class="makeStyles-launchIcon-4"
+            href="/reefs/2"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </a>
         </mock-hidden>
         <mock-hidden
           smup="true"
         >
-          Featured Reef
+          <mock-box
+            classname="makeStyles-mobileTitle-5"
+          >
+            Featured Reef
+            <a
+              class="makeStyles-launchIcon-4"
+              href="/reefs/2"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </a>
+          </mock-box>
         </mock-hidden>
       </mock-typography>
     </mock-box>
@@ -127,7 +161,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-4"
+    classname="makeStyles-card-6"
   >
     <mock-box
       mb="3"
@@ -138,10 +172,48 @@ exports[`renders loading as expected 1`] = `
       >
         <mock-hidden
           xsdown="true"
-        />
+        >
+          
+          <a
+            class="makeStyles-launchIcon-9"
+            href="/reefs/2"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </a>
+        </mock-hidden>
         <mock-hidden
           smup="true"
-        />
+        >
+          <mock-box
+            classname="makeStyles-mobileTitle-10"
+          >
+            
+            <a
+              class="makeStyles-launchIcon-9"
+              href="/reefs/2"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </a>
+          </mock-box>
+        </mock-hidden>
       </mock-typography>
     </mock-box>
     <mock-card>
@@ -171,7 +243,7 @@ exports[`renders loading as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-6"
+            class="makeStyles-metricsContainer-8"
           >
             <div>
               <mock-typography

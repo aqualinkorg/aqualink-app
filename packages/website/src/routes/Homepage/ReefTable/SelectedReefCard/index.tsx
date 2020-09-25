@@ -10,6 +10,7 @@ import {
   Hidden,
   Typography,
 } from "@material-ui/core";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -59,11 +60,24 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "start",
     },
   },
+  launchIcon: {
+    marginLeft: "0.25rem",
+    color: "inherit",
+    "&:hover": {
+      color: "inherit",
+    },
+  },
+  mobileTitle: {
+    width: "40%",
+  },
 }));
 
-type SelectedReefContentProps = { reef: Reef };
+type SelectedReefContentProps = {
+  reef: Reef;
+  url: string | null;
+};
 
-const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
+const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const classes = useStyles();
   const surveyList = useSelector(surveyListSelector);
 
@@ -96,20 +110,12 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
     },
   ];
 
-  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
-    (survey) =>
-      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
-  )?.featuredSurveyMedia;
-
   return (
     <Grid container spacing={1}>
-      {featuredMedia?.url && (
+      {url && (
         <Grid item xs={12} sm={4} lg={3}>
           <Box position="relative" height="100%">
-            <CardMedia
-              className={classes.cardImage}
-              image={featuredMedia?.url}
-            />
+            <CardMedia className={classes.cardImage} image={url} />
             <Hidden smUp>
               <Box position="absolute" top={16} left={16}>
                 <Typography variant="h5">{reef.name}</Typography>
@@ -139,8 +145,8 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        sm={featuredMedia?.url ? 8 : 12}
-        lg={featuredMedia?.url ? 6 : 9}
+        sm={url ? 8 : 12}
+        lg={url ? 6 : 9}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
@@ -191,6 +197,7 @@ const SelectedReefCard = () => {
   const reef = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
+  const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -204,6 +211,13 @@ const SelectedReefCard = () => {
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
+  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
+    (survey) =>
+      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
+  )?.featuredSurveyMedia;
+
+  const hasMedia = Boolean(featuredMedia?.url);
+
   return featuredReefId || reef?.id ? (
     <Box className={classes.card}>
       {!loading && (
@@ -215,8 +229,26 @@ const SelectedReefCard = () => {
                   ? `Featured - ${reef?.name}`
                   : "Featured Reef"
                 : reef?.name}
+              {!hasMedia && (
+                <Link to={`reefs/${reef?.id}`} className={classes.launchIcon}>
+                  <LaunchIcon />
+                </Link>
+              )}
             </Hidden>
-            <Hidden smUp>{isFeatured && "Featured Reef"}</Hidden>
+            <Hidden smUp>
+              <Box className={classes.mobileTitle}>
+                {isFeatured
+                  ? "Featured Reef"
+                  : !hasMedia
+                  ? `${reef?.name}`
+                  : ""}
+                {!hasMedia && (
+                  <Link to={`reefs/${reef?.id}`} className={classes.launchIcon}>
+                    <LaunchIcon />
+                  </Link>
+                )}
+              </Box>
+            </Hidden>
           </Typography>
         </Box>
       )}
@@ -227,7 +259,7 @@ const SelectedReefCard = () => {
             <CircularProgress size="6rem" thickness={1} />
           </Box>
         ) : reef ? (
-          <SelectedReefContent reef={reef} />
+          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
         ) : null}
       </Card>
     </Box>
