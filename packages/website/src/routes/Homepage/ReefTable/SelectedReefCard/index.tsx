@@ -79,7 +79,6 @@ type SelectedReefContentProps = {
 
 const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const classes = useStyles();
-  const surveyList = useSelector(surveyListSelector);
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
