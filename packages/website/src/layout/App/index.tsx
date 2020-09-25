@@ -17,6 +17,7 @@ import "./App.css";
 import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
+import { initGA } from "../../utils/google-analytics";
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -32,6 +33,7 @@ function App() {
       }
       setRender(true);
     });
+    initGA();
   }, [dispatch]);
 
   return (
