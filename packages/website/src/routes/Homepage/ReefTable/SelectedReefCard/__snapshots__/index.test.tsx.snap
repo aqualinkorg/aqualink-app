@@ -6,7 +6,7 @@ exports[`renders as expected 1`] = `
     classname="makeStyles-card-1"
   >
     <mock-box
-      mb="2"
+      mb="3"
     >
       <mock-typography
         color="textSecondary"
@@ -174,7 +174,7 @@ exports[`renders loading as expected 1`] = `
     classname="makeStyles-card-4"
   >
     <mock-box
-      mb="2"
+      mb="3"
     >
       <mock-typography
         color="textSecondary"
@@ -182,14 +182,10 @@ exports[`renders loading as expected 1`] = `
       >
         <mock-hidden
           xsdown="true"
-        >
-          Featured Reef
-        </mock-hidden>
+        />
         <mock-hidden
           smup="true"
-        >
-          Featured Reef
-        </mock-hidden>
+        />
       </mock-typography>
     </mock-box>
     <mock-card>

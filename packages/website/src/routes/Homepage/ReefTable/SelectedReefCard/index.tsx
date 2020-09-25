@@ -187,16 +187,24 @@ const SelectedReefCard = () => {
 
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
-  return featuredReefId || (reefOnMap && reefOnMap.id) ? (
+  const isFeatured = `${reef?.id}` === featuredReefId;
+
+  return featuredReefId || reef?.id ? (
     <Box className={classes.card}>
-      <Box mb={2}>
-        <Typography variant="h5" color="textSecondary">
-          <Hidden xsDown>{`Featured ${
-            reef?.name ? `- ${reef.name}` : "Reef"
-          }`}</Hidden>
-          <Hidden smUp>Featured Reef</Hidden>
-        </Typography>
-      </Box>
+      {!loading && (
+        <Box mb={3}>
+          <Typography variant="h5" color="textSecondary">
+            <Hidden xsDown>
+              {isFeatured
+                ? reef?.name
+                  ? `Featured - ${reef?.name}`
+                  : "Featured Reef"
+                : reef?.name}
+            </Hidden>
+            <Hidden smUp>{isFeatured && "Featured Reef"}</Hidden>
+          </Typography>
+        </Box>
+      )}
 
       <Card>
         {loading ? (

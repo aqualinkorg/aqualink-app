@@ -7,6 +7,7 @@ import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
+  setReefOnMap,
   unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
@@ -110,8 +111,9 @@ export const ReefMarkers = () => {
               <Marker
                 onClick={() => {
                   setCenter([lat, lng + offset], 6);
-                  dispatch(unsetReefOnMap());
+                  dispatch(setReefOnMap(reef));
                 }}
+                onpopupclose={() => dispatch(unsetReefOnMap())}
                 key={`${reef.id}-${offset}`}
                 icon={buoyIcon(
                   alertIconFinder(
