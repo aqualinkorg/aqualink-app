@@ -30,7 +30,7 @@ const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
           <Grid container justify="flex-start">
             <Grid item xs={12}>
               <Typography color="textSecondary" variant="h6">
-                CORAL BLEACHING ALERT
+                HEAT STRESS ALERT LEVEL
               </Typography>
             </Grid>
           </Grid>
