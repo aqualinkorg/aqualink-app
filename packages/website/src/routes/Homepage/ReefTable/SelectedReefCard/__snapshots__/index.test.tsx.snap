@@ -29,51 +29,7 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-        >
-          <mock-box
-            height="100%"
-            position="relative"
-          >
-            <div
-              class="MuiCardMedia-root makeStyles-cardImage-2"
-              style="background-image: url(reef-image.jpg);"
-            />
-            <mock-hidden
-              smup="true"
-            >
-              <mock-box
-                left="16"
-                position="absolute"
-                top="16"
-              >
-                <mock-typography
-                  variant="h5"
-                />
-              </mock-box>
-            </mock-hidden>
-            <mock-box
-              bottom="16"
-              position="absolute"
-              right="16"
-            >
-              <a
-                href="/reefs/2"
-                style="text-decoration: none;"
-              >
-                <mock-button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                >
-                  EXPLORE
-                </mock-button>
-              </a>
-            </mock-box>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-9"
           style="margin-bottom: 2rem; max-height: 14rem;"
         >
           <mock-box
@@ -193,51 +149,7 @@ exports[`renders loading as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-        >
-          <mock-box
-            height="100%"
-            position="relative"
-          >
-            <div
-              class="MuiCardMedia-root makeStyles-cardImage-5"
-              style="background-image: url(reef-image.jpg);"
-            />
-            <mock-hidden
-              smup="true"
-            >
-              <mock-box
-                left="16"
-                position="absolute"
-                top="16"
-              >
-                <mock-typography
-                  variant="h5"
-                />
-              </mock-box>
-            </mock-hidden>
-            <mock-box
-              bottom="16"
-              position="absolute"
-              right="16"
-            >
-              <a
-                href="/reefs/2"
-                style="text-decoration: none;"
-              >
-                <mock-button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                >
-                  EXPLORE
-                </mock-button>
-              </a>
-            </mock-box>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-9"
           style="margin-bottom: 2rem; max-height: 14rem;"
         >
           <mock-box

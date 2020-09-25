@@ -77,6 +77,9 @@ const store = mockStore({
   homepage: {
     reefOnMap: reef,
   },
+  surveyList: {
+    list: [],
+  },
 });
 
 store.dispatch = jest.fn();

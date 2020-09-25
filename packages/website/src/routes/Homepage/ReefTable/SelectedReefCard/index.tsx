@@ -17,7 +17,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
-import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import {
   reefDetailsSelector,
@@ -27,6 +26,10 @@ import {
 import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
+import {
+  surveyListSelector,
+  surveysRequest,
+} from "../../../../store/Survey/surveyListSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -62,6 +65,7 @@ type SelectedReefContentProps = { reef: Reef };
 
 const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
   const classes = useStyles();
+  const surveyList = useSelector(surveyListSelector);
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
@@ -92,41 +96,51 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
     },
   ];
 
+  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
+    (survey) =>
+      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
+  )?.featuredSurveyMedia;
+
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12} sm={4} lg={3}>
-        <Box position="relative" height="100%">
-          <CardMedia className={classes.cardImage} image={reefImage} />
-          <Hidden smUp>
-            <Box position="absolute" top={16} left={16}>
-              <Typography variant="h5">{reef.name}</Typography>
+      {featuredMedia?.url && (
+        <Grid item xs={12} sm={4} lg={3}>
+          <Box position="relative" height="100%">
+            <CardMedia
+              className={classes.cardImage}
+              image={featuredMedia?.url}
+            />
+            <Hidden smUp>
+              <Box position="absolute" top={16} left={16}>
+                <Typography variant="h5">{reef.name}</Typography>
 
-              {reef.region?.name && (
-                <Typography variant="h6" style={{ fontWeight: 400 }}>
-                  {reef.region.name}
-                </Typography>
-              )}
+                {reef.region?.name && (
+                  <Typography variant="h6" style={{ fontWeight: 400 }}>
+                    {reef.region.name}
+                  </Typography>
+                )}
+              </Box>
+            </Hidden>
+
+            <Box position="absolute" bottom={16} right={16}>
+              <Link
+                style={{ color: "inherit", textDecoration: "none" }}
+                to={`/reefs/${reef.id}`}
+              >
+                <Button size="small" variant="contained" color="primary">
+                  EXPLORE
+                </Button>
+              </Link>
             </Box>
-          </Hidden>
-
-          <Box position="absolute" bottom={16} right={16}>
-            <Link
-              style={{ color: "inherit", textDecoration: "none" }}
-              to={`/reefs/${reef.id}`}
-            >
-              <Button size="small" variant="contained" color="primary">
-                EXPLORE
-              </Button>
-            </Link>
           </Box>
-        </Box>
-      </Grid>
+        </Grid>
+      )}
 
       <Grid
         item
         xs={12}
-        sm={8}
-        lg={6}
+        sm={featuredMedia?.url ? 8 : 12}
+        lg={featuredMedia?.url ? 6 : 9}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
@@ -182,6 +196,7 @@ const SelectedReefCard = () => {
   useEffect(() => {
     if (reefOnMap) {
       dispatch(reefRequest(`${reefOnMap.id}`));
+      dispatch(surveysRequest(`${reefOnMap.id}`));
     }
   }, [dispatch, reefOnMap]);
 
