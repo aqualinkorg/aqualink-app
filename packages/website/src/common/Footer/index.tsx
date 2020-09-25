@@ -18,7 +18,9 @@ const Footer = ({ classes }: FooterProps) => {
         <Grid container justify="center">
           <Grid item xs={10} container direction="row">
             <Link className={classes.navBarLink} href="/">
-              <Typography variant="h4">Aqua</Typography>
+              <Typography color="textPrimary" variant="h4">
+                Aqua
+              </Typography>
               <Typography style={{ color: "#8AC6DE" }} variant="h4">
                 link
               </Typography>
@@ -39,11 +41,9 @@ const styles = (theme: Theme) =>
     },
     navBarLink: {
       display: "flex",
-      color: "inherit",
       textDecoration: "none",
       "&:hover": {
         textDecoration: "none",
-        color: "inherit",
       },
     },
   });

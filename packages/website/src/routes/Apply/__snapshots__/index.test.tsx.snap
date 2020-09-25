@@ -365,6 +365,7 @@ exports[`renders as expected 1`] = `
             href="/"
           >
             <mock-typography
+              color="textPrimary"
               variant="h4"
             >
               Aqua

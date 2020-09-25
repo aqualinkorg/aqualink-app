@@ -44,6 +44,7 @@ exports[`NavBar should render with given state from Redux store 1`] = `
               href="/"
             >
               <mock-typography
+                color="textPrimary"
                 variant="h4"
               >
                 Aqua

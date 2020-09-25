@@ -88,6 +88,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               href="/"
             >
               <mock-typography
+                color="textPrimary"
                 variant="h4"
               >
                 Aqua
@@ -608,6 +609,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             href="/"
           >
             <mock-typography
+              color="textPrimary"
               variant="h4"
             >
               Aqua
@@ -714,6 +716,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               href="/"
             >
               <mock-typography
+                color="textPrimary"
                 variant="h4"
               >
                 Aqua
@@ -1234,6 +1237,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             href="/"
           >
             <mock-typography
+              color="textPrimary"
               variant="h4"
             >
               Aqua
