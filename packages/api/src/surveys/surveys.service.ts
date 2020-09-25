@@ -36,7 +36,9 @@ export class SurveysService {
     user: User,
     reefId: number,
   ): Promise<Survey> {
-    const reef = await this.reefRepository.findOne(reefId);
+    const reef = await this.reefRepository.findOne({
+      where: { id: reefId, approved: true },
+    });
 
     if (!reef) {
       throw new NotFoundException(`Reef with id ${reefId} was not found.`);

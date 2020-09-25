@@ -73,7 +73,6 @@ export class ReefsService {
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
-      where: { approved: true },
       relations: ['region', 'admins', 'stream'],
     });
     if (!found) {
@@ -102,6 +101,12 @@ export class ReefsService {
   }
 
   async findDailyData(id: number): Promise<DailyData[]> {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
     return this.dailyDataRepository.find({
       where: { reef: id },
       order: {
