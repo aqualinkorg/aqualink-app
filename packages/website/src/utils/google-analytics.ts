@@ -10,5 +10,6 @@ if (process.env.IS_PROD && !GA_TRACKING_ID) {
 }
 
 export const initGA = () => {
-  ReactGA.initialize(GA_TRACKING_ID); // put your tracking id here
+  ReactGA.initialize(GA_TRACKING_ID);
+  ReactGA.pageview(window.location.pathname + window.location.search);
 };
