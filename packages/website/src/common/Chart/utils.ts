@@ -1,28 +1,23 @@
-import type { DailyData } from "../../../../store/Reefs/types";
+import type { ChartProps } from ".";
+import { sortByDate } from "../../helpers/sortDailyData";
+import type { DailyData } from "../../store/Reefs/types";
 
 export const createDatasets = (dailyData: DailyData[]) => {
-  const dailyDataLen = dailyData.length;
-
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
   const surfaceTemperature = dailyData
     .filter((item) => item.satelliteTemperature !== null)
     .map((item) => item.satelliteTemperature);
 
-  const meanBottomTemperature =
-    bottomTemperature.reduce((a, b) => a + b) / dailyDataLen;
-  const meanSurfaceTemperature =
-    surfaceTemperature.reduce((a, b) => a + b) / dailyDataLen;
-
   return {
     bottomTemperatureData: [
-      meanBottomTemperature,
+      bottomTemperature[0],
       ...bottomTemperature,
-      meanBottomTemperature,
+      bottomTemperature[bottomTemperature.length - 1],
     ],
     surfaceTemperatureData: [
-      meanSurfaceTemperature,
+      surfaceTemperature[0],
       ...surfaceTemperature,
-      meanSurfaceTemperature,
+      surfaceTemperature[surfaceTemperature.length - 1],
     ],
   };
 };
@@ -82,3 +77,16 @@ export const calculateAxisLimits = (
     chartLabels,
   };
 };
+
+export function useProcessedChartData(
+  dailyData: ChartProps["dailyData"],
+  temperatureThreshold: ChartProps["temperatureThreshold"]
+) {
+  // Sort daily data by date
+  const sortedDailyData = sortByDate(dailyData, "date");
+
+  const datasets = createDatasets(sortedDailyData);
+
+  const axisLimits = calculateAxisLimits(sortedDailyData, temperatureThreshold);
+  return { sortedDailyData, ...axisLimits, ...datasets };
+}
