@@ -12,7 +12,8 @@ const headCells: HeadCell[] = [
   {
     id: "locationName",
     label: "SITE",
-    width: "25%",
+    // TODO should be different on desktop (30% maybe)
+    width: "40%",
   },
   {
     id: "temp",
