@@ -55,13 +55,13 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       </Hidden>
       <SelectedReefCard />
       <Box display="flex" flexDirection="column" flex={1}>
+        <EnhancedTableHead
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableContainer>
           <Table style={{ tableLayout: "fixed" }}>
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
             <ReefTableBody order={order} orderBy={orderBy} />
           </Table>
         </TableContainer>

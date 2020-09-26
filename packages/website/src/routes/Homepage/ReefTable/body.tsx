@@ -18,17 +18,15 @@ type ReefTableBodyProps = {
 };
 
 const ReefNameCell = ({
-  reef: { dhw, locationName, maxMonthlyMean, region, temp },
+  reef: { dhw, locationName, maxMonthlyMean, region = "Sample Region", temp },
 }: {
   reef: Row;
 }) => {
   const { color, level } = alertFinder(maxMonthlyMean, temp, dhw);
   const style: CSSProperties = { color };
   const showWarning = level !== 0;
-  // eslint-disable-next-line no-param-reassign
-  region = region || "Sample Region";
   return (
-    <TableCell>
+    <TableCell style={{ width: "40%" }}>
       <Typography
         align="left"
         variant="h5"
@@ -106,6 +104,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
                   ? colors.lighterBlue
                   : "white",
               cursor: "pointer",
+              borderTop: "1px solid rgba(224, 224, 224, 1)",
             }}
             onClick={(event) => handleClick(event, reef)}
             role="button"

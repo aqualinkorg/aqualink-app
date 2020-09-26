@@ -5,6 +5,7 @@ import {
   TableCell,
   TableSortLabel,
   Typography,
+  Box,
 } from "@material-ui/core";
 import type { Order, OrderKeys } from "./utils";
 
@@ -57,27 +58,11 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   };
 
   return (
-    <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            style={{ width: headCell.width, paddingRight: 0 }}
-            align="left"
-            padding="default"
-            sortDirection={props.orderBy === headCell.id ? props.order : false}
-          >
-            <TableSortLabel
-              active={props.orderBy === headCell.id}
-              direction={props.orderBy === headCell.id ? props.order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              <ColumnTitle title={headCell.label} unit={headCell.unit} />
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
+    <div>
+      <Typography variant="h4" color="textSecondary" style={{ margin: "10px" }}>
+        All Reefs
+      </Typography>
+    </div>
   );
 };
 
