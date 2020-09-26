@@ -1,6 +1,5 @@
 import { TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import { merge } from "lodash";
 import React, { CSSProperties, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
@@ -18,7 +17,7 @@ type ReefTableBodyProps = {
   orderBy: OrderKeys;
 };
 
-const RowReefName = ({
+const ReefNameCell = ({
   reef: { dhw, locationName, maxMonthlyMean, region, temp },
 }: {
   reef: Row;
@@ -29,7 +28,7 @@ const RowReefName = ({
   // eslint-disable-next-line no-param-reassign
   region = region || "Sample Region";
   return (
-    <>
+    <TableCell>
       <Typography
         align="left"
         variant="h5"
@@ -44,8 +43,42 @@ const RowReefName = ({
       </Typography>
 
       {locationName !== region && <p style={{ color: "gray" }}>{region}</p>}
-    </>
+    </TableCell>
   );
+};
+const RowNumberCell = ({
+  color,
+  name,
+  unit,
+  decimalPlaces,
+  value,
+}: {
+  color?: string;
+  name: string;
+  unit?: string;
+  value: number | null;
+  decimalPlaces?: number;
+}) => {
+  return (
+    <TableCell align="right">
+      <Typography
+        variant="caption"
+        color="textSecondary"
+        style={{ fontSize: "1em" }}
+      >
+        {name.toUpperCase()}
+      </Typography>
+      <Typography variant="h5" style={{ color, fontWeight: 600 }}>
+        {formatNumber(value, decimalPlaces)}
+        {unit}
+      </Typography>
+    </TableCell>
+  );
+};
+RowNumberCell.defaultProps = {
+  unit: "",
+  color: "black",
+  decimalPlaces: 1,
 };
 
 const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
@@ -79,32 +112,24 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <TableCell>
-              <RowReefName reef={reef} />
-            </TableCell>
-            <TableCell align="left">
-              <Typography
-                style={{ color: colors.lightBlue }}
-                variant="subtitle1"
-              >
-                {formatNumber(reef.temp, 1)}
-              </Typography>
-            </TableCell>
-            <TableCell align="left">
-              <Typography variant="subtitle1" color="textSecondary">
-                {reef.depth}
-              </Typography>
-            </TableCell>
-            <TableCell align="left">
-              <Typography
-                style={{
-                  color: reef.dhw ? `${dhwColorFinder(reef.dhw)}` : "black",
-                }}
-                variant="subtitle1"
-              >
-                {formatNumber(reef.dhw, 1)}
-              </Typography>
-            </TableCell>
+            <ReefNameCell reef={reef} />
+            <RowNumberCell
+              name="Temp"
+              value={reef.temp}
+              color={colors.lightBlue}
+              unit="°C"
+            />
+            <RowNumberCell
+              name="Depth"
+              value={reef.depth}
+              unit="m"
+              decimalPlaces={0}
+            />
+            <RowNumberCell
+              name="DHW"
+              value={reef.dhw}
+              color={dhwColorFinder(reef.dhw)}
+            />
           </TableRow>
         );
       })}
