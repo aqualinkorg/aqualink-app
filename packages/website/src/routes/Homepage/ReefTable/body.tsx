@@ -34,9 +34,10 @@ const ReefNameCell = ({
       >
         {locationName}
         {showWarning && (
-          <span style={{ marginLeft: "6px" }}>
+          <>
+            {"   "}
             <ErrorIcon style={style} />
-          </span>
+          </>
         )}
       </Typography>
 
