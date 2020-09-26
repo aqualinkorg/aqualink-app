@@ -1,6 +1,7 @@
 import { TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import React, { useState } from "react";
+import { merge } from "lodash";
+import React, { CSSProperties, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
@@ -23,18 +24,27 @@ const RowReefName = ({
   reef: Row;
 }) => {
   const { color, level } = alertFinder(maxMonthlyMean, temp, dhw);
+  const style: CSSProperties = { color };
+  const showWarning = level !== 0;
+  // eslint-disable-next-line no-param-reassign
+  region = region || "Sample Region";
   return (
-    <Typography align="left" variant="subtitle1" color="textSecondary">
-      {locationName}
-      <p>{region}</p>
-      {level !== 0 && (
-        <ErrorIcon
-          style={{
-            color,
-          }}
-        />
-      )}
-    </Typography>
+    <>
+      <Typography
+        align="left"
+        variant="h5"
+        style={showWarning ? style : undefined}
+      >
+        {locationName}
+        {showWarning && (
+          <span style={{ marginLeft: "6px" }}>
+            <ErrorIcon style={style} />
+          </span>
+        )}
+      </Typography>
+
+      {locationName !== region && <p style={{ color: "gray" }}>{region}</p>}
+    </>
   );
 };
 

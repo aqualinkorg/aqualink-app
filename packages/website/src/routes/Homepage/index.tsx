@@ -40,7 +40,7 @@ const Homepage = ({ classes }: HomepageProps) => {
       <div className={classes.root}>
         <Grid container direction="row">
           <Grid className={classes.map} item xs={12} sm={6}>
-            <HomepageMap />
+            {/* TODO to reduce time to boot <HomepageMap /> */}
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
