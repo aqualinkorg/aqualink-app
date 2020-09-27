@@ -25,8 +25,8 @@ const Homepage = ({ classes }: HomepageProps) => {
     dispatch(reefsRequest());
     dispatch(reefRequest(featuredReefId));
   }, [dispatch]);
-  // TODO only true to help make testing easier
-  const [openDrawer, setOpenDrawer] = useState(true);
+
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -40,7 +40,7 @@ const Homepage = ({ classes }: HomepageProps) => {
       <div className={classes.root}>
         <Grid container direction="row">
           <Grid className={classes.map} item xs={12} sm={6}>
-            {/* <HomepageMap /> */}
+            <HomepageMap />
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
