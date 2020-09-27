@@ -5,33 +5,8 @@ import {
   TableCell,
   TableSortLabel,
   Typography,
-  Box,
 } from "@material-ui/core";
 import type { Order, OrderKeys } from "./utils";
-
-const headCells: HeadCell[] = [
-  {
-    id: "locationName",
-    label: "SITE",
-    // TODO should be different on desktop (30% maybe)
-    width: "40%",
-  },
-  {
-    id: "temp",
-    label: "TEMP",
-    unit: "°C",
-  },
-  {
-    id: "depth",
-    label: "DEPTH",
-    unit: "m",
-  },
-  {
-    id: "dhw",
-    label: "STRESS",
-    unit: "DHW",
-  },
-];
 
 const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
   <Typography variant="h6" style={{ color: "black" }} noWrap>
@@ -57,12 +32,56 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     props.onRequestSort(event, property);
   };
 
+  const headCells: HeadCell[] = [
+    {
+      id: "locationName",
+      label: "REEF",
+      width: "25%",
+    },
+    {
+      id: "temp",
+      label: "TEMP",
+      unit: "°C",
+    },
+    {
+      id: "depth",
+      label: "DEPTH",
+      unit: "m",
+    },
+    {
+      id: "dhw",
+      label: "STRESS",
+      unit: "DHW",
+    },
+    {
+      id: "alert",
+      label: "ALERT",
+      width: "5%",
+    },
+  ];
+
   return (
-    <div>
-      <Typography variant="h4" color="textSecondary" style={{ margin: "10px" }}>
-        All Reefs
-      </Typography>
-    </div>
+    <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            style={{ width: headCell.width, paddingRight: 0 }}
+            align="left"
+            padding="default"
+            sortDirection={props.orderBy === headCell.id ? props.order : false}
+          >
+            <TableSortLabel
+              active={props.orderBy === headCell.id}
+              direction={props.orderBy === headCell.id ? props.order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              <ColumnTitle title={headCell.label} unit={headCell.unit} />
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
   );
 };
 
@@ -79,7 +98,7 @@ interface EnhancedTableProps {
     property: OrderKeys
   ) => void;
   order: Order;
-  orderBy: OrderKeys;
+  orderBy: string;
 }
 
 export default EnhancedTableHead;

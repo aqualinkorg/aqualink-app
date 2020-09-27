@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import {
-  Grid,
-  Typography,
-  IconButton,
-  Hidden,
-  TableContainer,
-  Table,
-  CircularProgress,
   Box,
+  CircularProgress,
+  Grid,
+  Hidden,
+  IconButton,
+  Table,
+  TableContainer,
+  Typography,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 import { useSelector } from "react-redux";
 import SelectedReefCard from "./SelectedReefCard";
-import EnhancedTableHead from "./tableHead";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
+import EnhancedTableHead from "./tableHead";
+import { useIsMobile } from "../../../helpers/useIsMobile";
 
 const ReefTable = ({ openDrawer }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const isMobile = useIsMobile();
+
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
 
@@ -55,13 +58,15 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
       </Hidden>
       <SelectedReefCard />
       <Box display="flex" flexDirection="column" flex={1}>
-        <EnhancedTableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-        />
         <TableContainer>
-          <Table style={{ tableLayout: "fixed" }}>
+          <Table style={isMobile ? { tableLayout: "fixed" } : undefined}>
+            <Hidden xsDown>
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+            </Hidden>
             <ReefTableBody order={order} orderBy={orderBy} />
           </Table>
         </TableContainer>

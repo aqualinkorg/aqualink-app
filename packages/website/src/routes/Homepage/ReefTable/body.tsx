@@ -1,4 +1,10 @@
-import { TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
+import {
+  Hidden,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import React, { CSSProperties, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +17,7 @@ import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
+import { useIsMobile } from "../../../helpers/useIsMobile";
 
 type ReefTableBodyProps = {
   order: Order;
@@ -24,12 +31,14 @@ const ReefNameCell = ({
 }) => {
   const { color, level } = alertFinder(maxMonthlyMean, temp, dhw);
   const style: CSSProperties = { color };
-  const showWarning = level !== 0;
+  const isMobile = useIsMobile();
+  const showWarning = level !== 0 && isMobile;
   return (
-    <TableCell style={{ width: "40%" }}>
+    <TableCell style={isMobile ? { width: "40%" } : undefined}>
       <Typography
         align="left"
         variant="h5"
+        color="textSecondary"
         style={showWarning ? style : undefined}
       >
         {locationName}
@@ -58,18 +67,21 @@ const RowNumberCell = ({
   value: number | null;
   decimalPlaces?: number;
 }) => {
+  const isMobile = useIsMobile();
   return (
-    <TableCell align="right">
-      <Typography
-        variant="caption"
-        color="textSecondary"
-        style={{ fontSize: "1em" }}
-      >
-        {name.toUpperCase()}
-      </Typography>
+    <TableCell align={isMobile ? "right" : "left"}>
+      {isMobile && (
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          style={{ fontSize: "1em" }}
+        >
+          {name.toUpperCase()}
+        </Typography>
+      )}
       <Typography variant="h5" style={{ color, fontWeight: 600 }}>
         {formatNumber(value, decimalPlaces)}
-        {unit}
+        {isMobile && unit}
       </Typography>
     </TableCell>
   );
@@ -130,6 +142,16 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               value={reef.dhw}
               color={dhwColorFinder(reef.dhw)}
             />
+            <Hidden xsDown>
+              <TableCell>
+                <ErrorIcon
+                  style={{
+                    color: alertFinder(reef.maxMonthlyMean, reef.temp, reef.dhw)
+                      .color,
+                  }}
+                />
+              </TableCell>
+            </Hidden>
           </TableRow>
         );
       })}
