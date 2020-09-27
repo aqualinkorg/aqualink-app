@@ -98,7 +98,7 @@ interface EnhancedTableProps {
     property: OrderKeys
   ) => void;
   order: Order;
-  orderBy: string;
+  orderBy: OrderKeys;
 }
 
 export default EnhancedTableHead;
