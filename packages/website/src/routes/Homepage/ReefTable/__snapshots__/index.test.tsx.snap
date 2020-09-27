@@ -42,128 +42,132 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   >
     <mock-tablecontainer>
       <mock-table>
-        <mock-tablehead
-          style="background-color: rgb(244, 244, 244);"
+        <mock-hidden
+          xsdown="true"
         >
-          <mock-tablerow>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="false"
-              style="width: 25%; padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
+          <mock-tablehead
+            style="background-color: rgb(244, 244, 244);"
+          >
+            <mock-tablerow>
+              <mock-tablecell
+                align="left"
+                padding="default"
+                sortdirection="false"
+                style="width: 25%; padding-right: 0px;"
               >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
+                <mock-tablesortlabel
+                  active="false"
+                  direction="asc"
                 >
-                  SITE
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="false"
-              style="padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
-              >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
-                >
-                  TEMP
                   <mock-typography
-                    component="span"
+                    nowrap="true"
                     style="color: black;"
-                    variant="subtitle2"
+                    variant="h6"
                   >
-                     (°C)
+                    REEF
                   </mock-typography>
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="false"
-              style="padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
+                </mock-tablesortlabel>
+              </mock-tablecell>
+              <mock-tablecell
+                align="left"
+                padding="default"
+                sortdirection="false"
+                style="padding-right: 0px;"
               >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
+                <mock-tablesortlabel
+                  active="false"
+                  direction="asc"
                 >
-                  DEPTH
                   <mock-typography
-                    component="span"
+                    nowrap="true"
                     style="color: black;"
-                    variant="subtitle2"
+                    variant="h6"
                   >
-                     (m)
+                    TEMP
+                    <mock-typography
+                      component="span"
+                      style="color: black;"
+                      variant="subtitle2"
+                    >
+                       (°C)
+                    </mock-typography>
                   </mock-typography>
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="false"
-              style="padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
+                </mock-tablesortlabel>
+              </mock-tablecell>
+              <mock-tablecell
+                align="left"
+                padding="default"
+                sortdirection="false"
+                style="padding-right: 0px;"
               >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
+                <mock-tablesortlabel
+                  active="false"
+                  direction="asc"
                 >
-                  STRESS
                   <mock-typography
-                    component="span"
+                    nowrap="true"
                     style="color: black;"
-                    variant="subtitle2"
+                    variant="h6"
                   >
-                     (DHW)
+                    DEPTH
+                    <mock-typography
+                      component="span"
+                      style="color: black;"
+                      variant="subtitle2"
+                    >
+                       (m)
+                    </mock-typography>
                   </mock-typography>
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="desc"
-              style="width: 5%; padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="true"
-                direction="desc"
+                </mock-tablesortlabel>
+              </mock-tablecell>
+              <mock-tablecell
+                align="left"
+                padding="default"
+                sortdirection="false"
+                style="padding-right: 0px;"
               >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
+                <mock-tablesortlabel
+                  active="false"
+                  direction="asc"
                 >
-                  ALERT
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-          </mock-tablerow>
-        </mock-tablehead>
+                  <mock-typography
+                    nowrap="true"
+                    style="color: black;"
+                    variant="h6"
+                  >
+                    STRESS
+                    <mock-typography
+                      component="span"
+                      style="color: black;"
+                      variant="subtitle2"
+                    >
+                       (DHW)
+                    </mock-typography>
+                  </mock-typography>
+                </mock-tablesortlabel>
+              </mock-tablecell>
+              <mock-tablecell
+                align="left"
+                padding="default"
+                sortdirection="desc"
+                style="width: 5%; padding-right: 0px;"
+              >
+                <mock-tablesortlabel
+                  active="true"
+                  direction="desc"
+                >
+                  <mock-typography
+                    nowrap="true"
+                    style="color: black;"
+                    variant="h6"
+                  >
+                    ALERT
+                  </mock-typography>
+                </mock-tablesortlabel>
+              </mock-tablecell>
+            </mock-tablerow>
+          </mock-tablehead>
+        </mock-hidden>
         <mock-tablebody>
           <mock-tablerow
             hover="true"
@@ -175,17 +179,22 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               <mock-typography
                 align="left"
                 color="textSecondary"
-                variant="subtitle1"
+                variant="h5"
               >
                 Mock Reef Hartmann
               </mock-typography>
+              <p
+                style="color: gray;"
+              >
+                Hawai
+              </p>
             </mock-tablecell>
             <mock-tablecell
               align="left"
             >
               <mock-typography
-                style="color: rgb(22, 141, 189);"
-                variant="subtitle1"
+                style="color: rgb(22, 141, 189); font-weight: 600;"
+                variant="h5"
               >
                 10.0
               </mock-typography>
@@ -194,8 +203,8 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
             >
               <mock-typography
-                color="textSecondary"
-                variant="subtitle1"
+                style="color: black; font-weight: 600;"
+                variant="h5"
               >
                 19
               </mock-typography>
@@ -204,27 +213,29 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
             >
               <mock-typography
-                style="color: rgb(12, 157, 165);"
-                variant="subtitle1"
+                style="color: rgb(12, 157, 165); font-weight: 600;"
+                variant="h5"
               >
                 2.9
               </mock-typography>
             </mock-tablecell>
-            <mock-tablecell
-              align="center"
+            <mock-hidden
+              xsdown="true"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root"
-                focusable="false"
-                style="color: rgb(248, 171, 0);"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
-                />
-              </svg>
-            </mock-tablecell>
+              <mock-tablecell>
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  style="color: rgb(248, 171, 0);"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+                  />
+                </svg>
+              </mock-tablecell>
+            </mock-hidden>
           </mock-tablerow>
         </mock-tablebody>
       </mock-table>
