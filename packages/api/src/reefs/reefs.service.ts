@@ -99,7 +99,13 @@ export class ReefsService {
   }
 
   async findDailyData(id: number): Promise<DailyData[]> {
-    return this.dailyDataRepository.find({ where: { reef: id } });
+    return this.dailyDataRepository.find({
+      where: { reef: id },
+      order: {
+        date: 'DESC',
+      },
+      take: 90,
+    });
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
