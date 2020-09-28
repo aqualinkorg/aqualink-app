@@ -61,10 +61,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   launchIcon: {
-    marginLeft: "0.25rem",
-    color: "inherit",
+    fontSize: 20,
+    marginLeft: "0.5rem",
+    color: "#2f2f2f",
     "&:hover": {
-      color: "inherit",
+      color: "#2f2f2f",
     },
   },
   mobileTitle: {
@@ -117,7 +118,9 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             <CardMedia className={classes.cardImage} image={url} />
             <Hidden smUp>
               <Box position="absolute" top={16} left={16}>
-                <Typography variant="h5">{reef.name}</Typography>
+                <Typography variant="h5">
+                  {reef.name || reef.region?.name}
+                </Typography>
 
                 {reef.region?.name && (
                   <Typography variant="h6" style={{ fontWeight: 400 }}>
@@ -227,10 +230,10 @@ const SelectedReefCard = () => {
                 ? reef?.name
                   ? `Featured - ${reef?.name}`
                   : "Featured Reef"
-                : reef?.name}
+                : reef?.name || reef?.region?.name}
               {!hasMedia && (
-                <Link to={`reefs/${reef?.id}`} className={classes.launchIcon}>
-                  <LaunchIcon />
+                <Link to={`reefs/${reef?.id}`}>
+                  <LaunchIcon className={classes.launchIcon} />
                 </Link>
               )}
             </Hidden>
@@ -242,8 +245,8 @@ const SelectedReefCard = () => {
                   ? `${reef?.name}`
                   : ""}
                 {!hasMedia && (
-                  <Link to={`reefs/${reef?.id}`} className={classes.launchIcon}>
-                    <LaunchIcon />
+                  <Link to={`reefs/${reef?.id}`}>
+                    <LaunchIcon className={classes.launchIcon} />
                   </Link>
                 )}
               </Box>
