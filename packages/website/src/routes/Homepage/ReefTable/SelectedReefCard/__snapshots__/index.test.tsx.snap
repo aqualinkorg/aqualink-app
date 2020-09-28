@@ -17,12 +17,11 @@ exports[`renders as expected 1`] = `
         >
           Featured Reef
           <a
-            class="makeStyles-launchIcon-4"
             href="/reefs/2"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root"
+              class="MuiSvgIcon-root makeStyles-launchIcon-4"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -40,12 +39,11 @@ exports[`renders as expected 1`] = `
           >
             Featured Reef
             <a
-              class="makeStyles-launchIcon-4"
               href="/reefs/2"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root makeStyles-launchIcon-4"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -173,14 +171,12 @@ exports[`renders loading as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          
           <a
-            class="makeStyles-launchIcon-9"
             href="/reefs/2"
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root"
+              class="MuiSvgIcon-root makeStyles-launchIcon-9"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -198,12 +194,11 @@ exports[`renders loading as expected 1`] = `
           >
             
             <a
-              class="makeStyles-launchIcon-9"
               href="/reefs/2"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root"
+                class="MuiSvgIcon-root makeStyles-launchIcon-9"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
