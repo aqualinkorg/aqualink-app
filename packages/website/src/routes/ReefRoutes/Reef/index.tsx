@@ -28,6 +28,7 @@ import {
 } from "../../../store/Survey/surveyListSlice";
 import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
+import { formatReefName } from "../../../store/Reefs/helpers";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
@@ -67,7 +68,7 @@ const Reef = ({ match, classes }: ReefProps) => {
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
-              reefName={reefDetails?.name || reefDetails?.region?.name || ""}
+              reefName={formatReefName(reefDetails) || ""}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               managerName={reefDetails?.admin || ""}
             />
