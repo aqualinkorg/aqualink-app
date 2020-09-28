@@ -32,13 +32,17 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
   };
 
   useEffect(() => {
-    if (reefOnMap) {
-      const index = reefsList.findIndex((item) => item.id === reefOnMap.id);
-      if (index > -1) {
-        setSelectedRow(index);
-      }
-    }
+    const index = reefsList.findIndex((item) => item.id === reefOnMap?.id);
+    setSelectedRow(index);
   }, [reefOnMap, reefsList]);
+
+  useEffect(() => {
+    const child = document.getElementById(`homepage-table-row-${selectedRow}`);
+    const parent = document.getElementById("scrollable-table");
+    if (parent && child) {
+      parent.scrollTo({ top: child.offsetTop, behavior: "smooth" });
+    }
+  }, [selectedRow]);
 
   return (
     <TableBody>
@@ -48,6 +52,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
       ).map((reef) => {
         return (
           <TableRow
+            id={`homepage-table-row-${reef.tableData.id}`}
             hover
             style={{
               backgroundColor:

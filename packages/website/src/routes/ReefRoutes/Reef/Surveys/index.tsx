@@ -36,9 +36,15 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     : false;
 
   useEffect(() => {
-    reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setPointOptions(response.data));
+    let mounted = true;
+    reefServices.getReefPois(`${reefId}`).then((response) => {
+      if (mounted) {
+        setPointOptions(response.data);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
   }, [setPointOptions, reefId]);
 
   const onResize = useCallback(() => {

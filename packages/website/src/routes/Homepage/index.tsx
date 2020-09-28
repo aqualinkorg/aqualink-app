@@ -45,7 +45,12 @@ const Homepage = ({ classes }: HomepageProps) => {
             <HomepageMap />
           </Grid>
           <Hidden xsDown>
-            <Grid className={classes.reefTable} item sm={6}>
+            <Grid
+              id="scrollable-table"
+              className={classes.reefTable}
+              item
+              sm={6}
+            >
               <ReefTable openDrawer={openDrawer} />
             </Grid>
           </Hidden>
