@@ -18,9 +18,22 @@ import { formatReefName } from "../../store/Reefs/helpers";
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const dispatch = useDispatch();
-  const reefs = useSelector(reefsListSelector).filter((reef) =>
-    formatReefName(reef)
-  );
+  // eslint-disable-next-line fp/no-mutating-methods
+  const reefs = useSelector(reefsListSelector)
+    .filter((reef) => formatReefName(reef))
+    // Sort by formatted name
+    .sort((a, b) => {
+      const nameA = formatReefName(a) || "";
+      const nameB = formatReefName(b) || "";
+
+      if (nameA > nameB) {
+        return 1;
+      }
+      if (nameA < nameB) {
+        return -1;
+      }
+      return 0;
+    });
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
