@@ -15,6 +15,7 @@ import {
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
+import { calculateAlertLevel } from '../utils/bleachingAlert';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -201,15 +202,23 @@ export async function getDailyData(
 
   const windDirection = windDirections && getAverage(windDirections, true);
 
+  const dailyAlertLevel =
+    calculateAlertLevel(
+      maxMonthlyMean,
+      satelliteTemperature,
+      degreeHeatingDays?.value,
+    ) || undefined;
+
   return {
     reef: { id: reef.id },
     date,
+    dailyAlertLevel,
     minBottomTemperature,
     maxBottomTemperature,
     avgBottomTemperature,
     surfaceTemperature,
     satelliteTemperature,
-    degreeHeatingDays: degreeHeatingDays && degreeHeatingDays.value,
+    degreeHeatingDays: degreeHeatingDays?.value,
     minWaveHeight,
     maxWaveHeight,
     avgWaveHeight,
