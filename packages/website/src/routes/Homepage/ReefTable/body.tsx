@@ -38,9 +38,8 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
 
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
-    const parent = document.getElementById("scrollable-table");
-    if (parent && child) {
-      parent.scrollTo({ top: child.offsetTop, behavior: "smooth" });
+    if (child) {
+      child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
   }, [selectedRow]);
 

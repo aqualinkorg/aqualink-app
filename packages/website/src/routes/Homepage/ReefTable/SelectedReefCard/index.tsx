@@ -254,7 +254,14 @@ const SelectedReefCard = () => {
 
       <Card>
         {loading ? (
-          <Box textAlign="center" p={4}>
+          <Box
+            height="19rem"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            p={4}
+          >
             <CircularProgress size="6rem" thickness={1} />
           </Box>
         ) : reef ? (

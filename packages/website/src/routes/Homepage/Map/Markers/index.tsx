@@ -8,7 +8,6 @@ import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
   setReefOnMap,
-  unsetReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
@@ -113,7 +112,6 @@ export const ReefMarkers = () => {
                   setCenter([lat, lng + offset], 6);
                   dispatch(setReefOnMap(reef));
                 }}
-                onpopupclose={() => dispatch(unsetReefOnMap())}
                 key={`${reef.id}-${offset}`}
                 icon={buoyIcon(
                   alertIconFinder(

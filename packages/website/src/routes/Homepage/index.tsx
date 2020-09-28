@@ -45,12 +45,7 @@ const Homepage = ({ classes }: HomepageProps) => {
             <HomepageMap />
           </Grid>
           <Hidden xsDown>
-            <Grid
-              id="scrollable-table"
-              className={classes.reefTable}
-              item
-              sm={6}
-            >
+            <Grid className={classes.reefTable} item sm={6}>
               <ReefTable openDrawer={openDrawer} />
             </Grid>
           </Hidden>
@@ -92,7 +87,6 @@ const styles = () =>
       display: "flex",
     },
     reefTable: {
-      overflowY: "auto",
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
