@@ -19,6 +19,7 @@ export type Observations =
 type WeatherConditions = "calm" | "waves" | "storm";
 
 export interface SurveyMedia {
+  id: number;
   url: string;
   featured: boolean;
   observations: Observations;
@@ -27,6 +28,13 @@ export interface SurveyMedia {
   poiId?: SurveyPoint;
 }
 
+export interface SurveyMediaUpdateRequestData {
+  featured?: boolean;
+  hidden?: boolean;
+  observations?: Observations;
+  comments?: string;
+  poiId?: SurveyPoint;
+}
 export interface SurveyPoint {
   id?: number;
   name: string;
