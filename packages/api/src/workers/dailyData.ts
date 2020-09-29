@@ -1,6 +1,6 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, omitBy } from 'lodash';
-import { Connection } from 'typeorm';
+import { isNil, isNumber, omitBy } from 'lodash';
+import { Connection, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
@@ -231,6 +231,24 @@ export async function getDailyData(
   };
 }
 
+export async function getWeeklyAlertLevel(
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+  reef: Reef,
+): Promise<number | undefined> {
+  const pastWeek = new Date(date);
+  pastWeek.setDate(pastWeek.getDate() - 6);
+  const query = await dailyDataRepository
+    .createQueryBuilder('dailyData')
+    .select('MAX(dailyData.dailyAlertLevel)', 'weeklyAlertLevel')
+    .andWhere('dailyData.date >= :pastWeek', { pastWeek })
+    .andWhere('dailyData.date <= :date', { date })
+    .andWhere('dailyData.reef = :reef', { reef: reef.id })
+    .getRawOne();
+
+  return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
+}
+
 /* eslint-disable no-console */
 export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
@@ -242,7 +260,21 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     allReefs,
     async (reef) => {
       const dailyDataInput = await getDailyData(reef, date);
-      const entity = dailyDataRepository.create(dailyDataInput);
+      const weeklyAlertLevel = await getWeeklyAlertLevel(
+        dailyDataRepository,
+        date,
+        reef,
+      );
+
+      const entity = dailyDataRepository.create({
+        ...dailyDataInput,
+        weeklyAlertLevel:
+          (isNumber(weeklyAlertLevel) &&
+            isNumber(dailyDataInput.dailyAlertLevel) &&
+            getMax([weeklyAlertLevel, dailyDataInput.dailyAlertLevel])) ||
+          (isNumber(weeklyAlertLevel) && weeklyAlertLevel) ||
+          dailyDataInput.dailyAlertLevel,
+      });
       try {
         await dailyDataRepository.save(entity);
       } catch (err) {
@@ -255,7 +287,13 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
               reef,
               date: entity.date,
             },
-            filteredData,
+            {
+              ...filteredData,
+              ...(isNumber(weeklyAlertLevel) ? { weeklyAlertLevel } : {}),
+              ...(isNumber(dailyDataInput.dailyAlertLevel)
+                ? { dailyAlertLevel: dailyDataInput.dailyAlertLevel }
+                : {}),
+            },
           );
           return;
         }
