@@ -248,7 +248,7 @@ export async function getWeeklyAlertLevel(
   return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
 }
 
-export function mergeDailyAndWeeklyAlertLevel(
+export function getMaxAlert(
   dailyAlertLevel?: number,
   weeklyAlertLevel?: number,
 ) {
@@ -274,7 +274,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
 
       const entity = dailyDataRepository.create({
         ...dailyDataInput,
-        weeklyAlertLevel: mergeDailyAndWeeklyAlertLevel(
+        weeklyAlertLevel: getMaxAlert(
           dailyDataInput.dailyAlertLevel,
           weeklyAlertLevel,
         ),

@@ -12,10 +12,7 @@ import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
-import {
-  getWeeklyAlertLevel,
-  mergeDailyAndWeeklyAlertLevel,
-} from '../workers/dailyData';
+import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 
 @Injectable()
 export class ReefsService {
@@ -129,10 +126,7 @@ export class ReefsService {
 
     return {
       ...liveData,
-      weeklyAlertLevel: mergeDailyAndWeeklyAlertLevel(
-        liveData.dailyAlertLevel,
-        weeklyAlertLevel,
-      ),
+      weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
 }
