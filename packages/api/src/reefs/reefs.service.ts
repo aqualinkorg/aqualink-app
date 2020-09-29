@@ -12,6 +12,7 @@ import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
+import { getWeeklyAlertLevel, mergeDailyAndWeeklyAlertLevel } from '../workers/dailyData';
 
 @Injectable()
 export class ReefsService {
@@ -115,6 +116,21 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    return getLiveData(reef);
+    const weeklyAlertLevel = await getWeeklyAlertLevel(
+      this.dailyDataRepository,
+      new Date(),
+      reef,
+    );
+
+    const liveData = await getLiveData(reef);
+    console.log(liveData.dailyAlertLevel);
+
+    return {
+      ...liveData,
+      weeklyAlertLevel: mergeDailyAndWeeklyAlertLevel(
+        liveData.dailyAlertLevel,
+        weeklyAlertLevel,
+      ),
+    };
   }
 }

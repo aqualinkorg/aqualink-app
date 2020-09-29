@@ -10,6 +10,7 @@ import {
 } from './sofar';
 import { SofarLiveData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
+import { calculateAlertLevel } from './bleachingAlert';
 
 export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
   const { polygon, spotterId, maxMonthlyMean } = reef;
@@ -98,7 +99,8 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
       bottomTemperature: spotterData.bottomTemperature,
       surfaceTemperature: spotterData.surfaceTemperature,
       degreeHeatingDays,
-      satelliteTemperature: satelliteTemperature && getLatestData(satelliteTemperature),
+      satelliteTemperature:
+        satelliteTemperature && getLatestData(satelliteTemperature),
       waveHeight: spotterData.significantWaveHeight || waveHeight,
       waveDirection: spotterData.waveMeanDirection || waveDirection,
       wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
@@ -108,8 +110,16 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     (data) => isNil(data?.value) || data?.value === 9999,
   );
 
+  const dailyAlertLevel =
+    calculateAlertLevel(
+      maxMonthlyMean,
+      filteredValues?.satelliteTemperature?.value,
+      degreeHeatingDays?.value,
+    ) || undefined;
+
   return {
     reef: { id: reef.id },
     ...filteredValues,
+    dailyAlertLevel,
   };
 };

@@ -249,6 +249,19 @@ export async function getWeeklyAlertLevel(
   return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
 }
 
+export function mergeDailyAndWeeklyAlertLevel(
+  dailyAlertLevel?: number,
+  weeklyAlertLevel?: number,
+) {
+  return (
+    (isNumber(weeklyAlertLevel) &&
+      isNumber(dailyAlertLevel) &&
+      getMax([weeklyAlertLevel, dailyAlertLevel])) ||
+    (isNumber(weeklyAlertLevel) && weeklyAlertLevel) ||
+    dailyAlertLevel
+  );
+}
+
 /* eslint-disable no-console */
 export async function getReefsDailyData(connection: Connection, date: Date) {
   const reefRepository = connection.getRepository(Reef);
@@ -268,12 +281,10 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
 
       const entity = dailyDataRepository.create({
         ...dailyDataInput,
-        weeklyAlertLevel:
-          (isNumber(weeklyAlertLevel) &&
-            isNumber(dailyDataInput.dailyAlertLevel) &&
-            getMax([weeklyAlertLevel, dailyDataInput.dailyAlertLevel])) ||
-          (isNumber(weeklyAlertLevel) && weeklyAlertLevel) ||
+        weeklyAlertLevel: mergeDailyAndWeeklyAlertLevel(
           dailyDataInput.dailyAlertLevel,
+          weeklyAlertLevel,
+        ),
       });
       try {
         await dailyDataRepository.save(entity);
