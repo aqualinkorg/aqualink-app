@@ -18,6 +18,7 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
+import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
@@ -86,6 +87,8 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
     },
   ];
 
+  const { name, region: regionName } = getReefNameAndRegion(reef);
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={4} lg={3}>
@@ -93,11 +96,11 @@ const SelectedReefContent = ({ reef }: SelectedReefContentProps) => {
           <CardMedia className={classes.cardImage} image={reefImage} />
           <Hidden smUp>
             <Box position="absolute" top={16} left={16}>
-              <Typography variant="h5">{reef.name}</Typography>
+              <Typography variant="h5">{name}</Typography>
 
-              {reef.region?.name && (
+              {regionName && (
                 <Typography variant="h6" style={{ fontWeight: 400 }}>
-                  {reef.region.name}
+                  {regionName}
                 </Typography>
               )}
             </Box>
