@@ -9,16 +9,8 @@ export const createDatasets = (dailyData: DailyData[]) => {
     .map((item) => item.satelliteTemperature);
 
   return {
-    bottomTemperatureData: [
-      bottomTemperature[0],
-      ...bottomTemperature,
-      bottomTemperature[bottomTemperature.length - 1],
-    ],
-    surfaceTemperatureData: [
-      surfaceTemperature[0],
-      ...surfaceTemperature,
-      surfaceTemperature[surfaceTemperature.length - 1],
-    ],
+    bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
+    surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
   };
 };
 
@@ -34,20 +26,14 @@ export const calculateAxisLimits = (
     .map((item) => item.date);
   const dailyDataLen = dates.length;
 
-  const xAxisMax = new Date(
-    new Date(dates[dailyDataLen - 1]).setHours(24, 0, 0, 0)
-  ).toISOString();
+  const xAxisMax = new Date(new Date(dates[dailyDataLen - 1])).toISOString();
 
   const xAxisMin = new Date(
     new Date(dates[0]).setHours(-1, 0, 0, 0)
   ).toISOString();
 
   // Add an extra date one day after the final daily data date
-  const chartLabels = [
-    new Date(new Date(xAxisMin).setHours(3, 0, 0, 0)).toISOString(),
-    ...dates,
-    new Date(new Date(xAxisMax).setHours(3, 0, 0, 0)).toISOString(),
-  ];
+  const chartLabels = [xAxisMin, ...dates];
 
   const { surfaceTemperatureData } = createDatasets(dailyData);
 
