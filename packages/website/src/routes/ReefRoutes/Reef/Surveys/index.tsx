@@ -12,6 +12,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import Axios from "axios";
 
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
@@ -24,6 +25,7 @@ import { Pois } from "../../../../store/Reefs/types";
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("all");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
@@ -36,14 +38,20 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     : false;
 
   useEffect(() => {
-    let mounted = true;
-    reefServices.getReefPois(`${reefId}`).then((response) => {
-      if (mounted) {
+    const source = Axios.CancelToken.source();
+    reefServices
+      .getReefPois(`${reefId}`, source.token)
+      .then((response) => {
         setPointOptions(response.data);
-      }
-    });
+        setMountPois(true);
+      })
+      .catch((error) => {
+        if (!Axios.isCancel(error)) {
+          setMountPois(false);
+        }
+      });
     return () => {
-      mounted = false;
+      source.cancel();
     };
   }, [setPointOptions, reefId]);
 
@@ -107,36 +115,38 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
               Survey Point:
             </Typography>
           </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-point"
-                id="survey-point"
-                name="survey-point"
-                value={point}
-                onChange={handlePointChange}
-                className={classes.selectedItem}
-              >
-                <MenuItem value="all">
-                  <Typography className={classes.menuItem} variant="h6">
-                    All
-                  </Typography>
-                </MenuItem>
-                {pointOptions.map(
-                  (item) =>
-                    item.name !== null && (
-                      <MenuItem
-                        className={classes.menuItem}
-                        value={item.name}
-                        key={item.name}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    )
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
+          {mountPois && (
+            <Grid item>
+              <FormControl className={classes.formControl}>
+                <Select
+                  labelId="survey-point"
+                  id="survey-point"
+                  name="survey-point"
+                  value={point}
+                  onChange={handlePointChange}
+                  className={classes.selectedItem}
+                >
+                  <MenuItem value="all">
+                    <Typography className={classes.menuItem} variant="h6">
+                      All
+                    </Typography>
+                  </MenuItem>
+                  {pointOptions.map(
+                    (item) =>
+                      item.name !== null && (
+                        <MenuItem
+                          className={classes.menuItem}
+                          value={item.name}
+                          key={item.id}
+                        >
+                          {item.name}
+                        </MenuItem>
+                      )
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
         </Grid>
         <Grid
           container
