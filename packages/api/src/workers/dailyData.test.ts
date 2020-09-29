@@ -44,5 +44,6 @@ test('It processes Sofar API for daily data.', async () => {
     maxWindSpeed: 3.85278034210205,
     avgWindSpeed: 2.231244638562202,
     windDirection: 37,
+    dailyAlertLevel: 0,
   });
 });

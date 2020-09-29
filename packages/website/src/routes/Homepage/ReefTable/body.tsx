@@ -100,11 +100,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             <TableCell align="center">
               <ErrorIcon
                 style={{
-                  color: alertColorFinder(
-                    reef.maxMonthlyMean,
-                    reef.temp,
-                    reef.dhw
-                  ),
+                  color: alertColorFinder(reef.alertLevel),
                 }}
               />
             </TableCell>

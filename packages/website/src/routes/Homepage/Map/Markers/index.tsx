@@ -10,11 +10,10 @@ import {
   setReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
-  findInterval,
+  findIntervalByLevel,
   alertIconFinder,
   findMaxLevel,
   getColorByLevel,
@@ -66,14 +65,8 @@ const buoyIcon = (iconUrl: string) =>
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
     const { reef } = marker.options.children[0].props;
-    const { maxMonthlyMean } = reef;
-    const { satelliteTemperature, degreeHeatingDays } = reef.latestDailyData;
-    const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
-    return findInterval(
-      maxMonthlyMean,
-      satelliteTemperature,
-      degreeHeatingWeeks
-    );
+    const { weeklyAlertLevel } = reef.latestDailyData;
+    return findIntervalByLevel(weeklyAlertLevel);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
   const count = cluster.getChildCount();
@@ -101,9 +94,7 @@ export const ReefMarkers = () => {
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { maxMonthlyMean } = reef;
-            const { degreeHeatingDays, satelliteTemperature } =
-              reef.latestDailyData || {};
+            const { weeklyAlertLevel } = reef.latestDailyData || {};
 
             return lngOffsets.map((offset) => (
               <Marker
@@ -111,13 +102,7 @@ export const ReefMarkers = () => {
                   dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
-                icon={buoyIcon(
-                  alertIconFinder(
-                    maxMonthlyMean,
-                    satelliteTemperature,
-                    degreeHeatingWeeksCalculator(degreeHeatingDays)
-                  )
-                )}
+                icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
                 position={[lat, lng + offset]}
               >
                 <ActiveReefListener reef={reef} />

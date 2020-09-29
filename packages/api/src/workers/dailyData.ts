@@ -1,6 +1,6 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, omitBy } from 'lodash';
-import { Connection } from 'typeorm';
+import { isNil, isNumber, omitBy } from 'lodash';
+import { Connection, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
@@ -15,6 +15,7 @@ import {
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
+import { calculateAlertLevel } from '../utils/bleachingAlert';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -201,15 +202,22 @@ export async function getDailyData(
 
   const windDirection = windDirections && getAverage(windDirections, true);
 
+  const dailyAlertLevel = calculateAlertLevel(
+    maxMonthlyMean,
+    satelliteTemperature,
+    degreeHeatingDays?.value,
+  );
+
   return {
     reef: { id: reef.id },
     date,
+    dailyAlertLevel,
     minBottomTemperature,
     maxBottomTemperature,
     avgBottomTemperature,
     surfaceTemperature,
     satelliteTemperature,
-    degreeHeatingDays: degreeHeatingDays && degreeHeatingDays.value,
+    degreeHeatingDays: degreeHeatingDays?.value,
     minWaveHeight,
     maxWaveHeight,
     avgWaveHeight,
@@ -220,6 +228,31 @@ export async function getDailyData(
     avgWindSpeed,
     windDirection,
   };
+}
+
+export async function getWeeklyAlertLevel(
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+  reef: Reef,
+): Promise<number | undefined> {
+  const pastWeek = new Date(date);
+  pastWeek.setDate(pastWeek.getDate() - 6);
+  const query = await dailyDataRepository
+    .createQueryBuilder('dailyData')
+    .select('MAX(dailyData.dailyAlertLevel)', 'weeklyAlertLevel')
+    .andWhere('dailyData.date >= :pastWeek', { pastWeek })
+    .andWhere('dailyData.date <= :date', { date })
+    .andWhere('dailyData.reef = :reef', { reef: reef.id })
+    .getRawOne();
+
+  return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
+}
+
+export function getMaxAlert(
+  dailyAlertLevel?: number,
+  weeklyAlertLevel?: number,
+) {
+  return getMax([weeklyAlertLevel, dailyAlertLevel].filter(isNumber));
 }
 
 /* eslint-disable no-console */
@@ -233,7 +266,19 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
     allReefs,
     async (reef) => {
       const dailyDataInput = await getDailyData(reef, date);
-      const entity = dailyDataRepository.create(dailyDataInput);
+      const weeklyAlertLevel = await getWeeklyAlertLevel(
+        dailyDataRepository,
+        date,
+        reef,
+      );
+
+      const entity = dailyDataRepository.create({
+        ...dailyDataInput,
+        weeklyAlertLevel: getMaxAlert(
+          dailyDataInput.dailyAlertLevel,
+          weeklyAlertLevel,
+        ),
+      });
       try {
         await dailyDataRepository.save(entity);
       } catch (err) {
