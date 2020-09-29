@@ -18,7 +18,9 @@ exports[`renders as expected 1`] = `
             component="span"
             display="block"
             variant="h5"
-          />
+          >
+            Hawai
+          </mock-typography>
         </div>
       </div>
       <mock-cardcontent>
