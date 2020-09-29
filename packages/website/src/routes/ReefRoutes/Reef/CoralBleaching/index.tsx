@@ -12,16 +12,9 @@ import {
 
 import type { LiveData } from "../../../../store/Reefs/types";
 
-import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
+import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
 
-const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
-  const { degreeHeatingDays, satelliteTemperature } = liveData;
-
-  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
-    degreeHeatingDays?.value
-  );
-
+const Bleaching = ({ liveData, classes }: BleachingProps) => {
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -46,13 +39,7 @@ const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
           xs={12}
         >
           <img
-            src={
-              alertFinder(
-                maxMonthlyMean,
-                satelliteTemperature?.value,
-                degreeHeatingWeeks
-              ).image
-            }
+            src={findIntervalByLevel(liveData.weeklyAlertLevel).image}
             alt="alert-level"
           />
         </Grid>
@@ -82,7 +69,6 @@ const styles = () =>
 
 interface BleachingIncomingProps {
   liveData: LiveData;
-  maxMonthlyMean: number | null;
 }
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;

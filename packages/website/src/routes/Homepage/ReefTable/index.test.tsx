@@ -27,6 +27,7 @@ describe("ReefTable", () => {
       admin: null,
       stream: null,
       latestDailyData: {
+        weeklyAlertLevel: 3,
         maxBottomTemperature: 10,
         degreeHeatingDays: 20,
       },

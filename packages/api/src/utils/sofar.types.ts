@@ -6,6 +6,8 @@ export interface SofarValue {
 export interface SofarDailyData {
   reef: { id: number };
   date: Date;
+  dailyAlertLevel?: number;
+  weeklyAlertLevel?: number;
   minBottomTemperature?: number;
   maxBottomTemperature?: number;
   avgBottomTemperature?: number;
@@ -25,6 +27,8 @@ export interface SofarDailyData {
 
 export interface SofarLiveData {
   reef: { id: number };
+  dailyAlertLevel?: number;
+  weeklyAlertLevel?: number;
   bottomTemperature?: SofarValue;
   surfaceTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
