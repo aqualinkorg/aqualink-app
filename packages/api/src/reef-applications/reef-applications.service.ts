@@ -14,7 +14,7 @@ import { Reef } from '../reefs/reefs.entity';
 import { Region } from '../regions/regions.entity';
 import { getRegion, getTimezones } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
-import { User } from '../users/users.entity';
+import { AdminLevel, User } from '../users/users.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
 
 @Injectable()
@@ -27,6 +27,8 @@ export class ReefApplicationsService {
     private reefRepository: Repository<Reef>,
     @InjectRepository(Region)
     private regionRepository: Repository<Region>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   async create(
@@ -50,6 +52,26 @@ export class ReefApplicationsService {
       approved: false,
       region,
     });
+
+    // Change user's admin level only if they are not a super admin
+    // Also make him admin of the reef
+    if (user.adminLevel !== AdminLevel.SuperAdmin) {
+      // We need to fetch the user from the database again because the administeredReefs are not loaded
+      const reefAdmin = await this.userRepository.findOne({
+        where: { id: user.id },
+        relations: ['administeredReefs'],
+      });
+
+      if (!reefAdmin) {
+        throw new NotFoundException(`User with id ${user.id} was not found.`);
+      }
+
+      await this.userRepository.save({
+        id: reefAdmin.id,
+        adminLevel: AdminLevel.ReefManager,
+        administeredReefs: [...reefAdmin.administeredReefs, reef],
+      });
+    }
 
     if (!maxMonthlyMean) {
       this.logger.warn(

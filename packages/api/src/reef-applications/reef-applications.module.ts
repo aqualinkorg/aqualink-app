@@ -7,11 +7,12 @@ import { Reef } from '../reefs/reefs.entity';
 import { ReefApplication } from './reef-applications.entity';
 import { Region } from '../regions/regions.entity';
 import { AuthModule } from '../auth/auth.module';
+import { User } from '../users/users.entity';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([Reef, ReefApplication, Region]),
+    TypeOrmModule.forFeature([Reef, ReefApplication, Region, User]),
   ],
   controllers: [ReefApplicationsController],
   providers: [ReefApplicationsService, EntityExists],
