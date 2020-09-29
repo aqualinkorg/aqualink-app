@@ -20,7 +20,6 @@ export interface ChartProps {
   temperatureThreshold: number | null;
   maxMonthlyMean?: number | null;
 
-  chartHeight?: number;
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
@@ -29,7 +28,6 @@ function Chart({
   dailyData,
   temperatureThreshold,
   maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
-  chartHeight = 100,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -90,6 +88,9 @@ function Chart({
   });
   const settings = mergeWith(
     {
+      layout: {
+        padding: { right: 10 },
+      },
       maintainAspectRatio: false,
       plugins: {
         chartJsPluginBarchartBackground: {
@@ -137,7 +138,8 @@ function Chart({
             type: "time",
             time: {
               displayFormats: {
-                hour: "MMM D h:mm a",
+                week: "MMM D",
+                month: "MMM D",
               },
               unit: "week",
             },
@@ -147,10 +149,6 @@ function Chart({
               min: xAxisMin,
               max: xAxisMax,
               padding: 10,
-              maxRotation: 0,
-              callback: (value: string) => {
-                return value.split(", ")[0].toUpperCase();
-              },
             },
             gridLines: {
               display: false,
@@ -189,7 +187,6 @@ function Chart({
     <Line
       ref={chartRef}
       options={settings}
-      height={chartHeight}
       data={createChartData(chartLabels, surfaceTemperatureData, true)}
     />
   );
