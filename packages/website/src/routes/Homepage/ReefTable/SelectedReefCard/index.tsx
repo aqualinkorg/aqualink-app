@@ -24,6 +24,7 @@ import {
   reefLoadingSelector,
   reefRequest,
 } from "../../../../store/Reefs/selectedReefSlice";
+import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
@@ -110,6 +111,8 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
     },
   ];
 
+  const { name, region: regionName } = getReefNameAndRegion(reef);
+
   return (
     <Grid container spacing={1}>
       {url && (
@@ -118,13 +121,11 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             <CardMedia className={classes.cardImage} image={url} />
             <Hidden smUp>
               <Box position="absolute" top={16} left={16}>
-                <Typography variant="h5">
-                  {reef.name || reef.region?.name}
-                </Typography>
+                <Typography variant="h5">{name}</Typography>
 
-                {reef.region?.name && (
+                {regionName && (
                   <Typography variant="h6" style={{ fontWeight: 400 }}>
-                    {reef.region.name}
+                    {regionName}
                   </Typography>
                 )}
               </Box>
