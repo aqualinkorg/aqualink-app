@@ -13,18 +13,28 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { setReefOnMap } from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
 import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
+import { getReefNameAndRegion } from "../../store/Reefs/helpers";
 
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const dispatch = useDispatch();
-  const reefs = useSelector(reefsListSelector).filter(({ name }) => name);
+  const reefs = useSelector(reefsListSelector)
+    .filter((reef) => getReefNameAndRegion(reef).name)
+    // Sort by formatted name
+    .sort((a, b) => {
+      const nameA = getReefNameAndRegion(a).name || "";
+      const nameB = getReefNameAndRegion(b).name || "";
+      return nameA.localeCompare(nameB);
+    });
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const searchValue = event.target.value;
     const index = reefs.findIndex(
-      (reef) => reef.name?.toLowerCase() === searchValue.toLowerCase()
+      (reef) =>
+        getReefNameAndRegion(reef).name?.toLowerCase() ===
+        searchValue.toLowerCase()
     );
     if (index > -1) {
       setSearchedReef(reefs[index]);
@@ -57,7 +67,7 @@ const Search = ({ classes }: SearchProps) => {
           id="location"
           className={classes.searchBarInput}
           options={reefs}
-          getOptionLabel={(reef) => reef.name || ""}
+          getOptionLabel={(reef) => getReefNameAndRegion(reef).name || ""}
           value={searchedReef}
           onChange={onDropdownItemSelect}
           onInputChange={(event, value, reason) =>
