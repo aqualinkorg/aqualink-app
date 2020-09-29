@@ -110,12 +110,11 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     (data) => isNil(data?.value) || data?.value === 9999,
   );
 
-  const dailyAlertLevel =
-    calculateAlertLevel(
-      maxMonthlyMean,
-      filteredValues?.satelliteTemperature?.value,
-      degreeHeatingDays?.value,
-    ) || undefined;
+  const dailyAlertLevel = calculateAlertLevel(
+    maxMonthlyMean,
+    filteredValues?.satelliteTemperature?.value,
+    degreeHeatingDays?.value,
+  );
 
   return {
     reef: { id: reef.id },

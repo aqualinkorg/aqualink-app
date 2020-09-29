@@ -202,12 +202,11 @@ export async function getDailyData(
 
   const windDirection = windDirections && getAverage(windDirections, true);
 
-  const dailyAlertLevel =
-    calculateAlertLevel(
-      maxMonthlyMean,
-      satelliteTemperature,
-      degreeHeatingDays?.value,
-    ) || undefined;
+  const dailyAlertLevel = calculateAlertLevel(
+    maxMonthlyMean,
+    satelliteTemperature,
+    degreeHeatingDays?.value,
+  );
 
   return {
     reef: { id: reef.id },
@@ -253,13 +252,7 @@ export function mergeDailyAndWeeklyAlertLevel(
   dailyAlertLevel?: number,
   weeklyAlertLevel?: number,
 ) {
-  return (
-    (isNumber(weeklyAlertLevel) &&
-      isNumber(dailyAlertLevel) &&
-      getMax([weeklyAlertLevel, dailyAlertLevel])) ||
-    (isNumber(weeklyAlertLevel) && weeklyAlertLevel) ||
-    dailyAlertLevel
-  );
+  return getMax([weeklyAlertLevel, dailyAlertLevel].filter(isNumber));
 }
 
 /* eslint-disable no-console */
@@ -298,13 +291,7 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
               reef,
               date: entity.date,
             },
-            {
-              ...filteredData,
-              ...(isNumber(weeklyAlertLevel) ? { weeklyAlertLevel } : {}),
-              ...(isNumber(dailyDataInput.dailyAlertLevel)
-                ? { dailyAlertLevel: dailyDataInput.dailyAlertLevel }
-                : {}),
-            },
+            filteredData,
           );
           return;
         }

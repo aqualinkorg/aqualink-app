@@ -11,7 +11,7 @@ export const calculateAlertLevel = (
   maxMonthlyMean: number | null,
   satelliteTemperature?: number | null,
   degreeHeatingWeeks?: number | null,
-): number | null => {
+): number | undefined => {
   const hotSpot =
     satelliteTemperature &&
     maxMonthlyMean &&
@@ -19,7 +19,7 @@ export const calculateAlertLevel = (
 
   switch (true) {
     case isNil(hotSpot):
-      return null;
+      return undefined;
 
     case isNumber(hotSpot) && hotSpot <= 0:
       return 0;
@@ -41,6 +41,6 @@ export const calculateAlertLevel = (
       return 4;
 
     default:
-      return null;
+      return undefined;
   }
 };

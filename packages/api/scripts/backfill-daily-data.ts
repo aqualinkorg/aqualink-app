@@ -24,7 +24,6 @@ async function run() {
 
   createConnection(dbConfig).then(async (connection) => {
     await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
-      console.log(past);
       const date = new Date(today);
       date.setDate(today.getDate() - past - 1);
       try {
