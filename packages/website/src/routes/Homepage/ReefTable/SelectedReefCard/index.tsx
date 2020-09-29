@@ -229,8 +229,8 @@ const SelectedReefCard = () => {
               {isFeatured
                 ? reef?.name
                   ? `Featured - ${reef?.name}`
-                  : "Featured Reef"
-                : reef?.name || reef?.region?.name}
+                  : "Featured Site"
+                : reef?.name || reef?.region?.name || "Selected Site"}
               {!hasMedia && (
                 <Link to={`reefs/${reef?.id}`}>
                   <LaunchIcon className={classes.launchIcon} />
@@ -240,9 +240,9 @@ const SelectedReefCard = () => {
             <Hidden smUp>
               <Box className={classes.mobileTitle}>
                 {isFeatured
-                  ? "Featured Reef"
+                  ? "Featured Site"
                   : !hasMedia
-                  ? `${reef?.name}`
+                  ? reef?.name || reef?.region?.name || "Selected Site"
                   : ""}
                 {!hasMedia && (
                   <Link to={`reefs/${reef?.id}`}>

@@ -15,7 +15,7 @@ exports[`renders as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
-          Featured Reef
+          Featured Site
           <a
             href="/reefs/2"
           >
@@ -37,7 +37,7 @@ exports[`renders as expected 1`] = `
           <mock-box
             classname="makeStyles-mobileTitle-5"
           >
-            Featured Reef
+            Featured Site
             <a
               href="/reefs/2"
             >
@@ -171,6 +171,7 @@ exports[`renders loading as expected 1`] = `
         <mock-hidden
           xsdown="true"
         >
+          Selected Site
           <a
             href="/reefs/2"
           >
@@ -192,7 +193,7 @@ exports[`renders loading as expected 1`] = `
           <mock-box
             classname="makeStyles-mobileTitle-10"
           >
-            
+            Selected Site
             <a
               href="/reefs/2"
             >
