@@ -36,7 +36,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
           classes={{
             subheader: classes.subheader,
           }}
-          title={reef.name}
+          title={getReefNameAndRegion(reef).name}
           subheader={getReefNameAndRegion(reef).region}
         />
         <CardContent>
