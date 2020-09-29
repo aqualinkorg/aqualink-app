@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { Popup as LeafletPopup } from "react-leaflet";
 
 import { Reef } from "../../../../store/Reefs/types";
+import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import {
@@ -36,7 +37,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
             subheader: classes.subheader,
           }}
           title={reef.name}
-          subheader={reef.region?.name}
+          subheader={getReefNameAndRegion(reef).region}
         />
         <CardContent>
           <Grid container item xs={12}>

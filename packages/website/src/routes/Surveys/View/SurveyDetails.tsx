@@ -14,12 +14,13 @@ import {
 
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
+import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 import ObservationBox from "./observationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
-
+  const { region: regionName } = getReefNameAndRegion(reef);
   return (
     <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
       {survey && (
@@ -31,9 +32,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           </Grid>
           <Grid container item direction="row">
             <Grid container item direction="column" xs={12} md={4}>
-              <Typography style={{ fontSize: 18 }}>
-                {reef.region?.name}
-              </Typography>
+              <Typography style={{ fontSize: 18 }}>{regionName}</Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>
             </Grid>
             <Grid item xs={12} md={4}>

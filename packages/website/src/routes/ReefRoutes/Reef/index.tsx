@@ -16,6 +16,7 @@ import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
 
+import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 import {
   reefDetailsSelector,
   reefLoadingSelector,
@@ -28,7 +29,6 @@ import {
 } from "../../../store/Survey/surveyListSlice";
 import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
-import { formatReefName } from "../../../store/Reefs/helpers";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
@@ -68,7 +68,7 @@ const Reef = ({ match, classes }: ReefProps) => {
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
-              reefName={formatReefName(reefDetails) || ""}
+              reefName={getReefNameAndRegion(reefDetails).name || ""}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               managerName={reefDetails?.admin || ""}
             />

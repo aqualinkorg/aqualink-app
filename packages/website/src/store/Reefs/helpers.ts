@@ -4,8 +4,11 @@ import type { Reef } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 import { alertFinder } from "../../helpers/bleachingAlertIntervals";
 
-export const formatReefName = (reef: Reef) =>
-  reef.name || reef.region?.name || null;
+export function getReefNameAndRegion(reef: Reef) {
+  const name = reef.name || reef.region?.name || null;
+  const region = reef.name ? reef.region?.name : null;
+  return { name, region };
+}
 
 const longDHW = (dhw: number | null): string =>
   `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
@@ -16,7 +19,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       value.latestDailyData || {};
     const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
-    const locationName = formatReefName(value);
+    const locationName = getReefNameAndRegion(value).name;
 
     return {
       locationName,

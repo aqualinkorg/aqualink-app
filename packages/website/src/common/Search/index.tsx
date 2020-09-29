@@ -13,25 +13,18 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { setReefOnMap } from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
 import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
-import { formatReefName } from "../../store/Reefs/helpers";
+import { getReefNameAndRegion } from "../../store/Reefs/helpers";
 
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const dispatch = useDispatch();
   const reefs = useSelector(reefsListSelector)
-    .filter((reef) => formatReefName(reef))
+    .filter((reef) => getReefNameAndRegion(reef))
     // Sort by formatted name
     .sort((a, b) => {
-      const nameA = formatReefName(a) || "";
-      const nameB = formatReefName(b) || "";
-
-      if (nameA > nameB) {
-        return 1;
-      }
-      if (nameA < nameB) {
-        return -1;
-      }
-      return 0;
+      const nameA = getReefNameAndRegion(a).name || "";
+      const nameB = getReefNameAndRegion(b).name || "";
+      return nameA.localeCompare(nameB);
     });
 
   const onChangeSearchText = (
@@ -40,7 +33,8 @@ const Search = ({ classes }: SearchProps) => {
     const searchValue = event.target.value;
     const index = reefs.findIndex(
       (reef) =>
-        formatReefName(reef)?.toLowerCase() === searchValue.toLowerCase()
+        getReefNameAndRegion(reef).name?.toLowerCase() ===
+        searchValue.toLowerCase()
     );
     if (index > -1) {
       setSearchedReef(reefs[index]);
@@ -73,7 +67,7 @@ const Search = ({ classes }: SearchProps) => {
           id="location"
           className={classes.searchBarInput}
           options={reefs}
-          getOptionLabel={(reef) => formatReefName(reef) || ""}
+          getOptionLabel={(reef) => getReefNameAndRegion(reef) || ""}
           value={searchedReef}
           onChange={onDropdownItemSelect}
           onInputChange={(event, value, reason) =>
