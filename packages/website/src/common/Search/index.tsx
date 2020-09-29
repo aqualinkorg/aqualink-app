@@ -19,7 +19,7 @@ const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const dispatch = useDispatch();
   const reefs = useSelector(reefsListSelector)
-    .filter((reef) => getReefNameAndRegion(reef))
+    .filter((reef) => getReefNameAndRegion(reef).name)
     // Sort by formatted name
     .sort((a, b) => {
       const nameA = getReefNameAndRegion(a).name || "";
@@ -67,7 +67,7 @@ const Search = ({ classes }: SearchProps) => {
           id="location"
           className={classes.searchBarInput}
           options={reefs}
-          getOptionLabel={(reef) => getReefNameAndRegion(reef) || ""}
+          getOptionLabel={(reef) => getReefNameAndRegion(reef).name || ""}
           value={searchedReef}
           onChange={onDropdownItemSelect}
           onInputChange={(event, value, reason) =>
