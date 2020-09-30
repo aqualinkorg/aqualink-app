@@ -7,7 +7,6 @@ import {
   CardMedia,
   CircularProgress,
   Grid,
-  Hidden,
   Typography,
 } from "@material-ui/core";
 import LaunchIcon from "@material-ui/icons/Launch";
@@ -34,6 +33,17 @@ import {
 } from "../../../../store/Survey/surveyListSlice";
 
 const useStyles = makeStyles((theme) => ({
+  cardWrapper: {
+    height: "20rem",
+    [theme.breakpoints.down("md")]: {
+      height: "24rem",
+    },
+  },
+  mobileCardWrapperWithImage: {
+    [theme.breakpoints.down("xs")]: {
+      height: "44rem",
+    },
+  },
   card: {
     padding: 40,
     [theme.breakpoints.down("xs")]: {
@@ -53,8 +63,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
-    margin: theme.spacing(2),
     width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(3),
+    },
 
     [theme.breakpoints.up("lg")]: {
       flexDirection: "column",
@@ -69,8 +82,12 @@ const useStyles = makeStyles((theme) => ({
       color: "#2f2f2f",
     },
   },
-  mobileTitle: {
-    width: "40%",
+  reefName: {
+    fontSize: 16,
+  },
+  reefRegionName: {
+    fontSize: 14,
+    marginBottom: "0.5rem",
   },
 }));
 
@@ -114,22 +131,20 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const { name, region: regionName } = getReefNameAndRegion(reef);
 
   return (
-    <Grid container spacing={1}>
+    <Grid
+      className={
+        url
+          ? `${classes.cardWrapper} ${classes.mobileCardWrapperWithImage}`
+          : `${classes.cardWrapper}`
+      }
+      container
+      justify="space-between"
+      spacing={1}
+    >
       {url && (
-        <Grid item xs={12} sm={4} lg={3}>
+        <Grid item xs={12} sm={5} lg={4}>
           <Box position="relative" height="100%">
             <CardMedia className={classes.cardImage} image={url} />
-            <Hidden smUp>
-              <Box position="absolute" top={16} left={16}>
-                <Typography variant="h5">{name}</Typography>
-
-                {regionName && (
-                  <Typography variant="h6" style={{ fontWeight: 400 }}>
-                    {regionName}
-                  </Typography>
-                )}
-              </Box>
-            </Hidden>
 
             <Box position="absolute" bottom={16} right={16}>
               <Link
@@ -148,12 +163,18 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        sm={url ? 8 : 12}
-        lg={url ? 6 : 9}
+        sm={url ? 7 : 12}
+        lg={url ? 6 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
-          <Typography color="textSecondary" variant="subtitle1">
+          <Typography color="textSecondary" className={classes.reefName}>
+            {name}
+          </Typography>
+          <Typography color="textSecondary" className={classes.reefRegionName}>
+            {regionName}
+          </Typography>
+          <Typography color="textSecondary" variant="caption">
             MEAN DAILY SURFACE TEMP. (°C)
           </Typography>
         </Box>
@@ -169,7 +190,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        lg={3}
+        lg={2}
         style={{
           display: "flex",
         }}
@@ -226,32 +247,12 @@ const SelectedReefCard = () => {
       {!loading && (
         <Box mb={3}>
           <Typography variant="h5" color="textSecondary">
-            <Hidden xsDown>
-              {isFeatured
-                ? reef?.name
-                  ? `Featured - ${reef?.name}`
-                  : "Featured Site"
-                : reef?.name || reef?.region?.name || "Selected Site"}
-              {!hasMedia && (
-                <Link to={`reefs/${reef?.id}`}>
-                  <LaunchIcon className={classes.launchIcon} />
-                </Link>
-              )}
-            </Hidden>
-            <Hidden smUp>
-              <Box className={classes.mobileTitle}>
-                {isFeatured
-                  ? "Featured Site"
-                  : !hasMedia
-                  ? reef?.name || reef?.region?.name || "Selected Site"
-                  : ""}
-                {!hasMedia && (
-                  <Link to={`reefs/${reef?.id}`}>
-                    <LaunchIcon className={classes.launchIcon} />
-                  </Link>
-                )}
-              </Box>
-            </Hidden>
+            {isFeatured ? "Featured Site" : "Selected Site"}
+            {!hasMedia && (
+              <Link to={`reefs/${reef?.id}`}>
+                <LaunchIcon className={classes.launchIcon} />
+              </Link>
+            )}
           </Typography>
         </Box>
       )}
@@ -259,7 +260,7 @@ const SelectedReefCard = () => {
       <Card>
         {loading ? (
           <Box
-            height="19rem"
+            height="23rem"
             display="flex"
             alignItems="center"
             justifyContent="center"

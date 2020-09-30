@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-1"
+    classname="makeStyles-card-3"
   >
     <mock-box
       mb="3"
@@ -21,7 +21,7 @@ exports[`renders as expected 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root makeStyles-launchIcon-4"
+              class="MuiSvgIcon-root makeStyles-launchIcon-6"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -34,16 +34,14 @@ exports[`renders as expected 1`] = `
         <mock-hidden
           smup="true"
         >
-          <mock-box
-            classname="makeStyles-mobileTitle-5"
-          >
+          <mock-box>
             Featured Site
             <a
               href="/reefs/2"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-launchIcon-4"
+                class="MuiSvgIcon-root makeStyles-launchIcon-6"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -58,10 +56,10 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+        class="MuiGrid-root makeStyles-cardWrapper-1 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-9"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
           style="margin-bottom: 2rem; max-height: 14rem;"
         >
           <mock-box
@@ -70,8 +68,16 @@ exports[`renders as expected 1`] = `
             pl="0.5rem"
           >
             <mock-typography
+              classname="makeStyles-reefName-7"
               color="textSecondary"
-              variant="subtitle1"
+            />
+            <mock-typography
+              classname="makeStyles-reefRegionName-8"
+              color="textSecondary"
+            />
+            <mock-typography
+              color="textSecondary"
+              variant="caption"
             >
               MEAN DAILY SURFACE TEMP. (°C)
             </mock-typography>
@@ -79,11 +85,11 @@ exports[`renders as expected 1`] = `
           Mock-Line
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-3"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-3"
+            class="makeStyles-metricsContainer-5"
           >
             <div>
               <mock-typography
@@ -159,7 +165,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-6"
+    classname="makeStyles-card-11"
   >
     <mock-box
       mb="3"
@@ -177,7 +183,7 @@ exports[`renders loading as expected 1`] = `
           >
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root makeStyles-launchIcon-9"
+              class="MuiSvgIcon-root makeStyles-launchIcon-14"
               focusable="false"
               viewBox="0 0 24 24"
             >
@@ -190,16 +196,14 @@ exports[`renders loading as expected 1`] = `
         <mock-hidden
           smup="true"
         >
-          <mock-box
-            classname="makeStyles-mobileTitle-10"
-          >
+          <mock-box>
             Selected Site
             <a
               href="/reefs/2"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-launchIcon-9"
+                class="MuiSvgIcon-root makeStyles-launchIcon-14"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -214,10 +218,10 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+        class="MuiGrid-root makeStyles-cardWrapper-9 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-9"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
           style="margin-bottom: 2rem; max-height: 14rem;"
         >
           <mock-box
@@ -226,8 +230,16 @@ exports[`renders loading as expected 1`] = `
             pl="0.5rem"
           >
             <mock-typography
+              classname="makeStyles-reefName-15"
               color="textSecondary"
-              variant="subtitle1"
+            />
+            <mock-typography
+              classname="makeStyles-reefRegionName-16"
+              color="textSecondary"
+            />
+            <mock-typography
+              color="textSecondary"
+              variant="caption"
             >
               MEAN DAILY SURFACE TEMP. (°C)
             </mock-typography>
@@ -235,11 +247,11 @@ exports[`renders loading as expected 1`] = `
           Mock-Line
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-3"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-8"
+            class="makeStyles-metricsContainer-13"
           >
             <div>
               <mock-typography
