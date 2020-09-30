@@ -24,8 +24,8 @@ type ReefTableBodyProps = {
   orderBy: OrderKeys;
 };
 
-const ReefNameCell = ({
-  reef: { dhw, locationName, maxMonthlyMean, region = "Sample Region", temp },
+const RowNameCell = ({
+  reef: { dhw, locationName, maxMonthlyMean, region, temp },
 }: {
   reef: Row;
 }) => {
@@ -37,7 +37,7 @@ const ReefNameCell = ({
     <TableCell style={isMobile ? { width: "30%" } : undefined}>
       <Typography
         align="left"
-        variant="h6"
+        variant={isMobile ? "h6" : "subtitle1"}
         color="textSecondary"
         style={showWarning ? style : undefined}
       >
@@ -50,7 +50,9 @@ const ReefNameCell = ({
         )}
       </Typography>
 
-      {locationName !== region && <p style={{ color: "gray" }}>{region}</p>}
+      {locationName !== region && isMobile && (
+        <p style={{ color: "gray" }}>{region}</p>
+      )}
     </TableCell>
   );
 };
@@ -79,7 +81,10 @@ const RowNumberCell = ({
           {name.toUpperCase()}
         </Typography>
       )}
-      <Typography variant="h5" style={{ color, fontWeight: 600 }}>
+      <Typography
+        variant={isMobile ? "h5" : "subtitle1"}
+        style={{ color, fontWeight: isMobile ? 600 : undefined }}
+      >
         {formatNumber(value, decimalPlaces)}
         {isMobile && unit}
       </Typography>
@@ -124,7 +129,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <ReefNameCell reef={reef} />
+            <RowNameCell reef={reef} />
             <RowNumberCell
               name="Temp"
               value={reef.temp}
