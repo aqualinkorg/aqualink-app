@@ -2,7 +2,6 @@
 import type { TableRow } from "../Homepage/types";
 import type { Reef } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
-import { alertFinder } from "../../helpers/bleachingAlertIntervals";
 
 export function getReefNameAndRegion(reef: Reef) {
   const name = reef.name || reef.region?.name || null;
@@ -30,9 +29,8 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${
-        alertFinder(maxMonthlyMean, satelliteTemperature, dhw).level
-      },${longDHW(dhw)}`,
+      alert: `${value.latestDailyData.weeklyAlertLevel},${longDHW(dhw)}`,
+      alertLevel: value.latestDailyData.weeklyAlertLevel || null,
     };
   });
 };

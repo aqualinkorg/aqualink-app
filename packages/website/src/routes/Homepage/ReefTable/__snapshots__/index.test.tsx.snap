@@ -221,7 +221,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 aria-hidden="true"
                 class="MuiSvgIcon-root"
                 focusable="false"
-                style="color: rgb(248, 171, 0);"
+                style="color: rgb(239, 0, 0);"
                 viewBox="0 0 24 24"
               >
                 <path
