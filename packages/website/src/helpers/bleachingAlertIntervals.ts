@@ -1,4 +1,3 @@
-import { isNil, isNumber, inRange } from "lodash";
 import noStress from "../assets/alerts/alert_nostress.svg";
 import warning from "../assets/alerts/alert_warning.svg";
 import watch from "../assets/alerts/alert_watch.svg";
@@ -24,19 +23,13 @@ export type Interval = {
  * @param satelliteTemperature
  * @param degreeHeatingWeeks
  */
-export const findInterval = (
-  maxMonthlyMean: number | null,
-  satelliteTemperature?: number | null,
-  degreeHeatingWeeks?: number | null
+export const findIntervalByLevel = (
+  weeklyAlertLevel?: number | null
 ): Interval => {
-  const hotSpot =
-    satelliteTemperature &&
-    maxMonthlyMean &&
-    satelliteTemperature - maxMonthlyMean;
-
-  switch (true) {
-    case isNil(hotSpot):
-    case isNumber(hotSpot) && hotSpot <= 0:
+  switch (weeklyAlertLevel) {
+    case null:
+    case undefined:
+    case 0:
       return {
         image: noStress,
         color: "#C6E5FA",
@@ -44,7 +37,7 @@ export const findInterval = (
         level: 0,
       };
 
-    case isNumber(hotSpot) && hotSpot < 1:
+    case 1:
       return {
         image: watch,
         color: "#FFF200",
@@ -52,16 +45,7 @@ export const findInterval = (
         level: 1,
       };
 
-    // Hotspot >=1 or nil past this point, start dhw checks.
-    case isNil(degreeHeatingWeeks):
-      return {
-        image: noStress,
-        color: "#C6E5FA",
-        icon: pinNoStress,
-        level: 0,
-      };
-
-    case inRange(degreeHeatingWeeks!, 0, 4):
+    case 2:
       return {
         image: warning,
         color: "#F8AB00",
@@ -69,7 +53,7 @@ export const findInterval = (
         level: 2,
       };
 
-    case inRange(degreeHeatingWeeks!, 4, 8):
+    case 3:
       return {
         image: lvl1,
         color: "#EF0000",
@@ -77,7 +61,7 @@ export const findInterval = (
         level: 3,
       };
 
-    case degreeHeatingWeeks! >= 8:
+    case 4:
       return {
         image: lvl2,
         color: "#940000",
@@ -101,37 +85,15 @@ export const findMaxLevel = (intervals: Interval[]): number => {
 };
 
 export const getColorByLevel = (level: number): string => {
-  switch (level) {
-    case 0:
-      return "#C6E5FA";
-    case 1:
-      return "#FFF200";
-    case 2:
-      return "#F8AB00";
-    case 3:
-      return "#EF0000";
-    case 4:
-      return "#940000";
-    default:
-      return "#C6E5FA";
-  }
+  return findIntervalByLevel(level).color;
 };
 
-export const alertFinder = (
-  maxMonthlyMean: number | null,
-  satelliteTemperature?: number | null,
-  degreeHeatingWeeks?: number | null
-): Interval => {
-  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks);
+export const alertIconFinder = (weeklyAlertLevel?: number | null): string => {
+  return findIntervalByLevel(weeklyAlertLevel).icon;
 };
 
-export const alertIconFinder = (
-  maxMonthlyMean: number | null,
-  satelliteTemperature: number | null,
-  degreeHeatingWeeks?: number | null
-): string => {
-  return findInterval(maxMonthlyMean, satelliteTemperature, degreeHeatingWeeks)
-    .icon;
+export const alertColorFinder = (weeklyAlertLevel?: number | null): string => {
+  return findIntervalByLevel(weeklyAlertLevel).color;
 };
 
-export default { alertFinder, alertIconFinder };
+export default { findIntervalByLevel, alertColorFinder, alertIconFinder };

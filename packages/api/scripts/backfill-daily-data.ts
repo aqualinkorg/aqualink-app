@@ -23,19 +23,15 @@ async function run() {
   today.setUTCHours(0, 0, 0, 0);
 
   createConnection(dbConfig).then(async (connection) => {
-    await Bluebird.map(
-      backlogArray,
-      async (past) => {
-        const date = new Date(today);
-        date.setDate(today.getDate() - past - 1);
-        try {
-          await getReefsDailyData(connection, date);
-        } catch (error) {
-          console.error(error);
-        }
-      },
-      { concurrency: 4 },
-    );
+    await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
+      const date = new Date(today);
+      date.setDate(today.getDate() - past - 1);
+      try {
+        await getReefsDailyData(connection, date);
+      } catch (error) {
+        console.error(error);
+      }
+    });
   });
 }
 

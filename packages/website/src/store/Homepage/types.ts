@@ -14,5 +14,6 @@ export interface TableRow {
   tableData: {
     id: number;
   };
+  alertLevel: number | null;
   alert: string | null;
 }

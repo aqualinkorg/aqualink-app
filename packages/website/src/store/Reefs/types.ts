@@ -32,6 +32,7 @@ export interface LiveData {
   wavePeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
+  weeklyAlertLevel?: number;
 }
 
 export interface DailyData {
@@ -56,6 +57,8 @@ export interface DailyData {
   avgWaveHeight: number;
   waveDirection: number;
   wavePeriod: number;
+
+  weeklyAlertLevel?: number;
 }
 
 interface Region {
