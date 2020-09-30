@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-3"
+    classname="makeStyles-card-4"
   >
     <mock-box
       mb="3"
@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-6"
+            class="MuiSvgIcon-root makeStyles-launchIcon-7"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -31,7 +31,7 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-1 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-1 makeStyles-mobileCardWrapperWithNoImage-3 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
@@ -42,14 +42,19 @@ exports[`renders as expected 1`] = `
             pb="0.5rem"
             pl="0.5rem"
           >
-            <mock-typography
-              classname="makeStyles-reefName-7"
-              color="textSecondary"
-            />
-            <mock-typography
-              classname="makeStyles-reefRegionName-8"
-              color="textSecondary"
-            />
+            <mock-hidden
+              xsdown="false"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h5"
+              />
+              <mock-typography
+                classname="makeStyles-reefRegionName-8"
+                color="textSecondary"
+                variant="h6"
+              />
+            </mock-hidden>
             <mock-typography
               color="textSecondary"
               variant="caption"
@@ -64,7 +69,7 @@ exports[`renders as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-5"
+            class="makeStyles-metricsContainer-6"
           >
             <div>
               <mock-typography
@@ -140,7 +145,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-11"
+    classname="makeStyles-card-12"
   >
     <mock-box
       mb="3"
@@ -155,7 +160,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-14"
+            class="MuiSvgIcon-root makeStyles-launchIcon-15"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -168,7 +173,7 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-9 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-9 makeStyles-mobileCardWrapperWithNoImage-11 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
@@ -179,14 +184,19 @@ exports[`renders loading as expected 1`] = `
             pb="0.5rem"
             pl="0.5rem"
           >
-            <mock-typography
-              classname="makeStyles-reefName-15"
-              color="textSecondary"
-            />
-            <mock-typography
-              classname="makeStyles-reefRegionName-16"
-              color="textSecondary"
-            />
+            <mock-hidden
+              xsdown="false"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h5"
+              />
+              <mock-typography
+                classname="makeStyles-reefRegionName-16"
+                color="textSecondary"
+                variant="h6"
+              />
+            </mock-hidden>
             <mock-typography
               color="textSecondary"
               variant="caption"
@@ -201,7 +211,7 @@ exports[`renders loading as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-13"
+            class="makeStyles-metricsContainer-14"
           >
             <div>
               <mock-typography

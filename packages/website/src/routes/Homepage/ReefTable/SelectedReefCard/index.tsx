@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Grid,
   Typography,
+  Hidden,
 } from "@material-ui/core";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { Link } from "react-router-dom";
@@ -34,14 +35,19 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
-    height: "20rem",
+    height: "21rem",
     [theme.breakpoints.down("md")]: {
       height: "24rem",
     },
   },
   mobileCardWrapperWithImage: {
     [theme.breakpoints.down("xs")]: {
-      height: "44rem",
+      height: "42rem",
+    },
+  },
+  mobileCardWrapperWithNoImage: {
+    [theme.breakpoints.down("xs")]: {
+      height: "27rem",
     },
   },
   card: {
@@ -65,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     width: "100%",
     [theme.breakpoints.down("xs")]: {
-      marginTop: theme.spacing(6),
+      marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
     },
 
@@ -82,12 +88,8 @@ const useStyles = makeStyles((theme) => ({
       color: "#2f2f2f",
     },
   },
-  reefName: {
-    fontSize: 16,
-  },
   reefRegionName: {
-    fontSize: 14,
-    marginBottom: "0.5rem",
+    marginBottom: "1rem",
   },
 }));
 
@@ -135,16 +137,28 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       className={
         url
           ? `${classes.cardWrapper} ${classes.mobileCardWrapperWithImage}`
-          : `${classes.cardWrapper}`
+          : `${classes.cardWrapper} ${classes.mobileCardWrapperWithNoImage}`
       }
       container
       justify="space-between"
       spacing={1}
     >
       {url && (
-        <Grid item xs={12} sm={5} lg={4}>
+        <Grid item xs={12} sm={5} lg={5}>
           <Box position="relative" height="100%">
             <CardMedia className={classes.cardImage} image={url} />
+
+            <Hidden smUp>
+              <Box position="absolute" top={16} left={16}>
+                <Typography variant="h5">{name}</Typography>
+
+                {regionName && (
+                  <Typography variant="h6" style={{ fontWeight: 400 }}>
+                    {regionName}
+                  </Typography>
+                )}
+              </Box>
+            </Hidden>
 
             <Box position="absolute" bottom={16} right={16}>
               <Link
@@ -164,16 +178,22 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         item
         xs={12}
         sm={url ? 7 : 12}
-        lg={url ? 6 : 10}
+        lg={url ? 5 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
-          <Typography color="textSecondary" className={classes.reefName}>
-            {name}
-          </Typography>
-          <Typography color="textSecondary" className={classes.reefRegionName}>
-            {regionName}
-          </Typography>
+          <Hidden xsDown={Boolean(url)}>
+            <Typography color="textSecondary" variant="h5">
+              {name}
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="h6"
+              className={classes.reefRegionName}
+            >
+              {regionName}
+            </Typography>
+          </Hidden>
           <Typography color="textSecondary" variant="caption">
             MEAN DAILY SURFACE TEMP. (°C)
           </Typography>
