@@ -110,7 +110,13 @@ const TimelineMobile = ({
                     md={6}
                     spacing={1}
                   >
-                    <Grid container alignItems="center" item xs={11}>
+                    <Grid
+                      className={classes.info}
+                      container
+                      alignItems="center"
+                      item
+                      xs={11}
+                    >
                       {survey.userId!.fullName && (
                         <Grid container alignItems="flex-start" item xs={12}>
                           <Grid item xs={5}>
@@ -230,6 +236,9 @@ const styles = (theme: Theme) =>
         height: "50%",
       },
       overflowY: "auto",
+    },
+    info: {
+      height: "100%",
     },
     cardValues: {
       ...incomingStyles.cardValues,

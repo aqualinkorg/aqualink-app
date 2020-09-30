@@ -135,18 +135,24 @@ const SurveyMediaDetails = ({
                         </Grid>
                       ) : (
                         <Grid style={{ height: "100%" }} container>
-                          <Grid style={{ width: "100%" }} item xs={6}>
+                          <Grid
+                            className={classes.imageWrapper}
+                            item
+                            sm={12}
+                            md={6}
+                          >
                             <CardMedia
                               className={classes.cardImage}
                               image={media.url}
                             />
                           </Grid>
                           <Grid
-                            className={classes.mediaInfo}
+                            className={classes.mediaInfoWrapper}
                             container
                             justify="flex-start"
                             item
-                            xs={6}
+                            sm={12}
+                            md={6}
                           >
                             <Grid
                               container
@@ -216,8 +222,8 @@ const styles = (theme: Theme) =>
       color: theme.palette.text.secondary,
       marginBottom: "4rem",
       height: "28rem",
-      [theme.breakpoints.down("xs")]: {
-        height: "14rem",
+      [theme.breakpoints.down("sm")]: {
+        height: "32rem",
       },
     },
     title: {
@@ -236,6 +242,12 @@ const styles = (theme: Theme) =>
       display: "flex",
       whiteSpace: "pre",
     },
+    imageWrapper: {
+      width: "100%",
+      [theme.breakpoints.down("sm")]: {
+        height: "50%",
+      },
+    },
     cardImage: {
       width: "100%",
       height: "100%",
@@ -252,17 +264,20 @@ const styles = (theme: Theme) =>
     carousel: {
       marginBottom: "2rem",
     },
-    mediaInfo: {
-      height: "100%",
-      overflowY: "auto",
-      padding: "1rem 1rem 1rem 1.5rem",
-    },
     featuredIcon: {
       height: "3rem",
       width: "3rem",
     },
     loading: {
       height: "100%",
+    },
+    mediaInfoWrapper: {
+      height: "100%",
+      overflowY: "auto",
+      padding: "1rem 1rem 1rem 1.5rem",
+      [theme.breakpoints.down("sm")]: {
+        height: "50%",
+      },
     },
   });
 
