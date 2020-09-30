@@ -12,12 +12,12 @@ import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
 import { colors } from "../../../layout/App/theme";
 import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
-import { alertFinder } from "../../../helpers/bleachingAlertIntervals";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 import { useIsMobile } from "../../../helpers/useIsMobile";
+import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 
 type ReefTableBodyProps = {
   order: Order;
@@ -25,14 +25,15 @@ type ReefTableBodyProps = {
 };
 
 const RowNameCell = ({
-  reef: { dhw, locationName, maxMonthlyMean, region, temp },
+  reef: { locationName, region, alertLevel },
 }: {
   reef: Row;
 }) => {
-  const { color, level } = alertFinder(maxMonthlyMean, temp, dhw);
+  const color = alertColorFinder(alertLevel);
   const style: CSSProperties = { color };
   const isMobile = useIsMobile();
-  const showWarning = level !== 0 && isMobile;
+  // check for null and 0
+  const showWarning = alertLevel && isMobile;
   return (
     <TableCell style={isMobile ? { width: "30%" } : undefined}>
       <Typography
@@ -151,8 +152,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               <TableCell>
                 <ErrorIcon
                   style={{
-                    color: alertFinder(reef.maxMonthlyMean, reef.temp, reef.dhw)
-                      .color,
+                    color: alertColorFinder(reef.alertLevel),
                   }}
                 />
               </TableCell>
