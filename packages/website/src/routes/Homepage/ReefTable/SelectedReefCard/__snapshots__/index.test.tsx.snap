@@ -82,7 +82,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                29.0
+                23.0
                  
                 <mock-typography
                   component="span"
@@ -224,7 +224,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                29.0
+                23.0
                  
                 <mock-typography
                   component="span"

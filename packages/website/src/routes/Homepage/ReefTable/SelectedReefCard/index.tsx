@@ -105,17 +105,14 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const dailyDataLen = sortedDailyData.length;
   const {
     maxBottomTemperature,
-    surfaceTemperature,
     satelliteTemperature,
     degreeHeatingDays,
   } = sortedDailyData[dailyDataLen - 1];
 
-  const surfTemp = surfaceTemperature || satelliteTemperature;
-
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: formatNumber(surfTemp, 1),
+      value: formatNumber(satelliteTemperature, 1),
       unit: " °C",
     },
     {
