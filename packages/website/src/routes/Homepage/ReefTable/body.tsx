@@ -34,10 +34,10 @@ const ReefNameCell = ({
   const isMobile = useIsMobile();
   const showWarning = level !== 0 && isMobile;
   return (
-    <TableCell style={isMobile ? { width: "40%" } : undefined}>
+    <TableCell style={isMobile ? { width: "30%" } : undefined}>
       <Typography
         align="left"
-        variant="h5"
+        variant="h6"
         color="textSecondary"
         style={showWarning ? style : undefined}
       >
