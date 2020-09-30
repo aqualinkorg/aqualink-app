@@ -12,46 +12,21 @@ exports[`renders as expected 1`] = `
         color="textSecondary"
         variant="h5"
       >
-        <mock-hidden
-          xsdown="true"
+        Featured Site
+        <a
+          href="/reefs/2"
         >
-          Featured Site
-          <a
-            href="/reefs/2"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root makeStyles-launchIcon-6"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root makeStyles-launchIcon-6"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-              />
-            </svg>
-          </a>
-        </mock-hidden>
-        <mock-hidden
-          smup="true"
-        >
-          <mock-box>
-            Featured Site
-            <a
-              href="/reefs/2"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-launchIcon-6"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </a>
-          </mock-box>
-        </mock-hidden>
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </a>
       </mock-typography>
     </mock-box>
     <mock-card>
@@ -174,46 +149,21 @@ exports[`renders loading as expected 1`] = `
         color="textSecondary"
         variant="h5"
       >
-        <mock-hidden
-          xsdown="true"
+        Selected Site
+        <a
+          href="/reefs/2"
         >
-          Selected Site
-          <a
-            href="/reefs/2"
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root makeStyles-launchIcon-14"
+            focusable="false"
+            viewBox="0 0 24 24"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root makeStyles-launchIcon-14"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-              />
-            </svg>
-          </a>
-        </mock-hidden>
-        <mock-hidden
-          smup="true"
-        >
-          <mock-box>
-            Selected Site
-            <a
-              href="/reefs/2"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-launchIcon-14"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                />
-              </svg>
-            </a>
-          </mock-box>
-        </mock-hidden>
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </a>
       </mock-typography>
     </mock-box>
     <mock-card>
