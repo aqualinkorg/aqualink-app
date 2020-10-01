@@ -7,7 +7,7 @@ import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
-  unsetReefOnMap,
+  setReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
@@ -35,7 +35,12 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
       reefOnMap?.polygon.type === "Point" &&
       reefOnMap.id === reef.id
     ) {
-      map.flyTo(
+      const setCenter = (latLng: [number, number], zoom: number) => {
+        const newZoom = Math.max(map?.getZoom() || 6, zoom);
+        return map?.flyTo(latLng, newZoom, { duration: 2 });
+      };
+
+      setCenter(
         [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
         6
       );
@@ -75,12 +80,6 @@ const clusterIcon = (cluster: any) => {
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsListSelector);
   const dispatch = useDispatch();
-  const { map } = useLeaflet();
-
-  const setCenter = (latLng: [number, number], zoom: number) => {
-    const newZoom = Math.max(map?.getZoom() || 5, zoom);
-    return map?.flyTo(latLng, newZoom, { duration: 1 });
-  };
 
   // To make sure we can see all the reefs all the time, and especially
   // around -180/+180, we create dummy copies of each reef.
@@ -100,8 +99,7 @@ export const ReefMarkers = () => {
             return lngOffsets.map((offset) => (
               <Marker
                 onClick={() => {
-                  setCenter([lat, lng + offset], 6);
-                  dispatch(unsetReefOnMap());
+                  dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
                 icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
