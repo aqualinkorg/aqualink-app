@@ -12,6 +12,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import Axios from "axios";
 
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
@@ -20,25 +21,35 @@ import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
 import { Pois } from "../../../../store/Reefs/types";
+import { isAdmin } from "../../../../helpers/isAdmin";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("all");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" ||
-      (user.adminLevel === "reef_manager" &&
-        Boolean(user.administeredReefs?.find((reef) => reef.id === reefId)))
-    : false;
+  const isReefAdmin = isAdmin(user, reefId);
 
   useEffect(() => {
+    const source = Axios.CancelToken.source();
     reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setPointOptions(response.data));
+      .getReefPois(`${reefId}`, source.token)
+      .then((response) => {
+        setPointOptions(response.data);
+        setMountPois(true);
+      })
+      .catch((error) => {
+        if (!Axios.isCancel(error)) {
+          setMountPois(false);
+        }
+      });
+    return () => {
+      source.cancel();
+    };
   }, [setPointOptions, reefId]);
 
   const onResize = useCallback(() => {
@@ -91,9 +102,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           md={12}
           lg={4}
         >
-          <Typography className={classes.title}>
-            {isAdmin ? "Your survey history" : "Survey History"}
-          </Typography>
+          <Typography className={classes.title}>Survey History</Typography>
         </Grid>
         <Grid container alignItems="center" item md={12} lg={4}>
           <Grid item>
@@ -101,36 +110,38 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
               Survey Point:
             </Typography>
           </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-point"
-                id="survey-point"
-                name="survey-point"
-                value={point}
-                onChange={handlePointChange}
-                className={classes.selectedItem}
-              >
-                <MenuItem value="all">
-                  <Typography className={classes.menuItem} variant="h6">
-                    All
-                  </Typography>
-                </MenuItem>
-                {pointOptions.map(
-                  (item) =>
-                    item.name !== null && (
-                      <MenuItem
-                        className={classes.menuItem}
-                        value={item.name}
-                        key={item.name}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    )
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
+          {mountPois && (
+            <Grid item>
+              <FormControl className={classes.formControl}>
+                <Select
+                  labelId="survey-point"
+                  id="survey-point"
+                  name="survey-point"
+                  value={point}
+                  onChange={handlePointChange}
+                  className={classes.selectedItem}
+                >
+                  <MenuItem value="all">
+                    <Typography className={classes.menuItem} variant="h6">
+                      All
+                    </Typography>
+                  </MenuItem>
+                  {pointOptions.map(
+                    (item) =>
+                      item.name !== null && (
+                        <MenuItem
+                          className={classes.menuItem}
+                          value={item.name}
+                          key={item.id}
+                        >
+                          {item.name}
+                        </MenuItem>
+                      )
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
+          )}
         </Grid>
         <Grid
           container
@@ -179,14 +190,14 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       <Grid container justify="center" item xs={11} lg={12}>
         {windowWidth < 1280 ? (
           <TimelineMobile
-            isAdmin={isAdmin}
+            isAdmin={isReefAdmin}
             reefId={reefId}
             observation={observation}
             point={pointIdFinder(point)}
           />
         ) : (
           <Timeline
-            isAdmin={isAdmin}
+            isAdmin={isReefAdmin}
             reefId={reefId}
             observation={observation}
             point={pointIdFinder(point)}
