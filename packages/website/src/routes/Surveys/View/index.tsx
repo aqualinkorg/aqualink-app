@@ -136,7 +136,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>
-            <SurveyMediaDetails surveyMedia={surveyDetails?.surveyMedia} />
+            <SurveyMediaDetails
+              reefId={reef.id}
+              surveyId={surveyId}
+              surveyMedia={surveyDetails?.surveyMedia}
+            />
           </Grid>
         </Grid>
       </Grid>
