@@ -87,3 +87,22 @@ export const surfaceTempColorCode = [
     color: "#611c14",
   },
 ];
+
+export const alertLevelColorCode = [
+  {
+    value: "watch",
+    color: "#FFF200",
+  },
+  {
+    value: "warning",
+    color: "#F8AB00",
+  },
+  {
+    value: "alert lv 1",
+    color: "#EF0000",
+  },
+  {
+    value: "alert lv 2",
+    color: "#940000",
+  },
+];

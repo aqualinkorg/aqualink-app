@@ -13,6 +13,7 @@ import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
+import AlertLevelLegend from "./alertLevelLegend";
 
 const INITIAL_CENTER = new LatLng(37.9, -75.3);
 const INITIAL_ZOOM = 5;
@@ -60,6 +61,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       <SofarLayers />
       <ReefMarkers />
       <Legend legendName={legendName} />
+      <AlertLevelLegend />
       <div className="mapbox-wordmark" />
     </Map>
   );

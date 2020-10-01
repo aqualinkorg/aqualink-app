@@ -30,8 +30,11 @@ const styles = (theme: Theme) =>
       position: "absolute",
       bottom: 40,
       left: 10,
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down("md")]: {
         bottom: 80,
+      },
+      [theme.breakpoints.down("xs")]: {
+        bottom: 110,
       },
     },
   });
