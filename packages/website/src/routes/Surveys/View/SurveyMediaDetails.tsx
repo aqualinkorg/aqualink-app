@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -13,7 +13,7 @@ import {
   IconButton,
   CircularProgress,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
@@ -29,7 +29,13 @@ import {
   getNumberOfVideos,
   getSurveyPointsByName,
 } from "../../../helpers/surveyMedia";
-import { surveyLoadingSelector } from "../../../store/Survey/surveySlice";
+import {
+  surveyLoadingSelector,
+  surveyGetRequest,
+} from "../../../store/Survey/surveySlice";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import surveyServices from "../../../services/surveyServices";
+import { isAdmin } from "../../../helpers/isAdmin";
 
 const carouselSettings = {
   dots: true,
@@ -48,12 +54,32 @@ const carouselSettings = {
 };
 
 const SurveyMediaDetails = ({
-  isAdmin,
-  onSurveyMediaUpdate,
+  reefId,
+  surveyId,
   surveyMedia,
   classes,
 }: SurveyMediaDetailsProps) => {
+  const user = useSelector(userInfoSelector);
   const loading = useSelector(surveyLoadingSelector);
+  const dispatch = useDispatch();
+
+  const onSurveyMediaUpdate = useCallback(
+    (media: SurveyMedia) => {
+      if (user && user.token) {
+        surveyServices
+          .editSurveyMedia(reefId, media.id, { featured: true }, user.token)
+          .then(() => {
+            dispatch(
+              surveyGetRequest({
+                reefId: `${reefId}`,
+                surveyId,
+              })
+            );
+          });
+      }
+    },
+    [reefId, user, dispatch, surveyId]
+  );
 
   return (
     <>
@@ -179,7 +205,7 @@ const SurveyMediaDetails = ({
                                 </Typography>
                               </Grid>
                             </Grid>
-                            {isAdmin && (
+                            {isAdmin(user, reefId) && (
                               <Grid container justify="flex-end" item xs={2}>
                                 {media.featured ? (
                                   <Tooltip title="Featured image">
@@ -282,8 +308,8 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyMediaDetailsIncomingProps {
-  isAdmin: boolean;
-  onSurveyMediaUpdate: (media: SurveyMedia) => void;
+  reefId: number;
+  surveyId: string;
   surveyMedia?: SurveyMedia[] | null;
 }
 

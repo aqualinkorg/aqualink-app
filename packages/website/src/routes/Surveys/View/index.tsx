@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
@@ -28,22 +28,12 @@ import SurveyMediaDetails from "./SurveyMediaDetails";
 import Map from "../../ReefRoutes/Reef/Map";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { SurveyMedia } from "../../../store/Survey/types";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
-  const user = useSelector(userInfoSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const featuredMedia =
     surveyDetails?.surveyMedia && getFeaturedMedia(surveyDetails.surveyMedia);
-
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" ||
-      (user.adminLevel === "reef_manager" &&
-        Boolean(user.administeredReefs?.find((item) => item.id === reef.id)))
-    : false;
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -57,24 +47,6 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
       })
     );
   }, [dispatch, reef.id, surveyId]);
-
-  const onSurveyMediaUpdate = useCallback(
-    (media: SurveyMedia) => {
-      if (user && user.token) {
-        surveyServices
-          .editSurveyMedia(reef.id, media.id, { featured: true }, user.token)
-          .then(() => {
-            dispatch(
-              surveyGetRequest({
-                reefId: `${reef.id}`,
-                surveyId,
-              })
-            );
-          });
-      }
-    },
-    [reef.id, user, dispatch, surveyId]
-  );
 
   return (
     <Container>
@@ -165,8 +137,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           </Grid>
           <Grid style={{ width: "100%" }} item>
             <SurveyMediaDetails
-              isAdmin={isAdmin}
-              onSurveyMediaUpdate={onSurveyMediaUpdate}
+              reefId={reef.id}
+              surveyId={surveyId}
               surveyMedia={surveyDetails?.surveyMedia}
             />
           </Grid>

@@ -20,6 +20,7 @@ import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
 import { Pois } from "../../../../store/Reefs/types";
+import { isAdmin } from "../../../../helpers/isAdmin";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("all");
@@ -29,11 +30,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   >("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" ||
-      (user.adminLevel === "reef_manager" &&
-        Boolean(user.administeredReefs?.find((reef) => reef.id === reefId)))
-    : false;
+  const isReefAdmin = isAdmin(user, reefId);
 
   useEffect(() => {
     reefServices
@@ -92,7 +89,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           lg={4}
         >
           <Typography className={classes.title}>
-            {isAdmin ? "Your survey history" : "Survey History"}
+            {isReefAdmin ? "Your survey history" : "Survey History"}
           </Typography>
         </Grid>
         <Grid container alignItems="center" item md={12} lg={4}>
@@ -179,14 +176,14 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       <Grid container justify="center" item xs={11} lg={12}>
         {windowWidth < 1280 ? (
           <TimelineMobile
-            isAdmin={isAdmin}
+            isAdmin={isReefAdmin}
             reefId={reefId}
             observation={observation}
             point={pointIdFinder(point)}
           />
         ) : (
           <Timeline
-            isAdmin={isAdmin}
+            isAdmin={isReefAdmin}
             reefId={reefId}
             observation={observation}
             point={pointIdFinder(point)}
