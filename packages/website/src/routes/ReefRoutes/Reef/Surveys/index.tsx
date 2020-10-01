@@ -133,7 +133,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       <DeletePoiDialog
         open={deletePoiDialogOpen}
         onClose={handleDeletePoiDialogClose}
-        header="Are you sure you want to delete this survey point?"
+        header="Are you sure you want to delete this survey point? It will be deleted across all surveys."
         actions={deletePoiDialogActions}
       />
       <Grid className={classes.root} container justify="center" spacing={2}>
