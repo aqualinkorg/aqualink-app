@@ -41,6 +41,7 @@ exports[`renders as expected 1`] = `
             fontweight="400"
             pb="0.5rem"
             pl="0.5rem"
+            pt="1.5rem"
           >
             <mock-hidden
               xsdown="false"
@@ -183,6 +184,7 @@ exports[`renders loading as expected 1`] = `
             fontweight="400"
             pb="0.5rem"
             pl="0.5rem"
+            pt="1.5rem"
           >
             <mock-hidden
               xsdown="false"
