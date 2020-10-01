@@ -169,11 +169,12 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                               <Grid item>
                                 <Tooltip title="Delete this survey point">
                                   <IconButton
+                                    className={classes.pointDeleteButton}
                                     onClick={(event) =>
                                       handleSurveyPointDelete(event, item.id)
                                     }
                                   >
-                                    <DeleteOutlineIcon />
+                                    <DeleteOutlineIcon color="primary" />
                                   </IconButton>
                                 </Tooltip>
                               </Grid>
@@ -295,6 +296,9 @@ const styles = (theme: Theme) =>
       overflow: "hidden",
       textOverflow: "ellipsis",
       display: "block",
+    },
+    pointDeleteButton: {
+      marginLeft: "1rem",
     },
   });
 
