@@ -36,12 +36,15 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   </mock-hidden>
   <mock-selectedreefcard />
   <mock-box
+    classname="ReefTable-table-1"
     display="flex"
     flex="1"
     flexdirection="column"
   >
     <mock-tablecontainer>
-      <mock-table>
+      <mock-table
+        stickyheader="true"
+      >
         <mock-tablehead
           style="background-color: rgb(244, 244, 244);"
         >
@@ -167,6 +170,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         <mock-tablebody>
           <mock-tablerow
             hover="true"
+            id="homepage-table-row-0"
             role="button"
             style="background-color: white; cursor: pointer;"
             tabindex="-1"
