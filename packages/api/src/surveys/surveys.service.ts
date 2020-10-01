@@ -248,10 +248,11 @@ export class SurveysService {
       );
     }
 
+    const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
     await this.surveyMediaRepository.update(mediaId, {
       ...editSurveyMediaDto,
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
-      comments: this.transformComments(editSurveyMediaDto.comments),
+      ...(trimmedComments ? { comments: trimmedComments } : {}),
     });
 
     const updated = await this.surveyMediaRepository.findOne(mediaId);
