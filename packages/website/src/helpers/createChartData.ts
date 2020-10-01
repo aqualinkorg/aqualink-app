@@ -21,7 +21,7 @@ export const createChartData = (
     {
       label: "SURFACE TEMP",
       data: dataArray,
-      backgroundColor: "rgb(107,193,225,0.4)",
+      backgroundColor: "rgb(107,193,225,0.2)",
       borderColor: "#6bc1e1",
       borderWidth: 2,
       pointBackgroundColor: "#ffffff",

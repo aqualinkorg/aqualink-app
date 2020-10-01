@@ -1,6 +1,6 @@
 import { TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
@@ -9,7 +9,10 @@ import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
-import { setReefOnMap } from "../../../store/Homepage/homepageSlice";
+import {
+  reefOnMapSelector,
+  setReefOnMap,
+} from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 
 type ReefTableBodyProps = {
@@ -20,12 +23,25 @@ type ReefTableBodyProps = {
 const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsListSelector);
+  const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
     dispatch(setReefOnMap(reefsList[reef.tableData.id]));
   };
+
+  useEffect(() => {
+    const index = reefsList.findIndex((item) => item.id === reefOnMap?.id);
+    setSelectedRow(index);
+  }, [reefOnMap, reefsList]);
+
+  useEffect(() => {
+    const child = document.getElementById(`homepage-table-row-${selectedRow}`);
+    if (child) {
+      child.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }, [selectedRow]);
 
   return (
     <TableBody>
@@ -35,6 +51,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
       ).map((reef) => {
         return (
           <TableRow
+            id={`homepage-table-row-${reef.tableData.id}`}
             hover
             style={{
               backgroundColor:
