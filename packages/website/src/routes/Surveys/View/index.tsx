@@ -80,7 +80,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </IconButton>
           </Link>
           <Typography color="primary" variant="h5">
-            Back to reef
+            Back to site
           </Typography>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>

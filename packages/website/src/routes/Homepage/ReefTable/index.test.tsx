@@ -42,6 +42,9 @@ describe("ReefTable", () => {
         loading: false,
         error: null,
       },
+      homepage: {
+        reefOnMap: null,
+      },
     });
 
     const openDrawer = false;
