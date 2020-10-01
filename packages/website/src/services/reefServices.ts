@@ -36,10 +36,18 @@ const getReefPois = (
     cancelToken,
   });
 
+const deleteReefPoi = (id: number, token: string) =>
+  requests.send({
+    url: `pois/${id}`,
+    method: "DELETE",
+    token,
+  });
+
 export default {
   getReef,
   getReefs,
   getReefDailyData,
   getReefLiveData,
   getReefPois,
+  deleteReefPoi,
 };

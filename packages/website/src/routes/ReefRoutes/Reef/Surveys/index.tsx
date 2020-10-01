@@ -10,13 +10,17 @@ import {
   FormControl,
   MenuItem,
   Box,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
 import { userInfoSelector } from "../../../../store/User/userSlice";
+import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
@@ -24,7 +28,7 @@ import { Pois } from "../../../../store/Reefs/types";
 import { isAdmin } from "../../../../helpers/isAdmin";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
-  const [point, setPoint] = useState<string>("all");
+  const [point, setPoint] = useState<string>("All");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
   const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
@@ -33,6 +37,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reefId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const source = Axios.CancelToken.source();
@@ -51,6 +56,25 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       source.cancel();
     };
   }, [setPointOptions, reefId]);
+
+  const handleSurveyPointDelete = (
+    event: React.MouseEvent,
+    pointId: number
+  ) => {
+    if (user && user.token) {
+      reefServices
+        .deleteReefPoi(pointId, user.token)
+        .then(() =>
+          setPointOptions(
+            pointOptions.filter((option) => option.id !== pointId)
+          )
+        )
+        .then(() => {
+          dispatch(surveysRequest(`${reefId}`));
+        });
+    }
+    event.stopPropagation();
+  };
 
   const onResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -120,8 +144,9 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                   value={point}
                   onChange={handlePointChange}
                   className={classes.selectedItem}
+                  renderValue={(selected) => selected as string}
                 >
-                  <MenuItem value="all">
+                  <MenuItem value="All">
                     <Typography className={classes.menuItem} variant="h6">
                       All
                     </Typography>
@@ -134,7 +159,26 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                           value={item.name}
                           key={item.id}
                         >
-                          {item.name}
+                          <Grid
+                            container
+                            alignItems="center"
+                            justify="space-between"
+                          >
+                            <Grid item>{item.name}</Grid>
+                            {isReefAdmin && (
+                              <Grid item>
+                                <Tooltip title="Delete this survey point">
+                                  <IconButton
+                                    onClick={(event) =>
+                                      handleSurveyPointDelete(event, item.id)
+                                    }
+                                  >
+                                    <DeleteOutlineIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </Grid>
+                            )}
+                          </Grid>
                         </MenuItem>
                       )
                   )}
