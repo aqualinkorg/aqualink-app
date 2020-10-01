@@ -105,9 +105,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           md={12}
           lg={4}
         >
-          <Typography className={classes.title}>
-            {isAdmin ? "Your survey history" : "Survey History"}
-          </Typography>
+          <Typography className={classes.title}>Survey History</Typography>
         </Grid>
         <Grid container alignItems="center" item md={12} lg={4}>
           <Grid item>
