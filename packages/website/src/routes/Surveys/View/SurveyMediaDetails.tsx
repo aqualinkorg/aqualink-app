@@ -185,10 +185,9 @@ const SurveyMediaDetails = ({
                               item
                               xs={10}
                               justify="space-around"
-                              direction="column"
                               alignItems="flex-start"
                             >
-                              <Grid item>
+                              <Grid item xs={12}>
                                 <Typography variant="h6">
                                   Image Observation
                                 </Typography>
@@ -196,7 +195,7 @@ const SurveyMediaDetails = ({
                                   {findOption(media.observations)}
                                 </Typography>
                               </Grid>
-                              <Grid item>
+                              <Grid item xs={12}>
                                 <Typography variant="h6">
                                   Image Comments
                                 </Typography>
