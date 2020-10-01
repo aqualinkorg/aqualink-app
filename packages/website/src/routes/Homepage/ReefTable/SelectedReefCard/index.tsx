@@ -35,9 +35,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
-    height: "21rem",
+    height: "22rem",
     [theme.breakpoints.down("md")]: {
-      height: "24rem",
+      height: "27rem",
     },
   },
   mobileCardWrapperWithImage: {
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   reefRegionName: {
-    marginBottom: "1rem",
+    marginBottom: "0.6rem",
   },
 }));
 
@@ -178,7 +178,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         lg={url ? 5 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
-        <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
+        <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden xsDown={Boolean(url)}>
             <Typography color="textSecondary" variant="h5">
               {name}
