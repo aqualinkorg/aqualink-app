@@ -91,7 +91,7 @@ body {
   left: 10px;
   bottom: 10px;
   text-indent: -9999px;
-  z-index: 99999;
+  z-index: 401;
   overflow: hidden;
 
   /* `background-image` contains the Mapbox wordmark */
