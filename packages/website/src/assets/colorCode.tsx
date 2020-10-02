@@ -90,6 +90,10 @@ export const surfaceTempColorCode = [
 
 export const alertLevelColorCode = [
   {
+    value: "no alert",
+    color: "#C6E5FA",
+  },
+  {
     value: "watch",
     color: "#FFF200",
   },
