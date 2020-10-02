@@ -98,11 +98,11 @@ export const alertLevelColorCode = [
     color: "#F8AB00",
   },
   {
-    value: "alert lv 1",
+    value: "alert 1",
     color: "#EF0000",
   },
   {
-    value: "alert lv 2",
+    value: "alert 2",
     color: "#940000",
   },
 ];
