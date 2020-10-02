@@ -10,10 +10,10 @@ export const backfillReefData = (reefId: number) => {
 
   worker.on('error', (err) => {
     logger.error(err);
-    logger.error(`Worker encountered an error: `, err.stack);
+    logger.error(`Backfill worker encountered an error: `, err.stack);
   });
 
   worker.on('exit', (code) => {
-    logger.log(`Worker exited with code ${code}`);
+    logger.log(`Backfill worker exited with code ${code}`);
   });
 };
