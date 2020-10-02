@@ -12,13 +12,13 @@ const styles = {
     width: "2rem",
   },
   surveyCard: {
-    width: "85%",
+    width: "90%",
     backgroundColor: theme.palette.primary.light,
     border: 1,
     borderStyle: "solid",
     borderColor: "#dddddd",
     borderRadius: 2,
-    height: "14rem",
+    height: "20rem",
   },
   cardImage: {
     height: "100%",

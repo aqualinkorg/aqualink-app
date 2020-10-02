@@ -20,13 +20,8 @@ import incomingStyles from "../styles";
 const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
   return (
     <Paper elevation={0} className={classes.surveyCard}>
-      <Grid
-        style={{ height: "100%" }}
-        container
-        alignItems="center"
-        justify="space-between"
-      >
-        <Grid className={classes.cardImageWrapper} item xs={12} md={4}>
+      <Grid style={{ height: "100%" }} container justify="space-between">
+        <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
           {survey.featuredSurveyMedia && (
             <CardMedia
               className={classes.cardImage}
@@ -34,46 +29,34 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
             />
           )}
         </Grid>
-        <Grid
-          className={classes.infoWrapper}
-          container
-          alignItems="center"
-          justify="center"
-          item
-          xs={11}
-          md={6}
-          spacing={1}
-        >
-          <Grid
-            className={classes.info}
-            container
-            alignItems="center"
-            item
-            xs={11}
-          >
+        <Grid className={classes.infoWrapper} container item xs={11} md={6}>
+          <Grid className={classes.info} container item xs={12}>
             {survey.userId!.fullName && (
-              <Grid container alignItems="flex-start" item xs={12}>
-                <Grid item xs={5}>
-                  <Typography className={classes.cardFields} variant="h6">
-                    User:
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography className={classes.cardValues} variant="h6">
-                    {survey.userId!.fullName}
-                  </Typography>
-                </Grid>
+              <Grid item xs={12}>
+                <Typography className={classes.cardFields} variant="h6">
+                  User
+                </Typography>
+                <Typography className={classes.cardValues} variant="h6">
+                  {survey.userId!.fullName}
+                </Typography>
               </Grid>
             )}
             {survey.comments && (
-              <Grid container alignItems="flex-start" item xs={12}>
-                <Grid item xs={5}>
+              <Grid
+                className={classes.commentsWrapper}
+                container
+                alignItems="flex-start"
+                item
+                xs={12}
+              >
+                <Grid style={{ height: "80%" }} item xs={12}>
                   <Typography className={classes.cardFields} variant="h6">
-                    Comments:
+                    Comments
                   </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography className={classes.cardValues} variant="h6">
+                  <Typography
+                    className={`${classes.cardValues} ${classes.comments}`}
+                    variant="h6"
+                  >
                     {survey.comments}
                   </Typography>
                 </Grid>
@@ -81,19 +64,17 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
             )}
             {survey.temperature && (
               <Grid container alignItems="center" item xs={12}>
-                <Grid item xs={5}>
+                <Grid item xs={12}>
                   <Typography className={classes.cardFields} variant="h6">
-                    Temp:
+                    Temp
                   </Typography>
-                </Grid>
-                <Grid item xs={6}>
                   <Typography className={classes.cardValues} variant="h6">
                     {`${formatNumber(survey.temperature, 1)} °C`}
                   </Typography>
                 </Grid>
               </Grid>
             )}
-            <Grid item xs={5}>
+            <Grid container alignItems="flex-end" item xs={12}>
               <Link
                 style={{ color: "inherit", textDecoration: "none" }}
                 to={`/reefs/${reefId}/survey_details/${survey.id}`}
@@ -126,29 +107,36 @@ const styles = (theme: Theme) =>
       ...incomingStyles.surveyCard,
       width: "100%",
       [theme.breakpoints.down("sm")]: {
-        height: "25rem",
+        height: "32rem",
       },
     },
     cardImageWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {
-        height: "50%",
+        height: "40%",
       },
     },
     infoWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {
-        height: "50%",
+        height: "60%",
       },
+    },
+    commentsWrapper: {
+      height: "40%",
+    },
+    comments: {
+      height: "100%",
       overflowY: "auto",
     },
     info: {
       height: "100%",
+      padding: "0.5rem 0.5rem 0.5rem 1rem",
     },
     buttonContainer: {
       ...incomingStyles.buttonContainer,
       [theme.breakpoints.down("sm")]: {
-        height: "50%",
+        height: "60%",
       },
     },
   });
