@@ -17,6 +17,9 @@ const userInitialState: UserState = {
   error: null,
 };
 
+const isManager = (user: User) =>
+  user.adminLevel === "reef_manager" || user.adminLevel === "super_admin";
+
 export const createUser = createAsyncThunk<
   User,
   UserRegisterParams,
@@ -33,14 +36,15 @@ export const createUser = createAsyncThunk<
       const token = await user?.getIdToken();
 
       const { data } = await userServices.storeUser(fullName, email, token);
-      const { data: reefs } = await userServices.getAdministeredReefs(token);
 
       return {
         email: data.email,
         fullName: data.fullName,
         adminLevel: data.adminLevel,
         firebaseUid: data.firebaseUid,
-        administeredReefs: reefs,
+        administeredReefs: isManager(data)
+          ? (await userServices.getAdministeredReefs(token)).data
+          : [],
         token: await user?.getIdToken(),
       };
     } catch (err) {
@@ -62,13 +66,14 @@ export const signInUser = createAsyncThunk<
       const { user } = await userServices.signInUser(email, password);
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
-      const { data: reefs } = await userServices.getAdministeredReefs(token);
       return {
         email: userData.email,
         fullName: userData.fullName,
         adminLevel: userData.adminLevel,
         firebaseUid: userData.firebaseUid,
-        administeredReefs: reefs,
+        administeredReefs: isManager(userData)
+          ? (await userServices.getAdministeredReefs(token)).data
+          : [],
         token,
       };
     } catch (err) {
@@ -95,13 +100,14 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
-      const { data: reefs } = await userServices.getAdministeredReefs(token);
       return {
         email: userData.email,
         fullName: userData.fullName,
         adminLevel: userData.adminLevel,
         firebaseUid: userData.firebaseUid,
-        administeredReefs: reefs,
+        administeredReefs: isManager(userData)
+          ? (await userServices.getAdministeredReefs(token)).data
+          : [],
         token,
       };
     } catch (err) {

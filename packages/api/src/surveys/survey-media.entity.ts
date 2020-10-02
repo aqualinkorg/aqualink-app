@@ -63,7 +63,10 @@ export class SurveyMedia {
   })
   type: MediaType;
 
-  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
+  @ManyToOne(() => ReefPointOfInterest, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
   @JoinColumn({ name: 'poi_id' })
   poiId?: ReefPointOfInterest;
 
