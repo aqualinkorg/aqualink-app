@@ -12,7 +12,7 @@ const styles = {
     width: "2rem",
   },
   surveyCard: {
-    width: "75%",
+    width: "85%",
     backgroundColor: theme.palette.primary.light,
     border: 1,
     borderStyle: "solid",

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ReefRoutes Surveys should render with given state from Redux store 1`] = `
-<div>
-  <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-  />
-</div>
-`;
