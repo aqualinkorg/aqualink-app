@@ -80,7 +80,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </IconButton>
           </Link>
           <Typography color="primary" variant="h5">
-            Back to reef
+            Back to site
           </Typography>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>
@@ -136,7 +136,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>
-            <SurveyMediaDetails surveyMedia={surveyDetails?.surveyMedia} />
+            <SurveyMediaDetails
+              reefId={reef.id}
+              surveyId={surveyId}
+              surveyMedia={surveyDetails?.surveyMedia}
+            />
           </Grid>
         </Grid>
       </Grid>

@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from "axios";
 import requests from "../helpers/requests";
 import type { DailyData, LiveData, Reef, Pois } from "../store/Reefs/types";
 
@@ -25,10 +26,21 @@ const getReefs = () =>
     method: "GET",
   });
 
-const getReefPois = (id: string) =>
+const getReefPois = (
+  id: string,
+  cancelToken?: AxiosRequestConfig["cancelToken"]
+) =>
   requests.send<Pois[]>({
     url: `pois?reef=${id}`,
     method: "GET",
+    cancelToken,
+  });
+
+const deleteReefPoi = (id: number, token: string) =>
+  requests.send({
+    url: `pois/${id}`,
+    method: "DELETE",
+    token,
   });
 
 export default {
@@ -37,4 +49,5 @@ export default {
   getReefDailyData,
   getReefLiveData,
   getReefPois,
+  deleteReefPoi,
 };
