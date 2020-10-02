@@ -115,16 +115,19 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       label: "SURFACE TEMP",
       value: formatNumber(satelliteTemperature, 1),
       unit: " °C",
+      display: isNumber(satelliteTemperature),
     },
     {
       label: "HEAT STRESS",
       value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
       unit: " DHW",
+      display: isNumber(degreeHeatingDays),
     },
     {
       label: `TEMP AT ${reef.depth}m`,
       value: formatNumber(maxBottomTemperature, 1),
       unit: " °C",
+      display: isNumber(maxBottomTemperature),
     },
   ];
 
@@ -214,9 +217,9 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         }}
       >
         <div className={classes.metricsContainer}>
-          {metrics.map(({ label, value, unit }) => (
+          {metrics.map(({ label, value, unit, display }) => (
             <div key={label}>
-              {isNumber(value) && (
+              {display && (
                 <>
                   <Typography variant="caption" color="textSecondary">
                     {label}
