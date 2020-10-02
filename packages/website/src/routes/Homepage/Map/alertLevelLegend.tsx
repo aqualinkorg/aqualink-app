@@ -47,6 +47,10 @@ const styles = (theme: Theme) =>
       borderRadius: 10,
       minWidth: "4rem",
       marginRight: "0.5rem",
+      [theme.breakpoints.down("xs")]: {
+        fontWeight: 400,
+        minWidth: "3rem",
+      },
     },
     lastChild: {
       margin: 0,
