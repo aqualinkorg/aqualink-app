@@ -28,11 +28,13 @@ const styles = (theme: Theme) =>
     root: {
       zIndex: 401,
       position: "absolute",
-      bottom: 0,
-      left: 0,
-      margin: "0 0 8px 8px",
+      bottom: 40,
+      left: 10,
+      [theme.breakpoints.down("md")]: {
+        bottom: 80,
+      },
       [theme.breakpoints.down("xs")]: {
-        marginBottom: 64,
+        bottom: 110,
       },
     },
   });
