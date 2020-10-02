@@ -113,6 +113,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
+      .leftJoinAndSelect('featuredSurveyMedia.poiId', 'poi')
       .addSelect(['users.fullName', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
