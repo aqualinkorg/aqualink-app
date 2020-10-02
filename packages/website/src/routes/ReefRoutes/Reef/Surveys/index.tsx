@@ -10,35 +10,56 @@ import {
   FormControl,
   MenuItem,
   Box,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "axios";
 
 import Timeline from "./Timeline";
 import TimelineMobile from "./TimelineMobile";
 import { userInfoSelector } from "../../../../store/User/userSlice";
+import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
 import { Pois } from "../../../../store/Reefs/types";
+import { isAdmin } from "../../../../helpers/isAdmin";
+import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
-  const [point, setPoint] = useState<string>("all");
+  const [point, setPoint] = useState<string>("All");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
+    false
+  );
+  const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
+  const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
-  const isAdmin = user
-    ? user.adminLevel === "super_admin" ||
-      (user.adminLevel === "reef_manager" &&
-        Boolean(user.administeredReefs?.find((reef) => reef.id === reefId)))
-    : false;
+  const isReefAdmin = isAdmin(user, reefId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    const source = Axios.CancelToken.source();
     reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setPointOptions(response.data));
+      .getReefPois(`${reefId}`, source.token)
+      .then((response) => {
+        setPointOptions(response.data);
+        setMountPois(true);
+      })
+      .catch((error) => {
+        if (!Axios.isCancel(error)) {
+          setMountPois(false);
+        }
+      });
+    return () => {
+      source.cancel();
+    };
   }, [setPointOptions, reefId]);
 
   const onResize = useCallback(() => {
@@ -66,134 +87,206 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     return pointOptions.find((option) => option.name === name)?.id || -1;
   };
 
+  const handleDeletePoiDialogClose = () => {
+    setDeletePoiDialogOpen(false);
+    setPoiToDelete(null);
+  };
+
+  const handleSurveyPointDelete = () => {
+    if (user && user.token && poiToDelete) {
+      reefServices
+        .deleteReefPoi(poiToDelete, user.token)
+        .then(() =>
+          setPointOptions(
+            pointOptions.filter((option) => option.id !== poiToDelete)
+          )
+        )
+        .then(() => {
+          dispatch(surveysRequest(`${reefId}`));
+        })
+        .then(() => {
+          setDeletePoiDialogOpen(false);
+          setPoiToDelete(null);
+        });
+    }
+  };
+
+  const deletePoiDialogActions: Action[] = [
+    {
+      size: "small",
+      variant: "contained",
+      color: "secondary",
+      text: "No",
+      action: handleDeletePoiDialogClose,
+    },
+    {
+      size: "small",
+      variant: "contained",
+      color: "primary",
+      text: "Yes",
+      action: handleSurveyPointDelete,
+    },
+  ];
+
   return (
-    <Grid className={classes.root} container justify="center" spacing={2}>
-      <Box
-        bgcolor="#f5f6f6"
-        position="absolute"
-        height="100%"
-        width="99vw"
-        zIndex="-1"
+    <>
+      <DeletePoiDialog
+        open={deletePoiDialogOpen}
+        onClose={handleDeletePoiDialogClose}
+        header="Are you sure you want to delete this survey point? It will be deleted across all surveys."
+        actions={deletePoiDialogActions}
       />
-      <Grid
-        className={classes.surveyWrapper}
-        container
-        justify="space-between"
-        item
-        lg={12}
-        xs={11}
-        alignItems="baseline"
-      >
+      <Grid className={classes.root} container justify="center" spacing={2}>
+        <Box
+          bgcolor="#f5f6f6"
+          position="absolute"
+          height="100%"
+          width="99vw"
+          zIndex="-1"
+        />
         <Grid
+          className={classes.surveyWrapper}
           container
-          justify={windowWidth < 1280 ? "flex-start" : "center"}
+          justify="space-between"
           item
-          md={12}
-          lg={4}
+          lg={12}
+          xs={11}
+          alignItems="baseline"
         >
-          <Typography className={classes.title}>
-            {isAdmin ? "Your survey history" : "Survey History"}
-          </Typography>
-        </Grid>
-        <Grid container alignItems="center" item md={12} lg={4}>
-          <Grid item>
-            <Typography variant="h6" className={classes.subTitle}>
-              Survey Point:
-            </Typography>
+          <Grid
+            container
+            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            item
+            md={12}
+            lg={4}
+          >
+            <Typography className={classes.title}>Survey History</Typography>
           </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-point"
-                id="survey-point"
-                name="survey-point"
-                value={point}
-                onChange={handlePointChange}
-                className={classes.selectedItem}
-              >
-                <MenuItem value="all">
-                  <Typography className={classes.menuItem} variant="h6">
-                    All
-                  </Typography>
-                </MenuItem>
-                {pointOptions.map(
-                  (item) =>
-                    item.name !== null && (
-                      <MenuItem
-                        className={classes.menuItem}
-                        value={item.name}
-                        key={item.name}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    )
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          alignItems="center"
-          justify={windowWidth < 1280 ? "flex-start" : "center"}
-          item
-          md={12}
-          lg={4}
-        >
-          {/* TODO - Make observation a required field. */}
-          <Grid item>
-            <Typography variant="h6" className={classes.subTitle}>
-              Observation:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-observation"
-                id="survey-observation"
-                name="survey-observation"
-                value={observation}
-                onChange={handleObservationChange}
-                className={classes.selectedItem}
-                inputProps={{ className: classes.textField }}
-              >
-                <MenuItem value="any">
-                  <Typography className={classes.menuItem} variant="h6">
-                    Any
-                  </Typography>
-                </MenuItem>
-                {observationOptions.map((item) => (
-                  <MenuItem
-                    className={classes.menuItem}
-                    value={item.key}
-                    key={item.key}
+          <Grid container alignItems="center" item md={12} lg={4}>
+            <Grid item>
+              <Typography variant="h6" className={classes.subTitle}>
+                Survey Point:
+              </Typography>
+            </Grid>
+            {mountPois && (
+              <Grid item>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-point"
+                    id="survey-point"
+                    name="survey-point"
+                    value={point}
+                    onChange={handlePointChange}
+                    className={classes.selectedItem}
+                    renderValue={(selected) => selected as string}
                   >
-                    {item.value}
+                    <MenuItem value="All">
+                      <Typography className={classes.menuItem} variant="h6">
+                        All
+                      </Typography>
+                    </MenuItem>
+                    {pointOptions.map(
+                      (item) =>
+                        item.name !== null && (
+                          <MenuItem
+                            className={classes.menuItem}
+                            value={item.name}
+                            key={item.id}
+                          >
+                            <Grid
+                              container
+                              alignItems="center"
+                              justify="space-between"
+                            >
+                              <Grid item>{item.name}</Grid>
+                              {isReefAdmin && (
+                                <Grid item>
+                                  <Tooltip title="Delete this survey point">
+                                    <IconButton
+                                      className={classes.pointDeleteButton}
+                                      onClick={(event) => {
+                                        setDeletePoiDialogOpen(true);
+                                        setPoiToDelete(item.id);
+                                        event.stopPropagation();
+                                      }}
+                                    >
+                                      <DeleteOutlineIcon color="primary" />
+                                    </IconButton>
+                                  </Tooltip>
+                                </Grid>
+                              )}
+                            </Grid>
+                          </MenuItem>
+                        )
+                    )}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+          </Grid>
+          <Grid
+            container
+            alignItems="center"
+            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            item
+            md={12}
+            lg={4}
+          >
+            {/* TODO - Make observation a required field. */}
+            <Grid item>
+              <Typography variant="h6" className={classes.subTitle}>
+                Observation:
+              </Typography>
+            </Grid>
+            <Grid item>
+              <FormControl className={classes.formControl}>
+                <Select
+                  labelId="survey-observation"
+                  id="survey-observation"
+                  name="survey-observation"
+                  value={observation}
+                  onChange={handleObservationChange}
+                  className={classes.selectedItem}
+                  inputProps={{ className: classes.textField }}
+                >
+                  <MenuItem value="any">
+                    <Typography className={classes.menuItem} variant="h6">
+                      Any
+                    </Typography>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {observationOptions.map((item) => (
+                    <MenuItem
+                      className={classes.menuItem}
+                      value={item.key}
+                      key={item.key}
+                    >
+                      {item.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
         </Grid>
+        <Grid container justify="center" item xs={11} lg={12}>
+          {windowWidth < 1280 ? (
+            <TimelineMobile
+              isAdmin={isReefAdmin}
+              reefId={reefId}
+              observation={observation}
+              point={pointIdFinder(point)}
+            />
+          ) : (
+            <Timeline
+              isAdmin={isReefAdmin}
+              reefId={reefId}
+              observation={observation}
+              point={pointIdFinder(point)}
+            />
+          )}
+        </Grid>
       </Grid>
-      <Grid container justify="center" item xs={11} lg={12}>
-        {windowWidth < 1280 ? (
-          <TimelineMobile
-            isAdmin={isAdmin}
-            reefId={reefId}
-            observation={observation}
-            point={pointIdFinder(point)}
-          />
-        ) : (
-          <Timeline
-            isAdmin={isAdmin}
-            reefId={reefId}
-            observation={observation}
-            point={pointIdFinder(point)}
-          />
-        )}
-      </Grid>
-    </Grid>
+    </>
   );
 };
 
@@ -240,6 +333,9 @@ const styles = (theme: Theme) =>
       overflow: "hidden",
       textOverflow: "ellipsis",
       display: "block",
+    },
+    pointDeleteButton: {
+      marginLeft: "1rem",
     },
   });
 

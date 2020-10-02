@@ -15,6 +15,7 @@ import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
 import { reefRequest } from "../../store/Reefs/selectedReefSlice";
+import { surveysRequest } from "../../store/Survey/surveyListSlice";
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
@@ -24,6 +25,7 @@ const Homepage = ({ classes }: HomepageProps) => {
   useEffect(() => {
     dispatch(reefsRequest());
     dispatch(reefRequest(featuredReefId));
+    dispatch(surveysRequest(featuredReefId));
   }, [dispatch]);
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -85,7 +87,6 @@ const styles = () =>
       display: "flex",
     },
     reefTable: {
-      overflowY: "auto",
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
