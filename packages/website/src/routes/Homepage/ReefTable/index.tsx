@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import {
   Box,
   CircularProgress,
+  withStyles,
+  WithStyles,
+  createStyles,
   Grid,
   Hidden,
   IconButton,
@@ -20,7 +23,7 @@ import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
 import { useIsMobile } from "../../../helpers/useIsMobile";
 
-const ReefTable = ({ openDrawer }: ReefTableProps) => {
+const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const isMobile = useIsMobile();
 
@@ -57,9 +60,17 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
         )}
       </Hidden>
       <SelectedReefCard />
-      <Box display="flex" flexDirection="column" flex={1}>
+      <Box
+        className={classes.table}
+        display="flex"
+        flexDirection="column"
+        flex={1}
+      >
         <TableContainer>
-          <Table style={isMobile ? { tableLayout: "fixed" } : undefined}>
+          <Table
+            stickyHeader
+            style={isMobile ? { tableLayout: "fixed" } : undefined}
+          >
             <Hidden xsDown>
               <EnhancedTableHead
                 order={order}
@@ -85,8 +96,18 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   );
 };
 
-interface ReefTableProps {
+const styles = () =>
+  createStyles({
+    table: {
+      height: "70%",
+      overflowY: "auto",
+    },
+  });
+
+interface ReefTableIncomingProps {
   openDrawer: boolean;
 }
 
-export default ReefTable;
+type ReefTableProps = ReefTableIncomingProps & WithStyles<typeof styles>;
+
+export default withStyles(styles)(ReefTable);
