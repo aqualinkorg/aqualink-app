@@ -53,8 +53,7 @@ export class ReefApplicationsService {
       region,
     });
 
-    // Change user's admin level only if they are not a super admin
-    // Also make him admin of the reef
+    // Elevate user to ReefManager and make them an admin of the new reef
     if (user.adminLevel !== AdminLevel.SuperAdmin) {
       // We need to fetch the user from the database again because the administeredReefs are not loaded
       const reefAdmin = await this.userRepository.findOne({
