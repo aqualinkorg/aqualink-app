@@ -215,7 +215,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       >
         <div className={classes.metricsContainer}>
           {metrics.map(({ label, value, unit }) => (
-            <div key={label} className={classes.metric}>
+            <div key={label}>
               {isNumber(value) && (
                 <>
                   <Typography variant="caption" color="textSecondary">
