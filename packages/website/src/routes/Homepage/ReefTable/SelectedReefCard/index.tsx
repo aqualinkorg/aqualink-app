@@ -115,19 +115,16 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       label: "SURFACE TEMP",
       value: formatNumber(satelliteTemperature, 1),
       unit: " °C",
-      display: isNumber(satelliteTemperature),
-    },
-    {
-      label: `TEMP AT ${reef.depth}m`,
-      value: formatNumber(maxBottomTemperature, 1),
-      unit: " °C",
-      display: isNumber(maxBottomTemperature),
     },
     {
       label: "HEAT STRESS",
       value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
       unit: " DHW",
-      display: isNumber(degreeHeatingDays),
+    },
+    {
+      label: `TEMP AT ${reef.depth}m`,
+      value: formatNumber(maxBottomTemperature, 1),
+      unit: " °C",
     },
   ];
 
@@ -217,22 +214,24 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         }}
       >
         <div className={classes.metricsContainer}>
-          {metrics
-            .filter(({ display }) => display)
-            .map(({ label, value, unit }) => (
-              <div key={label}>
-                <Typography variant="caption" color="textSecondary">
-                  {label}
-                </Typography>
-                <Typography variant="h4" color="primary">
-                  {value}
-                  &nbsp;
-                  <Typography variant="h6" component="span">
-                    {unit}
+          {metrics.map(({ label, value, unit }) => (
+            <div key={label} className={classes.metric}>
+              {isNumber(value) && (
+                <>
+                  <Typography variant="caption" color="textSecondary">
+                    {label}
                   </Typography>
-                </Typography>
-              </div>
-            ))}
+                  <Typography variant="h4" color="primary">
+                    {value}
+                    &nbsp;
+                    <Typography variant="h6" component="span">
+                      {unit}
+                    </Typography>
+                  </Typography>
+                </>
+              )}
+            </div>
+          ))}
         </div>
       </Grid>
     </Grid>
