@@ -29,14 +29,17 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
             />
           )}
         </Grid>
-        <Grid className={classes.infoWrapper} container item xs={11} md={6}>
+        <Grid className={classes.infoWrapper} container item xs={12} md={7}>
           <Grid className={classes.info} container item xs={12}>
             {survey.userId!.fullName && (
-              <Grid item xs={12}>
+              <Grid container alignItems="center" item xs={12}>
                 <Typography className={classes.cardFields} variant="h6">
-                  User
+                  User:
                 </Typography>
-                <Typography className={classes.cardValues} variant="h6">
+                <Typography
+                  className={`${classes.cardValues} ${classes.valuesWithMargin}`}
+                  variant="h6"
+                >
                   {survey.userId!.fullName}
                 </Typography>
               </Grid>
@@ -64,37 +67,46 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
             )}
             {survey.temperature && (
               <Grid container alignItems="center" item xs={12}>
-                <Grid item xs={12}>
-                  <Typography className={classes.cardFields} variant="h6">
-                    Temp
-                  </Typography>
-                  <Typography className={classes.cardValues} variant="h6">
-                    {`${formatNumber(survey.temperature, 1)} °C`}
-                  </Typography>
-                </Grid>
+                <Typography className={classes.cardFields} variant="h6">
+                  Temp:
+                </Typography>
+                <Typography
+                  className={`${classes.cardValues} ${classes.valuesWithMargin}`}
+                  variant="h6"
+                >
+                  {`${formatNumber(survey.temperature, 1)} °C`}
+                </Typography>
               </Grid>
             )}
-            <Grid container alignItems="flex-end" item xs={12}>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to={`/reefs/${reefId}/survey_details/${survey.id}`}
-              >
-                <Button size="small" variant="outlined" color="primary">
-                  VIEW DETAILS
-                </Button>
-              </Link>
+            <Grid
+              container
+              alignItems="center"
+              justify="space-between"
+              item
+              xs={12}
+            >
+              <Grid item xs={10}>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to={`/reefs/${reefId}/survey_details/${survey.id}`}
+                >
+                  <Button size="small" variant="outlined" color="primary">
+                    VIEW DETAILS
+                  </Button>
+                </Link>
+              </Grid>
+              {isAdmin && (
+                <Grid container justify="flex-end" item xs={2}>
+                  <DeleteButton
+                    reefId={reefId}
+                    surveyId={survey.id}
+                    diveDate={survey.diveDate}
+                  />
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>
-        {isAdmin && (
-          <Grid className={classes.buttonContainer} item xs={1}>
-            <DeleteButton
-              reefId={reefId}
-              surveyId={survey.id}
-              diveDate={survey.diveDate}
-            />
-          </Grid>
-        )}
       </Grid>
     </Paper>
   );
@@ -123,7 +135,7 @@ const styles = (theme: Theme) =>
       },
     },
     commentsWrapper: {
-      height: "40%",
+      height: "55%",
     },
     comments: {
       height: "100%",
@@ -132,12 +144,6 @@ const styles = (theme: Theme) =>
     info: {
       height: "100%",
       padding: "0.5rem 0.5rem 0.5rem 1rem",
-    },
-    buttonContainer: {
-      ...incomingStyles.buttonContainer,
-      [theme.breakpoints.down("sm")]: {
-        height: "60%",
-      },
     },
   });
 

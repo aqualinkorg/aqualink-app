@@ -33,11 +33,8 @@ const styles = {
     lineHeight: 2,
     color: "#2f2f2f",
   },
-  buttonContainer: {
-    height: "100%",
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+  valuesWithMargin: {
+    marginLeft: "1rem",
   },
 };
 
