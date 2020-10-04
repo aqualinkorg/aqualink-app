@@ -13,6 +13,7 @@ import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
+import AlertLevelLegend from "./alertLevelLegend";
 
 const INITIAL_CENTER = new LatLng(37.9, -75.3);
 const INITIAL_ZOOM = 5;
@@ -21,6 +22,10 @@ const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 const tileURL = accessToken
   ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`
   : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}@2x";
+
+const attribution = accessToken
+  ? '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
+  : "";
 
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
@@ -52,10 +57,12 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       minZoom={2}
       worldCopyJump
     >
-      <TileLayer url={tileURL} />
+      <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers />
       <ReefMarkers />
       <Legend legendName={legendName} />
+      <AlertLevelLegend />
+      <div className="mapbox-wordmark" />
     </Map>
   );
 };
