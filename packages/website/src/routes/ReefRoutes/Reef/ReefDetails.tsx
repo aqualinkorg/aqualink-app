@@ -4,10 +4,10 @@ import {
   Grid,
   withStyles,
   WithStyles,
-  Typography,
   Theme,
   Box,
 } from "@material-ui/core";
+import moment from "moment";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -17,11 +17,13 @@ import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
+import CardTitle, { Value } from "./CardTitle";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { SurveyPoint } from "../../../store/Survey/types";
 
-const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
+const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
   const { liveData, maxMonthlyMean } = reef;
@@ -44,34 +46,63 @@ const ReefDetails = ({ classes, reef }: ReefDetailProps) => {
     },
   ];
 
+  const mapTitleItems: Value[] = [
+    {
+      text: "LOCATION:",
+      variant: "h6",
+      marginRight: "2rem",
+    },
+    {
+      text: `LAT: ${formatNumber(lat, 3)}`,
+      variant: "subtitle2",
+      marginRight: "1rem",
+    },
+    {
+      text: `LONG: ${formatNumber(lng, 3)}`,
+      variant: "subtitle2",
+      marginRight: 0,
+    },
+  ];
+
+  const featuredMediaTitleItems: Value[] = [
+    {
+      text: "SURVEY DATE:",
+      variant: "h6",
+      marginRight: "0.5rem",
+    },
+    {
+      text: `${moment(moment(diveDate).toISOString()).format("MM/DD/YYYY")}`,
+      variant: "subtitle2",
+      marginRight: "2rem",
+    },
+    {
+      text: "SURVEY POINT:",
+      variant: "h6",
+      marginRight: "0.5rem",
+    },
+    {
+      text: `${point?.name}`,
+      variant: "subtitle2",
+      marginRight: 0,
+    },
+  ];
+
   return (
     <Box mt="1rem">
-      <Box>
-        <Grid container alignItems="baseline" spacing={2}>
-          <Grid item>
-            <Typography variant="h6">LOCATION:</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">
-              LAT: {formatNumber(lat, 3)}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">
-              LONG: {formatNumber(lng, 3)}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Box>
+      {(!diveDate || !point) && <CardTitle values={mapTitleItems} />}
 
       <Grid container justify="space-between" spacing={4}>
         <Grid item xs={12} md={6}>
+          {diveDate && point && <CardTitle values={mapTitleItems} />}
           <div className={classes.container}>
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
           <div className={classes.container}>
+            {diveDate && point && (
+              <CardTitle values={featuredMediaTitleItems} />
+            )}
             <FeaturedMedia
               url={reef.videoStream}
               featuredImage={reef.featuredImage}
@@ -120,6 +151,17 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ReefDetailProps = WithStyles<typeof styles> & { reef: Reef };
+interface ReefDetailIncomingProps {
+  reef: Reef;
+  point?: SurveyPoint | null;
+  diveDate?: string | null;
+}
+
+ReefDetails.defaultProps = {
+  point: null,
+  diveDate: null,
+};
+
+type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(ReefDetails);
