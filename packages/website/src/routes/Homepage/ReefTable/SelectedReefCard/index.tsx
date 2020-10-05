@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
+import { isNumber } from "lodash";
 import {
   Box,
   Button,
@@ -114,16 +115,19 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       label: "SURFACE TEMP",
       value: formatNumber(satelliteTemperature, 1),
       unit: " °C",
-    },
-    {
-      label: `TEMP AT ${reef.depth}m`,
-      value: formatNumber(maxBottomTemperature, 1),
-      unit: " °C",
+      display: isNumber(satelliteTemperature),
     },
     {
       label: "HEAT STRESS",
       value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
       unit: " DHW",
+      display: isNumber(degreeHeatingDays),
+    },
+    {
+      label: `TEMP AT ${reef.depth}m`,
+      value: formatNumber(maxBottomTemperature, 1),
+      unit: " °C",
+      display: isNumber(maxBottomTemperature),
     },
   ];
 
@@ -213,18 +217,22 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         }}
       >
         <div className={classes.metricsContainer}>
-          {metrics.map(({ label, value, unit }) => (
+          {metrics.map(({ label, value, unit, display }) => (
             <div key={label}>
-              <Typography variant="caption" color="textSecondary">
-                {label}
-              </Typography>
-              <Typography variant="h4" color="primary">
-                {value}
-                &nbsp;
-                <Typography variant="h6" component="span">
-                  {unit}
-                </Typography>
-              </Typography>
+              {display && (
+                <>
+                  <Typography variant="caption" color="textSecondary">
+                    {label}
+                  </Typography>
+                  <Typography variant="h4" color="primary">
+                    {value}
+                    &nbsp;
+                    <Typography variant="h6" component="span">
+                      {unit}
+                    </Typography>
+                  </Typography>
+                </>
+              )}
             </div>
           ))}
         </div>

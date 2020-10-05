@@ -83,11 +83,6 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               </Typography>
             </TableCell>
             <TableCell align="left">
-              <Typography variant="subtitle1" color="textSecondary">
-                {reef.depth}
-              </Typography>
-            </TableCell>
-            <TableCell align="left">
               <Typography
                 style={{
                   color: reef.dhw ? `${dhwColorFinder(reef.dhw)}` : "black",
