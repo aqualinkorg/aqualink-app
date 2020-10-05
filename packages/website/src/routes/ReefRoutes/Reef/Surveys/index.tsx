@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 
 import Timeline from "./Timeline";
-import TimelineMobile from "./TimelineMobile";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
@@ -269,21 +268,12 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           </Grid>
         </Grid>
         <Grid container justify="center" item xs={11} lg={12}>
-          {windowWidth < 1280 ? (
-            <TimelineMobile
-              isAdmin={isReefAdmin}
-              reefId={reefId}
-              observation={observation}
-              point={pointIdFinder(point)}
-            />
-          ) : (
-            <Timeline
-              isAdmin={isReefAdmin}
-              reefId={reefId}
-              observation={observation}
-              point={pointIdFinder(point)}
-            />
-          )}
+          <Timeline
+            isAdmin={isReefAdmin}
+            reefId={reefId}
+            observation={observation}
+            point={pointIdFinder(point)}
+          />
         </Grid>
       </Grid>
     </>
