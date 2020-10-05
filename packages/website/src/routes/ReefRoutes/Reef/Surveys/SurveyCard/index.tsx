@@ -54,7 +54,7 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
               >
                 <Grid style={{ height: "80%" }} item xs={12}>
                   <Typography className={classes.cardFields} variant="h6">
-                    Comments
+                    Comments:
                   </Typography>
                   <Typography
                     className={`${classes.cardValues} ${classes.comments}`}
@@ -117,7 +117,6 @@ const styles = (theme: Theme) =>
     ...incomingStyles,
     surveyCard: {
       ...incomingStyles.surveyCard,
-      width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: "32rem",
       },
@@ -125,17 +124,17 @@ const styles = (theme: Theme) =>
     cardImageWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {
-        height: "40%",
+        height: "50%",
       },
     },
     infoWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {
-        height: "60%",
+        height: "50%",
       },
     },
     commentsWrapper: {
-      height: "55%",
+      maxHeight: "55%",
     },
     comments: {
       height: "100%",
