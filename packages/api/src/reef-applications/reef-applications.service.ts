@@ -53,24 +53,19 @@ export class ReefApplicationsService {
       region,
     });
 
-    // Elevate user to ReefManager and make them an admin of the new reef
-    if (user.adminLevel !== AdminLevel.SuperAdmin) {
-      // We need to fetch the user from the database again because the administeredReefs are not loaded
-      const reefAdmin = await this.userRepository.findOne({
-        where: { id: user.id },
-        relations: ['administeredReefs'],
-      });
-
-      if (!reefAdmin) {
-        throw new NotFoundException(`User with id ${user.id} was not found.`);
-      }
-
-      await this.userRepository.save({
-        id: reefAdmin.id,
+    // Elevate user to ReefManager
+    if (user.adminLevel === AdminLevel.Default) {
+      await this.userRepository.update(user.id, {
         adminLevel: AdminLevel.ReefManager,
-        administeredReefs: [...reefAdmin.administeredReefs, reef],
       });
     }
+
+    // Add reef ownership to user
+    await this.userRepository
+      .createQueryBuilder('users')
+      .relation('administeredReefs')
+      .of(user)
+      .add(reef);
 
     if (!maxMonthlyMean) {
       this.logger.warn(
