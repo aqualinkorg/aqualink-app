@@ -12,11 +12,9 @@ import {
   Theme,
   Paper,
   Typography,
-  CardMedia,
   Box,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { getFeaturedMedia } from "../../../helpers/surveyMedia";
 
 import {
   surveyDetailsSelector,
@@ -25,15 +23,12 @@ import {
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
 
-import Map from "../../ReefRoutes/Reef/Map";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
   const surveyDetails = useSelector(surveyDetailsSelector);
-  const featuredMedia =
-    surveyDetails?.surveyMedia && getFeaturedMedia(surveyDetails.surveyMedia);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -92,7 +87,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               item
               xs={12}
             >
-              <Grid container justify="center" item md={9}>
+              <Grid container justify="center" item md={12}>
                 <Grid container item xs={11}>
                   <SurveyDetails reef={reef} survey={surveyDetails} />
                 </Grid>
@@ -107,19 +102,6 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                     depth={reef.depth}
                     temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
                   />
-                </Grid>
-              </Grid>
-              <Grid container item md={3}>
-                <Grid item md={12} xs={6}>
-                  <Map polygon={reef.polygon} />
-                </Grid>
-                <Grid item md={12} xs={6}>
-                  {featuredMedia && (
-                    <CardMedia
-                      style={{ height: "100%" }}
-                      image={featuredMedia}
-                    />
-                  )}
                 </Grid>
               </Grid>
             </Grid>
