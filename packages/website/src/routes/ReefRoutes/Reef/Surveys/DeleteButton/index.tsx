@@ -84,7 +84,9 @@ const DeleteButton = ({
         onClose={handleClose}
         header={`Are you sure you would like to delete the survey for ${moment(
           diveDate
-        ).format("MM/DD/YYYY")}?`}
+        ).format(
+          "MM/DD/YYYY"
+        )}? It will delete all media assosciated with this survey.`}
         content={
           <>
             {loading && <LinearProgress />}
