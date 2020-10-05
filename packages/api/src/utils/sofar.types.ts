@@ -38,6 +38,10 @@ export interface SofarLiveData {
   wavePeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
+  spotterPosition?: {
+    latitude: SofarValue;
+    longitude: SofarValue;
+  };
 }
 
 export interface SpotterData {
@@ -46,4 +50,6 @@ export interface SpotterData {
   significantWaveHeight: SofarValue[];
   wavePeakPeriod: SofarValue[];
   waveMeanDirection: SofarValue[];
+  latitude?: SofarValue[];
+  longitude?: SofarValue[];
 }
