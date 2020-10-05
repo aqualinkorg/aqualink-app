@@ -7,11 +7,9 @@ import {
   createStyles,
   Typography,
   Theme,
-  Grid,
-  CardMedia,
-  Button,
-  Paper,
   IconButton,
+  Hidden,
+  Grid,
 } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {
@@ -24,15 +22,14 @@ import {
 } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 
-import DeleteButton from "../DeleteButton";
+import SurveyCard from "../SurveyCard";
 import {
   surveyListSelector,
   surveysRequest,
 } from "../../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
-import { formatNumber } from "../../../../../helpers/numberUtils";
-import { TimelineProps } from "../types";
 import filterSurveys from "../helpers";
+import { SurveyMedia } from "../../../../../store/Survey/types";
 
 const SurveyTimeline = ({
   isAdmin,
@@ -50,16 +47,73 @@ const SurveyTimeline = ({
 
   return (
     <div className={classes.root}>
-      <Timeline>
-        {isAdmin &&
-          !(window && window.location.pathname.includes("new_survey")) && (
-            <TimelineItem className={classes.timelineItem}>
-              <TimelineOppositeContent
-                className={classes.timelineOppositeContent}
-                // Modify padding to center the Add survey symbol.
-                style={{ padding: "0 10px" }}
-              />
-              <TimelineSeparator>
+      <Hidden mdDown>
+        <Timeline>
+          {isAdmin &&
+            !(window && window.location.pathname.includes("new_survey")) && (
+              <TimelineItem className={classes.timelineItem}>
+                <TimelineOppositeContent
+                  className={classes.timelineOppositeContent}
+                  // Modify padding to center the Add survey symbol.
+                  style={{ padding: "0 10px" }}
+                />
+                <TimelineSeparator>
+                  <Link
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    to={`/reefs/${reefId}/new_survey`}
+                  >
+                    <IconButton>
+                      <AddCircleOutlineIcon className={classes.addNewButton} />
+                    </IconButton>
+                  </Link>
+                </TimelineSeparator>
+                <TimelineContent style={{ padding: "12px 16px" }}>
+                  <Typography className={classes.cardFields} variant="h6">
+                    ADD NEW SURVEY
+                  </Typography>
+                </TimelineContent>
+              </TimelineItem>
+            )}
+          {surveyList &&
+            filterSurveys(surveyList, observation, point).map((survey) => (
+              <TimelineItem key={survey.id} className={classes.timelineItem}>
+                {survey.diveDate && (
+                  <TimelineOppositeContent
+                    className={classes.timelineOppositeContent}
+                  >
+                    <Typography variant="h6" className={classes.dates}>
+                      {moment(survey.diveDate).format("MM/DD/YYYY")}
+                    </Typography>
+                  </TimelineOppositeContent>
+                )}
+                <TimelineSeparator>
+                  <hr className={classes.connector} />
+                  <TimelineDot variant="outlined" className={classes.dot} />
+                  <hr className={classes.connector} />
+                </TimelineSeparator>
+                <TimelineContent>
+                  <SurveyCard
+                    isAdmin={isAdmin}
+                    reefId={reefId}
+                    survey={survey}
+                  />
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+        </Timeline>
+      </Hidden>
+      <Hidden lgUp>
+        <Grid container justify="flex-start" item xs={12}>
+          {isAdmin &&
+            !(window && window.location.pathname.includes("new_survey")) && (
+              <Grid
+                style={{ marginBottom: "1rem" }}
+                container
+                alignItems="center"
+                justify="flex-start"
+                item
+                xs={12}
+              >
                 <Link
                   style={{ color: "inherit", textDecoration: "none" }}
                   to={`/reefs/${reefId}/new_survey`}
@@ -68,144 +122,42 @@ const SurveyTimeline = ({
                     <AddCircleOutlineIcon className={classes.addNewButton} />
                   </IconButton>
                 </Link>
-              </TimelineSeparator>
-              <TimelineContent style={{ padding: "12px 16px" }}>
                 <Typography className={classes.cardFields} variant="h6">
                   ADD NEW SURVEY
                 </Typography>
-              </TimelineContent>
-            </TimelineItem>
-          )}
-        {surveyList &&
-          filterSurveys(surveyList, observation, point).map((survey) => (
-            <TimelineItem key={survey.id} className={classes.timelineItem}>
-              {survey.diveDate && (
-                <TimelineOppositeContent
-                  className={classes.timelineOppositeContent}
-                >
+              </Grid>
+            )}
+          {surveyList &&
+            filterSurveys(surveyList, observation, point).map((survey) => (
+              <Grid
+                key={survey.id}
+                className={classes.surveyWrapper}
+                container
+                justify="center"
+                item
+                xs={12}
+              >
+                <Grid className={classes.dateWrapper} item xs={11}>
                   <Typography variant="h6" className={classes.dates}>
-                    {moment(survey.diveDate).format("MM/DD/YYYY")}
+                    {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
                   </Typography>
-                </TimelineOppositeContent>
-              )}
-              <TimelineSeparator>
-                <hr className={classes.connector} />
-                <TimelineDot variant="outlined" className={classes.dot} />
-                <hr className={classes.connector} />
-              </TimelineSeparator>
-              <TimelineContent>
-                <Paper elevation={0} className={classes.surveyCard}>
-                  <Grid
-                    style={{ height: "100%" }}
-                    container
-                    alignItems="center"
-                    justify="space-between"
-                  >
-                    <Grid style={{ height: "100%" }} item xs={4}>
-                      {survey.featuredSurveyMedia && (
-                        <CardMedia
-                          className={classes.cardImage}
-                          image={survey.featuredSurveyMedia.url}
-                        />
-                      )}
-                    </Grid>
-                    <Grid
-                      className={classes.surveyInfo}
-                      container
-                      item
-                      xs={6}
-                      spacing={1}
-                    >
-                      {survey.userId!.fullName && (
-                        <Grid container alignItems="flex-start" item xs={12}>
-                          <Grid item xs={5}>
-                            <Typography
-                              className={classes.cardFields}
-                              variant="h6"
-                            >
-                              User:
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              className={classes.cardValues}
-                              variant="h6"
-                            >
-                              {survey.userId!.fullName}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      )}
-                      {survey.comments && (
-                        <Grid container alignItems="flex-start" item xs={12}>
-                          <Grid item xs={5}>
-                            <Typography
-                              className={classes.cardFields}
-                              variant="h6"
-                            >
-                              Comments:
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              className={classes.cardValues}
-                              variant="h6"
-                            >
-                              {survey.comments}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      )}
-                      {survey.temperature && (
-                        <Grid container alignItems="center" item xs={12}>
-                          <Grid item xs={5}>
-                            <Typography
-                              className={classes.cardFields}
-                              variant="h6"
-                            >
-                              Temp:
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={6}>
-                            <Typography
-                              className={classes.cardValues}
-                              variant="h6"
-                            >
-                              {`${formatNumber(survey.temperature, 1)} °C`}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      )}
-                      <Grid item xs={6}>
-                        <Link
-                          style={{ color: "inherit", textDecoration: "none" }}
-                          to={`/reefs/${reefId}/survey_details/${survey.id}`}
-                        >
-                          <Button
-                            size="small"
-                            variant="outlined"
-                            color="primary"
-                          >
-                            VIEW DETAILS
-                          </Button>
-                        </Link>
-                      </Grid>
-                    </Grid>
-                    {isAdmin && (
-                      <Grid className={classes.buttonContainer} item xs={1}>
-                        <DeleteButton
-                          reefId={reefId}
-                          surveyId={survey.id}
-                          diveDate={survey.diveDate}
-                        />
-                      </Grid>
-                    )}
-                  </Grid>
-                </Paper>
-              </TimelineContent>
-            </TimelineItem>
-          ))}
-      </Timeline>
+                </Grid>
+                <Grid
+                  className={classes.surveyCardWrapper}
+                  container
+                  item
+                  xs={12}
+                >
+                  <SurveyCard
+                    isAdmin={isAdmin}
+                    reefId={reefId}
+                    survey={survey}
+                  />
+                </Grid>
+              </Grid>
+            ))}
+        </Grid>
+      </Hidden>
     </div>
   );
 };
@@ -237,16 +189,19 @@ const styles = (theme: Theme) =>
       padding: 0,
       margin: 0,
     },
-    surveyInfo: {
-      height: "12rem",
-      overflowY: "auto",
-    },
-    cardValues: {
-      ...incomingStyles.cardValues,
-      fontWeight: "normal",
+    surveyWrapper: {
+      marginTop: "2rem",
     },
   });
 
-type SurveyTimelineProps = TimelineProps & WithStyles<typeof styles>;
+interface SurveyTimelineIncomingProps {
+  reefId: number;
+  isAdmin: boolean;
+  observation: SurveyMedia["observations"] | "any";
+  point: number;
+}
+
+type SurveyTimelineProps = SurveyTimelineIncomingProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(SurveyTimeline);

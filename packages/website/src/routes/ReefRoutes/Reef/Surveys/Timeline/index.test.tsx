@@ -47,7 +47,7 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Timeline isAdmin={false} reefId={0} />
+          <Timeline isAdmin={false} reefId={0} observation="any" point={0} />
         </Router>
       </Provider>
     ).container;
