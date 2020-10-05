@@ -98,27 +98,6 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="caption"
               >
-                TEMP AT 0m
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
-              >
-                39.0
-                 
-                <mock-typography
-                  component="span"
-                  variant="h6"
-                >
-                   °C
-                </mock-typography>
-              </mock-typography>
-            </div>
-            <div>
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
-              >
                 HEAT STRESS
               </mock-typography>
               <mock-typography
@@ -132,6 +111,27 @@ exports[`renders as expected 1`] = `
                   variant="h6"
                 >
                    DHW
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                TEMP AT 0m
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                39.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
                 </mock-typography>
               </mock-typography>
             </div>
@@ -241,27 +241,6 @@ exports[`renders loading as expected 1`] = `
                 color="textSecondary"
                 variant="caption"
               >
-                TEMP AT 0m
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
-              >
-                39.0
-                 
-                <mock-typography
-                  component="span"
-                  variant="h6"
-                >
-                   °C
-                </mock-typography>
-              </mock-typography>
-            </div>
-            <div>
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
-              >
                 HEAT STRESS
               </mock-typography>
               <mock-typography
@@ -275,6 +254,27 @@ exports[`renders loading as expected 1`] = `
                   variant="h6"
                 >
                    DHW
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                TEMP AT 0m
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                39.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
                 </mock-typography>
               </mock-typography>
             </div>
