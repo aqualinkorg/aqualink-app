@@ -150,14 +150,23 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             <CardMedia className={classes.cardImage} image={url} />
 
             <Hidden smUp>
-              <Box position="absolute" top={16} left={16}>
-                <Typography variant="h5">{name}</Typography>
+              <Box
+                bgcolor="rgba(3, 48, 66, 0.75)"
+                height="30%"
+                width="100%"
+                position="absolute"
+                top={0}
+                left={0}
+              >
+                <Box position="absolute" top={16} left={16}>
+                  <Typography variant="h5">{name}</Typography>
 
-                {regionName && (
-                  <Typography variant="h6" style={{ fontWeight: 400 }}>
-                    {regionName}
-                  </Typography>
-                )}
+                  {regionName && (
+                    <Typography variant="h6" style={{ fontWeight: 400 }}>
+                      {regionName}
+                    </Typography>
+                  )}
+                </Box>
               </Box>
             </Hidden>
 
