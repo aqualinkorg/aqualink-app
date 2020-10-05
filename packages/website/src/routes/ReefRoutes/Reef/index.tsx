@@ -44,10 +44,8 @@ const Reef = ({ match, classes }: ReefProps) => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   ) as SurveyListItem;
 
-  const featuredSurveyMedia = featuredMedia?.featuredSurveyMedia;
-  const diveDate = featuredMedia?.diveDate;
-  const point = featuredSurveyMedia?.poiId;
-  const url = featuredSurveyMedia?.url;
+  const { featuredSurveyMedia, diveDate } = featuredMedia || {};
+  const { poiId, url } = featuredSurveyMedia || {};
 
   const { liveData } = reefDetails || {};
 
@@ -92,7 +90,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
-              point={point}
+              point={poiId}
               diveDate={diveDate}
             />
           </>
