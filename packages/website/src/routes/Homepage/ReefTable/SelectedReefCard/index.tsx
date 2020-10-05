@@ -92,6 +92,13 @@ const useStyles = makeStyles((theme) => ({
   reefRegionName: {
     marginBottom: "0.6rem",
   },
+  cardTitle: {
+    width: "90%",
+    display: "block",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 }));
 
 type SelectedReefContentProps = {
@@ -152,7 +159,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             <Hidden smUp>
               <Box
                 bgcolor="rgba(3, 48, 66, 0.75)"
-                height="30%"
+                height="40%"
                 width="100%"
                 position="absolute"
                 top={0}
@@ -193,15 +200,19 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden xsDown={Boolean(url)}>
-            <Typography color="textSecondary" variant="h5">
-              {name}
+            <Typography
+              className={classes.cardTitle}
+              color="textSecondary"
+              variant="h5"
+            >
+              <span title={name || ""}>{name}</span>
             </Typography>
             <Typography
               color="textSecondary"
               variant="h6"
-              className={classes.reefRegionName}
+              className={`${classes.cardTitle} ${classes.reefRegionName}`}
             >
-              {regionName}
+              <span title={regionName || ""}>{regionName}</span>
             </Typography>
           </Hidden>
           <Typography color="textSecondary" variant="caption">
