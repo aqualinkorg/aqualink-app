@@ -1,6 +1,9 @@
 import theme from "../../../../layout/App/theme";
 
 const styles = {
+  dateWrapper: {
+    marginBottom: "1rem",
+  },
   dates: {
     fontWeight: 500,
     lineHeight: 0.81,
@@ -11,6 +14,9 @@ const styles = {
     height: "2rem",
     width: "2rem",
   },
+  surveyCardWrapper: {
+    marginBottom: "2rem",
+  },
   surveyCard: {
     width: "80%",
     backgroundColor: theme.palette.primary.light,
@@ -19,6 +25,12 @@ const styles = {
     borderColor: "#dddddd",
     borderRadius: 2,
     height: "16rem",
+    [theme.breakpoints.down("sm")]: {
+      height: "32rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   cardImage: {
     height: "100%",

@@ -137,12 +137,17 @@ const SurveyTimeline = ({
                 item
                 xs={12}
               >
-                <Grid style={{ marginBottom: "1rem" }} item xs={11}>
+                <Grid className={classes.dateWrapper} item xs={11}>
                   <Typography variant="h6" className={classes.dates}>
                     {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
                   </Typography>
                 </Grid>
-                <Grid style={{ marginBottom: "2rem" }} container item xs={12}>
+                <Grid
+                  className={classes.surveyCardWrapper}
+                  container
+                  item
+                  xs={12}
+                >
                   <SurveyCard
                     isAdmin={isAdmin}
                     reefId={reefId}

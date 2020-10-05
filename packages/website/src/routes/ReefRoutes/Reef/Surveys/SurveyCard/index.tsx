@@ -115,12 +115,6 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     ...incomingStyles,
-    surveyCard: {
-      ...incomingStyles.surveyCard,
-      [theme.breakpoints.down("sm")]: {
-        height: "32rem",
-      },
-    },
     cardImageWrapper: {
       height: "100%",
       [theme.breakpoints.down("sm")]: {

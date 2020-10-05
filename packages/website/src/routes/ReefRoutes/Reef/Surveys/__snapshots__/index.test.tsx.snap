@@ -198,7 +198,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
     >
       <div
-        class="SurveyTimeline-root-18"
+        class="SurveyTimeline-root-20"
       >
         <mock-hidden
           mddown="true"
