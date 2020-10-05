@@ -21,7 +21,7 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
       classname="Dialog-dialogTitle-2"
     >
       <mock-typography>
-        Are you sure you would like to delete the survey for 10/02/2020?
+        Are you sure you would like to delete the survey for 10/02/2020? It will delete all media assosciated with this survey.
       </mock-typography>
     </mock-dialogtitle>
     <mock-dialogcontent>

@@ -92,7 +92,7 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
                   classname="Dialog-dialogTitle-14"
                 >
                   <mock-typography>
-                    Are you sure you would like to delete the survey for Invalid date?
+                    Are you sure you would like to delete the survey for Invalid date? It will delete all media assosciated with this survey.
                   </mock-typography>
                 </mock-dialogtitle>
                 <mock-dialogcontent>
