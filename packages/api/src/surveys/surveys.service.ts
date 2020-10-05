@@ -308,9 +308,14 @@ export class SurveysService {
 
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    await this.googleCloudService.deleteFile(
-      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    );
+    await this.googleCloudService
+      .deleteFile(surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1])
+      .catch((error) => {
+        this.logger.error(
+          `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,
+        );
+        throw error;
+      });
 
     await this.surveyMediaRepository.delete(mediaId);
   }
