@@ -25,7 +25,7 @@ export class GoogleCloudService {
     });
   }
 
-  public async findDanglingFiles() {
+  public async findDanglingFiles(): Promise<string[]> {
     if (!process.env.GCS_BUCKET || !process.env.STORAGE_FOLDER) {
       this.logger.error(
         'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
@@ -47,14 +47,17 @@ export class GoogleCloudService {
       .bucket(process.env.GCS_BUCKET)
       .getFiles({ directory: process.env.STORAGE_FOLDER });
 
-    this.logger.log(fileResponse[0].length);
-    const danglingFiles = fileResponse[0].filter(
-      (file) => !mediaSet.has(file.name),
-    );
+    return fileResponse[0]
+      .filter((file) => !mediaSet.has(file.name))
+      .map((file) => file.name);
+  }
+
+  public async deleteDanglingFiles(): Promise<void[]> {
+    const danglingFiles = await this.findDanglingFiles();
 
     const actions = danglingFiles.map((file) => {
-      return this.deleteFile(file.name).catch(() => {
-        this.logger.log(`Could not delete media ${file.name}.`);
+      return this.deleteFile(file).catch(() => {
+        this.logger.log(`Could not delete media ${file}.`);
       });
     });
 
