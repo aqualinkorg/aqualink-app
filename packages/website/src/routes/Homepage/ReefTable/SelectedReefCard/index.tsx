@@ -92,11 +92,18 @@ const useStyles = makeStyles((theme) => ({
   reefRegionName: {
     marginBottom: "0.6rem",
   },
+  cardTitle: {
+    width: "90%",
+    display: "block",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
 }));
 
 type SelectedReefContentProps = {
   reef: Reef;
-  url: string | null;
+  url?: string | null;
 };
 
 const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
@@ -152,7 +159,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             <Hidden smUp>
               <Box
                 bgcolor="rgba(3, 48, 66, 0.75)"
-                height="30%"
+                height="40%"
                 width="100%"
                 position="absolute"
                 top={0}
@@ -193,15 +200,19 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden xsDown={Boolean(url)}>
-            <Typography color="textSecondary" variant="h5">
-              {name}
+            <Typography
+              className={classes.cardTitle}
+              color="textSecondary"
+              variant="h5"
+            >
+              <span title={name || ""}>{name}</span>
             </Typography>
             <Typography
               color="textSecondary"
               variant="h6"
-              className={classes.reefRegionName}
+              className={`${classes.cardTitle} ${classes.reefRegionName}`}
             >
-              {regionName}
+              <span title={regionName || ""}>{regionName}</span>
             </Typography>
           </Hidden>
           <Typography color="textSecondary" variant="caption">
@@ -250,6 +261,12 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   );
 };
 
+SelectedReefContent.defaultProps = {
+  url: null,
+};
+
+const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+
 const SelectedReefCard = () => {
   const classes = useStyles();
   const reef = useSelector(reefDetailsSelector);
@@ -259,13 +276,14 @@ const SelectedReefCard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (reefOnMap) {
+    if (!reefOnMap) {
+      dispatch(reefRequest(featuredReefId));
+      dispatch(surveysRequest(featuredReefId));
+    } else {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
   }, [dispatch, reefOnMap]);
-
-  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
@@ -276,7 +294,7 @@ const SelectedReefCard = () => {
 
   const hasMedia = Boolean(featuredMedia?.url);
 
-  return featuredReefId || reef?.id ? (
+  return (
     <Box className={classes.card}>
       {!loading && (
         <Box mb={3}>
@@ -308,7 +326,7 @@ const SelectedReefCard = () => {
         ) : null}
       </Card>
     </Box>
-  ) : null;
+  );
 };
 
 export default SelectedReefCard;
