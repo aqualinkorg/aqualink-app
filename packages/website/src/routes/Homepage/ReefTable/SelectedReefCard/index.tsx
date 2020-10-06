@@ -216,7 +216,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             </Typography>
           </Hidden>
           <Typography color="textSecondary" variant="caption">
-            MEAN DAILY SURFACE TEMP. (°C)
+            DAILY SURFACE TEMP. (°C)
           </Typography>
         </Box>
         <Chart
