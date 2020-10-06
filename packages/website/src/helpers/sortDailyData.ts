@@ -16,7 +16,7 @@ export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
 export const sortByDate = <T>(
   list: T[],
   dateFieldName: keyof T,
-  order?: string
+  order?: "asc" | "desc"
 ): T[] => {
   return Object.values(list).sort((item1, item2) => {
     const date1 = new Date(
