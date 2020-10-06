@@ -261,6 +261,8 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   );
 };
 
+const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+
 const SelectedReefCard = () => {
   const classes = useStyles();
   const reef = useSelector(reefDetailsSelector);
@@ -270,13 +272,14 @@ const SelectedReefCard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (reefOnMap) {
+    if (!reefOnMap) {
+      dispatch(reefRequest(featuredReefId));
+      dispatch(surveysRequest(featuredReefId));
+    } else {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
   }, [dispatch, reefOnMap]);
-
-  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
@@ -287,7 +290,7 @@ const SelectedReefCard = () => {
 
   const hasMedia = Boolean(featuredMedia?.url);
 
-  return featuredReefId || reef?.id ? (
+  return (
     <Box className={classes.card}>
       {!loading && (
         <Box mb={3}>
@@ -319,7 +322,7 @@ const SelectedReefCard = () => {
         ) : null}
       </Card>
     </Box>
-  ) : null;
+  );
 };
 
 export default SelectedReefCard;

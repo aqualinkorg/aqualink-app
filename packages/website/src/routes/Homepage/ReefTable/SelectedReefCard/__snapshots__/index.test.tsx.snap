@@ -12,7 +12,7 @@ exports[`renders as expected 1`] = `
         color="textSecondary"
         variant="h5"
       >
-        Featured Site
+        Selected Site
         <a
           href="/reefs/2"
         >
