@@ -69,7 +69,7 @@ exports[`renders as expected 1`] = `
               color="textSecondary"
               variant="caption"
             >
-              MEAN DAILY SURFACE TEMP. (°C)
+              DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
           Mock-Line
@@ -221,7 +221,7 @@ exports[`renders loading as expected 1`] = `
               color="textSecondary"
               variant="caption"
             >
-              MEAN DAILY SURFACE TEMP. (°C)
+              DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
           Mock-Line
