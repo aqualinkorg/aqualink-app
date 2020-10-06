@@ -56,7 +56,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 align="left"
                 padding="default"
                 sortdirection="false"
-                style="width: 25%; padding-right: 0px;"
+                style="width: 40%; padding-right: 0px;"
               >
                 <mock-tablesortlabel
                   active="false"
@@ -93,32 +93,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                       variant="subtitle2"
                     >
                        (°C)
-                    </mock-typography>
-                  </mock-typography>
-                </mock-tablesortlabel>
-              </mock-tablecell>
-              <mock-tablecell
-                align="left"
-                padding="default"
-                sortdirection="false"
-                style="padding-right: 0px;"
-              >
-                <mock-tablesortlabel
-                  active="false"
-                  direction="asc"
-                >
-                  <mock-typography
-                    nowrap="true"
-                    style="color: black;"
-                    variant="h6"
-                  >
-                    DEPTH
-                    <mock-typography
-                      component="span"
-                      style="color: black;"
-                      variant="subtitle2"
-                    >
-                       (m)
                     </mock-typography>
                   </mock-typography>
                 </mock-tablesortlabel>
@@ -196,16 +170,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 variant="subtitle1"
               >
                 10.0
-              </mock-typography>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-            >
-              <mock-typography
-                style="color: black;"
-                variant="subtitle1"
-              >
-                19
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
