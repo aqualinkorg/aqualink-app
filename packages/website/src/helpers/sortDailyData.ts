@@ -13,14 +13,18 @@ export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
 }
 
 /** Utility function to sort data by date */
-export const sortByDate = (
-  list: any[],
-  dateFieldName: string,
+export const sortByDate = <T>(
+  list: T[],
+  dateFieldName: keyof T,
   order?: string
-) => {
+): T[] => {
   return Object.values(list).sort((item1, item2) => {
-    const date1 = new Date(item1[dateFieldName]).getTime();
-    const date2 = new Date(item2[dateFieldName]).getTime();
+    const date1 = new Date(
+      (item1[dateFieldName] as unknown) as string
+    ).getTime();
+    const date2 = new Date(
+      (item2[dateFieldName] as unknown) as string
+    ).getTime();
 
     switch (order) {
       case "desc":

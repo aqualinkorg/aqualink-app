@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 type SelectedReefContentProps = {
   reef: Reef;
-  url: string | null;
+  url?: string | null;
 };
 
 const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
@@ -259,6 +259,10 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       </Grid>
     </Grid>
   );
+};
+
+SelectedReefContent.defaultProps = {
+  url: null,
 };
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
