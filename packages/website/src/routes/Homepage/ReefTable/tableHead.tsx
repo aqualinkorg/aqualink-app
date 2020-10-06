@@ -65,7 +65,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            style={{ width: headCell.width, paddingRight: 0 }}
+            style={{ width: headCell.width, paddingRight: 0, paddingLeft: 10 }}
             align="left"
             padding="default"
             sortDirection={props.orderBy === headCell.id ? props.order : false}

@@ -91,6 +91,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
 const styles = () =>
   createStyles({
     table: {
+      paddingLeft: 10,
       height: "70%",
       overflowY: "auto",
     },

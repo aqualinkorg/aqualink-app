@@ -65,7 +65,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <TableCell>
+            <TableCell style={{ paddingLeft: 10 }}>
               <Typography
                 align="left"
                 variant="subtitle1"

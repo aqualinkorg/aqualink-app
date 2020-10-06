@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   card: {
-    padding: 40,
     [theme.breakpoints.down("xs")]: {
       padding: 10,
     },
+    padding: 20,
   },
   cardImage: {
     borderRadius: "4px 0 0 4px",
