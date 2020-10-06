@@ -36,17 +36,12 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     {
       id: "locationName",
       label: "REEF",
-      width: "25%",
+      width: "40%",
     },
     {
       id: "temp",
       label: "TEMP",
       unit: "°C",
-    },
-    {
-      id: "depth",
-      label: "DEPTH",
-      unit: "m",
     },
     {
       id: "dhw",

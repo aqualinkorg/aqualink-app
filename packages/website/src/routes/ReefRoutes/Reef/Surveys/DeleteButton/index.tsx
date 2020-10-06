@@ -13,10 +13,10 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import CloseIcon from "@material-ui/icons/Close";
 import moment from "moment";
 
-import surveyServices from "../../../../services/surveyServices";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
-import DeleteDialog, { Action } from "../../../../common/Dialog";
+import surveyServices from "../../../../../services/surveyServices";
+import { userInfoSelector } from "../../../../../store/User/userSlice";
+import { surveysRequest } from "../../../../../store/Survey/surveyListSlice";
+import DeleteDialog, { Action } from "../../../../../common/Dialog";
 
 const DeleteButton = ({
   reefId,
@@ -84,7 +84,9 @@ const DeleteButton = ({
         onClose={handleClose}
         header={`Are you sure you would like to delete the survey for ${moment(
           diveDate
-        ).format("MM/DD/YYYY")}?`}
+        ).format(
+          "MM/DD/YYYY"
+        )}? It will delete all media assosciated with this survey.`}
         content={
           <>
             {loading && <LinearProgress />}

@@ -38,7 +38,7 @@ const RowNameCell = ({
   // check for null and 0
   const showWarning = alertLevel && isMobile;
   return (
-    <TableCell style={isMobile ? { width: "30%" } : undefined}>
+    <TableCell style={isMobile ? { width: "50%" } : undefined}>
       <Typography
         align="left"
         variant={isMobile ? "h6" : "subtitle1"}
@@ -153,12 +153,6 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
               value={reef.temp}
               color={colors.lightBlue}
               unit="°C"
-            />
-            <RowNumberCell
-              name="Depth"
-              value={reef.depth}
-              unit="m"
-              decimalPlaces={0}
             />
             <RowNumberCell
               name="DHW"

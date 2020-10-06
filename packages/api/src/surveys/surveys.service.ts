@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,7 +11,6 @@ import { CreateSurveyDto } from './dto/create-survey.dto';
 import { User } from '../users/users.entity';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { SurveyMedia, MediaType } from './survey-media.entity';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
@@ -18,15 +18,14 @@ import { Reef } from '../reefs/reefs.entity';
 
 @Injectable()
 export class SurveysService {
+  private logger: Logger = new Logger(SurveysService.name);
+
   constructor(
     @InjectRepository(Survey)
     private surveyRepository: Repository<Survey>,
 
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository: Repository<SurveyMedia>,
-
-    @InjectRepository(ReefPointOfInterest)
-    private poiRepository: Repository<ReefPointOfInterest>,
 
     @InjectRepository(Reef)
     private reefRepository: Repository<Reef>,
@@ -110,6 +109,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
+      .leftJoinAndSelect('featuredSurveyMedia.poiId', 'poi')
       .addSelect(['users.fullName', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
@@ -271,10 +271,15 @@ export class SurveysService {
 
     await Promise.all(
       surveyMedia.map((media) => {
+        const file = media.url;
         // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
-        return this.googleCloudService.deleteFile(
-          media.url.split(`${process.env.GCS_BUCKET}/`)[1],
-        );
+        return this.googleCloudService
+          .deleteFile(file.split(`${process.env.GCS_BUCKET}/`)[1])
+          .catch(() => {
+            this.logger.error(
+              `Could not delete media ${file} of survey ${surveyId}.`,
+            );
+          });
       }),
     );
 
@@ -300,9 +305,14 @@ export class SurveysService {
 
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    await this.googleCloudService.deleteFile(
-      surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1],
-    );
+    await this.googleCloudService
+      .deleteFile(surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1])
+      .catch((error) => {
+        this.logger.error(
+          `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,
+        );
+        throw error;
+      });
 
     await this.surveyMediaRepository.delete(mediaId);
   }

@@ -165,12 +165,29 @@ export async function getSpotterData(
     data: { waves = [], smartMooringData = [] },
   } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
 
-  const [sofarSignificantWaveHeight, sofarPeakPeriod, sofarMeanDirection]: [
+  const [
+    sofarSignificantWaveHeight,
+    sofarPeakPeriod,
+    sofarMeanDirection,
+    spotterLatitude,
+    spotterLongitude,
+  ]: [
+    SofarValue[],
+    SofarValue[],
     SofarValue[],
     SofarValue[],
     SofarValue[],
   ] = waves.reduce(
-    ([significantWaveHeights, peakPeriods, meanDirections], data) => {
+    (
+      [
+        significantWaveHeights,
+        peakPeriods,
+        meanDirections,
+        latitude,
+        longitude,
+      ],
+      data,
+    ) => {
       return [
         significantWaveHeights.concat({
           timestamp: data.timestamp,
@@ -184,9 +201,17 @@ export async function getSpotterData(
           timestamp: data.timestamp,
           value: data.meanDirection,
         }),
+        latitude.concat({
+          timestamp: data.timestamp,
+          value: data.latitude,
+        }),
+        longitude.concat({
+          timestamp: data.timestamp,
+          value: data.longitude,
+        }),
       ];
     },
-    [[], [], []],
+    [[], [], [], [], []],
   );
 
   const [sofarBottomTemperature, sofarSurfaceTemperature]: [
@@ -215,6 +240,8 @@ export async function getSpotterData(
     significantWaveHeight: sofarSignificantWaveHeight,
     wavePeakPeriod: sofarPeakPeriod,
     waveMeanDirection: sofarMeanDirection,
+    latitude: spotterLatitude,
+    longitude: spotterLongitude,
   };
 }
 

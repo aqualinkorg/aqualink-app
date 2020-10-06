@@ -67,6 +67,7 @@ export class ReefsService {
       'latestDailyData',
       `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
     );
+    query.andWhere('approved = true');
     return query.getMany();
   }
 
@@ -100,6 +101,12 @@ export class ReefsService {
   }
 
   async findDailyData(id: number): Promise<DailyData[]> {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
     return this.dailyDataRepository.find({
       where: { reef: id },
       order: {
