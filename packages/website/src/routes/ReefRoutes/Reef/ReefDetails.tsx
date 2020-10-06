@@ -21,9 +21,15 @@ import CardTitle, { Value } from "./CardTitle";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { SurveyPoint } from "../../../store/Survey/types";
+import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 
-const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
+const ReefDetails = ({
+  classes,
+  reef,
+  surveys,
+  point,
+  diveDate,
+}: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
   const { liveData, maxMonthlyMean } = reef;
@@ -122,6 +128,7 @@ const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
       <Box mt="2rem">
         <Charts
           dailyData={reef.dailyData}
+          surveys={surveys}
           depth={reef.depth}
           maxMonthlyMean={reef.maxMonthlyMean || null}
           temperatureThreshold={
@@ -153,6 +160,7 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  surveys: SurveyListItem[];
   point?: SurveyPoint | null;
   diveDate?: string | null;
 }

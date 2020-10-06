@@ -1,5 +1,6 @@
 export const createChartData = (
   labels: string[],
+  tempWithSurvey: (number | null)[],
   dataArray: number[],
   fill: boolean
   // TODO - use pointRadius to display survey dates
@@ -7,6 +8,14 @@ export const createChartData = (
 ) => ({
   labels,
   datasets: [
+    {
+      type: "scatter",
+      label: "SURVEYS",
+      data: tempWithSurvey,
+      pointRadius: 4,
+      backgroundColor: "#ffffff",
+      pointBorderWidth: 2.5,
+    },
     {
       label: "BLEACHING THRESHOLD",
       data: dataArray,

@@ -99,6 +99,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 <Grid container justify="center" item xs={12}>
                   <Charts
                     dailyData={reef.dailyData}
+                    surveys={[]}
                     depth={reef.depth}
                     temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
                   />

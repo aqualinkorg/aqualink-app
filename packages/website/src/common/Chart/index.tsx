@@ -14,9 +14,11 @@ import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData } from "../../helpers/createChartData";
 import { useProcessedChartData } from "./utils";
+import { SurveyListItem } from "../../store/Survey/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
+  surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean?: number | null;
 
@@ -26,6 +28,7 @@ export interface ChartProps {
 
 function Chart({
   dailyData,
+  surveys,
   temperatureThreshold,
   maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
   chartSettings = {},
@@ -49,8 +52,9 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
+    tempWithSurvey,
     chartLabels,
-  } = useProcessedChartData(dailyData, temperatureThreshold);
+  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
 
   const changeXTickShift = () => {
     const { current } = chartRef;
@@ -187,7 +191,12 @@ function Chart({
     <Line
       ref={chartRef}
       options={settings}
-      data={createChartData(chartLabels, surfaceTemperatureData, true)}
+      data={createChartData(
+        chartLabels,
+        tempWithSurvey,
+        surfaceTemperatureData,
+        true
+      )}
     />
   );
 }
