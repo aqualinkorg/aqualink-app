@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`Apply Page should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
@@ -135,6 +135,7 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
@@ -142,7 +143,7 @@ exports[`renders as expected 1`] = `
                       inputprops="[object Object]"
                       label="Name"
                       size="small"
-                      value=""
+                      value="Test User"
                       variant="outlined"
                     />
                   </div>
@@ -150,6 +151,7 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
@@ -157,7 +159,7 @@ exports[`renders as expected 1`] = `
                       inputprops="[object Object]"
                       label="Organization"
                       size="small"
-                      value=""
+                      value="Some Organization"
                       variant="outlined"
                     />
                   </div>
@@ -165,12 +167,29 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
                       id="email"
                       inputprops="[object Object]"
                       label="Email"
+                      size="small"
+                      value="test@mail.com"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-textfield
+                      disabled="false"
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="siteName"
+                      inputprops="[object Object]"
+                      label="Site Name"
                       size="small"
                       value=""
                       variant="outlined"

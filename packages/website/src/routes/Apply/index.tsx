@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Map, fromJS } from "immutable";
 import { pick, some, isEmpty } from "lodash";
 import L from "leaflet";
@@ -23,11 +23,13 @@ import {
   Theme,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { useSelector } from "react-redux";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import LocationMap from "./LocationMap";
 import reemimage from "../../assets/img/reemimage.jpg";
+import { userInfoSelector } from "../../store/User/userSlice";
 
 const obligations = [
   "Pay for shipping and any applicable duties",
@@ -47,6 +49,7 @@ const contactFormElements = [
     validator: (email: string) => isEmail(email),
     errorMessage: "Enter a valid email",
   },
+  { id: "siteName", label: "Site Name" },
 ];
 
 const agreements = [
@@ -56,10 +59,24 @@ const agreements = [
 ];
 
 const Apply = ({ classes }: ApplyProps) => {
+  const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
   const [formErrors, setFormErrors] = useState(Map<string, string>());
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false);
+
+  useEffect(() => {
+    if (user && user.fullName && user.organization && user.email) {
+      setFormModel(
+        formModel
+          .set("name", user.fullName)
+          .set("org", user.organization)
+          .set("email", user.email)
+      );
+    } else {
+      setFormModel(formModel.set("name", "").set("org", "").set("email", ""));
+    }
+  }, [user, formModel]);
 
   const locationFormElements = [
     {
@@ -242,6 +259,9 @@ const Apply = ({ classes }: ApplyProps) => {
                           <Grid item xs={12} key={label}>
                             <TextField
                               id={id}
+                              disabled={
+                                id === "name" || id === "org" || id === "email"
+                              }
                               label={label}
                               error={formErrors.get(id, "").length !== 0}
                               helperText={formErrors.get(id, "")}
