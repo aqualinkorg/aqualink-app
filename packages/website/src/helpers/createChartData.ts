@@ -12,9 +12,10 @@ export const createChartData = (
       type: "scatter",
       label: "SURVEYS",
       data: tempWithSurvey,
-      pointRadius: 4,
+      pointRadius: 5,
       backgroundColor: "#ffffff",
-      pointBorderWidth: 2.5,
+      borderWidth: 1.5,
+      borderColor: "#128cc0",
     },
     {
       label: "BLEACHING THRESHOLD",
