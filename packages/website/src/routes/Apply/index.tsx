@@ -30,6 +30,7 @@ import Footer from "../../common/Footer";
 import LocationMap from "./LocationMap";
 import reemimage from "../../assets/img/reemimage.jpg";
 import { userInfoSelector } from "../../store/User/userSlice";
+import reefServices from "../../services/reefServices";
 
 const obligations = [
   "Pay for shipping and any applicable duties",
@@ -132,23 +133,38 @@ const Apply = ({ classes }: ApplyProps) => {
       const time = new Date().getTime();
       const date = new Date(time);
 
-      const { name, org, email, lat, lng, depth } = formModel.toJS() as {
+      const {
+        name,
+        org,
+        email,
+        siteName,
+        lat,
+        lng,
+        depth,
+      } = formModel.toJS() as {
         [key: string]: string;
       };
 
-      // Add to Firestore
-      fetch(
-        `https://us-central1-ocean-systems.cloudfunctions.net/addSite?name=${name}&org=${org}&email=${email}&lat=${lat}&lng=${lng}&depth=${depth}&date=${date}`
-      )
-        .then((response) => {
-          setIsSuccessfullySubmitted(response.ok);
-          setSnackbarOpen(true);
-        })
-        .catch((error) => {
-          setIsSuccessfullySubmitted(false);
-          setSnackbarOpen(true);
-          console.error(error);
-        });
+      // Add to database
+      if (user && user.token) {
+        reefServices
+          .applyForReef(
+            siteName,
+            parseFloat(lat),
+            parseFloat(lng),
+            parseInt(depth, 10),
+            user.token
+          )
+          .then(() => {
+            setIsSuccessfullySubmitted(true);
+            setSnackbarOpen(true);
+          })
+          .catch((error) => {
+            setIsSuccessfullySubmitted(false);
+            setSnackbarOpen(true);
+            console.error(error);
+          });
+      }
 
       // Add to Carto
       const { REACT_APP_CARTO_API_KEY } = process.env;

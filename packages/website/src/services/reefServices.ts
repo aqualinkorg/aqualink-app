@@ -43,6 +43,31 @@ const deleteReefPoi = (id: number, token: string) =>
     token,
   });
 
+const applyForReef = (
+  name: string,
+  latitude: number,
+  longitude: number,
+  depth: number,
+  token: string
+) => {
+  const data = {
+    reefApplication: {},
+    reef: {
+      name,
+      latitude,
+      longitude,
+      depth,
+    },
+  };
+
+  return requests.send({
+    url: "reef-applications",
+    method: "POST",
+    data,
+    token,
+  });
+};
+
 export default {
   getReef,
   getReefs,
@@ -50,4 +75,5 @@ export default {
   getReefLiveData,
   getReefPois,
   deleteReefPoi,
+  applyForReef,
 };
