@@ -9,7 +9,7 @@ const mockStore = configureStore([]);
 jest.mock("../../common/NavBar", () => "Mock-NavBar");
 jest.mock("./LocationMap", () => "Mock-LocationMap");
 
-describe("Apply Page", () => {
+describe("Site registration page", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({

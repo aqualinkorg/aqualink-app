@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Apply Page should render with given state from Redux store 1`] = `
+exports[`Site registration page should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
