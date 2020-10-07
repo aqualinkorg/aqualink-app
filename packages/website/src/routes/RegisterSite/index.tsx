@@ -30,15 +30,6 @@ import reemimage from "../../assets/img/reemimage.jpg";
 import { userInfoSelector } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
 
-const obligations = [
-  "Pay for shipping and any applicable duties",
-  "Obtain any necessary permits (if applicable)",
-  "Provide and attach a ballast (e.g. 60lb kettlebell)",
-  "Deploy spotter with mooring weight (can be done from a kayak)",
-  "Maintain spotter (inspect and clean every 6 months)",
-  "Conduct initial and periodic photographic surveys and upload imagery to our website",
-];
-
 const contactFormElements = [
   { id: "name", label: "Name" },
   { id: "org", label: "Organization" },
@@ -198,10 +189,10 @@ const Apply = ({ classes }: ApplyProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Box py={4}>
+      <Box pt={4}>
         <Container>
           <Grid container spacing={6}>
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12}>
               <Typography variant="h3" gutterBottom>
                 Register your local site
               </Typography>
@@ -224,26 +215,6 @@ const Apply = ({ classes }: ApplyProps) => {
 
               <Box mt={4}>
                 <img src={reemimage} alt="Reefs" style={{ width: "100%" }} />
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={5}>
-              <Box bgcolor="grey.100" p={4}>
-                <Typography variant="h4" gutterBottom>
-                  Your Obligations
-                </Typography>
-
-                <Typography component="div">
-                  You will be given a free smart buoy but there are some things
-                  you will be expected to do or provide:
-                  <ol>
-                    {obligations.map((item) => (
-                      <li key={item} className={classes.listItem}>
-                        {item}
-                      </li>
-                    ))}
-                  </ol>
-                </Typography>
               </Box>
             </Grid>
           </Grid>

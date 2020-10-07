@@ -7,7 +7,7 @@ import { NotFound } from "../../routes/NotFound";
 import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
 import About from "../../routes/About";
-import Apply from "../../routes/Apply";
+import RegisterSite from "../../routes/RegisterSite";
 import Buoy from "../../routes/Buoy";
 import Drones from "../../routes/Drones";
 import Faq from "../../routes/Faq";
@@ -44,7 +44,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/about" component={About} />
-              <Route exact path="/register" component={Apply} />
+              <Route exact path="/register" component={RegisterSite} />
               <Route exact path="/buoy" component={Buoy} />
               <Route exact path="/drones" component={Drones} />
               <Route exact path="/faq" component={Faq} />

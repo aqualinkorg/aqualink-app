@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 jest.mock("../../routes/Homepage", () => "Mock-Homepage");
 jest.mock("../../routes/ReefRoutes", () => "Mock-ReefRoutes");
 jest.mock("../../routes/About", () => "Mock-About");
-jest.mock("../../routes/Apply", () => "Mock-Apply");
+jest.mock("../../routes/RegisterSite", () => "Mock-RegisterSite");
 jest.mock("../../routes/Buoy", () => "Mock-Buoy");
 jest.mock("../../routes/Drones", () => "Mock-Drones");
 jest.mock("../../routes/Faq", () => "Mock-Faq");
