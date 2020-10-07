@@ -63,8 +63,16 @@ const Apply = ({ classes }: ApplyProps) => {
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
   const [formErrors, setFormErrors] = useState(Map<string, string>());
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false);
+  const [snackbarOpenFromDatabase, setSnackbarOpenFromDatabase] = useState<
+    boolean
+  >(false);
+  const [snackbarOpenFromCarto, setSnackbarOpenFromCarto] = useState<boolean>(
+    false
+  );
+  const [databaseSubmissionOk, setDatabaseSubmissionOk] = useState<boolean>(
+    false
+  );
+  const [cartoSubmissionOk, setCartoSubmissionOk] = useState<boolean>(false);
 
   useEffect(() => {
     if (user && user.fullName && user.organization && user.email) {
@@ -156,12 +164,12 @@ const Apply = ({ classes }: ApplyProps) => {
             user.token
           )
           .then(() => {
-            setIsSuccessfullySubmitted(true);
-            setSnackbarOpen(true);
+            setDatabaseSubmissionOk(true);
+            setSnackbarOpenFromDatabase(true);
           })
           .catch((error) => {
-            setIsSuccessfullySubmitted(false);
-            setSnackbarOpen(true);
+            setDatabaseSubmissionOk(false);
+            setSnackbarOpenFromDatabase(true);
             console.error(error);
           });
       }
@@ -179,12 +187,12 @@ const Apply = ({ classes }: ApplyProps) => {
         `https://drewjgray.carto.com/api/v2/sql?&q=${sql}&api_key=${REACT_APP_CARTO_API_KEY}`
       )
         .then((response) => {
-          setIsSuccessfullySubmitted(response.ok);
-          setSnackbarOpen(true);
+          setCartoSubmissionOk(response.ok);
+          setSnackbarOpenFromCarto(true);
         })
         .catch((error) => {
-          setIsSuccessfullySubmitted(false);
-          setSnackbarOpen(true);
+          setCartoSubmissionOk(false);
+          setSnackbarOpenFromCarto(true);
           console.error(error);
         });
     }
@@ -361,17 +369,25 @@ const Apply = ({ classes }: ApplyProps) => {
       </Box>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={snackbarOpen}
+        open={snackbarOpenFromCarto && snackbarOpenFromDatabase}
         autoHideDuration={4000}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={() => {
+          setSnackbarOpenFromCarto(false);
+          setSnackbarOpenFromDatabase(false);
+        }}
       >
         <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={isSuccessfullySubmitted ? "success" : "error"}
+          onClose={() => {
+            setSnackbarOpenFromCarto(false);
+            setSnackbarOpenFromDatabase(false);
+          }}
+          severity={
+            databaseSubmissionOk && cartoSubmissionOk ? "success" : "error"
+          }
           elevation={6}
           variant="filled"
         >
-          {isSuccessfullySubmitted
+          {databaseSubmissionOk && cartoSubmissionOk
             ? "Application successfully submitted."
             : "Something went wrong, please try again"}
         </Alert>
