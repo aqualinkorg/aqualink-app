@@ -109,7 +109,7 @@ function Chart({
           color: "rgb(158, 166, 170, 0.07)",
         },
         fillPlugin: {
-          datasetIndex: 0,
+          datasetIndex: 1,
           zeroLevel: temperatureThreshold,
           bottom: 0,
           top: 35,
@@ -203,7 +203,7 @@ function Chart({
         chartLabels,
         tempWithSurvey,
         surfaceTemperatureData,
-        true
+        Boolean(temperatureThreshold)
       )}
     />
   );
