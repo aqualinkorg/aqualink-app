@@ -6,7 +6,7 @@ exports[`Site registration page should render with given state from Redux store 
     searchlocation="false"
   />
   <mock-box
-    py="4"
+    pt="4"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -15,7 +15,7 @@ exports[`Site registration page should render with given state from Redux store 
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
             gutterbottom="true"
@@ -37,58 +37,6 @@ exports[`Site registration page should render with given state from Redux store 
               src="reemimage.jpg"
               style="width: 100%;"
             />
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
-        >
-          <mock-box
-            bgcolor="grey.100"
-            p="4"
-          >
-            <mock-typography
-              gutterbottom="true"
-              variant="h4"
-            >
-              Your Obligations
-            </mock-typography>
-            <mock-typography
-              component="div"
-            >
-              You will be given a free smart buoy but there are some things you will be expected to do or provide:
-              <ol>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Pay for shipping and any applicable duties
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Obtain any necessary permits (if applicable)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Provide and attach a ballast (e.g. 60lb kettlebell)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Deploy spotter with mooring weight (can be done from a kayak)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Maintain spotter (inspect and clean every 6 months)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Conduct initial and periodic photographic surveys and upload imagery to our website
-                </li>
-              </ol>
-            </mock-typography>
           </mock-box>
         </div>
       </div>
