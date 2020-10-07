@@ -13,7 +13,7 @@ export const createChartData = (
       label: "SURVEYS",
       data: tempWithSurvey,
       pointRadius: 5,
-      backgroundColor: "#ffffff",
+      pointBackgroundColor: "#ffff",
       borderWidth: 1.5,
       borderColor: "#128cc0",
     },
