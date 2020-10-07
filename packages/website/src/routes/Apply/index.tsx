@@ -172,17 +172,23 @@ const Apply = ({ classes }: ApplyProps) => {
           <Grid container spacing={6}>
             <Grid item xs={12} md={7}>
               <Typography variant="h3" gutterBottom>
-                Manage your local reef
+                Register your local site
               </Typography>
 
               <Typography>
-                We will be starting with our deployments in August and would
-                love to have you apply to get free access to our system.
-                We&apos;ll have more more more information coming shortly.
-                Submitting the application doesn&apos;t obligate you, if you
-                have questions please first take a look at our FAQ page and if
-                you don&apos;t get the answer you&apos;re looking for then email
-                info@aqualink.org.
+                To get your local site registered with Aqualink to start
+                tracking surface temperatures and survey imagery please complete
+                the form below. Your site will become immediately available for
+                you to see though some of the data will take up to 24 hours to
+                show up.
+              </Typography>
+
+              <Typography>
+                Once you have your site registered you can apply to get a smart
+                buoy to track underwater temperatures as well. If approved,
+                Aqualink will provide you with a buoy free of charge but you
+                will be responsible for paying the shipping and import duties
+                costs (if applicable).
               </Typography>
 
               <Box mt={4}>

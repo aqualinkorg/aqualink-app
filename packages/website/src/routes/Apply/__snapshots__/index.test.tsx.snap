@@ -21,10 +21,13 @@ exports[`renders as expected 1`] = `
             gutterbottom="true"
             variant="h3"
           >
-            Manage your local reef
+            Register your local site
           </mock-typography>
           <mock-typography>
-            We will be starting with our deployments in August and would love to have you apply to get free access to our system. We'll have more more more information coming shortly. Submitting the application doesn't obligate you, if you have questions please first take a look at our FAQ page and if you don't get the answer you're looking for then email info@aqualink.org.
+            To get your local site registered with Aqualink to start tracking surface temperatures and survey imagery please complete the form below. Your site will become immediately available for you to see though some of the data will take up to 24 hours to show up.
+          </mock-typography>
+          <mock-typography>
+            Once you have your site registered you can apply to get a smart buoy to track underwater temperatures as well. If approved, Aqualink will provide you with a buoy free of charge but you will be responsible for paying the shipping and import duties costs (if applicable).
           </mock-typography>
           <mock-box
             mt="4"
