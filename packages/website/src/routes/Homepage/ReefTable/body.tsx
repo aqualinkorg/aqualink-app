@@ -1,4 +1,12 @@
-import { TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography,
+  createStyles,
+  withStyles,
+  WithStyles,
+} from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,12 +23,7 @@ import {
 } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 
-type ReefTableBodyProps = {
-  order: Order;
-  orderBy: OrderKeys;
-};
-
-const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
+const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
@@ -65,7 +68,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <TableCell>
+            <TableCell className={classes.nameCells}>
               <Typography
                 align="left"
                 variant="subtitle1"
@@ -106,4 +109,19 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
   );
 };
 
-export default ReefTableBody;
+const styles = () =>
+  createStyles({
+    nameCells: {
+      paddingLeft: 10,
+    },
+  });
+
+type ReefTableBodyIncomingProps = {
+  order: Order;
+  orderBy: OrderKeys;
+};
+
+type ReefTableBodyProps = WithStyles<typeof styles> &
+  ReefTableBodyIncomingProps;
+
+export default withStyles(styles)(ReefTableBody);
