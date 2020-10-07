@@ -36,12 +36,13 @@ export class ReefApplicationsService {
     reefParams: CreateReefWithApplicationDto,
     user: User,
   ): Promise<ReefApplication> {
-    const { longitude, latitude, depth } = reefParams;
+    const { longitude, latitude, depth, name } = reefParams;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
 
     const reef = await this.reefRepository.save({
+      name,
       depth,
       polygon: {
         type: 'Point',
