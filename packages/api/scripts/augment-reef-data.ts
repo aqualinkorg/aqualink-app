@@ -3,6 +3,7 @@ import {
   Client,
   AddressType,
   LatLng,
+  GeocodeResult,
 } from '@googlemaps/google-maps-services-js';
 import Bluebird from 'bluebird';
 import { Connection, createConnection, Repository } from 'typeorm';
@@ -16,18 +17,40 @@ const googleMapsClient = new Client({});
 
 const dbConfig = require('../ormconfig');
 
+function getLocality(results: GeocodeResult[]) {
+  const localityPreference = [
+    'administrative_area_level_2',
+    'administrative_area_level_1',
+    'locality',
+    'country',
+  ] as AddressType[];
+
+  if (results.length === 0) {
+    return undefined;
+  }
+
+  const result = localityPreference.reduce(
+    (tempResult: GeocodeResult | undefined, locality) => {
+      const localityResult = results.find((r) => r.types.includes(locality));
+      return tempResult || localityResult;
+    },
+    undefined,
+  );
+  return result ? result.formatted_address : results[0].formatted_address;
+}
+
 async function getCountry(longitude, latitude): Promise<string | undefined> {
   return googleMapsClient
     .reverseGeocode({
       params: {
         latlng: [latitude, longitude] as LatLng,
-        result_type: ['country' as AddressType],
+        result_type: ['political' as AddressType],
         key: process.env.GOOGLE_MAPS_API_KEY || '',
       },
     })
     .then((r) => {
       const { results } = r.data;
-      return results.length > 0 ? results[0].formatted_address : undefined;
+      return getLocality(results);
     })
     .catch((e) => {
       console.log(
@@ -48,7 +71,6 @@ async function getRegion(
   if (regions.length > 0) {
     return regions[0];
   }
-
   return country
     ? regionRepository.save({
         name: country,
