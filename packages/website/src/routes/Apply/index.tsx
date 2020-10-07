@@ -48,7 +48,6 @@ const contactFormElements = [
     validator: (email: string) => isEmail(email),
     errorMessage: "Enter a valid email",
   },
-  { id: "siteName", label: "Site Name" },
 ];
 
 const Apply = ({ classes }: ApplyProps) => {
@@ -87,6 +86,7 @@ const Apply = ({ classes }: ApplyProps) => {
       errorMessage: "Enter a valid lat/lng",
     },
     { id: "lng", label: "Longitude" },
+    { id: "siteName", label: "Site Name" },
     {
       id: "depth",
       label: "Depth (m)",
@@ -273,9 +273,7 @@ const Apply = ({ classes }: ApplyProps) => {
                           <Grid item xs={12} key={label}>
                             <TextField
                               id={id}
-                              disabled={
-                                id === "name" || id === "org" || id === "email"
-                              }
+                              disabled
                               label={label}
                               error={formErrors.get(id, "").length !== 0}
                               helperText={formErrors.get(id, "")}
@@ -293,7 +291,12 @@ const Apply = ({ classes }: ApplyProps) => {
                         </Grid>
 
                         {locationFormElements.map(({ id, label }) => (
-                          <Grid item xs={6} key={label}>
+                          <Grid
+                            item
+                            // eslint-disable-next-line no-nested-ternary
+                            xs={id === "siteName" ? 8 : id === "depth" ? 4 : 6}
+                            key={label}
+                          >
                             <TextField
                               id={id}
                               label={label}

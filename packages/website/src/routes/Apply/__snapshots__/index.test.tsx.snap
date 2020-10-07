@@ -182,22 +182,6 @@ exports[`Site registration page should render with given state from Redux store 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    <mock-textfield
-                      disabled="false"
-                      error="false"
-                      fullwidth="true"
-                      helpertext=""
-                      id="siteName"
-                      inputprops="[object Object]"
-                      label="Site Name"
-                      size="small"
-                      value=""
-                      variant="outlined"
-                    />
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-                  >
                     <mock-typography>
                       Location: Select point on map
                     </mock-typography>
@@ -233,7 +217,22 @@ exports[`Site registration page should render with given state from Redux store 
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="siteName"
+                      inputprops="[object Object]"
+                      label="Site Name"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
                   >
                     <mock-textfield
                       error="false"
