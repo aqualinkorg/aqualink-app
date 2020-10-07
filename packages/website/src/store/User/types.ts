@@ -17,6 +17,7 @@ export interface UserState {
 
 export interface UserRegisterParams {
   fullName: string;
+  organization: string;
   email: string;
   password: string;
 }

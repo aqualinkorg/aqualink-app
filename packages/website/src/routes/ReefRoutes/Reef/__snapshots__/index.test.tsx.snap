@@ -248,6 +248,21 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   error="false"
                   fullwidth="true"
                   helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-52 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
                   id="emailAddress"
                   inputprops="[object Object]"
                   label="Email Address"
@@ -866,6 +881,21 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   label="Last Name"
                   name="lastName"
                   placeholder="Last Name"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
                   variant="outlined"
                 />
               </div>
