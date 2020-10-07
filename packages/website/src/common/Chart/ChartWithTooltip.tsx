@@ -94,7 +94,7 @@ function ChartWithTooltip({
           },
           tooltips: {
             filter: (tooltipItem: any) => {
-              return tooltipItem.datasetIndex === 0;
+              return tooltipItem.datasetIndex === 1;
             },
             enabled: false,
             intersect: false,
