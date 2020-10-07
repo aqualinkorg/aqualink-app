@@ -43,6 +43,8 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
+  const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
+
   const {
     xAxisMax,
     xAxisMin,
@@ -52,14 +54,20 @@ function Chart({
     chartLabels,
   } = useProcessedChartData(dailyData, temperatureThreshold);
 
-  const changeXTickShift = () => {
+  const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
     if (current) {
       const xScale = current.chartInstance.scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
-      setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
+      if (xScale.width > 400) {
+        setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
+        setXPeriod("week");
+      } else {
+        setXPeriod("month");
+        setXTickShift(0);
+      }
     }
   };
 
@@ -71,7 +79,7 @@ function Chart({
     setTimeout(() => {
       // Resize has stopped so stop updating the chart
       setUpdateChart(false);
-      changeXTickShift();
+      changeXTickShiftAndPeriod();
     }, 1);
   }, []);
 
@@ -84,7 +92,7 @@ function Chart({
   }, [onResize]);
 
   useEffect(() => {
-    changeXTickShift();
+    changeXTickShiftAndPeriod();
   });
   const settings = mergeWith(
     {
@@ -139,9 +147,9 @@ function Chart({
             time: {
               displayFormats: {
                 week: "MMM D",
-                month: "MMM D",
+                month: "MMM",
               },
-              unit: "week",
+              unit: xPeriod,
             },
             display: true,
             ticks: {
