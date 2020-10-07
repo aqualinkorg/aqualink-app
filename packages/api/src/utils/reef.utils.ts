@@ -51,7 +51,7 @@ export const getRegion = async (
     ? regionRepository.save({
         name: country,
         polygon: {
-          coordinates: [latitude, longitude],
+          coordinates: [longitude, latitude],
           type: 'Point',
         } as Point,
       })

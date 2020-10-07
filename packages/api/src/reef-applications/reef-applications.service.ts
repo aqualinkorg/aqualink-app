@@ -46,7 +46,7 @@ export class ReefApplicationsService {
       depth,
       polygon: {
         type: 'Point',
-        coordinates: [latitude, longitude],
+        coordinates: [longitude, latitude],
       },
       maxMonthlyMean,
       timezone: timezones[0],

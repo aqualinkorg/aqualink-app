@@ -53,7 +53,7 @@ async function getRegion(
     ? regionRepository.save({
         name: country,
         polygon: {
-          coordinates: [latitude, longitude],
+          coordinates: [longitude, latitude],
           type: 'Point',
         } as GeoJSON,
       })
