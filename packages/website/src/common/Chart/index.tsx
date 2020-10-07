@@ -43,7 +43,7 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
-  const [xPeriod, setXPeriod] = useState<string>("week");
+  const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
   const {
     xAxisMax,

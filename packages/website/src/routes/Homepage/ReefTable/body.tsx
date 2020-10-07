@@ -23,11 +23,7 @@ import {
 } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 
-const ReefTableBody = ({
-  order,
-  orderBy,
-  classes,
-}: ReefTableBodyPropsStyled) => {
+const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
@@ -120,11 +116,12 @@ const styles = () =>
     },
   });
 
-type ReefTableBodyProps = {
+type ReefTableBodyIncomingProps = {
   order: Order;
   orderBy: OrderKeys;
 };
 
-type ReefTableBodyPropsStyled = WithStyles<typeof styles> & ReefTableBodyProps;
+type ReefTableBodyProps = WithStyles<typeof styles> &
+  ReefTableBodyIncomingProps;
 
 export default withStyles(styles)(ReefTableBody);

@@ -28,7 +28,7 @@ ColumnTitle.defaultProps = {
   unit: undefined,
 };
 
-const EnhancedTableHead = (props: EnhancedTablePropsStyled) => {
+const EnhancedTableHead = (props: EnhancedTableProps) => {
   const createSortHandler = (property: OrderKeys) => (
     event: React.MouseEvent<unknown>
   ) => {
@@ -96,7 +96,7 @@ interface HeadCell {
   width?: string;
 }
 
-interface EnhancedTableProps {
+interface EnhancedTableIncomingProps {
   onRequestSort: (
     event: React.MouseEvent<unknown>,
     property: OrderKeys
@@ -113,6 +113,7 @@ const styles = () =>
     },
   });
 
-type EnhancedTablePropsStyled = WithStyles<typeof styles> & EnhancedTableProps;
+type EnhancedTableProps = WithStyles<typeof styles> &
+  EnhancedTableIncomingProps;
 
 export default withStyles(styles)(EnhancedTableHead);
