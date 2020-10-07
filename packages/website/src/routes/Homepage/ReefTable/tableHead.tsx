@@ -5,6 +5,9 @@ import {
   TableCell,
   TableSortLabel,
   Typography,
+  createStyles,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import type { Order, OrderKeys } from "./utils";
 
@@ -25,7 +28,7 @@ ColumnTitle.defaultProps = {
   unit: undefined,
 };
 
-const EnhancedTableHead = (props: EnhancedTableProps) => {
+const EnhancedTableHead = (props: EnhancedTablePropsStyled) => {
   const createSortHandler = (property: OrderKeys) => (
     event: React.MouseEvent<unknown>
   ) => {
@@ -64,8 +67,9 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
+            className={props.classes.headCells}
             key={headCell.id}
-            style={{ width: headCell.width, paddingRight: 0, paddingLeft: 10 }}
+            style={{ width: headCell.width }}
             align="left"
             padding="default"
             sortDirection={props.orderBy === headCell.id ? props.order : false}
@@ -101,4 +105,14 @@ interface EnhancedTableProps {
   orderBy: string;
 }
 
-export default EnhancedTableHead;
+const styles = () =>
+  createStyles({
+    headCells: {
+      paddingRight: 0,
+      paddingLeft: 10,
+    },
+  });
+
+type EnhancedTablePropsStyled = WithStyles<typeof styles> & EnhancedTableProps;
+
+export default withStyles(styles)(EnhancedTableHead);

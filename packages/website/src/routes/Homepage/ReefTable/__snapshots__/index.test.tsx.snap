@@ -51,9 +51,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
           <mock-tablerow>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="width: 40%; padding-right: 0px; padding-left: 10px;"
+              style="width: 40%;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -70,9 +71,9 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="padding-right: 0px; padding-left: 10px;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -96,9 +97,9 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="padding-right: 0px; padding-left: 10px;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -122,9 +123,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="desc"
-              style="width: 5%; padding-right: 0px; padding-left: 10px;"
+              style="width: 5%;"
             >
               <mock-tablesortlabel
                 active="true"
@@ -150,7 +152,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             tabindex="-1"
           >
             <mock-tablecell
-              style="padding-left: 10px;"
+              classname="ReefTableBody-nameCells-3"
             >
               <mock-typography
                 align="left"
