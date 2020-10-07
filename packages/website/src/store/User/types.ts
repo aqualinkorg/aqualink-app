@@ -5,6 +5,7 @@ export interface User {
   fullName?: string | null;
   adminLevel?: "default" | "reef_manager" | "super_admin";
   firebaseUid?: string | null;
+  organization?: string | null;
   administeredReefs?: Reef[];
   token?: string | null;
 }
