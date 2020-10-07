@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Map, fromJS } from "immutable";
-import { pick, some, isEmpty } from "lodash";
+import { pick, isEmpty } from "lodash";
 import L from "leaflet";
 import isEmail from "validator/lib/isEmail";
 import isNumeric from "validator/lib/isNumeric";
@@ -12,15 +12,13 @@ import {
   Paper,
   Container,
   TextField,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
   Button,
   Snackbar,
   withStyles,
   WithStyles,
   createStyles,
   Theme,
+  Tooltip,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useSelector } from "react-redux";
@@ -51,12 +49,6 @@ const contactFormElements = [
     errorMessage: "Enter a valid email",
   },
   { id: "siteName", label: "Site Name" },
-];
-
-const agreements = [
-  { id: "shipping", label: "Handle any shipping and permitting charges" },
-  { id: "buoy", label: "Provide mooring and deploy buoy" },
-  { id: "survey", label: "Conduct initial survey" },
 ];
 
 const Apply = ({ classes }: ApplyProps) => {
@@ -103,9 +95,7 @@ const Apply = ({ classes }: ApplyProps) => {
     },
   ];
 
-  const joinedFormElements = locationFormElements
-    .concat(contactFormElements)
-    .concat(agreements);
+  const joinedFormElements = locationFormElements.concat(contactFormElements);
 
   function updateFormElement(id: string, value: string | boolean) {
     setFormModel(formModel.set(id, value));
@@ -319,44 +309,22 @@ const Apply = ({ classes }: ApplyProps) => {
                         ))}
 
                         <Grid item xs={12}>
-                          Agree to:
-                          <FormGroup>
-                            {agreements.map(({ id, label }) => (
-                              <FormControlLabel
-                                key={label}
-                                className={classes.formControlLabel}
-                                control={
-                                  <Checkbox
-                                    color="primary"
-                                    checked={
-                                      formModel.get(id, false) as boolean
-                                    }
-                                    onChange={(_, checked) =>
-                                      updateFormElement(id, checked)
-                                    }
-                                    name="checkedA"
-                                  />
-                                }
-                                label={label}
-                              />
-                            ))}
-                          </FormGroup>
-                          {some(agreements, ({ id }) => formErrors.get(id)) && (
-                            <Typography color="error">
-                              The agreements are required
-                            </Typography>
-                          )}
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            onClick={handleFormSubmission}
+                          <Tooltip
+                            disableHoverListener={Boolean(user)}
+                            title="Please login to register a site"
                           >
-                            Submit
-                          </Button>
+                            <div>
+                              <Button
+                                disabled={!user}
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                onClick={handleFormSubmission}
+                              >
+                                Submit
+                              </Button>
+                            </div>
+                          </Tooltip>
                         </Grid>
                       </>
                     </Grid>

@@ -250,67 +250,21 @@ exports[`Site registration page should render with given state from Redux store 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    Agree to:
-                    <div
-                      class="MuiFormGroup-root"
+                    <mock-tooltip
+                      disablehoverlistener="true"
+                      title="Please login to register a site"
                     >
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
+                      <div>
+                        <mock-button
                           color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
+                          disabled="false"
+                          fullwidth="true"
+                          variant="contained"
                         >
-                          Handle any shipping and permitting charges
-                        </mock-typography>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
-                          color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
-                        >
-                          Provide mooring and deploy buoy
-                        </mock-typography>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
-                          color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
-                        >
-                          Conduct initial survey
-                        </mock-typography>
-                      </label>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-                  >
-                    <mock-button
-                      color="primary"
-                      fullwidth="true"
-                      variant="contained"
-                    >
-                      Submit
-                    </mock-button>
+                          Submit
+                        </mock-button>
+                      </div>
+                    </mock-tooltip>
                   </div>
                 </div>
               </mock-box>
