@@ -14,11 +14,11 @@ const logger = new Logger('Reef Utils');
 
 const getLocality = (results: GeocodeResult[]) => {
   const localityPreference = [
-    'administrative_area_level_2',
-    'administrative_area_level_1',
-    'locality',
-    'country',
-  ] as AddressType[];
+    AddressType.administrative_area_level_2,
+    AddressType.administrative_area_level_1,
+    AddressType.locality,
+    AddressType.country,
+  ];
 
   if (results.length === 0) {
     return undefined;
