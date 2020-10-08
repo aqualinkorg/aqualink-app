@@ -104,7 +104,7 @@ const ReefDetails = ({
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid className={classes.mediaWrapper} item xs={12} md={6}>
           <div className={classes.container}>
             {diveDate && point && (
               <CardTitle values={featuredMediaTitleItems} />
@@ -154,6 +154,11 @@ const styles = (theme: Theme) =>
       },
       [theme.breakpoints.down("xs")]: {
         height: "20rem",
+      },
+    },
+    mediaWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        marginBottom: "3rem",
       },
     },
   });

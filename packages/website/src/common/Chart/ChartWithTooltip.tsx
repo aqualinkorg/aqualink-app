@@ -104,6 +104,12 @@ function ChartWithTooltip({
             display: true,
             rtl: true,
             labels: {
+              filter: (legendItem: any) => {
+                return (
+                  legendItem.text === "SURFACE TEMP" ||
+                  legendItem.text === "SURVEYS"
+                );
+              },
               fontSize: 14,
               fontColor: "#9ea6aa",
             },
