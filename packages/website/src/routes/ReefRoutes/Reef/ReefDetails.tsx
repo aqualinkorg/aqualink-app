@@ -21,9 +21,15 @@ import CardTitle, { Value } from "./CardTitle";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { SurveyPoint } from "../../../store/Survey/types";
+import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 
-const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
+const ReefDetails = ({
+  classes,
+  reef,
+  surveys,
+  point,
+  diveDate,
+}: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
   const { liveData, maxMonthlyMean } = reef;
@@ -98,7 +104,7 @@ const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid className={classes.mediaWrapper} item xs={12} md={6}>
           <div className={classes.container}>
             {diveDate && point && (
               <CardTitle values={featuredMediaTitleItems} />
@@ -122,6 +128,7 @@ const ReefDetails = ({ classes, reef, point, diveDate }: ReefDetailProps) => {
       <Box mt="2rem">
         <Charts
           dailyData={reef.dailyData}
+          surveys={surveys}
           depth={reef.depth}
           maxMonthlyMean={reef.maxMonthlyMean || null}
           temperatureThreshold={
@@ -149,10 +156,16 @@ const styles = (theme: Theme) =>
         height: "20rem",
       },
     },
+    mediaWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        marginBottom: "3rem",
+      },
+    },
   });
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  surveys: SurveyListItem[];
   point?: SurveyPoint | null;
   diveDate?: string | null;
 }

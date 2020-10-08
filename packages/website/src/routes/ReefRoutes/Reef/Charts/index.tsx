@@ -9,6 +9,7 @@ import {
 import type { DailyData } from "../../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
+import { SurveyListItem } from "../../../../store/Survey/types";
 
 const Charts = ({ classes, temperatureThreshold, ...rest }: ChartsProps) => {
   return (
@@ -63,6 +64,7 @@ const styles = (theme: Theme) =>
 
 interface ChartsIncomingProps {
   dailyData: DailyData[];
+  surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;
