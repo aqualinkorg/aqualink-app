@@ -3,7 +3,6 @@ import {
   Body,
   Param,
   Get,
-  Post,
   Put,
   Delete,
   Query,
@@ -11,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
-import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { AdminLevel } from '../users/users.entity';
@@ -22,11 +20,6 @@ import { Public } from '../auth/public.decorator';
 @Controller('reefs')
 export class ReefsController {
   constructor(private reefsService: ReefsService) {}
-
-  @Post()
-  create(@Body() createReefDto: CreateReefDto): Promise<Reef> {
-    return this.reefsService.create(createReefDto);
-  }
 
   @Public()
   @Get()
