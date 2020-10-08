@@ -2,6 +2,7 @@ import {
   Controller,
   Body,
   Param,
+  Post,
   Get,
   Put,
   Delete,
@@ -15,11 +16,17 @@ import { UpdateReefDto } from './dto/update-reef.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
+import { CreateReefDto } from './dto/create-reef.dto';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs')
 export class ReefsController {
   constructor(private reefsService: ReefsService) {}
+
+  @Post()
+  create(@Body() createReefDto: CreateReefDto): Promise<Reef> {
+    return this.reefsService.create(createReefDto);
+  }
 
   @Public()
   @Get()

@@ -14,6 +14,10 @@ import { getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
+import { CreateReefDto } from './dto/create-reef.dto';
+import { Region } from '../regions/regions.entity';
+import { getRegion, getTimezones } from '../utils/reef.utils';
+import { getMMM } from '../utils/temperature';
 
 @Injectable()
 export class ReefsService {
@@ -23,7 +27,51 @@ export class ReefsService {
 
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
+
+    @InjectRepository(Region)
+    private regionRepository: Repository<Region>,
   ) {}
+
+  async create(createReefDto: CreateReefDto): Promise<Reef> {
+    const {
+      name,
+      latitude,
+      longitude,
+      temperatureThreshold,
+      depth,
+      status,
+      videoStream,
+      admins,
+      stream,
+    } = createReefDto;
+    const region = await getRegion(longitude, latitude, this.regionRepository);
+    const maxMonthlyMean = await getMMM(longitude, latitude);
+    const timezones = getTimezones(latitude, longitude) as string[];
+    const reef = await this.reefsRepository.save({
+      name,
+      region,
+      polygon: {
+        type: 'Point',
+        coordinates: [latitude, longitude],
+      },
+      maxMonthlyMean,
+      timezones,
+      temperatureThreshold,
+      depth,
+      status,
+      videoStream,
+      stream,
+    });
+
+    this.reefsRepository
+      .createQueryBuilder('reefs')
+      .update()
+      .relation('admins')
+      .of(reef)
+      .add(admins);
+
+    return reef;
+  }
 
   latestDailyDataSubquery(): string {
     const query = this.dailyDataRepository.createQueryBuilder('dailyData');
