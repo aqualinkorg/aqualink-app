@@ -20,11 +20,13 @@ export interface ChartProps {
   dailyData: DailyData[];
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
-  maxMonthlyMean?: number | null;
+  maxMonthlyMean: number | null;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
+
+const SMALL_WINDOW = 400;
 
 function Chart({
   dailyData,
@@ -46,6 +48,11 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
+  const [
+    showHistoricalMaxAnnotation,
+    setShowHistoricalMaxAnnotation,
+  ] = useState<boolean>(true);
+
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
   const {
@@ -65,12 +72,24 @@ function Chart({
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
-      if (xScale.width > 400) {
+      if (xScale.width > SMALL_WINDOW) {
         setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
         setXPeriod("week");
       } else {
         setXPeriod("month");
         setXTickShift(0);
+      }
+    }
+  };
+
+  const decideForHistoricalMax = () => {
+    const { current } = chartRef;
+    if (current) {
+      const xScale = current.chartInstance.scales["x-axis-0"];
+      if (xScale.width < SMALL_WINDOW) {
+        setShowHistoricalMaxAnnotation(false);
+      } else {
+        setShowHistoricalMaxAnnotation(true);
       }
     }
   };
@@ -84,6 +103,7 @@ function Chart({
       // Resize has stopped so stop updating the chart
       setUpdateChart(false);
       changeXTickShiftAndPeriod();
+      decideForHistoricalMax();
     }, 1);
   }, []);
 
@@ -97,6 +117,7 @@ function Chart({
 
   useEffect(() => {
     changeXTickShiftAndPeriod();
+    decideForHistoricalMax();
   });
   const settings = mergeWith(
     {
@@ -130,7 +151,7 @@ function Chart({
             type: "line",
             mode: "horizontal",
             scaleID: "y-axis-0",
-            value: maxMonthlyMean,
+            value: showHistoricalMaxAnnotation ? maxMonthlyMean : null,
             borderColor: "rgb(75, 192, 192)",
             borderWidth: 2,
             borderDash: [5, 5],
