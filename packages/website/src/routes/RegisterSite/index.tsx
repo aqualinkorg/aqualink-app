@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Map, fromJS } from "immutable";
 import { pick, isEmpty } from "lodash";
 import L from "leaflet";
@@ -55,6 +56,7 @@ const Apply = ({ classes }: ApplyProps) => {
     false
   );
   const [cartoSubmissionOk, setCartoSubmissionOk] = useState<boolean>(false);
+  const [newReefId, setNewReefId] = useState<number>();
 
   useEffect(() => {
     if (user && user.fullName && user.organization && user.email) {
@@ -144,7 +146,8 @@ const Apply = ({ classes }: ApplyProps) => {
             parseInt(depth, 10),
             user.token
           )
-          .then(() => {
+          .then(({ data }) => {
+            setNewReefId(data.reef.id);
             setDatabaseSubmissionOk(true);
             setSnackbarOpenFromDatabase(true);
           })
@@ -309,6 +312,7 @@ const Apply = ({ classes }: ApplyProps) => {
           </Container>
         </Box>
       </Box>
+      {newReefId && <Redirect to={`/reefs/${newReefId}`} />}
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         open={snackbarOpenFromCarto && snackbarOpenFromDatabase}

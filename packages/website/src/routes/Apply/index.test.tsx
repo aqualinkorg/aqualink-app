@@ -3,8 +3,8 @@ import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
-import Sensor from ".";
-import type { Reef } from "../../../../store/Reefs/types";
+import Apply from ".";
+import type { Reef } from "../../store/Reefs/types";
 
 const mockStore = configureStore([]);
 
@@ -25,6 +25,30 @@ const liveData = {
   },
 };
 
+const dailyData = {
+  id: 10,
+  date: "",
+
+  minBottomTemperature: 10,
+  maxBottomTemperature: 10,
+  avgBottomTemperature: 10,
+
+  degreeHeatingDays: 10,
+  surfaceTemperature: 10,
+  satelliteTemperature: 10,
+
+  minWindSpeed: 10,
+  maxWindSpeed: 10,
+  avgWindSpeed: 10,
+  windDirection: 10,
+
+  minWaveHeight: 10,
+  maxWaveHeight: 10,
+  avgWaveHeight: 10,
+  waveDirection: 10,
+  wavePeriod: 10,
+};
+
 const reef: Reef = {
   id: 16,
   name: "Mock Reef Friesen",
@@ -40,45 +64,16 @@ const reef: Reef = {
     type: "Point",
     coordinates: [0, 0],
   },
-  dailyData: [],
-  latestDailyData: {
-    id: 10,
-    date: "",
-
-    minBottomTemperature: 10,
-    maxBottomTemperature: 10,
-    avgBottomTemperature: 10,
-
-    degreeHeatingDays: 10,
-    surfaceTemperature: 10,
-    satelliteTemperature: 10,
-
-    minWindSpeed: 10,
-    maxWindSpeed: 10,
-    avgWindSpeed: 10,
-    windDirection: 10,
-
-    minWaveHeight: 10,
-    maxWaveHeight: 10,
-    avgWaveHeight: 10,
-    waveDirection: 10,
-    wavePeriod: 10,
-  },
+  dailyData: [dailyData],
+  latestDailyData: dailyData,
 };
 
-describe("Sensor Card", () => {
+describe("Apply", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
-      user: {
-        userInfo: {
-          email: "test@mail.com",
-          fullName: "Test User",
-          adminLevel: "super_admin",
-          firebaseUid: "RaNdOmStRiNg",
-          administeredReefs: [],
-          token: "RaNdOmStRiNg",
-        },
+      selectedReef: {
+        details: reef,
       },
     });
 
@@ -86,7 +81,7 @@ describe("Sensor Card", () => {
 
     element = render(
       <Provider store={store}>
-        <Sensor reef={reef} />
+        <Apply />
       </Provider>
     ).container;
   });

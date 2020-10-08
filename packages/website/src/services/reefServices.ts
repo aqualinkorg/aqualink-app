@@ -1,6 +1,12 @@
 import { AxiosRequestConfig } from "axios";
 import requests from "../helpers/requests";
-import type { DailyData, LiveData, Reef, Pois } from "../store/Reefs/types";
+import type {
+  DailyData,
+  LiveData,
+  Reef,
+  Pois,
+  ReefRegisterResponseData,
+} from "../store/Reefs/types";
 
 const getReef = (id: string) =>
   requests.send<Reef>({
@@ -60,7 +66,7 @@ const applyForReef = (
     },
   };
 
-  return requests.send({
+  return requests.send<ReefRegisterResponseData>({
     url: "reef-applications",
     method: "POST",
     data,

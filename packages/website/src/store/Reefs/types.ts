@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { User } from "../User/types";
+
 export type Position = [number, number];
 
 export interface Polygon {
@@ -80,6 +82,17 @@ export interface Reef {
   liveData: LiveData;
   latestDailyData: DailyData;
   featuredImage?: string;
+}
+
+export interface ReefRegisterResponseData {
+  fundingSource: string | null;
+  id: number;
+  installationResources: string | null;
+  installationSchedule: string | null;
+  permitRequirements: string | null;
+  reef: Reef;
+  uid: string;
+  user: User;
 }
 
 export interface ReefsListState {

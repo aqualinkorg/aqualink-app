@@ -26,6 +26,7 @@ import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 const ReefDetails = ({
   classes,
   reef,
+  hasDailyData,
   surveys,
   point,
   diveDate,
@@ -117,26 +118,30 @@ const ReefDetails = ({
         </Grid>
       </Grid>
 
-      <Grid container justify="space-between" spacing={4}>
-        {cards.map(({ Component, props }, index) => (
-          <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-            <Component {...props} />
+      {hasDailyData && (
+        <>
+          <Grid container justify="space-between" spacing={4}>
+            {cards.map(({ Component, props }, index) => (
+              <Grid key={index.toString()} item xs={12} sm={6} md={3}>
+                <Component {...props} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
 
-      <Box mt="2rem">
-        <Charts
-          dailyData={reef.dailyData}
-          surveys={surveys}
-          depth={reef.depth}
-          maxMonthlyMean={reef.maxMonthlyMean || null}
-          temperatureThreshold={
-            reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-          }
-        />
-        <Surveys reefId={reef.id} />
-      </Box>
+          <Box mt="2rem">
+            <Charts
+              dailyData={reef.dailyData}
+              surveys={surveys}
+              depth={reef.depth}
+              maxMonthlyMean={reef.maxMonthlyMean || null}
+              temperatureThreshold={
+                reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+              }
+            />
+            <Surveys reefId={reef.id} />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
@@ -165,6 +170,7 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  hasDailyData: boolean;
   surveys: SurveyListItem[];
   point?: SurveyPoint | null;
   diveDate?: string | null;

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
 import {
   withStyles,
@@ -11,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
@@ -29,9 +30,21 @@ import {
 } from "../../../store/Survey/surveyListSlice";
 import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import { isAdmin } from "../../../helpers/isAdmin";
+
+const managerNoDataMessage =
+  "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
+
+const managerWithDataMessage =
+  "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models. Apply for an Aqualink spotter ";
+
+const defaultMessage =
+  "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
+  const user = useSelector(userInfoSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const surveyList = useSelector(surveyListSelector);
@@ -46,9 +59,11 @@ const Reef = ({ match, classes }: ReefProps) => {
   const { featuredSurveyMedia, diveDate } = featuredMedia || {};
   const { poiId, url } = featuredSurveyMedia || {};
 
-  const { liveData } = reefDetails || {};
+  const { liveData, dailyData } = reefDetails || {};
 
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
+
+  const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -67,7 +82,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   return (
     <>
       <ReefNavBar searchLocation={false} />
-      <Container>
+      <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
@@ -78,9 +93,18 @@ const Reef = ({ match, classes }: ReefProps) => {
             {!hasSpotter && (
               <Box mt="1rem">
                 <Alert severity="info">
-                  Currently no spotter deployed at this reef location. All
-                  values are derived from a combination of NOAA satellite
-                  readings and weather models.
+                  {isAdmin(user, parseInt(reefId, 10)) ? (
+                    !hasDailyData ? (
+                      managerNoDataMessage
+                    ) : (
+                      <div>
+                        {managerWithDataMessage}
+                        <Link to="/apply">here</Link>.
+                      </div>
+                    )
+                  ) : (
+                    defaultMessage
+                  )}
                 </Alert>
               </Box>
             )}
@@ -89,6 +113,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              hasDailyData={hasDailyData}
               surveys={surveyList}
               point={poiId}
               diveDate={diveDate}
@@ -122,6 +147,9 @@ const styles = () =>
       display: "flex",
       alignItems: "center",
       height: "80vh",
+    },
+    noDataWrapper: {
+      height: "100%",
     },
   });
 

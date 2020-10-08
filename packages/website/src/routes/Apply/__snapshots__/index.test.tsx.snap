@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Apply should render with given state from Redux store 1`] = `
+<div>
+  <div
+    class="Apply-root-1"
+  >
+    Apply Page
+  </div>
+</div>
+`;
