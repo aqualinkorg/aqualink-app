@@ -1,4 +1,8 @@
-import { Client, AddressType } from '@googlemaps/google-maps-services-js';
+import {
+  Client,
+  AddressType,
+  GeocodeResult,
+} from '@googlemaps/google-maps-services-js';
 import { Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Point } from 'geojson';
@@ -8,7 +12,29 @@ import { Region } from '../regions/regions.entity';
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
 
-const getCountry = async (
+const getLocality = (results: GeocodeResult[]) => {
+  const localityPreference = [
+    AddressType.administrative_area_level_2,
+    AddressType.administrative_area_level_1,
+    AddressType.locality,
+    AddressType.country,
+  ];
+
+  if (results.length === 0) {
+    return undefined;
+  }
+
+  const result = localityPreference.reduce(
+    (tempResult: GeocodeResult | undefined, locality) => {
+      const localityResult = results.find((r) => r.types.includes(locality));
+      return tempResult || localityResult;
+    },
+    undefined,
+  );
+  return result ? result.formatted_address : results[0].formatted_address;
+};
+
+export const getGoogleRegion = async (
   longitude: number,
   latitude: number,
 ): Promise<string | undefined> => {
@@ -22,7 +48,7 @@ const getCountry = async (
     })
     .then((r) => {
       const { results } = r.data;
-      return results.length > 0 ? results[0].formatted_address : undefined;
+      return getLocality(results);
     })
     .catch((e) => {
       logger.error(
@@ -40,7 +66,7 @@ export const getRegion = async (
   latitude: number,
   regionRepository: Repository<Region>,
 ) => {
-  const country = await getCountry(longitude, latitude);
+  const country = await getGoogleRegion(longitude, latitude);
   const region = await regionRepository.findOne({ where: { name: country } });
 
   if (region) {
