@@ -93,8 +93,12 @@ function ChartWithTooltip({
             },
           },
           tooltips: {
-            filter: (tooltipItem: any) => {
-              return tooltipItem.datasetIndex === 1;
+            filter: (tooltipItem: any, data: any) => {
+              const { datasets } = data;
+              const index = datasets.findIndex(
+                (item: any) => item.label === "SURFACE TEMP"
+              );
+              return tooltipItem.datasetIndex === index;
             },
             enabled: false,
             intersect: false,
