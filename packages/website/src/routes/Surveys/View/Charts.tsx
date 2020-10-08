@@ -23,6 +23,7 @@ const styles = () =>
 interface ChartsIncomingProps {
   dailyData: DailyData[];
   surveys: SurveyListItem[];
+  maxMonthlyMean: number | null;
   temperatureThreshold: number | null;
   depth: number | null;
 }

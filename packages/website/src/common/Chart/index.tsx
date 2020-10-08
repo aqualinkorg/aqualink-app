@@ -20,17 +20,19 @@ export interface ChartProps {
   dailyData: DailyData[];
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
-  maxMonthlyMean?: number | null;
+  maxMonthlyMean: number | null;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
 
+const SMALL_WINDOW = 400;
+
 function Chart({
   dailyData,
   surveys,
   temperatureThreshold,
-  maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
+  maxMonthlyMean,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -65,7 +67,7 @@ function Chart({
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
-      if (xScale.width > 400) {
+      if (xScale.width > SMALL_WINDOW) {
         setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
         setXPeriod("week");
       } else {
@@ -136,10 +138,30 @@ function Chart({
             borderDash: [5, 5],
             label: {
               enabled: true,
-              backgroundColor: "rgb(169,169,169)",
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
               position: "left",
               xAdjust: 10,
               content: "Historical Max",
+            },
+          },
+          {
+            type: "line",
+            mode: "horizontal",
+            scaleID: "y-axis-0",
+            value: temperatureThreshold,
+            borderColor: "#ff8d00",
+            borderWidth: 2,
+            borderDash: [5, 5],
+            label: {
+              enabled: true,
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
+              position: "left",
+              xAdjust: 10,
+              content: "Bleaching Threshold",
             },
           },
         ],
