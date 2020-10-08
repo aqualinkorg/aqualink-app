@@ -89,6 +89,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              surveys={surveyList}
               point={poiId}
               diveDate={diveDate}
             />

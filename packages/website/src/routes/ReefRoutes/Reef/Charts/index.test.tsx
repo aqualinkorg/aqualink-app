@@ -41,6 +41,7 @@ test("renders as expected", () => {
       maxMonthlyMean={null}
       depth={0}
       dailyData={dailyData}
+      surveys={[]}
       temperatureThreshold={0}
     />
   );
