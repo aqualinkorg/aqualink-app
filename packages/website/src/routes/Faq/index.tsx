@@ -258,6 +258,26 @@ const Faq = ({ classes }: FaqProps) => {
                   </p>
                 </div>
               </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    What are the best practices for conducting a survey?
+                  </Typography>
+                  <p>
+                    We have created an animated field guide that will describe
+                    the best practices for conducting a survey and using the
+                    Aqualink system.
+                    <br />
+                    <br />
+                    <iframe
+                      width="560"
+                      height="315"
+                      src="https://www.youtube.com/embed/E_nXCl612lg"
+                      title="field guide 2"
+                    />
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           {/* bloc-11 END */}
