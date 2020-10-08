@@ -11,35 +11,9 @@ import type { DailyData } from "../../../../store/Reefs/types";
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 import { SurveyListItem } from "../../../../store/Survey/types";
 
-const Charts = ({ classes, temperatureThreshold, ...rest }: ChartsProps) => {
+const Charts = ({ classes, ...rest }: ChartsProps) => {
   return (
-    <ChartWithTooltip
-      {...rest}
-      className={classes.root}
-      temperatureThreshold={temperatureThreshold}
-      chartSettings={{
-        annotation: {
-          annotations: [
-            {
-              type: "line",
-              mode: "horizontal",
-              scaleID: "y-axis-0",
-              value: temperatureThreshold,
-              borderColor: "#ff8d00",
-              borderWidth: 2,
-              borderDash: [5, 5],
-              label: {
-                backgroundColor: "rgb(169,169,169)",
-                enabled: false,
-                position: "left",
-                xAdjust: 10,
-                content: "Bleaching Threshold",
-              },
-            },
-          ],
-        },
-      }}
-    >
+    <ChartWithTooltip {...rest} className={classes.root}>
       <Typography className={classes.graphTitle} variant="h6">
         DAILY WATER TEMPERATURE (°C)
       </Typography>
