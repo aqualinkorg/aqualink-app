@@ -15,6 +15,7 @@ import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Reef } from '../reefs/reefs.entity';
+import { getFileFromURL } from '../utils/google-cloud.utils';
 
 @Injectable()
 export class SurveysService {
@@ -271,15 +272,13 @@ export class SurveysService {
 
     await Promise.all(
       surveyMedia.map((media) => {
-        const file = media.url;
+        const file = getFileFromURL(media.url);
         // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
-        return this.googleCloudService
-          .deleteFile(file.split(`${process.env.GCS_BUCKET}/`)[1])
-          .catch(() => {
-            this.logger.error(
-              `Could not delete media ${file} of survey ${surveyId}.`,
-            );
-          });
+        return this.googleCloudService.deleteFile(file).catch(() => {
+          this.logger.error(
+            `Could not delete media ${media.url} of survey ${surveyId}.`,
+          );
+        });
       }),
     );
 
@@ -306,7 +305,7 @@ export class SurveysService {
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
     await this.googleCloudService
-      .deleteFile(surveyMedia.url.split(`${process.env.GCS_BUCKET}/`)[1])
+      .deleteFile(getFileFromURL(surveyMedia.url))
       .catch((error) => {
         this.logger.error(
           `Could not delete media ${surveyMedia.url} of survey media ${mediaId}.`,
