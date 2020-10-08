@@ -33,24 +33,26 @@ exports[`About should render with given state from Redux store 1`] = `
                   About Us
                 </mock-typography>
                 <p>
-                  Aqualink is a philanthropic engineering organization working on building ocean conservation technology. Read more about our inspiration, smart buoy, and web application in our press release.
-                  <br />
-                  <br />
+                  Aqualink is a philanthropic engineering organization working on building ocean conservation technology. Read more about our inspiration, smart buoy, and web application in our press release:
+                   
                   <a
                     href="https://medium.com/aqualink/introducing-aqualink-dd1023393b8"
                   >
                     Introducing Aqualink
                   </a>
                   <br />
+                  <br />
+                  We have also created an animated field guide to give an overview to the system and outline the best practices for taking a survey and using the Aqualink system.
                 </p>
               </div>
               <div
                 class="offset-lg-0 col-lg-12 order-lg-1"
               >
-                <img
-                  alt="reef1b"
-                  class="img-fluid mx-auto d-block imagepaddingtop img-responsive lazyload"
-                  src="reef1b.jpg"
+                <iframe
+                  height="315"
+                  src="https://www.youtube.com/embed/E_nXCl612lg"
+                  title="field guide"
+                  width="560"
                 />
               </div>
             </div>

@@ -328,6 +328,31 @@ exports[`Faq should render with given state from Redux store 1`] = `
               </p>
             </div>
           </div>
+          <div
+            class="row faqq"
+          >
+            <div
+              class="col"
+            >
+              <mock-typography
+                classname="Faq-question-2"
+                variant="h5"
+              >
+                What are the best practices for conducting a survey?
+              </mock-typography>
+              <p>
+                We have created an animated field guide that will describe the best practices for conducting a survey and using the Aqualink system.
+                <br />
+                <br />
+                <iframe
+                  height="315"
+                  src="https://www.youtube.com/embed/E_nXCl612lg"
+                  title="field guide 2"
+                  width="560"
+                />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
