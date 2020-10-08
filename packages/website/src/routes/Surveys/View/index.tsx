@@ -107,7 +107,10 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                     dailyData={reef.dailyData}
                     surveys={surveyList}
                     depth={reef.depth}
-                    temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
+                    maxMonthlyMean={reef.maxMonthlyMean}
+                    temperatureThreshold={
+                      reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+                    }
                   />
                 </Grid>
               </Grid>
