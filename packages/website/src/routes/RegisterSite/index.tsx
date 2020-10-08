@@ -27,7 +27,6 @@ import { useSelector } from "react-redux";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import LocationMap from "./LocationMap";
-import reemimage from "../../assets/img/reemimage.jpg";
 import { userInfoSelector } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
 
@@ -215,10 +214,6 @@ const Apply = ({ classes }: ApplyProps) => {
                 will be responsible for paying the shipping and import duties
                 costs (if applicable).
               </Typography>
-
-              <Box mt={4}>
-                <img src={reemimage} alt="Reefs" style={{ width: "100%" }} />
-              </Box>
             </Grid>
           </Grid>
         </Container>

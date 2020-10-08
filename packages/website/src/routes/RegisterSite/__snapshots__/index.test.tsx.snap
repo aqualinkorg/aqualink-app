@@ -29,15 +29,6 @@ exports[`Site registration page should render with given state from Redux store 
           <mock-typography>
             Once you have your site registered you can apply to get a smart buoy to track underwater temperatures as well. If approved, Aqualink will provide you with a buoy free of charge but you will be responsible for paying the shipping and import duties costs (if applicable).
           </mock-typography>
-          <mock-box
-            mt="4"
-          >
-            <img
-              alt="Reefs"
-              src="reemimage.jpg"
-              style="width: 100%;"
-            />
-          </mock-box>
         </div>
       </div>
     </div>
