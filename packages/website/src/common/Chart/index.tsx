@@ -48,11 +48,6 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
-  const [
-    showHistoricalMaxAnnotation,
-    setShowHistoricalMaxAnnotation,
-  ] = useState<boolean>(true);
-
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
   const {
@@ -82,18 +77,6 @@ function Chart({
     }
   };
 
-  const decideForHistoricalMax = () => {
-    const { current } = chartRef;
-    if (current) {
-      const xScale = current.chartInstance.scales["x-axis-0"];
-      if (xScale.width < SMALL_WINDOW) {
-        setShowHistoricalMaxAnnotation(false);
-      } else {
-        setShowHistoricalMaxAnnotation(true);
-      }
-    }
-  };
-
   /*
       Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
     */
@@ -103,7 +86,6 @@ function Chart({
       // Resize has stopped so stop updating the chart
       setUpdateChart(false);
       changeXTickShiftAndPeriod();
-      decideForHistoricalMax();
     }, 1);
   }, []);
 
@@ -117,7 +99,6 @@ function Chart({
 
   useEffect(() => {
     changeXTickShiftAndPeriod();
-    decideForHistoricalMax();
   });
   const settings = mergeWith(
     {
@@ -151,15 +132,17 @@ function Chart({
             type: "line",
             mode: "horizontal",
             scaleID: "y-axis-0",
-            value: showHistoricalMaxAnnotation ? maxMonthlyMean : null,
+            value: maxMonthlyMean,
             borderColor: "rgb(75, 192, 192)",
             borderWidth: 2,
             borderDash: [5, 5],
             label: {
               enabled: true,
-              backgroundColor: "rgb(169,169,169)",
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
               position: "left",
-              xAdjust: 150,
+              xAdjust: 10,
               content: "Historical Max",
             },
           },
@@ -173,7 +156,9 @@ function Chart({
             borderDash: [5, 5],
             label: {
               enabled: true,
-              backgroundColor: "rgb(169,169,169)",
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
               position: "left",
               xAdjust: 10,
               content: "Bleaching Threshold",
