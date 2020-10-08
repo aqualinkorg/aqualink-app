@@ -221,6 +221,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         </Box>
         <Chart
           dailyData={reef.dailyData}
+          surveys={[]}
           temperatureThreshold={
             reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
           }

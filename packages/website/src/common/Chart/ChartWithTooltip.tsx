@@ -18,6 +18,7 @@ interface ChartWithTooltipProps extends ChartProps {
 function ChartWithTooltip({
   depth,
   dailyData,
+  surveys,
   temperatureThreshold,
   chartSettings,
   children,
@@ -30,7 +31,7 @@ function ChartWithTooltip({
     chartLabels,
     bottomTemperatureData,
     surfaceTemperatureData,
-  } = useProcessedChartData(dailyData, temperatureThreshold);
+  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -81,6 +82,7 @@ function ChartWithTooltip({
       <Chart
         {...rest}
         dailyData={dailyData}
+        surveys={surveys}
         chartRef={chartDataRef}
         temperatureThreshold={temperatureThreshold}
         chartSettings={{
@@ -91,8 +93,12 @@ function ChartWithTooltip({
             },
           },
           tooltips: {
-            filter: (tooltipItem: any) => {
-              return tooltipItem.datasetIndex === 0;
+            filter: (tooltipItem: any, data: any) => {
+              const { datasets } = data;
+              const index = datasets.findIndex(
+                (item: any) => item.label === "SURFACE TEMP"
+              );
+              return tooltipItem.datasetIndex === index;
             },
             enabled: false,
             intersect: false,
@@ -102,6 +108,12 @@ function ChartWithTooltip({
             display: true,
             rtl: true,
             labels: {
+              filter: (legendItem: any) => {
+                return (
+                  legendItem.text === "SURFACE TEMP" ||
+                  legendItem.text === "SURVEYS"
+                );
+              },
               fontSize: 14,
               fontColor: "#9ea6aa",
             },
