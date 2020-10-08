@@ -46,9 +46,9 @@ export class UpdateReefDto {
   readonly region?: Region;
 
   @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [User])
-  readonly admin?: User;
+  @IsInt({ each: true })
+  @Validate(EntityExists, [User], { each: true })
+  readonly admins?: User[];
 
   @IsOptional()
   @IsInt()
