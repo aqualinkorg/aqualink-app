@@ -29,7 +29,15 @@ export const reefRequest = createAsyncThunk<
 const selectedReefSlice = createSlice({
   name: "selectedReef",
   initialState: selectedReefInitialState,
-  reducers: {},
+  reducers: {
+    setSelectedReef: (
+      state,
+      action: PayloadAction<SelectedReefState["details"]>
+    ) => ({
+      ...state,
+      details: action.payload,
+    }),
+  },
   extraReducers: (builder) => {
     builder.addCase(
       reefRequest.fulfilled,
@@ -74,5 +82,7 @@ export const reefLoadingSelector = (
 export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
+
+export const { setSelectedReef } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;

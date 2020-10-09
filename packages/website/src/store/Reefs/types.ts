@@ -102,7 +102,7 @@ export interface ReefsListState {
 }
 
 export interface SelectedReefState {
-  details?: Reef;
+  details?: Reef | null;
   loading: boolean;
   error?: string | null;
 }
