@@ -100,8 +100,8 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
 
       <Typography>Schedule for installation</Typography>
       <Typography className={classes.scheduleDescription}>
-        What is the soonest date after September 2020 that you could install the
-        spotter and conduct a survey
+        What is the soonest date you could install the spotter and conduct a
+        survey
       </Typography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker

@@ -791,7 +791,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
           <mock-typography
             classname="Form-scheduleDescription-47"
           >
-            What is the soonest date after September 2020 that you could install the spotter and conduct a survey
+            What is the soonest date you could install the spotter and conduct a survey
           </mock-typography>
           <mock-textfield
             classname="Form-formField-45"
@@ -1112,7 +1112,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
                           role="presentation"
                         >
                           <mock-iconbutton
-                            classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                            classname="MuiPickersDay-day"
                             tabindex="0"
                           >
                             <mock-typography
@@ -1127,7 +1127,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
                           role="presentation"
                         >
                           <mock-iconbutton
-                            classname="MuiPickersDay-day"
+                            classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                             tabindex="0"
                           >
                             <mock-typography
