@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Apply from ".";
 import type { Reef } from "../../store/Reefs/types";
@@ -68,6 +69,15 @@ const reef: Reef = {
   latestDailyData: dailyData,
 };
 
+const user = {
+  email: "test@mail.com",
+  fullName: "Test User",
+  adminLevel: "super_admin",
+  firebaseUid: "RaNdOmStRiNg",
+  administeredReefs: [],
+  token: "RaNdOmStRiNg",
+};
+
 describe("Apply", () => {
   let element: HTMLElement;
   beforeEach(() => {
@@ -75,13 +85,18 @@ describe("Apply", () => {
       selectedReef: {
         details: reef,
       },
+      user: {
+        userInfo: user,
+      },
     });
 
     store.dispatch = jest.fn();
 
     element = render(
       <Provider store={store}>
-        <Apply />
+        <Router>
+          <Apply />
+        </Router>
       </Provider>
     ).container;
   });
