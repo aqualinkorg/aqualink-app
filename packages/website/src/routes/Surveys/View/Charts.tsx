@@ -3,6 +3,7 @@ import { createStyles, Grid, withStyles, WithStyles } from "@material-ui/core";
 import type { DailyData } from "../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
+import { SurveyListItem } from "../../../store/Survey/types";
 
 const Charts = ({ classes, ...rest }: ChartsProps) => {
   return (
@@ -21,6 +22,8 @@ const styles = () =>
 
 interface ChartsIncomingProps {
   dailyData: DailyData[];
+  surveys: SurveyListItem[];
+  maxMonthlyMean: number | null;
   temperatureThreshold: number | null;
   depth: number | null;
 }

@@ -298,13 +298,13 @@ export async function getReefsDailyData(
         if (err.constraint === 'no_duplicated_date') {
           const filteredData = omitBy(entity, isNil);
 
-          await dailyDataRepository.update(
-            {
-              reef,
-              date: entity.date,
-            },
-            filteredData,
-          );
+          await dailyDataRepository
+            .createQueryBuilder('dailyData')
+            .update()
+            .where('reef_id = :reef_id', { reef_id: reef.id })
+            .andWhere('Date(date) = Date(:date)', { date: entity.date })
+            .set(filteredData)
+            .execute();
           return;
         }
         console.error(

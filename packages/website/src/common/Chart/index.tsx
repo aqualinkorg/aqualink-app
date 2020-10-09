@@ -14,20 +14,25 @@ import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData } from "../../helpers/createChartData";
 import { useProcessedChartData } from "./utils";
+import { SurveyListItem } from "../../store/Survey/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
+  surveys: SurveyListItem[];
   temperatureThreshold: number | null;
-  maxMonthlyMean?: number | null;
+  maxMonthlyMean: number | null;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
 
+const SMALL_WINDOW = 400;
+
 function Chart({
   dailyData,
+  surveys,
   temperatureThreshold,
-  maxMonthlyMean = temperatureThreshold ? temperatureThreshold - 1 : null,
+  maxMonthlyMean,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -43,23 +48,32 @@ function Chart({
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
+  const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
+
   const {
     xAxisMax,
     xAxisMin,
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
+    tempWithSurvey,
     chartLabels,
-  } = useProcessedChartData(dailyData, temperatureThreshold);
+  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
 
-  const changeXTickShift = () => {
+  const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
     if (current) {
       const xScale = current.chartInstance.scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
-      setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
+      if (xScale.width > SMALL_WINDOW) {
+        setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
+        setXPeriod("week");
+      } else {
+        setXPeriod("month");
+        setXTickShift(0);
+      }
     }
   };
 
@@ -71,7 +85,7 @@ function Chart({
     setTimeout(() => {
       // Resize has stopped so stop updating the chart
       setUpdateChart(false);
-      changeXTickShift();
+      changeXTickShiftAndPeriod();
     }, 1);
   }, []);
 
@@ -84,7 +98,7 @@ function Chart({
   }, [onResize]);
 
   useEffect(() => {
-    changeXTickShift();
+    changeXTickShiftAndPeriod();
   });
   const settings = mergeWith(
     {
@@ -97,7 +111,7 @@ function Chart({
           color: "rgb(158, 166, 170, 0.07)",
         },
         fillPlugin: {
-          datasetIndex: 0,
+          datasetIndex: 1,
           zeroLevel: temperatureThreshold,
           bottom: 0,
           top: 35,
@@ -124,10 +138,30 @@ function Chart({
             borderDash: [5, 5],
             label: {
               enabled: true,
-              backgroundColor: "rgb(169,169,169)",
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
               position: "left",
               xAdjust: 10,
               content: "Historical Max",
+            },
+          },
+          {
+            type: "line",
+            mode: "horizontal",
+            scaleID: "y-axis-0",
+            value: temperatureThreshold,
+            borderColor: "#ff8d00",
+            borderWidth: 2,
+            borderDash: [5, 5],
+            label: {
+              enabled: true,
+              backgroundColor: "rgb(169,169,169, 0.7)",
+              yPadding: 3,
+              xPadding: 3,
+              position: "left",
+              xAdjust: 10,
+              content: "Bleaching Threshold",
             },
           },
         ],
@@ -139,9 +173,9 @@ function Chart({
             time: {
               displayFormats: {
                 week: "MMM D",
-                month: "MMM D",
+                month: "MMM",
               },
-              unit: "week",
+              unit: xPeriod,
             },
             display: true,
             ticks: {
@@ -187,7 +221,12 @@ function Chart({
     <Line
       ref={chartRef}
       options={settings}
-      data={createChartData(chartLabels, surfaceTemperatureData, true)}
+      data={createChartData(
+        chartLabels,
+        tempWithSurvey,
+        surfaceTemperatureData,
+        Boolean(temperatureThreshold)
+      )}
     />
   );
 }

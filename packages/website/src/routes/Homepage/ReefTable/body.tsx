@@ -4,6 +4,9 @@ import {
   TableCell,
   TableRow,
   Typography,
+  createStyles,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import React, { CSSProperties, useEffect, useState } from "react";
@@ -22,15 +25,12 @@ import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 import { useIsMobile } from "../../../helpers/useIsMobile";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 
-type ReefTableBodyProps = {
-  order: Order;
-  orderBy: OrderKeys;
-};
-
 const RowNameCell = ({
   reef: { locationName, region, alertLevel },
+  ...rest
 }: {
   reef: Row;
+  className: string;
 }) => {
   const color = alertColorFinder(alertLevel);
   const style: CSSProperties = { color };
@@ -38,7 +38,7 @@ const RowNameCell = ({
   // check for null and 0
   const showWarning = alertLevel && isMobile;
   return (
-    <TableCell style={isMobile ? { width: "50%" } : undefined}>
+    <TableCell style={isMobile ? { width: "50%" } : undefined} {...rest}>
       <Typography
         align="left"
         variant={isMobile ? "h6" : "subtitle1"}
@@ -101,7 +101,7 @@ RowNumberCell.defaultProps = {
   decimalPlaces: 1,
 };
 
-const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
+const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
@@ -147,7 +147,7 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <RowNameCell reef={reef} />
+            <RowNameCell reef={reef} className={classes.nameCells} />
             <RowNumberCell
               name="Temp"
               value={reef.temp}
@@ -175,4 +175,19 @@ const ReefTableBody = ({ order, orderBy }: ReefTableBodyProps) => {
   );
 };
 
-export default ReefTableBody;
+const styles = () =>
+  createStyles({
+    nameCells: {
+      paddingLeft: 10,
+    },
+  });
+
+type ReefTableBodyIncomingProps = {
+  order: Order;
+  orderBy: OrderKeys;
+};
+
+type ReefTableBodyProps = WithStyles<typeof styles> &
+  ReefTableBodyIncomingProps;
+
+export default withStyles(styles)(ReefTableBody);

@@ -29,7 +29,6 @@ import {
 } from "../../../store/Survey/surveyListSlice";
 import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
-import { SurveyListItem } from "../../../store/Survey/types";
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
@@ -42,7 +41,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
-  ) as SurveyListItem;
+  );
 
   const { featuredSurveyMedia, diveDate } = featuredMedia || {};
   const { poiId, url } = featuredSurveyMedia || {};
@@ -90,6 +89,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              surveys={surveyList}
               point={poiId}
               diveDate={diveDate}
             />

@@ -11,6 +11,7 @@ import {
   Table,
   TableContainer,
   Typography,
+  Theme,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -96,11 +97,15 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     table: {
+      paddingLeft: 10,
       height: "70%",
       overflowY: "auto",
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: 0,
+      },
     },
   });
 

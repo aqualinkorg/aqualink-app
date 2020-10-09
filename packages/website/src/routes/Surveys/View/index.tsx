@@ -25,14 +25,20 @@ import SurveyMediaDetails from "./SurveyMediaDetails";
 
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
+import {
+  surveyListSelector,
+  surveysRequest,
+} from "../../../store/Survey/surveyListSlice";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
+  const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
 
   useEffect(() => {
+    dispatch(surveysRequest(`${reef.id}`));
     window.scrollTo({ top: 0 });
-  }, []);
+  }, [dispatch, reef.id]);
 
   useEffect(() => {
     dispatch(
@@ -99,8 +105,12 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 <Grid container justify="center" item xs={12}>
                   <Charts
                     dailyData={reef.dailyData}
+                    surveys={surveyList}
                     depth={reef.depth}
-                    temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
+                    maxMonthlyMean={reef.maxMonthlyMean}
+                    temperatureThreshold={
+                      reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+                    }
                   />
                 </Grid>
               </Grid>
