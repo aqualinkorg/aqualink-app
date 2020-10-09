@@ -138,7 +138,7 @@ const Apply = ({ classes }: ApplyProps) => {
       // Add to database
       if (user && user.token) {
         reefServices
-          .applyForReef(
+          .registerReef(
             siteName,
             parseFloat(lat),
             parseFloat(lng),

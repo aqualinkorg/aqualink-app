@@ -6,6 +6,7 @@ import type {
   Reef,
   Pois,
   ReefRegisterResponseData,
+  ReefApplyParams,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -49,7 +50,7 @@ const deleteReefPoi = (id: number, token: string) =>
     token,
   });
 
-const applyForReef = (
+const registerReef = (
   name: string,
   latitude: number,
   longitude: number,
@@ -74,6 +75,14 @@ const applyForReef = (
   });
 };
 
+const applyReef = (id: string, data: ReefApplyParams, token: string) =>
+  requests.send({
+    url: `reef-applications/${id}`,
+    method: "PUT",
+    data,
+    token,
+  });
+
 export default {
   getReef,
   getReefs,
@@ -81,5 +90,6 @@ export default {
   getReefLiveData,
   getReefPois,
   deleteReefPoi,
-  applyForReef,
+  registerReef,
+  applyReef,
 };

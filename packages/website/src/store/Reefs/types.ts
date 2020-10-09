@@ -95,6 +95,13 @@ export interface ReefRegisterResponseData {
   user: User;
 }
 
+export interface ReefApplyParams {
+  permitRequirements: string;
+  fundingSource: string;
+  installationSchedule: string;
+  installationResources: string;
+}
+
 export interface ReefsListState {
   list: Reef[];
   loading: boolean;
