@@ -604,7 +604,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root Apply-root-1 MuiContainer-maxWidthLg"
+    class="MuiContainer-root Apply-welcomeMessage-1 MuiContainer-maxWidthLg"
   >
     <div
       class="MuiGrid-root MuiGrid-container"
@@ -627,6 +627,113 @@ exports[`Apply should render with given state from Redux store 1`] = `
             info@aqualink.org
           </a>
         </mock-typography>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+      >
+        <div
+          class="Obligations-obligations-35"
+        >
+          <mock-typography
+            classname="Obligations-obligationsTitle-36"
+            variant="h3"
+          >
+            Your Obligations
+          </mock-typography>
+          <mock-typography>
+            You will be given a free smart buoy but there are some things you will will be expected to do or provide:
+          </mock-typography>
+          <div
+            class="Obligations-obligationsList-37"
+          >
+            <mock-typography>
+              1. Pay for shipping and any applicable duties
+            </mock-typography>
+            <mock-typography>
+              2. Obtain any necessary permits (if applicable)
+            </mock-typography>
+            <mock-typography>
+              3. Provide and attach a ballast (e.g. 60lb kettlebell)
+            </mock-typography>
+            <mock-typography>
+              4. Deploy spotter with mooring weight (can be done from a kayak)
+            </mock-typography>
+            <mock-typography>
+              5. Maintain spotter (inspect and clean every 6 months)
+            </mock-typography>
+            <mock-typography>
+              6. Conduct initial and periodic photographic surveys and upload imagery to our website
+            </mock-typography>
+          </div>
+        </div>
+        <div
+          class="Agreements-agreements-38"
+        >
+          <mock-typography
+            variant="h5"
+          >
+            Agree to:
+          </mock-typography>
+          <div
+            class="MuiFormGroup-root"
+          >
+            <label
+              class="MuiFormControlLabel-root Agreements-formControlLabel-39"
+            >
+              <mock-checkbox
+                checked="false"
+                color="primary"
+              />
+              <mock-typography
+                classname="MuiFormControlLabel-label"
+                component="span"
+              >
+                Handle any shipping and permitting charges
+              </mock-typography>
+            </label>
+            <label
+              class="MuiFormControlLabel-root Agreements-formControlLabel-39"
+            >
+              <mock-checkbox
+                checked="false"
+                color="primary"
+              />
+              <mock-typography
+                classname="MuiFormControlLabel-label"
+                component="span"
+              >
+                Provide mooring and deploy buoy
+              </mock-typography>
+            </label>
+            <label
+              class="MuiFormControlLabel-root Agreements-formControlLabel-39"
+            >
+              <mock-checkbox
+                checked="false"
+                color="primary"
+              />
+              <mock-typography
+                classname="MuiFormControlLabel-label"
+                component="span"
+              >
+                Conduct initial survey
+              </mock-typography>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+      >
+        Form
       </div>
     </div>
   </div>
