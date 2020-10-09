@@ -3,6 +3,7 @@ import {
   IsString,
   IsOptional,
   IsDateString,
+  IsInt,
 } from 'class-validator';
 
 export class UpdateReefApplicationDto {
@@ -21,4 +22,15 @@ export class UpdateReefApplicationDto {
   @IsString()
   @IsNotEmpty()
   readonly installationResources: string;
+}
+
+export class UpdateReefWithApplicationDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly name?: string;
+
+  @IsOptional()
+  @IsInt()
+  readonly depth?: number;
 }
