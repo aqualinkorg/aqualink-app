@@ -67,7 +67,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   return (
     <>
       <ReefNavBar searchLocation={false} />
-      <Container>
+      <Container fixed>
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo
