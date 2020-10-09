@@ -6,10 +6,7 @@ import {
   CreateReefApplicationDto,
   CreateReefWithApplicationDto,
 } from './dto/create-reef-application.dto';
-import {
-  UpdateReefApplicationDto,
-  UpdateReefWithApplicationDto,
-} from './dto/update-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
 import { Reef } from '../reefs/reefs.entity';
 import { Region } from '../regions/regions.entity';
 import { getRegion, getTimezones } from '../utils/reef.utils';
@@ -97,18 +94,15 @@ export class ReefApplicationsService {
   async update(
     id: number,
     appParams: UpdateReefApplicationDto,
-    reefParams: UpdateReefWithApplicationDto,
   ): Promise<ReefApplication> {
     const app = await this.reefApplicationRepository.findOne({
       where: { id },
-      relations: ['reef'],
     });
     if (!app) {
       throw new NotFoundException(`Reef Application with ID ${id} not found.`);
     }
 
     const res = await this.reefApplicationRepository.update(app.id, appParams);
-    await this.reefRepository.update(app.reef.id, reefParams);
     return res.generatedMaps[0] as ReefApplication;
   }
 }

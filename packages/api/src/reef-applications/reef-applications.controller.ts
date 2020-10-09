@@ -11,15 +11,12 @@ import {
   Query,
   NotFoundException,
   Req,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
-import {
-  UpdateReefApplicationDto,
-  UpdateReefWithApplicationDto,
-} from './dto/update-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
 import { idFromHash, isValidId } from '../utils/urls';
-import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { Auth } from '../auth/auth.decorator';
 import {
   CreateReefApplicationDto,
@@ -67,12 +64,11 @@ export class ReefApplicationsController {
   }
 
   @Public()
-  @Put(':hashId')
+  @Put(':id')
   update(
-    @Param('hashId', new ParseHashedIdPipe()) id: number,
-    @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
-    @Body('reef') reef: UpdateReefWithApplicationDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() reefApplication: UpdateReefApplicationDto,
   ) {
-    return this.reefApplicationsService.update(id, reefApplication, reef);
+    return this.reefApplicationsService.update(id, reefApplication);
   }
 }
