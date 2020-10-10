@@ -1,4 +1,5 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
@@ -9,7 +10,6 @@ import {
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 
-import reef1b from "../../assets/img/reef1b.jpg";
 import peter from "../../assets/img/peter.jpg";
 import lyndon from "../../assets/img/LYNDON1.jpg";
 import drew from "../../assets/img/drew.jpg";
@@ -33,20 +33,22 @@ const About = ({ classes }: AboutProps) => {
                       Aqualink is a philanthropic engineering organization
                       working on building ocean conservation technology. Read
                       more about our inspiration, smart buoy, and web
-                      application in our press release.
-                      <br />
-                      <br />
+                      application in our press release:{" "}
                       <a href="https://medium.com/aqualink/introducing-aqualink-dd1023393b8">
                         Introducing Aqualink
                       </a>
                       <br />
+                      <br />
+                      We have also created an animated field guide to give an
+                      overview to the system and outline the best practices for
+                      taking a survey and using the Aqualink system.
                     </p>
                   </div>
                   <div className="offset-lg-0 col-lg-12 order-lg-1">
-                    <img
-                      src={reef1b}
-                      className="img-fluid mx-auto d-block imagepaddingtop img-responsive lazyload"
-                      alt="reef1b"
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
                     />
                   </div>
                 </div>
