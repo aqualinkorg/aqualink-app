@@ -11,7 +11,7 @@ import {
   Chip,
   Box,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { formatNumber } from "../../../../helpers/numberUtils";
@@ -19,12 +19,12 @@ import type { Reef } from "../../../../store/Reefs/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
-import { isAdmin } from "../../../../helpers/isAdmin";
-import { userInfoSelector } from "../../../../store/User/userSlice";
+// import { isAdmin } from "../../../../helpers/isAdmin";
+// import { userInfoSelector } from "../../../../store/User/userSlice";
 
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = reef.liveData;
-  const user = useSelector(userInfoSelector);
+  // const user = useSelector(userInfoSelector);
 
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value

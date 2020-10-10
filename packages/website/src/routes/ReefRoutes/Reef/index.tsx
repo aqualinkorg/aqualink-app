@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
@@ -36,8 +36,8 @@ import { isAdmin } from "../../../helpers/isAdmin";
 const managerNoDataMessage =
   "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
 
-const managerWithDataMessage =
-  "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models. Apply for an Aqualink spotter ";
+// const managerWithDataMessage =
+//   "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models. Apply for an Aqualink spotter ";
 
 const defaultMessage =
   "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
