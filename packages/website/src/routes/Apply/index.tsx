@@ -168,7 +168,7 @@ const Apply = ({ classes }: ApplyProps) => {
     <>
       <NavBar searchLocation={false} />
       <Box py={4}>
-        <Container>
+        <Container fixed>
           <Grid container spacing={6}>
             <Grid item xs={12} md={7}>
               <Typography variant="h3" gutterBottom>
@@ -213,7 +213,7 @@ const Apply = ({ classes }: ApplyProps) => {
         </Container>
 
         <Box bgcolor="grey.100" mt={8} p={{ xs: 0, md: 4 }}>
-          <Container>
+          <Container fixed>
             <Grid container spacing={6}>
               <Grid item xs={12} md={7}>
                 <LocationMap

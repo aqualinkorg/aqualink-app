@@ -571,10 +571,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiContainer-root Reef-noData-36 MuiContainer-maxWidthLg"
+      class="MuiContainer-root Reef-noData-36 MuiContainer-fixed MuiContainer-maxWidthLg"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
@@ -1199,10 +1199,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiContainer-root Reef-noData-1 MuiContainer-maxWidthLg"
+      class="MuiContainer-root Reef-noData-1 MuiContainer-fixed MuiContainer-maxWidthLg"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"

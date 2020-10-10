@@ -50,7 +50,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   }, [dispatch, reef.id, surveyId]);
 
   return (
-    <Container>
+    <Container fixed>
       <Grid
         style={{ position: "relative" }}
         container

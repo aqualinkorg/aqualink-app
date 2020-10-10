@@ -9,7 +9,7 @@ exports[`renders as expected 1`] = `
     py="4"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
@@ -96,7 +96,7 @@ exports[`renders as expected 1`] = `
       p="[object Object]"
     >
       <div
-        class="MuiContainer-root MuiContainer-maxWidthLg"
+        class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"

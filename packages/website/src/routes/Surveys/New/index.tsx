@@ -21,7 +21,7 @@ const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <Container hidden={value !== index} {...other}>
+      <Container hidden={value !== index} {...other} fixed>
         {value === index && <div>{children}</div>}
       </Container>
     </div>

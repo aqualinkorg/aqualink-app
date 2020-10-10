@@ -95,7 +95,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             />
           </>
         ) : (
-          <Container className={classes.noData}>
+          <Container className={classes.noData} fixed>
             <Grid
               container
               direction="column"
