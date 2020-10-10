@@ -99,8 +99,9 @@ const Reef = ({ match, classes }: ReefProps) => {
                       managerNoDataMessage
                     ) : (
                       <div>
-                        {managerWithDataMessage}
-                        <Link to="/apply">here</Link>.
+                        {defaultMessage}
+                        {/* TODO - Re-use apply link */}
+                        {/* <Link to="/apply">here</Link>. */}
                       </div>
                     )
                   ) : (

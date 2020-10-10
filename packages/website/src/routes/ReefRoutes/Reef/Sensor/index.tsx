@@ -85,7 +85,9 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 <Chip
                   className={classes.noSensorAlert}
                   label={
-                    isAdmin(user, reef.id) ? (
+                    false ? (
+                      // TODO - re-add to app
+                      // isAdmin(user, reef.id) ? (
                       <Link className={classes.newSpotterLink} to="/apply">
                         Add a spotter
                       </Link>
