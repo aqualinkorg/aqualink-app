@@ -1,4 +1,5 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
@@ -269,11 +270,10 @@ const Faq = ({ classes }: FaqProps) => {
                     Aqualink system.
                     <br />
                     <br />
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube.com/embed/E_nXCl612lg"
-                      title="field guide 2"
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
                     />
                   </p>
                 </div>

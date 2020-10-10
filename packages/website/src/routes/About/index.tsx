@@ -1,4 +1,5 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
@@ -44,11 +45,10 @@ const About = ({ classes }: AboutProps) => {
                     </p>
                   </div>
                   <div className="offset-lg-0 col-lg-12 order-lg-1">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src="https://www.youtube.com/embed/E_nXCl612lg"
-                      title="field guide"
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
                     />
                   </div>
                 </div>
