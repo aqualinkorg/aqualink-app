@@ -30,6 +30,25 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
+                    Overview of the Aqualink system and Survey guide
+                  </Typography>
+                  <p>
+                    We have created an animated field guide that will describe
+                    the best practices for conducting a survey and using the
+                    Aqualink system.
+                    <br />
+                    <br />
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
+                    />
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
                     I am managing a large area and would like more than one
                     spotter, can I get multiple?
                   </Typography>
@@ -256,25 +275,6 @@ const Faq = ({ classes }: FaqProps) => {
                     <br />
                     subsurface temperature (placement configurable)
                     <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    What are the best practices for conducting a survey?
-                  </Typography>
-                  <p>
-                    We have created an animated field guide that will describe
-                    the best practices for conducting a survey and using the
-                    Aqualink system.
-                    <br />
-                    <br />
-                    <ReactPlayer
-                      url="https://www.youtube.com/embed/E_nXCl612lg"
-                      width="100%"
-                      title="field_guide"
-                    />
                   </p>
                 </div>
               </div>

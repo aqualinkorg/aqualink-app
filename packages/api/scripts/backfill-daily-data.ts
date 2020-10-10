@@ -24,7 +24,7 @@ const { argv } = yargs
 async function run() {
   const { d: days, r: reefs } = argv;
   const backlogArray = Array.from(Array(days).keys());
-  const reefIds = Array.from( { length: 37 }, (v, k) => k + 2942)  // reefs && reefs.map((reef) => parseInt(`${reef}`, 10));
+  const reefIds = reefs && reefs.map((reef) => parseInt(`${reef}`, 10));
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
 
