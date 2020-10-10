@@ -346,6 +346,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 <br />
                 <div
                   style="width: 100%; height: 360px;"
+                  title="field_guide"
                 />
               </p>
             </div>
