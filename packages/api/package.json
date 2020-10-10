@@ -75,7 +75,8 @@
     "rxjs": "^6.5.4",
     "ts-node": "^8.10.2",
     "typeorm": "^0.2.25",
-    "typeorm-naming-strategies": "^1.1.0"
+    "typeorm-naming-strategies": "^1.1.0",
+    "typescript": "~3.8.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
@@ -104,7 +105,6 @@
     "ts-loader": "^6.2.1",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
-    "typescript": "~3.8.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "yargs": "^15.4.1"
