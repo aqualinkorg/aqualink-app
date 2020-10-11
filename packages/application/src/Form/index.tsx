@@ -156,7 +156,7 @@ const Form = ({ match, classes }: FormProps) => {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Container disableGutters maxWidth={false} fixed>
+      <Container disableGutters maxWidth={false}>
         <Collapse in={errorAlertOpen}>
           <Alert
             severity="error"
@@ -177,7 +177,7 @@ const Form = ({ match, classes }: FormProps) => {
           </Alert>
         </Collapse>
       </Container>
-      <Container fixed>
+      <Container>
         {/* Form Page Message */}
         <Grid style={{ marginTop: "4rem" }} container justify="center">
           <Grid item xs={12}>
