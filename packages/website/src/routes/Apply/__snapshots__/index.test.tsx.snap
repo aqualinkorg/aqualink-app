@@ -1127,7 +1127,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
                           role="presentation"
                         >
                           <mock-iconbutton
-                            classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                            classname="MuiPickersDay-day"
                             tabindex="0"
                           >
                             <mock-typography
@@ -1146,7 +1146,7 @@ exports[`Apply should render with given state from Redux store 1`] = `
                           role="presentation"
                         >
                           <mock-iconbutton
-                            classname="MuiPickersDay-day"
+                            classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                             tabindex="0"
                           >
                             <mock-typography
