@@ -67,7 +67,9 @@ const Reef = ({ match, classes }: ReefProps) => {
   return (
     <>
       <ReefNavBar searchLocation={false} />
-      <Container>
+      <Container
+        style={{ overflow: "hidden" /* Used in Survey Gray BG Box */ }}
+      >
         {reefDetails && liveData && !error ? (
           <>
             <ReefInfo

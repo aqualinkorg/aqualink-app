@@ -140,7 +140,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           bgcolor="#f5f6f6"
           position="absolute"
           height="100%"
-          width="99vw"
+          width="100vw"
           zIndex="-1"
         />
         <Grid
