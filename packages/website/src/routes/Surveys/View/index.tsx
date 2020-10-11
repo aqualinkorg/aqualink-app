@@ -3,18 +3,18 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
+  Box,
+  Button,
+  Container,
+  createStyles,
+  Grid,
+  Paper,
+  Theme,
+  Typography,
   withStyles,
   WithStyles,
-  createStyles,
-  Container,
-  Grid,
-  IconButton,
-  Theme,
-  Paper,
-  Typography,
-  Box,
 } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   surveyDetailsSelector,
@@ -72,17 +72,16 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           item
           xs={11}
         >
-          <Link
-            style={{ color: "inherit", textDecoration: "none" }}
+          <Button
+            color="primary"
+            startIcon={<ArrowBack />}
+            component={Link}
             to={`/reefs/${reef.id}`}
           >
-            <IconButton edge="start" color="primary" aria-label="menu">
-              <ArrowBack />
-            </IconButton>
-          </Link>
-          <Typography color="primary" variant="h5">
-            Back to site
-          </Typography>
+            <Typography style={{ textTransform: "none" }}>
+              Back to site
+            </Typography>
+          </Button>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>
           <Paper elevation={3} className={classes.surveyDetailsCard}>
