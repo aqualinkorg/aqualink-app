@@ -35,7 +35,11 @@ import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 
-const getAlertMessage = (user: User, reefId: string, hasDailyData: boolean) => {
+const getAlertMessage = (
+  user: User | null,
+  reefId: string,
+  hasDailyData: boolean
+) => {
   const userReef = findAdministeredReef(user, parseInt(reefId, 10));
   const applied = Boolean(userReef && userReef.applied);
 
@@ -53,7 +57,7 @@ const getAlertMessage = (user: User, reefId: string, hasDailyData: boolean) => {
       return (
         <div>
           {defaultMessage} Apply for an Aqualink spotter
-          <Link to="/apply">here</Link>.
+          <Link to="/apply"> here</Link>.
         </div>
       );
     default:

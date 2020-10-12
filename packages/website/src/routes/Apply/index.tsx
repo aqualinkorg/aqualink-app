@@ -45,8 +45,13 @@ const Apply = ({ classes }: ApplyProps) => {
       reefServices
         .getReefApplication(reef.id, user.token)
         .then(({ data }) => {
-          setReefApplication(data[0]);
+          if (data.length > 0) {
+            setReefApplication(data[0]);
+          } else {
+            setMessage("No application found");
+          }
         })
+        .catch(() => setMessage("There was an error getting the application"))
         .finally(() => setLoading(false));
     }
   }, [user, reef]);
