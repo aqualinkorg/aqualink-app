@@ -70,16 +70,24 @@ export class UsersService {
   }
 
   async getAdministeredReefs(req: AuthRequest): Promise<Reef[]> {
-    const user = await this.usersRepository.findOne({
-      where: { id: req.user.id },
-      relations: ['administeredReefs'],
-    });
+    const user = await this.usersRepository
+      .createQueryBuilder('users')
+      .innerJoinAndSelect('users.administeredReefs', 'reefs')
+      .leftJoinAndSelect('reefs.reefApplication', 'reefApplication')
+      .where('users.id = :id', { id: req.user.id })
+      .getOne();
 
     if (!user) {
       throw new NotFoundException(`User with ID ${req.user.id} not found.`);
     }
 
-    return user.administeredReefs;
+    return user.administeredReefs.map((reef) => {
+      return {
+        ...reef,
+        reefApplication: undefined,
+        applied: reef.applied,
+      };
+    });
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
