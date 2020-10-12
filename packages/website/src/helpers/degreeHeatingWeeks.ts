@@ -17,5 +17,5 @@ export const dhwColorFinder = (degreeHeatingWeeks?: number | null): string => {
     (item) => degreeHeatingWeeks < item.value
   );
 
-  return dhwColorCode[index - 1].color
+  return dhwColorCode[index - 1].color;
 };
