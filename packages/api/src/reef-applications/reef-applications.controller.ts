@@ -11,7 +11,6 @@ import {
   Query,
   NotFoundException,
   Req,
-  ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
@@ -30,6 +29,7 @@ import { Public } from '../auth/public.decorator';
 import { AuthRequest } from '../auth/auth.types';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
+import { FilterReefApplication } from './dto/filter-reef-application.dto';
 
 @Auth()
 @UseInterceptors(ClassSerializerInterceptor)
@@ -51,6 +51,11 @@ export class ReefApplicationsController {
       reef,
       request.user,
     );
+  }
+
+  @Get()
+  async find(@Query() filters: FilterReefApplication) {
+    return this.reefApplicationsService.find(filters);
   }
 
   @Public()
@@ -80,9 +85,9 @@ export class ReefApplicationsController {
   }
 
   @UseGuards(IsReefAdminGuard)
-  @Put(':id/reefs/:reef_id')
+  @Put(':hashId/reefs/:reef_id')
   update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('hashId', new ParseHashedIdPipe()) id: number,
     @Body() reefApplication: UpdateReefApplicationDto,
   ) {
     return this.reefApplicationsService.update(id, reefApplication, {});
