@@ -40,7 +40,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         installationResources: data.installationResources,
         installationSchedule: new Date(data.installationSchedule).toISOString(),
       };
-      handleFormSubmit(params);
+      handleFormSubmit(data.siteName, params);
     },
     [handleFormSubmit]
   );
@@ -56,8 +56,14 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         variant="outlined"
         inputProps={{ className: classes.textField }}
         fullWidth
-        disabled
-        value={reefName}
+        disabled={Boolean(reefName)}
+        defaultValue={reefName || ""}
+        name="siteName"
+        inputRef={register({
+          required: "This is a required field",
+        })}
+        error={!!errors.siteName}
+        helperText={errors?.siteName?.message || ""}
       />
 
       <Typography className={classes.additionalInfo}>
@@ -194,10 +200,14 @@ const styles = (theme: Theme) =>
   });
 
 interface FormIncomingProps {
-  reefName: string;
+  reefName?: string | null;
   agreed: boolean;
-  handleFormSubmit: (params: ReefApplyParams) => void;
+  handleFormSubmit: (siteName: string, params: ReefApplyParams) => void;
 }
+
+Form.defaultProps = {
+  reefName: null,
+};
 
 type FormProps = FormIncomingProps & WithStyles<typeof styles>;
 

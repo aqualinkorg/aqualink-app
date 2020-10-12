@@ -96,6 +96,16 @@ const getReefApplication = (reefId: number, token: string) =>
     token,
   });
 
+const updateReefName = (reefId: number, name: string, token: string) =>
+  requests.send<Reef>({
+    url: `reefs/${reefId}`,
+    method: "PUT",
+    data: {
+      name,
+    },
+    token,
+  });
+
 export default {
   getReef,
   getReefs,
@@ -106,4 +116,5 @@ export default {
   registerReef,
   applyReef,
   getReefApplication,
+  updateReefName,
 };

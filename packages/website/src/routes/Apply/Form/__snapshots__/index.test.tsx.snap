@@ -14,9 +14,11 @@ exports[`renders as expected 1`] = `
     <mock-textfield
       classname="Form-formField-3 Form-textField-6"
       disabled="true"
+      error="false"
       fullwidth="true"
+      helpertext=""
       inputprops="[object Object]"
-      value="Mock Reef"
+      name="siteName"
       variant="outlined"
     />
     <mock-typography

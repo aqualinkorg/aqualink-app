@@ -72,11 +72,17 @@ const Apply = ({ classes }: ApplyProps) => {
   };
 
   const handleFormSubmit = useCallback(
-    (data: ReefApplyParams) => {
+    (siteName: string, data: ReefApplyParams) => {
       if (user?.token && reef && reefApplication) {
         setLoading(true);
         reefServices
           .applyReef(reef.id, reefApplication.appId, data, user.token)
+          // eslint-disable-next-line consistent-return
+          .then(() => {
+            if (!reef?.name && user?.token) {
+              return reefServices.updateReefName(reef.id, siteName, user.token);
+            }
+          })
           .then(() => setMessage("Thank you for applying"))
           .catch(() => setMessage("Something went wrong"))
           .finally(() => setLoading(false));
@@ -157,15 +163,13 @@ const Apply = ({ classes }: ApplyProps) => {
                   handleChange={updateAgreement}
                 />
               </Grid>
-              {reef?.name && (
-                <Grid item xs={11} md={5}>
-                  <Form
-                    reefName={reef.name}
-                    agreed={agreed()}
-                    handleFormSubmit={handleFormSubmit}
-                  />
-                </Grid>
-              )}
+              <Grid item xs={11} md={5}>
+                <Form
+                  reefName={reef?.name}
+                  agreed={agreed()}
+                  handleFormSubmit={handleFormSubmit}
+                />
+              </Grid>
             </Grid>
           </Container>
         </>

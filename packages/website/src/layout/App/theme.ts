@@ -160,6 +160,9 @@ const theme: any = createMuiTheme({
     MuiInputBase: {
       root: {
         height: "100%",
+        "& $disabled": {
+          backgroundColor: "#f5f5f5",
+        },
       },
     },
     MuiPickersDay: {
