@@ -29,11 +29,7 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
   const applied = Boolean(userReef?.applied);
   switch (true) {
     case applied:
-      return (
-        <Link className={classes.newSpotterLink} to="/apply">
-          Check My Application
-        </Link>
-      );
+      return "Applied. In Review";
     case isAdmin(user, reefId):
       return (
         <Link className={classes.newSpotterLink} to="/apply">

@@ -433,7 +433,7 @@ exports[`renders as expected 1`] = `
                     role="presentation"
                   >
                     <mock-iconbutton
-                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                      classname="MuiPickersDay-day"
                       tabindex="0"
                     >
                       <mock-typography
@@ -448,7 +448,7 @@ exports[`renders as expected 1`] = `
                     role="presentation"
                   >
                     <mock-iconbutton
-                      classname="MuiPickersDay-day"
+                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                       tabindex="0"
                     >
                       <mock-typography

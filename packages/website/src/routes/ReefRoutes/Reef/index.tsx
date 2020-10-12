@@ -53,8 +53,7 @@ const getAlertMessage = (
     case applied:
       return (
         <div>
-          You have applied for an Aqualink spotter. Check your application
-          <span> </span> <Link to="/apply">here</Link>.
+          Your application for an Aqualink spotter is being reviewed!
         </div>
       );
 
