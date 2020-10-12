@@ -16,6 +16,7 @@ import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
+import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -55,6 +56,7 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   reef: Reef,
   date: Date,
+  excludeSpotterData: boolean,
 ): Promise<SofarDailyData> {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
@@ -74,7 +76,7 @@ export async function getDailyData(
     windVelocities,
     windDirections,
   ] = await Promise.all([
-    spotterId
+    spotterId && !excludeSpotterData
       ? getSpotterData(spotterId, endOfDate)
       : {
           surfaceTemperature: [],
@@ -263,6 +265,7 @@ export async function getReefsDailyData(
 ) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
+  const exclusionDatesRepository = connection.getRepository(ExclusionDates);
   const allReefs = await reefRepository.find(
     reefIds && reefIds.length > 0
       ? {
@@ -277,7 +280,19 @@ export async function getReefsDailyData(
   await Bluebird.map(
     allReefs,
     async (reef) => {
-      const dailyDataInput = await getDailyData(reef, date);
+      const excludeSpotterData = await exclusionDatesRepository
+        .createQueryBuilder('exclusion')
+        .where('exclusion.spotter_id = :spotterId', {
+          spotterId: reef.spotterId,
+        })
+        .andWhere('DATE(exclusion.date) = DATE(:date)', { date })
+        .getOne();
+
+      const dailyDataInput = await getDailyData(
+        reef,
+        date,
+        !!excludeSpotterData,
+      );
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         date,
