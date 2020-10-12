@@ -26,6 +26,7 @@ import reefServices from "../../../../services/reefServices";
 import { Pois } from "../../../../store/Reefs/types";
 import { isAdmin } from "../../../../helpers/isAdmin";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
+import { useBodyLength } from "../../../../helpers/useBodyLength";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("All");
@@ -42,6 +43,8 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reefId);
   const dispatch = useDispatch();
+
+  const bodyLength = useBodyLength();
 
   useEffect(() => {
     const source = Axios.CancelToken.source();
@@ -140,7 +143,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           bgcolor="#f5f6f6"
           position="absolute"
           height="100%"
-          width="100vw"
+          width={bodyLength}
           zIndex="-1"
         />
         <Grid

@@ -572,7 +572,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   </mock-dialog>
   <div
     class="MuiContainer-root MuiContainer-maxWidthLg"
-    style="overflow: hidden;"
   >
     <div
       class="MuiContainer-root Reef-noData-36 MuiContainer-maxWidthLg"
@@ -1201,7 +1200,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   </mock-dialog>
   <div
     class="MuiContainer-root MuiContainer-maxWidthLg"
-    style="overflow: hidden;"
   >
     <div
       class="MuiContainer-root Reef-noData-1 MuiContainer-maxWidthLg"

@@ -37,7 +37,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       bgcolor="#f5f6f6"
       height="100%"
       position="absolute"
-      width="100vw"
+      width=""
       zindex="-1"
     />
     <div
