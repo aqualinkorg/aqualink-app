@@ -78,7 +78,7 @@ export class UsersService {
       .getOne();
 
     if (!user) {
-      throw new NotFoundException(`User with ID ${req.user.id} not found.`);
+      return [];
     }
 
     return user.administeredReefs.map((reef) => {
