@@ -58,11 +58,11 @@ const Apply = ({ classes }: ApplyProps) => {
   const [newReefId, setNewReefId] = useState<number>();
 
   useEffect(() => {
-    if (user && user.fullName && user.organization && user.email) {
+    if (user && user.fullName && user.email) {
       setFormModel(
         formModel
           .set("name", user.fullName)
-          .set("org", user.organization)
+          .set("org", user.organization || " ")
           .set("email", user.email)
       );
     } else {
