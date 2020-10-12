@@ -56,6 +56,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         variant="outlined"
         inputProps={{ className: classes.textField }}
         fullWidth
+        placeholder="Reef Name e.g. 'Sombrero Reef'"
         disabled={Boolean(reefName)}
         defaultValue={reefName || ""}
         name="siteName"

@@ -19,6 +19,7 @@ exports[`renders as expected 1`] = `
       helpertext=""
       inputprops="[object Object]"
       name="siteName"
+      placeholder="Reef Name e.g. 'Sombrero Reef'"
       variant="outlined"
     />
     <mock-typography
