@@ -21,6 +21,7 @@ import CardTitle, { Value } from "./CardTitle";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 
 const ReefDetails = ({
@@ -33,7 +34,7 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { liveData, maxMonthlyMean } = reef;
+  const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -45,7 +46,10 @@ const ReefDetails = ({
     },
     {
       Component: CoralBleaching as ElementType,
-      props: { liveData, maxMonthlyMean },
+      props: {
+        dailyData: sortByDate(dailyData, "date").slice(-1)[0],
+        maxMonthlyMean,
+      },
     },
     {
       Component: Waves as ElementType,
