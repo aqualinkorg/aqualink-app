@@ -63,7 +63,7 @@ exports[`renders as expected 1`] = `
     <mock-typography
       classname="Form-scheduleDescription-5"
     >
-      What is the soonest date you could install the spotter and conduct a survey
+      What is the soonest date you could install the spotter and conduct a survey?
     </mock-typography>
     <mock-textfield
       classname="Form-formField-3"

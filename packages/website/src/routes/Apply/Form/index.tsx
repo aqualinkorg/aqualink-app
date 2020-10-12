@@ -58,7 +58,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         fullWidth
         placeholder="Reef Name e.g. 'Sombrero Reef'"
         disabled={Boolean(reefName)}
-        defaultValue={reefName || ""}
+        defaultValue={reefName || null}
         name="siteName"
         inputRef={register({
           required: "This is a required field",
@@ -108,7 +108,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
       <Typography>Schedule for installation</Typography>
       <Typography className={classes.scheduleDescription}>
         What is the soonest date you could install the spotter and conduct a
-        survey
+        survey?
       </Typography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
