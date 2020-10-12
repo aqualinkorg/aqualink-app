@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <div
+    class="Agreements-agreements-1"
+  >
+    <mock-typography
+      variant="h5"
+    >
+      Agree to:
+    </mock-typography>
+    <div
+      class="MuiFormGroup-root"
+    >
+      <label
+        class="MuiFormControlLabel-root Agreements-formControlLabel-2"
+      >
+        <mock-checkbox
+          checked="true"
+          color="primary"
+        />
+        <mock-typography
+          classname="MuiFormControlLabel-label"
+          component="span"
+        >
+          Handle any shipping and permitting charges
+        </mock-typography>
+      </label>
+      <label
+        class="MuiFormControlLabel-root Agreements-formControlLabel-2"
+      >
+        <mock-checkbox
+          checked="false"
+          color="primary"
+        />
+        <mock-typography
+          classname="MuiFormControlLabel-label"
+          component="span"
+        >
+          Provide mooring and deploy buoy
+        </mock-typography>
+      </label>
+      <label
+        class="MuiFormControlLabel-root Agreements-formControlLabel-2"
+      >
+        <mock-checkbox
+          checked="true"
+          color="primary"
+        />
+        <mock-typography
+          classname="MuiFormControlLabel-label"
+          component="span"
+        >
+          Conduct initial survey
+        </mock-typography>
+      </label>
+    </div>
+  </div>
+</div>
+`;
