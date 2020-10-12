@@ -54,7 +54,7 @@ const getAlertMessage = (
       return (
         <div>
           You have applied for an Aqualink spotter. Check your application
-          <Link to="/apply"> here</Link>.
+          <span> </span> <Link to="/apply">here</Link>.
         </div>
       );
 
@@ -62,7 +62,7 @@ const getAlertMessage = (
       return (
         <div>
           {defaultMessage} Apply for an Aqualink spotter
-          <Link to="/apply"> here</Link>.
+          <span> </span> <Link to="/apply">here</Link>.
         </div>
       );
     default:
