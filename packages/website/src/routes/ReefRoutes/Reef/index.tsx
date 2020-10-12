@@ -41,7 +41,7 @@ const getAlertMessage = (
   hasDailyData: boolean
 ) => {
   const userReef = findAdministeredReef(user, parseInt(reefId, 10));
-  const applied = Boolean(userReef && userReef.applied);
+  const applied = Boolean(userReef?.applied);
 
   const defaultMessage =
     "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
