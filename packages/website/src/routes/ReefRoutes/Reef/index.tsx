@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
@@ -33,15 +33,33 @@ import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
+import { User } from "../../../store/User/types";
 
-const managerNoDataMessage =
-  "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
+const getAlertMessage = (user: User, reefId: string, hasDailyData: boolean) => {
+  const userReef = findAdministeredReef(user, parseInt(reefId, 10));
+  const applied = Boolean(userReef && userReef.applied);
 
-// const managerWithDataMessage =
-//   "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models. Apply for an Aqualink spotter ";
+  const defaultMessage =
+    "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
-const defaultMessage =
-  "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
+  switch (true) {
+    case isAdmin(user, parseInt(reefId, 10)) && !hasDailyData:
+      return "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
+
+    case applied:
+      return defaultMessage;
+
+    case isAdmin(user, parseInt(reefId, 10)):
+      return (
+        <div>
+          {defaultMessage} Apply for an Aqualink spotter
+          <Link to="/apply">here</Link>.
+        </div>
+      );
+    default:
+      return defaultMessage;
+  }
+};
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
@@ -65,9 +83,6 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
-
-  const userReef = findAdministeredReef(user, parseInt(reefId, 10));
-  const applied = Boolean(userReef && userReef.applied);
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -98,19 +113,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             {!hasSpotter && (
               <Box mt="1rem">
                 <Alert severity="info">
-                  {isAdmin(user, parseInt(reefId, 10)) ? (
-                    !hasDailyData ? (
-                      managerNoDataMessage
-                    ) : (
-                      <div>
-                        {defaultMessage}
-                        {/* TODO - Re-use apply link */}
-                        {/* <Link to="/apply">here</Link>. */}
-                      </div>
-                    )
-                  ) : (
-                    defaultMessage
-                  )}
+                  {getAlertMessage(user, reefId, hasDailyData)}
                 </Alert>
               </Box>
             )}
