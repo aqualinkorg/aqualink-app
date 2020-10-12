@@ -82,6 +82,7 @@ export interface Reef {
   liveData: LiveData;
   latestDailyData: DailyData;
   featuredImage?: string;
+  applied?: boolean;
 }
 
 export interface ReefRegisterResponseData {
@@ -100,6 +101,15 @@ export interface ReefApplyParams {
   fundingSource: string;
   installationSchedule: string;
   installationResources: string;
+}
+
+export interface ReefApplication {
+  permitRequirements: string | null;
+  fundingSource: string | null;
+  installationSchedule: string | null;
+  installationResources: string | null;
+  appId: string;
+  applied: boolean;
 }
 
 export interface ReefsListState {

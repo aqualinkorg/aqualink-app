@@ -7,6 +7,7 @@ import type {
   Pois,
   ReefRegisterResponseData,
   ReefApplyParams,
+  ReefApplication,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -75,11 +76,23 @@ const registerReef = (
   });
 };
 
-const applyReef = (id: string, data: ReefApplyParams, token: string) =>
+const applyReef = (
+  reefId: number,
+  appId: string,
+  data: ReefApplyParams,
+  token: string
+) =>
   requests.send({
-    url: `reef-applications/${id}`,
+    url: `reef-applications/${appId}/reefs/${reefId}`,
     method: "PUT",
     data,
+    token,
+  });
+
+const getReefApplication = (reefId: number, token: string) =>
+  requests.send<ReefApplication[]>({
+    url: `reef-applications/?reef=${reefId}`,
+    method: "GET",
     token,
   });
 
@@ -92,4 +105,5 @@ export default {
   deleteReefPoi,
   registerReef,
   applyReef,
+  getReefApplication,
 };

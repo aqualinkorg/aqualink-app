@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -22,7 +22,7 @@ import Form from "./Form";
 import { userInfoSelector } from "../../store/User/userSlice";
 import { reefDetailsSelector } from "../../store/Reefs/selectedReefSlice";
 import { AgreementsChecked } from "./types";
-import { ReefApplyParams } from "../../store/Reefs/types";
+import { ReefApplication, ReefApplyParams } from "../../store/Reefs/types";
 import reefServices from "../../services/reefServices";
 
 const Apply = ({ classes }: ApplyProps) => {
@@ -37,6 +37,19 @@ const Apply = ({ classes }: ApplyProps) => {
   );
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [reefApplication, setReefApplication] = useState<ReefApplication>();
+
+  useEffect(() => {
+    if (reef && user?.token) {
+      setLoading(true);
+      reefServices
+        .getReefApplication(reef.id, user.token)
+        .then(({ data }) => {
+          setReefApplication(data[0]);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [user, reef]);
 
   const updateAgreement = useCallback(
     (label: keyof AgreementsChecked) => {
@@ -55,16 +68,16 @@ const Apply = ({ classes }: ApplyProps) => {
 
   const handleFormSubmit = useCallback(
     (data: ReefApplyParams) => {
-      if (user?.token && reef) {
+      if (user?.token && reef && reefApplication) {
         setLoading(true);
         reefServices
-          .applyReef(`${reef.id}`, data, user.token)
+          .applyReef(reef.id, reefApplication.appId, data, user.token)
           .then(() => setMessage("Thank you for applying"))
           .catch(() => setMessage("Something went wrong"))
           .finally(() => setLoading(false));
       }
     },
-    [reef, user]
+    [reef, user, reefApplication]
   );
 
   return (
@@ -111,7 +124,7 @@ const Apply = ({ classes }: ApplyProps) => {
             </Grid>
           </Grid>
         </Container>
-      ) : (
+      ) : reefApplication ? (
         <>
           <Container className={classes.welcomeMessage}>
             <Grid container>
@@ -151,7 +164,7 @@ const Apply = ({ classes }: ApplyProps) => {
             </Grid>
           </Container>
         </>
-      )}
+      ) : null}
       <Footer />
     </>
   );

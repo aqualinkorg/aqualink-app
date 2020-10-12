@@ -13,10 +13,10 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
+
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
-
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 import {
   reefDetailsSelector,
@@ -32,6 +32,7 @@ import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
+import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 
 const managerNoDataMessage =
   "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
@@ -64,6 +65,9 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
+
+  const userReef = findAdministeredReef(user, parseInt(reefId, 10));
+  const applied = Boolean(userReef && userReef.applied);
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
