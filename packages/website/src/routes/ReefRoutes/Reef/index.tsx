@@ -47,11 +47,16 @@ const getAlertMessage = (
     "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
-    case isAdmin(user, parseInt(reefId, 10)) && !hasDailyData:
-      return "Welcome to your virtual reef, data is loading, please come back in a few hours. Your site will be visible publicly as soon as it has been approved by the Aqualink team.";
+    case !hasDailyData:
+      return "Welcome to your virtual reef, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.";
 
     case applied:
-      return defaultMessage;
+      return (
+        <div>
+          You have applied for an Aqualink spotter. Check your application
+          <Link to="/apply"> here</Link>.
+        </div>
+      );
 
     case isAdmin(user, parseInt(reefId, 10)):
       return (
