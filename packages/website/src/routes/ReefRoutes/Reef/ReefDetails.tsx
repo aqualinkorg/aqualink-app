@@ -109,11 +109,9 @@ const ReefDetails = ({
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid className={classes.mediaWrapper} item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
+          {diveDate && point && <CardTitle values={featuredMediaTitleItems} />}
           <div className={classes.container}>
-            {diveDate && point && (
-              <CardTitle values={featuredMediaTitleItems} />
-            )}
             <FeaturedMedia
               url={reef.videoStream}
               featuredImage={reef.featuredImage}
@@ -124,7 +122,12 @@ const ReefDetails = ({
 
       {hasDailyData && (
         <>
-          <Grid container justify="space-between" spacing={4}>
+          <Grid
+            className={classes.metricsWrapper}
+            container
+            justify="space-between"
+            spacing={4}
+          >
             {cards.map(({ Component, props }, index) => (
               <Grid key={index.toString()} item xs={12} sm={6} md={3}>
                 <Component {...props} />
@@ -157,7 +160,6 @@ const styles = (theme: Theme) =>
     },
     container: {
       height: "30rem",
-      marginBottom: "2rem",
       [theme.breakpoints.between("md", 1440)]: {
         height: "25rem",
       },
@@ -165,10 +167,8 @@ const styles = (theme: Theme) =>
         height: "20rem",
       },
     },
-    mediaWrapper: {
-      [theme.breakpoints.down("xs")]: {
-        marginBottom: "3rem",
-      },
+    metricsWrapper: {
+      marginTop: "1rem",
     },
   });
 
