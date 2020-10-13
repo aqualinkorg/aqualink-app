@@ -29,7 +29,7 @@ const Form = ({
   );
 
   useEffect(() => {
-    if (application && application.installationSchedule) {
+    if (application?.installationSchedule) {
       setInstallationSchedule(new Date(application.installationSchedule));
     }
   }, [application]);

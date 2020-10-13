@@ -5,7 +5,5 @@ export const findAdministeredReef = (
   user: User | null,
   reefId: number
 ): Reef | undefined => {
-  const reef = user?.administeredReefs?.find((item) => item.id === reefId);
-
-  return reef;
+  return user?.administeredReefs?.find((item) => item.id === reefId);
 };
