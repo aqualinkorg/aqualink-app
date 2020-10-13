@@ -72,13 +72,13 @@ export class UsersService {
   async getAdministeredReefs(req: AuthRequest): Promise<Reef[]> {
     const user = await this.usersRepository
       .createQueryBuilder('users')
-      .innerJoinAndSelect('users.administeredReefs', 'reefs')
+      .leftJoinAndSelect('users.administeredReefs', 'reefs')
       .leftJoinAndSelect('reefs.reefApplication', 'reefApplication')
       .where('users.id = :id', { id: req.user.id })
       .getOne();
 
     if (!user) {
-      return [];
+      throw new NotFoundException(`User with ID ${req.user.id} not found.`);
     }
 
     return user.administeredReefs.map((reef) => {
