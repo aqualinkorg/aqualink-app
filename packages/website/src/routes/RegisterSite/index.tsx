@@ -166,18 +166,20 @@ const Apply = ({ classes }: ApplyProps) => {
 
       const sql = `INSERT INTO proposed_sites (the_geom, name, org, email, lat, lng, depth, date)
         VALUES (ST_SetSRID(ST_GeomFromGeoJSON('${position}'),4326),'${name}','${org}','${email}','${lat}','${lng}','${depth}','${date}')`;
-      fetch(
-        `https://drewjgray.carto.com/api/v2/sql?&q=${sql}&api_key=${REACT_APP_CARTO_API_KEY}`
-      )
-        .then((response) => {
-          setCartoSubmissionOk(response.ok);
-          setSnackbarOpenFromCarto(true);
-        })
-        .catch((error) => {
-          setCartoSubmissionOk(false);
-          setSnackbarOpenFromCarto(true);
-          console.error(error);
-        });
+      if (REACT_APP_CARTO_API_KEY) {
+        fetch(
+          `https://drewjgray.carto.com/api/v2/sql?&q=${sql}&api_key=${REACT_APP_CARTO_API_KEY}`
+        )
+          .then((response) => {
+            setCartoSubmissionOk(response.ok);
+            setSnackbarOpenFromCarto(true);
+          })
+          .catch((error) => {
+            setCartoSubmissionOk(false);
+            setSnackbarOpenFromCarto(true);
+            console.error(error);
+          });
+      }
     }
   }
 
