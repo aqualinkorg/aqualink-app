@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -15,12 +15,24 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-import { ReefApplyParams } from "../../../store/Reefs/types";
+import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
 
-const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
+const Form = ({
+  reefName,
+  application,
+  agreed,
+  handleFormSubmit,
+  classes,
+}: FormProps) => {
   const [installationSchedule, setInstallationSchedule] = useState<Date | null>(
     null
   );
+
+  useEffect(() => {
+    if (application && application.installationSchedule) {
+      setInstallationSchedule(new Date(application.installationSchedule));
+    }
+  }, [application]);
 
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
@@ -79,6 +91,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         fullWidth
         multiline
         rows={2}
+        defaultValue={application?.permitRequirements || null}
         placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction"
         name="permitRequirements"
         inputRef={register({
@@ -96,6 +109,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         fullWidth
         multiline
         rows={2}
+        defaultValue={application?.fundingSource || null}
         placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs"
         name="fundingSource"
         inputRef={register({
@@ -150,6 +164,7 @@ const Form = ({ reefName, agreed, handleFormSubmit, classes }: FormProps) => {
         fullWidth
         multiline
         rows={4}
+        defaultValue={application?.installationResources || null}
         placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
         name="installationResources"
         inputRef={register({
@@ -202,12 +217,14 @@ const styles = (theme: Theme) =>
 
 interface FormIncomingProps {
   reefName?: string | null;
+  application?: ReefApplication | null;
   agreed: boolean;
   handleFormSubmit: (siteName: string, params: ReefApplyParams) => void;
 }
 
 Form.defaultProps = {
   reefName: null,
+  application: null,
 };
 
 type FormProps = FormIncomingProps & WithStyles<typeof styles>;

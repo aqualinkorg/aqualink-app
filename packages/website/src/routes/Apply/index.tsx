@@ -166,6 +166,7 @@ const Apply = ({ classes }: ApplyProps) => {
               <Grid item xs={11} md={5}>
                 <Form
                   reefName={reef?.name}
+                  application={reefApplication}
                   agreed={agreed()}
                   handleFormSubmit={handleFormSubmit}
                 />
