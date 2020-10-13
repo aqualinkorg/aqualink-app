@@ -1,6 +1,14 @@
 import { AxiosRequestConfig } from "axios";
 import requests from "../helpers/requests";
-import type { DailyData, LiveData, Reef, Pois } from "../store/Reefs/types";
+import type {
+  DailyData,
+  LiveData,
+  Reef,
+  Pois,
+  ReefRegisterResponseData,
+  ReefApplyParams,
+  ReefApplication,
+} from "../store/Reefs/types";
 
 const getReef = (id: string) =>
   requests.send<Reef>({
@@ -43,6 +51,61 @@ const deleteReefPoi = (id: number, token: string) =>
     token,
   });
 
+const registerReef = (
+  name: string,
+  latitude: number,
+  longitude: number,
+  depth: number,
+  token: string
+) => {
+  const data = {
+    reefApplication: {},
+    reef: {
+      name,
+      latitude,
+      longitude,
+      depth,
+    },
+  };
+
+  return requests.send<ReefRegisterResponseData>({
+    url: "reef-applications",
+    method: "POST",
+    data,
+    token,
+  });
+};
+
+const applyReef = (
+  reefId: number,
+  appId: string,
+  data: ReefApplyParams,
+  token: string
+) =>
+  requests.send({
+    url: `reef-applications/${appId}/reefs/${reefId}`,
+    method: "PUT",
+    data,
+    token,
+  });
+
+const getReefApplication = (reefId: number, token: string) =>
+  requests.send<ReefApplication[]>({
+    url: `reef-applications/?reef=${reefId}`,
+    method: "GET",
+    token,
+  });
+
+const updateReefName = (reefId: number, name: string, token: string) =>
+  requests.send<Reef>({
+    url: `reefs/${reefId}`,
+    method: "PUT",
+    data: {
+      name,
+    },
+    token,
+  });
+
 export default {
   getReef,
   getReefs,
@@ -50,4 +113,8 @@ export default {
   getReefLiveData,
   getReefPois,
   deleteReefPoi,
+  registerReef,
+  applyReef,
+  getReefApplication,
+  updateReefName,
 };
