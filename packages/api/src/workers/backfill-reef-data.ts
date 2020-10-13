@@ -1,19 +1,28 @@
+import Bluebird from 'bluebird';
 import { Logger } from '@nestjs/common';
-import { Worker } from 'worker_threads';
+import { getConnection } from 'typeorm';
+import { getReefsDailyData } from './dailyData';
 
 const logger = new Logger('Backfill Worker');
 
+async function run(reefId: number, days: number) {
+  const backlogArray = Array.from(Array(days).keys());
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - past - 1);
+    try {
+      await getReefsDailyData(getConnection(), date, [reefId]);
+    } catch (error) {
+      logger.error(error);
+    }
+  });
+}
+
 export const backfillReefData = (reefId: number) => {
-  const worker = new Worker(`./scripts/async-backfill.js`, {
-    argv: ['--days', '90', '--reefs', `${reefId}`],
-  });
-
-  worker.on('error', (err) => {
-    logger.error(err);
-    logger.error(`Backfill worker encountered an error: `, err.stack);
-  });
-
-  worker.on('exit', (code) => {
-    logger.log(`Backfill worker exited with code ${code}`);
-  });
+  logger.log(`Starting backfill data for reef ${reefId}`);
+  run(reefId, 90);
+  logger.log(`Finished backfill data for reef ${reefId}`);
 };

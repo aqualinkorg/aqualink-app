@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Surveys Delete Button should render with given state from Redux store 1`] = `
+exports[`Survey Card should render with given state from Redux store 1`] = `
 <div>
   <div
     class="MuiPaper-root SurveyCard-surveyCard-5 MuiPaper-elevation0 MuiPaper-rounded"

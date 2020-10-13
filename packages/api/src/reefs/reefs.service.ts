@@ -120,9 +120,11 @@ export class ReefsService {
     const found = await this.reefsRepository.findOne(id, {
       relations: ['region', 'admins', 'stream'],
     });
+
     if (!found) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
+
     return found;
   }
 

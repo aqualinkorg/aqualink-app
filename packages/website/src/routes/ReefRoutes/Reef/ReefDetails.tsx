@@ -21,18 +21,20 @@ import CardTitle, { Value } from "./CardTitle";
 import type { Reef } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 
 const ReefDetails = ({
   classes,
   reef,
+  hasDailyData,
   surveys,
   point,
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { liveData, maxMonthlyMean } = reef;
+  const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -44,7 +46,10 @@ const ReefDetails = ({
     },
     {
       Component: CoralBleaching as ElementType,
-      props: { liveData, maxMonthlyMean },
+      props: {
+        dailyData: sortByDate(dailyData, "date").slice(-1)[0],
+        maxMonthlyMean,
+      },
     },
     {
       Component: Waves as ElementType,
@@ -104,11 +109,9 @@ const ReefDetails = ({
             <Map polygon={reef.polygon} />
           </div>
         </Grid>
-        <Grid className={classes.mediaWrapper} item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
+          {diveDate && point && <CardTitle values={featuredMediaTitleItems} />}
           <div className={classes.container}>
-            {diveDate && point && (
-              <CardTitle values={featuredMediaTitleItems} />
-            )}
             <FeaturedMedia
               url={reef.videoStream}
               featuredImage={reef.featuredImage}
@@ -117,26 +120,35 @@ const ReefDetails = ({
         </Grid>
       </Grid>
 
-      <Grid container justify="space-between" spacing={4}>
-        {cards.map(({ Component, props }, index) => (
-          <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-            <Component {...props} />
+      {hasDailyData && (
+        <>
+          <Grid
+            className={classes.metricsWrapper}
+            container
+            justify="space-between"
+            spacing={4}
+          >
+            {cards.map(({ Component, props }, index) => (
+              <Grid key={index.toString()} item xs={12} sm={6} md={3}>
+                <Component {...props} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
 
-      <Box mt="2rem">
-        <Charts
-          dailyData={reef.dailyData}
-          surveys={surveys}
-          depth={reef.depth}
-          maxMonthlyMean={reef.maxMonthlyMean || null}
-          temperatureThreshold={
-            reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-          }
-        />
-        <Surveys reefId={reef.id} />
-      </Box>
+          <Box mt="2rem">
+            <Charts
+              dailyData={reef.dailyData}
+              surveys={surveys}
+              depth={reef.depth}
+              maxMonthlyMean={reef.maxMonthlyMean || null}
+              temperatureThreshold={
+                reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+              }
+            />
+            <Surveys reefId={reef.id} />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
@@ -148,7 +160,6 @@ const styles = (theme: Theme) =>
     },
     container: {
       height: "30rem",
-      marginBottom: "2rem",
       [theme.breakpoints.between("md", 1440)]: {
         height: "25rem",
       },
@@ -156,15 +167,14 @@ const styles = (theme: Theme) =>
         height: "20rem",
       },
     },
-    mediaWrapper: {
-      [theme.breakpoints.down("xs")]: {
-        marginBottom: "3rem",
-      },
+    metricsWrapper: {
+      marginTop: "1rem",
     },
   });
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  hasDailyData: boolean;
   surveys: SurveyListItem[];
   point?: SurveyPoint | null;
   diveDate?: string | null;

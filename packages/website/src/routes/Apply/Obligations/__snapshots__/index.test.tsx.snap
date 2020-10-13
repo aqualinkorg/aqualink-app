@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Obligations 1`] = `
+<div>
+  <div
+    class="Obligations-obligations-1"
+  >
+    <mock-typography
+      classname="Obligations-obligationsTitle-2"
+      variant="h3"
+    >
+      Your Obligations
+    </mock-typography>
+    <mock-typography>
+      You will be given a free smart buoy but there are some things you will will be expected to do or provide:
+    </mock-typography>
+    <div
+      class="Obligations-obligationsList-3"
+    >
+      <mock-typography>
+        1. Pay for shipping and any applicable duties
+      </mock-typography>
+      <mock-typography>
+        2. Obtain any necessary permits (if applicable)
+      </mock-typography>
+      <mock-typography>
+        3. Provide and attach a ballast (e.g. 60lb kettlebell)
+      </mock-typography>
+      <mock-typography>
+        4. Deploy spotter with mooring weight (can be done from a kayak)
+      </mock-typography>
+      <mock-typography>
+        5. Maintain spotter (inspect and clean every 6 months)
+      </mock-typography>
+      <mock-typography>
+        6. Conduct initial and periodic photographic surveys and upload imagery to our website
+      </mock-typography>
+    </div>
+  </div>
+</div>
+`;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import moment from "moment";
 import {
   Grid,
@@ -9,15 +9,27 @@ import {
   WithStyles,
   createStyles,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
+import { setSelectedReef } from "../../../../store/Reefs/selectedReefSlice";
+
 const ReefNavBar = ({
+  hasDailyData,
   reefName = "",
   lastSurvey,
   managerName,
   classes,
 }: ReefNavBarProps) => {
+  const dispatch = useDispatch();
+
+  const clearReefInfo = useCallback(() => {
+    if (!hasDailyData) {
+      dispatch(setSelectedReef(null));
+    }
+  }, [hasDailyData, dispatch]);
+
   return (
     <Grid
       className={classes.root}
@@ -29,7 +41,12 @@ const ReefNavBar = ({
         <Grid alignItems="center" direction="row" container spacing={1}>
           <Grid item>
             <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
-              <IconButton edge="start" color="primary" aria-label="menu">
+              <IconButton
+                onClick={clearReefInfo}
+                edge="start"
+                color="primary"
+                aria-label="menu"
+              >
                 <ArrowBack />
               </IconButton>
             </Link>
@@ -92,6 +109,7 @@ const styles = () =>
   });
 
 interface ReefNavBarIncomingProps {
+  hasDailyData: boolean;
   reefName?: string;
   lastSurvey?: string | null;
   managerName?: string;

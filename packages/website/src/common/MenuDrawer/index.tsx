@@ -31,8 +31,8 @@ const menuRoutes = [
     href: "/faq",
   },
   {
-    text: "APPLY",
-    href: "/apply",
+    text: "REGISTER A SITE",
+    href: "/register",
   },
 ];
 
@@ -75,7 +75,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 const styles = () =>
   createStyles({
     paper: {
-      width: "12rem",
+      width: "16rem",
       alignItems: "center",
       // paddingTop: "2rem",
       backgroundColor: "#095877",

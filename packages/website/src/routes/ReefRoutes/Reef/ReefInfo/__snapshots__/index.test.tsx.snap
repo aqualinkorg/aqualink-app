@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`ReefNavBar should render with given state from Redux store 1`] = `
 <div>
   <div
     class="MuiGrid-root ReefNavBar-root-1 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -39,7 +39,15 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-9"
         >
-          
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-typography
+              variant="h4"
+            >
+              Mock Reef
+            </mock-typography>
+          </div>
           <div
             class="MuiGrid-root MuiGrid-item"
           >
@@ -54,7 +62,45 @@ exports[`renders as expected 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5"
-    />
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-flex-end"
+      >
+        <div
+          class="MuiGrid-root ReefNavBar-managerInfo-2 MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-flex-end"
+          >
+            <mock-typography
+              variant="subtitle1"
+            >
+              Managed by: Test User
+            </mock-typography>
+            <a
+              href="/"
+              style="text-decoration: none;"
+            >
+              <mock-typography
+                color="primary"
+                variant="subtitle2"
+              >
+                Contact Manager
+              </mock-typography>
+            </a>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container"
+          >
+            <mock-avatar />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

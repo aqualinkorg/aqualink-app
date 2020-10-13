@@ -8,7 +8,7 @@ import { SurveyListItem } from "../../../../../store/Survey/types";
 
 const mockStore = configureStore([]);
 
-describe("Surveys Delete Button", () => {
+describe("Survey Card", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const survey: SurveyListItem = {
