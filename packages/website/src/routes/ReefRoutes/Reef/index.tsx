@@ -52,7 +52,10 @@ const getAlertMessage = (
 
     case applied:
       return (
-        <div>Your application for an Aqualink spotter is being reviewed!</div>
+        <div>
+          Your application for an Aqualink spotter is being reviewed. You can
+          check your application<span> </span> <Link to="/apply">here</Link>.
+        </div>
       );
 
     case isAdmin(user, parseInt(reefId, 10)):
