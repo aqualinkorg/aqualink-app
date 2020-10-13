@@ -127,6 +127,7 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       display: "flex",
       flexDirection: "column",
       height: "100%",

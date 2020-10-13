@@ -1,6 +1,9 @@
 import theme from "../../../layout/App/theme";
 
 export const styles = {
+  card: {
+    minHeight: "18rem",
+  },
   cardTitle: {
     lineHeight: 1.5,
     [theme.breakpoints.between("md", 1544)]: {

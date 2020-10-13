@@ -13,6 +13,7 @@ import {
 import type { DailyData } from "../../../../store/Reefs/types";
 
 import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
+import { styles as incomingStyles } from "../styles";
 
 const Bleaching = ({ dailyData, classes }: BleachingProps) => {
   return (
@@ -50,7 +51,9 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
 
 const styles = () =>
   createStyles({
+    ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       height: "100%",
       width: "100%",
       backgroundColor: "#eff0f0",
