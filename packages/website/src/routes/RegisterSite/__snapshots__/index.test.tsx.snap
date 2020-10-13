@@ -6,6 +6,7 @@ exports[`Site registration page should render with given state from Redux store 
     searchlocation="false"
   />
   <mock-box
+    height="100%"
     pt="4"
   >
     <div
