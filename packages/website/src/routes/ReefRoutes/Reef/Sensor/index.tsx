@@ -37,7 +37,7 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
     case isAdmin(user, reefId):
       return (
         <Link className={classes.newSpotterLink} to="/apply">
-          Add a Spotter
+          Add a Smart Buoy
         </Link>
       );
     default:
