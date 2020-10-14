@@ -7,13 +7,19 @@ import type { Reef } from "../store/Reefs/types";
 const createUser = (email: string, password: string) =>
   app.auth().createUserWithEmailAndPassword(email, password);
 
-const storeUser = (fullName: string, email: string, token?: string) =>
+const storeUser = (
+  fullName: string,
+  email: string,
+  organization: string,
+  token?: string
+) =>
   requests.send<User>({
     method: "POST",
     url: "users",
     data: {
       fullName,
       email,
+      organization,
     },
     token,
   });

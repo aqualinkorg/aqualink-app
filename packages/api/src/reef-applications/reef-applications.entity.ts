@@ -49,4 +49,9 @@ export class ReefApplication {
   get appId(): string {
     return hashId(this.id);
   }
+
+  @Expose()
+  get applied(): boolean {
+    return !!this.permitRequirements;
+  }
 }

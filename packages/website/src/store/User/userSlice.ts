@@ -27,7 +27,7 @@ export const createUser = createAsyncThunk<
 >(
   "user/create",
   async (
-    { fullName, email, password }: UserRegisterParams,
+    { fullName, email, organization, password }: UserRegisterParams,
     { rejectWithValue }
   ) => {
     let user;
@@ -35,11 +35,17 @@ export const createUser = createAsyncThunk<
       user = (await userServices.createUser(email, password)).user;
       const token = await user?.getIdToken();
 
-      const { data } = await userServices.storeUser(fullName, email, token);
+      const { data } = await userServices.storeUser(
+        fullName,
+        email,
+        organization,
+        token
+      );
 
       return {
         email: data.email,
         fullName: data.fullName,
+        organization: data.organization,
         adminLevel: data.adminLevel,
         firebaseUid: data.firebaseUid,
         administeredReefs: isManager(data)
@@ -69,6 +75,7 @@ export const signInUser = createAsyncThunk<
       return {
         email: userData.email,
         fullName: userData.fullName,
+        organization: userData.organization,
         adminLevel: userData.adminLevel,
         firebaseUid: userData.firebaseUid,
         administeredReefs: isManager(userData)
@@ -103,6 +110,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
       return {
         email: userData.email,
         fullName: userData.fullName,
+        organization: userData.organization,
         adminLevel: userData.adminLevel,
         firebaseUid: userData.firebaseUid,
         administeredReefs: isManager(userData)

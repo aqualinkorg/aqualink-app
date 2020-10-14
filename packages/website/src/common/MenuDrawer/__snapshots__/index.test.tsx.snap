@@ -44,10 +44,10 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       FAQ
     </mock-link>
     <mock-link
-      href="/apply"
+      href="/register"
       style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
     >
-      APPLY
+      REGISTER A SITE
     </mock-link>
   </mock-drawer>
 </div>

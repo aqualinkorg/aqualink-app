@@ -10,11 +10,12 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import type { LiveData } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 
 import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
+import { styles as incomingStyles } from "../styles";
 
-const Bleaching = ({ liveData, classes }: BleachingProps) => {
+const Bleaching = ({ dailyData, classes }: BleachingProps) => {
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -39,7 +40,7 @@ const Bleaching = ({ liveData, classes }: BleachingProps) => {
           xs={12}
         >
           <img
-            src={findIntervalByLevel(liveData.weeklyAlertLevel).image}
+            src={findIntervalByLevel(dailyData.weeklyAlertLevel).image}
             alt="alert-level"
           />
         </Grid>
@@ -50,7 +51,9 @@ const Bleaching = ({ liveData, classes }: BleachingProps) => {
 
 const styles = () =>
   createStyles({
+    ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       height: "100%",
       width: "100%",
       backgroundColor: "#eff0f0",
@@ -68,7 +71,7 @@ const styles = () =>
   });
 
 interface BleachingIncomingProps {
-  liveData: LiveData;
+  dailyData: DailyData;
 }
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;
