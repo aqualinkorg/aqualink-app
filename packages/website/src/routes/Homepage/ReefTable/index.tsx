@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {
+  withStyles,
+  WithStyles,
+  createStyles,
   Grid,
   Typography,
   IconButton,
@@ -8,6 +11,7 @@ import {
   Table,
   CircularProgress,
   Box,
+  Theme,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -19,7 +23,7 @@ import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 
-const ReefTable = ({ openDrawer }: ReefTableProps) => {
+const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
@@ -54,9 +58,14 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
         )}
       </Hidden>
       <SelectedReefCard />
-      <Box display="flex" flexDirection="column" flex={1}>
+      <Box
+        className={classes.table}
+        display="flex"
+        flexDirection="column"
+        flex={1}
+      >
         <TableContainer>
-          <Table>
+          <Table stickyHeader>
             <EnhancedTableHead
               order={order}
               orderBy={orderBy}
@@ -80,8 +89,22 @@ const ReefTable = ({ openDrawer }: ReefTableProps) => {
   );
 };
 
-interface ReefTableProps {
+const styles = (theme: Theme) =>
+  createStyles({
+    table: {
+      paddingLeft: 10,
+      height: "70%",
+      overflowY: "auto",
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: 0,
+      },
+    },
+  });
+
+interface ReefTableIncomingProps {
   openDrawer: boolean;
 }
 
-export default ReefTable;
+type ReefTableProps = ReefTableIncomingProps & WithStyles<typeof styles>;
+
+export default withStyles(styles)(ReefTable);

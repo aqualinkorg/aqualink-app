@@ -2,8 +2,8 @@ import {
   Controller,
   Body,
   Param,
-  Get,
   Post,
+  Get,
   Put,
   Delete,
   Query,
@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
-import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
+import { CreateReefDto } from './dto/create-reef.dto';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs')

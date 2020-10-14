@@ -5,13 +5,19 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { omit } from 'lodash';
 import { Reef } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
-import { CreateReefDto } from './dto/create-reef.dto';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
+import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
+import { User } from '../users/users.entity';
+import { CreateReefDto } from './dto/create-reef.dto';
+import { Region } from '../regions/regions.entity';
+import { getRegion, getTimezones } from '../utils/reef.utils';
+import { getMMM } from '../utils/temperature';
 
 @Injectable()
 export class ReefsService {
@@ -21,7 +27,51 @@ export class ReefsService {
 
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
+
+    @InjectRepository(Region)
+    private regionRepository: Repository<Region>,
   ) {}
+
+  async create(createReefDto: CreateReefDto): Promise<Reef> {
+    const {
+      name,
+      latitude,
+      longitude,
+      temperatureThreshold,
+      depth,
+      status,
+      videoStream,
+      admins,
+      stream,
+    } = createReefDto;
+    const region = await getRegion(longitude, latitude, this.regionRepository);
+    const maxMonthlyMean = await getMMM(longitude, latitude);
+    const timezones = getTimezones(latitude, longitude) as string[];
+    const reef = await this.reefsRepository.save({
+      name,
+      region,
+      polygon: {
+        type: 'Point',
+        coordinates: [latitude, longitude],
+      },
+      maxMonthlyMean,
+      timezones,
+      temperatureThreshold,
+      depth,
+      status,
+      videoStream,
+      stream,
+    });
+
+    this.reefsRepository
+      .createQueryBuilder('reefs')
+      .update()
+      .relation('admins')
+      .of(reef)
+      .add(admins);
+
+    return reef;
+  }
 
   latestDailyDataSubquery(): string {
     const query = this.dailyDataRepository.createQueryBuilder('dailyData');
@@ -29,10 +79,6 @@ export class ReefsService {
     query.addSelect('reef_id');
     query.groupBy('reef_id');
     return query.getQuery();
-  }
-
-  async create(createReefDto: CreateReefDto): Promise<Reef> {
-    return this.reefsRepository.save(createReefDto);
   }
 
   async find(filter: FilterReefDto): Promise<Reef[]> {
@@ -66,6 +112,7 @@ export class ReefsService {
       'latestDailyData',
       `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
     );
+    query.andWhere('approved = true');
     return query.getMany();
   }
 
@@ -73,21 +120,37 @@ export class ReefsService {
     const found = await this.reefsRepository.findOne(id, {
       relations: ['region', 'admins', 'stream'],
     });
+
     if (!found) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
+
     return found;
   }
 
   async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
-    const result = await this.reefsRepository.update(id, updateReefDto);
+    const { admins } = updateReefDto;
+    const result = await this.reefsRepository.update(
+      id,
+      omit(updateReefDto, ['admins']),
+    );
+
+    if (admins) {
+      await this.updateAdmins(id, admins);
+    }
+
     if (!result.affected) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
-    const updated = await this.reefsRepository.findOne(id);
+
+    const updated = await this.reefsRepository.findOne(id, {
+      relations: ['admins'],
+    });
+
     if (!updated) {
       throw new InternalServerErrorException('Something went wrong.');
     }
+
     return updated;
   }
 
@@ -99,7 +162,19 @@ export class ReefsService {
   }
 
   async findDailyData(id: number): Promise<DailyData[]> {
-    return this.dailyDataRepository.find({ where: { reef: id } });
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
+    return this.dailyDataRepository.find({
+      where: { reef: id },
+      order: {
+        date: 'DESC',
+      },
+      take: 90,
+    });
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
@@ -109,6 +184,33 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    return getLiveData(reef);
+    const weeklyAlertLevel = await getWeeklyAlertLevel(
+      this.dailyDataRepository,
+      new Date(),
+      reef,
+    );
+
+    const liveData = await getLiveData(reef);
+
+    return {
+      ...liveData,
+      weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+    };
+  }
+
+  private async updateAdmins(id: number, admins: User[]) {
+    const reef = await this.reefsRepository.findOne(id, {
+      relations: ['admins'],
+    });
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
+    await this.reefsRepository
+      .createQueryBuilder('reefs')
+      .update()
+      .relation('admins')
+      .of(reef)
+      .addAndRemove(admins, reef.admins);
   }
 }

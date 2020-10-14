@@ -1,9 +1,4 @@
 import { isNil, omitBy } from 'lodash';
-import {
-  Client,
-  AddressType,
-  LatLng,
-} from '@googlemaps/google-maps-services-js';
 import Bluebird from 'bluebird';
 import { Connection, createConnection, Repository } from 'typeorm';
 import { Point, GeoJSON } from 'geojson';
@@ -11,49 +6,28 @@ import geoTz from 'geo-tz';
 import { Reef } from '../src/reefs/reefs.entity';
 import { Region } from '../src/regions/regions.entity';
 import { getMMM } from '../src/utils/temperature';
-
-const googleMapsClient = new Client({});
+import { getGoogleRegion } from '../src/utils/reef.utils';
 
 const dbConfig = require('../ormconfig');
-
-async function getCountry(longitude, latitude): Promise<string | undefined> {
-  return googleMapsClient
-    .reverseGeocode({
-      params: {
-        latlng: [latitude, longitude] as LatLng,
-        result_type: ['country' as AddressType],
-        key: process.env.GOOGLE_MAPS_API_KEY || '',
-      },
-    })
-    .then((r) => {
-      const { results } = r.data;
-      return results.length > 0 ? results[0].formatted_address : undefined;
-    })
-    .catch((e) => {
-      console.log(
-        e.response ? e.response.data.error_message : 'An unkown error occured.',
-      );
-      return undefined;
-    });
-}
 
 async function getRegion(
   longitude: number,
   latitude: number,
   regionRepository: Repository<Region>,
 ) {
-  const country = await getCountry(longitude, latitude);
-  const regions = await regionRepository.find({ where: { name: country } });
+  const googleRegion = await getGoogleRegion(longitude, latitude);
+  const regions = await regionRepository.find({
+    where: { name: googleRegion },
+  });
 
   if (regions.length > 0) {
     return regions[0];
   }
-
-  return country
+  return googleRegion
     ? regionRepository.save({
-        name: country,
+        name: googleRegion,
         polygon: {
-          coordinates: [latitude, longitude],
+          coordinates: [longitude, latitude],
           type: 'Point',
         } as GeoJSON,
       })

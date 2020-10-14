@@ -3,20 +3,18 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
+  Box,
+  Button,
+  Container,
+  createStyles,
+  Grid,
+  Paper,
+  Theme,
+  Typography,
   withStyles,
   WithStyles,
-  createStyles,
-  Container,
-  Grid,
-  IconButton,
-  Theme,
-  Paper,
-  Typography,
-  CardMedia,
-  Box,
 } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { getFeaturedMedia } from "../../../helpers/surveyMedia";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   surveyDetailsSelector,
@@ -25,19 +23,25 @@ import {
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
 
-import Map from "../../ReefRoutes/Reef/Map";
 import Charts from "./Charts";
 import type { Reef } from "../../../store/Reefs/types";
+import {
+  surveyListSelector,
+  surveysRequest,
+} from "../../../store/Survey/surveyListSlice";
+import { useBodyLength } from "../../../helpers/useBodyLength";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
+  const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
-  const featuredMedia =
-    surveyDetails?.surveyMedia && getFeaturedMedia(surveyDetails.surveyMedia);
+
+  const bodyLength = useBodyLength();
 
   useEffect(() => {
+    dispatch(surveysRequest(`${reef.id}`));
     window.scrollTo({ top: 0 });
-  }, []);
+  }, [dispatch, reef.id]);
 
   useEffect(() => {
     dispatch(
@@ -61,7 +65,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           bgcolor="#f5f6f6"
           position="absolute"
           height="100%"
-          width="100vw"
+          width={bodyLength}
           zIndex="-1"
         />
         <Grid
@@ -71,17 +75,16 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           item
           xs={11}
         >
-          <Link
-            style={{ color: "inherit", textDecoration: "none" }}
+          <Button
+            color="primary"
+            startIcon={<ArrowBack />}
+            component={Link}
             to={`/reefs/${reef.id}`}
           >
-            <IconButton edge="start" color="primary" aria-label="menu">
-              <ArrowBack />
-            </IconButton>
-          </Link>
-          <Typography color="primary" variant="h5">
-            Back to reef
-          </Typography>
+            <Typography style={{ textTransform: "none" }}>
+              Back to site
+            </Typography>
+          </Button>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>
           <Paper elevation={3} className={classes.surveyDetailsCard}>
@@ -92,7 +95,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               item
               xs={12}
             >
-              <Grid container justify="center" item md={9}>
+              <Grid container justify="center" item md={12}>
                 <Grid container item xs={11}>
                   <SurveyDetails reef={reef} survey={surveyDetails} />
                 </Grid>
@@ -104,22 +107,13 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 <Grid container justify="center" item xs={12}>
                   <Charts
                     dailyData={reef.dailyData}
+                    surveys={surveyList}
                     depth={reef.depth}
-                    temperatureThreshold={(reef.maxMonthlyMean || 20) + 1}
+                    maxMonthlyMean={reef.maxMonthlyMean}
+                    temperatureThreshold={
+                      reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+                    }
                   />
-                </Grid>
-              </Grid>
-              <Grid container item md={3}>
-                <Grid item md={12} xs={6}>
-                  <Map polygon={reef.polygon} />
-                </Grid>
-                <Grid item md={12} xs={6}>
-                  {featuredMedia && (
-                    <CardMedia
-                      style={{ height: "100%" }}
-                      image={featuredMedia}
-                    />
-                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -139,7 +133,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>
-            <SurveyMediaDetails surveyMedia={surveyDetails?.surveyMedia} />
+            <SurveyMediaDetails
+              reefId={reef.id}
+              surveyId={surveyId}
+              surveyMedia={surveyDetails?.surveyMedia}
+            />
           </Grid>
         </Grid>
       </Grid>

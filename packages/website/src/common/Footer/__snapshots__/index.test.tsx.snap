@@ -13,17 +13,23 @@ exports[`renders as expected 1`] = `
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
-          <mock-typography
-            variant="h4"
+          <mock-link
+            classname="Footer-navBarLink-2"
+            href="/"
           >
-            Aqua
-          </mock-typography>
-          <mock-typography
-            style="color: rgb(138, 198, 222);"
-            variant="h4"
-          >
-            link
-          </mock-typography>
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              style="color: rgb(138, 198, 222);"
+              variant="h4"
+            >
+              link
+            </mock-typography>
+          </mock-link>
         </div>
       </div>
     </mock-toolbar>

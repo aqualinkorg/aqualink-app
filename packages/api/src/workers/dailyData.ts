@@ -1,6 +1,6 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, omitBy } from 'lodash';
-import { Connection } from 'typeorm';
+import { isNil, isNumber, omitBy } from 'lodash';
+import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
@@ -15,6 +15,7 @@ import {
 import { calculateDegreeHeatingDays } from '../utils/temperature';
 import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
+import { calculateAlertLevel } from '../utils/bleachingAlert';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -201,15 +202,22 @@ export async function getDailyData(
 
   const windDirection = windDirections && getAverage(windDirections, true);
 
+  const dailyAlertLevel = calculateAlertLevel(
+    maxMonthlyMean,
+    satelliteTemperature,
+    degreeHeatingDays?.value,
+  );
+
   return {
     reef: { id: reef.id },
     date,
+    dailyAlertLevel,
     minBottomTemperature,
     maxBottomTemperature,
     avgBottomTemperature,
     surfaceTemperature,
     satelliteTemperature,
-    degreeHeatingDays: degreeHeatingDays && degreeHeatingDays.value,
+    degreeHeatingDays: degreeHeatingDays?.value,
     minWaveHeight,
     maxWaveHeight,
     avgWaveHeight,
@@ -222,18 +230,67 @@ export async function getDailyData(
   };
 }
 
+export async function getWeeklyAlertLevel(
+  dailyDataRepository: Repository<DailyData>,
+  date: Date,
+  reef: Reef,
+): Promise<number | undefined> {
+  const pastWeek = new Date(date);
+  pastWeek.setDate(pastWeek.getDate() - 6);
+  const query = await dailyDataRepository
+    .createQueryBuilder('dailyData')
+    .select('MAX(dailyData.dailyAlertLevel)', 'weeklyAlertLevel')
+    .andWhere('dailyData.date >= :pastWeek', { pastWeek })
+    .andWhere('dailyData.date <= :date', { date })
+    .andWhere('dailyData.reef = :reef', { reef: reef.id })
+    .getRawOne();
+
+  return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
+}
+
+export function getMaxAlert(
+  dailyAlertLevel?: number,
+  weeklyAlertLevel?: number,
+) {
+  return getMax([weeklyAlertLevel, dailyAlertLevel].filter(isNumber));
+}
+
 /* eslint-disable no-console */
-export async function getReefsDailyData(connection: Connection, date: Date) {
+export async function getReefsDailyData(
+  connection: Connection,
+  date: Date,
+  reefIds?: number[],
+) {
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
-  const allReefs = await reefRepository.find();
+  const allReefs = await reefRepository.find(
+    reefIds && reefIds.length > 0
+      ? {
+          where: {
+            id: In(reefIds),
+          },
+        }
+      : {},
+  );
   const start = new Date();
   console.log(`Updating ${allReefs.length} reefs for ${date.toDateString()}.`);
   await Bluebird.map(
     allReefs,
     async (reef) => {
       const dailyDataInput = await getDailyData(reef, date);
-      const entity = dailyDataRepository.create(dailyDataInput);
+      const weeklyAlertLevel = await getWeeklyAlertLevel(
+        dailyDataRepository,
+        date,
+        reef,
+      );
+
+      const entity = dailyDataRepository.create({
+        ...dailyDataInput,
+        weeklyAlertLevel: getMaxAlert(
+          dailyDataInput.dailyAlertLevel,
+          weeklyAlertLevel,
+        ),
+      });
       try {
         await dailyDataRepository.save(entity);
       } catch (err) {
@@ -241,13 +298,13 @@ export async function getReefsDailyData(connection: Connection, date: Date) {
         if (err.constraint === 'no_duplicated_date') {
           const filteredData = omitBy(entity, isNil);
 
-          await dailyDataRepository.update(
-            {
-              reef,
-              date: entity.date,
-            },
-            filteredData,
-          );
+          await dailyDataRepository
+            .createQueryBuilder('dailyData')
+            .update()
+            .where('reef_id = :reef_id', { reef_id: reef.id })
+            .andWhere('Date(date) = Date(:date)', { date: entity.date })
+            .set(filteredData)
+            .execute();
           return;
         }
         console.error(

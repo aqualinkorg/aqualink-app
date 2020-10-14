@@ -25,10 +25,12 @@ export class UpdateReefApplicationDto {
 }
 
 export class UpdateReefWithApplicationDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly name: string;
+  readonly name?: string;
 
+  @IsOptional()
   @IsInt()
-  readonly depth: number;
+  readonly depth?: number;
 }

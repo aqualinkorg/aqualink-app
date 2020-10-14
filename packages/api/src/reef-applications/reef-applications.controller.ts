@@ -3,12 +3,15 @@ import {
   Body,
   Param,
   Get,
+  Post,
   Put,
   UseInterceptors,
   ClassSerializerInterceptor,
   SerializeOptions,
   Query,
   NotFoundException,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
@@ -17,8 +20,18 @@ import {
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
 import { idFromHash, isValidId } from '../utils/urls';
+import { Auth } from '../auth/auth.decorator';
+import {
+  CreateReefApplicationDto,
+  CreateReefWithApplicationDto,
+} from './dto/create-reef-application.dto';
+import { Public } from '../auth/public.decorator';
+import { AuthRequest } from '../auth/auth.types';
+import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
+import { FilterReefApplication } from './dto/filter-reef-application.dto';
 
+@Auth()
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
 @SerializeOptions({
@@ -27,6 +40,25 @@ import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
+  @Post()
+  async create(
+    @Req() request: AuthRequest,
+    @Body('reefApplication') reefApplication: CreateReefApplicationDto,
+    @Body('reef') reef: CreateReefWithApplicationDto,
+  ): Promise<ReefApplication> {
+    return this.reefApplicationsService.create(
+      reefApplication,
+      reef,
+      request.user,
+    );
+  }
+
+  @Get()
+  async find(@Query() filters: FilterReefApplication) {
+    return this.reefApplicationsService.find(filters);
+  }
+
+  @Public()
   @Get(':id')
   async findOne(
     @Param('id') idParam: string,
@@ -42,12 +74,22 @@ export class ReefApplicationsController {
     return app;
   }
 
+  @Public()
   @Put(':hashId')
-  update(
+  updateWithHash(
     @Param('hashId', new ParseHashedIdPipe()) id: number,
     @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
     @Body('reef') reef: UpdateReefWithApplicationDto,
   ) {
     return this.reefApplicationsService.update(id, reefApplication, reef);
+  }
+
+  @UseGuards(IsReefAdminGuard)
+  @Put(':hashId/reefs/:reef_id')
+  update(
+    @Param('hashId', new ParseHashedIdPipe()) id: number,
+    @Body() reefApplication: UpdateReefApplicationDto,
+  ) {
+    return this.reefApplicationsService.update(id, reefApplication, {});
   }
 }

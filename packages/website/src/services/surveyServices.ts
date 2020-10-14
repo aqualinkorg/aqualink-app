@@ -3,6 +3,7 @@ import type {
   SurveyData,
   SurveyMediaData,
   SurveyListItem,
+  SurveyMediaUpdateRequestData,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
 
@@ -60,6 +61,20 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
   });
 };
 
+const editSurveyMedia = (
+  reefId: number,
+  mediaId: number,
+  data: SurveyMediaUpdateRequestData,
+  token: string
+) => {
+  return requests.send({
+    url: `reefs/${reefId}/surveys/media/${mediaId}`,
+    method: "PUT",
+    data,
+    token,
+  });
+};
+
 export default {
   addSurvey,
   deleteSurvey,
@@ -67,4 +82,5 @@ export default {
   getSurvey,
   getSurveys,
   addNewPoi,
+  editSurveyMedia,
 };

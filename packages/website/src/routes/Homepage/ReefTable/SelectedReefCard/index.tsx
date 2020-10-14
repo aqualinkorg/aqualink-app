@@ -1,108 +1,179 @@
-import React from "react";
+/* eslint-disable no-nested-ternary */
+import React, { useEffect } from "react";
+import { isNumber } from "lodash";
 import {
-  Typography,
-  Grid,
-  Button,
-  CardMedia,
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  CircularProgress,
-  Card,
-  Hidden,
   Box,
+  Button,
+  Card,
+  CardMedia,
+  CircularProgress,
+  Grid,
+  Typography,
+  Hidden,
 } from "@material-ui/core";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-import CardChart from "./cardChart";
+import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
-import reefImage from "../../../../assets/reef-image.jpg";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
-import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
+import {
+  reefDetailsSelector,
+  reefLoadingSelector,
+  reefRequest,
+} from "../../../../store/Reefs/selectedReefSlice";
+import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { Reef } from "../../../../store/Reefs/types";
+import Chart from "../../../../common/Chart";
+import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
+import {
+  surveyListSelector,
+  surveysRequest,
+} from "../../../../store/Survey/surveyListSlice";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    card: {
-      padding: 40,
-      [theme.breakpoints.down("xs")]: {
-        padding: 10,
-      },
+const useStyles = makeStyles((theme) => ({
+  cardWrapper: {
+    height: "22rem",
+    [theme.breakpoints.down("md")]: {
+      height: "27rem",
     },
-    cardImage: {
-      borderRadius: "4px 0 0 4px",
-      height: "100%",
-
-      [theme.breakpoints.down("xs")]: {
-        height: 300,
-      },
+  },
+  mobileCardWrapperWithImage: {
+    [theme.breakpoints.down("xs")]: {
+      height: "42rem",
     },
-    metricsContainer: {
-      display: "flex",
-      justifyContent: "space-around",
-      alignItems: "center",
-      flexDirection: "row",
-      margin: theme.spacing(2),
-      width: "100%",
-
-      [theme.breakpoints.up("lg")]: {
-        flexDirection: "column",
-        alignItems: "start",
-      },
+  },
+  mobileCardWrapperWithNoImage: {
+    [theme.breakpoints.down("xs")]: {
+      height: "27rem",
     },
-  });
+  },
+  card: {
+    [theme.breakpoints.down("xs")]: {
+      padding: 10,
+    },
+    padding: 20,
+  },
+  cardImage: {
+    borderRadius: "4px 0 0 4px",
+    height: "100%",
 
-type SelectedReefContentProps = WithStyles<typeof styles> & { reef: Reef };
+    [theme.breakpoints.down("xs")]: {
+      height: 300,
+    },
+  },
+  metricsContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "100%",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+    },
 
-const SelectedReefContent = withStyles(styles)(
-  ({ classes, reef }: SelectedReefContentProps) => {
-    const {
-      bottomTemperature,
-      degreeHeatingDays,
-      surfaceTemperature,
-      satelliteTemperature,
-    } = reef.liveData;
+    [theme.breakpoints.up("lg")]: {
+      flexDirection: "column",
+      alignItems: "start",
+    },
+  },
+  launchIcon: {
+    fontSize: 20,
+    marginLeft: "0.5rem",
+    color: "#2f2f2f",
+    "&:hover": {
+      color: "#2f2f2f",
+    },
+  },
+  reefRegionName: {
+    marginBottom: "0.6rem",
+  },
+  cardTitle: {
+    width: "90%",
+    display: "block",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
+}));
 
-    const surfTemp = surfaceTemperature?.value || satelliteTemperature?.value;
+type SelectedReefContentProps = {
+  reef: Reef;
+  url?: string | null;
+};
 
-    const metrics = [
-      {
-        label: "SURFACE TEMP",
-        value: formatNumber(surfTemp, 1),
-        unit: " °C",
-      },
-      {
-        label: `TEMP AT ${reef.depth}m`,
-        value: formatNumber(bottomTemperature?.value, 1),
-        unit: " °C",
-      },
-      {
-        label: "HEAT STRESS",
-        value: formatNumber(
-          degreeHeatingWeeksCalculator(degreeHeatingDays?.value),
-          1
-        ),
-        unit: " DHW",
-      },
-    ];
+const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
+  const classes = useStyles();
 
-    return (
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={4} lg={3}>
+  const sortedDailyData = sortByDate(reef.dailyData, "date");
+  const dailyDataLen = sortedDailyData.length;
+  const {
+    maxBottomTemperature,
+    satelliteTemperature,
+    degreeHeatingDays,
+  } = sortedDailyData[dailyDataLen - 1];
+
+  const metrics = [
+    {
+      label: "SURFACE TEMP",
+      value: formatNumber(satelliteTemperature, 1),
+      unit: " °C",
+      display: isNumber(satelliteTemperature),
+    },
+    {
+      label: "HEAT STRESS",
+      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+      unit: " DHW",
+      display: isNumber(degreeHeatingDays),
+    },
+    {
+      label: `TEMP AT ${reef.depth}m`,
+      value: formatNumber(maxBottomTemperature, 1),
+      unit: " °C",
+      display: isNumber(maxBottomTemperature),
+    },
+  ];
+
+  const { name, region: regionName } = getReefNameAndRegion(reef);
+
+  return (
+    <Grid
+      className={
+        url
+          ? `${classes.cardWrapper} ${classes.mobileCardWrapperWithImage}`
+          : `${classes.cardWrapper} ${classes.mobileCardWrapperWithNoImage}`
+      }
+      container
+      justify="space-between"
+      spacing={1}
+    >
+      {url && (
+        <Grid item xs={12} sm={5} lg={5}>
           <Box position="relative" height="100%">
-            <CardMedia className={classes.cardImage} image={reefImage} />
-            <Hidden smUp>
-              <Box position="absolute" top={16} left={16}>
-                <Typography variant="h5">{reef.name}</Typography>
+            <CardMedia className={classes.cardImage} image={url} />
 
-                {reef.region?.name && (
-                  <Typography variant="h6" style={{ fontWeight: 400 }}>
-                    {reef.region.name}
-                  </Typography>
-                )}
+            <Hidden smUp>
+              <Box
+                bgcolor="rgba(3, 48, 66, 0.75)"
+                height="40%"
+                width="100%"
+                position="absolute"
+                top={0}
+                left={0}
+              >
+                <Box position="absolute" top={16} left={16}>
+                  <Typography variant="h5">{name}</Typography>
+
+                  {regionName && (
+                    <Typography variant="h6" style={{ fontWeight: 400 }}>
+                      {regionName}
+                    </Typography>
+                  )}
+                </Box>
               </Box>
             </Hidden>
 
@@ -118,87 +189,145 @@ const SelectedReefContent = withStyles(styles)(
             </Box>
           </Box>
         </Grid>
+      )}
 
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          lg={6}
-          style={{ marginBottom: "1rem", maxHeight: "14rem" }}
-        >
-          <Box pb="0.5rem" pl="0.5rem" fontWeight={400}>
-            <Typography color="textSecondary" variant="subtitle1">
-              MEAN DAILY SURFACE TEMP. (°C)
+      <Grid
+        item
+        xs={12}
+        sm={url ? 7 : 12}
+        lg={url ? 5 : 10}
+        style={{ marginBottom: "2rem", maxHeight: "14rem" }}
+      >
+        <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
+          <Hidden xsDown={Boolean(url)}>
+            <Typography
+              className={classes.cardTitle}
+              color="textSecondary"
+              variant="h5"
+            >
+              <span title={name || ""}>{name}</span>
             </Typography>
-          </Box>
-          <CardChart
-            dailyData={reef.dailyData}
-            temperatureThreshold={
-              reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-            }
-            maxMonthlyMean={reef.maxMonthlyMean || null}
-          />
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          lg={3}
-          style={{
-            display: "flex",
-          }}
-        >
-          <div className={classes.metricsContainer}>
-            {metrics.map(({ label, value, unit }) => (
-              <div key={label}>
-                <Typography variant="caption" color="textSecondary">
-                  {label}
-                </Typography>
-                <Typography variant="h4" color="primary">
-                  {value}
-                  &nbsp;
-                  <Typography variant="h6" component="span">
-                    {unit}
-                  </Typography>
-                </Typography>
-              </div>
-            ))}
-          </div>
-        </Grid>
+            <Typography
+              color="textSecondary"
+              variant="h6"
+              className={`${classes.cardTitle} ${classes.reefRegionName}`}
+            >
+              <span title={regionName || ""}>{regionName}</span>
+            </Typography>
+          </Hidden>
+          <Typography color="textSecondary" variant="caption">
+            DAILY SURFACE TEMP. (°C)
+          </Typography>
+        </Box>
+        <Chart
+          dailyData={reef.dailyData}
+          surveys={[]}
+          temperatureThreshold={
+            reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+          }
+          maxMonthlyMean={reef.maxMonthlyMean || null}
+        />
       </Grid>
-    );
-  }
-);
 
-type SelectedReefProps = WithStyles<typeof styles>;
-
-const SelectedReefCard = ({ classes }: SelectedReefProps) => {
-  const reef = useSelector(reefDetailsSelector);
-
-  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
-
-  return featuredReefId ? (
-    <Box className={classes.card}>
-      <Box mb={2}>
-        <Typography variant="h5" color="textSecondary">
-          <Hidden xsDown>{`Featured ${
-            reef?.name ? `- ${reef.name}` : "Reef"
-          }`}</Hidden>
-          <Hidden smUp>Featured Reef</Hidden>
-        </Typography>
-      </Box>
-
-      <Card>
-        {reef && `${reef?.id}` === featuredReefId ? (
-          <SelectedReefContent reef={reef} />
-        ) : (
-          <Box textAlign="center" p={4}>
-            <CircularProgress size="6rem" thickness={1} />
-          </Box>
-        )}
-      </Card>
-    </Box>
-  ) : null;
+      <Grid
+        item
+        xs={12}
+        lg={2}
+        style={{
+          display: "flex",
+        }}
+      >
+        <div className={classes.metricsContainer}>
+          {metrics.map(({ label, value, unit, display }) => (
+            <div key={label}>
+              {display && (
+                <>
+                  <Typography variant="caption" color="textSecondary">
+                    {label}
+                  </Typography>
+                  <Typography variant="h4" color="primary">
+                    {value}
+                    &nbsp;
+                    <Typography variant="h6" component="span">
+                      {unit}
+                    </Typography>
+                  </Typography>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      </Grid>
+    </Grid>
+  );
 };
 
-export default withStyles(styles)(SelectedReefCard);
+SelectedReefContent.defaultProps = {
+  url: null,
+};
+
+const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+
+const SelectedReefCard = () => {
+  const classes = useStyles();
+  const reef = useSelector(reefDetailsSelector);
+  const loading = useSelector(reefLoadingSelector);
+  const reefOnMap = useSelector(reefOnMapSelector);
+  const surveyList = useSelector(surveyListSelector);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!reefOnMap) {
+      dispatch(reefRequest(featuredReefId));
+      dispatch(surveysRequest(featuredReefId));
+    } else {
+      dispatch(reefRequest(`${reefOnMap.id}`));
+      dispatch(surveysRequest(`${reefOnMap.id}`));
+    }
+  }, [dispatch, reefOnMap]);
+
+  const isFeatured = `${reef?.id}` === featuredReefId;
+
+  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
+    (survey) =>
+      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
+  )?.featuredSurveyMedia;
+
+  const hasMedia = Boolean(featuredMedia?.url);
+
+  return (
+    <Box className={classes.card}>
+      {!loading && (
+        <Box mb={3}>
+          <Typography variant="h5" color="textSecondary">
+            {isFeatured ? "Featured Site" : "Selected Site"}
+            {!hasMedia && (
+              <Link to={`reefs/${reef?.id}`}>
+                <LaunchIcon className={classes.launchIcon} />
+              </Link>
+            )}
+          </Typography>
+        </Box>
+      )}
+
+      <Card>
+        {loading ? (
+          <Box
+            height="23rem"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            p={4}
+          >
+            <CircularProgress size="6rem" thickness={1} />
+          </Box>
+        ) : reef ? (
+          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
+        ) : null}
+      </Card>
+    </Box>
+  );
+};
+
+export default SelectedReefCard;

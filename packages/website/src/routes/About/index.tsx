@@ -1,4 +1,5 @@
 import React from "react";
+import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
@@ -9,7 +10,6 @@ import {
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 
-import reef1b from "../../assets/img/reef1b.jpg";
 import peter from "../../assets/img/peter.jpg";
 import lyndon from "../../assets/img/LYNDON1.jpg";
 import drew from "../../assets/img/drew.jpg";
@@ -31,18 +31,28 @@ const About = ({ classes }: AboutProps) => {
                     </Typography>
                     <p>
                       Aqualink is a philanthropic engineering organization
-                      working on Ocean conservation problems.
+                      working on building ocean conservation technology. Read
+                      more about our inspiration, smart buoy, and web
+                      application in our press release:{" "}
+                      <a href="https://medium.com/aqualink/introducing-aqualink-dd1023393b8">
+                        Introducing Aqualink
+                      </a>
                       <br />
+                      <br />
+                      We have also created an animated field guide to give an
+                      overview to the system and outline the best practices for
+                      taking a survey and using the Aqualink system.
                     </p>
                   </div>
                   <div className="offset-lg-0 col-lg-12 order-lg-1">
-                    <img
-                      src={reef1b}
-                      className="img-fluid mx-auto d-block imagepaddingtop img-responsive lazyload"
-                      alt="reef1b"
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
                     />
                   </div>
                 </div>
+                <br />
                 <div className="row voffset-lg">
                   <div className="centered order-lg-0 order-1 order-md-0 order-sm-0 col">
                     <Typography className={classes.title} variant="h4">
@@ -51,13 +61,10 @@ const About = ({ classes }: AboutProps) => {
                     <p>
                       We have been working in rapid development and
                       entrepreneurial businesses that scale and hope to bring a
-                      similar mindset to Ocean conservation.
-                      <br />
-                      <br />
-                      We have an extended team of engineering contractors in a
-                      variety of disciplines all of whom embrace open source
-                      philosophies and want to help build Ocean conservation
-                      tools.&nbsp;
+                      similar mindset to ocean conservation. We have an extended
+                      team of engineering contractors in a variety of
+                      disciplines, all of whom embrace open source philosophies
+                      and want to help build ocean conservation tools.&nbsp;
                       <br />
                     </p>
                   </div>
@@ -109,13 +116,15 @@ const About = ({ classes }: AboutProps) => {
                           width={100}
                           alt="placeholder user"
                         />
-                        <h5 className="text-center mg-sm">Drew Gray</h5>
+                        <h5 className="text-center mg-sm">
+                          <a href="https://www.linkedin.com/in/drewjgray/">
+                            Drew Gray
+                          </a>
+                        </h5>
                         <p className="text-lg-center">
-                          Engineer and executive with experience building
-                          autonomous systems at Tesla, Cruise, Uber, and Voyage.
-                          Instrumental in pushing the state-of-the-art in
-                          self-driving cars using computer vision and deep
-                          learning.
+                          Computer-vision/AI software engineer, PhD in robotics,
+                          and experience building autonomous systems at Tesla,
+                          Cruise, and Uber.
                         </p>
                       </div>
                     </div>

@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import { User } from "../User/types";
+
 export type Position = [number, number];
 
 export interface Polygon {
@@ -32,6 +34,7 @@ export interface LiveData {
   wavePeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
+  weeklyAlertLevel?: number;
 }
 
 export interface DailyData {
@@ -56,6 +59,8 @@ export interface DailyData {
   avgWaveHeight: number;
   waveDirection: number;
   wavePeriod: number;
+
+  weeklyAlertLevel?: number;
 }
 
 interface Region {
@@ -77,6 +82,34 @@ export interface Reef {
   liveData: LiveData;
   latestDailyData: DailyData;
   featuredImage?: string;
+  applied?: boolean;
+}
+
+export interface ReefRegisterResponseData {
+  fundingSource: string | null;
+  id: number;
+  installationResources: string | null;
+  installationSchedule: string | null;
+  permitRequirements: string | null;
+  reef: Reef;
+  uid: string;
+  user: User;
+}
+
+export interface ReefApplyParams {
+  permitRequirements: string;
+  fundingSource: string;
+  installationSchedule: string;
+  installationResources: string;
+}
+
+export interface ReefApplication {
+  permitRequirements: string | null;
+  fundingSource: string | null;
+  installationSchedule: string | null;
+  installationResources: string | null;
+  appId: string;
+  applied: boolean;
 }
 
 export interface ReefsListState {
@@ -86,7 +119,7 @@ export interface ReefsListState {
 }
 
 export interface SelectedReefState {
-  details?: Reef;
+  details?: Reef | null;
   loading: boolean;
   error?: string | null;
 }

@@ -6,10 +6,10 @@ import {
   MaxLength,
   IsInt,
   IsUrl,
+  IsLatitude,
+  IsLongitude,
 } from 'class-validator';
-import { GeoJSON } from 'geojson';
 import { EntityExists } from '../../validations/entity-exists.constraint';
-import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
 import { VideoStream } from '../video-streams.entity';
 
@@ -19,8 +19,11 @@ export class CreateReefDto {
   @MaxLength(50)
   readonly name: string;
 
-  @IsNotEmpty()
-  readonly polygon: GeoJSON;
+  @IsLatitude()
+  readonly latitude: number;
+
+  @IsLongitude()
+  readonly longitude: number;
 
   @IsInt()
   readonly temperatureThreshold: number;
@@ -36,14 +39,9 @@ export class CreateReefDto {
   readonly videoStream: string;
 
   @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [Region])
-  readonly region?: Region;
-
-  @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [User])
-  readonly admin?: User;
+  @IsInt({ each: true })
+  @Validate(EntityExists, [User], { each: true })
+  readonly admins?: User[];
 
   @IsOptional()
   @IsInt()

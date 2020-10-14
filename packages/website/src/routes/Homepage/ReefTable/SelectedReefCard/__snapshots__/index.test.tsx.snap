@@ -3,99 +3,83 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    classname="SelectedReefCard-card-1"
+    classname="makeStyles-card-4"
   >
     <mock-box
-      mb="2"
+      mb="3"
     >
       <mock-typography
         color="textSecondary"
         variant="h5"
       >
-        <mock-hidden
-          xsdown="true"
+        Selected Site
+        <a
+          href="/reefs/2"
         >
-          Featured Reef
-        </mock-hidden>
-        <mock-hidden
-          smup="true"
-        >
-          Featured Reef
-        </mock-hidden>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root makeStyles-launchIcon-7"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </a>
       </mock-typography>
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+        class="MuiGrid-root makeStyles-cardWrapper-1 makeStyles-mobileCardWrapperWithNoImage-3 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-        >
-          <mock-box
-            height="100%"
-            position="relative"
-          >
-            <div
-              class="MuiCardMedia-root Component-cardImage-5"
-              style="background-image: url(reef-image.jpg);"
-            />
-            <mock-hidden
-              smup="true"
-            >
-              <mock-box
-                left="16"
-                position="absolute"
-                top="16"
-              >
-                <mock-typography
-                  variant="h5"
-                />
-              </mock-box>
-            </mock-hidden>
-            <mock-box
-              bottom="16"
-              position="absolute"
-              right="16"
-            >
-              <a
-                href="/reefs/2"
-                style="text-decoration: none;"
-              >
-                <mock-button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                >
-                  EXPLORE
-                </mock-button>
-              </a>
-            </mock-box>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-6"
-          style="margin-bottom: 1rem; max-height: 14rem;"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
+          style="margin-bottom: 2rem; max-height: 14rem;"
         >
           <mock-box
             fontweight="400"
             pb="0.5rem"
             pl="0.5rem"
+            pt="1.5rem"
           >
+            <mock-hidden
+              xsdown="false"
+            >
+              <mock-typography
+                classname="makeStyles-cardTitle-9"
+                color="textSecondary"
+                variant="h5"
+              >
+                <span
+                  title=""
+                />
+              </mock-typography>
+              <mock-typography
+                classname="makeStyles-cardTitle-9 makeStyles-reefRegionName-8"
+                color="textSecondary"
+                variant="h6"
+              >
+                <span
+                  title=""
+                />
+              </mock-typography>
+            </mock-hidden>
             <mock-typography
               color="textSecondary"
-              variant="subtitle1"
+              variant="caption"
             >
-              MEAN DAILY SURFACE TEMP. (°C)
+              DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
           Mock-Line
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-3"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
           style="display: flex;"
         >
           <div
-            class="Component-metricsContainer-6"
+            class="makeStyles-metricsContainer-6"
           >
             <div>
               <mock-typography
@@ -108,28 +92,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                29.0
-                 
-                <mock-typography
-                  component="span"
-                  variant="h6"
-                >
-                   °C
-                </mock-typography>
-              </mock-typography>
-            </div>
-            <div>
-              <mock-typography
-                color="textSecondary"
-                variant="caption"
-              >
-                TEMP AT 0m
-              </mock-typography>
-              <mock-typography
-                color="primary"
-                variant="h4"
-              >
-                39.0
+                23.0
                  
                 <mock-typography
                   component="span"
@@ -160,6 +123,27 @@ exports[`renders as expected 1`] = `
                 </mock-typography>
               </mock-typography>
             </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                TEMP AT 0m
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                39.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
+                </mock-typography>
+              </mock-typography>
+            </div>
           </div>
         </div>
       </div>
@@ -171,37 +155,150 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="SelectedReefCard-card-7"
+    classname="makeStyles-card-13"
   >
     <mock-box
-      mb="2"
+      mb="3"
     >
       <mock-typography
         color="textSecondary"
         variant="h5"
       >
-        <mock-hidden
-          xsdown="true"
+        Selected Site
+        <a
+          href="/reefs/2"
         >
-          Featured Reef
-        </mock-hidden>
-        <mock-hidden
-          smup="true"
-        >
-          Featured Reef
-        </mock-hidden>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root makeStyles-launchIcon-16"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </a>
       </mock-typography>
     </mock-box>
     <mock-card>
-      <mock-box
-        p="4"
-        textalign="center"
+      <div
+        class="MuiGrid-root makeStyles-cardWrapper-10 makeStyles-mobileCardWrapperWithNoImage-12 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
-        <mock-circularprogress
-          size="6rem"
-          thickness="1"
-        />
-      </mock-box>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
+          style="margin-bottom: 2rem; max-height: 14rem;"
+        >
+          <mock-box
+            fontweight="400"
+            pb="0.5rem"
+            pl="0.5rem"
+            pt="1.5rem"
+          >
+            <mock-hidden
+              xsdown="false"
+            >
+              <mock-typography
+                classname="makeStyles-cardTitle-18"
+                color="textSecondary"
+                variant="h5"
+              >
+                <span
+                  title=""
+                />
+              </mock-typography>
+              <mock-typography
+                classname="makeStyles-cardTitle-18 makeStyles-reefRegionName-17"
+                color="textSecondary"
+                variant="h6"
+              >
+                <span
+                  title=""
+                />
+              </mock-typography>
+            </mock-hidden>
+            <mock-typography
+              color="textSecondary"
+              variant="caption"
+            >
+              DAILY SURFACE TEMP. (°C)
+            </mock-typography>
+          </mock-box>
+          Mock-Line
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
+          style="display: flex;"
+        >
+          <div
+            class="makeStyles-metricsContainer-15"
+          >
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                SURFACE TEMP
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                23.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                HEAT STRESS
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                4.9
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   DHW
+                </mock-typography>
+              </mock-typography>
+            </div>
+            <div>
+              <mock-typography
+                color="textSecondary"
+                variant="caption"
+              >
+                TEMP AT 0m
+              </mock-typography>
+              <mock-typography
+                color="primary"
+                variant="h4"
+              >
+                39.0
+                 
+                <mock-typography
+                  component="span"
+                  variant="h6"
+                >
+                   °C
+                </mock-typography>
+              </mock-typography>
+            </div>
+          </div>
+        </div>
+      </div>
     </mock-card>
   </mock-box>
 </div>

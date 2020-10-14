@@ -36,21 +36,25 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   </mock-hidden>
   <mock-selectedreefcard />
   <mock-box
+    classname="ReefTable-table-1"
     display="flex"
     flex="1"
     flexdirection="column"
   >
     <mock-tablecontainer>
-      <mock-table>
+      <mock-table
+        stickyheader="true"
+      >
         <mock-tablehead
           style="background-color: rgb(244, 244, 244);"
         >
           <mock-tablerow>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="width: 25%; padding-right: 0px;"
+              style="width: 40%;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -67,9 +71,9 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -93,35 +97,9 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="false"
-              style="padding-right: 0px;"
-            >
-              <mock-tablesortlabel
-                active="false"
-                direction="asc"
-              >
-                <mock-typography
-                  nowrap="true"
-                  style="color: black;"
-                  variant="h6"
-                >
-                  DEPTH
-                  <mock-typography
-                    component="span"
-                    style="color: black;"
-                    variant="subtitle2"
-                  >
-                     (m)
-                  </mock-typography>
-                </mock-typography>
-              </mock-tablesortlabel>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-              padding="default"
-              sortdirection="false"
-              style="padding-right: 0px;"
             >
               <mock-tablesortlabel
                 active="false"
@@ -145,9 +123,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-tablecell>
             <mock-tablecell
               align="left"
+              classname="EnhancedTableHead-headCells-2"
               padding="default"
               sortdirection="desc"
-              style="width: 5%; padding-right: 0px;"
+              style="width: 5%;"
             >
               <mock-tablesortlabel
                 active="true"
@@ -167,11 +146,14 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         <mock-tablebody>
           <mock-tablerow
             hover="true"
+            id="homepage-table-row-0"
             role="button"
             style="background-color: white; cursor: pointer;"
             tabindex="-1"
           >
-            <mock-tablecell>
+            <mock-tablecell
+              classname="ReefTableBody-nameCells-3"
+            >
               <mock-typography
                 align="left"
                 color="textSecondary"
@@ -194,16 +176,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               align="left"
             >
               <mock-typography
-                color="textSecondary"
-                variant="subtitle1"
-              >
-                19
-              </mock-typography>
-            </mock-tablecell>
-            <mock-tablecell
-              align="left"
-            >
-              <mock-typography
                 style="color: rgb(12, 157, 165);"
                 variant="subtitle1"
               >
@@ -217,7 +189,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 aria-hidden="true"
                 class="MuiSvgIcon-root"
                 focusable="false"
-                style="color: rgb(248, 171, 0);"
+                style="color: rgb(239, 0, 0);"
                 viewBox="0 0 24 24"
               >
                 <path

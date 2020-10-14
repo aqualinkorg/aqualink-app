@@ -11,11 +11,13 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 import { Region } from '../regions/regions.entity';
 import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
+import { ReefApplication } from '../reef-applications/reef-applications.entity';
 
 @Entity()
 export class Reef {
@@ -54,6 +56,9 @@ export class Reef {
   @Column({ nullable: true })
   timezone: string;
 
+  @Column({ default: true })
+  approved: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -74,4 +79,12 @@ export class Reef {
 
   @OneToMany(() => Survey, (survey) => survey.reef)
   surveys: Survey[];
+
+  @OneToOne(() => ReefApplication, (reefApplication) => reefApplication.reef)
+  reefApplication?: ReefApplication;
+
+  @Expose()
+  get applied(): boolean {
+    return !!this.reefApplication?.permitRequirements;
+  }
 }

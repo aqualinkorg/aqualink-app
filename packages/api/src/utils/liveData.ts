@@ -10,6 +10,7 @@ import {
 } from './sofar';
 import { SofarLiveData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
+import { calculateAlertLevel } from './bleachingAlert';
 
 export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
   const { polygon, spotterId, maxMonthlyMean } = reef;
@@ -36,6 +37,8 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
           significantWaveHeight: [],
           wavePeakPeriod: [],
           waveMeanDirection: [],
+          latitude: [],
+          longitude: [],
         },
     getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
     getSofarHindcastData(
@@ -90,6 +93,10 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
         ),
         wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
         waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
+        longitude:
+          spotterRawData.longitude && getLatestData(spotterRawData.longitude),
+        latitude:
+          spotterRawData.latitude && getLatestData(spotterRawData.latitude),
       }
     : {};
 
@@ -98,18 +105,43 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
       bottomTemperature: spotterData.bottomTemperature,
       surfaceTemperature: spotterData.surfaceTemperature,
       degreeHeatingDays,
-      satelliteTemperature: satelliteTemperature && getLatestData(satelliteTemperature),
+      satelliteTemperature:
+        satelliteTemperature && getLatestData(satelliteTemperature),
       waveHeight: spotterData.significantWaveHeight || waveHeight,
       waveDirection: spotterData.waveMeanDirection || waveDirection,
       wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
       windSpeed,
       windDirection,
+      longitude: spotterData.longitude,
+      latitude: spotterData.latitude,
     },
     (data) => isNil(data?.value) || data?.value === 9999,
   );
 
+  const dailyAlertLevel = calculateAlertLevel(
+    maxMonthlyMean,
+    filteredValues?.satelliteTemperature?.value,
+    degreeHeatingDays?.value,
+  );
+
   return {
     reef: { id: reef.id },
-    ...filteredValues,
+    bottomTemperature: filteredValues.bottomTemperature,
+    surfaceTemperature: filteredValues.surfaceTemperature,
+    degreeHeatingDays: filteredValues.degreeHeatingDays,
+    satelliteTemperature: filteredValues.satelliteTemperature,
+    waveHeight: filteredValues.waveHeight,
+    waveDirection: filteredValues.waveDirection,
+    wavePeriod: filteredValues.wavePeriod,
+    windSpeed: filteredValues.windSpeed,
+    windDirection: filteredValues.windDirection,
+    ...(filteredValues.longitude &&
+      filteredValues.latitude && {
+        spotterPosition: {
+          longitude: filteredValues.longitude,
+          latitude: filteredValues.latitude,
+        },
+      }),
+    dailyAlertLevel,
   };
 };

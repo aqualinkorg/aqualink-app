@@ -6,7 +6,7 @@ exports[`renders as expected 1`] = `
     classname="Bleaching-card-1"
   >
     <div
-      class="MuiCardHeader-root Bleaching-header-2"
+      class="MuiCardHeader-root Bleaching-header-3"
     >
       <div
         class="MuiCardHeader-content"
@@ -27,7 +27,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                CORAL BLEACHING ALERT
+                HEAT STRESS ALERT LEVEL
               </mock-typography>
             </div>
           </div>
@@ -35,7 +35,7 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="Bleaching-contentWrapper-3"
+      classname="Bleaching-contentWrapper-8"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"

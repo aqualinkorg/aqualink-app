@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Site registration page should render with given state from Redux store 1`] = `
+<div>
+  <mock-navbar
+    searchlocation="false"
+  />
+  <mock-box
+    height="100%"
+    pt="4"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <mock-typography
+            gutterbottom="true"
+            variant="h3"
+          >
+            Register your local site
+          </mock-typography>
+          <mock-typography>
+            To get your local site registered with Aqualink to start tracking surface temperatures and survey imagery please complete the form below. Your site will become immediately available for you to see though some of the data will take up to 24 hours to show up.
+          </mock-typography>
+          <mock-typography>
+            Once you have your site registered you can apply to get a smart buoy to track underwater temperatures as well. If approved, Aqualink will provide you with a buoy free of charge but you will be responsible for paying the shipping and import duties costs (if applicable).
+          </mock-typography>
+        </div>
+      </div>
+    </div>
+    <mock-box
+      bgcolor="grey.100"
+      mt="8"
+      p="[object Object]"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+          >
+            <mock-locationmap
+              markerpositionlat=""
+              markerpositionlng=""
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation2 MuiPaper-rounded"
+            >
+              <mock-box
+                color="text.secondary"
+                p="4"
+              >
+                <mock-typography
+                  gutterbottom="true"
+                  variant="h4"
+                >
+                  Application Form
+                </mock-typography>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-textfield
+                      disabled="true"
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="name"
+                      inputprops="[object Object]"
+                      label="Name"
+                      size="small"
+                      value="Test User"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-textfield
+                      disabled="true"
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="org"
+                      inputprops="[object Object]"
+                      label="Organization"
+                      size="small"
+                      value="Some Organization"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-textfield
+                      disabled="true"
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="email"
+                      inputprops="[object Object]"
+                      label="Email"
+                      size="small"
+                      value="test@mail.com"
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography>
+                      Location: Select point on map
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="lat"
+                      inputprops="[object Object]"
+                      label="Latitude"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="lng"
+                      inputprops="[object Object]"
+                      label="Longitude"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="siteName"
+                      inputprops="[object Object]"
+                      label="Site Name"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="depth"
+                      inputprops="[object Object]"
+                      label="Depth (m)"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-tooltip
+                      disablehoverlistener="true"
+                      title="Please login to register a site"
+                    >
+                      <div>
+                        <mock-button
+                          color="primary"
+                          disabled="false"
+                          fullwidth="true"
+                          variant="contained"
+                        >
+                          Submit
+                        </mock-button>
+                      </div>
+                    </mock-tooltip>
+                  </div>
+                </div>
+              </mock-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mock-box>
+  </mock-box>
+  <mock-snackbar
+    anchororigin="[object Object]"
+    autohideduration="4000"
+    open="false"
+  >
+    <div
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledError MuiPaper-elevation6"
+      role="alert"
+    >
+      <div
+        class="MuiAlert-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+          />
+        </svg>
+      </div>
+      <div
+        class="MuiAlert-message"
+      >
+        Something went wrong, please try again
+      </div>
+      <div
+        class="MuiAlert-action"
+      >
+        <mock-iconbutton
+          aria-label="Close"
+          color="inherit"
+          size="small"
+          title="Close"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </mock-iconbutton>
+      </div>
+    </div>
+  </mock-snackbar>
+  <mock-appbar
+    classname="Footer-appBar-5"
+    position="static"
+  >
+    <mock-toolbar>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <mock-link
+            classname="Footer-navBarLink-6"
+            href="/"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              style="color: rgb(138, 198, 222);"
+              variant="h4"
+            >
+              link
+            </mock-typography>
+          </mock-link>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
+</div>
+`;

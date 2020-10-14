@@ -10,18 +10,12 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import type { LiveData } from "../../../../store/Reefs/types";
+import type { DailyData } from "../../../../store/Reefs/types";
 
-import { alertFinder } from "../../../../helpers/bleachingAlertIntervals";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
+import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
+import { styles as incomingStyles } from "../styles";
 
-const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
-  const { degreeHeatingDays, satelliteTemperature } = liveData;
-
-  const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
-    degreeHeatingDays?.value
-  );
-
+const Bleaching = ({ dailyData, classes }: BleachingProps) => {
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -30,7 +24,7 @@ const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
           <Grid container justify="flex-start">
             <Grid item xs={12}>
               <Typography color="textSecondary" variant="h6">
-                CORAL BLEACHING ALERT
+                HEAT STRESS ALERT LEVEL
               </Typography>
             </Grid>
           </Grid>
@@ -46,13 +40,7 @@ const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
           xs={12}
         >
           <img
-            src={
-              alertFinder(
-                maxMonthlyMean,
-                satelliteTemperature?.value,
-                degreeHeatingWeeks
-              ).image
-            }
+            src={findIntervalByLevel(dailyData.weeklyAlertLevel).image}
             alt="alert-level"
           />
         </Grid>
@@ -63,7 +51,9 @@ const Bleaching = ({ liveData, maxMonthlyMean, classes }: BleachingProps) => {
 
 const styles = () =>
   createStyles({
+    ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       height: "100%",
       width: "100%",
       backgroundColor: "#eff0f0",
@@ -81,8 +71,7 @@ const styles = () =>
   });
 
 interface BleachingIncomingProps {
-  liveData: LiveData;
-  maxMonthlyMean: number | null;
+  dailyData: DailyData;
 }
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;

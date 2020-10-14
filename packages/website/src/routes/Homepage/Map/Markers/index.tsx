@@ -7,14 +7,13 @@ import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
-  unsetReefOnMap,
+  setReefOnMap,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
-import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
-  findInterval,
+  findIntervalByLevel,
   alertIconFinder,
   findMaxLevel,
   getColorByLevel,
@@ -36,7 +35,12 @@ const ActiveReefListener = ({ reef }: { reef: Reef }) => {
       reefOnMap?.polygon.type === "Point" &&
       reefOnMap.id === reef.id
     ) {
-      map.flyTo(
+      const setCenter = (latLng: [number, number], zoom: number) => {
+        const newZoom = Math.max(map?.getZoom() || 6, zoom);
+        return map?.flyTo(latLng, newZoom, { duration: 2 });
+      };
+
+      setCenter(
         [reefOnMap.polygon.coordinates[1], reefOnMap.polygon.coordinates[0]],
         6
       );
@@ -61,14 +65,8 @@ const buoyIcon = (iconUrl: string) =>
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
     const { reef } = marker.options.children[0].props;
-    const { maxMonthlyMean } = reef;
-    const { satelliteTemperature, degreeHeatingDays } = reef.latestDailyData;
-    const degreeHeatingWeeks = degreeHeatingWeeksCalculator(degreeHeatingDays);
-    return findInterval(
-      maxMonthlyMean,
-      satelliteTemperature,
-      degreeHeatingWeeks
-    );
+    const { weeklyAlertLevel } = reef.latestDailyData;
+    return findIntervalByLevel(weeklyAlertLevel);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
   const count = cluster.getChildCount();
@@ -82,12 +80,6 @@ const clusterIcon = (cluster: any) => {
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsListSelector);
   const dispatch = useDispatch();
-  const { map } = useLeaflet();
-
-  const setCenter = (latLng: [number, number], zoom: number) => {
-    const newZoom = Math.max(map?.getZoom() || 5, zoom);
-    return map?.flyTo(latLng, newZoom, { duration: 1 });
-  };
 
   // To make sure we can see all the reefs all the time, and especially
   // around -180/+180, we create dummy copies of each reef.
@@ -102,24 +94,15 @@ export const ReefMarkers = () => {
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { maxMonthlyMean } = reef;
-            const { degreeHeatingDays, satelliteTemperature } =
-              reef.latestDailyData || {};
+            const { weeklyAlertLevel } = reef.latestDailyData || {};
 
             return lngOffsets.map((offset) => (
               <Marker
                 onClick={() => {
-                  setCenter([lat, lng + offset], 6);
-                  dispatch(unsetReefOnMap());
+                  dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
-                icon={buoyIcon(
-                  alertIconFinder(
-                    maxMonthlyMean,
-                    satelliteTemperature,
-                    degreeHeatingWeeksCalculator(degreeHeatingDays)
-                  )
-                )}
+                icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
                 position={[lat, lng + offset]}
               >
                 <ActiveReefListener reef={reef} />
