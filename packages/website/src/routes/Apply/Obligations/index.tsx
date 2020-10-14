@@ -10,8 +10,8 @@ const obligations = [
   "Pay for shipping and any applicable duties",
   "Obtain any necessary permits (if applicable)",
   "Provide and attach a ballast (e.g. 60lb kettlebell)",
-  "Deploy spotter with mooring weight (can be done from a kayak)",
-  "Maintain spotter (inspect and clean every 6 months)",
+  "Deploy buoy with mooring weight (can be done from a kayak)",
+  "Maintain buoy (inspect and clean every 6 months)",
   "Conduct initial and periodic photographic surveys and upload imagery to our website",
 ];
 

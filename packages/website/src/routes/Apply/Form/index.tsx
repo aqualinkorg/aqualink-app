@@ -121,7 +121,7 @@ const Form = ({
 
       <Typography>Schedule for installation</Typography>
       <Typography className={classes.scheduleDescription}>
-        What is the soonest date you could install the spotter and conduct a
+        What is the soonest date you could install the Smart Buoy and conduct a
         survey?
       </Typography>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
