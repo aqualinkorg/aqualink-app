@@ -44,7 +44,7 @@ const getAlertMessage = (
   const applied = Boolean(userReef?.applied);
 
   const defaultMessage =
-    "Currently no spotter deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
+    "Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
     case !hasDailyData:
@@ -53,7 +53,7 @@ const getAlertMessage = (
     case applied:
       return (
         <div>
-          Your application for an Aqualink spotter is being reviewed. You can
+          Your application for an Aqualink Smart Buoy is being reviewed. You can
           check your application<span> </span> <Link to="/apply">here</Link>.
         </div>
       );
@@ -61,7 +61,7 @@ const getAlertMessage = (
     case isAdmin(user, parseInt(reefId, 10)):
       return (
         <div>
-          {defaultMessage} Apply for an Aqualink spotter
+          {defaultMessage} Apply for an Aqualink Smart Buoy
           <span> </span> <Link to="/apply">here</Link>.
         </div>
       );

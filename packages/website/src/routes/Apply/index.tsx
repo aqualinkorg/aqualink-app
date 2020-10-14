@@ -141,11 +141,11 @@ const Apply = ({ classes }: ApplyProps) => {
             <Grid container>
               <Grid item xs={12} md={7}>
                 <Typography variant="h3" gutterBottom>
-                  Apply for a spotter
+                  Apply for a Smart Buoy
                 </Typography>
                 <Typography>
                   Please take a moment to fill out this form for each site you
-                  like to manage with an Aqualink spotter. If you have any
+                  like to manage with an Aqualink Smart Buoy. If you have any
                   questions, don&apos;t hesitate to reach out to
                   <a className={classes.mail} href="mailto: info@aqualink.org">
                     info@aqualink.org
