@@ -19,7 +19,7 @@ describe("ReefNavBar", () => {
           <ReefNavBar
             hasDailyData
             reefName="Mock Reef"
-            managerName="Test User"
+            isManager
             lastSurvey="May 10, 2020"
           />
         </Router>

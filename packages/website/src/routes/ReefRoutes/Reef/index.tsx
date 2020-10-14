@@ -117,7 +117,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               hasDailyData={hasDailyData}
               reefName={getReefNameAndRegion(reefDetails).name || ""}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-              managerName={reefDetails?.admin || ""}
+              isManager={isAdmin(user, parseInt(reefId, 10))}
             />
             {!hasSpotter && (
               <Box mt="1rem">

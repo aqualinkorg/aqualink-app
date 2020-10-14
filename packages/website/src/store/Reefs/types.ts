@@ -76,7 +76,7 @@ export interface Reef {
   status: number;
   videoStream: string | null;
   region: Region | null;
-  admin: string | null;
+  admins: User[];
   stream: string | null;
   dailyData: DailyData[];
   liveData: LiveData;

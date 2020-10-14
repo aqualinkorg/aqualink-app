@@ -4,10 +4,11 @@ import {
   Grid,
   Typography,
   IconButton,
-  Avatar,
   withStyles,
   WithStyles,
   createStyles,
+  Button,
+  Box,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -19,7 +20,7 @@ const ReefNavBar = ({
   hasDailyData,
   reefName = "",
   lastSurvey,
-  managerName,
+  isManager,
   classes,
 }: ReefNavBarProps) => {
   const dispatch = useDispatch();
@@ -37,8 +38,8 @@ const ReefNavBar = ({
       justify="space-between"
       alignItems="center"
     >
-      <Grid item xs={11}>
-        <Grid alignItems="center" direction="row" container spacing={1}>
+      <Grid item xs={12}>
+        <Grid alignItems="center" container spacing={1}>
           <Grid item>
             <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
               <IconButton
@@ -52,47 +53,30 @@ const ReefNavBar = ({
             </Link>
           </Grid>
 
-          <Grid item xs={9} direction="column" container>
-            {reefName && (
+          <Grid container alignItems="center" item xs={10} spacing={1}>
+            <Grid item xs={12} md={4} direction="column" container>
+              {reefName && (
+                <Box>
+                  <Typography variant="h4">{reefName}</Typography>
+                </Box>
+              )}
+              {lastSurvey && (
+                <Box>
+                  <Typography variant="subtitle1">{`Last surveyed: ${moment(
+                    lastSurvey
+                  ).format("MMM DD[,] YYYY")}`}</Typography>
+                </Box>
+              )}
+            </Grid>
+            {isManager && (
               <Grid item>
-                <Typography variant="h4">{reefName}</Typography>
-              </Grid>
-            )}
-            {lastSurvey && (
-              <Grid item>
-                <Typography variant="subtitle1">{`Last surveyed: ${moment(
-                  lastSurvey
-                ).format("MMM DD[,] YYYY")}`}</Typography>
+                <Button size="small" color="primary" variant="outlined">
+                  EDIT SITE DETAILS
+                </Button>
               </Grid>
             )}
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item xs={5}>
-        {managerName && (
-          <Grid container justify="flex-end" alignItems="center">
-            <Grid className={classes.managerInfo} item>
-              <Grid container direction="column" alignItems="flex-end">
-                <Typography variant="subtitle1">
-                  {`Managed by: ${managerName}`}
-                </Typography>
-                <Link
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  to="/"
-                >
-                  <Typography color="primary" variant="subtitle2">
-                    Contact Manager
-                  </Typography>
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container>
-                <Avatar />
-              </Grid>
-            </Grid>
-          </Grid>
-        )}
       </Grid>
     </Grid>
   );
@@ -112,13 +96,12 @@ interface ReefNavBarIncomingProps {
   hasDailyData: boolean;
   reefName?: string;
   lastSurvey?: string | null;
-  managerName?: string;
+  isManager: boolean;
 }
 
 ReefNavBar.defaultProps = {
   reefName: "",
   lastSurvey: null,
-  managerName: "",
 };
 
 type ReefNavBarProps = ReefNavBarIncomingProps & WithStyles<typeof styles>;
