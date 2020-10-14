@@ -1,5 +1,4 @@
 import {
-  Hidden,
   TableBody,
   TableCell,
   TableRow,
@@ -9,7 +8,7 @@ import {
   WithStyles,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
@@ -26,32 +25,21 @@ import { useIsMobile } from "../../../helpers/useIsMobile";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 
 const RowNameCell = ({
-  reef: { locationName, region, alertLevel },
+  reef: { locationName, region },
   ...rest
 }: {
   reef: Row;
   className: string;
 }) => {
-  const color = alertColorFinder(alertLevel);
-  const style: CSSProperties = { color };
   const isMobile = useIsMobile();
-  // check for null and 0
-  const showWarning = alertLevel && isMobile;
   return (
-    <TableCell style={isMobile ? { width: "50%" } : undefined} {...rest}>
+    <TableCell style={isMobile ? { width: "40%" } : undefined} {...rest}>
       <Typography
         align="left"
         variant={isMobile ? "h6" : "subtitle1"}
         color="textSecondary"
-        style={showWarning ? style : undefined}
       >
         {locationName}
-        {showWarning && (
-          <>
-            {"   "}
-            <ErrorIcon style={style} />
-          </>
-        )}
       </Typography>
 
       {locationName !== region && isMobile && (
@@ -60,15 +48,14 @@ const RowNameCell = ({
     </TableCell>
   );
 };
+
 const RowNumberCell = ({
   color,
-  name,
   unit,
   decimalPlaces,
   value,
 }: {
   color?: string;
-  name: string;
   unit?: string;
   value: number | null;
   decimalPlaces?: number;
@@ -76,25 +63,33 @@ const RowNumberCell = ({
   const isMobile = useIsMobile();
   return (
     <TableCell align={isMobile ? "right" : "left"}>
-      {isMobile && (
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          style={{ fontSize: "1em" }}
-        >
-          {name.toUpperCase()}
-        </Typography>
-      )}
       <Typography
         variant={isMobile ? "h5" : "subtitle1"}
         style={{ color, fontWeight: isMobile ? 600 : undefined }}
       >
         {formatNumber(value, decimalPlaces)}
-        {isMobile && unit}
+        &nbsp;
+        <Typography variant="h6" component="span">
+          {isMobile && unit}
+        </Typography>
       </Typography>
     </TableCell>
   );
 };
+
+const RowAlertCell = ({ reef: { alertLevel } }: { reef: Row }) => {
+  const isMobile = useIsMobile();
+  return (
+    <TableCell align={isMobile ? "right" : "left"}>
+      <ErrorIcon
+        style={{
+          color: alertColorFinder(alertLevel),
+        }}
+      />
+    </TableCell>
+  );
+};
+
 RowNumberCell.defaultProps = {
   unit: "",
   color: "black",
@@ -149,25 +144,16 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
           >
             <RowNameCell reef={reef} className={classes.nameCells} />
             <RowNumberCell
-              name="Temp"
               value={reef.temp}
               color={colors.lightBlue}
               unit="°C"
             />
             <RowNumberCell
-              name="DHW"
               value={reef.dhw}
               color={dhwColorFinder(reef.dhw)}
+              unit="DHW"
             />
-            <Hidden xsDown>
-              <TableCell>
-                <ErrorIcon
-                  style={{
-                    color: alertColorFinder(reef.alertLevel),
-                  }}
-                />
-              </TableCell>
-            </Hidden>
+            <RowAlertCell reef={reef} />
           </TableRow>
         );
       })}
