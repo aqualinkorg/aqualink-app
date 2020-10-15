@@ -56,7 +56,7 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   reef: Reef,
   date: Date,
-  excludeSpotterData: boolean,
+  includeSpotterData: boolean,
 ): Promise<SofarDailyData> {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
@@ -76,7 +76,7 @@ export async function getDailyData(
     windVelocities,
     windDirections,
   ] = await Promise.all([
-    spotterId && !excludeSpotterData
+    includeSpotterData
       ? getSpotterData(spotterId, endOfDate)
       : {
           surfaceTemperature: [],
@@ -280,18 +280,23 @@ export async function getReefsDailyData(
   await Bluebird.map(
     allReefs,
     async (reef) => {
-      const excludeSpotterData = await exclusionDatesRepository
-        .createQueryBuilder('exclusion')
-        .where('exclusion.spotter_id = :spotterId', {
-          spotterId: reef.spotterId,
-        })
-        .andWhere('DATE(exclusion.date) = DATE(:date)', { date })
-        .getOne();
+      const includeSpotterData =
+        reef.spotterId &&
+        isNil(
+          await exclusionDatesRepository
+            .createQueryBuilder('exclusion')
+            .where('exclusion.spotter_id = :spotterId', {
+              spotterId: reef.spotterId,
+            })
+            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', { date })
+            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', { date })
+            .getOne(),
+        );
 
       const dailyDataInput = await getDailyData(
         reef,
         date,
-        !!excludeSpotterData,
+        Boolean(includeSpotterData),
       );
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,

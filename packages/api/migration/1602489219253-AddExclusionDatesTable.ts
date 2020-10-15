@@ -9,8 +9,10 @@ export class AddExclusionDatesTable1602489219253 implements MigrationInterface {
       CREATE TABLE "exclusion_dates" (
         "id" SERIAL NOT NULL,
         "spotter_id" character varying NOT NULL,
-        "date" TIMESTAMP NOT NULL,
-        CONSTRAINT "no_duplicates_exclusion_dates" UNIQUE ("spotter_id", "date"),
+        "start_date" TIMESTAMP NOT NULL,
+        "end_date" TIMESTAMP NOT NULL,
+        CONSTRAINT "no_duplicates_start_date" UNIQUE ("spotter_id", "start_date"),
+        CONSTRAINT "no_duplicate_end_date" UNIQUE ("spotter_id", "end_date"),
         CONSTRAINT "PK_453a43baeaf71c69b10b159c726" PRIMARY KEY ("id")
       )
       `,
