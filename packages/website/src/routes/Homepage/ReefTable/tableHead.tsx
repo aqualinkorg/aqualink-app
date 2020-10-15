@@ -38,7 +38,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   const headCells: HeadCell[] = [
     {
       id: "locationName",
-      label: "REEF",
+      label: "SITE",
       width: "40%",
     },
     {
