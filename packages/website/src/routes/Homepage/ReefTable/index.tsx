@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import {
   Box,
   CircularProgress,
-  withStyles,
-  WithStyles,
   createStyles,
   Grid,
   Hidden,
   IconButton,
   Table,
   TableContainer,
-  Typography,
   Theme,
+  Typography,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -22,11 +22,9 @@ import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
-import { useIsMobile } from "../../../helpers/useIsMobile";
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
-  const isMobile = useIsMobile();
 
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
@@ -68,10 +66,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
         flex={1}
       >
         <TableContainer>
-          <Table
-            stickyHeader
-            style={isMobile ? { tableLayout: "fixed" } : undefined}
-          >
+          <Table stickyHeader>
             <Hidden xsDown>
               <EnhancedTableHead
                 order={order}
@@ -105,6 +100,7 @@ const styles = (theme: Theme) =>
       overflowY: "auto",
       [theme.breakpoints.down("xs")]: {
         paddingLeft: 0,
+        height: "auto",
       },
     },
   });
