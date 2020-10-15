@@ -22,7 +22,9 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
     } = value.latestDailyData || {};
     const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
-    const locationName = getReefNameAndRegion(value).name || "";
+    const { name: locationName = "", region = "" } = getReefNameAndRegion(
+      value
+    );
 
     return {
       locationName,
@@ -30,7 +32,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       maxMonthlyMean,
       depth: value.depth,
       dhw,
-      region: value.region?.name,
+      region,
       tableData: {
         id: key,
       },
