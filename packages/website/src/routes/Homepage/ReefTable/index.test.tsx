@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
 import ReefTable from ".";
+import { mockReef } from "../../../mocks/mockReef";
 
 jest.mock("./SelectedReefCard", () => "Mock-SelectedReefCard");
 
@@ -12,29 +13,9 @@ const mockStore = configureStore([]);
 describe("ReefTable", () => {
   let element: HTMLElement;
   beforeEach(() => {
-    const reef = {
-      id: 1,
-      name: "Mock Reef Hartmann",
-      polygon: {
-        type: "Point",
-        coordinates: [-39.7, -89.7],
-      },
-      maxMonthlyMean: 5,
-      depth: 19,
-      status: 0,
-      videoStream: null,
-      region: { name: "Hawai" },
-      admin: null,
-      stream: null,
-      latestDailyData: {
-        weeklyAlertLevel: 3,
-        maxBottomTemperature: 10,
-        degreeHeatingDays: 20,
-      },
-    };
     const store = mockStore({
       reefsList: {
-        list: [reef],
+        list: [mockReef],
         loading: false,
         error: null,
       },
