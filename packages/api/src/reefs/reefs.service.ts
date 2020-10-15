@@ -52,7 +52,7 @@ export class ReefsService {
       region,
       polygon: {
         type: 'Point',
-        coordinates: [latitude, longitude],
+        coordinates: [longitude, latitude],
       },
       maxMonthlyMean,
       timezones,
@@ -129,11 +129,18 @@ export class ReefsService {
   }
 
   async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
-    const { admins } = updateReefDto;
-    const result = await this.reefsRepository.update(
-      id,
-      omit(updateReefDto, ['admins']),
-    );
+    const { coordinates, admins } = updateReefDto;
+    const result = await this.reefsRepository.update(id, {
+      ...omit(updateReefDto, ['admins', 'coordinates']),
+      ...(coordinates
+        ? {
+            polygon: {
+              type: 'Point',
+              coordinates: [coordinates.longitude, coordinates.latitude],
+            },
+          }
+        : {}),
+    });
 
     if (admins) {
       await this.updateAdmins(id, admins);

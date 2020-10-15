@@ -6,12 +6,24 @@ import {
   MaxLength,
   IsInt,
   IsUrl,
+  IsLatitude,
+  IsLongitude,
+  IsObject,
+  ValidateNested,
 } from 'class-validator';
-import { GeoJSON } from 'geojson';
+import { Type } from 'class-transformer';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
 import { VideoStream } from '../video-streams.entity';
+
+class Coordinates {
+  @IsLatitude()
+  readonly latitude: number;
+
+  @IsLongitude()
+  readonly longitude: number;
+}
 
 export class UpdateReefDto {
   @IsOptional()
@@ -21,8 +33,10 @@ export class UpdateReefDto {
   readonly name?: string;
 
   @IsOptional()
-  @IsNotEmpty()
-  readonly polygon?: GeoJSON;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => Coordinates)
+  readonly coordinates?: Coordinates;
 
   @IsOptional()
   @IsInt()
