@@ -5,12 +5,19 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 import ReefNavBar from ".";
 
+import { mockReef } from "../../../../mocks/mockReef";
+import { mockUser } from "../../../../mocks/mockUser";
+
 const mockStore = configureStore([]);
 
 describe("ReefNavBar", () => {
   let element: HTMLElement;
   beforeEach(() => {
-    const store = mockStore({});
+    const store = mockStore({
+      user: {
+        userInfo: mockUser,
+      },
+    });
     store.dispatch = jest.fn();
 
     element = render(
@@ -18,7 +25,7 @@ describe("ReefNavBar", () => {
         <Router>
           <ReefNavBar
             hasDailyData
-            reefName="Mock Reef"
+            reef={mockReef}
             isManager
             lastSurvey="May 10, 2020"
           />

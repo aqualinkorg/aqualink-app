@@ -103,6 +103,15 @@ export interface ReefApplyParams {
   installationResources: string;
 }
 
+export interface ReefUpdateParams {
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  name?: string;
+  depth?: number;
+}
+
 export interface ReefApplication {
   permitRequirements: string | null;
   fundingSource: string | null;

@@ -46,7 +46,7 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
               <mock-typography
                 variant="h4"
               >
-                Mock Reef
+                Hawaii
               </mock-typography>
             </mock-box>
             <mock-box>
