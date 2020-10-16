@@ -22,12 +22,15 @@ import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
+import { useIsMobile } from "../../../helpers/useIsMobile";
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
 
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
+
+  const isMobile = useIsMobile();
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
     const isAsc = orderBy === property && order === "asc";
@@ -66,7 +69,10 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
         flex={1}
       >
         <TableContainer>
-          <Table stickyHeader>
+          <Table
+            stickyHeader
+            style={isMobile ? { tableLayout: "fixed" } : undefined}
+          >
             <Hidden xsDown>
               <EnhancedTableHead
                 order={order}

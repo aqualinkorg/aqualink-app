@@ -33,16 +33,15 @@ const RowNameCell = ({
 }) => {
   const isMobile = useIsMobile();
   return (
-    <TableCell style={isMobile ? { width: "40%" } : undefined} {...rest}>
-      <Typography
-        align="left"
-        variant={isMobile ? "h6" : "subtitle1"}
-        color="textSecondary"
-      >
+    <TableCell
+      style={isMobile ? { width: "35%", paddingRight: 0 } : undefined}
+      {...rest}
+    >
+      <Typography align="left" variant="h6" color="textSecondary">
         {locationName}
       </Typography>
 
-      {locationName !== region && isMobile && (
+      {locationName !== region && region && (
         <p style={{ color: "gray" }}>{region}</p>
       )}
     </TableCell>
@@ -64,14 +63,16 @@ const RowNumberCell = ({
   return (
     <TableCell align={isMobile ? "right" : "left"}>
       <Typography
-        variant={isMobile ? "h5" : "subtitle1"}
+        variant={isMobile ? "h6" : "subtitle1"}
         style={{ color, fontWeight: isMobile ? 600 : undefined }}
       >
         {formatNumber(value, decimalPlaces)}
         &nbsp;
-        <Typography variant="h6" component="span">
-          {isMobile && unit}
-        </Typography>
+        {isMobile && (
+          <Typography variant="h6" component="span">
+            {unit}
+          </Typography>
+        )}
       </Typography>
     </TableCell>
   );
