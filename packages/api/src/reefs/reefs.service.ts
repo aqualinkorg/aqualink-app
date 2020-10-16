@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,11 +17,16 @@ import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { Region } from '../regions/regions.entity';
-import { getRegion, getTimezones } from '../utils/reef.utils';
+import {
+  getRegion,
+  getTimezones,
+  handleDuplicateReef,
+} from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 
 @Injectable()
 export class ReefsService {
+  private readonly logger = new Logger(ReefsService.name);
   constructor(
     @InjectRepository(Reef)
     private reefsRepository: Repository<Reef>,
@@ -47,21 +53,23 @@ export class ReefsService {
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
-    const reef = await this.reefsRepository.save({
-      name,
-      region,
-      polygon: {
-        type: 'Point',
-        coordinates: [longitude, latitude],
-      },
-      maxMonthlyMean,
-      timezones,
-      temperatureThreshold,
-      depth,
-      status,
-      videoStream,
-      stream,
-    });
+    const reef = await this.reefsRepository
+      .save({
+        name,
+        region,
+        polygon: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        maxMonthlyMean,
+        timezones,
+        temperatureThreshold,
+        depth,
+        status,
+        videoStream,
+        stream,
+      })
+      .catch(handleDuplicateReef);
 
     this.reefsRepository
       .createQueryBuilder('reefs')
@@ -130,17 +138,19 @@ export class ReefsService {
 
   async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
     const { coordinates, admins } = updateReefDto;
-    const result = await this.reefsRepository.update(id, {
-      ...omit(updateReefDto, ['admins', 'coordinates']),
-      ...(coordinates
-        ? {
-            polygon: {
-              type: 'Point',
-              coordinates: [coordinates.longitude, coordinates.latitude],
-            },
-          }
-        : {}),
-    });
+    const result = await this.reefsRepository
+      .update(id, {
+        ...omit(updateReefDto, ['admins', 'coordinates']),
+        ...(coordinates
+          ? {
+              polygon: {
+                type: 'Point',
+                coordinates: [coordinates.longitude, coordinates.latitude],
+              },
+            }
+          : {}),
+      })
+      .catch(handleDuplicateReef);
 
     if (admins) {
       await this.updateAdmins(id, admins);
