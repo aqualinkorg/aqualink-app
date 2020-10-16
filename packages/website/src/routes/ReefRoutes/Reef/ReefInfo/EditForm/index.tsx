@@ -38,8 +38,8 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
-      <Grid container alignItems="center" spacing={3}>
-        <Grid container item xs={12} sm={8} md={6} spacing={3}>
+      <Grid container alignItems="flex-end" spacing={3}>
+        <Grid container item sm={12} md={6} spacing={3}>
           <Grid item sm={8} xs={12}>
             <TextField
               className={classes.textField}
@@ -121,17 +121,10 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
             />
           </Grid>
         </Grid>
-        <Grid
-          container
-          justify="flex-end"
-          item
-          xs={12}
-          sm={4}
-          md={3}
-          spacing={1}
-        >
+        <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
           <Grid item>
             <Button
+              className={classes.button}
               onClick={onClose}
               variant="outlined"
               size="small"
@@ -142,6 +135,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
           </Grid>
           <Grid item>
             <Button
+              className={classes.button}
               type="submit"
               variant="outlined"
               size="small"
@@ -160,7 +154,7 @@ const styles = (theme: Theme) =>
   createStyles({
     textField: {
       color: "black",
-      height: "3rem",
+      height: "2.5rem",
       alignItems: "center",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
@@ -168,6 +162,9 @@ const styles = (theme: Theme) =>
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: theme.palette.primary.main,
       },
+    },
+    button: {
+      height: "2.5rem",
     },
   });
 
