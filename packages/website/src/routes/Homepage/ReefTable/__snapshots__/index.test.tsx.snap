@@ -166,7 +166,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 Mock Reef Hartmann
               </mock-typography>
               <p
-                style="color: gray;"
+                style="color: gray; margin: 0px;"
               >
                 Hawai
               </p>
@@ -176,7 +176,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             >
               <mock-typography
                 style="color: rgb(22, 141, 189);"
-                variant="subtitle1"
+                variant="h6"
               >
                 10.0
                  
@@ -187,7 +187,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             >
               <mock-typography
                 style="color: rgb(12, 157, 165);"
-                variant="subtitle1"
+                variant="h6"
               >
                 2.9
                  

@@ -42,7 +42,7 @@ const RowNameCell = ({
       </Typography>
 
       {locationName !== region && region && (
-        <p style={{ color: "gray" }}>{region}</p>
+        <p style={{ color: "gray", margin: 0 }}>{region}</p>
       )}
     </TableCell>
   );
@@ -63,7 +63,7 @@ const RowNumberCell = ({
   return (
     <TableCell align={isMobile ? "right" : "left"}>
       <Typography
-        variant={isMobile ? "h6" : "subtitle1"}
+        variant="h6"
         style={{ color, fontWeight: isMobile ? 600 : undefined }}
       >
         {formatNumber(value, decimalPlaces)}
