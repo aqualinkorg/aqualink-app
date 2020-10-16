@@ -9,15 +9,18 @@ import {
   createStyles,
   Button,
   Box,
+  Collapse,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
 import {
-  reefRequest,
   setSelectedReef,
+  setReefData,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef, ReefUpdateParams } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
@@ -34,6 +37,8 @@ const ReefNavBar = ({
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
+  const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
   const reefName = getReefNameAndRegion(reef).name || "";
 
   const clearReefInfo = useCallback(() => {
@@ -49,74 +54,101 @@ const ReefNavBar = ({
       if (user && user.token) {
         reefServices
           .updateReef(reef.id, data, user.token)
-          .then(() => dispatch(reefRequest(`${reef.id}`)))
-          .finally(() => setEditEnabled(false));
+          .then(() => dispatch(setReefData(data)))
+          .then(() => setAlertSeverity("success"))
+          .catch(() => setAlertSeverity("error"))
+          .finally(() => {
+            setEditEnabled(false);
+            setAlertOpen(true);
+          });
       }
     },
     [user, reef.id, dispatch]
   );
 
   return (
-    <Grid
-      className={classes.root}
-      container
-      justify="space-between"
-      alignItems="center"
-    >
-      <Grid item xs={12}>
-        <Grid alignItems="center" container spacing={1}>
-          <Grid item>
-            <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
-              <IconButton
-                onClick={clearReefInfo}
-                edge="start"
-                color="primary"
-                aria-label="menu"
-              >
-                <ArrowBack />
-              </IconButton>
-            </Link>
-          </Grid>
-
-          {editEnabled ? (
-            <Grid item xs={10}>
-              <EditForm
-                reef={reef}
-                onClose={onCloseForm}
-                onSubmit={handleFormSubmit}
-              />
+    <>
+      <Collapse in={alertOpen}>
+        <Alert
+          severity={alertSeverity}
+          action={
+            <IconButton
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setAlertOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          {alertSeverity === "success"
+            ? "Successfully updated site information"
+            : "Something went wrong"}
+        </Alert>
+      </Collapse>
+      <Grid
+        className={classes.root}
+        container
+        justify="space-between"
+        alignItems="center"
+      >
+        <Grid item xs={12}>
+          <Grid alignItems="center" container spacing={1}>
+            <Grid item>
+              <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
+                <IconButton
+                  onClick={clearReefInfo}
+                  edge="start"
+                  color="primary"
+                  aria-label="menu"
+                >
+                  <ArrowBack />
+                </IconButton>
+              </Link>
             </Grid>
-          ) : (
-            <Grid container alignItems="center" item xs={10} spacing={1}>
-              <Grid item xs={12} md={4} direction="column" container>
-                <Box>
-                  <Typography variant="h4">{reefName}</Typography>
-                </Box>
-                {lastSurvey && (
+
+            {editEnabled ? (
+              <Grid item xs={10}>
+                <EditForm
+                  reef={reef}
+                  onClose={onCloseForm}
+                  onSubmit={handleFormSubmit}
+                />
+              </Grid>
+            ) : (
+              <Grid container alignItems="center" item xs={10} spacing={1}>
+                <Grid item xs={12} md={4} direction="column" container>
                   <Box>
-                    <Typography variant="subtitle1">{`Last surveyed: ${moment(
-                      lastSurvey
-                    ).format("MMM DD[,] YYYY")}`}</Typography>
+                    <Typography variant="h4">{reefName}</Typography>
                   </Box>
+                  {lastSurvey && (
+                    <Box>
+                      <Typography variant="subtitle1">{`Last surveyed: ${moment(
+                        lastSurvey
+                      ).format("MMM DD[,] YYYY")}`}</Typography>
+                    </Box>
+                  )}
+                </Grid>
+                {isManager && (
+                  <Grid item>
+                    <Button
+                      onClick={() => setEditEnabled(true)}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                    >
+                      EDIT SITE DETAILS
+                    </Button>
+                  </Grid>
                 )}
               </Grid>
-              {isManager && (
-                <Grid item>
-                  <Button
-                    onClick={() => setEditEnabled(true)}
-                    size="small"
-                    color="primary"
-                    variant="outlined"
-                  >
-                    EDIT SITE DETAILS
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
-          )}
+            )}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

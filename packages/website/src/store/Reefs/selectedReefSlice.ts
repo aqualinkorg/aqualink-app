@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
-import type { SelectedReefState } from "./types";
+import type { ReefUpdateParams, SelectedReefState } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
@@ -37,6 +37,31 @@ const selectedReefSlice = createSlice({
       ...state,
       details: action.payload,
     }),
+    setReefData: (state, action: PayloadAction<ReefUpdateParams>) => {
+      if (state.details) {
+        return {
+          ...state,
+          details: {
+            ...state.details,
+            name: action.payload.name || state.details.name,
+            depth: action.payload.depth || state.details.depth,
+            polygon:
+              state.details.polygon.type === "Point"
+                ? {
+                    ...state.details.polygon,
+                    coordinates: [
+                      action.payload.coordinates?.longitude ||
+                        state.details.polygon.coordinates[0],
+                      action.payload.coordinates?.latitude ||
+                        state.details.polygon.coordinates[1],
+                    ],
+                  }
+                : { ...state.details.polygon },
+          },
+        };
+      }
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -83,6 +108,6 @@ export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
 
-export const { setSelectedReef } = selectedReefSlice.actions;
+export const { setSelectedReef, setReefData } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;
