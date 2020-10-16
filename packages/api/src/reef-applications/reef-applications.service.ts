@@ -12,7 +12,11 @@ import {
 } from './dto/update-reef-application.dto';
 import { Reef } from '../reefs/reefs.entity';
 import { Region } from '../regions/regions.entity';
-import { getRegion, getTimezones } from '../utils/reef.utils';
+import {
+  getRegion,
+  getTimezones,
+  handleDuplicateReef,
+} from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { AdminLevel, User } from '../users/users.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
@@ -42,18 +46,20 @@ export class ReefApplicationsService {
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
 
-    const reef = await this.reefRepository.save({
-      name,
-      depth,
-      polygon: {
-        type: 'Point',
-        coordinates: [longitude, latitude],
-      },
-      maxMonthlyMean,
-      timezone: timezones[0],
-      approved: false,
-      region,
-    });
+    const reef = await this.reefRepository
+      .save({
+        name,
+        depth,
+        polygon: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        maxMonthlyMean,
+        timezone: timezones[0],
+        approved: false,
+        region,
+      })
+      .catch(handleDuplicateReef);
 
     // Elevate user to ReefManager
     if (user.adminLevel === AdminLevel.Default) {
