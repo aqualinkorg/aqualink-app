@@ -15,7 +15,7 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 
-const INITIAL_CENTER = new LatLng(37.9, -75.3);
+const INITIAL_CENTER = new LatLng(19, -76.3);
 const INITIAL_ZOOM = 5;
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
