@@ -3,7 +3,11 @@ import {
   AddressType,
   GeocodeResult,
 } from '@googlemaps/google-maps-services-js';
-import { Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
@@ -86,4 +90,14 @@ export const getRegion = async (
 
 export const getTimezones = (latitude: number, longitude: number) => {
   return geoTz(latitude, longitude);
+};
+
+export const handleDuplicateReef = (err) => {
+  // Unique Violation: A reef already exists at these coordinates
+  if (err.code === '23505') {
+    throw new BadRequestException('A reef already exists at these coordinates');
+  }
+
+  logger.error('An unexpected error occurred', err);
+  throw new InternalServerErrorException('An unexpected error occurred');
 };
