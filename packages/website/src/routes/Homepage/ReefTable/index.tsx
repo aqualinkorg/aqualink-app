@@ -22,15 +22,12 @@ import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
-import { useIsMobile } from "../../../helpers/useIsMobile";
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
 
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
-
-  const isMobile = useIsMobile();
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
     const isAsc = orderBy === property && order === "asc";
@@ -63,16 +60,13 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       </Hidden>
       <SelectedReefCard />
       <Box
-        className={classes.table}
+        className={classes.tableHolder}
         display="flex"
         flexDirection="column"
         flex={1}
       >
         <TableContainer>
-          <Table
-            stickyHeader
-            style={isMobile ? { tableLayout: "fixed" } : undefined}
-          >
+          <Table stickyHeader className={classes.table}>
             <Hidden xsDown>
               <EnhancedTableHead
                 order={order}
@@ -100,13 +94,18 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
-    table: {
+    tableHolder: {
       paddingLeft: 10,
       height: "70%",
       overflowY: "auto",
       [theme.breakpoints.down("xs")]: {
         paddingLeft: 0,
         height: "auto",
+      },
+    },
+    table: {
+      [theme.breakpoints.down("xs")]: {
+        tableLayout: "fixed",
       },
     },
   });
