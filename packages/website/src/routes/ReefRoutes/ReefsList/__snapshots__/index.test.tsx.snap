@@ -7,7 +7,21 @@ exports[`Reefs List should render with given state from Redux store 1`] = `
   >
     <mock-list
       component="nav"
-    />
+    >
+      <a
+        href="/reefs/1"
+        style="text-decoration: none;"
+      >
+        <mock-listitem
+          button="true"
+        >
+          <mock-listitemtext
+            primary=""
+            style="color: white;"
+          />
+        </mock-listitem>
+      </a>
+    </mock-list>
   </div>
 </div>
 `;

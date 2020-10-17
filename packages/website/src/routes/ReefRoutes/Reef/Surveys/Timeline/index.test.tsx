@@ -5,6 +5,7 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Timeline from ".";
+import { mockSurvey } from "../../../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
@@ -13,30 +14,7 @@ describe("ReefRoutes Surveys", () => {
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [
-          {
-            comments: "No comments",
-            diveDate: "2020-09-10T10:27:00.000Z",
-            id: 46,
-            temperature: null,
-            weatherConditions: "calm",
-            userId: {
-              id: 0,
-              name: "Joe Doe",
-            },
-            featuredSurveyMedia: {
-              comments: null,
-              featured: true,
-              hidden: false,
-              id: 66,
-              metadata: "{}",
-              observations: "possible-disease",
-              quality: 1,
-              type: "image",
-              url: "",
-            },
-          },
-        ],
+        list: [mockSurvey],
         loading: false,
         error: null,
       },

@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 import Reef from ".";
 import { mockReef } from "../../../mocks/mockReef";
+import { mockUser } from "../../../mocks/mockUser";
 
 const mockStore = configureStore([]);
 
@@ -24,7 +25,7 @@ describe("Reef Detail Page", () => {
         error: null,
       },
       user: {
-        userInfo: null,
+        userInfo: mockUser,
         error: null,
         loading: false,
       },
@@ -47,12 +48,12 @@ describe("Reef Detail Page", () => {
         error: null,
       },
       user: {
-        userInfo: null,
+        userInfo: mockUser,
         error: null,
         loading: false,
       },
       reefsList: {
-        list: [],
+        list: [mockReef],
         loading: false,
         error: null,
       },

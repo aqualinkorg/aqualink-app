@@ -61,20 +61,38 @@ exports[`NavBar should render with given state from Redux store 1`] = `
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item"
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
           >
-            <mock-button>
-              SIGN IN
-            </mock-button>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <mock-button>
-              REGISTER
-            </mock-button>
-          </div>
+            Mock User
+            <mock-iconbutton
+              classname="NavBar-button-9"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root NavBar-expandIcon-8"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-menu
+              classname="NavBar-userMenu-5"
+              keepmounted="true"
+              open="false"
+            >
+              <mock-menuitem
+                classname="NavBar-menuItem-6"
+              >
+                Logout
+              </mock-menuitem>
+            </mock-menu>
+          </mock-box>
         </div>
       </div>
     </mock-toolbar>

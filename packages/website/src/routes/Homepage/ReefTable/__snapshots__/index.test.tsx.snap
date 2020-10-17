@@ -159,7 +159,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 color="textSecondary"
                 variant="subtitle1"
               >
-                Mock Reef Hartmann
+                Hawaii
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
@@ -169,17 +169,17 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="subtitle1"
               >
-                10.0
+                39.0
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
               align="left"
             >
               <mock-typography
-                style="color: rgb(12, 157, 165);"
+                style="color: rgb(117, 180, 114);"
                 variant="subtitle1"
               >
-                2.9
+                4.9
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
@@ -189,7 +189,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 aria-hidden="true"
                 class="MuiSvgIcon-root"
                 focusable="false"
-                style="color: rgb(239, 0, 0);"
+                style="color: rgb(198, 229, 250);"
                 viewBox="0 0 24 24"
               >
                 <path
