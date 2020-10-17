@@ -83,7 +83,7 @@ exports[`Site registration page should render with given state from Redux store 
                       inputprops="[object Object]"
                       label="Name"
                       size="small"
-                      value="Test User"
+                      value="Mock User"
                       variant="outlined"
                     />
                   </div>
@@ -99,7 +99,7 @@ exports[`Site registration page should render with given state from Redux store 
                       inputprops="[object Object]"
                       label="Organization"
                       size="small"
-                      value="Some Organization"
+                      value="Some organization"
                       variant="outlined"
                     />
                   </div>
@@ -115,7 +115,7 @@ exports[`Site registration page should render with given state from Redux store 
                       inputprops="[object Object]"
                       label="Email"
                       size="small"
-                      value="test@mail.com"
+                      value="mail@mail.com"
                       variant="outlined"
                     />
                   </div>

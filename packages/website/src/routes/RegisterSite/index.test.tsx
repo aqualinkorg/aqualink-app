@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import Apply from ".";
+import { mockUser } from "../../mocks/mockUser";
 
 const mockStore = configureStore([]);
 
@@ -14,15 +15,7 @@ describe("Site registration page", () => {
   beforeEach(() => {
     const store = mockStore({
       user: {
-        userInfo: {
-          email: "test@mail.com",
-          organization: "Some Organization",
-          fullName: "Test User",
-          adminLevel: "super_admin",
-          firebaseUid: "RaNdOmStRiNg",
-          administeredReefs: [],
-          token: "RaNdOmStRiNg",
-        },
+        userInfo: mockUser,
       },
     });
 

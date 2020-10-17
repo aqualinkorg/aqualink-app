@@ -19,7 +19,7 @@ exports[`renders as expected 1`] = `
             display="block"
             variant="h5"
           >
-            Hawai
+            Hawaii
           </mock-typography>
         </div>
       </div>
@@ -48,7 +48,7 @@ exports[`renders as expected 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="h5"
               >
-                10.0  °C
+                39.0  °C
               </mock-typography>
             </div>
           </div>
@@ -70,10 +70,10 @@ exports[`renders as expected 1`] = `
             >
               <mock-typography
                 color="textSecondary"
-                style="color: rgb(8, 91, 163);"
+                style="color: rgb(117, 180, 114);"
                 variant="h5"
               >
-                1.4
+                4.9
                  
               </mock-typography>
               <mock-tooltip
@@ -81,7 +81,7 @@ exports[`renders as expected 1`] = `
               >
                 <mock-typography
                   color="textSecondary"
-                  style="color: rgb(8, 91, 163); position: relative; bottom: 0px;"
+                  style="color: rgb(117, 180, 114); position: relative; bottom: 0px;"
                   variant="h6"
                 >
                   DHW
@@ -98,7 +98,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/reefs/2"
+              href="/reefs/1"
               style="text-decoration: none;"
             >
               <mock-button

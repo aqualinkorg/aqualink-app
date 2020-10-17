@@ -76,7 +76,7 @@ export interface Reef {
   status: number;
   videoStream: string | null;
   region: Region | null;
-  admin: string | null;
+  admins: User[];
   stream: string | null;
   dailyData: DailyData[];
   liveData: LiveData;
@@ -101,6 +101,15 @@ export interface ReefApplyParams {
   fundingSource: string;
   installationSchedule: string;
   installationResources: string;
+}
+
+export interface ReefUpdateParams {
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  name?: string;
+  depth?: number;
 }
 
 export interface ReefApplication {

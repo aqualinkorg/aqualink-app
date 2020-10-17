@@ -8,6 +8,7 @@ import type {
   ReefRegisterResponseData,
   ReefApplyParams,
   ReefApplication,
+  ReefUpdateParams,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -96,13 +97,11 @@ const getReefApplication = (reefId: number, token: string) =>
     token,
   });
 
-const updateReefName = (reefId: number, name: string, token: string) =>
+const updateReef = (reefId: number, data: ReefUpdateParams, token: string) =>
   requests.send<Reef>({
     url: `reefs/${reefId}`,
     method: "PUT",
-    data: {
-      name,
-    },
+    data,
     token,
   });
 
@@ -116,5 +115,5 @@ export default {
   registerReef,
   applyReef,
   getReefApplication,
-  updateReefName,
+  updateReef,
 };

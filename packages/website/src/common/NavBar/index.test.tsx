@@ -4,6 +4,7 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
 import HomePageNavBar from ".";
+import { mockUser } from "../../mocks/mockUser";
 
 jest.mock("../../routes/Homepage/RegisterDialog", () => "Mock-RegisterDialog");
 jest.mock("../../routes/Homepage/SignInDialog", () => "Mock-SignInDialog");
@@ -17,7 +18,7 @@ describe("NavBar", () => {
   beforeEach(() => {
     const store = mockStore({
       user: {
-        userInfo: null,
+        userInfo: mockUser,
         loading: false,
         error: null,
       },

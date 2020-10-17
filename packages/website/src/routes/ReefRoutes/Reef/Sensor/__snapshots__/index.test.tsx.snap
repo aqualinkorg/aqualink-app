@@ -78,13 +78,13 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               classname="Sensor-contentTextTitles-4"
               variant="subtitle2"
             >
-              TEMP AT 24m
+              TEMP AT 0m
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-5"
               variant="h2"
             >
-              25.0 °C
+              39.0 °C
             </mock-typography>
           </div>
         </div>

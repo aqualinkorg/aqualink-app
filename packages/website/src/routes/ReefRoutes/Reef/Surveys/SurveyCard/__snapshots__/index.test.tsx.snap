@@ -11,7 +11,11 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
     >
       <div
         class="MuiGrid-root SurveyCard-cardImageWrapper-10 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
-      />
+      >
+        <div
+          class="MuiCardMedia-root SurveyCard-cardImage-6"
+        />
+      </div>
       <div
         class="MuiGrid-root SurveyCard-infoWrapper-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
       >
@@ -31,10 +35,30 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-9"
               variant="h6"
             >
-              Test User
+              Joe Doe
             </mock-typography>
           </div>
-          
+          <div
+            class="MuiGrid-root SurveyCard-commentsWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              style="height: 80%;"
+            >
+              <mock-typography
+                classname="SurveyCard-cardFields-7"
+                variant="h6"
+              >
+                Comments:
+              </mock-typography>
+              <mock-typography
+                classname="SurveyCard-cardValues-8 SurveyCard-comments-13"
+                variant="h6"
+              >
+                No comments
+              </mock-typography>
+            </div>
+          </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
           >
@@ -48,7 +72,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-9"
               variant="h6"
             >
-              24.5 °C
+              10.0 °C
             </mock-typography>
           </div>
           <div
@@ -58,7 +82,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
             >
               <a
-                href="/reefs/0/survey_details/0"
+                href="/reefs/0/survey_details/46"
                 style="text-decoration: none;"
               >
                 <mock-button
@@ -92,7 +116,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                   classname="Dialog-dialogTitle-16"
                 >
                   <mock-typography>
-                    Are you sure you would like to delete the survey for Invalid date? It will delete all media assosciated with this survey.
+                    Are you sure you would like to delete the survey for 09/10/2020? It will delete all media assosciated with this survey.
                   </mock-typography>
                 </mock-dialogtitle>
                 <mock-dialogcontent>

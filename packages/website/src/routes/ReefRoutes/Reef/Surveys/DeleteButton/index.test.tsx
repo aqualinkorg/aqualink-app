@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import DeleteButton from ".";
+import { mockUser } from "../../../../../mocks/mockUser";
 
 const mockStore = configureStore([]);
 
@@ -11,14 +12,7 @@ describe("Surveys Delete Button", () => {
   beforeEach(() => {
     const store = mockStore({
       user: {
-        userInfo: {
-          email: "test@mail.com",
-          fullName: "Test User",
-          adminLevel: "super_admin",
-          firebaseUid: "RaNdOmStRiNg",
-          administeredReefs: [],
-          token: "RaNdOmStRiNg",
-        },
+        userInfo: mockUser,
       },
     });
 
