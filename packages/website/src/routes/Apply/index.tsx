@@ -80,7 +80,11 @@ const Apply = ({ classes }: ApplyProps) => {
           // eslint-disable-next-line consistent-return
           .then(() => {
             if (!reef?.name && user?.token) {
-              return reefServices.updateReefName(reef.id, siteName, user.token);
+              return reefServices.updateReef(
+                reef.id,
+                { name: siteName },
+                user.token
+              );
             }
           })
           .then(() => setMessage("Thank you for applying"))

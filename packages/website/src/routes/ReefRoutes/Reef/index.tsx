@@ -17,7 +17,6 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
 import ReefInfo from "./ReefInfo";
-import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 import {
   reefDetailsSelector,
   reefLoadingSelector,
@@ -115,12 +114,12 @@ const Reef = ({ match, classes }: ReefProps) => {
           <>
             <ReefInfo
               hasDailyData={hasDailyData}
-              reefName={getReefNameAndRegion(reefDetails).name || ""}
+              reef={reefDetails}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-              managerName={reefDetails?.admin || ""}
+              isManager={isAdmin(user, parseInt(reefId, 10))}
             />
             {!hasSpotter && (
-              <Box mt="1rem">
+              <Box mt="1.3rem">
                 <Alert severity="info">
                   {getAlertMessage(user, reefId, hasDailyData)}
                 </Alert>

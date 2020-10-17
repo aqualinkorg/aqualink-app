@@ -14,7 +14,7 @@ exports[`renders as expected 1`] = `
       >
         Selected Site
         <a
-          href="/reefs/2"
+          href="/reefs/1"
         >
           <svg
             aria-hidden="true"
@@ -52,8 +52,10 @@ exports[`renders as expected 1`] = `
                 variant="h5"
               >
                 <span
-                  title=""
-                />
+                  title="Hawaii"
+                >
+                  Hawaii
+                </span>
               </mock-typography>
               <mock-typography
                 classname="makeStyles-cardTitle-9 makeStyles-reefRegionName-8"
@@ -166,7 +168,7 @@ exports[`renders loading as expected 1`] = `
       >
         Selected Site
         <a
-          href="/reefs/2"
+          href="/reefs/1"
         >
           <svg
             aria-hidden="true"
@@ -204,8 +206,10 @@ exports[`renders loading as expected 1`] = `
                 variant="h5"
               >
                 <span
-                  title=""
-                />
+                  title="Hawaii"
+                >
+                  Hawaii
+                </span>
               </mock-typography>
               <mock-typography
                 classname="makeStyles-cardTitle-18 makeStyles-reefRegionName-17"
