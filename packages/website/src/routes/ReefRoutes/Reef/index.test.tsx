@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
-import type { Reef as ReefType, Data } from "../../../store/Reefs/types";
 import Reef from ".";
+import { mockReef } from "../../../mocks/mockReef";
 
 const mockStore = configureStore([]);
 
@@ -17,47 +17,9 @@ describe("Reef Detail Page", () => {
   let elementEmpty: HTMLElement;
   let elementFull: HTMLElement;
   beforeEach(() => {
-    const dailyData: Data = {
-      id: 1,
-      date: "20 May 2020",
-      minBottomTemperature: 20,
-      maxBottomTemperature: 30,
-      avgBottomTemperature: 25,
-      degreeHeatingDays: 1,
-      surfaceTemperature: 25,
-      satelliteTemperature: 26,
-      minWindSpeed: 10,
-      maxWindSpeed: 9,
-      avgWindSpeed: 11,
-      windDirection: 180,
-      minWaveHeight: 3,
-      maxWaveHeight: 5,
-      avgWaveHeight: 4,
-      waveDirection: 180,
-      wavePeriod: 2,
-    };
-
-    const reef: ReefType = {
-      id: 1,
-      name: null,
-      polygon: {
-        type: "Polygon",
-        coordinates: [[[0, 0]]],
-      },
-      maxMonthlyMean: 22,
-      depth: 4,
-      status: 1,
-      region: "Hawaii",
-      videoStream: null,
-      stream: null,
-      admin: null,
-      dailyData: [],
-      latestDailyData: dailyData,
-    };
-
     const emptyStore = mockStore({
       selectedReef: {
-        details: reef,
+        details: { ...mockReef, dailyData: [] },
         loading: false,
         error: null,
       },
@@ -80,10 +42,7 @@ describe("Reef Detail Page", () => {
 
     const fullStore = mockStore({
       selectedReef: {
-        details: {
-          ...reef,
-          dailyData: [dailyData],
-        },
+        details: mockReef,
         loading: false,
         error: null,
       },
