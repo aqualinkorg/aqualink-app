@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
+import { mockUser } from "../../mocks/mockUser";
 
 import Homepage from ".";
 
@@ -24,7 +25,7 @@ describe("Homepage", () => {
         reefOnMap: null,
       },
       user: {
-        userInfo: null,
+        userInfo: mockUser,
         loading: false,
         error: null,
       },

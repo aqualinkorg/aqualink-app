@@ -4,7 +4,11 @@ import LocationMap from ".";
 
 test("renders as expected", () => {
   const { container } = render(
-    <LocationMap markerPosition={[1, 1]} setMarkerPosition={() => {}} />
+    <LocationMap
+      markerPositionLat="1"
+      markerPositionLng="1"
+      updateMarkerPosition={() => {}}
+    />
   );
   expect(container).toMatchSnapshot();
 });

@@ -7,6 +7,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
   <mock-drawer
     anchor="left"
     classes="[object Object]"
+    open="true"
   >
     <mock-iconbutton
       style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"

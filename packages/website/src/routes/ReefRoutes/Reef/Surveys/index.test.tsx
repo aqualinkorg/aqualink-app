@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import Surveys from ".";
+import { mockUser } from "../../../../mocks/mockUser";
+import { mockSurvey } from "../../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
@@ -13,12 +15,12 @@ describe("ReefRoutes Surveys", () => {
   beforeEach(() => {
     const store = mockStore({
       surveyList: {
-        list: [],
+        list: [mockSurvey],
         loading: false,
         error: null,
       },
       user: {
-        userInfo: null,
+        userInfo: mockUser,
         loading: false,
         error: null,
       },

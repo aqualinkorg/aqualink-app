@@ -107,7 +107,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-5"
                 variant="h2"
               >
-                4.6 DHW
+                4.1 DHW
               </mock-typography>
             </mock-tooltip>
           </div>
