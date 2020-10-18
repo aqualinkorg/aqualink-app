@@ -39,7 +39,7 @@ const RowNameCell = ({
       </Typography>
 
       {locationName !== region && region && (
-        <Typography style={{ color: "gray" }} variant="subtitle1">
+        <Typography className={classes.regionName} variant="subtitle1">
           {region}
         </Typography>
       )}
@@ -175,6 +175,9 @@ const styles = (theme: Theme) =>
     nameCells: {
       paddingLeft: 10,
       [theme.breakpoints.down("xs")]: { width: "35%", paddingRight: 0 },
+    },
+    regionName: {
+      color: "gray",
     },
     numberCellsTitle: {
       [theme.breakpoints.down("xs")]: { fontWeight: 600 },
