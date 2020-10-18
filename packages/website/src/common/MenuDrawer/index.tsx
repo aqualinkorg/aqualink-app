@@ -1,11 +1,13 @@
 import React from "react";
 import {
-  withStyles,
-  WithStyles,
+  Box,
+  Button,
   createStyles,
-  Link,
   Drawer,
   IconButton,
+  Link,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import { Clear } from "@material-ui/icons";
 
@@ -68,6 +70,9 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           {text}
         </Link>
       ))}
+      <Box marginTop="auto" padding="25px">
+        <Button>Hello world!</Button>
+      </Box>
     </Drawer>
   );
 };
