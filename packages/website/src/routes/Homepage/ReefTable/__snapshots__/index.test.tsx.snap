@@ -176,10 +176,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 variant="h6"
               >
                 39.0
-                 
                 <mock-hidden
                   smup="true"
                 >
+                   
                   <mock-typography
                     component="span"
                     variant="h6"
@@ -198,10 +198,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 variant="h6"
               >
                 4.9
-                 
                 <mock-hidden
                   smup="true"
                 >
+                   
                   <mock-typography
                     component="span"
                     variant="h6"

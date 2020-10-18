@@ -68,8 +68,8 @@ const RowNumberCell = ({
         className={classes.numberCellsTitle}
       >
         {formatNumber(value, decimalPlaces)}
-        &nbsp;
         <Hidden smUp>
+          &nbsp;
           <Typography variant="h6" component="span">
             {unit}
           </Typography>
