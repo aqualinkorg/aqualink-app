@@ -9,7 +9,7 @@ import {
   withStyles,
   WithStyles,
 } from "@material-ui/core";
-import { Clear } from "@material-ui/icons";
+import { Clear, GitHub } from "@material-ui/icons";
 
 const menuRoutes = [
   {
@@ -80,7 +80,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
         <Box className={classes.buttonBox}>
           <a href="https://github.com/aqualinkorg/aqualink-app">
             <IconButton size="medium">
-              <Clear />
+              <GitHub />
             </IconButton>
           </a>
           <a href="https://oviohub.com">
