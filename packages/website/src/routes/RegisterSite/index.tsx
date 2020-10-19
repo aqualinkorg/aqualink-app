@@ -119,18 +119,7 @@ const Apply = ({ classes }: ApplyProps) => {
     setFormErrors(fromJS(errors));
 
     if (isEmpty(errors)) {
-      const time = new Date().getTime();
-      const date = new Date(time);
-
-      const {
-        name,
-        org,
-        email,
-        siteName,
-        lat,
-        lng,
-        depth,
-      } = formModel.toJS() as {
+      const { siteName, lat, lng, depth } = formModel.toJS() as {
         [key: string]: string;
       };
 
