@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import {
-  withStyles,
-  WithStyles,
+  Box,
+  CircularProgress,
   createStyles,
   Grid,
-  Typography,
-  IconButton,
   Hidden,
-  TableContainer,
+  IconButton,
   Table,
-  CircularProgress,
-  Box,
+  TableContainer,
   Theme,
+  Typography,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 import { useSelector } from "react-redux";
 import SelectedReefCard from "./SelectedReefCard";
-import EnhancedTableHead from "./tableHead";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
+import EnhancedTableHead from "./tableHead";
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
 
@@ -59,18 +60,20 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       </Hidden>
       <SelectedReefCard />
       <Box
-        className={classes.table}
+        className={classes.tableHolder}
         display="flex"
         flexDirection="column"
         flex={1}
       >
         <TableContainer>
-          <Table stickyHeader>
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
+          <Table stickyHeader className={classes.table}>
+            <Hidden xsDown>
+              <EnhancedTableHead
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+              />
+            </Hidden>
             <ReefTableBody order={order} orderBy={orderBy} />
           </Table>
         </TableContainer>
@@ -91,12 +94,18 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
-    table: {
+    tableHolder: {
       paddingLeft: 10,
       height: "70%",
       overflowY: "auto",
       [theme.breakpoints.down("xs")]: {
         paddingLeft: 0,
+        height: "auto",
+      },
+    },
+    table: {
+      [theme.breakpoints.down("xs")]: {
+        tableLayout: "fixed",
       },
     },
   });
