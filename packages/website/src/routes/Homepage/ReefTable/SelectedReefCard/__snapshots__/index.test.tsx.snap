@@ -6,13 +6,13 @@ exports[`renders as expected 1`] = `
     classname="makeStyles-card-4"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
         variant="h5"
       >
-        Featured Site
+        Selected Site
         <a
           href="/reefs/1"
         >
@@ -74,7 +74,9 @@ exports[`renders as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <div>
+            Mock-Line
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
@@ -160,13 +162,13 @@ exports[`renders loading as expected 1`] = `
     classname="makeStyles-card-13"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
         variant="h5"
       >
-        Featured Site
+        Selected Site
         <a
           href="/reefs/1"
         >
@@ -228,7 +230,9 @@ exports[`renders loading as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <div>
+            Mock-Line
+          </div>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"

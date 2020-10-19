@@ -79,11 +79,13 @@ const styles = () =>
     },
     map: {
       display: "flex",
+      height: "calc(100vh - 64px)",
     },
     reefTable: {
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
+      overflowY: "auto",
     },
     drawer: {
       borderTopLeftRadius: "15px",
