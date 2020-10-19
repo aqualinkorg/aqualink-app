@@ -54,9 +54,42 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       margintop="auto"
       padding="25px"
     >
-      <mock-button>
-        Hello world!
-      </mock-button>
+      <mock-typography
+        variant="subtitle1"
+      >
+        Aqualink is licenced under MIT
+      </mock-typography>
+      <mock-typography
+        variant="subtitle1"
+      >
+        Contribute, to give our reefs a fighting chance!
+      </mock-typography>
+      <mock-box
+        classname="MenuDrawer-buttonBox-2"
+      >
+        <a
+          href="https://github.com/aqualinkorg/aqualink-app"
+        >
+          <mock-iconbutton
+            size="medium"
+          >
+            <clear />
+          </mock-iconbutton>
+        </a>
+        <a
+          href="https://oviohub.com"
+        >
+          <mock-iconbutton
+            size="medium"
+          >
+            <img
+              alt="Ovio Logo"
+              src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"
+              style="max-width: 100%;"
+            />
+          </mock-iconbutton>
+        </a>
+      </mock-box>
     </mock-box>
   </mock-drawer>
 </div>

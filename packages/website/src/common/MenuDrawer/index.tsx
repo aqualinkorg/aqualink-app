@@ -1,11 +1,11 @@
 import React from "react";
 import {
   Box,
-  Button,
   createStyles,
   Drawer,
   IconButton,
   Link,
+  Typography,
   withStyles,
   WithStyles,
 } from "@material-ui/core";
@@ -71,7 +71,28 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
         </Link>
       ))}
       <Box marginTop="auto" padding="25px">
-        <Button>Hello world!</Button>
+        <Typography variant="subtitle1">
+          Aqualink is licenced under MIT
+        </Typography>
+        <Typography variant="subtitle1">
+          Contribute, to give our reefs a fighting chance!
+        </Typography>
+        <Box className={classes.buttonBox}>
+          <a href="https://github.com/aqualinkorg/aqualink-app">
+            <IconButton size="medium">
+              <Clear />
+            </IconButton>
+          </a>
+          <a href="https://oviohub.com">
+            <IconButton size="medium">
+              <img
+                src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"
+                alt="Ovio Logo"
+                style={{ maxWidth: "100%" }}
+              />
+            </IconButton>
+          </a>
+        </Box>
       </Box>
     </Drawer>
   );
@@ -84,6 +105,13 @@ const styles = () =>
       alignItems: "center",
       // paddingTop: "2rem",
       backgroundColor: "#095877",
+    },
+    buttonBox: {
+      marginTop: "20px",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-evenly",
     },
   });
 
