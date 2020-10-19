@@ -19,6 +19,7 @@ import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
 import { initGA } from "../../utils/google-analytics";
+import Terms from "../../routes/Terms";
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -50,6 +51,7 @@ function App() {
               <Route exact path="/buoy" component={Buoy} />
               <Route exact path="/drones" component={Drones} />
               <Route exact path="/faq" component={Faq} />
+              <Route exact path="/terms" component={Terms} />
               <Route path="/reefs" component={ReefRoutes} />
               <Route default component={NotFound} />
             </Switch>
