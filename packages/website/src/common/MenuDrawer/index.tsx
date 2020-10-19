@@ -81,7 +81,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
               <GitHub style={{ color: "white" }} />
             </IconButton>
           </a>
-          <a href="https://oviohub.com">
+          <a href="https://ovio.org/project/aqualinkorg/aqualink-app">
             <IconButton size="medium">
               <img
                 src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"

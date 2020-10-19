@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuDrawer closed should render with given state from Redux store 1`] = `<div />`;
+
+exports[`MenuDrawer open should render with given state from Redux store 1`] = `
+<div>
+  <mock-drawer
+    anchor="left"
+    classes="[object Object]"
+    open="true"
+  >
+    <mock-iconbutton
+      style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
+    >
+      <clear />
+    </mock-iconbutton>
+    <mock-link
+      href="/"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      HOME
+    </mock-link>
+    <mock-link
+      href="/buoy"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      BUOY
+    </mock-link>
+    <mock-link
+      href="/drones"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      DRONE
+    </mock-link>
+    <mock-link
+      href="/about"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      ABOUT
+    </mock-link>
+    <mock-link
+      href="/faq"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      FAQ
+    </mock-link>
+    <mock-link
+      href="/register"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      REGISTER A SITE
+    </mock-link>
+    <mock-box
+      margintop="auto"
+      padding="25px"
+    >
+      <mock-typography
+        variant="subtitle1"
+      >
+        Aqualink is licenced under MIT.
+      </mock-typography>
+      <mock-typography
+        variant="subtitle1"
+      >
+        Contribute!
+      </mock-typography>
+      <mock-box
+        classname="MenuDrawer-buttonBox-2"
+      >
+        <a
+          href="https://github.com/aqualinkorg/aqualink-app"
+        >
+          <mock-iconbutton
+            size="medium"
+          >
+            <github
+              style="color: white;"
+            />
+          </mock-iconbutton>
+        </a>
+        <a
+          href="https://ovio.org/project/aqualinkorg/aqualink-app"
+        >
+          <mock-iconbutton
+            size="medium"
+          >
+            <img
+              alt="Ovio Logo"
+              src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"
+              style="max-width: 100%;"
+            />
+          </mock-iconbutton>
+        </a>
+      </mock-box>
+    </mock-box>
+  </mock-drawer>
+</div>
+`;
