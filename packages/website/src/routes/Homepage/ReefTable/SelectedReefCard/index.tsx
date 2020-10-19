@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mobileCardWrapperWithNoImage: {
     [theme.breakpoints.down("xs")]: {
-      height: "24rem",
+      height: "27rem",
     },
   },
   card: {
@@ -140,6 +140,17 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 
   const { name, region: regionName } = getReefNameAndRegion(reef);
 
+  const ChartComponent = (
+    <Chart
+      dailyData={reef.dailyData}
+      surveys={[]}
+      temperatureThreshold={
+        reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+      }
+      maxMonthlyMean={reef.maxMonthlyMean || null}
+    />
+  );
+
   return (
     <Grid
       className={
@@ -219,16 +230,10 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             DAILY SURFACE TEMP. (°C)
           </Typography>
         </Box>
-        <div>
-          <Chart
-            dailyData={reef.dailyData}
-            surveys={[]}
-            temperatureThreshold={
-              reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-            }
-            maxMonthlyMean={reef.maxMonthlyMean || null}
-          />
-        </div>
+        <Hidden xsDown>
+          <div>{ChartComponent}</div>
+        </Hidden>
+        <Hidden smUp>{ChartComponent}</Hidden>
       </Grid>
 
       <Grid

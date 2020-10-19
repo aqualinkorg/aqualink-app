@@ -74,9 +74,18 @@ exports[`renders as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          <div>
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
             Mock-Line
-          </div>
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
@@ -230,9 +239,18 @@ exports[`renders loading as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          <div>
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
             Mock-Line
-          </div>
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
