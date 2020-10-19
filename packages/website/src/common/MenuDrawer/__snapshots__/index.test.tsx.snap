@@ -57,7 +57,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       <mock-typography
         variant="subtitle1"
       >
-        Aqualink is licenced under MIT.
+        Aqualink's source code is licenced under MIT.
       </mock-typography>
       <mock-typography
         variant="subtitle1"

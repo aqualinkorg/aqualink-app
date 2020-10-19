@@ -75,7 +75,8 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       ))}
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
-          Aqualink is licenced under MIT.
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          Aqualink's source code is licenced under MIT.
         </Typography>
         <Typography variant="subtitle1">Contribute!</Typography>
         <ButtonGroup variant="contained" color="default">
@@ -112,6 +113,9 @@ const styles = () =>
       textTransform: "none",
       "& img": {
         maxWidth: "100%",
+      },
+      "&:hover": {
+        color: "#000000",
       },
     },
   });

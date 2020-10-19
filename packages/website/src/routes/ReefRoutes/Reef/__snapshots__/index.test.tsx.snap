@@ -63,7 +63,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink is licenced under MIT.
+            Aqualink's source code is licenced under MIT.
           </mock-typography>
           <mock-typography
             variant="subtitle1"
@@ -1805,7 +1805,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink is licenced under MIT.
+            Aqualink's source code is licenced under MIT.
           </mock-typography>
           <mock-typography
             variant="subtitle1"
