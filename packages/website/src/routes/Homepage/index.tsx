@@ -79,7 +79,6 @@ const styles = () =>
     },
     map: {
       display: "flex",
-      height: "calc(100vh - 64px)",
     },
     reefTable: {
       display: "flex",
