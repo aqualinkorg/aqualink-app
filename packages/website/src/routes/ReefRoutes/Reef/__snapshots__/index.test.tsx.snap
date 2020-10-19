@@ -56,6 +56,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           REGISTER A SITE
         </mock-link>
+        <mock-box
+          margintop="auto"
+          padding="25px"
+        >
+          <mock-button>
+            Hello world!
+          </mock-button>
+        </mock-box>
       </mock-drawer>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -1746,6 +1754,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           REGISTER A SITE
         </mock-link>
+        <mock-box
+          margintop="auto"
+          padding="25px"
+        >
+          <mock-button>
+            Hello world!
+          </mock-button>
+        </mock-box>
       </mock-drawer>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
