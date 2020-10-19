@@ -261,7 +261,7 @@ const RegisterDialog = ({
                       color="textSecondary"
                     >
                       I have read the{" "}
-                      <Link className={classes.termsLink} to="/">
+                      <Link className={classes.termsLink} to="/terms">
                         Terms and Conditions
                       </Link>
                     </Typography>
