@@ -50,6 +50,58 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
     >
       REGISTER A SITE
     </mock-link>
+    <mock-box
+      margintop="auto"
+      padding="25px"
+    >
+      <mock-typography
+        variant="subtitle1"
+      >
+        Aqualink's source code is licenced under MIT.
+      </mock-typography>
+      <mock-typography
+        variant="subtitle1"
+      >
+        Contribute!
+      </mock-typography>
+      <div
+        class="MuiButtonGroup-root MuiButtonGroup-contained"
+        role="group"
+      >
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
+          href="https://github.com/aqualinkorg/aqualink-app"
+          size="medium"
+          starticon="[object Object]"
+          variant="contained"
+        >
+          GitHub
+        </mock-button>
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
+          href="https://ovio.org/project/aqualinkorg/aqualink-app"
+          size="medium"
+          variant="contained"
+        >
+          <img
+            alt="Ovio Logo"
+            src="ovio_logo.png"
+          />
+        </mock-button>
+      </div>
+    </mock-box>
   </mock-drawer>
 </div>
 `;
