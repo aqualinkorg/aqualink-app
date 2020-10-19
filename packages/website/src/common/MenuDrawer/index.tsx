@@ -72,15 +72,13 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       ))}
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
-          Aqualink is licenced under MIT
+          Aqualink is licenced under MIT.
         </Typography>
-        <Typography variant="subtitle1">
-          Contribute, to give our reefs a fighting chance!
-        </Typography>
+        <Typography variant="subtitle1">Contribute!</Typography>
         <Box className={classes.buttonBox}>
           <a href="https://github.com/aqualinkorg/aqualink-app">
             <IconButton size="medium">
-              <GitHub />
+              <GitHub style={{ color: "white" }} />
             </IconButton>
           </a>
           <a href="https://oviohub.com">
