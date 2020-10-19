@@ -64,34 +64,43 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       >
         Contribute!
       </mock-typography>
-      <mock-box
-        classname="MenuDrawer-buttonBox-2"
+      <div
+        class="MuiButtonGroup-root MuiButtonGroup-contained"
+        role="group"
       >
-        <a
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
           href="https://github.com/aqualinkorg/aqualink-app"
+          size="medium"
+          starticon="[object Object]"
+          variant="contained"
         >
-          <mock-iconbutton
-            size="medium"
-          >
-            <github
-              style="color: white;"
-            />
-          </mock-iconbutton>
-        </a>
-        <a
+          GitHub
+        </mock-button>
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
           href="https://ovio.org/project/aqualinkorg/aqualink-app"
+          size="medium"
+          variant="contained"
         >
-          <mock-iconbutton
-            size="medium"
-          >
-            <img
-              alt="Ovio Logo"
-              src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"
-              style="max-width: 100%;"
-            />
-          </mock-iconbutton>
-        </a>
-      </mock-box>
+          <img
+            alt="Ovio Logo"
+            src="ovio_logo.png"
+          />
+        </mock-button>
+      </div>
     </mock-box>
   </mock-drawer>
 </div>

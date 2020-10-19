@@ -1,6 +1,8 @@
 import React from "react";
 import {
   Box,
+  Button,
+  ButtonGroup,
   createStyles,
   Drawer,
   IconButton,
@@ -10,6 +12,7 @@ import {
   WithStyles,
 } from "@material-ui/core";
 import { Clear, GitHub } from "@material-ui/icons";
+import ovioLogo from "../../assets/img/ovio_logo.png";
 
 const menuRoutes = [
   {
@@ -75,22 +78,22 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           Aqualink is licenced under MIT.
         </Typography>
         <Typography variant="subtitle1">Contribute!</Typography>
-        <Box className={classes.buttonBox}>
-          <a href="https://github.com/aqualinkorg/aqualink-app">
-            <IconButton size="medium">
-              <GitHub style={{ color: "white" }} />
-            </IconButton>
-          </a>
-          <a href="https://ovio.org/project/aqualinkorg/aqualink-app">
-            <IconButton size="medium">
-              <img
-                src="https://www.okta.com/sites/default/files/styles/400x400_scaled/public/media/image/2020-07/ovio.png"
-                alt="Ovio Logo"
-                style={{ maxWidth: "100%" }}
-              />
-            </IconButton>
-          </a>
-        </Box>
+        <ButtonGroup variant="contained" color="default">
+          <Button
+            href="https://github.com/aqualinkorg/aqualink-app"
+            startIcon={<GitHub />}
+            className={classes.contributeButton}
+          >
+            GitHub
+          </Button>
+
+          <Button
+            href="https://ovio.org/project/aqualinkorg/aqualink-app"
+            className={classes.contributeButton}
+          >
+            <img src={ovioLogo} alt="Ovio Logo" />
+          </Button>
+        </ButtonGroup>
       </Box>
     </Drawer>
   );
@@ -104,12 +107,12 @@ const styles = () =>
       // paddingTop: "2rem",
       backgroundColor: "#095877",
     },
-    buttonBox: {
-      marginTop: "20px",
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-evenly",
+    contributeButton: {
+      width: "50%",
+      textTransform: "none",
+      "& img": {
+        maxWidth: "100%",
+      },
     },
   });
 
