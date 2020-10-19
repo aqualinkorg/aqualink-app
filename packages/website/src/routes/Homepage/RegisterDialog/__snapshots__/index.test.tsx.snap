@@ -190,7 +190,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                      
                     <a
                       class="RegisterDialog-termsLink-12"
-                      href="/"
+                      href="/terms"
                     >
                       Terms and Conditions
                     </a>
