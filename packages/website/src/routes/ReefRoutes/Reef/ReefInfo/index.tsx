@@ -19,6 +19,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
 import {
+  setEditMode,
   setSelectedReef,
   setReefData,
 } from "../../../../store/Reefs/selectedReefSlice";
@@ -47,7 +48,10 @@ const ReefNavBar = ({
     }
   }, [hasDailyData, dispatch]);
 
-  const onCloseForm = useCallback(() => setEditEnabled(false), []);
+  const onCloseForm = useCallback(() => {
+    dispatch(setEditMode(false));
+    setEditEnabled(false);
+  }, [dispatch]);
 
   const handleFormSubmit = useCallback(
     (data: ReefUpdateParams) => {
@@ -58,6 +62,7 @@ const ReefNavBar = ({
           .then(() => setAlertSeverity("success"))
           .catch(() => setAlertSeverity("error"))
           .finally(() => {
+            dispatch(setEditMode(false));
             setEditEnabled(false);
             setAlertOpen(true);
           });
@@ -134,7 +139,10 @@ const ReefNavBar = ({
                 {isManager && (
                   <Grid item>
                     <Button
-                      onClick={() => setEditEnabled(true)}
+                      onClick={() => {
+                        dispatch(setEditMode(true));
+                        setEditEnabled(true);
+                      }}
                       size="small"
                       color="primary"
                       variant="outlined"

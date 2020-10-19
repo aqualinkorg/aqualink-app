@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
+import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
@@ -7,6 +8,10 @@ import { Reef, Position } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
 import marker from "../../../../assets/marker.png";
+import {
+  reefEditModeSelector,
+  setReefData,
+} from "../../../../store/Reefs/selectedReefSlice";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -16,7 +21,10 @@ const pinIcon = L.icon({
 });
 
 const ReefMap = ({ polygon, classes }: ReefMapProps) => {
+  const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
+  const markerRef = useRef<Marker>(null);
+  const editMode = useSelector(reefEditModeSelector);
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -41,6 +49,22 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
     }
   }, [mapRef, polygon]);
 
+  const handleDragChange = useCallback(() => {
+    const { current } = markerRef;
+    if (current && current.leafletElement) {
+      const mapMarker = current.leafletElement;
+      const { lat, lng } = mapMarker.getLatLng();
+      dispatch(
+        setReefData({
+          coordinates: {
+            latitude: lat,
+            longitude: lng,
+          },
+        })
+      );
+    }
+  }, [dispatch]);
+
   return (
     <Map ref={mapRef} dragging scrollWheelZoom={false} className={classes.map}>
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
@@ -48,6 +72,9 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (
         <Marker
+          ref={markerRef}
+          draggable={editMode}
+          ondragend={handleDragChange}
           icon={pinIcon}
           position={[polygon.coordinates[1], polygon.coordinates[0]]}
         />

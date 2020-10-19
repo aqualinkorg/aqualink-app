@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -17,7 +17,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   const reefName = getReefNameAndRegion(reef).name || "";
   const location = reef.polygon.type === "Point" ? reef.polygon : null;
 
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit, setValue } = useForm({
     reValidateMode: "onSubmit",
   });
 
@@ -35,6 +35,11 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
     },
     [onSubmit]
   );
+
+  useEffect(() => {
+    setValue("latitude", location?.coordinates[1]);
+    setValue("longitude", location?.coordinates[0]);
+  }, [location, setValue]);
 
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
