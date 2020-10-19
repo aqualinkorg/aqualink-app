@@ -315,7 +315,7 @@ const SelectedReefCard = () => {
       <Card>
         {loading ? (
           <Box
-            height="18rem"
+            height="20rem"
             display="flex"
             alignItems="center"
             justifyContent="center"
