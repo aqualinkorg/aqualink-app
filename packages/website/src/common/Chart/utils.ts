@@ -88,8 +88,8 @@ export const calculateAxisLimits = (
   return {
     xAxisMax,
     xAxisMin,
-    yAxisMin,
-    yAxisMax,
+    yAxisMin: 5 * Math.floor(yAxisMin / 5),
+    yAxisMax: 5 * (1 + Math.floor(yAxisMax / 5)),
     chartLabels,
   };
 };
