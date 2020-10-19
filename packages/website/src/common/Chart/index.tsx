@@ -201,7 +201,10 @@ function Chart({
               stepSize: 5,
               max: yAxisMax,
               callback: (value: number) => {
-                return `${value}\u00B0  `;
+                if (value % 5 === 0) {
+                  return `${value}\u00B0  `;
+                }
+                return "";
               },
             },
           },
