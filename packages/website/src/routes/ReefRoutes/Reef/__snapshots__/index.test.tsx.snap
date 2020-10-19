@@ -380,7 +380,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-131"
+                      class="RegisterDialog-termsLink-133"
                       href="/terms"
                     >
                       Terms and Conditions
@@ -2122,7 +2122,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-24"
+                      class="RegisterDialog-termsLink-25"
                       href="/terms"
                     >
                       Terms and Conditions
