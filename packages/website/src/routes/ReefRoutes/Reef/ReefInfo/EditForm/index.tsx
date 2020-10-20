@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, ChangeEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -7,17 +7,28 @@ import {
   Grid,
   TextField,
   Theme,
+  Typography,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
+import {
+  reefDraftSelector,
+  setReefDraft,
+} from "../../../../../store/Reefs/selectedReefSlice";
 
 const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
+  const dispatch = useDispatch();
+  const draftReef = useSelector(reefDraftSelector);
   const reefName = getReefNameAndRegion(reef).name || "";
   const location = reef.polygon.type === "Point" ? reef.polygon : null;
+  const { latitude: draftLatitude, longitude: draftLongitude } =
+    draftReef?.coordinates || {};
 
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit, setValue } = useForm({
     reValidateMode: "onSubmit",
   });
 
@@ -36,10 +47,39 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
     [onSubmit]
   );
 
+  const onFieldChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name: field, value: newValue } = event.target;
+
+      if (
+        draftReef?.coordinates &&
+        (field === "latitude" || field === "longitude")
+      ) {
+        dispatch(
+          setReefDraft({
+            ...draftReef,
+            coordinates: {
+              ...draftReef.coordinates,
+              [field]: parseFloat(newValue),
+            },
+          })
+        );
+      }
+    },
+    [dispatch, draftReef]
+  );
+
+  useEffect(() => {
+    if (draftLatitude && draftLongitude) {
+      setValue("latitude", draftLatitude);
+      setValue("longitude", draftLongitude);
+    }
+  }, [draftLatitude, draftLongitude, setValue]);
+
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
       <Grid container alignItems="flex-end" spacing={3}>
-        <Grid container item sm={12} md={6} spacing={3}>
+        <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
             <TextField
               className={classes.textField}
@@ -78,6 +118,14 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               helperText={errors?.depth?.message || ""}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Alert className={classes.infoAlert} icon={false} severity="info">
+              <Typography variant="subtitle2">
+                You can also change your site position by dragging the pin on
+                the map.
+              </Typography>
+            </Alert>
+          </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
               className={classes.textField}
@@ -85,6 +133,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               inputProps={{ className: classes.textField }}
               fullWidth
               defaultValue={location ? location.coordinates[1] : null}
+              onChange={onFieldChange}
               label="Latitude"
               placeholder="Latitude"
               name="latitude"
@@ -106,6 +155,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               inputProps={{ className: classes.textField }}
               fullWidth
               defaultValue={location ? location.coordinates[0] : null}
+              onChange={onFieldChange}
               label="Longitude"
               placeholder="Longitude"
               name="longitude"
@@ -165,6 +215,9 @@ const styles = (theme: Theme) =>
     },
     button: {
       height: "2.5rem",
+    },
+    infoAlert: {
+      marginTop: "0.5rem",
     },
   });
 

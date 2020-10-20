@@ -5,6 +5,7 @@ import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
 const selectedReefInitialState: SelectedReefState = {
+  draft: null,
   loading: false,
   error: null,
 };
@@ -30,6 +31,13 @@ const selectedReefSlice = createSlice({
   name: "selectedReef",
   initialState: selectedReefInitialState,
   reducers: {
+    setReefDraft: (
+      state,
+      action: PayloadAction<SelectedReefState["draft"]>
+    ) => ({
+      ...state,
+      draft: action.payload,
+    }),
     setSelectedReef: (
       state,
       action: PayloadAction<SelectedReefState["details"]>
@@ -100,6 +108,10 @@ export const reefDetailsSelector = (
   state: RootState
 ): SelectedReefState["details"] => state.selectedReef.details;
 
+export const reefDraftSelector = (
+  state: RootState
+): SelectedReefState["draft"] => state.selectedReef.draft;
+
 export const reefLoadingSelector = (
   state: RootState
 ): SelectedReefState["loading"] => state.selectedReef.loading;
@@ -108,6 +120,10 @@ export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
 
-export const { setSelectedReef, setReefData } = selectedReefSlice.actions;
+export const {
+  setReefDraft,
+  setSelectedReef,
+  setReefData,
+} = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;
