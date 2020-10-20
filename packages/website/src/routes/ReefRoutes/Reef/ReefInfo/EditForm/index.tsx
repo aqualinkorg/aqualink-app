@@ -51,33 +51,19 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name: field, value: newValue } = event.target;
 
-      if (draftReef?.coordinates) {
-        switch (field) {
-          case "latitude":
-            dispatch(
-              setReefDraft({
-                ...draftReef,
-                coordinates: {
-                  ...draftReef.coordinates,
-                  latitude: parseFloat(newValue),
-                },
-              })
-            );
-            break;
-          case "longitude":
-            dispatch(
-              setReefDraft({
-                ...draftReef,
-                coordinates: {
-                  ...draftReef.coordinates,
-                  longitude: parseFloat(newValue),
-                },
-              })
-            );
-            break;
-          default:
-            break;
-        }
+      if (
+        draftReef?.coordinates &&
+        (field === "latitude" || field === "longitude")
+      ) {
+        dispatch(
+          setReefDraft({
+            ...draftReef,
+            coordinates: {
+              ...draftReef.coordinates,
+              [field]: parseFloat(newValue),
+            },
+          })
+        );
       }
     },
     [dispatch, draftReef]
