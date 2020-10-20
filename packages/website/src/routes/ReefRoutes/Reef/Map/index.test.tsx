@@ -12,7 +12,7 @@ const mockStore = configureStore([]);
 
 test("renders as expected", () => {
   const { container } = render(
-    <Provider store={mockStore({ selectedReef: { editMode: false } })}>
+    <Provider store={mockStore({ selectedReef: { draft: null } })}>
       <Map
         polygon={{
           type: "Polygon",

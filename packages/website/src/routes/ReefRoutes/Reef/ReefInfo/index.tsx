@@ -19,9 +19,9 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
 import {
-  setEditMode,
   setSelectedReef,
   setReefData,
+  setDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef, ReefUpdateParams } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
@@ -49,9 +49,31 @@ const ReefNavBar = ({
   }, [hasDailyData, dispatch]);
 
   const onCloseForm = useCallback(() => {
-    dispatch(setEditMode(false));
+    dispatch(setDraft(null));
     setEditEnabled(false);
   }, [dispatch]);
+
+  const onOpenForm = useCallback(() => {
+    if (reef.depth && reef.polygon.type === "Point") {
+      dispatch(
+        setDraft({
+          name: reefName,
+          depth: reef.depth,
+          coordinates: {
+            longitude: reef.polygon.coordinates[0],
+            latitude: reef.polygon.coordinates[1],
+          },
+        })
+      );
+    }
+    setEditEnabled(true);
+  }, [
+    dispatch,
+    reef.depth,
+    reef.polygon.coordinates,
+    reef.polygon.type,
+    reefName,
+  ]);
 
   const handleFormSubmit = useCallback(
     (data: ReefUpdateParams) => {
@@ -62,7 +84,7 @@ const ReefNavBar = ({
           .then(() => setAlertSeverity("success"))
           .catch(() => setAlertSeverity("error"))
           .finally(() => {
-            dispatch(setEditMode(false));
+            dispatch(setDraft(null));
             setEditEnabled(false);
             setAlertOpen(true);
           });
@@ -139,10 +161,7 @@ const ReefNavBar = ({
                 {isManager && (
                   <Grid item>
                     <Button
-                      onClick={() => {
-                        dispatch(setEditMode(true));
-                        setEditEnabled(true);
-                      }}
+                      onClick={onOpenForm}
                       size="small"
                       color="primary"
                       variant="outlined"

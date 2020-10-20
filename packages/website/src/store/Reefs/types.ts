@@ -128,7 +128,7 @@ export interface ReefsListState {
 }
 
 export interface SelectedReefState {
-  editMode: boolean;
+  draft: ReefUpdateParams | null;
   details?: Reef | null;
   loading: boolean;
   error?: string | null;

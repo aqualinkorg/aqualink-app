@@ -9,8 +9,8 @@ import { mapBounds } from "../../../../helpers/mapBounds";
 
 import marker from "../../../../assets/marker.png";
 import {
-  reefEditModeSelector,
-  setReefData,
+  reefDraftSelector,
+  setDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
 
 const pinIcon = L.icon({
@@ -24,7 +24,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
-  const editMode = useSelector(reefEditModeSelector);
+  const draftReef = useSelector(reefDraftSelector);
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -37,6 +37,13 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       // Initialize map's position to fit the given polygon
       if (polygon.type === "Polygon") {
         map.fitBounds(mapBounds(polygon));
+      } else if (draftReef?.coordinates) {
+        map.panTo(
+          new L.LatLng(
+            draftReef.coordinates.latitude,
+            draftReef.coordinates.longitude
+          )
+        );
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
       }
@@ -47,7 +54,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
         map.setZoom(13);
       }
     }
-  }, [mapRef, polygon]);
+  }, [mapRef, draftReef, polygon]);
 
   const handleDragChange = useCallback(() => {
     const { current } = markerRef;
@@ -55,7 +62,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       const mapMarker = current.leafletElement;
       const { lat, lng } = mapMarker.getLatLng();
       dispatch(
-        setReefData({
+        setDraft({
           coordinates: {
             latitude: lat,
             longitude: lng,
@@ -73,10 +80,13 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       ) : (
         <Marker
           ref={markerRef}
-          draggable={editMode}
+          draggable={Boolean(draftReef)}
           ondragend={handleDragChange}
           icon={pinIcon}
-          position={[polygon.coordinates[1], polygon.coordinates[0]]}
+          position={[
+            draftReef?.coordinates?.latitude || polygon.coordinates[1],
+            draftReef?.coordinates?.longitude || polygon.coordinates[0],
+          ]}
         />
       )}
     </Map>
