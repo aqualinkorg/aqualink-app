@@ -36,9 +36,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
-    height: "22rem",
+    height: "18rem",
     [theme.breakpoints.down("md")]: {
-      height: "27rem",
+      height: "22rem",
     },
   },
   mobileCardWrapperWithImage: {
@@ -140,6 +140,17 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 
   const { name, region: regionName } = getReefNameAndRegion(reef);
 
+  const ChartComponent = (
+    <Chart
+      dailyData={reef.dailyData}
+      surveys={[]}
+      temperatureThreshold={
+        reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+      }
+      maxMonthlyMean={reef.maxMonthlyMean || null}
+    />
+  );
+
   return (
     <Grid
       className={
@@ -152,7 +163,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       spacing={1}
     >
       {url && (
-        <Grid item xs={12} sm={5} lg={5}>
+        <Grid item xs={12} sm={6} lg={4}>
           <Box position="relative" height="100%">
             <CardMedia className={classes.cardImage} image={url} />
 
@@ -194,8 +205,8 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        sm={url ? 7 : 12}
-        lg={url ? 5 : 10}
+        sm={url ? 6 : 12}
+        lg={url ? 6 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
@@ -219,14 +230,10 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
             DAILY SURFACE TEMP. (°C)
           </Typography>
         </Box>
-        <Chart
-          dailyData={reef.dailyData}
-          surveys={[]}
-          temperatureThreshold={
-            reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-          }
-          maxMonthlyMean={reef.maxMonthlyMean || null}
-        />
+        <Hidden xsDown>
+          <div>{ChartComponent}</div>
+        </Hidden>
+        <Hidden smUp>{ChartComponent}</Hidden>
       </Grid>
 
       <Grid
@@ -298,7 +305,7 @@ const SelectedReefCard = () => {
   return (
     <Box className={classes.card}>
       {!loading && (
-        <Box mb={3}>
+        <Box mb={2}>
           <Typography variant="h5" color="textSecondary">
             {isFeatured ? "Featured Site" : "Selected Site"}
             {!hasMedia && (
@@ -313,7 +320,7 @@ const SelectedReefCard = () => {
       <Card>
         {loading ? (
           <Box
-            height="23rem"
+            height="20rem"
             display="flex"
             alignItems="center"
             justifyContent="center"

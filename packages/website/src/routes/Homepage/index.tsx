@@ -84,6 +84,7 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
+      overflowY: "auto",
     },
     drawer: {
       borderTopLeftRadius: "15px",
