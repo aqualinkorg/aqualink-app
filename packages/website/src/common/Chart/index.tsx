@@ -201,7 +201,7 @@ function Chart({
               stepSize: 5,
               max: yAxisMax,
               callback: (value: number) => {
-                if (value % 5 === 0) {
+                if (![1, 4].includes(value % 5)) {
                   return `${value}\u00B0  `;
                 }
                 return "";
