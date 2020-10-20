@@ -47,12 +47,6 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
       }
-      const zoom = map.getZoom();
-      if (zoom < Infinity) {
-        map.setMinZoom(zoom);
-      } else {
-        map.setZoom(13);
-      }
     }
   }, [mapRef, draftReef, polygon]);
 
@@ -73,7 +67,13 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
   }, [dispatch]);
 
   return (
-    <Map ref={mapRef} dragging scrollWheelZoom={false} className={classes.map}>
+    <Map
+      ref={mapRef}
+      zoom={12}
+      dragging
+      scrollWheelZoom={false}
+      className={classes.map}
+    >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {polygon.type === "Polygon" ? (
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
