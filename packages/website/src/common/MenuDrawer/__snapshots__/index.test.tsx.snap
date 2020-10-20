@@ -74,6 +74,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
           href="https://github.com/aqualinkorg/aqualink-app"
           size="medium"
           starticon="[object Object]"
+          target="_blank"
           variant="contained"
         >
           GitHub
@@ -88,6 +89,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
           fullwidth="false"
           href="https://ovio.org/project/aqualinkorg/aqualink-app"
           size="medium"
+          target="_blank"
           variant="contained"
         >
           <img

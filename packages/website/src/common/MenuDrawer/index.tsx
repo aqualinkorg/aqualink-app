@@ -80,6 +80,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
         </Typography>
         <ButtonGroup variant="contained" color="default">
           <Button
+            target="_blank"
             href="https://github.com/aqualinkorg/aqualink-app"
             startIcon={<GitHub />}
             className={classes.contributeButton}
@@ -88,6 +89,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           </Button>
 
           <Button
+            target="_blank"
             href="https://ovio.org/project/aqualinkorg/aqualink-app"
             className={classes.contributeButton}
           >

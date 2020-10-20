@@ -80,6 +80,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               href="https://github.com/aqualinkorg/aqualink-app"
               size="medium"
               starticon="[object Object]"
+              target="_blank"
               variant="contained"
             >
               GitHub
@@ -94,6 +95,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               fullwidth="false"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               size="medium"
+              target="_blank"
               variant="contained"
             >
               <img
@@ -1817,6 +1819,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               href="https://github.com/aqualinkorg/aqualink-app"
               size="medium"
               starticon="[object Object]"
+              target="_blank"
               variant="contained"
             >
               GitHub
@@ -1831,6 +1834,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               fullwidth="false"
               href="https://ovio.org/project/aqualinkorg/aqualink-app"
               size="medium"
+              target="_blank"
               variant="contained"
             >
               <img
