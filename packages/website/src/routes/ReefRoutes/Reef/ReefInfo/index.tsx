@@ -21,7 +21,7 @@ import EditForm from "./EditForm";
 import {
   setSelectedReef,
   setReefData,
-  setDraft,
+  setReefDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef, ReefUpdateParams } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
@@ -49,14 +49,14 @@ const ReefNavBar = ({
   }, [hasDailyData, dispatch]);
 
   const onCloseForm = useCallback(() => {
-    dispatch(setDraft(null));
+    dispatch(setReefDraft(null));
     setEditEnabled(false);
   }, [dispatch]);
 
   const onOpenForm = useCallback(() => {
     if (reef.depth && reef.polygon.type === "Point") {
       dispatch(
-        setDraft({
+        setReefDraft({
           name: reefName,
           depth: reef.depth,
           coordinates: {
@@ -84,7 +84,7 @@ const ReefNavBar = ({
           .then(() => setAlertSeverity("success"))
           .catch(() => setAlertSeverity("error"))
           .finally(() => {
-            dispatch(setDraft(null));
+            dispatch(setReefDraft(null));
             setEditEnabled(false);
             setAlertOpen(true);
           });

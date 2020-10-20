@@ -10,7 +10,7 @@ import { mapBounds } from "../../../../helpers/mapBounds";
 import marker from "../../../../assets/marker.png";
 import {
   reefDraftSelector,
-  setDraft,
+  setReefDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
 
 const pinIcon = L.icon({
@@ -56,7 +56,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       const mapMarker = current.leafletElement;
       const { lat, lng } = mapMarker.getLatLng();
       dispatch(
-        setDraft({
+        setReefDraft({
           coordinates: {
             latitude: lat,
             longitude: lng,

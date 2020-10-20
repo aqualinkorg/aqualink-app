@@ -31,7 +31,10 @@ const selectedReefSlice = createSlice({
   name: "selectedReef",
   initialState: selectedReefInitialState,
   reducers: {
-    setDraft: (state, action: PayloadAction<SelectedReefState["draft"]>) => ({
+    setReefDraft: (
+      state,
+      action: PayloadAction<SelectedReefState["draft"]>
+    ) => ({
       ...state,
       draft: action.payload,
     }),
@@ -118,7 +121,7 @@ export const reefErrorSelector = (
 ): SelectedReefState["error"] => state.selectedReef.error;
 
 export const {
-  setDraft,
+  setReefDraft,
   setSelectedReef,
   setReefData,
 } = selectedReefSlice.actions;

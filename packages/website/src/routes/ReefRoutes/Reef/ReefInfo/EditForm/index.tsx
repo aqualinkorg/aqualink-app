@@ -17,7 +17,7 @@ import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
 import {
   reefDraftSelector,
-  setDraft,
+  setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
 
 const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
@@ -55,7 +55,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
         switch (field) {
           case "latitude":
             dispatch(
-              setDraft({
+              setReefDraft({
                 ...draftReef,
                 coordinates: {
                   ...draftReef.coordinates,
@@ -66,7 +66,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
             break;
           case "longitude":
             dispatch(
-              setDraft({
+              setReefDraft({
                 ...draftReef,
                 coordinates: {
                   ...draftReef.coordinates,
