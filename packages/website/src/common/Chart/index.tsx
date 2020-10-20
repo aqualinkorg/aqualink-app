@@ -50,6 +50,8 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
+  const stepSize = 5;
+
   const {
     xAxisMax,
     xAxisMin,
@@ -198,10 +200,10 @@ function Chart({
             display: true,
             ticks: {
               min: yAxisMin,
-              stepSize: 5,
+              stepSize,
               max: yAxisMax,
               callback: (value: number) => {
-                if (![1, 4].includes(value % 5)) {
+                if (![1, stepSize - 1].includes(value % stepSize)) {
                   return `${value}\u00B0  `;
                 }
                 return "";
