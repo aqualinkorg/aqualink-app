@@ -63,12 +63,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink's source code is licenced under MIT.
-          </mock-typography>
-          <mock-typography
-            variant="subtitle1"
-          >
-            Contribute!
+            Aqualink's source code is licenced under MIT. Contribute!
           </mock-typography>
           <div
             class="MuiButtonGroup-root MuiButtonGroup-contained"
@@ -1805,12 +1800,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink's source code is licenced under MIT.
-          </mock-typography>
-          <mock-typography
-            variant="subtitle1"
-          >
-            Contribute!
+            Aqualink's source code is licenced under MIT. Contribute!
           </mock-typography>
           <div
             class="MuiButtonGroup-root MuiButtonGroup-contained"
