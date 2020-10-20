@@ -47,10 +47,6 @@ export class UpdateReefDto {
   readonly depth?: number;
 
   @IsOptional()
-  @IsInt()
-  readonly status?: number;
-
-  @IsOptional()
   @IsUrl()
   readonly videoStream?: string;
 

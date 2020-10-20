@@ -45,7 +45,6 @@ export class ReefsService {
       longitude,
       temperatureThreshold,
       depth,
-      status,
       videoStream,
       admins,
       stream,
@@ -65,7 +64,6 @@ export class ReefsService {
         timezones,
         temperatureThreshold,
         depth,
-        status,
         videoStream,
         stream,
       })
