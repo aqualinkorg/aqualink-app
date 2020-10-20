@@ -7,7 +7,9 @@ import {
   Grid,
   TextField,
   Theme,
+  Typography,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -91,7 +93,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
       <Grid container alignItems="flex-end" spacing={3}>
-        <Grid container item sm={12} md={6} spacing={3}>
+        <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
             <TextField
               className={classes.textField}
@@ -129,6 +131,14 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               error={!!errors.depth}
               helperText={errors?.depth?.message || ""}
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Alert className={classes.infoAlert} icon={false} severity="info">
+              <Typography variant="subtitle2">
+                You can also change your site position by dragging the pin on
+                the map.
+              </Typography>
+            </Alert>
           </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
@@ -219,6 +229,9 @@ const styles = (theme: Theme) =>
     },
     button: {
       height: "2.5rem",
+    },
+    infoAlert: {
+      marginTop: "0.5rem",
     },
   });
 
