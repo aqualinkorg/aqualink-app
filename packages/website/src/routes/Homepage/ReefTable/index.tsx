@@ -22,9 +22,13 @@ import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
+import { useWindowSize } from "../../../helpers/useWindowSize";
+
+const SMALL_HEIGHT = 720;
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const windowSize = useWindowSize();
 
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
@@ -60,7 +64,11 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       </Hidden>
       <SelectedReefCard />
       <Box
-        className={classes.tableHolder}
+        className={
+          windowSize && windowSize.height > SMALL_HEIGHT
+            ? `${classes.tableHolder} ${classes.scrollable}`
+            : `${classes.tableHolder}`
+        }
         display="flex"
         flexDirection="column"
         flex={1}
@@ -96,12 +104,13 @@ const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {
       paddingLeft: 10,
-      height: "70%",
-      overflowY: "auto",
       [theme.breakpoints.down("xs")]: {
         paddingLeft: 0,
         height: "auto",
       },
+    },
+    scrollable: {
+      overflowY: "auto",
     },
     table: {
       [theme.breakpoints.down("xs")]: {
