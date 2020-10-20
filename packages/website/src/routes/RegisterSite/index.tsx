@@ -54,7 +54,6 @@ const Apply = ({ classes }: ApplyProps) => {
   const [databaseSubmissionOk, setDatabaseSubmissionOk] = useState<boolean>(
     false
   );
-  const [cartoSubmissionOk, setCartoSubmissionOk] = useState<boolean>(false);
   const [newReefId, setNewReefId] = useState<number>();
 
   useEffect(() => {
@@ -120,18 +119,7 @@ const Apply = ({ classes }: ApplyProps) => {
     setFormErrors(fromJS(errors));
 
     if (isEmpty(errors)) {
-      const time = new Date().getTime();
-      const date = new Date(time);
-
-      const {
-        name,
-        org,
-        email,
-        siteName,
-        lat,
-        lng,
-        depth,
-      } = formModel.toJS() as {
+      const { siteName, lat, lng, depth } = formModel.toJS() as {
         [key: string]: string;
       };
 
@@ -153,30 +141,6 @@ const Apply = ({ classes }: ApplyProps) => {
           .catch((error) => {
             setDatabaseSubmissionOk(false);
             setSnackbarOpenFromDatabase(true);
-            console.error(error);
-          });
-      }
-
-      // Add to Carto
-      const { REACT_APP_CARTO_API_KEY } = process.env;
-      const position = JSON.stringify({
-        type: "Point",
-        coordinates: [lng, lat],
-      });
-
-      const sql = `INSERT INTO proposed_sites (the_geom, name, org, email, lat, lng, depth, date)
-        VALUES (ST_SetSRID(ST_GeomFromGeoJSON('${position}'),4326),'${name}','${org}','${email}','${lat}','${lng}','${depth}','${date}')`;
-      if (REACT_APP_CARTO_API_KEY) {
-        fetch(
-          `https://drewjgray.carto.com/api/v2/sql?&q=${sql}&api_key=${REACT_APP_CARTO_API_KEY}`
-        )
-          .then((response) => {
-            setCartoSubmissionOk(response.ok);
-            setSnackbarOpenFromCarto(true);
-          })
-          .catch((error) => {
-            setCartoSubmissionOk(false);
-            setSnackbarOpenFromCarto(true);
             console.error(error);
           });
       }
@@ -324,13 +288,11 @@ const Apply = ({ classes }: ApplyProps) => {
             setSnackbarOpenFromCarto(false);
             setSnackbarOpenFromDatabase(false);
           }}
-          severity={
-            databaseSubmissionOk && cartoSubmissionOk ? "success" : "error"
-          }
+          severity={databaseSubmissionOk ? "success" : "error"}
           elevation={6}
           variant="filled"
         >
-          {databaseSubmissionOk && cartoSubmissionOk
+          {databaseSubmissionOk
             ? "Application successfully submitted."
             : "Something went wrong, please try again"}
         </Alert>
