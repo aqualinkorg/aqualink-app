@@ -6,7 +6,7 @@ exports[`renders as expected 1`] = `
     classname="makeStyles-card-4"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
@@ -74,7 +74,18 @@ exports[`renders as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
+            Mock-Line
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
@@ -160,7 +171,7 @@ exports[`renders loading as expected 1`] = `
     classname="makeStyles-card-13"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
@@ -228,7 +239,18 @@ exports[`renders loading as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
+            Mock-Line
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
