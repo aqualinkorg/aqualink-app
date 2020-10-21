@@ -185,6 +185,8 @@ function Chart({
               min: xAxisMin,
               max: xAxisMax,
               padding: 10,
+              callback: (value: number, index: number, values: string[]) =>
+                index === values.length - 1 ? undefined : value,
             },
             gridLines: {
               display: false,
