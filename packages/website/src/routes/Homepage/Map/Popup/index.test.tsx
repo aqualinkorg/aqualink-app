@@ -3,7 +3,6 @@ import { render } from "@testing-library/react";
 
 import { BrowserRouter as Router } from "react-router-dom";
 import Popup from ".";
-import { Reef } from "../../../../store/Reefs/types";
 import { mockReef } from "../../../../mocks/mockReef";
 
 jest.mock("react-leaflet", () => ({
