@@ -33,8 +33,19 @@ export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
     })),
     "poiName"
   );
-  return Object.entries(groupedMedia).map(([name, pointSurveyMedia]) => ({
-    name,
-    surveyMedia: pointSurveyMedia,
-  }));
+  const groupedMediaArray = Object.entries(groupedMedia).map(
+    ([name, pointSurveyMedia]) => ({
+      name,
+      surveyMedia: pointSurveyMedia,
+    })
+  );
+  const poiNames = Object.keys(groupedMedia);
+  // Force "Other" at the end
+  if (poiNames.includes("Other")) {
+    return [
+      ...groupedMediaArray.filter((item) => item.name !== "Other"),
+      { name: "Other", surveyMedia: groupedMedia.Other },
+    ];
+  }
+  return groupedMediaArray;
 };
