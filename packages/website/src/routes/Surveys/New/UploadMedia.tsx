@@ -339,20 +339,14 @@ const UploadMedia = ({
               title={missingObservations ? "Missing Observation Info" : ""}
             >
               <div>
-                {loading ? (
-                  <Button disabled color="primary" variant="contained">
-                    Uploading
-                  </Button>
-                ) : (
-                  <Button
-                    disabled={missingObservations}
-                    onClick={onMediaSubmit}
-                    color="primary"
-                    variant="contained"
-                  >
-                    Save
-                  </Button>
-                )}
+                <Button
+                  disabled={loading || missingObservations}
+                  onClick={onMediaSubmit}
+                  color="primary"
+                  variant="contained"
+                >
+                  {loading ? "Uploading..." : "Save"}
+                </Button>
               </div>
             </Tooltip>
           </Grid>
