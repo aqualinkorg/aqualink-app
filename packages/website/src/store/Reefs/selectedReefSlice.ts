@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
-import type { ReefUpdateParams, SelectedReefState } from "./types";
+import type {
+  ReefUpdateParams,
+  SelectedReefState,
+  ReefRequestParams,
+} from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 
@@ -12,20 +16,36 @@ const selectedReefInitialState: SelectedReefState = {
 
 export const reefRequest = createAsyncThunk<
   SelectedReefState["details"],
-  string,
+  ReefRequestParams,
   CreateAsyncThunkTypes
->("selectedReef/request", async (id: string, { rejectWithValue }) => {
-  try {
-    const { data } = await reefServices.getReef(id);
-    const { data: dailyData } = await reefServices.getReefDailyData(id);
-    const { data: liveData } = await reefServices.getReefLiveData(id);
+>(
+  "selectedReef/request",
+  async (
+    { id, startDate, endDate }: ReefRequestParams,
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await reefServices.getReef(id);
+      const { data: dailyData } = await reefServices.getReefDailyData(id);
+      const { data: liveData } = await reefServices.getReefLiveData(id);
 
-    return { ...data, dailyData, liveData };
-  } catch (err) {
-    const error: AxiosError<SelectedReefState["error"]> = err;
-    return rejectWithValue(error.message);
+      if (startDate && endDate) {
+        const { data: spotterData } = await reefServices.getReefSpotterData(
+          id,
+          startDate,
+          endDate
+        );
+
+        return { ...data, dailyData, liveData, spotterData };
+      }
+
+      return { ...data, dailyData, liveData };
+    } catch (err) {
+      const error: AxiosError<SelectedReefState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const selectedReefSlice = createSlice({
   name: "selectedReef",

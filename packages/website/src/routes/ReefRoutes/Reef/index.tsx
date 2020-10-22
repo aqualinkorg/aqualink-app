@@ -111,7 +111,13 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   useEffect(() => {
-    dispatch(reefRequest(reefId));
+    dispatch(
+      reefRequest({
+        id: reefId,
+        startDate: "2020-10-21T14:48:00.000Z",
+        endDate: "2020-10-22T14:48:00.000Z",
+      })
+    );
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 

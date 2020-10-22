@@ -32,7 +32,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 
   useEffect(() => {
     if (!reefDetails) {
-      dispatch(reefRequest(reefId));
+      dispatch(reefRequest({ id: reefId }));
     }
   }, [dispatch, reefId, reefDetails]);
 

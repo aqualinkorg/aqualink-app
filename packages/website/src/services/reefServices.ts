@@ -29,6 +29,12 @@ const getReefLiveData = (id: string) =>
     method: "GET",
   });
 
+const getReefSpotterData = (id: string, startDate: string, endDate: string) =>
+  requests.send<Reef["spotterData"]>({
+    url: `reefs/${id}/spotter_data?endDate=${endDate}&startDate=${startDate}`,
+    method: "GET",
+  });
+
 const getReefs = () =>
   requests.send<Reef[]>({
     url: "reefs",
@@ -110,6 +116,7 @@ export default {
   getReefs,
   getReefDailyData,
   getReefLiveData,
+  getReefSpotterData,
   getReefPois,
   deleteReefPoi,
   registerReef,
