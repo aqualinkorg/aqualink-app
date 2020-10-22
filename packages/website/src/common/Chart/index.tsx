@@ -28,6 +28,30 @@ export interface ChartProps {
 
 const SMALL_WINDOW = 400;
 
+const makeAnnotation = (
+  name: string,
+  value: number | null,
+  borderColor: string,
+  backgroundColor = "rgb(169,169,169, 0.7)"
+) => ({
+  type: "line",
+  mode: "horizontal",
+  scaleID: "y-axis-0",
+  value,
+  borderColor,
+  borderWidth: 2,
+  borderDash: [5, 5],
+  label: {
+    enabled: true,
+    backgroundColor,
+    yPadding: 3,
+    xPadding: 3,
+    position: "left",
+    xAdjust: 10,
+    content: name,
+  },
+});
+
 function Chart({
   dailyData,
   surveys,
@@ -80,8 +104,8 @@ function Chart({
   };
 
   /*
-      Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
-    */
+                Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
+              */
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
@@ -130,42 +154,12 @@ function Chart({
 
       annotation: {
         annotations: [
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: maxMonthlyMean,
-            borderColor: "rgb(75, 192, 192)",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Historical Max",
-            },
-          },
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: temperatureThreshold,
-            borderColor: "#ff8d00",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Bleaching Threshold",
-            },
-          },
+          makeAnnotation("Historical Max", maxMonthlyMean, "rgb(75, 192, 192)"),
+          makeAnnotation(
+            "Bleaching Threshold",
+            temperatureThreshold,
+            "#ff8d00"
+          ),
         ],
       },
       scales: {
@@ -230,7 +224,7 @@ function Chart({
         chartLabels,
         tempWithSurvey,
         surfaceTemperatureData,
-        Boolean(temperatureThreshold)
+        !!temperatureThreshold
       )}
     />
   );
