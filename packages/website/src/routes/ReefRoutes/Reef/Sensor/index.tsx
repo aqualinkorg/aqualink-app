@@ -51,7 +51,9 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
       return "Smart Buoy approved";
 
     case status === "rejected":
-      return "Smart Buoy not approved";
+      return (
+        <span className={classes.rejectedAlert}>Smart Buoy not approved</span>
+      );
     default:
       return "Not Installed Yet";
   }
@@ -117,7 +119,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               </Grid>
             ))}
             {!hasSpotter && (
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <Chip
                   className={classes.noSensorAlert}
                   label={applicationTag(user, reef.id, classes)}
@@ -161,6 +163,10 @@ const styles = () =>
       backgroundColor: "#edb86f",
       borderRadius: 4,
       color: "white",
+      width: "100%",
+    },
+    rejectedAlert: {
+      fontSize: 11,
     },
     newSpotterLink: {
       color: "inherit",
