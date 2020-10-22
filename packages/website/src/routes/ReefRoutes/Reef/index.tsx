@@ -76,8 +76,8 @@ const getAlertMessage = (
     case status === "rejected":
       return (
         <div>
-          Your application for an Aqualink Smart Buoy not approved at this time.
-          For more information, you can contact<span> </span>
+          Your application for an Aqualink Smart Buoy was not approved at this
+          time. For more information, you can contact<span> </span>
           <a href="mailto:info@aqualink.org">info@aqualink.org</a>
         </div>
       );
