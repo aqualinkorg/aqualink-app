@@ -2526,7 +2526,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          Welcome to your virtual reef, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.
+          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </mock-box>

@@ -67,13 +67,15 @@ interface Region {
   name: string | null;
 }
 
+type Status = "in_review" | "rejected" | "approved";
+
 export interface Reef {
   id: number;
   name: string | null;
   polygon: Polygon | Point;
   maxMonthlyMean: number | null;
   depth: number | null;
-  status: number;
+  status: Status;
   videoStream: string | null;
   region: Region | null;
   admins: User[];

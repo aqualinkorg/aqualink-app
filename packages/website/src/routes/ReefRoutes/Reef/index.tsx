@@ -40,30 +40,48 @@ const getAlertMessage = (
   hasDailyData: boolean
 ) => {
   const userReef = findAdministeredReef(user, parseInt(reefId, 10));
-  const applied = Boolean(userReef?.applied);
+  const { applied, status } = userReef || {};
+  const isManager = isAdmin(user, parseInt(reefId, 10));
 
   const defaultMessage =
     "Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
+    case !isManager:
+      return defaultMessage;
+
     case !hasDailyData:
       return "Welcome to your virtual reef, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.";
 
-    case applied:
-      return (
-        <div>
-          Your application for an Aqualink Smart Buoy is being reviewed. You can
-          check your application<span> </span> <Link to="/apply">here</Link>.
-        </div>
-      );
-
-    case isAdmin(user, parseInt(reefId, 10)):
+    case !applied:
       return (
         <div>
           {defaultMessage} Apply for an Aqualink Smart Buoy
           <span> </span> <Link to="/apply">here</Link>.
         </div>
       );
+
+    case status === "in_review":
+      return (
+        <div>
+          {defaultMessage} Your application for an Aqualink Smart Buoy is being
+          reviewed. You can check your application<span> </span>
+          <Link to="/apply">here</Link>.
+        </div>
+      );
+
+    case status === "approved":
+      return "Application for an Aqualink Smart Buoy has been approved.";
+
+    case status === "rejected":
+      return (
+        <div>
+          Application for an Aqualink Smart Buoy not approved at this time. For
+          more information, you can contact<span> </span>
+          <a href="mailto: info@aqualink.org">info@aqualink.org</a>
+        </div>
+      );
+
     default:
       return defaultMessage;
   }

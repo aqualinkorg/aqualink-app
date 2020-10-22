@@ -11,7 +11,7 @@ import {
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
@@ -19,13 +19,14 @@ import Footer from "../../common/Footer";
 import Obligations from "./Obligations";
 import Agreements from "./Agreements";
 import Form from "./Form";
-import { userInfoSelector } from "../../store/User/userSlice";
+import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import { reefDetailsSelector } from "../../store/Reefs/selectedReefSlice";
 import { AgreementsChecked } from "./types";
 import { ReefApplication, ReefApplyParams } from "../../store/Reefs/types";
 import reefServices from "../../services/reefServices";
 
 const Apply = ({ classes }: ApplyProps) => {
+  const dispatch = useDispatch();
   const reef = useSelector(reefDetailsSelector);
   const user = useSelector(userInfoSelector);
   const [agreementsChecked, setAgreementsChecked] = useState<AgreementsChecked>(
@@ -131,7 +132,15 @@ const Apply = ({ classes }: ApplyProps) => {
             <Grid item>
               {reef && (
                 <Link to={`reefs/${reef.id}`} className={classes.link}>
-                  <Button color="primary" variant="contained">
+                  <Button
+                    onClick={() => {
+                      if (user?.token) {
+                        dispatch(getSelf(user.token));
+                      }
+                    }}
+                    color="primary"
+                    variant="contained"
+                  >
                     Back to reef
                   </Button>
                 </Link>

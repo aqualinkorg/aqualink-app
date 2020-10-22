@@ -26,20 +26,32 @@ import { userInfoSelector } from "../../../../store/User/userSlice";
 
 const applicationTag = (user: User | null, reefId: number, classes: any) => {
   const userReef = findAdministeredReef(user, reefId);
-  const applied = Boolean(userReef?.applied);
+  const { applied, status } = userReef || {};
+  const isManager = isAdmin(user, reefId);
+
   switch (true) {
-    case applied:
-      return (
-        <Link className={classes.newSpotterLink} to="/apply">
-          My Application
-        </Link>
-      );
-    case isAdmin(user, reefId):
+    case !isManager:
+      return "Not Installed Yet";
+
+    case !applied:
       return (
         <Link className={classes.newSpotterLink} to="/apply">
           Add a Smart Buoy
         </Link>
       );
+
+    case status === "in_review":
+      return (
+        <Link className={classes.newSpotterLink} to="/apply">
+          My Application
+        </Link>
+      );
+
+    case status === "approved":
+      return "Smart Buoy approved";
+
+    case status === "rejected":
+      return "Smart Buoy not approved";
     default:
       return "Not Installed Yet";
   }

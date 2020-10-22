@@ -139,7 +139,7 @@ const Apply = ({ classes }: ApplyProps) => {
             setDatabaseSubmissionOk(true);
             setSnackbarOpenFromDatabase(true);
             if (user?.token) {
-              dispatch(getSelf(user?.token));
+              dispatch(getSelf(user.token));
             }
           })
           .catch((error) => {
