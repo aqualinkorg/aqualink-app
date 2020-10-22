@@ -1,4 +1,4 @@
-import { groupBy } from "lodash";
+import { groupBy, sortBy } from "lodash";
 import type { SurveyMedia } from "../store/Survey/types";
 
 export const getFeaturedMedia = (surveyMedia: SurveyMedia[]) => {
@@ -25,8 +25,9 @@ export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) => {
 };
 
 export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
+  const sortedByPoiName = sortBy(surveyMedia, (media) => media.poiId?.name);
   const groupedMedia = groupBy(
-    surveyMedia.map((media) => ({
+    sortedByPoiName.map((media) => ({
       ...media,
       poiName: media.poiId?.name || "Other",
     })),

@@ -340,12 +340,12 @@ const UploadMedia = ({
             >
               <div>
                 <Button
-                  disabled={missingObservations}
+                  disabled={loading || missingObservations}
                   onClick={onMediaSubmit}
                   color="primary"
                   variant="contained"
                 >
-                  Save
+                  {loading ? "Uploading..." : "Save"}
                 </Button>
               </div>
             </Tooltip>
