@@ -23,6 +23,7 @@ import {
   handleDuplicateReef,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
+import { getSpotterData } from '../utils/sofar';
 
 @Injectable()
 export class ReefsService {
@@ -210,6 +211,29 @@ export class ReefsService {
     return {
       ...liveData,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+    };
+  }
+
+  async getSpotterData(id: number, startDate: Date, endDate: Date) {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
+    if (!reef.spotterId) {
+      throw new NotFoundException(`Reef with ${id} has no spotter.`);
+    }
+
+    const { surfaceTemperature, bottomTemperature } = await getSpotterData(
+      reef.spotterId,
+      endDate,
+      startDate,
+    );
+
+    return {
+      surfaceTemperature,
+      bottomTemperature,
     };
   }
 
