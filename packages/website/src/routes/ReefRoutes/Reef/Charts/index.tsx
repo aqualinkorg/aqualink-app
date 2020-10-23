@@ -41,6 +41,8 @@ interface ChartsIncomingProps {
   title: string;
   dailyData: DailyData[];
   spotterData?: SpotterData;
+  startDate?: string;
+  endDate?: string;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
@@ -49,6 +51,8 @@ interface ChartsIncomingProps {
 
 Charts.defaultProps = {
   spotterData: { surfaceTemperature: [], bottomTemperature: [] },
+  startDate: "",
+  endDate: "",
 };
 
 type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;

@@ -27,6 +27,8 @@ import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 const ReefDetails = ({
   classes,
   reef,
+  startDate,
+  endDate,
   spotterData,
   hasDailyData,
   surveys,
@@ -151,6 +153,8 @@ const ReefDetails = ({
               title="SPOTTER WATER TEMPERATURE (°C)"
               dailyData={reef.dailyData}
               spotterData={spotterData}
+              startDate={startDate}
+              endDate={endDate}
               surveys={[]}
               depth={reef.depth}
               maxMonthlyMean={null}
@@ -185,6 +189,8 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  startDate: string;
+  endDate: string;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
   spotterData?: SpotterData;

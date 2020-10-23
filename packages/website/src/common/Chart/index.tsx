@@ -19,6 +19,8 @@ import { SurveyListItem } from "../../store/Survey/types";
 export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: SpotterData;
+  startDate?: string;
+  endDate?: string;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
@@ -33,6 +35,8 @@ function Chart({
   dailyData,
   spotterData,
   surveys,
+  startDate,
+  endDate,
   temperatureThreshold,
   maxMonthlyMean,
   chartSettings = {},
@@ -191,8 +195,8 @@ function Chart({
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: xAxisMin,
-              max: xAxisMax,
+              min: startDate || xAxisMin,
+              max: endDate || xAxisMax,
               padding: 10,
             },
             gridLines: {
