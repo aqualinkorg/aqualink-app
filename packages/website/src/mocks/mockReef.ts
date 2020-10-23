@@ -29,10 +29,6 @@ export const mockReef: Reef = {
       timestamp: "2020-07-01T14:25:18.008Z",
     },
   },
-  spotterData: {
-    bottomTemperature: [{ value: 39, timestamp: "2020-07-01T14:25:18.008Z" }],
-    surfaceTemperature: [{ value: 24, timestamp: "2020-07-01T14:25:18.008Z" }],
-  },
   dailyData: [
     {
       id: 171,

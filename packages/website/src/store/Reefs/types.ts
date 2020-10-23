@@ -82,19 +82,15 @@ export interface Reef {
   stream: string | null;
   dailyData: DailyData[];
   liveData: LiveData;
-  spotterData: {
-    surfaceTemperature: SofarValue[];
-    bottomTemperature: SofarValue[];
-  };
   latestDailyData: DailyData;
   featuredImage?: string;
   applied?: boolean;
 }
 
-export interface ReefRequestParams {
+export interface SpotterDataRequestParams {
   id: string;
-  startDate?: string;
-  endDate?: string;
+  startDate: string;
+  endDate: string;
 }
 
 export interface ReefRegisterResponseData {
@@ -142,6 +138,10 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  spotterData?: {
+    surfaceTemperature: SofarValue[];
+    bottomTemperature: SofarValue[];
+  };
   loading: boolean;
   error?: string | null;
 }

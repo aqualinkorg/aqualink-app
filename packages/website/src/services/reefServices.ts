@@ -9,6 +9,7 @@ import type {
   ReefApplyParams,
   ReefApplication,
   ReefUpdateParams,
+  SelectedReefState,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -30,7 +31,7 @@ const getReefLiveData = (id: string) =>
   });
 
 const getReefSpotterData = (id: string, startDate: string, endDate: string) =>
-  requests.send<Reef["spotterData"]>({
+  requests.send<SelectedReefState["spotterData"]>({
     url: `reefs/${id}/spotter_data?endDate=${endDate}&startDate=${startDate}`,
     method: "GET",
   });

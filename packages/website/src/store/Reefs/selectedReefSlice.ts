@@ -3,7 +3,7 @@ import type { AxiosError } from "axios";
 import type {
   ReefUpdateParams,
   SelectedReefState,
-  ReefRequestParams,
+  SpotterDataRequestParams,
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
@@ -16,30 +16,38 @@ const selectedReefInitialState: SelectedReefState = {
 
 export const reefRequest = createAsyncThunk<
   SelectedReefState["details"],
-  ReefRequestParams,
+  string,
+  CreateAsyncThunkTypes
+>("selectedReef/request", async (id: string, { rejectWithValue }) => {
+  try {
+    const { data } = await reefServices.getReef(id);
+    const { data: dailyData } = await reefServices.getReefDailyData(id);
+    const { data: liveData } = await reefServices.getReefLiveData(id);
+
+    return { ...data, dailyData, liveData };
+  } catch (err) {
+    const error: AxiosError<SelectedReefState["error"]> = err;
+    return rejectWithValue(error.message);
+  }
+});
+
+export const reefSpotterDataRequest = createAsyncThunk<
+  SelectedReefState["spotterData"],
+  SpotterDataRequestParams,
   CreateAsyncThunkTypes
 >(
-  "selectedReef/request",
+  "selectedReef/spotterDataRequest",
   async (
-    { id, startDate, endDate }: ReefRequestParams,
+    { id, startDate, endDate }: SpotterDataRequestParams,
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await reefServices.getReef(id);
-      const { data: dailyData } = await reefServices.getReefDailyData(id);
-      const { data: liveData } = await reefServices.getReefLiveData(id);
-
-      if (startDate && endDate) {
-        const { data: spotterData } = await reefServices.getReefSpotterData(
-          id,
-          startDate,
-          endDate
-        );
-
-        return { ...data, dailyData, liveData, spotterData };
-      }
-
-      return { ...data, dailyData, liveData };
+      const { data: spotterData } = await reefServices.getReefSpotterData(
+        id,
+        startDate,
+        endDate
+      );
+      return spotterData;
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
@@ -121,12 +129,46 @@ const selectedReefSlice = createSlice({
         error: null,
       };
     });
+
+    builder.addCase(
+      reefSpotterDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedReefState["spotterData"]>) => {
+        return {
+          ...state,
+          spotterData: action.payload,
+          loading: false,
+        };
+      }
+    );
+
+    builder.addCase(
+      reefSpotterDataRequest.rejected,
+      (state, action: PayloadAction<SelectedReefState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loading: false,
+        };
+      }
+    );
+
+    builder.addCase(reefSpotterDataRequest.pending, (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    });
   },
 });
 
 export const reefDetailsSelector = (
   state: RootState
 ): SelectedReefState["details"] => state.selectedReef.details;
+
+export const reefSpotterDataSelector = (
+  state: RootState
+): SelectedReefState["spotterData"] => state.selectedReef.spotterData;
 
 export const reefDraftSelector = (
   state: RootState

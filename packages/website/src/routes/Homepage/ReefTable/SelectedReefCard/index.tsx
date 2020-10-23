@@ -285,10 +285,10 @@ const SelectedReefCard = () => {
 
   useEffect(() => {
     if (!reefOnMap) {
-      dispatch(reefRequest({ id: featuredReefId }));
+      dispatch(reefRequest(featuredReefId));
       dispatch(surveysRequest(featuredReefId));
     } else {
-      dispatch(reefRequest({ id: `${reefOnMap.id}` }));
+      dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
   }, [dispatch, reefOnMap]);
