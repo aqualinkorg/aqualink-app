@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 import { Line } from "react-chartjs-2";
-import Chart, { ChartProps } from "./index";
+import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import { useProcessedChartData } from "./utils";
 
@@ -45,7 +45,7 @@ function ChartWithTooltip({
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
-    if (!chart) {
+    if (!chart || !chart.chartInstance.canvas) {
       return;
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();

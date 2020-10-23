@@ -1,12 +1,14 @@
+import { ChartComponentProps } from "react-chartjs-2";
+
 export const createChartData = (
   labels: string[],
   tempWithSurvey: (number | null)[],
-  dataArray: number[],
+  surfaceTemps: number[],
   fill: boolean
   // TODO - use pointRadius to display survey dates
   // pointRadius: number,
 ) => {
-  const data = {
+  const data: ChartComponentProps["data"] = {
     labels,
     datasets: [
       {
@@ -21,7 +23,7 @@ export const createChartData = (
       },
       {
         label: "SURFACE TEMP",
-        data: dataArray,
+        data: surfaceTemps,
         backgroundColor: "rgb(107,193,225,0.2)",
         borderColor: "#6bc1e1",
         borderWidth: 2,
@@ -34,24 +36,17 @@ export const createChartData = (
   };
 
   if (fill) {
-    return {
-      ...data,
-      datasets: [
-        data.datasets[0],
-        {
-          label: "BLEACHING THRESHOLD",
-          data: dataArray,
-          fill,
-          borderColor: "#6bc1e1",
-          borderWidth: 2,
-          pointBackgroundColor: "#ffffff",
-          pointBorderWidth: 1.5,
-          pointRadius: 0,
-          cubicInterpolationMode: "monotone",
-        },
-        data.datasets[1],
-      ],
-    };
+    data.datasets!.splice(1, 0, {
+      label: "BLEACHING THRESHOLD",
+      data: surfaceTemps,
+      fill,
+      borderColor: "#6bc1e1",
+      borderWidth: 2,
+      pointBackgroundColor: "#ffffff",
+      pointBorderWidth: 1.5,
+      pointRadius: 0,
+      cubicInterpolationMode: "monotone",
+    });
   }
   return data;
 };

@@ -74,7 +74,7 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const stepSize = 5;
+  const yStepSize = 5;
 
   const {
     xAxisMax,
@@ -89,7 +89,8 @@ function Chart({
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
     if (current) {
-      const xScale = current.chartInstance.scales["x-axis-0"];
+      // not sure why 'scales' doesn't have a type. Possibly from a plugin?
+      const xScale = (current.chartInstance as any).scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
@@ -103,9 +104,7 @@ function Chart({
     }
   };
 
-  /*
-                Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
-              */
+  // Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
@@ -194,11 +193,11 @@ function Chart({
             display: true,
             ticks: {
               min: yAxisMin,
-              stepSize,
+              stepSize: yStepSize,
               max: yAxisMax,
               callback: (value: number) => {
-                if (![1, stepSize - 1].includes(value % stepSize)) {
-                  return `${value}\u00B0  `;
+                if (![1, yStepSize - 1].includes(value % yStepSize)) {
+                  return `${value}°  `;
                 }
                 return "";
               },
