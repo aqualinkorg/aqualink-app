@@ -18,6 +18,7 @@ interface ChartWithTooltipProps extends ChartProps {
 function ChartWithTooltip({
   depth,
   dailyData,
+  spotterData,
   surveys,
   temperatureThreshold,
   chartSettings,
@@ -31,7 +32,12 @@ function ChartWithTooltip({
     chartLabels,
     bottomTemperatureData,
     surfaceTemperatureData,
-  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
+  } = useProcessedChartData(
+    dailyData,
+    spotterData,
+    surveys,
+    temperatureThreshold
+  );
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -81,6 +87,7 @@ function ChartWithTooltip({
       {children}
       <Chart
         {...rest}
+        spotterData={spotterData}
         dailyData={dailyData}
         surveys={surveys}
         chartRef={chartDataRef}

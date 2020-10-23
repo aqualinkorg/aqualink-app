@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import { mergeWith } from "lodash";
-import type { DailyData } from "../../store/Reefs/types";
+import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
@@ -18,6 +18,7 @@ import { SurveyListItem } from "../../store/Survey/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
+  spotterData?: SpotterData;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
@@ -30,6 +31,7 @@ const SMALL_WINDOW = 400;
 
 function Chart({
   dailyData,
+  spotterData,
   surveys,
   temperatureThreshold,
   maxMonthlyMean,
@@ -58,9 +60,16 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
+    spotterBottom,
+    spotterSurface,
     tempWithSurvey,
     chartLabels,
-  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
+  } = useProcessedChartData(
+    dailyData,
+    spotterData,
+    surveys,
+    temperatureThreshold
+  );
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
@@ -228,6 +237,8 @@ function Chart({
       options={settings}
       data={createChartData(
         chartLabels,
+        spotterBottom,
+        spotterSurface,
         tempWithSurvey,
         surfaceTemperatureData,
         Boolean(temperatureThreshold)

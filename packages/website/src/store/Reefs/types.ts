@@ -69,6 +69,11 @@ interface Region {
 
 type Status = "in_review" | "rejected" | "approved";
 
+export interface SpotterData {
+  surfaceTemperature: SofarValue[];
+  bottomTemperature: SofarValue[];
+}
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -138,10 +143,7 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
-  spotterData?: {
-    surfaceTemperature: SofarValue[];
-    bottomTemperature: SofarValue[];
-  };
+  spotterData?: SpotterData;
   loading: boolean;
   error?: string | null;
 }

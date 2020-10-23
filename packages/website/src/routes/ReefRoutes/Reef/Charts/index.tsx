@@ -6,16 +6,16 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
-import type { DailyData } from "../../../../store/Reefs/types";
+import type { DailyData, SpotterData } from "../../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 import { SurveyListItem } from "../../../../store/Survey/types";
 
-const Charts = ({ classes, ...rest }: ChartsProps) => {
+const Charts = ({ classes, title, ...rest }: ChartsProps) => {
   return (
     <ChartWithTooltip {...rest} className={classes.root}>
       <Typography className={classes.graphTitle} variant="h6">
-        DAILY WATER TEMPERATURE (°C)
+        {title}
       </Typography>
     </ChartWithTooltip>
   );
@@ -29,6 +29,7 @@ const styles = (theme: Theme) =>
     graphTitle: {
       lineHeight: 1.5,
       marginLeft: "4rem",
+      marginTop: "3rem",
 
       [theme.breakpoints.down("xs")]: {
         marginLeft: 0,
@@ -37,12 +38,18 @@ const styles = (theme: Theme) =>
   });
 
 interface ChartsIncomingProps {
+  title: string;
   dailyData: DailyData[];
+  spotterData?: SpotterData;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;
 }
+
+Charts.defaultProps = {
+  spotterData: { surfaceTemperature: [], bottomTemperature: [] },
+};
 
 type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
 

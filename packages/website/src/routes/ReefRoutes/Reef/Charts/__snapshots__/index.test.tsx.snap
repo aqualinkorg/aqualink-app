@@ -8,9 +8,7 @@ exports[`renders as expected 1`] = `
     <mock-typography
       classname="Charts-graphTitle-2"
       variant="h6"
-    >
-      DAILY WATER TEMPERATURE (°C)
-    </mock-typography>
+    />
     Mock-Line
   </div>
 </div>

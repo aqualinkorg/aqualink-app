@@ -18,7 +18,7 @@ import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import type { Reef } from "../../../store/Reefs/types";
+import type { Reef, SpotterData } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -27,6 +27,7 @@ import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 const ReefDetails = ({
   classes,
   reef,
+  spotterData,
   hasDailyData,
   surveys,
   point,
@@ -137,6 +138,7 @@ const ReefDetails = ({
 
           <Box mt="2rem">
             <Charts
+              title="DAILY WATER TEMPERATURE (°C)"
               dailyData={reef.dailyData}
               surveys={surveys}
               depth={reef.depth}
@@ -144,6 +146,15 @@ const ReefDetails = ({
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
+            />
+            <Charts
+              title="SPOTTER WATER TEMPERATURE (°C)"
+              dailyData={reef.dailyData}
+              spotterData={spotterData}
+              surveys={[]}
+              depth={reef.depth}
+              maxMonthlyMean={null}
+              temperatureThreshold={null}
             />
             <Surveys reefId={reef.id} />
           </Box>
@@ -176,6 +187,7 @@ interface ReefDetailIncomingProps {
   reef: Reef;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
+  spotterData?: SpotterData;
   point?: SurveyPoint | null;
   diveDate?: string | null;
 }
@@ -183,6 +195,7 @@ interface ReefDetailIncomingProps {
 ReefDetails.defaultProps = {
   point: null,
   diveDate: null,
+  spotterData: { surfaceTemperature: [], bottomTemperature: [] },
 };
 
 type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;

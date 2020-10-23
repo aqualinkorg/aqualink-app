@@ -1,6 +1,6 @@
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
-import type { DailyData } from "../../store/Reefs/types";
+import type { DailyData, SofarValue } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
@@ -16,6 +16,8 @@ const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
 
 export const createDatasets = (
   dailyData: DailyData[],
+  spotterBottomTemperature: SofarValue[],
+  spotterSurfaceTemperature: SofarValue[],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
@@ -24,6 +26,9 @@ export const createDatasets = (
     .map((item) => item.satelliteTemperature);
 
   const surveyDates = getSurveyDates(surveys);
+
+  const spotterBottom = spotterBottomTemperature.map((item) => item.value);
+  const spotterSurface = spotterSurfaceTemperature.map((item) => item.value);
 
   const tempWithSurvey = dailyData
     .filter((item) => item.satelliteTemperature !== null)
@@ -39,11 +44,17 @@ export const createDatasets = (
     tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
     bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
     surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
+    spotterBottom:
+      spotterBottom.length > 0 ? [spotterBottom[0], ...spotterBottom] : [],
+    spotterSurface:
+      spotterSurface.length > 0 ? [spotterSurface[0], ...spotterSurface] : [],
   };
 };
 
 export const calculateAxisLimits = (
   dailyData: DailyData[],
+  spotterBottomTemperature: SofarValue[],
+  spotterSurfaceTemperature: SofarValue[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
@@ -65,9 +76,22 @@ export const calculateAxisLimits = (
   // Add an extra date one day after the final daily data date
   const chartLabels = [xAxisMin, ...dates];
 
-  const { surfaceTemperatureData } = createDatasets(dailyData, surveys);
+  const {
+    surfaceTemperatureData,
+    spotterBottom,
+    spotterSurface,
+  } = createDatasets(
+    dailyData,
+    spotterBottomTemperature,
+    spotterSurfaceTemperature,
+    surveys
+  );
 
-  const temperatureData = [...surfaceTemperatureData].filter((value) => value);
+  const temperatureData = [
+    ...surfaceTemperatureData,
+    ...spotterBottom,
+    ...spotterSurface,
+  ].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
 
@@ -96,16 +120,26 @@ export const calculateAxisLimits = (
 
 export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
+  spotterData: ChartProps["spotterData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"]
 ) {
   // Sort daily data by date
   const sortedDailyData = sortByDate(dailyData, "date");
 
-  const datasets = createDatasets(sortedDailyData, surveys);
+  const { bottomTemperature, surfaceTemperature } = spotterData || {};
+
+  const datasets = createDatasets(
+    sortedDailyData,
+    bottomTemperature || [],
+    surfaceTemperature || [],
+    surveys
+  );
 
   const axisLimits = calculateAxisLimits(
     sortedDailyData,
+    bottomTemperature || [],
+    surfaceTemperature || [],
     surveys,
     temperatureThreshold
   );

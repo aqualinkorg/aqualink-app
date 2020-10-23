@@ -23,6 +23,7 @@ import {
   reefErrorSelector,
   reefRequest,
   reefSpotterDataRequest,
+  reefSpotterDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -111,6 +112,8 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
+  const spotterData = useSelector(reefSpotterDataSelector);
+
   useEffect(() => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
@@ -118,7 +121,7 @@ const Reef = ({ match, classes }: ReefProps) => {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
-          startDate: "2020-10-21T14:48:00.000Z",
+          startDate: "2020-07-24T14:48:00.000Z",
           endDate: "2020-10-22T14:48:00.000Z",
         })
       );
@@ -159,6 +162,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 featuredImage: url,
               }}
               hasDailyData={hasDailyData}
+              spotterData={spotterData}
               surveys={surveyList}
               point={poiId}
               diveDate={diveDate}
