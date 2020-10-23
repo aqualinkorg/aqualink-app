@@ -1491,6 +1491,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <mock-charts
           dailydata="[object Object]"
           depth="0"
+          spotterdata="[object Object]"
           surveys=""
           title="SPOTTER WATER TEMPERATURE (°C)"
         />
