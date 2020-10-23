@@ -37,7 +37,6 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
       bgcolor="#f5f6f6"
       height="100%"
       position="absolute"
-      width="99vw"
       zindex="-1"
     />
     <div
@@ -205,14 +204,259 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
         >
           <ul
             class="MuiTimeline-root MuiTimeline-alignLeft"
-          />
+          >
+            <li
+              class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-22"
+            >
+              <div
+                class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-23"
+              >
+                <mock-typography
+                  classname="SurveyTimeline-dates-12"
+                  variant="h6"
+                >
+                  09/10/2020
+                </mock-typography>
+              </div>
+              <div
+                class="MuiTimelineSeparator-root"
+              >
+                <hr
+                  class="SurveyTimeline-connector-21"
+                />
+                <span
+                  class="MuiTimelineDot-root SurveyTimeline-dot-24 MuiTimelineDot-outlinedGrey"
+                />
+                <hr
+                  class="SurveyTimeline-connector-21"
+                />
+              </div>
+              <div
+                class="MuiTimelineContent-root MuiTimelineItem-content"
+              >
+                <div
+                  class="MuiPaper-root SurveyCard-surveyCard-30 MuiPaper-elevation0 MuiPaper-rounded"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiGrid-root SurveyCard-cardImageWrapper-35 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                    >
+                      <div
+                        class="MuiCardMedia-root SurveyCard-cardImage-31"
+                      />
+                    </div>
+                    <div
+                      class="MuiGrid-root SurveyCard-infoWrapper-36 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                    >
+                      <div
+                        class="MuiGrid-root SurveyCard-info-39 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                        >
+                          <mock-typography
+                            classname="SurveyCard-cardFields-32"
+                            variant="h6"
+                          >
+                            User:
+                          </mock-typography>
+                          <mock-typography
+                            classname="SurveyCard-cardValues-33 SurveyCard-valuesWithMargin-34"
+                            variant="h6"
+                          >
+                            Joe Doe
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root SurveyCard-commentsWrapper-37 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            style="height: 80%;"
+                          >
+                            <mock-typography
+                              classname="SurveyCard-cardFields-32"
+                              variant="h6"
+                            >
+                              Comments:
+                            </mock-typography>
+                            <mock-typography
+                              classname="SurveyCard-cardValues-33 SurveyCard-comments-38"
+                              variant="h6"
+                            >
+                              No comments
+                            </mock-typography>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                        >
+                          <mock-typography
+                            classname="SurveyCard-cardFields-32"
+                            variant="h6"
+                          >
+                            Temp:
+                          </mock-typography>
+                          <mock-typography
+                            classname="SurveyCard-cardValues-33 SurveyCard-valuesWithMargin-34"
+                            variant="h6"
+                          >
+                            10.0 °C
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                          >
+                            <a
+                              href="/reefs/0/survey_details/46"
+                              style="text-decoration: none;"
+                            >
+                              <mock-button
+                                color="primary"
+                                size="small"
+                                variant="outlined"
+                              >
+                                VIEW DETAILS
+                              </mock-button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </mock-hidden>
         <mock-hidden
           lgup="true"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-          />
+          >
+            <div
+              class="MuiGrid-root SurveyTimeline-surveyWrapper-25 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+            >
+              <div
+                class="MuiGrid-root SurveyTimeline-dateWrapper-11 MuiGrid-item MuiGrid-grid-xs-11"
+              >
+                <mock-typography
+                  classname="SurveyTimeline-dates-12"
+                  variant="h6"
+                >
+                  09/10/2020
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root SurveyTimeline-surveyCardWrapper-14 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiPaper-root SurveyCard-surveyCard-30 MuiPaper-elevation0 MuiPaper-rounded"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                    style="height: 100%;"
+                  >
+                    <div
+                      class="MuiGrid-root SurveyCard-cardImageWrapper-35 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                    >
+                      <div
+                        class="MuiCardMedia-root SurveyCard-cardImage-31"
+                      />
+                    </div>
+                    <div
+                      class="MuiGrid-root SurveyCard-infoWrapper-36 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                    >
+                      <div
+                        class="MuiGrid-root SurveyCard-info-39 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                        >
+                          <mock-typography
+                            classname="SurveyCard-cardFields-32"
+                            variant="h6"
+                          >
+                            User:
+                          </mock-typography>
+                          <mock-typography
+                            classname="SurveyCard-cardValues-33 SurveyCard-valuesWithMargin-34"
+                            variant="h6"
+                          >
+                            Joe Doe
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root SurveyCard-commentsWrapper-37 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                            style="height: 80%;"
+                          >
+                            <mock-typography
+                              classname="SurveyCard-cardFields-32"
+                              variant="h6"
+                            >
+                              Comments:
+                            </mock-typography>
+                            <mock-typography
+                              classname="SurveyCard-cardValues-33 SurveyCard-comments-38"
+                              variant="h6"
+                            >
+                              No comments
+                            </mock-typography>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+                        >
+                          <mock-typography
+                            classname="SurveyCard-cardFields-32"
+                            variant="h6"
+                          >
+                            Temp:
+                          </mock-typography>
+                          <mock-typography
+                            classname="SurveyCard-cardValues-33 SurveyCard-valuesWithMargin-34"
+                            variant="h6"
+                          >
+                            10.0 °C
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                          >
+                            <a
+                              href="/reefs/0/survey_details/46"
+                              style="text-decoration: none;"
+                            >
+                              <mock-button
+                                color="primary"
+                                size="small"
+                                variant="outlined"
+                              >
+                                VIEW DETAILS
+                              </mock-button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </mock-hidden>
       </div>
     </div>

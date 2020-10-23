@@ -30,6 +30,9 @@ export class CreateReefApplicationDto {
 }
 
 export class CreateReefWithApplicationDto {
+  @IsNotEmpty()
+  name: string;
+
   @IsLatitude()
   latitude: number;
 

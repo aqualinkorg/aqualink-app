@@ -4,37 +4,17 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 import SurveyCard from ".";
-import { SurveyListItem } from "../../../../../store/Survey/types";
+import { mockUser } from "../../../../../mocks/mockUser";
+import { mockSurvey } from "../../../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
-describe("Surveys Delete Button", () => {
+describe("Survey Card", () => {
   let element: HTMLElement;
   beforeEach(() => {
-    const survey: SurveyListItem = {
-      id: 0,
-      diveLocation: null,
-      diveDate: null,
-      weatherConditions: "calm",
-      comments: "",
-      temperature: 24.5,
-      observations: ["possible-disease"],
-      userId: {
-        id: 0,
-        fullName: "Test User",
-      },
-    };
-
     const store = mockStore({
       user: {
-        userInfo: {
-          email: "test@mail.com",
-          fullName: "Test User",
-          adminLevel: "super_admin",
-          firebaseUid: "RaNdOmStRiNg",
-          administeredReefs: [],
-          token: "RaNdOmStRiNg",
-        },
+        userInfo: mockUser,
       },
     });
 
@@ -43,7 +23,7 @@ describe("Surveys Delete Button", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <SurveyCard isAdmin reefId={0} survey={survey} />
+          <SurveyCard isAdmin reefId={0} survey={mockSurvey} />
         </Router>
       </Provider>
     ).container;

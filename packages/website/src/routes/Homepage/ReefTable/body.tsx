@@ -1,11 +1,13 @@
 import {
+  createStyles,
+  Hidden,
   TableBody,
   TableCell,
   TableRow,
+  Theme,
   Typography,
-  createStyles,
-  withStyles,
   WithStyles,
+  withStyles,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
 import React, { useEffect, useState } from "react";
@@ -14,7 +16,6 @@ import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
 import { colors } from "../../../layout/App/theme";
 import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
-import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import {
@@ -22,6 +23,85 @@ import {
   setReefOnMap,
 } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
+import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
+
+const RowNameCell = ({
+  reef: { locationName, region },
+  classes,
+}: {
+  reef: Row;
+  classes: ReefTableBodyProps["classes"];
+}) => {
+  return (
+    <TableCell className={classes.nameCells}>
+      <Typography align="left" variant="h6" color="textSecondary">
+        {locationName}
+      </Typography>
+
+      {locationName !== region && region && (
+        <Typography className={classes.regionName} variant="subtitle1">
+          {region}
+        </Typography>
+      )}
+    </TableCell>
+  );
+};
+
+const RowNumberCell = ({
+  color,
+  unit,
+  decimalPlaces,
+  value,
+  classes,
+}: {
+  color?: string;
+  unit?: string;
+  value: number | null;
+  decimalPlaces?: number;
+  classes: ReefTableBodyProps["classes"];
+}) => {
+  return (
+    <TableCell className={classes.cellTextAlign}>
+      <Typography
+        variant="h6"
+        style={{ color }}
+        className={classes.numberCellsTitle}
+      >
+        {formatNumber(value, decimalPlaces)}
+        <Hidden smUp>
+          &nbsp;
+          <Typography variant="h6" component="span">
+            {unit}
+          </Typography>
+        </Hidden>
+      </Typography>
+    </TableCell>
+  );
+};
+
+const RowAlertCell = ({
+  reef: { alertLevel },
+  classes,
+}: {
+  reef: Row;
+  classes: ReefTableBodyProps["classes"];
+}) => {
+  return (
+    <TableCell className={classes.cellTextAlign}>
+      <ErrorIcon
+        style={{
+          color: alertColorFinder(alertLevel),
+        }}
+      />
+    </TableCell>
+  );
+};
+
+RowNumberCell.defaultProps = {
+  unit: "",
+  color: "black",
+  decimalPlaces: 1,
+};
 
 const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
@@ -62,46 +142,27 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
                   ? colors.lighterBlue
                   : "white",
               cursor: "pointer",
+              borderTop: "1px solid rgba(224, 224, 224, 1)",
             }}
             onClick={(event) => handleClick(event, reef)}
             role="button"
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <TableCell className={classes.nameCells}>
-              <Typography
-                align="left"
-                variant="subtitle1"
-                color="textSecondary"
-              >
-                {reef.locationName}
-              </Typography>
-            </TableCell>
-            <TableCell align="left">
-              <Typography
-                style={{ color: colors.lightBlue }}
-                variant="subtitle1"
-              >
-                {formatNumber(reef.temp, 1)}
-              </Typography>
-            </TableCell>
-            <TableCell align="left">
-              <Typography
-                style={{
-                  color: reef.dhw ? `${dhwColorFinder(reef.dhw)}` : "black",
-                }}
-                variant="subtitle1"
-              >
-                {formatNumber(reef.dhw, 1)}
-              </Typography>
-            </TableCell>
-            <TableCell align="center">
-              <ErrorIcon
-                style={{
-                  color: alertColorFinder(reef.alertLevel),
-                }}
-              />
-            </TableCell>
+            <RowNameCell reef={reef} classes={classes} />
+            <RowNumberCell
+              classes={classes}
+              value={reef.temp}
+              color={colors.lightBlue}
+              unit="°C"
+            />
+            <RowNumberCell
+              classes={classes}
+              value={reef.dhw}
+              color={dhwColorFinder(reef.dhw)}
+              unit="DHW"
+            />
+            <RowAlertCell reef={reef} classes={classes} />
           </TableRow>
         );
       })}
@@ -109,10 +170,23 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     nameCells: {
       paddingLeft: 10,
+      [theme.breakpoints.down("xs")]: { width: "35%", paddingRight: 0 },
+    },
+    regionName: {
+      color: "gray",
+    },
+    numberCellsTitle: {
+      [theme.breakpoints.down("xs")]: { fontWeight: 600 },
+    },
+    cellTextAlign: {
+      textAlign: "left",
+      [theme.breakpoints.down("xs")]: {
+        textAlign: "right",
+      },
     },
   });
 

@@ -3,12 +3,12 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-37"
+    classname="NavBar-appBar-112"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-40"
+      classname="NavBar-toolbar-115"
     >
       <mock-drawer
         anchor="left"
@@ -51,11 +51,60 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           FAQ
         </mock-link>
         <mock-link
-          href="/apply"
+          href="/register"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
-          APPLY
+          REGISTER A SITE
         </mock-link>
+        <mock-box
+          margintop="auto"
+          padding="25px"
+        >
+          <mock-typography
+            variant="subtitle1"
+          >
+            Aqualink's source code is licenced under MIT. Contribute!
+          </mock-typography>
+          <div
+            class="MuiButtonGroup-root MuiButtonGroup-contained"
+            role="group"
+          >
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-122"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://github.com/aqualinkorg/aqualink-app"
+              size="medium"
+              starticon="[object Object]"
+              target="_blank"
+              variant="contained"
+            >
+              GitHub
+            </mock-button>
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-122"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://ovio.org/project/aqualinkorg/aqualink-app"
+              size="medium"
+              target="_blank"
+              variant="contained"
+            >
+              <img
+                alt="Ovio Logo"
+                src="ovio_logo.png"
+              />
+            </mock-button>
+          </div>
+        </mock-box>
       </mock-drawer>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -84,7 +133,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-38"
+              classname="NavBar-navBarLink-113"
               href="/"
             >
               <mock-typography
@@ -105,20 +154,38 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item"
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
           >
-            <mock-button>
-              SIGN IN
-            </mock-button>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <mock-button>
-              REGISTER
-            </mock-button>
-          </div>
+            Mock User
+            <mock-iconbutton
+              classname="NavBar-button-120"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root NavBar-expandIcon-119"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-menu
+              classname="NavBar-userMenu-116"
+              keepmounted="true"
+              open="false"
+            >
+              <mock-menuitem
+                classname="NavBar-menuItem-117"
+              >
+                Logout
+              </mock-menuitem>
+            </mock-menu>
+          </mock-box>
         </div>
       </div>
     </mock-toolbar>
@@ -129,7 +196,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-48"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-124"
       >
         <div
           class="MuiCardHeader-content"
@@ -155,7 +222,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-49"
+                    classname="RegisterDialog-dialogHeaderSecondPart-125"
                     variant="h4"
                   >
                     link
@@ -165,7 +232,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="RegisterDialog-closeButton-47"
+                    classname="RegisterDialog-closeButton-123"
                     size="small"
                   >
                     <svg
@@ -186,13 +253,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <mock-cardcontent
-        classname="RegisterDialog-contentWrapper-56"
+        classname="RegisterDialog-contentWrapper-132"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-50 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-126 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -209,10 +276,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-51"
+              class="RegisterDialog-form-127"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-52 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-128 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -227,7 +294,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-52 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-128 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -242,7 +309,22 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-52 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-128 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-128 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -257,7 +339,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-52 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-128 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -280,7 +362,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-57"
+                    classname="RegisterDialog-termsCheckbox-133"
                     color="primary"
                   />
                 </div>
@@ -288,15 +370,15 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                 >
                   <mock-typography
-                    classname="RegisterDialog-formText-54"
+                    classname="RegisterDialog-formText-130"
                     color="textSecondary"
                     variant="subtitle1"
                   >
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-58"
-                      href="/"
+                      class="RegisterDialog-termsLink-134"
+                      href="/terms"
                     >
                       Terms and Conditions
                     </a>
@@ -304,7 +386,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-55 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-131 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -321,7 +403,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-54"
+                  classname="RegisterDialog-formText-130"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -346,7 +428,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-60"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-136"
       >
         <div
           class="MuiCardHeader-content"
@@ -372,7 +454,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-61"
+                    classname="SignInDialog-dialogHeaderSecondPart-137"
                     variant="h4"
                   >
                     link
@@ -382,7 +464,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="SignInDialog-closeButton-59"
+                    classname="SignInDialog-closeButton-135"
                     size="small"
                   >
                     <svg
@@ -464,7 +546,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-62 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-138 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -481,13 +563,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-63"
+              class="SignInDialog-form-139"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-64 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-140 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-66"
+                  classname="SignInDialog-formText-142"
                   variant="subtitle2"
                 >
                   or login with email address
@@ -505,7 +587,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-64 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-140 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -524,7 +606,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-68"
+                  classname="SignInDialog-forgotPasswordButton-144"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -535,7 +617,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-67 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-143 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -551,7 +633,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-66"
+                  classname="SignInDialog-formText-142"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -571,30 +653,1059 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
+    class="MuiContainer-root MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiContainer-root Reef-noData-36 MuiContainer-fixed MuiContainer-maxWidthLg"
+      class="MuiCollapse-container MuiCollapse-hidden"
+      style="min-height: 0px;"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiCollapse-wrapper"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiCollapse-wrapperInner"
         >
-          <mock-typography
-            color="primary"
-            gutterbottom="true"
-            variant="h2"
+          <div
+            class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+            role="alert"
           >
-            No Data Found
-          </mock-typography>
+            <div
+              class="MuiAlert-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiAlert-message"
+            >
+              Something went wrong
+            </div>
+            <div
+              class="MuiAlert-action"
+            >
+              <mock-iconbutton
+                color="inherit"
+                size="small"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div
+      class="MuiGrid-root ReefNavBar-root-145 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <a
+              href="/"
+              style="text-decoration: none;"
+            >
+              <mock-iconbutton
+                aria-label="menu"
+                color="primary"
+                edge="start"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </a>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-10"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+            >
+              <mock-box>
+                <mock-typography
+                  variant="h4"
+                >
+                  Hawaii
+                </mock-typography>
+              </mock-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mock-box
+      mt="1.3rem"
+    >
+      <div
+        class="MuiPaper-root MuiAlert-root MuiAlert-standardInfo MuiPaper-elevation0"
+        role="alert"
+      >
+        <div
+          class="MuiAlert-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiAlert-message"
+        >
+          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      mt="1rem"
+    >
+      <mock-box
+        classname="CardTitle-root-150"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 2rem;"
+          >
+            <mock-typography
+              variant="h6"
+            >
+              LOCATION:
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 1rem;"
+          >
+            <mock-typography
+              variant="subtitle2"
+            >
+              LAT: 0.000
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 0px;"
+          >
+            <mock-typography
+              variant="subtitle2"
+            >
+              LONG: 0.000
+            </mock-typography>
+          </div>
+        </div>
+      </mock-box>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="ReefDetails-container-148"
+          >
+            <mock-map
+              polygon="[object Object]"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="ReefDetails-container-148"
+          >
+            <mock-featuredmedia />
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root ReefDetails-metricsWrapper-149 MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <mock-card
+            classname="Satellite-card-153"
+            style="background-color: rgb(117, 180, 114);"
+          >
+            <div
+              class="MuiCardHeader-root Satellite-header-155"
+            >
+              <div
+                class="MuiCardHeader-content"
+              >
+                <mock-typography
+                  classname="MuiCardHeader-title"
+                  component="span"
+                  display="block"
+                  variant="h5"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-8"
+                    >
+                      <mock-typography
+                        classname="Satellite-cardTitle-154"
+                        variant="h6"
+                      >
+                        SATELLITE OBSERVATION
+                      </mock-typography>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                    >
+                      <img
+                        alt="satellite"
+                        class="Satellite-titleImage-160"
+                        src="satellite.svg"
+                      />
+                    </div>
+                  </div>
+                </mock-typography>
+              </div>
+            </div>
+            <mock-cardcontent
+              classname="Satellite-content-161"
+            >
+              <mock-box
+                display="flex"
+                flexgrow="1"
+                p="1rem"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-156"
+                      variant="subtitle2"
+                    >
+                      SURFACE TEMP
+                    </mock-typography>
+                    <mock-typography
+                      classname="Satellite-contentTextValues-157"
+                      variant="h2"
+                    >
+                      29.0 °C
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-156"
+                      variant="subtitle2"
+                    >
+                      HISTORICAL MAX
+                    </mock-typography>
+                    <mock-tooltip
+                      title="Historical maximum monthly average over the past 20 years"
+                    >
+                      <mock-typography
+                        classname="Satellite-contentTextValues-157"
+                        variant="h2"
+                      >
+                        0.0 °C
+                      </mock-typography>
+                    </mock-tooltip>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography
+                      classname="Satellite-contentTextTitles-156"
+                      variant="subtitle2"
+                    >
+                      HEAT STRESS
+                    </mock-typography>
+                    <mock-tooltip
+                      title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+                    >
+                      <mock-typography
+                        classname="Satellite-contentTextValues-157"
+                        variant="h2"
+                      >
+                        4.9 DHW
+                      </mock-typography>
+                    </mock-tooltip>
+                  </div>
+                </div>
+              </mock-box>
+              <div
+                class="MuiGrid-root MuiGrid-container"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(8, 91, 163); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      0
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(12, 157, 165); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      2
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(117, 180, 114); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      4
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(123, 217, 37); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      6
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(193, 229, 34); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      8
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(229, 187, 43); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      10
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(230, 121, 40); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      12
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(232, 79, 46); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      14
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(216, 69, 36); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      16
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(128, 58, 32); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      18
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(185, 41, 68); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      20
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                  style="background-color: rgb(128, 48, 126); height: 2rem;"
+                >
+                  <mock-box
+                    textalign="center"
+                  >
+                    <mock-typography
+                      align="center"
+                      variant="caption"
+                    >
+                      25
+                    </mock-typography>
+                  </mock-box>
+                </div>
+              </div>
+            </mock-cardcontent>
+          </mock-card>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <mock-card
+            classname="Sensor-card-163"
+          >
+            <div
+              class="MuiCardHeader-root Sensor-header-165"
+            >
+              <div
+                class="MuiCardHeader-content"
+              >
+                <mock-typography
+                  classname="MuiCardHeader-title"
+                  component="span"
+                  display="block"
+                  variant="h5"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+                    >
+                      <mock-typography
+                        classname="Sensor-cardTitle-164"
+                        variant="h6"
+                      >
+                        SENSOR OBSERVATION
+                      </mock-typography>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+                    >
+                      <img
+                        alt="buoy"
+                        class="Sensor-titleImage-170"
+                        src="buoy.svg"
+                      />
+                    </div>
+                  </div>
+                </mock-typography>
+              </div>
+            </div>
+            <mock-cardcontent
+              classname="Sensor-content-171"
+            >
+              <mock-box
+                display="flex"
+                flexgrow="1"
+                p="1rem"
+                style="position: relative;"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography
+                      classname="Sensor-contentTextTitles-166"
+                      variant="subtitle2"
+                    >
+                      TEMP AT 1m
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-167"
+                      variant="h2"
+                    >
+                      - - °C
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <mock-typography
+                      classname="Sensor-contentTextTitles-166"
+                      variant="subtitle2"
+                    >
+                      TEMP AT 0m
+                    </mock-typography>
+                    <mock-typography
+                      classname="Sensor-contentTextValues-167"
+                      variant="h2"
+                    >
+                      39.0 °C
+                    </mock-typography>
+                  </div>
+                </div>
+                <mock-box
+                  bottom="0"
+                  position="absolute"
+                  right="0"
+                >
+                  <img
+                    alt="sensor"
+                    src="sensor.svg"
+                  />
+                </mock-box>
+              </mock-box>
+            </mock-cardcontent>
+          </mock-card>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <mock-card
+            classname="Bleaching-card-175"
+          >
+            <div
+              class="MuiCardHeader-root Bleaching-header-177"
+            >
+              <div
+                class="MuiCardHeader-content"
+              >
+                <mock-typography
+                  classname="MuiCardHeader-title"
+                  component="span"
+                  display="block"
+                  variant="h5"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                    >
+                      <mock-typography
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        HEAT STRESS ALERT LEVEL
+                      </mock-typography>
+                    </div>
+                  </div>
+                </mock-typography>
+              </div>
+            </div>
+            <mock-cardcontent
+              classname="Bleaching-contentWrapper-182"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                style="height: 100%;"
+              >
+                <img
+                  alt="alert-level"
+                  src="alert_nostress.svg"
+                />
+              </div>
+            </mock-cardcontent>
+          </mock-card>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
+        >
+          <mock-card
+            classname="Waves-card-183"
+          >
+            <mock-cardcontent
+              classname="Waves-contentWrapper-191"
+            >
+              <div
+                class="MuiGrid-root Waves-content-192 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <mock-typography
+                    classname="Waves-cardTitle-184"
+                    variant="h6"
+                  >
+                    WIND
+                  </mock-typography>
+                  <img
+                    alt="wind"
+                    class="Waves-titleImages-190"
+                    src="wind.svg"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-typography
+                      classname="Waves-contentTextTitles-186"
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      SPEED
+                    </mock-typography>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <mock-typography
+                        classname="Waves-contentTextValues-187"
+                        color="textSecondary"
+                        variant="h3"
+                      >
+                        - -
+                      </mock-typography>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                  >
+                    <mock-typography
+                      classname="Waves-contentTextTitles-186"
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      DIRECTION
+                    </mock-typography>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <mock-typography
+                        classname="Waves-contentTextValues-187"
+                        color="textSecondary"
+                        variant="h3"
+                      >
+                        - -
+                      </mock-typography>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                >
+                  <mock-typography
+                    classname="Waves-cardTitle-184"
+                    variant="h6"
+                  >
+                    WAVES
+                  </mock-typography>
+                  <img
+                    alt="waves"
+                    class="Waves-titleImages-190"
+                    src="waves.svg"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
+                  >
+                    <mock-typography
+                      classname="Waves-contentTextTitles-186"
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      HEIGHT
+                    </mock-typography>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <mock-typography
+                        classname="Waves-contentTextValues-187"
+                        color="textSecondary"
+                        variant="h3"
+                      >
+                        - -
+                      </mock-typography>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
+                  >
+                    <mock-typography
+                      classname="Waves-contentTextTitles-186"
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      PERIOD
+                    </mock-typography>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <mock-typography
+                        classname="Waves-contentTextValues-187"
+                        color="textSecondary"
+                        variant="h3"
+                      >
+                        - -
+                      </mock-typography>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
+                  >
+                    <mock-typography
+                      classname="Waves-contentTextTitles-186"
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      DIRECTION
+                    </mock-typography>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                    >
+                      <mock-typography
+                        classname="Waves-contentTextValues-187"
+                        color="textSecondary"
+                        variant="h3"
+                      >
+                        - -
+                        
+                      </mock-typography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mock-cardcontent>
+          </mock-card>
+        </div>
+      </div>
+      <mock-box
+        mt="2rem"
+      >
+        <mock-charts
+          dailydata="[object Object]"
+          depth="0"
+          surveys=""
+        />
+        <mock-dialog
+          open="false"
+        >
+          <mock-dialogtitle
+            classname="Dialog-dialogTitle-203"
+          >
+            <mock-typography>
+              Are you sure you want to delete this survey point? It will be deleted across all surveys.
+            </mock-typography>
+          </mock-dialogtitle>
+          <mock-dialogcontent />
+          <mock-dialogactions>
+            <mock-button
+              color="secondary"
+              size="small"
+              variant="contained"
+            >
+              No
+            </mock-button>
+            <mock-button
+              color="primary"
+              size="small"
+              variant="contained"
+            >
+              Yes
+            </mock-button>
+          </mock-dialogactions>
+        </mock-dialog>
+        <div
+          class="MuiGrid-root Surveys-root-194 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+        >
+          <mock-box
+            bgcolor="#f5f6f6"
+            height="100%"
+            position="absolute"
+            zindex="-1"
+          />
+          <div
+            class="MuiGrid-root Surveys-surveyWrapper-195 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+            >
+              <mock-typography
+                classname="Surveys-title-196"
+              >
+                Survey History
+              </mock-typography>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-typography
+                  classname="Surveys-subTitle-197"
+                  variant="h6"
+                >
+                  Survey Point:
+                </mock-typography>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-typography
+                  classname="Surveys-subTitle-197"
+                  variant="h6"
+                >
+                  Observation:
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="MuiFormControl-root Surveys-formControl-198"
+                >
+                  <div
+                    class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-199 MuiInputBase-formControl MuiInput-formControl"
+                  >
+                    <div
+                      aria-haspopup="listbox"
+                      aria-labelledby="survey-observation survey-observation"
+                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Surveys-textField-201"
+                      id="survey-observation"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <mock-typography
+                        classname="Surveys-menuItem-200"
+                        variant="h6"
+                      >
+                        Any
+                      </mock-typography>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput"
+                      name="survey-observation"
+                      tabindex="-1"
+                      value="any"
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSelect-icon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <mock-menu
+                      anchorel="[object HTMLDivElement]"
+                      id="menu-survey-observation"
+                      menulistprops="[object Object]"
+                      open="false"
+                      paperprops="[object Object]"
+                    >
+                      <mock-menuitem
+                        aria-selected="true"
+                        data-value="any"
+                        role="option"
+                        selected="true"
+                      >
+                        <mock-typography
+                          classname="Surveys-menuItem-200"
+                          variant="h6"
+                        >
+                          Any
+                        </mock-typography>
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="healthy"
+                        role="option"
+                        selected="false"
+                      >
+                        Appears healthy
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="possible-disease"
+                        role="option"
+                        selected="false"
+                      >
+                        Showing possible signs of disease
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="evident-disease"
+                        role="option"
+                        selected="false"
+                      >
+                        Signs of disease are evident
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="mortality"
+                        role="option"
+                        selected="false"
+                      >
+                        Signs of mortality are evident
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="environmental"
+                        role="option"
+                        selected="false"
+                      >
+                        Signs of environmental disturbance are evident (e.g.,storm damage)
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-200"
+                        data-value="anthropogenic"
+                        role="option"
+                        selected="false"
+                      >
+                        Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
+                      </mock-menuitem>
+                    </mock-menu>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+          >
+            <div
+              class="SurveyTimeline-root-213"
+            >
+              <mock-hidden
+                mddown="true"
+              >
+                <ul
+                  class="MuiTimeline-root MuiTimeline-alignLeft"
+                />
+              </mock-hidden>
+              <mock-hidden
+                lgup="true"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                />
+              </mock-hidden>
+            </div>
+          </div>
+        </div>
+      </mock-box>
+    </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-69"
+    classname="Footer-appBar-151"
     position="static"
   >
     <mock-toolbar>
@@ -605,7 +1716,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-70"
+            classname="Footer-navBarLink-152"
             href="/"
           >
             <mock-typography
@@ -631,12 +1742,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-no-data 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-2"
+    classname="NavBar-appBar-3"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-5"
+      classname="NavBar-toolbar-6"
     >
       <mock-drawer
         anchor="left"
@@ -679,11 +1790,60 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           FAQ
         </mock-link>
         <mock-link
-          href="/apply"
+          href="/register"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
-          APPLY
+          REGISTER A SITE
         </mock-link>
+        <mock-box
+          margintop="auto"
+          padding="25px"
+        >
+          <mock-typography
+            variant="subtitle1"
+          >
+            Aqualink's source code is licenced under MIT. Contribute!
+          </mock-typography>
+          <div
+            class="MuiButtonGroup-root MuiButtonGroup-contained"
+            role="group"
+          >
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-13"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://github.com/aqualinkorg/aqualink-app"
+              size="medium"
+              starticon="[object Object]"
+              target="_blank"
+              variant="contained"
+            >
+              GitHub
+            </mock-button>
+            <mock-button
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-13"
+              color="default"
+              disabled="false"
+              disableelevation="false"
+              disablefocusripple="false"
+              disableripple="false"
+              fullwidth="false"
+              href="https://ovio.org/project/aqualinkorg/aqualink-app"
+              size="medium"
+              target="_blank"
+              variant="contained"
+            >
+              <img
+                alt="Ovio Logo"
+                src="ovio_logo.png"
+              />
+            </mock-button>
+          </div>
+        </mock-box>
       </mock-drawer>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
@@ -712,7 +1872,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-3"
+              classname="NavBar-navBarLink-4"
               href="/"
             >
               <mock-typography
@@ -733,20 +1893,38 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item"
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
           >
-            <mock-button>
-              SIGN IN
-            </mock-button>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-          >
-            <mock-button>
-              REGISTER
-            </mock-button>
-          </div>
+            Mock User
+            <mock-iconbutton
+              classname="NavBar-button-11"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root NavBar-expandIcon-10"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-menu
+              classname="NavBar-userMenu-7"
+              keepmounted="true"
+              open="false"
+            >
+              <mock-menuitem
+                classname="NavBar-menuItem-8"
+              >
+                Logout
+              </mock-menuitem>
+            </mock-menu>
+          </mock-box>
         </div>
       </div>
     </mock-toolbar>
@@ -757,7 +1935,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-13"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-15"
       >
         <div
           class="MuiCardHeader-content"
@@ -783,7 +1961,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-14"
+                    classname="RegisterDialog-dialogHeaderSecondPart-16"
                     variant="h4"
                   >
                     link
@@ -793,7 +1971,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="RegisterDialog-closeButton-12"
+                    classname="RegisterDialog-closeButton-14"
                     size="small"
                   >
                     <svg
@@ -814,13 +1992,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <mock-cardcontent
-        classname="RegisterDialog-contentWrapper-21"
+        classname="RegisterDialog-contentWrapper-23"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-15 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-17 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -837,10 +2015,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-16"
+              class="RegisterDialog-form-18"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-19 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -855,7 +2033,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-19 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -870,7 +2048,22 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-19 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-19 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -885,7 +2078,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-17 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-19 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -908,7 +2101,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-22"
+                    classname="RegisterDialog-termsCheckbox-24"
                     color="primary"
                   />
                 </div>
@@ -916,15 +2109,15 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                 >
                   <mock-typography
-                    classname="RegisterDialog-formText-19"
+                    classname="RegisterDialog-formText-21"
                     color="textSecondary"
                     variant="subtitle1"
                   >
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-23"
-                      href="/"
+                      class="RegisterDialog-termsLink-25"
+                      href="/terms"
                     >
                       Terms and Conditions
                     </a>
@@ -932,7 +2125,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-20 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -949,7 +2142,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-19"
+                  classname="RegisterDialog-formText-21"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -974,7 +2167,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-25"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-27"
       >
         <div
           class="MuiCardHeader-content"
@@ -1000,7 +2193,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-26"
+                    classname="SignInDialog-dialogHeaderSecondPart-28"
                     variant="h4"
                   >
                     link
@@ -1010,7 +2203,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="SignInDialog-closeButton-24"
+                    classname="SignInDialog-closeButton-26"
                     size="small"
                   >
                     <svg
@@ -1092,7 +2285,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-27 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-29 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -1109,13 +2302,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-28"
+              class="SignInDialog-form-30"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-29 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-31"
+                  classname="SignInDialog-formText-33"
                   variant="subtitle2"
                 >
                   or login with email address
@@ -1133,7 +2326,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-29 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-31 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -1152,7 +2345,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-33"
+                  classname="SignInDialog-forgotPasswordButton-35"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -1163,7 +2356,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-32 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-34 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -1179,7 +2372,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-31"
+                  classname="SignInDialog-formText-33"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -1199,30 +2392,213 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
+    class="MuiContainer-root Reef-noDataWrapper-2 MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiContainer-root Reef-noData-1 MuiContainer-fixed MuiContainer-maxWidthLg"
+      class="MuiCollapse-container MuiCollapse-hidden"
+      style="min-height: 0px;"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiCollapse-wrapper"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiCollapse-wrapperInner"
         >
-          <mock-typography
-            color="primary"
-            gutterbottom="true"
-            variant="h2"
+          <div
+            class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+            role="alert"
           >
-            No Data Found
-          </mock-typography>
+            <div
+              class="MuiAlert-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiAlert-message"
+            >
+              Something went wrong
+            </div>
+            <div
+              class="MuiAlert-action"
+            >
+              <mock-iconbutton
+                color="inherit"
+                size="small"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div
+      class="MuiGrid-root ReefNavBar-root-36 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <a
+              href="/"
+              style="text-decoration: none;"
+            >
+              <mock-iconbutton
+                aria-label="menu"
+                color="primary"
+                edge="start"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </a>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-10"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
+            >
+              <mock-box>
+                <mock-typography
+                  variant="h4"
+                >
+                  Hawaii
+                </mock-typography>
+              </mock-box>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mock-box
+      mt="1.3rem"
+    >
+      <div
+        class="MuiPaper-root MuiAlert-root MuiAlert-standardInfo MuiPaper-elevation0"
+        role="alert"
+      >
+        <div
+          class="MuiAlert-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiAlert-message"
+        >
+          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      mt="1rem"
+    >
+      <mock-box
+        classname="CardTitle-root-41"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 2rem;"
+          >
+            <mock-typography
+              variant="h6"
+            >
+              LOCATION:
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 1rem;"
+          >
+            <mock-typography
+              variant="subtitle2"
+            >
+              LAT: 0.000
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 0px;"
+          >
+            <mock-typography
+              variant="subtitle2"
+            >
+              LONG: 0.000
+            </mock-typography>
+          </div>
+        </div>
+      </mock-box>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="ReefDetails-container-39"
+          >
+            <mock-map
+              polygon="[object Object]"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="ReefDetails-container-39"
+          >
+            <mock-featuredmedia />
+          </div>
+        </div>
+      </div>
+    </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-34"
+    classname="Footer-appBar-42"
     position="static"
   >
     <mock-toolbar>
@@ -1233,7 +2609,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-35"
+            classname="Footer-navBarLink-43"
             href="/"
           >
             <mock-typography

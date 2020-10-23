@@ -6,7 +6,7 @@ exports[`renders as expected 1`] = `
     classname="makeStyles-card-4"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
@@ -14,7 +14,7 @@ exports[`renders as expected 1`] = `
       >
         Selected Site
         <a
-          href="/reefs/2"
+          href="/reefs/1"
         >
           <svg
             aria-hidden="true"
@@ -52,8 +52,10 @@ exports[`renders as expected 1`] = `
                 variant="h5"
               >
                 <span
-                  title=""
-                />
+                  title="Hawaii"
+                >
+                  Hawaii
+                </span>
               </mock-typography>
               <mock-typography
                 classname="makeStyles-cardTitle-9 makeStyles-reefRegionName-8"
@@ -72,7 +74,18 @@ exports[`renders as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
+            Mock-Line
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
@@ -158,7 +171,7 @@ exports[`renders loading as expected 1`] = `
     classname="makeStyles-card-13"
   >
     <mock-box
-      mb="3"
+      mb="2"
     >
       <mock-typography
         color="textSecondary"
@@ -166,7 +179,7 @@ exports[`renders loading as expected 1`] = `
       >
         Selected Site
         <a
-          href="/reefs/2"
+          href="/reefs/1"
         >
           <svg
             aria-hidden="true"
@@ -204,8 +217,10 @@ exports[`renders loading as expected 1`] = `
                 variant="h5"
               >
                 <span
-                  title=""
-                />
+                  title="Hawaii"
+                >
+                  Hawaii
+                </span>
               </mock-typography>
               <mock-typography
                 classname="makeStyles-cardTitle-18 makeStyles-reefRegionName-17"
@@ -224,7 +239,18 @@ exports[`renders loading as expected 1`] = `
               DAILY SURFACE TEMP. (°C)
             </mock-typography>
           </mock-box>
-          Mock-Line
+          <mock-hidden
+            xsdown="true"
+          >
+            <div>
+              Mock-Line
+            </div>
+          </mock-hidden>
+          <mock-hidden
+            smup="true"
+          >
+            Mock-Line
+          </mock-hidden>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"

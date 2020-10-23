@@ -31,9 +31,6 @@ export class CreateReefDto {
   @IsInt()
   readonly depth: number;
 
-  @IsInt()
-  readonly status: number;
-
   @IsOptional()
   @IsUrl()
   readonly videoStream: string;

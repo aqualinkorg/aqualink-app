@@ -11,11 +11,19 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 import { Region } from '../regions/regions.entity';
 import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
+import { ReefApplication } from '../reef-applications/reef-applications.entity';
+
+export enum ReefStatus {
+  InReview = 'in_review',
+  Rejected = 'rejected',
+  Approved = 'approved',
+}
 
 @Entity()
 export class Reef {
@@ -42,8 +50,14 @@ export class Reef {
   @Column({ nullable: true })
   depth: number;
 
-  @Column({ default: 0 })
-  status: number;
+  // TODO:  This field should be transferred to reef-application table
+  //        The transition has to be in sync with changes in admin dashboards in internal.io
+  @Column({
+    type: 'enum',
+    enum: ReefStatus,
+    default: ReefStatus.InReview,
+  })
+  status: ReefStatus;
 
   @Column({ nullable: true })
   videoStream: string;
@@ -77,4 +91,12 @@ export class Reef {
 
   @OneToMany(() => Survey, (survey) => survey.reef)
   surveys: Survey[];
+
+  @OneToOne(() => ReefApplication, (reefApplication) => reefApplication.reef)
+  reefApplication?: ReefApplication;
+
+  @Expose()
+  get applied(): boolean {
+    return !!this.reefApplication?.permitRequirements;
+  }
 }

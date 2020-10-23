@@ -7,6 +7,7 @@ import { NotFound } from "../../routes/NotFound";
 import HomePage from "../../routes/Homepage";
 import ReefRoutes from "../../routes/ReefRoutes";
 import About from "../../routes/About";
+import RegisterSite from "../../routes/RegisterSite";
 import Apply from "../../routes/Apply";
 import Buoy from "../../routes/Buoy";
 import Drones from "../../routes/Drones";
@@ -18,6 +19,7 @@ import "../../assets/css/bootstrap.css";
 import { getSelf } from "../../store/User/userSlice";
 import app from "../../firebase";
 import { initGA } from "../../utils/google-analytics";
+import Terms from "../../routes/Terms";
 
 function App() {
   const [render, setRender] = useState<boolean>(false);
@@ -44,10 +46,12 @@ function App() {
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route exact path="/about" component={About} />
+              <Route exact path="/register" component={RegisterSite} />
               <Route exact path="/apply" component={Apply} />
               <Route exact path="/buoy" component={Buoy} />
               <Route exact path="/drones" component={Drones} />
               <Route exact path="/faq" component={Faq} />
+              <Route exact path="/terms" component={Terms} />
               <Route path="/reefs" component={ReefRoutes} />
               <Route default component={NotFound} />
             </Switch>

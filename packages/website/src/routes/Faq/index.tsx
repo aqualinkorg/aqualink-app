@@ -30,8 +30,62 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
+                    Overview of the Aqualink system and Survey guide
+                  </Typography>
+                  <p>
+                    We have created an animated field guide that will describe
+                    the best practices for conducting a survey and using the
+                    Aqualink system.
+                    <br />
+                    <br />
+                    <ReactPlayer
+                      url="https://www.youtube.com/embed/E_nXCl612lg"
+                      width="100%"
+                      title="field_guide"
+                    />
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    How are you measuring temperature?
+                  </Typography>
+                  <p>
+                    We collect temperature through satellite observations or
+                    spotter (a Smart Buoy). Satellite measurements collect
+                    temperature information from the very top layer of the
+                    surface (skin temperature) based on a 5km grid. NOAA
+                    publishes observed temperatures on a daily basis and makes
+                    that available in their “Daily Global 5km Satellite Coral
+                    Bleaching Heat Stress Monitoring”. Sofar Ocean imports this
+                    data into their servers and Aqualink uses their API to
+                    render the data in our web application. When a Smart Buoy is
+                    deployed we collect temperature information every hour from
+                    a depth of 1 meter as well as the moored depth which is at
+                    the sea floor.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
+                    What is heat stress?
+                  </Typography>
+                  <p>
+                    Heat stress is a measure of the amount of time above the 20
+                    year historical maximum temperature. The unit of measure for
+                    heat stress is degree heating weeks. Many marine
+                    environments, like coral reefs, degrade after prolonged heat
+                    exposure which is why this is an important metric.
+                  </p>
+                </div>
+              </div>
+              <div className="row faqq">
+                <div className="col">
+                  <Typography className={classes.question} variant="h5">
                     I am managing a large area and would like more than one
-                    spotter, can I get multiple?
+                    Smart Buoy, can I get multiple?
                   </Typography>
                   <p>
                     Please submit an application for each reef or location you
@@ -54,8 +108,8 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    What is the maximum depth a temperature sensor on the smart
-                    mooring can be deployed?
+                    What is the maximum depth a temperature sensor on the Smart
+                    Buoy can be deployed?
                   </Typography>
                   <p>100 meters.</p>
                 </div>
@@ -127,10 +181,10 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    How big is the smart mooring and spotter buoy?
+                    How big is the Aqualink Smart Buoy?
                   </Typography>
                   <p>
-                    The total smart mooring system is small enough for regular
+                    The total Smart Buoy system is small enough for regular
                     shipping such as UPS, DHL, FedEx, etc. The dimensions and
                     weight of the buoy are:
                     <br />
@@ -173,16 +227,16 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    How is the smart mooring moored? Does it come with a mooring
+                    How is the Smart Buoy moored? Does it come with a mooring
                     anchor?
                   </Typography>
                   <p>
-                    The smart mooring does not come with an anchor. It
-                    terminates in a stainless steel shackle with a chain. This
-                    can be attached to an existing mooring. We will work with
-                    you to determine the best arrangement for mooring at your
-                    site as factors like depth, wind, current, wave action, and
-                    storms may determine the configuration of the mooring.
+                    The Smart Buoy does not come with an anchor. It terminates
+                    in a stainless steel shackle with a chain. This can be
+                    attached to an existing mooring. We will work with you to
+                    determine the best arrangement for mooring at your site as
+                    factors like depth, wind, current, wave action, and storms
+                    may determine the configuration of the mooring.
                     <br />
                   </p>
                 </div>
@@ -203,7 +257,7 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    How do I receive data from the smart mooring?
+                    How do I receive data from the Smart Buoy?
                   </Typography>
                   <p>
                     Data will be available in an open-source dashboard provided
@@ -226,7 +280,7 @@ const Faq = ({ classes }: FaqProps) => {
               <div className="row faqq">
                 <div className="col">
                   <Typography className={classes.question} variant="h5">
-                    What data will I receive from the smart mooring?
+                    What data will I receive from the Smart Buoy?
                   </Typography>
                   <p>
                     The planned data available will be:
@@ -256,25 +310,6 @@ const Faq = ({ classes }: FaqProps) => {
                     <br />
                     subsurface temperature (placement configurable)
                     <br />
-                  </p>
-                </div>
-              </div>
-              <div className="row faqq">
-                <div className="col">
-                  <Typography className={classes.question} variant="h5">
-                    What are the best practices for conducting a survey?
-                  </Typography>
-                  <p>
-                    We have created an animated field guide that will describe
-                    the best practices for conducting a survey and using the
-                    Aqualink system.
-                    <br />
-                    <br />
-                    <ReactPlayer
-                      url="https://www.youtube.com/embed/E_nXCl612lg"
-                      width="100%"
-                      title="field_guide"
-                    />
                   </p>
                 </div>
               </div>

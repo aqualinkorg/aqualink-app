@@ -202,6 +202,7 @@ const styles = (theme: Theme) =>
   createStyles({
     ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       height: "100%",
       width: "100%",
       backgroundColor: "#eff0f0",
@@ -217,6 +218,7 @@ const styles = (theme: Theme) =>
       marginLeft: "0.5rem",
     },
     contentWrapper: {
+      height: "100%",
       flex: "1 1 auto",
       padding: 0,
     },

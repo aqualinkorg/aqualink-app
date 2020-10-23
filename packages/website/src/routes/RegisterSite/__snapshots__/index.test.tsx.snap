@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`Site registration page should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
     searchlocation="false"
   />
   <mock-box
-    py="4"
+    height="100%"
+    pt="4"
   >
     <div
       class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
@@ -15,78 +16,20 @@ exports[`renders as expected 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
             gutterbottom="true"
             variant="h3"
           >
-            Manage your local reef
+            Register your local site
           </mock-typography>
           <mock-typography>
-            We will be starting with our deployments in August and would love to have you apply to get free access to our system. We'll have more more more information coming shortly. Submitting the application doesn't obligate you, if you have questions please first take a look at our FAQ page and if you don't get the answer you're looking for then email info@aqualink.org.
+            To get your local site registered with Aqualink to start tracking surface temperatures and survey imagery please complete the form below. Your site will become immediately available for you to see though some of the data will take up to 24 hours to show up.
           </mock-typography>
-          <mock-box
-            mt="4"
-          >
-            <img
-              alt="Reefs"
-              src="reemimage.jpg"
-              style="width: 100%;"
-            />
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
-        >
-          <mock-box
-            bgcolor="grey.100"
-            p="4"
-          >
-            <mock-typography
-              gutterbottom="true"
-              variant="h4"
-            >
-              Your Obligations
-            </mock-typography>
-            <mock-typography
-              component="div"
-            >
-              You will be given a free smart buoy but there are some things you will be expected to do or provide:
-              <ol>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Pay for shipping and any applicable duties
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Obtain any necessary permits (if applicable)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Provide and attach a ballast (e.g. 60lb kettlebell)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Deploy spotter with mooring weight (can be done from a kayak)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Maintain spotter (inspect and clean every 6 months)
-                </li>
-                <li
-                  class="Apply-listItem-1"
-                >
-                  Conduct initial and periodic photographic surveys and upload imagery to our website
-                </li>
-              </ol>
-            </mock-typography>
-          </mock-box>
+          <mock-typography>
+            Once you have your site registered you can apply to get a smart buoy to track underwater temperatures as well. If approved, Aqualink will provide you with a buoy free of charge but you will be responsible for paying the shipping and import duties costs (if applicable).
+          </mock-typography>
         </div>
       </div>
     </div>
@@ -132,6 +75,7 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
@@ -139,7 +83,7 @@ exports[`renders as expected 1`] = `
                       inputprops="[object Object]"
                       label="Name"
                       size="small"
-                      value=""
+                      value="Mock User"
                       variant="outlined"
                     />
                   </div>
@@ -147,6 +91,7 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
@@ -154,7 +99,7 @@ exports[`renders as expected 1`] = `
                       inputprops="[object Object]"
                       label="Organization"
                       size="small"
-                      value=""
+                      value="Some organization"
                       variant="outlined"
                     />
                   </div>
@@ -162,6 +107,7 @@ exports[`renders as expected 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-textfield
+                      disabled="true"
                       error="false"
                       fullwidth="true"
                       helpertext=""
@@ -169,7 +115,7 @@ exports[`renders as expected 1`] = `
                       inputprops="[object Object]"
                       label="Email"
                       size="small"
-                      value=""
+                      value="mail@mail.com"
                       variant="outlined"
                     />
                   </div>
@@ -211,7 +157,22 @@ exports[`renders as expected 1`] = `
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
+                  >
+                    <mock-textfield
+                      error="false"
+                      fullwidth="true"
+                      helpertext=""
+                      id="siteName"
+                      inputprops="[object Object]"
+                      label="Site Name"
+                      size="small"
+                      value=""
+                      variant="outlined"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4"
                   >
                     <mock-textfield
                       error="false"
@@ -228,67 +189,21 @@ exports[`renders as expected 1`] = `
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
-                    Agree to:
-                    <div
-                      class="MuiFormGroup-root"
+                    <mock-tooltip
+                      disablehoverlistener="true"
+                      title="Please login to register a site"
                     >
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
+                      <div>
+                        <mock-button
                           color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
+                          disabled="false"
+                          fullwidth="true"
+                          variant="contained"
                         >
-                          Handle any shipping and permitting charges
-                        </mock-typography>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
-                          color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
-                        >
-                          Provide mooring and deploy buoy
-                        </mock-typography>
-                      </label>
-                      <label
-                        class="MuiFormControlLabel-root Apply-formControlLabel-4"
-                      >
-                        <mock-checkbox
-                          checked="false"
-                          color="primary"
-                          name="checkedA"
-                        />
-                        <mock-typography
-                          classname="MuiFormControlLabel-label"
-                          component="span"
-                        >
-                          Conduct initial survey
-                        </mock-typography>
-                      </label>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-                  >
-                    <mock-button
-                      color="primary"
-                      fullwidth="true"
-                      variant="contained"
-                    >
-                      Submit
-                    </mock-button>
+                          Submit
+                        </mock-button>
+                      </div>
+                    </mock-tooltip>
                   </div>
                 </div>
               </mock-box>

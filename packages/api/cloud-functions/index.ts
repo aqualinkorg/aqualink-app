@@ -59,7 +59,8 @@ exports.dailyUpdate = functions
 
 exports.scheduledDailyUpdate = functions
   .runWith({ timeoutSeconds: 540 })
-  .pubsub.schedule('every 24 hours')
+  .pubsub.schedule('0 4 * * *')
+  .timeZone('America/Los_Angeles')
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
     // eslint-disable-next-line fp/no-mutation

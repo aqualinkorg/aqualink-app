@@ -10,11 +10,12 @@ export const dhwColorFinder = (degreeHeatingWeeks?: number | null): string => {
   if (isNil(degreeHeatingWeeks) || degreeHeatingWeeks < dhwColorCode[0].value) {
     return dhwColorCode[0].color;
   }
-  if (degreeHeatingWeeks > dhwColorCode[len - 1].value) {
+  if (degreeHeatingWeeks >= dhwColorCode[len - 1].value) {
     return dhwColorCode[len - 1].color;
   }
   const index = dhwColorCode.findIndex(
     (item) => degreeHeatingWeeks < item.value
   );
+
   return dhwColorCode[index - 1].color;
 };

@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`Sensor Card should render with given state from Redux store 1`] = `
 <div>
   <mock-card
-    classname="Sensor-card-7"
+    classname="Sensor-card-1"
   >
     <div
-      class="MuiCardHeader-root Sensor-header-2"
+      class="MuiCardHeader-root Sensor-header-3"
     >
       <div
         class="MuiCardHeader-content"
@@ -24,7 +24,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8"
             >
               <mock-typography
-                classname="Sensor-cardTitle-1"
+                classname="Sensor-cardTitle-2"
                 variant="h6"
               >
                 SENSOR OBSERVATION
@@ -59,13 +59,13 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="Sensor-contentTextTitles-3"
+              classname="Sensor-contentTextTitles-4"
               variant="subtitle2"
             >
               TEMP AT 1m
             </mock-typography>
             <mock-typography
-              classname="Sensor-contentTextValues-4"
+              classname="Sensor-contentTextValues-5"
               variant="h2"
             >
               - - °C
@@ -75,16 +75,16 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="Sensor-contentTextTitles-3"
+              classname="Sensor-contentTextTitles-4"
               variant="subtitle2"
             >
-              TEMP AT 24m
+              TEMP AT 0m
             </mock-typography>
             <mock-typography
-              classname="Sensor-contentTextValues-4"
+              classname="Sensor-contentTextValues-5"
               variant="h2"
             >
-              25.0 °C
+              39.0 °C
             </mock-typography>
           </div>
         </div>

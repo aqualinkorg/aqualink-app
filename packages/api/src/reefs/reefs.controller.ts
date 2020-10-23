@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
@@ -17,6 +18,8 @@ import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
 import { CreateReefDto } from './dto/create-reef.dto';
+import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
+import { ParseDatePipe } from '../pipes/parse-date.pipe';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs')
@@ -52,16 +55,28 @@ export class ReefsController {
     return this.reefsService.findLiveData(id);
   }
 
-  @Put(':id')
-  update(
+  @Public()
+  @Get(':id/spotter_data')
+  getSpotterData(
     @Param('id', ParseIntPipe) id: number,
+    @Query('startDate', ParseDatePipe) startDate: Date,
+    @Query('endDate', ParseDatePipe) endDate: Date,
+  ) {
+    return this.reefsService.getSpotterData(id, startDate, endDate);
+  }
+
+  @UseGuards(IsReefAdminGuard)
+  @Put(':reef_id')
+  update(
+    @Param('reef_id', ParseIntPipe) id: number,
     @Body() updateReefDto: UpdateReefDto,
   ): Promise<Reef> {
     return this.reefsService.update(id, updateReefDto);
   }
 
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+  @UseGuards(IsReefAdminGuard)
+  @Delete(':reef_id')
+  delete(@Param('reef_id', ParseIntPipe) id: number): Promise<void> {
     return this.reefsService.delete(id);
   }
 }

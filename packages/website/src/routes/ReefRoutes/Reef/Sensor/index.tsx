@@ -11,12 +11,53 @@ import {
   Chip,
   Box,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
+import { findAdministeredReef } from "../../../../helpers/findAdministeredReef";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import type { Reef } from "../../../../store/Reefs/types";
+import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
+import { isAdmin } from "../../../../helpers/isAdmin";
+import { userInfoSelector } from "../../../../store/User/userSlice";
+
+const applicationTag = (user: User | null, reefId: number, classes: any) => {
+  const userReef = findAdministeredReef(user, reefId);
+  const { applied, status } = userReef || {};
+  const isManager = isAdmin(user, reefId);
+
+  switch (true) {
+    case !isManager:
+      return "Not Installed Yet";
+
+    case !applied:
+      return (
+        <Link className={classes.newSpotterLink} to="/apply">
+          Add a Smart Buoy
+        </Link>
+      );
+
+    case status === "in_review":
+      return (
+        <Link className={classes.newSpotterLink} to="/apply">
+          My Application
+        </Link>
+      );
+
+    case status === "approved":
+      return "Smart Buoy approved";
+
+    case status === "rejected":
+      return (
+        <span className={classes.rejectedAlert}>Smart Buoy not approved</span>
+      );
+    default:
+      return "Not Installed Yet";
+  }
+};
 
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = reef.liveData;
@@ -24,6 +65,8 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value
   );
+
+  const user = useSelector(userInfoSelector);
 
   const metrics = [
     {
@@ -76,10 +119,10 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               </Grid>
             ))}
             {!hasSpotter && (
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <Chip
                   className={classes.noSensorAlert}
-                  label="Not Installed Yet"
+                  label={applicationTag(user, reef.id, classes)}
                 />
               </Grid>
             )}
@@ -98,6 +141,7 @@ const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
+      ...incomingStyles.card,
       display: "flex",
       flexDirection: "column",
       height: "100%",
@@ -119,6 +163,18 @@ const styles = () =>
       backgroundColor: "#edb86f",
       borderRadius: 4,
       color: "white",
+      width: "100%",
+    },
+    rejectedAlert: {
+      fontSize: 11,
+    },
+    newSpotterLink: {
+      color: "inherit",
+      textDecoration: "none",
+      "&:hover": {
+        color: "inherit",
+        textDecoration: "none",
+      },
     },
   });
 

@@ -29,11 +29,14 @@ import {
   surveyListSelector,
   surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
+import { useBodyLength } from "../../../helpers/useBodyLength";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
+
+  const bodyLength = useBodyLength();
 
   useEffect(() => {
     dispatch(surveysRequest(`${reef.id}`));
@@ -62,7 +65,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           bgcolor="#f5f6f6"
           position="absolute"
           height="100%"
-          width="100vw"
+          width={bodyLength}
           zIndex="-1"
         />
         <Grid

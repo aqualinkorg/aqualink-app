@@ -38,25 +38,21 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   const headCells: HeadCell[] = [
     {
       id: "locationName",
-      numeric: false,
       label: "SITE",
       width: "40%",
     },
     {
       id: "temp",
-      numeric: false,
       label: "TEMP",
       unit: "°C",
     },
     {
       id: "dhw",
-      numeric: true,
       label: "STRESS",
       unit: "DHW",
     },
     {
       id: "alert",
-      numeric: true,
       label: "ALERT",
       width: "5%",
     },
@@ -89,9 +85,8 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 };
 
 interface HeadCell {
-  id: OrderKeys | "alert";
+  id: OrderKeys;
   label: string;
-  numeric: boolean;
   unit?: string;
   width?: string;
 }
@@ -102,7 +97,7 @@ interface EnhancedTableIncomingProps {
     property: OrderKeys
   ) => void;
   order: Order;
-  orderBy: string;
+  orderBy: OrderKeys;
 }
 
 const styles = () =>

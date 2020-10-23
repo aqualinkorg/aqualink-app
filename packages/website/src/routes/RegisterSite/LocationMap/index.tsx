@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Map, TileLayer, Marker } from "react-leaflet";
-import L from "leaflet";
+import L, { LeafletEvent } from "leaflet";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
 
 import marker from "../../../assets/marker.png";
@@ -12,12 +12,22 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
+const INITIAL_ZOOM = 5;
+
 const LocationMap = ({
   markerPositionLat,
   markerPositionLng,
   updateMarkerPosition,
   classes,
 }: LocationMapProps) => {
+  const [zoom, setZoom] = useState<number>(INITIAL_ZOOM);
+
+  const onZoomEnd = useCallback(
+    // eslint-disable-next-line no-underscore-dangle
+    (event: LeafletEvent) => setZoom(event.target._zoom as number),
+    []
+  );
+
   function updateLatLng(event: L.LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
     updateMarkerPosition([lat, lng]);
@@ -36,9 +46,10 @@ const LocationMap = ({
   return (
     <Map
       center={markerPosition}
-      zoom={5}
+      zoom={zoom}
       className={classes.map}
       onclick={updateLatLng}
+      onzoomend={onZoomEnd}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {markerPosition && <Marker icon={pinIcon} position={markerPosition} />}

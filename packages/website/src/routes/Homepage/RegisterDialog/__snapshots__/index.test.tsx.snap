@@ -127,6 +127,21 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                   error="false"
                   fullwidth="true"
                   helpertext=""
+                  id="organization"
+                  inputprops="[object Object]"
+                  label="Organization"
+                  name="organization"
+                  placeholder="Organization"
+                  variant="outlined"
+                />
+              </div>
+              <div
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-6 MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-textfield
+                  error="false"
+                  fullwidth="true"
+                  helpertext=""
                   id="emailAddress"
                   inputprops="[object Object]"
                   label="Email Address"
@@ -175,7 +190,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                      
                     <a
                       class="RegisterDialog-termsLink-12"
-                      href="/"
+                      href="/terms"
                     >
                       Terms and Conditions
                     </a>

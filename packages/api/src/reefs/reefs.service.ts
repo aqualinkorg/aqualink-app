@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,11 +17,17 @@ import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { Region } from '../regions/regions.entity';
-import { getRegion, getTimezones } from '../utils/reef.utils';
+import {
+  getRegion,
+  getTimezones,
+  handleDuplicateReef,
+} from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
+import { getSpotterData } from '../utils/sofar';
 
 @Injectable()
 export class ReefsService {
+  private readonly logger = new Logger(ReefsService.name);
   constructor(
     @InjectRepository(Reef)
     private reefsRepository: Repository<Reef>,
@@ -39,7 +46,6 @@ export class ReefsService {
       longitude,
       temperatureThreshold,
       depth,
-      status,
       videoStream,
       admins,
       stream,
@@ -47,21 +53,22 @@ export class ReefsService {
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
-    const reef = await this.reefsRepository.save({
-      name,
-      region,
-      polygon: {
-        type: 'Point',
-        coordinates: [latitude, longitude],
-      },
-      maxMonthlyMean,
-      timezones,
-      temperatureThreshold,
-      depth,
-      status,
-      videoStream,
-      stream,
-    });
+    const reef = await this.reefsRepository
+      .save({
+        name,
+        region,
+        polygon: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        maxMonthlyMean,
+        timezones,
+        temperatureThreshold,
+        depth,
+        videoStream,
+        stream,
+      })
+      .catch(handleDuplicateReef);
 
     this.reefsRepository
       .createQueryBuilder('reefs')
@@ -120,18 +127,29 @@ export class ReefsService {
     const found = await this.reefsRepository.findOne(id, {
       relations: ['region', 'admins', 'stream'],
     });
+
     if (!found) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
+
     return found;
   }
 
   async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
-    const { admins } = updateReefDto;
-    const result = await this.reefsRepository.update(
-      id,
-      omit(updateReefDto, ['admins']),
-    );
+    const { coordinates, admins } = updateReefDto;
+    const result = await this.reefsRepository
+      .update(id, {
+        ...omit(updateReefDto, ['admins', 'coordinates']),
+        ...(coordinates
+          ? {
+              polygon: {
+                type: 'Point',
+                coordinates: [coordinates.longitude, coordinates.latitude],
+              },
+            }
+          : {}),
+      })
+      .catch(handleDuplicateReef);
 
     if (admins) {
       await this.updateAdmins(id, admins);
@@ -193,6 +211,29 @@ export class ReefsService {
     return {
       ...liveData,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+    };
+  }
+
+  async getSpotterData(id: number, startDate: Date, endDate: Date) {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found.`);
+    }
+
+    if (!reef.spotterId) {
+      throw new NotFoundException(`Reef with ${id} has no spotter.`);
+    }
+
+    const { surfaceTemperature, bottomTemperature } = await getSpotterData(
+      reef.spotterId,
+      endDate,
+      startDate,
+    );
+
+    return {
+      surfaceTemperature,
+      bottomTemperature,
     };
   }
 

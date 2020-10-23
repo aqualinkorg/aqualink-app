@@ -7,6 +7,7 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
   <mock-drawer
     anchor="left"
     classes="[object Object]"
+    open="true"
   >
     <mock-iconbutton
       style="align-self: flex-end; margin-right: 5px; margin-top: 5px; color: white;"
@@ -44,11 +45,60 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       FAQ
     </mock-link>
     <mock-link
-      href="/apply"
+      href="/register"
       style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
     >
-      APPLY
+      REGISTER A SITE
     </mock-link>
+    <mock-box
+      margintop="auto"
+      padding="25px"
+    >
+      <mock-typography
+        variant="subtitle1"
+      >
+        Aqualink's source code is licenced under MIT. Contribute!
+      </mock-typography>
+      <div
+        class="MuiButtonGroup-root MuiButtonGroup-contained"
+        role="group"
+      >
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
+          href="https://github.com/aqualinkorg/aqualink-app"
+          size="medium"
+          starticon="[object Object]"
+          target="_blank"
+          variant="contained"
+        >
+          GitHub
+        </mock-button>
+        <mock-button
+          classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-2"
+          color="default"
+          disabled="false"
+          disableelevation="false"
+          disablefocusripple="false"
+          disableripple="false"
+          fullwidth="false"
+          href="https://ovio.org/project/aqualinkorg/aqualink-app"
+          size="medium"
+          target="_blank"
+          variant="contained"
+        >
+          <img
+            alt="Ovio Logo"
+            src="ovio_logo.png"
+          />
+        </mock-button>
+      </div>
+    </mock-box>
   </mock-drawer>
 </div>
 `;

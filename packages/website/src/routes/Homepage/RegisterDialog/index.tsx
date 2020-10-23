@@ -63,6 +63,7 @@ const RegisterDialog = ({
       }
       const registerInfo: UserRegisterParams = {
         fullName: `${data.firstName} ${data.lastName}`,
+        organization: data.organization,
         email: data.emailAddress,
         password: data.password,
       };
@@ -185,6 +186,24 @@ const RegisterDialog = ({
                 </Grid>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
                   <TextField
+                    id="organization"
+                    name="organization"
+                    placeholder="Organization"
+                    helperText={
+                      errors.organization ? errors.organization.message : ""
+                    }
+                    label="Organization"
+                    inputRef={register({
+                      required: "This is a required field",
+                    })}
+                    error={!!errors.organization}
+                    inputProps={{ className: classes.textField }}
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid className={classes.textFieldWrapper} item xs={12}>
+                  <TextField
                     id="emailAddress"
                     name="emailAddress"
                     placeholder="Email Address"
@@ -242,7 +261,7 @@ const RegisterDialog = ({
                       color="textSecondary"
                     >
                       I have read the{" "}
-                      <Link className={classes.termsLink} to="/">
+                      <Link className={classes.termsLink} to="/terms">
                         Terms and Conditions
                       </Link>
                     </Typography>

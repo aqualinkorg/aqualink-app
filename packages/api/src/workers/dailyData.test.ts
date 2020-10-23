@@ -24,7 +24,7 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData((reef as unknown) as Reef, date);
+  const values = await getDailyData((reef as unknown) as Reef, date, true);
 
   expect(values).toEqual({
     reef: { id: 1 },

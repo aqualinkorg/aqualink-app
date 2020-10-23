@@ -12,10 +12,15 @@ import {
 } from './dto/update-reef-application.dto';
 import { Reef } from '../reefs/reefs.entity';
 import { Region } from '../regions/regions.entity';
-import { getRegion, getTimezones } from '../utils/reef.utils';
+import {
+  getRegion,
+  getTimezones,
+  handleDuplicateReef,
+} from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { AdminLevel, User } from '../users/users.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
+import { FilterReefApplication } from './dto/filter-reef-application.dto';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -36,22 +41,25 @@ export class ReefApplicationsService {
     reefParams: CreateReefWithApplicationDto,
     user: User,
   ): Promise<ReefApplication> {
-    const { longitude, latitude, depth } = reefParams;
+    const { longitude, latitude, depth, name } = reefParams;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
 
-    const reef = await this.reefRepository.save({
-      depth,
-      polygon: {
-        type: 'Point',
-        coordinates: [latitude, longitude],
-      },
-      maxMonthlyMean,
-      timezone: timezones[0],
-      approved: false,
-      region,
-    });
+    const reef = await this.reefRepository
+      .save({
+        name,
+        depth,
+        polygon: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        maxMonthlyMean,
+        timezone: timezones[0],
+        approved: false,
+        region,
+      })
+      .catch(handleDuplicateReef);
 
     // Elevate user to ReefManager
     if (user.adminLevel === AdminLevel.Default) {
@@ -80,6 +88,22 @@ export class ReefApplicationsService {
       reef,
       user,
     });
+  }
+
+  find(filters: FilterReefApplication): Promise<ReefApplication[]> {
+    const query = this.reefApplicationRepository.createQueryBuilder(
+      'reefApplication',
+    );
+
+    if (filters.reef) {
+      query.andWhere('reef_id = :reef_id', { reef_id: filters.reef });
+    }
+
+    if (filters.user) {
+      query.andWhere('user_id = :user_id', { user_id: filters.user });
+    }
+
+    return query.getMany();
   }
 
   findOne(id: number): Promise<ReefApplication> {
