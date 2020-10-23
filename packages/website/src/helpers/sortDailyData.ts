@@ -18,6 +18,7 @@ export const sortByDate = <T>(
   dateFieldName: keyof T,
   order?: "asc" | "desc"
 ): T[] => {
+  // eslint-disable-next-line fp/no-mutating-methods
   return Object.values(list).sort((item1, item2) => {
     const date1 = new Date(
       (item1[dateFieldName] as unknown) as string

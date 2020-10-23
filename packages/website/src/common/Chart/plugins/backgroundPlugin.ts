@@ -1,5 +1,5 @@
 const { Chart } = require("react-chartjs-2");
-
+/* eslint-disable fp/no-mutation,no-param-reassign */
 const plugin = {
   id: "chartJsPluginBarchartBackground",
   beforeDraw(chart: any, _easingValue: any, options: any) {
@@ -14,7 +14,6 @@ const plugin = {
     ctx.save();
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
-      // eslint-disable-next-line no-param-reassign
       chart.scales["x-axis-0"].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }

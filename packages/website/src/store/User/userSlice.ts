@@ -32,6 +32,7 @@ export const createUser = createAsyncThunk<
   ) => {
     let user;
     try {
+      // eslint-disable-next-line fp/no-mutation
       user = (await userServices.createUser(email, password)).user;
       const token = await user?.getIdToken();
 
@@ -152,7 +153,7 @@ const userSlice = createSlice({
   initialState: userInitialState,
   reducers: {},
   extraReducers: (builder) => {
-    // User Create
+    // User Create TODO duplicated below
     builder.addCase(
       createUser.fulfilled,
       (state, action: PayloadAction<User>) => {

@@ -36,6 +36,7 @@ export const createChartData = (
   };
 
   if (fill) {
+    // eslint-disable-next-line fp/no-mutating-methods
     data.datasets!.splice(1, 0, {
       label: "BLEACHING THRESHOLD",
       data: surfaceTemps,
