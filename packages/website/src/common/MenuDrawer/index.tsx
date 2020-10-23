@@ -1,13 +1,18 @@
 import React from "react";
 import {
-  withStyles,
-  WithStyles,
+  Box,
+  Button,
+  ButtonGroup,
   createStyles,
-  Link,
   Drawer,
   IconButton,
+  Link,
+  Typography,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
-import { Clear } from "@material-ui/icons";
+import { Clear, GitHub } from "@material-ui/icons";
+import ovioLogo from "../../assets/img/ovio_logo.png";
 
 const menuRoutes = [
   {
@@ -31,8 +36,8 @@ const menuRoutes = [
     href: "/faq",
   },
   {
-    text: "APPLY",
-    href: "/apply",
+    text: "REGISTER A SITE",
+    href: "/register",
   },
 ];
 
@@ -68,6 +73,30 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           {text}
         </Link>
       ))}
+      <Box marginTop="auto" padding="25px">
+        <Typography variant="subtitle1">
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          Aqualink's source code is licenced under MIT. Contribute!
+        </Typography>
+        <ButtonGroup variant="contained" color="default">
+          <Button
+            target="_blank"
+            href="https://github.com/aqualinkorg/aqualink-app"
+            startIcon={<GitHub />}
+            className={classes.contributeButton}
+          >
+            GitHub
+          </Button>
+
+          <Button
+            target="_blank"
+            href="https://ovio.org/project/aqualinkorg/aqualink-app"
+            className={classes.contributeButton}
+          >
+            <img src={ovioLogo} alt="Ovio Logo" />
+          </Button>
+        </ButtonGroup>
+      </Box>
     </Drawer>
   );
 };
@@ -75,10 +104,20 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
 const styles = () =>
   createStyles({
     paper: {
-      width: "12rem",
+      width: "16rem",
       alignItems: "center",
       // paddingTop: "2rem",
       backgroundColor: "#095877",
+    },
+    contributeButton: {
+      width: "50%",
+      textTransform: "none",
+      "& img": {
+        maxWidth: "100%",
+      },
+      "&:hover": {
+        color: "#000000",
+      },
     },
   });
 

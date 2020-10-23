@@ -10,7 +10,7 @@ exports[`Site registration page should render with given state from Redux store 
     pt="4"
   >
     <div
-      class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
+      class="MuiContainer-root MuiContainer-maxWidthLg"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
@@ -39,7 +39,7 @@ exports[`Site registration page should render with given state from Redux store 
       p="[object Object]"
     >
       <div
-        class="MuiContainer-root MuiContainer-fixed MuiContainer-maxWidthLg"
+        class="MuiContainer-root MuiContainer-maxWidthLg"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6"
