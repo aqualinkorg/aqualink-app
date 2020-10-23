@@ -12,8 +12,7 @@ import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
-import { createChartData } from "../../helpers/createChartData";
-import { useProcessedChartData } from "./utils";
+import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 
 export interface ChartProps {
@@ -82,6 +81,7 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
+    bottomTemperatureData,
     tempWithSurvey,
     chartLabels,
   } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
@@ -223,6 +223,7 @@ function Chart({
         chartLabels,
         tempWithSurvey,
         surfaceTemperatureData,
+        bottomTemperatureData,
         !!temperatureThreshold
       )}
     />
