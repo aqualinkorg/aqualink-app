@@ -66,9 +66,15 @@ export const calculateAxisLimits = (
   // Add an extra date one day after the final daily data date
   const chartLabels = [xAxisMin, ...dates];
 
-  const { surfaceTemperatureData } = createDatasets(dailyData, surveys);
+  const { surfaceTemperatureData, bottomTemperatureData } = createDatasets(
+    dailyData,
+    surveys
+  );
 
-  const temperatureData = [...surfaceTemperatureData].filter((value) => value);
+  const temperatureData = [
+    ...surfaceTemperatureData,
+    ...bottomTemperatureData,
+  ].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
 
@@ -149,7 +155,7 @@ export const createChartData = (
       {
         label: "TEMP AT DEPTH",
         data: bottomTemps,
-        borderColor: "#091b8d",
+        borderColor: "#46a5cf",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,
