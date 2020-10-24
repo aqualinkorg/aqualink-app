@@ -125,8 +125,6 @@ export const createChartData = (
   surfaceTemps: number[],
   bottomTemps: number[],
   fill: boolean
-  // TODO - use pointRadius to display survey dates
-  // pointRadius: number,
 ) => {
   const data: ChartComponentProps["data"] = {
     labels,

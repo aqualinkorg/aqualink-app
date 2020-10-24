@@ -1,5 +1,5 @@
 const { Chart } = require("react-chartjs-2");
-/* eslint-disable fp/no-mutation,no-param-reassign */
+
 const plugin = {
   id: "chartJsPluginBarchartBackground",
   beforeDraw(chart: any, _easingValue: any, options: any) {
@@ -12,11 +12,14 @@ const plugin = {
     const chartWidth = chartArea.right - chartArea.left;
     const day = 1;
     ctx.save();
+    // eslint-disable-next-line fp/no-mutation
     ctx.fillStyle = options.color;
     if (options.xTicksFontWeight) {
+      // eslint-disable-next-line no-param-reassign,fp/no-mutation
       chart.scales["x-axis-0"].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
+    // eslint-disable-next-line fp/no-mutation
     for (let i = 0; i < ticksPositions.length; i += 2 * day) {
       const start = ticksPositions[i];
       const end = ticksPositions[i + day];

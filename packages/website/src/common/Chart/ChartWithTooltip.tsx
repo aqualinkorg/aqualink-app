@@ -45,7 +45,7 @@ function ChartWithTooltip({
 
   const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
     const chart = ref.current;
-    if (!chart || !chart.chartInstance.canvas) {
+    if (!chart?.chartInstance.canvas) {
       return;
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
