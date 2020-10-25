@@ -9,7 +9,7 @@ import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import { useProcessedChartData } from "./utils";
 
-interface ChartWithTooltipProps extends ChartProps {
+export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
   className?: string;
   style?: CSSProperties;

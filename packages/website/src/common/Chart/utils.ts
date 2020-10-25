@@ -31,12 +31,13 @@ export const createDatasets = (
     .map((item) => {
       const date = new Date(item.date).setHours(0, 0, 0, 0);
       if (surveyDates.includes(date)) {
-        return item.satelliteTemperature;
+        return item.avgBottomTemperature || item.satelliteTemperature;
       }
       return null;
     });
 
   return {
+    // repeat first value, so chart start point isn't instantaneous.
     tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
     bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
     surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
