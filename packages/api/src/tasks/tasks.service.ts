@@ -17,8 +17,6 @@ export class TasksService {
   // Run task every 2 hours at 00 minutes.
   @Cron('0 */2 * * *', { name: CronJobs.DeleteEmptySurveys })
   async deleteEmptySurveys() {
-    this.logger.debug('Running delete empty surveys cron job.');
-
     const emptySurveys = await this.surveyRepository
       .createQueryBuilder('survey')
       .leftJoin('survey.surveyMedia', 'surveyMedia')
@@ -37,6 +35,8 @@ export class TasksService {
         .execute();
 
       this.logger.log(`Deleted ${results.affected} empty survey(s).`);
+    } else {
+      this.logger.debug('No empty surveys to delete.');
     }
   }
 }
