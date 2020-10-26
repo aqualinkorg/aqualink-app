@@ -7,9 +7,8 @@ import {
   withStyles,
 } from "@material-ui/core";
 
-import ChartWithTooltip, {
-  ChartWithTooltipProps,
-} from "../../../../common/Chart/ChartWithTooltip";
+import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
+import type { ChartWithTooltipProps } from "../../../../common/Chart/ChartWithTooltip";
 
 const Charts = ({ classes, ...rest }: ChartsProps) => {
   return (
