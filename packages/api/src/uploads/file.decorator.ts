@@ -52,9 +52,6 @@ export const AcceptFile = (
     FileInterceptor(param, {
       storage: new MulterGoogleCloudStorage(config),
       fileFilter: fileFilter(acceptTypes),
-      limits: {
-        fileSize: maxFileSizeB,
-      },
     }),
   );
 };
