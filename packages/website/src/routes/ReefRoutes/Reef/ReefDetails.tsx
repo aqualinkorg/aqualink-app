@@ -175,22 +175,17 @@ const ReefDetails = ({
               </Grid>
               <Grid item>
                 <Select
-                  labelId="demo-controlled-open-select-label"
-                  id="demo-controlled-open-select"
                   open={open}
                   onClose={() => setOpen(false)}
                   onOpen={() => setOpen(true)}
                   value={range}
                   onChange={onRaneChange}
                 >
-                  <MenuItem value="day" onClick={() => {}}>
+                  <MenuItem value="day">
                     <Typography color="textSecondary">One day</Typography>
                   </MenuItem>
-                  <MenuItem value="week" onClick={() => {}}>
+                  <MenuItem value="week">
                     <Typography color="textSecondary">One week</Typography>
-                  </MenuItem>
-                  <MenuItem value="month" onClick={() => {}}>
-                    <Typography color="textSecondary">One Month</Typography>
                   </MenuItem>
                 </Select>
               </Grid>

@@ -1510,23 +1510,21 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             >
               <div
                 aria-haspopup="listbox"
-                aria-labelledby="demo-controlled-open-select-label demo-controlled-open-select"
                 class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                id="demo-controlled-open-select"
                 role="button"
                 tabindex="0"
               >
                 <mock-typography
                   color="textSecondary"
                 >
-                  One Month
+                  One week
                 </mock-typography>
               </div>
               <input
                 aria-hidden="true"
                 class="MuiSelect-nativeInput"
                 tabindex="-1"
-                value="month"
+                value="week"
               />
               <svg
                 aria-hidden="true"
@@ -1557,26 +1555,15 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </mock-typography>
                 </mock-menuitem>
                 <mock-menuitem
-                  data-value="week"
-                  role="option"
-                  selected="false"
-                >
-                  <mock-typography
-                    color="textSecondary"
-                  >
-                    One week
-                  </mock-typography>
-                </mock-menuitem>
-                <mock-menuitem
                   aria-selected="true"
-                  data-value="month"
+                  data-value="week"
                   role="option"
                   selected="true"
                 >
                   <mock-typography
                     color="textSecondary"
                   >
-                    One Month
+                    One week
                   </mock-typography>
                 </mock-menuitem>
               </mock-menu>

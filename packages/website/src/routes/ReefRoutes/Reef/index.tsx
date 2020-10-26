@@ -35,7 +35,7 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
-import { subtractFromDate } from "../../../helpers/dates";
+import { subtractFromDate, findMaxDate } from "../../../helpers/dates";
 import { Range } from "../../../store/Reefs/types";
 
 const getAlertMessage = (
@@ -115,12 +115,12 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   const spotterData = useSelector(reefSpotterDataSelector);
-  const [range, setRange] = useState<Range>("month");
+  const [range, setRange] = useState<Range>("week");
   const today = new Date();
-  const todayDate = `${today.getFullYear()}-${
-    today.getMonth() + 1
-  }-${today.getDate()}`;
-  const endDate = new Date(todayDate).toISOString();
+  const todayDate = new Date(
+    `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  ).toISOString();
+  const [endDate, setEndDate] = useState<string>();
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -132,12 +132,18 @@ const Reef = ({ match, classes }: ReefProps) => {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
-          startDate: subtractFromDate(endDate, range),
-          endDate,
+          startDate: subtractFromDate(todayDate, range),
+          endDate: todayDate,
         })
       );
     }
-  }, [dispatch, reefId, hasSpotter, range, endDate]);
+  }, [dispatch, reefId, hasSpotter, range, todayDate]);
+
+  useEffect(() => {
+    if (dailyData && spotterData) {
+      setEndDate(findMaxDate(dailyData, spotterData));
+    }
+  }, [dailyData, spotterData]);
 
   const onRaneChange = useCallback((event: ChangeEvent<{ value: unknown }>) => {
     setRange(event.target.value as Range);
@@ -148,8 +154,6 @@ const Reef = ({ match, classes }: ReefProps) => {
       case "day":
         return "hour";
       case "week":
-        return "day";
-      case "month":
         return "day";
       default:
         return "day";
@@ -189,8 +193,8 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
-              startDate={subtractFromDate(endDate, range)}
-              endDate={endDate}
+              startDate={subtractFromDate(endDate || todayDate, range)}
+              endDate={endDate || todayDate}
               range={range}
               onRaneChange={onRaneChange}
               chartPeriod={chartPeriod()}
