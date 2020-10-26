@@ -12,8 +12,7 @@ import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
-import { createChartData } from "../../helpers/createChartData";
-import { useProcessedChartData } from "./utils";
+import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 
 export interface ChartProps {
@@ -27,6 +26,30 @@ export interface ChartProps {
 }
 
 const SMALL_WINDOW = 400;
+
+const makeAnnotation = (
+  name: string,
+  value: number | null,
+  borderColor: string,
+  backgroundColor = "rgb(169,169,169, 0.7)"
+) => ({
+  type: "line",
+  mode: "horizontal",
+  scaleID: "y-axis-0",
+  value,
+  borderColor,
+  borderWidth: 2,
+  borderDash: [5, 5],
+  label: {
+    enabled: true,
+    backgroundColor,
+    yPadding: 3,
+    xPadding: 3,
+    position: "left",
+    xAdjust: 10,
+    content: name,
+  },
+});
 
 function Chart({
   dailyData,
@@ -50,7 +73,7 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const stepSize = 5;
+  const yStepSize = 5;
 
   const {
     xAxisMax,
@@ -58,6 +81,7 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
+    bottomTemperatureData,
     tempWithSurvey,
     chartLabels,
   } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
@@ -65,7 +89,8 @@ function Chart({
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
     if (current) {
-      const xScale = current.chartInstance.scales["x-axis-0"];
+      // not sure why 'scales' doesn't have a type. Possibly from a plugin?
+      const xScale = (current.chartInstance as any).scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
@@ -79,9 +104,7 @@ function Chart({
     }
   };
 
-  /*
-      Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
-    */
+  // Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
@@ -130,42 +153,12 @@ function Chart({
 
       annotation: {
         annotations: [
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: maxMonthlyMean,
-            borderColor: "rgb(75, 192, 192)",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Historical Max",
-            },
-          },
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: temperatureThreshold,
-            borderColor: "#ff8d00",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Bleaching Threshold",
-            },
-          },
+          makeAnnotation("Historical Max", maxMonthlyMean, "rgb(75, 192, 192)"),
+          makeAnnotation(
+            "Bleaching Threshold",
+            temperatureThreshold,
+            "#ff8d00"
+          ),
         ],
       },
       scales: {
@@ -200,11 +193,11 @@ function Chart({
             display: true,
             ticks: {
               min: yAxisMin,
-              stepSize,
+              stepSize: yStepSize,
               max: yAxisMax,
               callback: (value: number) => {
-                if (![1, stepSize - 1].includes(value % stepSize)) {
-                  return `${value}\u00B0  `;
+                if (![1, yStepSize - 1].includes(value % yStepSize)) {
+                  return `${value}°  `;
                 }
                 return "";
               },
@@ -230,7 +223,8 @@ function Chart({
         chartLabels,
         tempWithSurvey,
         surfaceTemperatureData,
-        Boolean(temperatureThreshold)
+        bottomTemperatureData,
+        !!temperatureThreshold
       )}
     />
   );

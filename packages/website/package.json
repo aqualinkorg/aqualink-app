@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env EXTEND_ESLINT=true react-scripts start",
+    "build": "cross-env EXTEND_ESLINT=true react-scripts build",
     "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=2",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore",
@@ -83,9 +83,9 @@
     "node": "12.x"
   },
   "devDependencies": {
-    "@types/immutable": "^3.8.7",
-    "@types/validator": "^13.1.0",
+    "@types/chart.js": "^2.9.27",
     "@types/classnames": "^2.2.10",
+    "@types/immutable": "^3.8.7",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.0.0",
@@ -97,6 +97,8 @@
     "@types/react-slick": "^0.23.4",
     "@types/react-swipeable-views": "^0.13.0",
     "@types/redux-mock-store": "^1.0.2",
-    "canvas": "^2.6.1"
+    "@types/validator": "^13.1.0",
+    "canvas": "^2.6.1",
+    "cross-env": "^7.0.2"
   }
 }

@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-/* eslint-disable-next-line import/no-cycle */
 import reducer from "./reducer";
 
 export const store = configureStore({ reducer });
