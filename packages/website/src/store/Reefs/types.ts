@@ -23,6 +23,8 @@ export interface SofarValue {
   value: number;
 }
 
+export type Range = "day" | "week" | "month";
+
 export interface LiveData {
   reef: { id: number };
   bottomTemperature?: SofarValue;
@@ -144,6 +146,7 @@ export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
   spotterData?: SpotterData;
+  spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;
 }

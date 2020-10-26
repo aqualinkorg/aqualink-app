@@ -11,6 +11,7 @@ import reefServices from "../../services/reefServices";
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
   loading: false,
+  spotterDataLoading: false,
   error: null,
 };
 
@@ -136,7 +137,7 @@ const selectedReefSlice = createSlice({
         return {
           ...state,
           spotterData: action.payload,
-          loading: false,
+          spotterDataLoading: false,
         };
       }
     );
@@ -147,7 +148,7 @@ const selectedReefSlice = createSlice({
         return {
           ...state,
           error: action.payload,
-          loading: false,
+          spotterDataLoading: false,
         };
       }
     );
@@ -155,7 +156,7 @@ const selectedReefSlice = createSlice({
     builder.addCase(reefSpotterDataRequest.pending, (state) => {
       return {
         ...state,
-        loading: true,
+        spotterDataLoading: true,
         error: null,
       };
     });

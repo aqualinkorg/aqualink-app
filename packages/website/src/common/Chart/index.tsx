@@ -15,12 +15,14 @@ import "chartjs-plugin-annotation";
 import { createChartData } from "../../helpers/createChartData";
 import { useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
+import { Range } from "../../store/Reefs/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: SpotterData;
   startDate?: string;
   endDate?: string;
+  chartPeriod?: "hour" | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
@@ -37,6 +39,7 @@ function Chart({
   surveys,
   startDate,
   endDate,
+  chartPeriod,
   temperatureThreshold,
   maxMonthlyMean,
   chartSettings = {},
@@ -190,7 +193,7 @@ function Chart({
                 week: "MMM D",
                 month: "MMM",
               },
-              unit: xPeriod,
+              unit: chartPeriod || xPeriod,
             },
             display: true,
             ticks: {

@@ -1,4 +1,4 @@
-import React, { ElementType } from "react";
+import React, { ElementType, ChangeEvent } from "react";
 import {
   createStyles,
   Grid,
@@ -6,6 +6,9 @@ import {
   WithStyles,
   Theme,
   Box,
+  Select,
+  MenuItem,
+  Typography,
 } from "@material-ui/core";
 import moment from "moment";
 
@@ -29,6 +32,9 @@ const ReefDetails = ({
   reef,
   startDate,
   endDate,
+  range,
+  onRaneChange,
+  chartPeriod,
   spotterData,
   hasDailyData,
   surveys,
@@ -36,6 +42,7 @@ const ReefDetails = ({
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
+  const [open, setOpen] = React.useState(false);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -149,12 +156,46 @@ const ReefDetails = ({
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
             />
+            <Grid
+              alignItems="baseline"
+              container
+              justify="flex-end"
+              spacing={2}
+            >
+              <Grid item>
+                <Typography variant="h6" color="textSecondary">
+                  Time range:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Select
+                  labelId="demo-controlled-open-select-label"
+                  id="demo-controlled-open-select"
+                  open={open}
+                  onClose={() => setOpen(false)}
+                  onOpen={() => setOpen(true)}
+                  value={range}
+                  onChange={onRaneChange}
+                >
+                  <MenuItem value="day" onClick={() => {}}>
+                    <Typography color="textSecondary">One day</Typography>
+                  </MenuItem>
+                  <MenuItem value="week" onClick={() => {}}>
+                    <Typography color="textSecondary">One week</Typography>
+                  </MenuItem>
+                  <MenuItem value="month" onClick={() => {}}>
+                    <Typography color="textSecondary">One Month</Typography>
+                  </MenuItem>
+                </Select>
+              </Grid>
+            </Grid>
             <Charts
               title="SPOTTER WATER TEMPERATURE (°C)"
               dailyData={reef.dailyData}
               spotterData={spotterData}
               startDate={startDate}
               endDate={endDate}
+              chartPeriod={chartPeriod}
               surveys={[]}
               depth={reef.depth}
               maxMonthlyMean={null}
@@ -191,6 +232,9 @@ interface ReefDetailIncomingProps {
   reef: Reef;
   startDate: string;
   endDate: string;
+  range: "day" | "week" | "month";
+  chartPeriod: "hour" | "day";
+  onRaneChange: (event: ChangeEvent<{ value: unknown }>) => void;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
   spotterData?: SpotterData;

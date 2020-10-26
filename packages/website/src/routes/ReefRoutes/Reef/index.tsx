@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -35,6 +35,8 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
+import { subtractFromDate } from "../../../helpers/dates";
+import { Range } from "../../../store/Reefs/types";
 
 const getAlertMessage = (
   user: User | null,
@@ -113,22 +115,45 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   const spotterData = useSelector(reefSpotterDataSelector);
-  const startDate = "2020-07-24T14:48:00.000Z";
-  const endDate = "2020-10-22T14:48:00.000Z";
+  const [range, setRange] = useState<Range>("month");
+  const today = new Date();
+  const endDate = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   useEffect(() => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
+  }, [dispatch, reefId]);
+
+  useEffect(() => {
     if (hasSpotter) {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
-          startDate,
+          startDate: subtractFromDate(endDate, range),
           endDate,
         })
       );
     }
-  }, [dispatch, reefId, hasSpotter]);
+  }, [dispatch, reefId, hasSpotter, range, endDate]);
+
+  const onRaneChange = useCallback((event: ChangeEvent<{ value: unknown }>) => {
+    setRange(event.target.value as Range);
+  }, []);
+
+  const chartPeriod = useCallback(() => {
+    switch (range) {
+      case "day":
+        return "hour";
+      case "week":
+        return "day";
+      case "month":
+        return "day";
+      default:
+        return "day";
+    }
+  }, [range]);
 
   if (loading) {
     return (
@@ -163,8 +188,11 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
-              startDate={startDate}
+              startDate={subtractFromDate(endDate, range)}
               endDate={endDate}
+              range={range}
+              onRaneChange={onRaneChange}
+              chartPeriod={chartPeriod()}
               hasDailyData={hasDailyData}
               spotterData={spotterData}
               surveys={surveyList}

@@ -1488,12 +1488,107 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           surveys=""
           title="DAILY WATER TEMPERATURE (°C)"
         />
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-flex-end"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-typography
+              color="textSecondary"
+              variant="h6"
+            >
+              Time range:
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <div
+              class="MuiInputBase-root MuiInput-root MuiInput-underline"
+            >
+              <div
+                aria-haspopup="listbox"
+                aria-labelledby="demo-controlled-open-select-label demo-controlled-open-select"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                id="demo-controlled-open-select"
+                role="button"
+                tabindex="0"
+              >
+                <mock-typography
+                  color="textSecondary"
+                >
+                  One Month
+                </mock-typography>
+              </div>
+              <input
+                aria-hidden="true"
+                class="MuiSelect-nativeInput"
+                tabindex="-1"
+                value="month"
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSelect-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+              <mock-menu
+                anchorel="[object HTMLDivElement]"
+                id="menu-"
+                menulistprops="[object Object]"
+                open="false"
+                paperprops="[object Object]"
+              >
+                <mock-menuitem
+                  data-value="day"
+                  role="option"
+                  selected="false"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                  >
+                    One day
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  data-value="week"
+                  role="option"
+                  selected="false"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                  >
+                    One week
+                  </mock-typography>
+                </mock-menuitem>
+                <mock-menuitem
+                  aria-selected="true"
+                  data-value="month"
+                  role="option"
+                  selected="true"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                  >
+                    One Month
+                  </mock-typography>
+                </mock-menuitem>
+              </mock-menu>
+            </div>
+          </div>
+        </div>
         <mock-charts
+          chartperiod="day"
           dailydata="[object Object]"
           depth="0"
-          enddate="2020-10-22T14:48:00.000Z"
+          enddate="2020-10-26"
           spotterdata="[object Object]"
-          startdate="2020-07-24T14:48:00.000Z"
+          startdate="2020-09-26T00:00:00.000Z"
           surveys=""
           title="SPOTTER WATER TEMPERATURE (°C)"
         />
