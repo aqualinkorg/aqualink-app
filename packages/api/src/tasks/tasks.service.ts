@@ -14,9 +14,10 @@ export class TasksService {
     private surveyRepository: Repository<Survey>,
   ) {}
 
-  @Cron('0 0-23/2 * * *', { name: CronJobs.DeleteEmptySurveys })
+  // Run task every 2 hours at 00 minutes.
+  @Cron('0 */2 * * *', { name: CronJobs.DeleteEmptySurveys })
   async deleteEmptySurveys() {
-    this.logger.log('Deleting empty surveys.');
+    this.logger.debug('Running delete empty surveys cron job.');
 
     const emptySurveys = await this.surveyRepository
       .createQueryBuilder('survey')
@@ -26,7 +27,6 @@ export class TasksService {
       .select('survey.id')
       .getMany();
 
-    this.logger.log(`Found ${emptySurveys.length} empty survey(s).`);
     const emptyKeys = emptySurveys.map((survey) => survey.id);
 
     if (emptySurveys.length) {
@@ -37,8 +37,6 @@ export class TasksService {
         .execute();
 
       this.logger.log(`Deleted ${results.affected} empty survey(s).`);
-    } else {
-      this.logger.log('Skipping deletion');
     }
   }
 }
