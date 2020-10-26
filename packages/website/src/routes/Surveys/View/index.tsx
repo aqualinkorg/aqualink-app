@@ -113,6 +113,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                     temperatureThreshold={
                       reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
                     }
+                    background
                   />
                 </Grid>
               </Grid>

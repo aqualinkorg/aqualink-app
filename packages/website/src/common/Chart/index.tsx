@@ -26,6 +26,7 @@ export interface ChartProps {
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
+  background: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -42,6 +43,7 @@ function Chart({
   chartPeriod,
   temperatureThreshold,
   maxMonthlyMean,
+  background,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -124,7 +126,7 @@ function Chart({
       maintainAspectRatio: false,
       plugins: {
         chartJsPluginBarchartBackground: {
-          color: "rgb(158, 166, 170, 0.07)",
+          color: background ? "rgb(158, 166, 170, 0.07)" : "#ffffff",
         },
         fillPlugin: {
           datasetIndex: 1,

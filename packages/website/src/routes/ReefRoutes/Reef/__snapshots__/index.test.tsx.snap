@@ -1483,6 +1483,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         mt="2rem"
       >
         <mock-charts
+          background="true"
           dailydata="[object Object]"
           depth="0"
           surveys=""

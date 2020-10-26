@@ -148,6 +148,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
         reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
       }
       maxMonthlyMean={reef.maxMonthlyMean || null}
+      background
     />
   );
 

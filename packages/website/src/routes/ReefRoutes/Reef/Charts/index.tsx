@@ -53,6 +53,7 @@ interface ChartsIncomingProps {
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;
+  background: boolean;
 }
 
 Charts.defaultProps = {

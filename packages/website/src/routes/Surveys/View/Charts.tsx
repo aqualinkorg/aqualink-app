@@ -26,6 +26,7 @@ interface ChartsIncomingProps {
   maxMonthlyMean: number | null;
   temperatureThreshold: number | null;
   depth: number | null;
+  background: boolean;
 }
 
 type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;

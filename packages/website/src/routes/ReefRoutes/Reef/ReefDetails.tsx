@@ -160,6 +160,7 @@ const ReefDetails = ({
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
+              background
             />
             <Grid
               alignItems="baseline"
@@ -217,6 +218,7 @@ const ReefDetails = ({
                 depth={reef.depth}
                 maxMonthlyMean={null}
                 temperatureThreshold={null}
+                background={false}
               />
             ) : null}
             <Surveys reefId={reef.id} />
