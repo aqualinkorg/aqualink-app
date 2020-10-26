@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { ElementType, ChangeEvent } from "react";
 import {
   createStyles,
@@ -9,8 +10,10 @@ import {
   Select,
   MenuItem,
   Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -21,7 +24,8 @@ import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import type { Reef, SpotterData } from "../../../store/Reefs/types";
+import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
+import { reefspotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -43,6 +47,7 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
   const [open, setOpen] = React.useState(false);
+  const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -189,18 +194,31 @@ const ReefDetails = ({
                 </Select>
               </Grid>
             </Grid>
-            <Charts
-              title="SPOTTER WATER TEMPERATURE (°C)"
-              dailyData={reef.dailyData}
-              spotterData={spotterData}
-              startDate={startDate}
-              endDate={endDate}
-              chartPeriod={chartPeriod}
-              surveys={[]}
-              depth={reef.depth}
-              maxMonthlyMean={null}
-              temperatureThreshold={null}
-            />
+            {spotterDataLoading ? (
+              <Box
+                height="20rem"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                textAlign="center"
+                p={4}
+              >
+                <CircularProgress size="6rem" thickness={1} />
+              </Box>
+            ) : spotterData ? (
+              <Charts
+                title="SPOTTER WATER TEMPERATURE (°C)"
+                dailyData={reef.dailyData}
+                spotterData={spotterData}
+                startDate={startDate}
+                endDate={endDate}
+                chartPeriod={chartPeriod}
+                surveys={[]}
+                depth={reef.depth}
+                maxMonthlyMean={null}
+                temperatureThreshold={null}
+              />
+            ) : null}
             <Surveys reefId={reef.id} />
           </Box>
         </>
@@ -232,12 +250,12 @@ interface ReefDetailIncomingProps {
   reef: Reef;
   startDate: string;
   endDate: string;
-  range: "day" | "week" | "month";
-  chartPeriod: "hour" | "day";
+  range: Range;
+  chartPeriod: "hour" | Range;
   onRaneChange: (event: ChangeEvent<{ value: unknown }>) => void;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
-  spotterData?: SpotterData;
+  spotterData?: SpotterData | null;
   point?: SurveyPoint | null;
   diveDate?: string | null;
 }
@@ -245,7 +263,7 @@ interface ReefDetailIncomingProps {
 ReefDetails.defaultProps = {
   point: null,
   diveDate: null,
-  spotterData: { surfaceTemperature: [], bottomTemperature: [] },
+  spotterData: null,
 };
 
 type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;

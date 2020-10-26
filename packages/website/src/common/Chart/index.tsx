@@ -67,8 +67,6 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
-    spotterBottom,
-    spotterSurface,
     tempWithSurvey,
     chartLabels,
   } = useProcessedChartData(
@@ -244,8 +242,8 @@ function Chart({
       options={settings}
       data={createChartData(
         chartLabels,
-        spotterBottom,
-        spotterSurface,
+        spotterData?.bottomTemperature || [],
+        spotterData?.surfaceTemperature || [],
         tempWithSurvey,
         surfaceTemperatureData,
         Boolean(temperatureThreshold)

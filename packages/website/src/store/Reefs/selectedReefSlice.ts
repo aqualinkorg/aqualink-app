@@ -179,6 +179,11 @@ export const reefLoadingSelector = (
   state: RootState
 ): SelectedReefState["loading"] => state.selectedReef.loading;
 
+export const reefspotterDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["spotterDataLoading"] =>
+  state.selectedReef.spotterDataLoading;
+
 export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;

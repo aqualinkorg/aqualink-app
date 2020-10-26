@@ -1,7 +1,9 @@
+import { SofarValue } from "../store/Reefs/types";
+
 export const createChartData = (
   labels: string[],
-  spotterBottom: number[],
-  spotterSurface: number[],
+  spotterBottom: SofarValue[],
+  spotterSurface: SofarValue[],
   tempWithSurvey: (number | null)[],
   dataArray: number[],
   fill: boolean
@@ -34,7 +36,10 @@ export const createChartData = (
       },
       {
         label: "SPOTTER BOTTOM",
-        data: spotterBottom,
+        data: spotterBottom.map((item) => ({
+          x: item.timestamp,
+          y: item.value,
+        })),
         backgroundColor: "rgb(0,100,0,0.2)",
         borderColor: "#006400",
         borderWidth: 2,
@@ -45,7 +50,10 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: spotterSurface,
+        data: spotterSurface.map((item) => ({
+          x: item.timestamp,
+          y: item.value,
+        })),
         backgroundColor: "rgb(255,165,0,0.2)",
         borderColor: "#ffa500",
         borderWidth: 2,
