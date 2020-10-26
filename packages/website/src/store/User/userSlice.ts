@@ -1,4 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  ActionReducerMapBuilder,
+  AsyncThunk,
+} from "@reduxjs/toolkit";
 import { FirebaseError } from "firebase";
 
 import type {
@@ -32,6 +38,7 @@ export const createUser = createAsyncThunk<
   ) => {
     let user;
     try {
+      // eslint-disable-next-line fp/no-mutation
       user = (await userServices.createUser(email, password)).user;
       const token = await user?.getIdToken();
 
@@ -147,131 +154,59 @@ export const signOutUser = createAsyncThunk<
   }
 });
 
+function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
+  builder: ActionReducerMapBuilder<UserState>,
+  thunk: AsyncThunk<Out, In, ThunkParams>,
+  // there's no easy way (I know of) to take a type - UserState - and make everything in it optional
+  rejected: (action: PayloadAction<UserState["error"]>) => UserState | any = (
+    action
+  ) => ({
+    userInfo: null,
+    error: action.payload,
+    loading: false,
+  }),
+  fulfilled: (action: PayloadAction<Out>) => UserState | any = (action) => ({
+    userInfo: action.payload,
+    loading: false,
+  })
+) {
+  builder.addCase(thunk.fulfilled, (state, action: PayloadAction<Out>) => ({
+    ...state,
+    ...fulfilled(action),
+  }));
+  builder.addCase(
+    thunk.rejected,
+    (state, action: PayloadAction<UserState["error"]>) => ({
+      ...state,
+      ...rejected(action),
+    })
+  );
+  builder.addCase(thunk.pending, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  }));
+}
+
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {},
   extraReducers: (builder) => {
     // User Create
-    builder.addCase(
-      createUser.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        return {
-          ...state,
-          userInfo: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(
-      createUser.rejected,
-      (state, action: PayloadAction<UserState["error"]>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(createUser.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
-
+    addAsyncReducer(builder, createUser, (action) => ({
+      error: action.payload,
+      loading: false,
+    }));
     // User Sign In
-    builder.addCase(
-      signInUser.fulfilled,
-      (state, action: PayloadAction<User>) => {
-        return {
-          ...state,
-          userInfo: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(
-      signInUser.rejected,
-      (_state, action: PayloadAction<UserState["error"]>) => {
-        return {
-          userInfo: null,
-          error: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(signInUser.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
-
+    addAsyncReducer(builder, signInUser);
     // User Sign Out
-    builder.addCase(
-      signOutUser.fulfilled,
-      (state, action: PayloadAction<UserState["userInfo"]>) => {
-        return {
-          ...state,
-          userInfo: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(
-      signOutUser.rejected,
-      (_state, action: PayloadAction<UserState["error"]>) => {
-        return {
-          userInfo: null,
-          error: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(signOutUser.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
-
+    addAsyncReducer(builder, signOutUser);
     // Get self
-    builder.addCase(getSelf.fulfilled, (state, action: PayloadAction<User>) => {
-      return {
-        ...state,
-        userInfo: action.payload,
-        loading: false,
-      };
-    });
-
-    builder.addCase(
-      getSelf.rejected,
-      (state, action: PayloadAction<UserState["error"]>) => {
-        return {
-          ...state,
-          error: action.payload,
-          loading: false,
-        };
-      }
-    );
-
-    builder.addCase(getSelf.pending, (state) => {
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      };
-    });
+    addAsyncReducer(builder, getSelf, (action) => ({
+      error: action.payload,
+      loading: false,
+    }));
   },
 });
 

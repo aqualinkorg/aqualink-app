@@ -159,6 +159,7 @@ const UploadMedia = ({
         setMetadata([]);
         setPreviews([]);
         setFeaturedFile(0);
+        // eslint-disable-next-line fp/no-mutating-methods
         history.push(`/reefs/${reefId}/survey_details/${survey?.id}`);
       })
       .catch((err) => {
