@@ -7,9 +7,6 @@ import {
   WithStyles,
   Theme,
   Box,
-  Select,
-  MenuItem,
-  Typography,
   CircularProgress,
 } from "@material-ui/core";
 import moment from "moment";
@@ -24,6 +21,7 @@ import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
+import SelectRange from "../../../common/SelectRange";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
 import { reefspotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
@@ -167,34 +165,14 @@ const ReefDetails = ({
               background
             />
             {hasSpotter && (
-              <Grid
-                alignItems="baseline"
-                container
-                justify="flex-end"
-                spacing={2}
-              >
-                <Grid item>
-                  <Typography variant="h6" color="textSecondary">
-                    Time range:
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Select
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    onOpen={() => setOpen(true)}
-                    value={range}
-                    onChange={onRangeChange}
-                  >
-                    <MenuItem value="day">
-                      <Typography color="textSecondary">One day</Typography>
-                    </MenuItem>
-                    <MenuItem value="week">
-                      <Typography color="textSecondary">One week</Typography>
-                    </MenuItem>
-                  </Select>
-                </Grid>
-              </Grid>
+              <SelectRange
+                width={12}
+                open={open}
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                value={range}
+                onRangeChange={onRangeChange}
+              />
             )}
             {spotterDataLoading ? (
               <Box

@@ -14,8 +14,6 @@ import {
   Typography,
   withStyles,
   WithStyles,
-  Select,
-  MenuItem,
   CircularProgress,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +24,7 @@ import {
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
+import SelectRange from "../../../common/SelectRange";
 
 import Charts from "./Charts";
 import type { Range, Reef } from "../../../store/Reefs/types";
@@ -164,38 +163,14 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   />
                 </Grid>
                 {hasSpotter && (
-                  <Grid
-                    alignItems="baseline"
-                    container
-                    justify="flex-end"
-                    spacing={2}
-                    item
-                    xs={11}
-                  >
-                    <Grid item>
-                      <Typography variant="h6" color="textSecondary">
-                        Time range:
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Select
-                        open={open}
-                        onClose={() => setOpen(false)}
-                        onOpen={() => setOpen(true)}
-                        value={range}
-                        onChange={onRangeChange}
-                      >
-                        <MenuItem value="day">
-                          <Typography color="textSecondary">One day</Typography>
-                        </MenuItem>
-                        <MenuItem value="week">
-                          <Typography color="textSecondary">
-                            One week
-                          </Typography>
-                        </MenuItem>
-                      </Select>
-                    </Grid>
-                  </Grid>
+                  <SelectRange
+                    width={11}
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                    value={range}
+                    onRangeChange={onRangeChange}
+                  />
                 )}
                 {spotterDataLoading ? (
                   <Box
