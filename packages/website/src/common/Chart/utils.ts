@@ -1,3 +1,4 @@
+import { ChartComponentProps } from "react-chartjs-2";
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type { DailyData, SofarValue } from "../../store/Reefs/types";
@@ -35,12 +36,13 @@ export const createDatasets = (
     .map((item) => {
       const date = new Date(item.date).setHours(0, 0, 0, 0);
       if (surveyDates.includes(date)) {
-        return item.satelliteTemperature;
+        return item.avgBottomTemperature || item.satelliteTemperature;
       }
       return null;
     });
 
   return {
+    // repeat first value, so chart start point isn't instantaneous.
     tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
     bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
     surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
@@ -78,6 +80,7 @@ export const calculateAxisLimits = (
 
   const {
     surfaceTemperatureData,
+    bottomTemperatureData,
     spotterBottom,
     spotterSurface,
   } = createDatasets(
@@ -89,6 +92,7 @@ export const calculateAxisLimits = (
 
   const temperatureData = [
     ...surfaceTemperatureData,
+    ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterSurface,
   ].filter((value) => value);
@@ -145,3 +149,94 @@ export function useProcessedChartData(
   );
   return { sortedDailyData, ...axisLimits, ...datasets };
 }
+
+export const createChartData = (
+  labels: string[],
+  spotterBottom: SofarValue[],
+  spotterSurface: SofarValue[],
+  tempWithSurvey: (number | null)[],
+  surfaceTemps: number[],
+  bottomTemps: number[],
+  fill: boolean
+) => {
+  const data: ChartComponentProps["data"] = {
+    labels,
+    datasets: [
+      {
+        type: "scatter",
+        label: "SURVEYS",
+        data: tempWithSurvey,
+        pointRadius: 5,
+        backgroundColor: "#ffffff",
+        pointBackgroundColor: "#ffff",
+        borderWidth: 1.5,
+        borderColor: "#128cc0",
+      },
+      {
+        label: "SURFACE TEMP",
+        data: surfaceTemps,
+        backgroundColor: "rgb(107,193,225,0.2)",
+        borderColor: "#6bc1e1",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "TEMP AT DEPTH",
+        data: bottomTemps,
+        borderColor: "#46a5cf",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "SPOTTER BOTTOM",
+        data: spotterBottom.map((item) => ({
+          x: item.timestamp,
+          y: item.value,
+        })),
+        backgroundColor: "rgb(0,100,0,0.2)",
+        borderColor: "#006400",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "SPOTTER SURFACE",
+        data: spotterSurface.map((item) => ({
+          x: item.timestamp,
+          y: item.value,
+        })),
+        backgroundColor: "rgb(255,165,0,0.2)",
+        borderColor: "#ffa500",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+    ],
+  };
+
+  if (fill) {
+    // eslint-disable-next-line fp/no-mutating-methods
+    data.datasets!.splice(1, 0, {
+      label: "BLEACHING THRESHOLD",
+      data: surfaceTemps,
+      fill,
+      borderColor: "#6bc1e1",
+      borderWidth: 2,
+      pointBackgroundColor: "#ffffff",
+      pointBorderWidth: 1.5,
+      pointRadius: 0,
+      cubicInterpolationMode: "monotone",
+    });
+  }
+  return data;
+};

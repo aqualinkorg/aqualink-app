@@ -5,11 +5,12 @@ import React, {
   useState,
 } from "react";
 import { Line } from "react-chartjs-2";
-import Chart, { ChartProps } from "./index";
+import type { ChartTooltipModel } from "chart.js";
+import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import { useProcessedChartData } from "./utils";
 
-interface ChartWithTooltipProps extends ChartProps {
+export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
   className?: string;
   style?: CSSProperties;
@@ -49,9 +50,11 @@ function ChartWithTooltip({
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const customTooltip = (ref: React.RefObject<Line>) => (tooltipModel: any) => {
+  const customTooltip = (ref: React.RefObject<Line>) => (
+    tooltipModel: ChartTooltipModel
+  ) => {
     const chart = ref.current;
-    if (!chart) {
+    if (!chart?.chartInstance.canvas) {
       return;
     }
     const position = chart.chartInstance.canvas.getBoundingClientRect();
@@ -60,7 +63,7 @@ function ChartWithTooltip({
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     const index = date && chartLabels.findIndex((item) => item === date);
 
-    if (index > -1 && index !== 0) {
+    if (index && index > -1 && typeof date === "string") {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,

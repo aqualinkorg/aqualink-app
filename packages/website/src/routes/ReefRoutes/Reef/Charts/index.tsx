@@ -6,14 +6,9 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
-import type {
-  DailyData,
-  SpotterData,
-  Range,
-} from "../../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
-import { SurveyListItem } from "../../../../store/Survey/types";
+import type { ChartWithTooltipProps } from "../../../../common/Chart/ChartWithTooltip";
 
 const Charts = ({ classes, title, ...rest }: ChartsProps) => {
   return (
@@ -44,25 +39,10 @@ const styles = (theme: Theme) =>
 
 interface ChartsIncomingProps {
   title: string;
-  dailyData: DailyData[];
-  spotterData?: SpotterData;
-  startDate?: string;
-  endDate?: string;
-  chartPeriod?: "hour" | Range | null;
-  surveys: SurveyListItem[];
-  temperatureThreshold: number | null;
-  maxMonthlyMean: number | null;
-  depth: number | null;
-  background: boolean;
 }
 
-Charts.defaultProps = {
-  spotterData: { surfaceTemperature: [], bottomTemperature: [] },
-  startDate: "",
-  endDate: "",
-  chartPeriod: null,
-};
-
-type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
+type ChartsProps = ChartsIncomingProps &
+  ChartWithTooltipProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(Charts);

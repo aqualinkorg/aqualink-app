@@ -28,7 +28,7 @@ export const fillBetweenLinesPlugin = {
         !chart.data.datasets[options.datasetIndex].backgroundColor ||
         options.updateChart
       ) {
-        // eslint-disable-next-line no-param-reassign
+        // eslint-disable-next-line no-param-reassign,fp/no-mutation
         chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
         chart.update();
       }

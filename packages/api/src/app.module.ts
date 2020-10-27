@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { configService } from './config/config.service';
 import { ReefApplicationsModule } from './reef-applications/reef-applications.module';
 import { ReefsModule } from './reefs/reefs.module';
@@ -9,6 +10,7 @@ import { SurveysModule } from './surveys/surveys.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { GoogleCloudModule } from './google-cloud/google-cloud.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { GoogleCloudModule } from './google-cloud/google-cloud.module';
     UsersModule,
     AuthModule,
     GoogleCloudModule,
+    ScheduleModule.forRoot(),
+    TasksModule,
   ],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 const { Chart } = require("react-chartjs-2");
 
-export const sliceDrawPLugin = {
+export const sliceDrawPlugin = {
   id: "sliceDrawPlugin",
   afterDatasetsDraw: (chart: any, _easingValue: any, options: any) => {
     const yScale = chart.scales["y-axis-0"];
@@ -13,6 +13,7 @@ export const sliceDrawPLugin = {
     if (options.sliceAtLabel) {
       ctx.beginPath();
       ctx.moveTo(xCoord, top);
+      // eslint-disable-next-line fp/no-mutation
       ctx.strokeStyle = "#777777";
       ctx.lineTo(xCoord, bottom);
       ctx.stroke();
@@ -20,4 +21,4 @@ export const sliceDrawPLugin = {
   },
 };
 
-Chart.pluginService.register(sliceDrawPLugin);
+Chart.pluginService.register(sliceDrawPlugin);
