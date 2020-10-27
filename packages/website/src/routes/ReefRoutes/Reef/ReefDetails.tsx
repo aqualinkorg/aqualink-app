@@ -30,6 +30,7 @@ import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
+import { filterData } from "../../../common/Chart/utils";
 
 const ReefDetails = ({
   classes,
@@ -49,6 +50,8 @@ const ReefDetails = ({
   const [lng, lat] = locationCalculator(reef.polygon);
   const [open, setOpen] = useState<boolean>(false);
   const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
+
+  const filteredDailyData = filterData(startDate, endDate, reef.dailyData);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -207,7 +210,7 @@ const ReefDetails = ({
             ) : spotterData ? (
               <Charts
                 title="SMART BUOY WATER TEMPERATURE (°C)"
-                dailyData={reef.dailyData}
+                dailyData={filteredDailyData}
                 spotterData={spotterData}
                 startDate={startDate}
                 endDate={endDate}

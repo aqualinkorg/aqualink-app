@@ -4,6 +4,22 @@ import { sortByDate } from "../../helpers/sortDailyData";
 import type { DailyData, SofarValue } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
+const isBetween = (date: Date, start: Date, end: Date): boolean => {
+  return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
+};
+
+export const filterData = (
+  from: string,
+  to: string,
+  dailyData: DailyData[]
+): DailyData[] => {
+  const startDate = new Date(from);
+  const endDate = new Date(to);
+  return dailyData.filter((item) =>
+    isBetween(new Date(item.date), startDate, endDate)
+  );
+};
+
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
   const dates = surveys.map((survey) => {
     if (survey.diveDate) {
@@ -61,12 +77,16 @@ export const calculateAxisLimits = (
   temperatureThreshold: number | null
 ) => {
   const ySpacing = 1;
-  const dates = dailyData
-    .filter(
-      (item) =>
-        item.surfaceTemperature !== null || item.satelliteTemperature !== null
-    )
-    .map((item) => item.date);
+  const dates =
+    dailyData.length > 0
+      ? dailyData
+          .filter(
+            (item) =>
+              item.surfaceTemperature !== null ||
+              item.satelliteTemperature !== null
+          )
+          .map((item) => item.date)
+      : spotterBottomTemperature.map((item) => item.timestamp);
   const dailyDataLen = dates.length;
 
   const xAxisMax = new Date(new Date(dates[dailyDataLen - 1])).toISOString();
