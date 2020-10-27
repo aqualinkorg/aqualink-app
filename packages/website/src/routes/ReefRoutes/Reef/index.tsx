@@ -35,7 +35,11 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
-import { subtractFromDate, findMaxDate } from "../../../helpers/dates";
+import {
+  subtractFromDate,
+  findMaxDate,
+  findChartPeriod,
+} from "../../../helpers/dates";
 import { Range } from "../../../store/Reefs/types";
 
 const getAlertMessage = (
@@ -145,20 +149,12 @@ const Reef = ({ match, classes }: ReefProps) => {
     }
   }, [dailyData, spotterData]);
 
-  const onRaneChange = useCallback((event: ChangeEvent<{ value: unknown }>) => {
-    setRange(event.target.value as Range);
-  }, []);
-
-  const chartPeriod = useCallback(() => {
-    switch (range) {
-      case "day":
-        return "hour";
-      case "week":
-        return "day";
-      default:
-        return "day";
-    }
-  }, [range]);
+  const onRangeChange = useCallback(
+    (event: ChangeEvent<{ value: unknown }>) => {
+      setRange(event.target.value as Range);
+    },
+    []
+  );
 
   if (loading) {
     return (
@@ -196,8 +192,9 @@ const Reef = ({ match, classes }: ReefProps) => {
               startDate={subtractFromDate(endDate || todayDate, range)}
               endDate={endDate || todayDate}
               range={range}
-              onRaneChange={onRaneChange}
-              chartPeriod={chartPeriod()}
+              onRangeChange={onRangeChange}
+              hasSpotter={hasSpotter}
+              chartPeriod={findChartPeriod(range)}
               hasDailyData={hasDailyData}
               spotterData={spotterData}
               surveys={surveyList}

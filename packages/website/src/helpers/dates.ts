@@ -10,7 +10,7 @@ export const subtractFromDate = (endDate: string, amount: Range): string => {
     case "week":
       return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
     default:
-      return new Date(date.setTime(date.getTime() - 30 * day)).toISOString();
+      return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
   }
 };
 
@@ -29,4 +29,15 @@ export const findMaxDate = (
   const sortedData = sortByDate(combinedData, "date", "desc");
 
   return sortedData[0].date;
+};
+
+export const findChartPeriod = (range: Range) => {
+  switch (range) {
+    case "day":
+      return "hour";
+    case "week":
+      return "day";
+    default:
+      return "day";
+  }
 };

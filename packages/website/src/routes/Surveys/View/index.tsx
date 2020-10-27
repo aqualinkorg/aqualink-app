@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/* eslint-disable no-nested-ternary */
+import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
@@ -13,6 +14,9 @@ import {
   Typography,
   withStyles,
   WithStyles,
+  Select,
+  MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,17 +28,32 @@ import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
 
 import Charts from "./Charts";
-import type { Reef } from "../../../store/Reefs/types";
+import type { Range, Reef } from "../../../store/Reefs/types";
 import {
   surveyListSelector,
   surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
 import { useBodyLength } from "../../../helpers/useBodyLength";
+import {
+  reefSpotterDataSelector,
+  reefSpotterDataRequest,
+  reefspotterDataLoadingSelector,
+} from "../../../store/Reefs/selectedReefSlice";
+import { subtractFromDate, findChartPeriod } from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
+  const spotterData = useSelector(reefSpotterDataSelector);
+  const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
+
+  const { liveData } = reef;
+  const hasSpotter = Boolean(liveData?.surfaceTemperature);
+
+  const [range, setRange] = useState<Range>("week");
+  const [endDate, setEndDate] = useState<string>();
+  const [open, setOpen] = useState<boolean>(false);
 
   const bodyLength = useBodyLength();
 
@@ -51,6 +70,27 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
       })
     );
   }, [dispatch, reef.id, surveyId]);
+
+  useEffect(() => {
+    if (surveyDetails?.diveDate && hasSpotter) {
+      const toDate = new Date(surveyDetails.diveDate).toISOString();
+      setEndDate(toDate);
+      dispatch(
+        reefSpotterDataRequest({
+          id: `${reef.id}`,
+          startDate: subtractFromDate(toDate, range),
+          endDate: toDate,
+        })
+      );
+    }
+  }, [dispatch, hasSpotter, range, reef.id, surveyDetails]);
+
+  const onRangeChange = useCallback(
+    (event: ChangeEvent<{ value: unknown }>) => {
+      setRange(event.target.value as Range);
+    },
+    []
+  );
 
   return (
     <Container>
@@ -87,7 +127,14 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           </Button>
         </Grid>
         <Grid style={{ marginBottom: "6rem" }} item xs={11}>
-          <Paper elevation={3} className={classes.surveyDetailsCard}>
+          <Paper
+            elevation={3}
+            className={
+              hasSpotter
+                ? `${classes.surveyDetailsCard} ${classes.withSpotter}`
+                : `${classes.surveyDetailsCard} ${classes.noSpotter}`
+            }
+          >
             <Grid
               style={{ height: "100%" }}
               container
@@ -116,6 +163,74 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                     background
                   />
                 </Grid>
+                {hasSpotter && (
+                  <Grid
+                    alignItems="baseline"
+                    container
+                    justify="flex-end"
+                    spacing={2}
+                    item
+                    xs={11}
+                  >
+                    <Grid item>
+                      <Typography variant="h6" color="textSecondary">
+                        Time range:
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Select
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        onOpen={() => setOpen(true)}
+                        value={range}
+                        onChange={onRangeChange}
+                      >
+                        <MenuItem value="day">
+                          <Typography color="textSecondary">One day</Typography>
+                        </MenuItem>
+                        <MenuItem value="week">
+                          <Typography color="textSecondary">
+                            One week
+                          </Typography>
+                        </MenuItem>
+                      </Select>
+                    </Grid>
+                  </Grid>
+                )}
+                {spotterDataLoading ? (
+                  <Box
+                    height="20rem"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    textAlign="center"
+                    p={4}
+                  >
+                    <CircularProgress size="6rem" thickness={1} />
+                  </Box>
+                ) : spotterData && endDate ? (
+                  <>
+                    <Grid container alignItems="center" item xs={11}>
+                      <Typography variant="subtitle2">
+                        SMART BUOY WATER TEMPERATURE (°C)
+                      </Typography>
+                    </Grid>
+                    <Grid container justify="center" item xs={12}>
+                      <Charts
+                        dailyData={reef.dailyData}
+                        spotterData={spotterData}
+                        startDate={subtractFromDate(endDate, range)}
+                        endDate={endDate}
+                        chartPeriod={findChartPeriod(range)}
+                        surveys={[]}
+                        depth={reef.depth}
+                        maxMonthlyMean={null}
+                        temperatureThreshold={null}
+                        background={false}
+                      />
+                    </Grid>
+                  </>
+                ) : null}
               </Grid>
             </Grid>
           </Paper>
@@ -147,13 +262,24 @@ const styles = (theme: Theme) =>
   createStyles({
     surveyDetailsCard: {
       width: "100%",
-      height: "35rem",
       color: theme.palette.text.secondary,
+    },
+    noSpotter: {
+      height: "45rem",
       [theme.breakpoints.down("md")]: {
-        height: "40rem",
+        height: "55rem",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "70rem",
+        height: "72rem",
+      },
+    },
+    withSpotter: {
+      height: "60rem",
+      [theme.breakpoints.down("md")]: {
+        height: "75rem",
+      },
+      [theme.breakpoints.down("sm")]: {
+        height: "90rem",
       },
     },
   });

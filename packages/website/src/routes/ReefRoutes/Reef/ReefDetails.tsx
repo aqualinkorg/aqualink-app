@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { ElementType, ChangeEvent } from "react";
+import React, { ElementType, ChangeEvent, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -37,7 +37,8 @@ const ReefDetails = ({
   startDate,
   endDate,
   range,
-  onRaneChange,
+  onRangeChange,
+  hasSpotter,
   chartPeriod,
   spotterData,
   hasDailyData,
@@ -46,7 +47,7 @@ const ReefDetails = ({
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
@@ -162,34 +163,36 @@ const ReefDetails = ({
               }
               background
             />
-            <Grid
-              alignItems="baseline"
-              container
-              justify="flex-end"
-              spacing={2}
-            >
-              <Grid item>
-                <Typography variant="h6" color="textSecondary">
-                  Time range:
-                </Typography>
+            {hasSpotter && (
+              <Grid
+                alignItems="baseline"
+                container
+                justify="flex-end"
+                spacing={2}
+              >
+                <Grid item>
+                  <Typography variant="h6" color="textSecondary">
+                    Time range:
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Select
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                    value={range}
+                    onChange={onRangeChange}
+                  >
+                    <MenuItem value="day">
+                      <Typography color="textSecondary">One day</Typography>
+                    </MenuItem>
+                    <MenuItem value="week">
+                      <Typography color="textSecondary">One week</Typography>
+                    </MenuItem>
+                  </Select>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Select
-                  open={open}
-                  onClose={() => setOpen(false)}
-                  onOpen={() => setOpen(true)}
-                  value={range}
-                  onChange={onRaneChange}
-                >
-                  <MenuItem value="day">
-                    <Typography color="textSecondary">One day</Typography>
-                  </MenuItem>
-                  <MenuItem value="week">
-                    <Typography color="textSecondary">One week</Typography>
-                  </MenuItem>
-                </Select>
-              </Grid>
-            </Grid>
+            )}
             {spotterDataLoading ? (
               <Box
                 height="20rem"
@@ -203,7 +206,7 @@ const ReefDetails = ({
               </Box>
             ) : spotterData ? (
               <Charts
-                title="SPOTTER WATER TEMPERATURE (°C)"
+                title="SMART BUOY WATER TEMPERATURE (°C)"
                 dailyData={reef.dailyData}
                 spotterData={spotterData}
                 startDate={startDate}
@@ -249,7 +252,8 @@ interface ReefDetailIncomingProps {
   endDate: string;
   range: Range;
   chartPeriod: "hour" | Range;
-  onRaneChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  hasSpotter: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
   spotterData?: SpotterData | null;
