@@ -7,6 +7,7 @@ import {
 import MulterGoogleCloudStorage from 'multer-google-storage';
 import sharp from 'sharp';
 import mime from 'mime-types';
+import { Logger } from '@nestjs/common';
 
 interface CallbackMessage {
   path: string;
@@ -25,6 +26,10 @@ class CustomGoogleCloudStorageEnv {
   public thumbnailFile = 'thumbnail';
   public thumbnailType = 'image/jpeg';
   public thumbnailFileExt: string | false;
+  public startOne: Date;
+  public startTwo: Date;
+  public endOne: Date;
+  public endTwo: Date;
 
   constructor(
     public fileInfo: FileInfo,
@@ -47,9 +52,26 @@ class CustomGoogleCloudStorageEnv {
   public setThumbnailExt(thumbnailFileExt: string | false) {
     this.thumbnailFileExt = thumbnailFileExt;
   }
+
+  public setStartOne() {
+    this.startOne = new Date();
+  }
+
+  public setStartTwo() {
+    this.startTwo = new Date();
+  }
+
+  public setEndOne() {
+    this.endOne = new Date();
+  }
+
+  public setEndTwo() {
+    this.endTwo = new Date();
+  }
 }
 
 export class CustomGoogleCloudStorage {
+  private logger = new Logger(CustomGoogleCloudStorage.name, true);
   private googleCloudStorage: MulterGoogleCloudStorage;
 
   constructor(opts: any) {
@@ -64,8 +86,22 @@ export class CustomGoogleCloudStorage {
         if (env.messageAcc) {
           unlinkSync(`${env.originalFile}.${env.originalFileExt}`);
           unlinkSync(`${env.thumbnailFile}.${env.thumbnailFileExt}`);
+          env.setEndTwo();
+          this.logger.log('------------------------------------------');
+          this.logger.log(
+            `Upload of original took: ${
+              env.endOne.getTime() - env.startOne.getTime()
+            }ms`,
+          );
+          this.logger.log(
+            `Upload of thumbnail took: ${
+              env.endTwo.getTime() - env.startTwo.getTime()
+            }ms`,
+          );
+          this.logger.log('------------------------------------------');
           env.multerCallback(null, [env.messageAcc, message]);
         } else {
+          env.setEndOne();
           env.setMessage(message);
           this.createThumbnail(env);
         }
@@ -102,6 +138,7 @@ export class CustomGoogleCloudStorage {
     const fileIn = `${env.originalFile}.${env.originalFileExt}`;
     env.setThumbnailExt(mime.extension(env.thumbnailType));
     const fileOut = `${env.thumbnailFile}.${env.thumbnailFileExt}`;
+    const start = new Date();
 
     const resizeStream = sharp().resize(600, null).jpeg({ quality: 70 });
     const readStream = createReadStream(fileIn);
@@ -112,11 +149,17 @@ export class CustomGoogleCloudStorage {
     });
 
     outputStream.on('finish', () => {
+      const end = new Date();
+      env.setStartTwo();
+      this.logger.log(
+        `Creating thumbnail took: ${end.getTime() - start.getTime()}ms`,
+      );
       this.readFile(fileOut, this.uploadImageToCloud(env, env.thumbnailType));
     });
   }
 
   _handleFile(req: any, file: Express.Multer.File, cb: any) {
+    const start = new Date();
     const fileInfo = {
       mimeType: file.mimetype,
       fieldName: file.fieldname,
@@ -135,6 +178,11 @@ export class CustomGoogleCloudStorage {
     file.stream.pipe(outputStream);
 
     outputStream.on('finish', () => {
+      const end = new Date();
+      this.logger.log(
+        `Saving original took: ${end.getTime() - start.getTime()}ms`,
+      );
+      env.setStartOne();
       this.readFile(fileDest, this.uploadImageToCloud(env));
     });
   }

@@ -35,13 +35,13 @@ export class SurveysController {
   @AcceptFile('file', ['image', 'video'], 'surveys', 'reef')
   upload(
     @UploadedFile('file') file: any,
-  ): { original: string; thumbnail: string } {
+  ): { imageUrl: string; thumbnailUrl: string } {
     // Override file path because file.path provided an invalid google cloud format and HTTPS is not working correctly
     // Correct format of a URL pointing to a google cloud object should be
     // https://storage.googleapis.com/{bucketName}/path/to/object/in/bucket
     return {
-      original: `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file['0'].filename}`,
-      thumbnail: `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file['1'].filename}`,
+      imageUrl: `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file['0'].filename}`,
+      thumbnailUrl: `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file['1'].filename}`,
     };
   }
 
