@@ -276,30 +276,25 @@ export class SurveysService {
 
     await Promise.all(
       surveyMedia.map((media) => {
-        const file = getFileFromURL(media.original);
+        const imageUrl = getFileFromURL(media.imageUrl);
         // Thumbnail might not exist
-        const thumbnail = media.thumbnail && getFileFromURL(media.thumbnail);
+        const thumbnailUrl =
+          media.thumbnailUrl && getFileFromURL(media.thumbnailUrl);
 
-        return this.googleCloudService
-          .deleteFile(file)
-          .catch(() => {
-            this.logger.error(
-              `Could not delete original media ${media.original} of survey ${surveyId}.`,
-            );
-          })
-          .then(() => {
-            // Thumbnail might not exist
-            if (thumbnail) {
-              return this.googleCloudService.deleteFile(thumbnail);
+        return Promise.all(
+          [imageUrl, thumbnailUrl].map((file) => {
+            if (file) {
+              return this.googleCloudService.deleteFile(file).catch((error) => {
+                this.logger.error(
+                  `Could not delete media ${file} of survey ${surveyId}.`,
+                  error,
+                );
+              });
             }
 
             return null;
-          })
-          .catch(() => {
-            this.logger.error(
-              `Could not delete thumbnail media ${media.thumbnail} of survey ${surveyId}.`,
-            );
-          });
+          }),
+        );
       }),
     );
 
@@ -325,26 +320,22 @@ export class SurveysService {
 
     // We need to grab the path/to/file. So we split the url on "{GCS_BUCKET}/"
     // and grab the second element of the resulting array which is the path we need
-    await this.googleCloudService
-      .deleteFile(getFileFromURL(surveyMedia.original))
-      .catch((error) => {
-        this.logger.error(
-          `Could not delete original media ${surveyMedia.original} of survey media ${mediaId}.`,
-        );
-        throw error;
-      });
+    await Promise.all(
+      [surveyMedia.imageUrl, surveyMedia.thumbnailUrl].map((file) => {
+        if (file) {
+          return this.googleCloudService
+            .deleteFile(getFileFromURL(file))
+            .catch((error) => {
+              this.logger.error(
+                `Could not delete media ${file} of survey media ${mediaId}.`,
+              );
+              throw error;
+            });
+        }
 
-    // Delete thumbnail as well if it exists
-    if (surveyMedia.thumbnail) {
-      await this.googleCloudService
-        .deleteFile(getFileFromURL(surveyMedia.thumbnail))
-        .catch((error) => {
-          this.logger.error(
-            `Could not delete thumbnail media ${surveyMedia.thumbnail} of survey media ${mediaId}.`,
-          );
-          throw error;
-        });
-    }
+        return null;
+      }),
+    );
 
     await this.surveyMediaRepository.delete(mediaId);
   }
