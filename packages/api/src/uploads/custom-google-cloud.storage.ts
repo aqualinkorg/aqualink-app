@@ -19,34 +19,55 @@ interface FileInfo {
   originalName: string;
 }
 
+class CustomGoogleCloudStorageEnv {
+  public messageAcc: CallbackMessage;
+  public originalFile = 'original';
+  public thumbnailFile = 'thumbnail';
+  public thumbnailType = 'image/jpeg';
+  public thumbnailFileExt: string | false;
+
+  constructor(
+    public fileInfo: FileInfo,
+    public originalFileExt: string | false,
+    public multerCallback: any,
+    public request: any,
+  ) {
+    const randomString = Array(16)
+      .fill(null)
+      .map(() => Math.round(Math.random() * 15).toString(16))
+      .join('');
+    this.originalFile += randomString;
+    this.thumbnailFile += randomString;
+  }
+
+  public setMessage(message: CallbackMessage) {
+    this.messageAcc = message;
+  }
+
+  public setThumbnailExt(thumbnailFileExt: string | false) {
+    this.thumbnailFileExt = thumbnailFileExt;
+  }
+}
+
 export class CustomGoogleCloudStorage {
   private googleCloudStorage: MulterGoogleCloudStorage;
-  private messageAcc: CallbackMessage;
-  private originalFile = 'original';
-  private thumbnailFile = 'thumbnail';
-  private originalFileExt: string | false;
-  private thumbnailFileExt: string | false;
-  private fileInfo: FileInfo;
-  private multerCallback: any;
-  private request: any;
-  private thumbnailType = 'image/jpeg';
 
   constructor(opts: any) {
     this.googleCloudStorage = new MulterGoogleCloudStorage(opts);
   }
 
-  private callback() {
+  private callback(env: CustomGoogleCloudStorageEnv) {
     return (err: any, message?: CallbackMessage) => {
       if (err) {
-        this.multerCallback(err);
+        env.multerCallback(err);
       } else if (message) {
-        if (this.messageAcc) {
-          unlinkSync(`${this.originalFile}.${this.originalFileExt}`);
-          unlinkSync(`${this.thumbnailFile}.${this.thumbnailFileExt}`);
-          this.multerCallback(null, [this.messageAcc, message]);
+        if (env.messageAcc) {
+          unlinkSync(`${env.originalFile}.${env.originalFileExt}`);
+          unlinkSync(`${env.thumbnailFile}.${env.thumbnailFileExt}`);
+          env.multerCallback(null, [env.messageAcc, message]);
         } else {
-          this.messageAcc = message;
-          this.createThumbnail();
+          env.setMessage(message);
+          this.createThumbnail(env);
         }
       }
     };
@@ -57,23 +78,30 @@ export class CustomGoogleCloudStorage {
     readStream.on('open', () => cb(readStream));
   }
 
-  private uploadImageToCloud(mimeType?: string) {
+  private uploadImageToCloud(
+    env: CustomGoogleCloudStorageEnv,
+    mimeType?: string,
+  ) {
     return (img: ReadStream) => {
       const data: Partial<Express.Multer.File> = {
-        fieldname: this.fileInfo.fieldName,
-        mimetype: mimeType || this.fileInfo.mimeType,
-        originalname: this.fileInfo.originalName,
+        fieldname: env.fileInfo.fieldName,
+        mimetype: mimeType || env.fileInfo.mimeType,
+        originalname: env.fileInfo.originalName,
         stream: img,
       };
 
-      this.googleCloudStorage._handleFile(this.request, data, this.callback());
+      this.googleCloudStorage._handleFile(
+        env.request,
+        data,
+        this.callback(env),
+      );
     };
   }
 
-  private createThumbnail() {
-    const fileIn = `${this.originalFile}.${this.originalFileExt}`;
-    this.thumbnailFileExt = mime.extension(this.thumbnailType);
-    const fileOut = `${this.thumbnailFile}.${this.thumbnailFileExt}`;
+  private createThumbnail(env: CustomGoogleCloudStorageEnv) {
+    const fileIn = `${env.originalFile}.${env.originalFileExt}`;
+    env.setThumbnailExt(mime.extension(env.thumbnailType));
+    const fileOut = `${env.thumbnailFile}.${env.thumbnailFileExt}`;
 
     const resizeStream = sharp().resize(600, null).jpeg({ quality: 70 });
     const readStream = createReadStream(fileIn);
@@ -84,26 +112,30 @@ export class CustomGoogleCloudStorage {
     });
 
     outputStream.on('finish', () => {
-      this.readFile(fileOut, this.uploadImageToCloud(this.thumbnailType));
+      this.readFile(fileOut, this.uploadImageToCloud(env, env.thumbnailType));
     });
   }
 
   _handleFile(req: any, file: Express.Multer.File, cb: any) {
-    this.fileInfo = {
+    const fileInfo = {
       mimeType: file.mimetype,
       fieldName: file.fieldname,
       originalName: file.originalname,
     };
-    this.request = req;
-    this.multerCallback = cb;
-    this.originalFileExt = mime.extension(this.fileInfo.mimeType);
-    const fileDest = `${this.originalFile}.${this.originalFileExt}`;
+
+    const env = new CustomGoogleCloudStorageEnv(
+      fileInfo,
+      mime.extension(fileInfo.mimeType),
+      cb,
+      req,
+    );
+    const fileDest = `${env.originalFile}.${env.originalFileExt}`;
 
     const outputStream = createWriteStream(fileDest);
     file.stream.pipe(outputStream);
 
     outputStream.on('finish', () => {
-      this.readFile(fileDest, this.uploadImageToCloud());
+      this.readFile(fileDest, this.uploadImageToCloud(env));
     });
   }
 
