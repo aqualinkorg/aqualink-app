@@ -316,8 +316,7 @@ export async function getReefsDailyData(
       } catch (err) {
         // Update instead of insert
         if (err.constraint === 'no_duplicated_date') {
-          const filteredData = omitBy(entity, isNil);
-
+          const { date: omitDate, ...filteredData } = omitBy(entity, isNil);
           await dailyDataRepository
             .createQueryBuilder('dailyData')
             .update()
