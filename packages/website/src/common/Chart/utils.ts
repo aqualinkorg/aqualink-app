@@ -60,8 +60,16 @@ export const createDatasets = (
   return {
     // repeat first value, so chart start point isn't instantaneous.
     tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
-    bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
-    surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
+    bottomTemperatureData: [
+      bottomTemperature[0],
+      ...bottomTemperature,
+      bottomTemperature.slice(-1)[0],
+    ],
+    surfaceTemperatureData: [
+      surfaceTemperature[0],
+      ...surfaceTemperature,
+      surfaceTemperature.slice(-1)[0],
+    ],
     spotterBottom:
       spotterBottom.length > 0 ? [spotterBottom[0], ...spotterBottom] : [],
     spotterSurface:
@@ -87,16 +95,21 @@ export const calculateAxisLimits = (
           )
           .map((item) => item.date)
       : spotterBottomTemperature.map((item) => item.timestamp);
-  const dailyDataLen = dates.length;
 
-  const xAxisMax = new Date(new Date(dates[dailyDataLen - 1])).toISOString();
+  const spotterTimestamps = spotterBottomTemperature.map(
+    (item) => item.timestamp
+  );
+  const spotterXMax = spotterTimestamps.slice(-1)[0];
+  const spotterXMin = spotterTimestamps[0];
 
-  const xAxisMin = new Date(
-    new Date(dates[0]).setHours(-1, 0, 0, 0)
-  ).toISOString();
+  const xAxisMax = spotterXMax || dates.slice(-1)[0];
+
+  const xAxisMin =
+    spotterXMin ||
+    new Date(new Date(dates[0]).setHours(-1, 0, 0, 0)).toISOString();
 
   // Add an extra date one day after the final daily data date
-  const chartLabels = [xAxisMin, ...dates];
+  const chartLabels = [xAxisMin, ...dates, xAxisMax];
 
   const {
     surfaceTemperatureData,
