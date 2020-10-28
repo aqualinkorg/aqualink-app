@@ -28,11 +28,7 @@ const Tooltip = ({
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
 
-  const Circle = (
-    borderColor: string,
-    backgroundColor: string,
-    size: number
-  ) => (
+  const Circle = (backgroundColor: string, size: number) => (
     <div
       style={{
         marginRight: 5,
@@ -41,8 +37,6 @@ const Tooltip = ({
         height: size,
         borderRadius: size / 2,
         backgroundColor,
-        border: "2px solid",
-        borderColor,
         display: "inline-block",
       }}
     />
@@ -51,13 +45,12 @@ const Tooltip = ({
   const TemperatureMetric = (
     temperature: number,
     title: string,
-    backgroundColor: string,
-    borderColor: string,
+    color: string,
     gridClassName: string | undefined
   ) => (
     <Grid item xs={12} className={gridClassName}>
       <Grid container justify="flex-start" item>
-        {Circle(backgroundColor, borderColor, 10)}
+        {Circle(color, 10)}
         <Typography variant="caption">
           {title} {`${formatNumber(temperature, 1)} °C`}
         </Typography>
@@ -96,7 +89,6 @@ const Tooltip = ({
                 TemperatureMetric(
                   surfaceTemperature,
                   "SATTELLITE",
-                  "rgb(250, 250, 250)",
                   "#6bc1e1",
                   classes.tooltipContentItem
                 )}
@@ -104,7 +96,6 @@ const Tooltip = ({
                 TemperatureMetric(
                   spotterSurfaceTemp,
                   "BUOY 1m",
-                  "rgb(250, 250, 250)",
                   "#6bc1e1",
                   classes.tooltipContentItem
                 )}
@@ -112,7 +103,6 @@ const Tooltip = ({
                 TemperatureMetric(
                   bottomTemperature,
                   `BUOY ${depth}m`,
-                  "rgb(250, 250, 250)",
                   "rgb(94, 164, 203)",
                   classes.tooltipContentItem
                 )}
