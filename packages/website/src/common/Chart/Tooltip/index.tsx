@@ -76,7 +76,7 @@ const Tooltip = ({
               {spotterSurfaceTemp &&
                 TemperatureMetric(
                   spotterSurfaceTemp,
-                  "TEMP AT BUOY",
+                  "TEMP AT 1m",
                   surfaceTemperature ? 6 : 12,
                   classes.tooltipContentItem
                 )}

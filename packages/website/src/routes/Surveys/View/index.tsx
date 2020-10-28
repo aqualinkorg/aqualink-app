@@ -187,7 +187,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   <>
                     <Grid container alignItems="center" item xs={11}>
                       <Typography variant="subtitle2">
-                        SMART BUOY WATER TEMPERATURE (°C)
+                        HOURLY WATER TEMPERATURE (°C)
                       </Typography>
                     </Grid>
                     <Grid container justify="center" item xs={12}>

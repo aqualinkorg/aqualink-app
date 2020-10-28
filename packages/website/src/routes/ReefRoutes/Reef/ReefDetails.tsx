@@ -187,7 +187,7 @@ const ReefDetails = ({
               </Box>
             ) : spotterData ? (
               <Charts
-                title="SMART BUOY WATER TEMPERATURE (°C)"
+                title="HOURLY WATER TEMPERATURE (°C)"
                 dailyData={filteredDailyData}
                 spotterData={spotterData}
                 startDate={startDate}

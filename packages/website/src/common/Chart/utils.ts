@@ -179,6 +179,7 @@ export const createChartData = (
   bottomTemps: number[],
   fill: boolean
 ) => {
+  const displaySpotterData = spotterSurface.length > 0;
   const data: ChartComponentProps["data"] = {
     labels,
     datasets: [
@@ -195,6 +196,7 @@ export const createChartData = (
       {
         label: "SURFACE TEMP",
         data: surfaceTemps,
+        fill: !displaySpotterData,
         backgroundColor: "rgb(107,193,225,0.2)",
         borderColor: "#6bc1e1",
         borderWidth: 2,
@@ -219,8 +221,8 @@ export const createChartData = (
           x: item.timestamp,
           y: item.value,
         })),
-        backgroundColor: "rgb(0,100,0,0.2)",
-        borderColor: "#006400",
+        backgroundColor: "rgb(107,193,225,0.2)",
+        borderColor: "#46a5cf",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,
@@ -233,8 +235,8 @@ export const createChartData = (
           x: item.timestamp,
           y: item.value,
         })),
-        backgroundColor: "rgb(255,165,0,0.2)",
-        borderColor: "#ffa500",
+        backgroundColor: "rgb(107,193,225,0.2)",
+        borderColor: "#6bc1e1",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,
