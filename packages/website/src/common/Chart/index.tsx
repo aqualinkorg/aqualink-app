@@ -241,7 +241,7 @@ function Chart({
         spotterData?.surfaceTemperature || [],
         tempWithSurvey,
         surfaceTemperatureData,
-        !spotterData ? bottomTemperatureData : [],
+        [],
         !!temperatureThreshold
       )}
     />

@@ -88,7 +88,7 @@ const Tooltip = ({
               {surfaceTemperature &&
                 TemperatureMetric(
                   surfaceTemperature,
-                  "SATTELLITE",
+                  "SURFACE",
                   "#6bc1e1",
                   classes.tooltipContentItem
                 )}

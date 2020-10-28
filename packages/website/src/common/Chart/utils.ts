@@ -52,7 +52,7 @@ export const createDatasets = (
     .map((item) => {
       const date = new Date(item.date).setHours(0, 0, 0, 0);
       if (surveyDates.includes(date)) {
-        return item.avgBottomTemperature || item.satelliteTemperature;
+        return item.satelliteTemperature;
       }
       return null;
     });

@@ -75,7 +75,7 @@ function ChartWithTooltip({
         )?.value) ||
       null;
 
-    const bottomTemperature = bottomTemp || avgBottomTemperature;
+    const bottomTemperature = bottomTemp || null;
 
     const nValues = [
       satelliteTemperature,
@@ -84,7 +84,7 @@ function ChartWithTooltip({
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 75;
+    const left = position.left + tooltipModel.caretX - 80;
     const top = position.top + tooltipModel.caretY - ((nValues + 1) * 30 + 10);
 
     if (
