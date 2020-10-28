@@ -28,19 +28,38 @@ const Tooltip = ({
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
 
+  const Circle = (
+    borderColor: string,
+    backgroundColor: string,
+    size: number
+  ) => (
+    <div
+      style={{
+        marginRight: 5,
+        marginTop: 3,
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor,
+        border: "2px solid",
+        borderColor,
+        display: "inline-block",
+      }}
+    />
+  );
+
   const TemperatureMetric = (
     temperature: number,
     title: string,
-    spacing: 6 | 12,
+    backgroundColor: string,
+    borderColor: string,
     gridClassName: string | undefined
   ) => (
-    <Grid item xs={spacing} className={gridClassName}>
+    <Grid item xs={12} className={gridClassName}>
       <Grid container justify="flex-start" item>
-        <Typography variant="caption">{title}</Typography>
-      </Grid>
-      <Grid container justify="flex-start" item>
-        <Typography variant="h5">
-          {`${formatNumber(temperature, 1)} °C`}
+        {Circle(backgroundColor, borderColor, 10)}
+        <Typography variant="caption">
+          {title} {`${formatNumber(temperature, 1)} °C`}
         </Typography>
       </Grid>
     </Grid>
@@ -73,38 +92,29 @@ const Tooltip = ({
               item
               xs={12}
             >
-              {spotterSurfaceTemp &&
-                TemperatureMetric(
-                  spotterSurfaceTemp,
-                  "TEMP AT 1m",
-                  surfaceTemperature ? 6 : 12,
-                  classes.tooltipContentItem
-                )}
-              {!spotterSurfaceTemp &&
-                bottomTemperature &&
-                TemperatureMetric(
-                  bottomTemperature,
-                  `TEMP AT ${depth}m`,
-                  surfaceTemperature ? 6 : 12,
-                  classes.tooltipContentItem
-                )}
               {surfaceTemperature &&
                 TemperatureMetric(
                   surfaceTemperature,
-                  "SURFACE TEMP",
-                  spotterSurfaceTemp || bottomTemperature ? 6 : 12,
+                  "SATTELLITE",
+                  "rgb(250, 250, 250)",
+                  "#6bc1e1",
                   classes.tooltipContentItem
                 )}
-
               {spotterSurfaceTemp &&
-                bottomTemperature &&
+                TemperatureMetric(
+                  spotterSurfaceTemp,
+                  "BUOY 1m",
+                  "rgb(250, 250, 250)",
+                  "#6bc1e1",
+                  classes.tooltipContentItem
+                )}
+              {bottomTemperature &&
                 TemperatureMetric(
                   bottomTemperature,
-                  `TEMP AT ${depth}m`,
-                  12,
-                  surfaceTemperature
-                    ? classes.tooltipContentLargeItem
-                    : classes.tooltipContentItem
+                  `BUOY ${depth}m`,
+                  "rgb(250, 250, 250)",
+                  "rgb(94, 164, 203)",
+                  classes.tooltipContentItem
                 )}
             </Grid>
           </Grid>
@@ -125,8 +135,8 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 200,
-      minHeight: 100,
+      width: 160,
+      minHeight: 60,
     },
     tooltipCard: {
       display: "flex",
@@ -144,13 +154,9 @@ const styles = () =>
       padding: "0rem 1rem 0.5rem 1rem",
     },
     tooltipContentItem: {
-      width: "100px",
-      height: 50,
+      width: "120px",
+      height: 30,
       margin: "0",
-    },
-    tooltipContentLargeItem: {
-      height: 50,
-      width: "200px",
     },
     tooltipArrow: {
       content: " ",
