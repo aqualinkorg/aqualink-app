@@ -15,6 +15,7 @@ const Tooltip = ({
   date,
   depth,
   bottomTemperature,
+  spotterSurfaceTemp,
   surfaceTemperature,
   classes,
 }: TooltipProps) => {
@@ -23,7 +24,27 @@ const Tooltip = ({
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
+    hour: spotterSurfaceTemp ? "2-digit" : undefined,
+    minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
+
+  const TemperatureMetric = (
+    temperature: number,
+    title: string,
+    spacing: 6 | 12,
+    gridClassName: string | undefined
+  ) => (
+    <Grid item xs={spacing} className={gridClassName}>
+      <Grid container justify="flex-start" item>
+        <Typography variant="caption">{title}</Typography>
+      </Grid>
+      <Grid container justify="flex-start" item>
+        <Typography variant="h5">
+          {`${formatNumber(temperature, 1)} °C`}
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 
   return (
     <div className={classes.tooltip}>
@@ -33,6 +54,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
+              {spotterSurfaceTemp ? " UTC" : ""}
             </Typography>
           }
         />
@@ -51,32 +73,39 @@ const Tooltip = ({
               item
               xs={12}
             >
-              {bottomTemperature && (
-                <Grid item xs={6} className={classes.tooltipContentItem}>
-                  <Grid container justify="flex-start" item xs={12}>
-                    <Typography variant="caption">{`TEMP AT ${depth}m`}</Typography>
-                  </Grid>
-                  <Grid container justify="flex-start" item xs={12}>
-                    <Typography variant="h5">
-                      {`${formatNumber(bottomTemperature, 1)} °C`}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              )}
-              <Grid
-                item
-                xs={bottomTemperature ? 6 : 12}
-                className={classes.tooltipContentItem}
-              >
-                <Grid container justify="flex-start" item xs={12}>
-                  <Typography variant="caption">SURFACE TEMP</Typography>
-                </Grid>
-                <Grid container justify="flex-start" item xs={12}>
-                  <Typography variant="h5">
-                    {`${formatNumber(surfaceTemperature, 1)} °C`}
-                  </Typography>
-                </Grid>
-              </Grid>
+              {spotterSurfaceTemp &&
+                TemperatureMetric(
+                  spotterSurfaceTemp,
+                  "TEMP AT BUOY",
+                  surfaceTemperature ? 6 : 12,
+                  classes.tooltipContentItem
+                )}
+              {!spotterSurfaceTemp &&
+                bottomTemperature &&
+                TemperatureMetric(
+                  bottomTemperature,
+                  `TEMP AT ${depth}m`,
+                  surfaceTemperature ? 6 : 12,
+                  classes.tooltipContentItem
+                )}
+              {surfaceTemperature &&
+                TemperatureMetric(
+                  surfaceTemperature,
+                  "SURFACE TEMP",
+                  spotterSurfaceTemp || bottomTemperature ? 6 : 12,
+                  classes.tooltipContentItem
+                )}
+
+              {spotterSurfaceTemp &&
+                bottomTemperature &&
+                TemperatureMetric(
+                  bottomTemperature,
+                  `TEMP AT ${depth}m`,
+                  12,
+                  surfaceTemperature
+                    ? classes.tooltipContentLargeItem
+                    : classes.tooltipContentItem
+                )}
             </Grid>
           </Grid>
         </CardContent>
@@ -96,8 +125,8 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      height: 100,
       width: 200,
+      minHeight: 100,
     },
     tooltipCard: {
       display: "flex",
@@ -108,6 +137,7 @@ const styles = () =>
     tooltipHeader: {
       flex: "0 1 auto",
       padding: "0.5rem 1rem 0 1rem",
+      height: 30,
     },
     tooltipContent: {
       flex: "1 1 auto",
@@ -115,7 +145,12 @@ const styles = () =>
     },
     tooltipContentItem: {
       width: "100px",
+      height: 50,
       margin: "0",
+    },
+    tooltipContentLargeItem: {
+      height: 50,
+      width: "200px",
     },
     tooltipArrow: {
       content: " ",
@@ -132,8 +167,9 @@ const styles = () =>
 export interface TooltipData {
   date: string;
   depth: number | null;
+  spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
-  surfaceTemperature: number;
+  surfaceTemperature: number | null;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;

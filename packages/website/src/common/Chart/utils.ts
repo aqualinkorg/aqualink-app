@@ -260,3 +260,40 @@ export const createChartData = (
   }
   return data;
 };
+
+export function sameDay(date1: string | number, date2: string | number | Date) {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  return (
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+  );
+}
+
+const timeDiff = (incomingDate: string, date: Date) =>
+  Math.abs(new Date(incomingDate).getTime() - date.getTime());
+
+export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
+  return dailyData.reduce((prevClosest, nextPoint) =>
+    timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
+      ? nextPoint
+      : prevClosest
+  );
+}
+
+export function getSpotterDataClosestToDate(
+  spotterData: SofarValue[],
+  date: Date,
+  maxHours: number
+) {
+  const closest = spotterData.reduce((prevClosest, nextPoint) =>
+    timeDiff(prevClosest.timestamp, date) > timeDiff(nextPoint.timestamp, date)
+      ? nextPoint
+      : prevClosest
+  );
+
+  return timeDiff(closest.timestamp, date) < maxHours * 60 * 60 * 1000
+    ? closest
+    : undefined;
+}

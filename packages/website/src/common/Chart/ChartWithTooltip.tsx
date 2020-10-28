@@ -8,7 +8,7 @@ import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
-import { useProcessedChartData } from "./utils";
+import { getSpotterDataClosestToDate, sameDay } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
@@ -29,16 +29,6 @@ function ChartWithTooltip({
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
   const chartDataRef = useRef<Line>(null);
-  const {
-    chartLabels,
-    bottomTemperatureData,
-    surfaceTemperatureData,
-  } = useProcessedChartData(
-    dailyData,
-    spotterData,
-    surveys,
-    temperatureThreshold
-  );
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -46,6 +36,7 @@ function ChartWithTooltip({
     date: "",
     depth,
     bottomTemperature: 0,
+    spotterSurfaceTemp: null,
     surfaceTemperature: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -57,19 +48,52 @@ function ChartWithTooltip({
     if (!chart?.chartInstance.canvas) {
       return;
     }
+
+    const date = tooltipModel.dataPoints?.[0]?.xLabel;
+    if (typeof date !== "string") {
+      return;
+    }
+
+    const dailyDataForDate =
+      dailyData.filter((data) => sameDay(data.date, date))[0] || {};
+    const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
+
+    const bottomTemp =
+      spotterData &&
+      getSpotterDataClosestToDate(
+        spotterData.bottomTemperature,
+        new Date(date),
+        6
+      )?.value;
+
+    const spotterSurfaceTemp =
+      (spotterData &&
+        getSpotterDataClosestToDate(
+          spotterData.surfaceTemperature,
+          new Date(date),
+          6
+        )?.value) ||
+      null;
+
+    const bottomTemperature = bottomTemp || avgBottomTemperature;
+
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 110;
-    const date = tooltipModel.dataPoints?.[0]?.xLabel;
-    const index = date && chartLabels.findIndex((item) => item === date);
+    const top =
+      position.top + tooltipModel.caretY - (spotterSurfaceTemp ? 140 : 110);
 
-    if (index && index > -1 && typeof date === "string") {
+    if (
+      [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
+        Boolean
+      )
+    ) {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,
         depth,
-        bottomTemperature: bottomTemperatureData[index],
-        surfaceTemperature: surfaceTemperatureData[index],
+        bottomTemperature,
+        spotterSurfaceTemp,
+        surfaceTemperature: satelliteTemperature,
       });
       setShowTooltip(true);
       setSliceAtLabel(date);
@@ -103,13 +127,6 @@ function ChartWithTooltip({
             },
           },
           tooltips: {
-            filter: (tooltipItem: any, data: any) => {
-              const { datasets } = data;
-              const index = datasets.findIndex(
-                (item: any) => item.label === "SURFACE TEMP"
-              );
-              return tooltipItem.datasetIndex === index;
-            },
             enabled: false,
             intersect: false,
             custom: customTooltip(chartDataRef),
