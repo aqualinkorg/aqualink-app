@@ -56,7 +56,7 @@ function ChartWithTooltip({
 
     const dailyDataForDate =
       dailyData.filter((data) => sameDay(data.date, date))[0] || {};
-    const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
+    const { satelliteTemperature } = dailyDataForDate;
 
     const bottomTemp =
       spotterData &&

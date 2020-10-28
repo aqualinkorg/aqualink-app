@@ -92,7 +92,6 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
-    bottomTemperatureData,
     tempWithSurvey,
     chartLabels,
   } = useProcessedChartData(
