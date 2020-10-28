@@ -19,6 +19,7 @@ exports[`renders as expected 1`] = `
             variant="caption"
           >
             Invalid Date
+            
           </mock-typography>
         </div>
       </div>
@@ -37,7 +38,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-item MuiGrid-grid-xs-12"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item"
               >
                 <mock-typography
                   variant="caption"
@@ -46,7 +47,7 @@ exports[`renders as expected 1`] = `
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item"
               >
                 <mock-typography
                   variant="h5"
@@ -60,7 +61,7 @@ exports[`renders as expected 1`] = `
       </mock-cardcontent>
     </mock-card>
     <div
-      class="Tooltip-tooltipArrow-6"
+      class="Tooltip-tooltipArrow-7"
       style="border-color: #095877 transparent transparent transparent;"
     />
   </div>
