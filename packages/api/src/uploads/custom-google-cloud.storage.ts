@@ -140,7 +140,7 @@ export class CustomGoogleCloudStorage {
     const fileOut = `${env.thumbnailFile}.${env.thumbnailFileExt}`;
     const start = new Date();
 
-    const resizeStream = sharp().resize(600, null).jpeg({ quality: 70 });
+    const resizeStream = sharp().resize(600, null).jpeg({ quality: 85 });
     const readStream = createReadStream(fileIn);
     const outputStream = createWriteStream(fileOut);
 
