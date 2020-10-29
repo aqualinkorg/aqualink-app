@@ -102,7 +102,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   );
 
   const { featuredSurveyMedia, diveDate } = featuredMedia || {};
-  const { poiId, url } = featuredSurveyMedia || {};
+  const { poiId, imageUrl } = featuredSurveyMedia || {};
 
   const { liveData, dailyData } = reefDetails || {};
 
@@ -146,7 +146,7 @@ const Reef = ({ match, classes }: ReefProps) => {
             <ReefDetails
               reef={{
                 ...reefDetails,
-                featuredImage: url,
+                featuredImage: imageUrl,
               }}
               hasDailyData={hasDailyData}
               surveys={surveyList}

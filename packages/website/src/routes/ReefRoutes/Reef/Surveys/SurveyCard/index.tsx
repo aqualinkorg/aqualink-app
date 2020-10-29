@@ -25,7 +25,10 @@ const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
           {survey.featuredSurveyMedia && (
             <CardMedia
               className={classes.cardImage}
-              image={survey.featuredSurveyMedia.url}
+              image={
+                survey.featuredSurveyMedia.thumbnailUrl ||
+                survey.featuredSurveyMedia.imageUrl
+              }
             />
           )}
         </Grid>

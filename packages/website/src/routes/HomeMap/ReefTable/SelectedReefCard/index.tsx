@@ -300,7 +300,7 @@ const SelectedReefCard = () => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   )?.featuredSurveyMedia;
 
-  const hasMedia = Boolean(featuredMedia?.url);
+  const hasMedia = Boolean(featuredMedia?.imageUrl);
 
   return (
     <Box className={classes.card}>
@@ -330,7 +330,7 @@ const SelectedReefCard = () => {
             <CircularProgress size="6rem" thickness={1} />
           </Box>
         ) : reef ? (
-          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
+          <SelectedReefContent reef={reef} url={featuredMedia?.imageUrl} />
         ) : null}
       </Card>
     </Box>

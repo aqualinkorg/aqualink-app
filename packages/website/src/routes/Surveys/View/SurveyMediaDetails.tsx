@@ -144,7 +144,7 @@ const SurveyMediaDetails = ({
                 {point.surveyMedia.map((media) => {
                   return (
                     <Card
-                      key={media.url}
+                      key={media.thumbnailUrl || media.imageUrl}
                       elevation={3}
                       className={classes.shadowBox}
                     >
@@ -169,7 +169,7 @@ const SurveyMediaDetails = ({
                           >
                             <CardMedia
                               className={classes.cardImage}
-                              image={media.url}
+                              image={media.thumbnailUrl || media.imageUrl}
                             />
                           </Grid>
                           <Grid
