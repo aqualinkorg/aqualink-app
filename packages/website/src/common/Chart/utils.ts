@@ -4,6 +4,9 @@ import { sortByDate } from "../../helpers/sortDailyData";
 import type { DailyData, SofarValue } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
+// TODO make bottom temp permanent once we work UI caveats
+const CHART_BOTTOM_TEMP_ENABLED = false;
+
 const isBetween = (date: Date, start: Date, end: Date): boolean => {
   return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
 };

@@ -9,7 +9,37 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+
+import styled from "@material-ui/core/styles/styled";
 import { formatNumber } from "../../../helpers/numberUtils";
+
+const Circle = styled("div")<{}, { color: string; size?: number }>(
+  ({ size = 10, color: backgroundColor }) => ({
+    marginRight: 5,
+    marginTop: 3,
+    width: size,
+    height: size,
+    borderRadius: size / 2,
+    backgroundColor,
+    display: "inline-block",
+  })
+);
+
+const TemperatureMetric = (
+  temperature: number,
+  title: string,
+  color: string,
+  gridClassName: string | undefined
+) => (
+  <Grid item xs={12} className={gridClassName}>
+    <Grid container justify="flex-start" item>
+      <Circle color={color} />
+      <Typography variant="caption">
+        {title} {`${formatNumber(temperature, 1)} °C`}
+      </Typography>
+    </Grid>
+  </Grid>
+);
 
 const Tooltip = ({
   date,
@@ -27,36 +57,6 @@ const Tooltip = ({
     hour: spotterSurfaceTemp ? "2-digit" : undefined,
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
-
-  const Circle = (backgroundColor: string, size: number) => (
-    <div
-      style={{
-        marginRight: 5,
-        marginTop: 3,
-        width: size,
-        height: size,
-        borderRadius: size / 2,
-        backgroundColor,
-        display: "inline-block",
-      }}
-    />
-  );
-
-  const TemperatureMetric = (
-    temperature: number,
-    title: string,
-    color: string,
-    gridClassName: string | undefined
-  ) => (
-    <Grid item xs={12} className={gridClassName}>
-      <Grid container justify="flex-start" item>
-        {Circle(color, 10)}
-        <Typography variant="caption">
-          {title} {`${formatNumber(temperature, 1)} °C`}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
 
   return (
     <div className={classes.tooltip}>
