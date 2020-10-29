@@ -29,6 +29,12 @@ export class ReefApplication {
   @Column({ nullable: true })
   installationResources: string;
 
+  @Column({ nullable: true })
+  targetShipdate: Date;
+
+  @Column({ nullable: true })
+  trackingUrl: string;
+
   @Exclude()
   @Column({ default: () => 'gen_random_uuid()', unique: true })
   uid: string;
