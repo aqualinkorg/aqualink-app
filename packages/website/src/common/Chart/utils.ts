@@ -5,7 +5,7 @@ import type { DailyData, SofarValue } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
 // TODO make bottom temp permanent once we work UI caveats
-const CHART_BOTTOM_TEMP_ENABLED = false;
+export const CHART_BOTTOM_TEMP_ENABLED = false;
 
 const isBetween = (date: Date, start: Date, end: Date): boolean => {
   return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
@@ -55,7 +55,11 @@ export const createDatasets = (
     .map((item) => {
       const date = new Date(item.date).setHours(0, 0, 0, 0);
       if (surveyDates.includes(date)) {
-        return item.satelliteTemperature;
+        return (
+          // prioritise bottom temp, if enabled
+          (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
+          item.satelliteTemperature
+        );
       }
       return null;
     });
@@ -128,7 +132,7 @@ export const calculateAxisLimits = (
 
   const temperatureData = [
     ...surfaceTemperatureData,
-    ...bottomTemperatureData,
+    ...(CHART_BOTTOM_TEMP_ENABLED ? bottomTemperatureData : []),
     ...spotterBottom,
     ...spotterSurface,
   ].filter((value) => value);
@@ -223,7 +227,7 @@ export const createChartData = (
       },
       {
         label: "TEMP AT DEPTH",
-        data: bottomTemps,
+        data: CHART_BOTTOM_TEMP_ENABLED ? bottomTemps : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",

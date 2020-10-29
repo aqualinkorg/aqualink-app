@@ -40,7 +40,8 @@ exports[`renders as expected 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item"
               >
                 <div
-                  style="margin-right: 5px; margin-top: 3px; width: 10px; height: 10px; border-radius: 5px; background-color: rgb(107, 193, 225); display: inline-block;"
+                  class="div-root-7 div-root-8"
+                  color="#6bc1e1"
                 />
                 <mock-typography
                   variant="caption"
