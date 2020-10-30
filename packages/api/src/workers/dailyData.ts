@@ -3,6 +3,7 @@ import { isNil, isNumber, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
+import moment from 'moment';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getMin, getMax, getAverage } from '../utils/math';
@@ -317,7 +318,6 @@ export async function getReefsDailyData(
         // Update instead of insert
         if (err.constraint === 'no_duplicated_date') {
           const filteredData = omitBy(entity, isNil);
-
           await dailyDataRepository
             .createQueryBuilder('dailyData')
             .update()
@@ -342,14 +342,14 @@ export async function getReefsDailyData(
 }
 
 export async function runDailyUpdate(conn: Connection) {
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  const today = moment().utc();
+  today.hours(0).minutes(0).seconds(0).milliseconds(0);
 
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  console.log(`Daily Update for data on ${yesterday.toDateString()}`);
+  const yesterday = moment(today);
+  yesterday.day(today.day() - 1);
+  console.log(`Daily Update for data on ${yesterday.format()}`);
   try {
-    await getReefsDailyData(conn, yesterday);
+    await getReefsDailyData(conn, yesterday.toDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);
