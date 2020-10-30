@@ -191,7 +191,20 @@ function addAsyncReducer<Out, In, ThunkParams extends CreateAsyncThunkTypes>(
 const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
-  reducers: {},
+  reducers: {
+    setToken: (state, action: PayloadAction<string>) => {
+      if (state.userInfo) {
+        return {
+          ...state,
+          userInfo: {
+            ...state.userInfo,
+            token: action.payload,
+          },
+        };
+      }
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     // User Create
     addAsyncReducer(builder, createUser, (action) => ({
@@ -218,5 +231,7 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
+
+export const { setToken } = userSlice.actions;
 
 export default userSlice.reducer;

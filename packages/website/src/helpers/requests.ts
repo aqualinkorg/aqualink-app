@@ -35,5 +35,6 @@ interface Request {
 }
 
 export default {
+  agent,
   send,
 };
