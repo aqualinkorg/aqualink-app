@@ -31,13 +31,11 @@ const TemperatureMetric = (
   color: string,
   gridClassName: string | undefined
 ) => (
-  <Grid item xs={12} className={gridClassName}>
-    <Grid container justify="flex-start" item>
-      <Circle color={color} />
-      <Typography variant="caption">
-        {title} {`${formatNumber(temperature, 1)} °C`}
-      </Typography>
-    </Grid>
+  <Grid container justify="flex-start" item className={gridClassName}>
+    <Circle color={color} />
+    <Typography variant="caption">
+      {title} {`${formatNumber(temperature, 1)} °C`}
+    </Typography>
   </Grid>
 );
 
@@ -136,12 +134,12 @@ const styles = () =>
     },
     tooltipHeader: {
       flex: "0 1 auto",
-      padding: "0.5rem 1rem 0 1rem",
+      padding: "0.5rem 1rem 0.5 1rem",
       height: 30,
     },
     tooltipContent: {
       flex: "1 1 auto",
-      padding: "0rem 1rem 0.5rem 1rem",
+      padding: "0.5rem 1rem 0.5rem 1rem",
     },
     tooltipContentItem: {
       width: "120px",
