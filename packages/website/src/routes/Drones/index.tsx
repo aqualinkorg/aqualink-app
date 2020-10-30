@@ -16,7 +16,7 @@ import dronebottom from "../../assets/img/dronebottom.jpg";
 
 const Drones = () => (
   <>
-    <NavBar routeButtons={false} searchLocation={false} />
+    <NavBar searchLocation={false} />
     <Box py={6}>
       {/* Main container */}
       <div className="page-container">

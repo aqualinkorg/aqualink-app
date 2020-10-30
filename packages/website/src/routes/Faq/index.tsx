@@ -13,7 +13,7 @@ import Footer from "../../common/Footer";
 const Faq = ({ classes }: FaqProps) => {
   return (
     <>
-      <NavBar routeButtons={false} searchLocation={false} />
+      <NavBar searchLocation={false} />
       <div>
         {/* Main container */}
         <div className="page-container">

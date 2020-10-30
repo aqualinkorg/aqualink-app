@@ -3,7 +3,7 @@
 exports[`Landing Page should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-6 NavBar-appBarXs-8"
+    classname="NavBar-appBar-6"
     color="primary"
     position="static"
   >
@@ -162,6 +162,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             >
               <mock-button
                 component="[object Object]"
+                style="color: white;"
                 to="/map"
               >
                 MAP
@@ -172,6 +173,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             >
               <mock-button
                 component="[object Object]"
+                style="color: white;"
                 to="/about"
               >
                 ABOUT
@@ -182,6 +184,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             >
               <mock-button
                 component="[object Object]"
+                style="color: white;"
                 to="/register"
               >
                 REGISTER YOUR SITE
@@ -225,44 +228,6 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             </mock-menu>
           </mock-box>
         </div>
-        <mock-hidden
-          smup="true"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                to="/map"
-              >
-                MAP
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                to="/about"
-              >
-                ABOUT
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                to="/register"
-              >
-                REGISTER YOUR SITE
-              </mock-button>
-            </div>
-          </div>
-        </mock-hidden>
       </div>
     </mock-toolbar>
   </mock-appbar>

@@ -16,7 +16,7 @@ import fullDiagramInfra from "../../assets/img/fulldiag3.svg";
 const Buoy = ({ classes }: BuoyProps) => {
   return (
     <>
-      <NavBar routeButtons={false} searchLocation={false} />
+      <NavBar searchLocation={false} />
       <div className={classes.root} id="bloc-6">
         <div className="container bloc-md">
           <div className="row align-items-center">

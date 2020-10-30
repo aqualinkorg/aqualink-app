@@ -52,7 +52,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
     <>
       <AppBar
         className={classNames(classes.appBar, {
-          [classes.appBarXs]: searchLocation || routeButtons,
+          [classes.appBarXs]: searchLocation,
         })}
         position="static"
         color="primary"
@@ -177,11 +177,6 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                 </Grid>
               </Hidden>
             )}
-            {routeButtons && (
-              <Hidden smUp>
-                <RouteButtons />
-              </Hidden>
-            )}
           </Grid>
         </Toolbar>
       </AppBar>
@@ -243,8 +238,12 @@ const styles = (theme: Theme) =>
 
 interface NavBarIncomingProps {
   searchLocation: boolean;
-  routeButtons: boolean;
+  routeButtons?: boolean;
 }
+
+NavBar.defaultProps = {
+  routeButtons: true,
+};
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
 

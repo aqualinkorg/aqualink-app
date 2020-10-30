@@ -12,7 +12,7 @@ import Footer from "../../common/Footer";
 const Terms = ({ classes }: TermsProps) => {
   return (
     <>
-      <NavBar routeButtons={false} searchLocation={false} />
+      <NavBar searchLocation={false} />
       <Container className={classes.root}>
         <h1>Terms and Conditions</h1>
         <p>Last updated: October 08, 2020</p>
