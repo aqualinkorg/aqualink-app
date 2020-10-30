@@ -8,7 +8,6 @@ export const subtractFromDate = (endDate: string, amount: Range): string => {
     case "day":
       return new Date(date.setTime(date.getTime() - 1 * day)).toISOString();
     case "week":
-      return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
     default:
       return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
   }
@@ -36,7 +35,6 @@ export const findChartPeriod = (range: Range) => {
     case "day":
       return "hour";
     case "week":
-      return "day";
     default:
       return "day";
   }

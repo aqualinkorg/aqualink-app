@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -36,7 +35,7 @@ import { useBodyLength } from "../../../helpers/useBodyLength";
 import {
   reefSpotterDataSelector,
   reefSpotterDataRequest,
-  reefspotterDataLoadingSelector,
+  reefSpotterDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { subtractFromDate, findChartPeriod } from "../../../helpers/dates";
 
@@ -45,7 +44,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const spotterData = useSelector(reefSpotterDataSelector);
-  const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
+  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const { liveData } = reef;
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
@@ -183,29 +182,32 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   >
                     <CircularProgress size="6rem" thickness={1} />
                   </Box>
-                ) : spotterData && endDate ? (
-                  <>
-                    <Grid container alignItems="center" item xs={11}>
-                      <Typography variant="subtitle2">
-                        HOURLY WATER TEMPERATURE (°C)
-                      </Typography>
-                    </Grid>
-                    <Grid container justify="center" item xs={12}>
-                      <Charts
-                        dailyData={reef.dailyData}
-                        spotterData={spotterData}
-                        startDate={subtractFromDate(endDate, range)}
-                        endDate={endDate}
-                        chartPeriod={findChartPeriod(range)}
-                        surveys={[]}
-                        depth={reef.depth}
-                        maxMonthlyMean={null}
-                        temperatureThreshold={null}
-                        background={false}
-                      />
-                    </Grid>
-                  </>
-                ) : null}
+                ) : (
+                  spotterData &&
+                  endDate && (
+                    <>
+                      <Grid container alignItems="center" item xs={11}>
+                        <Typography variant="subtitle2">
+                          HOURLY WATER TEMPERATURE (°C)
+                        </Typography>
+                      </Grid>
+                      <Grid container justify="center" item xs={12}>
+                        <Charts
+                          dailyData={reef.dailyData}
+                          spotterData={spotterData}
+                          startDate={subtractFromDate(endDate, range)}
+                          endDate={endDate}
+                          chartPeriod={findChartPeriod(range)}
+                          surveys={[]}
+                          depth={reef.depth}
+                          maxMonthlyMean={null}
+                          temperatureThreshold={null}
+                          background={false}
+                        />
+                      </Grid>
+                    </>
+                  )
+                )}
               </Grid>
             </Grid>
           </Paper>

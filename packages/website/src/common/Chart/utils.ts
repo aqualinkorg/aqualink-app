@@ -283,15 +283,10 @@ export const createChartData = (
   return data;
 };
 
-export function sameDay(date1: string | number, date2: string | number | Date) {
-  const d1 = new Date(date1);
-  const d2 = new Date(date2);
-  return (
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate()
-  );
-}
+export const sameDay = (
+  date1: string | number | Date,
+  date2: string | number | Date
+) => new Date(date1).toDateString() === new Date(date2).toDateString();
 
 const timeDiff = (incomingDate: string, date: Date) =>
   Math.abs(new Date(incomingDate).getTime() - date.getTime());

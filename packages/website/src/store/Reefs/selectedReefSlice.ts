@@ -179,7 +179,7 @@ export const reefLoadingSelector = (
   state: RootState
 ): SelectedReefState["loading"] => state.selectedReef.loading;
 
-export const reefspotterDataLoadingSelector = (
+export const reefSpotterDataLoadingSelector = (
   state: RootState
 ): SelectedReefState["spotterDataLoading"] =>
   state.selectedReef.spotterDataLoading;

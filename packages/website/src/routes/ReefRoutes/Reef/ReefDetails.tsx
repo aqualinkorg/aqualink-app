@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { ElementType, ChangeEvent, useState } from "react";
 import {
   createStyles,
@@ -23,7 +22,7 @@ import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import SelectRange from "../../../common/SelectRange";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
-import { reefspotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
+import { reefSpotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -47,7 +46,7 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
   const [open, setOpen] = useState<boolean>(false);
-  const spotterDataLoading = useSelector(reefspotterDataLoadingSelector);
+  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const filteredDailyData = filterData(startDate, endDate, reef.dailyData);
 
@@ -185,21 +184,23 @@ const ReefDetails = ({
               >
                 <CircularProgress size="6rem" thickness={1} />
               </Box>
-            ) : spotterData ? (
-              <Charts
-                title="HOURLY WATER TEMPERATURE (°C)"
-                dailyData={filteredDailyData}
-                spotterData={spotterData}
-                startDate={startDate}
-                endDate={endDate}
-                chartPeriod={chartPeriod}
-                surveys={[]}
-                depth={reef.depth}
-                maxMonthlyMean={null}
-                temperatureThreshold={null}
-                background={false}
-              />
-            ) : null}
+            ) : (
+              spotterData && (
+                <Charts
+                  title="HOURLY WATER TEMPERATURE (°C)"
+                  dailyData={filteredDailyData}
+                  spotterData={spotterData}
+                  startDate={startDate}
+                  endDate={endDate}
+                  chartPeriod={chartPeriod}
+                  surveys={[]}
+                  depth={reef.depth}
+                  maxMonthlyMean={null}
+                  temperatureThreshold={null}
+                  background={false}
+                />
+              )
+            )}
             <Surveys reefId={reef.id} />
           </Box>
         </>
