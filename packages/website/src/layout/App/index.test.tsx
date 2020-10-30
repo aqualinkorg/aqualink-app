@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+jest.mock("../../routes/Landing", () => "Mock-LandingPage");
 jest.mock("../../routes/HomeMap", () => "Mock-HomeMap");
 jest.mock("../../routes/ReefRoutes", () => "Mock-ReefRoutes");
 jest.mock("../../routes/About", () => "Mock-About");
@@ -18,6 +19,7 @@ test("renders as expected", () => {
   const { container } = render(
     <Router>
       <Switch>
+        <Route exact path="/" component={() => <div>LandingPage</div>} />
         <Route exact path="/map" component={() => <div>HomeMap</div>} />
         <Route path="/reefs" component={() => <div>Reefs</div>} />
         <Route default component={() => <div>Not Found</div>} />

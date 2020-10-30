@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { NotFound } from "../../routes/NotFound";
+import LandingPage from "../../routes/Landing";
 import HomeMap from "../../routes/HomeMap";
 import ReefRoutes from "../../routes/ReefRoutes";
 import About from "../../routes/About";
@@ -44,6 +45,7 @@ function App() {
         <div id="app">
           {render && (
             <Switch>
+              <Route exact path="/" component={LandingPage} />
               <Route exact path="/map" component={HomeMap} />
               <Route exact path="/about" component={About} />
               <Route exact path="/register" component={RegisterSite} />

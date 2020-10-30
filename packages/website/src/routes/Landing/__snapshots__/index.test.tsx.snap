@@ -2,8 +2,10 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <div>
-    LandingPage
+  <div
+    class="LandingPage-root-1"
+  >
+    Landing Page
   </div>
 </div>
 `;
