@@ -3,7 +3,7 @@
 exports[`Landing Page should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-2"
+    classname="NavBar-appBar-2 NavBar-appBarXs-4"
     color="primary"
     position="static"
   >
@@ -110,7 +110,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
         >
           <mock-box
             alignitems="center"
@@ -151,8 +151,46 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             </mock-link>
           </mock-box>
         </div>
+        <mock-hidden
+          xsdown="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/map"
+              >
+                MAP
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/about"
+              >
+                ABOUT
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/register"
+              >
+                REGISTER YOUR SITE
+              </mock-button>
+            </div>
+          </div>
+        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
         >
           <mock-box
             alignitems="center"
@@ -187,6 +225,44 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             </mock-menu>
           </mock-box>
         </div>
+        <mock-hidden
+          smup="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/map"
+              >
+                MAP
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/about"
+              >
+                ABOUT
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                to="/register"
+              >
+                REGISTER YOUR SITE
+              </mock-button>
+            </div>
+          </div>
+        </mock-hidden>
       </div>
     </mock-toolbar>
   </mock-appbar>

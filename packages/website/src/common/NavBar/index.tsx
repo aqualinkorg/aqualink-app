@@ -25,6 +25,7 @@ import classNames from "classnames";
 import RegisterDialog from "../RegisterDialog";
 import SignInDialog from "../SignInDialog";
 import Search from "../Search";
+import RouteButtons from "../RouteButtons";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
@@ -51,7 +52,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
     <>
       <AppBar
         className={classNames(classes.appBar, {
-          [classes.appBarXs]: searchLocation,
+          [classes.appBarXs]: searchLocation || routeButtons,
         })}
         position="static"
         color="primary"
@@ -67,7 +68,8 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
             alignItems="center"
             spacing={1}
           >
-            <Grid item xs={5} sm={searchLocation ? 6 : 4}>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            <Grid item xs={5} sm={routeButtons ? 2 : searchLocation ? 6 : 4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
                   edge="start"
@@ -96,12 +98,18 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
               </Hidden>
             )}
 
+            {routeButtons && (
+              <Hidden xsDown>
+                <RouteButtons />
+              </Hidden>
+            )}
+
             <Grid
               container
               justify="flex-end"
               item
               xs={7}
-              sm={searchLocation ? 3 : 8}
+              sm={searchLocation || routeButtons ? 3 : 8}
             >
               {user ? (
                 <>
@@ -167,6 +175,11 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                 <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
                   <Search />
                 </Grid>
+              </Hidden>
+            )}
+            {routeButtons && (
+              <Hidden smUp>
+                <RouteButtons />
               </Hidden>
             )}
           </Grid>
