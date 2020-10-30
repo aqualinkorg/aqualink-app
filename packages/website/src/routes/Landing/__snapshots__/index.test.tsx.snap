@@ -872,11 +872,11 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root Card-cardImageWrapper-40 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
-          <div
-            class="MuiCardMedia-root Card-cardImage-41"
-            style="background-image: url(landing-page-buoy.jpg);"
+          <img
+            class="MuiCardMedia-root Card-cardImage-40 MuiCardMedia-media MuiCardMedia-img"
+            src="landing-page-buoy.jpg"
           />
         </div>
       </div>
@@ -912,11 +912,11 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root Card-cardImageWrapper-40 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
-          <div
-            class="MuiCardMedia-root Card-cardImage-41"
-            style="background-image: url(landing-page-metrics.png);"
+          <img
+            class="MuiCardMedia-root Card-cardImage-40 MuiCardMedia-media MuiCardMedia-img"
+            src="landing-page-metrics.png"
           />
         </div>
       </div>

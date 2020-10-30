@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Box,
   Grid,
   Typography,
@@ -32,23 +31,22 @@ const Card = ({
             <Typography variant="h6">{text}</Typography>
           </Box>
         </Grid>
-        <Grid className={classes.cardImageWrapper} item xs={12} md={6}>
-          <CardMedia className={classes.cardImage} image={image} />
+        <Grid item xs={12} md={6}>
+          <CardMedia
+            className={classes.cardImage}
+            component="img"
+            src={image}
+          />
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     cardTitle: {
       fontWeight: 500,
-    },
-    cardImageWrapper: {
-      [theme.breakpoints.down("sm")]: {
-        height: "30rem",
-      },
     },
     cardImage: {
       height: "100%",
