@@ -8,7 +8,11 @@ import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
-import { getSpotterDataClosestToDate, sameDay } from "./utils";
+import {
+  CHART_BOTTOM_TEMP_ENABLED,
+  getSpotterDataClosestToDate,
+  sameDay,
+} from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
@@ -75,12 +79,18 @@ function ChartWithTooltip({
         )?.value) ||
       null;
 
-    const bottomTemperature = bottomTemp || avgBottomTemperature;
+    const bottomTemperature =
+      bottomTemp || (CHART_BOTTOM_TEMP_ENABLED ? avgBottomTemperature : null);
+
+    const nValues = [
+      satelliteTemperature,
+      bottomTemperature,
+      spotterSurfaceTemp,
+    ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 100;
-    const top =
-      position.top + tooltipModel.caretY - (spotterSurfaceTemp ? 140 : 110);
+    const left = position.left + tooltipModel.caretX - 80;
+    const top = position.top + tooltipModel.caretY - ((nValues + 1) * 30 + 10);
 
     if (
       [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(

@@ -9,7 +9,35 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+
+import styled from "@material-ui/core/styles/styled";
 import { formatNumber } from "../../../helpers/numberUtils";
+
+const Circle = styled("div")<{}, { color: string; size?: number }>(
+  ({ size = 10, color: backgroundColor }) => ({
+    marginRight: 5,
+    marginTop: 3,
+    width: size,
+    height: size,
+    borderRadius: size / 2,
+    backgroundColor,
+    display: "inline-block",
+  })
+);
+
+const TemperatureMetric = (
+  temperature: number,
+  title: string,
+  color: string,
+  gridClassName: string | undefined
+) => (
+  <Grid container justify="flex-start" item className={gridClassName}>
+    <Circle color={color} />
+    <Typography variant="caption">
+      {title} {`${formatNumber(temperature, 1)} °C`}
+    </Typography>
+  </Grid>
+);
 
 const Tooltip = ({
   date,
@@ -27,24 +55,6 @@ const Tooltip = ({
     hour: spotterSurfaceTemp ? "2-digit" : undefined,
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
-
-  const TemperatureMetric = (
-    temperature: number,
-    title: string,
-    spacing: 6 | 12,
-    gridClassName: string | undefined
-  ) => (
-    <Grid item xs={spacing} className={gridClassName}>
-      <Grid container justify="flex-start" item>
-        <Typography variant="caption">{title}</Typography>
-      </Grid>
-      <Grid container justify="flex-start" item>
-        <Typography variant="h5">
-          {`${formatNumber(temperature, 1)} °C`}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
 
   return (
     <div className={classes.tooltip}>
@@ -73,38 +83,26 @@ const Tooltip = ({
               item
               xs={12}
             >
-              {spotterSurfaceTemp &&
-                TemperatureMetric(
-                  spotterSurfaceTemp,
-                  "TEMP AT 1m",
-                  surfaceTemperature ? 6 : 12,
-                  classes.tooltipContentItem
-                )}
-              {!spotterSurfaceTemp &&
-                bottomTemperature &&
-                TemperatureMetric(
-                  bottomTemperature,
-                  `TEMP AT ${depth}m`,
-                  surfaceTemperature ? 6 : 12,
-                  classes.tooltipContentItem
-                )}
               {surfaceTemperature &&
                 TemperatureMetric(
                   surfaceTemperature,
-                  "SURFACE TEMP",
-                  spotterSurfaceTemp || bottomTemperature ? 6 : 12,
+                  "SURFACE",
+                  "#6bc1e1",
                   classes.tooltipContentItem
                 )}
-
               {spotterSurfaceTemp &&
-                bottomTemperature &&
+                TemperatureMetric(
+                  spotterSurfaceTemp,
+                  "BUOY 1m",
+                  "#6bc1e1",
+                  classes.tooltipContentItem
+                )}
+              {bottomTemperature &&
                 TemperatureMetric(
                   bottomTemperature,
-                  `TEMP AT ${depth}m`,
-                  12,
-                  surfaceTemperature
-                    ? classes.tooltipContentLargeItem
-                    : classes.tooltipContentItem
+                  `BUOY ${depth}m`,
+                  "rgb(94, 164, 203)",
+                  classes.tooltipContentItem
                 )}
             </Grid>
           </Grid>
@@ -125,8 +123,8 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 200,
-      minHeight: 100,
+      width: 160,
+      minHeight: 60,
     },
     tooltipCard: {
       display: "flex",
@@ -136,21 +134,17 @@ const styles = () =>
     },
     tooltipHeader: {
       flex: "0 1 auto",
-      padding: "0.5rem 1rem 0 1rem",
+      padding: "0.5rem 1rem 0.5 1rem",
       height: 30,
     },
     tooltipContent: {
       flex: "1 1 auto",
-      padding: "0rem 1rem 0.5rem 1rem",
+      padding: "0.5rem 1rem 0.5rem 1rem",
     },
     tooltipContentItem: {
-      width: "100px",
-      height: 50,
+      width: "120px",
+      height: 30,
       margin: "0",
-    },
-    tooltipContentLargeItem: {
-      height: 50,
-      width: "200px",
     },
     tooltipArrow: {
       content: " ",

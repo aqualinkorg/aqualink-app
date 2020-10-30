@@ -92,8 +92,8 @@ function Chart({
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
-    bottomTemperatureData,
     tempWithSurvey,
+    bottomTemperatureData,
     chartLabels,
   } = useProcessedChartData(
     dailyData,
@@ -241,7 +241,7 @@ function Chart({
         spotterData?.surfaceTemperature || [],
         tempWithSurvey,
         surfaceTemperatureData,
-        !spotterData ? bottomTemperatureData : [],
+        bottomTemperatureData,
         !!temperatureThreshold
       )}
     />
