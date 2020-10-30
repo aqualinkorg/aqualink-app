@@ -31,7 +31,7 @@ const Homepage = ({ classes }: HomepageProps) => {
   return (
     <>
       <div role="presentation" onClick={openDrawer ? toggleDrawer : () => {}}>
-        <HomepageNavBar searchLocation />
+        <HomepageNavBar routeButtons={false} searchLocation />
       </div>
       <div className={classes.root}>
         <Grid container direction="row">

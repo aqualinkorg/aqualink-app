@@ -118,7 +118,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   if (loading) {
     return (
       <>
-        <ReefNavBar searchLocation={false} />
+        <ReefNavBar routeButtons={false} searchLocation={false} />
         <LinearProgress />
       </>
     );
@@ -126,7 +126,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   return (
     <>
-      <ReefNavBar searchLocation={false} />
+      <ReefNavBar routeButtons={false} searchLocation={false} />
       <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
         {reefDetails && liveData && !error ? (
           <>

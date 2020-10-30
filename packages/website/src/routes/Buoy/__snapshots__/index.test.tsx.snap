@@ -3,6 +3,7 @@
 exports[`Buoy should render with given state from Redux store 1`] = `
 <div>
   <mock-navbar
+    routebuttons="false"
     searchlocation="false"
   />
   <div

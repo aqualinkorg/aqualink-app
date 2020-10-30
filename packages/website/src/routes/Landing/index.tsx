@@ -1,8 +1,14 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
+import NavBar from "../../common/NavBar";
+
 const LandingPage = ({ classes }: LandingPageProps) => {
-  return <div className={classes.root}>Landing Page</div>;
+  return (
+    <>
+      <NavBar routeButtons searchLocation={false} />
+    </>
+  );
 };
 
 const styles = () =>

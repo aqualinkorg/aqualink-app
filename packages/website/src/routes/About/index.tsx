@@ -17,7 +17,7 @@ import drew from "../../assets/img/drew.jpg";
 const About = ({ classes }: AboutProps) => {
   return (
     <>
-      <NavBar searchLocation={false} />
+      <NavBar routeButtons={false} searchLocation={false} />
       <div>
         <div className="page-container">
           <div className="bloc l-bloc" id="bloc-0">

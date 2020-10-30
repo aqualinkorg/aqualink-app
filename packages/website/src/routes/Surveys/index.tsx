@@ -39,7 +39,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
   if (loading) {
     return (
       <>
-        <NavBar searchLocation={false} />
+        <NavBar routeButtons={false} searchLocation={false} />
         <LinearProgress />
       </>
     );
@@ -47,7 +47,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 
   return (
     <>
-      <NavBar searchLocation={false} />
+      <NavBar routeButtons={false} searchLocation={false} />
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {reefDetails && !error ? (

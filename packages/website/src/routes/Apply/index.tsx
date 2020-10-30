@@ -99,7 +99,7 @@ const Apply = ({ classes }: ApplyProps) => {
   return (
     <>
       {(!reef || !user) && <Redirect to="/" />}
-      <NavBar searchLocation={false} />
+      <NavBar routeButtons={false} searchLocation={false} />
       {loading ? (
         <Container className={classes.thankYouMessage}>
           <Grid

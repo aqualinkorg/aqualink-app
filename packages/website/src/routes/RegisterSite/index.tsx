@@ -160,7 +160,7 @@ const Apply = ({ classes }: ApplyProps) => {
 
   return (
     <>
-      <NavBar searchLocation={false} />
+      <NavBar routeButtons={false} searchLocation={false} />
       <Box height="100%" pt={4}>
         <Container>
           <Grid container spacing={6}>

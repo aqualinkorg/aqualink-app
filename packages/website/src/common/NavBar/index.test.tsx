@@ -28,7 +28,7 @@ describe("NavBar", () => {
 
     element = render(
       <Provider store={store}>
-        <HomePageNavBar searchLocation={false} />
+        <HomePageNavBar routeButtons={false} searchLocation={false} />
       </Provider>
     ).container;
   });

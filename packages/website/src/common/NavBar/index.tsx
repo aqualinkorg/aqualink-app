@@ -28,7 +28,7 @@ import Search from "../Search";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
-const NavBar = ({ searchLocation, classes }: NavBarProps) => {
+const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
@@ -230,6 +230,7 @@ const styles = (theme: Theme) =>
 
 interface NavBarIncomingProps {
   searchLocation: boolean;
+  routeButtons: boolean;
 }
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
