@@ -814,7 +814,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
   >
     <mock-box
       bgcolor="rgba(69, 76, 79, 0.05)"
-      mt="5rem"
+      classname="Card-container-39"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -823,13 +823,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <mock-box
-            classname="Card-container-39"
+            classname="Card-textContainer-40"
           >
             <mock-box
               mb="1rem"
             >
               <mock-typography
-                classname="Card-cardTitle-40"
+                classname="Card-cardTitle-41"
                 variant="h5"
               >
                 Underwater temperature monitoring with a smart buoy
@@ -846,7 +846,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <img
-            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
+            class="MuiCardMedia-root Card-cardImage-42 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-buoy.jpg"
           />
         </div>
@@ -854,7 +854,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
     </mock-box>
     <mock-box
       bgcolor="#ffffff"
-      mt="5rem"
+      classname="Card-container-39"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
@@ -863,13 +863,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <mock-box
-            classname="Card-container-39"
+            classname="Card-textContainer-40"
           >
             <mock-box
               mb="1rem"
             >
               <mock-typography
-                classname="Card-cardTitle-40"
+                classname="Card-cardTitle-41"
                 variant="h5"
               >
                 Each site gets its own web page
@@ -886,7 +886,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <img
-            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
+            class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-metrics.png"
           />
         </div>
@@ -894,7 +894,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
     </mock-box>
     <mock-box
       bgcolor="rgba(69, 76, 79, 0.05)"
-      mt="5rem"
+      classname="Card-container-39"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -903,13 +903,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <mock-box
-            classname="Card-container-39"
+            classname="Card-textContainer-40"
           >
             <mock-box
               mb="1rem"
             >
               <mock-typography
-                classname="Card-cardTitle-40"
+                classname="Card-cardTitle-41"
                 variant="h5"
               >
                 Correlate survey observations with temperature changes
@@ -926,7 +926,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <img
-            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
+            class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-survey-images.png"
           />
         </div>
@@ -934,7 +934,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
     </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-42"
+    classname="Footer-appBar-44"
     position="static"
   >
     <mock-toolbar>
@@ -945,7 +945,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-43"
+            classname="Footer-navBarLink-45"
             href="/"
           >
             <mock-typography

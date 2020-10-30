@@ -19,6 +19,7 @@ export const cardTitles: CardIncomingProps[] = [
     backgroundColor: "#ffffff",
     direction: "row-reverse",
     image: metrics,
+    scaleDown: true,
   },
   {
     title: "Correlate survey observations with temperature changes",
@@ -27,5 +28,6 @@ export const cardTitles: CardIncomingProps[] = [
     backgroundColor: "rgba(69, 76, 79, 0.05)",
     direction: "row",
     image: surveyImages,
+    scaleDown: true,
   },
 ];

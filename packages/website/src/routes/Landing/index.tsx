@@ -93,6 +93,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             backgroundColor={item.backgroundColor}
             direction={item.direction}
             image={item.image}
+            scaleDown={item.scaleDown}
           />
         ))}
       </Container>
