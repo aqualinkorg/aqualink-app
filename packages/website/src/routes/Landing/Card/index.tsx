@@ -47,7 +47,7 @@ const Card = ({
 const styles = (theme: Theme) =>
   createStyles({
     container: {
-      padding: "2rem",
+      padding: "4rem",
       // TODO - This does not seem to work atm.
       [theme.breakpoints.down("md")]: {
         margin: "0.5rem",

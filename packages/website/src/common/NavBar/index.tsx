@@ -242,7 +242,7 @@ interface NavBarIncomingProps {
 }
 
 NavBar.defaultProps = {
-  routeButtons: true,
+  routeButtons: false,
 };
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;

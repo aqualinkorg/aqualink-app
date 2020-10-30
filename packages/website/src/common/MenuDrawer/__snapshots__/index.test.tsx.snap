@@ -21,6 +21,12 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
       HOME
     </mock-link>
     <mock-link
+      href="/map"
+      style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+    >
+      MAP
+    </mock-link>
+    <mock-link
       href="/buoy"
       style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
     >

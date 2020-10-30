@@ -1,6 +1,7 @@
 import { CardIncomingProps } from "./Card";
 import buoy from "../../assets/img/landing-page-buoy.jpg";
 import metrics from "../../assets/img/landing-page-metrics.png";
+import surveyImages from "../../assets/img/landing-page-survey-images.png";
 
 export const cardTitles: CardIncomingProps[] = [
   {
@@ -18,5 +19,13 @@ export const cardTitles: CardIncomingProps[] = [
     backgroundColor: "#ffffff",
     direction: "row-reverse",
     image: metrics,
+  },
+  {
+    title: "Correlate survey observations with temperature changes",
+    text:
+      "Each site on the Aqualink web app has a detailed page outlining the satellite data, buoy data, heat stress alert level, as well as weather and a time history of the temperature. But perhaps most importantly for the site manager, it provides the ability to upload survey imagery and correlate it with all the other data. When a user uploads imagery, it provides a snapshot in time of the measured temperature with visual observations. By tagging the images, we are beginning to create a structured database that future machine learning algorithms can use to help predict heat stress events, such as coral bleaching. Adding surveys also connects the local ecosystem manager to a global network of scientists and engineers that are working everyday to protect these sensitive environments. The datasets are free and available to everyone.",
+    backgroundColor: "rgba(69, 76, 79, 0.05)",
+    direction: "row",
+    image: surveyImages,
   },
 ];

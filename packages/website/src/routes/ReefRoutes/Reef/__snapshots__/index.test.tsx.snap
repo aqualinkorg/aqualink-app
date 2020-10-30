@@ -27,6 +27,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           HOME
         </mock-link>
         <mock-link
+          href="/map"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          MAP
+        </mock-link>
+        <mock-link
           href="/buoy"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
@@ -110,7 +116,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
         >
           <mock-box
             alignitems="center"
@@ -151,49 +157,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             </mock-link>
           </mock-box>
         </div>
-        <mock-hidden
-          xsdown="true"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/map"
-              >
-                MAP
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/about"
-              >
-                ABOUT
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/register"
-              >
-                REGISTER YOUR SITE
-              </mock-button>
-            </div>
-          </div>
-        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
         >
           <mock-box
             alignitems="center"
@@ -1808,6 +1773,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           HOME
         </mock-link>
         <mock-link
+          href="/map"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          MAP
+        </mock-link>
+        <mock-link
           href="/buoy"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
@@ -1891,7 +1862,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
         >
           <mock-box
             alignitems="center"
@@ -1932,49 +1903,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             </mock-link>
           </mock-box>
         </div>
-        <mock-hidden
-          xsdown="true"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/map"
-              >
-                MAP
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/about"
-              >
-                ABOUT
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/register"
-              >
-                REGISTER YOUR SITE
-              </mock-button>
-            </div>
-          </div>
-        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
         >
           <mock-box
             alignitems="center"

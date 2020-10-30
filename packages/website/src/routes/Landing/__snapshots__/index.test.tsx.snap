@@ -27,6 +27,12 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           HOME
         </mock-link>
         <mock-link
+          href="/map"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          MAP
+        </mock-link>
+        <mock-link
           href="/buoy"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
@@ -882,6 +888,46 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           <img
             class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-metrics.png"
+          />
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      bgcolor="rgba(69, 76, 79, 0.05)"
+      mt="5rem"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            classname="Card-container-39"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-40"
+                variant="h5"
+              >
+                Correlate survey observations with temperature changes
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              Each site on the Aqualink web app has a detailed page outlining the satellite data, buoy data, heat stress alert level, as well as weather and a time history of the temperature. But perhaps most importantly for the site manager, it provides the ability to upload survey imagery and correlate it with all the other data. When a user uploads imagery, it provides a snapshot in time of the measured temperature with visual observations. By tagging the images, we are beginning to create a structured database that future machine learning algorithms can use to help predict heat stress events, such as coral bleaching. Adding surveys also connects the local ecosystem manager to a global network of scientists and engineers that are working everyday to protect these sensitive environments. The datasets are free and available to everyone.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <img
+            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
+            src="landing-page-survey-images.png"
           />
         </div>
       </div>
