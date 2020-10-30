@@ -33,7 +33,7 @@ import {
   userErrorSelector,
 } from "../../store/User/userSlice";
 import { UserSignInParams } from "../../store/User/types";
-import incomingStyles from "../../routes/Homepage/styles";
+import dialogStyles from "../styles/dialogStyles";
 
 const SignInDialog = ({
   open,
@@ -271,9 +271,9 @@ const SignInDialog = ({
 
 const styles = () =>
   createStyles({
-    ...incomingStyles,
+    ...dialogStyles,
     formText: {
-      ...incomingStyles.formText,
+      ...dialogStyles.formText,
       marginBottom: "1rem",
     },
     forgotPasswordButton: {

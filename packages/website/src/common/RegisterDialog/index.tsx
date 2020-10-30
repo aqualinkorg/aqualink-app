@@ -34,7 +34,7 @@ import {
   userErrorSelector,
 } from "../../store/User/userSlice";
 import { UserRegisterParams } from "../../store/User/types";
-import incomingStyles from "../../routes/Homepage/styles";
+import dialogStyles from "../styles/dialogStyles";
 
 const RegisterDialog = ({
   open,
@@ -308,7 +308,7 @@ const RegisterDialog = ({
 
 const styles = () =>
   createStyles({
-    ...incomingStyles,
+    ...dialogStyles,
     contentWrapper: {
       padding: 0,
     },
