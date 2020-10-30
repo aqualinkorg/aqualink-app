@@ -12,7 +12,9 @@ import {
 import { Link } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
+import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page-image.jpg";
+import { cardTitles } from "./titles";
 
 const LandingPage = ({ classes }: LandingPageProps) => {
   return (
@@ -81,6 +83,18 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           </Container>
         </div>
       </div>
+      <Container>
+        {cardTitles.map((item) => (
+          <Card
+            key={item.title}
+            title={item.title}
+            text={item.text}
+            backgroundColor={item.backgroundColor}
+            direction={item.direction}
+            image={item.image}
+          />
+        ))}
+      </Container>
     </>
   );
 };

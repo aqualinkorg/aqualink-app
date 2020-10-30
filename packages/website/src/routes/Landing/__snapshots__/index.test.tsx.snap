@@ -838,5 +838,89 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
       </div>
     </div>
   </div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg"
+  >
+    <mock-box
+      bgcolor="rgba(69, 76, 79, 0.05)"
+      mt="5rem"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            padding="4rem"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-39"
+                variant="h5"
+              >
+                Underwater temperature monitoring with a smart buoy
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              There is some incredible existing technology that uses satellites to measure the ocean’s surface temperature from space. However, coral reefs and other important marine ecosystems are not always near the surface, and complex ocean dynamics can create a large temperature difference just a few meters down. To augment the satellite temperature, we partnered with Sofar Ocean to design a buoy that measures the temperature at the ocean floor. By building as many of these buoys as we can, and deploying them around the world, we can begin to build a dataset that helps in understanding where and when heat stress in the ocean will occur. By measuring, we can understand. And by understanding, we can begin to help.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root Card-cardImageWrapper-40 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiCardMedia-root Card-cardImage-41"
+            style="background-image: url(landing-page-buoy.jpg);"
+          />
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      bgcolor="#ffffff"
+      mt="5rem"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            padding="4rem"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-39"
+                variant="h5"
+              >
+                Each site gets its own web page
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              For each site, with or without a buoy, we report the surface temperature as measured from satellite, along with the historical max for that specific site, the alert level, and a time-series plot of the temperature data. If a buoy can be deployed, we will make sure it happens.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root Card-cardImageWrapper-40 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiCardMedia-root Card-cardImage-41"
+            style="background-image: url(landing-page-metrics.png);"
+          />
+        </div>
+      </div>
+    </mock-box>
+  </div>
 </div>
 `;
