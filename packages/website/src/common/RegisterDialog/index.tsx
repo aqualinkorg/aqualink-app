@@ -82,7 +82,7 @@ const RegisterDialog = ({
   }, [user, handleRegisterOpen, error]);
 
   return (
-    <Dialog open={open} maxWidth="md">
+    <Dialog scroll="body" open={open} maxWidth="md">
       <Card>
         <CardHeader
           className={classes.dialogHeader}

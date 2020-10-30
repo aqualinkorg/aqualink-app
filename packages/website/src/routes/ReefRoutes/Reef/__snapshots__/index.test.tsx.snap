@@ -193,6 +193,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   <mock-dialog
     maxwidth="md"
     open="false"
+    scroll="body"
   >
     <mock-card>
       <div
@@ -1932,6 +1933,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   <mock-dialog
     maxwidth="md"
     open="false"
+    scroll="body"
   >
     <mock-card>
       <div
