@@ -3,12 +3,12 @@
 exports[`Landing Page should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-2 NavBar-appBarXs-4"
+    classname="NavBar-appBar-6 NavBar-appBarXs-8"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-5"
+      classname="NavBar-toolbar-9"
     >
       <mock-drawer
         anchor="left"
@@ -70,7 +70,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             role="group"
           >
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-12"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-16"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -86,7 +86,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               GitHub
             </mock-button>
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-12"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-16"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -133,7 +133,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-3"
+              classname="NavBar-navBarLink-7"
               href="/"
             >
               <mock-typography
@@ -199,11 +199,11 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-10"
+              classname="NavBar-button-14"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-9"
+                class="MuiSvgIcon-root NavBar-expandIcon-13"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -213,12 +213,12 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-6"
+              classname="NavBar-userMenu-10"
               keepmounted="true"
               open="false"
             >
               <mock-menuitem
-                classname="NavBar-menuItem-7"
+                classname="NavBar-menuItem-11"
               >
                 Logout
               </mock-menuitem>
@@ -273,7 +273,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-14"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-18"
       >
         <div
           class="MuiCardHeader-content"
@@ -299,7 +299,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-15"
+                    classname="RegisterDialog-dialogHeaderSecondPart-19"
                     variant="h4"
                   >
                     link
@@ -309,7 +309,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="RegisterDialog-closeButton-13"
+                    classname="RegisterDialog-closeButton-17"
                     size="small"
                   >
                     <svg
@@ -330,13 +330,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         </div>
       </div>
       <mock-cardcontent
-        classname="RegisterDialog-contentWrapper-22"
+        classname="RegisterDialog-contentWrapper-26"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-16 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-20 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -353,10 +353,10 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-17"
+              class="RegisterDialog-form-21"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -371,7 +371,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -386,7 +386,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -401,7 +401,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -416,7 +416,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -439,7 +439,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-23"
+                    classname="RegisterDialog-termsCheckbox-27"
                     color="primary"
                   />
                 </div>
@@ -447,14 +447,14 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                 >
                   <mock-typography
-                    classname="RegisterDialog-formText-20"
+                    classname="RegisterDialog-formText-24"
                     color="textSecondary"
                     variant="subtitle1"
                   >
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-24"
+                      class="RegisterDialog-termsLink-28"
                       href="/terms"
                     >
                       Terms and Conditions
@@ -463,7 +463,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-21 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-25 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -480,7 +480,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-20"
+                  classname="RegisterDialog-formText-24"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -505,7 +505,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-26"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-30"
       >
         <div
           class="MuiCardHeader-content"
@@ -531,7 +531,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-27"
+                    classname="SignInDialog-dialogHeaderSecondPart-31"
                     variant="h4"
                   >
                     link
@@ -541,7 +541,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="SignInDialog-closeButton-25"
+                    classname="SignInDialog-closeButton-29"
                     size="small"
                   >
                     <svg
@@ -623,7 +623,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-28 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-32 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -640,13 +640,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-29"
+              class="SignInDialog-form-33"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-30 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-34 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-32"
+                  classname="SignInDialog-formText-36"
                   variant="subtitle2"
                 >
                   or login with email address
@@ -664,7 +664,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-30 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-34 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -683,7 +683,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-34"
+                  classname="SignInDialog-forgotPasswordButton-38"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -694,7 +694,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-33 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-37 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -710,7 +710,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-32"
+                  classname="SignInDialog-formText-36"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -729,5 +729,114 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
       </mock-cardcontent>
     </mock-card>
   </mock-dialog>
+  <div
+    class="LandingPage-landingImage-1"
+  >
+    <div
+      class="LandingPage-layer-2"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-9"
+        >
+          <mock-box
+            display="flex"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h1"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-aqualinkSecondPart-3"
+              color="textPrimary"
+              variant="h1"
+            >
+              link
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-11 MuiGrid-grid-md-7"
+        >
+          <mock-box
+            display="flex"
+            mt="1.5rem"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h1"
+            >
+              Temperature monitoring for marine ecosystems
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-9 MuiGrid-grid-md-4"
+        >
+          <mock-box
+            display="flex"
+            mt="4rem"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              A free tools for people on the front line of Ocean conservation
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            mt="2rem"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-button
+                  classname="LandingPage-buttons-4"
+                  color="primary"
+                  component="[object Object]"
+                  to="/map"
+                  variant="contained"
+                >
+                  <mock-typography
+                    variant="h5"
+                  >
+                    View The Map
+                  </mock-typography>
+                </mock-button>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-button
+                  classname="LandingPage-buttons-4 LandingPage-registerButton-5"
+                  color="primary"
+                  component="[object Object]"
+                  to="/register"
+                  variant="outlined"
+                >
+                  <mock-typography
+                    variant="h5"
+                  >
+                    Register Your Site
+                  </mock-typography>
+                </mock-button>
+              </div>
+            </div>
+          </mock-box>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 `;
