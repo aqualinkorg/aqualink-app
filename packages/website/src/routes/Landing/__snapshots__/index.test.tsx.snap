@@ -817,13 +817,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <mock-box
-            padding="4rem"
+            classname="Card-container-39"
           >
             <mock-box
               mb="1rem"
             >
               <mock-typography
-                classname="Card-cardTitle-39"
+                classname="Card-cardTitle-40"
                 variant="h5"
               >
                 Underwater temperature monitoring with a smart buoy
@@ -840,7 +840,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <img
-            class="MuiCardMedia-root Card-cardImage-40 MuiCardMedia-media MuiCardMedia-img"
+            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-buoy.jpg"
           />
         </div>
@@ -857,13 +857,13 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <mock-box
-            padding="4rem"
+            classname="Card-container-39"
           >
             <mock-box
               mb="1rem"
             >
               <mock-typography
-                classname="Card-cardTitle-39"
+                classname="Card-cardTitle-40"
                 variant="h5"
               >
                 Each site gets its own web page
@@ -880,12 +880,44 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <img
-            class="MuiCardMedia-root Card-cardImage-40 MuiCardMedia-media MuiCardMedia-img"
+            class="MuiCardMedia-root Card-cardImage-41 MuiCardMedia-media MuiCardMedia-img"
             src="landing-page-metrics.png"
           />
         </div>
       </div>
     </mock-box>
   </div>
+  <mock-appbar
+    classname="Footer-appBar-42"
+    position="static"
+  >
+    <mock-toolbar>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <mock-link
+            classname="Footer-navBarLink-43"
+            href="/"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              style="color: rgb(138, 198, 222);"
+              variant="h4"
+            >
+              link
+            </mock-typography>
+          </mock-link>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
 </div>
 `;

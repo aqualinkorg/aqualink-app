@@ -8,6 +8,7 @@ import {
   Typography,
   GridProps,
   CardMedia,
+  Theme,
 } from "@material-ui/core";
 
 const Card = ({
@@ -22,7 +23,7 @@ const Card = ({
     <Box bgcolor={backgroundColor} mt="5rem">
       <Grid container direction={direction} item xs={12}>
         <Grid item xs={12} md={6}>
-          <Box padding="4rem">
+          <Box className={classes.container}>
             <Box mb="1rem">
               <Typography className={classes.cardTitle} variant="h5">
                 {title}
@@ -43,8 +44,15 @@ const Card = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
+    container: {
+      padding: "2rem",
+      // TODO - This does not seem to work atm.
+      [theme.breakpoints.down("md")]: {
+        margin: "0.5rem",
+      },
+    },
     cardTitle: {
       fontWeight: 500,
     },
