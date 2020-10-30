@@ -22,8 +22,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { sortBy } from "lodash";
 import classNames from "classnames";
 
-import RegisterDialog from "../../routes/Homepage/RegisterDialog";
-import SignInDialog from "../../routes/Homepage/SignInDialog";
+import RegisterDialog from "../RegisterDialog";
+import SignInDialog from "../SignInDialog";
 import Search from "../Search";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";

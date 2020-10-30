@@ -6,8 +6,8 @@ import configureStore from "redux-mock-store";
 import HomePageNavBar from ".";
 import { mockUser } from "../../mocks/mockUser";
 
-jest.mock("../../routes/Homepage/RegisterDialog", () => "Mock-RegisterDialog");
-jest.mock("../../routes/Homepage/SignInDialog", () => "Mock-SignInDialog");
+jest.mock("../RegisterDialog", () => "Mock-RegisterDialog");
+jest.mock("../SignInDialog", () => "Mock-SignInDialog");
 jest.mock("../Search", () => "Mock-Search");
 jest.mock("../MenuDrawer", () => "Mock-MenuDrawer");
 

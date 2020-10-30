@@ -32,9 +32,9 @@ import {
   userInfoSelector,
   userLoadingSelector,
   userErrorSelector,
-} from "../../../store/User/userSlice";
-import { UserRegisterParams } from "../../../store/User/types";
-import incomingStyles from "../styles";
+} from "../../store/User/userSlice";
+import { UserRegisterParams } from "../../store/User/types";
+import incomingStyles from "../../routes/Homepage/styles";
 
 const RegisterDialog = ({
   open,
