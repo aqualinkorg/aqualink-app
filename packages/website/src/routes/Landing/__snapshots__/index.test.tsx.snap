@@ -847,7 +847,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         >
           <img
             class="MuiCardMedia-root Card-cardImage-42 MuiCardMedia-media MuiCardMedia-img"
-            src="landing-page-buoy.jpg"
+            src="buoy.jpg"
           />
         </div>
       </div>
@@ -887,7 +887,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         >
           <img
             class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
-            src="landing-page-metrics.png"
+            src="metrics.png"
           />
         </div>
       </div>
@@ -927,7 +927,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         >
           <img
             class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
-            src="landing-page-survey-images.png"
+            src="survey-images.png"
           />
         </div>
       </div>

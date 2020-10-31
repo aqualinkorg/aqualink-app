@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import Card from "./Card";
-import landingPageImage from "../../assets/img/landing-page-drew.jpg";
+import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
 
 const LandingPage = ({ classes }: LandingPageProps) => {
