@@ -287,8 +287,12 @@ export async function getReefsDailyData(
             .where('exclusion.spotter_id = :spotterId', {
               spotterId: reef.spotterId,
             })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', { endOfDate })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', { endOfDate })
+            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
+              date: endOfDate,
+            })
+            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
+              date: endOfDate,
+            })
             .getOne(),
         );
 
