@@ -227,7 +227,10 @@ export const createChartData = (
       },
       {
         label: "TEMP AT DEPTH",
-        data: CHART_BOTTOM_TEMP_ENABLED ? bottomTemps : undefined,
+        data:
+          CHART_BOTTOM_TEMP_ENABLED && !displaySpotterData
+            ? bottomTemps
+            : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
