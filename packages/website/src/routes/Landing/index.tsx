@@ -116,9 +116,6 @@ const styles = (theme: Theme) =>
       height: "100%",
       alignItems: "center",
       display: "flex",
-      [theme.breakpoints.down("xs")]: {
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-      },
     },
     container: {
       [theme.breakpoints.up("sm")]: {
