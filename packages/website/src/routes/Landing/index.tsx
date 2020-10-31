@@ -14,8 +14,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import Card from "./Card";
-// import landingPageImage from "../../assets/img/landing-page-image.jpg";
-import landingPageImage from "../../assets/reef-image.jpg";
+import landingPageImage from "../../assets/img/landing-page-drew.jpg";
 import { cardTitles } from "./titles";
 
 const LandingPage = ({ classes }: LandingPageProps) => {
@@ -111,7 +110,7 @@ const styles = () =>
       height: "54rem",
     },
     content: {
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
       width: "100%",
       height: "100%",
       alignItems: "center",
