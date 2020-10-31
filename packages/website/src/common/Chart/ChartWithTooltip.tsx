@@ -90,7 +90,7 @@ function ChartWithTooltip({
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 80;
-    const top = position.top + tooltipModel.caretY - ((nValues + 1) * 30 + 10);
+    const top = position.top + tooltipModel.caretY - (nValues * 30 + 40);
 
     if (
       [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(

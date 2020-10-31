@@ -83,8 +83,6 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const yStepSize = 2;
-
   const {
     xAxisMax,
     xAxisMin,
@@ -101,6 +99,8 @@ function Chart({
     surveys,
     temperatureThreshold
   );
+
+  const yStepSize = yAxisMax - yAxisMin > 6 ? 5 : 2;
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
