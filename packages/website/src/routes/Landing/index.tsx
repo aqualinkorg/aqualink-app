@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
   Button,
+  Theme,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -22,8 +23,8 @@ const LandingPage = ({ classes }: LandingPageProps) => {
     <>
       <NavBar routeButtons searchLocation={false} />
       <div className={classes.landingImage}>
-        <div className={classes.content}>
-          <Container>
+        <div className={classes.overlay}>
+          <Container className={classes.container}>
             <Grid container item xs={9}>
               <Box display="flex">
                 <Typography variant="h1" color="textPrimary">
@@ -101,7 +102,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
@@ -109,12 +110,21 @@ const styles = () =>
       backgroundSize: "cover",
       height: "54rem",
     },
-    content: {
+    overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.3)",
       width: "100%",
       height: "100%",
       alignItems: "center",
       display: "flex",
+      [theme.breakpoints.down("xs")]: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      },
+    },
+    container: {
+      [theme.breakpoints.up("sm")]: {
+        paddingLeft: "12vw",
+        paddingRight: "40px",
+      },
     },
     aqualinkSecondPart: {
       opacity: 0.5,
