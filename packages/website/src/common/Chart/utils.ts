@@ -307,6 +307,10 @@ export function getSpotterDataClosestToDate(
   date: Date,
   maxHours: number
 ) {
+  if (spotterData.length === 0) {
+    return undefined;
+  }
+
   const closest = spotterData.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.timestamp, date) > timeDiff(nextPoint.timestamp, date)
       ? nextPoint
