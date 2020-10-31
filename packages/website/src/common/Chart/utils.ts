@@ -155,9 +155,7 @@ export const calculateAxisLimits = (
 
   const xAxisMax = spotterXMax || dates.slice(-1)[0];
 
-  const xAxisMin =
-    spotterXMin ||
-    new Date(new Date(dates[0]).setHours(-1, 0, 0, 0)).toISOString();
+  const xAxisMin = spotterXMin || dates[0];
 
   const {
     surfaceTemperatureData,
@@ -231,8 +229,6 @@ export function useProcessedChartData(
   );
   return { sortedDailyData, ...axisLimits, ...datasets };
 }
-
-export type Point = { x: string; y: number | null };
 
 export const createChartData = (
   spotterBottom: ChartPoint[],
