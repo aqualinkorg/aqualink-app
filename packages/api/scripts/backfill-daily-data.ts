@@ -27,7 +27,7 @@ async function run() {
   const backlogArray = Array.from(Array(days).keys());
   const reefIds = reefs && reefs.map((reef) => parseInt(`${reef}`, 10));
   const today = moment().utc();
-  today.hours(0).minutes(0).seconds(0).milliseconds(0);
+  today.hours(23).minutes(59).seconds(59).milliseconds(999);
 
   createConnection(dbConfig).then(async (connection) => {
     await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
