@@ -1,3 +1,4 @@
+import type { ChartPoint } from "chart.js";
 import { ChartComponentProps } from "react-chartjs-2";
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
@@ -34,53 +35,96 @@ const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
   return dates;
 };
 
+export const sameDay = (
+  date1: string | number | Date,
+  date2: string | number | Date
+) => new Date(date1).toDateString() === new Date(date2).toDateString();
+
+const timeDiff = (incomingDate: string, date: Date) =>
+  Math.abs(new Date(incomingDate).getTime() - date.getTime());
+
+export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
+  return dailyData.reduce((prevClosest, nextPoint) =>
+    timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
+      ? nextPoint
+      : prevClosest
+  );
+}
+
+export function getSpotterDataClosestToDate(
+  spotterData: SofarValue[],
+  date: Date,
+  maxHours: number
+) {
+  if (spotterData.length === 0) {
+    return undefined;
+  }
+
+  const closest = spotterData.reduce((prevClosest, nextPoint) =>
+    timeDiff(prevClosest.timestamp, date) > timeDiff(nextPoint.timestamp, date)
+      ? nextPoint
+      : prevClosest
+  );
+
+  return timeDiff(closest.timestamp, date) < maxHours * 60 * 60 * 1000
+    ? closest
+    : undefined;
+}
+
 export const createDatasets = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
   spotterSurfaceTemperature: SofarValue[],
   surveys: SurveyListItem[]
 ) => {
-  const bottomTemperature = dailyData.map((item) => item.avgBottomTemperature);
+  const bottomTemperature = dailyData
+    .filter((item) => item.avgBottomTemperature !== null)
+    .map((item) => ({
+      x: item.date,
+      y: item.avgBottomTemperature,
+    }));
+
   const surfaceTemperature = dailyData
     .filter((item) => item.satelliteTemperature !== null)
-    .map((item) => item.satelliteTemperature);
+    .map((item) => ({ x: item.date, y: item.satelliteTemperature }));
 
   const surveyDates = getSurveyDates(surveys);
 
-  const spotterBottom = spotterBottomTemperature.map((item) => item.value);
-  const spotterSurface = spotterSurfaceTemperature.map((item) => item.value);
+  const spotterBottom = spotterBottomTemperature.map((item) => ({
+    x: item.timestamp,
+    y: item.value,
+  }));
+
+  const spotterSurface = spotterSurfaceTemperature.map((item) => ({
+    x: item.timestamp,
+    y: item.value,
+  }));
 
   const tempWithSurvey = dailyData
-    .filter((item) => item.satelliteTemperature !== null)
+    .filter(
+      (item) =>
+        item.satelliteTemperature !== null &&
+        surveyDates.some(
+          (surveyDate) => surveyDate && sameDay(surveyDate, item.date)
+        )
+    )
     .map((item) => {
-      const date = new Date(item.date).setHours(0, 0, 0, 0);
-      if (surveyDates.includes(date)) {
-        return (
-          // prioritise bottom temp, if enabled
+      return {
+        x: item.date,
+        // prioritise bottom temp, if enabled
+        y:
           (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
-          item.satelliteTemperature
-        );
-      }
-      return null;
+          item.satelliteTemperature,
+      };
     });
 
   return {
     // repeat first value, so chart start point isn't instantaneous.
-    tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
-    bottomTemperatureData: [
-      bottomTemperature[0],
-      ...bottomTemperature,
-      bottomTemperature.slice(-1)[0],
-    ],
-    surfaceTemperatureData: [
-      surfaceTemperature[0],
-      ...surfaceTemperature,
-      surfaceTemperature.slice(-1)[0],
-    ],
-    spotterBottom:
-      spotterBottom.length > 0 ? [spotterBottom[0], ...spotterBottom] : [],
-    spotterSurface:
-      spotterSurface.length > 0 ? [spotterSurface[0], ...spotterSurface] : [],
+    tempWithSurvey,
+    bottomTemperatureData: CHART_BOTTOM_TEMP_ENABLED ? bottomTemperature : [],
+    surfaceTemperatureData: surfaceTemperature,
+    spotterBottom,
+    spotterSurface,
   };
 };
 
@@ -115,9 +159,6 @@ export const calculateAxisLimits = (
     spotterXMin ||
     new Date(new Date(dates[0]).setHours(-1, 0, 0, 0)).toISOString();
 
-  // Add an extra date one day after the final daily data date
-  const chartLabels = [xAxisMin, ...dates, xAxisMax];
-
   const {
     surfaceTemperatureData,
     bottomTemperatureData,
@@ -132,10 +173,12 @@ export const calculateAxisLimits = (
 
   const temperatureData = [
     ...surfaceTemperatureData,
-    ...(CHART_BOTTOM_TEMP_ENABLED ? bottomTemperatureData : []),
+    ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterSurface,
-  ].filter((value) => value);
+  ]
+    .filter((value) => value)
+    .map((value) => value.y);
 
   const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
 
@@ -158,7 +201,6 @@ export const calculateAxisLimits = (
     xAxisMin,
     yAxisMin,
     yAxisMax,
-    chartLabels,
   };
 };
 
@@ -190,18 +232,18 @@ export function useProcessedChartData(
   return { sortedDailyData, ...axisLimits, ...datasets };
 }
 
+export type Point = { x: string; y: number | null };
+
 export const createChartData = (
-  labels: string[],
-  spotterBottom: SofarValue[],
-  spotterSurface: SofarValue[],
-  tempWithSurvey: (number | null)[],
-  surfaceTemps: number[],
-  bottomTemps: number[],
+  spotterBottom: ChartPoint[],
+  spotterSurface: ChartPoint[],
+  tempWithSurvey: ChartPoint[],
+  surfaceTemps: ChartPoint[],
+  bottomTemps: ChartPoint[],
   fill: boolean
 ) => {
   const displaySpotterData = spotterSurface.length > 0;
   const data: ChartComponentProps["data"] = {
-    labels,
     datasets: [
       {
         type: "scatter",
@@ -240,10 +282,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER BOTTOM",
-        data: spotterBottom.map((item) => ({
-          x: item.timestamp,
-          y: item.value,
-        })),
+        data: spotterBottom,
         backgroundColor: "rgb(107,193,225,0.2)",
         borderColor: "#46a5cf",
         borderWidth: 2,
@@ -254,10 +293,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: spotterSurface.map((item) => ({
-          x: item.timestamp,
-          y: item.value,
-        })),
+        data: spotterSurface,
         backgroundColor: "rgb(107,193,225,0.2)",
         borderColor: "#6bc1e1",
         borderWidth: 2,
@@ -285,39 +321,3 @@ export const createChartData = (
   }
   return data;
 };
-
-export const sameDay = (
-  date1: string | number | Date,
-  date2: string | number | Date
-) => new Date(date1).toDateString() === new Date(date2).toDateString();
-
-const timeDiff = (incomingDate: string, date: Date) =>
-  Math.abs(new Date(incomingDate).getTime() - date.getTime());
-
-export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
-  return dailyData.reduce((prevClosest, nextPoint) =>
-    timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
-      ? nextPoint
-      : prevClosest
-  );
-}
-
-export function getSpotterDataClosestToDate(
-  spotterData: SofarValue[],
-  date: Date,
-  maxHours: number
-) {
-  if (spotterData.length === 0) {
-    return undefined;
-  }
-
-  const closest = spotterData.reduce((prevClosest, nextPoint) =>
-    timeDiff(prevClosest.timestamp, date) > timeDiff(nextPoint.timestamp, date)
-      ? nextPoint
-      : prevClosest
-  );
-
-  return timeDiff(closest.timestamp, date) < maxHours * 60 * 60 * 1000
-    ? closest
-    : undefined;
-}

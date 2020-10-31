@@ -61,7 +61,6 @@ function Chart({
   dailyData,
   spotterData,
   surveys,
-  startDate,
   endDate,
   chartPeriod,
   temperatureThreshold,
@@ -84,7 +83,7 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const yStepSize = 5;
+  const yStepSize = 2;
 
   const {
     xAxisMax,
@@ -94,7 +93,8 @@ function Chart({
     surfaceTemperatureData,
     tempWithSurvey,
     bottomTemperatureData,
-    chartLabels,
+    spotterBottom,
+    spotterSurface,
   } = useProcessedChartData(
     dailyData,
     spotterData,
@@ -191,7 +191,7 @@ function Chart({
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: startDate || xAxisMin,
+              min: xAxisMin,
               max: endDate || xAxisMax,
               padding: 10,
             },
@@ -236,9 +236,8 @@ function Chart({
       ref={chartRef}
       options={settings}
       data={createChartData(
-        chartLabels,
-        spotterData?.bottomTemperature || [],
-        spotterData?.surfaceTemperature || [],
+        spotterSurface,
+        spotterBottom,
         tempWithSurvey,
         surfaceTemperatureData,
         bottomTemperatureData,
