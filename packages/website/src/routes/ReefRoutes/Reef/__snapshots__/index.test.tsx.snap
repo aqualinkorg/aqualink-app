@@ -809,16 +809,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           <div
             class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 2rem;"
-          >
-            <mock-typography
-              variant="h6"
-            >
-              LOCATION:
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
             style="margin-right: 1rem;"
           >
             <mock-typography
@@ -2553,16 +2543,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 2rem;"
-          >
-            <mock-typography
-              variant="h6"
-            >
-              LOCATION:
-            </mock-typography>
-          </div>
           <div
             class="MuiGrid-root MuiGrid-item"
             style="margin-right: 1rem;"
