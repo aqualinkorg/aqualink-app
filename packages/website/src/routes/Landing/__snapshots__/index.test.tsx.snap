@@ -140,7 +140,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-7"
-              href="/"
+              href="/map"
             >
               <mock-typography
                 color="textPrimary"
@@ -704,7 +704,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
     class="LandingPage-landingImage-1"
   >
     <div
-      class="LandingPage-layer-2"
+      class="LandingPage-content-2"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -756,7 +756,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               color="textPrimary"
               variant="h4"
             >
-              A free tools for people on the front line of Ocean conservation
+              A tool for people on the front line of Ocean conservation
             </mock-typography>
           </mock-box>
         </div>

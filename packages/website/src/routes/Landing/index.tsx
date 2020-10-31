@@ -14,7 +14,8 @@ import { Link } from "react-router-dom";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import Card from "./Card";
-import landingPageImage from "../../assets/img/landing-page-image.jpg";
+// import landingPageImage from "../../assets/img/landing-page-image.jpg";
+import landingPageImage from "../../assets/reef-image.jpg";
 import { cardTitles } from "./titles";
 
 const LandingPage = ({ classes }: LandingPageProps) => {
@@ -22,7 +23,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
     <>
       <NavBar routeButtons searchLocation={false} />
       <div className={classes.landingImage}>
-        <div className={classes.layer}>
+        <div className={classes.content}>
           <Container>
             <Grid container item xs={9}>
               <Box display="flex">
@@ -48,8 +49,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid container item sm={9} md={4}>
               <Box mt="4rem" display="flex">
                 <Typography variant="h4" color="textPrimary">
-                  A free tools for people on the front line of Ocean
-                  conservation
+                  A tool for people on the front line of Ocean conservation
                 </Typography>
               </Box>
             </Grid>
@@ -110,7 +110,7 @@ const styles = () =>
       backgroundSize: "cover",
       height: "54rem",
     },
-    layer: {
+    content: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       width: "100%",
       height: "100%",

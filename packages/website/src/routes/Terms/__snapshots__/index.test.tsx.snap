@@ -140,7 +140,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             </mock-iconbutton>
             <mock-link
               classname="NavBar-navBarLink-3"
-              href="/"
+              href="/map"
             >
               <mock-typography
                 color="textPrimary"

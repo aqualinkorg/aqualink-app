@@ -79,7 +79,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                   <MenuIcon />
                 </IconButton>
 
-                <Link className={classes.navBarLink} href="/">
+                <Link className={classes.navBarLink} href="/map">
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
