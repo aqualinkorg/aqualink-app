@@ -124,6 +124,9 @@ const styles = () =>
       height: "3rem",
       width: "12rem",
       textTransform: "none",
+      "&:hover": {
+        color: "#ffffff",
+      },
     },
     registerButton: {
       color: "#ffffff",
