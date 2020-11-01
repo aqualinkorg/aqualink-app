@@ -94,14 +94,14 @@ const Tooltip = ({
                 TemperatureMetric(
                   spotterSurfaceTemp,
                   "BUOY 1m",
-                  "#6bc1e1",
+                  "#46a5cf",
                   classes.tooltipContentItem
                 )}
               {bottomTemperature &&
                 TemperatureMetric(
                   bottomTemperature,
                   `BUOY ${depth}m`,
-                  "rgb(94, 164, 203)",
+                  "rgba(250, 141, 0)",
                   classes.tooltipContentItem
                 )}
             </Grid>
