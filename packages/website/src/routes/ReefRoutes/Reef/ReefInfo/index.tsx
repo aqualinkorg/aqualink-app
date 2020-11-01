@@ -124,7 +124,10 @@ const ReefNavBar = ({
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
             <Grid item>
-              <Link style={{ color: "inherit", textDecoration: "none" }} to="/">
+              <Link
+                style={{ color: "inherit", textDecoration: "none" }}
+                to="/map"
+              >
                 <IconButton
                   onClick={clearReefInfo}
                   edge="start"
