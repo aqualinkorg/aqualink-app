@@ -700,8 +700,10 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
       </mock-cardcontent>
     </mock-card>
   </mock-dialog>
-  <div
-    class="LandingPage-landingImage-1"
+  <mock-box
+    alignitems="center"
+    classname="LandingPage-landingImage-1"
+    display="flex"
   >
     <div
       class="MuiContainer-root LandingPage-container-2 MuiContainer-maxWidthLg"
@@ -804,7 +806,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         </mock-box>
       </div>
     </div>
-  </div>
+  </mock-box>
   <div
     class="MuiContainer-root MuiContainer-maxWidthLg"
   >
