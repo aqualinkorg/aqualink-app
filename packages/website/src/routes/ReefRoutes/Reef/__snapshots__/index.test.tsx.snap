@@ -731,7 +731,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/"
+              href="/map"
               style="text-decoration: none;"
             >
               <mock-iconbutton
@@ -2469,7 +2469,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/"
+              href="/map"
               style="text-decoration: none;"
             >
               <mock-iconbutton
