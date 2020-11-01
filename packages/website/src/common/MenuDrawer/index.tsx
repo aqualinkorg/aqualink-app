@@ -20,6 +20,10 @@ const menuRoutes = [
     href: "/",
   },
   {
+    text: "MAP",
+    href: "/map",
+  },
+  {
     text: "BUOY",
     href: "/buoy",
   },
