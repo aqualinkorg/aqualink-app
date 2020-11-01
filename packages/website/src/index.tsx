@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { AxiosRequestConfig } from "axios";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 import "./assets/css/bootstrap.css";
@@ -7,6 +8,28 @@ import { Provider } from "react-redux";
 import App from "./layout/App";
 import { store } from "./store/configure";
 import * as serviceWorker from "./serviceWorker";
+import requestsConfig from "./helpers/requests";
+import app from "./firebase";
+import { setToken } from "./store/User/userSlice";
+
+app.auth().onAuthStateChanged((user) => {
+  if (user) {
+    user.getIdToken().then((token) => {
+      requestsConfig.agent.interceptors.request.use(
+        (config: AxiosRequestConfig) => {
+          store.dispatch(setToken(token));
+          return {
+            ...config,
+            headers: {
+              ...config.headers,
+              Authorization: `Bearer ${token}`,
+            },
+          };
+        }
+      );
+    });
+  }
+});
 
 ReactDOM.render(
   <>

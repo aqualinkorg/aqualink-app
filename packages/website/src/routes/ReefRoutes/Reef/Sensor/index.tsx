@@ -26,19 +26,33 @@ import { userInfoSelector } from "../../../../store/User/userSlice";
 
 const applicationTag = (user: User | null, reefId: number, classes: any) => {
   const userReef = findAdministeredReef(user, reefId);
-  const applied = Boolean(userReef?.applied);
+  const { applied, status } = userReef || {};
+  const isManager = isAdmin(user, reefId);
+
   switch (true) {
-    case applied:
+    case !isManager:
+      return "Not Installed Yet";
+
+    case !applied:
+      return (
+        <Link className={classes.newSpotterLink} to="/apply">
+          Add a Smart Buoy
+        </Link>
+      );
+
+    case status === "in_review":
       return (
         <Link className={classes.newSpotterLink} to="/apply">
           My Application
         </Link>
       );
-    case isAdmin(user, reefId):
+
+    case status === "approved":
+      return "Smart Buoy approved";
+
+    case status === "rejected":
       return (
-        <Link className={classes.newSpotterLink} to="/apply">
-          Add a Smart Buoy
-        </Link>
+        <span className={classes.rejectedAlert}>Smart Buoy not approved</span>
       );
     default:
       return "Not Installed Yet";
@@ -105,7 +119,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
               </Grid>
             ))}
             {!hasSpotter && (
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <Chip
                   className={classes.noSensorAlert}
                   label={applicationTag(user, reef.id, classes)}
@@ -149,6 +163,10 @@ const styles = () =>
       backgroundColor: "#edb86f",
       borderRadius: 4,
       color: "white",
+      width: "100%",
+    },
+    rejectedAlert: {
+      fontSize: 11,
     },
     newSpotterLink: {
       color: "inherit",

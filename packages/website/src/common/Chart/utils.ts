@@ -1,3 +1,4 @@
+import { ChartComponentProps } from "react-chartjs-2";
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type { DailyData } from "../../store/Reefs/types";
@@ -30,12 +31,13 @@ export const createDatasets = (
     .map((item) => {
       const date = new Date(item.date).setHours(0, 0, 0, 0);
       if (surveyDates.includes(date)) {
-        return item.satelliteTemperature;
+        return item.avgBottomTemperature || item.satelliteTemperature;
       }
       return null;
     });
 
   return {
+    // repeat first value, so chart start point isn't instantaneous.
     tempWithSurvey: [tempWithSurvey[0], ...tempWithSurvey],
     bottomTemperatureData: [bottomTemperature[0], ...bottomTemperature],
     surfaceTemperatureData: [surfaceTemperature[0], ...surfaceTemperature],
@@ -65,9 +67,15 @@ export const calculateAxisLimits = (
   // Add an extra date one day after the final daily data date
   const chartLabels = [xAxisMin, ...dates];
 
-  const { surfaceTemperatureData } = createDatasets(dailyData, surveys);
+  const { surfaceTemperatureData, bottomTemperatureData } = createDatasets(
+    dailyData,
+    surveys
+  );
 
-  const temperatureData = [...surfaceTemperatureData].filter((value) => value);
+  const temperatureData = [
+    ...surfaceTemperatureData,
+    ...bottomTemperatureData,
+  ].filter((value) => value);
 
   const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
 
@@ -111,3 +119,64 @@ export function useProcessedChartData(
   );
   return { sortedDailyData, ...axisLimits, ...datasets };
 }
+
+export const createChartData = (
+  labels: string[],
+  tempWithSurvey: (number | null)[],
+  surfaceTemps: number[],
+  bottomTemps: number[],
+  fill: boolean
+) => {
+  const data: ChartComponentProps["data"] = {
+    labels,
+    datasets: [
+      {
+        type: "scatter",
+        label: "SURVEYS",
+        data: tempWithSurvey,
+        pointRadius: 5,
+        backgroundColor: "#ffffff",
+        pointBackgroundColor: "#ffff",
+        borderWidth: 1.5,
+        borderColor: "#128cc0",
+      },
+      {
+        label: "SURFACE TEMP",
+        data: surfaceTemps,
+        backgroundColor: "rgb(107,193,225,0.2)",
+        borderColor: "#6bc1e1",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "TEMP AT DEPTH",
+        data: bottomTemps,
+        borderColor: "#46a5cf",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+    ],
+  };
+
+  if (fill) {
+    // eslint-disable-next-line fp/no-mutating-methods
+    data.datasets!.splice(1, 0, {
+      label: "BLEACHING THRESHOLD",
+      data: surfaceTemps,
+      fill,
+      borderColor: "#6bc1e1",
+      borderWidth: 2,
+      pointBackgroundColor: "#ffffff",
+      pointBorderWidth: 1.5,
+      pointRadius: 0,
+      cubicInterpolationMode: "monotone",
+    });
+  }
+  return data;
+};

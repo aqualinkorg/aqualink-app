@@ -9,7 +9,7 @@ export const mockReef: Reef = {
   },
   maxMonthlyMean: 0,
   depth: 0,
-  status: 0,
+  status: "in_review",
   videoStream: null,
   region: { name: "Hawaii" },
   admins: [],

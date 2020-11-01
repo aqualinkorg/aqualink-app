@@ -18,6 +18,7 @@ import { getReefNameAndRegion } from "../../store/Reefs/helpers";
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const dispatch = useDispatch();
+  // eslint-disable-next-line fp/no-mutating-methods
   const reefs = useSelector(reefsListSelector)
     .filter((reef) => getReefNameAndRegion(reef).name)
     // Sort by formatted name

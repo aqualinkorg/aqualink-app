@@ -22,12 +22,12 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import LocationMap from "./LocationMap";
-import { userInfoSelector } from "../../store/User/userSlice";
+import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
 
 const contactFormElements = [
@@ -42,6 +42,7 @@ const contactFormElements = [
 ];
 
 const Apply = ({ classes }: ApplyProps) => {
+  const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
   const [formErrors, setFormErrors] = useState(Map<string, string>());
@@ -137,6 +138,9 @@ const Apply = ({ classes }: ApplyProps) => {
             setNewReefId(data.reef.id);
             setDatabaseSubmissionOk(true);
             setSnackbarOpenFromDatabase(true);
+            if (user?.token) {
+              dispatch(getSelf(user.token));
+            }
           })
           .catch((error) => {
             setDatabaseSubmissionOk(false);
@@ -199,7 +203,7 @@ const Apply = ({ classes }: ApplyProps) => {
                 <Paper elevation={2}>
                   <Box color="text.secondary" p={4}>
                     <Typography variant="h4" gutterBottom>
-                      Application Form
+                      Site Information
                     </Typography>
 
                     <Grid container spacing={2}>

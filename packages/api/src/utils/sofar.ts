@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { isNil } from 'lodash';
 import axiosRetry from 'axios-retry';
+import moment from 'moment';
 import { getStartEndDate } from './dates';
 import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
 import { SofarValue, SpotterData } from './sofar.types';
@@ -155,12 +156,18 @@ function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
 }
 
 export async function getSpotterData(
-  // eslint-disable-next-line no-unused-vars
   spotterId: string,
-  // eslint-disable-next-line no-unused-vars
   endDate?: Date,
+  startDate?: Date,
 ): Promise<SpotterData> {
-  const [start, end] = endDate ? getStartEndDate(endDate) : [];
+  const [start, end] =
+    endDate && !startDate
+      ? getStartEndDate(endDate)
+      : [
+          startDate && moment(startDate).format(),
+          endDate && moment(endDate).format(),
+        ];
+
   const {
     data: { waves = [], smartMooringData = [] },
   } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
