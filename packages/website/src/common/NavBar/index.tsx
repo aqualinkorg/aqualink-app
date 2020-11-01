@@ -22,13 +22,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { sortBy } from "lodash";
 import classNames from "classnames";
 
-import RegisterDialog from "../../routes/Homepage/RegisterDialog";
-import SignInDialog from "../../routes/Homepage/SignInDialog";
+import RegisterDialog from "../RegisterDialog";
+import SignInDialog from "../SignInDialog";
 import Search from "../Search";
+import RouteButtons from "../RouteButtons";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
-const NavBar = ({ searchLocation, classes }: NavBarProps) => {
+const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
@@ -67,7 +68,8 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
             alignItems="center"
             spacing={1}
           >
-            <Grid item xs={5} sm={searchLocation ? 6 : 4}>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            <Grid item xs={5} sm={routeButtons ? 2 : searchLocation ? 6 : 4}>
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
                   edge="start"
@@ -77,7 +79,7 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
                   <MenuIcon />
                 </IconButton>
 
-                <Link className={classes.navBarLink} href="/">
+                <Link className={classes.navBarLink} href="/map">
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
@@ -96,12 +98,18 @@ const NavBar = ({ searchLocation, classes }: NavBarProps) => {
               </Hidden>
             )}
 
+            {routeButtons && (
+              <Hidden xsDown>
+                <RouteButtons />
+              </Hidden>
+            )}
+
             <Grid
               container
               justify="flex-end"
               item
               xs={7}
-              sm={searchLocation ? 3 : 8}
+              sm={searchLocation || routeButtons ? 3 : 8}
             >
               {user ? (
                 <>
@@ -230,7 +238,12 @@ const styles = (theme: Theme) =>
 
 interface NavBarIncomingProps {
   searchLocation: boolean;
+  routeButtons?: boolean;
 }
+
+NavBar.defaultProps = {
+  routeButtons: false,
+};
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;
 

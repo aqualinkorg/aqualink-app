@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Terms page should render with given state from Redux store 1`] = `
+exports[`Landing Page should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-2"
+    classname="NavBar-appBar-6"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-5"
+      classname="NavBar-toolbar-9"
     >
       <mock-drawer
         anchor="left"
@@ -76,7 +76,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             role="group"
           >
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-12"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-16"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -92,7 +92,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
               GitHub
             </mock-button>
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-12"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-16"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -116,7 +116,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
         >
           <mock-box
             alignitems="center"
@@ -139,7 +139,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-3"
+              classname="NavBar-navBarLink-7"
               href="/map"
             >
               <mock-typography
@@ -157,8 +157,49 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             </mock-link>
           </mock-box>
         </div>
+        <mock-hidden
+          xsdown="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/map"
+              >
+                MAP
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/about"
+              >
+                ABOUT
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/register"
+              >
+                REGISTER YOUR SITE
+              </mock-button>
+            </div>
+          </div>
+        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
         >
           <mock-box
             alignitems="center"
@@ -167,11 +208,11 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-10"
+              classname="NavBar-button-14"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-9"
+                class="MuiSvgIcon-root NavBar-expandIcon-13"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -181,12 +222,12 @@ exports[`Terms page should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-6"
+              classname="NavBar-userMenu-10"
               keepmounted="true"
               open="false"
             >
               <mock-menuitem
-                classname="NavBar-menuItem-7"
+                classname="NavBar-menuItem-11"
               >
                 Logout
               </mock-menuitem>
@@ -203,7 +244,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-14"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-18"
       >
         <div
           class="MuiCardHeader-content"
@@ -229,7 +270,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-15"
+                    classname="RegisterDialog-dialogHeaderSecondPart-19"
                     variant="h4"
                   >
                     link
@@ -239,7 +280,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="RegisterDialog-closeButton-13"
+                    classname="RegisterDialog-closeButton-17"
                     size="small"
                   >
                     <svg
@@ -260,13 +301,13 @@ exports[`Terms page should render with given state from Redux store 1`] = `
         </div>
       </div>
       <mock-cardcontent
-        classname="RegisterDialog-contentWrapper-22"
+        classname="RegisterDialog-contentWrapper-26"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-16 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-20 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -283,10 +324,10 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-17"
+              class="RegisterDialog-form-21"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -301,7 +342,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -316,7 +357,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -331,7 +372,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -346,7 +387,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-18 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-22 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -369,7 +410,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-23"
+                    classname="RegisterDialog-termsCheckbox-27"
                     color="primary"
                   />
                 </div>
@@ -377,14 +418,14 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                 >
                   <mock-typography
-                    classname="RegisterDialog-formText-20"
+                    classname="RegisterDialog-formText-24"
                     color="textSecondary"
                     variant="subtitle1"
                   >
                     I have read the
                      
                     <a
-                      class="RegisterDialog-termsLink-24"
+                      class="RegisterDialog-termsLink-28"
                       href="/terms"
                     >
                       Terms and Conditions
@@ -393,7 +434,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-21 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-25 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -410,7 +451,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-20"
+                  classname="RegisterDialog-formText-24"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -435,7 +476,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-26"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-30"
       >
         <div
           class="MuiCardHeader-content"
@@ -461,7 +502,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-27"
+                    classname="SignInDialog-dialogHeaderSecondPart-31"
                     variant="h4"
                   >
                     link
@@ -471,7 +512,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
                 >
                   <mock-iconbutton
-                    classname="SignInDialog-closeButton-25"
+                    classname="SignInDialog-closeButton-29"
                     size="small"
                   >
                     <svg
@@ -553,7 +594,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-28 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-32 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -570,13 +611,13 @@ exports[`Terms page should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-29"
+              class="SignInDialog-form-33"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-30 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-34 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-32"
+                  classname="SignInDialog-formText-36"
                   variant="subtitle2"
                 >
                   or login with email address
@@ -594,7 +635,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-30 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-34 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -613,7 +654,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-34"
+                  classname="SignInDialog-forgotPasswordButton-38"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -624,7 +665,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-33 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-37 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -640,7 +681,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-32"
+                  classname="SignInDialog-formText-36"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -659,295 +700,239 @@ exports[`Terms page should render with given state from Redux store 1`] = `
       </mock-cardcontent>
     </mock-card>
   </mock-dialog>
-  <div
-    class="MuiContainer-root Terms-root-1 MuiContainer-maxWidthLg"
+  <mock-box
+    alignitems="center"
+    classname="LandingPage-landingImage-1"
+    display="flex"
   >
-    <h1>
-      Terms and Conditions
-    </h1>
-    <p>
-      Last updated: October 08, 2020
-    </p>
-    <p>
-      Please read these terms and conditions carefully before using Our Service.
-    </p>
-    <h1>
-      Interpretation and Definitions
-    </h1>
-    <h2>
-      Interpretation
-    </h2>
-    <p>
-      The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
-    </p>
-    <h2>
-      Definitions
-    </h2>
-    <p>
-      For the purposes of these Terms and Conditions:
-    </p>
-    <ul>
-      <li>
-        <p>
-          <strong>
-            Affiliate
-          </strong>
-           means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Account
-          </strong>
-           means a unique account created for You to access our Service or parts of our Service.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Country
-          </strong>
-           refers to: California, United States
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Company
-          </strong>
-           (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Aqualink, 1740 20th street, San Francisco, CA.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Content
-          </strong>
-           refers to content such as text, images, or other information that can be posted, uploaded, linked to or otherwise made available by You, regardless of the form of that content.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Device
-          </strong>
-           means any device that can access the Service such as a computer, a cellphone or a digital tablet.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Feedback
-          </strong>
-           means feedback, innovations or suggestions sent by You regarding the attributes, performance or features of our Service.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Service
-          </strong>
-           refers to the Website.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Terms and Conditions
-          </strong>
-           (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Third-party Social Media Service
-          </strong>
-           means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            Website
-          </strong>
-           refers to Aqualink, accessible from
-           
-          <a
-            href="http://www.aqualink.org"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            http://www.aqualink.org
-          </a>
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>
-            You
-          </strong>
-           means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
-        </p>
-      </li>
-    </ul>
-    <h1>
-      Acknowledgment
-    </h1>
-    <p>
-      These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.
-    </p>
-    <p>
-      Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.
-    </p>
-    <p>
-      By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.
-    </p>
-    <p>
-      You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.
-    </p>
-    <p>
-      Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your personal information when You use the Application or the Website and tells You about Your privacy rights and how the law protects You. Please read Our Privacy Policy carefully before using Our Service.
-    </p>
-    <h1>
-      User Accounts
-    </h1>
-    <p>
-      When You create an account with Us, You must provide Us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of Your account on Our Service.
-    </p>
-    <p>
-      You are responsible for safeguarding the password that You use to access the Service and for any activities or actions under Your password, whether Your password is with Our Service or a Third-Party Social Media Service.
-    </p>
-    <p>
-      You agree not to disclose Your password to any third party. You must notify Us immediately upon becoming aware of any breach of security or unauthorized use of Your account.
-    </p>
-    <p>
-      You may not use as a username the name of another person or entity or that is not lawfully available for use, a name or trademark that is subject to any rights of another person or entity other than You without appropriate authorization, or a name that is otherwise offensive, vulgar or obscene.
-    </p>
-    <h1>
-      Content
-    </h1>
-    <h2>
-      Content and Data Ownership
-    </h2>
-    <p>
-      Our Service allows You to post Content. You are responsible for the Content that You post to the Service, including its legality, reliability, and appropriateness.
-    </p>
-    <p>
-      All data generated by the Aqualink system or posted by our users is governed by the Creative Commons
-       
-      <a
-        href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+    <div
+      class="MuiContainer-root LandingPage-container-2 MuiContainer-maxWidthLg"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-9"
       >
-        CC BY-NC-SA
-      </a>
-       
-      license. This license allows reusers to distribute, remix, adapt, and build upon the material in any medium or format for noncommercial purposes only, and only so long as attribution is given to the creator. If you remix, adapt, or build upon the material, you must license the modified material under identical terms.
-    </p>
-    <p>
-      When you post content you represent and warrant that: (i) the Content is Yours (You own it) or You have the right to use it and grant Us the rights and license as provided in these Terms, and (ii) the posting of Your Content on or through the Service does not violate the privacy rights, publicity rights, copyrights, contract rights or any other rights of any person.
-    </p>
-    <h2>
-      Content Restrictions
-    </h2>
-    <p>
-      The Company is not responsible for the content of the Service's users. You expressly understand and agree that You are solely responsible for the Content and for all activity that occurs under your account, whether done so by You or any third person using Your account.
-    </p>
-    <p>
-      You may not transmit any Content that is unlawful, offensive, upsetting, intended to disgust, threatening, libelous, defamatory, obscene or otherwise objectionable. Examples of such objectionable Content include, but are not limited to, the following:
-    </p>
-    <ul>
-      <li>
-        Unlawful or promoting unlawful activity.
-      </li>
-      <li>
-        Defamatory, discriminatory, or mean-spirited content, including references or commentary about religion, race, sexual orientation, gender, national/ethnic origin, or other targeted groups.
-      </li>
-      <li>
-        Spam, machine – or randomly – generated, constituting unauthorized or unsolicited advertising, chain letters, any other form of unauthorized solicitation, or any form of lottery or gambling.
-      </li>
-      <li>
-        Containing or installing any viruses, worms, malware, trojan horses, or other content that is designed or intended to disrupt, damage, or limit the functioning of any software, hardware or telecommunications equipment or to damage or obtain unauthorized access to any data or other information of a third person.
-      </li>
-      <li>
-        Infringing on any proprietary rights of any party, including patent, trademark, trade secret, copyright, right of publicity or other rights.
-      </li>
-      <li>
-        Impersonating any person or entity including the Company and its employees or representatives.
-      </li>
-      <li>
-        Violating the privacy of any third person.
-      </li>
-      <li>
-        False information and features.
-      </li>
-    </ul>
-    <p>
-      The Company reserves the right, but not the obligation, to, in its sole discretion, determine whether or not any Content is appropriate and complies with this Terms, refuse or remove this Content. The Company further reserves the right to make formatting and edits and change the manner any Content. The Company can also limit or revoke the use of the Service if You post such objectionable Content. As the Company cannot control all content posted by users and/or third parties on the Service, you agree to use the Service at your own risk. You understand that by using the Service You may be exposed to content that You may find offensive, indecent, incorrect or objectionable, and You agree that under no circumstances will the Company be liable in any way for any content, including any errors or omissions in any content, or any loss or damage of any kind incurred as a result of your use of any content.
-    </p>
-    <h2>
-      Content Backups
-    </h2>
-    <p>
-      Although regular backups of Content are performed, the Company do not guarantee there will be no loss or corruption of data.
-    </p>
-    <p>
-      Corrupt or invalid backup points may be caused by, without limitation, Content that is corrupted prior to being backed up or that changes during the time a backup is performed.
-    </p>
-    <p>
-      The Company will provide support and attempt to troubleshoot any known or discovered issues that may affect the backups of Content. But You acknowledge that the Company has no liability related to the integrity of Content or the failure to successfully restore Content to a usable state.
-    </p>
-    <p>
-      You agree to maintain a complete and accurate copy of any Content in a location independent of the Service.
-    </p>
-    <h1>
-      Copyright Policy
-    </h1>
-    <h2>
-      Intellectual Property Infringement
-    </h2>
-    <p>
-      We respect the intellectual property rights of others. It is Our policy to respond to any claim that Content posted on the Service infringes a copyright or other intellectual property infringement of any person.
-    </p>
-    <p>
-      If You are a copyright owner, or authorized on behalf of one, and You believe that the copyrighted work has been copied in a way that constitutes copyright infringement that is taking place through the Service, You must submit Your notice in writing to the attention of our copyright agent via email at info@aqualink.org and include in Your notice a detailed description of the alleged infringement.
-    </p>
-    <p>
-      You may be held accountable for damages (including costs and attorneys' fees) for misrepresenting that any Content is infringing Your copyright.
-    </p>
-    <h2>
-      DMCA Notice and DMCA Procedure for Copyright Infringement Claims
-    </h2>
-    <p>
-      You may submit a notification pursuant to the Digital Millennium Copyright Act (DMCA) by providing our Copyright Agent with the following information in writing (see 17 U.S.C 512(c)(3) for further detail):
-    </p>
-    <ul>
-      <li>
-        An electronic or physical signature of the person authorized to act on behalf of the owner of the copyright's interest.
-      </li>
-      <li>
-        A description of the copyrighted work that You claim has been infringed, including the URL (i.e., web page address) of the location where the copyrighted work exists or a copy of the copyrighted work.
-      </li>
-      <li>
-        Identification of the URL or other specific location on the Service where the material that You claim is infringing is located.
-      </li>
-      <li>
-        Your address, telephone number, and email address.
-      </li>
-      <li>
-        A statement by You that You have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law.
-      </li>
-      <li>
-        A statement by You, made under penalty of perjury, that the above information in Your notice is accurate and that You are the copyright owner or authorized to act on the copyright owne's behalf.
-      </li>
-    </ul>
-    <p>
-      You can contact our copyright agent via em...
-    </p>
+        <mock-box
+          display="flex"
+        >
+          <mock-typography
+            color="textPrimary"
+            variant="h1"
+          >
+            Aqua
+          </mock-typography>
+          <mock-typography
+            classname="LandingPage-aqualinkSecondPart-3"
+            color="textPrimary"
+            variant="h1"
+          >
+            link
+          </mock-typography>
+        </mock-box>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-11 MuiGrid-grid-md-7"
+      >
+        <mock-box
+          display="flex"
+          mt="1.5rem"
+        >
+          <mock-typography
+            color="textPrimary"
+            variant="h1"
+          >
+            Temperature monitoring for marine ecosystems
+          </mock-typography>
+        </mock-box>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-9 MuiGrid-grid-md-4"
+      >
+        <mock-box
+          display="flex"
+          mt="4rem"
+        >
+          <mock-typography
+            color="textPrimary"
+            variant="h4"
+          >
+            A tool for people on the front line of Ocean conservation
+          </mock-typography>
+        </mock-box>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+      >
+        <mock-box
+          mt="2rem"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                classname="LandingPage-buttons-4"
+                color="primary"
+                component="[object Object]"
+                to="/map"
+                variant="contained"
+              >
+                <mock-typography
+                  variant="h5"
+                >
+                  View The Map
+                </mock-typography>
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                classname="LandingPage-buttons-4 LandingPage-registerButton-5"
+                color="primary"
+                component="[object Object]"
+                to="/register"
+                variant="outlined"
+              >
+                <mock-typography
+                  variant="h5"
+                >
+                  Register Your Site
+                </mock-typography>
+              </mock-button>
+            </div>
+          </div>
+        </mock-box>
+      </div>
+    </div>
+  </mock-box>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg"
+  >
+    <mock-box
+      bgcolor="rgba(69, 76, 79, 0.05)"
+      classname="Card-container-39"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            classname="Card-textContainer-40"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-41"
+                variant="h5"
+              >
+                Underwater temperature monitoring with a smart buoy
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              There is some incredible existing technology that uses satellites to measure the ocean’s surface temperature from space. However, coral reefs and other important marine ecosystems are not always near the surface, and complex ocean dynamics can create a large temperature difference just a few meters down. To augment the satellite temperature, we partnered with Sofar Ocean to design a buoy that measures the temperature at the ocean floor. By building as many of these buoys as we can, and deploying them around the world, we can begin to build a dataset that helps in understanding where and when heat stress in the ocean will occur. By measuring, we can understand. And by understanding, we can begin to help.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <img
+            class="MuiCardMedia-root Card-cardImage-42 MuiCardMedia-media MuiCardMedia-img"
+            src="buoy.jpg"
+          />
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      bgcolor="#ffffff"
+      classname="Card-container-39"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            classname="Card-textContainer-40"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-41"
+                variant="h5"
+              >
+                Each site gets its own web page
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              For each site, with or without a buoy, we report the surface temperature as measured from satellite, along with the historical max for that specific site, the alert level, and a time-series plot of the temperature data. If a buoy can be deployed, we will make sure it happens.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <img
+            class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
+            src="metrics.png"
+          />
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      bgcolor="rgba(69, 76, 79, 0.05)"
+      classname="Card-container-39"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <mock-box
+            classname="Card-textContainer-40"
+          >
+            <mock-box
+              mb="1rem"
+            >
+              <mock-typography
+                classname="Card-cardTitle-41"
+                variant="h5"
+              >
+                Correlate survey observations with temperature changes
+              </mock-typography>
+            </mock-box>
+            <mock-typography
+              variant="h6"
+            >
+              Each site on the Aqualink web app has a detailed page outlining the satellite data, buoy data, heat stress alert level, as well as weather and a time history of the temperature. But perhaps most importantly for the site manager, it provides the ability to upload survey imagery and correlate it with all the other data. When a user uploads imagery, it provides a snapshot in time of the measured temperature with visual observations. By tagging the images, we are beginning to create a structured database that future machine learning algorithms can use to help predict heat stress events, such as coral bleaching. Adding surveys also connects the local ecosystem manager to a global network of scientists and engineers that are working everyday to protect these sensitive environments. The datasets are free and available to everyone.
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <img
+            class="MuiCardMedia-root Card-cardImageScaleDown-43 MuiCardMedia-media MuiCardMedia-img"
+            src="survey-images.png"
+          />
+        </div>
+      </div>
+    </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-35"
+    classname="Footer-appBar-44"
     position="static"
   >
     <mock-toolbar>
@@ -958,7 +943,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-36"
+            classname="Footer-navBarLink-45"
             href="/"
           >
             <mock-typography

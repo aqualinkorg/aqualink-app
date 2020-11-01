@@ -75,11 +75,6 @@ const ReefDetails = ({
 
   const mapTitleItems: Value[] = [
     {
-      text: "LOCATION:",
-      variant: "h6",
-      marginRight: "2rem",
-    },
-    {
       text: `LAT: ${formatNumber(lat, 3)}`,
       variant: "subtitle2",
       marginRight: "1rem",
@@ -93,22 +88,19 @@ const ReefDetails = ({
 
   const featuredMediaTitleItems: Value[] = [
     {
-      text: "SURVEY DATE:",
-      variant: "h6",
-      marginRight: "0.5rem",
-    },
-    {
-      text: `${moment(moment(diveDate).toISOString()).format("MM/DD/YYYY")}`,
-      variant: "subtitle2",
-      marginRight: "2rem",
-    },
-    {
       text: "SURVEY POINT:",
       variant: "h6",
       marginRight: "0.5rem",
     },
     {
       text: `${point?.name}`,
+      variant: "subtitle2",
+      marginRight: "2rem",
+    },
+    {
+      text: `${moment(moment(diveDate).toISOString()).format(
+        "MMM DD[,] YYYY"
+      )}`,
       variant: "subtitle2",
       marginRight: 0,
     },
