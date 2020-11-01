@@ -15,7 +15,6 @@ import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { Range } from "../../store/Reefs/types";
-import { surfaceTempColorCode } from "../../assets/colorCode";
 
 export interface ChartProps {
   dailyData: DailyData[];
