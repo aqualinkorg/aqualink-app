@@ -23,7 +23,7 @@ export enum ReefStatus {
   InReview = 'in_review',
   Rejected = 'rejected',
   Approved = 'approved',
-  shipped = 'shipped',
+  Shipped = 'shipped',
 }
 
 @Entity()
