@@ -13,7 +13,7 @@ jest.mock("../MenuDrawer", () => "Mock-MenuDrawer");
 
 const mockStore = configureStore([]);
 
-describe("NavBar", () => {
+describe("NavBar with routeButtons", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -28,7 +28,32 @@ describe("NavBar", () => {
 
     element = render(
       <Provider store={store}>
-        <HomePageNavBar routeButtons={false} searchLocation={false} />
+        <HomePageNavBar routeButtons searchLocation={false} />
+      </Provider>
+    ).container;
+  });
+
+  it("should render with given state from Redux store", () => {
+    expect(element).toMatchSnapshot();
+  });
+});
+
+describe("NavBar without routeButtons", () => {
+  let element: HTMLElement;
+  beforeEach(() => {
+    const store = mockStore({
+      user: {
+        userInfo: mockUser,
+        loading: false,
+        error: null,
+      },
+    });
+
+    store.dispatch = jest.fn();
+
+    element = render(
+      <Provider store={store}>
+        <HomePageNavBar searchLocation={false} />
       </Provider>
     ).container;
   });
