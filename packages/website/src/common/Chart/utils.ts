@@ -111,15 +111,14 @@ export const createDatasets = (
     .map((item) => {
       return {
         x: item.date,
-        // prioritise bottom temp, if enabled
         y:
+          // Position survey on bottom temp, if enabled, else surface temp.
           (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
           item.satelliteTemperature,
       };
     });
 
   return {
-    // repeat first value, so chart start point isn't instantaneous.
     tempWithSurvey,
     bottomTemperatureData: CHART_BOTTOM_TEMP_ENABLED ? bottomTemperature : [],
     surfaceTemperatureData: surfaceTemperature,
@@ -154,7 +153,6 @@ export const calculateAxisLimits = (
   const spotterXMin = spotterTimestamps[0];
 
   const xAxisMax = spotterXMax || dates.slice(-1)[0];
-
   const xAxisMin = spotterXMin || dates[0];
 
   const {

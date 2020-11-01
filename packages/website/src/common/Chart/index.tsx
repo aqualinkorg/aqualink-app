@@ -15,6 +15,7 @@ import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { Range } from "../../store/Reefs/types";
+import { surfaceTempColorCode } from "../../assets/colorCode";
 
 export interface ChartProps {
   dailyData: DailyData[];
@@ -239,7 +240,12 @@ function Chart({
         spotterSurface,
         spotterBottom,
         tempWithSurvey,
-        surfaceTemperatureData,
+        // Extend surface temperature line to the chart extremities.
+        [
+          { x: xAxisMin, y: surfaceTemperatureData[0]?.y },
+          ...surfaceTemperatureData,
+          { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+        ],
         bottomTemperatureData,
         !!temperatureThreshold
       )}
