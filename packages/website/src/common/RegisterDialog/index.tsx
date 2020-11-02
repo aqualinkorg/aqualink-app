@@ -1,9 +1,10 @@
 import React, {
   BaseSyntheticEvent,
   useCallback,
-  useEffect,
   useState,
+  useEffect,
 } from "react";
+import { Link } from "react-router-dom";
 import {
   withStyles,
   WithStyles,
@@ -11,12 +12,13 @@ import {
   Dialog,
   Card,
   CardHeader,
-  CardContent,
-  Grid,
-  Typography,
   IconButton,
+  CardContent,
+  Typography,
+  Grid,
   TextField,
   Button,
+  Checkbox,
   LinearProgress,
   Collapse,
 } from "@material-ui/core";
@@ -26,27 +28,27 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  resetPassword,
-  signInUser,
+  createUser,
   userInfoSelector,
   userLoadingSelector,
   userErrorSelector,
-} from "../../../store/User/userSlice";
-import { UserSignInParams } from "../../../store/User/types";
-import incomingStyles from "../styles";
+} from "../../store/User/userSlice";
+import { UserRegisterParams } from "../../store/User/types";
+import dialogStyles from "../styles/dialogStyles";
 
-const SignInDialog = ({
+const RegisterDialog = ({
   open,
   handleRegisterOpen,
   handleSignInOpen,
   classes,
-}: SignInDialogProps) => {
+}: RegisterDialogProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const loading = useSelector(userLoadingSelector);
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
-  const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
+  const [readTerms, setReadTerms] = useState<boolean>(false);
+
   const { register, errors, handleSubmit } = useForm({
     reValidateMode: "onSubmit",
   });
@@ -59,40 +61,28 @@ const SignInDialog = ({
       if (event) {
         event.preventDefault();
       }
-      const registerInfo: UserSignInParams = {
+      const registerInfo: UserRegisterParams = {
+        fullName: `${data.firstName} ${data.lastName}`,
+        organization: data.organization,
         email: data.emailAddress,
         password: data.password,
       };
-      dispatch(signInUser(registerInfo));
+      dispatch(createUser(registerInfo));
     },
     [dispatch]
   );
 
   useEffect(() => {
     if (user) {
-      handleSignInOpen(false);
+      handleRegisterOpen(false);
     }
     if (error) {
       setErrorAlertOpen(true);
     }
-  }, [user, handleSignInOpen, error]);
-
-  const onResetPassword = useCallback(
-    (
-      data: any,
-      event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
-    ) => {
-      if (event) {
-        event.preventDefault();
-      }
-      dispatch(resetPassword({ email: data.emailAddress }));
-      setPasswordResetEmail(data.emailAddress);
-    },
-    [dispatch]
-  );
+  }, [user, handleRegisterOpen, error]);
 
   return (
-    <Dialog open={open} maxWidth="md">
+    <Dialog scroll="body" open={open} maxWidth="md">
       <Card>
         <CardHeader
           className={classes.dialogHeader}
@@ -118,7 +108,7 @@ const SignInDialog = ({
                   <IconButton
                     className={classes.closeButton}
                     size="small"
-                    onClick={() => handleSignInOpen(false)}
+                    onClick={() => handleRegisterOpen(false)}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -149,40 +139,70 @@ const SignInDialog = ({
             </Alert>
           </Collapse>
         )}
-        <Collapse in={passwordResetEmail !== ""}>
-          <Alert
-            severity="success"
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  setPasswordResetEmail("");
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            {`Password reset email sent to ${passwordResetEmail}.`}
-          </Alert>
-        </Collapse>
-        <CardContent>
+        <CardContent className={classes.contentWrapper}>
           <Grid container justify="center" item xs={12}>
             <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
                 <Typography variant="h5" color="textSecondary">
-                  Sign In
+                  Create an account
                 </Typography>
               </Grid>
             </Grid>
             <Grid container item xs={10}>
               <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <Typography className={classes.formText} variant="subtitle2">
-                    or login with email address
-                  </Typography>
+                  <TextField
+                    id="firstName"
+                    name="firstName"
+                    placeholder="First Name"
+                    helperText={
+                      errors.firstName ? errors.firstName.message : ""
+                    }
+                    label="First Name"
+                    inputRef={register({
+                      required: "This is a required field",
+                    })}
+                    error={!!errors.firstName}
+                    inputProps={{ className: classes.textField }}
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid className={classes.textFieldWrapper} item xs={12}>
+                  <TextField
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Last Name"
+                    helperText={errors.lastName ? errors.lastName.message : ""}
+                    label="Last Name"
+                    inputRef={register({
+                      required: "This is a required field",
+                    })}
+                    error={!!errors.lastName}
+                    inputProps={{ className: classes.textField }}
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid className={classes.textFieldWrapper} item xs={12}>
+                  <TextField
+                    id="organization"
+                    name="organization"
+                    placeholder="Organization"
+                    helperText={
+                      errors.organization ? errors.organization.message : ""
+                    }
+                    label="Organization"
+                    inputRef={register({
+                      required: "This is a required field",
+                    })}
+                    error={!!errors.organization}
+                    inputProps={{ className: classes.textField }}
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid className={classes.textFieldWrapper} item xs={12}>
                   <TextField
                     id="emailAddress"
                     name="emailAddress"
@@ -214,6 +234,10 @@ const SignInDialog = ({
                     label="Password"
                     inputRef={register({
                       required: "This is a required field",
+                      minLength: {
+                        value: 8,
+                        message: "Password must be at least 8 characters",
+                      },
                     })}
                     error={!!errors.password}
                     inputProps={{ className: classes.textField }}
@@ -221,15 +245,27 @@ const SignInDialog = ({
                     variant="outlined"
                   />
                 </Grid>
-                <Grid container item xs={12}>
-                  <Button
-                    className={classes.forgotPasswordButton}
-                    onClick={handleSubmit(onResetPassword)}
-                  >
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Forgot your password?
+                <Grid container justify="space-around" item xs={11}>
+                  <Grid item xs={1}>
+                    <Checkbox
+                      className={classes.termsCheckbox}
+                      checked={readTerms}
+                      onChange={() => setReadTerms(!readTerms)}
+                      color="primary"
+                    />
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography
+                      className={classes.formText}
+                      variant="subtitle1"
+                      color="textSecondary"
+                    >
+                      I have read the{" "}
+                      <Link className={classes.termsLink} to="/terms">
+                        Terms and Conditions
+                      </Link>
                     </Typography>
-                  </Button>
+                  </Grid>
                 </Grid>
                 <Grid className={classes.button} item xs={12}>
                   <Button
@@ -238,8 +274,9 @@ const SignInDialog = ({
                     color="primary"
                     variant="contained"
                     size="large"
+                    disabled={!readTerms}
                   >
-                    SIGN IN
+                    REGISTER NOW
                   </Button>
                 </Grid>
                 <Grid container item xs={12}>
@@ -248,15 +285,15 @@ const SignInDialog = ({
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    Don&#39;t have an account?{" "}
+                    Have an account?{" "}
                     <Button
                       onClick={() => {
-                        handleRegisterOpen(true);
-                        handleSignInOpen(false);
+                        handleRegisterOpen(false);
+                        handleSignInOpen(true);
                       }}
                       color="primary"
                     >
-                      REGISTER
+                      SIGN IN
                     </Button>
                   </Typography>
                 </Grid>
@@ -271,23 +308,26 @@ const SignInDialog = ({
 
 const styles = () =>
   createStyles({
-    ...incomingStyles,
-    formText: {
-      ...incomingStyles.formText,
-      marginBottom: "1rem",
+    ...dialogStyles,
+    contentWrapper: {
+      padding: 0,
     },
-    forgotPasswordButton: {
-      color: "inherit",
-      textDecoration: "none",
+    termsCheckbox: {
+      padding: 0,
+      margin: "0 0 1rem 0",
+    },
+    termsLink: {
+      color: "black",
     },
   });
 
-interface SignInDialogIncomingProps {
+interface RegisterDialogIncomingProps {
   open: boolean;
   handleRegisterOpen: (open: boolean) => void;
   handleSignInOpen: (open: boolean) => void;
 }
 
-type SignInDialogProps = SignInDialogIncomingProps & WithStyles<typeof styles>;
+type RegisterDialogProps = RegisterDialogIncomingProps &
+  WithStyles<typeof styles>;
 
-export default withStyles(styles)(SignInDialog);
+export default withStyles(styles)(RegisterDialog);
