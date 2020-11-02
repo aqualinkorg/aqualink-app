@@ -159,7 +159,7 @@ const ReefDetails = ({
             {hasSpotter && (
               <Grid
                 container
-                justify="flex-end"
+                justify="flex-start"
                 alignItems="baseline"
                 spacing={3}
               >
@@ -170,7 +170,6 @@ const ReefDetails = ({
                   value={range}
                   onRangeChange={onRangeChange}
                 />
-
                 <DatePicker value={pickerDate} onChange={onDateChange} />
               </Grid>
             )}
