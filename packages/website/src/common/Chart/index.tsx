@@ -236,8 +236,8 @@ function Chart({
       ref={chartRef}
       options={settings}
       data={createChartData(
-        spotterSurface,
         spotterBottom,
+        spotterSurface,
         tempWithSurvey,
         // Extend surface temperature line to the chart extremities.
         [
