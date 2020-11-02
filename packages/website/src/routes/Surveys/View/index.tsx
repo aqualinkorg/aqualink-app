@@ -15,6 +15,7 @@ import {
   WithStyles,
   CircularProgress,
 } from "@material-ui/core";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -24,6 +25,7 @@ import {
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
 import SelectRange from "../../../common/SelectRange";
+import DatePicker from "../../../common/Datepicker";
 
 import Charts from "./Charts";
 import type { Range, Reef } from "../../../store/Reefs/types";
@@ -37,7 +39,11 @@ import {
   reefSpotterDataRequest,
   reefSpotterDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
-import { subtractFromDate, findChartPeriod } from "../../../helpers/dates";
+import {
+  subtractFromDate,
+  findChartPeriod,
+  findMaxDate,
+} from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
@@ -51,6 +57,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
 
   const [range, setRange] = useState<Range>("week");
   const [endDate, setEndDate] = useState<string>();
+  const [pickerDate, setPickerDate] = useState<string | null>(null);
   const [open, setOpen] = useState<boolean>(false);
 
   const bodyLength = useBodyLength();
@@ -72,20 +79,45 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   useEffect(() => {
     if (surveyDetails?.diveDate && hasSpotter) {
       const toDate = new Date(surveyDetails.diveDate).toISOString();
-      setEndDate(toDate);
+      setPickerDate(toDate);
+    }
+  }, [hasSpotter, surveyDetails]);
+
+  useEffect(() => {
+    if (hasSpotter && pickerDate) {
       dispatch(
         reefSpotterDataRequest({
           id: `${reef.id}`,
-          startDate: subtractFromDate(toDate, range),
-          endDate: toDate,
+          startDate: subtractFromDate(pickerDate, range),
+          endDate: pickerDate,
         })
       );
     }
-  }, [dispatch, hasSpotter, range, reef.id, surveyDetails]);
+  }, [dispatch, hasSpotter, pickerDate, range, reef.id]);
+
+  useEffect(() => {
+    if (reef.dailyData && spotterData && pickerDate) {
+      const maxDataDate = new Date(findMaxDate(reef.dailyData, spotterData));
+      if (maxDataDate.getTime() > new Date(pickerDate).getTime()) {
+        setEndDate(pickerDate);
+      } else {
+        setEndDate(maxDataDate.toISOString());
+      }
+    }
+  }, [pickerDate, reef.dailyData, spotterData]);
 
   const onRangeChange = useCallback(
     (event: ChangeEvent<{ value: unknown }>) => {
       setRange(event.target.value as Range);
+    },
+    []
+  );
+
+  const onDateChange = useCallback(
+    (date: MaterialUiPickersDate, value?: string | null) => {
+      if (value) {
+        setPickerDate(new Date(value).toISOString());
+      }
     },
     []
   );
@@ -162,14 +194,23 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   />
                 </Grid>
                 {hasSpotter && (
-                  <SelectRange
-                    width={11}
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    onOpen={() => setOpen(true)}
-                    value={range}
-                    onRangeChange={onRangeChange}
-                  />
+                  <Grid
+                    container
+                    justify="flex-end"
+                    alignItems="baseline"
+                    item
+                    xs={11}
+                    spacing={3}
+                  >
+                    <SelectRange
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      onOpen={() => setOpen(true)}
+                      value={range}
+                      onRangeChange={onRangeChange}
+                    />
+                    <DatePicker value={pickerDate} onChange={onDateChange} />
+                  </Grid>
                 )}
                 {spotterDataLoading ? (
                   <Box
@@ -256,7 +297,10 @@ const styles = (theme: Theme) =>
         height: "75rem",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "90rem",
+        height: "85rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "100rem",
       },
     },
   });
