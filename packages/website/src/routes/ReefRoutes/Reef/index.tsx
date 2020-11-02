@@ -10,6 +10,7 @@ import {
   Typography,
   LinearProgress,
 } from "@material-ui/core";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
@@ -125,6 +126,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
   ).toISOString();
   const [endDate, setEndDate] = useState<string>();
+  const [pickerDate, setPickerDate] = useState<string>(todayDate);
 
   // fetch the reef and spotter data
   useEffect(() => {
@@ -138,23 +140,37 @@ const Reef = ({ match, classes }: ReefProps) => {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
-          startDate: subtractFromDate(todayDate, range),
-          endDate: todayDate,
+          startDate: subtractFromDate(pickerDate, range),
+          endDate: pickerDate,
         })
       );
     }
-  }, [dispatch, reefId, hasSpotter, range, todayDate]);
+  }, [dispatch, reefId, hasSpotter, range, pickerDate]);
 
   // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
     if (dailyData && spotterData) {
-      setEndDate(findMaxDate(dailyData, spotterData));
+      const maxDataDate = new Date(findMaxDate(dailyData, spotterData));
+      if (maxDataDate.getTime() > new Date(pickerDate).getTime()) {
+        setEndDate(pickerDate);
+      } else {
+        setEndDate(maxDataDate.toISOString());
+      }
     }
-  }, [dailyData, spotterData]);
+  }, [dailyData, spotterData, pickerDate]);
 
   const onRangeChange = useCallback(
     (event: ChangeEvent<{ value: unknown }>) => {
       setRange(event.target.value as Range);
+    },
+    []
+  );
+
+  const onDateChange = useCallback(
+    (date: MaterialUiPickersDate, value?: string | null) => {
+      if (value) {
+        setPickerDate(new Date(value).toISOString());
+      }
     },
     []
   );
@@ -192,10 +208,12 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
-              startDate={subtractFromDate(endDate || todayDate, range)}
-              endDate={endDate || todayDate}
+              startDate={subtractFromDate(endDate || pickerDate, range)}
+              endDate={endDate || pickerDate}
+              pickerDate={pickerDate}
               range={range}
               onRangeChange={onRangeChange}
+              onDateChange={onDateChange}
               hasSpotter={hasSpotter}
               chartPeriod={findChartPeriod(range)}
               hasDailyData={hasDailyData}

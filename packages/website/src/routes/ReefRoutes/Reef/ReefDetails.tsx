@@ -8,6 +8,7 @@ import {
   Box,
   CircularProgress,
 } from "@material-ui/core";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
@@ -21,6 +22,7 @@ import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import SelectRange from "../../../common/SelectRange";
+import DatePicker from "../../../common/Datepicker";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
 import { reefSpotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
@@ -35,6 +37,8 @@ const ReefDetails = ({
   endDate,
   range,
   onRangeChange,
+  onDateChange,
+  pickerDate,
   hasSpotter,
   chartPeriod,
   spotterData,
@@ -153,14 +157,22 @@ const ReefDetails = ({
               background
             />
             {hasSpotter && (
-              <SelectRange
-                width={12}
-                open={open}
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-                value={range}
-                onRangeChange={onRangeChange}
-              />
+              <Grid
+                container
+                justify="flex-end"
+                alignItems="baseline"
+                spacing={3}
+              >
+                <SelectRange
+                  open={open}
+                  onClose={() => setOpen(false)}
+                  onOpen={() => setOpen(true)}
+                  value={range}
+                  onRangeChange={onRangeChange}
+                />
+
+                <DatePicker value={pickerDate} onChange={onDateChange} />
+              </Grid>
             )}
             {spotterDataLoading ? (
               <Box
@@ -221,9 +233,11 @@ interface ReefDetailIncomingProps {
   reef: Reef;
   startDate: string;
   endDate: string;
+  pickerDate: string;
   range: Range;
   chartPeriod: "hour" | Range;
   onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onDateChange: (date: MaterialUiPickersDate, value?: string | null) => void;
   hasSpotter: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
