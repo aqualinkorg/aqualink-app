@@ -126,11 +126,13 @@ const Reef = ({ match, classes }: ReefProps) => {
   ).toISOString();
   const [endDate, setEndDate] = useState<string>();
 
+  // fetch the reef and spotter data
   useEffect(() => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 
+  // fetch spotter data from api, also filter the range we're interested in.
   useEffect(() => {
     if (hasSpotter) {
       dispatch(
@@ -143,6 +145,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     }
   }, [dispatch, reefId, hasSpotter, range, todayDate]);
 
+  // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
     if (dailyData && spotterData) {
       setEndDate(findMaxDate(dailyData, spotterData));

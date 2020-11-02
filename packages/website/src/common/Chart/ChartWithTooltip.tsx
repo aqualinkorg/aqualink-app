@@ -22,16 +22,13 @@ export interface ChartWithTooltipProps extends ChartProps {
 
 function ChartWithTooltip({
   depth,
-  dailyData,
-  spotterData,
-  surveys,
-  temperatureThreshold,
   chartSettings,
   children,
   className,
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
+  const { dailyData, spotterData } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
@@ -124,11 +121,7 @@ function ChartWithTooltip({
       {children}
       <Chart
         {...rest}
-        spotterData={spotterData}
-        dailyData={dailyData}
-        surveys={surveys}
         chartRef={chartDataRef}
-        temperatureThreshold={temperatureThreshold}
         chartSettings={{
           plugins: {
             sliceDrawPlugin: {
