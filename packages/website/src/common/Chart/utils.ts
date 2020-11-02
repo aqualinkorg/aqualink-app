@@ -2,7 +2,11 @@ import type { ChartPoint } from "chart.js";
 import { ChartComponentProps } from "react-chartjs-2";
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
-import type { DailyData, SofarValue } from "../../store/Reefs/types";
+import type {
+  DailyData,
+  SofarValue,
+  SpotterData,
+} from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
 // TODO make bottom temp permanent once we work UI caveats
@@ -11,7 +15,9 @@ export const CHART_BOTTOM_TEMP_ENABLED = false;
 const isBetween = (date: Date, start: Date, end: Date): boolean => {
   return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
 };
-
+// ^
+// TODO unused, possibly not needed.
+// v
 export const filterData = (
   from: string,
   to: string,
@@ -73,8 +79,8 @@ export function getSpotterDataClosestToDate(
 
 export const createDatasets = (
   dailyData: DailyData[],
-  spotterBottomTemperature: SofarValue[],
-  spotterSurfaceTemperature: SofarValue[],
+  rawSpotterBottom: SpotterData["bottomTemperature"],
+  rawSpotterSurface: SpotterData["surfaceTemperature"],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData
@@ -90,12 +96,12 @@ export const createDatasets = (
 
   const surveyDates = getSurveyDates(surveys);
 
-  const spotterBottom = spotterBottomTemperature.map((item) => ({
+  const spotterBottom = rawSpotterBottom.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
 
-  const spotterSurface = spotterSurfaceTemperature.map((item) => ({
+  const spotterSurface = rawSpotterSurface.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -108,15 +114,13 @@ export const createDatasets = (
           (surveyDate) => surveyDate && sameDay(surveyDate, item.date)
         )
     )
-    .map((item) => {
-      return {
-        x: item.date,
-        y:
-          // Position survey on bottom temp, if enabled, else surface temp.
-          (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
-          item.satelliteTemperature,
-      };
-    });
+    .map((item) => ({
+      x: item.date,
+      y:
+        // Position survey on bottom temp, if enabled, else surface temp.
+        (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
+        item.satelliteTemperature,
+    }));
 
   return {
     tempWithSurvey,
