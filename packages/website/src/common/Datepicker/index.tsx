@@ -28,8 +28,8 @@ const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
               className={classes.textField}
               disableToolbar
               format="MM/dd/yyyy"
-              id="dive-date"
-              name="diveDate"
+              id="date-picker"
+              name="datePicker"
               autoOk
               showTodayButton
               disableFuture
@@ -53,7 +53,7 @@ const styles = (theme: Theme) =>
       marginLeft: "0.5rem",
     },
     textField: {
-      width: "8rem",
+      width: "10rem",
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
