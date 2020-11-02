@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NavBar should render with given state from Redux store 1`] = `
+exports[`NavBar with routeButtons should render with given state from Redux store 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-1"
@@ -9,6 +9,153 @@ exports[`NavBar should render with given state from Redux store 1`] = `
   >
     <mock-toolbar
       classname="NavBar-toolbar-4"
+    >
+      <mock-menudrawer
+        open="false"
+      />
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
+        >
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
+          >
+            <mock-iconbutton
+              color="inherit"
+              edge="start"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-link
+              classname="NavBar-navBarLink-2"
+              href="/map"
+            >
+              <mock-typography
+                color="textPrimary"
+                variant="h4"
+              >
+                Aqua
+              </mock-typography>
+              <mock-typography
+                style="color: rgb(138, 198, 222);"
+                variant="h4"
+              >
+                link
+              </mock-typography>
+            </mock-link>
+          </mock-box>
+        </div>
+        <mock-hidden
+          xsdown="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/map"
+              >
+                MAP
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/about"
+              >
+                ABOUT
+              </mock-button>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                component="[object Object]"
+                style="color: white;"
+                to="/register"
+              >
+                REGISTER YOUR SITE
+              </mock-button>
+            </div>
+          </div>
+        </mock-hidden>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
+        >
+          <mock-box
+            alignitems="center"
+            display="flex"
+            flexwrap="nowrap"
+          >
+            Mock User
+            <mock-iconbutton
+              classname="NavBar-button-9"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root NavBar-expandIcon-8"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </mock-iconbutton>
+            <mock-menu
+              classname="NavBar-userMenu-5"
+              keepmounted="true"
+              open="false"
+            >
+              <mock-menuitem
+                classname="NavBar-menuItem-6"
+              >
+                Logout
+              </mock-menuitem>
+            </mock-menu>
+          </mock-box>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
+  <mock-registerdialog
+    open="false"
+  />
+  <mock-signindialog
+    open="false"
+  />
+</div>
+`;
+
+exports[`NavBar without routeButtons should render with given state from Redux store 1`] = `
+<div>
+  <mock-appbar
+    classname="NavBar-appBar-10"
+    color="primary"
+    position="static"
+  >
+    <mock-toolbar
+      classname="NavBar-toolbar-13"
     >
       <mock-menudrawer
         open="false"
@@ -40,8 +187,8 @@ exports[`NavBar should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-2"
-              href="/"
+              classname="NavBar-navBarLink-11"
+              href="/map"
             >
               <mock-typography
                 color="textPrimary"
@@ -68,11 +215,11 @@ exports[`NavBar should render with given state from Redux store 1`] = `
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-9"
+              classname="NavBar-button-18"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-8"
+                class="MuiSvgIcon-root NavBar-expandIcon-17"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -82,12 +229,12 @@ exports[`NavBar should render with given state from Redux store 1`] = `
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-5"
+              classname="NavBar-userMenu-14"
               keepmounted="true"
               open="false"
             >
               <mock-menuitem
-                classname="NavBar-menuItem-6"
+                classname="NavBar-menuItem-15"
               >
                 Logout
               </mock-menuitem>

@@ -203,7 +203,7 @@ const Apply = ({ classes }: ApplyProps) => {
                 <Paper elevation={2}>
                   <Box color="text.secondary" p={4}>
                     <Typography variant="h4" gutterBottom>
-                      Application Form
+                      Site Information
                     </Typography>
 
                     <Grid container spacing={2}>

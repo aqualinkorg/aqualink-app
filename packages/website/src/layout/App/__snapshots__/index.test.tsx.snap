@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div>
-    Homepage
+    LandingPage
   </div>
 </div>
 `;
