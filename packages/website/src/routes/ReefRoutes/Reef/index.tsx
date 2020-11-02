@@ -122,11 +122,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   const spotterData = useSelector(reefSpotterDataSelector);
   const [range, setRange] = useState<Range>("week");
   const today = new Date();
-  const todayDate = new Date(
-    `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-  ).toISOString();
   const [endDate, setEndDate] = useState<string>();
-  const [pickerDate, setPickerDate] = useState<string>(todayDate);
+  const [pickerDate, setPickerDate] = useState<string>(today.toISOString());
 
   // fetch the reef and spotter data
   useEffect(() => {
