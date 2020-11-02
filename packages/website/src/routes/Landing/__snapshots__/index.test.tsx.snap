@@ -700,113 +700,115 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
       </mock-cardcontent>
     </mock-card>
   </mock-dialog>
-  <mock-box
-    alignitems="center"
-    classname="LandingPage-landingImage-1"
-    display="flex"
-  >
-    <div
-      class="MuiContainer-root LandingPage-container-2 MuiContainer-maxWidthLg"
+  <div>
+    <mock-box
+      alignitems="center"
+      classname="LandingPage-landingImage-1"
+      display="flex"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-9"
+        class="MuiContainer-root LandingPage-container-2 MuiContainer-maxWidthLg"
       >
-        <mock-box
-          display="flex"
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-9"
         >
-          <mock-typography
-            color="textPrimary"
-            variant="h1"
+          <mock-box
+            display="flex"
           >
-            Aqua
-          </mock-typography>
-          <mock-typography
-            classname="LandingPage-aqualinkSecondPart-3"
-            color="textPrimary"
-            variant="h1"
-          >
-            link
-          </mock-typography>
-        </mock-box>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-11 MuiGrid-grid-md-7"
-      >
-        <mock-box
-          display="flex"
-          mt="1.5rem"
+            <mock-typography
+              color="textPrimary"
+              variant="h1"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              classname="LandingPage-aqualinkSecondPart-3"
+              color="textPrimary"
+              variant="h1"
+            >
+              link
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-11 MuiGrid-grid-md-7"
         >
-          <mock-typography
-            color="textPrimary"
-            variant="h1"
+          <mock-box
+            display="flex"
+            mt="1.5rem"
           >
-            Temperature monitoring for marine ecosystems
-          </mock-typography>
-        </mock-box>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-9 MuiGrid-grid-md-4"
-      >
-        <mock-box
-          display="flex"
-          mt="4rem"
+            <mock-typography
+              color="textPrimary"
+              variant="h1"
+            >
+              Temperature monitoring for marine ecosystems
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-9 MuiGrid-grid-md-4"
         >
-          <mock-typography
-            color="textPrimary"
-            variant="h4"
+          <mock-box
+            display="flex"
+            mt="4rem"
           >
-            A tool for people on the front line of Ocean conservation
-          </mock-typography>
-        </mock-box>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-      >
-        <mock-box
-          mt="2rem"
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              A tool for people on the front line of Ocean conservation
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+          <mock-box
+            mt="2rem"
           >
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
             >
-              <mock-button
-                classname="LandingPage-buttons-4"
-                color="primary"
-                component="[object Object]"
-                to="/map"
-                variant="contained"
+              <div
+                class="MuiGrid-root MuiGrid-item"
               >
-                <mock-typography
-                  variant="h5"
+                <mock-button
+                  classname="LandingPage-buttons-4"
+                  color="primary"
+                  component="[object Object]"
+                  to="/map"
+                  variant="contained"
                 >
-                  View The Map
-                </mock-typography>
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                classname="LandingPage-buttons-4 LandingPage-registerButton-5"
-                color="primary"
-                component="[object Object]"
-                to="/register"
-                variant="outlined"
+                  <mock-typography
+                    variant="h5"
+                  >
+                    View The Map
+                  </mock-typography>
+                </mock-button>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
               >
-                <mock-typography
-                  variant="h5"
+                <mock-button
+                  classname="LandingPage-buttons-4 LandingPage-registerButton-5"
+                  color="primary"
+                  component="[object Object]"
+                  to="/register"
+                  variant="outlined"
                 >
-                  Register Your Site
-                </mock-typography>
-              </mock-button>
+                  <mock-typography
+                    variant="h5"
+                  >
+                    Register Your Site
+                  </mock-typography>
+                </mock-button>
+              </div>
             </div>
-          </div>
-        </mock-box>
+          </mock-box>
+        </div>
       </div>
-    </div>
-  </mock-box>
+    </mock-box>
+  </div>
   <div
     class="MuiContainer-root MuiContainer-maxWidthLg"
   >
