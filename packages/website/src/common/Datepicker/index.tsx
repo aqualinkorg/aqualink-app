@@ -20,7 +20,7 @@ const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
     <Grid item>
       <Box display="flex" alignItems="flex-end">
         <Typography variant="h6" color="textSecondary">
-          To date:
+          Until:
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -53,7 +53,7 @@ const styles = (theme: Theme) =>
       marginLeft: "0.5rem",
     },
     textField: {
-      width: "10rem",
+      width: "8rem",
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
