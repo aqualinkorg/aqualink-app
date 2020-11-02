@@ -22,7 +22,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
   return (
     <>
       <NavBar routeButtons searchLocation={false} />
-      <Container className={classes.landingImageWrapper}>
+      <div>
         <Box
           display="flex"
           alignItems="center"
@@ -87,7 +87,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             </Grid>
           </Container>
         </Box>
-      </Container>
+      </div>
       <Container>
         {cardTitles.map((item) => (
           <Card
@@ -108,11 +108,6 @@ const LandingPage = ({ classes }: LandingPageProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
-    landingImageWrapper: {
-      padding: 0,
-      margin: 0,
-      minWidth: "100%",
-    },
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
       backgroundSize: "cover",
