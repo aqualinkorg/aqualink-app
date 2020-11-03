@@ -246,9 +246,9 @@ interface ReefDetailIncomingProps {
 }
 
 ReefDetails.defaultProps = {
-    point: null,
-    diveDate: null,
-    spotterData: null,
+  point: null,
+  diveDate: null,
+  spotterData: null,
 };
 
 type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;
