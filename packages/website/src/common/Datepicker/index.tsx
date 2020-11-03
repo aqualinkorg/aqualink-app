@@ -6,7 +6,6 @@ import {
   Theme,
   Grid,
   Box,
-  IconButton,
   Typography,
 } from "@material-ui/core";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
