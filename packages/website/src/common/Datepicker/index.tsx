@@ -6,8 +6,10 @@ import {
   Theme,
   Grid,
   Box,
+  IconButton,
   Typography,
 } from "@material-ui/core";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import {
   KeyboardDatePicker,
@@ -39,6 +41,8 @@ const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
                 className: classes.textField,
               }}
               inputVariant="standard"
+              KeyboardButtonProps={{ className: classes.calendarButton }}
+              keyboardIcon={<CalendarTodayIcon />}
             />
           </MuiPickersUtilsProvider>
         </div>
@@ -52,8 +56,11 @@ const styles = (theme: Theme) =>
     datePicker: {
       marginLeft: "0.5rem",
     },
+    calendarButton: {
+      padding: 0,
+    },
     textField: {
-      width: "10rem",
+      width: "7.5rem",
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
