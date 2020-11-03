@@ -5,7 +5,7 @@ test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
   const date = new Date('2020-09-01');
-  date.setUTCHours(0, 0, 0, 0);
+  date.setUTCHours(23, 59, 59, 999);
   const reef = {
     id: 1,
     name: null,
