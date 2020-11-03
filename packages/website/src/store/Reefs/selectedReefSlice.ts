@@ -10,7 +10,7 @@ import reefServices from "../../services/reefServices";
 
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
-  loading: false,
+  loading: true,
   spotterDataLoading: false,
   error: null,
 };
