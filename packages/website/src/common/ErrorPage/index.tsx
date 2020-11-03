@@ -17,9 +17,14 @@ const ErrorPage = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box display="flex" flexDirection="column" alignItems="center">
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Box mb="1rem">
-            <Typography variant="h1">Something went wrong</Typography>
+            <Typography variant="h2">Something went wrong</Typography>
           </Box>
           <Button
             color="primary"

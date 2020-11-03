@@ -670,12 +670,13 @@ exports[`Error Page should render with given state from Redux store 1`] = `
       alignitems="center"
       display="flex"
       flexdirection="column"
+      justifycontent="center"
     >
       <mock-box
         mb="1rem"
       >
         <mock-typography
-          variant="h1"
+          variant="h2"
         >
           Something went wrong
         </mock-typography>
