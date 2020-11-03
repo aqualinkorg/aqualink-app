@@ -14,9 +14,6 @@ import { SurveyListItem } from "../../store/Survey/types";
 // TODO make bottom temp permanent once we work UI caveats
 export const CHART_BOTTOM_TEMP_ENABLED = false;
 
-// ^
-// TODO unused, possibly not needed.
-// v
 export const filterDailyData = (
   dailyData: DailyData[],
   // Date strings, ISO preferred.
