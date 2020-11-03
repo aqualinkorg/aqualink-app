@@ -674,19 +674,34 @@ exports[`Error Page should render with given state from Redux store 1`] = `
     >
       <mock-box
         mb="1rem"
+        p="1rem"
       >
         <mock-typography
           variant="h2"
         >
-          Something went wrong
+          Sorry, something went wrong...
         </mock-typography>
       </mock-box>
-      <mock-button
-        color="primary"
-        variant="contained"
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
       >
-        Refresh
-      </mock-button>
+        <mock-button
+          color="primary"
+          style="margin: 1rem;"
+          variant="contained"
+        >
+          Try Again
+        </mock-button>
+        <mock-button
+          color="primary"
+          component="[object Object]"
+          style="margin: 1rem; color: white;"
+          to="/map"
+          variant="contained"
+        >
+          Back to Map
+        </mock-button>
+      </div>
     </mock-box>
   </mock-box>
   <mock-appbar
