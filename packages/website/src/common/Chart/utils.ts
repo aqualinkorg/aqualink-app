@@ -25,7 +25,8 @@ export const filterDailyData = (
   const endDate = moment(to);
 
   const ret = dailyData.filter((item) =>
-    inRange(moment(item.date).date(), startDate.date(), endDate.date())
+    // add one since inRange is exclusive for last param
+    inRange(moment(item.date).date(), startDate.date(), endDate.date() + 1)
   );
   // if this list is empty, it means satellite is behind. We want to display latest value, so lets just return the latest values.
   if (ret.length === 0) {
