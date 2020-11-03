@@ -61,6 +61,7 @@ function Chart({
   dailyData,
   spotterData,
   surveys,
+  startDate,
   endDate,
   chartPeriod,
   temperatureThreshold,
@@ -97,7 +98,9 @@ function Chart({
     dailyData,
     spotterData,
     surveys,
-    temperatureThreshold
+    temperatureThreshold,
+    startDate,
+    endDate
   );
 
   const yStepSize = yAxisMax - yAxisMin > 6 ? 5 : 2;

@@ -1,5 +1,7 @@
 import type { ChartPoint } from "chart.js";
 import { ChartComponentProps } from "react-chartjs-2";
+import moment from "moment";
+import { inRange } from "lodash";
 import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type {
@@ -12,22 +14,29 @@ import { SurveyListItem } from "../../store/Survey/types";
 // TODO make bottom temp permanent once we work UI caveats
 export const CHART_BOTTOM_TEMP_ENABLED = false;
 
-const isBetween = (date: Date, start: Date, end: Date): boolean => {
-  return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
-};
 // ^
 // TODO unused, possibly not needed.
 // v
-export const filterData = (
-  from: string,
-  to: string,
-  dailyData: DailyData[]
+export const filterDailyData = (
+  dailyData: DailyData[],
+  // Date strings, ISO preferred.
+  from?: string,
+  to?: string
 ): DailyData[] => {
-  const startDate = new Date(from);
-  const endDate = new Date(to);
-  return dailyData.filter((item) =>
-    isBetween(new Date(item.date), startDate, endDate)
+  if (!from || !to) return dailyData;
+  const startDate = moment(from);
+  const endDate = moment(to);
+
+  const ret = dailyData.filter((item) =>
+    inRange(moment(item.date).date(), startDate.date(), endDate.date())
   );
+  // if this list is empty, it means satellite is behind. We want to display latest value, so lets just return the latest values.
+  if (ret.length === 0) {
+    // daily data is separated by days, so lets try match the amount of days between the range given to us.
+    const diffDays = endDate.diff(startDate, "days");
+    return ret.slice(-diffDays);
+  }
+  return ret;
 };
 
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
@@ -208,28 +217,35 @@ export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
   surveys: SurveyListItem[],
-  temperatureThreshold: ChartProps["temperatureThreshold"]
+  temperatureThreshold: ChartProps["temperatureThreshold"],
+  startDate: ChartProps["startDate"],
+  endDate: ChartProps["endDate"]
 ) {
   // Sort daily data by date
-  const sortedDailyData = sortByDate(dailyData, "date");
+
+  const sortedFilteredDailyData = filterDailyData(
+    sortByDate(dailyData, "date"),
+    startDate,
+    endDate
+  );
 
   const { bottomTemperature, surfaceTemperature } = spotterData || {};
 
   const datasets = createDatasets(
-    sortedDailyData,
+    sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
     surveys
   );
 
   const axisLimits = calculateAxisLimits(
-    sortedDailyData,
+    sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
     surveys,
     temperatureThreshold
   );
-  return { sortedDailyData, ...axisLimits, ...datasets };
+  return { sortedFilteredDailyData, ...axisLimits, ...datasets };
 }
 
 export const createChartData = (
