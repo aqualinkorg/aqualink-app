@@ -20,7 +20,7 @@ const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
     <Grid item>
       <Box display="flex" alignItems="flex-end">
         <Typography variant="h6" color="textSecondary">
-          Until:
+          Date:
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
