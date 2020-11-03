@@ -157,12 +157,7 @@ const ReefDetails = ({
               background
             />
             {hasSpotter && (
-              <Grid
-                container
-                justify="flex-start"
-                alignItems="baseline"
-                spacing={3}
-              >
+              <Grid container alignItems="baseline" spacing={3}>
                 <SelectRange
                   open={open}
                   onClose={() => setOpen(false)}
