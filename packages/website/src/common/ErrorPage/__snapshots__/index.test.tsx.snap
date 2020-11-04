@@ -663,46 +663,41 @@ exports[`Error Page should render with given state from Redux store 1`] = `
     alignitems="center"
     color="#3f51b5"
     display="flex"
+    flexdirection="column"
     height="100%"
     justifycontent="center"
   >
     <mock-box
-      alignitems="center"
-      display="flex"
-      flexdirection="column"
-      justifycontent="center"
+      mb="1rem"
+      p="1rem"
     >
-      <mock-box
-        mb="1rem"
-        p="1rem"
+      <mock-typography
+        align="center"
+        variant="h2"
       >
-        <mock-typography
-          variant="h2"
-        >
-          Sorry, something went wrong...
-        </mock-typography>
-      </mock-box>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
-      >
-        <mock-button
-          color="primary"
-          style="margin: 1rem;"
-          variant="contained"
-        >
-          Try Again
-        </mock-button>
-        <mock-button
-          color="primary"
-          component="[object Object]"
-          style="margin: 1rem; color: white;"
-          to="/map"
-          variant="contained"
-        >
-          Back to Map
-        </mock-button>
-      </div>
+        Sorry, something went wrong...
+      </mock-typography>
     </mock-box>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+    >
+      <mock-button
+        color="primary"
+        style="margin: 1rem;"
+        variant="contained"
+      >
+        Try Again
+      </mock-button>
+      <mock-button
+        color="primary"
+        component="[object Object]"
+        style="margin: 1rem; color: white;"
+        to="/map"
+        variant="contained"
+      >
+        Back to Map
+      </mock-button>
+    </div>
   </mock-box>
   <mock-appbar
     classname="Footer-appBar-34"
