@@ -32,7 +32,7 @@ const ErrorPage = () => {
             variant="contained"
             onClick={() => window.location.reload()}
           >
-            Try Again
+            Refresh
           </Button>
           {pathname !== "/map" && (
             <Button
