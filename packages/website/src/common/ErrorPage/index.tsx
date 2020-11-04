@@ -1,12 +1,13 @@
 import React from "react";
 import { Grid, Typography, Box, Button, useTheme } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 import NavBar from "../NavBar";
 import Footer from "../Footer";
 
 const ErrorPage = () => {
   const theme = useTheme();
+  const { pathname } = useLocation();
 
   return (
     <>
@@ -33,15 +34,17 @@ const ErrorPage = () => {
           >
             Try Again
           </Button>
-          <Button
-            style={{ margin: "1rem", color: "white" }}
-            component={Link}
-            to="/map"
-            color="primary"
-            variant="contained"
-          >
-            Back to Map
-          </Button>
+          {pathname !== "/map" && (
+            <Button
+              style={{ margin: "1rem", color: "white" }}
+              component={Link}
+              to="/map"
+              color="primary"
+              variant="contained"
+            >
+              Back to Map
+            </Button>
+          )}
         </Grid>
       </Box>
       <Footer />
