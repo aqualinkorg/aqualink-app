@@ -686,7 +686,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
         style="margin: 1rem;"
         variant="contained"
       >
-        Try Again
+        Refresh
       </mock-button>
       <mock-button
         color="primary"
