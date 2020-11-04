@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 import "./assets/css/bootstrap.css";
@@ -14,20 +14,26 @@ import { setToken } from "./store/User/userSlice";
 
 app.auth().onAuthStateChanged((user) => {
   if (user) {
-    user.getIdToken().then((token) => {
-      requestsConfig.agent.interceptors.request.use(
-        (config: AxiosRequestConfig) => {
+    requestsConfig.agent.interceptors.response.use(
+      (response: AxiosResponse) => Promise.resolve(response),
+      async (error: AxiosError) => {
+        const { config, status } = error?.response || {};
+        if (config && status === 401) {
+          const token = await user.getIdToken();
           store.dispatch(setToken(token));
-          return {
+
+          const newConfig = {
             ...config,
             headers: {
               ...config.headers,
               Authorization: `Bearer ${token}`,
             },
           };
+          return requestsConfig.agent.request(newConfig);
         }
-      );
-    });
+        return Promise.reject(error);
+      }
+    );
   }
 });
 
