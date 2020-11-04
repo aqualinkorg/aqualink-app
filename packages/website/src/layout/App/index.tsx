@@ -42,8 +42,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <Router>
+      <Router>
+        <ErrorBoundary>
           <div id="app">
             {render && (
               <Switch>
@@ -61,8 +61,8 @@ function App() {
               </Switch>
             )}
           </div>
-        </Router>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Router>
     </ThemeProvider>
   );
 }
