@@ -172,7 +172,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     []
   );
 
-  if (loading) {
+  if (loading || (!reefDetails && !error)) {
     return (
       <>
         <ReefNavBar searchLocation={false} />
