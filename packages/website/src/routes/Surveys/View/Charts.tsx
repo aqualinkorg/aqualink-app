@@ -15,7 +15,7 @@ const Charts = ({ classes, ...rest }: ChartsProps) => {
 const styles = () =>
   createStyles({
     root: {
-      height: "10rem",
+      height: "16rem",
     },
   });
 

@@ -23,6 +23,8 @@ export interface SofarValue {
   value: number;
 }
 
+export type Range = "day" | "week";
+
 export interface LiveData {
   reef: { id: number };
   bottomTemperature?: SofarValue;
@@ -69,6 +71,11 @@ interface Region {
 
 type Status = "in_review" | "rejected" | "approved";
 
+export interface SpotterData {
+  surfaceTemperature: SofarValue[];
+  bottomTemperature: SofarValue[];
+}
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -85,6 +92,12 @@ export interface Reef {
   latestDailyData: DailyData;
   featuredImage?: string;
   applied?: boolean;
+}
+
+export interface SpotterDataRequestParams {
+  id: string;
+  startDate: string;
+  endDate: string;
 }
 
 export interface ReefRegisterResponseData {
@@ -132,6 +145,8 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  spotterData?: SpotterData;
+  spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;
 }

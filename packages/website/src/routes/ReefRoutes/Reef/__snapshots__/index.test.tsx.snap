@@ -731,7 +731,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/"
+              href="/map"
               style="text-decoration: none;"
             >
               <mock-iconbutton
@@ -1480,9 +1480,11 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         mt="2rem"
       >
         <mock-charts
+          background="true"
           dailydata="[object Object]"
           depth="0"
           surveys=""
+          title="DAILY WATER TEMPERATURE (°C)"
         />
         <mock-dialog
           open="false"
@@ -2467,7 +2469,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/"
+              href="/map"
               style="text-decoration: none;"
             >
               <mock-iconbutton

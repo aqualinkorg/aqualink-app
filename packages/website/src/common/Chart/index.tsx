@@ -7,19 +7,25 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import { mergeWith } from "lodash";
-import type { DailyData } from "../../store/Reefs/types";
+import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
+import { Range } from "../../store/Reefs/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
+  spotterData?: SpotterData;
+  startDate?: string;
+  endDate?: string;
+  chartPeriod?: "hour" | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
+  background: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -53,9 +59,14 @@ const makeAnnotation = (
 
 function Chart({
   dailyData,
+  spotterData,
   surveys,
+  startDate,
+  endDate,
+  chartPeriod,
   temperatureThreshold,
   maxMonthlyMean,
+  background,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -73,18 +84,26 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const yStepSize = 5;
-
   const {
     xAxisMax,
     xAxisMin,
     yAxisMax,
     yAxisMin,
     surfaceTemperatureData,
-    bottomTemperatureData,
     tempWithSurvey,
-    chartLabels,
-  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
+    bottomTemperatureData,
+    spotterBottom,
+    spotterSurface,
+  } = useProcessedChartData(
+    dailyData,
+    spotterData,
+    surveys,
+    temperatureThreshold,
+    startDate,
+    endDate
+  );
+
+  const yStepSize = yAxisMax - yAxisMin > 6 ? 5 : 2;
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
@@ -133,7 +152,7 @@ function Chart({
       maintainAspectRatio: false,
       plugins: {
         chartJsPluginBarchartBackground: {
-          color: "rgb(158, 166, 170, 0.07)",
+          color: background ? "rgb(158, 166, 170, 0.07)" : "#ffffff",
         },
         fillPlugin: {
           datasetIndex: 1,
@@ -170,13 +189,13 @@ function Chart({
                 week: "MMM D",
                 month: "MMM",
               },
-              unit: xPeriod,
+              unit: chartPeriod || xPeriod,
             },
             display: true,
             ticks: {
               labelOffset: xTickShift,
               min: xAxisMin,
-              max: xAxisMax,
+              max: endDate || xAxisMax,
               padding: 10,
             },
             gridLines: {
@@ -220,9 +239,15 @@ function Chart({
       ref={chartRef}
       options={settings}
       data={createChartData(
-        chartLabels,
+        spotterBottom,
+        spotterSurface,
         tempWithSurvey,
-        surfaceTemperatureData,
+        // Extend surface temperature line to the chart extremities.
+        [
+          { x: xAxisMin, y: surfaceTemperatureData[0]?.y },
+          ...surfaceTemperatureData,
+          { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+        ],
         bottomTemperatureData,
         !!temperatureThreshold
       )}
