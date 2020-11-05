@@ -1716,7 +1716,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           <mock-link
             classname="Footer-navBarLink-152"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"
@@ -2606,7 +2606,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         >
           <mock-link
             classname="Footer-navBarLink-43"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"
