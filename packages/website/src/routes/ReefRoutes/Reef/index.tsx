@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,6 +10,7 @@ import {
   Typography,
   LinearProgress,
 } from "@material-ui/core";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
@@ -22,6 +23,8 @@ import {
   reefLoadingSelector,
   reefErrorSelector,
   reefRequest,
+  reefSpotterDataRequest,
+  reefSpotterDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -33,6 +36,12 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/isAdmin";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
+import {
+  subtractFromDate,
+  findMaxDate,
+  findChartPeriod,
+} from "../../../helpers/dates";
+import { Range } from "../../../store/Reefs/types";
 
 const getAlertMessage = (
   user: User | null,
@@ -110,12 +119,60 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
+  const spotterData = useSelector(reefSpotterDataSelector);
+  const [range, setRange] = useState<Range>("week");
+  const today = new Date();
+  const [endDate, setEndDate] = useState<string>();
+  const [pickerDate, setPickerDate] = useState<string>(today.toISOString());
+
+  // fetch the reef and spotter data
   useEffect(() => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 
-  if (loading) {
+  // fetch spotter data from api, also filter the range we're interested in.
+  useEffect(() => {
+    if (hasSpotter) {
+      dispatch(
+        reefSpotterDataRequest({
+          id: reefId,
+          startDate: subtractFromDate(pickerDate, range),
+          endDate: pickerDate,
+        })
+      );
+    }
+  }, [dispatch, reefId, hasSpotter, range, pickerDate]);
+
+  // update the end date once spotter data changes. Happens when `range` is changed.
+  useEffect(() => {
+    if (dailyData && spotterData) {
+      const maxDataDate = new Date(findMaxDate(dailyData, spotterData));
+      if (maxDataDate.getTime() > new Date(pickerDate).getTime()) {
+        setEndDate(pickerDate);
+      } else {
+        setEndDate(maxDataDate.toISOString());
+      }
+    }
+  }, [dailyData, spotterData, pickerDate]);
+
+  const onRangeChange = useCallback(
+    (event: ChangeEvent<{ value: unknown }>) => {
+      setRange(event.target.value as Range);
+    },
+    []
+  );
+
+  const onDateChange = useCallback(
+    (date: MaterialUiPickersDate, value?: string | null) => {
+      if (value) {
+        setPickerDate(new Date(value).toISOString());
+      }
+    },
+    []
+  );
+
+  if (loading || (!reefDetails && !error)) {
     return (
       <>
         <ReefNavBar searchLocation={false} />
@@ -148,7 +205,16 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              startDate={subtractFromDate(endDate || pickerDate, range)}
+              endDate={endDate || pickerDate}
+              pickerDate={pickerDate}
+              range={range}
+              onRangeChange={onRangeChange}
+              onDateChange={onDateChange}
+              hasSpotter={hasSpotter}
+              chartPeriod={findChartPeriod(range)}
               hasDailyData={hasDailyData}
+              spotterData={spotterData}
               surveys={surveyList}
               point={poiId}
               diveDate={diveDate}

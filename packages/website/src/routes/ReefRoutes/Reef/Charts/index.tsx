@@ -10,11 +10,11 @@ import {
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 import type { ChartWithTooltipProps } from "../../../../common/Chart/ChartWithTooltip";
 
-const Charts = ({ classes, ...rest }: ChartsProps) => {
+const Charts = ({ classes, title, ...rest }: ChartsProps) => {
   return (
     <ChartWithTooltip {...rest} className={classes.root}>
       <Typography className={classes.graphTitle} variant="h6">
-        DAILY WATER TEMPERATURE (°C)
+        {title}
       </Typography>
     </ChartWithTooltip>
   );
@@ -24,6 +24,8 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       height: "16rem",
+      marginBottom: "6rem",
+      marginTop: "1rem",
     },
     graphTitle: {
       lineHeight: 1.5,
@@ -35,6 +37,12 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ChartsProps = ChartWithTooltipProps & WithStyles<typeof styles>;
+interface ChartsIncomingProps {
+  title: string;
+}
+
+type ChartsProps = ChartsIncomingProps &
+  ChartWithTooltipProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(Charts);

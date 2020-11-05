@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { NotFound } from "../../routes/NotFound";
+import ErrorBoundary from "./ErrorBoundary";
 import LandingPage from "../../routes/Landing";
 import HomeMap from "../../routes/HomeMap";
 import ReefRoutes from "../../routes/ReefRoutes";
@@ -42,23 +43,25 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <div id="app">
-          {render && (
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/map" component={HomeMap} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/register" component={RegisterSite} />
-              <Route exact path="/apply" component={Apply} />
-              <Route exact path="/buoy" component={Buoy} />
-              <Route exact path="/drones" component={Drones} />
-              <Route exact path="/faq" component={Faq} />
-              <Route exact path="/terms" component={Terms} />
-              <Route path="/reefs" component={ReefRoutes} />
-              <Route default component={NotFound} />
-            </Switch>
-          )}
-        </div>
+        <ErrorBoundary>
+          <div id="app">
+            {render && (
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/map" component={HomeMap} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/register" component={RegisterSite} />
+                <Route exact path="/apply" component={Apply} />
+                <Route exact path="/buoy" component={Buoy} />
+                <Route exact path="/drones" component={Drones} />
+                <Route exact path="/faq" component={Faq} />
+                <Route exact path="/terms" component={Terms} />
+                <Route path="/reefs" component={ReefRoutes} />
+                <Route default component={NotFound} />
+              </Switch>
+            )}
+          </div>
+        </ErrorBoundary>
       </Router>
     </ThemeProvider>
   );

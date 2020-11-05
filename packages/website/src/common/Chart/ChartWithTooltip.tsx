@@ -8,7 +8,12 @@ import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
-import { useProcessedChartData } from "./utils";
+import {
+  CHART_BOTTOM_TEMP_ENABLED,
+  getDailyDataClosestToDate,
+  getSpotterDataClosestToDate,
+  sameDay,
+} from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
@@ -18,21 +23,14 @@ export interface ChartWithTooltipProps extends ChartProps {
 
 function ChartWithTooltip({
   depth,
-  dailyData,
-  surveys,
-  temperatureThreshold,
   chartSettings,
   children,
   className,
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
+  const { dailyData, spotterData } = rest;
   const chartDataRef = useRef<Line>(null);
-  const {
-    chartLabels,
-    bottomTemperatureData,
-    surfaceTemperatureData,
-  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -40,6 +38,7 @@ function ChartWithTooltip({
     date: "",
     depth,
     bottomTemperature: 0,
+    spotterSurfaceTemp: null,
     surfaceTemperature: 0,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -51,19 +50,59 @@ function ChartWithTooltip({
     if (!chart?.chartInstance.canvas) {
       return;
     }
-    const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 100;
-    const top = position.top + tooltipModel.caretY - 110;
-    const date = tooltipModel.dataPoints?.[0]?.xLabel;
-    const index = date && chartLabels.findIndex((item) => item === date);
 
-    if (index && index > -1 && typeof date === "string") {
+    const date = tooltipModel.dataPoints?.[0]?.xLabel;
+    if (typeof date !== "string") return;
+
+    const dailyDataForDate =
+      // Try to find data on same day, else closest, else nothing.
+      dailyData.filter((data) => sameDay(data.date, date))[0] ||
+      getDailyDataClosestToDate(dailyData, new Date(date)) ||
+      {};
+    const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
+
+    const bottomTemp =
+      spotterData &&
+      getSpotterDataClosestToDate(
+        spotterData.bottomTemperature,
+        new Date(date),
+        6
+      )?.value;
+
+    const spotterSurfaceTemp =
+      (spotterData &&
+        getSpotterDataClosestToDate(
+          spotterData.surfaceTemperature,
+          new Date(date),
+          6
+        )?.value) ||
+      null;
+
+    const bottomTemperature =
+      bottomTemp || (CHART_BOTTOM_TEMP_ENABLED ? avgBottomTemperature : null);
+
+    const nValues = [
+      satelliteTemperature,
+      bottomTemperature,
+      spotterSurfaceTemp,
+    ].filter(Boolean).length;
+
+    const position = chart.chartInstance.canvas.getBoundingClientRect();
+    const left = position.left + tooltipModel.caretX - 80;
+    const top = position.top + tooltipModel.caretY - (nValues * 30 + 40);
+
+    if (
+      [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
+        Boolean
+      )
+    ) {
       setTooltipPosition({ top, left });
       setTooltipData({
         date,
         depth,
-        bottomTemperature: bottomTemperatureData[index],
-        surfaceTemperature: surfaceTemperatureData[index],
+        bottomTemperature,
+        spotterSurfaceTemp,
+        surfaceTemperature: satelliteTemperature,
       });
       setShowTooltip(true);
       setSliceAtLabel(date);
@@ -84,10 +123,7 @@ function ChartWithTooltip({
       {children}
       <Chart
         {...rest}
-        dailyData={dailyData}
-        surveys={surveys}
         chartRef={chartDataRef}
-        temperatureThreshold={temperatureThreshold}
         chartSettings={{
           plugins: {
             sliceDrawPlugin: {
@@ -96,13 +132,6 @@ function ChartWithTooltip({
             },
           },
           tooltips: {
-            filter: (tooltipItem: any, data: any) => {
-              const { datasets } = data;
-              const index = datasets.findIndex(
-                (item: any) => item.label === "SURFACE TEMP"
-              );
-              return tooltipItem.datasetIndex === index;
-            },
             enabled: false,
             intersect: false,
             custom: customTooltip(chartDataRef),

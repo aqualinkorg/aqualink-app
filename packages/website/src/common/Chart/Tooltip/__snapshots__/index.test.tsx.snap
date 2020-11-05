@@ -32,29 +32,22 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
           >
-            0
             <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-item MuiGrid-grid-xs-12"
+              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="div-root-7 div-root-8"
+                color="#6bc1e1"
+              />
+              <mock-typography
+                variant="caption"
               >
-                <mock-typography
-                  variant="caption"
-                >
-                  SURFACE TEMP
-                </mock-typography>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-              >
-                <mock-typography
-                  variant="h5"
-                >
-                  10.0 °C
-                </mock-typography>
-              </div>
+                SURFACE
+                 
+                10.0 °C
+              </mock-typography>
             </div>
+            0
           </div>
         </div>
       </mock-cardcontent>
