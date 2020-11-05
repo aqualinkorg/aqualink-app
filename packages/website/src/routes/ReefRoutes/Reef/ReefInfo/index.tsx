@@ -40,7 +40,7 @@ const ReefNavBar = ({
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
-  const reefName = getReefNameAndRegion(reef).name || "";
+  const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -57,7 +57,7 @@ const ReefNavBar = ({
     if (reef.depth && reef.polygon.type === "Point") {
       dispatch(
         setReefDraft({
-          name: reefName,
+          name: reefName || "",
           depth: reef.depth,
           coordinates: {
             longitude: reef.polygon.coordinates[0],
@@ -149,9 +149,12 @@ const ReefNavBar = ({
               </Grid>
             ) : (
               <Grid container alignItems="center" item xs={10} spacing={1}>
-                <Grid item xs={12} md={4} direction="column" container>
+                <Grid item xs={12} md={8} direction="column" container>
                   <Box>
-                    <Typography variant="h4">{reefName}</Typography>
+                    <Typography variant="h4">
+                      {reefName}
+                      {reefRegion && `, ${reefRegion}`}
+                    </Typography>
                   </Box>
                   {lastSurvey && (
                     <Box>
