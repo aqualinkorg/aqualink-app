@@ -55,7 +55,7 @@ function ChartWithTooltip({
     if (typeof date !== "string") return;
 
     const dailyDataForDate =
-      // try find data on same day, else closest, else nothing.
+      // Try to find data on same day, else closest, else nothing.
       dailyData.filter((data) => sameDay(data.date, date))[0] ||
       getDailyDataClosestToDate(dailyData, new Date(date)) ||
       {};
