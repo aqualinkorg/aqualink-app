@@ -32,6 +32,7 @@ export interface ChartProps {
 }
 
 const SMALL_WINDOW = 400;
+const X_TICK_THRESHOLD = 70;
 
 const makeAnnotation = (
   name: string,
@@ -84,6 +85,8 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
+  const [hideLastTick, setHideLastTick] = useState<boolean>(false);
+
   const {
     xAxisMax,
     xAxisMin,
@@ -113,6 +116,16 @@ function Chart({
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
+      const nTicks = ticksPositions.length;
+      const {
+        chartArea: { right },
+      } = current.chartInstance;
+      // If last tick is close enough to the chart's right edge then hide it
+      if (right - ticksPositions[nTicks - 1] < X_TICK_THRESHOLD) {
+        setHideLastTick(true);
+      } else {
+        setHideLastTick(false);
+      }
       setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
       if (xScale.width > SMALL_WINDOW) {
         setXPeriod("week");
@@ -197,7 +210,7 @@ function Chart({
               max: endDate || xAxisMax,
               padding: 10,
               callback: (value: number, index: number, values: string[]) =>
-                index === values.length - 1 ? undefined : value,
+                index === values.length - 1 && hideLastTick ? undefined : value,
             },
             gridLines: {
               display: false,

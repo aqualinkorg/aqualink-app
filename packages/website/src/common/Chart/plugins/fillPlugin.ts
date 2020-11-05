@@ -3,7 +3,7 @@ const { Chart } = require("react-chartjs-2");
 export const fillBetweenLinesPlugin = {
   id: "fillPlugin",
   // TODO we could type options here.
-  afterDatasetsDraw: (chart: any, _easingValue: any, options: any) => {
+  beforeDraw: (chart: any, _easingValue: any, options: any) => {
     if (
       chart &&
       chart.chart &&
