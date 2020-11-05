@@ -219,8 +219,7 @@ export function useProcessedChartData(
   startDate: ChartProps["startDate"],
   endDate: ChartProps["endDate"]
 ) {
-  // Sort daily data by date
-
+  // Sort daily data by date & in given date range, or latest data if no data found in range.
   const sortedFilteredDailyData = filterDailyData(
     sortByDate(dailyData, "date"),
     startDate,

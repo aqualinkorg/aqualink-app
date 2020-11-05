@@ -10,6 +10,7 @@ import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
   CHART_BOTTOM_TEMP_ENABLED,
+  getDailyDataClosestToDate,
   getSpotterDataClosestToDate,
   sameDay,
 } from "./utils";
@@ -51,12 +52,13 @@ function ChartWithTooltip({
     }
 
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
-    if (typeof date !== "string") {
-      return;
-    }
+    if (typeof date !== "string") return;
 
     const dailyDataForDate =
-      dailyData.filter((data) => sameDay(data.date, date))[0] || {};
+      // try find data on same day, else closest, else nothing.
+      dailyData.filter((data) => sameDay(data.date, date))[0] ||
+      getDailyDataClosestToDate(dailyData, new Date(date)) ||
+      {};
     const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
 
     const bottomTemp =
