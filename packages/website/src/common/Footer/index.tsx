@@ -17,7 +17,7 @@ const Footer = ({ classes }: FooterProps) => {
       <Toolbar>
         <Grid container justify="center">
           <Grid item xs={10} container direction="row">
-            <Link className={classes.navBarLink} href="/">
+            <Link className={classes.navBarLink} href="/map">
               <Typography color="textPrimary" variant="h4">
                 Aqua
               </Typography>
