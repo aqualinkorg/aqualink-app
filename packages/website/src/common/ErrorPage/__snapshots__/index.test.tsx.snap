@@ -712,7 +712,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
         >
           <mock-link
             classname="Footer-navBarLink-35"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"
