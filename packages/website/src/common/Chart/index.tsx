@@ -120,7 +120,7 @@ function Chart({
       const {
         chartArea: { right },
       } = current.chartInstance;
-      // If last tick is close enough to the chart's right edge then hide it
+      // If last tick is too close to the chart's right edge then hide it
       if (right - ticksPositions[nTicks - 1] < X_TICK_THRESHOLD) {
         setHideLastTick(true);
       } else {
