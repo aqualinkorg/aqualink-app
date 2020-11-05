@@ -113,12 +113,11 @@ function Chart({
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
+      setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
       if (xScale.width > SMALL_WINDOW) {
-        setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
         setXPeriod("week");
       } else {
         setXPeriod("month");
-        setXTickShift(0);
       }
     }
   };
