@@ -25,12 +25,17 @@ const Circle = styled("div")<{}, { color: string; size?: number }>(
   })
 );
 
-const TemperatureMetric = (
-  temperature: number,
-  title: string,
-  color: string,
-  gridClassName: string | undefined
-) => (
+const TemperatureMetric = ({
+  temperature,
+  title,
+  color,
+  gridClassName,
+}: {
+  temperature: number | null;
+  title: string;
+  color: string;
+  gridClassName: string | undefined;
+}) => (
   <Grid container justify="flex-start" item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
@@ -55,6 +60,19 @@ const Tooltip = ({
     hour: spotterSurfaceTemp ? "2-digit" : undefined,
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
   });
+  const tooltipLines: {
+    temperature: number | null;
+    color: string;
+    title: string;
+  }[] = [
+    { temperature: surfaceTemperature, color: "#6bc1e1", title: "SURFACE" },
+    { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
+    {
+      temperature: bottomTemperature,
+      color: "rgba(250, 141, 0)",
+      title: `BUOY ${depth}m`,
+    },
+  ];
 
   return (
     <div className={classes.tooltip}>
@@ -64,7 +82,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {spotterSurfaceTemp ? " UTC" : ""}
+              {spotterSurfaceTemp && " UTC"}
             </Typography>
           }
         />
@@ -83,27 +101,15 @@ const Tooltip = ({
               item
               xs={12}
             >
-              {surfaceTemperature &&
-                TemperatureMetric(
-                  surfaceTemperature,
-                  "SURFACE",
-                  "#6bc1e1",
-                  classes.tooltipContentItem
-                )}
-              {spotterSurfaceTemp &&
-                TemperatureMetric(
-                  spotterSurfaceTemp,
-                  "BUOY 1m",
-                  "#46a5cf",
-                  classes.tooltipContentItem
-                )}
-              {bottomTemperature &&
-                TemperatureMetric(
-                  bottomTemperature,
-                  `BUOY ${depth}m`,
-                  "rgba(250, 141, 0)",
-                  classes.tooltipContentItem
-                )}
+              {tooltipLines.map(
+                (item) =>
+                  item.temperature && (
+                    <TemperatureMetric
+                      {...item}
+                      gridClassName={classes.tooltipContentItem}
+                    />
+                  )
+              )}
             </Grid>
           </Grid>
         </CardContent>
