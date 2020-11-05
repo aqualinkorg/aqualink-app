@@ -946,7 +946,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
         >
           <mock-link
             classname="Footer-navBarLink-45"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"

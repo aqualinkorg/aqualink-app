@@ -15,7 +15,7 @@ exports[`renders as expected 1`] = `
         >
           <mock-link
             classname="Footer-navBarLink-2"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"

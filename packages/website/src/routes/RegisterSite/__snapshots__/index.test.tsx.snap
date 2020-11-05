@@ -277,7 +277,7 @@ exports[`Site registration page should render with given state from Redux store 
         >
           <mock-link
             classname="Footer-navBarLink-6"
-            href="/"
+            href="/map"
           >
             <mock-typography
               color="textPrimary"
