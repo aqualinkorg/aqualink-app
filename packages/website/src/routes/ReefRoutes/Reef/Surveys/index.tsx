@@ -142,9 +142,9 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       if (key) {
         // If key provided then change that specific poi edit status
         setEditPoiNameEnabled({ ...editPoiNameEnabled, [key]: enabled });
-        // Reset Poi name draft
+        // Reset Poi name draft on close
         const poiName = pointOptions.find((item) => item.id === key)?.name;
-        if (poiName) {
+        if (poiName && !enabled) {
           setEditPoiNameDraft({ ...editPoiNameDraft, [key]: poiName });
         }
       } else {
@@ -152,13 +152,15 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         setEditPoiNameEnabled(
           pointOptions.reduce((acc, poi) => ({ ...acc, [poi.id]: enabled }), {})
         );
-        // Reset Poi name draft for all Pois
-        setEditPoiNameDraft(
-          pointOptions.reduce(
-            (acc, poi) => ({ ...acc, [poi.id]: poi.name }),
-            {}
-          )
-        );
+        // Reset Poi name draft for all Pois on close
+        if (!enabled) {
+          setEditPoiNameDraft(
+            pointOptions.reduce(
+              (acc, poi) => ({ ...acc, [poi.id]: poi.name }),
+              {}
+            )
+          );
+        }
       }
     },
     [editPoiNameEnabled, pointOptions, editPoiNameDraft]
