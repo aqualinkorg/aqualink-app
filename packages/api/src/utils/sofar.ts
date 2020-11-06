@@ -116,7 +116,7 @@ export async function sofarSpotter(
     .catch((error) => {
       if (error.response) {
         console.error(
-          `Sofar API responded with a ${error.response.status} status for spooter ${spotterId}. ${error.response.data.message}`,
+          `Sofar API responded with a ${error.response.status} status for spotter ${spotterId}. ${error.response.data.message}`,
         );
       } else {
         console.error(`An error occured accessing the Sofar API - ${error}`);
