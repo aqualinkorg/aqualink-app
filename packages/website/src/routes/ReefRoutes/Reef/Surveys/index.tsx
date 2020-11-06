@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, ChangeEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -11,9 +11,9 @@ import {
   MenuItem,
   Box,
   IconButton,
-  Tooltip,
+  TextField,
 } from "@material-ui/core";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { Check, Close, Create, DeleteOutline } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 
@@ -27,6 +27,15 @@ import { Pois } from "../../../../store/Reefs/types";
 import { isAdmin } from "../../../../helpers/isAdmin";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 import { useBodyLength } from "../../../../helpers/useBodyLength";
+import surveyServices from "../../../../services/surveyServices";
+
+interface EditPoiNameEnabled {
+  [key: number]: boolean;
+}
+
+interface EditPoiNameDraft {
+  [key: number]: string;
+}
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("All");
@@ -34,6 +43,13 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
+  const [editPoiNameEnabled, setEditPoiNameEnabled] = useState<
+    EditPoiNameEnabled
+  >({});
+  const [editPoiNameDraft, setEditPoiNameDraft] = useState<EditPoiNameDraft>(
+    {}
+  );
+  const [editPoiNameLoading, setEditPoiNameLoading] = useState<boolean>(false);
   const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
   const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
@@ -50,8 +66,16 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     const source = Axios.CancelToken.source();
     reefServices
       .getReefPois(`${reefId}`, source.token)
-      .then((response) => {
-        setPointOptions(response.data);
+      .then(({ data }) => {
+        setPointOptions(data);
+        if (data.length > 0) {
+          setEditPoiNameEnabled(
+            data.reduce((acc, poi) => ({ ...acc, [poi.id]: false }), {})
+          );
+          setEditPoiNameDraft(
+            data.reduce((acc, poi) => ({ ...acc, [poi.id]: poi.name }), {})
+          );
+        }
         setMountPois(true);
       })
       .catch((error) => {
@@ -112,6 +136,68 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         });
     }
   };
+
+  const toggleEditPoiNameEnabled = useCallback(
+    (enabled: boolean, key?: number) => {
+      if (key) {
+        // If key provided then change that specific poi edit status
+        setEditPoiNameEnabled({ ...editPoiNameEnabled, [key]: enabled });
+        // Reset Poi name draft
+        const poiName = pointOptions.find((item) => item.id === key)?.name;
+        if (poiName) {
+          setEditPoiNameDraft({ ...editPoiNameDraft, [key]: poiName });
+        }
+      } else {
+        // If no key provided then change all
+        setEditPoiNameEnabled(
+          pointOptions.reduce((acc, poi) => ({ ...acc, [poi.id]: enabled }), {})
+        );
+        // Reset Poi name draft for all Pois
+        setEditPoiNameDraft(
+          pointOptions.reduce(
+            (acc, poi) => ({ ...acc, [poi.id]: poi.name }),
+            {}
+          )
+        );
+      }
+    },
+    [editPoiNameEnabled, pointOptions, editPoiNameDraft]
+  );
+
+  const onChangePoiName = useCallback(
+    (key: number) => (
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) =>
+      setEditPoiNameDraft({
+        ...editPoiNameDraft,
+        [key]: event.target.value,
+      }),
+    [editPoiNameDraft]
+  );
+
+  const submitPoiNameUpdate = useCallback(
+    (key: number) => {
+      const newName = editPoiNameDraft[key];
+      if (newName !== "" && user?.token) {
+        setEditPoiNameLoading(true);
+        surveyServices
+          .updatePoi(key, newName, user.token)
+          .then(() => reefServices.getReefPois(`${reefId}`))
+          .then(({ data }) => {
+            const prevName = pointOptions.find((item) => item.id === key)?.name;
+            setPointOptions(data);
+            // If the updated point was previously selected, update its value
+            if (prevName === point) {
+              setPoint(newName);
+            }
+            setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
+            setEditPoiNameEnabled({ ...editPoiNameEnabled, [key]: false });
+          })
+          .finally(() => setEditPoiNameLoading(false));
+      }
+    },
+    [editPoiNameDraft, editPoiNameEnabled, point, pointOptions, reefId, user]
+  );
 
   const deletePoiDialogActions: Action[] = [
     {
@@ -177,8 +263,13 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                     labelId="survey-point"
                     id="survey-point"
                     name="survey-point"
-                    value={point}
+                    value={
+                      pointOptions.map((item) => item.name).includes(point)
+                        ? point
+                        : "All"
+                    }
                     onChange={handlePointChange}
+                    onClose={() => toggleEditPoiNameEnabled(false)}
                     className={classes.selectedItem}
                     renderValue={(selected) => selected as string}
                   >
@@ -199,24 +290,107 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
                               container
                               alignItems="center"
                               justify="space-between"
+                              spacing={2}
                             >
-                              <Grid item>{item.name}</Grid>
-                              {isReefAdmin && (
-                                <Grid item>
-                                  <Tooltip title="Delete this survey point">
-                                    <IconButton
-                                      className={classes.pointDeleteButton}
-                                      onClick={(event) => {
-                                        setDeletePoiDialogOpen(true);
-                                        setPoiToDelete(item.id);
-                                        event.stopPropagation();
-                                      }}
+                              <Grid item>
+                                {editPoiNameEnabled[item.id] ? (
+                                  <TextField
+                                    className={classes.editPoiTextField}
+                                    variant="outlined"
+                                    inputProps={{
+                                      className: classes.editPoiTextField,
+                                    }}
+                                    fullWidth
+                                    value={editPoiNameDraft[item.id]}
+                                    onClick={(event) => event.stopPropagation()}
+                                    onChange={onChangePoiName(item.id)}
+                                    error={editPoiNameDraft[item.id] === ""}
+                                    helperText={
+                                      editPoiNameDraft[item.id] === ""
+                                        ? "Cannot be empty"
+                                        : ""
+                                    }
+                                  />
+                                ) : (
+                                  `${item.name}`
+                                )}
+                              </Grid>
+                              {isReefAdmin &&
+                                (editPoiNameEnabled[item.id] ? (
+                                  <Grid item>
+                                    <Grid
+                                      container
+                                      justify="space-between"
+                                      spacing={2}
                                     >
-                                      <DeleteOutlineIcon color="primary" />
-                                    </IconButton>
-                                  </Tooltip>
-                                </Grid>
-                              )}
+                                      <Grid item>
+                                        <IconButton
+                                          disabled={editPoiNameLoading}
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            submitPoiNameUpdate(item.id);
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <Check
+                                            className={classes.checkIcon}
+                                          />
+                                        </IconButton>
+                                      </Grid>
+                                      <Grid item>
+                                        <IconButton
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            toggleEditPoiNameEnabled(
+                                              false,
+                                              item.id
+                                            );
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <Close
+                                            className={classes.closeIcon}
+                                          />
+                                        </IconButton>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                ) : (
+                                  <Grid item>
+                                    <Grid
+                                      container
+                                      justify="space-between"
+                                      spacing={2}
+                                    >
+                                      <Grid item>
+                                        <IconButton
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            toggleEditPoiNameEnabled(
+                                              true,
+                                              item.id
+                                            );
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <Create color="primary" />
+                                        </IconButton>
+                                      </Grid>
+                                      <Grid item>
+                                        <IconButton
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            setDeletePoiDialogOpen(true);
+                                            setPoiToDelete(item.id);
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <DeleteOutline color="secondary" />
+                                        </IconButton>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                ))}
                             </Grid>
                           </MenuItem>
                         )
@@ -321,14 +495,31 @@ const styles = (theme: Theme) =>
     menuItem: {
       color: theme.palette.primary.main,
     },
+    menuButton: {
+      padding: 0,
+    },
+    checkIcon: {
+      color: theme.palette.success.main,
+    },
+    closeIcon: {
+      color: theme.palette.error.main,
+    },
     textField: {
       width: "100%",
       overflow: "hidden",
       textOverflow: "ellipsis",
       display: "block",
     },
-    pointDeleteButton: {
-      marginLeft: "1rem",
+    editPoiTextField: {
+      color: "black",
+      height: "2.5rem",
+      alignItems: "center",
+      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+        borderColor: "rgba(0, 0, 0, 0.23)",
+      },
+      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+        borderColor: theme.palette.primary.main,
+      },
     },
   });
 
