@@ -86,7 +86,7 @@ export interface Action {
 interface DialogIncomingProps {
   open: boolean;
   header?: string;
-  content?: any;
+  content?: JSX.Element | null;
   actions?: Action[];
   onClose?: (...args: any[]) => void;
 }
