@@ -168,34 +168,35 @@ const ReefDetails = ({
                 <DatePicker value={pickerDate} onChange={onDateChange} />
               </Grid>
             )}
-            {spotterDataLoading ? (
-              <Box
-                height="20rem"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-                p={4}
-              >
-                <CircularProgress size="6rem" thickness={1} />
-              </Box>
-            ) : (
-              spotterData && (
-                <Charts
-                  title="HOURLY WATER TEMPERATURE (°C)"
-                  dailyData={reef.dailyData}
-                  spotterData={spotterData}
-                  startDate={startDate}
-                  endDate={endDate}
-                  chartPeriod={chartPeriod}
-                  surveys={[]}
-                  depth={reef.depth}
-                  maxMonthlyMean={null}
-                  temperatureThreshold={null}
-                  background={false}
-                />
-              )
-            )}
+            {hasSpotter &&
+              (spotterDataLoading ? (
+                <Box
+                  height="20rem"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                  p={4}
+                >
+                  <CircularProgress size="6rem" thickness={1} />
+                </Box>
+              ) : (
+                spotterData && (
+                  <Charts
+                    title="HOURLY WATER TEMPERATURE (°C)"
+                    dailyData={reef.dailyData}
+                    spotterData={spotterData}
+                    startDate={startDate}
+                    endDate={endDate}
+                    chartPeriod={chartPeriod}
+                    surveys={[]}
+                    depth={reef.depth}
+                    maxMonthlyMean={null}
+                    temperatureThreshold={null}
+                    background={false}
+                  />
+                )
+              ))}
             <Surveys reefId={reef.id} />
           </Box>
         </>
