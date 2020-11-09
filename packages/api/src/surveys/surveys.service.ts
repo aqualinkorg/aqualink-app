@@ -139,7 +139,11 @@ export class SurveysService {
         { reefId },
       )
       .groupBy('surveyMedia.surveyId, surveyMedia.poiId')
-      .select(['surveyMedia.surveyId', 'surveyMedia.poiId'])
+      .select([
+        'surveyMedia.surveyId',
+        'surveyMedia.poiId',
+        'array_agg(surveyMedia.url) poi_images',
+      ])
       .getRawMany();
 
     const observationsGroupedBySurveyId = this.groupBySurveyId(
@@ -148,6 +152,12 @@ export class SurveysService {
     );
     const poiIdGroupedBySurveyId = this.groupBySurveyId(
       surveyPointsQuery,
+      'poi_id',
+    );
+
+    const surveyImageGroupedByPoiId = this.groupBySurveyId(
+      surveyPointsQuery,
+      'poi_images',
       'poi_id',
     );
 
@@ -168,6 +178,7 @@ export class SurveysService {
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],
+        surveyPointImage: surveyImageGroupedByPoiId[survey.id] || [],
       };
     });
   }
@@ -359,11 +370,13 @@ export class SurveysService {
     return trimmedComments === '' ? undefined : trimmedComments;
   }
 
-  private groupBySurveyId(object: any[], key: string) {
+  private groupBySurveyId(object: any[], key: string, extra?: string) {
     return object.reduce((rv, x) => {
       return {
         ...rv,
-        [x.survey_id]: [...(rv[x.survey_id] || []), x[key]],
+        [x.survey_id]: extra
+          ? { ...rv[x.survey_id], [x[extra]]: x[key] }
+          : [...(rv[x.survey_id] || []), x[key]],
       };
     }, {});
   }
