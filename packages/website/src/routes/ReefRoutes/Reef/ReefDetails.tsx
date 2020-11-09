@@ -7,6 +7,7 @@ import {
   Theme,
   Box,
   CircularProgress,
+  Typography,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
@@ -181,8 +182,7 @@ const ReefDetails = ({
                   <CircularProgress size="6rem" thickness={1} />
                 </Box>
               ) : (
-                spotterData &&
-                spotterData.bottomTemperature.length > 1 && (
+                (spotterData && spotterData.bottomTemperature.length > 1 && (
                   <Charts
                     title="HOURLY WATER TEMPERATURE (°C)"
                     dailyData={reef.dailyData}
@@ -196,6 +196,12 @@ const ReefDetails = ({
                     temperatureThreshold={null}
                     background={false}
                   />
+                )) || (
+                  <Box mt="2rem">
+                    <Typography>
+                      No Smart Buoy data available in this time range.
+                    </Typography>
+                  </Box>
                 )
               ))}
             <Surveys reefId={reef.id} />
