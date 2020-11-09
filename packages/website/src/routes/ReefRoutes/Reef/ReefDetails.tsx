@@ -182,7 +182,7 @@ const ReefDetails = ({
                 </Box>
               ) : (
                 spotterData &&
-                spotterData.length > 1 && (
+                spotterData.bottomTemperature.length > 1 && (
                   <Charts
                     title="HOURLY WATER TEMPERATURE (°C)"
                     dailyData={reef.dailyData}
