@@ -10,14 +10,12 @@ import {
   FormControl,
   MenuItem,
   Box,
-  IconButton,
-  TextField,
 } from "@material-ui/core";
-import { Check, Close, Create, DeleteOutline } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
 
 import Timeline from "./Timeline";
+import PointSelector from "./PointSelector";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import { setSelectedPoi } from "../../../../store/Survey/surveySlice";
@@ -29,14 +27,7 @@ import { isAdmin } from "../../../../helpers/isAdmin";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 import { useBodyLength } from "../../../../helpers/useBodyLength";
 import surveyServices from "../../../../services/surveyServices";
-
-interface EditPoiNameEnabled {
-  [key: number]: boolean;
-}
-
-interface EditPoiNameDraft {
-  [key: number]: string;
-}
+import { EditPoiNameDraft, EditPoiNameEnabled } from "./types";
 
 const Surveys = ({ reefId, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("All");
@@ -103,6 +94,11 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       window.removeEventListener("resize", onResize);
     };
   }, [onResize]);
+
+  const onDeletePoiButtonClick = useCallback((id: number) => {
+    setDeletePoiDialogOpen(true);
+    setPoiToDelete(id);
+  }, []);
 
   const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const poiName = event.target.value as string;
@@ -258,156 +254,20 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           >
             <Typography className={classes.title}>Survey History</Typography>
           </Grid>
-          <Grid container alignItems="center" item md={12} lg={4}>
-            <Grid item>
-              <Typography variant="h6" className={classes.subTitle}>
-                Survey Point:
-              </Typography>
-            </Grid>
-            {mountPois && (
-              <Grid item>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    labelId="survey-point"
-                    id="survey-point"
-                    name="survey-point"
-                    value={
-                      pointOptions.map((item) => item.name).includes(point)
-                        ? point
-                        : "All"
-                    }
-                    onChange={handlePointChange}
-                    onClose={() => toggleEditPoiNameEnabled(false)}
-                    className={classes.selectedItem}
-                    renderValue={(selected) => selected as string}
-                  >
-                    <MenuItem value="All">
-                      <Typography className={classes.menuItem} variant="h6">
-                        All
-                      </Typography>
-                    </MenuItem>
-                    {pointOptions.map(
-                      (item) =>
-                        item.name !== null && (
-                          <MenuItem
-                            className={classes.menuItem}
-                            value={item.name}
-                            key={item.id}
-                          >
-                            <Grid
-                              container
-                              alignItems="center"
-                              justify="space-between"
-                              spacing={2}
-                            >
-                              <Grid item>
-                                {editPoiNameEnabled[item.id] ? (
-                                  <TextField
-                                    className={classes.editPoiTextField}
-                                    variant="outlined"
-                                    inputProps={{
-                                      className: classes.editPoiTextField,
-                                    }}
-                                    fullWidth
-                                    value={editPoiNameDraft[item.id]}
-                                    onClick={(event) => event.stopPropagation()}
-                                    onChange={onChangePoiName(item.id)}
-                                    error={editPoiNameDraft[item.id] === ""}
-                                    helperText={
-                                      editPoiNameDraft[item.id] === ""
-                                        ? "Cannot be empty"
-                                        : ""
-                                    }
-                                  />
-                                ) : (
-                                  `${item.name}`
-                                )}
-                              </Grid>
-                              {isReefAdmin &&
-                                (editPoiNameEnabled[item.id] ? (
-                                  <Grid item>
-                                    <Grid
-                                      container
-                                      justify="space-between"
-                                      spacing={2}
-                                    >
-                                      <Grid item>
-                                        <IconButton
-                                          disabled={editPoiNameLoading}
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            submitPoiNameUpdate(item.id);
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <Check
-                                            className={classes.checkIcon}
-                                          />
-                                        </IconButton>
-                                      </Grid>
-                                      <Grid item>
-                                        <IconButton
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            toggleEditPoiNameEnabled(
-                                              false,
-                                              item.id
-                                            );
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <Close
-                                            className={classes.closeIcon}
-                                          />
-                                        </IconButton>
-                                      </Grid>
-                                    </Grid>
-                                  </Grid>
-                                ) : (
-                                  <Grid item>
-                                    <Grid
-                                      container
-                                      justify="space-between"
-                                      spacing={2}
-                                    >
-                                      <Grid item>
-                                        <IconButton
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            toggleEditPoiNameEnabled(
-                                              true,
-                                              item.id
-                                            );
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <Create color="primary" />
-                                        </IconButton>
-                                      </Grid>
-                                      <Grid item>
-                                        <IconButton
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            setDeletePoiDialogOpen(true);
-                                            setPoiToDelete(item.id);
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <DeleteOutline color="secondary" />
-                                        </IconButton>
-                                      </Grid>
-                                    </Grid>
-                                  </Grid>
-                                ))}
-                            </Grid>
-                          </MenuItem>
-                        )
-                    )}
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-          </Grid>
+          <PointSelector
+            mountPois={mountPois}
+            pointOptions={pointOptions}
+            point={point}
+            editPoiNameEnabled={editPoiNameEnabled}
+            editPoiNameDraft={editPoiNameDraft}
+            isReefAdmin={isReefAdmin}
+            editPoiNameLoading={editPoiNameLoading}
+            onChangePoiName={onChangePoiName}
+            handlePointChange={handlePointChange}
+            toggleEditPoiNameEnabled={toggleEditPoiNameEnabled}
+            submitPoiNameUpdate={submitPoiNameUpdate}
+            onDeleteButtonClick={onDeletePoiButtonClick}
+          />
           <Grid
             container
             alignItems="center"
@@ -476,20 +336,12 @@ const styles = (theme: Theme) =>
     },
     title: {
       fontSize: 22,
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.45,
-      letterSpacing: "normal",
       color: "#2a2a2a",
       marginBottom: "1rem",
     },
     subTitle: {
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1,
-      letterSpacing: "normal",
       color: "#474747",
       marginRight: "1rem",
     },
@@ -503,31 +355,11 @@ const styles = (theme: Theme) =>
     menuItem: {
       color: theme.palette.primary.main,
     },
-    menuButton: {
-      padding: 0,
-    },
-    checkIcon: {
-      color: theme.palette.success.main,
-    },
-    closeIcon: {
-      color: theme.palette.error.main,
-    },
     textField: {
       width: "100%",
       overflow: "hidden",
       textOverflow: "ellipsis",
       display: "block",
-    },
-    editPoiTextField: {
-      color: "black",
-      height: "2.5rem",
-      alignItems: "center",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: theme.palette.primary.main,
-      },
     },
   });
 
