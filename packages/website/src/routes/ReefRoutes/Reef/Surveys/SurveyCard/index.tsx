@@ -17,17 +17,30 @@ import DeleteButton from "../DeleteButton";
 import { SurveyListItem } from "../../../../../store/Survey/types";
 import incomingStyles from "../styles";
 
-const SurveyCard = ({ isAdmin, reefId, survey, classes }: SurveyCardProps) => {
+const SurveyCard = ({
+  point,
+  isAdmin,
+  reefId,
+  survey,
+  classes,
+}: SurveyCardProps) => {
   return (
     <Paper elevation={0} className={classes.surveyCard}>
       <Grid style={{ height: "100%" }} container justify="space-between">
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
-          {survey.featuredSurveyMedia && (
-            <CardMedia
-              className={classes.cardImage}
-              image={survey.featuredSurveyMedia.url}
-            />
-          )}
+          {point === -1
+            ? survey.featuredSurveyMedia && (
+                <CardMedia
+                  className={classes.cardImage}
+                  image={survey.featuredSurveyMedia.url}
+                />
+              )
+            : survey.surveyPointImage && (
+                <CardMedia
+                  className={classes.cardImage}
+                  image={survey.surveyPointImage[point][0]}
+                />
+              )}
         </Grid>
         <Grid className={classes.infoWrapper} container item xs={12} md={7}>
           <Grid className={classes.info} container item xs={12}>
@@ -141,6 +154,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyCardIncomingProps {
+  point: number;
   isAdmin: boolean;
   reefId: number;
   survey: SurveyListItem;

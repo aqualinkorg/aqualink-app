@@ -64,6 +64,9 @@ export interface SurveyListItem {
   userId?: publicUser;
   surveyPoints?: number[];
   featuredSurveyMedia?: SurveyMedia;
+  surveyPointImage?: {
+    [poiId: number]: string[];
+  };
 }
 
 export interface SurveyData {

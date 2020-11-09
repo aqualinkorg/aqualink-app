@@ -93,6 +93,7 @@ const SurveyTimeline = ({
                 </TimelineSeparator>
                 <TimelineContent>
                   <SurveyCard
+                    point={point}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
@@ -149,6 +150,7 @@ const SurveyTimeline = ({
                   xs={12}
                 >
                   <SurveyCard
+                    point={point}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
