@@ -96,6 +96,7 @@ export interface SurveyListState {
 }
 
 export interface SelectedSurveyState {
+  selectedPoi?: string;
   details?: SurveyState;
   loading: boolean;
   error?: string | null;

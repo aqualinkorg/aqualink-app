@@ -86,7 +86,15 @@ const surveyFormDraft = createSlice({
 const selectedSurvey = createSlice({
   name: "selectedSurvey",
   initialState: selectedSurveyInitialState,
-  reducers: {},
+  reducers: {
+    setSelectedPoi: (
+      state,
+      action: PayloadAction<SelectedSurveyState["selectedPoi"]>
+    ) => ({
+      ...state,
+      selectedPoi: action.payload,
+    }),
+  },
   extraReducers: (builder) => {
     builder.addCase(
       surveyGetRequest.fulfilled,
@@ -159,6 +167,11 @@ export const surveyDetailsSelector = (
   state: RootState
 ): SelectedSurveyState["details"] => state.survey.selectedSurvey.details;
 
+export const selectedPoiSelector = (
+  state: RootState
+): SelectedSurveyState["selectedPoi"] =>
+  state.survey.selectedSurvey.selectedPoi;
+
 export const surveyLoadingSelector = (
   state: RootState
 ): SelectedSurveyState["loading"] => state.survey.selectedSurvey.loading;
@@ -168,5 +181,6 @@ export const surveyErrorSelector = (
 ): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
 
 export const { setDiveLocation } = surveyFormDraft.actions;
+export const { setSelectedPoi } = selectedSurvey.actions;
 
 export default survey;

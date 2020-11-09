@@ -20,6 +20,7 @@ import Axios from "axios";
 import Timeline from "./Timeline";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
+import { setSelectedPoi } from "../../../../store/Survey/surveySlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
@@ -88,6 +89,10 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     };
   }, [setPointOptions, reefId]);
 
+  useEffect(() => {
+    dispatch(setSelectedPoi(point));
+  }, [dispatch, point]);
+
   const onResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
   }, []);
@@ -100,7 +105,8 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   }, [onResize]);
 
   const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setPoint(event.target.value as string);
+    const poiName = event.target.value as string;
+    setPoint(poiName);
   };
 
   const handleObservationChange = (
