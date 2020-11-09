@@ -19,11 +19,26 @@ const plugin = {
       chart.scales["x-axis-0"].options.ticks.fontSize =
         (chartWidth * options.xTicksFontWeight) / 100;
     }
+    const nTicks = ticksPositions.length;
     // eslint-disable-next-line fp/no-mutation
-    for (let i = 0; i < ticksPositions.length; i += 2 * day) {
-      const start = ticksPositions[i];
-      const end = ticksPositions[i + day];
-      ctx.fillRect(start, chartArea.top, end - start, chartHeight);
+    for (let i = 0; i < nTicks; i += day) {
+      // Color every other day
+      if (i % 2 === 0) {
+        const start = ticksPositions[i];
+        if (i + day < nTicks) {
+          // If next day does not exceed the chart area, then color a one day range
+          const end = ticksPositions[i + day];
+          ctx.fillRect(start, chartArea.top, end - start, chartHeight);
+        } else {
+          // If next day exceeds the chart area, color to chart's right edge
+          ctx.fillRect(
+            start,
+            chartArea.top,
+            chartArea.right - start,
+            chartHeight
+          );
+        }
+      }
     }
     ctx.restore();
   },
