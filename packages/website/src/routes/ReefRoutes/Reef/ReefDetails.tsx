@@ -181,7 +181,8 @@ const ReefDetails = ({
                   <CircularProgress size="6rem" thickness={1} />
                 </Box>
               ) : (
-                spotterData && (
+                spotterData &&
+                spotterData.length > 1 && (
                   <Charts
                     title="HOURLY WATER TEMPERATURE (°C)"
                     dailyData={reef.dailyData}
