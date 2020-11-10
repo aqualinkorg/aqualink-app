@@ -144,7 +144,7 @@ const Reef = ({ match, classes }: ReefProps) => {
       );
     } else {
       // Clear possible spotter data from previously selected reef
-      dispatch(clearReefSpotterData(null));
+      dispatch(clearReefSpotterData());
     }
   }, [dispatch, reefId, hasSpotter, range, pickerDate]);
 

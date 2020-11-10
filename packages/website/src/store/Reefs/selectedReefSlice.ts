@@ -99,12 +99,9 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
-    clearReefSpotterData: (
-      state,
-      action: PayloadAction<SelectedReefState["spotterData"]>
-    ) => ({
+    clearReefSpotterData: (state) => ({
       ...state,
-      spotterData: action.payload,
+      spotterData: null,
     }),
   },
   extraReducers: (builder) => {
