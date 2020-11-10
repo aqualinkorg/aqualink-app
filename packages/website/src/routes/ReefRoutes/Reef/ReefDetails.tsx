@@ -7,6 +7,7 @@ import {
   Theme,
   Box,
   CircularProgress,
+  Typography,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
@@ -168,34 +169,41 @@ const ReefDetails = ({
                 <DatePicker value={pickerDate} onChange={onDateChange} />
               </Grid>
             )}
-            {spotterDataLoading ? (
-              <Box
-                height="20rem"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                textAlign="center"
-                p={4}
-              >
-                <CircularProgress size="6rem" thickness={1} />
-              </Box>
-            ) : (
-              spotterData && (
-                <Charts
-                  title="HOURLY WATER TEMPERATURE (°C)"
-                  dailyData={reef.dailyData}
-                  spotterData={spotterData}
-                  startDate={startDate}
-                  endDate={endDate}
-                  chartPeriod={chartPeriod}
-                  surveys={[]}
-                  depth={reef.depth}
-                  maxMonthlyMean={null}
-                  temperatureThreshold={null}
-                  background={false}
-                />
-              )
-            )}
+            {hasSpotter &&
+              (spotterDataLoading ? (
+                <Box
+                  height="20rem"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                  p={4}
+                >
+                  <CircularProgress size="6rem" thickness={1} />
+                </Box>
+              ) : (
+                (spotterData && spotterData.bottomTemperature.length > 1 && (
+                  <Charts
+                    title="HOURLY WATER TEMPERATURE (°C)"
+                    dailyData={reef.dailyData}
+                    spotterData={spotterData}
+                    startDate={startDate}
+                    endDate={endDate}
+                    chartPeriod={chartPeriod}
+                    surveys={[]}
+                    depth={reef.depth}
+                    maxMonthlyMean={null}
+                    temperatureThreshold={null}
+                    background={false}
+                  />
+                )) || (
+                  <Box mt="2rem">
+                    <Typography>
+                      No Smart Buoy data available in this time range.
+                    </Typography>
+                  </Box>
+                )
+              ))}
             <Surveys reefId={reef.id} />
           </Box>
         </>

@@ -145,7 +145,7 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
-  spotterData?: SpotterData;
+  spotterData?: SpotterData | null;
   spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;
