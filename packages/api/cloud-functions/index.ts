@@ -82,9 +82,8 @@ exports.scheduledDailyUpdate = functions
     }
   });
 
-exports.pingService = functions
-  .runWith({ timeoutSeconds: 60 })
-  .pubsub.schedule('*/5 * * * *')
+exports.pingService = functions.pubsub
+  .schedule('*/5 * * * *')
   .onRun(async () => {
     const backendBaseUrl = functions.config().backend_base_url;
     // eslint-disable-next-line no-console
