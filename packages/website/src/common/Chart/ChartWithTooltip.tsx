@@ -9,7 +9,6 @@ import type { ChartTooltipModel } from "chart.js";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
-  CHART_BOTTOM_TEMP_ENABLED,
   getDailyDataClosestToDate,
   getSpotterDataClosestToDate,
   findSurveyFromDate,
@@ -83,8 +82,7 @@ function ChartWithTooltip({
         )?.value) ||
       null;
 
-    const bottomTemperature =
-      bottomTemp || (CHART_BOTTOM_TEMP_ENABLED ? avgBottomTemperature : null);
+    const bottomTemperature = bottomTemp || avgBottomTemperature;
 
     const nValues = [
       satelliteTemperature,

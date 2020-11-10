@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { GoogleCloudModule } from './google-cloud/google-cloud.module';
 import { TasksModule } from './tasks/tasks.module';
+import { HealthCheckModule } from './health-check/health-check.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TasksModule } from './tasks/tasks.module';
     GoogleCloudModule,
     ScheduleModule.forRoot(),
     TasksModule,
+    HealthCheckModule,
   ],
 })
 export class AppModule {}

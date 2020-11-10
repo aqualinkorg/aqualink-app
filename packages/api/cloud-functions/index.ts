@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import * as functions from 'firebase-functions';
 import { createConnection } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
@@ -79,4 +80,13 @@ exports.scheduledDailyUpdate = functions
     } finally {
       conn.close();
     }
+  });
+
+exports.pingService = functions.pubsub
+  .schedule('*/5 * * * *')
+  .onRun(async () => {
+    const backendBaseUrl = functions.config().api.base_url;
+    // eslint-disable-next-line no-console
+    console.log('Pinging server');
+    await Axios.get(`${backendBaseUrl}/health-check`);
   });
