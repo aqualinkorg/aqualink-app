@@ -183,6 +183,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Charts
+                    reefId={reef.id}
                     dailyData={reef.dailyData}
                     surveys={surveyList}
                     depth={reef.depth}
@@ -234,6 +235,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       </Grid>
                       <Grid container justify="center" item xs={12}>
                         <Charts
+                          reefId={reef.id}
                           dailyData={reef.dailyData}
                           spotterData={spotterData}
                           startDate={subtractFromDate(endDate, range)}

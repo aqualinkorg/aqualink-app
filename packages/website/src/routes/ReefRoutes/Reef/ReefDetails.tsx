@@ -146,6 +146,7 @@ const ReefDetails = ({
 
           <Box mt="2rem">
             <Charts
+              reefId={reef.id}
               title="DAILY WATER TEMPERATURE (°C)"
               dailyData={reef.dailyData}
               surveys={surveys}
@@ -182,6 +183,7 @@ const ReefDetails = ({
             ) : (
               spotterData && (
                 <Charts
+                  reefId={reef.id}
                   title="HOURLY WATER TEMPERATURE (°C)"
                   dailyData={reef.dailyData}
                   spotterData={spotterData}

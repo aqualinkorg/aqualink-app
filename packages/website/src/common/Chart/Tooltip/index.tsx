@@ -8,7 +8,9 @@ import {
   CardContent,
   Grid,
   Typography,
+  Button,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import styled from "@material-ui/core/styles/styled";
 import { formatNumber } from "../../../helpers/numberUtils";
@@ -45,11 +47,13 @@ const TemperatureMetric = ({
 );
 
 const Tooltip = ({
+  reefId,
   date,
   depth,
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
+  surveyId,
   classes,
 }: TooltipProps) => {
   // Remove seconds from date
@@ -112,6 +116,18 @@ const Tooltip = ({
                   )
               )}
             </Grid>
+            {surveyId && (
+              <Grid item>
+                <Link
+                  className={classes.surveyLink}
+                  to={`/reefs/${reefId}/survey_details/${surveyId}`}
+                >
+                  <Button variant="contained" color="primary" size="small">
+                    VIEW SURVEY
+                  </Button>
+                </Link>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
       </Card>
@@ -138,6 +154,7 @@ const styles = () =>
       flexFlow: "column",
       backgroundColor: "#095877",
       borderRadius: 8,
+      paddingBottom: "0.5rem",
     },
     tooltipHeader: {
       flex: "0 1 auto",
@@ -163,14 +180,22 @@ const styles = () =>
       borderStyle: "solid",
       borderColor: "#095877 transparent transparent transparent",
     },
+    surveyLink: {
+      textDecoration: "none",
+      "&:hover": {
+        textDecoration: "none",
+      },
+    },
   });
 
 export interface TooltipData {
+  reefId: number;
   date: string;
   depth: number | null;
   spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
+  surveyId?: number | null;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;

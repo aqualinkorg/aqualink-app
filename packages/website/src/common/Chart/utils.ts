@@ -37,6 +37,33 @@ export const filterDailyData = (
   return ret;
 };
 
+export const findSurveyFromDate = (
+  inputDate: string,
+  surveys: SurveyListItem[]
+): number | null | undefined => {
+  const inputDateTime = new Date(inputDate);
+  const formatInputDate = `${inputDateTime.getFullYear()}-${
+    inputDateTime.getMonth() + 1
+  }-${inputDateTime.getDate()}`;
+  const surveyDates = surveys.map((survey) => {
+    if (survey.diveDate) {
+      const date = new Date(survey.diveDate);
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    }
+    return null;
+  });
+
+  const survey = surveys.find(
+    (_survey, index) => surveyDates[index] === formatInputDate
+  );
+
+  if (survey) {
+    return survey.id;
+  }
+
+  return null;
+};
+
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
   const dates = surveys.map((survey) => {
     if (survey.diveDate) {

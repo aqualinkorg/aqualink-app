@@ -17,6 +17,7 @@ import { SurveyListItem } from "../../store/Survey/types";
 import { Range } from "../../store/Reefs/types";
 
 export interface ChartProps {
+  reefId: number;
   dailyData: DailyData[];
   spotterData?: SpotterData;
   startDate?: string;
