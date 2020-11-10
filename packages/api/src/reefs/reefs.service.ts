@@ -12,7 +12,7 @@ import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
-import { SofarLiveData } from '../utils/sofar.types';
+import { SofarLiveData, SofarValue } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
@@ -246,6 +246,20 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ${id} has no spotter.`);
     }
 
+    const exclusionDates = await this.exclusionDatesRepository
+      .createQueryBuilder('exclusion')
+      .where('exclusion.spotter_id = :spotterId', {
+        spotterId: reef.spotterId,
+      })
+      .andWhere('DATE(exclusion.startDate) <= DATE(:endDate)', {
+        endDate,
+      })
+      .andWhere('DATE(exclusion.endDate) >= DATE(:startDate)', {
+        startDate,
+      })
+      .orderBy('exclusion.startDate', 'ASC')
+      .getMany();
+
     const { surfaceTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
       endDate,
@@ -253,8 +267,14 @@ export class ReefsService {
     );
 
     return {
-      surfaceTemperature,
-      bottomTemperature,
+      surfaceTemperature: this.filterSpotterDate(
+        surfaceTemperature,
+        exclusionDates,
+      ),
+      bottomTemperature: this.filterSpotterDate(
+        bottomTemperature,
+        exclusionDates,
+      ),
     };
   }
 
@@ -272,5 +292,21 @@ export class ReefsService {
       .relation('admins')
       .of(reef)
       .addAndRemove(admins, reef.admins);
+  }
+
+  private filterSpotterDate(
+    spotterDate: SofarValue[],
+    exclusionDates: ExclusionDates[],
+  ) {
+    return spotterDate.filter(({ timestamp }) => {
+      const excluded = isNil(
+        exclusionDates.find(({ startDate: start, endDate: end }) => {
+          const dataDate = new Date(timestamp);
+          dataDate.setUTCHours(0, 0, 0, 0);
+          return start <= dataDate && dataDate <= end;
+        }),
+      );
+      return excluded;
+    });
   }
 }
