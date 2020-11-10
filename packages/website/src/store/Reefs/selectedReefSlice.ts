@@ -99,7 +99,7 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
-    setReefSpotterData: (
+    clearReefSpotterData: (
       state,
       action: PayloadAction<SelectedReefState["spotterData"]>
     ) => ({
@@ -199,7 +199,7 @@ export const {
   setReefDraft,
   setSelectedReef,
   setReefData,
-  setReefSpotterData,
+  clearReefSpotterData,
 } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;
