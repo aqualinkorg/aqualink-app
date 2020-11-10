@@ -85,7 +85,7 @@ exports.scheduledDailyUpdate = functions
 exports.pingService = functions.pubsub
   .schedule('*/5 * * * *')
   .onRun(async () => {
-    const backendBaseUrl = functions.config().backend_base_url;
+    const backendBaseUrl = functions.config().api.base_url;
     // eslint-disable-next-line no-console
     console.log('Pinging server');
     await Axios.get(`${backendBaseUrl}/health-check`);
