@@ -25,6 +25,7 @@ import {
   reefRequest,
   reefSpotterDataRequest,
   reefSpotterDataSelector,
+  clearReefSpotterData,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -141,6 +142,9 @@ const Reef = ({ match, classes }: ReefProps) => {
           endDate: pickerDate,
         })
       );
+    } else {
+      // Clear possible spotter data from previously selected reef
+      dispatch(clearReefSpotterData());
     }
   }, [dispatch, reefId, hasSpotter, range, pickerDate]);
 
