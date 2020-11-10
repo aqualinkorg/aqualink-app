@@ -12,7 +12,10 @@ import { SofarLiveData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 
-export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
+export const getLiveData = async (
+  reef: Reef,
+  includeSpotterData: boolean,
+): Promise<SofarLiveData> => {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
@@ -29,7 +32,7 @@ export const getLiveData = async (reef: Reef): Promise<SofarLiveData> => {
     windSpeed,
     windDirection,
   ] = await Promise.all([
-    spotterId
+    includeSpotterData
       ? getSpotterData(spotterId)
       : {
           surfaceTemperature: [],
