@@ -78,7 +78,7 @@ Before running daily updates for the first time, you will need to augment your r
 In addition, you will need to set the environment variables in Firebase:
 
 ```
-export $(grep -v '^#' .env.staging | xargs) && firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN
+export $(grep -v '^#' .env.prod | xargs) && firebase functions:config:set database.url=$DATABASE_URL sofar_api.token=$SOFAR_API_TOKEN api.base_url=$BACKEND_BASE_URL
 ```
 
 #### Deploy
