@@ -115,7 +115,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const { liveData, dailyData } = reefDetails || {};
 
-  const hasSpotter = Boolean(liveData?.surfaceTemperature);
+  const hasSpotter = Boolean(reefDetails?.spotterId);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
