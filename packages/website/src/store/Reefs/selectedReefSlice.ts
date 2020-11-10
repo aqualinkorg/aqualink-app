@@ -99,6 +99,10 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
+    clearReefSpotterData: (state) => ({
+      ...state,
+      spotterData: null,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -192,6 +196,7 @@ export const {
   setReefDraft,
   setSelectedReef,
   setReefData,
+  clearReefSpotterData,
 } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;
