@@ -107,8 +107,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   }, []);
 
   const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const poiName = event.target.value as string;
-    setPoint(poiName);
+    setPoint(event.target.value as string);
   };
 
   const handleObservationChange = (
