@@ -3,6 +3,7 @@ import { isNil, isNumber, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
+import moment from 'moment';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { getMin, getMax, getAverage } from '../utils/math';
@@ -55,16 +56,12 @@ export async function getDegreeHeatingDays(
 
 export async function getDailyData(
   reef: Reef,
-  date: Date,
+  endOfDate: Date,
   includeSpotterData: boolean,
 ): Promise<SofarDailyData> {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
-
-  // Get the end of the day for the date.
-  const endOfDate = new Date(date);
-  endOfDate.setUTCHours(23, 59, 59, 59);
 
   const [
     spotterRawData,
@@ -212,7 +209,7 @@ export async function getDailyData(
 
   return {
     reef: { id: reef.id },
-    date,
+    date: endOfDate,
     dailyAlertLevel,
     minBottomTemperature,
     maxBottomTemperature,
@@ -260,7 +257,7 @@ export function getMaxAlert(
 /* eslint-disable no-console */
 export async function getReefsDailyData(
   connection: Connection,
-  date: Date,
+  endOfDate: Date,
   reefIds?: number[],
 ) {
   const reefRepository = connection.getRepository(Reef);
@@ -276,7 +273,9 @@ export async function getReefsDailyData(
       : {},
   );
   const start = new Date();
-  console.log(`Updating ${allReefs.length} reefs for ${date.toDateString()}.`);
+  console.log(
+    `Updating ${allReefs.length} reefs for ${endOfDate.toDateString()}.`,
+  );
   await Bluebird.map(
     allReefs,
     async (reef) => {
@@ -288,19 +287,23 @@ export async function getReefsDailyData(
             .where('exclusion.spotter_id = :spotterId', {
               spotterId: reef.spotterId,
             })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', { date })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', { date })
+            .andWhere('DATE(exclusion.startDate) <= DATE(:endOfDate)', {
+              endOfDate,
+            })
+            .andWhere('DATE(exclusion.endDate) >= DATE(:endOfDate)', {
+              endOfDate,
+            })
             .getOne(),
         );
 
       const dailyDataInput = await getDailyData(
         reef,
-        date,
+        endOfDate,
         Boolean(includeSpotterData),
       );
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
-        date,
+        endOfDate,
         reef,
       );
 
@@ -317,7 +320,6 @@ export async function getReefsDailyData(
         // Update instead of insert
         if (err.constraint === 'no_duplicated_date') {
           const filteredData = omitBy(entity, isNil);
-
           await dailyDataRepository
             .createQueryBuilder('dailyData')
             .update()
@@ -328,7 +330,9 @@ export async function getReefsDailyData(
           return;
         }
         console.error(
-          `Error updating data for Reef ${reef.id} & ${date}: ${err}.`,
+          `Error updating data for Reef ${
+            reef.id
+          } & ${endOfDate.toDateString()}: ${err}.`,
         );
       }
     },
@@ -342,14 +346,14 @@ export async function getReefsDailyData(
 }
 
 export async function runDailyUpdate(conn: Connection) {
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  const today = moment().utc();
+  today.hours(23).minutes(59).seconds(59).milliseconds(0);
 
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  console.log(`Daily Update for data on ${yesterday.toDateString()}`);
+  const yesterday = moment(today);
+  yesterday.day(today.day() - 1);
+  console.log(`Daily Update for data ending on ${yesterday.date()}`);
   try {
-    await getReefsDailyData(conn, yesterday);
+    await getReefsDailyData(conn, yesterday.toDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);

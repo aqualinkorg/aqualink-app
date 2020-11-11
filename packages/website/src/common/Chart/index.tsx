@@ -7,32 +7,67 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import { mergeWith } from "lodash";
-import type { DailyData } from "../../store/Reefs/types";
+import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
-import { createChartData } from "../../helpers/createChartData";
-import { useProcessedChartData } from "./utils";
+import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
+import { Range } from "../../store/Reefs/types";
 
 export interface ChartProps {
   dailyData: DailyData[];
+  spotterData?: SpotterData;
+  startDate?: string;
+  endDate?: string;
+  chartPeriod?: "hour" | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
+  background: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
 
 const SMALL_WINDOW = 400;
+const X_TICK_THRESHOLD = 70;
+
+const makeAnnotation = (
+  name: string,
+  value: number | null,
+  borderColor: string,
+  backgroundColor = "rgb(169,169,169, 0.7)"
+) => ({
+  type: "line",
+  mode: "horizontal",
+  scaleID: "y-axis-0",
+  value,
+  borderColor,
+  borderWidth: 2,
+  borderDash: [5, 5],
+  label: {
+    enabled: true,
+    backgroundColor,
+    yPadding: 3,
+    xPadding: 3,
+    position: "left",
+    xAdjust: 10,
+    content: name,
+  },
+});
 
 function Chart({
   dailyData,
+  spotterData,
   surveys,
+  startDate,
+  endDate,
+  chartPeriod,
   temperatureThreshold,
   maxMonthlyMean,
+  background,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -50,7 +85,7 @@ function Chart({
 
   const [xPeriod, setXPeriod] = useState<"week" | "month">("week");
 
-  const stepSize = 5;
+  const [hideLastTick, setHideLastTick] = useState<boolean>(false);
 
   const {
     xAxisMax,
@@ -59,29 +94,48 @@ function Chart({
     yAxisMin,
     surfaceTemperatureData,
     tempWithSurvey,
-    chartLabels,
-  } = useProcessedChartData(dailyData, surveys, temperatureThreshold);
+    bottomTemperatureData,
+    spotterBottom,
+    spotterSurface,
+  } = useProcessedChartData(
+    dailyData,
+    spotterData,
+    surveys,
+    temperatureThreshold,
+    startDate,
+    endDate
+  );
+
+  const yStepSize = yAxisMax - yAxisMin > 6 ? 5 : 2;
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
     if (current) {
-      const xScale = current.chartInstance.scales["x-axis-0"];
+      // not sure why 'scales' doesn't have a type. Possibly from a plugin?
+      const xScale = (current.chartInstance as any).scales["x-axis-0"];
       const ticksPositions = xScale.ticks.map((_: any, index: number) =>
         xScale.getPixelForTick(index)
       );
+      const nTicks = ticksPositions.length;
+      const {
+        chartArea: { right },
+      } = current.chartInstance;
+      // If last tick is too close to the chart's right edge then hide it
+      if (right - ticksPositions[nTicks - 1] < X_TICK_THRESHOLD) {
+        setHideLastTick(true);
+      } else {
+        setHideLastTick(false);
+      }
+      setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
       if (xScale.width > SMALL_WINDOW) {
-        setXTickShift((ticksPositions[2] - ticksPositions[1]) / 2);
         setXPeriod("week");
       } else {
         setXPeriod("month");
-        setXTickShift(0);
       }
     }
   };
 
-  /*
-      Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
-    */
+  // Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
   const onResize = useCallback(() => {
     setUpdateChart(true);
     setTimeout(() => {
@@ -110,7 +164,7 @@ function Chart({
       maintainAspectRatio: false,
       plugins: {
         chartJsPluginBarchartBackground: {
-          color: "rgb(158, 166, 170, 0.07)",
+          color: background ? "rgb(158, 166, 170, 0.07)" : "#ffffff",
         },
         fillPlugin: {
           datasetIndex: 1,
@@ -130,42 +184,12 @@ function Chart({
 
       annotation: {
         annotations: [
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: maxMonthlyMean,
-            borderColor: "rgb(75, 192, 192)",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Historical Max",
-            },
-          },
-          {
-            type: "line",
-            mode: "horizontal",
-            scaleID: "y-axis-0",
-            value: temperatureThreshold,
-            borderColor: "#ff8d00",
-            borderWidth: 2,
-            borderDash: [5, 5],
-            label: {
-              enabled: true,
-              backgroundColor: "rgb(169,169,169, 0.7)",
-              yPadding: 3,
-              xPadding: 3,
-              position: "left",
-              xAdjust: 10,
-              content: "Bleaching Threshold",
-            },
-          },
+          makeAnnotation("Historical Max", maxMonthlyMean, "rgb(75, 192, 192)"),
+          makeAnnotation(
+            "Bleaching Threshold",
+            temperatureThreshold,
+            "#ff8d00"
+          ),
         ],
       },
       scales: {
@@ -177,14 +201,16 @@ function Chart({
                 week: "MMM D",
                 month: "MMM",
               },
-              unit: xPeriod,
+              unit: chartPeriod || xPeriod,
             },
             display: true,
             ticks: {
               labelOffset: xTickShift,
               min: xAxisMin,
-              max: xAxisMax,
+              max: endDate || xAxisMax,
               padding: 10,
+              callback: (value: number, index: number, values: string[]) =>
+                index === values.length - 1 && hideLastTick ? undefined : value,
             },
             gridLines: {
               display: false,
@@ -200,11 +226,11 @@ function Chart({
             display: true,
             ticks: {
               min: yAxisMin,
-              stepSize,
+              stepSize: yStepSize,
               max: yAxisMax,
               callback: (value: number) => {
-                if (![1, stepSize - 1].includes(value % stepSize)) {
-                  return `${value}\u00B0  `;
+                if (![1, yStepSize - 1].includes(value % yStepSize)) {
+                  return `${value}°  `;
                 }
                 return "";
               },
@@ -227,10 +253,17 @@ function Chart({
       ref={chartRef}
       options={settings}
       data={createChartData(
-        chartLabels,
+        spotterBottom,
+        spotterSurface,
         tempWithSurvey,
-        surfaceTemperatureData,
-        Boolean(temperatureThreshold)
+        // Extend surface temperature line to the chart extremities.
+        [
+          { x: xAxisMin, y: surfaceTemperatureData[0]?.y },
+          ...surfaceTemperatureData,
+          { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+        ],
+        bottomTemperatureData,
+        !!temperatureThreshold
       )}
     />
   );

@@ -1,4 +1,4 @@
-import React, { ElementType } from "react";
+import React, { ElementType, ChangeEvent, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -6,8 +6,12 @@ import {
   WithStyles,
   Theme,
   Box,
+  CircularProgress,
+  Typography,
 } from "@material-ui/core";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -18,7 +22,10 @@ import Waves from "./Waves";
 import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import type { Reef } from "../../../store/Reefs/types";
+import SelectRange from "../../../common/SelectRange";
+import DatePicker from "../../../common/Datepicker";
+import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
+import { reefSpotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -27,12 +34,23 @@ import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 const ReefDetails = ({
   classes,
   reef,
+  startDate,
+  endDate,
+  range,
+  onRangeChange,
+  onDateChange,
+  pickerDate,
+  hasSpotter,
+  chartPeriod,
+  spotterData,
   hasDailyData,
   surveys,
   point,
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
+  const [open, setOpen] = useState<boolean>(false);
+  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -59,11 +77,6 @@ const ReefDetails = ({
 
   const mapTitleItems: Value[] = [
     {
-      text: "LOCATION:",
-      variant: "h6",
-      marginRight: "2rem",
-    },
-    {
       text: `LAT: ${formatNumber(lat, 3)}`,
       variant: "subtitle2",
       marginRight: "1rem",
@@ -77,22 +90,19 @@ const ReefDetails = ({
 
   const featuredMediaTitleItems: Value[] = [
     {
-      text: "SURVEY DATE:",
-      variant: "h6",
-      marginRight: "0.5rem",
-    },
-    {
-      text: `${moment(moment(diveDate).toISOString()).format("MM/DD/YYYY")}`,
-      variant: "subtitle2",
-      marginRight: "2rem",
-    },
-    {
       text: "SURVEY POINT:",
       variant: "h6",
       marginRight: "0.5rem",
     },
     {
       text: `${point?.name}`,
+      variant: "subtitle2",
+      marginRight: "2rem",
+    },
+    {
+      text: `${moment(moment(diveDate).toISOString()).format(
+        "MMM DD[,] YYYY"
+      )}`,
       variant: "subtitle2",
       marginRight: 0,
     },
@@ -137,6 +147,7 @@ const ReefDetails = ({
 
           <Box mt="2rem">
             <Charts
+              title="DAILY WATER TEMPERATURE (°C)"
               dailyData={reef.dailyData}
               surveys={surveys}
               depth={reef.depth}
@@ -144,7 +155,55 @@ const ReefDetails = ({
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
+              background
             />
+            {hasSpotter && (
+              <Grid container alignItems="baseline" spacing={3}>
+                <SelectRange
+                  open={open}
+                  onClose={() => setOpen(false)}
+                  onOpen={() => setOpen(true)}
+                  value={range}
+                  onRangeChange={onRangeChange}
+                />
+                <DatePicker value={pickerDate} onChange={onDateChange} />
+              </Grid>
+            )}
+            {hasSpotter &&
+              (spotterDataLoading ? (
+                <Box
+                  height="20rem"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  textAlign="center"
+                  p={4}
+                >
+                  <CircularProgress size="6rem" thickness={1} />
+                </Box>
+              ) : (
+                (spotterData && spotterData.bottomTemperature.length > 1 && (
+                  <Charts
+                    title="HOURLY WATER TEMPERATURE (°C)"
+                    dailyData={reef.dailyData}
+                    spotterData={spotterData}
+                    startDate={startDate}
+                    endDate={endDate}
+                    chartPeriod={chartPeriod}
+                    surveys={[]}
+                    depth={reef.depth}
+                    maxMonthlyMean={null}
+                    temperatureThreshold={null}
+                    background={false}
+                  />
+                )) || (
+                  <Box mt="2rem">
+                    <Typography>
+                      No Smart Buoy data available in this time range.
+                    </Typography>
+                  </Box>
+                )
+              ))}
             <Surveys reefId={reef.id} />
           </Box>
         </>
@@ -174,8 +233,17 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  startDate: string;
+  endDate: string;
+  pickerDate: string;
+  range: Range;
+  chartPeriod: "hour" | Range;
+  onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onDateChange: (date: MaterialUiPickersDate, value?: string | null) => void;
+  hasSpotter: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
+  spotterData?: SpotterData | null;
   point?: SurveyPoint | null;
   diveDate?: string | null;
 }
@@ -183,6 +251,7 @@ interface ReefDetailIncomingProps {
 ReefDetails.defaultProps = {
   point: null,
   diveDate: null,
+  spotterData: null,
 };
 
 type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;

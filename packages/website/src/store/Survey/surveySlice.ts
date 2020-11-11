@@ -10,7 +10,7 @@ import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import surveyServices from "../../services/surveyServices";
 
 const selectedSurveyInitialState: SelectedSurveyState = {
-  loading: false,
+  loading: true,
   error: null,
 };
 

@@ -3,7 +3,7 @@ const { Chart } = require("react-chartjs-2");
 export const fillBetweenLinesPlugin = {
   id: "fillPlugin",
   // TODO we could type options here.
-  afterDatasetsDraw: (chart: any, _easingValue: any, options: any) => {
+  beforeDraw: (chart: any, _easingValue: any, options: any) => {
     if (
       chart &&
       chart.chart &&
@@ -28,7 +28,7 @@ export const fillBetweenLinesPlugin = {
         !chart.data.datasets[options.datasetIndex].backgroundColor ||
         options.updateChart
       ) {
-        // eslint-disable-next-line no-param-reassign
+        // eslint-disable-next-line no-param-reassign,fp/no-mutation
         chart.data.datasets[options.datasetIndex].backgroundColor = gradient;
         chart.update();
       }

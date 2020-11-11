@@ -1,9 +1,8 @@
 import React from "react";
 import { createStyles, Grid, withStyles, WithStyles } from "@material-ui/core";
-import type { DailyData } from "../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
-import { SurveyListItem } from "../../../store/Survey/types";
+import type { ChartWithTooltipProps } from "../../../common/Chart/ChartWithTooltip";
 
 const Charts = ({ classes, ...rest }: ChartsProps) => {
   return (
@@ -16,18 +15,10 @@ const Charts = ({ classes, ...rest }: ChartsProps) => {
 const styles = () =>
   createStyles({
     root: {
-      height: "10rem",
+      height: "16rem",
     },
   });
 
-interface ChartsIncomingProps {
-  dailyData: DailyData[];
-  surveys: SurveyListItem[];
-  maxMonthlyMean: number | null;
-  temperatureThreshold: number | null;
-  depth: number | null;
-}
-
-type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
+type ChartsProps = ChartWithTooltipProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Charts);

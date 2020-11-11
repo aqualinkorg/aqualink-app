@@ -6,16 +6,15 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
-import type { DailyData } from "../../../../store/Reefs/types";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
-import { SurveyListItem } from "../../../../store/Survey/types";
+import type { ChartWithTooltipProps } from "../../../../common/Chart/ChartWithTooltip";
 
-const Charts = ({ classes, ...rest }: ChartsProps) => {
+const Charts = ({ classes, title, ...rest }: ChartsProps) => {
   return (
     <ChartWithTooltip {...rest} className={classes.root}>
       <Typography className={classes.graphTitle} variant="h6">
-        DAILY WATER TEMPERATURE (°C)
+        {title}
       </Typography>
     </ChartWithTooltip>
   );
@@ -25,6 +24,8 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       height: "16rem",
+      marginBottom: "6rem",
+      marginTop: "1rem",
     },
     graphTitle: {
       lineHeight: 1.5,
@@ -37,13 +38,11 @@ const styles = (theme: Theme) =>
   });
 
 interface ChartsIncomingProps {
-  dailyData: DailyData[];
-  surveys: SurveyListItem[];
-  temperatureThreshold: number | null;
-  maxMonthlyMean: number | null;
-  depth: number | null;
+  title: string;
 }
 
-type ChartsProps = ChartsIncomingProps & WithStyles<typeof styles>;
+type ChartsProps = ChartsIncomingProps &
+  ChartWithTooltipProps &
+  WithStyles<typeof styles>;
 
 export default withStyles(styles)(Charts);
