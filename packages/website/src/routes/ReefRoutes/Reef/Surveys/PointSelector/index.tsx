@@ -157,7 +157,7 @@ const PointSelector = ({
                                       event.stopPropagation();
                                     }}
                                   >
-                                    <DeleteOutline color="secondary" />
+                                    <DeleteOutline color="primary" />
                                   </IconButton>
                                 </Grid>
                               </Grid>
