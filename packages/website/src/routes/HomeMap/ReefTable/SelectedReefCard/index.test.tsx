@@ -30,6 +30,11 @@ const store = mockStore({
   surveyList: {
     list: [],
   },
+  survey: {
+    selectedSurvey: {
+      details: null,
+    },
+  },
 });
 
 store.dispatch = jest.fn();

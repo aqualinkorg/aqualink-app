@@ -278,6 +278,7 @@ export const createChartData = (
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
+  surveyDate: Date | null,
   fill: boolean
 ) => {
   const displaySpotterData = spotterSurface.length > 0;
@@ -289,7 +290,28 @@ export const createChartData = (
         data: tempWithSurvey,
         pointRadius: 5,
         backgroundColor: "#ffffff",
-        pointBackgroundColor: "#ffff",
+        pointBackgroundColor: (context) => {
+          if (surveyDate) {
+            const surveyDateFormatted = `${surveyDate.getFullYear()}-${
+              surveyDate.getMonth() + 1
+            }-${surveyDate.getDate()}`;
+            const index = context.dataIndex;
+            if (context.dataset?.data && typeof index === "number") {
+              const chartPoint = context.dataset.data[index] as ChartPoint;
+              const chartDate = new Date(chartPoint.x as string);
+              const chartDateFormatted = `${chartDate.getFullYear()}-${
+                chartDate.getMonth() + 1
+              }-${chartDate.getDate()}`;
+
+              if (chartDateFormatted === surveyDateFormatted) {
+                return "#6bc1e1";
+              }
+              return "#ffffff";
+            }
+            return "#ffffff";
+          }
+          return "#ffffff";
+        },
         borderWidth: 1.5,
         borderColor: "#128cc0",
       },

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders as expected 1`] = `
+exports[`Charts should render with given state from Redux store 1`] = `
 <div>
   <div
     class="Charts-root-1"
@@ -8,7 +8,9 @@ exports[`renders as expected 1`] = `
     <mock-typography
       classname="Charts-graphTitle-2"
       variant="h6"
-    />
+    >
+      Test Chart
+    </mock-typography>
     Mock-Line
   </div>
 </div>

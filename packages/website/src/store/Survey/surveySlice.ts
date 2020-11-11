@@ -87,6 +87,10 @@ const selectedSurvey = createSlice({
   name: "selectedSurvey",
   initialState: selectedSurveyInitialState,
   reducers: {
+    clearSurvey: (state) => ({
+      ...state,
+      details: null,
+    }),
     setSelectedPoi: (
       state,
       action: PayloadAction<SelectedSurveyState["selectedPoi"]>
@@ -181,6 +185,6 @@ export const surveyErrorSelector = (
 ): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
 
 export const { setDiveLocation } = surveyFormDraft.actions;
-export const { setSelectedPoi } = selectedSurvey.actions;
+export const { setSelectedPoi, clearSurvey } = selectedSurvey.actions;
 
 export default survey;

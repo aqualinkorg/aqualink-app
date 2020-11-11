@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { Line } from "react-chartjs-2";
+import { useSelector } from "react-redux";
 import { mergeWith } from "lodash";
 import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
@@ -14,6 +15,7 @@ import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
+import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Reefs/types";
 
 export interface ChartProps {
@@ -73,6 +75,7 @@ function Chart({
   chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
+  const selectedSurvey = useSelector(surveyDetailsSelector);
 
   if (forwardRef) {
     // this might be doable with forwardRef or callbacks, but its a little hard since we need to
@@ -264,6 +267,7 @@ function Chart({
           { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
         ],
         bottomTemperatureData,
+        selectedSurvey?.diveDate ? new Date(selectedSurvey?.diveDate) : null,
         !!temperatureThreshold
       )}
     />

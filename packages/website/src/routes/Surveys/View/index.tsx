@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   surveyDetailsSelector,
   surveyGetRequest,
+  clearSurvey,
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
@@ -74,6 +75,9 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         surveyId,
       })
     );
+    return () => {
+      dispatch(clearSurvey());
+    };
   }, [dispatch, reef.id, surveyId]);
 
   useEffect(() => {
