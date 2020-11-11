@@ -3,5 +3,5 @@ export interface EditPoiNameEnabled {
 }
 
 export interface EditPoiNameDraft {
-  [key: number]: string;
+  [key: number]: string | null;
 }

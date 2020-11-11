@@ -62,10 +62,16 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         setPointOptions(data);
         if (data.length > 0) {
           setEditPoiNameEnabled(
-            data.reduce((acc, poi) => ({ ...acc, [poi.id]: false }), {})
+            data.reduce(
+              (acc: EditPoiNameEnabled, poi) => ({ ...acc, [poi.id]: false }),
+              {}
+            )
           );
           setEditPoiNameDraft(
-            data.reduce((acc, poi) => ({ ...acc, [poi.id]: poi.name }), {})
+            data.reduce(
+              (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
+              {}
+            )
           );
         }
         setMountPois(true);
@@ -152,13 +158,16 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
       } else {
         // If no key provided then change all
         setEditPoiNameEnabled(
-          pointOptions.reduce((acc, poi) => ({ ...acc, [poi.id]: enabled }), {})
+          pointOptions.reduce(
+            (acc: EditPoiNameEnabled, poi) => ({ ...acc, [poi.id]: enabled }),
+            {}
+          )
         );
         // Reset Poi name draft for all Pois on close
         if (!enabled) {
           setEditPoiNameDraft(
             pointOptions.reduce(
-              (acc, poi) => ({ ...acc, [poi.id]: poi.name }),
+              (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
               {}
             )
           );
@@ -182,7 +191,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   const submitPoiNameUpdate = useCallback(
     (key: number) => {
       const newName = editPoiNameDraft[key];
-      if (newName !== "" && user?.token) {
+      if (newName && user?.token) {
         setEditPoiNameLoading(true);
         surveyServices
           .updatePoi(key, newName, user.token)
