@@ -370,13 +370,20 @@ export class SurveysService {
     return trimmedComments === '' ? undefined : trimmedComments;
   }
 
-  private groupBySurveyId(object: any[], key: string, extra?: string) {
-    return object.reduce((rv, x) => {
+  /**
+   * Group the values of the provided object array by the survey id and optionally by a secondary key
+   *
+   * @param object The object of arrays to perform the group (must have a survey id in each record)
+   * @param key The key of the value you want to group
+   * @param secondary The optional secondary key to perform a deeper group
+   */
+  private groupBySurveyId(object: any[], key: string, secondary?: string) {
+    return object.reduce((result, current) => {
       return {
-        ...rv,
-        [x.survey_id]: extra
-          ? { ...rv[x.survey_id], [x[extra]]: x[key] }
-          : [...(rv[x.survey_id] || []), x[key]],
+        ...result,
+        [current.survey_id]: secondary
+          ? { ...result[current.survey_id], [current[secondary]]: current[key] }
+          : [...(result[current.survey_id] || []), current[key]],
       };
     }, {});
   }
