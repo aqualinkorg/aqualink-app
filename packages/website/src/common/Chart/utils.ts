@@ -280,8 +280,9 @@ export const createChartData = (
             context.dataset?.data &&
             typeof context.dataIndex === "number"
           ) {
-            const index = context.dataIndex;
-            const chartPoint = context.dataset.data[index] as ChartPoint;
+            const chartPoint = context.dataset.data[
+              context.dataIndex
+            ] as ChartPoint;
             const chartDate = new Date(chartPoint.x as string);
             return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
           }
