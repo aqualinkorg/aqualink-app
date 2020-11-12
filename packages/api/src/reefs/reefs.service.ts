@@ -267,11 +267,11 @@ export class ReefsService {
     );
 
     return {
-      surfaceTemperature: this.filterSpotterDate(
+      surfaceTemperature: this.filterSpotterDataByDate(
         surfaceTemperature,
         exclusionDates,
       ),
-      bottomTemperature: this.filterSpotterDate(
+      bottomTemperature: this.filterSpotterDataByDate(
         bottomTemperature,
         exclusionDates,
       ),
@@ -294,7 +294,7 @@ export class ReefsService {
       .addAndRemove(admins, reef.admins);
   }
 
-  private filterSpotterDate(
+  private filterSpotterDataByDate(
     spotterDate: SofarValue[],
     exclusionDates: ExclusionDates[],
   ) {
