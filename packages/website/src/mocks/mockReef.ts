@@ -7,6 +7,7 @@ export const mockReef: Reef = {
     coordinates: [0, 0],
     type: "Point",
   },
+  spotterId: null,
   maxMonthlyMean: 0,
   depth: 0,
   status: "in_review",

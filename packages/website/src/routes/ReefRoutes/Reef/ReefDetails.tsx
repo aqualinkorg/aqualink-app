@@ -40,7 +40,7 @@ const ReefDetails = ({
   onRangeChange,
   onDateChange,
   pickerDate,
-  hasSpotter,
+  hasSpotterData,
   chartPeriod,
   spotterData,
   hasDailyData,
@@ -158,7 +158,7 @@ const ReefDetails = ({
               }
               background
             />
-            {hasSpotter && (
+            {hasSpotterData && (
               <Grid container alignItems="baseline" spacing={3}>
                 <SelectRange
                   open={open}
@@ -170,7 +170,7 @@ const ReefDetails = ({
                 <DatePicker value={pickerDate} onChange={onDateChange} />
               </Grid>
             )}
-            {hasSpotter &&
+            {hasSpotterData &&
               (spotterDataLoading ? (
                 <Box
                   height="20rem"
@@ -242,7 +242,7 @@ interface ReefDetailIncomingProps {
   chartPeriod: "hour" | Range;
   onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
   onDateChange: (date: MaterialUiPickersDate, value?: string | null) => void;
-  hasSpotter: boolean;
+  hasSpotterData: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
   spotterData?: SpotterData | null;

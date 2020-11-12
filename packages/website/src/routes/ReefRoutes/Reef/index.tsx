@@ -116,7 +116,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const { liveData, dailyData } = reefDetails || {};
 
-  const hasSpotter = Boolean(liveData?.surfaceTemperature);
+  const hasSpotterData = Boolean(liveData?.surfaceTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
@@ -134,7 +134,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   // fetch spotter data from api, also filter the range we're interested in.
   useEffect(() => {
-    if (hasSpotter) {
+    if (hasSpotterData) {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
@@ -146,7 +146,7 @@ const Reef = ({ match, classes }: ReefProps) => {
       // Clear possible spotter data from previously selected reef
       dispatch(clearReefSpotterData());
     }
-  }, [dispatch, reefId, hasSpotter, range, pickerDate]);
+  }, [dispatch, reefId, hasSpotterData, range, pickerDate]);
 
   // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
@@ -197,7 +197,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
               isManager={isAdmin(user, parseInt(reefId, 10))}
             />
-            {!hasSpotter && (
+            {!hasSpotterData && (
               <Box mt="1.3rem">
                 <Alert severity="info">
                   {getAlertMessage(user, reefId, hasDailyData)}
@@ -215,7 +215,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               range={range}
               onRangeChange={onRangeChange}
               onDateChange={onDateChange}
-              hasSpotter={hasSpotter}
+              hasSpotterData={hasSpotterData}
               chartPeriod={findChartPeriod(range)}
               hasDailyData={hasDailyData}
               spotterData={spotterData}
