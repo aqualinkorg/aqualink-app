@@ -92,6 +92,7 @@ export interface Reef {
   latestDailyData: DailyData;
   featuredImage?: string;
   applied?: boolean;
+  spotterId: string | null;
 }
 
 export interface SpotterDataRequestParams {
