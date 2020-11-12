@@ -37,33 +37,6 @@ export const filterDailyData = (
   return ret;
 };
 
-export const findSurveyFromDate = (
-  inputDate: string,
-  surveys: SurveyListItem[]
-): number | null | undefined => {
-  const inputDateTime = new Date(inputDate);
-  const formatInputDate = `${inputDateTime.getFullYear()}-${
-    inputDateTime.getMonth() + 1
-  }-${inputDateTime.getDate()}`;
-  const surveyDates = surveys.map((survey) => {
-    if (survey.diveDate) {
-      const date = new Date(survey.diveDate);
-      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    }
-    return null;
-  });
-
-  const survey = surveys.find(
-    (_survey, index) => surveyDates[index] === formatInputDate
-  );
-
-  if (survey) {
-    return survey.id;
-  }
-
-  return null;
-};
-
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
   const dates = surveys.map((survey) => {
     if (survey.diveDate) {
@@ -82,6 +55,17 @@ export const sameDay = (
 
 const timeDiff = (incomingDate: string, date: Date) =>
   Math.abs(new Date(incomingDate).getTime() - date.getTime());
+
+export const findSurveyFromDate = (
+  inputDate: string,
+  surveys: SurveyListItem[]
+): number | null | undefined => {
+  return (
+    surveys.find(
+      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate)
+    )?.id || null
+  );
+};
 
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
   return dailyData.reduce((prevClosest, nextPoint) =>
@@ -291,24 +275,15 @@ export const createChartData = (
         pointRadius: 5,
         backgroundColor: "#ffffff",
         pointBackgroundColor: (context) => {
-          if (surveyDate) {
-            const surveyDateFormatted = `${surveyDate.getFullYear()}-${
-              surveyDate.getMonth() + 1
-            }-${surveyDate.getDate()}`;
+          if (
+            surveyDate &&
+            context.dataset?.data &&
+            typeof context.dataIndex === "number"
+          ) {
             const index = context.dataIndex;
-            if (context.dataset?.data && typeof index === "number") {
-              const chartPoint = context.dataset.data[index] as ChartPoint;
-              const chartDate = new Date(chartPoint.x as string);
-              const chartDateFormatted = `${chartDate.getFullYear()}-${
-                chartDate.getMonth() + 1
-              }-${chartDate.getDate()}`;
-
-              if (chartDateFormatted === surveyDateFormatted) {
-                return "#6bc1e1";
-              }
-              return "#ffffff";
-            }
-            return "#ffffff";
+            const chartPoint = context.dataset.data[index] as ChartPoint;
+            const chartDate = new Date(chartPoint.x as string);
+            return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
           }
           return "#ffffff";
         },
