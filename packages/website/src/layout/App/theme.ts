@@ -183,6 +183,10 @@ const theme: any = createMuiTheme({
     MuiOutlinedInput: {
       root: {
         padding: 0,
+        color: "black",
+        "&$focused": {
+          borderColor: lightBlue,
+        },
       },
     },
   },

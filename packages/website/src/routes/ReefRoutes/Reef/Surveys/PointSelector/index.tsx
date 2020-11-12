@@ -80,9 +80,6 @@ const PointSelector = ({
                             <TextField
                               className={classes.editPoiTextField}
                               variant="outlined"
-                              inputProps={{
-                                className: classes.editPoiTextField,
-                              }}
                               fullWidth
                               value={editPoiNameDraft[item.id]}
                               onClick={(event) => event.stopPropagation()}
@@ -196,12 +193,6 @@ const styles = (theme: Theme) =>
       color: "black",
       height: "2.5rem",
       alignItems: "center",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: theme.palette.primary.main,
-      },
     },
     menuButton: {
       padding: 0,
