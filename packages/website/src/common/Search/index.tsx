@@ -41,6 +41,21 @@ const Search = ({ classes }: SearchProps) => {
       return nameA.localeCompare(nameB);
     });
 
+  const onChangeSearchText = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const searchInput = event.target.value;
+    const index = reefs.findIndex(
+      (reef) =>
+        reefAugmentedName(reef).toLowerCase() === searchInput.toLowerCase()
+    );
+    if (index > -1) {
+      setSearchedReef(reefs[index]);
+    } else {
+      setSearchValue(searchInput);
+    }
+  };
+
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
       setSearchedReef(value);
@@ -91,6 +106,7 @@ const Search = ({ classes }: SearchProps) => {
           renderInput={(params) => (
             <TextField
               {...params}
+              onChange={onChangeSearchText}
               placeholder="Search by site name or country"
               variant="outlined"
               InputLabelProps={{
