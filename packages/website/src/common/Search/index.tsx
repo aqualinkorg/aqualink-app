@@ -19,35 +19,27 @@ import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
 import { getReefNameAndRegion } from "../../store/Reefs/helpers";
 import mapServices from "../../services/mapServices";
 
+const reefAugmentedName = (reef: Reef) => {
+  const { name, region } = getReefNameAndRegion(reef);
+  if (name && region) {
+    return `${name}, ${region}`;
+  }
+  return `${name || region || ""}`;
+};
+
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const dispatch = useDispatch();
   // eslint-disable-next-line fp/no-mutating-methods
   const reefs = useSelector(reefsListSelector)
-    .filter((reef) => getReefNameAndRegion(reef).name)
+    .filter((reef) => reefAugmentedName(reef))
     // Sort by formatted name
     .sort((a, b) => {
-      const nameA = getReefNameAndRegion(a).name || "";
-      const nameB = getReefNameAndRegion(b).name || "";
+      const nameA = reefAugmentedName(a);
+      const nameB = reefAugmentedName(b);
       return nameA.localeCompare(nameB);
     });
-
-  const onChangeSearchText = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const searchInput = event.target.value;
-    const index = reefs.findIndex(
-      (reef) =>
-        getReefNameAndRegion(reef).name?.toLowerCase() ===
-        searchInput.toLowerCase()
-    );
-    if (index > -1) {
-      setSearchedReef(reefs[index]);
-    } else {
-      setSearchValue(searchInput);
-    }
-  };
 
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
@@ -84,11 +76,13 @@ const Search = ({ classes }: SearchProps) => {
 
       <div className={classes.searchBarText}>
         <Autocomplete
-          onKeyPress={onKeyPress}
           id="location"
+          autoHighlight
+          onKeyPress={onKeyPress}
           className={classes.searchBarInput}
           options={reefs}
-          getOptionLabel={(reef) => getReefNameAndRegion(reef).name || ""}
+          noOptionsText={`No sites found. Press enter to zoom to "${searchValue}"`}
+          getOptionLabel={(reef) => reefAugmentedName(reef)}
           value={searchedReef}
           onChange={onDropdownItemSelect}
           onInputChange={(event, value, reason) =>
@@ -97,8 +91,7 @@ const Search = ({ classes }: SearchProps) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              onChange={onChangeSearchText}
-              placeholder="Search by site name"
+              placeholder="Search by site name or country"
               variant="outlined"
               InputLabelProps={{
                 shrink: false,
