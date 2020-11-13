@@ -142,6 +142,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 
   const ChartComponent = (
     <Chart
+      reefId={reef.id}
       dailyData={reef.dailyData}
       surveys={[]}
       temperatureThreshold={

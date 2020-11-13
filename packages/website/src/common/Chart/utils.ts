@@ -56,6 +56,17 @@ export const sameDay = (
 const timeDiff = (incomingDate: string, date: Date) =>
   Math.abs(new Date(incomingDate).getTime() - date.getTime());
 
+export const findSurveyFromDate = (
+  inputDate: string,
+  surveys: SurveyListItem[]
+): number | null | undefined => {
+  return (
+    surveys.find(
+      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate)
+    )?.id || null
+  );
+};
+
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
   return dailyData.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
@@ -251,6 +262,7 @@ export const createChartData = (
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
+  surveyDate: Date | null,
   fill: boolean
 ) => {
   const displaySpotterData = spotterSurface.length > 0;
@@ -262,7 +274,20 @@ export const createChartData = (
         data: tempWithSurvey,
         pointRadius: 5,
         backgroundColor: "#ffffff",
-        pointBackgroundColor: "#ffff",
+        pointBackgroundColor: (context) => {
+          if (
+            surveyDate &&
+            context.dataset?.data &&
+            typeof context.dataIndex === "number"
+          ) {
+            const chartPoint = context.dataset.data[
+              context.dataIndex
+            ] as ChartPoint;
+            const chartDate = new Date(chartPoint.x as string);
+            return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
+          }
+          return "#ffffff";
+        },
         borderWidth: 1.5,
         borderColor: "#128cc0",
       },

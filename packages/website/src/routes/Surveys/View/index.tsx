@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   surveyDetailsSelector,
   surveyGetRequest,
+  clearSurvey,
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
@@ -74,6 +75,9 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         surveyId,
       })
     );
+    return () => {
+      dispatch(clearSurvey());
+    };
   }, [dispatch, reef.id, surveyId]);
 
   useEffect(() => {
@@ -183,6 +187,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 </Grid>
                 <Grid container justify="center" item xs={12}>
                   <Charts
+                    reefId={reef.id}
                     dailyData={reef.dailyData}
                     surveys={surveyList}
                     depth={reef.depth}
@@ -234,6 +239,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       </Grid>
                       <Grid container justify="center" item xs={12}>
                         <Charts
+                          reefId={reef.id}
                           dailyData={reef.dailyData}
                           spotterData={spotterData}
                           startDate={subtractFromDate(endDate, range)}

@@ -14,7 +14,7 @@ const selectedSurveyInitialState: SelectedSurveyState = {
   error: null,
 };
 
-const surveyInitialState: SurveyState = {
+const surveyFormDraftInitialState: SurveyState = {
   diveLocation: null,
   surveyMedia: [],
 };
@@ -69,9 +69,9 @@ export const surveyAddRequest = createAsyncThunk<
   }
 );
 
-const surveySlice = createSlice({
+const surveyFormDraft = createSlice({
   name: "survey",
-  initialState: surveyInitialState,
+  initialState: surveyFormDraftInitialState,
   reducers: {
     setDiveLocation: (
       state,
@@ -83,10 +83,22 @@ const surveySlice = createSlice({
   },
 });
 
-const selectedSurveySlice = createSlice({
+const selectedSurvey = createSlice({
   name: "selectedSurvey",
   initialState: selectedSurveyInitialState,
-  reducers: {},
+  reducers: {
+    clearSurvey: (state) => ({
+      ...state,
+      details: null,
+    }),
+    setSelectedPoi: (
+      state,
+      action: PayloadAction<SelectedSurveyState["selectedPoi"]>
+    ) => ({
+      ...state,
+      selectedPoi: action.payload,
+    }),
+  },
   extraReducers: (builder) => {
     builder.addCase(
       surveyGetRequest.fulfilled,
@@ -145,28 +157,34 @@ const selectedSurveySlice = createSlice({
   },
 });
 
-const surveyReducer = combineReducers({
-  survey: surveySlice.reducer,
-  selectedSurvey: selectedSurveySlice.reducer,
+const survey = combineReducers({
+  surveyFormDraft: surveyFormDraft.reducer,
+  selectedSurvey: selectedSurvey.reducer,
 });
 
 export const diveLocationSelector = (
   state: RootState
-): SurveyState["diveLocation"] => state.surveyReducer.survey.diveLocation;
+): SurveyState["diveLocation"] => state.survey.surveyFormDraft.diveLocation;
 
 /* For surveyRequest */
 export const surveyDetailsSelector = (
   state: RootState
-): SelectedSurveyState["details"] => state.surveyReducer.selectedSurvey.details;
+): SelectedSurveyState["details"] => state.survey.selectedSurvey.details;
+
+export const selectedPoiSelector = (
+  state: RootState
+): SelectedSurveyState["selectedPoi"] =>
+  state.survey.selectedSurvey.selectedPoi;
 
 export const surveyLoadingSelector = (
   state: RootState
-): SelectedSurveyState["loading"] => state.surveyReducer.selectedSurvey.loading;
+): SelectedSurveyState["loading"] => state.survey.selectedSurvey.loading;
 
 export const surveyErrorSelector = (
   state: RootState
-): SelectedSurveyState["error"] => state.surveyReducer.selectedSurvey.error;
+): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
 
-export const { setDiveLocation } = surveySlice.actions;
+export const { setDiveLocation } = surveyFormDraft.actions;
+export const { setSelectedPoi, clearSurvey } = selectedSurvey.actions;
 
-export default surveyReducer;
+export default survey;

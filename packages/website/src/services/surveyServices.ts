@@ -61,6 +61,16 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
   });
 };
 
+const updatePoi = (poiId: number, name: string, token: string) =>
+  requests.send({
+    url: `pois/${poiId}`,
+    method: "PUT",
+    data: {
+      name,
+    },
+    token,
+  });
+
 const editSurveyMedia = (
   reefId: number,
   mediaId: number,
@@ -82,5 +92,6 @@ export default {
   getSurvey,
   getSurveys,
   addNewPoi,
+  updatePoi,
   editSurveyMedia,
 };
