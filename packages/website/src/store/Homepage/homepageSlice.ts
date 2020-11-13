@@ -12,6 +12,13 @@ const homepageSlice = createSlice({
   name: "homepage",
   initialState: homepageInitialState,
   reducers: {
+    setSearchResult: (
+      state,
+      action: PayloadAction<HomePageState["searchResult"]>
+    ) => ({
+      ...state,
+      searchResult: action.payload,
+    }),
     setReefOnMap: (state, action: PayloadAction<Reef>) => ({
       ...state,
       reefOnMap: action.payload,
@@ -26,6 +33,14 @@ export const reefOnMapSelector = (
   state: RootState
 ): HomePageState["reefOnMap"] => state.homepage.reefOnMap;
 
-export const { setReefOnMap, unsetReefOnMap } = homepageSlice.actions;
+export const searchResultSelector = (
+  state: RootState
+): HomePageState["searchResult"] => state.homepage.searchResult;
+
+export const {
+  setSearchResult,
+  setReefOnMap,
+  unsetReefOnMap,
+} = homepageSlice.actions;
 
 export default homepageSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   withStyles,
@@ -10,13 +10,18 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import { setReefOnMap } from "../../store/Homepage/homepageSlice";
+import {
+  setReefOnMap,
+  setSearchResult,
+} from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
 import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
 import { getReefNameAndRegion } from "../../store/Reefs/helpers";
+import mapServices from "../../services/mapServices";
 
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
   const dispatch = useDispatch();
   // eslint-disable-next-line fp/no-mutating-methods
   const reefs = useSelector(reefsListSelector)
@@ -31,14 +36,16 @@ const Search = ({ classes }: SearchProps) => {
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    const searchValue = event.target.value;
+    const searchInput = event.target.value;
     const index = reefs.findIndex(
       (reef) =>
         getReefNameAndRegion(reef).name?.toLowerCase() ===
-        searchValue.toLowerCase()
+        searchInput.toLowerCase()
     );
     if (index > -1) {
       setSearchedReef(reefs[index]);
+    } else {
+      setSearchValue(searchInput);
     }
   };
 
@@ -52,6 +59,18 @@ const Search = ({ classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
+    } else if (searchValue) {
+      mapServices
+        .getLocation(searchValue)
+        .then((data) => dispatch(setSearchResult(data)))
+        // eslint-disable-next-line no-console
+        .catch((error) => console.log(error));
+    }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      onSearchSubmit();
     }
   };
 
@@ -65,6 +84,7 @@ const Search = ({ classes }: SearchProps) => {
 
       <div className={classes.searchBarText}>
         <Autocomplete
+          onKeyPress={onKeyPress}
           id="location"
           className={classes.searchBarInput}
           options={reefs}
