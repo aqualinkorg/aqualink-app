@@ -24,12 +24,12 @@ const reefAugmentedName = (reef: Reef) => {
   if (name && region) {
     return `${name}, ${region}`;
   }
-  return `${name || region || ""}`;
+  return name || region || "";
 };
 
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   // eslint-disable-next-line fp/no-mutating-methods
   const reefs = useSelector(reefsListSelector)
@@ -70,8 +70,7 @@ const Search = ({ classes }: SearchProps) => {
       mapServices
         .getLocation(searchValue)
         .then((data) => dispatch(setSearchResult(data)))
-        // eslint-disable-next-line no-console
-        .catch((error) => console.log(error));
+        .catch(console.error);
     }
   };
 
@@ -97,10 +96,10 @@ const Search = ({ classes }: SearchProps) => {
           className={classes.searchBarInput}
           options={reefs}
           noOptionsText={`No sites found. Press enter to zoom to "${searchValue}"`}
-          getOptionLabel={(reef) => reefAugmentedName(reef)}
+          getOptionLabel={reefAugmentedName}
           value={searchedReef}
           onChange={onDropdownItemSelect}
-          onInputChange={(event, value, reason) =>
+          onInputChange={(_event, _value, reason) =>
             reason === "clear" && setSearchedReef(null)
           }
           renderInput={(params) => (
