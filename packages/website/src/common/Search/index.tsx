@@ -58,7 +58,7 @@ const Search = ({ classes }: SearchProps) => {
 
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
-      setSearchedReef(value);
+      setSearchedReef(null);
       dispatch(setReefOnMap(value));
     }
   };
@@ -66,6 +66,7 @@ const Search = ({ classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
+      setSearchedReef(null);
     } else if (searchValue) {
       mapServices
         .getLocation(searchValue)
