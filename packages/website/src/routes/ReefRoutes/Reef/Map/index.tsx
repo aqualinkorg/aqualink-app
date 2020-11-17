@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import { Reef, Position } from "../../../../store/Reefs/types";
+import { Reef, Position, SpotterPosition } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
 import marker from "../../../../assets/marker.png";
@@ -20,7 +20,7 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const ReefMap = ({ polygon, classes }: ReefMapProps) => {
+const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
@@ -75,17 +75,27 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
       className={classes.map}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-      {polygon.type === "Polygon" ? (
-        <Polygon positions={reverseCoords(...polygon.coordinates)} />
-      ) : (
+      {Boolean(draftReef) &&
+        (polygon.type === "Polygon" ? (
+          <Polygon positions={reverseCoords(...polygon.coordinates)} />
+        ) : (
+          <Marker
+            ref={markerRef}
+            draggable={Boolean(draftReef)}
+            ondragend={handleDragChange}
+            icon={pinIcon}
+            position={[
+              draftReef?.coordinates?.latitude || polygon.coordinates[1],
+              draftReef?.coordinates?.longitude || polygon.coordinates[0],
+            ]}
+          />
+        ))}
+      {!draftReef && spotterPosition && (
         <Marker
-          ref={markerRef}
-          draggable={Boolean(draftReef)}
-          ondragend={handleDragChange}
           icon={pinIcon}
           position={[
-            draftReef?.coordinates?.latitude || polygon.coordinates[1],
-            draftReef?.coordinates?.longitude || polygon.coordinates[0],
+            spotterPosition.latitude.value,
+            spotterPosition.longitude.value,
           ]}
         />
       )}
@@ -105,7 +115,12 @@ const styles = () => {
 
 interface ReefMapIncomingProps {
   polygon: Reef["polygon"];
+  spotterPosition?: SpotterPosition | null;
 }
+
+ReefMap.defaultProps = {
+  spotterPosition: null,
+};
 
 type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
 

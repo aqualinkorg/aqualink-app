@@ -116,7 +116,10 @@ const ReefDetails = ({
         <Grid item xs={12} md={6}>
           {diveDate && point && <CardTitle values={mapTitleItems} />}
           <div className={classes.container}>
-            <Map polygon={reef.polygon} />
+            <Map
+              spotterPosition={reef.liveData?.spotterPosition}
+              polygon={reef.polygon}
+            />
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
