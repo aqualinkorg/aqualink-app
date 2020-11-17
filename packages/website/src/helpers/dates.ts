@@ -39,3 +39,14 @@ export const findChartPeriod = (range: Range) => {
       return "day";
   }
 };
+
+export const convertToLocalTime = (
+  utcTime?: string | null,
+  timeZone?: string | null
+): string | null =>
+  // eslint-disable-next-line no-nested-ternary
+  utcTime
+    ? timeZone
+      ? new Date(utcTime).toLocaleString("en-US", { timeZone })
+      : utcTime
+    : null;

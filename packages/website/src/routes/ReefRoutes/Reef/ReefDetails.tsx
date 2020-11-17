@@ -30,6 +30,7 @@ import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
+import { convertToLocalTime } from "../../../helpers/dates";
 
 const ReefDetails = ({
   classes,
@@ -100,7 +101,7 @@ const ReefDetails = ({
       marginRight: "2rem",
     },
     {
-      text: `${moment(moment(diveDate).toISOString()).format(
+      text: `${moment(convertToLocalTime(diveDate, reef.timezone)).format(
         "MMM DD[,] YYYY"
       )}`,
       variant: "subtitle2",
@@ -206,7 +207,7 @@ const ReefDetails = ({
                   </Box>
                 )
               ))}
-            <Surveys reefId={reef.id} />
+            <Surveys reef={reef} />
           </Box>
         </>
       )}

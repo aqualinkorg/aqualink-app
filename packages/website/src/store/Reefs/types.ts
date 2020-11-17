@@ -93,6 +93,7 @@ export interface Reef {
   featuredImage?: string;
   applied?: boolean;
   spotterId: string | null;
+  timezone?: string | null;
 }
 
 export interface SpotterDataRequestParams {

@@ -22,14 +22,14 @@ import { setSelectedPoi } from "../../../../store/Survey/surveySlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
-import { Pois } from "../../../../store/Reefs/types";
+import { Pois, Reef } from "../../../../store/Reefs/types";
 import { isAdmin } from "../../../../helpers/isAdmin";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 import { useBodyLength } from "../../../../helpers/useBodyLength";
 import surveyServices from "../../../../services/surveyServices";
 import { EditPoiNameDraft, EditPoiNameEnabled } from "./types";
 
-const Surveys = ({ reefId, classes }: SurveysProps) => {
+const Surveys = ({ reef, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("All");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
@@ -49,7 +49,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   >("any");
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
-  const isReefAdmin = isAdmin(user, reefId);
+  const isReefAdmin = isAdmin(user, reef.id);
   const dispatch = useDispatch();
 
   const bodyLength = useBodyLength();
@@ -57,7 +57,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
   useEffect(() => {
     const source = Axios.CancelToken.source();
     reefServices
-      .getReefPois(`${reefId}`, source.token)
+      .getReefPois(`${reef.id}`, source.token)
       .then(({ data }) => {
         setPointOptions(data);
         if (data.length > 0) {
@@ -84,7 +84,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
     return () => {
       source.cancel();
     };
-  }, [setPointOptions, reefId]);
+  }, [setPointOptions, reef.id]);
 
   useEffect(() => {
     dispatch(setSelectedPoi(point));
@@ -135,7 +135,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           )
         )
         .then(() => {
-          dispatch(surveysRequest(`${reefId}`));
+          dispatch(surveysRequest(`${reef.id}`));
         })
         .then(() => {
           setDeletePoiDialogOpen(false);
@@ -194,7 +194,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         setEditPoiNameLoading(true);
         surveyServices
           .updatePoi(key, newName, user.token)
-          .then(() => reefServices.getReefPois(`${reefId}`))
+          .then(() => reefServices.getReefPois(`${reef.id}`))
           .then(({ data }) => {
             const prevName = pointOptions.find((item) => item.id === key)?.name;
             setPointOptions(data);
@@ -208,7 +208,7 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
           .finally(() => setEditPoiNameLoading(false));
       }
     },
-    [editPoiNameDraft, editPoiNameEnabled, point, pointOptions, reefId, user]
+    [editPoiNameDraft, editPoiNameEnabled, point, pointOptions, reef.id, user]
   );
 
   const deletePoiDialogActions: Action[] = [
@@ -323,7 +323,8 @@ const Surveys = ({ reefId, classes }: SurveysProps) => {
         <Grid container justify="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isReefAdmin}
-            reefId={reefId}
+            reefId={reef.id}
+            timeZone={reef.timezone}
             observation={observation}
             point={pointIdFinder(point)}
           />
@@ -372,7 +373,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyIncomingProps {
-  reefId: number;
+  reef: Reef;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;
