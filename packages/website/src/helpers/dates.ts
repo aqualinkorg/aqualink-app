@@ -1,4 +1,5 @@
 import { DailyData, Range, SpotterData } from "../store/Reefs/types";
+import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
 export const subtractFromDate = (endDate: string, amount: Range): string => {
@@ -50,3 +51,35 @@ export const convertToLocalTime = (
       ? new Date(utcTime).toLocaleString("en-US", { timeZone })
       : utcTime
     : null;
+
+export const convertDailyDataToLocalTime = (
+  data: DailyData[],
+  timeZone?: string | null
+): DailyData[] =>
+  data.map((item) => ({
+    ...item,
+    date: convertToLocalTime(item.date, timeZone) || item.date,
+  }));
+
+export const convertSpotterDataToLocalTime = (
+  data: SpotterData,
+  timeZone?: string | null
+): SpotterData => ({
+  bottomTemperature: data.bottomTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
+  })),
+  surfaceTemperature: data.surfaceTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
+  })),
+});
+
+export const convertSurveysToLocalTime = (
+  surveys: SurveyListItem[],
+  timeZone?: string | null
+): SurveyListItem[] =>
+  surveys.map((item) => ({
+    ...item,
+    diveDate: convertToLocalTime(item.diveDate, timeZone) || item.diveDate,
+  }));

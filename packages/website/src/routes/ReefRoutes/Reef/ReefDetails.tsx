@@ -30,7 +30,12 @@ import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
-import { convertToLocalTime } from "../../../helpers/dates";
+import {
+  convertToLocalTime,
+  convertDailyDataToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertSurveysToLocalTime,
+} from "../../../helpers/dates";
 
 const ReefDetails = ({
   classes,
@@ -150,8 +155,11 @@ const ReefDetails = ({
             <Charts
               reefId={reef.id}
               title="DAILY WATER TEMPERATURE (°C)"
-              dailyData={reef.dailyData}
-              surveys={surveys}
+              dailyData={convertDailyDataToLocalTime(
+                reef.dailyData,
+                reef.timezone
+              )}
+              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
               depth={reef.depth}
               maxMonthlyMean={reef.maxMonthlyMean || null}
               temperatureThreshold={
@@ -188,10 +196,20 @@ const ReefDetails = ({
                   <Charts
                     reefId={reef.id}
                     title="HOURLY WATER TEMPERATURE (°C)"
-                    dailyData={reef.dailyData}
-                    spotterData={spotterData}
-                    startDate={startDate}
-                    endDate={endDate}
+                    dailyData={convertDailyDataToLocalTime(
+                      reef.dailyData,
+                      reef.timezone
+                    )}
+                    spotterData={convertSpotterDataToLocalTime(
+                      spotterData,
+                      reef.timezone
+                    )}
+                    startDate={
+                      convertToLocalTime(startDate, reef.timezone) || startDate
+                    }
+                    endDate={
+                      convertToLocalTime(endDate, reef.timezone) || endDate
+                    }
                     chartPeriod={chartPeriod}
                     surveys={[]}
                     depth={reef.depth}

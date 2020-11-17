@@ -33,6 +33,7 @@ import {
   surveyListSelector,
   surveysRequest,
 } from "../../../../store/Survey/surveyListSlice";
+import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -143,7 +144,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const ChartComponent = (
     <Chart
       reefId={reef.id}
-      dailyData={reef.dailyData}
+      dailyData={convertDailyDataToLocalTime(reef.dailyData, reef.timezone)}
       surveys={[]}
       temperatureThreshold={
         reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
