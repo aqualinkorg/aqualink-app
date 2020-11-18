@@ -1,7 +1,16 @@
 import { Reef } from "../Reefs/types";
 
+export interface MapboxGeolocationData {
+  bbox: {
+    southWest: [number, number];
+    northEast: [number, number];
+  };
+  placeName: string;
+}
+
 export interface HomePageState {
   reefOnMap: Reef | null;
+  searchResult?: MapboxGeolocationData;
 }
 
 export interface TableRow {
