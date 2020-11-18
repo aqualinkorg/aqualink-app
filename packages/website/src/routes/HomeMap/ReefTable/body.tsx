@@ -21,6 +21,7 @@ import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
 import {
   reefOnMapSelector,
   setReefOnMap,
+  setSearchResult,
 } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
@@ -111,6 +112,7 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
 
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
+    dispatch(setSearchResult());
     dispatch(setReefOnMap(reefsList[reef.tableData.id]));
   };
 

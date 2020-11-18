@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   withStyles,
@@ -10,41 +10,55 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import { setReefOnMap } from "../../store/Homepage/homepageSlice";
+import {
+  setReefOnMap,
+  setSearchResult,
+} from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
 import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
 import { getReefNameAndRegion } from "../../store/Reefs/helpers";
+import mapServices from "../../services/mapServices";
+
+const reefAugmentedName = (reef: Reef) => {
+  const { name, region } = getReefNameAndRegion(reef);
+  if (name && region) {
+    return `${name}, ${region}`;
+  }
+  return name || region || "";
+};
 
 const Search = ({ classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
+  const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   // eslint-disable-next-line fp/no-mutating-methods
   const reefs = useSelector(reefsListSelector)
-    .filter((reef) => getReefNameAndRegion(reef).name)
+    .filter((reef) => reefAugmentedName(reef))
     // Sort by formatted name
     .sort((a, b) => {
-      const nameA = getReefNameAndRegion(a).name || "";
-      const nameB = getReefNameAndRegion(b).name || "";
+      const nameA = reefAugmentedName(a);
+      const nameB = reefAugmentedName(b);
       return nameA.localeCompare(nameB);
     });
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    const searchValue = event.target.value;
+    const searchInput = event.target.value;
     const index = reefs.findIndex(
       (reef) =>
-        getReefNameAndRegion(reef).name?.toLowerCase() ===
-        searchValue.toLowerCase()
+        reefAugmentedName(reef).toLowerCase() === searchInput.toLowerCase()
     );
     if (index > -1) {
       setSearchedReef(reefs[index]);
+    } else {
+      setSearchValue(searchInput);
     }
   };
 
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
-      setSearchedReef(value);
+      setSearchedReef(null);
       dispatch(setReefOnMap(value));
     }
   };
@@ -52,6 +66,18 @@ const Search = ({ classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
+      setSearchedReef(null);
+    } else if (searchValue) {
+      mapServices
+        .getLocation(searchValue)
+        .then((data) => dispatch(setSearchResult(data)))
+        .catch(console.error);
+    }
+  };
+
+  const onKeyPress = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      onSearchSubmit();
     }
   };
 
@@ -66,19 +92,22 @@ const Search = ({ classes }: SearchProps) => {
       <div className={classes.searchBarText}>
         <Autocomplete
           id="location"
+          autoHighlight
+          onKeyPress={onKeyPress}
           className={classes.searchBarInput}
           options={reefs}
-          getOptionLabel={(reef) => getReefNameAndRegion(reef).name || ""}
+          noOptionsText={`No sites found. Press enter to zoom to "${searchValue}"`}
+          getOptionLabel={reefAugmentedName}
           value={searchedReef}
           onChange={onDropdownItemSelect}
-          onInputChange={(event, value, reason) =>
+          onInputChange={(_event, _value, reason) =>
             reason === "clear" && setSearchedReef(null)
           }
           renderInput={(params) => (
             <TextField
               {...params}
               onChange={onChangeSearchText}
-              placeholder="Search by site name"
+              placeholder="Search by site name or country"
               variant="outlined"
               InputLabelProps={{
                 shrink: false,

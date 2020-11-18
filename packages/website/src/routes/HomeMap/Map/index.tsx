@@ -14,6 +14,7 @@ import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
+import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
 
 const INITIAL_CENTER = new LatLng(19, -76.3);
 const INITIAL_ZOOM = 5;
@@ -30,12 +31,19 @@ const attribution = accessToken
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const loading = useSelector(reefsListLoadingSelector);
+  const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 
   useEffect(() => {
     const { current } = ref;
     if (current && current.leafletElement) {
       const map = current.leafletElement;
+      if (searchResult) {
+        map.fitBounds([
+          searchResult.bbox.southWest,
+          searchResult.bbox.northEast,
+        ]);
+      }
       map.on("baselayerchange", (layer: any) => {
         setLegendName(layer.name);
       });
