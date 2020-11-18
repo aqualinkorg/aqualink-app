@@ -24,8 +24,14 @@ import { useForm } from "react-hook-form";
 
 import { diveLocationSelector } from "../../store/Survey/surveySlice";
 import { SurveyData, SurveyState } from "../../store/Survey/types";
+import { setTimeZone } from "../../helpers/dates";
 
-const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
+const SurveyForm = ({
+  reefId,
+  timeZone,
+  onSubmit,
+  classes,
+}: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
@@ -49,13 +55,15 @@ const SurveyForm = ({ reefId, onSubmit, classes }: SurveyFormProps) => {
   const nativeSubmit = useCallback(
     (data: any) => {
       if (diveDateTime) {
-        const dateTime = diveDateTime.toISOString();
+        const dateTime = new Date(
+          setTimeZone(diveDateTime, timeZone) || diveDateTime
+        ).toISOString();
         const weatherConditions = weather;
         const { comments } = data;
         onSubmit(dateTime, diveLocation, weatherConditions, comments);
       }
     },
-    [onSubmit, diveDateTime, weather, diveLocation]
+    [onSubmit, diveDateTime, timeZone, weather, diveLocation]
   );
 
   const resetForm = () => {
@@ -281,6 +289,7 @@ const styles = (theme: Theme) =>
 
 interface SurveyFormIncomingProps {
   reefId: number;
+  timeZone?: string | null;
   onSubmit: (
     diveDateTime: string,
     diveLocation: SurveyState["diveLocation"],
@@ -288,6 +297,10 @@ interface SurveyFormIncomingProps {
     comments: string
   ) => void;
 }
+
+SurveyForm.defaultProps = {
+  timeZone: null,
+};
 
 type SurveyFormProps = SurveyFormIncomingProps & WithStyles<typeof styles>;
 

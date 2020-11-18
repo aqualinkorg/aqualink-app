@@ -41,6 +41,7 @@ export const findChartPeriod = (range: Range) => {
   }
 };
 
+// Converts a given date to a specified time zone
 export const convertToLocalTime = (
   utcTime?: string | null,
   timeZone?: string | null
@@ -51,6 +52,19 @@ export const convertToLocalTime = (
       ? new Date(utcTime).toLocaleString("en-US", { timeZone })
       : utcTime
     : null;
+
+// Returns the same date but for a different time zone
+export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
+  if (date) {
+    if (timeZone) {
+      const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
+      const diff = date.getTime() - localTime.getTime();
+      return new Date(date.getTime() + diff).toISOString();
+    }
+    return date;
+  }
+  return null;
+};
 
 export const convertDailyDataToLocalTime = (
   data: DailyData[],
