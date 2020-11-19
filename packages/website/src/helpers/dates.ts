@@ -45,25 +45,21 @@ export const findChartPeriod = (range: Range) => {
 export const convertToLocalTime = (
   utcTime?: string | null,
   timeZone?: string | null
-): string | null =>
-  // eslint-disable-next-line no-nested-ternary
-  utcTime
-    ? timeZone
-      ? new Date(utcTime).toLocaleString("en-US", { timeZone })
-      : utcTime
-    : null;
+): string | null | undefined => {
+  if (utcTime && timeZone) {
+    return new Date(utcTime).toLocaleString("en-US", { timeZone });
+  }
+  return utcTime;
+};
 
 // Returns the same date but for a different time zone
 export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
-  if (date) {
-    if (timeZone) {
-      const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
-      const diff = date.getTime() - localTime.getTime();
-      return new Date(date.getTime() + diff).toISOString();
-    }
-    return date;
+  if (date && timeZone) {
+    const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
+    const diff = date.getTime() - localTime.getTime();
+    return new Date(date.getTime() + diff).toISOString();
   }
-  return null;
+  return date;
 };
 
 export const convertDailyDataToLocalTime = (
