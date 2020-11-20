@@ -8,6 +8,7 @@ import { Reef, Position, SpotterPosition } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
 import marker from "../../../../assets/marker.png";
+import buoy from "../../../../assets/buoy-marker.svg";
 import {
   reefDraftSelector,
   setReefDraft,
@@ -16,6 +17,13 @@ import {
 const pinIcon = L.icon({
   iconUrl: marker,
   iconSize: [20, 30],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -41],
+});
+
+const buoyIcon = L.icon({
+  iconUrl: buoy,
+  iconSize: [30, 40],
   iconAnchor: [10, 30],
   popupAnchor: [0, -41],
 });
@@ -92,7 +100,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
         ))}
       {!draftReef && spotterPosition && (
         <Marker
-          icon={pinIcon}
+          icon={buoyIcon}
           position={[
             spotterPosition.latitude.value,
             spotterPosition.longitude.value,
