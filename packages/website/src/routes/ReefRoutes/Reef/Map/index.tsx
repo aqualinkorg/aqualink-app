@@ -83,21 +83,20 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
       className={classes.map}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-      {Boolean(draftReef) &&
-        (polygon.type === "Polygon" ? (
-          <Polygon positions={reverseCoords(...polygon.coordinates)} />
-        ) : (
-          <Marker
-            ref={markerRef}
-            draggable={Boolean(draftReef)}
-            ondragend={handleDragChange}
-            icon={pinIcon}
-            position={[
-              draftReef?.coordinates?.latitude || polygon.coordinates[1],
-              draftReef?.coordinates?.longitude || polygon.coordinates[0],
-            ]}
-          />
-        ))}
+      {polygon.type === "Polygon" ? (
+        <Polygon positions={reverseCoords(...polygon.coordinates)} />
+      ) : (
+        <Marker
+          ref={markerRef}
+          draggable={Boolean(draftReef)}
+          ondragend={handleDragChange}
+          icon={pinIcon}
+          position={[
+            draftReef?.coordinates?.latitude || polygon.coordinates[1],
+            draftReef?.coordinates?.longitude || polygon.coordinates[0],
+          ]}
+        />
+      )}
       {!draftReef && spotterPosition && (
         <Marker
           icon={buoyIcon}
