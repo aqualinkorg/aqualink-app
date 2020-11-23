@@ -221,7 +221,7 @@ export async function getSpotterData(
     [[], [], [], [], []],
   );
 
-  const [sofarBottomTemperature, sofarSurfaceTemperature]: [
+  const [sofarSurfaceTemperature, sofarBottomTemperature]: [
     SofarValue[],
     SofarValue[],
   ] = smartMooringData.reduce(
