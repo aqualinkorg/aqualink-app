@@ -221,6 +221,8 @@ export async function getSpotterData(
     [[], [], [], [], []],
   );
 
+  // Sofar increments sensors by distance to the spotter.
+  // Sensor 0 -> surfaceTemp and Sensor 1 -> bottomTemp
   const [sofarSurfaceTemperature, sofarBottomTemperature]: [
     SofarValue[],
     SofarValue[],
