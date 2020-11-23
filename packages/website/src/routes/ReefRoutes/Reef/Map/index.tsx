@@ -13,6 +13,8 @@ import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
+import { userInfoSelector } from "../../../../store/User/userSlice";
+import { isManager } from "../../../../helpers/user";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -33,6 +35,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
   const draftReef = useSelector(reefDraftSelector);
+  const user = useSelector(userInfoSelector);
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -97,7 +100,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
           ]}
         />
       )}
-      {!draftReef && spotterPosition && (
+      {!draftReef && spotterPosition && isManager(user) && (
         <Marker
           icon={buoyIcon}
           position={[

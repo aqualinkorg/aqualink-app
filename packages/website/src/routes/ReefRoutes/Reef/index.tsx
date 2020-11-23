@@ -34,7 +34,7 @@ import {
 import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
-import { isAdmin } from "../../../helpers/isAdmin";
+import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import {
