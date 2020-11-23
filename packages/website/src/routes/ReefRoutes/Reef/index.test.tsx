@@ -7,12 +7,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Reef from ".";
 import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
+import { mockSurvey } from "../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
 jest.mock("./Map", () => "Mock-Map");
 jest.mock("./FeaturedMedia", () => "Mock-FeaturedMedia");
-jest.mock("./Charts", () => "Mock-Charts");
+
+jest.mock("react-chartjs-2", () => ({
+  Line: () => "Mock-Line",
+  Chart: {
+    pluginService: {
+      register: jest.fn(),
+    },
+  },
+}));
 
 describe("Reef Detail Page", () => {
   let elementEmpty: HTMLElement;
@@ -39,6 +48,11 @@ describe("Reef Detail Page", () => {
         loading: false,
         error: null,
       },
+      survey: {
+        selectedSurvey: {
+          details: null,
+        },
+      },
     });
 
     const fullStore = mockStore({
@@ -61,6 +75,11 @@ describe("Reef Detail Page", () => {
         list: [],
         loading: false,
         error: null,
+      },
+      survey: {
+        selectedSurvey: {
+          details: mockSurvey,
+        },
       },
     });
 

@@ -21,14 +21,14 @@ import { Range } from "../../store/Reefs/types";
 export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
-  spotterData?: SpotterData;
+  spotterData?: SpotterData | null;
   startDate?: string;
   endDate?: string;
   chartPeriod?: "hour" | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
-  background: boolean;
+  background?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
