@@ -53,7 +53,7 @@ const SurveyForm = ({
   };
 
   const nativeSubmit = useCallback(
-    (data: any) => {
+    (data: { comments: string }) => {
       if (diveDateTime) {
         const dateTime = new Date(
           setTimeZone(diveDateTime, timeZone) || diveDateTime
