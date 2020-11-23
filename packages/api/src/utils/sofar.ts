@@ -242,8 +242,12 @@ export async function getSpotterData(
   );
 
   return {
-    surfaceTemperature: sofarBottomTemperature,
-    bottomTemperature: sofarSurfaceTemperature,
+    surfaceTemperature: sofarSurfaceTemperature.filter(
+      (data) => !isNil(data.value),
+    ),
+    bottomTemperature: sofarBottomTemperature.filter(
+      (data) => !isNil(data.value),
+    ),
     significantWaveHeight: sofarSignificantWaveHeight,
     wavePeakPeriod: sofarPeakPeriod,
     waveMeanDirection: sofarMeanDirection,
