@@ -86,6 +86,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
+              {spotterSurfaceTemp && " Local"}
             </Typography>
           }
         />

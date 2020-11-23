@@ -44,10 +44,11 @@ export const findChartPeriod = (range: Range) => {
 // Converts a given date to a specified time zone
 export const convertToLocalTime = (
   utcTime?: string | null,
-  timeZone?: string | null
+  timeZone?: string | null,
+  options?: Intl.DateTimeFormatOptions
 ): string | null | undefined => {
   if (utcTime && timeZone) {
-    return new Date(utcTime).toLocaleString("en-US", { timeZone });
+    return new Date(utcTime).toLocaleString("en-US", { ...options, timeZone });
   }
   return utcTime;
 };
