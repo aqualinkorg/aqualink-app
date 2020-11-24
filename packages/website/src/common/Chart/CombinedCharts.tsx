@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useCallback } from "react";
 import {
   withStyles,
   WithStyles,
@@ -41,6 +41,65 @@ const CombinedCharts = ({
   const [open, setOpen] = useState<boolean>(false);
   const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
+  const spotterComponent = useCallback(() => {
+    if (spotterDataLoading) {
+      return (
+        <Box
+          height="20rem"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          p={4}
+        >
+          <CircularProgress size="6rem" thickness={1} />
+        </Box>
+      );
+    }
+
+    if (spotterData && spotterData.bottomTemperature.length > 1) {
+      return (
+        <ChartWithTooltip
+          className={classes.chart}
+          reefId={reefId}
+          dailyData={dailyData}
+          spotterData={convertSpotterDataToLocalTime(spotterData, timeZone)}
+          startDate={startDate}
+          endDate={endDate}
+          chartPeriod={chartPeriod}
+          surveys={[]}
+          depth={depth}
+          maxMonthlyMean={null}
+          temperatureThreshold={null}
+          background={false}
+        >
+          <Typography className={classes.graphTitle} variant="h6">
+            HOURLY WATER TEMPERATURE (°C)
+          </Typography>
+        </ChartWithTooltip>
+      );
+    }
+    return (
+      <Box mt="2rem">
+        <Typography>
+          No Smart Buoy data available in this time range.
+        </Typography>
+      </Box>
+    );
+  }, [
+    chartPeriod,
+    classes.chart,
+    classes.graphTitle,
+    dailyData,
+    depth,
+    endDate,
+    reefId,
+    spotterData,
+    spotterDataLoading,
+    startDate,
+    timeZone,
+  ]);
+
   return (
     <div>
       <ChartWithTooltip
@@ -69,46 +128,7 @@ const CombinedCharts = ({
           <DatePicker value={pickerDate} onChange={onDateChange} />
         </Grid>
       )}
-      {hasSpotterData &&
-        (spotterDataLoading ? (
-          <Box
-            height="20rem"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-            p={4}
-          >
-            <CircularProgress size="6rem" thickness={1} />
-          </Box>
-        ) : (
-          (spotterData && spotterData.bottomTemperature.length > 1 && (
-            <ChartWithTooltip
-              className={classes.chart}
-              reefId={reefId}
-              dailyData={dailyData}
-              spotterData={convertSpotterDataToLocalTime(spotterData, timeZone)}
-              startDate={startDate}
-              endDate={endDate}
-              chartPeriod={chartPeriod}
-              surveys={[]}
-              depth={depth}
-              maxMonthlyMean={null}
-              temperatureThreshold={null}
-              background={false}
-            >
-              <Typography className={classes.graphTitle} variant="h6">
-                HOURLY WATER TEMPERATURE (°C)
-              </Typography>
-            </ChartWithTooltip>
-          )) || (
-            <Box mt="2rem">
-              <Typography>
-                No Smart Buoy data available in this time range.
-              </Typography>
-            </Box>
-          )
-        ))}
+      {hasSpotterData && spotterComponent()}
     </div>
   );
 };
