@@ -18,7 +18,7 @@ import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import CombinedCharts from "../../../common/CombinedCharts";
+import CombinedCharts from "../../../common/Chart/CombinedCharts";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";

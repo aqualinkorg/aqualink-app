@@ -12,9 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
-import ChartWithTooltip, {
-  ChartWithTooltipProps,
-} from "../Chart/ChartWithTooltip";
+import ChartWithTooltip, { ChartWithTooltipProps } from "./ChartWithTooltip";
 import SelectRange from "../SelectRange";
 import DatePicker from "../Datepicker";
 import { Range } from "../../store/Reefs/types";

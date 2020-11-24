@@ -24,7 +24,7 @@ import {
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
-import CombinedCharts from "../../../common/CombinedCharts";
+import CombinedCharts from "../../../common/Chart/CombinedCharts";
 import type { Range, Reef } from "../../../store/Reefs/types";
 import {
   surveyListSelector,
