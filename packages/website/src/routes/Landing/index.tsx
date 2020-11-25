@@ -113,6 +113,9 @@ const styles = (theme: Theme) =>
       backgroundSize: "cover",
       left: "10rem",
       height: "54rem",
+      [theme.breakpoints.down("xs")]: {
+        height: "36rem",
+      },
     },
     container: {
       [theme.breakpoints.up("sm")]: {

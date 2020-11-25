@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, Theme } from "@material-ui/core/styles";
 import { MuiPickersOverrides } from "@material-ui/pickers/typings/overrides";
 
 type OverridesNameToClassKey = {
@@ -33,7 +33,7 @@ declare module "@material-ui/core/styles/createBreakpoints" {
   }
 }
 
-const theme: any = createMuiTheme({
+const theme: Theme = createMuiTheme({
   palette: {
     primary: {
       main: lightBlue,
@@ -78,6 +78,7 @@ const theme: any = createMuiTheme({
       h1: {
         fontSize: 52,
         fontFamily,
+        fontWeight: 300,
       },
       h2: {
         fontSize: 48,
@@ -90,6 +91,7 @@ const theme: any = createMuiTheme({
       h4: {
         fontSize: 26,
         fontFamily,
+        fontWeight: 400,
       },
       h5: {
         fontSize: 20,
@@ -191,5 +193,21 @@ const theme: any = createMuiTheme({
     },
   },
 });
+
+// eslint-disable-next-line fp/no-mutation
+theme.typography = {
+  ...theme.typography,
+  h1: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 38,
+    },
+  },
+  h4: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 22,
+      fontWeight: 400,
+    },
+  },
+};
 
 export default theme;
