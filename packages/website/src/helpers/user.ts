@@ -7,3 +7,8 @@ export const isAdmin = (user: User | null, reefId: number): boolean => {
           Boolean(user.administeredReefs?.find((item) => item.id === reefId)))
     : false;
 };
+
+export const isManager = (user: User | null) =>
+  user
+    ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
+    : false;
