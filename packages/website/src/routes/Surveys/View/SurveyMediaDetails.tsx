@@ -36,7 +36,7 @@ import {
 } from "../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import surveyServices from "../../../services/surveyServices";
-import { isAdmin } from "../../../helpers/isAdmin";
+import { isAdmin } from "../../../helpers/user";
 
 const carouselSettings = {
   dots: true,

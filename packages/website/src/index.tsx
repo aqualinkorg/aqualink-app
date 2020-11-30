@@ -4,6 +4,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import "./index.css";
 import "leaflet/dist/leaflet.css";
 import "./assets/css/bootstrap.css";
+import jwt from "jsonwebtoken";
 import { Provider } from "react-redux";
 import App from "./layout/App";
 import { store } from "./store/configure";
@@ -18,18 +19,24 @@ app.auth().onAuthStateChanged((user) => {
       (response: AxiosResponse) => Promise.resolve(response),
       async (error: AxiosError) => {
         const { config, status } = error?.response || {};
-        if (config && status === 401) {
-          const token = await user.getIdToken();
-          store.dispatch(setToken(token));
-
-          const newConfig = {
-            ...config,
-            headers: {
-              ...config.headers,
-              Authorization: `Bearer ${token}`,
-            },
-          };
-          return requestsConfig.agent.request(newConfig);
+        const oldToken = store.getState().user.userInfo?.token;
+        if (oldToken) {
+          const decoded = jwt.decode(oldToken) as { exp: number };
+          const now = new Date().getTime();
+          if (config && status === 401 && decoded.exp < now) {
+            // 401 - Unauthorized eror was due to an expired token, renew it.
+            const newToken = await user.getIdToken();
+            store.dispatch(setToken(newToken));
+            const newConfig = {
+              ...config,
+              headers: {
+                ...config.headers,
+                Authorization: `Bearer ${newToken}`,
+              },
+            };
+            return requestsConfig.agent.request(newConfig);
+          }
+          return Promise.reject(error);
         }
         return Promise.reject(error);
       }
