@@ -24,7 +24,7 @@ app.auth().onAuthStateChanged((user) => {
           const decoded = jwt.decode(oldToken) as { exp: number };
           const now = new Date().getTime();
           if (config && status === 401 && decoded.exp < now) {
-            // Unauthorized due to token expiration
+            // 401 - Unauthorized eror was due to an expired token, renew it.
             const newToken = await user.getIdToken();
             store.dispatch(setToken(newToken));
             const newConfig = {
