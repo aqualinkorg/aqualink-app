@@ -25,10 +25,11 @@ import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
 
 const SMALL_HEIGHT = 720;
+const SMALL_WIDTH = 600;
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
-  const windowSize = useWindowSize();
+  const { height, width } = useWindowSize() || {};
 
   const [order, setOrder] = useState<Order>("desc");
   const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
@@ -38,6 +39,8 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  const showTable = (width && width >= SMALL_WIDTH) || openDrawer;
 
   return (
     <>
@@ -62,40 +65,44 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
           </Typography>
         )}
       </Hidden>
-      <SelectedReefCard />
-      <Box
-        className={
-          windowSize && windowSize.height > SMALL_HEIGHT
-            ? `${classes.tableHolder} ${classes.scrollable}`
-            : `${classes.tableHolder}`
-        }
-        display="flex"
-        flexDirection="column"
-        flex={1}
-      >
-        <TableContainer>
-          <Table stickyHeader className={classes.table}>
-            <Hidden xsDown>
-              <EnhancedTableHead
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-              />
-            </Hidden>
-            <ReefTableBody order={order} orderBy={orderBy} />
-          </Table>
-        </TableContainer>
-        {loading && (
+      {showTable && (
+        <>
+          <SelectedReefCard />
           <Box
+            className={
+              height && height > SMALL_HEIGHT
+                ? `${classes.tableHolder} ${classes.scrollable}`
+                : `${classes.tableHolder}`
+            }
             display="flex"
+            flexDirection="column"
             flex={1}
-            alignItems="center"
-            justifyContent="center"
           >
-            <CircularProgress size="10rem" thickness={1} />
+            <TableContainer>
+              <Table stickyHeader className={classes.table}>
+                <Hidden xsDown>
+                  <EnhancedTableHead
+                    order={order}
+                    orderBy={orderBy}
+                    onRequestSort={handleRequestSort}
+                  />
+                </Hidden>
+                <ReefTableBody order={order} orderBy={orderBy} />
+              </Table>
+            </TableContainer>
+            {loading && (
+              <Box
+                display="flex"
+                flex={1}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <CircularProgress size="10rem" thickness={1} />
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
+        </>
+      )}
     </>
   );
 };
