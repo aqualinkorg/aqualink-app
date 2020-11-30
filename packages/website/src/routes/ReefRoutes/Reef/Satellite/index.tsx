@@ -86,18 +86,12 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
                 </Typography>
                 {tooltipTitle ? (
                   <Tooltip title={tooltipTitle}>
-                    <Typography
-                      className={classes.contentTextValues}
-                      variant="h2"
-                    >
+                    <Typography className={classes.contentTextValues}>
                       {value}
                     </Typography>
                   </Tooltip>
                 ) : (
-                  <Typography
-                    className={classes.contentTextValues}
-                    variant="h2"
-                  >
+                  <Typography className={classes.contentTextValues}>
                     {value}
                   </Typography>
                 )}

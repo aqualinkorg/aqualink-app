@@ -113,7 +113,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 >
                   {label}
                 </Typography>
-                <Typography className={classes.contentTextValues} variant="h2">
+                <Typography className={classes.contentTextValues}>
                   {value}
                 </Typography>
               </Grid>

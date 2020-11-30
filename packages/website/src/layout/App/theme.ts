@@ -83,6 +83,7 @@ const theme: Theme = createMuiTheme({
       h2: {
         fontSize: 48,
         fontFamily,
+        fontWeight: 300,
       },
       h3: {
         fontSize: 32,
@@ -200,6 +201,11 @@ theme.typography = {
   h1: {
     [theme.breakpoints.down("xs")]: {
       fontSize: 38,
+    },
+  },
+  h2: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 34,
     },
   },
   h4: {
