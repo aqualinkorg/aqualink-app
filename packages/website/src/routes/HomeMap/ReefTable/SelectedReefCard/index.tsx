@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from "react";
+import React from "react";
 import { isNumber } from "lodash";
 import {
   Box,
@@ -14,7 +14,7 @@ import {
 import LaunchIcon from "@material-ui/icons/Launch";
 import { Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
@@ -23,16 +23,11 @@ import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingW
 import {
   reefDetailsSelector,
   reefLoadingSelector,
-  reefRequest,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
-import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
-import {
-  surveyListSelector,
-  surveysRequest,
-} from "../../../../store/Survey/surveyListSlice";
+import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 
 const useStyles = makeStyles((theme) => ({
@@ -282,19 +277,7 @@ const SelectedReefCard = () => {
   const classes = useStyles();
   const reef = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
-  const reefOnMap = useSelector(reefOnMapSelector);
   const surveyList = useSelector(surveyListSelector);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!reefOnMap) {
-      dispatch(reefRequest(featuredReefId));
-      dispatch(surveysRequest(featuredReefId));
-    } else {
-      dispatch(reefRequest(`${reefOnMap.id}`));
-      dispatch(surveysRequest(`${reefOnMap.id}`));
-    }
-  }, [dispatch, reefOnMap]);
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 

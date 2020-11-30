@@ -23,7 +23,7 @@ import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import reefServices from "../../../../services/reefServices";
 import { Pois, Reef } from "../../../../store/Reefs/types";
-import { isAdmin } from "../../../../helpers/isAdmin";
+import { isAdmin } from "../../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 import { useBodyLength } from "../../../../helpers/useBodyLength";
 import surveyServices from "../../../../services/surveyServices";
