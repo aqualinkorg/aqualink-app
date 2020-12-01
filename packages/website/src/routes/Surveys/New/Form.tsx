@@ -10,7 +10,7 @@ import {
 import { userInfoSelector } from "../../../store/User/userSlice";
 import Form from "../../../common/SurveyForm";
 
-const SurveyForm = ({ reefId, changeTab }: SurveyFormProps) => {
+const SurveyForm = ({ reefId, timeZone, changeTab }: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
@@ -56,7 +56,7 @@ const SurveyForm = ({ reefId, changeTab }: SurveyFormProps) => {
           </Alert>
         </Collapse>
       </Grid>
-      <Form reefId={reefId} onSubmit={onSubmit} />
+      <Form reefId={reefId} timeZone={timeZone} onSubmit={onSubmit} />
     </>
   );
 };
@@ -64,6 +64,11 @@ const SurveyForm = ({ reefId, changeTab }: SurveyFormProps) => {
 interface SurveyFormProps {
   changeTab: (index: number) => void;
   reefId: number;
+  timeZone?: string | null;
 }
+
+SurveyForm.defaultProps = {
+  timeZone: null,
+};
 
 export default SurveyForm;

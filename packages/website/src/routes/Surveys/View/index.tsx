@@ -44,6 +44,10 @@ import {
   subtractFromDate,
   findChartPeriod,
   findMaxDate,
+  convertToLocalTime,
+  convertDailyDataToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertSurveysToLocalTime,
 } from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
@@ -62,6 +66,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const bodyLength = useBodyLength();
+  const startDate = endDate ? subtractFromDate(endDate, range) : undefined;
 
   useEffect(() => {
     dispatch(surveysRequest(`${reef.id}`));
@@ -188,8 +193,14 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 <Grid container justify="center" item xs={12}>
                   <Charts
                     reefId={reef.id}
-                    dailyData={reef.dailyData}
-                    surveys={surveyList}
+                    dailyData={convertDailyDataToLocalTime(
+                      reef.dailyData,
+                      reef.timezone
+                    )}
+                    surveys={convertSurveysToLocalTime(
+                      surveyList,
+                      reef.timezone
+                    )}
                     depth={reef.depth}
                     maxMonthlyMean={reef.maxMonthlyMean}
                     temperatureThreshold={
@@ -240,10 +251,22 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       <Grid container justify="center" item xs={12}>
                         <Charts
                           reefId={reef.id}
-                          dailyData={reef.dailyData}
-                          spotterData={spotterData}
-                          startDate={subtractFromDate(endDate, range)}
-                          endDate={endDate}
+                          dailyData={convertDailyDataToLocalTime(
+                            reef.dailyData,
+                            reef.timezone
+                          )}
+                          spotterData={convertSpotterDataToLocalTime(
+                            spotterData,
+                            reef.timezone
+                          )}
+                          startDate={
+                            convertToLocalTime(startDate, reef.timezone) ||
+                            startDate
+                          }
+                          endDate={
+                            convertToLocalTime(endDate, reef.timezone) ||
+                            endDate
+                          }
                           chartPeriod={findChartPeriod(range)}
                           surveys={[]}
                           depth={reef.depth}

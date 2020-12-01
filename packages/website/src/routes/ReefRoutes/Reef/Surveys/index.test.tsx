@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Surveys from ".";
 import { mockUser } from "../../../../mocks/mockUser";
 import { mockSurvey } from "../../../../mocks/mockSurvey";
+import { mockReef } from "../../../../mocks/mockReef";
 
 const mockStore = configureStore([]);
 
@@ -31,7 +32,7 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Surveys reefId={0} />
+          <Surveys reef={mockReef} />
         </Router>
       </Provider>
     ).container;

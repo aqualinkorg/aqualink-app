@@ -27,10 +27,12 @@ import { surveyListSelector } from "../../../../../store/Survey/surveyListSlice"
 import incomingStyles from "../styles";
 import filterSurveys from "../helpers";
 import { SurveyMedia } from "../../../../../store/Survey/types";
+import { convertToLocalTime } from "../../../../../helpers/dates";
 
 const SurveyTimeline = ({
   isAdmin,
   reefId,
+  timeZone,
   observation,
   point,
   classes,
@@ -74,7 +76,9 @@ const SurveyTimeline = ({
                     className={classes.timelineOppositeContent}
                   >
                     <Typography variant="h6" className={classes.dates}>
-                      {moment(survey.diveDate).format("MM/DD/YYYY")}
+                      {moment(
+                        convertToLocalTime(survey.diveDate, timeZone)
+                      ).format("MM/DD/YYYY")}
                     </Typography>
                   </TimelineOppositeContent>
                 )}
@@ -189,10 +193,15 @@ const styles = (theme: Theme) =>
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
+  timeZone?: string | null;
   isAdmin: boolean;
   observation: SurveyMedia["observations"] | "any";
   point: number;
 }
+
+SurveyTimeline.defaultProps = {
+  timeZone: null,
+};
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &
   WithStyles<typeof styles>;

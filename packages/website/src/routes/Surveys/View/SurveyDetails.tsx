@@ -11,6 +11,7 @@ import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
 } from "../../../helpers/surveyMedia";
+import { convertToLocalTime } from "../../../helpers/dates";
 
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
@@ -33,7 +34,9 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
             <Typography variant="subtitle1">
-              {moment(survey.diveDate).format("MM/DD/YYYY [at] h:mm A")}
+              {moment(
+                convertToLocalTime(survey.diveDate, reef.timezone)
+              ).format("MM/DD/YYYY [at] h:mm A")}
             </Typography>
           </Grid>
           <Grid container item>
