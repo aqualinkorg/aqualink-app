@@ -923,6 +923,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </mock-typography>
                     <mock-typography
                       classname="Satellite-contentTextValues-164"
+                      variant="h3"
                     >
                       29.0 °C
                     </mock-typography>
@@ -941,6 +942,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <mock-typography
                         classname="Satellite-contentTextValues-164"
+                        variant="h3"
                       >
                         0.0 °C
                       </mock-typography>
@@ -960,6 +962,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <mock-typography
                         classname="Satellite-contentTextValues-164"
+                        variant="h3"
                       >
                         4.9 DHW
                       </mock-typography>
@@ -1221,6 +1224,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </mock-typography>
                     <mock-typography
                       classname="Sensor-contentTextValues-174"
+                      variant="h3"
                     >
                       - - °C
                     </mock-typography>
@@ -1236,6 +1240,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </mock-typography>
                     <mock-typography
                       classname="Sensor-contentTextValues-174"
+                      variant="h3"
                     >
                       39.0 °C
                     </mock-typography>
