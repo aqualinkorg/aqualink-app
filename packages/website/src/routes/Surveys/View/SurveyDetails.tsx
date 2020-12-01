@@ -36,7 +36,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               {moment(survey.diveDate).format("MM/DD/YYYY [at] h:mm A")}
             </Typography>
           </Grid>
-          <Grid container item direction="row">
+          <Grid container item>
             <Grid container item direction="column" xs={12} md={4}>
               <Typography style={{ fontSize: 18 }}>{regionName}</Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>

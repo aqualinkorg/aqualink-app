@@ -104,7 +104,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           flexGrow={1}
           style={{ position: "relative" }}
         >
-          <Grid container direction="row" spacing={3}>
+          <Grid container spacing={3}>
             {metrics.map(({ label, value }) => (
               <Grid key={label} item xs={12}>
                 <Typography

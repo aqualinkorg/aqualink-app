@@ -50,7 +50,7 @@ const Homepage = ({ classes }: HomepageProps) => {
         <HomepageNavBar searchLocation />
       </div>
       <div className={classes.root}>
-        <Grid container direction="row">
+        <Grid container>
           <Grid className={classes.map} item xs={12} sm={6}>
             <HomepageMap />
           </Grid>
