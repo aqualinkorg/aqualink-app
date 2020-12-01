@@ -146,7 +146,7 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 160,
+      width: 170,
       minHeight: 60,
     },
     tooltipCard: {
