@@ -5,7 +5,7 @@ import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import { Reef, Position, SpotterPosition } from "../../../../store/Reefs/types";
-import { mapBounds } from "../../../../helpers/mapBounds";
+import { mapBounds, getTileURL } from "../../../../helpers/map";
 
 import marker from "../../../../assets/marker.png";
 import buoy from "../../../../assets/buoy-marker.svg";
@@ -85,7 +85,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
       scrollWheelZoom={false}
       className={classes.map}
     >
-      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <TileLayer url={getTileURL()} />
       {polygon.type === "Polygon" ? (
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (

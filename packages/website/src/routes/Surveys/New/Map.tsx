@@ -5,7 +5,7 @@ import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import { Reef } from "../../../store/Reefs/types";
-import { mapBounds } from "../../../helpers/mapBounds";
+import { getTileURL, mapBounds } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import {
@@ -87,7 +87,7 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
 
   return (
     <Map ref={mapRef} className={classes.map}>
-      <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
+      <TileLayer url={getTileURL()} />
       {markerLat && markerLng && (
         <Marker icon={pinIcon} position={[markerLat, markerLng]} />
       )}

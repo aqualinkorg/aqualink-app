@@ -13,3 +13,10 @@ export const mapBounds = (polygon: Polygon): LatLngBounds => {
 
   return latLngBounds([south, west], [north, east]);
 };
+
+export const getTileURL = (): string => {
+  const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  return accessToken
+    ? `https://api.mapbox.com/styles/v1/eric-ovio/ckesyzu658klw19s6zc0adlgp/tiles/{z}/{x}/{y}@2x?access_token=${accessToken}`
+    : "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+};
