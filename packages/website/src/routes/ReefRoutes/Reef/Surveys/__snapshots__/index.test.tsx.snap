@@ -314,7 +314,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                           >
                             <a
-                              href="/reefs/0/survey_details/46"
+                              href="/reefs/1/survey_details/46"
                               style="text-decoration: none;"
                             >
                               <mock-button
@@ -437,7 +437,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
                           >
                             <a
-                              href="/reefs/0/survey_details/46"
+                              href="/reefs/1/survey_details/46"
                               style="text-decoration: none;"
                             >
                               <mock-button

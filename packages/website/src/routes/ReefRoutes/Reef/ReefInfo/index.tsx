@@ -27,6 +27,7 @@ import { Reef, ReefUpdateParams } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import reefServices from "../../../../services/reefServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
+import { convertToLocalTime } from "../../../../helpers/dates";
 
 const ReefNavBar = ({
   hasDailyData,
@@ -159,7 +160,7 @@ const ReefNavBar = ({
                   {lastSurvey && (
                     <Box>
                       <Typography variant="subtitle1">{`Last surveyed: ${moment(
-                        lastSurvey
+                        convertToLocalTime(lastSurvey, reef.timezone)
                       ).format("MMM DD[,] YYYY")}`}</Typography>
                     </Box>
                   )}
