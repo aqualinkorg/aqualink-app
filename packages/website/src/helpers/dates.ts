@@ -2,6 +2,8 @@ import { DailyData, Range, SpotterData } from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
+type Time = string | null | undefined;
+
 export const subtractFromDate = (endDate: string, amount: Range): string => {
   const date = new Date(endDate);
   const day = 1000 * 60 * 60 * 24;
@@ -43,10 +45,10 @@ export const findChartPeriod = (range: Range) => {
 
 // Converts a given date to a specified time zone
 export const convertToLocalTime = (
-  utcTime?: string | null,
+  utcTime: Time,
   timeZone?: string | null,
   options?: Intl.DateTimeFormatOptions
-): string | null | undefined => {
+): Time => {
   if (utcTime && timeZone) {
     return new Date(utcTime).toLocaleString("en-US", { ...options, timeZone });
   }
