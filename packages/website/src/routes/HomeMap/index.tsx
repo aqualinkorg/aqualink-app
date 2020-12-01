@@ -108,7 +108,7 @@ const styles = () =>
     },
     openDrawer: {
       height: "calc(95% - 64px);", // subtract height of the navbar
-      overfow: "auto",
+      overflow: "auto",
     },
     closedDrawer: {
       height: "50px",
