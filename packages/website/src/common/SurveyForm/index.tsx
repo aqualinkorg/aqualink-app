@@ -90,7 +90,7 @@ const SurveyForm = ({
           <Typography variant="h6">Dive Date</Typography>
         </Grid>
         <Grid item xs={5}>
-          <Typography variant="h6">Dive Time</Typography>
+          <Typography variant="h6">Dive Local Time</Typography>
         </Grid>
       </Grid>
       <Grid
