@@ -211,7 +211,6 @@ theme.typography = {
   h4: {
     [theme.breakpoints.down("sm")]: {
       fontSize: 22,
-      fontWeight: 400,
     },
   },
 };
