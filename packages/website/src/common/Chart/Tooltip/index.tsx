@@ -63,6 +63,7 @@ const Tooltip = ({
     year: "2-digit",
     hour: spotterSurfaceTemp ? "2-digit" : undefined,
     minute: spotterSurfaceTemp ? "2-digit" : undefined,
+    timeZoneName: "short",
   });
   const tooltipLines: {
     temperature: number | null;
@@ -86,7 +87,6 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {spotterSurfaceTemp && " Local"}
             </Typography>
           }
         />
