@@ -39,7 +39,7 @@ export const createUser = createAsyncThunk<
     let user;
     try {
       // eslint-disable-next-line fp/no-mutation
-      user = (await userServices.createUser(email, password)).user;
+      user = (await userServices.createUser(email, password))?.user;
       const token = await user?.getIdToken();
 
       const { data } = await userServices.storeUser(
@@ -76,7 +76,7 @@ export const signInUser = createAsyncThunk<
   "user/signIn",
   async ({ email, password }: UserSignInParams, { rejectWithValue }) => {
     try {
-      const { user } = await userServices.signInUser(email, password);
+      const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
       return {

@@ -28,15 +28,17 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    app.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in
-        user.getIdToken().then((token) => {
-          dispatch(getSelf(token));
-        });
-      }
-      setRender(true);
-    });
+    if (app) {
+      app.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in
+          user.getIdToken().then((token) => {
+            dispatch(getSelf(token));
+          });
+        }
+      });
+    }
+    setRender(true);
     initGA();
   }, [dispatch]);
 
