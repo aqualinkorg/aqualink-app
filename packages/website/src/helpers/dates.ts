@@ -50,7 +50,10 @@ export const convertToLocalTime = (
   options?: Intl.DateTimeFormatOptions
 ): DateString => {
   if (utcTime && timeZone) {
-    return new Date(utcTime).toLocaleString("en-US", { ...options, timeZone });
+    return new Date(utcTime).toLocaleString("en-US", {
+      ...options,
+      timeZone,
+    });
   }
   return utcTime;
 };

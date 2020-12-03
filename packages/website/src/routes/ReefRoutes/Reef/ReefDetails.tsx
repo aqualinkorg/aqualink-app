@@ -164,6 +164,7 @@ const ReefDetails = ({
               )}
               surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
               depth={reef.depth}
+              timeZone={reef.timezone}
               maxMonthlyMean={reef.maxMonthlyMean || null}
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
@@ -216,6 +217,7 @@ const ReefDetails = ({
                     chartPeriod={chartPeriod}
                     surveys={[]}
                     depth={reef.depth}
+                    timeZone={reef.timezone}
                     maxMonthlyMean={null}
                     temperatureThreshold={null}
                     background={false}

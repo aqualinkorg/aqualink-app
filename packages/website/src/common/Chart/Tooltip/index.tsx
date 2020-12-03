@@ -49,6 +49,7 @@ const TemperatureMetric = ({
 const Tooltip = ({
   reefId,
   date,
+  timeZone,
   depth,
   bottomTemperature,
   spotterSurfaceTemp,
@@ -60,6 +61,7 @@ const Tooltip = ({
   const hourlyOptions = {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: timeZone || "UTC",
     timeZoneName: "short",
   };
   const dateString = new Date(date).toLocaleString("en", {
@@ -194,6 +196,7 @@ const styles = () =>
 export interface TooltipData {
   reefId: number;
   date: string;
+  timeZone?: string | null;
   depth: number | null;
   spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
