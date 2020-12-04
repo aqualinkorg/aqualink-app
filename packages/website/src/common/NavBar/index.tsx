@@ -158,12 +158,12 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                 <>
                   <Grid item>
                     <Button onClick={() => handleSignInDialog(true)}>
-                      SIGN IN
+                      LOG IN
                     </Button>
                   </Grid>
                   <Grid item>
                     <Button onClick={() => handleRegisterDialog(true)}>
-                      REGISTER
+                      SIGN UP
                     </Button>
                   </Grid>
                 </>
