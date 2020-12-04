@@ -158,7 +158,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                 <>
                   <Grid item>
                     <Button onClick={() => handleSignInDialog(true)}>
-                      LOG IN
+                      SIGN IN
                     </Button>
                   </Grid>
                   <Grid item>
