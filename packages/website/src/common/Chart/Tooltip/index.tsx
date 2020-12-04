@@ -58,6 +58,7 @@ const Tooltip = ({
   surveyId,
   classes,
 }: TooltipProps) => {
+  const hourlyData = !isNull(spotterSurfaceTemp);
   // Date formatting
   const hourlyOptions = {
     hour: "2-digit",
@@ -67,7 +68,7 @@ const Tooltip = ({
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
-    ...(!isNull(spotterSurfaceTemp) ? hourlyOptions : {}),
+    ...(hourlyData ? hourlyOptions : {}),
   });
   const timeZoneName = new Date(date)
     .toLocaleString("en", {
@@ -98,7 +99,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {!isNull(spotterSurfaceTemp) && ` ${timeZoneName}`}
+              {hourlyData && timeZoneName && ` ${timeZoneName}`}
             </Typography>
           }
         />
