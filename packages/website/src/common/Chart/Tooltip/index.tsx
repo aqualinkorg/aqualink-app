@@ -11,8 +11,8 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
 import styled from "@material-ui/core/styles/styled";
+
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const Circle = styled("div")<{}, { color: string; size?: number }>(
@@ -61,8 +61,6 @@ const Tooltip = ({
   const hourlyOptions = {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: timeZone || "UTC",
-    timeZoneName: "short",
   };
   const dateString = new Date(date).toLocaleString("en", {
     day: "2-digit",
@@ -70,6 +68,13 @@ const Tooltip = ({
     year: "2-digit",
     ...(spotterSurfaceTemp ? hourlyOptions : {}),
   });
+  const timeZoneName = new Date(date)
+    .toLocaleString("en", {
+      timeZone: timeZone || "UTC",
+      timeZoneName: "short",
+    })
+    .split(" ")[3];
+
   const tooltipLines: {
     temperature: number | null;
     color: string;
@@ -92,6 +97,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
+              {spotterSurfaceTemp && ` ${timeZoneName}`}
             </Typography>
           }
         />
@@ -151,7 +157,7 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 160,
+      width: 180,
       minHeight: 60,
     },
     tooltipCard: {

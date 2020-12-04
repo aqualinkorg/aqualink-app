@@ -93,7 +93,7 @@ function ChartWithTooltip({
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 80;
+    const left = position.left + tooltipModel.caretX - 90;
     const top =
       position.top +
       tooltipModel.caretY -
