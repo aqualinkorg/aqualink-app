@@ -256,7 +256,7 @@ const SignInDialog = ({
                       }}
                       color="primary"
                     >
-                      REGISTER
+                      SIGN UP
                     </Button>
                   </Typography>
                 </Grid>
