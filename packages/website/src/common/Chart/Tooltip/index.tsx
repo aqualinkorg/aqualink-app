@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
+import { isNull } from "lodash";
 
 import { formatNumber } from "../../../helpers/numberUtils";
 
@@ -66,7 +67,7 @@ const Tooltip = ({
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
-    ...(spotterSurfaceTemp ? hourlyOptions : {}),
+    ...(!isNull(spotterSurfaceTemp) ? hourlyOptions : {}),
   });
   const timeZoneName = new Date(date)
     .toLocaleString("en", {
@@ -97,7 +98,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {spotterSurfaceTemp && ` ${timeZoneName}`}
+              {!isNull(spotterSurfaceTemp) && ` ${timeZoneName}`}
             </Typography>
           }
         />
