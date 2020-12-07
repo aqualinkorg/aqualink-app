@@ -13,36 +13,38 @@ import requestsConfig from "./helpers/requests";
 import app from "./firebase";
 import { setToken } from "./store/User/userSlice";
 
-app.auth().onAuthStateChanged((user) => {
-  if (user) {
-    requestsConfig.agent.interceptors.response.use(
-      (response: AxiosResponse) => Promise.resolve(response),
-      async (error: AxiosError) => {
-        const { config, status } = error?.response || {};
-        const oldToken = store.getState().user.userInfo?.token;
-        if (oldToken) {
-          const decoded = jwt.decode(oldToken) as { exp: number };
-          const now = new Date().getTime();
-          if (config && status === 401 && decoded.exp < now) {
-            // 401 - Unauthorized eror was due to an expired token, renew it.
-            const newToken = await user.getIdToken();
-            store.dispatch(setToken(newToken));
-            const newConfig = {
-              ...config,
-              headers: {
-                ...config.headers,
-                Authorization: `Bearer ${newToken}`,
-              },
-            };
-            return requestsConfig.agent.request(newConfig);
+if (app) {
+  app.auth().onAuthStateChanged((user) => {
+    if (user) {
+      requestsConfig.agent.interceptors.response.use(
+        (response: AxiosResponse) => Promise.resolve(response),
+        async (error: AxiosError) => {
+          const { config, status } = error?.response || {};
+          const oldToken = store.getState().user.userInfo?.token;
+          if (oldToken) {
+            const decoded = jwt.decode(oldToken) as { exp: number };
+            const now = new Date().getTime();
+            if (config && status === 401 && decoded.exp < now) {
+              // 401 - Unauthorized eror was due to an expired token, renew it.
+              const newToken = await user.getIdToken();
+              store.dispatch(setToken(newToken));
+              const newConfig = {
+                ...config,
+                headers: {
+                  ...config.headers,
+                  Authorization: `Bearer ${newToken}`,
+                },
+              };
+              return requestsConfig.agent.request(newConfig);
+            }
+            return Promise.reject(error);
           }
           return Promise.reject(error);
         }
-        return Promise.reject(error);
-      }
-    );
-  }
-});
+      );
+    }
+  });
+}
 
 ReactDOM.render(
   <>
