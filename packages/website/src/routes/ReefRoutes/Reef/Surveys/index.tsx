@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useEffect, ChangeEvent } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 import {
   withStyles,
   WithStyles,
@@ -211,6 +217,16 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
     [editPoiNameDraft, editPoiNameEnabled, point, pointOptions, reef.id, user]
   );
 
+  const onKeyPress = useCallback(
+    (id: number) => (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "Enter") {
+        submitPoiNameUpdate(id);
+        event.stopPropagation();
+      }
+    },
+    [submitPoiNameUpdate]
+  );
+
   const deletePoiDialogActions: Action[] = [
     {
       size: "small",
@@ -275,6 +291,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             toggleEditPoiNameEnabled={toggleEditPoiNameEnabled}
             submitPoiNameUpdate={submitPoiNameUpdate}
             onDeleteButtonClick={onDeletePoiButtonClick}
+            onKeyPress={onKeyPress}
           />
           <Grid
             container

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, KeyboardEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,7 +10,7 @@ import {
   MenuItem,
   Select,
   IconButton,
-  TextField,
+  OutlinedInput,
 } from "@material-ui/core";
 import { Check, Close, Create, DeleteOutline } from "@material-ui/icons";
 
@@ -26,6 +26,7 @@ const PointSelector = ({
   isReefAdmin,
   editPoiNameLoading,
   onChangePoiName,
+  onKeyPress,
   handlePointChange,
   toggleEditPoiNameEnabled,
   submitPoiNameUpdate,
@@ -77,19 +78,15 @@ const PointSelector = ({
                       >
                         <Grid item>
                           {editPoiNameEnabled[item.id] ? (
-                            <TextField
+                            <OutlinedInput
+                              autoFocus
                               className={classes.editPoiTextField}
-                              variant="outlined"
                               fullWidth
                               value={editPoiNameDraft[item.id]}
                               onClick={(event) => event.stopPropagation()}
+                              onKeyPress={onKeyPress(item.id)}
                               onChange={onChangePoiName(item.id)}
                               error={editPoiNameDraft[item.id] === ""}
-                              helperText={
-                                editPoiNameDraft[item.id] === ""
-                                  ? "Cannot be empty"
-                                  : ""
-                              }
                             />
                           ) : (
                             `${item.name}`
@@ -216,6 +213,7 @@ interface PointSelectorIncomingProps {
   onChangePoiName: (
     key: number
   ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onKeyPress: (id: number) => (event: KeyboardEvent<HTMLDivElement>) => void;
   handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
   toggleEditPoiNameEnabled: (
     enabled: boolean,
