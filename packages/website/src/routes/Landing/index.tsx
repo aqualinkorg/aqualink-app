@@ -53,7 +53,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid container item sm={9} md={4}>
               <Box mt="4rem" display="flex">
                 <Typography variant="h4" color="textPrimary">
-                  A tool for people on the front line of Ocean conservation
+                  A tool for people on the front lines of ocean conservation
                 </Typography>
               </Box>
             </Grid>

@@ -163,7 +163,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
                   </Grid>
                   <Grid item>
                     <Button onClick={() => handleRegisterDialog(true)}>
-                      REGISTER
+                      SIGN UP
                     </Button>
                   </Grid>
                 </>

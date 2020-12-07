@@ -403,7 +403,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   type="submit"
                   variant="contained"
                 >
-                  REGISTER NOW
+                  CREATE ACCOUNT
                 </mock-button>
               </div>
               <div
@@ -649,7 +649,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
                   <mock-button
                     color="primary"
                   >
-                    REGISTER
+                    SIGN UP
                   </mock-button>
                 </mock-typography>
               </div>
