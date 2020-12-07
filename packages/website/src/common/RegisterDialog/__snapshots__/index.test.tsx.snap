@@ -209,7 +209,7 @@ exports[`RegisterDialog should render with given state from Redux store 1`] = `
                   type="submit"
                   variant="contained"
                 >
-                  REGISTER NOW
+                  CREATE ACCOUNT
                 </mock-button>
               </div>
               <div

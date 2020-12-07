@@ -56,13 +56,17 @@ const Tooltip = ({
   surveyId,
   classes,
 }: TooltipProps) => {
-  // Remove seconds from date
+  // Date formatting
+  const hourlyOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  };
   const dateString = new Date(date).toLocaleString("en", {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
-    hour: spotterSurfaceTemp ? "2-digit" : undefined,
-    minute: spotterSurfaceTemp ? "2-digit" : undefined,
+    ...(spotterSurfaceTemp ? hourlyOptions : {}),
   });
   const tooltipLines: {
     temperature: number | null;
@@ -86,7 +90,6 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {spotterSurfaceTemp && " Local"}
             </Typography>
           }
         />
