@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -12,131 +12,138 @@ import {
   IconButton,
   OutlinedInput,
 } from "@material-ui/core";
-import { Check, Close, Create, DeleteOutline } from "@material-ui/icons";
+import { Create, DeleteOutline } from "@material-ui/icons";
 
 import { Pois } from "../../../../../store/Reefs/types";
-import { EditPoiNameDraft, EditPoiNameEnabled } from "../types";
+import { EditPoiNameDraft } from "../types";
+import EditDialog, { Action } from "../../../../../common/Dialog";
 
 const PointSelector = ({
   mountPois,
   pointOptions,
   point,
-  editPoiNameEnabled,
   editPoiNameDraft,
   isReefAdmin,
   editPoiNameLoading,
   onChangePoiName,
-  onKeyPress,
   handlePointChange,
   toggleEditPoiNameEnabled,
   submitPoiNameUpdate,
   onDeleteButtonClick,
   classes,
 }: PointSelectorProps) => {
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editPoi, setEditPoi] = useState<Pois>();
+
+  const onEditDialogClose = useCallback(() => {
+    toggleEditPoiNameEnabled(false, editPoi?.id);
+    setEditPoi(undefined);
+    setEditDialogOpen(false);
+  }, [editPoi, toggleEditPoiNameEnabled]);
+
+  const onEditPoiSubmit = useCallback(() => {
+    if (editPoi) {
+      submitPoiNameUpdate(editPoi.id);
+    }
+  }, [editPoi, submitPoiNameUpdate]);
+
+  useEffect(() => {
+    if (!editPoiNameLoading) {
+      setEditPoi(undefined);
+      setEditDialogOpen(false);
+    }
+  }, [editPoiNameLoading]);
+
+  const editDialogActions: Action[] = [
+    {
+      size: "small",
+      variant: "contained",
+      color: "secondary",
+      text: "Close",
+      action: onEditDialogClose,
+    },
+    {
+      size: "small",
+      variant: "contained",
+      color: "primary",
+      text: editPoiNameLoading ? "Updating..." : "Save",
+      action: onEditPoiSubmit,
+      disabled: editPoiNameLoading,
+    },
+  ];
+
   return (
-    <Grid container alignItems="center" item md={12} lg={4}>
-      <Grid item>
-        <Typography variant="h6" className={classes.subTitle}>
-          Survey Point:
-        </Typography>
-      </Grid>
-      {mountPois && (
+    <>
+      {editPoi && (
+        <EditDialog
+          actions={editDialogActions}
+          open={editDialogOpen}
+          header={editPoi.name || ""}
+          onClose={onEditDialogClose}
+          content={
+            <OutlinedInput
+              autoFocus
+              className={classes.editPoiTextField}
+              fullWidth
+              value={editPoiNameDraft[editPoi.id]}
+              onChange={onChangePoiName(editPoi.id)}
+              error={editPoiNameDraft[editPoi.id] === ""}
+            />
+          }
+        />
+      )}
+      <Grid container alignItems="center" item md={12} lg={4}>
         <Grid item>
-          <FormControl className={classes.formControl}>
-            <Select
-              labelId="survey-point"
-              id="survey-point"
-              name="survey-point"
-              value={
-                pointOptions.map((item) => item.name).includes(point)
-                  ? point
-                  : "All"
-              }
-              onChange={handlePointChange}
-              onClose={() => toggleEditPoiNameEnabled(false)}
-              className={classes.selectedItem}
-              renderValue={(selected) => selected as string}
-            >
-              <MenuItem value="All">
-                <Typography className={classes.menuItem} variant="h6">
-                  All
-                </Typography>
-              </MenuItem>
-              {pointOptions.map(
-                (item) =>
-                  item.name !== null && (
-                    <MenuItem
-                      className={classes.menuItem}
-                      value={item.name}
-                      key={item.id}
-                    >
-                      <Grid
-                        container
-                        alignItems="center"
-                        justify="space-between"
-                        spacing={2}
+          <Typography variant="h6" className={classes.subTitle}>
+            Survey Point:
+          </Typography>
+        </Grid>
+        {mountPois && (
+          <Grid item>
+            <FormControl className={classes.formControl}>
+              <Select
+                labelId="survey-point"
+                id="survey-point"
+                name="survey-point"
+                value={
+                  pointOptions.map((item) => item.name).includes(point)
+                    ? point
+                    : "All"
+                }
+                onChange={handlePointChange}
+                onClose={() => toggleEditPoiNameEnabled(false)}
+                className={classes.selectedItem}
+                renderValue={(selected) => selected as string}
+              >
+                <MenuItem value="All">
+                  <Typography className={classes.menuItem} variant="h6">
+                    All
+                  </Typography>
+                </MenuItem>
+                {pointOptions.map(
+                  (item) =>
+                    item.name !== null && (
+                      <MenuItem
+                        className={classes.menuItem}
+                        value={item.name}
+                        key={item.id}
                       >
-                        <Grid item>
-                          {editPoiNameEnabled[item.id] ? (
-                            <OutlinedInput
-                              autoFocus
-                              className={classes.editPoiTextField}
-                              fullWidth
-                              value={editPoiNameDraft[item.id]}
-                              onClick={(event) => event.stopPropagation()}
-                              onKeyPress={onKeyPress(item.id)}
-                              onChange={onChangePoiName(item.id)}
-                              error={editPoiNameDraft[item.id] === ""}
-                            />
-                          ) : (
-                            `${item.name}`
-                          )}
-                        </Grid>
-                        {isReefAdmin &&
-                          (editPoiNameEnabled[item.id] ? (
+                        <Grid
+                          container
+                          alignItems="center"
+                          justify="space-between"
+                          spacing={1}
+                        >
+                          <Grid item>{item.name}</Grid>
+                          {isReefAdmin && (
                             <Grid item>
-                              <Grid
-                                container
-                                justify="space-between"
-                                spacing={2}
-                              >
-                                <Grid item>
-                                  <IconButton
-                                    disabled={editPoiNameLoading}
-                                    className={classes.menuButton}
-                                    onClick={(event) => {
-                                      submitPoiNameUpdate(item.id);
-                                      event.stopPropagation();
-                                    }}
-                                  >
-                                    <Check className={classes.checkIcon} />
-                                  </IconButton>
-                                </Grid>
+                              <Grid container item spacing={1}>
                                 <Grid item>
                                   <IconButton
                                     className={classes.menuButton}
                                     onClick={(event) => {
-                                      toggleEditPoiNameEnabled(false, item.id);
-                                      event.stopPropagation();
-                                    }}
-                                  >
-                                    <Close className={classes.closeIcon} />
-                                  </IconButton>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          ) : (
-                            <Grid item>
-                              <Grid
-                                container
-                                justify="space-between"
-                                spacing={2}
-                              >
-                                <Grid item>
-                                  <IconButton
-                                    className={classes.menuButton}
-                                    onClick={(event) => {
-                                      toggleEditPoiNameEnabled(true, item.id);
+                                      setEditDialogOpen(true);
+                                      setEditPoi(item);
                                       event.stopPropagation();
                                     }}
                                   >
@@ -156,16 +163,17 @@ const PointSelector = ({
                                 </Grid>
                               </Grid>
                             </Grid>
-                          ))}
-                      </Grid>
-                    </MenuItem>
-                  )
-              )}
-            </Select>
-          </FormControl>
-        </Grid>
-      )}
-    </Grid>
+                          )}
+                        </Grid>
+                      </MenuItem>
+                    )
+                )}
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
+      </Grid>
+    </>
   );
 };
 
@@ -206,14 +214,12 @@ interface PointSelectorIncomingProps {
   mountPois: boolean;
   pointOptions: Pois[];
   point: string;
-  editPoiNameEnabled: EditPoiNameEnabled;
   editPoiNameDraft: EditPoiNameDraft;
   isReefAdmin: boolean;
   editPoiNameLoading: boolean;
   onChangePoiName: (
     key: number
   ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onKeyPress: (id: number) => (event: KeyboardEvent<HTMLDivElement>) => void;
   handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
   toggleEditPoiNameEnabled: (
     enabled: boolean,
