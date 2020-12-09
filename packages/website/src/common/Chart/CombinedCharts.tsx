@@ -61,6 +61,7 @@ const CombinedCharts = ({
         maxMonthlyMean={maxMonthlyMean}
         background
         className={classes.chart}
+        timeZone={timeZone}
       >
         <Typography className={classes.graphTitle} variant="h6">
           DAILY WATER TEMPERATURE (°C)
@@ -103,6 +104,7 @@ const CombinedCharts = ({
               maxMonthlyMean={null}
               temperatureThreshold={null}
               background={false}
+              timeZone={timeZone}
             >
               <Typography className={classes.graphTitle} variant="h6">
                 HOURLY WATER TEMPERATURE (°C)
