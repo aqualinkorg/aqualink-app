@@ -17,7 +17,10 @@ import Axios from "axios";
 import Timeline from "./Timeline";
 import PointSelector from "./PointSelector";
 import { userInfoSelector } from "../../../../store/User/userSlice";
-import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
+import {
+  surveysRequest,
+  updatePoiName,
+} from "../../../../store/Survey/surveyListSlice";
 import { setSelectedPoi } from "../../../../store/Survey/surveySlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
@@ -174,20 +177,34 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
         setEditPoiNameLoading(true);
         surveyServices
           .updatePoi(key, newName, user.token)
-          .then(() => reefServices.getReefPois(`${reef.id}`))
-          .then(({ data }) => {
-            const prevName = pointOptions.find((item) => item.id === key)?.name;
-            setPointOptions(data);
+          .then(() => {
+            // Update point name for featured image card
+            dispatch(updatePoiName({ id: key, name: newName }));
+
             // If the updated point was previously selected, update its value
+            const prevName = pointOptions.find((item) => item.id === key)?.name;
             if (prevName === point) {
               setPoint(newName);
             }
+
+            // Update point options
+            setPointOptions(
+              pointOptions.map((item) => {
+                if (item.id === key) {
+                  return {
+                    ...item,
+                    name: newName,
+                  };
+                }
+                return item;
+              })
+            );
             setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
           })
           .finally(() => setEditPoiNameLoading(false));
       }
     },
-    [editPoiNameDraft, point, pointOptions, reef.id, user]
+    [dispatch, editPoiNameDraft, point, pointOptions, user]
   );
 
   const deletePoiDialogActions: Action[] = [
