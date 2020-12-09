@@ -202,6 +202,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       reef.timezone
                     )}
                     depth={reef.depth}
+                    timeZone={reef.timezone}
                     maxMonthlyMean={reef.maxMonthlyMean}
                     temperatureThreshold={
                       reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
@@ -270,6 +271,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                           chartPeriod={findChartPeriod(range)}
                           surveys={[]}
                           depth={reef.depth}
+                          timeZone={reef.timezone}
                           maxMonthlyMean={null}
                           temperatureThreshold={null}
                           background={false}

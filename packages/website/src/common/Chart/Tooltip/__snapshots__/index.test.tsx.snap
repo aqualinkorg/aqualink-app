@@ -19,6 +19,7 @@ exports[`renders as expected 1`] = `
             variant="caption"
           >
             Invalid Date
+             UTC
           </mock-typography>
         </div>
       </div>
