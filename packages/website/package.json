@@ -42,6 +42,7 @@
     "lodash": "^4.17.15",
     "material-table": "^1.65.0",
     "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "mutationobserver-shim": "^0.3.7",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.9.0",

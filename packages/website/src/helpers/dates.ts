@@ -1,3 +1,4 @@
+import moment from "moment-timezone";
 import { DailyData, Range, SpotterData } from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
@@ -90,6 +91,13 @@ export const convertSpotterDataToLocalTime = (
     timestamp: convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
   })),
 });
+
+export const getTimeZoneName = (timeZone: string): string => {
+  const rawTimeZoneName = moment().tz(timeZone).format("z");
+  const needsGMT =
+    rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
+  return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
+};
 
 export const convertSurveysToLocalTime = (
   surveys: SurveyListItem[],

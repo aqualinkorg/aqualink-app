@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
 import { isNull } from "lodash";
 
+import { getTimeZoneName } from "../../../helpers/dates";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const Circle = styled("div")<{}, { color: string; size?: number }>(
@@ -70,12 +71,8 @@ const Tooltip = ({
     year: "2-digit",
     ...(hourlyData ? hourlyOptions : {}),
   });
-  const timeZoneName = new Date(date)
-    .toLocaleString("en", {
-      timeZone: timeZone || "UTC",
-      timeZoneName: "short",
-    })
-    .split(" ")[3];
+
+  const timeZoneName = getTimeZoneName(timeZone || "UTC");
 
   const tooltipLines: {
     temperature: number | null;
