@@ -19,60 +19,56 @@ exports[`renders as expected 1`] = `
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiFormControl-root PointSelector-formControl-2"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-2"
       >
         <div
-          class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selectedItem-3 MuiInputBase-formControl MuiInput-formControl"
+          aria-haspopup="listbox"
+          aria-labelledby="survey-point survey-point"
+          class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+          id="survey-point"
+          role="button"
+          tabindex="0"
         >
-          <div
-            aria-haspopup="listbox"
-            aria-labelledby="survey-point survey-point"
-            class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-            id="survey-point"
-            role="button"
-            tabindex="0"
-          >
-            All
-          </div>
-          <input
-            aria-hidden="true"
-            class="MuiSelect-nativeInput"
-            name="survey-point"
-            tabindex="-1"
-            value="All"
-          />
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSelect-icon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M7 10l5 5 5-5z"
-            />
-          </svg>
-          <mock-menu
-            anchorel="[object HTMLDivElement]"
-            id="menu-survey-point"
-            menulistprops="[object Object]"
-            open="false"
-            paperprops="[object Object]"
-          >
-            <mock-menuitem
-              aria-selected="true"
-              data-value="All"
-              role="option"
-              selected="true"
-            >
-              <mock-typography
-                classname="PointSelector-menuItem-4"
-                variant="h6"
-              >
-                All
-              </mock-typography>
-            </mock-menuitem>
-          </mock-menu>
+          All
         </div>
+        <input
+          aria-hidden="true"
+          class="MuiSelect-nativeInput"
+          name="survey-point"
+          tabindex="-1"
+          value="All"
+        />
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSelect-icon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+        <mock-menu
+          anchorel="[object HTMLDivElement]"
+          id="menu-survey-point"
+          menulistprops="[object Object]"
+          open="false"
+          paperprops="[object Object]"
+        >
+          <mock-menuitem
+            aria-selected="true"
+            data-value="All"
+            role="option"
+            selected="true"
+          >
+            <mock-typography
+              classname="PointSelector-menuItem-4"
+              variant="h6"
+            >
+              All
+            </mock-typography>
+          </mock-menuitem>
+        </mock-menu>
       </div>
     </div>
   </div>

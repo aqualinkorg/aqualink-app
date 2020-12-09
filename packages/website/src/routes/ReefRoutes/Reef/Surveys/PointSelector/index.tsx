@@ -6,7 +6,6 @@ import {
   Theme,
   Grid,
   Typography,
-  FormControl,
   MenuItem,
   Select,
   IconButton,
@@ -100,76 +99,76 @@ const PointSelector = ({
         </Grid>
         {mountPois && (
           <Grid item>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelId="survey-point"
-                id="survey-point"
-                name="survey-point"
-                value={
-                  pointOptions.map((item) => item.name).includes(point)
-                    ? point
-                    : "All"
-                }
-                onChange={handlePointChange}
-                onClose={() => toggleEditPoiNameEnabled(false)}
-                className={classes.selectedItem}
-                renderValue={(selected) => selected as string}
-              >
-                <MenuItem value="All">
-                  <Typography className={classes.menuItem} variant="h6">
-                    All
-                  </Typography>
-                </MenuItem>
-                {pointOptions.map(
-                  (item) =>
-                    item.name !== null && (
-                      <MenuItem
-                        className={classes.menuItem}
-                        value={item.name}
-                        key={item.id}
+            <Select
+              className={classes.selector}
+              labelId="survey-point"
+              id="survey-point"
+              name="survey-point"
+              value={
+                pointOptions.map((item) => item.name).includes(point)
+                  ? point
+                  : "All"
+              }
+              onChange={handlePointChange}
+              onClose={() => toggleEditPoiNameEnabled(false)}
+              renderValue={(selected) => selected as string}
+            >
+              <MenuItem value="All">
+                <Typography className={classes.menuItem} variant="h6">
+                  All
+                </Typography>
+              </MenuItem>
+              {pointOptions.map(
+                (item) =>
+                  item.name !== null && (
+                    <MenuItem
+                      className={classes.menuItem}
+                      value={item.name}
+                      key={item.id}
+                    >
+                      <Grid
+                        container
+                        alignItems="center"
+                        justify="space-between"
+                        spacing={1}
                       >
-                        <Grid
-                          container
-                          alignItems="center"
-                          justify="space-between"
-                          spacing={1}
-                        >
-                          <Grid item>{item.name}</Grid>
-                          {isReefAdmin && (
-                            <Grid item>
-                              <Grid container item spacing={1}>
-                                <Grid item>
-                                  <IconButton
-                                    className={classes.menuButton}
-                                    onClick={(event) => {
-                                      setEditDialogOpen(true);
-                                      setEditPoi(item);
-                                      event.stopPropagation();
-                                    }}
-                                  >
-                                    <Create color="primary" />
-                                  </IconButton>
-                                </Grid>
-                                <Grid item>
-                                  <IconButton
-                                    className={classes.menuButton}
-                                    onClick={(event) => {
-                                      onDeleteButtonClick(item.id);
-                                      event.stopPropagation();
-                                    }}
-                                  >
-                                    <DeleteOutline color="primary" />
-                                  </IconButton>
-                                </Grid>
+                        <Grid className={classes.itemName} item>
+                          {item.name}
+                        </Grid>
+                        {isReefAdmin && (
+                          <Grid item>
+                            <Grid container item spacing={1}>
+                              <Grid item>
+                                <IconButton
+                                  className={classes.menuButton}
+                                  onClick={(event) => {
+                                    setEditDialogOpen(true);
+                                    setEditPoi(item);
+                                    event.stopPropagation();
+                                  }}
+                                >
+                                  <Create color="primary" />
+                                </IconButton>
+                              </Grid>
+                              <Grid item>
+                                <IconButton
+                                  className={classes.menuButton}
+                                  onClick={(event) => {
+                                    onDeleteButtonClick(item.id);
+                                    event.stopPropagation();
+                                  }}
+                                >
+                                  <DeleteOutline color="primary" />
+                                </IconButton>
                               </Grid>
                             </Grid>
-                          )}
-                        </Grid>
-                      </MenuItem>
-                    )
-                )}
-              </Select>
-            </FormControl>
+                          </Grid>
+                        )}
+                      </Grid>
+                    </MenuItem>
+                  )
+              )}
+            </Select>
           </Grid>
         )}
       </Grid>
@@ -184,14 +183,21 @@ const styles = (theme: Theme) =>
       color: "#474747",
       marginRight: "1rem",
     },
-    formControl: {
+    selector: {
       minWidth: 120,
       maxWidth: 240,
-    },
-    selectedItem: {
       color: theme.palette.primary.main,
     },
+    itemName: {
+      maxWidth: 140,
+      whiteSpace: "normal",
+      overflowWrap: "break-word",
+      wordWrap: "break-word",
+      wordBreak: "break-word",
+      hyphens: "auto",
+    },
     menuItem: {
+      minWidth: 200,
       color: theme.palette.primary.main,
     },
     editPoiTextField: {
