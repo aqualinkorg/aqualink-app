@@ -41,6 +41,10 @@ const CombinedCharts = ({
   const [open, setOpen] = useState<boolean>(false);
   const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
+  const handleOpen = useCallback((isOpen: boolean) => {
+    setOpen(isOpen);
+  }, []);
+
   const spotterComponent = useCallback(() => {
     if (spotterDataLoading) {
       return (
@@ -117,18 +121,19 @@ const CombinedCharts = ({
         </Typography>
       </ChartWithTooltip>
       {hasSpotterData && (
-        <Grid container alignItems="baseline" spacing={3}>
-          <SelectRange
-            open={open}
-            onClose={() => setOpen(false)}
-            onOpen={() => setOpen(true)}
-            value={range}
-            onRangeChange={onRangeChange}
-          />
-          <DatePicker value={pickerDate} onChange={onDateChange} />
-        </Grid>
+        <>
+          <Grid container alignItems="baseline" spacing={3}>
+            <SelectRange
+              open={open}
+              handleOpen={handleOpen}
+              value={range}
+              onRangeChange={onRangeChange}
+            />
+            <DatePicker value={pickerDate} onChange={onDateChange} />
+          </Grid>
+          {spotterComponent()}
+        </>
       )}
-      {hasSpotterData && spotterComponent()}
     </div>
   );
 };
