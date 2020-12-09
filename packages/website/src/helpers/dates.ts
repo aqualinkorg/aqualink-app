@@ -103,7 +103,7 @@ export const convertSurveysToLocalTime = (
 
 export const getTimeZoneName = (timeZone: string): string => {
   const rawTimeZoneName = moment().tz(timeZone).format("z");
-  // Only add GMT prefix to raw time difference and not acronyms such as PST.
+  // Only add GMT prefix to raw time differences and not acronyms such as PST.
   const needsGMT =
     rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
   return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
