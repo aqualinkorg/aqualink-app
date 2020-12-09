@@ -17,6 +17,7 @@ import {
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
+  timeZone?: string | null;
   className?: string;
   style?: CSSProperties;
 }
@@ -29,14 +30,15 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData } = rest;
+  const { dailyData, spotterData, reefId, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
-    reefId: rest.reefId,
+    reefId,
     date: "",
+    timeZone,
     depth,
     bottomTemperature: 0,
     spotterSurfaceTemp: null,
@@ -91,7 +93,7 @@ function ChartWithTooltip({
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 80;
+    const left = position.left + tooltipModel.caretX - 95;
     const top =
       position.top +
       tooltipModel.caretY -
