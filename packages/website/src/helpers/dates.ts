@@ -92,13 +92,6 @@ export const convertSpotterDataToLocalTime = (
   })),
 });
 
-export const getTimeZoneName = (timeZone: string): string => {
-  const rawTimeZoneName = moment().tz(timeZone).format("z");
-  const needsGMT =
-    rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
-  return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
-};
-
 export const convertSurveysToLocalTime = (
   surveys: SurveyListItem[],
   timeZone?: string | null
@@ -107,3 +100,10 @@ export const convertSurveysToLocalTime = (
     ...item,
     diveDate: convertToLocalTime(item.diveDate, timeZone) || item.diveDate,
   }));
+
+export const getTimeZoneName = (timeZone: string): string => {
+  const rawTimeZoneName = moment().tz(timeZone).format("z");
+  const needsGMT =
+    rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
+  return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
+};
