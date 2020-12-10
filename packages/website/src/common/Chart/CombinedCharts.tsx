@@ -1,13 +1,13 @@
-import React, { useState, ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Typography,
-  Grid,
   Box,
   CircularProgress,
+  createStyles,
+  Grid,
+  Theme,
+  Typography,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
@@ -39,16 +39,13 @@ const CombinedCharts = ({
   classes,
 }: CombinedChartsProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
-  const spotterDataSuccess =
-    !spotterDataLoading &&
+
+  const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
+  const hasSpotterDataSuccess =
+    !isSpotterDataLoading &&
     spotterData &&
     spotterData.bottomTemperature.length > 1;
-  const spotterDataError = !spotterDataLoading && !spotterDataSuccess;
-
-  const handleOpen = useCallback((isOpen: boolean) => {
-    setOpen(isOpen);
-  }, []);
+  const hasSpotterDataErrored = !isSpotterDataLoading && !hasSpotterDataSuccess;
 
   return (
     <div>
@@ -72,13 +69,13 @@ const CombinedCharts = ({
           <Grid container alignItems="baseline" spacing={3}>
             <SelectRange
               open={open}
-              handleOpen={handleOpen}
+              setOpen={setOpen}
               value={range}
               onRangeChange={onRangeChange}
             />
             <DatePicker value={pickerDate} onChange={onDateChange} />
           </Grid>
-          {spotterDataLoading && (
+          {isSpotterDataLoading && (
             <Box
               height="20rem"
               display="flex"
@@ -90,7 +87,7 @@ const CombinedCharts = ({
               <CircularProgress size="6rem" thickness={1} />
             </Box>
           )}
-          {spotterDataSuccess && (
+          {hasSpotterDataSuccess && (
             <ChartWithTooltip
               className={classes.chart}
               reefId={reefId}
@@ -111,7 +108,7 @@ const CombinedCharts = ({
               </Typography>
             </ChartWithTooltip>
           )}
-          {spotterDataError && (
+          {hasSpotterDataErrored && (
             <Box mt="2rem">
               <Typography>
                 No Smart Buoy data available in this time range.
