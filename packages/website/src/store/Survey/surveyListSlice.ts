@@ -32,7 +32,31 @@ export const surveysRequest = createAsyncThunk<
 const surveyListSlice = createSlice({
   name: "surveyList",
   initialState: surveyListInitialState,
-  reducers: {},
+  reducers: {
+    updatePoiName: (
+      state,
+      action: PayloadAction<{ id: number; name: string }>
+    ) => {
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          if (item.featuredSurveyMedia?.poiId?.id === action.payload.id) {
+            return {
+              ...item,
+              featuredSurveyMedia: {
+                ...item.featuredSurveyMedia,
+                poiId: {
+                  ...item.featuredSurveyMedia.poiId,
+                  name: action.payload.name,
+                },
+              },
+            };
+          }
+          return item;
+        }),
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       surveysRequest.fulfilled,
@@ -75,5 +99,7 @@ export const surveyListLoadingSelector = (
 export const surveyListErrorSelector = (
   state: RootState
 ): SurveyListState["error"] => state.surveyList.error;
+
+export const { updatePoiName } = surveyListSlice.actions;
 
 export default surveyListSlice.reducer;
