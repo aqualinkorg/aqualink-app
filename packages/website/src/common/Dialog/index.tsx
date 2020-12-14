@@ -43,6 +43,7 @@ const Dialog = ({
                     color={action.color}
                     variant={action.variant}
                     size={action.size}
+                    disabled={action.disabled}
                     onClick={action.action}
                   >
                     {action.text}
@@ -56,6 +57,7 @@ const Dialog = ({
                 color={action.color}
                 variant={action.variant}
                 size={action.size}
+                disabled={action.disabled}
                 onClick={action.action}
               >
                 {action.text}
@@ -80,6 +82,7 @@ export interface Action {
   color: ButtonProps["color"];
   text: string;
   link?: string;
+  disabled?: boolean;
   action: (...args: any[]) => void;
 }
 
