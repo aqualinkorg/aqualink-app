@@ -276,7 +276,7 @@ const RegisterDialog = ({
                     size="large"
                     disabled={!readTerms}
                   >
-                    REGISTER NOW
+                    CREATE ACCOUNT
                   </Button>
                 </Grid>
                 <Grid container item xs={12}>

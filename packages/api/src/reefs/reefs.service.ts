@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { omit } from 'lodash';
+import { isNil, omit } from 'lodash';
 import { Reef } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
-import { SofarLiveData } from '../utils/sofar.types';
+import { SofarLiveData, SofarValue } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
@@ -24,6 +24,7 @@ import {
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
+import { ExclusionDates } from './exclusion-dates.entity';
 
 @Injectable()
 export class ReefsService {
@@ -37,6 +38,9 @@ export class ReefsService {
 
     @InjectRepository(Region)
     private regionRepository: Repository<Region>,
+
+    @InjectRepository(ExclusionDates)
+    private exclusionDatesRepository: Repository<ExclusionDates>,
   ) {}
 
   async create(createReefDto: CreateReefDto): Promise<Reef> {
@@ -206,7 +210,24 @@ export class ReefsService {
       reef,
     );
 
-    const liveData = await getLiveData(reef);
+    const includeSpotterData =
+      reef.spotterId &&
+      isNil(
+        await this.exclusionDatesRepository
+          .createQueryBuilder('exclusion')
+          .where('exclusion.spotter_id = :spotterId', {
+            spotterId: reef.spotterId,
+          })
+          .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
+            date: new Date(),
+          })
+          .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
+            date: new Date(),
+          })
+          .getOne(),
+      );
+
+    const liveData = await getLiveData(reef, Boolean(includeSpotterData));
 
     return {
       ...liveData,
@@ -225,6 +246,20 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ${id} has no spotter.`);
     }
 
+    const exclusionDates = await this.exclusionDatesRepository
+      .createQueryBuilder('exclusion')
+      .where('exclusion.spotter_id = :spotterId', {
+        spotterId: reef.spotterId,
+      })
+      .andWhere('DATE(exclusion.startDate) <= DATE(:endDate)', {
+        endDate,
+      })
+      .andWhere('DATE(exclusion.endDate) >= DATE(:startDate)', {
+        startDate,
+      })
+      .orderBy('exclusion.startDate', 'ASC')
+      .getMany();
+
     const { surfaceTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
       endDate,
@@ -232,8 +267,14 @@ export class ReefsService {
     );
 
     return {
-      surfaceTemperature,
-      bottomTemperature,
+      surfaceTemperature: this.filterSpotterDataByDate(
+        surfaceTemperature,
+        exclusionDates,
+      ),
+      bottomTemperature: this.filterSpotterDataByDate(
+        bottomTemperature,
+        exclusionDates,
+      ),
     };
   }
 
@@ -251,5 +292,21 @@ export class ReefsService {
       .relation('admins')
       .of(reef)
       .addAndRemove(admins, reef.admins);
+  }
+
+  private filterSpotterDataByDate(
+    spotterDate: SofarValue[],
+    exclusionDates: ExclusionDates[],
+  ) {
+    return spotterDate.filter(({ timestamp }) => {
+      const excluded = isNil(
+        exclusionDates.find(({ startDate: start, endDate: end }) => {
+          const dataDate = new Date(timestamp);
+          dataDate.setUTCHours(0, 0, 0, 0);
+          return start <= dataDate && dataDate <= end;
+        }),
+      );
+      return excluded;
+    });
   }
 }

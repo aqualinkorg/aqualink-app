@@ -21,7 +21,7 @@ import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
-import { isAdmin } from "../../../../helpers/isAdmin";
+import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 
 const applicationTag = (user: User | null, reefId: number, classes: any) => {

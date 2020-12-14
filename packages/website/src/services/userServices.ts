@@ -5,7 +5,7 @@ import type { User } from "../store/User/types";
 import type { Reef } from "../store/Reefs/types";
 
 const createUser = (email: string, password: string) =>
-  app.auth().createUserWithEmailAndPassword(email, password);
+  app && app.auth().createUserWithEmailAndPassword(email, password);
 
 const storeUser = (
   fullName: string,
@@ -25,7 +25,9 @@ const storeUser = (
   });
 
 const resetPassword = (email: string) => {
-  app.auth().sendPasswordResetEmail(email, { url: "https://aqualink.org" });
+  if (app) {
+    app.auth().sendPasswordResetEmail(email, { url: "https://aqualink.org" });
+  }
 };
 
 const getSelf = (token?: string) =>
@@ -43,9 +45,9 @@ const getAdministeredReefs = (token?: string) =>
   });
 
 const signInUser = (email: string, password: string) =>
-  app.auth().signInWithEmailAndPassword(email, password);
+  app && app.auth().signInWithEmailAndPassword(email, password);
 
-const signOutUser = () => app.auth().signOut();
+const signOutUser = () => app && app.auth().signOut();
 
 export default {
   createUser,

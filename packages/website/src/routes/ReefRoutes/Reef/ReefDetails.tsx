@@ -1,4 +1,4 @@
-import React, { ElementType, ChangeEvent, useState } from "react";
+import React, { ElementType, ChangeEvent } from "react";
 import {
   createStyles,
   Grid,
@@ -6,12 +6,9 @@ import {
   WithStyles,
   Theme,
   Box,
-  CircularProgress,
-  Typography,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
-import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -19,17 +16,19 @@ import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
-import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import SelectRange from "../../../common/SelectRange";
-import DatePicker from "../../../common/Datepicker";
+import CombinedCharts from "../../../common/Chart/CombinedCharts";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
-import { reefSpotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
+import {
+  convertToLocalTime,
+  convertDailyDataToLocalTime,
+  convertSurveysToLocalTime,
+} from "../../../helpers/dates";
 
 const ReefDetails = ({
   classes,
@@ -40,7 +39,7 @@ const ReefDetails = ({
   onRangeChange,
   onDateChange,
   pickerDate,
-  hasSpotter,
+  hasSpotterData,
   chartPeriod,
   spotterData,
   hasDailyData,
@@ -49,8 +48,6 @@ const ReefDetails = ({
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
-  const [open, setOpen] = useState<boolean>(false);
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -100,7 +97,7 @@ const ReefDetails = ({
       marginRight: "2rem",
     },
     {
-      text: `${moment(moment(diveDate).toISOString()).format(
+      text: `${moment(convertToLocalTime(diveDate, reef.timezone)).format(
         "MMM DD[,] YYYY"
       )}`,
       variant: "subtitle2",
@@ -116,7 +113,10 @@ const ReefDetails = ({
         <Grid item xs={12} md={6}>
           {diveDate && point && <CardTitle values={mapTitleItems} />}
           <div className={classes.container}>
-            <Map polygon={reef.polygon} />
+            <Map
+              spotterPosition={reef.liveData?.spotterPosition}
+              polygon={reef.polygon}
+            />
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -146,65 +146,32 @@ const ReefDetails = ({
           </Grid>
 
           <Box mt="2rem">
-            <Charts
-              title="DAILY WATER TEMPERATURE (°C)"
-              dailyData={reef.dailyData}
-              surveys={surveys}
+            <CombinedCharts
+              reefId={reef.id}
+              dailyData={convertDailyDataToLocalTime(
+                reef.dailyData,
+                reef.timezone
+              )}
               depth={reef.depth}
+              hasSpotterData={hasSpotterData}
               maxMonthlyMean={reef.maxMonthlyMean || null}
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
-              background
+              onDateChange={onDateChange}
+              onRangeChange={onRangeChange}
+              pickerDate={pickerDate}
+              range={range}
+              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
+              chartPeriod={chartPeriod}
+              spotterData={spotterData}
+              startDate={
+                convertToLocalTime(startDate, reef.timezone) || startDate
+              }
+              endDate={convertToLocalTime(endDate, reef.timezone) || endDate}
+              timeZone={reef.timezone}
             />
-            {hasSpotter && (
-              <Grid container alignItems="baseline" spacing={3}>
-                <SelectRange
-                  open={open}
-                  onClose={() => setOpen(false)}
-                  onOpen={() => setOpen(true)}
-                  value={range}
-                  onRangeChange={onRangeChange}
-                />
-                <DatePicker value={pickerDate} onChange={onDateChange} />
-              </Grid>
-            )}
-            {hasSpotter &&
-              (spotterDataLoading ? (
-                <Box
-                  height="20rem"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  textAlign="center"
-                  p={4}
-                >
-                  <CircularProgress size="6rem" thickness={1} />
-                </Box>
-              ) : (
-                (spotterData && spotterData.bottomTemperature.length > 1 && (
-                  <Charts
-                    title="HOURLY WATER TEMPERATURE (°C)"
-                    dailyData={reef.dailyData}
-                    spotterData={spotterData}
-                    startDate={startDate}
-                    endDate={endDate}
-                    chartPeriod={chartPeriod}
-                    surveys={[]}
-                    depth={reef.depth}
-                    maxMonthlyMean={null}
-                    temperatureThreshold={null}
-                    background={false}
-                  />
-                )) || (
-                  <Box mt="2rem">
-                    <Typography>
-                      No Smart Buoy data available in this time range.
-                    </Typography>
-                  </Box>
-                )
-              ))}
-            <Surveys reefId={reef.id} />
+            <Surveys reef={reef} />
           </Box>
         </>
       )}
@@ -240,7 +207,7 @@ interface ReefDetailIncomingProps {
   chartPeriod: "hour" | Range;
   onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
   onDateChange: (date: MaterialUiPickersDate, value?: string | null) => void;
-  hasSpotter: boolean;
+  hasSpotterData: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
   spotterData?: SpotterData | null;

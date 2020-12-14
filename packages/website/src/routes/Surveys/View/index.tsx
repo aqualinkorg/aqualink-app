@@ -13,7 +13,6 @@ import {
   Typography,
   withStyles,
   WithStyles,
-  CircularProgress,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,13 +20,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   surveyDetailsSelector,
   surveyGetRequest,
+  clearSurvey,
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./SurveyMediaDetails";
-import SelectRange from "../../../common/SelectRange";
-import DatePicker from "../../../common/Datepicker";
-
-import Charts from "./Charts";
+import CombinedCharts from "../../../common/Chart/CombinedCharts";
 import type { Range, Reef } from "../../../store/Reefs/types";
 import {
   surveyListSelector,
@@ -37,12 +34,14 @@ import { useBodyLength } from "../../../helpers/useBodyLength";
 import {
   reefSpotterDataSelector,
   reefSpotterDataRequest,
-  reefSpotterDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   subtractFromDate,
   findChartPeriod,
   findMaxDate,
+  convertToLocalTime,
+  convertDailyDataToLocalTime,
+  convertSurveysToLocalTime,
 } from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
@@ -50,7 +49,6 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const spotterData = useSelector(reefSpotterDataSelector);
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const { liveData } = reef;
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
@@ -58,9 +56,9 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const [range, setRange] = useState<Range>("week");
   const [endDate, setEndDate] = useState<string>();
   const [pickerDate, setPickerDate] = useState<string | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
 
   const bodyLength = useBodyLength();
+  const startDate = endDate ? subtractFromDate(endDate, range) : undefined;
 
   useEffect(() => {
     dispatch(surveysRequest(`${reef.id}`));
@@ -74,6 +72,9 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         surveyId,
       })
     );
+    return () => {
+      dispatch(clearSurvey());
+    };
   }, [dispatch, reef.id, surveyId]);
 
   useEffect(() => {
@@ -176,79 +177,41 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                 <Grid container item xs={11}>
                   <SurveyDetails reef={reef} survey={surveyDetails} />
                 </Grid>
-                <Grid container alignItems="center" item xs={11}>
-                  <Typography variant="subtitle2">
-                    DAILY WATER TEMPERATURE (°C)
-                  </Typography>
-                </Grid>
                 <Grid container justify="center" item xs={12}>
-                  <Charts
-                    dailyData={reef.dailyData}
-                    surveys={surveyList}
-                    depth={reef.depth}
-                    maxMonthlyMean={reef.maxMonthlyMean}
-                    temperatureThreshold={
-                      reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-                    }
-                    background
-                  />
-                </Grid>
-                {hasSpotter && (
-                  <Grid
-                    container
-                    justify="flex-end"
-                    alignItems="baseline"
-                    item
-                    xs={11}
-                    spacing={3}
-                  >
-                    <SelectRange
-                      open={open}
-                      onClose={() => setOpen(false)}
-                      onOpen={() => setOpen(true)}
-                      value={range}
+                  <Grid item xs={11}>
+                    <CombinedCharts
+                      reefId={reef.id}
+                      dailyData={convertDailyDataToLocalTime(
+                        reef.dailyData,
+                        reef.timezone
+                      )}
+                      depth={reef.depth}
+                      hasSpotterData={hasSpotter}
+                      maxMonthlyMean={reef.maxMonthlyMean || null}
+                      temperatureThreshold={
+                        reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+                      }
+                      onDateChange={onDateChange}
                       onRangeChange={onRangeChange}
+                      pickerDate={pickerDate}
+                      range={range}
+                      surveys={convertSurveysToLocalTime(
+                        surveyList,
+                        reef.timezone
+                      )}
+                      chartPeriod={findChartPeriod(range)}
+                      spotterData={spotterData}
+                      startDate={
+                        convertToLocalTime(startDate, reef.timezone) ||
+                        startDate
+                      }
+                      endDate={
+                        convertToLocalTime(endDate, reef.timezone) || endDate
+                      }
+                      timeZone={reef.timezone}
                     />
-                    <DatePicker value={pickerDate} onChange={onDateChange} />
                   </Grid>
-                )}
-                {spotterDataLoading ? (
-                  <Box
-                    height="20rem"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    textAlign="center"
-                    p={4}
-                  >
-                    <CircularProgress size="6rem" thickness={1} />
-                  </Box>
-                ) : (
-                  spotterData &&
-                  endDate && (
-                    <>
-                      <Grid container alignItems="center" item xs={11}>
-                        <Typography variant="subtitle2">
-                          HOURLY WATER TEMPERATURE (°C)
-                        </Typography>
-                      </Grid>
-                      <Grid container justify="center" item xs={12}>
-                        <Charts
-                          dailyData={reef.dailyData}
-                          spotterData={spotterData}
-                          startDate={subtractFromDate(endDate, range)}
-                          endDate={endDate}
-                          chartPeriod={findChartPeriod(range)}
-                          surveys={[]}
-                          depth={reef.depth}
-                          maxMonthlyMean={null}
-                          temperatureThreshold={null}
-                          background={false}
-                        />
-                      </Grid>
-                    </>
-                  )
-                )}
+                </Grid>
               </Grid>
             </Grid>
           </Paper>
@@ -288,19 +251,22 @@ const styles = (theme: Theme) =>
         height: "55rem",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "72rem",
+        height: "65rem",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: "75rem",
       },
     },
     withSpotter: {
-      height: "60rem",
+      height: "65rem",
       [theme.breakpoints.down("md")]: {
-        height: "75rem",
+        height: "78rem",
       },
       [theme.breakpoints.down("sm")]: {
-        height: "85rem",
+        height: "86rem",
       },
       [theme.breakpoints.down("xs")]: {
-        height: "100rem",
+        height: "105rem",
       },
     },
   });

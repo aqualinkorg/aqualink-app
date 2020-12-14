@@ -32,10 +32,11 @@ import {
 import {
   surveyLoadingSelector,
   surveyGetRequest,
+  selectedPoiSelector,
 } from "../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import surveyServices from "../../../services/surveyServices";
-import { isAdmin } from "../../../helpers/isAdmin";
+import { isAdmin } from "../../../helpers/user";
 
 const carouselSettings = {
   dots: true,
@@ -61,6 +62,7 @@ const SurveyMediaDetails = ({
 }: SurveyMediaDetailsProps) => {
   const user = useSelector(userInfoSelector);
   const loading = useSelector(surveyLoadingSelector);
+  const selectedPoi = useSelector(selectedPoiSelector);
   const dispatch = useDispatch();
 
   const onSurveyMediaUpdate = useCallback(
@@ -110,7 +112,12 @@ const SurveyMediaDetails = ({
                     <Typography variant="h6">Survey Point: </Typography>
                   </Grid>
                   <Grid item>
-                    <Typography className={classes.titleName} variant="h6">
+                    <Typography
+                      className={`${classes.titleName} ${
+                        point.name === selectedPoi && classes.selectedPoi
+                      }`}
+                      variant="h6"
+                    >
                       {point.name}
                     </Typography>
                   </Grid>
@@ -262,6 +269,9 @@ const styles = (theme: Theme) =>
       fontStyle: "normal",
       lineHeight: 1.56,
       letterSpacing: "normal",
+    },
+    selectedPoi: {
+      color: theme.palette.primary.main,
     },
     imageLabel: {
       display: "flex",

@@ -15,8 +15,7 @@ import { Range } from "../../store/Reefs/types";
 const SelectRange = ({
   open,
   value,
-  onClose,
-  onOpen,
+  setOpen,
   onRangeChange,
   classes,
 }: SelectRangeProps) => {
@@ -29,8 +28,8 @@ const SelectRange = ({
         <Select
           className={classes.selector}
           open={open}
-          onClose={onClose}
-          onOpen={onOpen}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
           value={value}
           onChange={onRangeChange}
         >
@@ -60,8 +59,7 @@ const styles = () =>
 interface SelectRangeIncomingProps {
   open: boolean;
   value: Range;
-  onClose: () => void;
-  onOpen: () => void;
+  setOpen: (open: boolean) => void;
   onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
 }
 

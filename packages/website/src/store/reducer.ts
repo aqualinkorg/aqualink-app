@@ -3,7 +3,7 @@ import selectedReef from "./Reefs/selectedReefSlice";
 import reefsList from "./Reefs/reefsListSlice";
 import homepage from "./Homepage/homepageSlice";
 import user from "./User/userSlice";
-import surveyReducer from "./Survey/surveySlice";
+import survey from "./Survey/surveySlice";
 import surveyList from "./Survey/surveyListSlice";
 
 const appReducer = combineReducers({
@@ -11,7 +11,7 @@ const appReducer = combineReducers({
   reefsList,
   homepage,
   user,
-  surveyReducer,
+  survey,
   surveyList,
 });
 

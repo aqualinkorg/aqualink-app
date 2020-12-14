@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Grid,
   withStyles,
@@ -14,13 +14,29 @@ import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
+import { reefRequest } from "../../store/Reefs/selectedReefSlice";
+import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
+import { surveysRequest } from "../../store/Survey/surveyListSlice";
+
+const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
+  const reefOnMap = useSelector(reefOnMapSelector);
 
   useEffect(() => {
     dispatch(reefsRequest());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!reefOnMap) {
+      dispatch(reefRequest(featuredReefId));
+      dispatch(surveysRequest(featuredReefId));
+    } else {
+      dispatch(reefRequest(`${reefOnMap.id}`));
+      dispatch(surveysRequest(`${reefOnMap.id}`));
+    }
+  }, [dispatch, reefOnMap]);
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -92,10 +108,11 @@ const styles = () =>
     },
     openDrawer: {
       height: "calc(95% - 64px);", // subtract height of the navbar
+      overflow: "auto",
     },
     closedDrawer: {
       height: "50px",
-      overflow: "revert",
+      overflow: "hidden",
     },
   });
 

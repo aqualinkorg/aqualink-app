@@ -19,6 +19,7 @@ exports[`renders as expected 1`] = `
             variant="caption"
           >
             Invalid Date
+             UTC
           </mock-typography>
         </div>
       </div>
@@ -36,7 +37,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
             >
               <div
-                class="div-root-7 div-root-8"
+                class="div-root-8 div-root-9"
                 color="#6bc1e1"
               />
               <mock-typography

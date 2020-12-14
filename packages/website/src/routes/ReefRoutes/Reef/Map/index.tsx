@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import { Reef, Position } from "../../../../store/Reefs/types";
+import { Reef, Position, SpotterPosition } from "../../../../store/Reefs/types";
 import { mapBounds } from "../../../../helpers/mapBounds";
 
 import marker from "../../../../assets/marker.png";
+import buoy from "../../../../assets/buoy-marker.svg";
 import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../store/Reefs/selectedReefSlice";
+import { userInfoSelector } from "../../../../store/User/userSlice";
+import { isManager } from "../../../../helpers/user";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -20,11 +23,19 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const ReefMap = ({ polygon, classes }: ReefMapProps) => {
+const buoyIcon = L.icon({
+  iconUrl: buoy,
+  iconSize: [30, 40],
+  iconAnchor: [10, 30],
+  popupAnchor: [0, -41],
+});
+
+const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
   const draftReef = useSelector(reefDraftSelector);
+  const user = useSelector(userInfoSelector);
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -89,6 +100,15 @@ const ReefMap = ({ polygon, classes }: ReefMapProps) => {
           ]}
         />
       )}
+      {!draftReef && spotterPosition && isManager(user) && (
+        <Marker
+          icon={buoyIcon}
+          position={[
+            spotterPosition.latitude.value,
+            spotterPosition.longitude.value,
+          ]}
+        />
+      )}
     </Map>
   );
 };
@@ -105,7 +125,12 @@ const styles = () => {
 
 interface ReefMapIncomingProps {
   polygon: Reef["polygon"];
+  spotterPosition?: SpotterPosition | null;
 }
+
+ReefMap.defaultProps = {
+  spotterPosition: null,
+};
 
 type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
 

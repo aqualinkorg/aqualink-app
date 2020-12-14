@@ -11,11 +11,13 @@ import Tooltip, { TooltipData } from "./Tooltip";
 import {
   getDailyDataClosestToDate,
   getSpotterDataClosestToDate,
+  findSurveyFromDate,
   sameDay,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
+  timeZone?: string | null;
   className?: string;
   style?: CSSProperties;
 }
@@ -28,17 +30,20 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData } = rest;
+  const { dailyData, spotterData, reefId, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
+    reefId,
     date: "",
+    timeZone,
     depth,
     bottomTemperature: 0,
     spotterSurfaceTemp: null,
     surfaceTemperature: 0,
+    surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
@@ -52,6 +57,8 @@ function ChartWithTooltip({
 
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     if (typeof date !== "string") return;
+
+    const surveyId = findSurveyFromDate(date, rest.surveys);
 
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
@@ -86,8 +93,11 @@ function ChartWithTooltip({
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 80;
-    const top = position.top + tooltipModel.caretY - (nValues * 30 + 40);
+    const left = position.left + tooltipModel.caretX - 95;
+    const top =
+      position.top +
+      tooltipModel.caretY -
+      ((surveyId ? nValues + 1 : nValues) * 30 + 48);
 
     if (
       [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
@@ -96,11 +106,13 @@ function ChartWithTooltip({
     ) {
       setTooltipPosition({ top, left });
       setTooltipData({
+        ...tooltipData,
         date,
         depth,
         bottomTemperature,
         spotterSurfaceTemp,
         surfaceTemperature: satelliteTemperature,
+        surveyId,
       });
       setShowTooltip(true);
       setSliceAtLabel(date);

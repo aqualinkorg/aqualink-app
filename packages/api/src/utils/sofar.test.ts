@@ -4,22 +4,15 @@ import { getSofarHindcastData, getSpotterData, sofarForecast } from './sofar';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
-    'HYCOM',
-    'HYCOM-seaSurfaceTemperature',
+    'NOAACoralReefWatch',
+    'analysedSeaSurfaceTemperature',
     -3.5976336810301888,
     -178.0000002552476,
-    new Date('2020-07-07'),
+    new Date('2020-11-07'),
   );
 
   expect(values).toEqual([
-    { timestamp: '2020-07-06T00:00:00.000Z', value: 29.6140003204346 },
-    { timestamp: '2020-07-06T03:00:00.000Z', value: 29.6389999389648 },
-    { timestamp: '2020-07-06T06:00:00.000Z', value: 29.5740013122559 },
-    { timestamp: '2020-07-06T09:00:00.000Z', value: 29.5670013427734 },
-    { timestamp: '2020-07-06T12:00:00.000Z', value: 29.3450012207031 },
-    { timestamp: '2020-07-06T15:00:00.000Z', value: 29.4020004272461 },
-    { timestamp: '2020-07-06T18:00:00.000Z', value: 29.3900012969971 },
-    { timestamp: '2020-07-06T21:00:00.000Z', value: 29.3250007629395 },
+    { timestamp: '2020-11-06T12:00:00.000Z', value: 28.9400005340576 },
   ]);
 });
 

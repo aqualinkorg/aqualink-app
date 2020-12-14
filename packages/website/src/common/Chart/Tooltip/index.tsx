@@ -8,9 +8,13 @@ import {
   CardContent,
   Grid,
   Typography,
+  Button,
 } from "@material-ui/core";
-
+import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
+import { isNull } from "lodash";
+
+import { getTimeZoneName } from "../../../helpers/dates";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const Circle = styled("div")<{}, { color: string; size?: number }>(
@@ -45,21 +49,31 @@ const TemperatureMetric = ({
 );
 
 const Tooltip = ({
+  reefId,
   date,
+  timeZone,
   depth,
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
+  surveyId,
   classes,
 }: TooltipProps) => {
-  // Remove seconds from date
+  const hourlyData = !isNull(spotterSurfaceTemp);
+  // Date formatting
+  const hourlyOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+  };
   const dateString = new Date(date).toLocaleString("en", {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
-    hour: spotterSurfaceTemp ? "2-digit" : undefined,
-    minute: spotterSurfaceTemp ? "2-digit" : undefined,
+    ...(hourlyData ? hourlyOptions : {}),
   });
+
+  const timeZoneName = getTimeZoneName(timeZone || "UTC");
+
   const tooltipLines: {
     temperature: number | null;
     color: string;
@@ -82,7 +96,7 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {spotterSurfaceTemp && " UTC"}
+              {hourlyData && timeZoneName && ` ${timeZoneName}`}
             </Typography>
           }
         />
@@ -112,6 +126,18 @@ const Tooltip = ({
                   )
               )}
             </Grid>
+            {surveyId && (
+              <Grid item>
+                <Link
+                  className={classes.surveyLink}
+                  to={`/reefs/${reefId}/survey_details/${surveyId}`}
+                >
+                  <Button variant="contained" color="primary" size="small">
+                    VIEW SURVEY
+                  </Button>
+                </Link>
+              </Grid>
+            )}
           </Grid>
         </CardContent>
       </Card>
@@ -130,7 +156,7 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 160,
+      width: 190,
       minHeight: 60,
     },
     tooltipCard: {
@@ -138,6 +164,7 @@ const styles = () =>
       flexFlow: "column",
       backgroundColor: "#095877",
       borderRadius: 8,
+      paddingBottom: "0.5rem",
     },
     tooltipHeader: {
       flex: "0 1 auto",
@@ -163,14 +190,23 @@ const styles = () =>
       borderStyle: "solid",
       borderColor: "#095877 transparent transparent transparent",
     },
+    surveyLink: {
+      textDecoration: "none",
+      "&:hover": {
+        textDecoration: "none",
+      },
+    },
   });
 
 export interface TooltipData {
+  reefId: number;
   date: string;
+  timeZone?: string | null;
   depth: number | null;
   spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
+  surveyId?: number | null;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;

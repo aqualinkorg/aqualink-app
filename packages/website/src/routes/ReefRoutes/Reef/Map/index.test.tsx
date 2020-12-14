@@ -5,21 +5,39 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
 import Map from ".";
+import { mockUser } from "../../../../mocks/mockUser";
 
 jest.mock("react-leaflet");
 
 const mockStore = configureStore([]);
 
-test("renders as expected", () => {
-  const { container } = render(
-    <Provider store={mockStore({ selectedReef: { draft: null } })}>
-      <Map
-        polygon={{
-          type: "Polygon",
-          coordinates: [[[0, 0]]],
-        }}
-      />
-    </Provider>
-  );
-  expect(container).toMatchSnapshot();
+describe("Reef Map", () => {
+  let element: HTMLElement;
+  beforeEach(() => {
+    const store = mockStore({
+      user: {
+        userInfo: mockUser,
+      },
+      selectedReef: {
+        draft: null,
+      },
+    });
+
+    store.dispatch = jest.fn();
+
+    element = render(
+      <Provider store={store}>
+        <Map
+          polygon={{
+            type: "Polygon",
+            coordinates: [[[0, 0]]],
+          }}
+        />
+      </Provider>
+    ).container;
+  });
+
+  it("should render with given state from Redux store", () => {
+    expect(element).toMatchSnapshot();
+  });
 });

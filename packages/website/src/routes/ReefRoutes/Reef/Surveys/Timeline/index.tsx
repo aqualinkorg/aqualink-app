@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import moment from "moment";
 import {
   withStyles,
@@ -23,27 +23,21 @@ import {
 import { Link } from "react-router-dom";
 
 import SurveyCard from "../SurveyCard";
-import {
-  surveyListSelector,
-  surveysRequest,
-} from "../../../../../store/Survey/surveyListSlice";
+import { surveyListSelector } from "../../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
 import filterSurveys from "../helpers";
 import { SurveyMedia } from "../../../../../store/Survey/types";
+import { convertToLocalTime } from "../../../../../helpers/dates";
 
 const SurveyTimeline = ({
   isAdmin,
   reefId,
+  timeZone,
   observation,
   point,
   classes,
 }: SurveyTimelineProps) => {
-  const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
-
-  useEffect(() => {
-    dispatch(surveysRequest(`${reefId}`));
-  }, [dispatch, reefId]);
 
   return (
     <div className={classes.root}>
@@ -82,7 +76,9 @@ const SurveyTimeline = ({
                     className={classes.timelineOppositeContent}
                   >
                     <Typography variant="h6" className={classes.dates}>
-                      {moment(survey.diveDate).format("MM/DD/YYYY")}
+                      {moment(
+                        convertToLocalTime(survey.diveDate, timeZone)
+                      ).format("MM/DD/YYYY")}
                     </Typography>
                   </TimelineOppositeContent>
                 )}
@@ -93,6 +89,7 @@ const SurveyTimeline = ({
                 </TimelineSeparator>
                 <TimelineContent>
                   <SurveyCard
+                    point={point}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
@@ -149,6 +146,7 @@ const SurveyTimeline = ({
                   xs={12}
                 >
                   <SurveyCard
+                    point={point}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
@@ -196,10 +194,15 @@ const styles = (theme: Theme) =>
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
+  timeZone?: string | null;
   isAdmin: boolean;
   observation: SurveyMedia["observations"] | "any";
   point: number;
 }
+
+SurveyTimeline.defaultProps = {
+  timeZone: null,
+};
 
 type SurveyTimelineProps = SurveyTimelineIncomingProps &
   WithStyles<typeof styles>;

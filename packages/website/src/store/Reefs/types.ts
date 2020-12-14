@@ -25,6 +25,17 @@ export interface SofarValue {
 
 export type Range = "day" | "week";
 
+export interface SpotterPosition {
+  latitude: {
+    timestamp: string;
+    value: number;
+  };
+  longitude: {
+    timestamp: string;
+    value: number;
+  };
+}
+
 export interface LiveData {
   reef: { id: number };
   bottomTemperature?: SofarValue;
@@ -37,6 +48,7 @@ export interface LiveData {
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
   weeklyAlertLevel?: number;
+  spotterPosition?: SpotterPosition;
 }
 
 export interface DailyData {
@@ -92,6 +104,8 @@ export interface Reef {
   latestDailyData: DailyData;
   featuredImage?: string;
   applied?: boolean;
+  spotterId: string | null;
+  timezone?: string | null;
 }
 
 export interface SpotterDataRequestParams {

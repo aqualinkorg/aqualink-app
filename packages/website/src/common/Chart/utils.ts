@@ -56,6 +56,17 @@ export const sameDay = (
 const timeDiff = (incomingDate: string, date: Date) =>
   Math.abs(new Date(incomingDate).getTime() - date.getTime());
 
+export const findSurveyFromDate = (
+  inputDate: string,
+  surveys: SurveyListItem[]
+): number | null | undefined => {
+  return (
+    surveys.find(
+      (survey) => survey.diveDate && sameDay(survey.diveDate, inputDate)
+    )?.id || null
+  );
+};
+
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
   return dailyData.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
@@ -245,13 +256,63 @@ export function useProcessedChartData(
   return { sortedFilteredDailyData, ...axisLimits, ...datasets };
 }
 
+interface Context {
+  chart?: Chart;
+  dataIndex?: number;
+  dataset?: Chart.ChartDataSets;
+  datasetIndex?: number;
+}
+
+const fillColor = (threshold: number | null) => ({ chart }: Context) => {
+  const yScale = (chart as any).scales["y-axis-0"];
+  const top = yScale.getPixelForValue(40);
+  const zero = yScale.getPixelForValue(threshold);
+  const bottom = yScale.getPixelForValue(0);
+  const { ctx } = chart as any;
+  if (yScale && ctx) {
+    const gradient = ctx.createLinearGradient(
+      0,
+      top,
+      0,
+      bottom
+    ) as CanvasGradient;
+    const ratio = Math.min((zero - top) / (bottom - top), 1);
+    if (threshold) {
+      gradient.addColorStop(0, "rgba(250, 141, 0, 0.5)");
+      gradient.addColorStop(ratio, "rgba(250, 141, 0, 0.5)");
+      gradient.addColorStop(ratio, "rgb(107,193,225,0.2)");
+      gradient.addColorStop(1, "rgb(107,193,225,0.2)");
+    } else {
+      gradient.addColorStop(0, "rgb(107,193,225,0.2)");
+    }
+
+    return gradient;
+  }
+
+  return "transparent";
+};
+
+const pointColor = (surveyDate: Date | null) => (context: Context) => {
+  if (
+    surveyDate &&
+    context.dataset?.data &&
+    typeof context.dataIndex === "number"
+  ) {
+    const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
+    const chartDate = new Date(chartPoint.x as string);
+    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
+  }
+  return "#ffffff";
+};
+
 export const createChartData = (
   spotterBottom: ChartPoint[],
   spotterSurface: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
-  fill: boolean
+  surveyDate: Date | null,
+  temperatureThreshold: number | null
 ) => {
   const displaySpotterData = spotterSurface.length > 0;
   const data: ChartComponentProps["data"] = {
@@ -262,7 +323,7 @@ export const createChartData = (
         data: tempWithSurvey,
         pointRadius: 5,
         backgroundColor: "#ffffff",
-        pointBackgroundColor: "#ffff",
+        pointBackgroundColor: pointColor(surveyDate),
         borderWidth: 1.5,
         borderColor: "#128cc0",
       },
@@ -276,7 +337,7 @@ export const createChartData = (
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
-        backgroundColor: "rgb(107,193,225,0.2)",
+        backgroundColor: fillColor(temperatureThreshold),
       },
       {
         label: "TEMP AT DEPTH",
@@ -316,19 +377,5 @@ export const createChartData = (
     ],
   };
 
-  if (fill) {
-    // eslint-disable-next-line fp/no-mutating-methods
-    data.datasets!.splice(1, 0, {
-      label: "BLEACHING THRESHOLD",
-      data: surfaceTemps,
-      fill,
-      borderColor: "#6bc1e1",
-      borderWidth: 2,
-      pointBackgroundColor: "#ffffff",
-      pointBorderWidth: 1.5,
-      pointRadius: 0,
-      cubicInterpolationMode: "monotone",
-    });
-  }
   return data;
 };
