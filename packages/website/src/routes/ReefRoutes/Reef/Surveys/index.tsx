@@ -17,7 +17,10 @@ import Axios from "axios";
 import Timeline from "./Timeline";
 import PointSelector from "./PointSelector";
 import { userInfoSelector } from "../../../../store/User/userSlice";
-import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
+import {
+  surveysRequest,
+  updatePoiName,
+} from "../../../../store/Survey/surveyListSlice";
 import { setSelectedPoi } from "../../../../store/Survey/surveySlice";
 import observationOptions from "../../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../../store/Survey/types";
@@ -27,7 +30,7 @@ import { isAdmin } from "../../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../../../common/Dialog";
 import { useBodyLength } from "../../../../helpers/useBodyLength";
 import surveyServices from "../../../../services/surveyServices";
-import { EditPoiNameDraft, EditPoiNameEnabled } from "./types";
+import { EditPoiNameDraft } from "./types";
 
 const Surveys = ({ reef, classes }: SurveysProps) => {
   const [point, setPoint] = useState<string>("All");
@@ -35,9 +38,6 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
-  const [editPoiNameEnabled, setEditPoiNameEnabled] = useState<
-    EditPoiNameEnabled
-  >({});
   const [editPoiNameDraft, setEditPoiNameDraft] = useState<EditPoiNameDraft>(
     {}
   );
@@ -61,12 +61,6 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
       .then(({ data }) => {
         setPointOptions(data);
         if (data.length > 0) {
-          setEditPoiNameEnabled(
-            data.reduce(
-              (acc: EditPoiNameEnabled, poi) => ({ ...acc, [poi.id]: false }),
-              {}
-            )
-          );
           setEditPoiNameDraft(
             data.reduce(
               (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
@@ -147,33 +141,22 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const toggleEditPoiNameEnabled = useCallback(
     (enabled: boolean, key?: number) => {
       if (key) {
-        // If key provided then change that specific poi edit status
-        setEditPoiNameEnabled({ ...editPoiNameEnabled, [key]: enabled });
         // Reset Poi name draft on close
         const poiName = pointOptions.find((item) => item.id === key)?.name;
         if (poiName && !enabled) {
           setEditPoiNameDraft({ ...editPoiNameDraft, [key]: poiName });
         }
-      } else {
-        // If no key provided then change all
-        setEditPoiNameEnabled(
+      } else if (!enabled) {
+        // Reset Poi name draft for all Pois on close
+        setEditPoiNameDraft(
           pointOptions.reduce(
-            (acc: EditPoiNameEnabled, poi) => ({ ...acc, [poi.id]: enabled }),
+            (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
             {}
           )
         );
-        // Reset Poi name draft for all Pois on close
-        if (!enabled) {
-          setEditPoiNameDraft(
-            pointOptions.reduce(
-              (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
-              {}
-            )
-          );
-        }
       }
     },
-    [editPoiNameEnabled, pointOptions, editPoiNameDraft]
+    [pointOptions, editPoiNameDraft]
   );
 
   const onChangePoiName = useCallback(
@@ -194,21 +177,34 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
         setEditPoiNameLoading(true);
         surveyServices
           .updatePoi(key, newName, user.token)
-          .then(() => reefServices.getReefPois(`${reef.id}`))
-          .then(({ data }) => {
-            const prevName = pointOptions.find((item) => item.id === key)?.name;
-            setPointOptions(data);
+          .then(() => {
+            // Update point name for featured image card
+            dispatch(updatePoiName({ id: key, name: newName }));
+
             // If the updated point was previously selected, update its value
+            const prevName = pointOptions.find((item) => item.id === key)?.name;
             if (prevName === point) {
               setPoint(newName);
             }
+
+            // Update point options
+            setPointOptions(
+              pointOptions.map((item) => {
+                if (item.id === key) {
+                  return {
+                    ...item,
+                    name: newName,
+                  };
+                }
+                return item;
+              })
+            );
             setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
-            setEditPoiNameEnabled({ ...editPoiNameEnabled, [key]: false });
           })
           .finally(() => setEditPoiNameLoading(false));
       }
     },
-    [editPoiNameDraft, editPoiNameEnabled, point, pointOptions, reef.id, user]
+    [dispatch, editPoiNameDraft, point, pointOptions, user]
   );
 
   const deletePoiDialogActions: Action[] = [
@@ -266,7 +262,6 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             mountPois={mountPois}
             pointOptions={pointOptions}
             point={point}
-            editPoiNameEnabled={editPoiNameEnabled}
             editPoiNameDraft={editPoiNameDraft}
             isReefAdmin={isReefAdmin}
             editPoiNameLoading={editPoiNameLoading}
