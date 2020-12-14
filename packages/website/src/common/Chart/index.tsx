@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { mergeWith } from "lodash";
 import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
-import "./plugins/fillPlugin";
 import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
@@ -21,14 +20,14 @@ import { Range } from "../../store/Reefs/types";
 export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
-  spotterData?: SpotterData;
+  spotterData?: SpotterData | null;
   startDate?: string;
   endDate?: string;
   chartPeriod?: "hour" | Range | null;
   surveys: SurveyListItem[];
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
-  background: boolean;
+  background?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -83,7 +82,6 @@ function Chart({
     // eslint-disable-next-line no-param-reassign
     forwardRef.current = chartRef.current;
   }
-  const [updateChart, setUpdateChart] = useState<boolean>(true);
 
   const [xTickShift, setXTickShift] = useState<number>(0);
 
@@ -141,10 +139,8 @@ function Chart({
 
   // Catch the "window done resizing" event as suggested by https://css-tricks.com/snippets/jquery/done-resizing-event/
   const onResize = useCallback(() => {
-    setUpdateChart(true);
     setTimeout(() => {
       // Resize has stopped so stop updating the chart
-      setUpdateChart(false);
       changeXTickShiftAndPeriod();
     }, 1);
   }, []);
@@ -169,14 +165,6 @@ function Chart({
       plugins: {
         chartJsPluginBarchartBackground: {
           color: background ? "rgb(158, 166, 170, 0.07)" : "#ffffff",
-        },
-        fillPlugin: {
-          datasetIndex: 1,
-          zeroLevel: temperatureThreshold,
-          bottom: 0,
-          top: 35,
-          color: "rgba(250, 141, 0, 0.5)",
-          updateChart,
         },
       },
       tooltips: {
@@ -268,7 +256,7 @@ function Chart({
         ],
         bottomTemperatureData,
         selectedSurvey?.diveDate ? new Date(selectedSurvey?.diveDate) : null,
-        !!temperatureThreshold
+        temperatureThreshold
       )}
     />
   );

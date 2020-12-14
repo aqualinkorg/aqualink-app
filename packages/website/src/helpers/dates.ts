@@ -1,3 +1,4 @@
+import moment from "moment-timezone";
 import { DailyData, Range, SpotterData } from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
@@ -50,7 +51,10 @@ export const convertToLocalTime = (
   options?: Intl.DateTimeFormatOptions
 ): DateString => {
   if (utcTime && timeZone) {
-    return new Date(utcTime).toLocaleString("en-US", { ...options, timeZone });
+    return new Date(utcTime).toLocaleString("en-US", {
+      ...options,
+      timeZone,
+    });
   }
   return utcTime;
 };
@@ -75,18 +79,25 @@ export const convertDailyDataToLocalTime = (
   }));
 
 export const convertSpotterDataToLocalTime = (
-  data: SpotterData,
+  data?: SpotterData | null,
   timeZone?: string | null
-): SpotterData => ({
-  bottomTemperature: data.bottomTemperature.map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-  })),
-  surfaceTemperature: data.surfaceTemperature.map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-  })),
-});
+): SpotterData | null | undefined => {
+  if (data) {
+    return {
+      bottomTemperature: data.bottomTemperature.map((item) => ({
+        ...item,
+        timestamp:
+          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
+      })),
+      surfaceTemperature: data.surfaceTemperature.map((item) => ({
+        ...item,
+        timestamp:
+          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
+      })),
+    };
+  }
+  return data;
+};
 
 export const convertSurveysToLocalTime = (
   surveys: SurveyListItem[],
@@ -96,3 +107,11 @@ export const convertSurveysToLocalTime = (
     ...item,
     diveDate: convertToLocalTime(item.diveDate, timeZone) || item.diveDate,
   }));
+
+export const getTimeZoneName = (timeZone: string): string => {
+  const rawTimeZoneName = moment().tz(timeZone).format("z");
+  // Only add GMT prefix to raw time differences and not acronyms such as PST.
+  const needsGMT =
+    rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
+  return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
+};

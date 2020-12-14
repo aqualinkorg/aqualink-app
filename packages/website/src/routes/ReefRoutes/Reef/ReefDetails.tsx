@@ -1,4 +1,4 @@
-import React, { ElementType, ChangeEvent, useState } from "react";
+import React, { ElementType, ChangeEvent } from "react";
 import {
   createStyles,
   Grid,
@@ -6,12 +6,9 @@ import {
   WithStyles,
   Theme,
   Box,
-  CircularProgress,
-  Typography,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import moment from "moment";
-import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -19,13 +16,10 @@ import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
-import Charts from "./Charts";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
-import SelectRange from "../../../common/SelectRange";
-import DatePicker from "../../../common/Datepicker";
+import CombinedCharts from "../../../common/Chart/CombinedCharts";
 import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
-import { reefSpotterDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -33,7 +27,6 @@ import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 import {
   convertToLocalTime,
   convertDailyDataToLocalTime,
-  convertSpotterDataToLocalTime,
   convertSurveysToLocalTime,
 } from "../../../helpers/dates";
 
@@ -55,8 +48,6 @@ const ReefDetails = ({
   diveDate,
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
-  const [open, setOpen] = useState<boolean>(false);
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
@@ -155,79 +146,31 @@ const ReefDetails = ({
           </Grid>
 
           <Box mt="2rem">
-            <Charts
+            <CombinedCharts
               reefId={reef.id}
-              title="DAILY WATER TEMPERATURE (°C)"
               dailyData={convertDailyDataToLocalTime(
                 reef.dailyData,
                 reef.timezone
               )}
-              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
               depth={reef.depth}
+              hasSpotterData={hasSpotterData}
               maxMonthlyMean={reef.maxMonthlyMean || null}
               temperatureThreshold={
                 reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
               }
-              background
+              onDateChange={onDateChange}
+              onRangeChange={onRangeChange}
+              pickerDate={pickerDate}
+              range={range}
+              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
+              chartPeriod={chartPeriod}
+              spotterData={spotterData}
+              startDate={
+                convertToLocalTime(startDate, reef.timezone) || startDate
+              }
+              endDate={convertToLocalTime(endDate, reef.timezone) || endDate}
+              timeZone={reef.timezone}
             />
-            {hasSpotterData && (
-              <Grid container alignItems="baseline" spacing={3}>
-                <SelectRange
-                  open={open}
-                  onClose={() => setOpen(false)}
-                  onOpen={() => setOpen(true)}
-                  value={range}
-                  onRangeChange={onRangeChange}
-                />
-                <DatePicker value={pickerDate} onChange={onDateChange} />
-              </Grid>
-            )}
-            {hasSpotterData &&
-              (spotterDataLoading ? (
-                <Box
-                  height="20rem"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  textAlign="center"
-                  p={4}
-                >
-                  <CircularProgress size="6rem" thickness={1} />
-                </Box>
-              ) : (
-                (spotterData && spotterData.bottomTemperature.length > 1 && (
-                  <Charts
-                    reefId={reef.id}
-                    title="HOURLY WATER TEMPERATURE (°C)"
-                    dailyData={convertDailyDataToLocalTime(
-                      reef.dailyData,
-                      reef.timezone
-                    )}
-                    spotterData={convertSpotterDataToLocalTime(
-                      spotterData,
-                      reef.timezone
-                    )}
-                    startDate={
-                      convertToLocalTime(startDate, reef.timezone) || startDate
-                    }
-                    endDate={
-                      convertToLocalTime(endDate, reef.timezone) || endDate
-                    }
-                    chartPeriod={chartPeriod}
-                    surveys={[]}
-                    depth={reef.depth}
-                    maxMonthlyMean={null}
-                    temperatureThreshold={null}
-                    background={false}
-                  />
-                )) || (
-                  <Box mt="2rem">
-                    <Typography>
-                      No Smart Buoy data available in this time range.
-                    </Typography>
-                  </Box>
-                )
-              ))}
             <Surveys reef={reef} />
           </Box>
         </>

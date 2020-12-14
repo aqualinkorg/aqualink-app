@@ -8,6 +8,7 @@ import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
   setReefOnMap,
+  setSearchResult,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
@@ -82,6 +83,7 @@ export const ReefMarkers = () => {
             return lngOffsets.map((offset) => (
               <Marker
                 onClick={() => {
+                  dispatch(setSearchResult());
                   dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
