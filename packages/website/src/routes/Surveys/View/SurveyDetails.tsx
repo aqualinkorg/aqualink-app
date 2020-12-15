@@ -24,7 +24,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   const { region: regionName } = getReefNameAndRegion(reef);
   return (
     <Grid
-      style={{ marginTop: "1rem" }}
+      style={{ marginTop: 16 }}
       container
       item
       xs={12}

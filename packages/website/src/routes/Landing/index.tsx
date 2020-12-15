@@ -111,24 +111,24 @@ const styles = (theme: Theme) =>
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
       backgroundSize: "cover",
-      left: "10rem",
-      height: "54rem",
+      left: 160,
+      height: 864,
       [theme.breakpoints.down("xs")]: {
-        height: "36rem",
+        height: 576,
       },
     },
     container: {
       [theme.breakpoints.up("sm")]: {
         paddingLeft: "12vw",
-        paddingRight: "40px",
+        paddingRight: 40,
       },
     },
     aqualinkSecondPart: {
       opacity: 0.5,
     },
     buttons: {
-      height: "3rem",
-      width: "13rem",
+      height: 48,
+      width: 208,
       textTransform: "none",
       "&:hover": {
         color: "#ffffff",
