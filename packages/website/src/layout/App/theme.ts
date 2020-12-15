@@ -1,4 +1,5 @@
 import { createMuiTheme, Theme } from "@material-ui/core/styles";
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 import { MuiPickersOverrides } from "@material-ui/pickers/typings/overrides";
 
 type OverridesNameToClassKey = {
@@ -22,16 +23,7 @@ const fontFamily =
 
 export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue };
 
-declare module "@material-ui/core/styles/createBreakpoints" {
-  interface BreakpointOverrides {
-    xs: true;
-    sm: true;
-    md: true;
-    lg: true;
-    xl: true;
-    xxl: true;
-  }
-}
+const breakpoints = createBreakpoints({});
 
 const theme: Theme = createMuiTheme({
   palette: {
@@ -46,16 +38,6 @@ const theme: Theme = createMuiTheme({
     },
     grey: {
       500: lightGray,
-    },
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1460,
-      xxl: 1920,
     },
   },
   overrides: {
@@ -79,11 +61,17 @@ const theme: Theme = createMuiTheme({
         fontSize: 52,
         fontFamily,
         fontWeight: 300,
+        [breakpoints.down("xs")]: {
+          fontSize: 38,
+        },
       },
       h2: {
         fontSize: 48,
         fontFamily,
         fontWeight: 300,
+        [breakpoints.down("xs")]: {
+          fontSize: 34,
+        },
       },
       h3: {
         fontSize: 32,
@@ -93,6 +81,9 @@ const theme: Theme = createMuiTheme({
         fontSize: 26,
         fontFamily,
         fontWeight: 400,
+        [breakpoints.down("sm")]: {
+          fontSize: 22,
+        },
       },
       h5: {
         fontSize: 20,
@@ -194,25 +185,5 @@ const theme: Theme = createMuiTheme({
     },
   },
 });
-
-// eslint-disable-next-line fp/no-mutation
-theme.typography = {
-  ...theme.typography,
-  h1: {
-    [theme.breakpoints.down("xs")]: {
-      fontSize: 38,
-    },
-  },
-  h2: {
-    [theme.breakpoints.down("xs")]: {
-      fontSize: 34,
-    },
-  },
-  h4: {
-    [theme.breakpoints.down("sm")]: {
-      fontSize: 22,
-    },
-  },
-};
 
 export default theme;
