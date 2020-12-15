@@ -54,6 +54,7 @@ export const convertToLocalTime = (
     return new Date(utcTime).toLocaleString("en-US", {
       ...options,
       timeZone,
+      timeZoneName: "short",
     });
   }
   return utcTime;
