@@ -62,7 +62,7 @@ const theme: Theme = createMuiTheme({
         fontFamily,
         fontWeight: 300,
         [breakpoints.down("xs")]: {
-          fontSize: 38,
+          fontSize: 34,
         },
       },
       h2: {
@@ -70,7 +70,7 @@ const theme: Theme = createMuiTheme({
         fontFamily,
         fontWeight: 300,
         [breakpoints.down("xs")]: {
-          fontSize: 34,
+          fontSize: 30,
         },
       },
       h3: {

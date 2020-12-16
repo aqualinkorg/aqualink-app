@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -9,7 +9,9 @@ import {
   Box,
   Button,
   Theme,
+  Fab,
 } from "@material-ui/core";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Link } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
@@ -17,11 +19,51 @@ import Footer from "../../common/Footer";
 import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
+import { useWindowSize } from "../../helpers/useWindowSize";
+
+const MOBILE_SIZE = 600;
 
 const LandingPage = ({ classes }: LandingPageProps) => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize && windowSize.width < MOBILE_SIZE;
+
+  const handleScroll = useCallback(() => {
+    setScrollPosition(window.pageYOffset);
+  }, []);
+
+  const seeMore = useCallback(() => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: window.innerHeight,
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <>
       <NavBar routeButtons searchLocation={false} />
+      {scrollPosition === 0 && isMobile && (
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="flex-end"
+          position="absolute"
+          top="calc(100vh - 64px)"
+          padding="0 10px 0 10px"
+        >
+          <Fab onClick={seeMore} size="large">
+            <ArrowDownwardIcon />
+          </Fab>
+        </Box>
+      )}
       <div>
         <Box
           display="flex"
@@ -59,7 +101,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Box mt="2rem">
-                <Grid container spacing={3}>
+                <Grid container spacing={2}>
                   <Grid item>
                     <Button
                       component={Link}
@@ -112,9 +154,10 @@ const styles = (theme: Theme) =>
       backgroundImage: `url("${landingPageImage}")`,
       backgroundSize: "cover",
       left: 160,
-      height: 864,
+      minHeight: 864,
+      height: "calc(100vh - 64px)",
       [theme.breakpoints.down("xs")]: {
-        height: 576,
+        minHeight: 576,
       },
     },
     container: {
@@ -132,6 +175,9 @@ const styles = (theme: Theme) =>
       textTransform: "none",
       "&:hover": {
         color: "#ffffff",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: 40,
       },
     },
     registerButton: {
