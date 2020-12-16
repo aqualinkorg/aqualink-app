@@ -1,8 +1,10 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
   createStyles,
+  useMediaQuery,
+  useTheme,
   Container,
   Grid,
   Typography,
@@ -19,33 +21,30 @@ import Footer from "../../common/Footer";
 import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
-import { useWindowSize } from "../../helpers/useWindowSize";
-
-const MOBILE_SIZE = 600;
 
 const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const windowSize = useWindowSize();
-  const isMobile = windowSize && windowSize.width < MOBILE_SIZE;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const handleScroll = useCallback(() => {
-    setScrollPosition(window.pageYOffset);
-  }, []);
-
-  const seeMore = useCallback(() => {
+  const seeMore = () => {
     window.scrollTo({
       behavior: "smooth",
       top: window.innerHeight,
     });
-  }, []);
+  };
 
   useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.pageYOffset);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [handleScroll]);
+  }, []);
 
   return (
     <>
@@ -56,8 +55,8 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           display="flex"
           justifyContent="flex-end"
           position="absolute"
-          top="calc(100vh - 64px)"
-          padding="0 10px 0 10px"
+          top="calc(100vh - 64px)" // place button at the bottom of the screen
+          padding="0 10px"
         >
           <Fab onClick={seeMore} size="large">
             <ArrowDownwardIcon />
@@ -155,7 +154,7 @@ const styles = (theme: Theme) =>
       backgroundSize: "cover",
       left: 160,
       minHeight: 864,
-      height: "calc(100vh - 64px)",
+      height: "calc(100vh - 64px)", // subtract height of the navbar
       [theme.breakpoints.down("xs")]: {
         minHeight: 576,
       },
