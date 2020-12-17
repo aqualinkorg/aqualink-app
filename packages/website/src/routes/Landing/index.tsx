@@ -54,8 +54,8 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           width="100%"
           display="flex"
           justifyContent="flex-end"
-          position="absolute"
-          top="calc(100vh - 64px)" // place button at the bottom of the screen
+          position="fixed"
+          bottom="10px"
           padding="0 10px"
         >
           <Fab onClick={seeMore} size="large">
