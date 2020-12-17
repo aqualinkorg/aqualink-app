@@ -43,7 +43,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     },
     {
       id: "temp",
-      label: "TEMP",
+      label: "SURF. TEMP",
       unit: "°C",
     },
     {
