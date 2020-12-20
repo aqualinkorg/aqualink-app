@@ -23,9 +23,6 @@ const styles = () =>
       alignItems: "center",
       justifyContent: "center",
     },
-    aqualinkSecondPart: {
-      opacity: 0.5,
-    },
   });
 
 type NotFoundPageProps = WithStyles<typeof styles>;
