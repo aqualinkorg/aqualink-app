@@ -88,7 +88,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                     style="color: black;"
                     variant="h6"
                   >
-                    TEMP
+                    SST
                     <mock-typography
                       component="span"
                       style="color: black;"
@@ -175,7 +175,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="h6"
               >
-                39.0
+                23.0
                 <mock-hidden
                   smup="true"
                 >
