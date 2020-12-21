@@ -80,7 +80,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
               <Grid item xs={6}>
                 <Grid container item xs={12}>
                   <Typography variant="caption" color="textSecondary">
-                    SAT. TEMP.
+                    SST
                   </Typography>
                 </Grid>
                 <Grid container item xs={12}>
