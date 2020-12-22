@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -12,15 +12,19 @@ import {
   Typography,
   withStyles,
   WithStyles,
+  Checkbox,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useSelector } from "react-redux";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
-import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
+import {
+  reefsListLoadingSelector,
+  filterReefsWithSpotter,
+} from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
 
@@ -29,6 +33,7 @@ const SMALL_WIDTH = 600;
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const dispatch = useDispatch();
   const { height, width } = useWindowSize() || {};
 
   const [order, setOrder] = useState<Order>("desc");
@@ -41,6 +46,10 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   };
 
   const showTable = (width && width >= SMALL_WIDTH) || openDrawer;
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(filterReefsWithSpotter(event.target.checked));
+  };
 
   return (
     <>
@@ -68,6 +77,12 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       {showTable && (
         <>
           <SelectedReefCard />
+          <Box display="flex" alignItems="center">
+            <Checkbox onChange={handleCheckboxChange} color="primary" />
+            <Typography color="textSecondary" variant="h6">
+              Only sites with spotter
+            </Typography>
+          </Box>
           <Box
             className={
               height && height > SMALL_HEIGHT

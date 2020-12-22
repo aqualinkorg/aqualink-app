@@ -16,6 +16,7 @@ describe("ReefTable", () => {
     const store = mockStore({
       reefsList: {
         list: [mockReef],
+        reefsToDisplay: [mockReef],
         loading: false,
         error: null,
       },

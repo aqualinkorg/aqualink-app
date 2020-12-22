@@ -36,6 +36,20 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   </mock-hidden>
   <mock-selectedreefcard />
   <mock-box
+    alignitems="center"
+    display="flex"
+  >
+    <mock-checkbox
+      color="primary"
+    />
+    <mock-typography
+      color="textSecondary"
+      variant="h6"
+    >
+      Only sites with spotter
+    </mock-typography>
+  </mock-box>
+  <mock-box
     classname="ReefTable-tableHolder-1 ReefTable-scrollable-2"
     display="flex"
     flex="1"
