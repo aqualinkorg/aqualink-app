@@ -58,12 +58,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
           )
         ) : (
           <Container className={classes.noData}>
-            <Grid
-              container
-              direction="column"
-              justify="flex-start"
-              alignItems="center"
-            >
+            <Grid container direction="column" alignItems="center">
               <Grid item>
                 <Typography gutterBottom color="primary" variant="h2">
                   No Data Found

@@ -21,7 +21,7 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="flex-start">
+          <Grid container>
             <Grid item xs={12}>
               <Typography color="textSecondary" variant="h6">
                 HEAT STRESS ALERT LEVEL
