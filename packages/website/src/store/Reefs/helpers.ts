@@ -14,12 +14,8 @@ const longDHW = (dhw: number | null): string =>
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const {
-      degreeHeatingDays,
-      satelliteTemperature,
-      maxBottomTemperature,
-      weeklyAlertLevel,
-    } = value.latestDailyData || {};
+    const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
+      value.latestDailyData || {};
     const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
     const { name: locationName = "", region = "" } = getReefNameAndRegion(
@@ -28,7 +24,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
     return {
       locationName,
-      temp: maxBottomTemperature || satelliteTemperature,
+      temp: satelliteTemperature,
       maxMonthlyMean,
       depth: value.depth,
       dhw,
