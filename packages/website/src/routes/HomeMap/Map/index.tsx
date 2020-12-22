@@ -49,18 +49,14 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const ref = useRef<Map>(null);
 
   const onLocationSearch = () => {
-    const { current } = ref;
-    if (current && current.leafletElement) {
-      const map = current.leafletElement;
-      map
-        .locate({ setView: true, enableHighAccuracy: true, maxZoom: 8 })
-        .on("locationfound", ({ accuracy, latlng }) => {
-          setCurrentLocation([latlng.lat, latlng.lng]);
-          setCurrentLocationAccuracy(accuracy);
-        })
-        .on("locationerror", () => {
-          setCurrentLocationError(true);
-        });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCurrentLocation([
+          position.coords.latitude,
+          position.coords.longitude,
+        ]);
+        setCurrentLocationAccuracy(position.coords.accuracy);
+      });
     }
   };
 
