@@ -58,8 +58,6 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
         setCurrentLocation(latLng);
         setCurrentLocationAccuracy(position.coords.accuracy);
 
-        console.log("hello");
-
         // zoom to user location
         const { current } = ref;
         if (current && current.leafletElement) {
