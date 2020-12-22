@@ -12,7 +12,7 @@ import {
   Typography,
   withStyles,
   WithStyles,
-  Checkbox,
+  Switch,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -47,7 +47,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
 
   const showTable = (width && width >= SMALL_WIDTH) || openDrawer;
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const toggleSwitch = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(filterReefsWithSpotter(event.target.checked));
   };
 
@@ -77,10 +77,15 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       {showTable && (
         <>
           <SelectedReefCard />
-          <Box display="flex" alignItems="center">
-            <Checkbox onChange={handleCheckboxChange} color="primary" />
+          <Box
+            padding="0 40px"
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <Switch onChange={toggleSwitch} color="primary" />
             <Typography color="textSecondary" variant="h6">
-              Only sites with spotter
+              spotters only
             </Typography>
           </Box>
           <Box

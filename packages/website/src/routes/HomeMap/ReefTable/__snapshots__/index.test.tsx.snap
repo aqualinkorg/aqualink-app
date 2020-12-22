@@ -38,15 +38,17 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   <mock-box
     alignitems="center"
     display="flex"
+    justifycontent="flex-end"
+    padding="0 40px"
   >
-    <mock-checkbox
+    <mock-switch
       color="primary"
     />
     <mock-typography
       color="textSecondary"
       variant="h6"
     >
-      Only sites with spotter
+      spotters only
     </mock-typography>
   </mock-box>
   <mock-box
