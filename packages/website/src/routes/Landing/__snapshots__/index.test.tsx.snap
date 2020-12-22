@@ -767,7 +767,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
             mt="2rem"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
             >
               <div
                 class="MuiGrid-root MuiGrid-item"
