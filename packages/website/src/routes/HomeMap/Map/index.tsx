@@ -51,11 +51,22 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const onLocationSearch = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setCurrentLocation([
+        const latLng = [
           position.coords.latitude,
           position.coords.longitude,
-        ]);
+        ] as [number, number];
+        setCurrentLocation(latLng);
         setCurrentLocationAccuracy(position.coords.accuracy);
+
+        console.log("hello");
+
+        // zoom to user location
+        const { current } = ref;
+        if (current && current.leafletElement) {
+          const map = current.leafletElement;
+          const newZoom = Math.max(map.getZoom() || 6, 8);
+          map.flyTo(latLng, newZoom, { duration: 2 });
+        }
       });
     }
   };
