@@ -27,12 +27,15 @@ import {
 } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import { isSuperAdmin } from "../../../helpers/user";
 
 const SMALL_HEIGHT = 720;
 const SMALL_WIDTH = 600;
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const { height, width } = useWindowSize() || {};
 
@@ -77,17 +80,19 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       {showTable && (
         <>
           <SelectedReefCard />
-          <Box
-            padding="0 40px"
-            display="flex"
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-            <Switch onChange={toggleSwitch} color="primary" />
-            <Typography color="textSecondary" variant="h6">
-              spotters only
-            </Typography>
-          </Box>
+          {isSuperAdmin(user) && (
+            <Box
+              padding="0 40px"
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <Switch onChange={toggleSwitch} color="primary" />
+              <Typography color="textSecondary" variant="h6">
+                spotters only
+              </Typography>
+            </Box>
+          )}
           <Box
             className={
               height && height > SMALL_HEIGHT
