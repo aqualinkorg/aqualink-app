@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, ChangeEvent } from "react";
+import React, { useCallback, useEffect, ChangeEvent, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -9,6 +9,12 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
 import Alert from "@material-ui/lab/Alert";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +29,7 @@ import {
 const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   const dispatch = useDispatch();
   const draftReef = useSelector(reefDraftSelector);
+  const [exclusionDate, setExclusionDate] = useState<Date | null>(null);
   const reefName = getReefNameAndRegion(reef).name || "";
   const location = reef.polygon.type === "Point" ? reef.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
@@ -31,6 +38,8 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   const { register, errors, handleSubmit, setValue } = useForm({
     reValidateMode: "onSubmit",
   });
+
+  const onEclusionDateChange = (date: Date | null) => setExclusionDate(date);
 
   const formSubmit = useCallback(
     (data: any) => {
@@ -117,6 +126,48 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               error={!!errors.depth}
               helperText={errors?.depth?.message || ""}
             />
+          </Grid>
+          <Grid item container spacing={2} alignItems="center">
+            <Grid item sm={6} xs={12}>
+              <Alert icon={false} severity="info">
+                <Typography variant="subtitle2">
+                  Spotter data before this date will not be displayed
+                </Typography>
+              </Alert>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  className={classes.textField}
+                  disableToolbar
+                  format="MM/dd/yyyy"
+                  id="exclusion-date"
+                  name="exclusionDate"
+                  autoOk
+                  showTodayButton
+                  fullWidth
+                  helperText={errors?.exclusionDate?.message || ""}
+                  inputRef={register({
+                    required: "This is a required field",
+                    validate: {
+                      validDate: (value) =>
+                        moment(value, "MM/DD/YYYY", true).isValid() ||
+                        "Invalid date",
+                    },
+                  })}
+                  error={!!errors.exclusionDate}
+                  value={exclusionDate}
+                  onChange={onEclusionDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date",
+                  }}
+                  inputProps={{
+                    className: classes.textField,
+                  }}
+                  inputVariant="outlined"
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
