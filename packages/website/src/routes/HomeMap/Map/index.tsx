@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Map, TileLayer, Marker } from "react-leaflet";
+import { Map, TileLayer, Marker, Circle } from "react-leaflet";
 import L, { LatLng } from "leaflet";
 import {
   createStyles,
@@ -40,6 +40,9 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
+  const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
+    number
+  >();
   const [currentLocationError, setCurrentLocationError] = useState(false);
   const loading = useSelector(reefsListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
@@ -50,9 +53,10 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     if (current && current.leafletElement) {
       const map = current.leafletElement;
       map
-        .locate({ setView: true, enableHighAccuracy: true, maxZoom: 20 })
-        .on("locationfound", ({ latlng }) => {
+        .locate({ setView: true, enableHighAccuracy: true, maxZoom: 8 })
+        .on("locationfound", ({ accuracy, latlng }) => {
           setCurrentLocation([latlng.lat, latlng.lng]);
+          setCurrentLocationAccuracy(accuracy);
         })
         .on("locationerror", () => {
           setCurrentLocationError(true);
@@ -108,6 +112,12 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       <ReefMarkers />
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
+      )}
+      {currentLocation && currentLocationAccuracy && (
+        <Circle
+          center={{ lat: currentLocation[0], lng: currentLocation[1] }}
+          radius={currentLocationAccuracy}
+        />
       )}
       <Legend legendName={legendName} />
       <AlertLevelLegend />
