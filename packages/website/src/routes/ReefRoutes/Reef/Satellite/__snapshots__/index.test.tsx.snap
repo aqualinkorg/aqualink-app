@@ -66,7 +66,7 @@ exports[`renders as expected 1`] = `
             </mock-typography>
             <mock-typography
               classname="Satellite-contentTextValues-5"
-              variant="h2"
+              variant="h3"
             >
               26.0 °C
             </mock-typography>
@@ -85,7 +85,7 @@ exports[`renders as expected 1`] = `
             >
               <mock-typography
                 classname="Satellite-contentTextValues-5"
-                variant="h2"
+                variant="h3"
               >
                 24.0 °C
               </mock-typography>
@@ -105,7 +105,7 @@ exports[`renders as expected 1`] = `
             >
               <mock-typography
                 classname="Satellite-contentTextValues-5"
-                variant="h2"
+                variant="h3"
               >
                 4.1 DHW
               </mock-typography>
