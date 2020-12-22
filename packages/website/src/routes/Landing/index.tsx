@@ -57,7 +57,6 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           position="fixed"
           bottom="10px"
           padding="0 10px"
-          zIndex={100}
         >
           <Fab onClick={seeMore} size="large">
             <ArrowDownwardIcon />
