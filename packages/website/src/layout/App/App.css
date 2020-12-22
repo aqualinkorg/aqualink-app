@@ -105,6 +105,20 @@ body {
   background-color: #4285F4;
   border-radius: 50%;
   border: 2px solid white;
+  animation: pulsate 0.9s ease-in;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulsate {
+  0% {border: 5px solid white;}
+  13% {border: 4px solid white;}
+  25% {border: 3px solid white;}
+  38% {border: 2px solid white;}
+  50% {border: 1px solid white;}
+  63% {border: 2px solid white;}
+  75% {border: 3px solid white;}
+  88% {border: 4px solid white;}
+  100% {border: 5px solid white;}
 }
 
 @media screen and (max-width: 599px) {
