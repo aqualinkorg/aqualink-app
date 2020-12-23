@@ -43,11 +43,10 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
     number
   >();
-  const [currentLocationError, setCurrentLocationError] = useState(false);
   const [
     currentLocationErrorMessage,
     setCurrentLocationErrorMessage,
-  ] = useState("");
+  ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
@@ -72,19 +71,18 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
           }
         },
         () => {
-          setCurrentLocationError(true);
           setCurrentLocationErrorMessage("Unable to find your location");
         }
       );
     } else {
-      setCurrentLocationError(true);
       setCurrentLocationErrorMessage(
         "Geolocation is not supported by your browser"
       );
     }
   };
 
-  const onLocationErrorAlertClose = () => setCurrentLocationError(false);
+  const onLocationErrorAlertClose = () =>
+    setCurrentLocationErrorMessage(undefined);
 
   useEffect(() => {
     const { current } = ref;
@@ -118,7 +116,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       worldCopyJump
     >
       <Snackbar
-        open={currentLocationError}
+        open={Boolean(currentLocationErrorMessage)}
         autoHideDuration={5000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         onClose={onLocationErrorAlertClose}
