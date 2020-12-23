@@ -21,9 +21,28 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
+import UpdateInfo from "../UpdateInfo";
 
-const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
+const Satellite = ({
+  maxMonthlyMean,
+  liveData,
+  timeZone,
+  classes,
+}: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = liveData;
+  const timestamp =
+    satelliteTemperature?.timestamp && timeZone
+      ? new Date(satelliteTemperature?.timestamp)
+          .toLocaleDateString("en-GB", {
+            timeZone,
+            timeZoneName: "short",
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+          .replace(",", "")
+      : null;
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
     degreeHeatingDays?.value
@@ -56,18 +75,11 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between">
-            <Grid container item xs={8}>
+          <Grid container>
+            <Grid item>
               <Typography className={classes.cardTitle} variant="h6">
                 SATELLITE OBSERVATION
               </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <img
-                className={classes.titleImage}
-                alt="satellite"
-                src={satellite}
-              />
             </Grid>
           </Grid>
         }
@@ -122,6 +134,8 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
             </Grid>
           ))}
         </Grid>
+
+        <UpdateInfo timestamp={timestamp} image={satellite} />
       </CardContent>
     </Card>
   );
@@ -135,10 +149,6 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
       height: "100%",
-    },
-    titleImage: {
-      height: 35,
-      width: 35,
     },
     content: {
       display: "flex",
@@ -156,7 +166,12 @@ const styles = () =>
 interface SatelliteIncomingProps {
   maxMonthlyMean: number | null;
   liveData: LiveData;
+  timeZone?: string | null;
 }
+
+Satellite.defaultProps = {
+  timeZone: null,
+};
 
 type SatelliteProps = WithStyles<typeof styles> & SatelliteIncomingProps;
 

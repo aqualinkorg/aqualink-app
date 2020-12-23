@@ -49,11 +49,11 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean } = reef;
+  const { dailyData, liveData, maxMonthlyMean, timezone } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
-      props: { liveData, maxMonthlyMean },
+      props: { liveData, maxMonthlyMean, timeZone: timezone },
     },
     {
       Component: Sensor as ElementType,
@@ -109,7 +109,7 @@ const ReefDetails = ({
     <Box mt="1rem">
       {(!diveDate || !point) && <CardTitle values={mapTitleItems} />}
 
-      <Grid container justify="space-between" spacing={4}>
+      <Grid container justify="space-between" spacing={2}>
         <Grid item xs={12} md={6}>
           {diveDate && point && <CardTitle values={mapTitleItems} />}
           <div className={classes.container}>
@@ -136,7 +136,7 @@ const ReefDetails = ({
             className={classes.metricsWrapper}
             container
             justify="space-between"
-            spacing={4}
+            spacing={2}
           >
             {cards.map(({ Component, props }, index) => (
               <Grid key={index.toString()} item xs={12} sm={6} md={3}>
