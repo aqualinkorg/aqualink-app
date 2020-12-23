@@ -101,6 +101,12 @@ body {
   background-size: 65px 20px;
 }
 
+.current-position-marker {
+  background-color: #4285F4;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
 @media screen and (max-width: 599px) {
   .mapbox-wordmark {
     bottom: 55px;
