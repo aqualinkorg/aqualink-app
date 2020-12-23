@@ -165,7 +165,7 @@ const styles = (theme: Theme) =>
       },
     },
     switchWrapper: {
-      padding: "0 40px",
+      padding: "0 16px",
       display: "flex",
       alignItems: "center",
       justifyContent: "flex-end",
