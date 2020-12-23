@@ -100,14 +100,13 @@ const SurveyTimeline = ({
         </Timeline>
       </Hidden>
       <Hidden lgUp>
-        <Grid container justify="flex-start" item xs={12}>
+        <Grid container item xs={12}>
           {isAdmin &&
             !(window && window.location.pathname.includes("new_survey")) && (
               <Grid
                 style={{ marginBottom: "1rem" }}
                 container
                 alignItems="center"
-                justify="flex-start"
                 item
                 xs={12}
               >

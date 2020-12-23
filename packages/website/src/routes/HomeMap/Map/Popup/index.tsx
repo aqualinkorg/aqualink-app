@@ -61,12 +61,12 @@ const Popup = ({ reef, classes }: PopupProps) => {
           <Grid container item xs={12}>
             {maxBottomTemperature ? (
               <Grid item xs={6}>
-                <Grid container justify="flex-start" item xs={12}>
+                <Grid container item xs={12}>
                   <Typography variant="caption" color="textSecondary">
                     {`TEMP AT ${reef.depth}m`}
                   </Typography>
                 </Grid>
-                <Grid container justify="flex-start" item xs={12}>
+                <Grid container item xs={12}>
                   <Typography
                     style={{ color: colors.lightBlue }}
                     variant="h5"
@@ -78,12 +78,12 @@ const Popup = ({ reef, classes }: PopupProps) => {
               </Grid>
             ) : (
               <Grid item xs={6}>
-                <Grid container justify="flex-start" item xs={12}>
+                <Grid container item xs={12}>
                   <Typography variant="caption" color="textSecondary">
                     SST
                   </Typography>
                 </Grid>
-                <Grid container justify="flex-start" item xs={12}>
+                <Grid container item xs={12}>
                   <Typography
                     style={{ color: colors.lightBlue }}
                     variant="h5"
@@ -95,7 +95,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
               </Grid>
             )}
             <Grid item xs={6}>
-              <Grid container justify="flex-start" item xs={12}>
+              <Grid container item xs={12}>
                 <Typography variant="caption" color="textSecondary">
                   HEAT STRESS
                 </Typography>
@@ -134,13 +134,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid
-            style={{ margin: "1rem 0 1rem 0" }}
-            container
-            justify="flex-start"
-            item
-            xs={12}
-          >
+          <Grid style={{ margin: "1rem 0 1rem 0" }} container item xs={12}>
             <Grid item>
               <Link
                 style={{ color: "inherit", textDecoration: "none" }}
