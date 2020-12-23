@@ -44,28 +44,43 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     number
   >();
   const [currentLocationError, setCurrentLocationError] = useState(false);
+  const [
+    currentLocationErrorMessage,
+    setCurrentLocationErrorMessage,
+  ] = useState("");
   const loading = useSelector(reefsListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const latLng = [
-          position.coords.latitude,
-          position.coords.longitude,
-        ] as [number, number];
-        setCurrentLocation(latLng);
-        setCurrentLocationAccuracy(position.coords.accuracy);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latLng = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ] as [number, number];
+          setCurrentLocation(latLng);
+          setCurrentLocationAccuracy(position.coords.accuracy);
 
-        // zoom to user location
-        const { current } = ref;
-        if (current && current.leafletElement) {
-          const map = current.leafletElement;
-          const newZoom = Math.max(map.getZoom() || 6, 8);
-          map.flyTo(latLng, newZoom, { duration: 2 });
+          // zoom to user location
+          const { current } = ref;
+          if (current && current.leafletElement) {
+            const map = current.leafletElement;
+            const newZoom = Math.max(map.getZoom() || 6, 8);
+            map.flyTo(latLng, newZoom, { duration: 2 });
+          }
+        },
+        () => {
+          setCurrentLocationError(true);
+          setCurrentLocationErrorMessage("Unable to find your location");
         }
-      });
+      );
+    } else {
+      setCurrentLocationError(true);
+      setCurrentLocationErrorMessage(
+        "Geolocation is not supported by your browser"
+      );
     }
   };
 
@@ -109,7 +124,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
         onClose={onLocationErrorAlertClose}
       >
         <Alert severity="error" onClose={onLocationErrorAlertClose}>
-          Unable to find your location
+          {currentLocationErrorMessage}
         </Alert>
       </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
