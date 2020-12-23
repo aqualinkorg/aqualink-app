@@ -7,7 +7,7 @@ import NotFoundBG from "../../assets/img/404_background.jpg";
 const NotFoundPage = ({ classes }: NotFoundPageProps) => {
   return (
     <div className={classes.background}>
-      <Link to="/">
+      <Link to="/map">
         <img src={NotFoundButton} alt="404 Not Found" />
       </Link>
     </div>
