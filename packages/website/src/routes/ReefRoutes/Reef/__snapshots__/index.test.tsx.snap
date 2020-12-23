@@ -766,17 +766,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-typography>
               </mock-box>
             </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                color="primary"
-                size="small"
-                variant="outlined"
-              >
-                EDIT SITE DETAILS
-              </mock-button>
-            </div>
           </div>
         </div>
       </div>
@@ -805,20 +794,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          <div>
-            Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
-             Apply for an Aqualink Smart Buoy
-            <span>
-               
-            </span>
-             
-            <a
-              href="/apply"
-            >
-              here
-            </a>
-            .
-          </div>
+          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </mock-box>
@@ -1718,84 +1694,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               >
                 <ul
                   class="MuiTimeline-root MuiTimeline-alignLeft"
-                >
-                  <li
-                    class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-233"
-                  >
-                    <div
-                      class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-234"
-                      style="padding: 0px 10px;"
-                    />
-                    <div
-                      class="MuiTimelineSeparator-root"
-                    >
-                      <a
-                        href="/reefs/1/new_survey"
-                        style="text-decoration: none;"
-                      >
-                        <mock-iconbutton>
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root SurveyTimeline-addNewButton-224"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                            />
-                          </svg>
-                        </mock-iconbutton>
-                      </a>
-                    </div>
-                    <div
-                      class="MuiTimelineContent-root MuiTimelineItem-content"
-                      style="padding: 12px 16px;"
-                    >
-                      <mock-typography
-                        classname="SurveyTimeline-cardFields-228"
-                        variant="h6"
-                      >
-                        ADD NEW SURVEY
-                      </mock-typography>
-                    </div>
-                  </li>
-                </ul>
+                />
               </mock-hidden>
               <mock-hidden
                 lgup="true"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
-                    style="margin-bottom: 1rem;"
-                  >
-                    <a
-                      href="/reefs/1/new_survey"
-                      style="text-decoration: none;"
-                    >
-                      <mock-iconbutton>
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root SurveyTimeline-addNewButton-224"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-                          />
-                        </svg>
-                      </mock-iconbutton>
-                    </a>
-                    <mock-typography
-                      classname="SurveyTimeline-cardFields-228"
-                      variant="h6"
-                    >
-                      ADD NEW SURVEY
-                    </mock-typography>
-                  </div>
-                </div>
+                />
               </mock-hidden>
             </div>
           </div>
@@ -2604,17 +2510,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-typography>
               </mock-box>
             </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                color="primary"
-                size="small"
-                variant="outlined"
-              >
-                EDIT SITE DETAILS
-              </mock-button>
-            </div>
           </div>
         </div>
       </div>
@@ -2643,7 +2538,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          Welcome to your virtual reef, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.
+          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </mock-box>

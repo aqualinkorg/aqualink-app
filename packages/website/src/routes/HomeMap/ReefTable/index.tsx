@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, MouseEvent, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -29,6 +29,10 @@ import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isSuperAdmin } from "../../../helpers/user";
+import {
+  onlyWithSpotterSelector,
+  setOnlyWithSpotter,
+} from "../../../store/Homepage/homepageSlice";
 
 const SMALL_HEIGHT = 720;
 const SMALL_WIDTH = 600;
@@ -36,6 +40,7 @@ const SMALL_WIDTH = 600;
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const user = useSelector(userInfoSelector);
+  const onlyWithSpotter = useSelector(onlyWithSpotterSelector);
   const dispatch = useDispatch();
   const { height, width } = useWindowSize() || {};
 
@@ -51,7 +56,17 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const showTable = (width && width >= SMALL_WIDTH) || openDrawer;
 
   const toggleSwitch = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(filterReefsWithSpotter(event.target.checked));
+    const {
+      target: { checked },
+    } = event;
+    dispatch(filterReefsWithSpotter(checked));
+    dispatch(setOnlyWithSpotter(checked));
+  };
+
+  const onSwitchClick = (
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    event.stopPropagation();
   };
 
   return (
@@ -81,13 +96,13 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
         <>
           <SelectedReefCard />
           {isSuperAdmin(user) && (
-            <Box
-              padding="0 40px"
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-              <Switch onChange={toggleSwitch} color="primary" />
+            <Box className={classes.switchWrapper}>
+              <Switch
+                checked={onlyWithSpotter}
+                onClick={onSwitchClick}
+                onChange={toggleSwitch}
+                color="primary"
+              />
               <Typography color="textSecondary" variant="h6">
                 spotters only
               </Typography>
@@ -148,6 +163,12 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         tableLayout: "fixed",
       },
+    },
+    switchWrapper: {
+      padding: "0 40px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
     },
   });
 

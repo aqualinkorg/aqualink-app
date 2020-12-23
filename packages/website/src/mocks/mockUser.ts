@@ -1,7 +1,7 @@
 import { User } from "../store/User/types";
 
 export const mockUser: User = {
-  adminLevel: "super_admin",
+  adminLevel: "default",
   administeredReefs: [],
   email: "mail@mail.com",
   firebaseUid: "RaNdOm StRiNg",

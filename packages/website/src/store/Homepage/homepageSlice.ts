@@ -6,12 +6,17 @@ import type { RootState } from "../configure";
 
 const homepageInitialState: HomePageState = {
   reefOnMap: null,
+  onlyWithSpotter: false,
 };
 
 const homepageSlice = createSlice({
   name: "homepage",
   initialState: homepageInitialState,
   reducers: {
+    setOnlyWithSpotter: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      onlyWithSpotter: action.payload,
+    }),
     setSearchResult: (
       state,
       action: PayloadAction<HomePageState["searchResult"]>
@@ -23,7 +28,8 @@ const homepageSlice = createSlice({
       ...state,
       reefOnMap: action.payload,
     }),
-    unsetReefOnMap: () => ({
+    unsetReefOnMap: (state) => ({
+      ...state,
       reefOnMap: null,
     }),
   },
@@ -37,10 +43,15 @@ export const searchResultSelector = (
   state: RootState
 ): HomePageState["searchResult"] => state.homepage.searchResult;
 
+export const onlyWithSpotterSelector = (
+  state: RootState
+): HomePageState["onlyWithSpotter"] => state.homepage.onlyWithSpotter;
+
 export const {
   setSearchResult,
   setReefOnMap,
   unsetReefOnMap,
+  setOnlyWithSpotter,
 } = homepageSlice.actions;
 
 export default homepageSlice.reducer;
