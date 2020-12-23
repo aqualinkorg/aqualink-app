@@ -9,8 +9,10 @@ import {
   Theme,
   Typography,
 } from "@material-ui/core";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import {
   KeyboardDatePicker,
+  KeyboardTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -25,6 +27,7 @@ import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
+import { setTimeZone } from "../../../../../helpers/dates";
 
 const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   const dispatch = useDispatch();
@@ -39,21 +42,28 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
     reValidateMode: "onSubmit",
   });
 
-  const onEclusionDateChange = (date: Date | null) => setExclusionDate(date);
+  const onExclusionDateChange = (date: Date | null) => setExclusionDate(date);
 
   const formSubmit = useCallback(
     (data: any) => {
-      const updateParams: ReefUpdateParams = {
-        coordinates: {
-          latitude: parseFloat(data.latitude),
-          longitude: parseFloat(data.longitude),
-        },
-        name: data.siteName,
-        depth: parseInt(data.depth, 10),
-      };
-      onSubmit(updateParams);
+      const localDateTime = setTimeZone(exclusionDate, reef.timezone);
+      if (localDateTime) {
+        // The exclusion date to be stored
+        const endDate = new Date(localDateTime).toISOString();
+        // eslint-disable-next-line no-console
+        console.log(`DATE TO BE STORED STORED: ${endDate}`);
+        const updateParams: ReefUpdateParams = {
+          coordinates: {
+            latitude: parseFloat(data.latitude),
+            longitude: parseFloat(data.longitude),
+          },
+          name: data.siteName,
+          depth: parseInt(data.depth, 10),
+        };
+        onSubmit(updateParams);
+      }
     },
-    [onSubmit]
+    [onSubmit, exclusionDate, reef.timezone]
   );
 
   const onFieldChange = useCallback(
@@ -87,7 +97,7 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
-      <Grid container alignItems="flex-end" spacing={3}>
+      <Grid container alignItems="flex-start" spacing={3}>
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
             <TextField
@@ -126,48 +136,6 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
               error={!!errors.depth}
               helperText={errors?.depth?.message || ""}
             />
-          </Grid>
-          <Grid item container spacing={2} alignItems="center">
-            <Grid item sm={6} xs={12}>
-              <Alert icon={false} severity="info">
-                <Typography variant="subtitle2">
-                  Spotter data before this date will not be displayed
-                </Typography>
-              </Alert>
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  className={classes.textField}
-                  disableToolbar
-                  format="MM/dd/yyyy"
-                  id="exclusion-date"
-                  name="exclusionDate"
-                  autoOk
-                  showTodayButton
-                  fullWidth
-                  helperText={errors?.exclusionDate?.message || ""}
-                  inputRef={register({
-                    required: "This is a required field",
-                    validate: {
-                      validDate: (value) =>
-                        moment(value, "MM/DD/YYYY", true).isValid() ||
-                        "Invalid date",
-                    },
-                  })}
-                  error={!!errors.exclusionDate}
-                  value={exclusionDate}
-                  onChange={onEclusionDateChange}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                  inputProps={{
-                    className: classes.textField,
-                  }}
-                  inputVariant="outlined"
-                />
-              </MuiPickersUtilsProvider>
-            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Alert className={classes.infoAlert} icon={false} severity="info">
@@ -222,28 +190,107 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
             />
           </Grid>
         </Grid>
-        <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
-          <Grid item>
-            <Button
-              className={classes.button}
-              onClick={onClose}
-              variant="outlined"
-              size="small"
-              color="secondary"
-            >
-              Cancel
-            </Button>
+        <Grid container justify="flex-start" item sm={12} md={6} spacing={2}>
+          <Grid item xs={12}>
+            <Alert icon={false} severity="info">
+              <Typography variant="subtitle2">
+                Spotter data before this date will not be displayed
+              </Typography>
+            </Alert>
           </Grid>
-          <Grid item>
-            <Button
-              className={classes.button}
-              type="submit"
-              variant="outlined"
-              size="small"
-              color="primary"
-            >
-              Save
-            </Button>
+          <Grid item sm={6} xs={12}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className={classes.textField}
+                disableToolbar
+                format="MM/dd/yyyy"
+                id="exclusion-date"
+                name="exclusionDate"
+                autoOk
+                showTodayButton
+                fullWidth
+                helperText={errors?.exclusionDate?.message || ""}
+                inputRef={register({
+                  required: "This is a required field",
+                  validate: {
+                    validDate: (value) =>
+                      moment(value, "MM/DD/YYYY", true).isValid() ||
+                      "Invalid date",
+                  },
+                })}
+                error={!!errors.exclusionDate}
+                value={exclusionDate}
+                onChange={onExclusionDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+                inputProps={{
+                  className: classes.textField,
+                }}
+                inputVariant="outlined"
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid item sm={6} xs={12}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardTimePicker
+                className={classes.textField}
+                id="exclusion-time"
+                name="exclusionTime"
+                autoOk
+                helperText={errors?.exclusionTime?.message || ""}
+                inputRef={register({
+                  required: "This is a required field",
+                  pattern: {
+                    value: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
+                    message: "Invalid time format",
+                  },
+                })}
+                fullWidth
+                error={!!errors.exclusionTime}
+                format="HH:mm"
+                value={exclusionDate}
+                onChange={onExclusionDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change time",
+                }}
+                InputProps={{
+                  className: classes.textField,
+                }}
+                keyboardIcon={<AccessTimeIcon />}
+                inputVariant="outlined"
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
+          <Grid
+            className={classes.buttonWrapper}
+            container
+            justify="flex-end"
+            item
+            spacing={2}
+          >
+            <Grid item>
+              <Button
+                className={classes.button}
+                onClick={onClose}
+                variant="outlined"
+                size="small"
+                color="secondary"
+              >
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                className={classes.button}
+                type="submit"
+                variant="outlined"
+                size="small"
+                color="primary"
+              >
+                Save
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -268,6 +315,9 @@ const styles = (theme: Theme) =>
       height: "2.5rem",
     },
     infoAlert: {
+      marginTop: "0.5rem",
+    },
+    buttonWrapper: {
       marginTop: "0.5rem",
     },
   });
