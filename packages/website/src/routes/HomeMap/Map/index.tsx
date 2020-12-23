@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Map, TileLayer } from "react-leaflet";
-import { LatLng } from "leaflet";
+import { Map, TileLayer, Marker, Circle } from "react-leaflet";
+import L, { LatLng } from "leaflet";
 import {
   createStyles,
   withStyles,
   WithStyles,
   CircularProgress,
+  IconButton,
+  Snackbar,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
 
 import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
@@ -28,11 +32,57 @@ const attribution = accessToken
   ? '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
   : "";
 
+const currentLocationMarker = L.divIcon({
+  className: "current-position-marker",
+  iconSize: L.point(16, 16, true),
+});
+
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
+  const [currentLocation, setCurrentLocation] = useState<[number, number]>();
+  const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
+    number
+  >();
+  const [
+    currentLocationErrorMessage,
+    setCurrentLocationErrorMessage,
+  ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
+
+  const onLocationSearch = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latLng = [
+            position.coords.latitude,
+            position.coords.longitude,
+          ] as [number, number];
+          setCurrentLocation(latLng);
+          setCurrentLocationAccuracy(position.coords.accuracy);
+
+          // zoom to user location
+          const { current } = ref;
+          if (current && current.leafletElement) {
+            const map = current.leafletElement;
+            const newZoom = Math.max(map.getZoom() || 6, 8);
+            map.flyTo(latLng, newZoom, { duration: 2 });
+          }
+        },
+        () => {
+          setCurrentLocationErrorMessage("Unable to find your location");
+        }
+      );
+    } else {
+      setCurrentLocationErrorMessage(
+        "Geolocation is not supported by your browser"
+      );
+    }
+  };
+
+  const onLocationErrorAlertClose = () =>
+    setCurrentLocationErrorMessage(undefined);
 
   useEffect(() => {
     const { current } = ref;
@@ -65,12 +115,36 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       minZoom={2}
       worldCopyJump
     >
+      <Snackbar
+        open={Boolean(currentLocationErrorMessage)}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        onClose={onLocationErrorAlertClose}
+      >
+        <Alert severity="error" onClose={onLocationErrorAlertClose}>
+          {currentLocationErrorMessage}
+        </Alert>
+      </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers />
       <ReefMarkers />
+      {currentLocation && (
+        <Marker icon={currentLocationMarker} position={currentLocation} />
+      )}
+      {currentLocation && currentLocationAccuracy && (
+        <Circle
+          center={{ lat: currentLocation[0], lng: currentLocation[1] }}
+          radius={currentLocationAccuracy}
+        />
+      )}
       <Legend legendName={legendName} />
       <AlertLevelLegend />
       <div className="mapbox-wordmark" />
+      <div className={classes.locationIconButton}>
+        <IconButton onClick={onLocationSearch}>
+          <MyLocationIcon color="primary" />
+        </IconButton>
+      </div>
     </Map>
   );
 };
@@ -86,6 +160,23 @@ const styles = () =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+    },
+    locationIconButton: {
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+      left: 0,
+      top: 80,
+      zIndex: 1000,
+      height: 34,
+      width: 34,
+      border: "2px solid rgba(0,0,0,0.2)",
+      borderRadius: 5,
+      margin: "10px 0 0 10px",
+      backgroundColor: "white",
+      backgroundClip: "padding-box",
     },
   });
 
