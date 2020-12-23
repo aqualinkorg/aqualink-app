@@ -40,7 +40,7 @@ const TemperatureMetric = ({
   color: string;
   gridClassName: string | undefined;
 }) => (
-  <Grid container justify="flex-start" item className={gridClassName}>
+  <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
       {title} {`${formatNumber(temperature, 1)} °C`}
@@ -91,7 +91,6 @@ const Tooltip = ({
             style={{ height: "100%" }}
             item
             container
-            direction="row"
             justify="space-between"
           >
             <Grid

@@ -23,7 +23,13 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getReefNameAndRegion(reef);
   return (
-    <Grid style={{ marginTop: "1rem" }} container item xs={12} direction="row">
+    <Grid
+      style={{ marginTop: 16 }}
+      container
+      item
+      xs={12}
+      justify="space-between"
+    >
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
@@ -33,7 +39,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               ).format("MM/DD/YYYY [at] h:mm A")}
             </Typography>
           </Grid>
-          <Grid container item direction="row">
+          <Grid container item>
             <Grid container item direction="column" xs={12} md={4}>
               <Typography style={{ fontSize: 18 }}>{regionName}</Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>
@@ -80,7 +86,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
         </Grid>
       )}
 
-      <Grid item xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={6} lg={3}>
         <ObservationBox
           depth={reef.depth}
           date={survey?.diveDate ? new Date(survey?.diveDate) : new Date()}

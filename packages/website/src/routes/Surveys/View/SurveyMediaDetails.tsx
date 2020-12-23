@@ -92,13 +92,7 @@ const SurveyMediaDetails = ({
 
           return (
             <div key={point.name}>
-              <Grid
-                className={classes.title}
-                container
-                justify="flex-start"
-                item
-                xs={12}
-              >
+              <Grid className={classes.title} container item xs={12}>
                 <Grid
                   container
                   item
@@ -182,7 +176,6 @@ const SurveyMediaDetails = ({
                           <Grid
                             className={classes.mediaInfoWrapper}
                             container
-                            justify="flex-start"
                             item
                             sm={12}
                             md={6}

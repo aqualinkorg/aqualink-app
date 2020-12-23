@@ -270,7 +270,7 @@ const UploadMedia = ({
         </Collapse>
       </Grid>
       <Grid className={classes.root} container justify="center" item xs={12}>
-        <Grid container justify="flex-start" alignItems="center" item xs={10}>
+        <Grid container alignItems="center" item xs={10}>
           <Grid item>
             <IconButton
               edge="start"

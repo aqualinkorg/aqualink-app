@@ -42,7 +42,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
             </Typography>
             <img className={classes.titleImages} alt="wind" src={wind} />
           </Grid>
-          <Grid container justify="flex-start" item xs={12}>
+          <Grid container item xs={12}>
             <Grid item xs={6}>
               <Typography
                 className={classes.contentTextTitles}

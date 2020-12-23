@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
   createStyles,
+  useMediaQuery,
+  useTheme,
   Container,
   Grid,
   Typography,
   Box,
   Button,
   Theme,
+  Fab,
 } from "@material-ui/core";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Link } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
@@ -19,9 +23,46 @@ import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
 
 const LandingPage = ({ classes }: LandingPageProps) => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const seeMore = () => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: window.innerHeight,
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.pageYOffset);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <NavBar routeButtons searchLocation={false} />
+      {scrollPosition === 0 && isMobile && (
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="flex-end"
+          position="fixed"
+          bottom="10px"
+          padding="0 10px"
+        >
+          <Fab onClick={seeMore} size="large">
+            <ArrowDownwardIcon />
+          </Fab>
+        </Box>
+      )}
       <div>
         <Box
           display="flex"
@@ -59,7 +100,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Box mt="2rem">
-                <Grid container spacing={3}>
+                <Grid container spacing={2}>
                   <Grid item>
                     <Button
                       component={Link}
@@ -111,24 +152,31 @@ const styles = (theme: Theme) =>
     landingImage: {
       backgroundImage: `url("${landingPageImage}")`,
       backgroundSize: "cover",
-      left: "10rem",
-      height: "54rem",
+      left: 160,
+      minHeight: 864,
+      height: "calc(100vh - 64px)", // subtract height of the navbar
+      [theme.breakpoints.down("xs")]: {
+        minHeight: 576,
+      },
     },
     container: {
       [theme.breakpoints.up("sm")]: {
         paddingLeft: "12vw",
-        paddingRight: "40px",
+        paddingRight: 40,
       },
     },
     aqualinkSecondPart: {
       opacity: 0.5,
     },
     buttons: {
-      height: "3rem",
-      width: "13rem",
+      height: 48,
+      width: 208,
       textTransform: "none",
       "&:hover": {
         color: "#ffffff",
+      },
+      [theme.breakpoints.down("xs")]: {
+        height: 40,
       },
     },
     registerButton: {
