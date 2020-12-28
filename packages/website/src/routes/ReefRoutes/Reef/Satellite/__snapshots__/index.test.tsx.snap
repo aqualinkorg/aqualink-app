@@ -289,7 +289,7 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root UpdateInfo-updateInfo-10 false MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+        class="MuiGrid-root UpdateInfo-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -341,13 +341,13 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
             <mock-typography
-              variant="caption"
+              classname="UpdateInfo-nooaChipText-14"
             >
               NOAA
             </mock-typography>
             <img
               alt="sensor-type"
-              class="UpdateInfo-sensorImage-14"
+              class="UpdateInfo-sensorImage-15"
               src="satellite.svg"
             />
           </div>

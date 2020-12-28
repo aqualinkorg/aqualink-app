@@ -27,7 +27,6 @@ const UpdateInfo = ({
     justify="space-around"
     alignItems="center"
     item
-    spacing={1}
   >
     <Grid item>
       <Grid container alignItems="center" justify="center">
@@ -49,11 +48,13 @@ const UpdateInfo = ({
         {live ? (
           <>
             <div className={classes.circle} />
-            <Typography variant="caption">LIVE</Typography>
+            <Typography className={classes.nooaChipText}>LIVE</Typography>
           </>
         ) : (
           <>
-            <Typography variant="caption">{imageText}</Typography>
+            <Typography className={classes.nooaChipText}>
+              {imageText}
+            </Typography>
             {image && (
               <img
                 className={classes.sensorImage}
@@ -73,7 +74,7 @@ const styles = () =>
     updateInfo: {
       backgroundColor: "#c4c4c4",
       color: "#757575",
-      padding: 6,
+      padding: "2px 0",
     },
     updateIcon: {
       marginRight: 4,
@@ -81,13 +82,17 @@ const styles = () =>
       width: "1.5rem",
     },
     updateTimeInfo: {
-      minWidth: 192,
+      width: 215,
     },
     nooaChip: {
       backgroundColor: "#dddddd",
       borderRadius: 8,
-      height: 26,
-      minWidth: 63,
+      height: 24,
+      width: 48,
+      display: "flex",
+    },
+    nooaChipText: {
+      fontSize: 8.5,
     },
     sensorImage: {
       height: 18,
@@ -96,8 +101,8 @@ const styles = () =>
     circle: {
       backgroundColor: "#51DD00",
       borderRadius: "50%",
-      height: 10,
-      width: 10,
+      height: 8.5,
+      width: 8.5,
       marginRight: 5,
     },
     withMargin: {

@@ -194,7 +194,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-13 UpdateInfo-withMargin-19 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+          class="MuiGrid-root UpdateInfo-updateInfo-13 UpdateInfo-withMargin-20 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
@@ -228,7 +228,7 @@ exports[`renders as expected 1`] = `
                   >
                     Last data received
                      
-                    4319 days ago
+                    4321 days ago
                   </mock-typography>
                   <mock-typography
                     variant="caption"
@@ -247,10 +247,10 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <div
-                class="UpdateInfo-circle-18"
+                class="UpdateInfo-circle-19"
               />
               <mock-typography
-                variant="caption"
+                classname="UpdateInfo-nooaChipText-17"
               >
                 LIVE
               </mock-typography>
@@ -258,7 +258,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-13 false MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+          class="MuiGrid-root UpdateInfo-updateInfo-13 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
@@ -310,7 +310,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <mock-typography
-                variant="caption"
+                classname="UpdateInfo-nooaChipText-17"
               >
                 NOAA GFS
               </mock-typography>
