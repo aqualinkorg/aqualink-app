@@ -216,23 +216,29 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <UpdateInfo
-            timestamp={windAgo}
-            timestampText="Last data received"
-            image={null}
-            imageText={null}
-            live
-            frequency="hourly"
-            withBottomMargin
-          />
-          <UpdateInfo
-            timestamp={timestamp}
-            timestampText="Forecast model valid for"
-            image={null}
-            imageText="NOAA GFS"
-            live={false}
-            frequency="hourly"
-          />
+          {(windSpeed || windDirection) && (
+            <UpdateInfo
+              timestamp={windAgo}
+              timestampText="Last data received"
+              image={null}
+              imageText={null}
+              live
+              frequency="hourly"
+              withBottomMargin={Boolean(
+                waveHeight || wavePeriod || waveDirection
+              )}
+            />
+          )}
+          {(waveHeight || wavePeriod || waveDirection) && (
+            <UpdateInfo
+              timestamp={timestamp}
+              timestampText="Forecast model valid for"
+              image={null}
+              imageText="NOAA GFS"
+              live={false}
+              frequency="hourly"
+            />
+          )}
         </Grid>
       </CardContent>
     </Card>

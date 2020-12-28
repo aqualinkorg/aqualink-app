@@ -125,7 +125,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                 >
                   Last data received
                    
-                  4321 days ago
+                  4322 days ago
                 </mock-typography>
                 <mock-typography
                   variant="caption"

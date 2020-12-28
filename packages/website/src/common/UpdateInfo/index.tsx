@@ -92,7 +92,7 @@ const styles = () =>
       display: "flex",
     },
     nooaChipText: {
-      fontSize: 8.5,
+      fontSize: 8.4,
     },
     sensorImage: {
       height: 18,
@@ -101,8 +101,8 @@ const styles = () =>
     circle: {
       backgroundColor: "#51DD00",
       borderRadius: "50%",
-      height: 8.5,
-      width: 8.5,
+      height: 8.4,
+      width: 8.4,
       marginRight: 5,
     },
     withMargin: {
