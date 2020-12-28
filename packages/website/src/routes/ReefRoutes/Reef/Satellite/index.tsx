@@ -21,7 +21,7 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
-import UpdateInfo from "../UpdateInfo";
+import UpdateInfo from "../../../../common/UpdateInfo";
 
 const Satellite = ({
   maxMonthlyMean,
@@ -135,7 +135,14 @@ const Satellite = ({
           ))}
         </Grid>
 
-        <UpdateInfo timestamp={timestamp} image={satellite} />
+        <UpdateInfo
+          timestamp={timestamp}
+          timestampText="Last data received"
+          image={satellite}
+          imageText="NOAA"
+          live={false}
+          frequency="daily"
+        />
       </CardContent>
     </Card>
   );

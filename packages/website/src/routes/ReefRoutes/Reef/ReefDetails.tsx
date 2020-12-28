@@ -63,12 +63,13 @@ const ReefDetails = ({
       Component: CoralBleaching as ElementType,
       props: {
         dailyData: sortByDate(dailyData, "date").slice(-1)[0],
+        timeZone: timezone,
         maxMonthlyMean,
       },
     },
     {
       Component: Waves as ElementType,
-      props: { liveData },
+      props: { liveData, timeZone: timezone },
     },
   ];
 

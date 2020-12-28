@@ -10,14 +10,16 @@ import {
   Grid,
 } from "@material-ui/core";
 
+import UpdateInfo from "../../../../common/UpdateInfo";
 import type { LiveData } from "../../../../store/Reefs/types";
 import { formatNumber } from "../../../../helpers/numberUtils";
+import { timeAgo } from "../../../../helpers/dates";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ liveData, classes }: WavesProps) => {
+const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
   const {
     waveHeight,
     waveDirection,
@@ -25,6 +27,22 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     windSpeed,
     windDirection,
   } = liveData;
+
+  const windAgo = timeAgo(windSpeed?.timestamp);
+
+  const timestamp =
+    waveHeight?.timestamp && timeZone
+      ? new Date(waveHeight.timestamp)
+          .toLocaleDateString("en-GB", {
+            timeZone,
+            timeZoneName: "short",
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+          .replace(",", "")
+      : null;
 
   return (
     <Card className={classes.card}>
@@ -36,13 +54,13 @@ const Waves = ({ liveData, classes }: WavesProps) => {
           item
           xs={12}
         >
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Typography className={classes.cardTitle} variant="h6">
               WIND
             </Typography>
             <img className={classes.titleImages} alt="wind" src={wind} />
           </Grid>
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Grid item xs={6}>
               <Typography
                 className={classes.contentTextTitles}
@@ -101,13 +119,19 @@ const Waves = ({ liveData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Typography className={classes.cardTitle} variant="h6">
               WAVES
             </Typography>
             <img className={classes.titleImages} alt="waves" src={waves} />
           </Grid>
-          <Grid item xs={12} container justify="space-between">
+          <Grid
+            className={classes.paddingContainer}
+            item
+            xs={12}
+            container
+            justify="space-between"
+          >
             <Grid item lg={4}>
               <Typography
                 className={classes.contentTextTitles}
@@ -192,6 +216,23 @@ const Waves = ({ liveData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
+          <UpdateInfo
+            timestamp={windAgo}
+            timestampText="Last data received"
+            image={null}
+            imageText={null}
+            live
+            frequency="hourly"
+            withBottomMargin
+          />
+          <UpdateInfo
+            timestamp={timestamp}
+            timestampText="Forecast model valid for"
+            image={null}
+            imageText="NOAA GFS"
+            live={false}
+            frequency="hourly"
+          />
         </Grid>
       </CardContent>
     </Card>
@@ -217,13 +258,15 @@ const styles = (theme: Theme) =>
       height: 24,
       marginLeft: "0.5rem",
     },
+    paddingContainer: {
+      padding: "0.5rem 1rem",
+    },
     contentWrapper: {
       height: "100%",
       flex: "1 1 auto",
       padding: 0,
     },
     content: {
-      padding: "1rem",
       height: "100%",
     },
     arrow: {
@@ -240,7 +283,12 @@ const styles = (theme: Theme) =>
 
 interface WavesIncomingProps {
   liveData: LiveData;
+  timeZone?: string | null;
 }
+
+Waves.defaultProps = {
+  timeZone: null,
+};
 
 type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;
 

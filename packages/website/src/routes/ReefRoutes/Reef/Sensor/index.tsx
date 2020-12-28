@@ -14,12 +14,13 @@ import {
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import UpdateInfo from "../../../../common/UpdateInfo";
 import { findAdministeredReef } from "../../../../helpers/findAdministeredReef";
 import { formatNumber } from "../../../../helpers/numberUtils";
+import { timeAgo } from "../../../../helpers/dates";
 import type { Reef } from "../../../../store/Reefs/types";
 import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
-import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
 import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
@@ -62,6 +63,10 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = reef.liveData;
 
+  const ago = timeAgo(
+    surfaceTemperature?.timestamp || bottomTemperature?.timestamp
+  );
+
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value
   );
@@ -84,14 +89,11 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between">
-            <Grid item xs={8}>
+          <Grid container>
+            <Grid item>
               <Typography className={classes.cardTitle} variant="h6">
                 SENSOR OBSERVATION
               </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <img className={classes.titleImage} alt="buoy" src={buoy} />
             </Grid>
           </Grid>
         }
@@ -128,10 +130,20 @@ const Sensor = ({ reef, classes }: SensorProps) => {
             )}
           </Grid>
 
-          <Box position="absolute" bottom={0} right={0}>
+          <Box position="absolute" bottom={10} right={0}>
             <img alt="sensor" src={sensor} />
           </Box>
         </Box>
+        {hasSpotter && (
+          <UpdateInfo
+            timestamp={ago}
+            timestampText="Last data received"
+            image={null}
+            imageText={null}
+            live
+            frequency="hourly"
+          />
+        )}
       </CardContent>
     </Card>
   );
@@ -146,7 +158,7 @@ const styles = () =>
       flexDirection: "column",
       height: "100%",
       backgroundColor: "#128cc0",
-      paddingBottom: "1rem",
+      // paddingBottom: "1rem",
     },
     titleImage: {
       height: 35,

@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root UpdateInfo-updateInfo-1 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+    class="MuiGrid-root UpdateInfo-updateInfo-1 false MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
@@ -26,7 +26,7 @@ exports[`renders as expected 1`] = `
           </svg>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root UpdateInfo-updateTimeInfo-3 MuiGrid-item"
         >
           <mock-box
             display="flex"
@@ -35,34 +35,28 @@ exports[`renders as expected 1`] = `
             <mock-typography
               variant="caption"
             >
-              Last data received 
+               
               
             </mock-typography>
             <mock-typography
               variant="caption"
             >
-              Updated daily
+              Updated 
             </mock-typography>
           </mock-box>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root UpdateInfo-nooaChip-3 MuiGrid-item"
+      class="MuiGrid-root UpdateInfo-nooaChip-4 MuiGrid-item"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
       >
         <mock-typography
           variant="caption"
-        >
-          NOAA
-        </mock-typography>
-        <img
-          alt="sensor-type"
-          class="UpdateInfo-sensorImage-4"
-          src=""
         />
+        
       </div>
     </div>
   </div>
