@@ -30,8 +30,8 @@ import { useWindowSize } from "../../../helpers/useWindowSize";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isSuperAdmin } from "../../../helpers/user";
 import {
-  onlyWithSpotterSelector,
-  setOnlyWithSpotter,
+  withSpotterOnlySelector,
+  setWithSpotterOnly,
 } from "../../../store/Homepage/homepageSlice";
 
 const SMALL_HEIGHT = 720;
@@ -40,7 +40,7 @@ const SMALL_WIDTH = 600;
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const user = useSelector(userInfoSelector);
-  const onlyWithSpotter = useSelector(onlyWithSpotterSelector);
+  const withSpotterOnly = useSelector(withSpotterOnlySelector);
   const dispatch = useDispatch();
   const { height, width } = useWindowSize() || {};
 
@@ -60,7 +60,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       target: { checked },
     } = event;
     dispatch(filterReefsWithSpotter(checked));
-    dispatch(setOnlyWithSpotter(checked));
+    dispatch(setWithSpotterOnly(checked));
   };
 
   const onSwitchClick = (
@@ -98,7 +98,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
           {isSuperAdmin(user) && (
             <Box className={classes.switchWrapper}>
               <Switch
-                checked={onlyWithSpotter}
+                checked={withSpotterOnly}
                 onClick={onSwitchClick}
                 onChange={toggleSwitch}
                 color="primary"

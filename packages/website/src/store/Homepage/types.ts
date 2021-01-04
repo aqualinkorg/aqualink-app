@@ -11,7 +11,7 @@ export interface MapboxGeolocationData {
 export interface HomePageState {
   reefOnMap: Reef | null;
   searchResult?: MapboxGeolocationData;
-  onlyWithSpotter: boolean;
+  withSpotterOnly: boolean;
 }
 
 export interface TableRow {
