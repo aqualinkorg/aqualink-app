@@ -228,7 +228,7 @@ exports[`renders as expected 1`] = `
                   >
                     Last data received
                      
-                    4489 days ago
+                    4490 days ago
                   </mock-typography>
                   <mock-typography
                     variant="caption"
@@ -247,10 +247,10 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <div
-                class="UpdateInfo-circle-19"
+                class="UpdateInfo-circle-20"
               />
               <mock-typography
-                classname="UpdateInfo-nooaChipText-17"
+                classname="UpdateInfo-nooaChipText-18"
               >
                 LIVE
               </mock-typography>

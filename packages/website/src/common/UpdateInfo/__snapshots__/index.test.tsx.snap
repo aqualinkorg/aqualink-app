@@ -55,11 +55,17 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
       >
-        <mock-typography
-          classname="UpdateInfo-nooaChipText-5"
+        <a
+          class="UpdateInfo-nooaLink-5"
+          href="/"
+          target="_blank"
         >
-          NOAA
-        </mock-typography>
+          <mock-typography
+            classname="UpdateInfo-nooaChipText-6"
+          >
+            NOAA
+          </mock-typography>
+        </a>
       </div>
     </div>
   </div>

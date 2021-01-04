@@ -142,6 +142,7 @@ const Satellite = ({
           imageText="NOAA"
           live={false}
           frequency="daily"
+          href="https://coralreefwatch.noaa.gov/"
         />
       </CardContent>
     </Card>

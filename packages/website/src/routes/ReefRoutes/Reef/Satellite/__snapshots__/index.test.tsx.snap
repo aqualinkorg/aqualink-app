@@ -340,16 +340,22 @@ exports[`renders as expected 1`] = `
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
-            <mock-typography
-              classname="UpdateInfo-nooaChipText-14"
+            <a
+              class="UpdateInfo-nooaLink-14"
+              href="https://coralreefwatch.noaa.gov/"
+              target="_blank"
             >
-              NOAA
-            </mock-typography>
-            <img
-              alt="sensor-type"
-              class="UpdateInfo-sensorImage-15"
-              src="satellite.svg"
-            />
+              <mock-typography
+                classname="UpdateInfo-nooaChipText-15"
+              >
+                NOAA
+              </mock-typography>
+              <img
+                alt="sensor-type"
+                class="UpdateInfo-sensorImage-16"
+                src="satellite.svg"
+              />
+            </a>
           </div>
         </div>
       </div>

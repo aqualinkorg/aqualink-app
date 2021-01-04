@@ -97,11 +97,17 @@ exports[`renders as expected 1`] = `
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
-              <mock-typography
-                classname="UpdateInfo-nooaChipText-15"
+              <a
+                class="UpdateInfo-nooaLink-15"
+                href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+                target="_blank"
               >
-                NOAA CRW
-              </mock-typography>
+                <mock-typography
+                  classname="UpdateInfo-nooaChipText-16"
+                >
+                  NOAA CRW
+                </mock-typography>
+              </a>
             </div>
           </div>
         </div>

@@ -231,6 +231,7 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
             imageText={hasSpotter ? null : "NOAA GFS"}
             live={hasSpotter}
             frequency="hourly"
+            href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
           />
         </Grid>
       </CardContent>

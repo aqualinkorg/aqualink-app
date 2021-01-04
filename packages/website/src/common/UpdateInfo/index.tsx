@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import UpdateIcon from "@material-ui/icons/Update";
+import { Link } from "react-router-dom";
 
 const UpdateInfo = ({
   timestamp,
@@ -16,6 +17,7 @@ const UpdateInfo = ({
   imageText,
   live,
   frequency,
+  href,
   classes,
 }: UpdateInfoProps) => (
   <Grid
@@ -48,7 +50,11 @@ const UpdateInfo = ({
             <Typography className={classes.nooaChipText}>LIVE</Typography>
           </>
         ) : (
-          <>
+          <Link
+            to={{ pathname: href }}
+            target="_blank"
+            className={classes.nooaLink}
+          >
             <Typography className={classes.nooaChipText}>
               {imageText}
             </Typography>
@@ -59,7 +65,7 @@ const UpdateInfo = ({
                 src={image}
               />
             )}
-          </>
+          </Link>
         )}
       </Grid>
     </Grid>
@@ -88,6 +94,16 @@ const styles = () =>
       width: 48,
       display: "flex",
     },
+    nooaLink: {
+      display: "flex",
+      alignItems: "center",
+      textDecoration: "none",
+      color: "inherit",
+      "&:hover": {
+        textDecoration: "none",
+        color: "inherit",
+      },
+    },
     nooaChipText: {
       fontSize: 8.4,
     },
@@ -111,7 +127,12 @@ interface UpdateInfoIncomingProps {
   imageText: string | null;
   live: boolean;
   frequency: "hourly" | "daily";
+  href?: string;
 }
+
+UpdateInfo.defaultProps = {
+  href: "",
+};
 
 type UpdateInfoProps = UpdateInfoIncomingProps & WithStyles<typeof styles>;
 
