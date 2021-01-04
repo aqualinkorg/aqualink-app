@@ -17,7 +17,7 @@ import { constructTableData } from "../../../store/Reefs/helpers";
 import { colors } from "../../../layout/App/theme";
 import { dhwColorFinder } from "../../../helpers/degreeHeatingWeeks";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { reefsListSelector } from "../../../store/Reefs/reefsListSlice";
+import { reefsToDisplayListSelector } from "../../../store/Reefs/reefsListSlice";
 import {
   reefOnMapSelector,
   setReefOnMap,
@@ -106,7 +106,7 @@ RowNumberCell.defaultProps = {
 
 const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
-  const reefsList = useSelector(reefsListSelector);
+  const reefsList = useSelector(reefsToDisplayListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 

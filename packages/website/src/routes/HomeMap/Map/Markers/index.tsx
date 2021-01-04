@@ -3,7 +3,7 @@ import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useCallback, useEffect } from "react";
 import L from "leaflet";
-import { reefsListSelector } from "../../../../store/Reefs/reefsListSlice";
+import { reefsToDisplayListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
   reefOnMapSelector,
@@ -45,7 +45,7 @@ const clusterIcon = (cluster: any) => {
 };
 
 export const ReefMarkers = () => {
-  const reefsList = useSelector(reefsListSelector);
+  const reefsList = useSelector(reefsToDisplayListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();

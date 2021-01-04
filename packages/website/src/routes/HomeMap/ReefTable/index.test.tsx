@@ -5,6 +5,7 @@ import configureStore from "redux-mock-store";
 
 import ReefTable from ".";
 import { mockReef } from "../../../mocks/mockReef";
+import { mockUser } from "../../../mocks/mockUser";
 
 jest.mock("./SelectedReefCard", () => "Mock-SelectedReefCard");
 
@@ -14,8 +15,12 @@ describe("ReefTable", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
+      user: {
+        userInfo: mockUser,
+      },
       reefsList: {
         list: [mockReef],
+        reefsToDisplay: [mockReef],
         loading: false,
         error: null,
       },
