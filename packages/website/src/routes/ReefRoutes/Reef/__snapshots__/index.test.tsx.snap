@@ -849,7 +849,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <div
             class="ReefDetails-container-157"
           >
-            <mock-featuredmedia />
+            <mock-featuredmedia
+              reefid="1"
+            />
           </div>
         </div>
       </div>
@@ -2593,7 +2595,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           <div
             class="ReefDetails-container-39"
           >
-            <mock-featuredmedia />
+            <mock-featuredmedia
+              reefid="1"
+            />
           </div>
         </div>
       </div>
