@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
             classname="FeaturedMedia-noVideoCardHeaderText-4"
             variant="h5"
           >
-            IMAGE TO BE UPLOADED
+            SURVEY TO BE UPLOADED
           </mock-typography>
         </div>
         <div
