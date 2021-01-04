@@ -2,8 +2,17 @@
 
 exports[`renders as expected 1`] = `
 <div>
-  <p>
-    Route not found.
-  </p>
+  <div
+    class="NotFoundPage-background-1"
+  >
+    <a
+      href="/map"
+    >
+      <img
+        alt="404 Not Found"
+        src="404_click.png"
+      />
+    </a>
+  </div>
 </div>
 `;
