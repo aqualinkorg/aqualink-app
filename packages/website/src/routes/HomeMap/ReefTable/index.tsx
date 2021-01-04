@@ -63,6 +63,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
     dispatch(setWithSpotterOnly(checked));
   };
 
+  // This function is used to prevent the drawer onClick close effect on mobile
   const onSwitchClick = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
