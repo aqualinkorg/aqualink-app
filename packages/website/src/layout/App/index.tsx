@@ -3,7 +3,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { NotFound } from "../../routes/NotFound";
+import NotFound from "../../routes/NotFound";
 import ErrorBoundary from "./ErrorBoundary";
 import LandingPage from "../../routes/Landing";
 import HomeMap from "../../routes/HomeMap";

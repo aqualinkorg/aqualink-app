@@ -9,6 +9,7 @@ import reefServices from "../../services/reefServices";
 
 const reefsListInitialState: ReefsListState = {
   list: [],
+  reefsToDisplay: [],
   loading: false,
   error: null,
 };
@@ -32,7 +33,14 @@ export const reefsRequest = createAsyncThunk<
 const reefsListSlice = createSlice({
   name: "reefsList",
   initialState: reefsListInitialState,
-  reducers: {},
+  reducers: {
+    filterReefsWithSpotter: (state, action: PayloadAction<boolean>) => ({
+      ...state,
+      reefsToDisplay: action.payload
+        ? state.list.filter((item) => item.spotterId)
+        : state.list,
+    }),
+  },
   extraReducers: (builder) => {
     builder.addCase(
       reefsRequest.fulfilled,
@@ -40,6 +48,7 @@ const reefsListSlice = createSlice({
         return {
           ...state,
           list: action.payload,
+          reefsToDisplay: action.payload,
           loading: false,
         };
       }
@@ -68,6 +77,10 @@ const reefsListSlice = createSlice({
 export const reefsListSelector = (state: RootState): ReefsListState["list"] =>
   state.reefsList.list;
 
+export const reefsToDisplayListSelector = (
+  state: RootState
+): ReefsListState["reefsToDisplay"] => state.reefsList.reefsToDisplay;
+
 export const reefsListLoadingSelector = (
   state: RootState
 ): ReefsListState["loading"] => state.reefsList.loading;
@@ -75,5 +88,7 @@ export const reefsListLoadingSelector = (
 export const reefsListErrorSelector = (
   state: RootState
 ): ReefsListState["error"] => state.reefsList.error;
+
+export const { filterReefsWithSpotter } = reefsListSlice.actions;
 
 export default reefsListSlice.reducer;
