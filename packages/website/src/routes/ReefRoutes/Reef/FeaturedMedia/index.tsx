@@ -11,12 +11,23 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 import uploadIcon from "../../../../assets/icon_upload.svg";
+import { isAdmin } from "../../../../helpers/user";
+import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
+const FeaturedMedia = ({
+  reefId,
+  url,
+  featuredImage,
+  classes,
+}: FeaturedMediaProps) => {
+  const user = useSelector(userInfoSelector);
+
   if (url) {
     return (
       <Card className={classes.card}>
@@ -46,20 +57,25 @@ const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
 
   return (
     <Card className={classes.card}>
-      <div className={classes.noVideoCardHeader}>
-        <Grid container direction="column" alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              IMAGE TO BE UPLOADED
-            </Typography>
+      {isAdmin(user, reefId) && (
+        <div className={classes.noVideoCardHeader}>
+          <Grid container direction="column" alignItems="center" spacing={2}>
+            <Grid item>
+              <Typography
+                className={classes.noVideoCardHeaderText}
+                variant="h5"
+              >
+                ADD YOUR FIRST SURVEY
+              </Typography>
+            </Grid>
+            <Grid item>
+              <IconButton component={Link} to={`/reefs/${reefId}/new_survey`}>
+                <img src={uploadIcon} alt="upload" />
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item>
-            <IconButton>
-              <img src={uploadIcon} alt="upload" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      )}
       <div className={classes.noVideoCardContent} />
     </Card>
   );
@@ -106,6 +122,7 @@ const styles = (theme: Theme) => {
 };
 
 interface FeaturedMediaIncomingProps {
+  reefId: number;
   url?: string | null;
   featuredImage?: string | null;
 }
