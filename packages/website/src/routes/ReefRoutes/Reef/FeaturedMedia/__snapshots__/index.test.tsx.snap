@@ -18,7 +18,7 @@ exports[`Featured Media Card should render with given state from Redux store 1`]
             classname="FeaturedMedia-noVideoCardHeaderText-4"
             variant="h5"
           >
-            IMAGE TO BE UPLOADED
+            SURVEY TO BE UPLOADED
           </mock-typography>
         </div>
       </div>

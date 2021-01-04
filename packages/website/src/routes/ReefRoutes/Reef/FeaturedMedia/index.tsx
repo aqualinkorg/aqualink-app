@@ -62,7 +62,7 @@ const FeaturedMedia = ({
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "IMAGE TO BE UPLOADED"}
+              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
             </Typography>
           </Grid>
           {isReefAdmin && (
