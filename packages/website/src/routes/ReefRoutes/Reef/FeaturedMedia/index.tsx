@@ -50,7 +50,7 @@ const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              SURVEY TO BE UPLOADED
+              IMAGE TO BE UPLOADED
             </Typography>
           </Grid>
           <Grid item>
