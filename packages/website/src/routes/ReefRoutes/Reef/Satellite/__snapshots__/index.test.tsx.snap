@@ -289,7 +289,7 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root UpdateInfo-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+        class="MuiGrid-root UpdateInfo-updateInfo-10 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
       >
         <div
           class="MuiGrid-root MuiGrid-item"

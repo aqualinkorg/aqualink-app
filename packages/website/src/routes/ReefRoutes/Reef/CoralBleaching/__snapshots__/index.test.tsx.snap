@@ -46,7 +46,7 @@ exports[`renders as expected 1`] = `
           src="alert_lvl1.svg"
         />
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-11 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+          class="MuiGrid-root UpdateInfo-updateInfo-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
         >
           <div
             class="MuiGrid-root MuiGrid-item"

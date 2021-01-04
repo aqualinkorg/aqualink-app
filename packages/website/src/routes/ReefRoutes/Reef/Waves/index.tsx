@@ -21,6 +21,8 @@ import { styles as incomingStyles } from "../styles";
 
 const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
   const {
+    surfaceTemperature,
+    bottomTemperature,
     waveHeight,
     waveDirection,
     wavePeriod,
@@ -28,11 +30,15 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
     windDirection,
   } = liveData;
 
+  const hasSpotter = Boolean(
+    surfaceTemperature?.value || bottomTemperature?.value
+  );
+
   const windAgo = timeAgo(windSpeed?.timestamp);
 
   const timestamp =
-    waveHeight?.timestamp && timeZone
-      ? new Date(waveHeight.timestamp)
+    windSpeed?.timestamp && timeZone
+      ? new Date(windSpeed.timestamp)
           .toLocaleDateString("en-GB", {
             timeZone,
             timeZoneName: "short",
@@ -216,29 +222,16 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          {(windSpeed || windDirection) && (
-            <UpdateInfo
-              timestamp={windAgo}
-              timestampText="Last data received"
-              image={null}
-              imageText={null}
-              live
-              frequency="hourly"
-              withBottomMargin={Boolean(
-                waveHeight || wavePeriod || waveDirection
-              )}
-            />
-          )}
-          {(waveHeight || wavePeriod || waveDirection) && (
-            <UpdateInfo
-              timestamp={timestamp}
-              timestampText="Forecast model valid for"
-              image={null}
-              imageText="NOAA GFS"
-              live={false}
-              frequency="hourly"
-            />
-          )}
+          <UpdateInfo
+            timestamp={hasSpotter ? windAgo : timestamp}
+            timestampText={
+              hasSpotter ? "Last data received" : "Forecast model valid for"
+            }
+            image={null}
+            imageText={hasSpotter ? null : "NOAA GFS"}
+            live={hasSpotter}
+            frequency="hourly"
+          />
         </Grid>
       </CardContent>
     </Card>

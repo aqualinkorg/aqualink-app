@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root UpdateInfo-updateInfo-1 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+    class="MuiGrid-root UpdateInfo-updateInfo-1 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
@@ -35,13 +35,15 @@ exports[`renders as expected 1`] = `
             <mock-typography
               variant="caption"
             >
+              Last data received
                
-              
+              02/01 14:00 EET
             </mock-typography>
             <mock-typography
               variant="caption"
             >
               Updated 
+              daily
             </mock-typography>
           </mock-box>
         </div>
@@ -55,8 +57,9 @@ exports[`renders as expected 1`] = `
       >
         <mock-typography
           classname="UpdateInfo-nooaChipText-5"
-        />
-        
+        >
+          NOAA
+        </mock-typography>
       </div>
     </div>
   </div>

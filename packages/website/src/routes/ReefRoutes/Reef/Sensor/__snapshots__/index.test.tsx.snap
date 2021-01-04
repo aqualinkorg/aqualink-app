@@ -91,7 +91,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
         </mock-box>
       </mock-box>
       <div
-        class="MuiGrid-root UpdateInfo-updateInfo-13 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+        class="MuiGrid-root UpdateInfo-updateInfo-13 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -125,7 +125,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                 >
                   Last data received
                    
-                  4322 days ago
+                  4489 days ago
                 </mock-typography>
                 <mock-typography
                   variant="caption"
