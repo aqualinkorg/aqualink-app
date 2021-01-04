@@ -6,6 +6,24 @@ exports[`Featured Media Card should render with given state from Redux store 1`]
     classname="FeaturedMedia-card-1"
   >
     <div
+      class="FeaturedMedia-noVideoCardHeader-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-typography
+            classname="FeaturedMedia-noVideoCardHeaderText-4"
+            variant="h5"
+          >
+            IMAGE TO BE UPLOADED
+          </mock-typography>
+        </div>
+      </div>
+    </div>
+    <div
       class="FeaturedMedia-noVideoCardContent-5"
     />
   </mock-card>
