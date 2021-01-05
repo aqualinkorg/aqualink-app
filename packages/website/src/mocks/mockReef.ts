@@ -1,5 +1,9 @@
 import { Reef } from "../store/Reefs/types";
 
+const now = new Date();
+const minutesAgo = 5;
+const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
+
 export const mockReef: Reef = {
   id: 1,
   name: "",
@@ -19,15 +23,35 @@ export const mockReef: Reef = {
     reef: { id: 1 },
     bottomTemperature: {
       value: 39,
-      timestamp: "2020-07-01T14:25:18.008Z",
+      timestamp: liveDataDate,
     },
     satelliteTemperature: {
       value: 29,
-      timestamp: "2020-07-01T14:25:18.008Z",
+      timestamp: liveDataDate,
     },
     degreeHeatingDays: {
       value: 34,
-      timestamp: "2020-07-01T14:25:18.008Z",
+      timestamp: liveDataDate,
+    },
+    waveHeight: {
+      value: 1,
+      timestamp: liveDataDate,
+    },
+    waveDirection: {
+      value: 90,
+      timestamp: liveDataDate,
+    },
+    wavePeriod: {
+      value: 3,
+      timestamp: liveDataDate,
+    },
+    windSpeed: {
+      value: 6,
+      timestamp: liveDataDate,
+    },
+    windDirection: {
+      value: 180,
+      timestamp: liveDataDate,
     },
   },
   dailyData: [

@@ -1347,7 +1347,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         >
                           Last data received
                            
-                          4490 days ago
+                          5 min. ago
                         </mock-typography>
                         <mock-typography
                           variant="caption"
@@ -1543,7 +1543,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        - -
+                        6.0
+                      </mock-typography>
+                      <mock-typography
+                        classname="Waves-contentUnits-216"
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        km/h
                       </mock-typography>
                     </div>
                   </div>
@@ -1560,12 +1567,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
+                      <img
+                        alt="arrow"
+                        class="Waves-arrow-222"
+                        src="directioncircle.svg"
+                        style="transform: rotate(360deg);"
+                      />
                       <mock-typography
                         classname="Waves-contentTextValues-215"
                         color="textSecondary"
                         variant="h3"
                       >
-                        - -
+                        180°
                       </mock-typography>
                     </div>
                   </div>
@@ -1606,7 +1619,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        - -
+                        1.0
+                      </mock-typography>
+                      <mock-typography
+                        classname="Waves-contentUnits-216"
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        m
                       </mock-typography>
                     </div>
                   </div>
@@ -1628,7 +1648,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        - -
+                        3
+                      </mock-typography>
+                      <mock-typography
+                        classname="Waves-contentUnits-216"
+                        color="textSecondary"
+                        variant="h6"
+                      >
+                        s
                       </mock-typography>
                     </div>
                   </div>
@@ -1645,13 +1672,19 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
+                      <img
+                        alt="arrow"
+                        class="Waves-arrow-222"
+                        src="directioncircle.svg"
+                        style="transform: rotate(270deg);"
+                      />
                       <mock-typography
                         classname="Waves-contentTextValues-215"
                         color="textSecondary"
                         variant="h3"
                       >
-                        - -
-                        
+                        90
+                        °
                       </mock-typography>
                     </div>
                   </div>
@@ -1691,6 +1724,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           >
                             Last data received
                              
+                            5 min. ago
                           </mock-typography>
                           <mock-typography
                             variant="caption"
