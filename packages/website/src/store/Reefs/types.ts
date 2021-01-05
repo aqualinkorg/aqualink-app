@@ -152,6 +152,7 @@ export interface ReefApplication {
 
 export interface ReefsListState {
   list: Reef[];
+  reefsToDisplay: Reef[];
   loading: boolean;
   error?: string | null;
 }

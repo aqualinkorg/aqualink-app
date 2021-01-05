@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, MouseEvent, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -12,23 +12,36 @@ import {
   Typography,
   withStyles,
   WithStyles,
+  Switch,
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useSelector } from "react-redux";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
-import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
+import {
+  reefsListLoadingSelector,
+  filterReefsWithSpotter,
+} from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import { isSuperAdmin } from "../../../helpers/user";
+import {
+  withSpotterOnlySelector,
+  setWithSpotterOnly,
+} from "../../../store/Homepage/homepageSlice";
 
 const SMALL_HEIGHT = 720;
 const SMALL_WIDTH = 600;
 
 const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const user = useSelector(userInfoSelector);
+  const withSpotterOnly = useSelector(withSpotterOnlySelector);
+  const dispatch = useDispatch();
   const { height, width } = useWindowSize() || {};
 
   const [order, setOrder] = useState<Order>("desc");
@@ -41,6 +54,21 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   };
 
   const showTable = (width && width >= SMALL_WIDTH) || openDrawer;
+
+  const toggleSwitch = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { checked },
+    } = event;
+    dispatch(filterReefsWithSpotter(checked));
+    dispatch(setWithSpotterOnly(checked));
+  };
+
+  // This function is used to prevent the drawer onClick close effect on mobile
+  const onSwitchClick = (
+    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    event.stopPropagation();
+  };
 
   return (
     <>
@@ -68,6 +96,19 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
       {showTable && (
         <>
           <SelectedReefCard />
+          {isSuperAdmin(user) && (
+            <Box className={classes.switchWrapper}>
+              <Switch
+                checked={withSpotterOnly}
+                onClick={onSwitchClick}
+                onChange={toggleSwitch}
+                color="primary"
+              />
+              <Typography color="textSecondary" variant="h6">
+                spotters only
+              </Typography>
+            </Box>
+          )}
           <Box
             className={
               height && height > SMALL_HEIGHT
@@ -123,6 +164,12 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         tableLayout: "fixed",
       },
+    },
+    switchWrapper: {
+      padding: "0 16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
     },
   });
 

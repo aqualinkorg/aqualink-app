@@ -12,3 +12,6 @@ export const isManager = (user: User | null) =>
   user
     ? user.adminLevel === "super_admin" || user.adminLevel === "reef_manager"
     : false;
+
+export const isSuperAdmin = (user: User | null) =>
+  user ? user.adminLevel === "super_admin" : false;
