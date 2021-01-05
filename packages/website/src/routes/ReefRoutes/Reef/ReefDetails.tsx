@@ -124,6 +124,7 @@ const ReefDetails = ({
           {diveDate && point && <CardTitle values={featuredMediaTitleItems} />}
           <div className={classes.container}>
             <FeaturedMedia
+              reefId={reef.id}
               url={reef.videoStream}
               featuredImage={reef.featuredImage}
             />

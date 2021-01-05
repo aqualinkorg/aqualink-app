@@ -11,12 +11,24 @@ import {
   IconButton,
   Theme,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
+import { useSelector } from "react-redux";
 
 import reefImage from "../../../../assets/reef-image.jpg";
 import uploadIcon from "../../../../assets/icon_upload.svg";
+import { isAdmin } from "../../../../helpers/user";
+import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
+const FeaturedMedia = ({
+  reefId,
+  url,
+  featuredImage,
+  classes,
+}: FeaturedMediaProps) => {
+  const user = useSelector(userInfoSelector);
+  const isReefAdmin = isAdmin(user, reefId);
+
   if (url) {
     return (
       <Card className={classes.card}>
@@ -50,14 +62,16 @@ const FeaturedMedia = ({ url, featuredImage, classes }: FeaturedMediaProps) => {
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              IMAGE TO BE UPLOADED
+              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
             </Typography>
           </Grid>
-          <Grid item>
-            <IconButton>
-              <img src={uploadIcon} alt="upload" />
-            </IconButton>
-          </Grid>
+          {isReefAdmin && (
+            <Grid item>
+              <IconButton component={Link} to={`/reefs/${reefId}/new_survey`}>
+                <img src={uploadIcon} alt="upload" />
+              </IconButton>
+            </Grid>
+          )}
         </Grid>
       </div>
       <div className={classes.noVideoCardContent} />
@@ -85,7 +99,7 @@ const styles = (theme: Theme) => {
       position: "absolute",
       top: 0,
       width: "100%",
-      padding: "2rem 0 1rem",
+      padding: "2rem 0",
       zIndex: 1,
     },
     noVideoCardHeaderText: {
@@ -106,6 +120,7 @@ const styles = (theme: Theme) => {
 };
 
 interface FeaturedMediaIncomingProps {
+  reefId: number;
   url?: string | null;
   featuredImage?: string | null;
 }
