@@ -104,33 +104,33 @@ type SelectedReefContentProps = {
 
 const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   const classes = useStyles();
-
-  const sortedDailyData = sortByDate(reef.dailyData, "date");
-  const dailyDataLen = sortedDailyData.length;
   const {
-    maxBottomTemperature,
     satelliteTemperature,
     degreeHeatingDays,
-  } = sortedDailyData[dailyDataLen - 1];
+    bottomTemperature,
+  } = reef.liveData;
 
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: formatNumber(satelliteTemperature, 1),
+      value: formatNumber(satelliteTemperature?.value, 1),
       unit: " °C",
-      display: isNumber(satelliteTemperature),
+      display: isNumber(satelliteTemperature?.value),
     },
     {
       label: "HEAT STRESS",
-      value: formatNumber(degreeHeatingWeeksCalculator(degreeHeatingDays), 1),
+      value: formatNumber(
+        degreeHeatingWeeksCalculator(degreeHeatingDays?.value),
+        1
+      ),
       unit: " DHW",
-      display: isNumber(degreeHeatingDays),
+      display: isNumber(degreeHeatingDays?.value),
     },
     {
       label: `TEMP AT ${reef.depth}m`,
-      value: formatNumber(maxBottomTemperature, 1),
+      value: formatNumber(bottomTemperature?.value, 1),
       unit: " °C",
-      display: isNumber(maxBottomTemperature),
+      display: isNumber(bottomTemperature?.value),
     },
   ];
 

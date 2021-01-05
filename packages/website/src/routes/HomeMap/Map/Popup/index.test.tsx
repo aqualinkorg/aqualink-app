@@ -26,6 +26,9 @@ describe("Popup", () => {
       homepage: {
         reefOnMap: mockReef,
       },
+      selectedReef: {
+        details: mockReef,
+      },
     });
 
     store.dispatch = jest.fn();
