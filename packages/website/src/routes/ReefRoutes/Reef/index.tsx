@@ -134,7 +134,8 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   // fetch spotter data from api, also filter the range we're interested in.
   useEffect(() => {
-    if (hasSpotterData) {
+    // make sure we've loaded the reef, before attempting to get its spotter data.
+    if (hasSpotterData && !loading) {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
@@ -146,7 +147,7 @@ const Reef = ({ match, classes }: ReefProps) => {
       // Clear possible spotter data from previously selected reef
       dispatch(clearReefSpotterData());
     }
-  }, [dispatch, reefId, hasSpotterData, range, pickerDate]);
+  }, [dispatch, reefId, hasSpotterData, range, pickerDate, loading]);
 
   // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
