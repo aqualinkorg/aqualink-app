@@ -1182,6 +1182,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         >
                           Last data received
                            
+                          5 min. ago
                         </mock-typography>
                         <mock-typography
                           variant="caption"
@@ -1460,6 +1461,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           >
                             Last data received
                              
+                            193 days ago
                           </mock-typography>
                           <mock-typography
                             variant="caption"
@@ -1505,7 +1507,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               classname="Waves-contentWrapper-220"
             >
               <div
-                class="MuiGrid-root Waves-content-221 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                class="MuiGrid-root Waves-content-221 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
               >
                 <div
                   class="MuiGrid-root Waves-paddingContainer-219 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"

@@ -22,27 +22,11 @@ import {
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
 import UpdateInfo from "../../../../common/UpdateInfo";
+import { timeAgo } from "../../../../helpers/dates";
 
-const Satellite = ({
-  maxMonthlyMean,
-  liveData,
-  timeZone,
-  classes,
-}: SatelliteProps) => {
+const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = liveData;
-  const timestamp =
-    satelliteTemperature?.timestamp && timeZone
-      ? new Date(satelliteTemperature?.timestamp)
-          .toLocaleDateString("en-GB", {
-            timeZone,
-            timeZoneName: "short",
-            day: "2-digit",
-            month: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-          .replace(",", "")
-      : null;
+  const ago = timeAgo(satelliteTemperature?.timestamp);
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
     degreeHeatingDays?.value
@@ -136,7 +120,7 @@ const Satellite = ({
         </Grid>
 
         <UpdateInfo
-          timestamp={timestamp}
+          timestamp={ago}
           timestampText="Last data received"
           image={satellite}
           imageText="NOAA"
@@ -174,12 +158,7 @@ const styles = () =>
 interface SatelliteIncomingProps {
   maxMonthlyMean: number | null;
   liveData: LiveData;
-  timeZone?: string | null;
 }
-
-Satellite.defaultProps = {
-  timeZone: null,
-};
 
 type SatelliteProps = WithStyles<typeof styles> & SatelliteIncomingProps;
 

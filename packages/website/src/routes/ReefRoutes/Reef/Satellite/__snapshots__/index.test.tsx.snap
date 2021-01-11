@@ -323,6 +323,7 @@ exports[`renders as expected 1`] = `
                 >
                   Last data received
                    
+                  5 min. ago
                 </mock-typography>
                 <mock-typography
                   variant="caption"

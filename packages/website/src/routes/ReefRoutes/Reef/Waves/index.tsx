@@ -19,7 +19,7 @@ import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
+const Waves = ({ liveData, classes }: WavesProps) => {
   const {
     surfaceTemperature,
     bottomTemperature,
@@ -36,20 +36,6 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
 
   const windAgo = timeAgo(windSpeed?.timestamp);
 
-  const timestamp =
-    windSpeed?.timestamp && timeZone
-      ? new Date(windSpeed.timestamp)
-          .toLocaleDateString("en-GB", {
-            timeZone,
-            timeZoneName: "short",
-            day: "2-digit",
-            month: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-          .replace(",", "")
-      : null;
-
   return (
     <Card className={classes.card}>
       <CardContent className={classes.contentWrapper}>
@@ -57,6 +43,7 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
           className={classes.content}
           container
           justify="center"
+          alignContent="space-between"
           item
           xs={12}
         >
@@ -223,14 +210,14 @@ const Waves = ({ liveData, timeZone, classes }: WavesProps) => {
             </Grid>
           </Grid>
           <UpdateInfo
-            timestamp={hasSpotter ? windAgo : timestamp}
+            timestamp={hasSpotter ? windAgo : null}
             timestampText={
-              hasSpotter ? "Last data received" : "Forecast model valid for"
+              hasSpotter ? "Last data received" : "Updated every 6 hours"
             }
             image={null}
             imageText={hasSpotter ? null : "NOAA GFS"}
             live={hasSpotter}
-            frequency="hourly"
+            frequency={hasSpotter ? "hourly" : null}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
           />
         </Grid>
@@ -283,12 +270,7 @@ const styles = (theme: Theme) =>
 
 interface WavesIncomingProps {
   liveData: LiveData;
-  timeZone?: string | null;
 }
-
-Waves.defaultProps = {
-  timeZone: null,
-};
 
 type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;
 

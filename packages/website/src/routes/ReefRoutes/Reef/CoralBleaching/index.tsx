@@ -15,21 +15,10 @@ import UpdateInfo from "../../../../common/UpdateInfo";
 
 import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
 import { styles as incomingStyles } from "../styles";
+import { timeAgo } from "../../../../helpers/dates";
 
-const Bleaching = ({ dailyData, timeZone, classes }: BleachingProps) => {
-  const timestamp =
-    dailyData?.date && timeZone
-      ? new Date(dailyData?.date)
-          .toLocaleDateString("en-GB", {
-            timeZone,
-            timeZoneName: "short",
-            day: "2-digit",
-            month: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-          .replace(",", "")
-      : null;
+const Bleaching = ({ dailyData, classes }: BleachingProps) => {
+  const ago = timeAgo(dailyData?.date);
 
   return (
     <Card className={classes.card}>
@@ -61,7 +50,7 @@ const Bleaching = ({ dailyData, timeZone, classes }: BleachingProps) => {
             alt="alert-level"
           />
           <UpdateInfo
-            timestamp={timestamp}
+            timestamp={ago}
             timestampText="Last data received"
             image={null}
             imageText="NOAA CRW"
@@ -105,12 +94,7 @@ const styles = () =>
 
 interface BleachingIncomingProps {
   dailyData: DailyData;
-  timeZone?: string | null;
 }
-
-Bleaching.defaultProps = {
-  timeZone: null,
-};
 
 type BleachingProps = WithStyles<typeof styles> & BleachingIncomingProps;
 

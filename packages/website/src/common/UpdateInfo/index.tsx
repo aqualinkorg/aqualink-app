@@ -37,7 +37,9 @@ const UpdateInfo = ({
             <Typography variant="caption">
               {timestampText} {timestamp}
             </Typography>
-            <Typography variant="caption">Updated {frequency}</Typography>
+            {frequency && (
+              <Typography variant="caption">Updated {frequency}</Typography>
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -78,6 +80,7 @@ const styles = () =>
       backgroundColor: "#c4c4c4",
       color: "#757575",
       padding: "2px 0",
+      minHeight: 36,
     },
     updateIcon: {
       marginRight: 4,
@@ -126,7 +129,7 @@ interface UpdateInfoIncomingProps {
   image: string | null;
   imageText: string | null;
   live: boolean;
-  frequency: "hourly" | "daily";
+  frequency: "hourly" | "daily" | null;
   href?: string;
 }
 

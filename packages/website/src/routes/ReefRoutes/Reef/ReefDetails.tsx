@@ -49,11 +49,11 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean, timezone } = reef;
+  const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
-      props: { liveData, maxMonthlyMean, timeZone: timezone },
+      props: { liveData, maxMonthlyMean },
     },
     {
       Component: Sensor as ElementType,
@@ -63,13 +63,12 @@ const ReefDetails = ({
       Component: CoralBleaching as ElementType,
       props: {
         dailyData: sortByDate(dailyData, "date").slice(-1)[0],
-        timeZone: timezone,
         maxMonthlyMean,
       },
     },
     {
       Component: Waves as ElementType,
-      props: { liveData, timeZone: timezone },
+      props: { liveData },
     },
   ];
 

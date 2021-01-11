@@ -138,7 +138,7 @@ export const timeAgo = (timestamp?: string) => {
       const hours = Math.floor(timePeriod / hour);
       return `${hours} hour${hours > 1 ? "s" : ""} ago`;
     }
-    const days = Math.floor(timePeriod / hour);
+    const days = Math.floor(timePeriod / day);
     return `${days} day${days > 1 ? "s" : ""} ago`;
   }
   return null;

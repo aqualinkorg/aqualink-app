@@ -158,7 +158,6 @@ const styles = () =>
       flexDirection: "column",
       height: "100%",
       backgroundColor: "#128cc0",
-      // paddingBottom: "1rem",
     },
     titleImage: {
       height: 35,
