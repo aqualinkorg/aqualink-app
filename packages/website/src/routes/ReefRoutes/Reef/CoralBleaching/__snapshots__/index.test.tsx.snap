@@ -46,7 +46,7 @@ exports[`renders as expected 1`] = `
           src="alert_lvl1.svg"
         />
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+          class="MuiGrid-root UpdateInfo-updateInfo-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
@@ -69,13 +69,14 @@ exports[`renders as expected 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiGrid-root UpdateInfo-updateTimeInfo-13 MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item"
               >
                 <mock-box
                   display="flex"
                   flexdirection="column"
                 >
                   <mock-typography
+                    classname="UpdateInfo-updateInfoText-13"
                     variant="caption"
                   >
                     Last data received
@@ -83,6 +84,7 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
+                    classname="UpdateInfo-updateInfoText-13"
                     variant="caption"
                   >
                     Updated 

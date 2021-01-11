@@ -1148,7 +1148,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+                class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item"
@@ -1171,13 +1171,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root UpdateInfo-updateTimeInfo-183 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item"
                     >
                       <mock-box
                         display="flex"
                         flexdirection="column"
                       >
                         <mock-typography
+                          classname="UpdateInfo-updateInfoText-183"
                           variant="caption"
                         >
                           Last data received
@@ -1185,6 +1186,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           5 min. ago
                         </mock-typography>
                         <mock-typography
+                          classname="UpdateInfo-updateInfoText-183"
                           variant="caption"
                         >
                           Updated 
@@ -1314,7 +1316,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-box>
               </mock-box>
               <div
-                class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+                class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item"
@@ -1337,13 +1339,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       </svg>
                     </div>
                     <div
-                      class="MuiGrid-root UpdateInfo-updateTimeInfo-183 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-item"
                     >
                       <mock-box
                         display="flex"
                         flexdirection="column"
                       >
                         <mock-typography
+                          classname="UpdateInfo-updateInfoText-183"
                           variant="caption"
                         >
                           Last data received
@@ -1351,6 +1354,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           5 min. ago
                         </mock-typography>
                         <mock-typography
+                          classname="UpdateInfo-updateInfoText-183"
                           variant="caption"
                         >
                           Updated 
@@ -1427,7 +1431,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   src="alert_nostress.svg"
                 />
                 <div
-                  class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+                  class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
@@ -1450,13 +1454,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </svg>
                       </div>
                       <div
-                        class="MuiGrid-root UpdateInfo-updateTimeInfo-183 MuiGrid-item"
+                        class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-box
                           display="flex"
                           flexdirection="column"
                         >
                           <mock-typography
+                            classname="UpdateInfo-updateInfoText-183"
                             variant="caption"
                           >
                             Last data received
@@ -1464,6 +1469,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                             193 days ago
                           </mock-typography>
                           <mock-typography
+                            classname="UpdateInfo-updateInfoText-183"
                             variant="caption"
                           >
                             Updated 
@@ -1692,7 +1698,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around"
+                  class="MuiGrid-root UpdateInfo-updateInfo-181 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
@@ -1715,13 +1721,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         </svg>
                       </div>
                       <div
-                        class="MuiGrid-root UpdateInfo-updateTimeInfo-183 MuiGrid-item"
+                        class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-box
                           display="flex"
                           flexdirection="column"
                         >
                           <mock-typography
+                            classname="UpdateInfo-updateInfoText-183"
                             variant="caption"
                           >
                             Last data received
@@ -1729,6 +1736,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                             5 min. ago
                           </mock-typography>
                           <mock-typography
+                            classname="UpdateInfo-updateInfoText-183"
                             variant="caption"
                           >
                             Updated 

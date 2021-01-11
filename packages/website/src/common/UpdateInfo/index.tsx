@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Grid,
   Box,
   Typography,
@@ -23,7 +24,7 @@ const UpdateInfo = ({
   <Grid
     className={classes.updateInfo}
     container
-    justify="space-around"
+    justify="space-between"
     alignItems="center"
     item
   >
@@ -32,13 +33,15 @@ const UpdateInfo = ({
         <Grid item>
           <UpdateIcon className={classes.updateIcon} fontSize="small" />
         </Grid>
-        <Grid className={classes.updateTimeInfo} item>
+        <Grid item>
           <Box display="flex" flexDirection="column">
-            <Typography variant="caption">
+            <Typography className={classes.updateInfoText} variant="caption">
               {timestampText} {timestamp}
             </Typography>
             {frequency && (
-              <Typography variant="caption">Updated {frequency}</Typography>
+              <Typography className={classes.updateInfoText} variant="caption">
+                Updated {frequency}
+              </Typography>
             )}
           </Box>
         </Grid>
@@ -74,28 +77,35 @@ const UpdateInfo = ({
   </Grid>
 );
 
-const styles = () =>
-  createStyles({
+const styles = (theme: Theme) => {
+  const maxWidth = 1080;
+
+  return createStyles({
     updateInfo: {
       backgroundColor: "#c4c4c4",
       color: "#757575",
-      padding: "2px 0",
-      minHeight: 36,
+      padding: 4,
+      minHeight: 40,
     },
     updateIcon: {
       marginRight: 4,
-      height: "1.5rem",
-      width: "1.5rem",
+      height: 24,
+      width: 24,
     },
-    updateTimeInfo: {
-      width: 215,
+    updateInfoText: {
+      [theme.breakpoints.between("md", maxWidth)]: {
+        fontSize: 8.5,
+      },
     },
     nooaChip: {
       backgroundColor: "#dddddd",
       borderRadius: 8,
       height: 24,
-      width: 48,
+      width: 60,
       display: "flex",
+      [theme.breakpoints.between("md", maxWidth)]: {
+        width: 48,
+      },
     },
     nooaLink: {
       display: "flex",
@@ -108,7 +118,10 @@ const styles = () =>
       },
     },
     nooaChipText: {
-      fontSize: 8.4,
+      fontSize: 9,
+      [theme.breakpoints.between("md", maxWidth)]: {
+        fontSize: 7,
+      },
     },
     sensorImage: {
       height: 18,
@@ -122,6 +135,7 @@ const styles = () =>
       marginRight: 5,
     },
   });
+};
 
 interface UpdateInfoIncomingProps {
   timestamp: string | null;
