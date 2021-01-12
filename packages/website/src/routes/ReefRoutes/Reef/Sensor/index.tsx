@@ -173,7 +173,7 @@ const styles = () =>
       padding: 0,
     },
     noSensorAlert: {
-      backgroundColor: "#ffd966",
+      backgroundColor: "#edb86f",
       borderRadius: "0 0 4px 4px",
       color: "white",
       width: "100%",
