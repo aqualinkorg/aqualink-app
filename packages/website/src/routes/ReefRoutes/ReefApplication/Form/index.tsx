@@ -15,7 +15,10 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
+import {
+  ReefApplication,
+  ReefApplyParams,
+} from "../../../../store/Reefs/types";
 
 const Form = ({
   reefName,

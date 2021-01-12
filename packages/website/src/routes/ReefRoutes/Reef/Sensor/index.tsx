@@ -35,14 +35,14 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
 
     case !applied:
       return (
-        <Link className={classes.newSpotterLink} to="/apply">
+        <Link className={classes.newSpotterLink} to={`/reefs/${reefId}/apply`}>
           Add a Smart Buoy
         </Link>
       );
 
     case status === "in_review":
       return (
-        <Link className={classes.newSpotterLink} to="/apply">
+        <Link className={classes.newSpotterLink} to={`/reefs/${reefId}/apply`}>
           My Application
         </Link>
       );
