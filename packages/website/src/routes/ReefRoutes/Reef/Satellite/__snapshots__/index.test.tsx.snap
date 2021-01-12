@@ -289,7 +289,7 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root UpdateInfo-updateInfo-10 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root UpdateInfo-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -302,7 +302,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root UpdateInfo-updateIcon-11 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root UpdateInfo-updateIcon-12 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -319,7 +319,7 @@ exports[`renders as expected 1`] = `
                 flexdirection="column"
               >
                 <mock-typography
-                  classname="UpdateInfo-updateInfoText-12"
+                  classname="UpdateInfo-updateInfoText-13"
                   variant="caption"
                 >
                   Last data received
@@ -327,7 +327,7 @@ exports[`renders as expected 1`] = `
                   5 min. ago
                 </mock-typography>
                 <mock-typography
-                  classname="UpdateInfo-updateInfoText-12"
+                  classname="UpdateInfo-updateInfoText-13"
                   variant="caption"
                 >
                   Updated 
@@ -338,24 +338,24 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-nooaChip-13 MuiGrid-item"
+          class="MuiGrid-root UpdateInfo-nooaChip-14 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
             <a
-              class="UpdateInfo-nooaLink-14"
+              class="UpdateInfo-nooaLink-15"
               href="https://coralreefwatch.noaa.gov/"
               target="_blank"
             >
               <mock-typography
-                classname="UpdateInfo-nooaChipText-15"
+                classname="UpdateInfo-nooaChipText-16"
               >
                 NOAA
               </mock-typography>
               <img
                 alt="sensor-type"
-                class="UpdateInfo-sensorImage-16"
+                class="UpdateInfo-sensorImage-17"
                 src="satellite.svg"
               />
             </a>

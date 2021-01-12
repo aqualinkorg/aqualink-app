@@ -194,7 +194,7 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-13 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root UpdateInfo-updateInfo-13 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
@@ -207,7 +207,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root UpdateInfo-updateIcon-14 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root UpdateInfo-updateIcon-15 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -224,7 +224,7 @@ exports[`renders as expected 1`] = `
                   flexdirection="column"
                 >
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-15"
+                    classname="UpdateInfo-updateInfoText-16"
                     variant="caption"
                   >
                     Last data received
@@ -232,7 +232,7 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-15"
+                    classname="UpdateInfo-updateInfoText-16"
                     variant="caption"
                   >
                     Updated 
@@ -243,16 +243,16 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root UpdateInfo-nooaChip-16 MuiGrid-item"
+            class="MuiGrid-root UpdateInfo-nooaChip-17 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <div
-                class="UpdateInfo-circle-20"
+                class="UpdateInfo-circle-21"
               />
               <mock-typography
-                classname="UpdateInfo-nooaChipText-18"
+                classname="UpdateInfo-nooaChipText-19"
               >
                 LIVE
               </mock-typography>

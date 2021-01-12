@@ -57,6 +57,7 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
             live={false}
             frequency="daily"
             href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+            withMargin
           />
         </Grid>
       </CardContent>

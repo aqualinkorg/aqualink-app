@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root UpdateInfo-updateInfo-1 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    class="MuiGrid-root UpdateInfo-updateInfo-1 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
@@ -16,7 +16,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root UpdateInfo-updateIcon-2 MuiSvgIcon-fontSizeSmall"
+            class="MuiSvgIcon-root UpdateInfo-updateIcon-3 MuiSvgIcon-fontSizeSmall"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -33,7 +33,7 @@ exports[`renders as expected 1`] = `
             flexdirection="column"
           >
             <mock-typography
-              classname="UpdateInfo-updateInfoText-3"
+              classname="UpdateInfo-updateInfoText-4"
               variant="caption"
             >
               Last data received
@@ -41,7 +41,7 @@ exports[`renders as expected 1`] = `
               02/01 14:00 EET
             </mock-typography>
             <mock-typography
-              classname="UpdateInfo-updateInfoText-3"
+              classname="UpdateInfo-updateInfoText-4"
               variant="caption"
             >
               Updated 
@@ -52,18 +52,18 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root UpdateInfo-nooaChip-4 MuiGrid-item"
+      class="MuiGrid-root UpdateInfo-nooaChip-5 MuiGrid-item"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
       >
         <a
-          class="UpdateInfo-nooaLink-5"
+          class="UpdateInfo-nooaLink-6"
           href="/"
           target="_blank"
         >
           <mock-typography
-            classname="UpdateInfo-nooaChipText-6"
+            classname="UpdateInfo-nooaChipText-7"
           >
             NOAA
           </mock-typography>

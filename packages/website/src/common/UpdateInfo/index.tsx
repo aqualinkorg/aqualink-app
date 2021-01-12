@@ -19,10 +19,11 @@ const UpdateInfo = ({
   live,
   frequency,
   href,
+  withMargin,
   classes,
 }: UpdateInfoProps) => (
   <Grid
-    className={classes.updateInfo}
+    className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
     container
     justify="space-between"
     alignItems="center"
@@ -87,6 +88,9 @@ const styles = (theme: Theme) => {
       padding: 4,
       minHeight: 40,
     },
+    withMargin: {
+      marginTop: 32,
+    },
     updateIcon: {
       marginRight: 4,
       height: 24,
@@ -145,10 +149,12 @@ interface UpdateInfoIncomingProps {
   live: boolean;
   frequency: "hourly" | "daily" | null;
   href?: string;
+  withMargin?: boolean;
 }
 
 UpdateInfo.defaultProps = {
   href: "",
+  withMargin: false,
 };
 
 type UpdateInfoProps = UpdateInfoIncomingProps & WithStyles<typeof styles>;
