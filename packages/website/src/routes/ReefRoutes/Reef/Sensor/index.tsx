@@ -174,7 +174,7 @@ const styles = () =>
     },
     noSensorAlert: {
       backgroundColor: "#ffd966",
-      borderRadius: 4,
+      borderRadius: "0 0 4px 4px",
       color: "white",
       width: "100%",
       minHeight: 40,
