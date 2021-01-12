@@ -23,9 +23,12 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useSelector, useDispatch } from "react-redux";
+import classNames from "classnames";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
+import RegisterDialog from "../../common/RegisterDialog";
+import SignInDialog from "../../common/SignInDialog";
 import LocationMap from "./LocationMap";
 import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
@@ -46,6 +49,8 @@ const Apply = ({ classes }: ApplyProps) => {
   const user = useSelector(userInfoSelector);
   const [formModel, setFormModel] = useState(Map<string, string | boolean>());
   const [formErrors, setFormErrors] = useState(Map<string, string>());
+  const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
+  const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [snackbarOpenFromDatabase, setSnackbarOpenFromDatabase] = useState<
     boolean
   >(false);
@@ -56,6 +61,9 @@ const Apply = ({ classes }: ApplyProps) => {
     false
   );
   const [newReefId, setNewReefId] = useState<number>();
+
+  const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
+  const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
 
   useEffect(() => {
     if (user && user.fullName && user.email) {
@@ -161,7 +169,7 @@ const Apply = ({ classes }: ApplyProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Box height="100%" pt={4}>
+      <Box className={classNames(classes.boxBar)} height="100%" pt={4}>
         <Container>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -204,6 +212,16 @@ const Apply = ({ classes }: ApplyProps) => {
                   <Box color="text.secondary" p={4}>
                     <Typography variant="h4" gutterBottom>
                       Site Information
+                    </Typography>
+                    <Typography variant="h6" gutterBottom>
+                      Please
+                      <Button
+                        color="primary"
+                        onClick={() => handleRegisterDialog(true)}
+                      >
+                        Sign up
+                      </Button>
+                      before registering a new site
                     </Typography>
 
                     <Grid container spacing={2}>
@@ -302,12 +320,25 @@ const Apply = ({ classes }: ApplyProps) => {
         </Alert>
       </Snackbar>
       <Footer />
+      <RegisterDialog
+        open={registerDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
+      <SignInDialog
+        open={signInDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
     </>
   );
 };
 
 const styles = (theme: Theme) =>
   createStyles({
+    boxBar: {
+      overflowX: "hidden",
+    },
     listItem: {
       marginTop: theme.spacing(1),
     },
