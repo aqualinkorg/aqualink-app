@@ -2,7 +2,7 @@ import { sortBy } from "lodash";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-import { ReefsListState } from "./types";
+import { ReefsListState, ReefsRequestData } from "./types";
 
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
@@ -14,21 +14,28 @@ const reefsListInitialState: ReefsListState = {
   error: null,
 };
 
-const getReefs = async () => {
+export const reefsRequest = createAsyncThunk<
+  ReefsRequestData,
+  undefined,
+  CreateAsyncThunkTypes
+>("reefsList/request", async (arg, { rejectWithValue, getState }) => {
   try {
     const { data } = await reefServices.getReefs();
-    return sortBy(data, "name");
+    const {
+      homepage: { withSpotterOnly },
+    } = getState();
+    const sortedData = sortBy(data, "name");
+    return {
+      list: sortedData,
+      reefsToDisplay: withSpotterOnly
+        ? sortedData.filter((item) => item.spotterId)
+        : sortedData,
+    };
   } catch (err) {
     const error: AxiosError<ReefsListState["error"]> = err;
-    return Promise.reject(error.message);
+    return rejectWithValue(error.message);
   }
-};
-
-export const reefsRequest = createAsyncThunk<
-  ReefsListState["list"],
-  void,
-  CreateAsyncThunkTypes
->("reefsList/request", () => getReefs());
+});
 
 const reefsListSlice = createSlice({
   name: "reefsList",
@@ -44,11 +51,11 @@ const reefsListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       reefsRequest.fulfilled,
-      (state, action: PayloadAction<ReefsListState["list"]>) => {
+      (state, action: PayloadAction<ReefsRequestData>) => {
         return {
           ...state,
-          list: action.payload,
-          reefsToDisplay: action.payload,
+          list: action.payload.list,
+          reefsToDisplay: action.payload.reefsToDisplay,
           loading: false,
         };
       }
