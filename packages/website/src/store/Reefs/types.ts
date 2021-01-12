@@ -150,6 +150,11 @@ export interface ReefApplication {
   applied: boolean;
 }
 
+export interface ReefsRequestData {
+  list: Reef[];
+  reefsToDisplay: Reef[];
+}
+
 export interface ReefsListState {
   list: Reef[];
   reefsToDisplay: Reef[];
