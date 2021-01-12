@@ -1466,7 +1466,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           >
                             Last data received
                              
-                            193 days ago
+                            5 min. ago
                           </mock-typography>
                           <mock-typography
                             classname="UpdateInfo-updateInfoText-183"
