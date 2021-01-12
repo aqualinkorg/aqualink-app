@@ -26,6 +26,9 @@ import {
   reefSpotterDataRequest,
   reefSpotterDataSelector,
   clearReefSpotterData,
+  reefLiveDataSelector,
+  reefLiveDataRequest,
+  reefLiveDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -99,6 +102,8 @@ const getAlertMessage = (
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
+  const liveData = useSelector(reefLiveDataSelector);
+  const liveDataLoading = useSelector(reefLiveDataLoadingSelector);
   const user = useSelector(userInfoSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
@@ -114,7 +119,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   const { featuredSurveyMedia, diveDate } = featuredMedia || {};
   const { poiId, url } = featuredSurveyMedia || {};
 
-  const { liveData, dailyData } = reefDetails || {};
+  const { dailyData } = reefDetails || {};
 
   const hasSpotterData = Boolean(liveData?.surfaceTemperature);
 
@@ -129,6 +134,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   // fetch the reef and spotter data
   useEffect(() => {
     dispatch(reefRequest(reefId));
+    dispatch(reefLiveDataRequest(reefId));
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
 
@@ -177,7 +183,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     []
   );
 
-  if (loading || (!reefDetails && !error)) {
+  if (loading || liveDataLoading || (!reefDetails && !error)) {
     return (
       <>
         <ReefNavBar searchLocation={false} />
@@ -210,6 +216,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              liveData={liveData}
               startDate={subtractFromDate(endDate || pickerDate, range)}
               endDate={endDate || pickerDate}
               pickerDate={pickerDate}

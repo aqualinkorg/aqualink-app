@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 
 import SelectedReefCard from ".";
 import { mockReef } from "../../../../mocks/mockReef";
+import { mockLiveData } from "../../../../mocks/mockLiveData";
 
 jest.mock("react-chartjs-2", () => ({
   Line: () => "Mock-Line",
@@ -18,6 +19,7 @@ jest.mock("react-chartjs-2", () => ({
 
 const reef = {
   details: mockReef,
+  liveData: mockLiveData,
 };
 
 const mockStore = configureStore([]);

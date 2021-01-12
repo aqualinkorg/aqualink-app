@@ -26,16 +26,19 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
-import { reefDetailsSelector } from "../../../../store/Reefs/selectedReefSlice";
+import {
+  // reefDetailsSelector,
+  reefLiveDataLoadingSelector,
+  reefLiveDataSelector,
+} from "../../../../store/Reefs/selectedReefSlice";
 
 const Popup = ({ reef, classes }: PopupProps) => {
   const { map } = useLeaflet();
   const reefOnMap = useSelector(reefOnMapSelector);
-  const { id: selectedReefId, liveData } =
-    useSelector(reefDetailsSelector) || {};
+  const liveData = useSelector(reefLiveDataSelector);
+  const liveDataLoading = useSelector(reefLiveDataLoadingSelector);
   const { bottomTemperature, satelliteTemperature, degreeHeatingDays } =
     liveData || {};
-  const loading = selectedReefId !== reefOnMap?.id;
   const popupRef = useRef<LeafletPopup>(null);
 
   useEffect(() => {
@@ -63,7 +66,7 @@ const Popup = ({ reef, classes }: PopupProps) => {
           subheader={getReefNameAndRegion(reef).region}
         />
         <CardContent>
-          {loading ? (
+          {liveDataLoading ? (
             <Grid
               style={{ marginBottom: "1rem" }}
               container

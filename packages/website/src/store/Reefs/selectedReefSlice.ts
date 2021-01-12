@@ -11,6 +11,7 @@ import reefServices from "../../services/reefServices";
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
   loading: true,
+  liveDataLoading: false,
   spotterDataLoading: false,
   error: null,
 };
@@ -23,9 +24,22 @@ export const reefRequest = createAsyncThunk<
   try {
     const { data } = await reefServices.getReef(id);
     const { data: dailyData } = await reefServices.getReefDailyData(id);
-    const { data: liveData } = await reefServices.getReefLiveData(id);
 
-    return { ...data, dailyData, liveData };
+    return { ...data, dailyData };
+  } catch (err) {
+    const error: AxiosError<SelectedReefState["error"]> = err;
+    return rejectWithValue(error.message);
+  }
+});
+
+export const reefLiveDataRequest = createAsyncThunk<
+  SelectedReefState["liveData"],
+  string,
+  CreateAsyncThunkTypes
+>("selectedReef/liveDataRequest", async (id: string, { rejectWithValue }) => {
+  try {
+    const { data } = await reefServices.getReefLiveData(id);
+    return data;
   } catch (err) {
     const error: AxiosError<SelectedReefState["error"]> = err;
     return rejectWithValue(error.message);
@@ -136,6 +150,36 @@ const selectedReefSlice = createSlice({
     });
 
     builder.addCase(
+      reefLiveDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedReefState["liveData"]>) => {
+        return {
+          ...state,
+          liveData: action.payload,
+          liveDataLoading: false,
+        };
+      }
+    );
+
+    builder.addCase(
+      reefLiveDataRequest.rejected,
+      (state, action: PayloadAction<SelectedReefState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          liveDataLoading: false,
+        };
+      }
+    );
+
+    builder.addCase(reefLiveDataRequest.pending, (state) => {
+      return {
+        ...state,
+        liveDataLoading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
       reefSpotterDataRequest.fulfilled,
       (state, action: PayloadAction<SelectedReefState["spotterData"]>) => {
         return {
@@ -171,6 +215,10 @@ export const reefDetailsSelector = (
   state: RootState
 ): SelectedReefState["details"] => state.selectedReef.details;
 
+export const reefLiveDataSelector = (
+  state: RootState
+): SelectedReefState["liveData"] => state.selectedReef.liveData;
+
 export const reefSpotterDataSelector = (
   state: RootState
 ): SelectedReefState["spotterData"] => state.selectedReef.spotterData;
@@ -187,6 +235,10 @@ export const reefSpotterDataLoadingSelector = (
   state: RootState
 ): SelectedReefState["spotterDataLoading"] =>
   state.selectedReef.spotterDataLoading;
+
+export const reefLiveDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["liveDataLoading"] => state.selectedReef.liveDataLoading;
 
 export const reefErrorSelector = (
   state: RootState

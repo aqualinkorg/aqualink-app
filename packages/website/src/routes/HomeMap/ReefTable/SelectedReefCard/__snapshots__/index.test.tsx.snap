@@ -105,7 +105,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                29.0
+                26.0
                  
                 <mock-typography
                   component="span"
@@ -126,7 +126,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                4.9
+                4.1
                  
                 <mock-typography
                   component="span"
@@ -147,7 +147,7 @@ exports[`renders as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                39.0
+                25.0
                  
                 <mock-typography
                   component="span"
@@ -270,7 +270,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                29.0
+                26.0
                  
                 <mock-typography
                   component="span"
@@ -291,7 +291,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                4.9
+                4.1
                  
                 <mock-typography
                   component="span"
@@ -312,7 +312,7 @@ exports[`renders loading as expected 1`] = `
                 color="primary"
                 variant="h4"
               >
-                39.0
+                25.0
                  
                 <mock-typography
                   component="span"

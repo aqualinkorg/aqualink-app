@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 import { findAdministeredReef } from "../../../../helpers/findAdministeredReef";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import type { Reef } from "../../../../store/Reefs/types";
+import type { LiveData, Reef } from "../../../../store/Reefs/types";
 import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
 import buoy from "../../../../assets/buoy.svg";
@@ -59,8 +59,8 @@ const applicationTag = (user: User | null, reefId: number, classes: any) => {
   }
 };
 
-const Sensor = ({ reef, classes }: SensorProps) => {
-  const { surfaceTemperature, bottomTemperature } = reef.liveData;
+const Sensor = ({ reef, liveData, classes }: SensorProps) => {
+  const { surfaceTemperature, bottomTemperature } = liveData;
 
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value
@@ -180,6 +180,7 @@ const styles = () =>
 
 interface SensorIncomingProps {
   reef: Reef;
+  liveData: LiveData;
 }
 
 type SensorProps = WithStyles<typeof styles> & SensorIncomingProps;

@@ -15,21 +15,6 @@ export const mockReef: Reef = {
   region: { name: "Hawaii" },
   admins: [],
   stream: null,
-  liveData: {
-    reef: { id: 1 },
-    bottomTemperature: {
-      value: 39,
-      timestamp: "2020-07-01T14:25:18.008Z",
-    },
-    satelliteTemperature: {
-      value: 29,
-      timestamp: "2020-07-01T14:25:18.008Z",
-    },
-    degreeHeatingDays: {
-      value: 34,
-      timestamp: "2020-07-01T14:25:18.008Z",
-    },
-  },
   dailyData: [
     {
       id: 171,

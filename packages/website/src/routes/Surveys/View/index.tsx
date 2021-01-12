@@ -34,6 +34,7 @@ import { useBodyLength } from "../../../helpers/useBodyLength";
 import {
   reefSpotterDataSelector,
   reefSpotterDataRequest,
+  reefLiveDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   subtractFromDate,
@@ -49,8 +50,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
   const spotterData = useSelector(reefSpotterDataSelector);
-
-  const { liveData } = reef;
+  const liveData = useSelector(reefLiveDataSelector);
   const hasSpotter = Boolean(liveData?.surfaceTemperature);
 
   const [range, setRange] = useState<Range>("week");

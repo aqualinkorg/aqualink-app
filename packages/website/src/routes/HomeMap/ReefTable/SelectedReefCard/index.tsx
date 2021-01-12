@@ -22,10 +22,12 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
 import {
   reefDetailsSelector,
+  reefLiveDataLoadingSelector,
+  reefLiveDataSelector,
   reefLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
-import { Reef } from "../../../../store/Reefs/types";
+import { LiveData, Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
@@ -99,16 +101,18 @@ const useStyles = makeStyles((theme) => ({
 
 type SelectedReefContentProps = {
   reef: Reef;
+  liveData?: LiveData | null;
   url?: string | null;
 };
 
-const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
+const SelectedReefContent = ({
+  reef,
+  liveData,
+  url,
+}: SelectedReefContentProps) => {
   const classes = useStyles();
-  const {
-    satelliteTemperature,
-    degreeHeatingDays,
-    bottomTemperature,
-  } = reef.liveData;
+  const { satelliteTemperature, degreeHeatingDays, bottomTemperature } =
+    liveData || {};
 
   const metrics = [
     {
@@ -269,6 +273,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 
 SelectedReefContent.defaultProps = {
   url: null,
+  liveData: null,
 };
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
@@ -276,6 +281,8 @@ const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 const SelectedReefCard = () => {
   const classes = useStyles();
   const reef = useSelector(reefDetailsSelector);
+  const liveData = useSelector(reefLiveDataSelector);
+  const liveDataLoading = useSelector(reefLiveDataLoadingSelector);
   const loading = useSelector(reefLoadingSelector);
   const surveyList = useSelector(surveyListSelector);
 
@@ -304,7 +311,7 @@ const SelectedReefCard = () => {
       )}
 
       <Card>
-        {loading ? (
+        {loading || liveDataLoading ? (
           <Box
             height="20rem"
             display="flex"
@@ -316,7 +323,11 @@ const SelectedReefCard = () => {
             <CircularProgress size="6rem" thickness={1} />
           </Box>
         ) : reef ? (
-          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
+          <SelectedReefContent
+            reef={reef}
+            liveData={liveData}
+            url={featuredMedia?.url}
+          />
         ) : null}
       </Card>
     </Box>

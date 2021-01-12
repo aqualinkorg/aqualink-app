@@ -16,6 +16,8 @@ import {
   reefLoadingSelector,
   reefErrorSelector,
   reefRequest,
+  reefLiveDataRequest,
+  reefLiveDataLoadingSelector,
 } from "../../store/Reefs/selectedReefSlice";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -25,6 +27,7 @@ import ViewSurvey from "./View";
 const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
   const loading = useSelector(reefLoadingSelector);
+  const liveDataLoading = useSelector(reefLiveDataLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
@@ -33,10 +36,11 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
   useEffect(() => {
     if (!reefDetails) {
       dispatch(reefRequest(reefId));
+      dispatch(reefLiveDataRequest(reefId));
     }
   }, [dispatch, reefId, reefDetails]);
 
-  if (loading) {
+  if (loading || liveDataLoading) {
     return (
       <>
         <NavBar searchLocation={false} />

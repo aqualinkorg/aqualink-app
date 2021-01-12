@@ -8,6 +8,7 @@ import Reef from ".";
 import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockLiveData } from "../../../mocks/mockLiveData";
 
 const mockStore = configureStore([]);
 
@@ -30,6 +31,8 @@ describe("Reef Detail Page", () => {
     const emptyStore = mockStore({
       selectedReef: {
         details: { ...mockReef, dailyData: [] },
+        liveData: mockLiveData,
+        liveDataLoading: false,
         loading: false,
         error: null,
       },

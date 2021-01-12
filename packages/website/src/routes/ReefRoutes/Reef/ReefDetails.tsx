@@ -19,7 +19,12 @@ import Waves from "./Waves";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import CombinedCharts from "../../../common/Chart/CombinedCharts";
-import type { Range, Reef, SpotterData } from "../../../store/Reefs/types";
+import type {
+  LiveData,
+  Range,
+  Reef,
+  SpotterData,
+} from "../../../store/Reefs/types";
 import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
@@ -33,6 +38,7 @@ import {
 const ReefDetails = ({
   classes,
   reef,
+  liveData,
   startDate,
   endDate,
   range,
@@ -49,7 +55,7 @@ const ReefDetails = ({
 }: ReefDetailProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean } = reef;
+  const { dailyData, maxMonthlyMean } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -57,7 +63,7 @@ const ReefDetails = ({
     },
     {
       Component: Sensor as ElementType,
-      props: { reef },
+      props: { reef, liveData },
     },
     {
       Component: CoralBleaching as ElementType,
@@ -114,7 +120,7 @@ const ReefDetails = ({
           {diveDate && point && <CardTitle values={mapTitleItems} />}
           <div className={classes.container}>
             <Map
-              spotterPosition={reef.liveData?.spotterPosition}
+              spotterPosition={liveData?.spotterPosition}
               polygon={reef.polygon}
             />
           </div>
@@ -201,6 +207,7 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  liveData: LiveData;
   startDate: string;
   endDate: string;
   pickerDate: string;

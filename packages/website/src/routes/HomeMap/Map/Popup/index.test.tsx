@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 import { BrowserRouter as Router } from "react-router-dom";
 import Popup from ".";
 import { mockReef } from "../../../../mocks/mockReef";
+import { mockLiveData } from "../../../../mocks/mockLiveData";
 
 jest.mock("react-leaflet", () => ({
   __esModule: true,
@@ -28,6 +29,7 @@ describe("Popup", () => {
       },
       selectedReef: {
         details: mockReef,
+        liveData: mockLiveData,
       },
     });
 

@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 import Sensor from ".";
 import { mockUser } from "../../../../mocks/mockUser";
 import { mockReef } from "../../../../mocks/mockReef";
+import { mockLiveData } from "../../../../mocks/mockLiveData";
 
 const mockStore = configureStore([]);
 
@@ -22,7 +23,7 @@ describe("Sensor Card", () => {
 
     element = render(
       <Provider store={store}>
-        <Sensor reef={mockReef} />
+        <Sensor reef={mockReef} liveData={mockLiveData} />
       </Provider>
     ).container;
   });

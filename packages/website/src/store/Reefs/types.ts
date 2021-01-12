@@ -100,7 +100,7 @@ export interface Reef {
   admins: User[];
   stream: string | null;
   dailyData: DailyData[];
-  liveData: LiveData;
+  // liveData: LiveData;
   latestDailyData: DailyData;
   featuredImage?: string;
   applied?: boolean;
@@ -165,6 +165,8 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  liveData?: LiveData | null;
+  liveDataLoading: boolean;
   spotterData?: SpotterData | null;
   spotterDataLoading: boolean;
   loading: boolean;

@@ -14,7 +14,10 @@ import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
 import { reefsRequest } from "../../store/Reefs/reefsListSlice";
-import { reefRequest } from "../../store/Reefs/selectedReefSlice";
+import {
+  reefLiveDataRequest,
+  reefRequest,
+} from "../../store/Reefs/selectedReefSlice";
 import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
 
@@ -31,9 +34,11 @@ const Homepage = ({ classes }: HomepageProps) => {
   useEffect(() => {
     if (!reefOnMap) {
       dispatch(reefRequest(featuredReefId));
+      dispatch(reefLiveDataRequest(featuredReefId));
       dispatch(surveysRequest(featuredReefId));
     } else {
       dispatch(reefRequest(`${reefOnMap.id}`));
+      dispatch(reefLiveDataRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
   }, [dispatch, reefOnMap]);
