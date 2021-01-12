@@ -56,7 +56,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
   }, [dispatch, reefId]);
 
   useEffect(() => {
-    if (reef && user?.token) {
+    if (user?.token) {
       setLoading(true);
       reefServices
         .getReefApplication(reefId, user.token)
@@ -70,7 +70,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
         .catch(() => setMessage("There was an error getting the application"))
         .finally(() => setLoading(false));
     }
-  }, [user, reef, reefId]);
+  }, [user, reefId]);
 
   const updateAgreement = useCallback(
     (label: keyof AgreementsChecked) => {
