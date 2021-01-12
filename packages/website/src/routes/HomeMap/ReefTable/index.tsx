@@ -105,7 +105,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
                 color="primary"
               />
               <Typography color="textSecondary" variant="h6">
-                spotters only
+                deployed buoys only
               </Typography>
             </Box>
           )}
