@@ -12,8 +12,8 @@ import UpdateIcon from "@material-ui/icons/Update";
 import { Link } from "react-router-dom";
 
 const UpdateInfo = ({
-  timestamp,
-  timestampText,
+  relativeTime,
+  timeText,
   image,
   imageText,
   live,
@@ -37,7 +37,7 @@ const UpdateInfo = ({
         <Grid item>
           <Box display="flex" flexDirection="column">
             <Typography className={classes.updateInfoText} variant="caption">
-              {timestampText} {timestamp}
+              {timeText} {relativeTime}
             </Typography>
             {frequency && (
               <Typography className={classes.updateInfoText} variant="caption">
@@ -142,8 +142,8 @@ const styles = (theme: Theme) => {
 };
 
 interface UpdateInfoIncomingProps {
-  timestamp: string | null;
-  timestampText: string;
+  relativeTime: string | null;
+  timeText: string;
   image: string | null;
   imageText: string | null;
   live: boolean;

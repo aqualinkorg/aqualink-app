@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import UpdateInfo from "../../../../common/UpdateInfo";
 import { findAdministeredReef } from "../../../../helpers/findAdministeredReef";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import { timeAgo } from "../../../../helpers/dates";
+import { toRelativeTime } from "../../../../helpers/dates";
 import type { Reef } from "../../../../store/Reefs/types";
 import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
@@ -55,7 +55,7 @@ const applicationTag = (
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = reef.liveData;
 
-  const ago = timeAgo(
+  const relativeTime = toRelativeTime(
     surfaceTemperature?.timestamp || bottomTemperature?.timestamp
   );
 
@@ -122,8 +122,8 @@ const Sensor = ({ reef, classes }: SensorProps) => {
         </Box>
         {hasSpotter ? (
           <UpdateInfo
-            timestamp={ago}
-            timestampText="Last data received"
+            relativeTime={relativeTime}
+            timeText="Last data received"
             image={null}
             imageText={null}
             live

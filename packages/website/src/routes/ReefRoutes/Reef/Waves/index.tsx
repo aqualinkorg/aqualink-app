@@ -13,7 +13,7 @@ import {
 import UpdateInfo from "../../../../common/UpdateInfo";
 import type { LiveData } from "../../../../store/Reefs/types";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import { timeAgo } from "../../../../helpers/dates";
+import { toRelativeTime } from "../../../../helpers/dates";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
@@ -34,7 +34,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     surfaceTemperature?.value || bottomTemperature?.value
   );
 
-  const windAgo = timeAgo(windSpeed?.timestamp);
+  const windRelativeTime = toRelativeTime(windSpeed?.timestamp);
 
   return (
     <Card className={classes.card}>
@@ -210,10 +210,8 @@ const Waves = ({ liveData, classes }: WavesProps) => {
             </Grid>
           </Grid>
           <UpdateInfo
-            timestamp={windAgo}
-            timestampText={
-              hasSpotter ? "Last data received" : "Forecast valid for"
-            }
+            relativeTime={windRelativeTime}
+            timeText={hasSpotter ? "Last data received" : "Forecast valid for"}
             image={null}
             imageText={hasSpotter ? null : "NOAA GFS"}
             live={hasSpotter}

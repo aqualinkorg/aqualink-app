@@ -22,11 +22,11 @@ import {
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
 import UpdateInfo from "../../../../common/UpdateInfo";
-import { timeAgo } from "../../../../helpers/dates";
+import { toRelativeTime } from "../../../../helpers/dates";
 
 const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = liveData;
-  const ago = timeAgo(satelliteTemperature?.timestamp);
+  const relativeTime = toRelativeTime(satelliteTemperature?.timestamp);
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
     degreeHeatingDays?.value
@@ -120,8 +120,8 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
         </Grid>
 
         <UpdateInfo
-          timestamp={ago}
-          timestampText="Last data received"
+          relativeTime={relativeTime}
+          timeText="Last data received"
           image={satellite}
           imageText="NOAA"
           live={false}

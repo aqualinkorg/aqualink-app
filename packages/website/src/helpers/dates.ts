@@ -116,7 +116,7 @@ export const getTimeZoneName = (timeZone: string): string => {
   return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
 };
 
-export const timeAgo = (timestamp?: string) => {
+export const toRelativeTime = (timestamp?: string) => {
   if (timestamp) {
     const minute = 60;
     const hour = 60 * 60;

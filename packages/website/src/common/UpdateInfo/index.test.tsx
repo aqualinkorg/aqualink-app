@@ -8,8 +8,8 @@ test("renders as expected", () => {
   const { container } = render(
     <Router>
       <UpdateInfo
-        timestamp="02/01 14:00 EET"
-        timestampText="Last data received"
+        relativeTime="02/01 14:00 EET"
+        timeText="Last data received"
         image={null}
         imageText="NOAA"
         live={false}

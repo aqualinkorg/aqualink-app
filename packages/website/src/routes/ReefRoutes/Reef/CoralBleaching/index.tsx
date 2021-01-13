@@ -15,10 +15,10 @@ import UpdateInfo from "../../../../common/UpdateInfo";
 
 import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
 import { styles as incomingStyles } from "../styles";
-import { timeAgo } from "../../../../helpers/dates";
+import { toRelativeTime } from "../../../../helpers/dates";
 
 const Bleaching = ({ dailyData, classes }: BleachingProps) => {
-  const ago = timeAgo(dailyData?.date);
+  const relativeTime = toRelativeTime(dailyData?.date);
 
   return (
     <Card className={classes.card}>
@@ -50,8 +50,8 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
             alt="alert-level"
           />
           <UpdateInfo
-            timestamp={ago}
-            timestampText="Last data received"
+            relativeTime={relativeTime}
+            timeText="Last data received"
             image={null}
             imageText="NOAA CRW"
             live={false}
