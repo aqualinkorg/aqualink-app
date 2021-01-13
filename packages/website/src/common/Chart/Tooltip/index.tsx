@@ -13,8 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
 import { isNull } from "lodash";
+import moment from "moment";
 
-import { getTimeZoneName } from "../../../helpers/dates";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const Circle = styled("div")<{}, { color: string; size?: number }>(
@@ -51,7 +51,6 @@ const TemperatureMetric = ({
 const Tooltip = ({
   reefId,
   date,
-  timeZone,
   depth,
   bottomTemperature,
   spotterSurfaceTemp,
@@ -60,19 +59,7 @@ const Tooltip = ({
   classes,
 }: TooltipProps) => {
   const hourlyData = !isNull(spotterSurfaceTemp);
-  // Date formatting
-  const hourlyOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-  const dateString = new Date(date).toLocaleString("en", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    ...(hourlyData ? hourlyOptions : {}),
-  });
-
-  const timeZoneName = getTimeZoneName(timeZone || "UTC");
+  const dateString = hourlyData ? date : moment(date).format("MM/DD/YY");
 
   const tooltipLines: {
     temperature: number | null;
@@ -96,7 +83,6 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {hourlyData && timeZoneName && ` ${timeZoneName}`}
             </Typography>
           }
         />
@@ -200,7 +186,6 @@ const styles = () =>
 export interface TooltipData {
   reefId: number;
   date: string;
-  timeZone?: string | null;
   depth: number | null;
   spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
