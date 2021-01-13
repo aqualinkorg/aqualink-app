@@ -30,7 +30,7 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData, reefId } = rest;
+  const { dailyData, spotterData, reefId, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
@@ -38,6 +38,7 @@ function ChartWithTooltip({
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     reefId,
     date: "",
+    timeZone,
     depth,
     bottomTemperature: 0,
     spotterSurfaceTemp: null,
