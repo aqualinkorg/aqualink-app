@@ -11,11 +11,15 @@ import {
 } from "@material-ui/core";
 
 import type { DailyData } from "../../../../store/Reefs/types";
+import UpdateInfo from "../../../../common/UpdateInfo";
 
 import { findIntervalByLevel } from "../../../../helpers/bleachingAlertIntervals";
 import { styles as incomingStyles } from "../styles";
+import { toRelativeTime } from "../../../../helpers/dates";
 
 const Bleaching = ({ dailyData, classes }: BleachingProps) => {
+  const relativeTime = toRelativeTime(dailyData?.date);
+
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -32,16 +36,28 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
       />
       <CardContent className={classes.contentWrapper}>
         <Grid
-          style={{ height: "100%" }}
+          className={classes.content}
           container
           alignItems="center"
+          alignContent="space-between"
           justify="center"
           item
           xs={12}
         >
           <img
+            className={classes.alertImage}
             src={findIntervalByLevel(dailyData.weeklyAlertLevel).image}
             alt="alert-level"
+          />
+          <UpdateInfo
+            relativeTime={relativeTime}
+            timeText="Last data received"
+            image={null}
+            imageText="NOAA CRW"
+            live={false}
+            frequency="daily"
+            href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+            withMargin
           />
         </Grid>
       </CardContent>
@@ -59,14 +75,21 @@ const styles = () =>
       backgroundColor: "#eff0f0",
       display: "flex",
       flexDirection: "column",
-      paddingBottom: "1rem",
     },
     header: {
       flex: "0 1 auto",
-      padding: "1rem",
+      padding: "0.5rem 1rem 1.5rem 1rem",
     },
     contentWrapper: {
       padding: 0,
+      height: "100%",
+    },
+    content: {
+      height: "100%",
+    },
+    alertImage: {
+      height: 160,
+      marginBottom: 5,
     },
   });
 

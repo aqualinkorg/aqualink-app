@@ -1,8 +1,14 @@
 import { DailyData } from "../store/Reefs/types";
 
+const now = new Date();
+const minutesAgo = 5;
+const dailyDataDate = new Date(
+  now.getTime() - minutesAgo * 60000
+).toISOString();
+
 export const mockDailyData: DailyData = {
   id: 1,
-  date: "2020-07-01T14:25:18.008Z",
+  date: dailyDataDate,
   minBottomTemperature: 25,
   maxBottomTemperature: 27,
   avgBottomTemperature: 26,

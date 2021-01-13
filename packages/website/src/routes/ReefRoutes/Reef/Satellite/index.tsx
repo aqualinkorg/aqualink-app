@@ -21,9 +21,12 @@ import {
   degreeHeatingWeeksCalculator,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { styles as incomingStyles } from "../styles";
+import UpdateInfo from "../../../../common/UpdateInfo";
+import { toRelativeTime } from "../../../../helpers/dates";
 
 const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = liveData;
+  const relativeTime = toRelativeTime(satelliteTemperature?.timestamp);
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
     degreeHeatingDays?.value
@@ -56,18 +59,11 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between">
-            <Grid container item xs={8}>
+          <Grid container>
+            <Grid item>
               <Typography className={classes.cardTitle} variant="h6">
                 SATELLITE OBSERVATION
               </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <img
-                className={classes.titleImage}
-                alt="satellite"
-                src={satellite}
-              />
             </Grid>
           </Grid>
         }
@@ -122,6 +118,16 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
             </Grid>
           ))}
         </Grid>
+
+        <UpdateInfo
+          relativeTime={relativeTime}
+          timeText="Last data received"
+          image={satellite}
+          imageText="NOAA"
+          live={false}
+          frequency="daily"
+          href="https://coralreefwatch.noaa.gov/"
+        />
       </CardContent>
     </Card>
   );
@@ -135,10 +141,6 @@ const styles = () =>
       display: "flex",
       flexDirection: "column",
       height: "100%",
-    },
-    titleImage: {
-      height: 35,
-      width: 35,
     },
     content: {
       display: "flex",
