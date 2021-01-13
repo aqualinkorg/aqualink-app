@@ -1,5 +1,9 @@
 import { Reef } from "../store/Reefs/types";
 
+const now = new Date();
+const minutesAgo = 5;
+const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
+
 export const mockReef: Reef = {
   id: 1,
   name: "",
@@ -18,7 +22,7 @@ export const mockReef: Reef = {
   dailyData: [
     {
       id: 171,
-      date: "2020-07-01T16:40:19.842Z",
+      date: liveDataDate,
       minBottomTemperature: 37,
       maxBottomTemperature: 39,
       avgBottomTemperature: 38,
@@ -38,7 +42,7 @@ export const mockReef: Reef = {
   ],
   latestDailyData: {
     id: 171,
-    date: "2020-07-01T16:40:19.842Z",
+    date: liveDataDate,
     minBottomTemperature: 37,
     maxBottomTemperature: 39,
     avgBottomTemperature: 38,

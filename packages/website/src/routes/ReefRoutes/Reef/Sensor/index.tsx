@@ -8,59 +8,56 @@ import {
   Typography,
   CardHeader,
   Grid,
-  Chip,
   Box,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import UpdateInfo from "../../../../common/UpdateInfo";
 import { findAdministeredReef } from "../../../../helpers/findAdministeredReef";
 import { formatNumber } from "../../../../helpers/numberUtils";
+import { toRelativeTime } from "../../../../helpers/dates";
 import type { LiveData, Reef } from "../../../../store/Reefs/types";
 import { User } from "../../../../store/User/types";
 import sensor from "../../../../assets/sensor.svg";
-import buoy from "../../../../assets/buoy.svg";
 import { styles as incomingStyles } from "../styles";
 import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const applicationTag = (user: User | null, reefId: number, classes: any) => {
+const applicationTag = (
+  user: User | null,
+  reefId: number
+): [string, boolean] => {
   const userReef = findAdministeredReef(user, reefId);
   const { applied, status } = userReef || {};
   const isManager = isAdmin(user, reefId);
 
   switch (true) {
     case !isManager:
-      return "Not Installed Yet";
+      return ["Not Installed Yet", false];
 
     case !applied:
-      return (
-        <Link className={classes.newSpotterLink} to="/apply">
-          Add a Smart Buoy
-        </Link>
-      );
+      return ["Add a Smart Buoy", true];
 
     case status === "in_review":
-      return (
-        <Link className={classes.newSpotterLink} to="/apply">
-          My Application
-        </Link>
-      );
+      return ["My Application", true];
 
     case status === "approved":
-      return "Smart Buoy approved";
+      return ["Smart Buoy approved", false];
 
     case status === "rejected":
-      return (
-        <span className={classes.rejectedAlert}>Smart Buoy not approved</span>
-      );
+      return ["Smart Buoy not approved", false];
     default:
-      return "Not Installed Yet";
+      return ["Not Installed Yet", false];
   }
 };
 
 const Sensor = ({ reef, liveData, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = liveData;
+
+  const relativeTime = toRelativeTime(
+    surfaceTemperature?.timestamp || bottomTemperature?.timestamp
+  );
 
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value
@@ -79,19 +76,18 @@ const Sensor = ({ reef, liveData, classes }: SensorProps) => {
     },
   ];
 
+  const [alertText, clickable] = applicationTag(user, reef.id);
+
   return (
     <Card className={classes.card}>
       <CardHeader
         className={classes.header}
         title={
-          <Grid container justify="space-between">
-            <Grid item xs={8}>
+          <Grid container>
+            <Grid item>
               <Typography className={classes.cardTitle} variant="h6">
                 SENSOR OBSERVATION
               </Typography>
-            </Grid>
-            <Grid item xs={1}>
-              <img className={classes.titleImage} alt="buoy" src={buoy} />
             </Grid>
           </Grid>
         }
@@ -118,20 +114,38 @@ const Sensor = ({ reef, liveData, classes }: SensorProps) => {
                 </Typography>
               </Grid>
             ))}
-            {!hasSpotter && (
-              <Grid item xs={8}>
-                <Chip
-                  className={classes.noSensorAlert}
-                  label={applicationTag(user, reef.id, classes)}
-                />
-              </Grid>
-            )}
           </Grid>
 
-          <Box position="absolute" bottom={0} right={0}>
+          <Box position="absolute" bottom={-15} right={0}>
             <img alt="sensor" src={sensor} />
           </Box>
         </Box>
+        {hasSpotter ? (
+          <UpdateInfo
+            relativeTime={relativeTime}
+            timeText="Last data received"
+            image={null}
+            imageText={null}
+            live
+            frequency="hourly"
+            withMargin
+          />
+        ) : (
+          <Grid
+            className={classes.noSensorAlert}
+            container
+            alignItems="center"
+            justify="center"
+          >
+            {clickable ? (
+              <Link className={classes.newSpotterLink} to="/apply">
+                <Typography variant="h6">{alertText}</Typography>
+              </Link>
+            ) : (
+              <Typography variant="h6">{alertText}</Typography>
+            )}
+          </Grid>
+        )}
       </CardContent>
     </Card>
   );
@@ -146,7 +160,6 @@ const styles = () =>
       flexDirection: "column",
       height: "100%",
       backgroundColor: "#128cc0",
-      paddingBottom: "1rem",
     },
     titleImage: {
       height: 35,
@@ -161,14 +174,21 @@ const styles = () =>
     },
     noSensorAlert: {
       backgroundColor: "#edb86f",
-      borderRadius: 4,
+      borderRadius: "0 0 4px 4px",
       color: "white",
       width: "100%",
+      minHeight: 40,
+      marginTop: 32,
     },
     rejectedAlert: {
       fontSize: 11,
     },
     newSpotterLink: {
+      height: "100%",
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       color: "inherit",
       textDecoration: "none",
       "&:hover": {
