@@ -53,7 +53,13 @@ export const convertToLocalTime = (
   if (utcTime && timeZone) {
     return new Date(utcTime).toLocaleString("en-US", {
       ...options,
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
       timeZone,
+      timeZoneName: "short",
     });
   }
   return utcTime;
