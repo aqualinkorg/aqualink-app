@@ -157,6 +157,11 @@ const ReefNavBar = ({
                       {reefRegion && `, ${reefRegion}`}
                     </Typography>
                   </Box>
+                  {reef.admins && reef.admins[0] && (
+                    <Box>
+                      <Typography variant="h6">{`Managed by ${reef.admins[0].organization}`}</Typography>
+                    </Box>
+                  )}
                   {lastSurvey && (
                     <Box>
                       <Typography variant="subtitle1">{`Last surveyed: ${moment(
