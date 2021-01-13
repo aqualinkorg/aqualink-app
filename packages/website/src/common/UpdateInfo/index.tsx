@@ -147,7 +147,7 @@ interface UpdateInfoIncomingProps {
   image: string | null;
   imageText: string | null;
   live: boolean;
-  frequency: "hourly" | "daily" | null;
+  frequency: "hourly" | "daily" | "every 6 hours" | null;
   href?: string;
   withMargin?: boolean;
 }

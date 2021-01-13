@@ -210,14 +210,14 @@ const Waves = ({ liveData, classes }: WavesProps) => {
             </Grid>
           </Grid>
           <UpdateInfo
-            timestamp={hasSpotter ? windAgo : null}
+            timestamp={windAgo}
             timestampText={
-              hasSpotter ? "Last data received" : "Updated every 6 hours"
+              hasSpotter ? "Last data received" : "Forecast valid for"
             }
             image={null}
             imageText={hasSpotter ? null : "NOAA GFS"}
             live={hasSpotter}
-            frequency={hasSpotter ? "hourly" : null}
+            frequency={hasSpotter ? "hourly" : "every 6 hours"}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
           />
         </Grid>
