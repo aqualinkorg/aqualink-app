@@ -162,7 +162,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             </Grid>
           </Grid>
         </Container>
-      ) : reefApplication ? (
+      ) : reef?.name && reefApplication ? (
         <>
           <Container className={classes.welcomeMessage}>
             <Grid container>
@@ -192,7 +192,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
               </Grid>
               <Grid item xs={11} md={5}>
                 <Form
-                  reefName={reef?.name}
+                  reefName={reef.name}
                   application={reefApplication}
                   agreed={agreed()}
                   handleFormSubmit={handleFormSubmit}
