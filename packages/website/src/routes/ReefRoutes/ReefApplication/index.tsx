@@ -69,8 +69,6 @@ const Apply = ({ match, classes }: ApplyProps) => {
         })
         .catch(() => setMessage("There was an error getting the application"))
         .finally(() => setLoading(false));
-    } else {
-      setMessage("Not authorized");
     }
   }, [user, reefId]);
 
