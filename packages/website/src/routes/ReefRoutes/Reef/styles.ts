@@ -6,15 +6,6 @@ export const styles = {
   },
   cardTitle: {
     lineHeight: 1.5,
-    [theme.breakpoints.between("md", 1544)]: {
-      width: "10rem",
-    },
-    [theme.breakpoints.between("sm", 780)]: {
-      width: "10rem",
-    },
-    [theme.breakpoints.down(398)]: {
-      width: "10rem",
-    },
   },
   header: {
     padding: "0.5rem 1.5rem 0 1rem",

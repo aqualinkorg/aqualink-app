@@ -121,3 +121,31 @@ export const getTimeZoneName = (timeZone: string): string => {
     rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
   return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
 };
+
+export const toRelativeTime = (timestamp?: string) => {
+  if (timestamp) {
+    const minute = 60;
+    const hour = 60 * 60;
+    const day = 60 * 60 * 24;
+
+    const now = new Date().getTime();
+    const start = new Date(timestamp).getTime();
+
+    // Time period in seconds
+    const timePeriod = Math.floor((now - start) / 1000);
+
+    if (timePeriod < minute) {
+      return `${timePeriod} sec. ago`;
+    }
+    if (timePeriod < hour) {
+      return `${Math.floor(timePeriod / minute)} min. ago`;
+    }
+    if (timePeriod < day) {
+      const hours = Math.floor(timePeriod / hour);
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    }
+    const days = Math.floor(timePeriod / day);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
+  return null;
+};

@@ -10,8 +10,10 @@ import {
   Grid,
 } from "@material-ui/core";
 
+import UpdateInfo from "../../../../common/UpdateInfo";
 import type { LiveData } from "../../../../store/Reefs/types";
 import { formatNumber } from "../../../../helpers/numberUtils";
+import { toRelativeTime } from "../../../../helpers/dates";
 import waves from "../../../../assets/waves.svg";
 import arrow from "../../../../assets/directioncircle.svg";
 import wind from "../../../../assets/wind.svg";
@@ -19,12 +21,20 @@ import { styles as incomingStyles } from "../styles";
 
 const Waves = ({ liveData, classes }: WavesProps) => {
   const {
+    surfaceTemperature,
+    bottomTemperature,
     waveHeight,
     waveDirection,
     wavePeriod,
     windSpeed,
     windDirection,
   } = liveData;
+
+  const hasSpotter = Boolean(
+    surfaceTemperature?.value || bottomTemperature?.value
+  );
+
+  const windRelativeTime = toRelativeTime(windSpeed?.timestamp);
 
   return (
     <Card className={classes.card}>
@@ -33,16 +43,17 @@ const Waves = ({ liveData, classes }: WavesProps) => {
           className={classes.content}
           container
           justify="center"
+          alignContent="space-between"
           item
           xs={12}
         >
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Typography className={classes.cardTitle} variant="h6">
               WIND
             </Typography>
             <img className={classes.titleImages} alt="wind" src={wind} />
           </Grid>
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Grid item xs={6}>
               <Typography
                 className={classes.contentTextTitles}
@@ -101,13 +112,19 @@ const Waves = ({ liveData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item xs={12}>
+          <Grid className={classes.paddingContainer} container item xs={12}>
             <Typography className={classes.cardTitle} variant="h6">
               WAVES
             </Typography>
             <img className={classes.titleImages} alt="waves" src={waves} />
           </Grid>
-          <Grid item xs={12} container justify="space-between">
+          <Grid
+            className={classes.paddingContainer}
+            item
+            xs={12}
+            container
+            justify="space-between"
+          >
             <Grid item lg={4}>
               <Typography
                 className={classes.contentTextTitles}
@@ -192,6 +209,15 @@ const Waves = ({ liveData, classes }: WavesProps) => {
               </Grid>
             </Grid>
           </Grid>
+          <UpdateInfo
+            relativeTime={windRelativeTime}
+            timeText={hasSpotter ? "Last data received" : "Forecast valid for"}
+            image={null}
+            imageText={hasSpotter ? null : "NOAA GFS"}
+            live={hasSpotter}
+            frequency={hasSpotter ? "hourly" : "every 6 hours"}
+            href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+          />
         </Grid>
       </CardContent>
     </Card>
@@ -217,13 +243,15 @@ const styles = (theme: Theme) =>
       height: 24,
       marginLeft: "0.5rem",
     },
+    paddingContainer: {
+      padding: "0.5rem 1rem",
+    },
     contentWrapper: {
       height: "100%",
       flex: "1 1 auto",
       padding: 0,
     },
     content: {
-      padding: "1rem",
       height: "100%",
     },
     arrow: {
