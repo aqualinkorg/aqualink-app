@@ -2,13 +2,19 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Waves from ".";
-import { mockLiveData } from "../../../../mocks/mockLiveData";
+import UpdateInfo from ".";
 
 test("renders as expected", () => {
   const { container } = render(
     <Router>
-      <Waves liveData={mockLiveData} />
+      <UpdateInfo
+        relativeTime="02/01 14:00 EET"
+        timeText="Last data received"
+        image={null}
+        imageText="NOAA"
+        live={false}
+        frequency="daily"
+      />
     </Router>
   );
   expect(container).toMatchSnapshot();
