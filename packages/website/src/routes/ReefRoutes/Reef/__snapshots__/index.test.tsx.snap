@@ -765,6 +765,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   Hawaii
                 </mock-typography>
               </mock-box>
+              <mock-box>
+                <mock-typography
+                  variant="h6"
+                >
+                  Managed by Some organization
+                </mock-typography>
+              </mock-box>
             </div>
           </div>
         </div>
@@ -2799,6 +2806,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   variant="h4"
                 >
                   Hawaii
+                </mock-typography>
+              </mock-box>
+              <mock-box>
+                <mock-typography
+                  variant="h6"
+                >
+                  Managed by Some organization
                 </mock-typography>
               </mock-box>
             </div>
