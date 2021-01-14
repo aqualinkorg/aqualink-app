@@ -15,7 +15,10 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import moment from "moment";
-import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
+import {
+  ReefApplication,
+  ReefApplyParams,
+} from "../../../../store/Reefs/types";
 
 const Form = ({
   reefName,
@@ -69,8 +72,8 @@ const Form = ({
         inputProps={{ className: classes.textField }}
         fullWidth
         placeholder="Reef Name e.g. 'Sombrero Reef'"
-        disabled={Boolean(reefName)}
-        defaultValue={reefName || null}
+        disabled
+        defaultValue={reefName}
         name="siteName"
         inputRef={register({
           required: "This is a required field",
@@ -216,14 +219,13 @@ const styles = (theme: Theme) =>
   });
 
 interface FormIncomingProps {
-  reefName?: string | null;
+  reefName: string;
   application?: ReefApplication | null;
   agreed: boolean;
   handleFormSubmit: (siteName: string, params: ReefApplyParams) => void;
 }
 
 Form.defaultProps = {
-  reefName: null,
   application: null,
 };
 
