@@ -14,11 +14,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 
-import NavBar from "../../../common/NavBar";
-import Footer from "../../../common/Footer";
+import { AgreementsChecked } from "./types";
 import Obligations from "./Obligations";
 import Agreements from "./Agreements";
 import Form from "./Form";
+import NavBar from "../../../common/NavBar";
+import Footer from "../../../common/Footer";
+import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
+import reefServices from "../../../services/reefServices";
 import {
   userInfoSelector,
   getSelf,
@@ -29,9 +32,7 @@ import {
   reefLoadingSelector,
   reefRequest,
 } from "../../../store/Reefs/selectedReefSlice";
-import { AgreementsChecked } from "./types";
 import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
-import reefServices from "../../../services/reefServices";
 
 const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();
@@ -111,6 +112,9 @@ const Apply = ({ match, classes }: ApplyProps) => {
     [user, reef, reefApplication, reefId]
   );
 
+  const { name } = (reef && getReefNameAndRegion(reef)) || {};
+  const reefName = name || "Edit Site Name on Site Details Page.";
+
   return (
     <>
       <NavBar searchLocation={false} />
@@ -162,7 +166,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             </Grid>
           </Grid>
         </Container>
-      ) : reef?.name && reefApplication ? (
+      ) : reefName && reefApplication ? (
         <>
           <Container className={classes.welcomeMessage}>
             <Grid container>
@@ -192,7 +196,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
               </Grid>
               <Grid item xs={11} md={5}>
                 <Form
-                  reefName={reef.name}
+                  reefName={reefName}
                   application={reefApplication}
                   agreed={agreed()}
                   handleFormSubmit={handleFormSubmit}
