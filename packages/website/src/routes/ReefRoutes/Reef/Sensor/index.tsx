@@ -47,6 +47,10 @@ const applicationTag = (
 
     case status === "rejected":
       return ["Smart Buoy not approved", false];
+
+    case status === "shipped":
+      return ["Your Smart Buoy Has Shipped!", false];
+
     default:
       return ["Not Installed Yet", false];
   }
