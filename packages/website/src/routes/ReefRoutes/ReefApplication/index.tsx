@@ -12,22 +12,34 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 
-import NavBar from "../../common/NavBar";
-import Footer from "../../common/Footer";
+import { AgreementsChecked } from "./types";
 import Obligations from "./Obligations";
 import Agreements from "./Agreements";
 import Form from "./Form";
-import { userInfoSelector, getSelf } from "../../store/User/userSlice";
-import { reefDetailsSelector } from "../../store/Reefs/selectedReefSlice";
-import { AgreementsChecked } from "./types";
-import { ReefApplication, ReefApplyParams } from "../../store/Reefs/types";
-import reefServices from "../../services/reefServices";
+import NavBar from "../../../common/NavBar";
+import Footer from "../../../common/Footer";
+import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
+import reefServices from "../../../services/reefServices";
+import {
+  userInfoSelector,
+  getSelf,
+  userLoadingSelector,
+} from "../../../store/User/userSlice";
+import {
+  reefDetailsSelector,
+  reefLoadingSelector,
+  reefRequest,
+} from "../../../store/Reefs/selectedReefSlice";
+import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
 
-const Apply = ({ classes }: ApplyProps) => {
+const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();
   const reef = useSelector(reefDetailsSelector);
+  const reefLoading = useSelector(reefLoadingSelector);
+  const userLoading = useSelector(userLoadingSelector);
+  const reefId = parseInt(match.params.id, 10);
   const user = useSelector(userInfoSelector);
   const [agreementsChecked, setAgreementsChecked] = useState<AgreementsChecked>(
     {
@@ -41,10 +53,14 @@ const Apply = ({ classes }: ApplyProps) => {
   const [reefApplication, setReefApplication] = useState<ReefApplication>();
 
   useEffect(() => {
-    if (reef && user?.token) {
+    dispatch(reefRequest(`${reefId}`));
+  }, [dispatch, reefId]);
+
+  useEffect(() => {
+    if (user?.token) {
       setLoading(true);
       reefServices
-        .getReefApplication(reef.id, user.token)
+        .getReefApplication(reefId, user.token)
         .then(({ data }) => {
           if (data.length > 0) {
             setReefApplication(data[0]);
@@ -55,7 +71,7 @@ const Apply = ({ classes }: ApplyProps) => {
         .catch(() => setMessage("There was an error getting the application"))
         .finally(() => setLoading(false));
     }
-  }, [user, reef]);
+  }, [user, reefId]);
 
   const updateAgreement = useCallback(
     (label: keyof AgreementsChecked) => {
@@ -77,12 +93,12 @@ const Apply = ({ classes }: ApplyProps) => {
       if (user?.token && reef && reefApplication) {
         setLoading(true);
         reefServices
-          .applyReef(reef.id, reefApplication.appId, data, user.token)
+          .applyReef(reefId, reefApplication.appId, data, user.token)
           // eslint-disable-next-line consistent-return
           .then(() => {
             if (!reef?.name && user?.token) {
               return reefServices.updateReef(
-                reef.id,
+                reefId,
                 { name: siteName },
                 user.token
               );
@@ -93,14 +109,16 @@ const Apply = ({ classes }: ApplyProps) => {
           .finally(() => setLoading(false));
       }
     },
-    [reef, user, reefApplication]
+    [user, reef, reefApplication, reefId]
   );
+
+  const { name } = (reef && getReefNameAndRegion(reef)) || {};
+  const reefName = name || "Edit Site Name on Site Details Page.";
 
   return (
     <>
-      {(!reef || !user) && <Redirect to="/" />}
       <NavBar searchLocation={false} />
-      {loading ? (
+      {loading || reefLoading || userLoading ? (
         <Container className={classes.thankYouMessage}>
           <Grid
             className={classes.thankYouMessage}
@@ -131,7 +149,7 @@ const Apply = ({ classes }: ApplyProps) => {
             </Grid>
             <Grid item>
               {reef && (
-                <Link to={`reefs/${reef.id}`} className={classes.link}>
+                <Link to={`/reefs/${reefId}`} className={classes.link}>
                   <Button
                     onClick={() => {
                       if (user?.token) {
@@ -148,7 +166,7 @@ const Apply = ({ classes }: ApplyProps) => {
             </Grid>
           </Grid>
         </Container>
-      ) : reefApplication ? (
+      ) : reefName && reefApplication ? (
         <>
           <Container className={classes.welcomeMessage}>
             <Grid container>
@@ -178,7 +196,7 @@ const Apply = ({ classes }: ApplyProps) => {
               </Grid>
               <Grid item xs={11} md={5}>
                 <Form
-                  reefName={reef?.name}
+                  reefName={reefName}
                   application={reefApplication}
                   agreed={agreed()}
                   handleFormSubmit={handleFormSubmit}
@@ -216,6 +234,8 @@ const styles = (theme: Theme) =>
     },
   });
 
-type ApplyProps = WithStyles<typeof styles>;
+interface MatchProps extends RouteComponentProps<{ id: string }> {}
+
+type ApplyProps = WithStyles<typeof styles> & MatchProps;
 
 export default withStyles(styles)(Apply);
