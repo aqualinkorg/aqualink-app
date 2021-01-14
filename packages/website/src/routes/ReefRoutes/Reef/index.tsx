@@ -70,7 +70,7 @@ const getAlertMessage = (
       return (
         <div>
           {defaultMessage} Apply for an Aqualink Smart Buoy
-          <span> </span> <Link to="/apply">here</Link>.
+          <span> </span> <Link to={`/reefs/${reefId}/apply`}>here</Link>.
         </div>
       );
 
@@ -79,7 +79,7 @@ const getAlertMessage = (
         <div>
           {defaultMessage} Your application for an Aqualink Smart Buoy is being
           reviewed. You can check your application<span> </span>
-          <Link to="/apply">here</Link>.
+          <Link to={`/reefs/${reefId}/apply`}>here</Link>.
         </div>
       );
 

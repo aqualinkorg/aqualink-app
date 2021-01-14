@@ -37,16 +37,16 @@ const applicationTag = (
       return ["Not Installed Yet", false];
 
     case !applied:
-      return ["Add a Smart Buoy", true];
+      return ["Apply for a Smart Buoy", true];
 
     case status === "in_review":
       return ["My Application", true];
 
     case status === "approved":
-      return ["Smart Buoy approved", false];
+      return ["Smart Buoy Approved", false];
 
     case status === "rejected":
-      return ["Smart Buoy not approved", false];
+      return ["Smart Buoy Not Approved", false];
     default:
       return ["Not Installed Yet", false];
   }
@@ -138,7 +138,10 @@ const Sensor = ({ reef, liveData, classes }: SensorProps) => {
             justify="center"
           >
             {clickable ? (
-              <Link className={classes.newSpotterLink} to="/apply">
+              <Link
+                className={classes.newSpotterLink}
+                to={`/reefs/${reef.id}/apply`}
+              >
                 <Typography variant="h6">{alertText}</Typography>
               </Link>
             ) : (
