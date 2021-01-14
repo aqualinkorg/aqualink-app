@@ -42,6 +42,7 @@ const ReefNavBar = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
+  const organizationName = reef.admins[0].organization;
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -157,9 +158,9 @@ const ReefNavBar = ({
                       {reefRegion && `, ${reefRegion}`}
                     </Typography>
                   </Box>
-                  {reef.admins && reef.admins[0] && (
+                  {organizationName && (
                     <Box>
-                      <Typography variant="h6">{`Managed by ${reef.admins[0].organization}`}</Typography>
+                      <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
                     </Box>
                   )}
                   {lastSurvey && (
