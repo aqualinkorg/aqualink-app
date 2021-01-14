@@ -54,7 +54,7 @@ const getAlertMessage = (
   const isManager = isAdmin(user, parseInt(reefId, 10));
 
   const defaultMessage =
-    "Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
+    "Currently no Smart Buoy deployed at this location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
     case !isManager:
