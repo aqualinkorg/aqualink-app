@@ -124,21 +124,23 @@ const ReefNavBar = ({
       >
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
-            <Grid item>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to="/map"
-              >
-                <IconButton
-                  onClick={clearReefInfo}
-                  edge="start"
-                  color="primary"
-                  aria-label="menu"
+            {editEnabled ? null : (
+              <Grid item>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to="/map"
                 >
-                  <ArrowBack />
-                </IconButton>
-              </Link>
-            </Grid>
+                  <IconButton
+                    onClick={clearReefInfo}
+                    edge="start"
+                    color="primary"
+                    aria-label="menu"
+                  >
+                    <ArrowBack />
+                  </IconButton>
+                </Link>
+              </Grid>
+            )}
 
             {editEnabled ? (
               <Grid item xs={10}>
