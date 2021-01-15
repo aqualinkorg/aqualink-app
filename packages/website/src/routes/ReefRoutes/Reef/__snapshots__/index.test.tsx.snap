@@ -1565,7 +1565,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h6"
                       >
-                        km/h
+                        m/s
                       </mock-typography>
                     </div>
                   </div>

@@ -54,7 +54,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h6"
               >
-                km/h
+                m/s
               </mock-typography>
             </div>
           </div>

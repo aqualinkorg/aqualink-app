@@ -76,7 +76,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h6"
                   >
-                    km/h
+                    m/s
                   </Typography>
                 )}
               </Grid>
