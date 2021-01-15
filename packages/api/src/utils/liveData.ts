@@ -40,6 +40,8 @@ export const getLiveData = async (
           significantWaveHeight: [],
           wavePeakPeriod: [],
           waveMeanDirection: [],
+          windSpeed: [],
+          windDirection: [],
           latitude: [],
           longitude: [],
         },

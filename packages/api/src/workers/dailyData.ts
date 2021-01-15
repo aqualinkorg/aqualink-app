@@ -70,8 +70,8 @@ export async function getDailyData(
     significantWaveHeightsRaw,
     meanDirectionWindWavesRaw,
     peakPeriodWindWavesRaw,
-    windVelocities,
-    windDirections,
+    windSpeedsRaw,
+    windDirectionsRaw,
   ] = await Promise.all([
     includeSpotterData
       ? getSpotterData(spotterId, endOfDate)
@@ -81,6 +81,8 @@ export async function getDailyData(
           significantWaveHeight: [],
           wavePeakPeriod: [],
           waveMeanDirection: [],
+          windSpeed: [],
+          windDirection: [],
         },
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
@@ -145,6 +147,8 @@ export async function getDailyData(
         ),
         wavePeakPeriod: extractSofarValues(spotterRawData.wavePeakPeriod),
         waveMeanDirection: extractSofarValues(spotterRawData.waveMeanDirection),
+        windSpeed: extractSofarValues(spotterRawData.windSpeed),
+        windDirection: extractSofarValues(spotterRawData.windDirection),
       }
     : {
         surfaceTemperature: [],
@@ -152,6 +156,8 @@ export async function getDailyData(
         significantWaveHeight: [],
         wavePeakPeriod: [],
         waveMeanDirection: [],
+        windSpeed: [],
+        windDirection: [],
       };
 
   const minBottomTemperature = getMin(spotterData.bottomTemperature);
@@ -172,8 +178,7 @@ export async function getDailyData(
       ? spotterData.significantWaveHeight
       : significantWaveHeightsRaw;
 
-  const minWaveHeight =
-    significantWaveHeights && getMin(significantWaveHeights);
+  const minWaveHeight = getMin(significantWaveHeights);
   const maxWaveHeight =
     significantWaveHeights && getMax(significantWaveHeights);
   const avgWaveHeight =
@@ -195,9 +200,17 @@ export async function getDailyData(
   const wavePeriod =
     peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
 
-  const minWindSpeed = windVelocities && getMin(windVelocities);
-  const maxWindSpeed = windVelocities && getMax(windVelocities);
-  const avgWindSpeed = windVelocities && getAverage(windVelocities);
+  // Get wind data if unavailable through a spotter
+  const windSpeeds =
+    spotterData.windSpeed.length > 0 ? spotterData.windSpeed : windSpeedsRaw;
+  const windDirections =
+    spotterData.windDirection.length > 0
+      ? spotterData.windDirection
+      : windDirectionsRaw;
+
+  const minWindSpeed = windSpeeds && getMin(windSpeeds);
+  const maxWindSpeed = windSpeeds && getMax(windSpeeds);
+  const avgWindSpeed = windSpeeds && getAverage(windSpeeds);
 
   const windDirection = windDirections && getAverage(windDirections, true);
 
