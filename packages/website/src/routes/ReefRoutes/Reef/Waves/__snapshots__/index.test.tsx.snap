@@ -47,14 +47,14 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                5.0
+                18.0
               </mock-typography>
               <mock-typography
                 classname="Waves-contentUnits-6"
                 color="textSecondary"
                 variant="h6"
               >
-                m/s
+                km/h
               </mock-typography>
             </div>
           </div>

@@ -68,7 +68,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(windSpeed?.value, 1)}
+                  {formatNumber(windSpeed?.value && windSpeed.value * 3.6, 1)}
                 </Typography>
                 {windSpeed?.value && (
                   <Typography
@@ -76,7 +76,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                     color="textSecondary"
                     variant="h6"
                   >
-                    m/s
+                    km/h
                   </Typography>
                 )}
               </Grid>
