@@ -281,6 +281,11 @@ export async function getReefsDailyData(
     async (reef) => {
       const includeSpotterData =
         reef.spotterId &&
+        /** TODO - Now that we are considering exclusion times,
+        /* instead we should use the exclusion dates to filter the spotterData results
+        /* similar to what we are doing when we get the spotterData for the charts.
+        /* We can then build a simple utility function taking isExcluded(exclusion dates, date) or similar in JS
+        */
         isNil(
           await exclusionDatesRepository
             .createQueryBuilder('exclusion')
