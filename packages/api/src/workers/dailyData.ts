@@ -178,7 +178,8 @@ export async function getDailyData(
       ? spotterData.significantWaveHeight
       : significantWaveHeightsRaw;
 
-  const minWaveHeight = getMin(significantWaveHeights);
+  const minWaveHeight =
+    significantWaveHeights && getMin(significantWaveHeights);
   const maxWaveHeight =
     significantWaveHeights && getMax(significantWaveHeights);
   const avgWaveHeight =

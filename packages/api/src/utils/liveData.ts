@@ -98,6 +98,8 @@ export const getLiveData = async (
         ),
         wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
         waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
+        windSpeed: getLatestData(spotterRawData.windSpeed),
+        windDirection: getLatestData(spotterRawData.windDirection),
         longitude:
           spotterRawData.longitude && getLatestData(spotterRawData.longitude),
         latitude:
@@ -115,8 +117,8 @@ export const getLiveData = async (
       waveHeight: spotterData.significantWaveHeight || waveHeight,
       waveDirection: spotterData.waveMeanDirection || waveDirection,
       wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
-      windSpeed,
-      windDirection,
+      windSpeed: spotterData.windSpeed || windSpeed,
+      windDirection: spotterData.windDirection || windDirection,
       longitude: spotterData.longitude,
       latitude: spotterData.latitude,
     },
