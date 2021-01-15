@@ -125,7 +125,7 @@ const ReefNavBar = ({
       >
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
-            {editEnabled ? null : (
+            {!editEnabled ? (
               <Grid item>
                 <Link
                   style={{ color: "inherit", textDecoration: "none" }}
@@ -141,7 +141,7 @@ const ReefNavBar = ({
                   </IconButton>
                 </Link>
               </Grid>
-            )}
+            ) : null}
 
             {editEnabled ? (
               <Grid item xs={10}>
