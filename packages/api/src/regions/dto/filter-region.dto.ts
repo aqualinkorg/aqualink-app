@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString, IsInt } from 'class-validator';
-import { Type } from 'class-transformer/decorators';
+import { Type } from 'class-transformer';
 
 export class FilterRegionDto {
   @IsOptional()
