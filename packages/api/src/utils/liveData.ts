@@ -87,22 +87,21 @@ export const getLiveData = async (
     ),
   ]);
 
-  const spotterData =
-    spotterRawData && reef.status === 'deployed'
-      ? {
-          surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
-          bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
-          significantWaveHeight: getLatestData(
-            spotterRawData.significantWaveHeight,
-          ),
-          wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
-          waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
-          longitude:
-            spotterRawData.longitude && getLatestData(spotterRawData.longitude),
-          latitude:
-            spotterRawData.latitude && getLatestData(spotterRawData.latitude),
-        }
-      : {};
+  const spotterData = spotterRawData
+    ? {
+        surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
+        bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
+        significantWaveHeight: getLatestData(
+          spotterRawData.significantWaveHeight,
+        ),
+        wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
+        waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
+        longitude:
+          spotterRawData.longitude && getLatestData(spotterRawData.longitude),
+        latitude:
+          spotterRawData.latitude && getLatestData(spotterRawData.latitude),
+      }
+    : {};
 
   const filteredValues = omitBy(
     {

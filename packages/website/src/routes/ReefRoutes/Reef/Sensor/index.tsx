@@ -24,7 +24,13 @@ import { styles as incomingStyles } from "../styles";
 import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const applicationTag = (
+/**
+ * Get the sensor application tag message and clickability for a user/reef conbination.
+ *
+ * @param user
+ * @param reefId
+ */
+const getApplicationTag = (
   user: User | null,
   reefId: number
 ): [string, boolean] => {
@@ -80,7 +86,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
     },
   ];
 
-  const [alertText, clickable] = applicationTag(user, reef.id);
+  const [alertText, clickable] = getApplicationTag(user, reef.id);
 
   return (
     <Card className={classes.card}>
