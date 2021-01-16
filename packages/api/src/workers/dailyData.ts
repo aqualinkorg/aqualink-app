@@ -1,5 +1,5 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, isNumber, omitBy } from 'lodash';
+import { isEmpty, isNil, isNumber, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
@@ -202,12 +202,12 @@ export async function getDailyData(
     peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
 
   // Get wind data if unavailable through a spotter
-  const windSpeeds =
-    spotterData.windSpeed.length > 0 ? spotterData.windSpeed : windSpeedsRaw;
-  const windDirections =
-    spotterData.windDirection.length > 0
-      ? spotterData.windDirection
-      : windDirectionsRaw;
+  const windSpeeds = isEmpty(spotterData.windSpeed)
+    ? windSpeedsRaw
+    : spotterData.windSpeed;
+  const windDirections = isEmpty(spotterData.windDirection)
+    ? windDirectionsRaw
+    : spotterData.windDirection;
 
   const minWindSpeed = windSpeeds && getMin(windSpeeds);
   const maxWindSpeed = windSpeeds && getMax(windSpeeds);

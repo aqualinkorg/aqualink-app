@@ -1,7 +1,7 @@
 import { Reef } from '../reefs/reefs.entity';
 import { getLiveData } from './liveData';
 
-test('It processes Sofar API for daily data.', async () => {
+test('It creates a liveData object using Sofar API.', async () => {
   jest.setTimeout(30000);
 
   const reef = {
