@@ -20,6 +20,9 @@ import { Public } from '../auth/public.decorator';
 import { CreateReefDto } from './dto/create-reef.dto';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
+import { DeploySpotterDto } from './dto/deploy-spotter.dto';
+import { MaintainSpotterDto } from './dto/maintain-spotter.dto';
+import { ExclusionDates } from './exclusion-dates.entity';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs')
@@ -78,5 +81,31 @@ export class ReefsController {
   @Delete(':reef_id')
   delete(@Param('reef_id', ParseIntPipe) id: number): Promise<void> {
     return this.reefsService.delete(id);
+  }
+
+  @UseGuards(IsReefAdminGuard)
+  @Post(':reef_id/deploy')
+  deploySpotter(
+    @Param('reef_id', ParseIntPipe) id: number,
+    @Body() deploySpotterDto: DeploySpotterDto,
+  ): Promise<void> {
+    return this.reefsService.deploySpotter(id, deploySpotterDto);
+  }
+
+  @UseGuards(IsReefAdminGuard)
+  @Post(':reef_id/maintain')
+  maintainSpotter(
+    @Param('reef_id', ParseIntPipe) id: number,
+    @Body() maintainSpotterDto: MaintainSpotterDto,
+  ): Promise<void> {
+    return this.reefsService.maintainSpotter(id, maintainSpotterDto);
+  }
+
+  @UseGuards(IsReefAdminGuard)
+  @Get(':reef_id/exclusion_dates')
+  findExclusionDates(
+    @Param('reef_id', ParseIntPipe) id: number,
+  ): Promise<ExclusionDates[]> {
+    return this.reefsService.getExclusionDates(id);
   }
 }

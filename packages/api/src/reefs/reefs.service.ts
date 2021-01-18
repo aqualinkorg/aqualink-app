@@ -3,9 +3,10 @@ import {
   NotFoundException,
   InternalServerErrorException,
   Logger,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
@@ -25,6 +26,8 @@ import {
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
+import { DeploySpotterDto } from './dto/deploy-spotter.dto';
+import { MaintainSpotterDto } from './dto/maintain-spotter.dto';
 
 @Injectable()
 export class ReefsService {
@@ -278,6 +281,82 @@ export class ReefsService {
         exclusionDates,
       ),
     };
+  }
+
+  async deploySpotter(id: number, deploySpotterDto: DeploySpotterDto) {
+    const { endDate } = deploySpotterDto;
+
+    const reef = await this.reefsRepository.findOne({
+      id,
+      status: Not(ReefStatus.Deployed),
+    });
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    // Run update queries concurrently
+    await Promise.all([
+      this.reefsRepository.update(id, {
+        status: ReefStatus.Deployed,
+      }),
+      this.exclusionDatesRepository.save({
+        spotterId: reef.spotterId,
+        endDate,
+      }),
+    ]);
+  }
+
+  async maintainSpotter(id: number, maintainSpotterDto: MaintainSpotterDto) {
+    const { startDate, endDate } = maintainSpotterDto;
+
+    const reef = await this.reefsRepository.findOne({
+      id,
+      status: ReefStatus.Deployed,
+    });
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    const dateConflict = await this.exclusionDatesRepository
+      .createQueryBuilder('exclusion')
+      .where('spotter_id = :spotterId', { spotterId: reef.spotterId })
+      .andWhere('(end_date > :endDate AND start_date < :endDate)', { endDate })
+      .orWhere('(end_date > :startDate AND start_date < :startDate)', {
+        startDate,
+      })
+      .orWhere('(end_date > :endDate AND start_date IS NULL)')
+      .getOne();
+
+    if (dateConflict) {
+      throw new BadRequestException(
+        'Start or end date conflicts with previous exclusion period',
+      );
+    }
+
+    await this.exclusionDatesRepository.save({
+      spotterId: reef.spotterId,
+      endDate,
+      startDate,
+    });
+  }
+
+  async getExclusionDates(id: number) {
+    const reef = await this.reefsRepository.findOne({
+      id,
+      status: ReefStatus.Deployed,
+    });
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    return this.exclusionDatesRepository.find({
+      where: {
+        spotterId: reef.spotterId,
+      },
+    });
   }
 
   private async updateAdmins(id: number, admins: User[]) {
