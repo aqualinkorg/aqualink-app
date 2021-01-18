@@ -1,4 +1,5 @@
 import { Reef } from "../store/Reefs/types";
+import { mockUser } from "./mockUser";
 
 const now = new Date();
 const minutesAgo = 5;
@@ -17,7 +18,7 @@ export const mockReef: Reef = {
   status: "in_review",
   videoStream: null,
   region: { name: "Hawaii" },
-  admins: [],
+  admins: [mockUser],
   stream: null,
   dailyData: [
     {
