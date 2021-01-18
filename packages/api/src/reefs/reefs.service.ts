@@ -6,7 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
@@ -295,6 +295,7 @@ export class ReefsService {
 
     const reef = await this.reefsRepository.findOne({
       id,
+      spotterId: Not(IsNull()),
       status: Not(ReefStatus.Deployed),
     });
 
@@ -319,6 +320,7 @@ export class ReefsService {
 
     const reef = await this.reefsRepository.findOne({
       id,
+      spotterId: Not(IsNull()),
       status: ReefStatus.Deployed,
     });
 
@@ -352,6 +354,7 @@ export class ReefsService {
   async getExclusionDates(id: number) {
     const reef = await this.reefsRepository.findOne({
       id,
+      spotterId: Not(IsNull()),
       status: ReefStatus.Deployed,
     });
 
