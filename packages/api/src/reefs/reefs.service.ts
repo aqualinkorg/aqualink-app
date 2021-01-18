@@ -207,9 +207,11 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
+    const now = new Date();
+
     const weeklyAlertLevel = await getWeeklyAlertLevel(
       this.dailyDataRepository,
-      new Date(),
+      now,
       reef,
     );
 
@@ -222,12 +224,13 @@ export class ReefsService {
             .where('exclusion.spotter_id = :spotterId', {
               spotterId: reef.spotterId,
             })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
-              date: new Date(),
+            .andWhere('exclusion.endDate >= :now', {
+              now,
             })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
-              date: new Date(),
+            .andWhere('exclusion.startDate <= :now', {
+              now,
             })
+            .orWhere('exclusion.startDate IS NULL')
             .getOne(),
         ),
     );
@@ -256,13 +259,17 @@ export class ReefsService {
       .where('exclusion.spotter_id = :spotterId', {
         spotterId: reef.spotterId,
       })
-      .andWhere('DATE(exclusion.startDate) <= DATE(:endDate)', {
-        endDate,
-      })
-      .andWhere('DATE(exclusion.endDate) >= DATE(:startDate)', {
-        startDate,
-      })
-      .orderBy('exclusion.startDate', 'ASC')
+      .andWhere(
+        '(exclusion.start_date <= :endDate AND exclusion.end_date >= :startDate)',
+        {
+          endDate,
+          startDate,
+        },
+      )
+      .orWhere(
+        '(exclusion.end_date >= :startDate AND exclusion.start_date IS NULL)',
+      )
+      .orderBy('exclusion.start_date', 'ASC')
       .getMany();
 
     const { surfaceTemperature, bottomTemperature } = await getSpotterData(
@@ -383,8 +390,7 @@ export class ReefsService {
       const excluded = isNil(
         exclusionDates.find(({ startDate: start, endDate: end }) => {
           const dataDate = new Date(timestamp);
-          dataDate.setUTCHours(0, 0, 0, 0);
-          return start <= dataDate && dataDate <= end;
+          return dataDate <= end && (!start || start <= dataDate);
         }),
       );
       return excluded;

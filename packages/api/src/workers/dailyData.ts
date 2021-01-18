@@ -301,12 +301,11 @@ export async function getReefsDailyData(
             .where('exclusion.spotter_id = :spotterId', {
               spotterId: reef.spotterId,
             })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:endOfDate)', {
+            .andWhere('exclusion.endDate >= :endOfDate', {
               endOfDate,
             })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:endOfDate)', {
-              endOfDate,
-            })
+            .andWhere('exclusion.startDate <= :endOfDate')
+            .orWhere('exclusion.startDate IS NULL')
             .getOne(),
         );
 
