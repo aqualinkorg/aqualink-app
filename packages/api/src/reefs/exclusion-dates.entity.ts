@@ -11,7 +11,7 @@ export class ExclusionDates {
   spotterId: string;
 
   // The start of the exclusive range. Inclusive
-  @Column()
+  @Column({ nullable: true })
   startDate: Date;
 
   // The end of the exclusive range. Inclusive
