@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import requests from "../helpers/requests";
-import type {
+import {
   DailyData,
   LiveData,
   Reef,
@@ -10,6 +10,9 @@ import type {
   ReefApplication,
   ReefUpdateParams,
   SelectedReefState,
+  DeploySpotterParams,
+  MaintainSpotterParams,
+  ExclusionDateResponse,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -112,6 +115,37 @@ const updateReef = (reefId: number, data: ReefUpdateParams, token: string) =>
     token,
   });
 
+const getExclusionDates = (reefId: number, token: string) =>
+  requests.send<ExclusionDateResponse>({
+    url: `reefs/${reefId}/exclusion_dates`,
+    method: "GET",
+    token,
+  });
+
+const deploySpotter = (
+  reefId: number,
+  data: DeploySpotterParams,
+  token: string
+) =>
+  requests.send({
+    url: `reefs/${reefId}/deploy`,
+    method: "POST",
+    data,
+    token,
+  });
+
+const maintainSpotter = (
+  reefId: string,
+  data: MaintainSpotterParams,
+  token: string
+) =>
+  requests.send({
+    url: `reefs/${reefId}/maintain`,
+    method: "POST",
+    data,
+    token,
+  });
+
 export default {
   getReef,
   getReefs,
@@ -124,4 +158,7 @@ export default {
   applyReef,
   getReefApplication,
   updateReef,
+  getExclusionDates,
+  deploySpotter,
+  maintainSpotter,
 };
