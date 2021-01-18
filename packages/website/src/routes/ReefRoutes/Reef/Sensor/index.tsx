@@ -56,7 +56,7 @@ const getApplicationTag = (
       return ["Smart Buoy Not Approved", false];
 
     case status === "shipped":
-      return ["Your Smart Buoy Has Shipped!", false];
+      return ["Your Buoy Has Shipped!", false];
 
     default:
       return ["Not Installed Yet", false];
@@ -153,14 +153,10 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 className={classes.newSpotterLink}
                 to={`/reefs/${reef.id}/apply`}
               >
-                <Typography className={classes.noSensorAlertText} variant="h6">
-                  {alertText}
-                </Typography>
+                <Typography variant="h6">{alertText}</Typography>
               </Link>
             ) : (
-              <Typography className={classes.noSensorAlertText} variant="h6">
-                {alertText}
-              </Typography>
+              <Typography variant="h6">{alertText}</Typography>
             )}
           </Grid>
         )}
@@ -197,11 +193,6 @@ const styles = (theme: Theme) =>
       width: "100%",
       minHeight: 40,
       marginTop: 32,
-    },
-    noSensorAlertText: {
-      [theme.breakpoints.between("md", "md")]: {
-        fontSize: 14,
-      },
     },
     rejectedAlert: {
       fontSize: 11,
