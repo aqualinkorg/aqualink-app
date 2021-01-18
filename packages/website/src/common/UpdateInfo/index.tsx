@@ -78,10 +78,8 @@ const UpdateInfo = ({
   </Grid>
 );
 
-const styles = (theme: Theme) => {
-  const maxWidth = 1080;
-
-  return createStyles({
+const styles = (theme: Theme) =>
+  createStyles({
     updateInfo: {
       backgroundColor: "#c4c4c4",
       color: "#757575",
@@ -97,7 +95,7 @@ const styles = (theme: Theme) => {
       width: 24,
     },
     updateInfoText: {
-      [theme.breakpoints.between("md", maxWidth)]: {
+      [theme.breakpoints.between("md", "md")]: {
         fontSize: 8.5,
       },
     },
@@ -107,7 +105,7 @@ const styles = (theme: Theme) => {
       height: 24,
       width: 60,
       display: "flex",
-      [theme.breakpoints.between("md", maxWidth)]: {
+      [theme.breakpoints.between("md", "md")]: {
         width: 48,
       },
     },
@@ -123,7 +121,7 @@ const styles = (theme: Theme) => {
     },
     nooaChipText: {
       fontSize: 9,
-      [theme.breakpoints.between("md", maxWidth)]: {
+      [theme.breakpoints.between("md", "md")]: {
         fontSize: 7,
       },
     },
@@ -139,7 +137,6 @@ const styles = (theme: Theme) => {
       marginRight: 5,
     },
   });
-};
 
 interface UpdateInfoIncomingProps {
   relativeTime: string | null;

@@ -3,6 +3,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
   Card,
   CardContent,
   Typography,
@@ -152,10 +153,14 @@ const Sensor = ({ reef, classes }: SensorProps) => {
                 className={classes.newSpotterLink}
                 to={`/reefs/${reef.id}/apply`}
               >
-                <Typography variant="h6">{alertText}</Typography>
+                <Typography className={classes.noSensorAlertText} variant="h6">
+                  {alertText}
+                </Typography>
               </Link>
             ) : (
-              <Typography variant="h6">{alertText}</Typography>
+              <Typography className={classes.noSensorAlertText} variant="h6">
+                {alertText}
+              </Typography>
             )}
           </Grid>
         )}
@@ -164,7 +169,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     ...incomingStyles,
     card: {
@@ -192,6 +197,11 @@ const styles = () =>
       width: "100%",
       minHeight: 40,
       marginTop: 32,
+    },
+    noSensorAlertText: {
+      [theme.breakpoints.between("md", "md")]: {
+        fontSize: 14,
+      },
     },
     rejectedAlert: {
       fontSize: 11,
