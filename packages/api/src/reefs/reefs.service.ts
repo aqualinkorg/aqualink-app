@@ -331,11 +331,14 @@ export class ReefsService {
     const dateConflict = await this.exclusionDatesRepository
       .createQueryBuilder('exclusion')
       .where('spotter_id = :spotterId', { spotterId: reef.spotterId })
-      .andWhere('(end_date > :endDate AND start_date < :endDate)', { endDate })
-      .orWhere('(end_date > :startDate AND start_date < :startDate)', {
+      .andWhere('(end_date >= :endDate AND start_date <= :endDate)', {
+        endDate,
+      })
+      .orWhere('(end_date >= :startDate AND start_date <= :startDate)', {
         startDate,
       })
-      .orWhere('(end_date > :endDate AND start_date IS NULL)')
+      .orWhere('(end_date <= :endDate AND start_date >= :startDate)')
+      .orWhere('(end_date >= :endDate AND start_date IS NULL)')
       .getOne();
 
     if (dateConflict) {
