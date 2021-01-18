@@ -42,6 +42,7 @@ const ReefNavBar = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
+  const organizationName = reef.admins[0].organization;
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -124,21 +125,23 @@ const ReefNavBar = ({
       >
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
-            <Grid item>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to="/map"
-              >
-                <IconButton
-                  onClick={clearReefInfo}
-                  edge="start"
-                  color="primary"
-                  aria-label="menu"
+            {!editEnabled ? (
+              <Grid item>
+                <Link
+                  style={{ color: "inherit", textDecoration: "none" }}
+                  to="/map"
                 >
-                  <ArrowBack />
-                </IconButton>
-              </Link>
-            </Grid>
+                  <IconButton
+                    onClick={clearReefInfo}
+                    edge="start"
+                    color="primary"
+                    aria-label="menu"
+                  >
+                    <ArrowBack />
+                  </IconButton>
+                </Link>
+              </Grid>
+            ) : null}
 
             {editEnabled ? (
               <Grid item xs={10}>
@@ -157,6 +160,11 @@ const ReefNavBar = ({
                       {reefRegion && `, ${reefRegion}`}
                     </Typography>
                   </Box>
+                  {organizationName && (
+                    <Box>
+                      <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
+                    </Box>
+                  )}
                   {lastSurvey && (
                     <Box>
                       <Typography variant="subtitle1">{`Last surveyed: ${moment(
