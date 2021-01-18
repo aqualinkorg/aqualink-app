@@ -33,6 +33,7 @@ import {
   reefRequest,
 } from "../../../store/Reefs/selectedReefSlice";
 import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
+import { isAdmin } from "../../../helpers/user";
 
 const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();
@@ -57,6 +58,12 @@ const Apply = ({ match, classes }: ApplyProps) => {
   }, [dispatch, reefId]);
 
   useEffect(() => {
+    if (!isAdmin(user, reefId)) {
+      setMessage("Not authorized");
+    }
+  }, [reefId, user]);
+
+  useEffect(() => {
     if (user?.token) {
       setLoading(true);
       reefServices
@@ -64,6 +71,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
         .then(({ data }) => {
           if (data.length > 0) {
             setReefApplication(data[0]);
+            setMessage(null);
           } else {
             setMessage("No application found");
           }
