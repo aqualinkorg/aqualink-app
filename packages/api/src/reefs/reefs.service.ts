@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
-import { Reef } from './reefs.entity';
+import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
@@ -210,24 +210,26 @@ export class ReefsService {
       reef,
     );
 
-    const includeSpotterData =
+    const includeSpotterData = Boolean(
       reef.spotterId &&
-      isNil(
-        await this.exclusionDatesRepository
-          .createQueryBuilder('exclusion')
-          .where('exclusion.spotter_id = :spotterId', {
-            spotterId: reef.spotterId,
-          })
-          .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
-            date: new Date(),
-          })
-          .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
-            date: new Date(),
-          })
-          .getOne(),
-      );
+        reef.status === ReefStatus.Deployed &&
+        isNil(
+          await this.exclusionDatesRepository
+            .createQueryBuilder('exclusion')
+            .where('exclusion.spotter_id = :spotterId', {
+              spotterId: reef.spotterId,
+            })
+            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
+              date: new Date(),
+            })
+            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
+              date: new Date(),
+            })
+            .getOne(),
+        ),
+    );
 
-    const liveData = await getLiveData(reef, Boolean(includeSpotterData));
+    const liveData = await getLiveData(reef, includeSpotterData);
 
     return {
       ...liveData,

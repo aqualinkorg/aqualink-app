@@ -1558,7 +1558,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        6.0
+                        21.6
                       </mock-typography>
                       <mock-typography
                         classname="Waves-contentUnits-218"
