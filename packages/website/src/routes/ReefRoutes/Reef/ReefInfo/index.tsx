@@ -10,6 +10,8 @@ import {
   Button,
   Box,
   Collapse,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import CloseIcon from "@material-ui/icons/Close";
@@ -18,6 +20,7 @@ import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
+import DeployDialog from "./DeployDialog";
 import {
   setSelectedReef,
   setReefData,
@@ -37,12 +40,15 @@ const ReefNavBar = ({
   classes,
 }: ReefNavBarProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const user = useSelector(userInfoSelector);
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
   const organizationName = reef.admins[0]?.organization;
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const [deployDialogOpen, setDeployDialogOpen] = useState(false);
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -97,6 +103,15 @@ const ReefNavBar = ({
 
   return (
     <>
+      {user?.token && reef.timezone && (
+        <DeployDialog
+          onClose={() => setDeployDialogOpen(false)}
+          open={deployDialogOpen}
+          token={user.token}
+          timeZone={reef.timezone}
+          reefId={reef.id}
+        />
+      )}
       <Collapse in={alertOpen}>
         <Alert
           severity={alertSeverity}
@@ -174,15 +189,38 @@ const ReefNavBar = ({
                   )}
                 </Grid>
                 {isManager && (
-                  <Grid item>
-                    <Button
-                      onClick={onOpenForm}
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                    >
-                      EDIT SITE DETAILS
-                    </Button>
+                  <Grid
+                    container
+                    direction={matches ? "row" : "column"}
+                    item
+                    xs={12}
+                    md={4}
+                    spacing={1}
+                  >
+                    <Grid item>
+                      <Button
+                        className={classes.button}
+                        onClick={onOpenForm}
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                      >
+                        EDIT SITE DETAILS
+                      </Button>
+                    </Grid>
+                    {reef.status === "shipped" && (
+                      <Grid item>
+                        <Button
+                          className={classes.button}
+                          onClick={() => setDeployDialogOpen(true)}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        >
+                          MARK AS DEPLOYED
+                        </Button>
+                      </Grid>
+                    )}
                   </Grid>
                 )}
               </Grid>
@@ -201,6 +239,9 @@ const styles = () =>
     },
     managerInfo: {
       marginRight: "0.5rem",
+    },
+    button: {
+      width: 160,
     },
   });
 
