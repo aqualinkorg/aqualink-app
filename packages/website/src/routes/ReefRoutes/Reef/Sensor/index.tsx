@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Card,
   CardContent,
   Typography,
@@ -165,7 +164,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     ...incomingStyles,
     card: {
