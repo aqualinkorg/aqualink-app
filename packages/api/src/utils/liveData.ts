@@ -77,8 +77,20 @@ export const getLiveData = async (
     ),
   ]);
 
-  const spotterData: { [k in keyof SpotterData]?: SofarValue } = spotterRawData
-    ? mapValues(spotterRawData, (values) => values && getLatestData(values))
+  const spotterData = spotterRawData
+    ? {
+        surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
+        bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
+        waveHeight: getLatestData(spotterRawData.significantWaveHeight),
+        wavePeriod: getLatestData(spotterRawData.wavePeakPeriod),
+        waveDirection: getLatestData(spotterRawData.waveMeanDirection),
+        windSpeed: getLatestData(spotterRawData.windSpeed),
+        windDirection: getLatestData(spotterRawData.windDirection),
+        longitude:
+          spotterRawData.longitude && getLatestData(spotterRawData.longitude),
+        latitude:
+          spotterRawData.latitude && getLatestData(spotterRawData.latitude),
+      }
     : {};
 
   const filteredValues = omitBy(
