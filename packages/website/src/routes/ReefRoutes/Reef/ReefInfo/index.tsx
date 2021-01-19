@@ -106,22 +106,22 @@ const ReefNavBar = ({
   return (
     <>
       {user?.token && reef.timezone && (
-        <DeployDialog
-          onClose={() => setDeployDialogOpen(false)}
-          open={deployDialogOpen}
-          token={user.token}
-          timeZone={reef.timezone}
-          reefId={reef.id}
-        />
-      )}
-      {user?.token && reef.timezone && (
-        <MaintainDialog
-          onClose={() => setMaintainDialogOpen(false)}
-          open={maintainDialogOpen}
-          token={user.token}
-          timeZone={reef.timezone}
-          reefId={reef.id}
-        />
+        <>
+          <DeployDialog
+            onClose={() => setDeployDialogOpen(false)}
+            open={deployDialogOpen}
+            token={user.token}
+            timeZone={reef.timezone}
+            reefId={reef.id}
+          />
+          <MaintainDialog
+            onClose={() => setMaintainDialogOpen(false)}
+            open={maintainDialogOpen}
+            token={user.token}
+            timeZone={reef.timezone}
+            reefId={reef.id}
+          />
+        </>
       )}
       <Collapse in={alertOpen}>
         <Alert
