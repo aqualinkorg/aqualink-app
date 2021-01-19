@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
+import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -100,4 +101,53 @@ export const handleDuplicateReef = (err) => {
 
   logger.error('An unexpected error occurred', err);
   throw new InternalServerErrorException('An unexpected error occurred');
+};
+
+const getExclusionDateSubQuery = (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+  start: Date,
+  end: Date,
+) => {
+  const stmt = exclusionDatesRepository
+    .createQueryBuilder('exclusion')
+    .where('exclusion.spotter_id = :spotterId', {
+      spotterId,
+    })
+    .andWhere('exclusion.end_date >= :start', { start })
+    .andWhere(
+      '(exclusion.start_date <= :end OR exclusion.start_date IS NULL)',
+      { end },
+    )
+    .orderBy('exclusion.start_date', 'ASC');
+
+  return stmt;
+};
+
+export const getConflictingExclusionDate = async (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+  start: Date,
+  end: Date,
+) => {
+  return getExclusionDateSubQuery(
+    exclusionDatesRepository,
+    spotterId,
+    start,
+    end,
+  ).getOne();
+};
+
+export const getConflictingExclusionDates = async (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+  start: Date,
+  end: Date,
+) => {
+  return getExclusionDateSubQuery(
+    exclusionDatesRepository,
+    spotterId,
+    start,
+    end,
+  ).getMany();
 };

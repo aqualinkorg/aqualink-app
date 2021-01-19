@@ -22,6 +22,8 @@ import {
   getRegion,
   getTimezones,
   handleDuplicateReef,
+  getConflictingExclusionDate,
+  getConflictingExclusionDates,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -219,19 +221,12 @@ export class ReefsService {
       reef.spotterId &&
         reef.status === ReefStatus.Deployed &&
         isNil(
-          await this.exclusionDatesRepository
-            .createQueryBuilder('exclusion')
-            .where('exclusion.spotter_id = :spotterId', {
-              spotterId: reef.spotterId,
-            })
-            .andWhere('exclusion.endDate >= :now', {
-              now,
-            })
-            .andWhere('exclusion.startDate <= :now', {
-              now,
-            })
-            .orWhere('exclusion.startDate IS NULL')
-            .getOne(),
+          await getConflictingExclusionDate(
+            this.exclusionDatesRepository,
+            reef.spotterId,
+            now,
+            now,
+          ),
         ),
     );
 
@@ -254,23 +249,12 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ${id} has no spotter.`);
     }
 
-    const exclusionDates = await this.exclusionDatesRepository
-      .createQueryBuilder('exclusion')
-      .where('exclusion.spotter_id = :spotterId', {
-        spotterId: reef.spotterId,
-      })
-      .andWhere(
-        '(exclusion.start_date <= :endDate AND exclusion.end_date >= :startDate)',
-        {
-          endDate,
-          startDate,
-        },
-      )
-      .orWhere(
-        '(exclusion.end_date >= :startDate AND exclusion.start_date IS NULL)',
-      )
-      .orderBy('exclusion.start_date', 'ASC')
-      .getMany();
+    const exclusionDates = await getConflictingExclusionDates(
+      this.exclusionDatesRepository,
+      reef.spotterId,
+      startDate,
+      endDate,
+    );
 
     const { surfaceTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
@@ -328,18 +312,20 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found`);
     }
 
-    const dateConflict = await this.exclusionDatesRepository
-      .createQueryBuilder('exclusion')
-      .where('spotter_id = :spotterId', { spotterId: reef.spotterId })
-      .andWhere('(end_date >= :endDate AND start_date <= :endDate)', {
-        endDate,
-      })
-      .orWhere('(end_date >= :startDate AND start_date <= :startDate)', {
-        startDate,
-      })
-      .orWhere('(end_date <= :endDate AND start_date >= :startDate)')
-      .orWhere('(end_date >= :endDate AND start_date IS NULL)')
-      .getOne();
+    if (startDate >= endDate) {
+      throw new BadRequestException(
+        'Start date should be less than the end date',
+      );
+    }
+
+    const dateConflict = await getConflictingExclusionDate(
+      this.exclusionDatesRepository,
+      reef.spotterId,
+      startDate,
+      endDate,
+    );
+
+    this.logger.debug(dateConflict);
 
     if (dateConflict) {
       throw new BadRequestException(

@@ -18,6 +18,7 @@ import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
+import { getConflictingExclusionDate } from '../utils/reef.utils';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -296,17 +297,12 @@ export async function getReefsDailyData(
       const includeSpotterData =
         reef.spotterId &&
         isNil(
-          await exclusionDatesRepository
-            .createQueryBuilder('exclusion')
-            .where('exclusion.spotter_id = :spotterId', {
-              spotterId: reef.spotterId,
-            })
-            .andWhere('exclusion.endDate >= :endOfDate', {
-              endOfDate,
-            })
-            .andWhere('exclusion.startDate <= :endOfDate')
-            .orWhere('exclusion.startDate IS NULL')
-            .getOne(),
+          await getConflictingExclusionDate(
+            exclusionDatesRepository,
+            reef.spotterId,
+            endOfDate,
+            endOfDate,
+          ),
         );
 
       const dailyDataInput = await getDailyData(
