@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
-import { Type } from 'class-transformer/decorators';
+import { Type } from 'class-transformer';
 import { Reef } from '../../reefs/reefs.entity';
 
 export class FilterReefPoiDto {

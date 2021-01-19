@@ -81,7 +81,7 @@ interface Region {
   name: string | null;
 }
 
-type Status = "in_review" | "rejected" | "approved";
+type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
 export interface SpotterData {
   surfaceTemperature: SofarValue[];

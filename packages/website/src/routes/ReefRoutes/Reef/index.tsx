@@ -86,6 +86,9 @@ const getAlertMessage = (
     case status === "approved":
       return "Your application for an Aqualink Smart Buoy has been approved.";
 
+    case status === "shipped":
+      return "Your Smart Buoy is on its way! Mark it as 'deployed' once it's installed to access its data.";
+
     case status === "rejected":
       return (
         <div>

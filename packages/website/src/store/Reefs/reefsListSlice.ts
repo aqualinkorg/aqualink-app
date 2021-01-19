@@ -44,7 +44,9 @@ const reefsListSlice = createSlice({
     filterReefsWithSpotter: (state, action: PayloadAction<boolean>) => ({
       ...state,
       reefsToDisplay: action.payload
-        ? state.list.filter((item) => item.spotterId)
+        ? state.list.filter(
+            (item) => item.spotterId && item.status === "deployed"
+          )
         : state.list,
     }),
   },
