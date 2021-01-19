@@ -135,7 +135,7 @@ const deploySpotter = (
   });
 
 const maintainSpotter = (
-  reefId: string,
+  reefId: number,
   data: MaintainSpotterParams,
   token: string
 ) =>

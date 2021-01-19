@@ -110,7 +110,7 @@ const DeployDialog = ({
             End Date
           </Typography>
           <Grid container item spacing={1}>
-            <Grid item xs={12} sm={5} md={6}>
+            <Grid item xs={12} sm={6}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
                   className={classes.textField}
@@ -119,6 +119,7 @@ const DeployDialog = ({
                   id="installationSchedule"
                   name="installationSchedule"
                   autoOk
+                  fullWidth
                   showTodayButton
                   value={deployDateTime}
                   onChange={setDeployDateTime}
@@ -134,13 +135,14 @@ const DeployDialog = ({
                 />
               </MuiPickersUtilsProvider>
             </Grid>
-            <Grid item xs={12} sm={5} md={6}>
+            <Grid item xs={12} sm={6}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardTimePicker
                   className={classes.textField}
                   id="time-picker"
                   name="diveTime"
                   autoOk
+                  fullWidth
                   format="HH:mm"
                   value={deployDateTime}
                   onChange={setDeployDateTime}

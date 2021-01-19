@@ -21,6 +21,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
 import DeployDialog from "./DeployDialog";
+import MaintainDialog from "./MaintainDialog";
 import {
   setSelectedReef,
   setReefData,
@@ -49,6 +50,7 @@ const ReefNavBar = ({
   const organizationName = reef.admins[0]?.organization;
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const [deployDialogOpen, setDeployDialogOpen] = useState(false);
+  const [maintainDialogOpen, setMaintainDialogOpen] = useState(false);
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -107,6 +109,15 @@ const ReefNavBar = ({
         <DeployDialog
           onClose={() => setDeployDialogOpen(false)}
           open={deployDialogOpen}
+          token={user.token}
+          timeZone={reef.timezone}
+          reefId={reef.id}
+        />
+      )}
+      {user?.token && reef.timezone && (
+        <MaintainDialog
+          onClose={() => setMaintainDialogOpen(false)}
+          open={maintainDialogOpen}
           token={user.token}
           timeZone={reef.timezone}
           reefId={reef.id}
@@ -218,6 +229,19 @@ const ReefNavBar = ({
                           variant="outlined"
                         >
                           MARK AS DEPLOYED
+                        </Button>
+                      </Grid>
+                    )}
+                    {reef.status === "deployed" && (
+                      <Grid item>
+                        <Button
+                          className={classes.button}
+                          onClick={() => setMaintainDialogOpen(true)}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        >
+                          ADD MAINTENANCE
                         </Button>
                       </Grid>
                     )}
