@@ -1,5 +1,5 @@
 import { Point } from 'geojson';
-import { isNil, mapValues, omitBy } from 'lodash';
+import { isNil, omitBy } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
@@ -8,7 +8,7 @@ import {
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData, SofarValue, SpotterData } from './sofar.types';
+import { SofarLiveData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 
