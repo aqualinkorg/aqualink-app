@@ -20,8 +20,8 @@ import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
 
-const INITIAL_CENTER = new LatLng(19, -76.3);
-const INITIAL_ZOOM = 5;
+const INITIAL_CENTER = new LatLng(0, 121.3);
+const INITIAL_ZOOM = 4;
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken

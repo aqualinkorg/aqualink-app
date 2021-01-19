@@ -42,7 +42,7 @@ const ReefNavBar = ({
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
-  const organizationName = reef.admins[0].organization;
+  const organizationName = reef.admins[0]?.organization;
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {

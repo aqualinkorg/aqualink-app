@@ -1,5 +1,5 @@
 /** Worker to process daily data for all reefs. */
-import { isNil, isNumber, omitBy } from 'lodash';
+import { isEmpty, isNil, isNumber, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
@@ -70,8 +70,8 @@ export async function getDailyData(
     significantWaveHeightsRaw,
     meanDirectionWindWavesRaw,
     peakPeriodWindWavesRaw,
-    windVelocities,
-    windDirections,
+    windSpeedsRaw,
+    windDirectionsRaw,
   ] = await Promise.all([
     includeSpotterData
       ? getSpotterData(spotterId, endOfDate)
@@ -81,6 +81,8 @@ export async function getDailyData(
           significantWaveHeight: [],
           wavePeakPeriod: [],
           waveMeanDirection: [],
+          windSpeed: [],
+          windDirection: [],
         },
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
@@ -145,6 +147,8 @@ export async function getDailyData(
         ),
         wavePeakPeriod: extractSofarValues(spotterRawData.wavePeakPeriod),
         waveMeanDirection: extractSofarValues(spotterRawData.waveMeanDirection),
+        windSpeed: extractSofarValues(spotterRawData.windSpeed),
+        windDirection: extractSofarValues(spotterRawData.windDirection),
       }
     : {
         surfaceTemperature: [],
@@ -152,6 +156,8 @@ export async function getDailyData(
         significantWaveHeight: [],
         wavePeakPeriod: [],
         waveMeanDirection: [],
+        windSpeed: [],
+        windDirection: [],
       };
 
   const minBottomTemperature = getMin(spotterData.bottomTemperature);
@@ -195,9 +201,17 @@ export async function getDailyData(
   const wavePeriod =
     peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
 
-  const minWindSpeed = windVelocities && getMin(windVelocities);
-  const maxWindSpeed = windVelocities && getMax(windVelocities);
-  const avgWindSpeed = windVelocities && getAverage(windVelocities);
+  // Get wind data if unavailable through a spotter
+  const windSpeeds = isEmpty(spotterData.windSpeed)
+    ? windSpeedsRaw
+    : spotterData.windSpeed;
+  const windDirections = isEmpty(spotterData.windDirection)
+    ? windDirectionsRaw
+    : spotterData.windDirection;
+
+  const minWindSpeed = windSpeeds && getMin(windSpeeds);
+  const maxWindSpeed = windSpeeds && getMax(windSpeeds);
+  const avgWindSpeed = windSpeeds && getAverage(windSpeeds);
 
   const windDirection = windDirections && getAverage(windDirections, true);
 

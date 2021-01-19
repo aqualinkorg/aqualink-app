@@ -32,17 +32,7 @@ export const getLiveData = async (
     windSpeed,
     windDirection,
   ] = await Promise.all([
-    includeSpotterData
-      ? getSpotterData(spotterId)
-      : {
-          surfaceTemperature: [],
-          bottomTemperature: [],
-          significantWaveHeight: [],
-          wavePeakPeriod: [],
-          waveMeanDirection: [],
-          latitude: [],
-          longitude: [],
-        },
+    includeSpotterData ? getSpotterData(spotterId) : undefined,
     getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
@@ -93,18 +83,16 @@ export const getLiveData = async (
 
   const filteredValues = omitBy(
     {
-      bottomTemperature: spotterData.bottomTemperature,
-      surfaceTemperature: spotterData.surfaceTemperature,
       degreeHeatingDays,
       satelliteTemperature:
         satelliteTemperature && getLatestData(satelliteTemperature),
-      waveHeight: spotterData.significantWaveHeight || waveHeight,
-      waveDirection: spotterData.waveMeanDirection || waveDirection,
-      wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
+      waveHeight,
+      waveDirection,
+      wavePeriod,
       windSpeed,
       windDirection,
-      longitude: spotterData.longitude,
-      latitude: spotterData.latitude,
+      // Override all possible values with spotter data.
+      ...spotterData,
     },
     (data) => isNil(data?.value) || data?.value === 9999,
   );
@@ -117,20 +105,12 @@ export const getLiveData = async (
 
   return {
     reef: { id: reef.id },
-    bottomTemperature: filteredValues.bottomTemperature,
-    surfaceTemperature: filteredValues.surfaceTemperature,
-    degreeHeatingDays: filteredValues.degreeHeatingDays,
-    satelliteTemperature: filteredValues.satelliteTemperature,
-    waveHeight: filteredValues.waveHeight,
-    waveDirection: filteredValues.waveDirection,
-    wavePeriod: filteredValues.wavePeriod,
-    windSpeed: filteredValues.windSpeed,
-    windDirection: filteredValues.windDirection,
-    ...(filteredValues.longitude &&
-      filteredValues.latitude && {
+    ...filteredValues,
+    ...(spotterData.longitude &&
+      spotterData.latitude && {
         spotterPosition: {
-          longitude: filteredValues.longitude,
-          latitude: filteredValues.latitude,
+          longitude: spotterData.longitude,
+          latitude: spotterData.latitude,
         },
       }),
     dailyAlertLevel,
