@@ -108,6 +108,7 @@ export async function sofarSpotter(
         token: process.env.SOFAR_API_TOKEN,
         includeSmartMooringData: true,
         includeSurfaceTempData: true,
+        includeWindData: true,
       },
     })
     .then((response) => {
@@ -169,7 +170,7 @@ export async function getSpotterData(
         ];
 
   const {
-    data: { waves = [], smartMooringData = [] },
+    data: { waves = [], wind = [], smartMooringData = [] },
   } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
 
   const [
@@ -221,6 +222,25 @@ export async function getSpotterData(
     [[], [], [], [], []],
   );
 
+  const [sofarWindSpeed, sofarWindDirection]: [
+    SofarValue[],
+    SofarValue[],
+  ] = wind.reduce(
+    ([speed, direction], data) => {
+      return [
+        speed.concat({
+          timestamp: data.timestamp,
+          value: data.speed,
+        }),
+        direction.concat({
+          timestamp: data.timestamp,
+          value: data.direction,
+        }),
+      ];
+    },
+    [[], []],
+  );
+
   // Sofar increments sensors by distance to the spotter.
   // Sensor 0 -> surfaceTemp and Sensor 1 -> bottomTemp
   const [sofarSurfaceTemperature, sofarBottomTemperature]: [
@@ -253,6 +273,8 @@ export async function getSpotterData(
     significantWaveHeight: sofarSignificantWaveHeight,
     wavePeakPeriod: sofarPeakPeriod,
     waveMeanDirection: sofarMeanDirection,
+    windSpeed: sofarWindSpeed,
+    windDirection: sofarWindDirection,
     latitude: spotterLatitude,
     longitude: spotterLongitude,
   };
