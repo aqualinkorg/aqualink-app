@@ -107,7 +107,7 @@ const DeployDialog = ({
             color="textSecondary"
             variant="h5"
           >
-            End Date
+            Activation Date
           </Typography>
           <Grid container item spacing={1}>
             <Grid item xs={12} sm={6}>
