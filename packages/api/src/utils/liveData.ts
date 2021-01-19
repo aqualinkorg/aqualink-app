@@ -1,5 +1,5 @@
 import { Point } from 'geojson';
-import { isNil, omitBy } from 'lodash';
+import { isNil, mapValues, omitBy } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
@@ -8,7 +8,7 @@ import {
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData } from './sofar.types';
+import { SofarLiveData, SofarValue, SpotterData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 
@@ -77,22 +77,8 @@ export const getLiveData = async (
     ),
   ]);
 
-  const spotterData = spotterRawData
-    ? {
-        surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
-        bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
-        significantWaveHeight: getLatestData(
-          spotterRawData.significantWaveHeight,
-        ),
-        wavePeriod: getLatestData(spotterRawData.wavePeakPeriod),
-        waveDirection: getLatestData(spotterRawData.waveMeanDirection),
-        windSpeed: getLatestData(spotterRawData.windSpeed),
-        windDirection: getLatestData(spotterRawData.windDirection),
-        longitude:
-          spotterRawData.longitude && getLatestData(spotterRawData.longitude),
-        latitude:
-          spotterRawData.latitude && getLatestData(spotterRawData.latitude),
-      }
+  const spotterData: { [k in keyof SpotterData]?: SofarValue } = spotterRawData
+    ? mapValues(spotterRawData, (values) => values && getLatestData(values))
     : {};
 
   const filteredValues = omitBy(
