@@ -1,5 +1,5 @@
 import { Point } from 'geojson';
-import { isNil, omitBy } from 'lodash';
+import { isNil, mapValues, omitBy } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
@@ -8,7 +8,7 @@ import {
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData } from './sofar.types';
+import { SofarLiveData, SofarValue, SpotterData } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 
@@ -32,17 +32,7 @@ export const getLiveData = async (
     windSpeed,
     windDirection,
   ] = await Promise.all([
-    includeSpotterData
-      ? getSpotterData(spotterId)
-      : {
-          surfaceTemperature: [],
-          bottomTemperature: [],
-          significantWaveHeight: [],
-          wavePeakPeriod: [],
-          waveMeanDirection: [],
-          latitude: [],
-          longitude: [],
-        },
+    includeSpotterData ? getSpotterData(spotterId) : undefined,
     getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
@@ -91,11 +81,11 @@ export const getLiveData = async (
     ? {
         surfaceTemperature: getLatestData(spotterRawData.surfaceTemperature),
         bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
-        significantWaveHeight: getLatestData(
-          spotterRawData.significantWaveHeight,
-        ),
-        wavePeakPeriod: getLatestData(spotterRawData.wavePeakPeriod),
-        waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
+        waveHeight: getLatestData(spotterRawData.significantWaveHeight),
+        wavePeriod: getLatestData(spotterRawData.wavePeakPeriod),
+        waveDirection: getLatestData(spotterRawData.waveMeanDirection),
+        windSpeed: getLatestData(spotterRawData.windSpeed),
+        windDirection: getLatestData(spotterRawData.windDirection),
         longitude:
           spotterRawData.longitude && getLatestData(spotterRawData.longitude),
         latitude:
@@ -105,18 +95,16 @@ export const getLiveData = async (
 
   const filteredValues = omitBy(
     {
-      bottomTemperature: spotterData.bottomTemperature,
-      surfaceTemperature: spotterData.surfaceTemperature,
       degreeHeatingDays,
       satelliteTemperature:
         satelliteTemperature && getLatestData(satelliteTemperature),
-      waveHeight: spotterData.significantWaveHeight || waveHeight,
-      waveDirection: spotterData.waveMeanDirection || waveDirection,
-      wavePeriod: spotterData.wavePeakPeriod || wavePeriod,
+      waveHeight,
+      waveDirection,
+      wavePeriod,
       windSpeed,
       windDirection,
-      longitude: spotterData.longitude,
-      latitude: spotterData.latitude,
+      // Override all possible values with spotter data.
+      ...spotterData,
     },
     (data) => isNil(data?.value) || data?.value === 9999,
   );
@@ -129,20 +117,12 @@ export const getLiveData = async (
 
   return {
     reef: { id: reef.id },
-    bottomTemperature: filteredValues.bottomTemperature,
-    surfaceTemperature: filteredValues.surfaceTemperature,
-    degreeHeatingDays: filteredValues.degreeHeatingDays,
-    satelliteTemperature: filteredValues.satelliteTemperature,
-    waveHeight: filteredValues.waveHeight,
-    waveDirection: filteredValues.waveDirection,
-    wavePeriod: filteredValues.wavePeriod,
-    windSpeed: filteredValues.windSpeed,
-    windDirection: filteredValues.windDirection,
-    ...(filteredValues.longitude &&
-      filteredValues.latitude && {
+    ...filteredValues,
+    ...(spotterData.longitude &&
+      spotterData.latitude && {
         spotterPosition: {
-          longitude: filteredValues.longitude,
-          latitude: filteredValues.latitude,
+          longitude: spotterData.longitude,
+          latitude: spotterData.latitude,
         },
       }),
     dailyAlertLevel,

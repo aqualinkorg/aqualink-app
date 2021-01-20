@@ -50,6 +50,8 @@ export interface SpotterData {
   significantWaveHeight: SofarValue[];
   wavePeakPeriod: SofarValue[];
   waveMeanDirection: SofarValue[];
+  windSpeed: SofarValue[];
+  windDirection: SofarValue[];
   latitude?: SofarValue[];
   longitude?: SofarValue[];
 }

@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
-import { Type } from 'class-transformer/decorators';
+import { Type } from 'class-transformer';
 import { Region } from '../../regions/regions.entity';
 import { User } from '../../users/users.entity';
 
