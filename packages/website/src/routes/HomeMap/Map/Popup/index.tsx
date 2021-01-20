@@ -1,28 +1,29 @@
 import React, { useEffect, useRef } from "react";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  createStyles,
+  Grid,
+  Theme,
+  Tooltip,
+  Typography,
   withStyles,
   WithStyles,
-  createStyles,
-  Theme,
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
-  Typography,
-  Button,
-  Tooltip,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
 import { useSelector } from "react-redux";
 
-import { Reef } from "../../../../store/Reefs/types";
+import type { LatLngTuple } from "leaflet";
+import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import {
-  dhwColorFinder,
   degreeHeatingWeeksCalculator,
+  dhwColorFinder,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
@@ -37,7 +38,18 @@ const Popup = ({ reef, classes }: PopupProps) => {
     if (map && popupRef?.current && reefOnMap?.polygon.type === "Point") {
       const { leafletElement: popup } = popupRef.current;
       const [lng, lat] = reefOnMap.polygon.coordinates;
-      popup.setLatLng([lat, lng]).openOn(map);
+
+      const moveFunc = () => {
+        const point: LatLngTuple = [lat, lng];
+        popup.setLatLng(point).openOn(map);
+        map.off("moveend", moveFunc);
+      };
+      moveFunc();
+      // If the map is zoomed out (we can possibly see repeat markers) then we should reopen the popup.
+      // There's a good chance it might close on moveend (pan animation finishes) - a small quirk of Leaflet
+      // when we have markers outside of the normal map range.
+      // Closest instance I could find in the wild: https://stackoverflow.com/a/30135133/5279269
+      if (map.getZoom() <= 4) map.on("moveend", moveFunc);
     }
   }, [map, reefOnMap]);
 
