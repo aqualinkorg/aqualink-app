@@ -28,7 +28,6 @@ async function run() {
   const reefIds = reefs && reefs.map((reef) => parseInt(`${reef}`, 10));
   const today = moment().utc();
   today.hours(23).minutes(59).seconds(59).milliseconds(999);
-
   createConnection(dbConfig).then(async (connection) => {
     await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
       const date = moment(today);

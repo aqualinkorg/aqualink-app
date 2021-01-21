@@ -10,9 +10,11 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Point } from 'geojson';
+import { isNil } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
+import { SofarValue } from './sofar.types';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -150,4 +152,20 @@ export const getConflictingExclusionDates = async (
     start,
     end,
   ).getMany();
+};
+
+export const filterSpotterDataByDate = (
+  spotterDate: SofarValue[],
+  exclusionDates: ExclusionDates[],
+) => {
+  const data = spotterDate.filter(({ timestamp }) => {
+    const excluded = isNil(
+      exclusionDates.find(({ startDate: start, endDate: end }) => {
+        const dataDate = new Date(timestamp);
+        return dataDate <= end && (!start || start <= dataDate);
+      }),
+    );
+    return excluded;
+  });
+  return data;
 };

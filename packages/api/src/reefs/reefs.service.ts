@@ -13,7 +13,7 @@ import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
-import { SofarLiveData, SofarValue } from '../utils/sofar.types';
+import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
@@ -24,6 +24,7 @@ import {
   handleDuplicateReef,
   getConflictingExclusionDate,
   getConflictingExclusionDates,
+  filterSpotterDataByDate,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -263,11 +264,11 @@ export class ReefsService {
     );
 
     return {
-      surfaceTemperature: this.filterSpotterDataByDate(
+      surfaceTemperature: filterSpotterDataByDate(
         surfaceTemperature,
         exclusionDates,
       ),
-      bottomTemperature: this.filterSpotterDataByDate(
+      bottomTemperature: filterSpotterDataByDate(
         bottomTemperature,
         exclusionDates,
       ),
@@ -318,21 +319,6 @@ export class ReefsService {
       );
     }
 
-    const dateConflict = await getConflictingExclusionDate(
-      this.exclusionDatesRepository,
-      reef.spotterId,
-      startDate,
-      endDate,
-    );
-
-    this.logger.debug(dateConflict);
-
-    if (dateConflict) {
-      throw new BadRequestException(
-        'Start or end date conflicts with previous exclusion period',
-      );
-    }
-
     await this.exclusionDatesRepository.save({
       spotterId: reef.spotterId,
       endDate,
@@ -372,20 +358,5 @@ export class ReefsService {
       .relation('admins')
       .of(reef)
       .addAndRemove(admins, reef.admins);
-  }
-
-  private filterSpotterDataByDate(
-    spotterDate: SofarValue[],
-    exclusionDates: ExclusionDates[],
-  ) {
-    return spotterDate.filter(({ timestamp }) => {
-      const excluded = isNil(
-        exclusionDates.find(({ startDate: start, endDate: end }) => {
-          const dataDate = new Date(timestamp);
-          return dataDate <= end && (!start || start <= dataDate);
-        }),
-      );
-      return excluded;
-    });
   }
 }
