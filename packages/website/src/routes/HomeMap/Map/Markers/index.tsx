@@ -68,6 +68,7 @@ export const ReefMarkers = () => {
       setCenter(map, [lat, lng], 6);
     }
   }, [map, reefOnMap, setCenter]);
+
   return (
     <LayerGroup>
       <MarkerClusterGroup
