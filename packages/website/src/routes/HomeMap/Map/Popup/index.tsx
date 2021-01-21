@@ -1,45 +1,56 @@
 import React, { useEffect, useRef } from "react";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  createStyles,
+  Grid,
+  Theme,
+  Tooltip,
+  Typography,
   withStyles,
   WithStyles,
-  createStyles,
-  Theme,
-  Card,
-  CardHeader,
-  CardContent,
-  Grid,
-  Typography,
-  Button,
-  Tooltip,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
 import { useSelector } from "react-redux";
 
-import { Reef } from "../../../../store/Reefs/types";
+import type { LatLngTuple } from "leaflet";
+import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import {
-  dhwColorFinder,
   degreeHeatingWeeksCalculator,
+  dhwColorFinder,
 } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
-const Popup = ({ reef, classes }: PopupProps) => {
+const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
+
   const { degreeHeatingDays, maxBottomTemperature, satelliteTemperature } =
     reef.latestDailyData || {};
 
   useEffect(() => {
-    if (map && popupRef?.current && reefOnMap?.polygon.type === "Point") {
+    if (
+      map &&
+      popupRef?.current &&
+      reefOnMap?.polygon.type === "Point" &&
+      autoOpen
+    ) {
       const { leafletElement: popup } = popupRef.current;
       const [lng, lat] = reefOnMap.polygon.coordinates;
-      popup.setLatLng([lat, lng]).openOn(map);
+      const moveFunc = () => {
+        const point: LatLngTuple = [lat, lng];
+        popup.setLatLng(point).openOn(map);
+      };
+      moveFunc();
     }
-  }, [map, reefOnMap]);
+  }, [autoOpen, map, reefOnMap]);
 
   return (
     <LeafletPopup
@@ -170,7 +181,12 @@ const styles = (theme: Theme) =>
 
 interface PopupIncomingProps {
   reef: Reef;
+  autoOpen?: boolean;
 }
+
+Popup.defaultProps = {
+  autoOpen: true,
+};
 
 type PopupProps = PopupIncomingProps & WithStyles<typeof styles>;
 
