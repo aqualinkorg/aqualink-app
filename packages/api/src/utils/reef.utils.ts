@@ -105,25 +105,25 @@ export const handleDuplicateReef = (err) => {
   throw new InternalServerErrorException('An unexpected error occurred');
 };
 
-const getExclusionDateSubQuery = (
+const getExclusionDateSubQuery = async (
   exclusionDatesRepository: Repository<ExclusionDates>,
   spotterId: string,
   start: Date,
   end: Date,
 ) => {
-  const stmt = exclusionDatesRepository
+  const allDates = await exclusionDatesRepository
     .createQueryBuilder('exclusion')
     .where('exclusion.spotter_id = :spotterId', {
       spotterId,
     })
-    .andWhere('exclusion.end_date >= :start', { start })
-    .andWhere(
-      '(exclusion.start_date <= :end OR exclusion.start_date IS NULL)',
-      { end },
-    )
-    .orderBy('exclusion.start_date', 'ASC');
+    .getMany();
 
-  return stmt;
+  return allDates.filter((exclusionDate) => {
+    return (
+      start <= exclusionDate.endDate &&
+      (!exclusionDate.startDate || exclusionDate.startDate <= end)
+    );
+  });
 };
 
 export const getConflictingExclusionDate = async (
@@ -137,7 +137,7 @@ export const getConflictingExclusionDate = async (
     spotterId,
     start,
     end,
-  ).getOne();
+  )[0];
 };
 
 export const getConflictingExclusionDates = async (
@@ -151,14 +151,14 @@ export const getConflictingExclusionDates = async (
     spotterId,
     start,
     end,
-  ).getMany();
+  );
 };
 
 export const filterSpotterDataByDate = (
-  spotterDate: SofarValue[],
+  spotterData: SofarValue[],
   exclusionDates: ExclusionDates[],
 ) => {
-  const data = spotterDate.filter(({ timestamp }) => {
+  const data = spotterData.filter(({ timestamp }) => {
     const excluded = isNil(
       exclusionDates.find(({ startDate: start, endDate: end }) => {
         const dataDate = new Date(timestamp);

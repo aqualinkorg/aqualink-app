@@ -6,7 +6,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { isNil, omit } from 'lodash';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
@@ -22,9 +22,9 @@ import {
   getRegion,
   getTimezones,
   handleDuplicateReef,
-  getConflictingExclusionDate,
-  getConflictingExclusionDates,
   filterSpotterDataByDate,
+  getConflictingExclusionDates,
+  getConflictingExclusionDate,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -278,14 +278,18 @@ export class ReefsService {
   async deploySpotter(id: number, deploySpotterDto: DeploySpotterDto) {
     const { endDate } = deploySpotterDto;
 
-    const reef = await this.reefsRepository.findOne({
-      id,
-      spotterId: Not(IsNull()),
-      status: Not(ReefStatus.Deployed),
-    });
+    const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    if (reef.status === ReefStatus.Deployed) {
+      throw new BadRequestException(`Reef with ID ${id} is already deployed`);
     }
 
     // Run update queries concurrently
@@ -303,14 +307,18 @@ export class ReefsService {
   async maintainSpotter(id: number, maintainSpotterDto: MaintainSpotterDto) {
     const { startDate, endDate } = maintainSpotterDto;
 
-    const reef = await this.reefsRepository.findOne({
-      id,
-      spotterId: Not(IsNull()),
-      status: ReefStatus.Deployed,
-    });
+    const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    if (reef.status !== ReefStatus.Deployed) {
+      throw new BadRequestException(`Reef with ID ${id} is not deployed`);
     }
 
     if (startDate >= endDate) {
@@ -327,14 +335,18 @@ export class ReefsService {
   }
 
   async getExclusionDates(id: number) {
-    const reef = await this.reefsRepository.findOne({
-      id,
-      spotterId: Not(IsNull()),
-      status: ReefStatus.Deployed,
-    });
+    const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    if (reef.status !== ReefStatus.Deployed) {
+      throw new BadRequestException(`Reef with ID ${id} is not deployed`);
     }
 
     return this.exclusionDatesRepository.find({
