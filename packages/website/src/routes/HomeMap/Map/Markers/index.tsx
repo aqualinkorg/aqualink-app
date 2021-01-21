@@ -14,8 +14,8 @@ import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
-  findIntervalByLevel,
   alertIconFinder,
+  findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
@@ -90,7 +90,7 @@ export const ReefMarkers = () => {
                 icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
                 position={[lat, lng + offset]}
               >
-                <Popup reef={reef} />
+                <Popup reef={reef} autoOpen={offset === 0} />
               </Marker>
             ));
           }
