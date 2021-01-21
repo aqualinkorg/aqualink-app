@@ -1,16 +1,16 @@
-import { Reef, Position } from "../store/Reefs/types";
+import { LatLng } from "leaflet";
+import { Reef } from "../store/Reefs/types";
 
-export const findMaxDhwReefPosition = (reefs: Reef[]): Position | null => {
+export const findMaxDhwReefPosition = (reefs: Reef[]): LatLng | null => {
   const dhws = reefs.map((reef) => reef.latestDailyData.degreeHeatingDays);
-  const maxIndex = dhws.indexOf(Math.max(...dhws));
-  const maxDhwReef = reefs[maxIndex];
+  const maxDhwReef = reefs[dhws.indexOf(Math.max(...dhws))];
 
   // If the polygon type is a Point, return its coordinates
   if (maxDhwReef?.polygon.type === "Point") {
-    return [
+    return new LatLng(
       maxDhwReef.polygon.coordinates[1],
-      maxDhwReef.polygon.coordinates[0],
-    ];
+      maxDhwReef.polygon.coordinates[0]
+    );
   }
 
   // If the polygon type is a Polygon, return the coordinates of its centroid
@@ -27,7 +27,7 @@ export const findMaxDhwReefPosition = (reefs: Reef[]): Position | null => {
         0
       ) / points;
 
-    return [centroidLat, centroidLng];
+    return new LatLng(centroidLat, centroidLng);
   }
 
   return null;
