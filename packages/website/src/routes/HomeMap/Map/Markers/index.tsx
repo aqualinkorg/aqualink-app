@@ -48,6 +48,7 @@ export const ReefMarkers = () => {
   const reefsList = useSelector(reefsToDisplayListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
+  const dispatch = useDispatch();
 
   // To make sure we can see all the reefs all the time, and especially
   // around -180/+180, we create dummy copies of each reef.
@@ -67,7 +68,6 @@ export const ReefMarkers = () => {
       setCenter(map, [lat, lng], 6);
     }
   }, [map, reefOnMap, setCenter]);
-  const dispatch = useDispatch();
   return (
     <LayerGroup>
       <MarkerClusterGroup
