@@ -105,7 +105,7 @@ export const handleDuplicateReef = (err) => {
   throw new InternalServerErrorException('An unexpected error occurred');
 };
 
-const getExclusionDateSubQuery = async (
+export const getConflictingExclusionDates = async (
   exclusionDatesRepository: Repository<ExclusionDates>,
   spotterId: string,
   start: Date,
@@ -124,34 +124,6 @@ const getExclusionDateSubQuery = async (
       (!exclusionDate.startDate || exclusionDate.startDate <= end)
     );
   });
-};
-
-export const getConflictingExclusionDate = async (
-  exclusionDatesRepository: Repository<ExclusionDates>,
-  spotterId: string,
-  start: Date,
-  end: Date,
-) => {
-  return getExclusionDateSubQuery(
-    exclusionDatesRepository,
-    spotterId,
-    start,
-    end,
-  )[0];
-};
-
-export const getConflictingExclusionDates = async (
-  exclusionDatesRepository: Repository<ExclusionDates>,
-  spotterId: string,
-  start: Date,
-  end: Date,
-) => {
-  return getExclusionDateSubQuery(
-    exclusionDatesRepository,
-    spotterId,
-    start,
-    end,
-  );
 };
 
 export const filterSpotterDataByDate = (

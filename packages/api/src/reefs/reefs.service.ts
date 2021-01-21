@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { isNil, omit } from 'lodash';
+import { omit, isEmpty } from 'lodash';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
@@ -24,7 +24,6 @@ import {
   handleDuplicateReef,
   filterSpotterDataByDate,
   getConflictingExclusionDates,
-  getConflictingExclusionDate,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -221,8 +220,8 @@ export class ReefsService {
     const includeSpotterData = Boolean(
       reef.spotterId &&
         reef.status === ReefStatus.Deployed &&
-        isNil(
-          await getConflictingExclusionDate(
+        isEmpty(
+          await getConflictingExclusionDates(
             this.exclusionDatesRepository,
             reef.spotterId,
             now,
