@@ -25,7 +25,7 @@ import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
 import { findMaxDhwReefPosition } from "../../../helpers/reefUtils";
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
-const INITIAL_ZOOM = 4;
+const INITIAL_ZOOM = 5;
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
