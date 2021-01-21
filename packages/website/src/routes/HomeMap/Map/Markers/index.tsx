@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useCallback, useEffect } from "react";
-import L, { DivIcon, Icon } from "leaflet";
+import L from "leaflet";
 import { reefsToDisplayListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
@@ -44,36 +44,6 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
-function MarkerWithPopup({
-  reef,
-  lng,
-  lat,
-  offset,
-  icon,
-}: {
-  reef: Reef;
-  offset: number;
-  lat: number;
-  lng: number;
-  // eslint-disable-next-line react/require-default-props
-  icon?: DivIcon | Icon;
-}) {
-  const dispatch = useDispatch();
-  return (
-    <Marker
-      onClick={() => {
-        dispatch(setSearchResult());
-        dispatch(setReefOnMap(reef));
-      }}
-      key={`${reef.id}-${offset}`}
-      icon={icon}
-      position={[lat, lng + offset]}
-    >
-      <Popup reef={reef} autoOpen={offset === 0} />
-    </Marker>
-  );
-}
-
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsToDisplayListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
@@ -97,6 +67,7 @@ export const ReefMarkers = () => {
       setCenter(map, [lat, lng], 6);
     }
   }, [map, reefOnMap, setCenter]);
+  const dispatch = useDispatch();
   return (
     <LayerGroup>
       <MarkerClusterGroup
@@ -109,13 +80,17 @@ export const ReefMarkers = () => {
             const { weeklyAlertLevel } = reef.latestDailyData || {};
 
             return lngOffsets.map((offset) => (
-              <MarkerWithPopup
-                reef={reef}
-                offset={offset}
-                lat={lat}
-                lng={lng}
+              <Marker
+                onClick={() => {
+                  dispatch(setSearchResult());
+                  dispatch(setReefOnMap(reef));
+                }}
+                key={`${reef.id}-${offset}`}
                 icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
-              />
+                position={[lat, lng + offset]}
+              >
+                <Popup reef={reef} autoOpen={offset === 0} />
+              </Marker>
             ));
           }
           return null;
