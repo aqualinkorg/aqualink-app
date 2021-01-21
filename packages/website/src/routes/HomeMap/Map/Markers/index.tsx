@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useCallback, useEffect } from "react";
-import L from "leaflet";
+import L, { DivIcon, Icon } from "leaflet";
 import { reefsToDisplayListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
 import {
@@ -14,8 +14,8 @@ import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
-  findIntervalByLevel,
   alertIconFinder,
+  findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
@@ -44,11 +44,40 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
+function MarkerWithPopup({
+  reef,
+  lng,
+  lat,
+  offset,
+  icon,
+}: {
+  reef: Reef;
+  offset: number;
+  lat: number;
+  lng: number;
+  // eslint-disable-next-line react/require-default-props
+  icon?: DivIcon | Icon;
+}) {
+  const dispatch = useDispatch();
+  return (
+    <Marker
+      onClick={() => {
+        dispatch(setSearchResult());
+        dispatch(setReefOnMap(reef));
+      }}
+      key={`${reef.id}-${offset}`}
+      icon={icon}
+      position={[lat, lng + offset]}
+    >
+      <Popup reef={reef} autoOpen={offset === 0} />
+    </Marker>
+  );
+}
+
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsToDisplayListSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
-  const dispatch = useDispatch();
 
   // To make sure we can see all the reefs all the time, and especially
   // around -180/+180, we create dummy copies of each reef.
@@ -68,7 +97,6 @@ export const ReefMarkers = () => {
       setCenter(map, [lat, lng], 6);
     }
   }, [map, reefOnMap, setCenter]);
-
   return (
     <LayerGroup>
       <MarkerClusterGroup
@@ -81,17 +109,13 @@ export const ReefMarkers = () => {
             const { weeklyAlertLevel } = reef.latestDailyData || {};
 
             return lngOffsets.map((offset) => (
-              <Marker
-                onClick={() => {
-                  dispatch(setSearchResult());
-                  dispatch(setReefOnMap(reef));
-                }}
-                key={`${reef.id}-${offset}`}
+              <MarkerWithPopup
+                reef={reef}
+                offset={offset}
+                lat={lat}
+                lng={lng}
                 icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
-                position={[lat, lng + offset]}
-              >
-                <Popup reef={reef} />
-              </Marker>
+              />
             ));
           }
           return null;

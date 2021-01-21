@@ -27,31 +27,30 @@ import {
 } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
-const Popup = ({ reef, classes }: PopupProps) => {
+const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
+
   const { degreeHeatingDays, maxBottomTemperature, satelliteTemperature } =
     reef.latestDailyData || {};
 
   useEffect(() => {
-    if (map && popupRef?.current && reefOnMap?.polygon.type === "Point") {
+    if (
+      map &&
+      popupRef?.current &&
+      reefOnMap?.polygon.type === "Point" &&
+      autoOpen
+    ) {
       const { leafletElement: popup } = popupRef.current;
       const [lng, lat] = reefOnMap.polygon.coordinates;
-
       const moveFunc = () => {
         const point: LatLngTuple = [lat, lng];
         popup.setLatLng(point).openOn(map);
-        map.off("moveend", moveFunc);
       };
       moveFunc();
-      // If the map is zoomed out (we can possibly see repeat markers) then we should reopen the popup.
-      // There's a good chance it might close on moveend (pan animation finishes) - a small quirk of Leaflet
-      // when we have markers outside of the normal map range.
-      // Closest instance I could find in the wild: https://stackoverflow.com/a/30135133/5279269
-      if (map.getZoom() <= 4) map.on("moveend", moveFunc);
     }
-  }, [map, reefOnMap]);
+  }, [autoOpen, map, reefOnMap]);
 
   return (
     <LeafletPopup
@@ -182,7 +181,12 @@ const styles = (theme: Theme) =>
 
 interface PopupIncomingProps {
   reef: Reef;
+  autoOpen?: boolean;
 }
+
+Popup.defaultProps = {
+  autoOpen: true,
+};
 
 type PopupProps = PopupIncomingProps & WithStyles<typeof styles>;
 
