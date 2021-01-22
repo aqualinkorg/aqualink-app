@@ -32,6 +32,7 @@ import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import reefServices from "../../../../services/reefServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { convertToLocalTime } from "../../../../helpers/dates";
+import { isAdmin } from "../../../../helpers/user";
 
 const ReefNavBar = ({
   hasDailyData,
@@ -105,7 +106,7 @@ const ReefNavBar = ({
 
   return (
     <>
-      {user?.token && reef.timezone && (
+      {user?.token && isAdmin(user, reef.id) && (
         <>
           <DeployDialog
             onClose={() => setDeployDialogOpen(false)}
@@ -241,7 +242,7 @@ const ReefNavBar = ({
                           color="primary"
                           variant="outlined"
                         >
-                          ADD MAINTENANCE
+                          ADD EXCLUSION DATES
                         </Button>
                       </Grid>
                     )}
@@ -265,7 +266,7 @@ const styles = () =>
       marginRight: "0.5rem",
     },
     button: {
-      width: 160,
+      width: 180,
     },
   });
 

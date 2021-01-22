@@ -191,10 +191,14 @@ const styles = (theme: Theme) =>
 interface DeployDialogIncomingProps {
   open: boolean;
   token: string;
-  timeZone: string;
+  timeZone?: string | null;
   reefId: number;
   onClose: () => void;
 }
+
+DeployDialog.defaultProps = {
+  timeZone: null,
+};
 
 type DeployDialogProps = DeployDialogIncomingProps & WithStyles<typeof styles>;
 

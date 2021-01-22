@@ -283,10 +283,14 @@ const styles = (theme: Theme) =>
 interface MaintainDialogIncomingProps {
   open: boolean;
   token: string;
-  timeZone: string;
+  timeZone?: string | null;
   reefId: number;
   onClose: () => void;
 }
+
+MaintainDialog.defaultProps = {
+  timeZone: null,
+};
 
 type MaintainDialogProps = MaintainDialogIncomingProps &
   WithStyles<typeof styles>;
