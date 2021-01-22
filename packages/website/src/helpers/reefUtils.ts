@@ -1,9 +1,13 @@
 import { LatLng } from "leaflet";
+import { maxBy, meanBy } from "lodash";
+
 import { Reef } from "../store/Reefs/types";
 
 export const findMaxDhwReefPosition = (reefs: Reef[]): LatLng | null => {
-  const dhws = reefs.map((reef) => reef.latestDailyData.degreeHeatingDays);
-  const maxDhwReef = reefs[dhws.indexOf(Math.max(...dhws))];
+  const maxDhwReef = maxBy(
+    reefs,
+    (reef) => reef.latestDailyData.degreeHeatingDays
+  );
 
   // If the polygon type is a Point, return its coordinates
   if (maxDhwReef?.polygon.type === "Point") {
@@ -15,17 +19,14 @@ export const findMaxDhwReefPosition = (reefs: Reef[]): LatLng | null => {
 
   // If the polygon type is a Polygon, return the coordinates of its centroid
   if (maxDhwReef?.polygon.type === "Polygon") {
-    const points = maxDhwReef.polygon.coordinates[0].length;
-    const centroidLat =
-      maxDhwReef.polygon.coordinates[0].reduce(
-        (acum, curr) => acum + curr[1],
-        0
-      ) / points;
-    const centroidLng =
-      maxDhwReef.polygon.coordinates[0].reduce(
-        (acum, curr) => acum + curr[0],
-        0
-      ) / points;
+    const centroidLat = meanBy(
+      maxDhwReef.polygon.coordinates[0],
+      (coords) => coords[1]
+    );
+    const centroidLng = meanBy(
+      maxDhwReef.polygon.coordinates[0],
+      (coords) => coords[0]
+    );
 
     return new LatLng(centroidLat, centroidLng);
   }
