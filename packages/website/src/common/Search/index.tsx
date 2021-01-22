@@ -59,14 +59,12 @@ const Search = ({ classes }: SearchProps) => {
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
       setSearchedReef(null);
-      dispatch(setSearchResult());
       dispatch(setReefOnMap(value));
     }
   };
 
   const onSearchSubmit = () => {
     if (searchedReef) {
-      dispatch(setSearchResult());
       dispatch(setReefOnMap(searchedReef));
       setSearchedReef(null);
     } else if (searchValue) {
