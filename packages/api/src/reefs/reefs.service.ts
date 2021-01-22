@@ -218,16 +218,7 @@ export class ReefsService {
     );
 
     const includeSpotterData = Boolean(
-      reef.spotterId &&
-        reef.status === ReefStatus.Deployed &&
-        isEmpty(
-          await getConflictingExclusionDates(
-            this.exclusionDatesRepository,
-            reef.spotterId,
-            now,
-            now,
-          ),
-        ),
+      reef.spotterId && reef.status === ReefStatus.Deployed,
     );
 
     const liveData = await getLiveData(reef, includeSpotterData);
