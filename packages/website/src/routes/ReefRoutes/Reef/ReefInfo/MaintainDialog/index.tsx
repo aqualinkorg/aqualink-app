@@ -251,7 +251,7 @@ const MaintainDialog = ({
           </Grid>
         </div>
       }
-      header="Maintenance Period"
+      header="Data Exclusion Dates"
       onClose={onDialogClose}
       open={open}
     />
