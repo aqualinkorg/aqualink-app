@@ -23,7 +23,6 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useSelector, useDispatch } from "react-redux";
-import classNames from "classnames";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -169,7 +168,7 @@ const Apply = ({ classes }: ApplyProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Box className={classNames(classes.boxBar)} height="100%" pt={4}>
+      <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>
           <Grid container spacing={6}>
             <Grid item xs={12}>
@@ -213,16 +212,18 @@ const Apply = ({ classes }: ApplyProps) => {
                     <Typography variant="h4" gutterBottom>
                       Site Information
                     </Typography>
-                    <Typography variant="h6" gutterBottom>
-                      Please
-                      <Button
-                        color="primary"
-                        onClick={() => handleRegisterDialog(true)}
-                      >
-                        Sign up
-                      </Button>
-                      before registering a new site
-                    </Typography>
+                    {!user && (
+                      <Typography variant="h6" gutterBottom>
+                        Please
+                        <Button
+                          color="primary"
+                          onClick={() => handleRegisterDialog(true)}
+                        >
+                          Sign up
+                        </Button>
+                        before registering a new site
+                      </Typography>
+                    )}
 
                     <Grid container spacing={2}>
                       <>
@@ -271,7 +272,7 @@ const Apply = ({ classes }: ApplyProps) => {
                         <Grid item xs={12}>
                           <Tooltip
                             disableHoverListener={Boolean(user)}
-                            title="Please login to register a site"
+                            title="Please Sign up before registering a new site"
                           >
                             <div>
                               <Button
