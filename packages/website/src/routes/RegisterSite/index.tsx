@@ -221,6 +221,13 @@ const Apply = ({ classes }: ApplyProps) => {
                         >
                           Sign up
                         </Button>
+                        /
+                        <Button
+                          color="primary"
+                          onClick={() => handleSignInDialog(true)}
+                        >
+                          Sign in
+                        </Button>
                         before registering a new site
                       </Typography>
                     )}
