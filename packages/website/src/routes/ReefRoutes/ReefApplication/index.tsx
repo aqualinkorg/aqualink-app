@@ -17,6 +17,8 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { AgreementsChecked } from "./types";
 import Obligations from "./Obligations";
 import Agreements from "./Agreements";
+import SignInDialog from "../../../common/SignInDialog";
+import RegisterDialog from "../../../common/RegisterDialog";
 import Form from "./Form";
 import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
@@ -42,6 +44,8 @@ const Apply = ({ match, classes }: ApplyProps) => {
   const userLoading = useSelector(userLoadingSelector);
   const reefId = parseInt(match.params.id, 10);
   const user = useSelector(userInfoSelector);
+  const [signInDialogOpen, setSignInDialogOpen] = useState(false);
+  const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [agreementsChecked, setAgreementsChecked] = useState<AgreementsChecked>(
     {
       shipping: false,
@@ -58,8 +62,8 @@ const Apply = ({ match, classes }: ApplyProps) => {
   }, [dispatch, reefId]);
 
   useEffect(() => {
-    if (!isAdmin(user, reefId)) {
-      setMessage("Not authorized");
+    if (!user) {
+      setMessage("You need to sign up to access this page");
     }
   }, [reefId, user]);
 
@@ -81,6 +85,9 @@ const Apply = ({ match, classes }: ApplyProps) => {
     }
   }, [user, reefId]);
 
+  const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
+  const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
+
   const updateAgreement = useCallback(
     (label: keyof AgreementsChecked) => {
       setAgreementsChecked({
@@ -98,6 +105,12 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   const handleFormSubmit = useCallback(
     (siteName: string, data: ReefApplyParams) => {
+      if (!isAdmin(user, reefId)) {
+        setMessage(
+          "You are not authorized to execute this action. If this is an error, contact info@aqualink.org"
+        );
+        return;
+      }
       if (user?.token && reef && reefApplication) {
         setLoading(true);
         reefServices
@@ -125,6 +138,16 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   return (
     <>
+      <RegisterDialog
+        open={registerDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
+      <SignInDialog
+        open={signInDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
       <NavBar searchLocation={false} />
       {loading || reefLoading || userLoading ? (
         <Container className={classes.thankYouMessage}>
@@ -156,21 +179,30 @@ const Apply = ({ match, classes }: ApplyProps) => {
               </Typography>
             </Grid>
             <Grid item>
-              {reef && (
-                <Link to={`/reefs/${reefId}`} className={classes.link}>
+              {reef &&
+                (user ? (
+                  <Link to={`/reefs/${reefId}`} className={classes.link}>
+                    <Button
+                      onClick={() => {
+                        if (user?.token) {
+                          dispatch(getSelf(user.token));
+                        }
+                      }}
+                      color="primary"
+                      variant="contained"
+                    >
+                      Back to site
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
-                    onClick={() => {
-                      if (user?.token) {
-                        dispatch(getSelf(user.token));
-                      }
-                    }}
+                    onClick={() => handleRegisterDialog(true)}
                     color="primary"
                     variant="contained"
                   >
-                    Back to reef
+                    Sign Up
                   </Button>
-                </Link>
-              )}
+                ))}
             </Grid>
           </Grid>
         </Container>
@@ -230,6 +262,7 @@ const styles = (theme: Theme) =>
     },
     coloredMessage: {
       color: theme.palette.primary.main,
+      textAlign: "center",
     },
     mail: {
       marginLeft: "0.2rem",
