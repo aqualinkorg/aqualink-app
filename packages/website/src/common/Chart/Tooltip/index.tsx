@@ -167,7 +167,7 @@ const styles = () =>
     },
     tooltipHeader: {
       flex: "0 1 auto",
-      padding: "0.5rem 1rem 1rem 1rem",
+      padding: "0.5rem 1rem 1rem",
       height: 30,
     },
     tooltipContent: {
