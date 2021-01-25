@@ -20,8 +20,7 @@ import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 import EditForm from "./EditForm";
-import DeployDialog from "./DeployDialog";
-import MaintainDialog from "./MaintainDialog";
+import ExclusionDatesDialog from "./ExclusionDatesDialog";
 import {
   setSelectedReef,
   setReefData,
@@ -50,8 +49,10 @@ const ReefNavBar = ({
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
   const organizationName = reef.admins[0]?.organization;
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const [deployDialogOpen, setDeployDialogOpen] = useState(false);
-  const [maintainDialogOpen, setMaintainDialogOpen] = useState(false);
+  const [
+    exclusionDatesDialogOpen,
+    setExclusionDatesDeployDialogOpen,
+  ] = useState(false);
 
   const clearReefInfo = useCallback(() => {
     if (!hasDailyData) {
@@ -106,24 +107,18 @@ const ReefNavBar = ({
 
   return (
     <>
-      {user?.token && isAdmin(user, reef.id) && (
-        <>
-          <DeployDialog
-            onClose={() => setDeployDialogOpen(false)}
-            open={deployDialogOpen}
+      {user?.token &&
+        isAdmin(user, reef.id) &&
+        (reef.status === "shipped" || reef.status === "deployed") && (
+          <ExclusionDatesDialog
+            dialogType={reef.status === "shipped" ? "deploy" : "maintain"}
+            open={exclusionDatesDialogOpen}
+            onClose={() => setExclusionDatesDeployDialogOpen(false)}
             token={user.token}
             timeZone={reef.timezone}
             reefId={reef.id}
           />
-          <MaintainDialog
-            onClose={() => setMaintainDialogOpen(false)}
-            open={maintainDialogOpen}
-            token={user.token}
-            timeZone={reef.timezone}
-            reefId={reef.id}
-          />
-        </>
-      )}
+        )}
       <Collapse in={alertOpen}>
         <Alert
           severity={alertSeverity}
@@ -220,29 +215,21 @@ const ReefNavBar = ({
                         EDIT SITE DETAILS
                       </Button>
                     </Grid>
-                    {reef.status === "shipped" && (
+                    {(reef.status === "shipped" ||
+                      reef.status === "deployed") && (
                       <Grid item>
                         <Button
                           className={classes.button}
-                          onClick={() => setDeployDialogOpen(true)}
+                          onClick={() =>
+                            setExclusionDatesDeployDialogOpen(true)
+                          }
                           size="small"
                           color="primary"
                           variant="outlined"
                         >
-                          MARK AS DEPLOYED
-                        </Button>
-                      </Grid>
-                    )}
-                    {reef.status === "deployed" && (
-                      <Grid item>
-                        <Button
-                          className={classes.button}
-                          onClick={() => setMaintainDialogOpen(true)}
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        >
-                          ADD EXCLUSION DATES
+                          {reef.status === "shipped"
+                            ? "MARK AS DEPLOYED"
+                            : "ADD EXCLUSION DATES"}
                         </Button>
                       </Grid>
                     )}
@@ -266,7 +253,7 @@ const styles = () =>
       marginRight: "0.5rem",
     },
     button: {
-      width: 180,
+      minWidth: 180,
     },
   });
 
