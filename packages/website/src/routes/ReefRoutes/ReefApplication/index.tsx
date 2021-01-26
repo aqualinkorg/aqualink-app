@@ -182,7 +182,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
                 {unauthorized && (
                   <a
                     className={`${classes.mail} ${classes.link}`}
-                    href="mailto: info@aqualink.org"
+                    href="mailto:info@aqualink.org"
                   >
                     info@aqualink.org
                   </a>
