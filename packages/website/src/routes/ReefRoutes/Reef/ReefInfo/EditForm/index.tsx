@@ -20,6 +20,8 @@ import {
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
 
+const STEP = 1 / 10 ** 9;
+
 const EditForm = ({
   reef,
   loading,
@@ -136,7 +138,11 @@ const EditForm = ({
             <TextField
               className={classes.textField}
               variant="outlined"
-              inputProps={{ className: classes.textField }}
+              type="number"
+              inputProps={{
+                className: classes.textField,
+                step: STEP,
+              }}
               fullWidth
               defaultValue={location ? location.coordinates[1] : null}
               onChange={onCoordinatesChange}
@@ -145,10 +151,6 @@ const EditForm = ({
               name="latitude"
               inputRef={register({
                 required: "Required",
-                pattern: {
-                  value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                  message: "Invalid input",
-                },
               })}
               error={!!errors.latitude}
               helperText={errors?.latitude?.message || ""}
@@ -158,7 +160,11 @@ const EditForm = ({
             <TextField
               className={classes.textField}
               variant="outlined"
-              inputProps={{ className: classes.textField }}
+              type="number"
+              inputProps={{
+                className: classes.textField,
+                step: STEP,
+              }}
               fullWidth
               defaultValue={location ? location.coordinates[0] : null}
               onChange={onCoordinatesChange}
@@ -167,10 +173,6 @@ const EditForm = ({
               name="longitude"
               inputRef={register({
                 required: "Required",
-                pattern: {
-                  value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                  message: "Invalid input",
-                },
               })}
               error={!!errors.longitude}
               helperText={errors?.longitude?.message || ""}
