@@ -176,7 +176,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
               <Typography
                 className={classes.coloredMessage}
                 gutterBottom
-                variant="h1"
+                variant="h3"
               >
                 {message}{" "}
                 {unauthorized && (
