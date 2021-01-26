@@ -41,6 +41,7 @@ const ReefNavBar = ({
   const [editEnabled, setEditEnabled] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertSeverity, setAlertSeverity] = useState<"success" | "error">();
+  const [formSubmitLoading, setFormSubmitLoading] = useState(false);
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
   const organizationName = reef.admins[0]?.organization;
 
@@ -80,6 +81,7 @@ const ReefNavBar = ({
   const handleFormSubmit = useCallback(
     (data: ReefUpdateParams) => {
       if (user && user.token) {
+        setFormSubmitLoading(true);
         reefServices
           .updateReef(reef.id, data, user.token)
           .then(() => dispatch(setReefData(data)))
@@ -89,6 +91,7 @@ const ReefNavBar = ({
             dispatch(setReefDraft(null));
             setEditEnabled(false);
             setAlertOpen(true);
+            setFormSubmitLoading(false);
           });
       }
     },
@@ -147,6 +150,7 @@ const ReefNavBar = ({
               <Grid item xs={10}>
                 <EditForm
                   reef={reef}
+                  loading={formSubmitLoading}
                   onClose={onCloseForm}
                   onSubmit={handleFormSubmit}
                 />
