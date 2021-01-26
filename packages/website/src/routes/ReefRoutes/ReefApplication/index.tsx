@@ -17,6 +17,8 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { AgreementsChecked } from "./types";
 import Obligations from "./Obligations";
 import Agreements from "./Agreements";
+import SignInDialog from "../../../common/SignInDialog";
+import RegisterDialog from "../../../common/RegisterDialog";
 import Form from "./Form";
 import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
@@ -33,6 +35,7 @@ import {
   reefRequest,
 } from "../../../store/Reefs/selectedReefSlice";
 import { ReefApplication, ReefApplyParams } from "../../../store/Reefs/types";
+import { isAdmin } from "../../../helpers/user";
 
 const Apply = ({ match, classes }: ApplyProps) => {
   const dispatch = useDispatch();
@@ -41,6 +44,8 @@ const Apply = ({ match, classes }: ApplyProps) => {
   const userLoading = useSelector(userLoadingSelector);
   const reefId = parseInt(match.params.id, 10);
   const user = useSelector(userInfoSelector);
+  const [signInDialogOpen, setSignInDialogOpen] = useState(false);
+  const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [agreementsChecked, setAgreementsChecked] = useState<AgreementsChecked>(
     {
       shipping: false,
@@ -51,19 +56,35 @@ const Apply = ({ match, classes }: ApplyProps) => {
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [reefApplication, setReefApplication] = useState<ReefApplication>();
+  const [unauthorized, setUnauthorized] = useState(false);
 
   useEffect(() => {
     dispatch(reefRequest(`${reefId}`));
   }, [dispatch, reefId]);
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user) {
+      setMessage("You need to sign up to access this page");
+      setUnauthorized(false);
+      return;
+    }
+    if (!isAdmin(user, reefId)) {
+      setMessage(
+        "You are not authorized to access this page. If this is an error, contact"
+      );
+      setUnauthorized(true);
+    }
+  }, [reefId, user]);
+
+  useEffect(() => {
+    if (user?.token && isAdmin(user, reefId)) {
       setLoading(true);
       reefServices
         .getReefApplication(reefId, user.token)
         .then(({ data }) => {
           if (data.length > 0) {
             setReefApplication(data[0]);
+            setMessage(null);
           } else {
             setMessage("No application found");
           }
@@ -72,6 +93,9 @@ const Apply = ({ match, classes }: ApplyProps) => {
         .finally(() => setLoading(false));
     }
   }, [user, reefId]);
+
+  const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
+  const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
 
   const updateAgreement = useCallback(
     (label: keyof AgreementsChecked) => {
@@ -90,7 +114,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   const handleFormSubmit = useCallback(
     (siteName: string, data: ReefApplyParams) => {
-      if (user?.token && reef && reefApplication) {
+      if (user?.token && isAdmin(user, reefId) && reef && reefApplication) {
         setLoading(true);
         reefServices
           .applyReef(reefId, reefApplication.appId, data, user.token)
@@ -117,6 +141,16 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   return (
     <>
+      <RegisterDialog
+        open={registerDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
+      <SignInDialog
+        open={signInDialogOpen}
+        handleRegisterOpen={handleRegisterDialog}
+        handleSignInOpen={handleSignInDialog}
+      />
       <NavBar searchLocation={false} />
       {loading || reefLoading || userLoading ? (
         <Container className={classes.thankYouMessage}>
@@ -142,27 +176,44 @@ const Apply = ({ match, classes }: ApplyProps) => {
               <Typography
                 className={classes.coloredMessage}
                 gutterBottom
-                variant="h1"
+                variant="h3"
               >
-                {message}
+                {message}{" "}
+                {unauthorized && (
+                  <a
+                    className={`${classes.mail} ${classes.link}`}
+                    href="mailto:info@aqualink.org"
+                  >
+                    info@aqualink.org
+                  </a>
+                )}
               </Typography>
             </Grid>
             <Grid item>
-              {reef && (
-                <Link to={`/reefs/${reefId}`} className={classes.link}>
+              {reef &&
+                (user ? (
+                  <Link to={`/reefs/${reefId}`} className={classes.link}>
+                    <Button
+                      onClick={() => {
+                        if (user?.token) {
+                          dispatch(getSelf(user.token));
+                        }
+                      }}
+                      color="primary"
+                      variant="contained"
+                    >
+                      Back to site
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
-                    onClick={() => {
-                      if (user?.token) {
-                        dispatch(getSelf(user.token));
-                      }
-                    }}
+                    onClick={() => handleRegisterDialog(true)}
                     color="primary"
                     variant="contained"
                   >
-                    Back to reef
+                    Sign Up
                   </Button>
-                </Link>
-              )}
+                ))}
             </Grid>
           </Grid>
         </Container>
@@ -222,11 +273,13 @@ const styles = (theme: Theme) =>
     },
     coloredMessage: {
       color: theme.palette.primary.main,
+      textAlign: "center",
     },
     mail: {
       marginLeft: "0.2rem",
     },
     link: {
+      color: "inherit",
       textDecoration: "none",
       "&:hover": {
         textDecoration: "none",
