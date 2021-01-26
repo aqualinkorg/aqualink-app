@@ -140,7 +140,7 @@ const maintainSpotter = (
   token: string
 ) =>
   requests.send({
-    url: `reefs/${reefId}/maintain`,
+    url: `reefs/${reefId}/exclusion_dates`,
     method: "POST",
     data,
     token,

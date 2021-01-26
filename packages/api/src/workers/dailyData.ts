@@ -20,7 +20,7 @@ import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 import {
   filterSpotterDataByDate,
-  getConflictingExclusionDates,
+  getExclusionDates,
 } from '../utils/reef.utils';
 
 export async function getDegreeHeatingDays(
@@ -61,7 +61,6 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   reef: Reef,
   endOfDate: Date,
-  includeSpotterData: boolean,
   excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
   const { polygon, spotterId, maxMonthlyMean } = reef;
@@ -78,7 +77,7 @@ export async function getDailyData(
     windSpeedsRaw,
     windDirectionsRaw,
   ] = await Promise.all([
-    includeSpotterData
+    spotterId
       ? getSpotterData(spotterId, endOfDate)
       : {
           surfaceTemperature: [],
@@ -288,26 +287,12 @@ export async function getReefsDailyData(
   await Bluebird.map(
     allReefs,
     async (reef) => {
-      const startOfDate = moment(endOfDate)
-        .hours(0)
-        .minutes(0)
-        .seconds(0)
-        .milliseconds(0);
-      const includeSpotterData = Boolean(reef.spotterId);
-
-      const conflictingDates = await getConflictingExclusionDates(
+      const excludedDates = await getExclusionDates(
         exclusionDatesRepository,
         reef.spotterId,
-        startOfDate.toDate(),
-        endOfDate,
       );
 
-      const dailyDataInput = await getDailyData(
-        reef,
-        endOfDate,
-        includeSpotterData,
-        conflictingDates,
-      );
+      const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         endOfDate,
@@ -358,7 +343,7 @@ export async function runDailyUpdate(conn: Connection) {
     .hours(23)
     .minutes(59)
     .seconds(59)
-    .milliseconds(0);
+    .milliseconds(999);
 
   const yesterday = moment(today);
   yesterday.day(today.day() - 1);

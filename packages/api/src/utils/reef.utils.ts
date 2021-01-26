@@ -105,18 +105,25 @@ export const handleDuplicateReef = (err) => {
   throw new InternalServerErrorException('An unexpected error occurred');
 };
 
+export const getExclusionDates = async (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+) => {
+  return exclusionDatesRepository
+    .createQueryBuilder('exclusion')
+    .where('exclusion.spotter_id = :spotterId', {
+      spotterId,
+    })
+    .getMany();
+};
+
 export const getConflictingExclusionDates = async (
   exclusionDatesRepository: Repository<ExclusionDates>,
   spotterId: string,
   start: Date,
   end: Date,
 ) => {
-  const allDates = await exclusionDatesRepository
-    .createQueryBuilder('exclusion')
-    .where('exclusion.spotter_id = :spotterId', {
-      spotterId,
-    })
-    .getMany();
+  const allDates = await getExclusionDates(exclusionDatesRepository, spotterId);
 
   return allDates.filter(
     (exclusionDate) =>

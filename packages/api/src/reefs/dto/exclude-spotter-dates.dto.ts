@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty } from 'class-validator';
 
-export class MaintainSpotterDto {
+export class ExcludeSpotterDatesDto {
   @IsDateString()
   @IsNotEmpty()
   startDate: Date;

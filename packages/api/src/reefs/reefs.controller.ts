@@ -21,7 +21,7 @@ import { CreateReefDto } from './dto/create-reef.dto';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
-import { MaintainSpotterDto } from './dto/maintain-spotter.dto';
+import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { ExclusionDates } from './exclusion-dates.entity';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
@@ -93,12 +93,12 @@ export class ReefsController {
   }
 
   @UseGuards(IsReefAdminGuard)
-  @Post(':reef_id/maintain')
+  @Post(':reef_id/exclusion_dates')
   addExclusionDates(
     @Param('reef_id', ParseIntPipe) id: number,
-    @Body() maintainSpotterDto: MaintainSpotterDto,
+    @Body() excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ): Promise<void> {
-    return this.reefsService.addExclusionDates(id, maintainSpotterDto);
+    return this.reefsService.addExclusionDates(id, excludeSpotterDatesDto);
   }
 
   @UseGuards(IsReefAdminGuard)

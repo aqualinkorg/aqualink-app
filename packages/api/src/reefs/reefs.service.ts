@@ -29,7 +29,7 @@ import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
-import { MaintainSpotterDto } from './dto/maintain-spotter.dto';
+import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 
 @Injectable()
 export class ReefsService {
@@ -294,8 +294,11 @@ export class ReefsService {
     ]);
   }
 
-  async addExclusionDates(id: number, maintainSpotterDto: MaintainSpotterDto) {
-    const { startDate, endDate } = maintainSpotterDto;
+  async addExclusionDates(
+    id: number,
+    excludeSpotterDatesDto: ExcludeSpotterDatesDto,
+  ) {
+    const { startDate, endDate } = excludeSpotterDatesDto;
 
     const reef = await this.reefsRepository.findOne(id);
 
