@@ -56,6 +56,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [reefApplication, setReefApplication] = useState<ReefApplication>();
+  const [unauthorized, setUnauthorized] = useState(false);
 
   useEffect(() => {
     dispatch(reefRequest(`${reefId}`));
@@ -64,11 +65,19 @@ const Apply = ({ match, classes }: ApplyProps) => {
   useEffect(() => {
     if (!user) {
       setMessage("You need to sign up to access this page");
+      setUnauthorized(false);
+      return;
+    }
+    if (!isAdmin(user, reefId)) {
+      setMessage(
+        "You are not authorized to access this page. If this is an error, contact"
+      );
+      setUnauthorized(true);
     }
   }, [reefId, user]);
 
   useEffect(() => {
-    if (user?.token) {
+    if (user?.token && isAdmin(user, reefId)) {
       setLoading(true);
       reefServices
         .getReefApplication(reefId, user.token)
@@ -105,13 +114,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   const handleFormSubmit = useCallback(
     (siteName: string, data: ReefApplyParams) => {
-      if (!isAdmin(user, reefId)) {
-        setMessage(
-          "You are not authorized to execute this action. If this is an error, contact info@aqualink.org"
-        );
-        return;
-      }
-      if (user?.token && reef && reefApplication) {
+      if (user?.token && isAdmin(user, reefId) && reef && reefApplication) {
         setLoading(true);
         reefServices
           .applyReef(reefId, reefApplication.appId, data, user.token)
@@ -175,7 +178,15 @@ const Apply = ({ match, classes }: ApplyProps) => {
                 gutterBottom
                 variant="h1"
               >
-                {message}
+                {message}{" "}
+                {unauthorized && (
+                  <a
+                    className={`${classes.mail} ${classes.link}`}
+                    href="mailto: info@aqualink.org"
+                  >
+                    info@aqualink.org
+                  </a>
+                )}
               </Typography>
             </Grid>
             <Grid item>
@@ -268,6 +279,7 @@ const styles = (theme: Theme) =>
       marginLeft: "0.2rem",
     },
     link: {
+      color: "inherit",
       textDecoration: "none",
       "&:hover": {
         textDecoration: "none",
