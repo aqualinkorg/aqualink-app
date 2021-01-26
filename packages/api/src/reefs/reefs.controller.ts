@@ -94,11 +94,11 @@ export class ReefsController {
 
   @UseGuards(IsReefAdminGuard)
   @Post(':reef_id/maintain')
-  maintainSpotter(
+  addExclusionDates(
     @Param('reef_id', ParseIntPipe) id: number,
     @Body() maintainSpotterDto: MaintainSpotterDto,
   ): Promise<void> {
-    return this.reefsService.maintainSpotter(id, maintainSpotterDto);
+    return this.reefsService.addExclusionDates(id, maintainSpotterDto);
   }
 
   @UseGuards(IsReefAdminGuard)

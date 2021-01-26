@@ -1,5 +1,5 @@
 /** Worker to process daily data for all reefs. */
-import { isEmpty, isNil, isNumber, omitBy } from 'lodash';
+import { isEmpty, isNil, isNumber, mapValues, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
@@ -142,41 +142,9 @@ export async function getDailyData(
   ]);
 
   const spotterData = spotterRawData
-    ? {
-        surfaceTemperature: extractSofarValues(
-          filterSpotterDataByDate(
-            spotterRawData.surfaceTemperature,
-            excludedDates,
-          ),
-        ),
-        bottomTemperature: extractSofarValues(
-          filterSpotterDataByDate(
-            spotterRawData.bottomTemperature,
-            excludedDates,
-          ),
-        ),
-        significantWaveHeight: extractSofarValues(
-          filterSpotterDataByDate(
-            spotterRawData.significantWaveHeight,
-            excludedDates,
-          ),
-        ),
-        wavePeakPeriod: extractSofarValues(
-          filterSpotterDataByDate(spotterRawData.wavePeakPeriod, excludedDates),
-        ),
-        waveMeanDirection: extractSofarValues(
-          filterSpotterDataByDate(
-            spotterRawData.waveMeanDirection,
-            excludedDates,
-          ),
-        ),
-        windSpeed: extractSofarValues(
-          filterSpotterDataByDate(spotterRawData.windSpeed, excludedDates),
-        ),
-        windDirection: extractSofarValues(
-          filterSpotterDataByDate(spotterRawData.windDirection, excludedDates),
-        ),
-      }
+    ? mapValues(spotterRawData, (v) =>
+        v ? extractSofarValues(filterSpotterDataByDate(v, excludedDates)) : [],
+      )
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -320,9 +288,12 @@ export async function getReefsDailyData(
   await Bluebird.map(
     allReefs,
     async (reef) => {
-      const startOfDate = moment(endOfDate);
-      startOfDate.hours(0).minutes(0).seconds(0).milliseconds(0);
-      const includeSpotterData = reef.spotterId;
+      const startOfDate = moment(endOfDate)
+        .hours(0)
+        .minutes(0)
+        .seconds(0)
+        .milliseconds(0);
+      const includeSpotterData = Boolean(reef.spotterId);
 
       const conflictingDates = await getConflictingExclusionDates(
         exclusionDatesRepository,
@@ -334,7 +305,7 @@ export async function getReefsDailyData(
       const dailyDataInput = await getDailyData(
         reef,
         endOfDate,
-        Boolean(includeSpotterData),
+        includeSpotterData,
         conflictingDates,
       );
       const weeklyAlertLevel = await getWeeklyAlertLevel(
@@ -382,8 +353,12 @@ export async function getReefsDailyData(
 }
 
 export async function runDailyUpdate(conn: Connection) {
-  const today = moment().utc();
-  today.hours(23).minutes(59).seconds(59).milliseconds(0);
+  const today = moment()
+    .utc()
+    .hours(23)
+    .minutes(59)
+    .seconds(59)
+    .milliseconds(0);
 
   const yesterday = moment(today);
   yesterday.day(today.day() - 1);

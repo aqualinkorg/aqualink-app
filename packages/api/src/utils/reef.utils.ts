@@ -118,12 +118,11 @@ export const getConflictingExclusionDates = async (
     })
     .getMany();
 
-  return allDates.filter((exclusionDate) => {
-    return (
+  return allDates.filter(
+    (exclusionDate) =>
       start <= exclusionDate.endDate &&
-      (!exclusionDate.startDate || exclusionDate.startDate <= end)
-    );
-  });
+      (!exclusionDate.startDate || exclusionDate.startDate <= end),
+  );
 };
 
 export const filterSpotterDataByDate = (
@@ -131,13 +130,13 @@ export const filterSpotterDataByDate = (
   exclusionDates: ExclusionDates[],
 ) => {
   const data = spotterData.filter(({ timestamp }) => {
-    const excluded = isNil(
+    const isExcluded = isNil(
       exclusionDates.find(({ startDate: start, endDate: end }) => {
         const dataDate = new Date(timestamp);
         return dataDate <= end && (!start || start <= dataDate);
       }),
     );
-    return excluded;
+    return isExcluded;
   });
   return data;
 };

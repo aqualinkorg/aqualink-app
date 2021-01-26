@@ -294,7 +294,7 @@ export class ReefsService {
     ]);
   }
 
-  async maintainSpotter(id: number, maintainSpotterDto: MaintainSpotterDto) {
+  async addExclusionDates(id: number, maintainSpotterDto: MaintainSpotterDto) {
     const { startDate, endDate } = maintainSpotterDto;
 
     const reef = await this.reefsRepository.findOne(id);
@@ -305,10 +305,6 @@ export class ReefsService {
 
     if (!reef.spotterId) {
       throw new BadRequestException(`Reef with ID ${id} has no spotter`);
-    }
-
-    if (reef.status !== ReefStatus.Deployed) {
-      throw new BadRequestException(`Reef with ID ${id} is not deployed`);
     }
 
     if (startDate >= endDate) {
@@ -333,10 +329,6 @@ export class ReefsService {
 
     if (!reef.spotterId) {
       throw new BadRequestException(`Reef with ID ${id} has no spotter`);
-    }
-
-    if (reef.status !== ReefStatus.Deployed) {
-      throw new BadRequestException(`Reef with ID ${id} is not deployed`);
     }
 
     return this.exclusionDatesRepository.find({
