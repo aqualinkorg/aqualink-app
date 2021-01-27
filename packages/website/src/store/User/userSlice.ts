@@ -15,6 +15,7 @@ import type {
   UserSignInParams,
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
+import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
 
 const userInitialState: UserState = {
@@ -22,9 +23,6 @@ const userInitialState: UserState = {
   loading: false,
   error: null,
 };
-
-const isManager = (user: User) =>
-  user.adminLevel === "reef_manager" || user.adminLevel === "super_admin";
 
 export const createUser = createAsyncThunk<
   User,

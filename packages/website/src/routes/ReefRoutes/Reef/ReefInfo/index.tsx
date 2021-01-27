@@ -31,13 +31,12 @@ import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import reefServices from "../../../../services/reefServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { convertToLocalTime } from "../../../../helpers/dates";
-import { isAdmin } from "../../../../helpers/user";
 
 const ReefNavBar = ({
   hasDailyData,
   reef,
   lastSurvey,
-  isManager,
+  isAdmin,
   classes,
 }: ReefNavBarProps) => {
   const dispatch = useDispatch();
@@ -108,7 +107,7 @@ const ReefNavBar = ({
   return (
     <>
       {user?.token &&
-        isAdmin(user, reef.id) &&
+        isAdmin &&
         (reef.status === "shipped" || reef.status === "deployed") && (
           <ExclusionDatesDialog
             dialogType={reef.status === "shipped" ? "deploy" : "maintain"}
@@ -195,7 +194,7 @@ const ReefNavBar = ({
                     </Box>
                   )}
                 </Grid>
-                {isManager && (
+                {isAdmin && (
                   <Grid
                     container
                     direction={matches ? "row" : "column"}
@@ -262,7 +261,7 @@ interface ReefNavBarIncomingProps {
   hasDailyData: boolean;
   reef: Reef;
   lastSurvey?: string | null;
-  isManager: boolean;
+  isAdmin: boolean;
 }
 
 ReefNavBar.defaultProps = {

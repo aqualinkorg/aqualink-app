@@ -26,7 +26,7 @@ describe("ReefNavBar", () => {
           <ReefNavBar
             hasDailyData
             reef={mockReef}
-            isManager
+            isAdmin
             lastSurvey="May 10, 2020"
           />
         </Router>
