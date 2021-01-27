@@ -215,24 +215,25 @@ const ReefNavBar = ({
                         EDIT SITE DETAILS
                       </Button>
                     </Grid>
-                    {(reef.status === "shipped" ||
-                      reef.status === "deployed") && (
-                      <Grid item>
-                        <Button
-                          className={classes.button}
-                          onClick={() =>
-                            setExclusionDatesDeployDialogOpen(true)
-                          }
-                          size="small"
-                          color="primary"
-                          variant="outlined"
-                        >
-                          {reef.status === "shipped"
-                            ? "MARK AS DEPLOYED"
-                            : "ADD EXCLUSION DATES"}
-                        </Button>
-                      </Grid>
-                    )}
+                    {reef.spotterId &&
+                      (reef.status === "shipped" ||
+                        reef.status === "deployed") && (
+                        <Grid item>
+                          <Button
+                            className={classes.button}
+                            onClick={() =>
+                              setExclusionDatesDeployDialogOpen(true)
+                            }
+                            size="small"
+                            color="primary"
+                            variant="outlined"
+                          >
+                            {reef.status === "shipped"
+                              ? "MARK AS DEPLOYED"
+                              : "ADD EXCLUSION DATES"}
+                          </Button>
+                        </Grid>
+                      )}
                   </Grid>
                 )}
               </Grid>
