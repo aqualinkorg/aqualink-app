@@ -6,7 +6,6 @@ import {
   Button,
   Grid,
   TextField,
-  Theme,
   Typography,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -235,10 +234,9 @@ const EditForm = ({
         <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
           <Grid item>
             <Button
-              className={classes.button}
               onClick={onClose}
               variant="outlined"
-              size="small"
+              size="medium"
               color="secondary"
             >
               Cancel
@@ -246,12 +244,17 @@ const EditForm = ({
           </Grid>
           <Grid item>
             <Button
-              className={classes.button}
               type="submit"
+              disabled={
+                loading ||
+                !!reefName.error ||
+                !!reefDepth.error ||
+                !!reefLongitude.error ||
+                !!reefLatitude.error
+              }
               variant="outlined"
-              size="small"
+              size="medium"
               color="primary"
-              disabled={loading}
             >
               {loading ? "Saving..." : "Save"}
             </Button>
@@ -262,21 +265,11 @@ const EditForm = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     textField: {
       color: "black",
-      height: "2.5rem",
       alignItems: "center",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: theme.palette.primary.main,
-      },
-    },
-    button: {
-      height: "2.5rem",
     },
     infoAlert: {
       marginTop: "0.5rem",
