@@ -158,7 +158,7 @@ const SurveyMediaDetails = ({
                           item
                           xs={12}
                         >
-                          <CircularProgress size="10rem" thickness={1} />
+                          <CircularProgress size="4rem" thickness={1} />
                         </Grid>
                       ) : (
                         <Grid style={{ height: "100%" }} container>
