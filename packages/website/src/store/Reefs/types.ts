@@ -36,6 +36,22 @@ export interface SpotterPosition {
   };
 }
 
+export interface DeploySpotterParams {
+  endDate: string;
+}
+
+export interface MaintainSpotterParams {
+  startDate: string;
+  endDate: string;
+}
+
+export type ExclusionDateResponse = {
+  id: number;
+  spotterId: string;
+  startDate: string | null;
+  endDate: string;
+}[];
+
 export interface LiveData {
   reef: { id: number };
   bottomTemperature?: SofarValue;
