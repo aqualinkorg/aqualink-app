@@ -1,8 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-@Unique('no_duplicates_start_date', ['spotterId', 'startDate'])
-@Unique('no_duplicate_end_date', ['spotterId', 'endDate'])
 export class ExclusionDates {
   @PrimaryGeneratedColumn()
   id: number;
@@ -11,7 +9,7 @@ export class ExclusionDates {
   spotterId: string;
 
   // The start of the exclusive range. Inclusive
-  @Column()
+  @Column({ nullable: true })
   startDate: Date;
 
   // The end of the exclusive range. Inclusive

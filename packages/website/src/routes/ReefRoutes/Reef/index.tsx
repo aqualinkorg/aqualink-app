@@ -51,13 +51,13 @@ const getAlertMessage = (
 ) => {
   const userReef = findAdministeredReef(user, parseInt(reefId, 10));
   const { applied, status } = userReef || {};
-  const isManager = isAdmin(user, parseInt(reefId, 10));
+  const isSiteAdmin = isAdmin(user, parseInt(reefId, 10));
 
   const defaultMessage =
     "Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
-    case !isManager:
+    case !isSiteAdmin:
       return defaultMessage;
 
     case !hasDailyData:
@@ -199,7 +199,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               hasDailyData={hasDailyData}
               reef={reefDetails}
               lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-              isManager={isAdmin(user, parseInt(reefId, 10))}
+              isAdmin={isAdmin(user, parseInt(reefId, 10))}
             />
             {!hasSpotterData && (
               <Box mt="1.3rem">

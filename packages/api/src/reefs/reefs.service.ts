@@ -3,16 +3,17 @@ import {
   NotFoundException,
   InternalServerErrorException,
   Logger,
+  BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { isNil, omit } from 'lodash';
+import { omit } from 'lodash';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
-import { SofarLiveData, SofarValue } from '../utils/sofar.types';
+import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
@@ -21,10 +22,14 @@ import {
   getRegion,
   getTimezones,
   handleDuplicateReef,
+  filterSpotterDataByDate,
+  getConflictingExclusionDates,
 } from '../utils/reef.utils';
 import { getMMM } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
+import { DeploySpotterDto } from './dto/deploy-spotter.dto';
+import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 
 @Injectable()
 export class ReefsService {
@@ -204,29 +209,16 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
+    const now = new Date();
+
     const weeklyAlertLevel = await getWeeklyAlertLevel(
       this.dailyDataRepository,
-      new Date(),
+      now,
       reef,
     );
 
     const includeSpotterData = Boolean(
-      reef.spotterId &&
-        reef.status === ReefStatus.Deployed &&
-        isNil(
-          await this.exclusionDatesRepository
-            .createQueryBuilder('exclusion')
-            .where('exclusion.spotter_id = :spotterId', {
-              spotterId: reef.spotterId,
-            })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:date)', {
-              date: new Date(),
-            })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:date)', {
-              date: new Date(),
-            })
-            .getOne(),
-        ),
+      reef.spotterId && reef.status === ReefStatus.Deployed,
     );
 
     const liveData = await getLiveData(reef, includeSpotterData);
@@ -248,19 +240,12 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ${id} has no spotter.`);
     }
 
-    const exclusionDates = await this.exclusionDatesRepository
-      .createQueryBuilder('exclusion')
-      .where('exclusion.spotter_id = :spotterId', {
-        spotterId: reef.spotterId,
-      })
-      .andWhere('DATE(exclusion.startDate) <= DATE(:endDate)', {
-        endDate,
-      })
-      .andWhere('DATE(exclusion.endDate) >= DATE(:startDate)', {
-        startDate,
-      })
-      .orderBy('exclusion.startDate', 'ASC')
-      .getMany();
+    const exclusionDates = await getConflictingExclusionDates(
+      this.exclusionDatesRepository,
+      reef.spotterId,
+      startDate,
+      endDate,
+    );
 
     const { surfaceTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
@@ -269,15 +254,91 @@ export class ReefsService {
     );
 
     return {
-      surfaceTemperature: this.filterSpotterDataByDate(
+      surfaceTemperature: filterSpotterDataByDate(
         surfaceTemperature,
         exclusionDates,
       ),
-      bottomTemperature: this.filterSpotterDataByDate(
+      bottomTemperature: filterSpotterDataByDate(
         bottomTemperature,
         exclusionDates,
       ),
     };
+  }
+
+  async deploySpotter(id: number, deploySpotterDto: DeploySpotterDto) {
+    const { endDate } = deploySpotterDto;
+
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    if (reef.status === ReefStatus.Deployed) {
+      throw new BadRequestException(`Reef with ID ${id} is already deployed`);
+    }
+
+    // Run update queries concurrently
+    await Promise.all([
+      this.reefsRepository.update(id, {
+        status: ReefStatus.Deployed,
+      }),
+      this.exclusionDatesRepository.save({
+        spotterId: reef.spotterId,
+        endDate,
+      }),
+    ]);
+  }
+
+  async addExclusionDates(
+    id: number,
+    excludeSpotterDatesDto: ExcludeSpotterDatesDto,
+  ) {
+    const { startDate, endDate } = excludeSpotterDatesDto;
+
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    if (startDate >= endDate) {
+      throw new BadRequestException(
+        'Start date should be less than the end date',
+      );
+    }
+
+    await this.exclusionDatesRepository.save({
+      spotterId: reef.spotterId,
+      endDate,
+      startDate,
+    });
+  }
+
+  async getExclusionDates(id: number) {
+    const reef = await this.reefsRepository.findOne(id);
+
+    if (!reef) {
+      throw new NotFoundException(`Reef with ID ${id} not found`);
+    }
+
+    if (!reef.spotterId) {
+      throw new BadRequestException(`Reef with ID ${id} has no spotter`);
+    }
+
+    return this.exclusionDatesRepository.find({
+      where: {
+        spotterId: reef.spotterId,
+      },
+    });
   }
 
   private async updateAdmins(id: number, admins: User[]) {
@@ -294,21 +355,5 @@ export class ReefsService {
       .relation('admins')
       .of(reef)
       .addAndRemove(admins, reef.admins);
-  }
-
-  private filterSpotterDataByDate(
-    spotterDate: SofarValue[],
-    exclusionDates: ExclusionDates[],
-  ) {
-    return spotterDate.filter(({ timestamp }) => {
-      const excluded = isNil(
-        exclusionDates.find(({ startDate: start, endDate: end }) => {
-          const dataDate = new Date(timestamp);
-          dataDate.setUTCHours(0, 0, 0, 0);
-          return start <= dataDate && dataDate <= end;
-        }),
-      );
-      return excluded;
-    });
   }
 }

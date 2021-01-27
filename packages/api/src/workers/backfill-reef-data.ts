@@ -8,8 +8,12 @@ const logger = new Logger('Backfill Worker');
 
 async function run(reefId: number, days: number) {
   const backlogArray = Array.from(Array(days).keys());
-  const today = moment().utc();
-  today.hours(23).minutes(59).seconds(59).milliseconds(999);
+  const today = moment()
+    .utc()
+    .hours(23)
+    .minutes(59)
+    .seconds(59)
+    .milliseconds(999);
 
   await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
     const date = moment(today);
