@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
+import "./plugins/leaflet-tilelayer-subpixel-fix";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import { Reef, Position, SpotterPosition } from "../../../../store/Reefs/types";
