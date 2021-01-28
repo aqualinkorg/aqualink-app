@@ -138,7 +138,7 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
                 alignItems="center"
                 justifyContent="center"
               >
-                <CircularProgress size="10rem" thickness={1} />
+                <CircularProgress size="4rem" thickness={1} />
               </Box>
             )}
           </Box>

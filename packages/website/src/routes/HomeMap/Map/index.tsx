@@ -107,7 +107,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
 
   return loading ? (
     <div className={classes.loading}>
-      <CircularProgress size="10rem" thickness={1} />
+      <CircularProgress size="4rem" thickness={1} />
     </div>
   ) : (
     <Map

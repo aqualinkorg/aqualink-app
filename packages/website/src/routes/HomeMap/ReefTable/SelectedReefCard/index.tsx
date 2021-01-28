@@ -313,7 +313,7 @@ const SelectedReefCard = () => {
             textAlign="center"
             p={4}
           >
-            <CircularProgress size="6rem" thickness={1} />
+            <CircularProgress size="3rem" thickness={1} />
           </Box>
         ) : reef ? (
           <SelectedReefContent reef={reef} url={featuredMedia?.url} />
