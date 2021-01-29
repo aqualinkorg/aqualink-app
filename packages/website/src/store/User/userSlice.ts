@@ -5,7 +5,7 @@ import {
   ActionReducerMapBuilder,
   AsyncThunk,
 } from "@reduxjs/toolkit";
-import { FirebaseError } from "firebase";
+import { FirebaseError } from "firebase/app";
 
 import type {
   PasswordResetParams,
