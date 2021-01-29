@@ -11,7 +11,7 @@ import L from "leaflet";
 
   const originalInitTile = L.GridLayer.prototype._initTile;
   L.GridLayer.include({
-    _initTile: function (tile: any) {
+    _initTile: function (tile) {
       originalInitTile.call(this, tile);
       const tileSize = this.getTileSize();
       tile.style.width = tileSize.x + 1 + "px";
