@@ -25,6 +25,7 @@ export enum ReefStatus {
   Approved = 'approved',
   Shipped = 'shipped',
   Deployed = 'deployed',
+  Maintenance = 'maintenance',
 }
 
 @Entity()

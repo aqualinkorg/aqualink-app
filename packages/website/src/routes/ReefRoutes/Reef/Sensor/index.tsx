@@ -36,10 +36,10 @@ const getApplicationTag = (
 ): [string, boolean] => {
   const userReef = findAdministeredReef(user, reefId);
   const { applied, status } = userReef || {};
-  const isManager = isAdmin(user, reefId);
+  const isSiteAdmin = isAdmin(user, reefId);
 
   switch (true) {
-    case !isManager:
+    case !isSiteAdmin:
       return ["Not Installed Yet", false];
 
     case !applied:

@@ -10,8 +10,11 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Point } from 'geojson';
+import { isNil } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
+import { ExclusionDates } from '../reefs/exclusion-dates.entity';
+import { SofarValue } from './sofar.types';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -100,4 +103,47 @@ export const handleDuplicateReef = (err) => {
 
   logger.error('An unexpected error occurred', err);
   throw new InternalServerErrorException('An unexpected error occurred');
+};
+
+export const getExclusionDates = async (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+) => {
+  return exclusionDatesRepository
+    .createQueryBuilder('exclusion')
+    .where('exclusion.spotter_id = :spotterId', {
+      spotterId,
+    })
+    .getMany();
+};
+
+export const getConflictingExclusionDates = async (
+  exclusionDatesRepository: Repository<ExclusionDates>,
+  spotterId: string,
+  start: Date,
+  end: Date,
+) => {
+  const allDates = await getExclusionDates(exclusionDatesRepository, spotterId);
+
+  return allDates.filter(
+    (exclusionDate) =>
+      start <= exclusionDate.endDate &&
+      (!exclusionDate.startDate || exclusionDate.startDate <= end),
+  );
+};
+
+export const filterSpotterDataByDate = (
+  spotterData: SofarValue[],
+  exclusionDates: ExclusionDates[],
+) => {
+  const data = spotterData.filter(({ timestamp }) => {
+    const isExcluded = isNil(
+      exclusionDates.find(({ startDate: start, endDate: end }) => {
+        const dataDate = new Date(timestamp);
+        return dataDate <= end && (!start || start <= dataDate);
+      }),
+    );
+    return isExcluded;
+  });
+  return data;
 };

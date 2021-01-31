@@ -160,7 +160,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
             alignItems="center"
             justify="center"
           >
-            <CircularProgress size="10rem" thickness={2} />
+            <CircularProgress size="4rem" thickness={2} />
           </Grid>
         </Container>
       ) : message ? (

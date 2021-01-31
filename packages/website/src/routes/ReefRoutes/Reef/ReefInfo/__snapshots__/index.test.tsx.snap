@@ -121,15 +121,20 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
             </mock-box>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
           >
-            <mock-button
-              color="primary"
-              size="small"
-              variant="outlined"
+            <div
+              class="MuiGrid-root MuiGrid-item"
             >
-              EDIT SITE DETAILS
-            </mock-button>
+              <mock-button
+                classname="ReefNavBar-button-3"
+                color="primary"
+                size="small"
+                variant="outlined"
+              >
+                EDIT SITE DETAILS
+              </mock-button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 /** Worker to process daily data for all reefs. */
-import { isEmpty, isNil, isNumber, omitBy } from 'lodash';
+import { isEmpty, isNil, isNumber, mapValues, omitBy } from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
@@ -18,6 +18,10 @@ import { SofarDailyData, SofarValue } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
+import {
+  filterSpotterDataByDate,
+  getExclusionDates,
+} from '../utils/reef.utils';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -57,7 +61,7 @@ export async function getDegreeHeatingDays(
 export async function getDailyData(
   reef: Reef,
   endOfDate: Date,
-  includeSpotterData: boolean,
+  excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
@@ -73,7 +77,7 @@ export async function getDailyData(
     windSpeedsRaw,
     windDirectionsRaw,
   ] = await Promise.all([
-    includeSpotterData
+    spotterId
       ? getSpotterData(spotterId, endOfDate)
       : {
           surfaceTemperature: [],
@@ -137,19 +141,9 @@ export async function getDailyData(
   ]);
 
   const spotterData = spotterRawData
-    ? {
-        surfaceTemperature: extractSofarValues(
-          spotterRawData.surfaceTemperature,
-        ),
-        bottomTemperature: extractSofarValues(spotterRawData.bottomTemperature),
-        significantWaveHeight: extractSofarValues(
-          spotterRawData.significantWaveHeight,
-        ),
-        wavePeakPeriod: extractSofarValues(spotterRawData.wavePeakPeriod),
-        waveMeanDirection: extractSofarValues(spotterRawData.waveMeanDirection),
-        windSpeed: extractSofarValues(spotterRawData.windSpeed),
-        windDirection: extractSofarValues(spotterRawData.windDirection),
-      }
+    ? mapValues(spotterRawData, (v) =>
+        v ? extractSofarValues(filterSpotterDataByDate(v, excludedDates)) : [],
+      )
     : {
         surfaceTemperature: [],
         bottomTemperature: [],
@@ -293,28 +287,12 @@ export async function getReefsDailyData(
   await Bluebird.map(
     allReefs,
     async (reef) => {
-      const includeSpotterData =
-        reef.spotterId &&
-        isNil(
-          await exclusionDatesRepository
-            .createQueryBuilder('exclusion')
-            .where('exclusion.spotter_id = :spotterId', {
-              spotterId: reef.spotterId,
-            })
-            .andWhere('DATE(exclusion.startDate) <= DATE(:endOfDate)', {
-              endOfDate,
-            })
-            .andWhere('DATE(exclusion.endDate) >= DATE(:endOfDate)', {
-              endOfDate,
-            })
-            .getOne(),
-        );
-
-      const dailyDataInput = await getDailyData(
-        reef,
-        endOfDate,
-        Boolean(includeSpotterData),
+      const excludedDates = await getExclusionDates(
+        exclusionDatesRepository,
+        reef.spotterId,
       );
+
+      const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         endOfDate,
@@ -360,8 +338,12 @@ export async function getReefsDailyData(
 }
 
 export async function runDailyUpdate(conn: Connection) {
-  const today = moment().utc();
-  today.hours(23).minutes(59).seconds(59).milliseconds(0);
+  const today = moment()
+    .utc()
+    .hours(23)
+    .minutes(59)
+    .seconds(59)
+    .milliseconds(999);
 
   const yesterday = moment(today);
   yesterday.day(today.day() - 1);
