@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  createStyles,
   Grid,
+  Hidden,
   withStyles,
   WithStyles,
-  createStyles,
-  Hidden,
-  Drawer,
 } from "@material-ui/core";
-import classNames from "classnames";
-
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
@@ -60,26 +58,13 @@ const Homepage = ({ classes }: HomepageProps) => {
             </Grid>
           </Hidden>
           <Hidden smUp>
-            <Drawer
-              variant="permanent"
-              anchor="bottom"
-              open={openDrawer}
-              onClose={toggleDrawer}
-              className={classNames({
-                [classes.openDrawer]: openDrawer,
-                [classes.closedDrawer]: !openDrawer,
-              })}
-              classes={{
-                paper: classNames(classes.drawer, {
-                  [classes.openDrawer]: openDrawer,
-                  [classes.closedDrawer]: !openDrawer,
-                }),
-              }}
+            <SwipeableBottomSheet
+              overflowHeight={10}
+              onChange={setOpenDrawer}
+              bodyStyle={{ maxHeight: "80vh" }}
             >
-              <div role="presentation" onClick={toggleDrawer}>
-                <ReefTable openDrawer={openDrawer} />
-              </div>
-            </Drawer>
+              <ReefTable openDrawer={openDrawer} handleHeight={50} />
+            </SwipeableBottomSheet>
           </Hidden>
         </Grid>
       </div>
@@ -95,24 +80,13 @@ const styles = () =>
     },
     map: {
       display: "flex",
+      zIndex: 0,
     },
     reefTable: {
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
       overflowY: "auto",
-    },
-    drawer: {
-      borderTopLeftRadius: "15px",
-      borderTopRightRadius: "15px",
-    },
-    openDrawer: {
-      height: "calc(95% - 64px);", // subtract height of the navbar
-      overflow: "auto",
-    },
-    closedDrawer: {
-      height: "50px",
-      overflow: "hidden",
     },
   });
 

@@ -92,7 +92,7 @@
       }
     ],
     "no-unused-vars": [
-      "error",
+      "warn",
       {
         "argsIgnorePattern": "^props$",
         "ignoreRestSiblings": true
