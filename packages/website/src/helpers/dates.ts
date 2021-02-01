@@ -5,6 +5,14 @@ import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
+interface DisplayDateParams {
+  hourlyData: boolean;
+  displayTimezone: boolean;
+  date: DateString;
+  timeZone?: string | null;
+  options?: Intl.DateTimeFormatOptions;
+}
+
 export const subtractFromDate = (endDate: string, amount: Range): string => {
   const date = new Date(endDate);
   const day = 1000 * 60 * 60 * 24;
@@ -120,6 +128,35 @@ export const getTimeZoneName = (timeZone: string): string => {
   const needsGMT =
     rawTimeZoneName.includes("+") || rawTimeZoneName.includes("-");
   return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
+};
+
+export const displayTimeInLocalTimezone = ({
+  hourlyData,
+  displayTimezone,
+  date,
+  timeZone,
+  options,
+}: DisplayDateParams) => {
+  if (date) {
+    const timeZoneName = getTimeZoneName(timeZone || "UTC");
+    const dateString = new Date(date).toLocaleString("en-US", {
+      day: options?.day || "2-digit",
+      month: options?.month || "2-digit",
+      year: options?.year || "2-digit",
+      ...(hourlyData
+        ? {
+            hour: options?.hour || "2-digit",
+            minute: options?.minute || "2-digit",
+          }
+        : {}),
+      timeZone: timeZone || "UTC",
+    });
+
+    return `${dateString} ${
+      hourlyData && timeZoneName && displayTimezone ? timeZoneName : ""
+    }`;
+  }
+  return date;
 };
 
 export const toRelativeTime = (timestamp?: string) => {
