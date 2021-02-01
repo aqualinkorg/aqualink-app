@@ -43,6 +43,10 @@ import {
   findChartPeriod,
 } from "../../../helpers/dates";
 import { Range } from "../../../store/Reefs/types";
+import {
+  reefsListSelector,
+  reefsRequest,
+} from "../../../store/Reefs/reefsListSlice";
 
 const getAlertMessage = (
   user: User | null,
@@ -102,6 +106,7 @@ const getAlertMessage = (
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
+  const reefsList = useSelector(reefsListSelector);
   const user = useSelector(userInfoSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
@@ -129,6 +134,13 @@ const Reef = ({ match, classes }: ReefProps) => {
   const [endDate, setEndDate] = useState<string>();
   const [pickerDate, setPickerDate] = useState<string>(today.toISOString());
 
+  // Fetch reefs for the search bar
+  useEffect(() => {
+    if (reefsList.length === 0) {
+      dispatch(reefsRequest());
+    }
+  }, [dispatch, reefsList]);
+
   // fetch the reef and spotter data
   useEffect(() => {
     dispatch(reefRequest(reefId));
@@ -138,7 +150,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   // fetch spotter data from api, also filter the range we're interested in.
   useEffect(() => {
     // make sure we've loaded the reef, before attempting to get its spotter data.
-    if (hasSpotterData && !loading) {
+    if (reefId === reefDetails?.id.toString() && hasSpotterData && !loading) {
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
@@ -150,7 +162,15 @@ const Reef = ({ match, classes }: ReefProps) => {
       // Clear possible spotter data from previously selected reef
       dispatch(clearReefSpotterData());
     }
-  }, [dispatch, reefId, hasSpotterData, range, pickerDate, loading]);
+  }, [
+    dispatch,
+    reefId,
+    hasSpotterData,
+    range,
+    pickerDate,
+    loading,
+    reefDetails,
+  ]);
 
   // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
@@ -191,7 +211,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   return (
     <>
-      <ReefNavBar searchLocation={false} />
+      <ReefNavBar searchLocation geolocationEnabled={false} />
       <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
         {reefDetails && liveData && !error ? (
           <>

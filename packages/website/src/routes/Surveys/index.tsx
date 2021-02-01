@@ -21,14 +21,26 @@ import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import NewSurvey from "./New";
 import ViewSurvey from "./View";
+import {
+  reefsListSelector,
+  reefsRequest,
+} from "../../store/Reefs/reefsListSlice";
 
 const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
+  const reefsList = useSelector(reefsListSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
   const surveyId = match.params.sid;
+
+  // Fetch reefs for the search bar
+  useEffect(() => {
+    if (reefsList.length === 0) {
+      dispatch(reefsRequest());
+    }
+  }, [dispatch, reefsList]);
 
   useEffect(() => {
     if (!reefDetails) {
@@ -47,7 +59,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 
   return (
     <>
-      <NavBar searchLocation={false} />
+      <NavBar searchLocation geolocationEnabled={false} />
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {reefDetails && !error ? (

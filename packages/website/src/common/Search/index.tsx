@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Redirect } from "react-router-dom";
 
 import {
   setReefOnMap,
@@ -27,8 +28,9 @@ const reefAugmentedName = (reef: Reef) => {
   return name || region || "";
 };
 
-const Search = ({ classes }: SearchProps) => {
+const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
+  const [searchedReefId, setSearchedReefId] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   // eslint-disable-next-line fp/no-mutating-methods
@@ -59,6 +61,7 @@ const Search = ({ classes }: SearchProps) => {
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
       setSearchedReef(null);
+      setSearchedReefId(value.id);
       dispatch(setReefOnMap(value));
     }
   };
@@ -66,8 +69,9 @@ const Search = ({ classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
+      setSearchedReefId(searchedReef.id);
       setSearchedReef(null);
-    } else if (searchValue) {
+    } else if (searchValue && geolocationEnabled) {
       mapServices
         .getLocation(searchValue)
         .then((data) => dispatch(setSearchResult(data)))
@@ -82,41 +86,50 @@ const Search = ({ classes }: SearchProps) => {
   };
 
   return (
-    <div className={classes.searchBar}>
-      <div className={classes.searchBarIcon}>
-        <IconButton size="small" onClick={onSearchSubmit}>
-          <SearchIcon />
-        </IconButton>
-      </div>
+    <>
+      {!geolocationEnabled && searchedReefId && (
+        <Redirect to={`/reefs/${searchedReefId}`} />
+      )}
+      <div className={classes.searchBar}>
+        <div className={classes.searchBarIcon}>
+          <IconButton size="small" onClick={onSearchSubmit}>
+            <SearchIcon />
+          </IconButton>
+        </div>
 
-      <div className={classes.searchBarText}>
-        <Autocomplete
-          id="location"
-          autoHighlight
-          onKeyPress={onKeyPress}
-          className={classes.searchBarInput}
-          options={reefs}
-          noOptionsText={`No sites found. Press enter to zoom to "${searchValue}"`}
-          getOptionLabel={reefAugmentedName}
-          value={searchedReef}
-          onChange={onDropdownItemSelect}
-          onInputChange={(_event, _value, reason) =>
-            reason === "clear" && setSearchedReef(null)
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              onChange={onChangeSearchText}
-              placeholder="Search by site name or country"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: false,
-              }}
-            />
-          )}
-        />
+        <div className={classes.searchBarText}>
+          <Autocomplete
+            id="location"
+            autoHighlight
+            onKeyPress={onKeyPress}
+            className={classes.searchBarInput}
+            options={reefs}
+            noOptionsText={
+              geolocationEnabled
+                ? `No sites found. Press enter to zoom to "${searchValue}"`
+                : undefined
+            }
+            getOptionLabel={reefAugmentedName}
+            value={searchedReef}
+            onChange={onDropdownItemSelect}
+            onInputChange={(_event, _value, reason) =>
+              reason === "clear" && setSearchedReef(null)
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                onChange={onChangeSearchText}
+                placeholder="Search by site name or country"
+                variant="outlined"
+                InputLabelProps={{
+                  shrink: false,
+                }}
+              />
+            )}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -154,6 +167,10 @@ const styles = () =>
     },
   });
 
-type SearchProps = WithStyles<typeof styles>;
+interface SearchIncomingProps {
+  geolocationEnabled: boolean;
+}
+
+type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Search);

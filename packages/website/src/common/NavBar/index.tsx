@@ -29,7 +29,12 @@ import RouteButtons from "../RouteButtons";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
-const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
+const NavBar = ({
+  searchLocation,
+  geolocationEnabled,
+  routeButtons,
+  classes,
+}: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
@@ -93,7 +98,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
             {searchLocation && (
               <Hidden xsDown>
                 <Grid item sm={3}>
-                  <Search />
+                  <Search geolocationEnabled={Boolean(geolocationEnabled)} />
                 </Grid>
               </Hidden>
             )}
@@ -173,7 +178,7 @@ const NavBar = ({ searchLocation, routeButtons, classes }: NavBarProps) => {
             {searchLocation && (
               <Hidden smUp>
                 <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
-                  <Search />
+                  <Search geolocationEnabled={Boolean(geolocationEnabled)} />
                 </Grid>
               </Hidden>
             )}
@@ -238,10 +243,12 @@ const styles = (theme: Theme) =>
 
 interface NavBarIncomingProps {
   searchLocation: boolean;
+  geolocationEnabled?: boolean;
   routeButtons?: boolean;
 }
 
 NavBar.defaultProps = {
+  geolocationEnabled: true,
   routeButtons: false,
 };
 
