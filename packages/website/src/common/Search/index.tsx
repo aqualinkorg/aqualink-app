@@ -12,6 +12,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Redirect } from "react-router-dom";
 
 import {
+  reefOnMapSelector,
   setReefOnMap,
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
@@ -33,10 +34,10 @@ const reefAugmentedName = (reef: Reef) => {
 
 const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
-  const [searchedReefId, setSearchedReefId] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const reefs = useSelector(reefsListSelector);
+  const reefOnMap = useSelector(reefOnMapSelector);
   // eslint-disable-next-line fp/no-mutating-methods
   const filteredReefs = (reefs || [])
     .filter((reef) => reefAugmentedName(reef))
@@ -72,7 +73,6 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
     if (value) {
       setSearchedReef(null);
-      setSearchedReefId(value.id);
       dispatch(setReefOnMap(value));
     }
   };
@@ -80,7 +80,6 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
-      setSearchedReefId(searchedReef.id);
       setSearchedReef(null);
     } else if (searchValue && geolocationEnabled) {
       mapServices
@@ -98,8 +97,8 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
 
   return (
     <>
-      {!geolocationEnabled && searchedReefId && (
-        <Redirect to={`/reefs/${searchedReefId}`} />
+      {!geolocationEnabled && reefOnMap?.id && (
+        <Redirect to={`/reefs/${reefOnMap?.id}`} />
       )}
       <div className={classes.searchBar}>
         <div className={classes.searchBarIcon}>
@@ -179,8 +178,12 @@ const styles = () =>
   });
 
 interface SearchIncomingProps {
-  geolocationEnabled: boolean;
+  geolocationEnabled?: boolean;
 }
+
+Search.defaultProps = {
+  geolocationEnabled: false,
+};
 
 type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
 

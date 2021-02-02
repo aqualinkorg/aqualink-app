@@ -199,7 +199,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   return (
     <>
-      <ReefNavBar searchLocation geolocationEnabled={false} />
+      <ReefNavBar searchLocation />
       <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
         {reefDetails && liveData && !error ? (
           <>

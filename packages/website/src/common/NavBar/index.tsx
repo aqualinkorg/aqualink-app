@@ -98,7 +98,7 @@ const NavBar = ({
             {searchLocation && (
               <Hidden xsDown>
                 <Grid item sm={3}>
-                  <Search geolocationEnabled={Boolean(geolocationEnabled)} />
+                  <Search geolocationEnabled={geolocationEnabled} />
                 </Grid>
               </Hidden>
             )}
@@ -178,7 +178,7 @@ const NavBar = ({
             {searchLocation && (
               <Hidden smUp>
                 <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
-                  <Search geolocationEnabled={Boolean(geolocationEnabled)} />
+                  <Search geolocationEnabled={geolocationEnabled} />
                 </Grid>
               </Hidden>
             )}
@@ -248,7 +248,7 @@ interface NavBarIncomingProps {
 }
 
 NavBar.defaultProps = {
-  geolocationEnabled: true,
+  geolocationEnabled: false,
   routeButtons: false,
 };
 

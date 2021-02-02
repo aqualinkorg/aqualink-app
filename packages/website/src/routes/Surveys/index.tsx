@@ -47,7 +47,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
 
   return (
     <>
-      <NavBar searchLocation geolocationEnabled={false} />
+      <NavBar searchLocation />
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
         {reefDetails && !error ? (
