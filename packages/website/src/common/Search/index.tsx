@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   withStyles,
@@ -16,7 +16,10 @@ import {
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
-import { reefsListSelector } from "../../store/Reefs/reefsListSlice";
+import {
+  reefsListSelector,
+  reefsRequest,
+} from "../../store/Reefs/reefsListSlice";
 import { getReefNameAndRegion } from "../../store/Reefs/helpers";
 import mapServices from "../../services/mapServices";
 
@@ -42,6 +45,13 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
       const nameB = reefAugmentedName(b);
       return nameA.localeCompare(nameB);
     });
+
+  // Fetch reefs for the search bar
+  useEffect(() => {
+    if (reefs.length === 0) {
+      dispatch(reefsRequest());
+    }
+  }, [dispatch, reefs]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

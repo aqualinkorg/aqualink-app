@@ -43,10 +43,6 @@ import {
   findChartPeriod,
 } from "../../../helpers/dates";
 import { Range } from "../../../store/Reefs/types";
-import {
-  reefsListSelector,
-  reefsRequest,
-} from "../../../store/Reefs/reefsListSlice";
 
 const getAlertMessage = (
   user: User | null,
@@ -106,7 +102,6 @@ const getAlertMessage = (
 
 const Reef = ({ match, classes }: ReefProps) => {
   const reefDetails = useSelector(reefDetailsSelector);
-  const reefsList = useSelector(reefsListSelector);
   const user = useSelector(userInfoSelector);
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
@@ -133,13 +128,6 @@ const Reef = ({ match, classes }: ReefProps) => {
   const today = new Date();
   const [endDate, setEndDate] = useState<string>();
   const [pickerDate, setPickerDate] = useState<string>(today.toISOString());
-
-  // Fetch reefs for the search bar
-  useEffect(() => {
-    if (reefsList.length === 0) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefsList]);
 
   // fetch the reef and spotter data
   useEffect(() => {
