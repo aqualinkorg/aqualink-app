@@ -52,7 +52,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     setCurrentLocationErrorMessage,
   ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
-  const reefs = useSelector(reefsListSelector);
+  const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 

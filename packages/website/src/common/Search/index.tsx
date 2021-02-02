@@ -36,8 +36,9 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const [searchedReefId, setSearchedReefId] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
+  const reefs = useSelector(reefsListSelector);
   // eslint-disable-next-line fp/no-mutating-methods
-  const reefs = useSelector(reefsListSelector)
+  const filteredReefs = (reefs || [])
     .filter((reef) => reefAugmentedName(reef))
     // Sort by formatted name
     .sort((a, b) => {
@@ -48,7 +49,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
 
   // Fetch reefs for the search bar
   useEffect(() => {
-    if (reefs.length === 0) {
+    if (!reefs) {
       dispatch(reefsRequest());
     }
   }, [dispatch, reefs]);
@@ -57,12 +58,12 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const searchInput = event.target.value;
-    const index = reefs.findIndex(
+    const index = filteredReefs.findIndex(
       (reef) =>
         reefAugmentedName(reef).toLowerCase() === searchInput.toLowerCase()
     );
     if (index > -1) {
-      setSearchedReef(reefs[index]);
+      setSearchedReef(filteredReefs[index]);
     } else {
       setSearchValue(searchInput);
     }
@@ -113,7 +114,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
             autoHighlight
             onKeyPress={onKeyPress}
             className={classes.searchBarInput}
-            options={reefs}
+            options={filteredReefs}
             noOptionsText={
               geolocationEnabled
                 ? `No sites found. Press enter to zoom to "${searchValue}"`
