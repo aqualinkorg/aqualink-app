@@ -91,6 +91,13 @@ const EditForm = ({
           setReefName({ value: newValue, error: "Required" });
           return;
         }
+        if (newValue.length > 50) {
+          setReefName({
+            value: newValue,
+            error: "Must not exceed 50 characters",
+          });
+          return;
+        }
         setReefName({ value: newValue, error: undefined });
         break;
       case "depth":
