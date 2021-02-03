@@ -1,31 +1,26 @@
-import React, { useEffect, ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import {
   withStyles,
   WithStyles,
   createStyles,
   Button,
   Grid,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import isInt from "validator/lib/isInt";
-import isNumeric from "validator/lib/isNumeric";
+import { find } from "lodash";
 
+import Textfield from "./Τextfield";
 import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
 import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
+import { useFormField } from "./useFormField";
 
 const STEP = 1 / 10 ** 15;
-
-interface FormField {
-  value: string;
-  error?: string;
-}
 
 const EditForm = ({
   reef,
@@ -40,26 +35,44 @@ const EditForm = ({
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftReef?.coordinates || {};
 
-  // Form Fields
-  const [reefName, setReefName] = useState<FormField>({
-    value: getReefNameAndRegion(reef).name || "",
-  });
-  const [reefDepth, setReefDepth] = useState<FormField>({
-    value: reef.depth?.toString() || "",
-  });
-  const [reefLatitude, setReefLatitude] = useState<FormField>({
-    value: location ? location.coordinates[1].toString() : "",
-  });
-  const [reefLongitude, setReefLongitude] = useState<FormField>({
-    value: location ? location.coordinates[0].toString() : "",
-  });
+  const setDraftReefCoordinates = (field: "longitude" | "latitude") => (
+    value: string
+  ) => {
+    dispatch(
+      setReefDraft({
+        ...draftReef,
+        coordinates: draftReef?.coordinates && {
+          ...draftReef.coordinates,
+          [field]: parseFloat(value),
+        },
+      })
+    );
+  };
 
-  useEffect(() => {
-    if (draftLatitude && draftLongitude) {
-      setReefLatitude({ value: draftLatitude.toString() });
-      setReefLongitude({ value: draftLongitude.toString() });
-    }
-  }, [draftLatitude, draftLongitude]);
+  // Form Fields
+  const [reefName, setReefName] = useFormField(
+    getReefNameAndRegion(reef).name || "",
+    ["required", "maxLength"]
+  );
+
+  const [reefDepth, setReefDepth] = useFormField(reef.depth?.toString() || "", [
+    "required",
+    "isInt",
+  ]);
+
+  const [reefLatitude, setReefLatitude] = useFormField(
+    location ? location.coordinates[1].toString() : "",
+    ["required", "isNumeric"],
+    draftLatitude?.toString(),
+    setDraftReefCoordinates("latitude")
+  );
+
+  const [reefLongitude, setReefLongitude] = useFormField(
+    location ? location.coordinates[0].toString() : "",
+    ["required", "isNumeric"],
+    draftLongitude?.toString(),
+    setDraftReefCoordinates("longitude")
+  );
 
   const formSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (
@@ -87,69 +100,16 @@ const EditForm = ({
     const { name: field, value: newValue } = event.target;
     switch (field) {
       case "siteName":
-        if (newValue === "") {
-          setReefName({ value: newValue, error: "Required" });
-          return;
-        }
-        if (newValue.length > 50) {
-          setReefName({
-            value: newValue,
-            error: "Must not exceed 50 characters",
-          });
-          return;
-        }
-        setReefName({ value: newValue, error: undefined });
+        setReefName(newValue);
         break;
       case "depth":
-        if (newValue === "") {
-          setReefDepth({ value: newValue, error: "Required" });
-          return;
-        }
-        if (!isInt(newValue)) {
-          setReefDepth({ value: newValue, error: "Invalid" });
-          return;
-        }
-        setReefDepth({ value: newValue, error: undefined });
+        setReefDepth(newValue);
         break;
       case "latitude":
-        if (newValue === "") {
-          setReefLatitude({ value: newValue, error: "Required" });
-          return;
-        }
-        if (!isNumeric(newValue)) {
-          setReefLatitude({ value: newValue, error: "Invalid" });
-          return;
-        }
-        setReefLatitude({ value: newValue, error: undefined });
-        dispatch(
-          setReefDraft({
-            ...draftReef,
-            coordinates: draftReef?.coordinates && {
-              ...draftReef.coordinates,
-              latitude: parseFloat(newValue),
-            },
-          })
-        );
+        setReefLatitude(newValue, true);
         break;
       case "longitude":
-        if (newValue === "") {
-          setReefLongitude({ value: newValue, error: "Required" });
-          return;
-        }
-        if (!isNumeric(newValue)) {
-          setReefLongitude({ value: newValue, error: "Invalid" });
-          return;
-        }
-        setReefLongitude({ value: newValue, error: undefined });
-        dispatch(
-          setReefDraft({
-            ...draftReef,
-            coordinates: draftReef?.coordinates && {
-              ...draftReef.coordinates,
-              longitude: parseFloat(newValue),
-            },
-          })
-        );
+        setReefLongitude(newValue, true);
         break;
       default:
         break;
@@ -157,38 +117,27 @@ const EditForm = ({
   };
 
   return (
-    <form onSubmit={(e) => formSubmit(e)}>
+    <form onSubmit={formSubmit}>
       <Grid container alignItems="flex-end" spacing={3}>
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField }}
-              fullWidth
-              value={reefName.value}
-              onChange={onFieldChange}
+            <Textfield
+              formField={reefName}
               label="Site Name"
               placeholder="Site Name"
               name="siteName"
-              error={Boolean(reefName.error)}
-              helperText={reefName.error}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField, step: 1 }}
-              fullWidth
-              value={reefDepth.value}
-              onChange={onFieldChange}
+            <Textfield
+              formField={reefDepth}
               label="Depth"
               placeholder="Depth (m)"
               name="depth"
-              type="number"
-              error={Boolean(reefDepth.error)}
-              helperText={reefDepth.error}
+              isNumeric
+              step={1}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -200,41 +149,25 @@ const EditForm = ({
             </Alert>
           </Grid>
           <Grid item sm={6} xs={12}>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              type="number"
-              inputProps={{
-                className: classes.textField,
-                step: STEP,
-              }}
-              fullWidth
-              value={reefLatitude.value}
-              onChange={onFieldChange}
+            <Textfield
+              formField={reefLatitude}
               label="Latitude"
               placeholder="Latitude"
               name="latitude"
-              error={Boolean(reefLatitude.error)}
-              helperText={reefLatitude.error}
+              isNumeric
+              step={STEP}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item sm={6} xs={12}>
-            <TextField
-              className={classes.textField}
-              variant="outlined"
-              type="number"
-              inputProps={{
-                className: classes.textField,
-                step: STEP,
-              }}
-              fullWidth
-              value={reefLongitude.value}
-              onChange={onFieldChange}
+            <Textfield
+              formField={reefLongitude}
               label="Longitude"
               placeholder="Longitude"
               name="longitude"
-              error={Boolean(reefLongitude.error)}
-              helperText={reefLongitude.error}
+              isNumeric
+              step={STEP}
+              onChange={onFieldChange}
             />
           </Grid>
         </Grid>
@@ -254,10 +187,10 @@ const EditForm = ({
               type="submit"
               disabled={
                 loading ||
-                !!reefName.error ||
-                !!reefDepth.error ||
-                !!reefLongitude.error ||
-                !!reefLatitude.error
+                !!find(
+                  [reefName, reefDepth, reefLongitude, reefLatitude],
+                  (field) => field.error
+                )
               }
               variant="outlined"
               size="medium"
