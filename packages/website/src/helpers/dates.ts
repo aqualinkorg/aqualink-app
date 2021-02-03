@@ -1,16 +1,15 @@
 import moment from "moment-timezone";
 import { DailyData, Range, SpotterData } from "../store/Reefs/types";
-import { SurveyListItem } from "../store/Survey/types";
+// import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
 interface DisplayDateParams {
-  hourlyData: boolean;
+  utcDate: DateString;
+  format: string;
   displayTimezone: boolean;
-  date: DateString;
   timeZone?: string | null;
-  options?: Intl.DateTimeFormatOptions;
 }
 
 export const subtractFromDate = (endDate: string, amount: Range): string => {
@@ -52,27 +51,6 @@ export const findChartPeriod = (range: Range) => {
   }
 };
 
-// Converts a given date to a specified time zone
-export const convertToLocalTime = (
-  utcTime: DateString,
-  timeZone?: string | null,
-  options?: Intl.DateTimeFormatOptions
-): DateString => {
-  if (utcTime && timeZone) {
-    return new Date(utcTime).toLocaleString("en-US", {
-      ...options,
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone,
-      timeZoneName: "short",
-    });
-  }
-  return utcTime;
-};
-
 // Returns the same date but for a different time zone
 export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
   if (date && timeZone) {
@@ -83,45 +61,6 @@ export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
   return date;
 };
 
-export const convertDailyDataToLocalTime = (
-  data: DailyData[],
-  timeZone?: string | null
-): DailyData[] =>
-  data.map((item) => ({
-    ...item,
-    date: convertToLocalTime(item.date, timeZone) || item.date,
-  }));
-
-export const convertSpotterDataToLocalTime = (
-  data?: SpotterData | null,
-  timeZone?: string | null
-): SpotterData | null | undefined => {
-  if (data) {
-    return {
-      bottomTemperature: data.bottomTemperature.map((item) => ({
-        ...item,
-        timestamp:
-          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-      })),
-      surfaceTemperature: data.surfaceTemperature.map((item) => ({
-        ...item,
-        timestamp:
-          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-      })),
-    };
-  }
-  return data;
-};
-
-export const convertSurveysToLocalTime = (
-  surveys: SurveyListItem[],
-  timeZone?: string | null
-): SurveyListItem[] =>
-  surveys.map((item) => ({
-    ...item,
-    diveDate: convertToLocalTime(item.diveDate, timeZone) || item.diveDate,
-  }));
-
 export const getTimeZoneName = (timeZone: string): string => {
   const rawTimeZoneName = moment().tz(timeZone).format("z");
   // Only add GMT prefix to raw time differences and not acronyms such as PST.
@@ -131,32 +70,20 @@ export const getTimeZoneName = (timeZone: string): string => {
 };
 
 export const displayTimeInLocalTimezone = ({
-  hourlyData,
+  utcDate,
+  format,
   displayTimezone,
-  date,
   timeZone,
-  options,
 }: DisplayDateParams) => {
-  if (date) {
+  if (utcDate) {
     const timeZoneName = getTimeZoneName(timeZone || "UTC");
-    const dateString = new Date(date).toLocaleString("en-US", {
-      day: options?.day || "2-digit",
-      month: options?.month || "2-digit",
-      year: options?.year || "2-digit",
-      ...(hourlyData
-        ? {
-            hour: options?.hour || "2-digit",
-            minute: options?.minute || "2-digit",
-          }
-        : {}),
-      timeZone: timeZone || "UTC",
-    });
+    const dateString = moment(utcDate)
+      .tz(timeZone || "UTC")
+      .format(format);
 
-    return `${dateString} ${
-      hourlyData && timeZoneName && displayTimezone ? timeZoneName : ""
-    }`;
+    return `${dateString} ${displayTimezone ? timeZoneName : ""}`;
   }
-  return date;
+  return utcDate;
 };
 
 export const toRelativeTime = (timestamp?: string) => {

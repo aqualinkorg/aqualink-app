@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
             color="textPrimary"
             variant="caption"
           >
-            12/20/20, 02:19 AM GMT-5
+            12/20/20 07:19 AM UTC
           </mock-typography>
         </div>
       </div>

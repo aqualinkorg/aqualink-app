@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -11,7 +10,7 @@ import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
 } from "../../../helpers/surveyMedia";
-import { convertToLocalTime } from "../../../helpers/dates";
+import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
@@ -34,9 +33,12 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
             <Typography variant="subtitle1">
-              {moment(
-                convertToLocalTime(survey.diveDate, reef.timezone)
-              ).format("MM/DD/YYYY [at] h:mm A")}
+              {displayTimeInLocalTimezone({
+                utcDate: survey.diveDate,
+                format: "MM/DD/YYYY [at] h:mm A",
+                displayTimezone: false,
+                timeZone: reef.timezone,
+              })}
             </Typography>
           </Grid>
           <Grid container item>

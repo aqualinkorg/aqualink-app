@@ -8,7 +8,6 @@ import {
   Box,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
-import moment from "moment";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -24,11 +23,7 @@ import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
-import {
-  convertToLocalTime,
-  convertDailyDataToLocalTime,
-  convertSurveysToLocalTime,
-} from "../../../helpers/dates";
+import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 
 const ReefDetails = ({
   classes,
@@ -97,9 +92,12 @@ const ReefDetails = ({
       marginRight: "2rem",
     },
     {
-      text: `${moment(convertToLocalTime(diveDate, reef.timezone)).format(
-        "MMM DD[,] YYYY"
-      )}`,
+      text: `${displayTimeInLocalTimezone({
+        utcDate: diveDate,
+        format: "MMM DD[,] YYYY",
+        displayTimezone: false,
+        timeZone: reef.timezone,
+      })}`,
       variant: "subtitle2",
       marginRight: 0,
     },
@@ -149,10 +147,7 @@ const ReefDetails = ({
           <Box mt="2rem">
             <CombinedCharts
               reefId={reef.id}
-              dailyData={convertDailyDataToLocalTime(
-                reef.dailyData,
-                reef.timezone
-              )}
+              dailyData={reef.dailyData}
               depth={reef.depth}
               hasSpotterData={hasSpotterData}
               maxMonthlyMean={reef.maxMonthlyMean || null}
@@ -163,13 +158,11 @@ const ReefDetails = ({
               onRangeChange={onRangeChange}
               pickerDate={pickerDate}
               range={range}
-              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
+              surveys={surveys}
               chartPeriod={chartPeriod}
               spotterData={spotterData}
-              startDate={
-                convertToLocalTime(startDate, reef.timezone) || startDate
-              }
-              endDate={convertToLocalTime(endDate, reef.timezone) || endDate}
+              startDate={startDate}
+              endDate={endDate}
               timeZone={reef.timezone}
             />
             <Surveys reef={reef} />

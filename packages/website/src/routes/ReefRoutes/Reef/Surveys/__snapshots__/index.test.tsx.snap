@@ -215,7 +215,7 @@ exports[`ReefRoutes Surveys should render with given state from Redux store 1`] 
                   classname="SurveyTimeline-dates-19"
                   variant="h6"
                 >
-                  09/10/2020
+                  09/10/2020 
                 </mock-typography>
               </div>
               <div

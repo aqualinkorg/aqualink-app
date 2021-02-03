@@ -162,7 +162,7 @@ function ChartWithTooltip({
             left: tooltipPosition.left,
           }}
         >
-          <Tooltip {...tooltipData} />
+          <Tooltip {...tooltipData} timeZone={rest.timeZone} />
         </div>
       ) : null}
     </div>

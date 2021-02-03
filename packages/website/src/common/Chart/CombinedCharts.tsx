@@ -17,7 +17,6 @@ import SelectRange from "../SelectRange";
 import DatePicker from "../Datepicker";
 import { Range } from "../../store/Reefs/types";
 import { reefSpotterDataLoadingSelector } from "../../store/Reefs/selectedReefSlice";
-import { convertSpotterDataToLocalTime } from "../../helpers/dates";
 
 const CombinedCharts = ({
   reefId,
@@ -92,7 +91,7 @@ const CombinedCharts = ({
               className={classes.chart}
               reefId={reefId}
               dailyData={dailyData}
-              spotterData={convertSpotterDataToLocalTime(spotterData, timeZone)}
+              spotterData={spotterData}
               startDate={startDate}
               endDate={endDate}
               chartPeriod={chartPeriod}
