@@ -38,6 +38,9 @@ describe("Reef Detail Page", () => {
         error: null,
         loading: false,
       },
+      homepage: {
+        reefOnMap: mockReef,
+      },
       reefsList: {
         list: [],
         loading: false,
@@ -65,6 +68,9 @@ describe("Reef Detail Page", () => {
         userInfo: mockUser,
         error: null,
         loading: false,
+      },
+      homepage: {
+        reefOnMap: mockReef,
       },
       reefsList: {
         list: [mockReef],

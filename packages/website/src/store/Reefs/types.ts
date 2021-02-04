@@ -172,8 +172,8 @@ export interface ReefsRequestData {
 }
 
 export interface ReefsListState {
-  list: Reef[];
-  reefsToDisplay: Reef[];
+  list?: Reef[];
+  reefsToDisplay?: Reef[];
   loading: boolean;
   error?: string | null;
 }
