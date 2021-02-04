@@ -166,6 +166,7 @@ const Apply = ({ classes }: ApplyProps) => {
 
   return (
     <>
+      {newReefId && <Redirect to={`/reefs/${newReefId}`} />}
       <NavBar searchLocation={false} />
       <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>
@@ -305,7 +306,6 @@ const Apply = ({ classes }: ApplyProps) => {
           </Container>
         </Box>
       </Box>
-      {newReefId && <Redirect to={`/reefs/${newReefId}`} />}
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         open={snackbarOpenFromCarto && snackbarOpenFromDatabase}
