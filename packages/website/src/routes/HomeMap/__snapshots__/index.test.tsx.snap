@@ -6,6 +6,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
     role="presentation"
   >
     <mock-navbar
+      geolocationenabled="true"
       searchlocation="true"
     />
   </div>
