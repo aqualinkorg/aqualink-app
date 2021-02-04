@@ -64,13 +64,17 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
   return (
     <>
       <Hidden smUp>
-        <Box className={classes.topHandle}>
+        <Box
+          width="100vw"
+          display="flex"
+          justifyContent="center"
+          marginTop={2}
+          marginBottom={3}
+        >
+          <Box className={classes.topHandle} />
           {!openDrawer && (
             <Typography
-              style={{
-                position: "relative",
-                margin: "1rem 0 0.5rem 1rem",
-              }}
+              className={classes.allReefsText}
               variant="h5"
               color="textSecondary"
             >
@@ -153,26 +157,16 @@ const styles = (theme: Theme) =>
       alignItems: "center",
       justifyContent: "flex-end",
     },
-    topHandle: ({ handleHeight = 50 }: { handleHeight?: number }) => ({
-      width: "100vw",
-      height: handleHeight,
+    topHandle: {
+      width: 50,
+      height: 10,
+      backgroundColor: theme.palette.grey["400"],
+      borderRadius: "20px",
+    },
+    allReefsText: {
       position: "absolute",
-      top: -handleHeight,
-      borderTopLeftRadius: "25px",
-      borderTopRightRadius: "25px",
-      backgroundColor: "white",
-      "&:before": {
-        content: "''",
-        width: 50,
-        height: 10,
-        backgroundColor: theme.palette.grey["400"],
-        position: "absolute",
-        top: handleHeight / 2 - 5,
-        left: "50%",
-        transform: "translateX(-50%)",
-        borderRadius: "20px",
-      },
-    }),
+      left: 25,
+    },
   });
 
 interface ReefTableIncomingProps {

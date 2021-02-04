@@ -6,11 +6,18 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
     smup="true"
   >
     <mock-box
-      classname="ReefTable-topHandle-5 ReefTable-topHandle-6"
+      display="flex"
+      justifycontent="center"
+      marginbottom="3"
+      margintop="2"
+      width="100vw"
     >
+      <mock-box
+        classname="ReefTable-topHandle-5"
+      />
       <mock-typography
+        classname="ReefTable-allReefsText-6"
         color="textSecondary"
-        style="position: relative; margin: 1rem 0px 0.5rem 1rem;"
         variant="h5"
       >
         All Reefs

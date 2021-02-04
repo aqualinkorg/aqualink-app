@@ -36,15 +36,15 @@ const Homepage = ({ classes }: HomepageProps) => {
     }
   }, [dispatch, reefOnMap]);
 
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
-    setOpenDrawer(!openDrawer);
+    setDrawerOpen(!isDrawerOpen);
   };
 
   return (
     <>
-      <div role="presentation" onClick={openDrawer ? toggleDrawer : () => {}}>
+      <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation />
       </div>
       <div className={classes.root}>
@@ -54,16 +54,21 @@ const Homepage = ({ classes }: HomepageProps) => {
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
-              <ReefTable openDrawer={openDrawer} />
+              <ReefTable openDrawer={isDrawerOpen} />
             </Grid>
           </Hidden>
           <Hidden smUp>
             <SwipeableBottomSheet
-              overflowHeight={10}
-              onChange={setOpenDrawer}
-              bodyStyle={{ maxHeight: "80vh" }}
+              overflowHeight={60}
+              bodyStyle={{
+                borderTopLeftRadius: "25px",
+                borderTopRightRadius: "25px",
+                maxHeight: "80vh",
+              }}
+              onChange={setDrawerOpen}
+              open={isDrawerOpen}
             >
-              <ReefTable openDrawer={openDrawer} handleHeight={50} />
+              <ReefTable openDrawer={isDrawerOpen} />
             </SwipeableBottomSheet>
           </Hidden>
         </Grid>

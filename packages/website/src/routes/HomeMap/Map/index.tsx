@@ -103,7 +103,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
         setLegendName(layer.name);
       });
     }
-  });
+  }, [searchResult]);
 
   return loading ? (
     <div className={classes.loading}>

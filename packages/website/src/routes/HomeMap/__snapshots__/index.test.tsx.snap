@@ -35,7 +35,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         smup="true"
       >
         <div
-          style="height: 10px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
+          style="height: 60px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
         >
           <div
             style="position: fixed; top: 0px; right: 0px; left: 0px; height: 768px; transition: opacity 450ms; pointer-events: none; background-color: black; opacity: 0;"
@@ -50,14 +50,13 @@ exports[`Homepage should render with given state from Redux store 1`] = `
               <div
                 aria-hidden="false"
                 data-swipeable="true"
-                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -10px;"
+                style="width: 100%; flex-shrink: 0; overflow: visible; box-sizing: border-box; margin-bottom: -60px;"
               >
                 <div
                   class="ReactSwipeableBottomSheet--closed"
-                  style="overflow: hidden; background-color: white; max-height: 80vh;"
+                  style="overflow: hidden; background-color: white; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                 >
                   <mock-reeftable
-                    handleheight="50"
                     opendrawer="false"
                   />
                 </div>
