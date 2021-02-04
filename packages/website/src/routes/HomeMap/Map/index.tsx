@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Map, TileLayer, Marker, Circle } from "react-leaflet";
-import L, { LatLng } from "leaflet";
+import L, { LatLng, LayersControlEvent } from "leaflet";
 import {
   createStyles,
   withStyles,
@@ -52,7 +52,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     setCurrentLocationErrorMessage,
   ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
-  const reefs = useSelector(reefsListSelector);
+  const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 
@@ -99,11 +99,12 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
           searchResult.bbox.northEast,
         ]);
       }
-      map.on("baselayerchange", (layer: any) => {
-        setLegendName(layer.name);
-      });
     }
-  });
+  }, [searchResult]);
+
+  const onBaseLayerChange = ({ name }: LayersControlEvent) => {
+    setLegendName(name);
+  };
 
   return loading ? (
     <div className={classes.loading}>
@@ -119,6 +120,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       zoom={INITIAL_ZOOM}
       minZoom={2}
       worldCopyJump
+      onbaselayerchange={onBaseLayerChange}
     >
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}

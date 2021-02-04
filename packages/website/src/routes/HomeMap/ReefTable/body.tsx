@@ -106,7 +106,7 @@ RowNumberCell.defaultProps = {
 
 const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
-  const reefsList = useSelector(reefsToDisplayListSelector);
+  const reefsList = useSelector(reefsToDisplayListSelector) || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 

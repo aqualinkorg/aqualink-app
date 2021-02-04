@@ -47,7 +47,7 @@ const Homepage = ({ classes }: HomepageProps) => {
   return (
     <>
       <div role="presentation" onClick={openDrawer ? toggleDrawer : () => {}}>
-        <HomepageNavBar searchLocation />
+        <HomepageNavBar searchLocation geolocationEnabled />
       </div>
       <div className={classes.root}>
         <Grid container>

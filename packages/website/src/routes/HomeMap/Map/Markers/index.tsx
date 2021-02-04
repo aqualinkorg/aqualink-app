@@ -45,7 +45,7 @@ const clusterIcon = (cluster: any) => {
 };
 
 export const ReefMarkers = () => {
-  const reefsList = useSelector(reefsToDisplayListSelector);
+  const reefsList = useSelector(reefsToDisplayListSelector) || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();
