@@ -17,7 +17,7 @@ import {
 } from "../../../store/Reefs/reefsListSlice";
 
 const ReefsList = ({ classes }: ReefsListProps) => {
-  const reefsList = useSelector(reefsListSelector);
+  const reefsList = useSelector(reefsListSelector) || [];
   const dispatch = useDispatch();
 
   useEffect(() => {
