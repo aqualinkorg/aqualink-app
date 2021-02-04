@@ -16,7 +16,7 @@ import { VideoStream } from '../video-streams.entity';
 export class CreateReefDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
+  @MaxLength(100)
   readonly name: string;
 
   @IsLatitude()

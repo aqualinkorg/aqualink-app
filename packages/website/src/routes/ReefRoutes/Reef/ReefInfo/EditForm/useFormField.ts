@@ -11,7 +11,7 @@ const validations = {
   required: (value: string) =>
     value === "" || value === "NaN" ? "Required field" : undefined,
   maxLength: (value: string) =>
-    value.length > 50 ? "Must not exceed 50 characters" : undefined,
+    value.length > 100 ? "Must not exceed 100 characters" : undefined,
   isInt: (value: string) => (!isInt(value) ? "Must be an integer" : undefined),
   isNumeric: (value: string) =>
     !isNumeric(value) ? "Must be numeric" : undefined,
