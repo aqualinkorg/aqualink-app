@@ -2,7 +2,6 @@ import {
   IsString,
   IsInt,
   IsNotEmpty,
-  MaxLength,
   IsOptional,
   Validate,
 } from 'class-validator';
@@ -14,7 +13,6 @@ export class UpdateRegionDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
   readonly name?: string;
 
   @IsOptional()

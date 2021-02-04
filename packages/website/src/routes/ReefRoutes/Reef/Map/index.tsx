@@ -52,8 +52,8 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
       } else if (draftReef?.coordinates) {
         map.panTo(
           new L.LatLng(
-            draftReef.coordinates.latitude,
-            draftReef.coordinates.longitude
+            draftReef.coordinates.latitude || polygon.coordinates[1],
+            draftReef.coordinates.longitude || polygon.coordinates[0]
           )
         );
       } else {
