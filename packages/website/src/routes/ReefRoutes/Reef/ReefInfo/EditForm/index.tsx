@@ -11,7 +11,7 @@ import Alert from "@material-ui/lab/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { find } from "lodash";
 
-import Textfield from "./Τextfield";
+import TextField from "./TextField";
 import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
 import {
@@ -20,7 +20,7 @@ import {
 } from "../../../../../store/Reefs/selectedReefSlice";
 import { useFormField } from "./useFormField";
 
-const STEP = 1 / 10 ** 15;
+const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
 const EditForm = ({
   reef,
@@ -51,24 +51,24 @@ const EditForm = ({
 
   // Form Fields
   const [reefName, setReefName] = useFormField(
-    getReefNameAndRegion(reef).name || "",
+    getReefNameAndRegion(reef).name,
     ["required", "maxLength"]
   );
 
-  const [reefDepth, setReefDepth] = useFormField(reef.depth?.toString() || "", [
+  const [reefDepth, setReefDepth] = useFormField(reef.depth?.toString(), [
     "required",
     "isInt",
   ]);
 
   const [reefLatitude, setReefLatitude] = useFormField(
-    location ? location.coordinates[1].toString() : "",
+    location?.coordinates[1].toString(),
     ["required", "isNumeric"],
     draftLatitude?.toString(),
     setDraftReefCoordinates("latitude")
   );
 
   const [reefLongitude, setReefLongitude] = useFormField(
-    location ? location.coordinates[0].toString() : "",
+    location?.coordinates[0].toString(),
     ["required", "isNumeric"],
     draftLongitude?.toString(),
     setDraftReefCoordinates("longitude")
@@ -121,7 +121,7 @@ const EditForm = ({
       <Grid container alignItems="flex-end" spacing={3}>
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
-            <Textfield
+            <TextField
               formField={reefName}
               label="Site Name"
               placeholder="Site Name"
@@ -130,7 +130,7 @@ const EditForm = ({
             />
           </Grid>
           <Grid item sm={4} xs={12}>
-            <Textfield
+            <TextField
               formField={reefDepth}
               label="Depth"
               placeholder="Depth (m)"
@@ -149,24 +149,24 @@ const EditForm = ({
             </Alert>
           </Grid>
           <Grid item sm={6} xs={12}>
-            <Textfield
+            <TextField
               formField={reefLatitude}
               label="Latitude"
               placeholder="Latitude"
               name="latitude"
               isNumeric
-              step={STEP}
+              step={NUMERIC_FIELD_STEP}
               onChange={onFieldChange}
             />
           </Grid>
           <Grid item sm={6} xs={12}>
-            <Textfield
+            <TextField
               formField={reefLongitude}
               label="Longitude"
               placeholder="Longitude"
               name="longitude"
               isNumeric
-              step={STEP}
+              step={NUMERIC_FIELD_STEP}
               onChange={onFieldChange}
             />
           </Grid>

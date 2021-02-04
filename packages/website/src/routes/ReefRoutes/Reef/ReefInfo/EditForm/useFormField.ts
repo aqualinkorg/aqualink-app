@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 import isInt from "validator/lib/isInt";
 import isNumeric from "validator/lib/isNumeric";
 
@@ -27,30 +27,27 @@ const validations = {
  *                     value is set
  */
 export const useFormField = (
-  initialValue: string,
+  initialValue: string | null | undefined,
   checks: ("required" | "maxLength" | "isInt" | "isNumeric")[],
   draftValue?: string,
   extraHandler?: (value: string) => void
 ): [FormField, (value: string, runExtraHandler?: boolean) => void] => {
-  const [field, setField] = useState<FormField>({ value: initialValue });
+  const reducer = (_state: FormField, newValue: string): FormField => ({
+    value: newValue,
+    error: checks
+      .map((check) => validations[check](newValue))
+      .filter((error) => error)[0],
+  });
+  const [field, dispatch] = useReducer(reducer, { value: initialValue || "" });
 
   useEffect(() => {
     if (draftValue) {
-      setField({
-        value: draftValue,
-        error: checks
-          .map((check) => validations[check](draftValue))
-          .filter((error) => error)[0],
-      });
+      dispatch(draftValue);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draftValue]);
 
-  const handleFieldChange = (value: string, runExtraHandler?: boolean) => {
-    const errors = checks
-      .map((check) => validations[check](value))
-      .filter((error) => error);
-    setField({ value, error: errors[0] });
+  const handleFieldChange = (value: string, runExtraHandler = false) => {
+    dispatch(value);
     if (extraHandler && runExtraHandler) {
       extraHandler(value);
     }
