@@ -129,7 +129,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
               <TextField
                 {...params}
                 onChange={onChangeSearchText}
-                placeholder="Search by site name or country"
+                placeholder="Search"
                 variant="outlined"
                 InputLabelProps={{
                   shrink: false,

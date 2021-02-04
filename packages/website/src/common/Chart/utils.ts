@@ -269,7 +269,7 @@ const fillColor = (threshold: number | null) => ({ chart }: Context) => {
   const zero = yScale.getPixelForValue(threshold);
   const bottom = yScale.getPixelForValue(0);
   const { ctx } = chart as any;
-  if (yScale && ctx) {
+  if (yScale && ctx && top && bottom) {
     const gradient = ctx.createLinearGradient(
       0,
       top,
