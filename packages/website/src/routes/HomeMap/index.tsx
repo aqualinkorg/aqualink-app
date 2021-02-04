@@ -42,6 +42,20 @@ const Homepage = ({ classes }: HomepageProps) => {
     setDrawerOpen(!isDrawerOpen);
   };
 
+  // scroll drawer to top when its closed.
+  // the lib we use doesn't support passing ID or ref, so we rely on class name here.
+  // scrollTopAtClose prop doesn't work with manually controlled state
+  useEffect(() => {
+    if (isDrawerOpen) return;
+    const className = "ReactSwipeableBottomSheet";
+    const drawer =
+      document.getElementsByClassName(`${className}--opened`)[0] ||
+      document.getElementsByClassName(`${className}--closed`)[0];
+    if (!drawer) return;
+    // eslint-disable-next-line fp/no-mutation
+    drawer.scrollTop = 0;
+  });
+
   return (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
@@ -68,7 +82,9 @@ const Homepage = ({ classes }: HomepageProps) => {
               onChange={setDrawerOpen}
               open={isDrawerOpen}
             >
-              <ReefTable openDrawer={isDrawerOpen} />
+              <div role="presentation" onClick={toggleDrawer}>
+                <ReefTable openDrawer={isDrawerOpen} />
+              </div>
             </SwipeableBottomSheet>
           </Hidden>
         </Grid>
