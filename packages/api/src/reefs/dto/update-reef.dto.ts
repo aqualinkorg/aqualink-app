@@ -29,7 +29,7 @@ export class UpdateReefDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
+  @MaxLength(100)
   readonly name?: string;
 
   @IsOptional()
