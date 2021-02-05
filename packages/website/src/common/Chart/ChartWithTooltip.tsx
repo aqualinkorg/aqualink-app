@@ -33,7 +33,6 @@ function ChartWithTooltip({
   const { dailyData, spotterData, reefId, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
-  const [sliceAtLabel, setSliceAtLabel] = useState<string | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     reefId,
@@ -97,7 +96,7 @@ function ChartWithTooltip({
     const top =
       position.top +
       tooltipModel.caretY -
-      ((surveyId ? nValues + 1 : nValues) * 30 + 48);
+      ((surveyId ? nValues + 1 : nValues) * 20 + 48);
 
     if (
       [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
@@ -115,13 +114,11 @@ function ChartWithTooltip({
         surveyId,
       });
       setShowTooltip(true);
-      setSliceAtLabel(date);
     }
   };
 
   const hideTooltip = () => {
     setShowTooltip(false);
-    setSliceAtLabel(null);
   };
   // Hide tooltip on scroll to avoid dragging it on the page.
   if (showTooltip) {
@@ -135,12 +132,6 @@ function ChartWithTooltip({
         {...rest}
         chartRef={chartDataRef}
         chartSettings={{
-          plugins: {
-            sliceDrawPlugin: {
-              sliceAtLabel,
-              datasetIndex: 0,
-            },
-          },
           tooltips: {
             enabled: false,
             intersect: false,
