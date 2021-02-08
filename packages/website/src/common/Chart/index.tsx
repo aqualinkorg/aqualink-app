@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import { mergeWith } from "lodash";
 import type { DailyData, SpotterData } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
-import "./plugins/slicePlugin";
 import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
