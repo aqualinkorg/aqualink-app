@@ -39,6 +39,10 @@ import {
   findChartPeriod,
   findMaxDate,
   displayTimeInLocalTimezone,
+  convertDailyDataToLocalTime,
+  convertSurveyDataToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertToLocalTime,
 } from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
@@ -178,7 +182,10 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                   <Grid item xs={11}>
                     <CombinedCharts
                       reefId={reef.id}
-                      dailyData={reef.dailyData}
+                      dailyData={convertDailyDataToLocalTime(
+                        reef.dailyData,
+                        reef.timezone
+                      )}
                       depth={reef.depth}
                       hasSpotterData={hasSpotter}
                       maxMonthlyMean={reef.maxMonthlyMean || null}
@@ -189,11 +196,29 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       onRangeChange={onRangeChange}
                       pickerDate={pickerDate}
                       range={range}
-                      surveys={surveyList}
+                      surveys={convertSurveyDataToLocalTime(
+                        surveyList,
+                        reef.timezone
+                      )}
                       chartPeriod={findChartPeriod(range)}
-                      spotterData={spotterData}
-                      startDate={startDate}
-                      endDate={endDate}
+                      spotterData={
+                        spotterData
+                          ? convertSpotterDataToLocalTime(
+                              spotterData,
+                              reef.timezone
+                            )
+                          : { bottomTemperature: [], surfaceTemperature: [] }
+                      }
+                      startDate={
+                        startDate
+                          ? convertToLocalTime(startDate, reef.timezone)
+                          : startDate
+                      }
+                      endDate={
+                        endDate
+                          ? convertToLocalTime(endDate, reef.timezone)
+                          : endDate
+                      }
                       timeZone={reef.timezone}
                     />
                   </Grid>

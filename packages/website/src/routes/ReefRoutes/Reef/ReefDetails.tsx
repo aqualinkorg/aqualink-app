@@ -23,7 +23,13 @@ import { locationCalculator } from "../../../helpers/locationCalculator";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
-import { displayTimeInLocalTimezone } from "../../../helpers/dates";
+import {
+  convertDailyDataToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertSurveyDataToLocalTime,
+  convertToLocalTime,
+  displayTimeInLocalTimezone,
+} from "../../../helpers/dates";
 
 const ReefDetails = ({
   classes,
@@ -147,7 +153,10 @@ const ReefDetails = ({
           <Box mt="2rem">
             <CombinedCharts
               reefId={reef.id}
-              dailyData={reef.dailyData}
+              dailyData={convertDailyDataToLocalTime(
+                reef.dailyData,
+                reef.timezone
+              )}
               depth={reef.depth}
               hasSpotterData={hasSpotterData}
               maxMonthlyMean={reef.maxMonthlyMean || null}
@@ -158,11 +167,15 @@ const ReefDetails = ({
               onRangeChange={onRangeChange}
               pickerDate={pickerDate}
               range={range}
-              surveys={surveys}
+              surveys={convertSurveyDataToLocalTime(surveys, reef.timezone)}
               chartPeriod={chartPeriod}
-              spotterData={spotterData}
-              startDate={startDate}
-              endDate={endDate}
+              spotterData={
+                spotterData
+                  ? convertSpotterDataToLocalTime(spotterData, reef.timezone)
+                  : { bottomTemperature: [], surfaceTemperature: [] }
+              }
+              startDate={convertToLocalTime(startDate, reef.timezone)}
+              endDate={convertToLocalTime(endDate, reef.timezone)}
               timeZone={reef.timezone}
             />
             <Surveys reef={reef} />

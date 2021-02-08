@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
 import { DailyData, Range, SpotterData } from "../store/Reefs/types";
-// import { SurveyListItem } from "../store/Survey/types";
+import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
@@ -85,6 +85,45 @@ export const displayTimeInLocalTimezone = ({
   }
   return isoDate;
 };
+
+export const convertToLocalTime = (isoTime: string, timeZone?: string | null) =>
+  moment(isoTime)
+    .tz(timeZone || "UTC")
+    .format();
+
+export const convertDailyDataToLocalTime = (
+  dailyData: DailyData[],
+  timeZone?: string | null
+): DailyData[] =>
+  dailyData.map((item) => ({
+    ...item,
+    date: convertToLocalTime(item.date, timeZone),
+  }));
+
+export const convertSpotterDataToLocalTime = (
+  spotterData: SpotterData,
+  timeZone?: string | null
+): SpotterData => ({
+  bottomTemperature: spotterData.bottomTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  })),
+  surfaceTemperature: spotterData.surfaceTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  })),
+});
+
+export const convertSurveyDataToLocalTime = (
+  surveys: SurveyListItem[],
+  timeZone?: string | null
+): SurveyListItem[] =>
+  surveys.map((survey) => ({
+    ...survey,
+    diveDate: survey.diveDate
+      ? convertToLocalTime(survey.diveDate, timeZone)
+      : survey.diveDate,
+  }));
 
 export const toRelativeTime = (timestamp?: string) => {
   if (timestamp) {
