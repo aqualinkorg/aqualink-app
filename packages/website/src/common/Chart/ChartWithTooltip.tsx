@@ -96,7 +96,7 @@ function ChartWithTooltip({
     const top =
       position.top +
       tooltipModel.caretY -
-      ((surveyId ? nValues + 1 : nValues) * 20 + 48);
+      ((surveyId ? 30 : 0) + nValues * 20 + 48);
 
     if (
       [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
