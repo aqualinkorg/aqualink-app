@@ -193,7 +193,7 @@ const ReefNavBar = ({
                     <Box>
                       <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
                         {
-                          utcDate: lastSurvey,
+                          isoDate: lastSurvey,
                           format: "MMM DD[,] YYYY",
                           displayTimezone: false,
                           timeZone: reef.timezone,

@@ -93,7 +93,7 @@ const ReefDetails = ({
     },
     {
       text: `${displayTimeInLocalTimezone({
-        utcDate: diveDate,
+        isoDate: diveDate,
         format: "MMM DD[,] YYYY",
         displayTimezone: false,
         timeZone: reef.timezone,

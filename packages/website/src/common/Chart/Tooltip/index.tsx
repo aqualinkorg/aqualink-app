@@ -62,7 +62,7 @@ const Tooltip = ({
   const hourlyData = !isNull(spotterSurfaceTemp);
   // const dateString = hourlyData ? date : moment(date).format("MM/DD/YY");
   const dateString = displayTimeInLocalTimezone({
-    utcDate: date,
+    isoDate: date,
     format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
     displayTimezone: hourlyData,
     timeZone,

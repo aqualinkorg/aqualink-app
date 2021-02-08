@@ -6,7 +6,7 @@ import { sortByDate } from "./sortDailyData";
 type DateString = string | null | undefined;
 
 interface DisplayDateParams {
-  utcDate: DateString;
+  isoDate: DateString;
   format: string;
   displayTimezone: boolean;
   timeZone?: string | null;
@@ -70,20 +70,20 @@ export const getTimeZoneName = (timeZone: string): string => {
 };
 
 export const displayTimeInLocalTimezone = ({
-  utcDate,
+  isoDate,
   format,
   displayTimezone,
   timeZone,
 }: DisplayDateParams) => {
-  if (utcDate) {
+  if (isoDate) {
     const timeZoneName = getTimeZoneName(timeZone || "UTC");
-    const dateString = moment(utcDate)
+    const dateString = moment(isoDate)
       .tz(timeZone || "UTC")
       .format(format);
 
     return `${dateString} ${displayTimezone ? timeZoneName : ""}`;
   }
-  return utcDate;
+  return isoDate;
 };
 
 export const toRelativeTime = (timestamp?: string) => {

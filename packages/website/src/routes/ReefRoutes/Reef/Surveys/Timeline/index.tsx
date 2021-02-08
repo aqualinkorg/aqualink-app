@@ -77,7 +77,7 @@ const SurveyTimeline = ({
                   >
                     <Typography variant="h6" className={classes.dates}>
                       {displayTimeInLocalTimezone({
-                        utcDate: survey.diveDate,
+                        isoDate: survey.diveDate,
                         format: "MM/DD/YYYY",
                         displayTimezone: false,
                         timeZone,

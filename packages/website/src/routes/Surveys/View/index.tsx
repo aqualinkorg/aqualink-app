@@ -208,7 +208,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           <Grid style={{ margin: "5rem 0 5rem 0" }} item>
             <Typography style={{ fontSize: 18 }}>
               {`${displayTimeInLocalTimezone({
-                utcDate: surveyDetails?.diveDate,
+                isoDate: surveyDetails?.diveDate,
                 format: "MM/DD/YYYY",
                 displayTimezone: false,
                 timeZone: reef.timezone,

@@ -34,7 +34,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           <Grid item>
             <Typography variant="subtitle1">
               {displayTimeInLocalTimezone({
-                utcDate: survey.diveDate,
+                isoDate: survey.diveDate,
                 format: "MM/DD/YYYY [at] h:mm A",
                 displayTimezone: false,
                 timeZone: reef.timezone,
