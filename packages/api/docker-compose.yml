@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   aqua-postgres:
-    image: kartoza/postgis:12.1
+    image: timescale/timescaledb-postgis:2.0.1-pg12
     restart: always
     ports:
       - 54321:5432
