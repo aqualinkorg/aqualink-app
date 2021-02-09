@@ -100,9 +100,14 @@ const useStyles = makeStyles((theme) => ({
 type SelectedReefContentProps = {
   reef: Reef;
   url?: string | null;
+  surveyId?: number | null;
 };
 
-const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
+const SelectedReefContent = ({
+  reef,
+  url,
+  surveyId,
+}: SelectedReefContentProps) => {
   const classes = useStyles();
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
@@ -160,10 +165,15 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       justify="space-between"
       spacing={1}
     >
-      {url && (
+      {url && surveyId && (
         <Grid item xs={12} sm={6} lg={4}>
           <Box position="relative" height="100%">
-            <CardMedia className={classes.cardImage} image={url} />
+            <Link
+              style={{ color: "inherit", textDecoration: "none" }}
+              to={`/reefs/${reef.id}/survey_details/${surveyId}`}
+            >
+              <CardMedia className={classes.cardImage} image={url} />
+            </Link>
 
             <Hidden smUp>
               <Box
@@ -269,6 +279,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 
 SelectedReefContent.defaultProps = {
   url: null,
+  surveyId: null,
 };
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
@@ -281,12 +292,14 @@ const SelectedReefCard = () => {
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
-  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
-    (survey) =>
-      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
-  )?.featuredSurveyMedia;
+  const { id: surveyId, featuredSurveyMedia } =
+    sortByDate(surveyList, "diveDate", "desc").find(
+      (survey) =>
+        survey.featuredSurveyMedia &&
+        survey.featuredSurveyMedia.type === "image"
+    ) || {};
 
-  const hasMedia = Boolean(featuredMedia?.url);
+  const hasMedia = Boolean(featuredSurveyMedia?.url);
 
   return (
     <Box className={classes.card}>
@@ -316,7 +329,11 @@ const SelectedReefCard = () => {
             <CircularProgress size="3rem" thickness={1} />
           </Box>
         ) : reef ? (
-          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
+          <SelectedReefContent
+            reef={reef}
+            url={featuredSurveyMedia?.url}
+            surveyId={surveyId}
+          />
         ) : null}
       </Card>
     </Box>

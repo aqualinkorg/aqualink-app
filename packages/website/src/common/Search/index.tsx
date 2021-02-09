@@ -12,7 +12,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Redirect } from "react-router-dom";
 
 import {
-  reefOnMapSelector,
   setReefOnMap,
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
@@ -35,9 +34,10 @@ const reefAugmentedName = (reef: Reef) => {
 const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [searchValue, setSearchValue] = useState("");
+  // Variable that listens to reef id changes in order to redirect in case geolocation is disabled
+  const [newReefId, setNewReefId] = useState<number>();
   const dispatch = useDispatch();
   const reefs = useSelector(reefsListSelector);
-  const reefOnMap = useSelector(reefOnMapSelector);
   // eslint-disable-next-line fp/no-mutating-methods
   const filteredReefs = (reefs || [])
     .filter((reef) => reefAugmentedName(reef))
@@ -74,12 +74,14 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedReef(null);
       dispatch(setReefOnMap(value));
+      setNewReefId(value.id);
     }
   };
 
   const onSearchSubmit = () => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
+      setNewReefId(searchedReef.id);
       setSearchedReef(null);
     } else if (searchValue && geolocationEnabled) {
       mapServices
@@ -97,8 +99,8 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
 
   return (
     <>
-      {!geolocationEnabled && reefOnMap?.id && (
-        <Redirect to={`/reefs/${reefOnMap?.id}`} />
+      {!geolocationEnabled && newReefId && (
+        <Redirect to={`/reefs/${newReefId}`} />
       )}
       <div className={classes.searchBar}>
         <div className={classes.searchBarIcon}>
