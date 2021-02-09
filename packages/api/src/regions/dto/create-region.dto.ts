@@ -1,6 +1,5 @@
 import {
   IsNotEmpty,
-  MaxLength,
   IsOptional,
   IsString,
   IsInt,
@@ -13,7 +12,6 @@ import { Region } from '../regions.entity';
 export class CreateRegionDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(50)
   readonly name: string;
 
   @IsNotEmpty()

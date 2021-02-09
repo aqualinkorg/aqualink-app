@@ -198,7 +198,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     id="location"
                     inputlabelprops="[object Object]"
                     inputprops="[object Object]"
-                    placeholder="Search by site name or country"
+                    placeholder="Search"
                     variant="outlined"
                   />
                 </div>
@@ -284,7 +284,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     id="location"
                     inputlabelprops="[object Object]"
                     inputprops="[object Object]"
-                    placeholder="Search by site name or country"
+                    placeholder="Search"
                     variant="outlined"
                   />
                 </div>
@@ -2340,7 +2340,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     id="location"
                     inputlabelprops="[object Object]"
                     inputprops="[object Object]"
-                    placeholder="Search by site name or country"
+                    placeholder="Search"
                     variant="outlined"
                   />
                 </div>
@@ -2426,7 +2426,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     id="location"
                     inputlabelprops="[object Object]"
                     inputprops="[object Object]"
-                    placeholder="Search by site name or country"
+                    placeholder="Search"
                     variant="outlined"
                   />
                 </div>

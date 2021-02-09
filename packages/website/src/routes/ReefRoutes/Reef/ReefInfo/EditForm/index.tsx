@@ -1,121 +1,143 @@
-import React, { useCallback, useEffect, ChangeEvent } from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import {
   withStyles,
   WithStyles,
   createStyles,
   Button,
   Grid,
-  TextField,
-  Theme,
   Typography,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { find } from "lodash";
 
+import TextField from "./TextField";
 import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
 import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
+import { useFormField } from "./useFormField";
 
-const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
+const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
+
+const EditForm = ({
+  reef,
+  loading,
+  onClose,
+  onSubmit,
+  classes,
+}: EditFormProps) => {
   const dispatch = useDispatch();
   const draftReef = useSelector(reefDraftSelector);
-  const reefName = getReefNameAndRegion(reef).name || "";
   const location = reef.polygon.type === "Point" ? reef.polygon : null;
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftReef?.coordinates || {};
 
-  const { register, errors, handleSubmit, setValue } = useForm({
-    reValidateMode: "onSubmit",
-  });
+  const setDraftReefCoordinates = (field: "longitude" | "latitude") => (
+    value: string
+  ) => {
+    dispatch(
+      setReefDraft({
+        ...draftReef,
+        coordinates: draftReef?.coordinates && {
+          ...draftReef.coordinates,
+          [field]: parseFloat(value),
+        },
+      })
+    );
+  };
 
-  const formSubmit = useCallback(
-    (data: any) => {
+  // Form Fields
+  const [reefName, setReefName] = useFormField(
+    getReefNameAndRegion(reef).name,
+    ["required", "maxLength"]
+  );
+
+  const [reefDepth, setReefDepth] = useFormField(reef.depth?.toString(), [
+    "required",
+    "isInt",
+  ]);
+
+  const [reefLatitude, setReefLatitude] = useFormField(
+    location?.coordinates[1].toString(),
+    ["required", "isNumeric"],
+    draftLatitude?.toString(),
+    setDraftReefCoordinates("latitude")
+  );
+
+  const [reefLongitude, setReefLongitude] = useFormField(
+    location?.coordinates[0].toString(),
+    ["required", "isNumeric"],
+    draftLongitude?.toString(),
+    setDraftReefCoordinates("longitude")
+  );
+
+  const formSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (
+      reefName.value &&
+      reefDepth.value &&
+      reefLatitude.value &&
+      reefLongitude.value
+    ) {
       const updateParams: ReefUpdateParams = {
         coordinates: {
-          latitude: parseFloat(data.latitude),
-          longitude: parseFloat(data.longitude),
+          latitude: parseFloat(reefLatitude.value),
+          longitude: parseFloat(reefLongitude.value),
         },
-        name: data.siteName,
-        depth: parseInt(data.depth, 10),
+        name: reefName.value,
+        depth: parseInt(reefDepth.value, 10),
       };
       onSubmit(updateParams);
-    },
-    [onSubmit]
-  );
-
-  const onFieldChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name: field, value: newValue } = event.target;
-
-      if (
-        draftReef?.coordinates &&
-        (field === "latitude" || field === "longitude")
-      ) {
-        dispatch(
-          setReefDraft({
-            ...draftReef,
-            coordinates: {
-              ...draftReef.coordinates,
-              [field]: parseFloat(newValue),
-            },
-          })
-        );
-      }
-    },
-    [dispatch, draftReef]
-  );
-
-  useEffect(() => {
-    if (draftLatitude && draftLongitude) {
-      setValue("latitude", draftLatitude);
-      setValue("longitude", draftLongitude);
     }
-  }, [draftLatitude, draftLongitude, setValue]);
+    event.preventDefault();
+  };
+
+  const onFieldChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name: field, value: newValue } = event.target;
+    switch (field) {
+      case "siteName":
+        setReefName(newValue);
+        break;
+      case "depth":
+        setReefDepth(newValue);
+        break;
+      case "latitude":
+        setReefLatitude(newValue, true);
+        break;
+      case "longitude":
+        setReefLongitude(newValue, true);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(formSubmit)}>
+    <form onSubmit={formSubmit}>
       <Grid container alignItems="flex-end" spacing={3}>
         <Grid container item sm={12} md={6} spacing={2}>
           <Grid item sm={8} xs={12}>
             <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField }}
-              fullWidth
-              defaultValue={reefName}
+              formField={reefName}
               label="Site Name"
               placeholder="Site Name"
               name="siteName"
-              inputRef={register({
-                required: "Required",
-              })}
-              error={!!errors.siteName}
-              helperText={errors?.siteName?.message || ""}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item sm={4} xs={12}>
             <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField }}
-              fullWidth
-              defaultValue={reef.depth}
+              formField={reefDepth}
               label="Depth"
               placeholder="Depth (m)"
               name="depth"
-              inputRef={register({
-                required: "Required",
-                pattern: {
-                  value: /^\d+$/,
-                  message: "Invalid input",
-                },
-              })}
-              error={!!errors.depth}
-              helperText={errors?.depth?.message || ""}
+              isNumeric
+              step={1}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -128,56 +150,33 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
           </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField }}
-              fullWidth
-              defaultValue={location ? location.coordinates[1] : null}
-              onChange={onFieldChange}
+              formField={reefLatitude}
               label="Latitude"
               placeholder="Latitude"
               name="latitude"
-              inputRef={register({
-                required: "Required",
-                pattern: {
-                  value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                  message: "Invalid input",
-                },
-              })}
-              error={!!errors.latitude}
-              helperText={errors?.latitude?.message || ""}
+              isNumeric
+              step={NUMERIC_FIELD_STEP}
+              onChange={onFieldChange}
             />
           </Grid>
           <Grid item sm={6} xs={12}>
             <TextField
-              className={classes.textField}
-              variant="outlined"
-              inputProps={{ className: classes.textField }}
-              fullWidth
-              defaultValue={location ? location.coordinates[0] : null}
-              onChange={onFieldChange}
+              formField={reefLongitude}
               label="Longitude"
               placeholder="Longitude"
               name="longitude"
-              inputRef={register({
-                required: "Required",
-                pattern: {
-                  value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                  message: "Invalid input",
-                },
-              })}
-              error={!!errors.longitude}
-              helperText={errors?.longitude?.message || ""}
+              isNumeric
+              step={NUMERIC_FIELD_STEP}
+              onChange={onFieldChange}
             />
           </Grid>
         </Grid>
         <Grid container justify="flex-end" item sm={12} md={4} spacing={3}>
           <Grid item>
             <Button
-              className={classes.button}
               onClick={onClose}
               variant="outlined"
-              size="small"
+              size="medium"
               color="secondary"
             >
               Cancel
@@ -185,13 +184,19 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
           </Grid>
           <Grid item>
             <Button
-              className={classes.button}
               type="submit"
+              disabled={
+                loading ||
+                !!find(
+                  [reefName, reefDepth, reefLongitude, reefLatitude],
+                  (field) => field.error
+                )
+              }
               variant="outlined"
-              size="small"
+              size="medium"
               color="primary"
             >
-              Save
+              {loading ? "Saving..." : "Save"}
             </Button>
           </Grid>
         </Grid>
@@ -200,21 +205,11 @@ const EditForm = ({ reef, onClose, onSubmit, classes }: EditFormProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     textField: {
       color: "black",
-      height: "2.5rem",
       alignItems: "center",
-      "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-        borderColor: "rgba(0, 0, 0, 0.23)",
-      },
-      "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-        borderColor: theme.palette.primary.main,
-      },
-    },
-    button: {
-      height: "2.5rem",
     },
     infoAlert: {
       marginTop: "0.5rem",
@@ -223,6 +218,7 @@ const styles = (theme: Theme) =>
 
 interface EditFormIncomingProps {
   reef: Reef;
+  loading: boolean;
   onClose: () => void;
   onSubmit: (data: ReefUpdateParams) => void;
 }
