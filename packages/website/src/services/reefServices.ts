@@ -101,8 +101,8 @@ const applyReef = (
   });
 
 const getReefApplication = (reefId: number, token: string) =>
-  requests.send<ReefApplication[]>({
-    url: `reef-applications/?reef=${reefId}`,
+  requests.send<ReefApplication>({
+    url: `reef-applications/reefs/${reefId}`,
     method: "GET",
     token,
   });
