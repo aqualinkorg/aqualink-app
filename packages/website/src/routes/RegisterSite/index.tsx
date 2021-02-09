@@ -5,7 +5,6 @@ import { pick, isEmpty } from "lodash";
 import L from "leaflet";
 import isEmail from "validator/lib/isEmail";
 import isNumeric from "validator/lib/isNumeric";
-import isLatLong from "validator/lib/isLatLong";
 import {
   Typography,
   Grid,
@@ -78,10 +77,17 @@ const Apply = ({ classes }: ApplyProps) => {
     {
       id: "lat",
       label: "Latitude",
-      validator: (lat: string) => isLatLong(`${lat},${formModel.get("lng")}`),
-      errorMessage: "Enter a valid lat/lng",
+      validator: (lat: string) =>
+        isNumeric(lat) && Math.abs(parseFloat(lat)) <= 90,
+      errorMessage: "Enter a valid latitude",
     },
-    { id: "lng", label: "Longitude" },
+    {
+      id: "lng",
+      label: "Longitude",
+      validator: (lng: string) =>
+        isNumeric(lng) && Math.abs(parseFloat(lng)) <= 180,
+      errorMessage: "Enter a valid longitude",
+    },
     { id: "siteName", label: "Site Name" },
     {
       id: "depth",

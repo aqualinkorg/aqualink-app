@@ -15,6 +15,14 @@ const validations = {
   isInt: (value: string) => (!isInt(value) ? "Must be an integer" : undefined),
   isNumeric: (value: string) =>
     !isNumeric(value) ? "Must be numeric" : undefined,
+  isLat: (value: string) =>
+    !isNumeric(value) || Math.abs(parseFloat(value)) > 90
+      ? "Invalid latitude value"
+      : undefined,
+  isLong: (value: string) =>
+    !isNumeric(value) || Math.abs(parseFloat(value)) > 180
+      ? "Invalid longitude value"
+      : undefined,
 };
 
 /**
@@ -28,7 +36,14 @@ const validations = {
  */
 export const useFormField = (
   initialValue: string | null | undefined,
-  checks: ("required" | "maxLength" | "isInt" | "isNumeric")[],
+  checks: (
+    | "required"
+    | "maxLength"
+    | "isInt"
+    | "isNumeric"
+    | "isLong"
+    | "isLat"
+  )[],
   draftValue?: string,
   extraHandler?: (value: string) => void
 ): [FormField, (value: string, runExtraHandler?: boolean) => void] => {

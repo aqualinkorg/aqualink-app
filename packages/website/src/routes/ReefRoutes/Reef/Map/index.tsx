@@ -66,7 +66,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
     const { current } = markerRef;
     if (current && current.leafletElement) {
       const mapMarker = current.leafletElement;
-      const { lat, lng } = mapMarker.getLatLng();
+      const { lat, lng } = mapMarker.getLatLng().wrap();
       dispatch(
         setReefDraft({
           coordinates: {
