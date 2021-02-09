@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  createStyles,
   Grid,
+  Hidden,
   withStyles,
   WithStyles,
-  createStyles,
-  Hidden,
-  Drawer,
 } from "@material-ui/core";
-import classNames from "classnames";
-
+import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
@@ -38,15 +36,29 @@ const Homepage = ({ classes }: HomepageProps) => {
     }
   }, [dispatch, reefOnMap]);
 
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
-    setOpenDrawer(!openDrawer);
+    setDrawerOpen(!isDrawerOpen);
   };
+
+  // scroll drawer to top when its closed.
+  // the lib we use doesn't support passing ID or ref, so we rely on class name here.
+  // scrollTopAtClose prop doesn't work with manually controlled state
+  useEffect(() => {
+    if (isDrawerOpen) return;
+    const className = "ReactSwipeableBottomSheet";
+    const drawer =
+      document.getElementsByClassName(`${className}--opened`)[0] ||
+      document.getElementsByClassName(`${className}--closed`)[0];
+    if (!drawer) return;
+    // eslint-disable-next-line fp/no-mutation
+    drawer.scrollTop = 0;
+  });
 
   return (
     <>
-      <div role="presentation" onClick={openDrawer ? toggleDrawer : () => {}}>
+      <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geolocationEnabled />
       </div>
       <div className={classes.root}>
@@ -56,30 +68,24 @@ const Homepage = ({ classes }: HomepageProps) => {
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
-              <ReefTable openDrawer={openDrawer} />
+              <ReefTable openDrawer={isDrawerOpen} />
             </Grid>
           </Hidden>
           <Hidden smUp>
-            <Drawer
-              variant="permanent"
-              anchor="bottom"
-              open={openDrawer}
-              onClose={toggleDrawer}
-              className={classNames({
-                [classes.openDrawer]: openDrawer,
-                [classes.closedDrawer]: !openDrawer,
-              })}
-              classes={{
-                paper: classNames(classes.drawer, {
-                  [classes.openDrawer]: openDrawer,
-                  [classes.closedDrawer]: !openDrawer,
-                }),
+            <SwipeableBottomSheet
+              overflowHeight={60}
+              bodyStyle={{
+                borderTopLeftRadius: "25px",
+                borderTopRightRadius: "25px",
+                maxHeight: "80vh",
               }}
+              onChange={setDrawerOpen}
+              open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <ReefTable openDrawer={openDrawer} />
+                <ReefTable openDrawer={isDrawerOpen} />
               </div>
-            </Drawer>
+            </SwipeableBottomSheet>
           </Hidden>
         </Grid>
       </div>
@@ -95,24 +101,13 @@ const styles = () =>
     },
     map: {
       display: "flex",
+      zIndex: 0,
     },
     reefTable: {
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar
       overflowY: "auto",
-    },
-    drawer: {
-      borderTopLeftRadius: "15px",
-      borderTopRightRadius: "15px",
-    },
-    openDrawer: {
-      height: "calc(95% - 64px);", // subtract height of the navbar
-      overflow: "auto",
-    },
-    closedDrawer: {
-      height: "50px",
-      overflow: "hidden",
     },
   });
 

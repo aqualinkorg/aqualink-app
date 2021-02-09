@@ -11,3 +11,4 @@ declare module "*.css" {
 }
 
 declare module "react-leaflet-markercluster";
+declare module "react-swipeable-bottom-sheet";
