@@ -15,6 +15,7 @@ async function run(reefId: number, days: number) {
     .seconds(59)
     .milliseconds(999);
 
+  // eslint-disable-next-line fp/no-mutating-methods
   await Bluebird.mapSeries(backlogArray.reverse(), async (past) => {
     const date = moment(today);
     date.day(today.day() - past - 1);

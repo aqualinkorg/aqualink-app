@@ -19,7 +19,7 @@
     "start:dev:db": "docker-compose up",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main.js",
-    "lint": "eslint \"{src,apps,libs,test,scripts}/**/*.{ts,js}\" --fix",
+    "lint": "eslint \"{src,apps,libs,test,scripts}/**/*.{ts,js}\" --max-warnings 0 --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
