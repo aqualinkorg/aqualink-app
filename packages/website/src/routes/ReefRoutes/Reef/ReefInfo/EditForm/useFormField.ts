@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import isInt from "validator/lib/isInt";
-import isNumeric from "validator/lib/isNumeric";
+
+import validators from "../../../../../helpers/validators";
 
 export interface FormField {
   value: string;
@@ -14,14 +15,14 @@ const validations = {
     value.length > 100 ? "Must not exceed 100 characters" : undefined,
   isInt: (value: string) => (!isInt(value) ? "Must be an integer" : undefined),
   isNumeric: (value: string) =>
-    !isNumeric(value) ? "Must be numeric" : undefined,
+    !validators.isNumeric(value) ? "Must be numeric" : undefined,
   isLat: (value: string) =>
-    !isNumeric(value) || Math.abs(parseFloat(value)) > 90
-      ? "Invalid latitude value"
+    !validators.isLat(value)
+      ? "Enter a valid latitude between -90 and 90"
       : undefined,
   isLong: (value: string) =>
-    !isNumeric(value) || Math.abs(parseFloat(value)) > 180
-      ? "Invalid longitude value"
+    !validators.isLong(value)
+      ? "Enter a valid longitude between -180 and 180"
       : undefined,
 };
 

@@ -4,7 +4,6 @@ import { Map, fromJS } from "immutable";
 import { pick, isEmpty } from "lodash";
 import L from "leaflet";
 import isEmail from "validator/lib/isEmail";
-import isNumeric from "validator/lib/isNumeric";
 import {
   Typography,
   Grid,
@@ -30,6 +29,7 @@ import SignInDialog from "../../common/SignInDialog";
 import LocationMap from "./LocationMap";
 import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
+import validators from "../../helpers/validators";
 
 const contactFormElements = [
   { id: "name", label: "Name" },
@@ -77,22 +77,20 @@ const Apply = ({ classes }: ApplyProps) => {
     {
       id: "lat",
       label: "Latitude",
-      validator: (lat: string) =>
-        isNumeric(lat) && Math.abs(parseFloat(lat)) <= 90,
-      errorMessage: "Enter a valid latitude",
+      validator: validators.isLat,
+      errorMessage: "Enter a valid latitude between -90 and 90",
     },
     {
       id: "lng",
       label: "Longitude",
-      validator: (lng: string) =>
-        isNumeric(lng) && Math.abs(parseFloat(lng)) <= 180,
-      errorMessage: "Enter a valid longitude",
+      validator: validators.isLong,
+      errorMessage: "Enter a valid longitude between -180 and 180",
     },
     { id: "siteName", label: "Site Name" },
     {
       id: "depth",
       label: "Depth (m)",
-      validator: isNumeric,
+      validator: validators.isNumeric,
       errorMessage: "Depth should be a number",
     },
   ];
