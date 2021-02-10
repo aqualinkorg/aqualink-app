@@ -17,7 +17,6 @@ import {
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
-  timeZone?: string | null;
   className?: string;
   style?: CSSProperties;
 }
@@ -153,7 +152,11 @@ function ChartWithTooltip({
             left: tooltipPosition.left,
           }}
         >
-          <Tooltip {...tooltipData} timeZone={rest.timeZone} />
+          <Tooltip
+            {...tooltipData}
+            reefTimeZone={rest.timeZone}
+            userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
+          />
         </div>
       ) : null}
     </div>

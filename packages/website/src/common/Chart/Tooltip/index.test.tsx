@@ -12,6 +12,8 @@ test("renders as expected", () => {
       spotterSurfaceTemp={20}
       bottomTemperature={15}
       surfaceTemperature={20}
+      userTimeZone="UTC"
+      reefTimeZone="UTC"
     />
   );
   expect(container).toMatchSnapshot();

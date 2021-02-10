@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -138,7 +137,12 @@ const SurveyTimeline = ({
               >
                 <Grid className={classes.dateWrapper} item xs={11}>
                   <Typography variant="h6" className={classes.dates}>
-                    {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
+                    {displayTimeInLocalTimezone({
+                      isoDate: survey.diveDate,
+                      format: "MM/DD/YYYY",
+                      displayTimezone: false,
+                      timeZone,
+                    })}
                   </Typography>
                 </Grid>
                 <Grid

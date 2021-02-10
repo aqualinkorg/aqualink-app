@@ -52,7 +52,8 @@ const Tooltip = ({
   reefId,
   date,
   depth,
-  timeZone,
+  reefTimeZone,
+  userTimeZone,
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
@@ -65,7 +66,8 @@ const Tooltip = ({
     isoDate: date,
     format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
     displayTimezone: hourlyData,
-    timeZone,
+    timeZone: userTimeZone,
+    timeZoneToDisplay: reefTimeZone,
   });
 
   const tooltipLines: {
@@ -198,7 +200,8 @@ export interface TooltipData {
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
   surveyId?: number | null;
-  timeZone?: string | null;
+  reefTimeZone?: string | null;
+  userTimeZone?: string;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;

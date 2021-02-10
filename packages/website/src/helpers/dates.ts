@@ -10,6 +10,7 @@ interface DisplayDateParams {
   format: string;
   displayTimezone: boolean;
   timeZone?: string | null;
+  timeZoneToDisplay?: string | null;
 }
 
 export const subtractFromDate = (endDate: string, amount: Range): string => {
@@ -22,6 +23,34 @@ export const subtractFromDate = (endDate: string, amount: Range): string => {
     default:
       return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
   }
+};
+
+export const toRelativeTime = (timestamp?: string) => {
+  if (timestamp) {
+    const minute = 60;
+    const hour = 60 * 60;
+    const day = 60 * 60 * 24;
+
+    const now = new Date().getTime();
+    const start = new Date(timestamp).getTime();
+
+    // Time period in seconds
+    const timePeriod = Math.floor((now - start) / 1000);
+
+    if (timePeriod < minute) {
+      return `${timePeriod} sec. ago`;
+    }
+    if (timePeriod < hour) {
+      return `${Math.floor(timePeriod / minute)} min. ago`;
+    }
+    if (timePeriod < day) {
+      const hours = Math.floor(timePeriod / hour);
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    }
+    const days = Math.floor(timePeriod / day);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
+  return null;
 };
 
 export const findMaxDate = (
@@ -74,22 +103,60 @@ export const displayTimeInLocalTimezone = ({
   format,
   displayTimezone,
   timeZone,
+  timeZoneToDisplay,
 }: DisplayDateParams) => {
   if (isoDate) {
-    const timeZoneName = getTimeZoneName(timeZone || "UTC");
+    const timeZoneName = getTimeZoneName(
+      timeZoneToDisplay || timeZone || "UTC"
+    );
     const dateString = moment(isoDate)
       .tz(timeZone || "UTC")
       .format(format);
 
-    return `${dateString} ${displayTimezone ? timeZoneName : ""}`;
+    return `${dateString}${displayTimezone ? ` ${timeZoneName}` : ""}`;
   }
   return isoDate;
 };
 
-export const convertToLocalTime = (isoTime: string, timeZone?: string | null) =>
-  moment(isoTime)
+// The following functions are used to trick Chart.js
+// In general Chart.js converts dates and displays them to user's local time zone
+// If for example a date is equal to 2021-01-01T22:19:01 in site's local time then
+// this must be converted to user's 2021-01-01T22:19:01 local time.
+
+const userLocalTimeZoneOffset = new Date().getTimezoneOffset();
+
+/**
+ * Converts site's local time to user's local time
+ * @param isotTime - Site's local time in ISO format
+ * @param timeZone - Site's time zone
+ */
+export const convertToLocalTime = (
+  isoTime: string,
+  timeZone?: string | null
+) => {
+  // E.g. isoTime = 2021-01-01T22:19:01.000Z, timeZone = "America/New_York", userLocalTimeZoneOffset = -120 (Europe/Athens)
+
+  // siteLocalTime = 2021-01-01T17:19:01-05:00
+  const siteLocalTime = moment(isoTime)
     .tz(timeZone || "UTC")
     .format();
+
+  // siteLocalIgnoreTimeZone = 2021-01-01T17:19:01-05:00
+  const siteLocalIgnoreTimeZone = `${siteLocalTime.substring(0, 19)}.000Z`;
+
+  // userLocalTime = 2021-01-01T15:19:01-02:00
+  const userLocalTime = moment(siteLocalIgnoreTimeZone)
+    .utcOffset(userLocalTimeZoneOffset)
+    .format();
+
+  // userLocalTime = 021-01-01T15:19:01.000Z
+  const userLocalIgnoreTimeZone = `${userLocalTime.substring(0, 19)}.000Z`;
+
+  // This value going to be interpreted as 2021-01-01T17:19:01
+  // in user's local time zone from Chart.js, which is exactly what
+  // we want
+  return userLocalIgnoreTimeZone;
+};
 
 export const convertDailyDataToLocalTime = (
   dailyData: DailyData[],
@@ -124,31 +191,3 @@ export const convertSurveyDataToLocalTime = (
       ? convertToLocalTime(survey.diveDate, timeZone)
       : survey.diveDate,
   }));
-
-export const toRelativeTime = (timestamp?: string) => {
-  if (timestamp) {
-    const minute = 60;
-    const hour = 60 * 60;
-    const day = 60 * 60 * 24;
-
-    const now = new Date().getTime();
-    const start = new Date(timestamp).getTime();
-
-    // Time period in seconds
-    const timePeriod = Math.floor((now - start) / 1000);
-
-    if (timePeriod < minute) {
-      return `${timePeriod} sec. ago`;
-    }
-    if (timePeriod < hour) {
-      return `${Math.floor(timePeriod / minute)} min. ago`;
-    }
-    if (timePeriod < day) {
-      const hours = Math.floor(timePeriod / hour);
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    }
-    const days = Math.floor(timePeriod / day);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
-  }
-  return null;
-};
