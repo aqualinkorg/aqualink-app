@@ -99,10 +99,10 @@ const useStyles = makeStyles((theme) => ({
 
 type SelectedReefContentProps = {
   reef: Reef;
-  url?: string | null;
+  imageUrl?: string | null;
 };
 
-const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
+const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   const classes = useStyles();
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
@@ -152,7 +152,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
   return (
     <Grid
       className={
-        url
+        imageUrl
           ? `${classes.cardWrapper} ${classes.mobileCardWrapperWithImage}`
           : `${classes.cardWrapper} ${classes.mobileCardWrapperWithNoImage}`
       }
@@ -160,10 +160,12 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       justify="space-between"
       spacing={1}
     >
-      {url && (
+      {imageUrl && (
         <Grid item xs={12} sm={6} lg={4}>
           <Box position="relative" height="100%">
-            <CardMedia className={classes.cardImage} image={url} />
+            <Link to={`/reefs/${reef.id}`}>
+              <CardMedia className={classes.cardImage} image={imageUrl} />
+            </Link>
 
             <Hidden smUp>
               <Box
@@ -203,12 +205,12 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        sm={url ? 6 : 12}
-        lg={url ? 6 : 10}
+        sm={imageUrl ? 6 : 12}
+        lg={imageUrl ? 6 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
-          <Hidden xsDown={Boolean(url)}>
+          <Hidden xsDown={Boolean(imageUrl)}>
             <Typography
               className={classes.cardTitle}
               color="textSecondary"
@@ -268,7 +270,7 @@ const SelectedReefContent = ({ reef, url }: SelectedReefContentProps) => {
 };
 
 SelectedReefContent.defaultProps = {
-  url: null,
+  imageUrl: null,
 };
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
@@ -281,12 +283,14 @@ const SelectedReefCard = () => {
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
-  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
-    (survey) =>
-      survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
-  )?.featuredSurveyMedia;
+  const { featuredSurveyMedia } =
+    sortByDate(surveyList, "diveDate", "desc").find(
+      (survey) =>
+        survey.featuredSurveyMedia &&
+        survey.featuredSurveyMedia.type === "image"
+    ) || {};
 
-  const hasMedia = Boolean(featuredMedia?.url);
+  const hasMedia = Boolean(featuredSurveyMedia?.url);
 
   return (
     <Box className={classes.card}>
@@ -316,7 +320,10 @@ const SelectedReefCard = () => {
             <CircularProgress size="3rem" thickness={1} />
           </Box>
         ) : reef ? (
-          <SelectedReefContent reef={reef} url={featuredMedia?.url} />
+          <SelectedReefContent
+            reef={reef}
+            imageUrl={featuredSurveyMedia?.url}
+          />
         ) : null}
       </Card>
     </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable fp/no-mutating-methods */
 import React, { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,10 +10,9 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import {
-  reefOnMapSelector,
   setReefOnMap,
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
@@ -32,13 +32,12 @@ const reefAugmentedName = (reef: Reef) => {
   return name || region || "";
 };
 
-const Search = ({ geolocationEnabled, classes }: SearchProps) => {
+const Search = ({ geocodingEnabled, classes }: SearchProps) => {
+  const browserHistory = useHistory();
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
   const reefs = useSelector(reefsListSelector);
-  const reefOnMap = useSelector(reefOnMapSelector);
-  // eslint-disable-next-line fp/no-mutating-methods
   const filteredReefs = (reefs || [])
     .filter((reef) => reefAugmentedName(reef))
     // Sort by formatted name
@@ -74,14 +73,20 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedReef(null);
       dispatch(setReefOnMap(value));
+      if (!geocodingEnabled) {
+        browserHistory.push(`/reefs/${value.id}`);
+      }
     }
   };
 
   const onSearchSubmit = () => {
     if (searchedReef) {
+      if (!geocodingEnabled) {
+        browserHistory.push(`/reefs/${searchedReef.id}`);
+      }
       dispatch(setReefOnMap(searchedReef));
       setSearchedReef(null);
-    } else if (searchValue && geolocationEnabled) {
+    } else if (searchValue && geocodingEnabled) {
       mapServices
         .getLocation(searchValue)
         .then((data) => dispatch(setSearchResult(data)))
@@ -96,50 +101,45 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   };
 
   return (
-    <>
-      {!geolocationEnabled && reefOnMap?.id && (
-        <Redirect to={`/reefs/${reefOnMap?.id}`} />
-      )}
-      <div className={classes.searchBar}>
-        <div className={classes.searchBarIcon}>
-          <IconButton size="small" onClick={onSearchSubmit}>
-            <SearchIcon />
-          </IconButton>
-        </div>
-
-        <div className={classes.searchBarText}>
-          <Autocomplete
-            id="location"
-            autoHighlight
-            onKeyPress={onKeyPress}
-            className={classes.searchBarInput}
-            options={filteredReefs}
-            noOptionsText={
-              geolocationEnabled
-                ? `No sites found. Press enter to zoom to "${searchValue}"`
-                : undefined
-            }
-            getOptionLabel={reefAugmentedName}
-            value={searchedReef}
-            onChange={onDropdownItemSelect}
-            onInputChange={(_event, _value, reason) =>
-              reason === "clear" && setSearchedReef(null)
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                onChange={onChangeSearchText}
-                placeholder="Search"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: false,
-                }}
-              />
-            )}
-          />
-        </div>
+    <div className={classes.searchBar}>
+      <div className={classes.searchBarIcon}>
+        <IconButton size="small" onClick={onSearchSubmit}>
+          <SearchIcon />
+        </IconButton>
       </div>
-    </>
+
+      <div className={classes.searchBarText}>
+        <Autocomplete
+          id="location"
+          autoHighlight
+          onKeyPress={onKeyPress}
+          className={classes.searchBarInput}
+          options={filteredReefs}
+          noOptionsText={
+            geocodingEnabled
+              ? `No sites found. Press enter to zoom to "${searchValue}"`
+              : undefined
+          }
+          getOptionLabel={reefAugmentedName}
+          value={searchedReef}
+          onChange={onDropdownItemSelect}
+          onInputChange={(_event, _value, reason) =>
+            reason === "clear" && setSearchedReef(null)
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              onChange={onChangeSearchText}
+              placeholder="Search"
+              variant="outlined"
+              InputLabelProps={{
+                shrink: false,
+              }}
+            />
+          )}
+        />
+      </div>
+    </div>
   );
 };
 
@@ -178,11 +178,11 @@ const styles = () =>
   });
 
 interface SearchIncomingProps {
-  geolocationEnabled?: boolean;
+  geocodingEnabled?: boolean;
 }
 
 Search.defaultProps = {
-  geolocationEnabled: false,
+  geocodingEnabled: false,
 };
 
 type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
