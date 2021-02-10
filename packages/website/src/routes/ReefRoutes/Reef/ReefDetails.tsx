@@ -33,6 +33,7 @@ import {
 const ReefDetails = ({
   classes,
   reef,
+  featuredSurveyId,
   startDate,
   endDate,
   range,
@@ -126,6 +127,7 @@ const ReefDetails = ({
               reefId={reef.id}
               url={reef.videoStream}
               featuredImage={reef.featuredImage}
+              surveyId={featuredSurveyId}
             />
           </div>
         </Grid>
@@ -201,6 +203,7 @@ const styles = (theme: Theme) =>
 
 interface ReefDetailIncomingProps {
   reef: Reef;
+  featuredSurveyId?: number | null;
   startDate: string;
   endDate: string;
   pickerDate: string;
@@ -220,6 +223,7 @@ ReefDetails.defaultProps = {
   point: null,
   diveDate: null,
   spotterData: null,
+  featuredSurveyId: null,
 };
 
 type ReefDetailProps = ReefDetailIncomingProps & WithStyles<typeof styles>;

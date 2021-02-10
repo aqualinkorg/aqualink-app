@@ -31,7 +31,7 @@ import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
 
 const NavBar = ({
   searchLocation,
-  geolocationEnabled,
+  geocodingEnabled,
   routeButtons,
   classes,
 }: NavBarProps) => {
@@ -98,7 +98,7 @@ const NavBar = ({
             {searchLocation && (
               <Hidden xsDown>
                 <Grid item sm={3}>
-                  <Search geolocationEnabled={geolocationEnabled} />
+                  <Search geocodingEnabled={geocodingEnabled} />
                 </Grid>
               </Hidden>
             )}
@@ -178,7 +178,7 @@ const NavBar = ({
             {searchLocation && (
               <Hidden smUp>
                 <Grid item xs={12} style={{ margin: 0, paddingTop: 0 }}>
-                  <Search geolocationEnabled={geolocationEnabled} />
+                  <Search geocodingEnabled={geocodingEnabled} />
                 </Grid>
               </Hidden>
             )}
@@ -243,12 +243,12 @@ const styles = (theme: Theme) =>
 
 interface NavBarIncomingProps {
   searchLocation: boolean;
-  geolocationEnabled?: boolean;
+  geocodingEnabled?: boolean;
   routeButtons?: boolean;
 }
 
 NavBar.defaultProps = {
-  geolocationEnabled: false,
+  geocodingEnabled: false,
   routeButtons: false,
 };
 

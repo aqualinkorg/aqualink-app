@@ -18,9 +18,6 @@ describe("Search", () => {
         loading: false,
         error: null,
       },
-      homepage: {
-        reefOnMap: mockReef,
-      },
     });
 
     store.dispatch = jest.fn();

@@ -24,6 +24,7 @@ const FeaturedMedia = ({
   reefId,
   url,
   featuredImage,
+  surveyId,
   classes,
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
@@ -46,13 +47,15 @@ const FeaturedMedia = ({
     );
   }
 
-  if (featuredImage) {
+  if (featuredImage && surveyId) {
     return (
-      <CardMedia
-        className={classes.card}
-        style={{ height: "100%" }}
-        image={featuredImage}
-      />
+      <Link to={`/reefs/${reefId}/survey_details/${surveyId}`}>
+        <CardMedia
+          className={classes.card}
+          style={{ height: "100%" }}
+          image={featuredImage}
+        />
+      </Link>
     );
   }
 
@@ -123,11 +126,13 @@ interface FeaturedMediaIncomingProps {
   reefId: number;
   url?: string | null;
   featuredImage?: string | null;
+  surveyId?: number | null;
 }
 
 FeaturedMedia.defaultProps = {
   url: null,
   featuredImage: null,
+  surveyId: null,
 };
 
 type FeaturedMediaProps = WithStyles<typeof styles> &
