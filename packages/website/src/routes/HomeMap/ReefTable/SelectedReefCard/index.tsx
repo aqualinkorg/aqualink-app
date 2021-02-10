@@ -99,13 +99,13 @@ const useStyles = makeStyles((theme) => ({
 
 type SelectedReefContentProps = {
   reef: Reef;
-  url?: string | null;
+  imageUrl?: string | null;
   surveyId?: number | null;
 };
 
 const SelectedReefContent = ({
   reef,
-  url,
+  imageUrl,
   surveyId,
 }: SelectedReefContentProps) => {
   const classes = useStyles();
@@ -157,7 +157,7 @@ const SelectedReefContent = ({
   return (
     <Grid
       className={
-        url
+        imageUrl
           ? `${classes.cardWrapper} ${classes.mobileCardWrapperWithImage}`
           : `${classes.cardWrapper} ${classes.mobileCardWrapperWithNoImage}`
       }
@@ -165,14 +165,14 @@ const SelectedReefContent = ({
       justify="space-between"
       spacing={1}
     >
-      {url && surveyId && (
+      {imageUrl && surveyId && (
         <Grid item xs={12} sm={6} lg={4}>
           <Box position="relative" height="100%">
             <Link
               style={{ color: "inherit", textDecoration: "none" }}
               to={`/reefs/${reef.id}/survey_details/${surveyId}`}
             >
-              <CardMedia className={classes.cardImage} image={url} />
+              <CardMedia className={classes.cardImage} image={imageUrl} />
             </Link>
 
             <Hidden smUp>
@@ -213,12 +213,12 @@ const SelectedReefContent = ({
       <Grid
         item
         xs={12}
-        sm={url ? 6 : 12}
-        lg={url ? 6 : 10}
+        sm={imageUrl ? 6 : 12}
+        lg={imageUrl ? 6 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
-          <Hidden xsDown={Boolean(url)}>
+          <Hidden xsDown={Boolean(imageUrl)}>
             <Typography
               className={classes.cardTitle}
               color="textSecondary"
@@ -278,7 +278,7 @@ const SelectedReefContent = ({
 };
 
 SelectedReefContent.defaultProps = {
-  url: null,
+  imageUrl: null,
   surveyId: null,
 };
 
@@ -331,7 +331,7 @@ const SelectedReefCard = () => {
         ) : reef ? (
           <SelectedReefContent
             reef={reef}
-            url={featuredSurveyMedia?.url}
+            imageUrl={featuredSurveyMedia?.url}
             surveyId={surveyId}
           />
         ) : null}

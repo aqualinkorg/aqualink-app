@@ -33,7 +33,7 @@ const reefAugmentedName = (reef: Reef) => {
   return name || region || "";
 };
 
-const Search = ({ geolocationEnabled, classes }: SearchProps) => {
+const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
@@ -86,7 +86,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
     if (searchedReef) {
       dispatch(setReefOnMap(searchedReef));
       setSearchedReef(null);
-    } else if (searchValue && geolocationEnabled) {
+    } else if (searchValue && geocodingEnabled) {
       mapServices
         .getLocation(searchValue)
         .then((data) => dispatch(setSearchResult(data)))
@@ -103,7 +103,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
   return (
     <>
       {/* Redirect to searched reef's details page for components that do not use geolocation */}
-      {!geolocationEnabled && reefOnMap?.id && (
+      {!geocodingEnabled && reefOnMap?.id && (
         <Redirect to={`/reefs/${reefOnMap.id}`} />
       )}
       <div className={classes.searchBar}>
@@ -121,7 +121,7 @@ const Search = ({ geolocationEnabled, classes }: SearchProps) => {
             className={classes.searchBarInput}
             options={filteredReefs}
             noOptionsText={
-              geolocationEnabled
+              geocodingEnabled
                 ? `No sites found. Press enter to zoom to "${searchValue}"`
                 : undefined
             }
@@ -184,11 +184,11 @@ const styles = () =>
   });
 
 interface SearchIncomingProps {
-  geolocationEnabled?: boolean;
+  geocodingEnabled?: boolean;
 }
 
 Search.defaultProps = {
-  geolocationEnabled: false,
+  geocodingEnabled: false,
 };
 
 type SearchProps = SearchIncomingProps & WithStyles<typeof styles>;
