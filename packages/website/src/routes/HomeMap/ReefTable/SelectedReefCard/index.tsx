@@ -100,14 +100,9 @@ const useStyles = makeStyles((theme) => ({
 type SelectedReefContentProps = {
   reef: Reef;
   imageUrl?: string | null;
-  surveyId?: number | null;
 };
 
-const SelectedReefContent = ({
-  reef,
-  imageUrl,
-  surveyId,
-}: SelectedReefContentProps) => {
+const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   const classes = useStyles();
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
@@ -165,13 +160,10 @@ const SelectedReefContent = ({
       justify="space-between"
       spacing={1}
     >
-      {imageUrl && surveyId && (
+      {imageUrl && (
         <Grid item xs={12} sm={6} lg={4}>
           <Box position="relative" height="100%">
-            <Link
-              style={{ color: "inherit", textDecoration: "none" }}
-              to={`/reefs/${reef.id}/survey_details/${surveyId}`}
-            >
+            <Link to={`/reefs/${reef.id}`}>
               <CardMedia className={classes.cardImage} image={imageUrl} />
             </Link>
 
@@ -279,7 +271,6 @@ const SelectedReefContent = ({
 
 SelectedReefContent.defaultProps = {
   imageUrl: null,
-  surveyId: null,
 };
 
 const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
@@ -292,7 +283,7 @@ const SelectedReefCard = () => {
 
   const isFeatured = `${reef?.id}` === featuredReefId;
 
-  const { id: surveyId, featuredSurveyMedia } =
+  const { featuredSurveyMedia } =
     sortByDate(surveyList, "diveDate", "desc").find(
       (survey) =>
         survey.featuredSurveyMedia &&
@@ -332,7 +323,6 @@ const SelectedReefCard = () => {
           <SelectedReefContent
             reef={reef}
             imageUrl={featuredSurveyMedia?.url}
-            surveyId={surveyId}
           />
         ) : null}
       </Card>
