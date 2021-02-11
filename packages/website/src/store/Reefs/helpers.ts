@@ -9,7 +9,7 @@ export function getReefNameAndRegion(reef: Reef) {
   return { name, region };
 }
 
-const longDHW = (dhw: number | null): string =>
+export const longDHW = (dhw: number | null): string =>
   `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
 
 export const constructTableData = (list: Reef[]): TableRow[] => {

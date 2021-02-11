@@ -1,12 +1,16 @@
 import { LatLng } from "leaflet";
 import { maxBy, meanBy } from "lodash";
 
+import { longDHW } from "../store/Reefs/helpers";
 import { Reef } from "../store/Reefs/types";
 
-export const findMaxDhwReefPosition = (reefs: Reef[]): LatLng | null => {
+export const findMaxAlertReefPosition = (reefs: Reef[]): LatLng | null => {
   const maxDhwReef = maxBy(
     reefs,
-    (reef) => reef.latestDailyData.degreeHeatingDays
+    (reef) =>
+      `${reef.latestDailyData.weeklyAlertLevel || 0},${longDHW(
+        reef.latestDailyData.degreeHeatingDays
+      )}`
   );
 
   // If the polygon type is a Point, return its coordinates
