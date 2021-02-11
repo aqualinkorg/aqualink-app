@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import { Map, fromJS } from "immutable";
 import { pick, isEmpty } from "lodash";
 import L from "leaflet";
-import isEmail from "validator/lib/isEmail";
 import {
   Typography,
   Grid,
@@ -30,17 +29,6 @@ import LocationMap from "./LocationMap";
 import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
 import validators from "../../helpers/validators";
-
-const contactFormElements = [
-  { id: "name", label: "Name" },
-  { id: "org", label: "Organization" },
-  {
-    id: "email",
-    label: "Email",
-    validator: (email: string) => isEmail(email),
-    errorMessage: "Enter a valid email",
-  },
-];
 
 const Apply = ({ classes }: ApplyProps) => {
   const dispatch = useDispatch();
@@ -73,24 +61,31 @@ const Apply = ({ classes }: ApplyProps) => {
     }
   }, [user, formModel]);
 
+  const contactFormElements = [
+    { id: "name", label: "Name" },
+    { id: "org", label: "Organization" },
+    {
+      id: "email",
+      label: "Email",
+      errorMessage: validators.isEmail(`${formModel.get("email")}`),
+    },
+  ];
+
   const locationFormElements = [
     {
       id: "lat",
       label: "Latitude",
-      validator: (lat: string) => !validators.isLat(lat),
       errorMessage: validators.isLat(`${formModel.get("lat")}`),
     },
     {
       id: "lng",
       label: "Longitude",
-      validator: (lng: string) => !validators.isLong(lng),
       errorMessage: validators.isLong(`${formModel.get("lng")}`),
     },
     { id: "siteName", label: "Site Name" },
     {
       id: "depth",
       label: "Depth (m)",
-      validator: (depth: string) => !validators.isInt(depth),
       errorMessage: validators.isInt(`${formModel.get("depth")}`),
     },
   ];
@@ -110,13 +105,13 @@ const Apply = ({ classes }: ApplyProps) => {
 
   function handleFormSubmission() {
     const errors = joinedFormElements.reduce(
-      (acc, { id, label, validator, errorMessage }) => {
+      (acc, { id, label, errorMessage }) => {
         const value = formModel.get(id);
         if (!value) {
           return { ...acc, [id]: `"${label}" is required` };
         }
 
-        if (validator && !validator(value as string)) {
+        if (errorMessage) {
           return { ...acc, [id]: errorMessage };
         }
 
