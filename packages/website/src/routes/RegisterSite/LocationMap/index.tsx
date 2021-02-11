@@ -29,7 +29,7 @@ const LocationMap = ({
   );
 
   function updateLatLng(event: L.LeafletMouseEvent) {
-    const { lat, lng } = event.latlng;
+    const { lat, lng } = event.latlng.wrap();
     updateMarkerPosition([lat, lng]);
   }
 

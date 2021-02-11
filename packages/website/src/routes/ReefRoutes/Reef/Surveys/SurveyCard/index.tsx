@@ -28,14 +28,16 @@ const SurveyCard = ({
     <Paper elevation={0} className={classes.surveyCard}>
       <Grid style={{ height: "100%" }} container justify="space-between">
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
-          <CardMedia
-            className={classes.cardImage}
-            image={
-              point === -1
-                ? survey.featuredSurveyMedia?.url
-                : survey.surveyPointImage && survey.surveyPointImage[point][0]
-            }
-          />
+          <Link to={`/reefs/${reefId}/survey_details/${survey.id}`}>
+            <CardMedia
+              className={classes.cardImage}
+              image={
+                point === -1
+                  ? survey.featuredSurveyMedia?.url
+                  : survey.surveyPointImage && survey.surveyPointImage[point][0]
+              }
+            />
+          </Link>
         </Grid>
         <Grid className={classes.infoWrapper} container item xs={12} md={7}>
           <Grid className={classes.info} container item xs={12}>

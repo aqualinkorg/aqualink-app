@@ -62,14 +62,14 @@ const EditForm = ({
 
   const [reefLatitude, setReefLatitude] = useFormField(
     location?.coordinates[1].toString(),
-    ["required", "isNumeric"],
+    ["required", "isNumeric", "isLat"],
     draftLatitude?.toString(),
     setDraftReefCoordinates("latitude")
   );
 
   const [reefLongitude, setReefLongitude] = useFormField(
     location?.coordinates[0].toString(),
-    ["required", "isNumeric"],
+    ["required", "isNumeric", "isLong"],
     draftLongitude?.toString(),
     setDraftReefCoordinates("longitude")
   );

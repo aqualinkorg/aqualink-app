@@ -114,7 +114,8 @@ const Reef = ({ match, classes }: ReefProps) => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   );
 
-  const { featuredSurveyMedia, diveDate } = featuredMedia || {};
+  const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
+    featuredMedia || {};
   const { poiId, url } = featuredSurveyMedia || {};
 
   const { liveData, dailyData } = reefDetails || {};
@@ -221,6 +222,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              featuredSurveyId={featuredSurveyId}
               startDate={subtractFromDate(endDate || pickerDate, range)}
               endDate={endDate || pickerDate}
               pickerDate={pickerDate}
