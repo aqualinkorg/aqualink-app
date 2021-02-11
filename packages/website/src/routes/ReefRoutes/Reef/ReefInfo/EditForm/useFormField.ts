@@ -1,21 +1,11 @@
 import { useEffect, useReducer } from "react";
-import isInt from "validator/lib/isInt";
-import isNumeric from "validator/lib/isNumeric";
+
+import validators from "../../../../../helpers/validators";
 
 export interface FormField {
   value: string;
   error?: string;
 }
-
-const validations = {
-  required: (value: string) =>
-    value === "" || value === "NaN" ? "Required field" : undefined,
-  maxLength: (value: string) =>
-    value.length > 100 ? "Must not exceed 100 characters" : undefined,
-  isInt: (value: string) => (!isInt(value) ? "Must be an integer" : undefined),
-  isNumeric: (value: string) =>
-    !isNumeric(value) ? "Must be numeric" : undefined,
-};
 
 /**
  * Custom hook that handles the changes of a form textfield
@@ -28,14 +18,22 @@ const validations = {
  */
 export const useFormField = (
   initialValue: string | null | undefined,
-  checks: ("required" | "maxLength" | "isInt" | "isNumeric")[],
+  checks: (
+    | "required"
+    | "maxLength"
+    | "isInt"
+    | "isNumeric"
+    | "isLong"
+    | "isLat"
+    | "isEmail"
+  )[],
   draftValue?: string,
   extraHandler?: (value: string) => void
 ): [FormField, (value: string, runExtraHandler?: boolean) => void] => {
   const reducer = (_state: FormField, newValue: string): FormField => ({
     value: newValue,
     error: checks
-      .map((check) => validations[check](newValue))
+      .map((check) => validators[check](newValue))
       .filter((error) => error)[0],
   });
   const [field, dispatch] = useReducer(reducer, { value: initialValue || "" });
