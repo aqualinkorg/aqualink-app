@@ -30,6 +30,12 @@ import { userInfoSelector, getSelf } from "../../store/User/userSlice";
 import reefServices from "../../services/reefServices";
 import validators from "../../helpers/validators";
 
+interface FormElement {
+  id: string;
+  label: string;
+  validator?: (value: string) => string | undefined;
+}
+
 const Apply = ({ classes }: ApplyProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
@@ -61,32 +67,32 @@ const Apply = ({ classes }: ApplyProps) => {
     }
   }, [user, formModel]);
 
-  const contactFormElements = [
+  const contactFormElements: FormElement[] = [
     { id: "name", label: "Name" },
     { id: "org", label: "Organization" },
     {
       id: "email",
       label: "Email",
-      errorMessage: validators.isEmail(`${formModel.get("email")}`),
+      validator: validators.isEmail,
     },
   ];
 
-  const locationFormElements = [
+  const locationFormElements: FormElement[] = [
     {
       id: "lat",
       label: "Latitude",
-      errorMessage: validators.isLat(`${formModel.get("lat")}`),
+      validator: validators.isLat,
     },
     {
       id: "lng",
       label: "Longitude",
-      errorMessage: validators.isLong(`${formModel.get("lng")}`),
+      validator: validators.isLong,
     },
     { id: "siteName", label: "Site Name" },
     {
       id: "depth",
       label: "Depth (m)",
-      errorMessage: validators.isInt(`${formModel.get("depth")}`),
+      validator: validators.isInt,
     },
   ];
 
@@ -105,11 +111,13 @@ const Apply = ({ classes }: ApplyProps) => {
 
   function handleFormSubmission() {
     const errors = joinedFormElements.reduce(
-      (acc, { id, label, errorMessage }) => {
+      (acc, { id, label, validator }) => {
         const value = formModel.get(id);
         if (!value) {
           return { ...acc, [id]: `"${label}" is required` };
         }
+
+        const errorMessage = validator && validator(value as string);
 
         if (errorMessage) {
           return { ...acc, [id]: errorMessage };
