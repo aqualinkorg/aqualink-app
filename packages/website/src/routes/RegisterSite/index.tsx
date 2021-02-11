@@ -77,21 +77,21 @@ const Apply = ({ classes }: ApplyProps) => {
     {
       id: "lat",
       label: "Latitude",
-      validator: validators.isLat,
-      errorMessage: "Enter a valid latitude between -90 and 90",
+      validator: (lat: string) => !validators.isLat(lat),
+      errorMessage: validators.isLat(`${formModel.get("lat")}`),
     },
     {
       id: "lng",
       label: "Longitude",
-      validator: validators.isLong,
-      errorMessage: "Enter a valid longitude between -180 and 180",
+      validator: (lng: string) => !validators.isLong(lng),
+      errorMessage: validators.isLong(`${formModel.get("lng")}`),
     },
     { id: "siteName", label: "Site Name" },
     {
       id: "depth",
       label: "Depth (m)",
-      validator: validators.isNumeric,
-      errorMessage: "Depth should be a number",
+      validator: (depth: string) => !validators.isInt(depth),
+      errorMessage: validators.isInt(`${formModel.get("depth")}`),
     },
   ];
 
