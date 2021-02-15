@@ -1,20 +1,20 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class TimeSeriesTables1613051594551 implements MigrationInterface {
-  name = 'TimeSeriesTables1613051594551';
+export class TimeSeriesTables1613383141290 implements MigrationInterface {
+  name = 'TimeSeriesTables1613383141290';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TYPE "metrics_metric_enum" AS ENUM('surface_temperature', 'bottom_temperature', 'dhw', 'alert', 'sst_anomaly')`,
     );
     await queryRunner.query(
-      `CREATE TYPE "metrics_units_enum" AS ENUM('C', '', 'm')`,
+      `CREATE TYPE "metrics_units_enum" AS ENUM('celsius', 'm', 'm/s', 'dhw')`,
     );
     await queryRunner.query(
       `CREATE TABLE "metrics" ("id" SERIAL NOT NULL, "metric" "metrics_metric_enum" NOT NULL, "description" character varying NOT NULL, "units" "metrics_units_enum" NOT NULL, CONSTRAINT "PK_5283cad666a83376e28a715bf0e" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "reef_id" integer, "poi_id" integer, "metric_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_88a659ad442c11d3a5400b3def4" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -26,7 +26,7 @@ export class TimeSeriesTables1613051594551 implements MigrationInterface {
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `CREATE MATERIALIZED VIEW "latest_data" AS SELECT DISTINCT ON (metric_id, reef_id, poi_id) metric_id, id, timestamp, value, reef_id, poi_id FROM "time_series" "time_series"  ORDER BY reef_id, poi_id, metric_id, timestamp DESC`,
+      `CREATE MATERIALIZED VIEW "latest_data" AS SELECT DISTINCT ON (metric_id, reef_id, poi_id) "metric"."metric" AS "metric", "time_series"."id" AS "id", timestamp, value, reef_id, poi_id FROM "time_series" "time_series" INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id  ORDER BY reef_id, poi_id, metric_id, timestamp DESC WITH DATA`,
     );
     await queryRunner.query(
       `INSERT INTO "typeorm_metadata"("type", "schema", "name", "value") VALUES ($1, $2, $3, $4)`,
@@ -34,7 +34,7 @@ export class TimeSeriesTables1613051594551 implements MigrationInterface {
         'VIEW',
         'public',
         'latest_data',
-        'SELECT DISTINCT ON (metric_id, reef_id, poi_id) metric_id, id, timestamp, value, reef_id, poi_id FROM "time_series" "time_series"  ORDER BY reef_id, poi_id, metric_id, timestamp DESC',
+        'SELECT DISTINCT ON (metric_id, reef_id, poi_id) "metric"."metric" AS "metric", "time_series"."id" AS "id", timestamp, value, reef_id, poi_id FROM "time_series" "time_series" INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id  ORDER BY reef_id, poi_id, metric_id, timestamp DESC WITH DATA',
       ],
     );
   }

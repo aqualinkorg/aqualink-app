@@ -9,9 +9,10 @@ export enum Metric {
 }
 
 export enum Units {
-  C_DEGREES = 'C',
-  NONE = '',
+  CELSIUS = 'celsius',
   METERS = 'm',
+  METERS_PER_SECOND = 'm/s',
+  DHW = 'dhw',
 }
 
 @Entity()

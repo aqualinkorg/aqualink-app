@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { Metrics } from './metrics.entity';
@@ -22,4 +29,10 @@ export class TimeSeries {
 
   @ManyToOne(() => Metrics, { onDelete: 'SET NULL', nullable: true })
   metric: Metrics;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
