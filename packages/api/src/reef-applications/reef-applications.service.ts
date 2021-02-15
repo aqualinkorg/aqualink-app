@@ -20,7 +20,6 @@ import {
 import { getMMM } from '../utils/temperature';
 import { AdminLevel, User } from '../users/users.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
-import { FilterReefApplication } from './dto/filter-reef-application.dto';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -90,20 +89,21 @@ export class ReefApplicationsService {
     });
   }
 
-  find(filters: FilterReefApplication): Promise<ReefApplication[]> {
-    const query = this.reefApplicationRepository.createQueryBuilder(
-      'reefApplication',
-    );
+  async findOneFromReef(reefId: number): Promise<ReefApplication> {
+    const application = await this.reefApplicationRepository.findOne({
+      where: {
+        reef: reefId,
+      },
+      relations: ['reef', 'user'],
+    });
 
-    if (filters.reef) {
-      query.andWhere('reef_id = :reef_id', { reef_id: filters.reef });
+    if (!application) {
+      throw new NotFoundException(
+        `Reef Application for reef with ID ${reefId} not found.`,
+      );
     }
 
-    if (filters.user) {
-      query.andWhere('user_id = :user_id', { user_id: filters.user });
-    }
-
-    return query.getMany();
+    return application;
   }
 
   findOne(id: number): Promise<ReefApplication> {
@@ -113,7 +113,7 @@ export class ReefApplicationsService {
         relations: ['reef', 'user'],
       });
     } catch (err) {
-      throw new NotFoundException(`ReefApplication with ID ${id} not found.`);
+      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
     }
   }
 
