@@ -6,10 +6,11 @@ test("renders as expected", () => {
   const { container } = render(
     <PointSelector
       mountPois
+      reefId={1}
       pointOptions={[]}
       point="Custom Point"
+      pointId={1}
       editPoiNameDraft={{}}
-      editPoiNameEnabled={{}}
       isReefAdmin={false}
       editPoiNameLoading={false}
       onChangePoiName={jest.fn()}

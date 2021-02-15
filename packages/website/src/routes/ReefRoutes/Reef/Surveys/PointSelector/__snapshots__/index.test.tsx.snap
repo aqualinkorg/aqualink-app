@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-4"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-5"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
@@ -70,6 +70,19 @@ exports[`renders as expected 1`] = `
           </mock-menuitem>
         </mock-menu>
       </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <mock-button
+        color="primary"
+        component="[object Object]"
+        size="small"
+        to="/reefs/1/points/1"
+        variant="outlined"
+      >
+        View Survey Point
+      </mock-button>
     </div>
   </div>
 </div>

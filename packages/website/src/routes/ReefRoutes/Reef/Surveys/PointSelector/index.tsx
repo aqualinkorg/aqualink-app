@@ -10,17 +10,21 @@ import {
   Select,
   IconButton,
   OutlinedInput,
+  Button,
 } from "@material-ui/core";
 import { Create, DeleteOutline } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 import { Pois } from "../../../../../store/Reefs/types";
 import { EditPoiNameDraft } from "../types";
 import EditDialog, { Action } from "../../../../../common/Dialog";
 
 const PointSelector = ({
+  reefId,
   mountPois,
   pointOptions,
   point,
+  pointId,
   editPoiNameDraft,
   isReefAdmin,
   editPoiNameLoading,
@@ -91,7 +95,7 @@ const PointSelector = ({
           }
         />
       )}
-      <Grid container alignItems="center" item md={12} lg={4}>
+      <Grid container alignItems="center" item md={12} lg={5} spacing={1}>
         <Grid item>
           <Typography variant="h6" className={classes.subTitle}>
             Survey Point:
@@ -171,6 +175,19 @@ const PointSelector = ({
             </Select>
           </Grid>
         )}
+        {pointId !== -1 && (
+          <Grid item>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              component={Link}
+              to={`/reefs/${reefId}/points/${pointId}`}
+            >
+              View Survey Point
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </>
   );
@@ -185,8 +202,9 @@ const styles = (theme: Theme) =>
     },
     selector: {
       minWidth: 120,
-      maxWidth: 240,
+      maxWidth: 190,
       color: theme.palette.primary.main,
+      marginRight: "1rem",
     },
     itemName: {
       maxWidth: 140,
@@ -217,9 +235,11 @@ const styles = (theme: Theme) =>
   });
 
 interface PointSelectorIncomingProps {
+  reefId: number;
   mountPois: boolean;
   pointOptions: Pois[];
   point: string;
+  pointId: number;
   editPoiNameDraft: EditPoiNameDraft;
   isReefAdmin: boolean;
   editPoiNameLoading: boolean;

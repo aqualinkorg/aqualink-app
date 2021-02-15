@@ -254,14 +254,16 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             justify={windowWidth < 1280 ? "flex-start" : "center"}
             item
             md={12}
-            lg={4}
+            lg={3}
           >
             <Typography className={classes.title}>Survey History</Typography>
           </Grid>
           <PointSelector
+            reefId={reef.id}
             mountPois={mountPois}
             pointOptions={pointOptions}
             point={point}
+            pointId={pointIdFinder(point)}
             editPoiNameDraft={editPoiNameDraft}
             isReefAdmin={isReefAdmin}
             editPoiNameLoading={editPoiNameLoading}
