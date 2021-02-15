@@ -29,7 +29,8 @@ import { Public } from '../auth/public.decorator';
 import { AuthRequest } from '../auth/auth.types';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
-import { FilterReefApplication } from './dto/filter-reef-application.dto';
+import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
+import { AdminLevel } from '../users/users.entity';
 
 @Auth()
 @UseInterceptors(ClassSerializerInterceptor)
@@ -53,9 +54,13 @@ export class ReefApplicationsController {
     );
   }
 
-  @Get()
-  async find(@Query() filters: FilterReefApplication) {
-    return this.reefApplicationsService.find(filters);
+  @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
+  @UseGuards(IsReefAdminGuard)
+  @Get('/reefs/:reef_id')
+  async findOneFromReef(
+    @Param('reef_id') reefId: number,
+  ): Promise<ReefApplication> {
+    return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
   @Public()

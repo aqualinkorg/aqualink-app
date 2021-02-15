@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { AxiosError } from "axios";
 
 import { AgreementsChecked } from "./types";
 import Obligations from "./Obligations";
@@ -82,14 +83,20 @@ const Apply = ({ match, classes }: ApplyProps) => {
       reefServices
         .getReefApplication(reefId, user.token)
         .then(({ data }) => {
-          if (data.length > 0) {
-            setReefApplication(data[0]);
-            setMessage(null);
+          setReefApplication(data);
+          setMessage(null);
+        })
+        .catch(({ response }: AxiosError) => {
+          if (response?.data.statusCode === 403) {
+            setMessage(
+              "You are not authorized to access this page. If this is an error, contact"
+            );
+            setUnauthorized(true);
           } else {
-            setMessage("No application found");
+            setMessage("There was an error getting the application");
+            setUnauthorized(false);
           }
         })
-        .catch(() => setMessage("There was an error getting the application"))
         .finally(() => setLoading(false));
     }
   }, [user, reefId]);
