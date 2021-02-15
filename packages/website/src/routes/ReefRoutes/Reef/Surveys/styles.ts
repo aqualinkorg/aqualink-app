@@ -18,15 +18,15 @@ const styles = {
     marginBottom: "2rem",
   },
   surveyCard: {
-    width: "80%",
+    width: "100%",
     backgroundColor: theme.palette.primary.light,
     border: 1,
     borderStyle: "solid",
     borderColor: "#dddddd",
     borderRadius: 2,
-    height: "16rem",
+    height: 320,
     [theme.breakpoints.down("sm")]: {
-      height: "32rem",
+      height: 640,
     },
     [theme.breakpoints.down("xs")]: {
       width: "100%",
@@ -47,6 +47,18 @@ const styles = {
   },
   valuesWithMargin: {
     marginLeft: "1rem",
+    maxWidth: "60%",
+  },
+  cardLink: {
+    display: "block",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    color: theme.palette.primary.main,
+    textDecoration: "none",
+    "&:hover": {
+      color: theme.palette.primary.main,
+      textDecoration: "none",
+    },
   },
 };
 

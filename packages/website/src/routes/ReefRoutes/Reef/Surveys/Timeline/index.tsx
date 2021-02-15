@@ -174,7 +174,7 @@ const styles = (theme: Theme) =>
       width: "100%",
     },
     connector: {
-      height: "9rem",
+      height: 180,
       borderLeft: "2px dashed #8f8f8f",
       marginTop: 0,
       marginBottom: 0,

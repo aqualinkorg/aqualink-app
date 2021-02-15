@@ -54,6 +54,25 @@ const SurveyCard = ({
                 </Typography>
               </Grid>
             )}
+            {survey.featuredSurveyMedia?.poiId?.name && (
+              <Grid container alignItems="center" item xs={12}>
+                <Typography className={classes.cardFields} variant="h6">
+                  Survey Point:
+                </Typography>
+                <Typography
+                  className={`${classes.cardValues} ${classes.valuesWithMargin}`}
+                  variant="h6"
+                  title={survey.featuredSurveyMedia.poiId.name}
+                >
+                  <Link
+                    className={classes.cardLink}
+                    to={`/reefs/${reefId}/points/${survey.featuredSurveyMedia.poiId.id}`}
+                  >
+                    {survey.featuredSurveyMedia.poiId.name}
+                  </Link>
+                </Typography>
+              </Grid>
+            )}
             {survey.comments && (
               <Grid
                 className={classes.commentsWrapper}
@@ -138,7 +157,7 @@ const styles = (theme: Theme) =>
       },
     },
     commentsWrapper: {
-      maxHeight: "55%",
+      maxHeight: "51%",
     },
     comments: {
       height: "100%",
