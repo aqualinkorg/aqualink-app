@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class AddUniqueIndex1612891721900 implements MigrationInterface {
-  name = 'AddUniqueIndex1612891721900';
+  name = 'AddReefUniqueIndexForApplications1612891721900';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
