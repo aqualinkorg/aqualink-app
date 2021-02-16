@@ -16,73 +16,81 @@ exports[`renders as expected 1`] = `
       </mock-typography>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root PointSelector-selectorWrapper-2 MuiGrid-item"
     >
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-2"
+        class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
       >
         <div
-          aria-haspopup="listbox"
-          aria-labelledby="survey-point survey-point"
-          class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-          id="survey-point"
-          role="button"
-          tabindex="0"
+          class="MuiGrid-root MuiGrid-item"
         >
-          All
-        </div>
-        <input
-          aria-hidden="true"
-          class="MuiSelect-nativeInput"
-          name="survey-point"
-          tabindex="-1"
-          value="All"
-        />
-        <svg
-          aria-hidden="true"
-          class="MuiSvgIcon-root MuiSelect-icon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 10l5 5 5-5z"
-          />
-        </svg>
-        <mock-menu
-          anchorel="[object HTMLDivElement]"
-          id="menu-survey-point"
-          menulistprops="[object Object]"
-          open="false"
-          paperprops="[object Object]"
-        >
-          <mock-menuitem
-            aria-selected="true"
-            data-value="All"
-            role="option"
-            selected="true"
+          <div
+            class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-3"
           >
-            <mock-typography
-              classname="PointSelector-menuItem-4"
-              variant="h6"
+            <div
+              aria-haspopup="listbox"
+              aria-labelledby="survey-point survey-point"
+              class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+              id="survey-point"
+              role="button"
+              tabindex="0"
             >
               All
-            </mock-typography>
-          </mock-menuitem>
-        </mock-menu>
+            </div>
+            <input
+              aria-hidden="true"
+              class="MuiSelect-nativeInput"
+              name="survey-point"
+              tabindex="-1"
+              value="All"
+            />
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSelect-icon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+            <mock-menu
+              anchorel="[object HTMLDivElement]"
+              id="menu-survey-point"
+              menulistprops="[object Object]"
+              open="false"
+              paperprops="[object Object]"
+            >
+              <mock-menuitem
+                aria-selected="true"
+                data-value="All"
+                role="option"
+                selected="true"
+              >
+                <mock-typography
+                  classname="PointSelector-menuItem-5"
+                  variant="h6"
+                >
+                  All
+                </mock-typography>
+              </mock-menuitem>
+            </mock-menu>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <mock-button
+            color="primary"
+            component="[object Object]"
+            size="small"
+            to="/reefs/1/points/1"
+            variant="outlined"
+          >
+            View Survey Point
+          </mock-button>
+        </div>
       </div>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item"
-    >
-      <mock-button
-        color="primary"
-        component="[object Object]"
-        size="small"
-        to="/reefs/1/points/1"
-        variant="outlined"
-      >
-        View Survey Point
-      </mock-button>
     </div>
   </div>
 </div>

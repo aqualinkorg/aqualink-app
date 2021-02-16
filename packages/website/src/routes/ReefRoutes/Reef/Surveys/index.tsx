@@ -3,6 +3,8 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  useTheme,
+  useMediaQuery,
   Theme,
   Grid,
   Typography,
@@ -33,6 +35,8 @@ import surveyServices from "../../../../services/surveyServices";
 import { EditPoiNameDraft } from "./types";
 
 const Surveys = ({ reef, classes }: SurveysProps) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
   const [pointOptions, setPointOptions] = useState<Pois[]>([]);
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
@@ -248,6 +252,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
           lg={12}
           xs={11}
           alignItems="baseline"
+          spacing={matches ? 4 : 1}
         >
           <Grid
             container
@@ -280,6 +285,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             item
             md={12}
             lg={4}
+            spacing={1}
           >
             {/* TODO - Make observation a required field. */}
             <Grid item>
@@ -287,7 +293,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
                 Observation:
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.selectorWrapper}>
               <FormControl className={classes.formControl}>
                 <Select
                   labelId="survey-observation"
@@ -308,6 +314,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
                       className={classes.menuItem}
                       value={item.key}
                       key={item.key}
+                      title={item.value}
                     >
                       {item.value}
                     </MenuItem>
@@ -351,6 +358,11 @@ const styles = (theme: Theme) =>
       color: "#474747",
       marginRight: "1rem",
     },
+    selectorWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        width: "100%",
+      },
+    },
     formControl: {
       minWidth: 120,
       maxWidth: 240,
@@ -360,6 +372,10 @@ const styles = (theme: Theme) =>
     },
     menuItem: {
       color: theme.palette.primary.main,
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "block",
     },
     textField: {
       width: "100%",

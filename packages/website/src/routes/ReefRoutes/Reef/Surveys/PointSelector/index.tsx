@@ -3,6 +3,8 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  useMediaQuery,
+  useTheme,
   Theme,
   Grid,
   Typography,
@@ -11,8 +13,9 @@ import {
   IconButton,
   OutlinedInput,
   Button,
+  Tooltip,
 } from "@material-ui/core";
-import { Create, DeleteOutline } from "@material-ui/icons";
+import { Create, DeleteOutline, Launch } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 import { Pois } from "../../../../../store/Reefs/types";
@@ -35,6 +38,8 @@ const PointSelector = ({
   onDeleteButtonClick,
   classes,
 }: PointSelectorProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPoi, setEditPoi] = useState<Pois>();
 
@@ -102,90 +107,133 @@ const PointSelector = ({
           </Typography>
         </Grid>
         {mountPois && (
-          <Grid item>
-            <Select
-              className={classes.selector}
-              labelId="survey-point"
-              id="survey-point"
-              name="survey-point"
-              value={
-                pointOptions.map((item) => item.name).includes(point)
-                  ? point
-                  : "All"
-              }
-              onChange={handlePointChange}
-              onClose={() => toggleEditPoiNameEnabled(false)}
-              renderValue={(selected) => selected as string}
-            >
-              <MenuItem value="All">
-                <Typography className={classes.menuItem} variant="h6">
-                  All
-                </Typography>
-              </MenuItem>
-              {pointOptions.map(
-                (item) =>
-                  item.name !== null && (
-                    <MenuItem
-                      className={classes.menuItem}
-                      value={item.name}
-                      key={item.id}
-                    >
-                      <Grid
-                        container
-                        alignItems="center"
-                        justify="space-between"
-                        spacing={1}
-                      >
-                        <Grid className={classes.itemName} item>
-                          {item.name}
-                        </Grid>
-                        {isReefAdmin && (
-                          <Grid item>
-                            <Grid container item spacing={1}>
-                              <Grid item>
-                                <IconButton
-                                  className={classes.menuButton}
-                                  onClick={(event) => {
-                                    setEditDialogOpen(true);
-                                    setEditPoi(item);
-                                    event.stopPropagation();
-                                  }}
-                                >
-                                  <Create color="primary" />
-                                </IconButton>
-                              </Grid>
-                              <Grid item>
-                                <IconButton
-                                  className={classes.menuButton}
-                                  onClick={(event) => {
-                                    onDeleteButtonClick(item.id);
-                                    event.stopPropagation();
-                                  }}
-                                >
-                                  <DeleteOutline color="primary" />
-                                </IconButton>
+          <Grid item className={classes.selectorWrapper}>
+            <Grid container alignItems="center">
+              <Grid item>
+                <Select
+                  className={classes.selector}
+                  labelId="survey-point"
+                  id="survey-point"
+                  name="survey-point"
+                  value={
+                    pointOptions.map((item) => item.name).includes(point)
+                      ? point
+                      : "All"
+                  }
+                  onChange={handlePointChange}
+                  onClose={() => toggleEditPoiNameEnabled(false)}
+                  renderValue={(selected) => selected as string}
+                >
+                  <MenuItem value="All">
+                    <Typography className={classes.menuItem} variant="h6">
+                      All
+                    </Typography>
+                  </MenuItem>
+                  {pointOptions.map(
+                    (item) =>
+                      item.name !== null && (
+                        <MenuItem
+                          className={classes.menuItem}
+                          value={item.name}
+                          key={item.id}
+                        >
+                          <Grid
+                            container
+                            alignItems="center"
+                            justify="space-between"
+                            spacing={1}
+                          >
+                            <Grid className={classes.itemName} item>
+                              {item.name}
+                            </Grid>
+                            <Grid item>
+                              <Grid container item spacing={1}>
+                                <Grid item>
+                                  <Tooltip
+                                    title="View survey point"
+                                    placement="top"
+                                    arrow
+                                  >
+                                    <Link
+                                      to={`/reefs/${reefId}/points/${item.id}`}
+                                    >
+                                      <IconButton
+                                        className={classes.menuButton}
+                                      >
+                                        <Launch color="primary" />
+                                      </IconButton>
+                                    </Link>
+                                  </Tooltip>
+                                </Grid>
+                                {isReefAdmin && (
+                                  <>
+                                    <Grid item>
+                                      <Tooltip
+                                        title="Edit survey point"
+                                        placement="top"
+                                        arrow
+                                      >
+                                        <IconButton
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            setEditDialogOpen(true);
+                                            setEditPoi(item);
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <Create color="primary" />
+                                        </IconButton>
+                                      </Tooltip>
+                                    </Grid>
+                                    <Grid item>
+                                      <Tooltip
+                                        title="Delete survey point"
+                                        placement="top"
+                                        arrow
+                                      >
+                                        <IconButton
+                                          className={classes.menuButton}
+                                          onClick={(event) => {
+                                            onDeleteButtonClick(item.id);
+                                            event.stopPropagation();
+                                          }}
+                                        >
+                                          <DeleteOutline color="primary" />
+                                        </IconButton>
+                                      </Tooltip>
+                                    </Grid>
+                                  </>
+                                )}
                               </Grid>
                             </Grid>
                           </Grid>
-                        )}
-                      </Grid>
-                    </MenuItem>
-                  )
+                        </MenuItem>
+                      )
+                  )}
+                </Select>
+              </Grid>
+              {pointId !== -1 && (
+                <Grid item>
+                  {isMobile ? (
+                    <Link to={`/reefs/${reefId}/points/${pointId}`}>
+                      <IconButton className={classes.menuButton}>
+                        <Launch color="primary" />
+                      </IconButton>
+                    </Link>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      component={Link}
+                      to={`/reefs/${reefId}/points/${pointId}`}
+                    >
+                      View Survey Point
+                    </Button>
+                  )}
+                </Grid>
               )}
-            </Select>
-          </Grid>
-        )}
-        {pointId !== -1 && (
-          <Grid item>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="small"
-              component={Link}
-              to={`/reefs/${reefId}/points/${pointId}`}
-            >
-              View Survey Point
-            </Button>
+            </Grid>
           </Grid>
         )}
       </Grid>
@@ -199,6 +247,11 @@ const styles = (theme: Theme) =>
       lineHeight: 1,
       color: "#474747",
       marginRight: "1rem",
+    },
+    selectorWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        width: "100%",
+      },
     },
     selector: {
       minWidth: 120,
@@ -215,7 +268,7 @@ const styles = (theme: Theme) =>
       hyphens: "auto",
     },
     menuItem: {
-      minWidth: 200,
+      minWidth: 240,
       color: theme.palette.primary.main,
     },
     editPoiTextField: {
