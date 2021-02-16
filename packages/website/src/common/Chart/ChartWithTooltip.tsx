@@ -29,7 +29,7 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData, reefId } = rest;
+  const { dailyData, spotterData, reefId, surveys, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -55,7 +55,7 @@ function ChartWithTooltip({
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     if (typeof date !== "string") return;
 
-    const surveyId = findSurveyFromDate(date, rest.surveys);
+    const surveyId = findSurveyFromDate(date, surveys);
 
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
@@ -154,7 +154,7 @@ function ChartWithTooltip({
         >
           <Tooltip
             {...tooltipData}
-            reefTimeZone={rest.timeZone}
+            reefTimeZone={timeZone}
             userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
           />
         </div>

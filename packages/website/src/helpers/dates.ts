@@ -25,32 +25,29 @@ export const subtractFromDate = (endDate: string, amount: Range): string => {
   }
 };
 
-export const toRelativeTime = (timestamp?: string) => {
-  if (timestamp) {
-    const minute = 60;
-    const hour = 60 * 60;
-    const day = 60 * 60 * 24;
+export const toRelativeTime = (timestamp: Date | string | number) => {
+  const minute = 60;
+  const hour = 60 * minute;
+  const day = 24 * hour;
 
-    const now = new Date().getTime();
-    const start = new Date(timestamp).getTime();
+  const now = new Date().getTime();
+  const start = new Date(timestamp).getTime();
 
-    // Time period in seconds
-    const timePeriod = Math.floor((now - start) / 1000);
+  const timePeriodInSeconds = Math.floor((now - start) / 1000);
+  const timePeriodInMinutes = Math.floor(timePeriodInSeconds / minute);
+  const timePeriodInHours = Math.floor(timePeriodInSeconds / hour);
+  const timePeriodInDays = Math.floor(timePeriodInSeconds / day);
 
-    if (timePeriod < minute) {
-      return `${timePeriod} sec. ago`;
-    }
-    if (timePeriod < hour) {
-      return `${Math.floor(timePeriod / minute)} min. ago`;
-    }
-    if (timePeriod < day) {
-      const hours = Math.floor(timePeriod / hour);
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    }
-    const days = Math.floor(timePeriod / day);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
+  switch (true) {
+    case timePeriodInSeconds < minute:
+      return `${timePeriodInSeconds} sec. ago`;
+    case timePeriodInSeconds < hour:
+      return `${timePeriodInMinutes} min. ago`;
+    case timePeriodInSeconds < day:
+      return `${timePeriodInHours} hour${timePeriodInHours > 1 ? "s" : ""} ago`;
+    default:
+      return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
-  return null;
 };
 
 export const findMaxDate = (

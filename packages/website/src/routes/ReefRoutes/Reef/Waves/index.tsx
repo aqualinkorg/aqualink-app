@@ -34,7 +34,8 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     surfaceTemperature?.value || bottomTemperature?.value
   );
 
-  const windRelativeTime = toRelativeTime(windSpeed?.timestamp);
+  const windRelativeTime =
+    windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
 
   return (
     <Card className={classes.card}>
