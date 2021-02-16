@@ -131,28 +131,25 @@ export const convertToLocalTime = (
   isoTime: string,
   timeZone?: string | null
 ) => {
-  // E.g. isoTime = 2021-01-01T22:19:01.000Z, timeZone = "America/New_York", userLocalTimeZoneOffset = -120 (Europe/Athens)
+  // Example usage
+  // isoTime = 2021-01-31T23:59:59.999Z,
+  // timeZone = "America/New_York",
+  // userLocalTimeZoneOffset = -120 (Europe/Athens)
 
-  // siteLocalTime = 2021-01-01T17:19:01-05:00
-  const siteLocalTime = moment(isoTime)
+  // siteLocalTimeIgnoreTimeZone = 2021-01-31T18:59:59.999Z
+  const siteLocalTimeIgnoreTimeZone = moment(isoTime)
     .tz(timeZone || "UTC")
-    .format();
+    .format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]");
 
-  // siteLocalIgnoreTimeZone = 2021-01-01T17:19:01-05:00
-  const siteLocalIgnoreTimeZone = `${siteLocalTime.substring(0, 19)}.000Z`;
-
-  // userLocalTime = 2021-01-01T15:19:01-02:00
-  const userLocalTime = moment(siteLocalIgnoreTimeZone)
+  // userLocalTimeIgnoreTimeZone = 2021-01-31T16:59:59.999Z
+  const userLocalTimeIgnoreTimeZone = moment(siteLocalTimeIgnoreTimeZone)
     .utcOffset(userLocalTimeZoneOffset)
-    .format();
+    .format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]");
 
-  // userLocalTime = 021-01-01T15:19:01.000Z
-  const userLocalIgnoreTimeZone = `${userLocalTime.substring(0, 19)}.000Z`;
-
-  // This value going to be interpreted as 2021-01-01T17:19:01
+  // This value going to be interpreted as 2021-01-31T18:59:59.999Z
   // in user's local time zone from Chart.js, which is exactly what
   // we want
-  return userLocalIgnoreTimeZone;
+  return userLocalTimeIgnoreTimeZone;
 };
 
 export const convertDailyDataToLocalTime = (
