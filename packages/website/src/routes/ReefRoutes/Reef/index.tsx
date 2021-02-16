@@ -18,6 +18,7 @@ import moment from "moment";
 
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
+import SiteDetails from "../../../common/SiteDetails";
 import ReefInfo from "./ReefInfo";
 import {
   reefDetailsSelector,
@@ -32,7 +33,6 @@ import {
   surveysRequest,
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import ReefDetails from "./ReefDetails";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/user";
@@ -232,7 +232,7 @@ const Reef = ({ match, classes }: ReefProps) => {
                 </Alert>
               </Box>
             )}
-            <ReefDetails
+            <SiteDetails
               reef={{
                 ...reefDetails,
                 featuredImage: url,
@@ -249,8 +249,8 @@ const Reef = ({ match, classes }: ReefProps) => {
               hasDailyData={hasDailyData}
               spotterData={spotterData}
               surveys={surveyList}
-              point={poiId}
-              diveDate={diveDate}
+              surveyPoint={poiId}
+              surveyDiveDate={diveDate}
             />
           </>
         ) : (

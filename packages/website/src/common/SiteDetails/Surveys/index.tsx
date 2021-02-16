@@ -1,0 +1,394 @@
+import React, { useState, useCallback, useEffect, ChangeEvent } from "react";
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  useTheme,
+  useMediaQuery,
+  Theme,
+  Grid,
+  Typography,
+  Select,
+  FormControl,
+  MenuItem,
+  Box,
+} from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "axios";
+
+import Timeline from "./Timeline";
+import PointSelector from "./PointSelector";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import {
+  surveysRequest,
+  updatePoiName,
+} from "../../../store/Survey/surveyListSlice";
+import { setSelectedPoi } from "../../../store/Survey/surveySlice";
+import observationOptions from "../../../constants/uploadDropdowns";
+import { SurveyMedia } from "../../../store/Survey/types";
+import reefServices from "../../../services/reefServices";
+import { Pois, Reef } from "../../../store/Reefs/types";
+import { isAdmin } from "../../../helpers/user";
+import DeletePoiDialog, { Action } from "../../Dialog";
+import { useBodyLength } from "../../../helpers/useBodyLength";
+import surveyServices from "../../../services/surveyServices";
+import { EditPoiNameDraft } from "./types";
+
+const Surveys = ({ reef, classes }: SurveysProps) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [point, setPoint] = useState<string>("All");
+  const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
+    false
+  );
+  const [editPoiNameDraft, setEditPoiNameDraft] = useState<EditPoiNameDraft>(
+    {}
+  );
+  const [editPoiNameLoading, setEditPoiNameLoading] = useState<boolean>(false);
+  const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
+  const [mountPois, setMountPois] = useState<boolean>(false);
+  const [observation, setObservation] = useState<
+    SurveyMedia["observations"] | "any"
+  >("any");
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const user = useSelector(userInfoSelector);
+  const isReefAdmin = isAdmin(user, reef.id);
+  const dispatch = useDispatch();
+
+  const bodyLength = useBodyLength();
+
+  useEffect(() => {
+    const source = Axios.CancelToken.source();
+    reefServices
+      .getReefPois(`${reef.id}`, source.token)
+      .then(({ data }) => {
+        setPointOptions(data);
+        if (data.length > 0) {
+          setEditPoiNameDraft(
+            data.reduce(
+              (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
+              {}
+            )
+          );
+        }
+        setMountPois(true);
+      })
+      .catch((error) => {
+        if (!Axios.isCancel(error)) {
+          setMountPois(false);
+        }
+      });
+    return () => {
+      source.cancel();
+    };
+  }, [setPointOptions, reef.id]);
+
+  useEffect(() => {
+    dispatch(setSelectedPoi(point));
+  }, [dispatch, point]);
+
+  const onResize = useCallback(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+  }, [onResize]);
+
+  const onDeletePoiButtonClick = useCallback((id: number) => {
+    setDeletePoiDialogOpen(true);
+    setPoiToDelete(id);
+  }, []);
+
+  const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPoint(event.target.value as string);
+  };
+
+  const handleObservationChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setObservation(event.target.value as SurveyMedia["observations"] | "any");
+  };
+
+  const pointIdFinder = (name: string) => {
+    return pointOptions.find((option) => option.name === name)?.id || -1;
+  };
+
+  const handleDeletePoiDialogClose = () => {
+    setDeletePoiDialogOpen(false);
+    setPoiToDelete(null);
+  };
+
+  const handleSurveyPointDelete = () => {
+    if (user && user.token && poiToDelete) {
+      reefServices
+        .deleteReefPoi(poiToDelete, user.token)
+        .then(() =>
+          setPointOptions(
+            pointOptions.filter((option) => option.id !== poiToDelete)
+          )
+        )
+        .then(() => {
+          dispatch(surveysRequest(`${reef.id}`));
+        })
+        .then(() => {
+          setDeletePoiDialogOpen(false);
+          setPoiToDelete(null);
+        });
+    }
+  };
+
+  const toggleEditPoiNameEnabled = useCallback(
+    (enabled: boolean, key?: number) => {
+      if (key) {
+        // Reset Poi name draft on close
+        const poiName = pointOptions.find((item) => item.id === key)?.name;
+        if (poiName && !enabled) {
+          setEditPoiNameDraft({ ...editPoiNameDraft, [key]: poiName });
+        }
+      } else if (!enabled) {
+        // Reset Poi name draft for all Pois on close
+        setEditPoiNameDraft(
+          pointOptions.reduce(
+            (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
+            {}
+          )
+        );
+      }
+    },
+    [pointOptions, editPoiNameDraft]
+  );
+
+  const onChangePoiName = useCallback(
+    (key: number) => (
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) =>
+      setEditPoiNameDraft({
+        ...editPoiNameDraft,
+        [key]: event.target.value,
+      }),
+    [editPoiNameDraft]
+  );
+
+  const submitPoiNameUpdate = useCallback(
+    (key: number) => {
+      const newName = editPoiNameDraft[key];
+      if (newName && user?.token) {
+        setEditPoiNameLoading(true);
+        surveyServices
+          .updatePoi(key, newName, user.token)
+          .then(() => {
+            // Update point name for featured image card
+            dispatch(updatePoiName({ id: key, name: newName }));
+
+            // If the updated point was previously selected, update its value
+            const prevName = pointOptions.find((item) => item.id === key)?.name;
+            if (prevName === point) {
+              setPoint(newName);
+            }
+
+            // Update point options
+            setPointOptions(
+              pointOptions.map((item) => {
+                if (item.id === key) {
+                  return {
+                    ...item,
+                    name: newName,
+                  };
+                }
+                return item;
+              })
+            );
+            setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
+          })
+          .finally(() => setEditPoiNameLoading(false));
+      }
+    },
+    [dispatch, editPoiNameDraft, point, pointOptions, user]
+  );
+
+  const deletePoiDialogActions: Action[] = [
+    {
+      size: "small",
+      variant: "contained",
+      color: "secondary",
+      text: "No",
+      action: handleDeletePoiDialogClose,
+    },
+    {
+      size: "small",
+      variant: "contained",
+      color: "primary",
+      text: "Yes",
+      action: handleSurveyPointDelete,
+    },
+  ];
+
+  return (
+    <>
+      <DeletePoiDialog
+        open={deletePoiDialogOpen}
+        onClose={handleDeletePoiDialogClose}
+        header="Are you sure you want to delete this survey point? It will be deleted across all surveys."
+        actions={deletePoiDialogActions}
+      />
+      <Grid className={classes.root} container justify="center" spacing={2}>
+        <Box
+          bgcolor="#f5f6f6"
+          position="absolute"
+          height="100%"
+          width={bodyLength}
+          zIndex="-1"
+        />
+        <Grid
+          className={classes.surveyWrapper}
+          container
+          justify="space-between"
+          item
+          lg={12}
+          xs={11}
+          alignItems="baseline"
+          spacing={matches ? 4 : 1}
+        >
+          <Grid
+            container
+            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            item
+            md={12}
+            lg={3}
+          >
+            <Typography className={classes.title}>Survey History</Typography>
+          </Grid>
+          <PointSelector
+            reefId={reef.id}
+            mountPois={mountPois}
+            pointOptions={pointOptions}
+            point={point}
+            pointId={pointIdFinder(point)}
+            editPoiNameDraft={editPoiNameDraft}
+            isReefAdmin={isReefAdmin}
+            editPoiNameLoading={editPoiNameLoading}
+            onChangePoiName={onChangePoiName}
+            handlePointChange={handlePointChange}
+            toggleEditPoiNameEnabled={toggleEditPoiNameEnabled}
+            submitPoiNameUpdate={submitPoiNameUpdate}
+            onDeleteButtonClick={onDeletePoiButtonClick}
+          />
+          <Grid
+            container
+            alignItems="center"
+            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            item
+            md={12}
+            lg={4}
+            spacing={1}
+          >
+            {/* TODO - Make observation a required field. */}
+            <Grid item>
+              <Typography variant="h6" className={classes.subTitle}>
+                Observation:
+              </Typography>
+            </Grid>
+            <Grid item className={classes.selectorWrapper}>
+              <FormControl className={classes.formControl}>
+                <Select
+                  labelId="survey-observation"
+                  id="survey-observation"
+                  name="survey-observation"
+                  value={observation}
+                  onChange={handleObservationChange}
+                  className={classes.selectedItem}
+                  inputProps={{ className: classes.textField }}
+                >
+                  <MenuItem value="any">
+                    <Typography className={classes.menuItem} variant="h6">
+                      Any
+                    </Typography>
+                  </MenuItem>
+                  {observationOptions.map((item) => (
+                    <MenuItem
+                      className={classes.menuItem}
+                      value={item.key}
+                      key={item.key}
+                      title={item.value}
+                    >
+                      {item.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid container justify="center" item xs={11} lg={12}>
+          <Timeline
+            isAdmin={isReefAdmin}
+            reefId={reef.id}
+            timeZone={reef.timezone}
+            observation={observation}
+            point={pointIdFinder(point)}
+          />
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      marginTop: "5rem",
+      position: "relative",
+    },
+    surveyWrapper: {
+      marginTop: "5rem",
+    },
+    title: {
+      fontSize: 22,
+      lineHeight: 1.45,
+      color: "#2a2a2a",
+      marginBottom: "1rem",
+    },
+    subTitle: {
+      lineHeight: 1,
+      color: "#474747",
+      marginRight: "1rem",
+    },
+    selectorWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        width: "100%",
+      },
+    },
+    formControl: {
+      minWidth: 120,
+      maxWidth: 240,
+    },
+    selectedItem: {
+      color: theme.palette.primary.main,
+    },
+    menuItem: {
+      color: theme.palette.primary.main,
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "block",
+    },
+    textField: {
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "block",
+    },
+  });
+
+interface SurveyIncomingProps {
+  reef: Reef;
+}
+
+type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;
+
+export default withStyles(styles)(Surveys);

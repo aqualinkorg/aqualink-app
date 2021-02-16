@@ -11,8 +11,11 @@ import { mockSurvey } from "../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
-jest.mock("./Map", () => "Mock-Map");
-jest.mock("./FeaturedMedia", () => "Mock-FeaturedMedia");
+jest.mock("../../../common/SiteDetails/Map", () => "Mock-Map");
+jest.mock(
+  "../../../common/SiteDetails/FeaturedMedia",
+  () => "Mock-FeaturedMedia"
+);
 
 jest.mock("react-chartjs-2", () => ({
   Line: () => "Mock-Line",
