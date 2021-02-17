@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <div
+    class="SurveyPoint-root-1"
+  >
+    <span>
+      Survey Point
+    </span>
+  </div>
+</div>
+`;
