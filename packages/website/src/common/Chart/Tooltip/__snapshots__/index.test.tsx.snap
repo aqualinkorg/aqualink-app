@@ -18,8 +18,7 @@ exports[`renders as expected 1`] = `
             color="textPrimary"
             variant="caption"
           >
-            Invalid Date
-             UTC
+            12/20/20 07:19 AM UTC
           </mock-typography>
         </div>
       </div>
@@ -45,10 +44,39 @@ exports[`renders as expected 1`] = `
               >
                 SURFACE
                  
-                10.0 °C
+                20.0 °C
               </mock-typography>
             </div>
-            0
+            <div
+              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
+            >
+              <div
+                class="div-root-8 div-root-10"
+                color="#46a5cf"
+              />
+              <mock-typography
+                variant="caption"
+              >
+                BUOY 1m
+                 
+                20.0 °C
+              </mock-typography>
+            </div>
+            <div
+              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
+            >
+              <div
+                class="div-root-8 div-root-11"
+                color="rgba(250, 141, 0)"
+              />
+              <mock-typography
+                variant="caption"
+              >
+                BUOY 10m
+                 
+                15.0 °C
+              </mock-typography>
+            </div>
           </div>
         </div>
       </mock-cardcontent>

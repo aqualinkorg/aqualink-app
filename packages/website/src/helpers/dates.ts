@@ -5,6 +5,14 @@ import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
+interface DisplayDateParams {
+  isoDate: DateString;
+  format: string;
+  displayTimezone: boolean;
+  timeZone?: string | null;
+  timeZoneToDisplay?: string | null;
+}
+
 export const subtractFromDate = (endDate: string, amount: Range): string => {
   const date = new Date(endDate);
   const day = 1000 * 60 * 60 * 24;
@@ -14,6 +22,31 @@ export const subtractFromDate = (endDate: string, amount: Range): string => {
     case "week":
     default:
       return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
+  }
+};
+
+export const toRelativeTime = (timestamp: Date | string | number) => {
+  const minute = 60;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+
+  const now = new Date().getTime();
+  const start = new Date(timestamp).getTime();
+
+  const timePeriodInSeconds = Math.floor((now - start) / 1000);
+  const timePeriodInMinutes = Math.floor(timePeriodInSeconds / minute);
+  const timePeriodInHours = Math.floor(timePeriodInSeconds / hour);
+  const timePeriodInDays = Math.floor(timePeriodInSeconds / day);
+
+  switch (true) {
+    case timePeriodInSeconds < minute:
+      return `${timePeriodInSeconds} sec. ago`;
+    case timePeriodInSeconds < hour:
+      return `${timePeriodInMinutes} min. ago`;
+    case timePeriodInSeconds < day:
+      return `${timePeriodInHours} hour${timePeriodInHours > 1 ? "s" : ""} ago`;
+    default:
+      return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
 };
 
@@ -44,21 +77,6 @@ export const findChartPeriod = (range: Range) => {
   }
 };
 
-// Converts a given date to a specified time zone
-export const convertToLocalTime = (
-  utcTime: DateString,
-  timeZone?: string | null,
-  options?: Intl.DateTimeFormatOptions
-): DateString => {
-  if (utcTime && timeZone) {
-    return new Date(utcTime).toLocaleString("en-US", {
-      ...options,
-      timeZone,
-    });
-  }
-  return utcTime;
-};
-
 // Returns the same date but for a different time zone
 export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
   if (date && timeZone) {
@@ -69,45 +87,6 @@ export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
   return date;
 };
 
-export const convertDailyDataToLocalTime = (
-  data: DailyData[],
-  timeZone?: string | null
-): DailyData[] =>
-  data.map((item) => ({
-    ...item,
-    date: convertToLocalTime(item.date, timeZone) || item.date,
-  }));
-
-export const convertSpotterDataToLocalTime = (
-  data?: SpotterData | null,
-  timeZone?: string | null
-): SpotterData | null | undefined => {
-  if (data) {
-    return {
-      bottomTemperature: data.bottomTemperature.map((item) => ({
-        ...item,
-        timestamp:
-          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-      })),
-      surfaceTemperature: data.surfaceTemperature.map((item) => ({
-        ...item,
-        timestamp:
-          convertToLocalTime(item.timestamp, timeZone) || item.timestamp,
-      })),
-    };
-  }
-  return data;
-};
-
-export const convertSurveysToLocalTime = (
-  surveys: SurveyListItem[],
-  timeZone?: string | null
-): SurveyListItem[] =>
-  surveys.map((item) => ({
-    ...item,
-    diveDate: convertToLocalTime(item.diveDate, timeZone) || item.diveDate,
-  }));
-
 export const getTimeZoneName = (timeZone: string): string => {
   const rawTimeZoneName = moment().tz(timeZone).format("z");
   // Only add GMT prefix to raw time differences and not acronyms such as PST.
@@ -116,30 +95,93 @@ export const getTimeZoneName = (timeZone: string): string => {
   return `${needsGMT ? "GMT" : ""}${rawTimeZoneName}`;
 };
 
-export const toRelativeTime = (timestamp?: string) => {
-  if (timestamp) {
-    const minute = 60;
-    const hour = 60 * 60;
-    const day = 60 * 60 * 24;
+export const displayTimeInLocalTimezone = ({
+  isoDate,
+  format,
+  displayTimezone,
+  timeZone,
+  timeZoneToDisplay,
+}: DisplayDateParams) => {
+  if (isoDate) {
+    const timeZoneName = getTimeZoneName(
+      timeZoneToDisplay || timeZone || "UTC"
+    );
+    const dateString = moment(isoDate)
+      .tz(timeZone || "UTC")
+      .format(format);
 
-    const now = new Date().getTime();
-    const start = new Date(timestamp).getTime();
-
-    // Time period in seconds
-    const timePeriod = Math.floor((now - start) / 1000);
-
-    if (timePeriod < minute) {
-      return `${timePeriod} sec. ago`;
-    }
-    if (timePeriod < hour) {
-      return `${Math.floor(timePeriod / minute)} min. ago`;
-    }
-    if (timePeriod < day) {
-      const hours = Math.floor(timePeriod / hour);
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    }
-    const days = Math.floor(timePeriod / day);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
+    return `${dateString}${displayTimezone ? ` ${timeZoneName}` : ""}`;
   }
-  return null;
+  return isoDate;
 };
+
+// The following functions are used to trick Chart.js
+// In general Chart.js converts dates and displays them to user's local time zone
+// If for example a date is equal to 2021-01-01T22:19:01 in site's local time then
+// this must be converted to user's 2021-01-01T22:19:01 local time.
+
+const userLocalTimeZoneOffset = new Date().getTimezoneOffset();
+
+/**
+ * Converts site's local time to user's local time
+ * @param isotTime - Site's local time in ISO format
+ * @param timeZone - Site's time zone
+ */
+export const convertToLocalTime = (
+  isoTime: string,
+  timeZone?: string | null
+) => {
+  // Example usage
+  // isoTime = 2021-01-31T23:59:59.999Z,
+  // timeZone = "America/New_York",
+  // userLocalTimeZoneOffset = -120 (Europe/Athens)
+
+  // siteLocalTimeIgnoreTimeZone = 2021-01-31T18:59:59.999Z
+  const siteLocalTimeIgnoreTimeZone = moment(isoTime)
+    .tz(timeZone || "UTC")
+    .format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]");
+
+  // userLocalTimeIgnoreTimeZone = 2021-01-31T16:59:59.999Z
+  const userLocalTimeIgnoreTimeZone = moment(siteLocalTimeIgnoreTimeZone)
+    .utcOffset(userLocalTimeZoneOffset)
+    .format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]");
+
+  // This value going to be interpreted as 2021-01-31T18:59:59.999Z
+  // in user's local time zone from Chart.js, which is exactly what
+  // we want
+  return userLocalTimeIgnoreTimeZone;
+};
+
+export const convertDailyDataToLocalTime = (
+  dailyData: DailyData[],
+  timeZone?: string | null
+): DailyData[] =>
+  dailyData.map((item) => ({
+    ...item,
+    date: convertToLocalTime(item.date, timeZone),
+  }));
+
+export const convertSpotterDataToLocalTime = (
+  spotterData: SpotterData,
+  timeZone?: string | null
+): SpotterData => ({
+  bottomTemperature: spotterData.bottomTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  })),
+  surfaceTemperature: spotterData.surfaceTemperature.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  })),
+});
+
+export const convertSurveyDataToLocalTime = (
+  surveys: SurveyListItem[],
+  timeZone?: string | null
+): SurveyListItem[] =>
+  surveys.map((survey) => ({
+    ...survey,
+    diveDate: survey.diveDate
+      ? convertToLocalTime(survey.diveDate, timeZone)
+      : survey.diveDate,
+  }));

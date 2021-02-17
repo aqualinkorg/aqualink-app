@@ -65,9 +65,11 @@ const getApplicationTag = (
 const Sensor = ({ reef, classes }: SensorProps) => {
   const { surfaceTemperature, bottomTemperature } = reef.liveData;
 
-  const relativeTime = toRelativeTime(
-    surfaceTemperature?.timestamp || bottomTemperature?.timestamp
-  );
+  const relativeTime =
+    (surfaceTemperature?.timestamp &&
+      toRelativeTime(surfaceTemperature.timestamp)) ||
+    (bottomTemperature?.timestamp &&
+      toRelativeTime(bottomTemperature.timestamp));
 
   const hasSpotter = Boolean(
     surfaceTemperature?.value || bottomTemperature?.value

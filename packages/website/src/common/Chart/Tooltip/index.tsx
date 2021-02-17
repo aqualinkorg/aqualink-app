@@ -14,8 +14,8 @@ import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
 import { isNull } from "lodash";
 
-import { getTimeZoneName } from "../../../helpers/dates";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 
 const Circle = styled("div")<{}, { color: string; size?: number }>(
   ({ size = 10, color: backgroundColor }) => ({
@@ -51,8 +51,9 @@ const TemperatureMetric = ({
 const Tooltip = ({
   reefId,
   date,
-  timeZone,
   depth,
+  reefTimeZone,
+  userTimeZone,
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
@@ -60,19 +61,13 @@ const Tooltip = ({
   classes,
 }: TooltipProps) => {
   const hourlyData = !isNull(spotterSurfaceTemp);
-  // Date formatting
-  const hourlyOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-  };
-  const dateString = new Date(date).toLocaleString("en", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    ...(hourlyData ? hourlyOptions : {}),
+  const dateString = displayTimeInLocalTimezone({
+    isoDate: date,
+    format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
+    displayTimezone: hourlyData,
+    timeZone: userTimeZone,
+    timeZoneToDisplay: reefTimeZone,
   });
-
-  const timeZoneName = getTimeZoneName(timeZone || "UTC");
 
   const tooltipLines: {
     temperature: number | null;
@@ -96,7 +91,6 @@ const Tooltip = ({
           title={
             <Typography color="textPrimary" variant="caption">
               {dateString}
-              {hourlyData && timeZoneName && ` ${timeZoneName}`}
             </Typography>
           }
         />
@@ -200,12 +194,13 @@ const styles = () =>
 export interface TooltipData {
   reefId: number;
   date: string;
-  timeZone?: string | null;
   depth: number | null;
   spotterSurfaceTemp: number | null;
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
   surveyId?: number | null;
+  reefTimeZone?: string | null;
+  userTimeZone?: string;
 }
 
 type TooltipProps = TooltipData & WithStyles<typeof styles>;

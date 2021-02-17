@@ -26,7 +26,9 @@ import { toRelativeTime } from "../../../../helpers/dates";
 
 const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
   const { degreeHeatingDays, satelliteTemperature } = liveData;
-  const relativeTime = toRelativeTime(satelliteTemperature?.timestamp);
+  const relativeTime =
+    satelliteTemperature?.timestamp &&
+    toRelativeTime(satelliteTemperature.timestamp);
 
   const degreeHeatingWeeks = degreeHeatingWeeksCalculator(
     degreeHeatingDays?.value

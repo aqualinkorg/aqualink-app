@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import {
@@ -39,9 +38,11 @@ import {
   subtractFromDate,
   findChartPeriod,
   findMaxDate,
-  convertToLocalTime,
+  displayTimeInLocalTimezone,
   convertDailyDataToLocalTime,
-  convertSurveysToLocalTime,
+  convertSurveyDataToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertToLocalTime,
 } from "../../../helpers/dates";
 
 const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
@@ -195,18 +196,28 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       onRangeChange={onRangeChange}
                       pickerDate={pickerDate}
                       range={range}
-                      surveys={convertSurveysToLocalTime(
+                      surveys={convertSurveyDataToLocalTime(
                         surveyList,
                         reef.timezone
                       )}
                       chartPeriod={findChartPeriod(range)}
-                      spotterData={spotterData}
+                      spotterData={
+                        spotterData
+                          ? convertSpotterDataToLocalTime(
+                              spotterData,
+                              reef.timezone
+                            )
+                          : { bottomTemperature: [], surfaceTemperature: [] }
+                      }
                       startDate={
-                        convertToLocalTime(startDate, reef.timezone) ||
                         startDate
+                          ? convertToLocalTime(startDate, reef.timezone)
+                          : startDate
                       }
                       endDate={
-                        convertToLocalTime(endDate, reef.timezone) || endDate
+                        endDate
+                          ? convertToLocalTime(endDate, reef.timezone)
+                          : endDate
                       }
                       timeZone={reef.timezone}
                     />
@@ -221,9 +232,12 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         <Grid container item xs={11}>
           <Grid style={{ margin: "5rem 0 5rem 0" }} item>
             <Typography style={{ fontSize: 18 }}>
-              {`${moment(surveyDetails?.diveDate).format(
-                "MM/DD/YYYY"
-              )} Survey Media`}
+              {`${displayTimeInLocalTimezone({
+                isoDate: surveyDetails?.diveDate,
+                format: "MM/DD/YYYY",
+                displayTimezone: false,
+                timeZone: reef.timezone,
+              })} Survey Media`}
             </Typography>
           </Grid>
           <Grid style={{ width: "100%" }} item>

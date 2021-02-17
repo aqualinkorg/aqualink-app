@@ -8,7 +8,6 @@ import {
   Box,
 } from "@material-ui/core";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
-import moment from "moment";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -25,9 +24,11 @@ import { formatNumber } from "../../../helpers/numberUtils";
 import { sortByDate } from "../../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../../store/Survey/types";
 import {
-  convertToLocalTime,
   convertDailyDataToLocalTime,
-  convertSurveysToLocalTime,
+  convertSpotterDataToLocalTime,
+  convertSurveyDataToLocalTime,
+  convertToLocalTime,
+  displayTimeInLocalTimezone,
 } from "../../../helpers/dates";
 
 const ReefDetails = ({
@@ -98,9 +99,12 @@ const ReefDetails = ({
       marginRight: "2rem",
     },
     {
-      text: `${moment(convertToLocalTime(diveDate, reef.timezone)).format(
-        "MMM DD[,] YYYY"
-      )}`,
+      text: `${displayTimeInLocalTimezone({
+        isoDate: diveDate,
+        format: "MMM DD[,] YYYY",
+        displayTimezone: false,
+        timeZone: reef.timezone,
+      })}`,
       variant: "subtitle2",
       marginRight: 0,
     },
@@ -165,13 +169,15 @@ const ReefDetails = ({
               onRangeChange={onRangeChange}
               pickerDate={pickerDate}
               range={range}
-              surveys={convertSurveysToLocalTime(surveys, reef.timezone)}
+              surveys={convertSurveyDataToLocalTime(surveys, reef.timezone)}
               chartPeriod={chartPeriod}
-              spotterData={spotterData}
-              startDate={
-                convertToLocalTime(startDate, reef.timezone) || startDate
+              spotterData={
+                spotterData
+                  ? convertSpotterDataToLocalTime(spotterData, reef.timezone)
+                  : { bottomTemperature: [], surfaceTemperature: [] }
               }
-              endDate={convertToLocalTime(endDate, reef.timezone) || endDate}
+              startDate={convertToLocalTime(startDate, reef.timezone)}
+              endDate={convertToLocalTime(endDate, reef.timezone)}
               timeZone={reef.timezone}
             />
             <Surveys reef={reef} />

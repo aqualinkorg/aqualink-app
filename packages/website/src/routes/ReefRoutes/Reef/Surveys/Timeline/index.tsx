@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import moment from "moment";
 import {
   withStyles,
   WithStyles,
@@ -27,7 +26,7 @@ import { surveyListSelector } from "../../../../../store/Survey/surveyListSlice"
 import incomingStyles from "../styles";
 import filterSurveys from "../helpers";
 import { SurveyMedia } from "../../../../../store/Survey/types";
-import { convertToLocalTime } from "../../../../../helpers/dates";
+import { displayTimeInLocalTimezone } from "../../../../../helpers/dates";
 
 const SurveyTimeline = ({
   isAdmin,
@@ -76,9 +75,12 @@ const SurveyTimeline = ({
                     className={classes.timelineOppositeContent}
                   >
                     <Typography variant="h6" className={classes.dates}>
-                      {moment(
-                        convertToLocalTime(survey.diveDate, timeZone)
-                      ).format("MM/DD/YYYY")}
+                      {displayTimeInLocalTimezone({
+                        isoDate: survey.diveDate,
+                        format: "MM/DD/YYYY",
+                        displayTimezone: false,
+                        timeZone,
+                      })}
                     </Typography>
                   </TimelineOppositeContent>
                 )}
@@ -135,7 +137,12 @@ const SurveyTimeline = ({
               >
                 <Grid className={classes.dateWrapper} item xs={11}>
                   <Typography variant="h6" className={classes.dates}>
-                    {moment.parseZone(survey.diveDate).format("MM/DD/YYYY")}
+                    {displayTimeInLocalTimezone({
+                      isoDate: survey.diveDate,
+                      format: "MM/DD/YYYY",
+                      displayTimezone: false,
+                      timeZone,
+                    })}
                   </Typography>
                 </Grid>
                 <Grid

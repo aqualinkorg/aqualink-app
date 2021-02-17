@@ -17,7 +17,6 @@ import {
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
-  timeZone?: string | null;
   className?: string;
   style?: CSSProperties;
 }
@@ -30,14 +29,13 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData, reefId, timeZone } = rest;
+  const { dailyData, spotterData, reefId, surveys, timeZone } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     reefId,
     date: "",
-    timeZone,
     depth,
     bottomTemperature: 0,
     spotterSurfaceTemp: null,
@@ -57,7 +55,7 @@ function ChartWithTooltip({
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     if (typeof date !== "string") return;
 
-    const surveyId = findSurveyFromDate(date, rest.surveys);
+    const surveyId = findSurveyFromDate(date, surveys);
 
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
@@ -154,7 +152,11 @@ function ChartWithTooltip({
             left: tooltipPosition.left,
           }}
         >
-          <Tooltip {...tooltipData} />
+          <Tooltip
+            {...tooltipData}
+            reefTimeZone={timeZone}
+            userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
+          />
         </div>
       ) : null}
     </div>

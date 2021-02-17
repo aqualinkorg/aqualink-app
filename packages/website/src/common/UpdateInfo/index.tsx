@@ -36,9 +36,11 @@ const UpdateInfo = ({
         </Grid>
         <Grid item>
           <Box display="flex" flexDirection="column">
-            <Typography className={classes.updateInfoText} variant="caption">
-              {timeText} {relativeTime}
-            </Typography>
+            {relativeTime && (
+              <Typography className={classes.updateInfoText} variant="caption">
+                {timeText} {relativeTime}
+              </Typography>
+            )}
             {frequency && (
               <Typography className={classes.updateInfoText} variant="caption">
                 Updated {frequency}
@@ -139,7 +141,7 @@ const styles = (theme: Theme) =>
   });
 
 interface UpdateInfoIncomingProps {
-  relativeTime: string | null;
+  relativeTime: string | undefined;
   timeText: string;
   image: string | null;
   imageText: string | null;

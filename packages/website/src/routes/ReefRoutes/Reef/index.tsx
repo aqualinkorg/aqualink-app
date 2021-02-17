@@ -14,6 +14,7 @@ import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
+import moment from "moment";
 
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
@@ -41,6 +42,7 @@ import {
   subtractFromDate,
   findMaxDate,
   findChartPeriod,
+  setTimeZone,
 } from "../../../helpers/dates";
 import { Range } from "../../../store/Reefs/types";
 
@@ -140,11 +142,18 @@ const Reef = ({ match, classes }: ReefProps) => {
   useEffect(() => {
     // make sure we've loaded the reef, before attempting to get its spotter data.
     if (reefId === reefDetails?.id.toString() && hasSpotterData && !loading) {
+      const userLocalEndDate = new Date(
+        moment(pickerDate).format("MM/DD/YYYY")
+      );
+      const reefLocalEndDate = setTimeZone(
+        userLocalEndDate,
+        reefDetails.timezone
+      ) as string;
       dispatch(
         reefSpotterDataRequest({
           id: reefId,
-          startDate: subtractFromDate(pickerDate, range),
-          endDate: pickerDate,
+          startDate: subtractFromDate(reefLocalEndDate, range),
+          endDate: reefLocalEndDate,
         })
       );
     } else {
@@ -165,13 +174,19 @@ const Reef = ({ match, classes }: ReefProps) => {
   useEffect(() => {
     if (dailyData && spotterData) {
       const maxDataDate = new Date(findMaxDate(dailyData, spotterData));
-      if (maxDataDate.getTime() > new Date(pickerDate).getTime()) {
-        setEndDate(pickerDate);
+      const reefLocalEndDate = new Date(
+        setTimeZone(
+          new Date(moment(pickerDate).format("MM/DD/YYYY")),
+          reefDetails?.timezone
+        ) as string
+      );
+      if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
+        setEndDate(reefLocalEndDate.toISOString());
       } else {
         setEndDate(maxDataDate.toISOString());
       }
     }
-  }, [dailyData, spotterData, pickerDate]);
+  }, [dailyData, spotterData, pickerDate, reefDetails]);
 
   const onRangeChange = useCallback(
     (event: ChangeEvent<{ value: unknown }>) => {

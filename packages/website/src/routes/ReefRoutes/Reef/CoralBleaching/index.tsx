@@ -18,7 +18,7 @@ import { styles as incomingStyles } from "../styles";
 import { toRelativeTime } from "../../../../helpers/dates";
 
 const Bleaching = ({ dailyData, classes }: BleachingProps) => {
-  const relativeTime = toRelativeTime(dailyData?.date);
+  const relativeTime = toRelativeTime(dailyData.date);
 
   return (
     <Card className={classes.card}>

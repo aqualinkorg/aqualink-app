@@ -15,11 +15,13 @@ import { createChartData, useProcessedChartData } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Reefs/types";
+import { convertToLocalTime } from "../../helpers/dates";
 
 export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
   spotterData?: SpotterData | null;
+  timeZone?: string | null;
   startDate?: string;
   endDate?: string;
   chartPeriod?: "hour" | Range | null;
@@ -63,6 +65,7 @@ function Chart({
   dailyData,
   spotterData,
   surveys,
+  timeZone,
   startDate,
   endDate,
   chartPeriod,
@@ -254,7 +257,9 @@ function Chart({
           { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
         ],
         bottomTemperatureData,
-        selectedSurvey?.diveDate ? new Date(selectedSurvey?.diveDate) : null,
+        selectedSurvey?.diveDate
+          ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
+          : null,
         temperatureThreshold
       )}
     />

@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import moment from "moment";
 import {
   Grid,
   Typography,
@@ -30,7 +29,7 @@ import { Reef, ReefUpdateParams } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import reefServices from "../../../../services/reefServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
-import { convertToLocalTime } from "../../../../helpers/dates";
+import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 
 const ReefNavBar = ({
   hasDailyData,
@@ -192,9 +191,14 @@ const ReefNavBar = ({
                   )}
                   {lastSurvey && (
                     <Box>
-                      <Typography variant="subtitle1">{`Last surveyed: ${moment(
-                        convertToLocalTime(lastSurvey, reef.timezone)
-                      ).format("MMM DD[,] YYYY")}`}</Typography>
+                      <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
+                        {
+                          isoDate: lastSurvey,
+                          format: "MMM DD[,] YYYY",
+                          displayTimezone: false,
+                          timeZone: reef.timezone,
+                        }
+                      )}`}</Typography>
                     </Box>
                   )}
                 </Grid>

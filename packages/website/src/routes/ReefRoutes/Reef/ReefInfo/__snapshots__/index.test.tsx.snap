@@ -116,7 +116,7 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
               <mock-typography
                 variant="subtitle1"
               >
-                Last surveyed: May 10, 2020
+                Last surveyed: Sep 10, 2020
               </mock-typography>
             </mock-box>
           </div>
