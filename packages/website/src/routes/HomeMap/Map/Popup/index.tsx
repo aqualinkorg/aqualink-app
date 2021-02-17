@@ -174,10 +174,11 @@ const styles = (theme: Theme) =>
     },
 
     popup: {
-      width: "12vw",
-      minWidth: 200,
-      [theme.breakpoints.up("xl")]: {
-        width: "7vw",
+      width: "7vw",
+      minWidth: 240,
+      "@media (max-width: 1920px)": {
+        width: "12vw",
+        minWidth: 200,
       },
     },
   });
