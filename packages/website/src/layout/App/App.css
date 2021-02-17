@@ -37,6 +37,7 @@ body {
 }
 
 .leaflet-popup-content {
+  width: 100% !important;
   border-radius: 4px;
   margin: 0px;
 }
