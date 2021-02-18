@@ -18,7 +18,8 @@ import { SurveyListItem } from "../../../../store/Survey/types";
 import incomingStyles from "../styles";
 
 const SurveyCard = ({
-  point,
+  pointId,
+  pointName,
   isAdmin,
   reefId,
   survey,
@@ -32,9 +33,10 @@ const SurveyCard = ({
             <CardMedia
               className={classes.cardImage}
               image={
-                point === -1
+                pointId === -1
                   ? survey.featuredSurveyMedia?.url
-                  : survey.surveyPointImage && survey.surveyPointImage[point][0]
+                  : survey.surveyPointImage &&
+                    survey.surveyPointImage[pointId][0]
               }
             />
           </Link>
@@ -66,9 +68,15 @@ const SurveyCard = ({
                 >
                   <Link
                     className={classes.cardLink}
-                    to={`/reefs/${reefId}/points/${survey.featuredSurveyMedia.poiId.id}`}
+                    to={`/reefs/${reefId}/points/${
+                      pointId === -1
+                        ? survey.featuredSurveyMedia.poiId.id
+                        : pointId
+                    }`}
                   >
-                    {survey.featuredSurveyMedia.poiId.name}
+                    {pointName === "All"
+                      ? survey.featuredSurveyMedia.poiId.name
+                      : pointName}
                   </Link>
                 </Typography>
               </Grid>
@@ -170,7 +178,8 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyCardIncomingProps {
-  point: number;
+  pointId: number;
+  pointName: string | null;
   isAdmin: boolean;
   reefId: number;
   survey: SurveyListItem;

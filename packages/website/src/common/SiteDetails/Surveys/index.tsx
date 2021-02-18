@@ -327,10 +327,12 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
         <Grid container justify="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isReefAdmin}
+            addNewButton
             reefId={reef.id}
             timeZone={reef.timezone}
             observation={observation}
-            point={pointIdFinder(point)}
+            pointName={point}
+            pointId={pointIdFinder(point)}
           />
         </Grid>
       </Grid>

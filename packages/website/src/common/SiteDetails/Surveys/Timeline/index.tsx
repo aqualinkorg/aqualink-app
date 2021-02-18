@@ -24,16 +24,18 @@ import { Link } from "react-router-dom";
 import SurveyCard from "../SurveyCard";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
-import filterSurveys from "../../../../helpers/surveys";
+import { filterSurveys } from "../../../../helpers/surveys";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 
 const SurveyTimeline = ({
   isAdmin,
   reefId,
+  addNewButton,
   timeZone,
   observation,
-  point,
+  pointName,
+  pointId,
   classes,
 }: SurveyTimelineProps) => {
   const surveyList = useSelector(surveyListSelector);
@@ -43,6 +45,7 @@ const SurveyTimeline = ({
       <Hidden mdDown>
         <Timeline>
           {isAdmin &&
+            addNewButton &&
             !(window && window.location.pathname.includes("new_survey")) && (
               <TimelineItem className={classes.timelineItem}>
                 <TimelineOppositeContent
@@ -68,7 +71,7 @@ const SurveyTimeline = ({
               </TimelineItem>
             )}
           {surveyList &&
-            filterSurveys(surveyList, observation, point).map((survey) => (
+            filterSurveys(surveyList, observation, pointId).map((survey) => (
               <TimelineItem key={survey.id} className={classes.timelineItem}>
                 {survey.diveDate && (
                   <TimelineOppositeContent
@@ -91,7 +94,8 @@ const SurveyTimeline = ({
                 </TimelineSeparator>
                 <TimelineContent>
                   <SurveyCard
-                    point={point}
+                    pointId={pointId}
+                    pointName={pointName}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
@@ -126,7 +130,7 @@ const SurveyTimeline = ({
               </Grid>
             )}
           {surveyList &&
-            filterSurveys(surveyList, observation, point).map((survey) => (
+            filterSurveys(surveyList, observation, pointId).map((survey) => (
               <Grid
                 key={survey.id}
                 className={classes.surveyWrapper}
@@ -152,7 +156,8 @@ const SurveyTimeline = ({
                   xs={12}
                 >
                   <SurveyCard
-                    point={point}
+                    pointId={pointId}
+                    pointName={pointName}
                     isAdmin={isAdmin}
                     reefId={reefId}
                     survey={survey}
@@ -200,10 +205,12 @@ const styles = (theme: Theme) =>
 
 interface SurveyTimelineIncomingProps {
   reefId: number;
+  addNewButton: boolean;
   timeZone?: string | null;
   isAdmin: boolean;
   observation: SurveyMedia["observations"] | "any";
-  point: number;
+  pointName: string | null;
+  pointId: number;
 }
 
 SurveyTimeline.defaultProps = {

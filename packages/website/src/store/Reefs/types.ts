@@ -122,6 +122,7 @@ export interface Reef {
   applied?: boolean;
   spotterId: string | null;
   timezone?: string | null;
+  surveyPoints: Pois[];
 }
 
 export interface SpotterDataRequestParams {

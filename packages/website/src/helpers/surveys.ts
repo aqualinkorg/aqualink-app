@@ -1,7 +1,7 @@
 import { SurveyListState, Observations } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
-const filterSurveys = (
+export const filterSurveys = (
   list: SurveyListState["list"],
   observation: Observations | "any",
   point: number
@@ -27,5 +27,3 @@ const filterSurveys = (
       survey.surveyPoints?.includes(point)
   );
 };
-
-export default filterSurveys;

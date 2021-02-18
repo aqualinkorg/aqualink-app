@@ -8,6 +8,7 @@ import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
 
 import SurveyPoint from ".";
+import { mockSurvey } from "../../../mocks/mockSurvey";
 
 const mockMatch = {
   isExact: true,
@@ -39,6 +40,9 @@ describe("Survey Point Detail Page", () => {
         userInfo: mockUser,
         error: null,
         loading: false,
+      },
+      surveyList: {
+        list: [mockSurvey],
       },
     });
 

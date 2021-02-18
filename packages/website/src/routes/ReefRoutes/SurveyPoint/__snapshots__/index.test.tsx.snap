@@ -778,5 +778,60 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </mock-button>
     </div>
   </div>
+  <mock-box
+    classname="SurveyPoint-timelineWrapper-1"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg"
+    >
+      <div
+        class="SurveyTimeline-root-51"
+      >
+        <mock-hidden
+          mddown="true"
+        >
+          <ul
+            class="MuiTimeline-root MuiTimeline-alignLeft"
+          />
+        </mock-hidden>
+        <mock-hidden
+          lgup="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
+              style="margin-bottom: 1rem;"
+            >
+              <a
+                href="/reefs/1/new_survey"
+                style="text-decoration: none;"
+              >
+                <mock-iconbutton>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root SurveyTimeline-addNewButton-43"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </a>
+              <mock-typography
+                classname="SurveyTimeline-cardFields-47"
+                variant="h6"
+              >
+                ADD NEW SURVEY
+              </mock-typography>
+            </div>
+          </div>
+        </mock-hidden>
+      </div>
+    </div>
+  </mock-box>
 </div>
 `;
