@@ -25,7 +25,14 @@ describe("ReefRoutes Surveys", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Timeline isAdmin={false} reefId={0} observation="any" point={0} />
+          <Timeline
+            isAdmin={false}
+            reefId={0}
+            observation="any"
+            pointId={0}
+            pointName="Test Point"
+            addNewButton
+          />
         </Router>
       </Provider>
     ).container;

@@ -108,6 +108,7 @@ const SurveyTimeline = ({
       <Hidden lgUp>
         <Grid container item xs={12}>
           {isAdmin &&
+            addNewButton &&
             !(window && window.location.pathname.includes("new_survey")) && (
               <Grid
                 style={{ marginBottom: "1rem" }}

@@ -20,6 +20,8 @@ import {
   surveysRequest,
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
+import { isAdmin } from "../../../helpers/user";
+import { userInfoSelector } from "../../../store/User/userSlice";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -27,6 +29,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const pointIdNumber = parseInt(pointId, 10);
 
   const dispatch = useDispatch();
+  const user = useSelector(userInfoSelector);
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
@@ -49,6 +52,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
         <>
           <BackButton reefId={id} />
           <SurveyHistory
+            isAdmin={isAdmin(user, reefIdNumber)}
             pointName={pointName}
             pointId={pointIdNumber}
             reefId={reefIdNumber}

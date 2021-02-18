@@ -5,11 +5,14 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Typography,
+  Grid,
 } from "@material-ui/core";
 
 import TimeLine from "../../../../common/SiteDetails/Surveys/Timeline";
 
 const SurveyHistory = ({
+  isAdmin,
   pointName,
   pointId,
   reefId,
@@ -19,8 +22,13 @@ const SurveyHistory = ({
   return (
     <Box className={classes.timelineWrapper}>
       <Container>
+        <Grid container justify="center">
+          <Box mt="100px">
+            <Typography variant="h4">{pointName} Survey History</Typography>
+          </Box>
+        </Grid>
         <TimeLine
-          isAdmin
+          isAdmin={isAdmin}
           addNewButton={false}
           observation="any"
           pointName={pointName}
@@ -41,6 +49,7 @@ const styles = () =>
   });
 
 interface SurveyHistoryIncomingProps {
+  isAdmin: boolean;
   pointName: string;
   pointId: number;
   reefId: number;
