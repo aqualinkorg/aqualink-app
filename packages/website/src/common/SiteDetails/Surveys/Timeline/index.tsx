@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 import SurveyCard from "../SurveyCard";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import incomingStyles from "../styles";
-import filterSurveys from "../helpers";
+import filterSurveys from "../../../../helpers/surveys";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 

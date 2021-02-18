@@ -1,5 +1,5 @@
-import { SurveyListState, Observations } from "../../../store/Survey/types";
-import { sortByDate } from "../../../helpers/sortDailyData";
+import { SurveyListState, Observations } from "../store/Survey/types";
+import { sortByDate } from "./sortDailyData";
 
 const filterSurveys = (
   list: SurveyListState["list"],
