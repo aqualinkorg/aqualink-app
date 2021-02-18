@@ -3,16 +3,14 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Container,
-  Box,
   LinearProgress,
 } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import NavBar from "../../../common/NavBar";
-import TimeLine from "../../../common/SiteDetails/Surveys/Timeline";
 import BackButton from "./BackButton";
+import SurveyHistory from "./SurveyHistory";
 import {
   reefDetailsSelector,
   reefRequest,
@@ -23,7 +21,7 @@ import {
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
 
-const SurveyPoint = ({ match, classes }: SurveyPointProps) => {
+const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
   const reefIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
@@ -50,19 +48,12 @@ const SurveyPoint = ({ match, classes }: SurveyPointProps) => {
       {pointName && (
         <>
           <BackButton reefId={id} />
-          <Box className={classes.timelineWrapper}>
-            <Container>
-              <TimeLine
-                isAdmin
-                addNewButton={false}
-                observation="any"
-                pointName={pointName}
-                pointId={pointIdNumber}
-                reefId={reefIdNumber}
-                timeZone={reef?.timezone}
-              />
-            </Container>
-          </Box>
+          <SurveyHistory
+            pointName={pointName}
+            pointId={pointIdNumber}
+            reefId={reefIdNumber}
+            timeZone={reef?.timezone}
+          />
         </>
       )}
     </>
@@ -71,9 +62,7 @@ const SurveyPoint = ({ match, classes }: SurveyPointProps) => {
 
 const styles = () =>
   createStyles({
-    timelineWrapper: {
-      backgroundColor: "rgb(245, 246, 246)",
-    },
+    root: {},
   });
 
 interface MatchProps

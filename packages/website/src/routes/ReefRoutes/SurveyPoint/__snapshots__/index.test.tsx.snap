@@ -779,13 +779,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </div>
   <mock-box
-    classname="SurveyPoint-timelineWrapper-1"
+    classname="SurveyHistory-timelineWrapper-41"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
     >
       <div
-        class="SurveyTimeline-root-51"
+        class="SurveyTimeline-root-52"
       >
         <mock-hidden
           mddown="true"
@@ -811,7 +811,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 <mock-iconbutton>
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root SurveyTimeline-addNewButton-43"
+                    class="MuiSvgIcon-root SurveyTimeline-addNewButton-44"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -822,7 +822,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 </mock-iconbutton>
               </a>
               <mock-typography
-                classname="SurveyTimeline-cardFields-47"
+                classname="SurveyTimeline-cardFields-48"
                 variant="h6"
               >
                 ADD NEW SURVEY
