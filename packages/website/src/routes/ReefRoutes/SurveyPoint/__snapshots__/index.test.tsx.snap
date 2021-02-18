@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Survey Point Detail Page should render with given state from Redux store: snapshot-with-no-data 1`] = `
+exports[`Survey Point Detail Page should render with given state from Redux store: snapshot 1`] = `
 <div>
   <mock-appbar
     classname="NavBar-appBar-2 NavBar-appBarXs-4"
@@ -778,8 +778,129 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </mock-button>
     </div>
   </div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthLg"
+  >
+    <div
+      class="MuiGrid-root InfoCard-cardWrapper-41 MuiGrid-container MuiGrid-justify-xs-center"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-10"
+      >
+        <mock-card
+          elevation="3"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+          >
+            <div
+              class="MuiGrid-root Info-cardInfo-42 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <mock-typography
+                        color="textSecondary"
+                        variant="h5"
+                      >
+                        Test Survey Point
+                      </mock-typography>
+                      <mock-typography
+                        color="textSecondary"
+                        variant="subtitle1"
+                      >
+                        Hawaii
+                      </mock-typography>
+                    </div>
+                    0
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-item MuiGrid-justify-xs-space-between"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-item"
+                        >
+                          <mock-typography
+                            classname="Info-coloredText-44"
+                            variant="h5"
+                          >
+                            0
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item"
+                        >
+                          <mock-typography
+                            color="textSecondary"
+                            variant="subtitle1"
+                          >
+                            SURVEYS
+                          </mock-typography>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-item"
+                        >
+                          <mock-typography
+                            classname="Info-coloredText-44"
+                            variant="h5"
+                          >
+                            2
+                          </mock-typography>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item"
+                        >
+                          <mock-typography
+                            color="textSecondary"
+                            variant="subtitle1"
+                          >
+                            IMAGES
+                          </mock-typography>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mock-map
+              points="[object Object]"
+              reef="[object Object]"
+            />
+          </div>
+        </mock-card>
+      </div>
+    </div>
+  </div>
   <mock-box
-    classname="SurveyHistory-timelineWrapper-41"
+    classname="SurveyHistory-timelineWrapper-45"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -799,7 +920,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-52"
+        class="SurveyTimeline-root-56"
       >
         <mock-hidden
           mddown="true"
@@ -818,5 +939,37 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </div>
     </div>
   </mock-box>
+  <mock-appbar
+    classname="Footer-appBar-62"
+    position="static"
+  >
+    <mock-toolbar>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <mock-link
+            classname="Footer-navBarLink-63"
+            href="/map"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              style="color: rgb(138, 198, 222);"
+              variant="h4"
+            >
+              link
+            </mock-typography>
+          </mock-link>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
 </div>
 `;

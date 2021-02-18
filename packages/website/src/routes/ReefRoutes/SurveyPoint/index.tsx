@@ -9,7 +9,9 @@ import { RouteComponentProps } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import NavBar from "../../../common/NavBar";
+import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
+import InfoCard from "./InfoCard";
 import SurveyHistory from "./SurveyHistory";
 import {
   reefDetailsSelector,
@@ -19,9 +21,11 @@ import {
 import {
   surveysRequest,
   surveyListLoadingSelector,
+  surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import { filterSurveys } from "../../../helpers/surveys";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -32,10 +36,17 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const user = useSelector(userInfoSelector);
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
+  const surveys = filterSurveys(
+    useSelector(surveyListSelector),
+    "any",
+    pointIdNumber
+  );
   const surveysLoading = useSelector(surveyListLoadingSelector);
 
   const { name: pointName } =
     reef?.surveyPoints.filter((point) => point.id === pointIdNumber)[0] || {};
+
+  const nSurveys = surveys.length;
 
   useEffect(() => {
     if (!reef || reef.id !== reefIdNumber) {
@@ -48,9 +59,15 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     <>
       <NavBar searchLocation />
       {(reefLoading || surveysLoading) && <LinearProgress />}
-      {pointName && (
+      {reef && pointName && (
         <>
           <BackButton reefId={id} />
+          <InfoCard
+            reef={reef}
+            points={reef.surveyPoints}
+            pointName={pointName}
+            nSurveys={nSurveys}
+          />
           <SurveyHistory
             isAdmin={isAdmin(user, reefIdNumber)}
             pointName={pointName}
@@ -58,6 +75,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
             reefId={reefIdNumber}
             timeZone={reef?.timezone}
           />
+          <Footer />
         </>
       )}
     </>

@@ -10,6 +10,8 @@ import { mockUser } from "../../../mocks/mockUser";
 import SurveyPoint from ".";
 import { mockSurvey } from "../../../mocks/mockSurvey";
 
+jest.mock("./InfoCard/Map", () => "Mock-Map");
+
 const mockMatch = {
   isExact: true,
   params: {
@@ -62,6 +64,6 @@ describe("Survey Point Detail Page", () => {
   });
 
   it("should render with given state from Redux store", () => {
-    expect(element).toMatchSnapshot("snapshot-with-no-data");
+    expect(element).toMatchSnapshot("snapshot");
   });
 });
