@@ -785,7 +785,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       class="MuiGrid-root InfoCard-cardWrapper-41 MuiGrid-container MuiGrid-justify-xs-center"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-10"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12"
       >
         <mock-card
           elevation="3"

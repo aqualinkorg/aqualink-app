@@ -60,7 +60,7 @@ const Map = ({ reef, points, classes }: MapProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     map: {
-      height: 400,
+      height: 450,
       width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: 300,

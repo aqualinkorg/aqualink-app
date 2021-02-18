@@ -27,7 +27,7 @@ const InfoCard = ({
   return (
     <Container>
       <Grid className={classes.cardWrapper} container justify="center">
-        <Grid item xs={12} sm={10}>
+        <Grid item xs={12} sm={12}>
           <Card elevation={3}>
             <Grid container justify="space-between">
               <Info
