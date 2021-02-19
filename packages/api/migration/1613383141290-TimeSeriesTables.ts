@@ -5,7 +5,7 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TYPE "metrics_metric_enum" AS ENUM('surface_temperature', 'bottom_temperature', 'dhw', 'alert', 'sst_anomaly')`,
+      `CREATE TYPE "metrics_metric_enum" AS ENUM('satellite_temperature', 'surface_temperature', 'bottom_temperature', 'dhw', 'alert', 'sst_anomaly')`,
     );
     await queryRunner.query(
       `CREATE TYPE "metrics_units_enum" AS ENUM('celsius', 'm', 'm/s', 'dhw')`,

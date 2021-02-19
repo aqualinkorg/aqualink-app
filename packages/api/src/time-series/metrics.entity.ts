@@ -1,10 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Metric {
+  ALERT = 'alert',
+  DHW = 'dhw',
+  SATELLITE_TEMPERATURE = 'satellite_temperature',
   SURFACE_TEMPERATURE = 'surface_temperature',
   BOTTOM_TEMPERATURE = 'bottom_temperature',
-  DHW = 'dhw',
-  ALERT = 'alert',
   SST_ANOMALY = 'sst_anomaly',
 }
 
