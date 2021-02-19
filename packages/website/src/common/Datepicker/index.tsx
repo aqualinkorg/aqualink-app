@@ -7,31 +7,44 @@ import {
   Grid,
   Box,
   Typography,
+  TypographyProps,
 } from "@material-ui/core";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import {
   KeyboardDatePicker,
+  KeyboardDatePickerProps,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
+const DatePicker = ({
+  value,
+  dateName,
+  nameVariant,
+  pickerSize,
+  minDate,
+  maxDate,
+  onChange,
+  classes,
+}: DatePickerProps) => {
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
-        <Typography variant="h6" color="textSecondary">
-          Date:
+        <Typography variant={nameVariant || "h6"} color="textSecondary">
+          {dateName ? `${dateName}:` : "Date:"}
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+              size={pickerSize}
               className={classes.textField}
               disableToolbar
               format="MM/dd/yyyy"
-              id="date-picker"
               name="datePicker"
               autoOk
+              minDate={minDate}
+              maxDate={maxDate}
               showTodayButton
               disableFuture
               value={value || null}
@@ -41,7 +54,7 @@ const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
               }}
               inputVariant="standard"
               KeyboardButtonProps={{ className: classes.calendarButton }}
-              keyboardIcon={<CalendarTodayIcon />}
+              keyboardIcon={<CalendarTodayIcon fontSize="small" />}
             />
           </MuiPickersUtilsProvider>
         </div>
@@ -72,8 +85,21 @@ const styles = (theme: Theme) =>
 
 interface DatePickerIncomingProps {
   value: string | null;
+  dateName?: string;
+  nameVariant?: TypographyProps["variant"];
+  pickerSize?: KeyboardDatePickerProps["size"];
+  minDate?: KeyboardDatePickerProps["minDate"];
+  maxDate?: KeyboardDatePickerProps["minDate"];
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
 }
+
+DatePicker.defaultProps = {
+  dateName: undefined,
+  nameVariant: undefined,
+  pickerSize: undefined,
+  minDate: undefined,
+  maxDate: undefined,
+};
 
 type DatePickerProps = DatePickerIncomingProps & WithStyles<typeof styles>;
 

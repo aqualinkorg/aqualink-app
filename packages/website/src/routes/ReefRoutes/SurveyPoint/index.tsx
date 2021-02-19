@@ -12,6 +12,7 @@ import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
 import InfoCard from "./InfoCard";
+import Chart from "./Chart";
 import SurveyHistory from "./SurveyHistory";
 import {
   reefDetailsSelector,
@@ -53,6 +54,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
         <>
           <BackButton reefId={id} />
           <InfoCard reef={reef} pointId={pointIdNumber} />
+          <Chart reef={reef} />
           <SurveyHistory reef={reef} pointId={pointIdNumber} />
           <Footer />
         </>

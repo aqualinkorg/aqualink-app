@@ -104,7 +104,7 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" color="textSecondary">
-                    IMAGES
+                    {nImages === 1 ? "IMAGE" : "IMAGES"}
                   </Typography>
                 </Grid>
               </Grid>
