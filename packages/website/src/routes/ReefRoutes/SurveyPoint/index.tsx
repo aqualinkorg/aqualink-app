@@ -48,6 +48,11 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
 
   const nSurveys = surveys.length;
 
+  // Always scroll to top on first render
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (!reef || reef.id !== reefIdNumber) {
       dispatch(reefRequest(id));
