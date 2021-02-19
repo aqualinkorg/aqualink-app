@@ -1,13 +1,15 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import _, { groupBy, omit } from 'lodash';
+import _, { chunk, groupBy, omit } from 'lodash';
 import { Repository } from 'typeorm';
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import unzipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import xlsx from 'xlsx';
 import { Point } from 'geojson';
 import moment from 'moment';
+import Bluebird from 'bluebird';
+import { ExifParserFactory } from 'ts-exif-parser';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { DataRangeDto } from './dto/data-range.dto';
@@ -15,6 +17,14 @@ import { Reef } from '../reefs/reefs.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Metric, Metrics } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
+import { User } from '../users/users.entity';
+import { Survey, WeatherConditions } from '../surveys/surveys.entity';
+import { GoogleCloudService } from '../google-cloud/google-cloud.service';
+import {
+  MediaType,
+  Observations,
+  SurveyMedia,
+} from '../surveys/survey-media.entity';
 
 interface Coords {
   reef: number;
@@ -50,6 +60,17 @@ export class TimeSeriesService {
 
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+
+    @InjectRepository(Survey)
+    private surveyRepository: Repository<Survey>,
+
+    @InjectRepository(SurveyMedia)
+    private surveyMediaRepository: Repository<SurveyMedia>,
+
+    private googleCloudService: GoogleCloudService,
   ) {}
 
   private groupByMetric(data: any[]) {
@@ -135,7 +156,11 @@ export class TimeSeriesService {
     return xlsx.utils.sheet_to_json(firstSheet, { header, range });
   }
 
-  async uploadHoboData(file: Express.Multer.File, aliases: [number, string][]) {
+  async uploadHoboData(
+    file: Express.Multer.File,
+    aliases: [number, string][],
+    email: string,
+  ) {
     const EXTRACT_PATH = 'data';
     const FOLDER_PREFIX = 'Patch_Reef_';
     const COLONY_COORDS_FILE = 'Colony_Coords.xlsx';
@@ -143,6 +168,15 @@ export class TimeSeriesService {
     const COLONY_PREFIX = 'Colony ';
     const COLONY_DATA_FILE = 'Col{}_FullHOBO.xlsx';
     const validFiles = new Set(['png', 'jpeg', 'jpg']);
+
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['administeredReefs'],
+    });
+    if (!user) {
+      this.logger.error(`No user was found with email ${email}`);
+      throw new BadRequestException('User was not found');
+    }
 
     const directory = await unzipper.Open.buffer(file.buffer);
     await directory.extract({ path: EXTRACT_PATH });
@@ -198,12 +232,17 @@ export class TimeSeriesService {
       };
     });
 
+    this.logger.log('Saving reefs');
     const reefEntities = await this.reefRepository.save(reefs);
     const dbIdToXLSXId = Object.fromEntries(
       reefEntities.map((reef) => {
         return [reef.id, aliasesToId[reef.name]];
       }),
     );
+    await this.userRepository.save({
+      id: user.id,
+      administeredReefs: user.administeredReefs.concat(reefEntities),
+    });
 
     const pois = reefEntities
       .map((reef) => {
@@ -230,11 +269,8 @@ export class TimeSeriesService {
       })
       .flat();
 
+    this.logger.log('Saving reef points of interest');
     const poiEntities = await this.poiRepository.save(pois);
-    const metrics = await this.metricsRepository.find();
-    const metricToMetrics = Object.fromEntries(
-      metrics.map((metric) => [metric.metric.toString(), metric]),
-    );
 
     const parsedData = poiEntities
       .map((poi) => {
@@ -263,36 +299,111 @@ export class TimeSeriesService {
       value: data.bottomTemperature,
       reef: data.reef,
       poi: data.poi,
-      metric: metricToMetrics[Metric.BOTTOM_TEMPERATURE],
+      metric: Metric.BOTTOM_TEMPERATURE,
     }));
 
-    await this.timeSeriesRepository.save(bottomTemperatureData);
+    const batchSize = 1000;
+    this.logger.log(`Saving time series data in batches of ${batchSize}`);
+    const inserts = chunk(bottomTemperatureData, batchSize).map((batch) => {
+      return this.timeSeriesRepository.save(batch);
+    });
 
-    // const metadata = filteredColonies.map((record) => {
-    //   const colonyId = record.colony.toString().padStart(3, '0');
-    //   const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-    //   const colonyFolderPath = path.join(rootPath, reefFolder, colonyFolder);
-    //   const contents = fs.readdirSync(colonyFolderPath);
-    //   const images = contents.filter((file) => {
-    //     const ext = path.extname(file).toLowerCase().replace('.', '');
-    //     console.log(ext);
-    //     console.log(validFiles.keys());
-    //     return validFiles.has(ext);
-    //   });
+    const actionsLength = inserts.length;
+    await Bluebird.Promise.each(inserts, (props, idx) => {
+      this.logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+    });
 
-    //   return images.map((image) => {
-    //     const data = ExifParserFactory.create(
-    //       fs.readFileSync(path.join(colonyFolderPath, image)),
-    //     ).parse();
-    //     return {
-    //       image:
-    //         data.tags &&
-    //         data.tags.CreateDate &&
-    //         moment.unix(data.tags.CreateDate),
-    //     };
-    //   });
-    // });
+    const imageData = poiEntities
+      .map((poi) => {
+        const colonyId = poi.name.split(' ')[1].padStart(3, '0');
+        const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
+        const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
+        const colonyFolderPath = path.join(rootPath, reefFolder, colonyFolder);
+        const contents = fs.readdirSync(colonyFolderPath);
+        const images = contents.filter((f) => {
+          const ext = path.extname(f).toLowerCase().replace('.', '');
+          return validFiles.has(ext);
+        });
 
-    // logger.log(metadata);
+        return images.map((image) => {
+          const data = ExifParserFactory.create(
+            fs.readFileSync(path.join(colonyFolderPath, image)),
+          ).parse();
+          const createdDate =
+            data.tags && data.tags.CreateDate
+              ? moment.unix(data.tags.CreateDate).toDate()
+              : moment().toDate();
+          return {
+            imagePath: path.join(colonyFolderPath, image),
+            reef: poi.reef,
+            poi,
+            createdDate,
+          };
+        });
+      })
+      .flat();
+
+    const surveys = imageData.map((image) => ({
+      reef: image.reef,
+      userId: user,
+      diveDate: image.createdDate,
+      // Add default values to other required fields
+      weatherConditions: WeatherConditions.Calm,
+    }));
+
+    this.logger.log('Saving surveys');
+    const surveyEntities = await this.surveyRepository.save(surveys);
+
+    this.logger.log('Upload photos to google cloud');
+    const imageLength = imageData.length;
+    const uploadedImageData = await Bluebird.Promise.each(
+      imageData.map((image) =>
+        this.googleCloudService
+          .uploadFile(image.imagePath, 'image')
+          .then((url) => {
+            const foundSurvey = surveyEntities.find((survey) => {
+              return (
+                survey.reef.id === image.reef.id &&
+                survey.diveDate.getTime() === image.createdDate.getTime()
+              );
+            });
+
+            if (!foundSurvey) {
+              this.logger.error(
+                `Could not match photo ${image.imagePath} to any survey`,
+              );
+            }
+
+            return {
+              ...image,
+              url,
+              survey: foundSurvey,
+            };
+          }),
+      ),
+      (data, idx) => {
+        this.logger.log(`${idx + 1} images uploaded out of ${imageLength}`);
+        return data;
+      },
+    );
+
+    const surveyMedia = uploadedImageData
+      .filter((image) => image.survey)
+      .map((image) => ({
+        url: image.url,
+        featured: true,
+        hidden: false,
+        type: MediaType.Image,
+        poiId: image.poi,
+        survey: image.survey,
+        metadata: JSON.stringify({}),
+        // Add default values to other required fields
+        observations: Observations.Healthy,
+      }));
+
+    this.logger.log('Saving survey media');
+    await this.surveyMediaRepository.save(surveyMedia);
+
+    return dbIdToXLSXId;
   }
 }
