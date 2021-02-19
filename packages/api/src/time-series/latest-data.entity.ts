@@ -15,7 +15,7 @@ import { TimeSeries } from './time-series.entity';
     connection
       .createQueryBuilder()
       .select(
-        'DISTINCT ON (metric_id, reef_id, poi_id) metric.metric',
+        'DISTINCT ON (metric_id, source_id, reef_id, poi_id) metric.metric',
         'metric',
       )
       .addSelect('time_series.id', 'id')
@@ -25,7 +25,8 @@ import { TimeSeries } from './time-series.entity';
       .addSelect('poi_id')
       .from(TimeSeries, 'time_series')
       .innerJoin('metrics', 'metric', 'metric.id = metric_id')
-      .orderBy('reef_id, poi_id, metric_id, timestamp', 'DESC'),
+      .innerJoin('sources', 'source_type', 'source_type.id = source_id')
+      .orderBy('reef_id, poi_id, metric_id, source_id, timestamp', 'DESC'),
 })
 export class LatestData {
   @PrimaryGeneratedColumn()

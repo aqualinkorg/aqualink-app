@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from './reefs.entity';
 
 export enum SourceType {
@@ -14,6 +15,9 @@ export class Sources {
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;
+
+  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
+  poi: ReefPointOfInterest;
 
   @Column({ type: 'enum', enum: SourceType })
   type: SourceType;

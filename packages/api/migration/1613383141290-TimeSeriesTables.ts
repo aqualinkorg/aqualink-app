@@ -17,10 +17,13 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       `CREATE TYPE "sources_type_enum" AS ENUM('spotter', 'hobo', 'sofar_api')`,
     );
     await queryRunner.query(
-      `CREATE TABLE "sources" ("id" SERIAL NOT NULL, "type" "sources_type_enum" NOT NULL, "spotter_id" character varying, "reef_id" integer, CONSTRAINT "PK_85523beafe5a2a6b90b02096443" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "sources" ("id" SERIAL NOT NULL, "type" "sources_type_enum" NOT NULL, "spotter_id" character varying, "reef_id" integer, "poi_id" integer, CONSTRAINT "PK_85523beafe5a2a6b90b02096443" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "sources" ADD CONSTRAINT "FK_fc8de60fc92ac93f41a52ad01b7" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "sources" ADD CONSTRAINT "FK_1fc2de0b22c11547cb5f17f14c8" FOREIGN KEY ("poi_id") REFERENCES "reef_point_of_interest"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, "source_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
