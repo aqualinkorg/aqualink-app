@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from '../reefs/reefs.entity';
+import { Sources } from '../reefs/sources.entity';
 import { Metrics } from './metrics.entity';
 
 @Entity()
@@ -29,6 +30,9 @@ export class TimeSeries {
 
   @ManyToOne(() => Metrics, { onDelete: 'SET NULL', nullable: true })
   metric: Metrics;
+
+  @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })
+  source: Sources;
 
   @CreateDateColumn()
   createdAt: Date;

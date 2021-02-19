@@ -14,6 +14,15 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       `CREATE TABLE "metrics" ("id" SERIAL NOT NULL, "metric" "metrics_metric_enum" NOT NULL, "description" character varying NOT NULL, "units" "metrics_units_enum" NOT NULL, CONSTRAINT "PK_5283cad666a83376e28a715bf0e" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
+      `CREATE TYPE "sources_type_enum" AS ENUM('spotter', 'hobo', 'sofar_api')`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "sources" ("id" SERIAL NOT NULL, "type" "sources_type_enum" NOT NULL, "spotter_id" character varying, "reef_id" integer, CONSTRAINT "PK_85523beafe5a2a6b90b02096443" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "sources" ADD CONSTRAINT "FK_fc8de60fc92ac93f41a52ad01b7" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
       `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
@@ -54,9 +63,14 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "time_series" DROP CONSTRAINT "FK_88a659ad442c11d3a5400b3def4"`,
     );
+    await queryRunner.query(
+      `ALTER TABLE "sources" DROP CONSTRAINT "FK_fc8de60fc92ac93f41a52ad01b7"`,
+    );
     await queryRunner.query(`DROP TABLE "time_series"`);
     await queryRunner.query(`DROP TABLE "metrics"`);
     await queryRunner.query(`DROP TYPE "metrics_units_enum"`);
     await queryRunner.query(`DROP TYPE "metrics_metric_enum"`);
+    await queryRunner.query(`DROP TABLE "sources"`);
+    await queryRunner.query(`DROP TYPE "sources_type_enum"`);
   }
 }
