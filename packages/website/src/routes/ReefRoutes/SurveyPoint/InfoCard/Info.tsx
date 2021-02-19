@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Grid,
   Typography,
   withStyles,
@@ -7,18 +8,46 @@ import {
   createStyles,
   Theme,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
-const Info = ({
-  pointName,
-  reefName,
-  reefRegion,
-  nSurveys,
-  lat,
-  lng,
-  classes,
-}: InfoProps) => {
+import { Reef } from "../../../../store/Reefs/types";
+import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
+import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
+import {
+  filterSurveys,
+  findImagesAtSurveyPoint,
+} from "../../../../helpers/surveys";
+import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
+
+const Info = ({ reef, pointId, classes }: InfoProps) => {
+  const surveys = filterSurveys(
+    useSelector(surveyListSelector),
+    "any",
+    pointId
+  );
+  const { name: pointName } =
+    reef.surveyPoints.filter((point) => point.id === pointId)[0] || {};
+  const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
+  const [lng, lat] =
+    reef.polygon.type === "Point" ? reef.polygon.coordinates : [];
+  const nSurveys = surveys.length;
+  const nImages = findImagesAtSurveyPoint(surveys, pointId);
+  const lastSurveyed = displayTimeInLocalTimezone({
+    isoDate: surveys[0]?.diveDate,
+    displayTimezone: false,
+    timeZone: reef.timezone,
+    format: "MMM DD[,] YYYY",
+  });
+
   return (
     <Grid className={classes.cardInfo} item xs={12} md={6}>
+      <Grid container>
+        <Box mb="24px">
+          <Typography variant="subtitle2" color="textSecondary">
+            Last survreyed: {lastSurveyed}
+          </Typography>
+        </Box>
+      </Grid>
       <Grid container justify="space-between" spacing={2}>
         <Grid item>
           <Grid container direction="column" spacing={2}>
@@ -33,6 +62,7 @@ const Info = ({
             </Grid>
             {lat && lng && (
               <Grid item>
+                {/* TODO: Add survey point's coordinates */}
                 <Grid container item spacing={1}>
                   <Grid item>
                     <Typography variant="subtitle2" color="textSecondary">
@@ -68,9 +98,8 @@ const Info = ({
             <Grid item>
               <Grid container alignItems="baseline" item spacing={1}>
                 <Grid item>
-                  {/* TODO: Calculate actual number of images with a util */}
                   <Typography variant="h5" className={classes.coloredText}>
-                    2
+                    {nImages}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -103,12 +132,8 @@ const styles = (theme: Theme) =>
   });
 
 interface InfoIncomingProps {
-  pointName: string;
-  reefName: string | null;
-  reefRegion: string | null | undefined;
-  nSurveys: number;
-  lat: number | undefined;
-  lng: number | undefined;
+  reef: Reef;
+  pointId: number;
 }
 
 type InfoProps = InfoIncomingProps & WithStyles<typeof styles>;

@@ -10,7 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import L from "leaflet";
 import { Map as LeafletMap, TileLayer, Marker } from "react-leaflet";
-import { Pois, Reef } from "../../../../store/Reefs/types";
+import { Reef } from "../../../../store/Reefs/types";
 
 import marker from "../../../../assets/marker.png";
 
@@ -21,8 +21,9 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const Map = ({ reef, points, classes }: MapProps) => {
+const Map = ({ reef, classes }: MapProps) => {
   const history = useHistory();
+  const points = reef.surveyPoints;
   const [lng, lat] =
     reef.polygon.type === "Point" ? reef.polygon.coordinates : [0, 0];
 
@@ -70,7 +71,6 @@ const styles = (theme: Theme) =>
 
 interface MapIncomingProps {
   reef: Reef;
-  points: Pois[];
 }
 
 type MapProps = MapIncomingProps & WithStyles<typeof styles>;

@@ -10,35 +10,17 @@ import {
 
 import Info from "./Info";
 import Map from "./Map";
-import { Pois, Reef } from "../../../../store/Reefs/types";
-import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
+import { Reef } from "../../../../store/Reefs/types";
 
-const InfoCard = ({
-  reef,
-  points,
-  pointName,
-  nSurveys,
-  classes,
-}: InfoCardProps) => {
-  const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
-  const [lng, lat] =
-    reef.polygon.type === "Point" ? reef.polygon.coordinates : [];
-
+const InfoCard = ({ reef, pointId, classes }: InfoCardProps) => {
   return (
     <Container>
       <Grid className={classes.cardWrapper} container justify="center">
         <Grid item xs={12} sm={12}>
           <Card elevation={3}>
             <Grid container justify="space-between">
-              <Info
-                lat={lat}
-                lng={lng}
-                nSurveys={nSurveys}
-                pointName={pointName}
-                reefName={reefName}
-                reefRegion={reefRegion}
-              />
-              <Map reef={reef} points={points} />
+              <Info reef={reef} pointId={pointId} />
+              <Map reef={reef} />
             </Grid>
           </Card>
         </Grid>
@@ -56,9 +38,7 @@ const styles = () =>
 
 interface InfoCardIncomingProps {
   reef: Reef;
-  pointName: string;
-  nSurveys: number;
-  points: Pois[];
+  pointId: number;
 }
 
 type InfoCardProps = InfoCardIncomingProps & WithStyles<typeof styles>;

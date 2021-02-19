@@ -1,4 +1,10 @@
-import { SurveyListState, Observations } from "../store/Survey/types";
+import { sumBy } from "lodash";
+
+import {
+  SurveyListState,
+  Observations,
+  SurveyListItem,
+} from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
 export const filterSurveys = (
@@ -26,4 +32,17 @@ export const filterSurveys = (
       survey.observations?.includes(observation) &&
       survey.surveyPoints?.includes(point)
   );
+};
+
+export const findImagesAtSurveyPoint = (
+  surveyList: SurveyListItem[],
+  point: number
+) => {
+  const imagesAtPoint = surveyList.map(
+    (survey) => survey.surveyPointImage![point]
+  );
+  if (imagesAtPoint.length > 0) {
+    return sumBy(imagesAtPoint, (item) => item.length);
+  }
+  return 0;
 };

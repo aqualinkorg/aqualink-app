@@ -21,11 +21,7 @@ import {
 import {
   surveysRequest,
   surveyListLoadingSelector,
-  surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { isAdmin } from "../../../helpers/user";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { filterSurveys } from "../../../helpers/surveys";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -33,20 +29,9 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const pointIdNumber = parseInt(pointId, 10);
 
   const dispatch = useDispatch();
-  const user = useSelector(userInfoSelector);
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
-  const surveys = filterSurveys(
-    useSelector(surveyListSelector),
-    "any",
-    pointIdNumber
-  );
   const surveysLoading = useSelector(surveyListLoadingSelector);
-
-  const { name: pointName } =
-    reef?.surveyPoints.filter((point) => point.id === pointIdNumber)[0] || {};
-
-  const nSurveys = surveys.length;
 
   // Always scroll to top on first render
   useEffect(() => {
@@ -64,22 +49,11 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     <>
       <NavBar searchLocation />
       {(reefLoading || surveysLoading) && <LinearProgress />}
-      {reef && pointName && (
+      {reef && (
         <>
           <BackButton reefId={id} />
-          <InfoCard
-            reef={reef}
-            points={reef.surveyPoints}
-            pointName={pointName}
-            nSurveys={nSurveys}
-          />
-          <SurveyHistory
-            isAdmin={isAdmin(user, reefIdNumber)}
-            pointName={pointName}
-            pointId={pointIdNumber}
-            reefId={reefIdNumber}
-            timeZone={reef?.timezone}
-          />
+          <InfoCard reef={reef} pointId={pointIdNumber} />
+          <SurveyHistory reef={reef} pointId={pointIdNumber} />
           <Footer />
         </>
       )}

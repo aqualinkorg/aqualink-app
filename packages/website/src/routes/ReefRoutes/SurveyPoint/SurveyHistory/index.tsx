@@ -8,17 +8,18 @@ import {
   Typography,
   Grid,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import TimeLine from "../../../../common/SiteDetails/Surveys/Timeline";
+import { Reef } from "../../../../store/Reefs/types";
+import { userInfoSelector } from "../../../../store/User/userSlice";
+import { isAdmin } from "../../../../helpers/user";
 
-const SurveyHistory = ({
-  isAdmin,
-  pointName,
-  pointId,
-  reefId,
-  timeZone,
-  classes,
-}: SurveyHistoryProps) => {
+const SurveyHistory = ({ reef, pointId, classes }: SurveyHistoryProps) => {
+  const user = useSelector(userInfoSelector);
+  const { name: pointName } =
+    reef?.surveyPoints.filter((point) => point.id === pointId)[0] || {};
+
   return (
     <Box className={classes.timelineWrapper}>
       <Container>
@@ -28,13 +29,13 @@ const SurveyHistory = ({
           </Box>
         </Grid>
         <TimeLine
-          isAdmin={isAdmin}
+          isAdmin={isAdmin(user, reef.id)}
           addNewButton={false}
           observation="any"
           pointName={pointName}
           pointId={pointId}
-          reefId={reefId}
-          timeZone={timeZone}
+          reefId={reef.id}
+          timeZone={reef.timezone}
         />
       </Container>
     </Box>
@@ -49,11 +50,8 @@ const styles = () =>
   });
 
 interface SurveyHistoryIncomingProps {
-  isAdmin: boolean;
-  pointName: string;
+  reef: Reef;
   pointId: number;
-  reefId: number;
-  timeZone: string | null | undefined;
 }
 
 type SurveyHistoryProps = SurveyHistoryIncomingProps &
