@@ -35,7 +35,7 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `CREATE MATERIALIZED VIEW "latest_data" AS SELECT DISTINCT ON (metric_id, reef_id, poi_id) "metric"."metric" AS "metric", "time_series"."id" AS "id", timestamp, value, reef_id, poi_id FROM "time_series" "time_series" INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id  ORDER BY reef_id, poi_id, metric_id, timestamp DESC WITH DATA`,
+      `CREATE VIEW "latest_data" AS SELECT DISTINCT ON (metric_id, reef_id, poi_id) "metric"."metric" AS "metric", "time_series"."id" AS "id", timestamp, value, reef_id, poi_id FROM "time_series" "time_series" INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id  ORDER BY reef_id, poi_id, metric_id, timestamp DESC WITH DATA`,
     );
     await queryRunner.query(
       `INSERT INTO "typeorm_metadata"("type", "schema", "name", "value") VALUES ($1, $2, $3, $4)`,
@@ -53,7 +53,7 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       `DELETE FROM "typeorm_metadata" WHERE "type" = 'VIEW' AND "schema" = $1 AND "name" = $2`,
       ['public', 'latest_data'],
     );
-    await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
+    await queryRunner.query(`DROP VIEW "latest_data"`);
     await queryRunner.query(
       `ALTER TABLE "time_series" DROP CONSTRAINT "FK_769f6576134f6f18b1f23108c45"`,
     );

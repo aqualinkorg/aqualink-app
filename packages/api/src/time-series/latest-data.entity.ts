@@ -11,7 +11,6 @@ import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 
 @ViewEntity({
-  materialized: true,
   expression: (connection: Connection) =>
     connection
       .createQueryBuilder()
