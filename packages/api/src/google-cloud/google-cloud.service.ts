@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Storage } from '@google-cloud/storage';
 import { Repository } from 'typeorm';
+import path from 'path';
 import { SurveyMedia } from '../surveys/survey-media.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
 
@@ -29,6 +30,37 @@ export class GoogleCloudService {
       projectId: this.GCS_PROJECT,
       maxRetries: 3,
     });
+  }
+
+  public async uploadFile(filePath: string, type: string): Promise<string> {
+    if (!this.GCS_BUCKET || !this.STORAGE_FOLDER) {
+      this.logger.error(
+        'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
+      );
+      throw new InternalServerErrorException();
+    }
+    const ext = path.extname(filePath);
+    const basename = path.basename(filePath).replace(ext, '');
+    const randomString = Array(16)
+      .fill(null)
+      .map(() => Math.round(Math.random() * 15).toString(16))
+      .join('');
+    const destination = `${this.STORAGE_FOLDER}/surveys/${basename}-${type}-${randomString}`;
+    const response = await this.storage
+      .bucket(this.GCS_BUCKET)
+      .upload(filePath, {
+        destination,
+        public: true,
+        gzip: true,
+      });
+    const publicUrl = response[0].baseUrl;
+
+    if (!publicUrl) {
+      this.logger.error('Google cloud did not return any url');
+      return '';
+    }
+
+    return publicUrl;
   }
 
   public async findDanglingFiles(): Promise<string[]> {

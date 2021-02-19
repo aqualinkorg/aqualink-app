@@ -63,8 +63,12 @@ export class TimeSeriesController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  uploadHoboData(@Body('aliases') aliases: string, @UploadedFile() file) {
+  uploadHoboData(
+    @Body('aliases') aliases: string,
+    @Body('email') email: string,
+    @UploadedFile() file,
+  ) {
     const parsedAliases = JSON.parse(aliases);
-    return this.timeSeriesService.uploadHoboData(file, parsedAliases);
+    return this.timeSeriesService.uploadHoboData(file, parsedAliases, email);
   }
 }
