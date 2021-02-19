@@ -17,6 +17,7 @@ import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { User } from '../users/users.entity';
 import { CreateReefDto } from './dto/create-reef.dto';
+import { MonthlyMax } from './monthly-max.entity';
 import { Region } from '../regions/regions.entity';
 import {
   getRegion,
@@ -25,7 +26,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
 } from '../utils/reef.utils';
-import { getMMM } from '../utils/temperature';
+import { getMMM, getMonthlyMaximums } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
@@ -46,6 +47,9 @@ export class ReefsService {
 
     @InjectRepository(ExclusionDates)
     private exclusionDatesRepository: Repository<ExclusionDates>,
+
+    @InjectRepository(MonthlyMax)
+    private monthlyMaxRepository: Repository<MonthlyMax>,
   ) {}
 
   async create(createReefDto: CreateReefDto): Promise<Reef> {
@@ -61,6 +65,8 @@ export class ReefsService {
     } = createReefDto;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
+    const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+
     const timezones = getTimezones(latitude, longitude) as string[];
 
     // TODO - Add MonthlyMax data on reef creation using getMonthlyMaximums
@@ -87,6 +93,15 @@ export class ReefsService {
       .relation('admins')
       .of(reef)
       .add(admins);
+
+    await Promise.all(
+      monthlyMaximums.map(async ({ month, temperature }) => {
+        return (
+          temperature &&
+          this.monthlyMaxRepository.insert({ reef, month, temperature })
+        );
+      }),
+    );
 
     return reef;
   }

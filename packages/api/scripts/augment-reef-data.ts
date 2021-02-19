@@ -78,9 +78,9 @@ async function augmentReefs(connection: Connection) {
       await reefRepository.update(reef.id, augmentedData);
       // Add monthlyMaximums
       const [longitude, latitude] = (reef.polygon as Point).coordinates;
-      const monthlyMaxiums = await getMonthlyMaximums(longitude, latitude);
+      const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
       await Promise.all(
-        monthlyMaxiums.map(async ({ month, temperature }) => {
+        monthlyMaximums.map(async ({ month, temperature }) => {
           return (
             temperature &&
             monthlyMaxRepository.insert({ reef, month, temperature })
