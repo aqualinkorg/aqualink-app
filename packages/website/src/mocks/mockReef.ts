@@ -1,5 +1,4 @@
 import { Reef } from "../store/Reefs/types";
-import { mockSurveyPoint } from "./mockSurveyPoint";
 import { mockUser } from "./mockUser";
 
 const now = new Date();
@@ -20,7 +19,7 @@ export const mockReef: Reef = {
   videoStream: null,
   region: { name: "Hawaii" },
   admins: [mockUser],
-  surveyPoints: [mockSurveyPoint],
+  surveyPoints: [],
   stream: null,
   liveData: {
     reef: { id: 1 },

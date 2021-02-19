@@ -11,7 +11,7 @@ import { mockReef } from "../../../mocks/mockReef";
 
 const mockStore = configureStore([]);
 
-describe("ReefRoutes Surveys", () => {
+describe("Surveys", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({

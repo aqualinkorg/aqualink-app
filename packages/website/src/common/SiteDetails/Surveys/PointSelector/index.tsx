@@ -24,7 +24,6 @@ import EditDialog, { Action } from "../../../Dialog";
 
 const PointSelector = ({
   reefId,
-  mountPois,
   pointOptions,
   point,
   pointId,
@@ -106,136 +105,132 @@ const PointSelector = ({
             Survey Point:
           </Typography>
         </Grid>
-        {mountPois && (
-          <Grid item className={classes.selectorWrapper}>
-            <Grid container alignItems="center">
-              <Grid item>
-                <Select
-                  className={classes.selector}
-                  labelId="survey-point"
-                  id="survey-point"
-                  name="survey-point"
-                  value={
-                    pointOptions.map((item) => item.name).includes(point)
-                      ? point
-                      : "All"
-                  }
-                  onChange={handlePointChange}
-                  onClose={() => toggleEditPoiNameEnabled(false)}
-                  renderValue={(selected) => selected as string}
-                >
-                  <MenuItem value="All">
-                    <Typography className={classes.menuItem} variant="h6">
-                      All
-                    </Typography>
-                  </MenuItem>
-                  {pointOptions.map(
-                    (item) =>
-                      item.name !== null && (
-                        <MenuItem
-                          className={classes.menuItem}
-                          value={item.name}
-                          key={item.id}
+        <Grid item className={classes.selectorWrapper}>
+          <Grid container alignItems="center">
+            <Grid item>
+              <Select
+                className={classes.selector}
+                labelId="survey-point"
+                id="survey-point"
+                name="survey-point"
+                value={
+                  pointOptions.map((item) => item.name).includes(point)
+                    ? point
+                    : "All"
+                }
+                onChange={handlePointChange}
+                onClose={() => toggleEditPoiNameEnabled(false)}
+                renderValue={(selected) => selected as string}
+              >
+                <MenuItem value="All">
+                  <Typography className={classes.menuItem} variant="h6">
+                    All
+                  </Typography>
+                </MenuItem>
+                {pointOptions.map(
+                  (item) =>
+                    item.name !== null && (
+                      <MenuItem
+                        className={classes.menuItem}
+                        value={item.name}
+                        key={item.id}
+                      >
+                        <Grid
+                          container
+                          alignItems="center"
+                          justify="space-between"
+                          spacing={1}
                         >
-                          <Grid
-                            container
-                            alignItems="center"
-                            justify="space-between"
-                            spacing={1}
-                          >
-                            <Grid className={classes.itemName} item>
-                              {item.name}
-                            </Grid>
-                            <Grid item>
-                              <Grid container item spacing={1}>
-                                <Grid item>
-                                  <Tooltip
-                                    title="View survey point"
-                                    placement="top"
-                                    arrow
+                          <Grid className={classes.itemName} item>
+                            {item.name}
+                          </Grid>
+                          <Grid item>
+                            <Grid container item spacing={1}>
+                              <Grid item>
+                                <Tooltip
+                                  title="View survey point"
+                                  placement="top"
+                                  arrow
+                                >
+                                  <Link
+                                    to={`/reefs/${reefId}/points/${item.id}`}
                                   >
-                                    <Link
-                                      to={`/reefs/${reefId}/points/${item.id}`}
+                                    <IconButton className={classes.menuButton}>
+                                      <Launch color="primary" />
+                                    </IconButton>
+                                  </Link>
+                                </Tooltip>
+                              </Grid>
+                              {isReefAdmin && (
+                                <>
+                                  <Grid item>
+                                    <Tooltip
+                                      title="Edit survey point"
+                                      placement="top"
+                                      arrow
                                     >
                                       <IconButton
                                         className={classes.menuButton}
+                                        onClick={(event) => {
+                                          setEditDialogOpen(true);
+                                          setEditPoi(item);
+                                          event.stopPropagation();
+                                        }}
                                       >
-                                        <Launch color="primary" />
+                                        <Create color="primary" />
                                       </IconButton>
-                                    </Link>
-                                  </Tooltip>
-                                </Grid>
-                                {isReefAdmin && (
-                                  <>
-                                    <Grid item>
-                                      <Tooltip
-                                        title="Edit survey point"
-                                        placement="top"
-                                        arrow
+                                    </Tooltip>
+                                  </Grid>
+                                  <Grid item>
+                                    <Tooltip
+                                      title="Delete survey point"
+                                      placement="top"
+                                      arrow
+                                    >
+                                      <IconButton
+                                        className={classes.menuButton}
+                                        onClick={(event) => {
+                                          onDeleteButtonClick(item.id);
+                                          event.stopPropagation();
+                                        }}
                                       >
-                                        <IconButton
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            setEditDialogOpen(true);
-                                            setEditPoi(item);
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <Create color="primary" />
-                                        </IconButton>
-                                      </Tooltip>
-                                    </Grid>
-                                    <Grid item>
-                                      <Tooltip
-                                        title="Delete survey point"
-                                        placement="top"
-                                        arrow
-                                      >
-                                        <IconButton
-                                          className={classes.menuButton}
-                                          onClick={(event) => {
-                                            onDeleteButtonClick(item.id);
-                                            event.stopPropagation();
-                                          }}
-                                        >
-                                          <DeleteOutline color="primary" />
-                                        </IconButton>
-                                      </Tooltip>
-                                    </Grid>
-                                  </>
-                                )}
-                              </Grid>
+                                        <DeleteOutline color="primary" />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Grid>
+                                </>
+                              )}
                             </Grid>
                           </Grid>
-                        </MenuItem>
-                      )
-                  )}
-                </Select>
-              </Grid>
-              {pointId !== -1 && (
-                <Grid item>
-                  {isMobile ? (
-                    <Link to={`/reefs/${reefId}/points/${pointId}`}>
-                      <IconButton className={classes.menuButton}>
-                        <Launch color="primary" />
-                      </IconButton>
-                    </Link>
-                  ) : (
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      component={Link}
-                      to={`/reefs/${reefId}/points/${pointId}`}
-                    >
-                      View Survey Point
-                    </Button>
-                  )}
-                </Grid>
-              )}
+                        </Grid>
+                      </MenuItem>
+                    )
+                )}
+              </Select>
             </Grid>
+            {pointId !== -1 && (
+              <Grid item>
+                {isMobile ? (
+                  <Link to={`/reefs/${reefId}/points/${pointId}`}>
+                    <IconButton className={classes.menuButton}>
+                      <Launch color="primary" />
+                    </IconButton>
+                  </Link>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    component={Link}
+                    to={`/reefs/${reefId}/points/${pointId}`}
+                  >
+                    View Survey Point
+                  </Button>
+                )}
+              </Grid>
+            )}
           </Grid>
-        )}
+        </Grid>
       </Grid>
     </>
   );
@@ -289,7 +284,6 @@ const styles = (theme: Theme) =>
 
 interface PointSelectorIncomingProps {
   reefId: number;
-  mountPois: boolean;
   pointOptions: Pois[];
   point: string;
   pointId: number;

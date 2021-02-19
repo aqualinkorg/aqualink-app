@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 import type {
+  Pois,
   ReefUpdateParams,
   SelectedReefState,
   SpotterDataRequestParams,
@@ -112,6 +113,18 @@ const selectedReefSlice = createSlice({
       ...state,
       spotterData: null,
     }),
+    setReefPois: (state, action: PayloadAction<Pois[]>) => {
+      if (state.details) {
+        return {
+          ...state,
+          details: {
+            ...state.details,
+            surveyPoints: action.payload,
+          },
+        };
+      }
+      return state;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -206,6 +219,7 @@ export const {
   setSelectedReef,
   setReefData,
   clearReefSpotterData,
+  setReefPois,
 } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;

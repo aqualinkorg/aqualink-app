@@ -14,10 +14,10 @@ import {
   Box,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import Axios from "axios";
 
 import Timeline from "./Timeline";
 import PointSelector from "./PointSelector";
+import { setReefPois } from "../../../store/Reefs/selectedReefSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import {
   surveysRequest,
@@ -27,7 +27,7 @@ import { setSelectedPoi } from "../../../store/Survey/surveySlice";
 import observationOptions from "../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../store/Survey/types";
 import reefServices from "../../../services/reefServices";
-import { Pois, Reef } from "../../../store/Reefs/types";
+import { Reef } from "../../../store/Reefs/types";
 import { isAdmin } from "../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../Dialog";
 import { useBodyLength } from "../../../helpers/useBodyLength";
@@ -38,7 +38,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
-  const [pointOptions, setPointOptions] = useState<Pois[]>([]);
+  const pointOptions = reef.surveyPoints;
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
@@ -47,11 +47,9 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   );
   const [editPoiNameLoading, setEditPoiNameLoading] = useState<boolean>(false);
   const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
-  const [mountPois, setMountPois] = useState<boolean>(false);
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reef.id);
   const dispatch = useDispatch();
@@ -59,45 +57,19 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const bodyLength = useBodyLength();
 
   useEffect(() => {
-    const source = Axios.CancelToken.source();
-    reefServices
-      .getReefPois(`${reef.id}`, source.token)
-      .then(({ data }) => {
-        setPointOptions(data);
-        if (data.length > 0) {
-          setEditPoiNameDraft(
-            data.reduce(
-              (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
-              {}
-            )
-          );
-        }
-        setMountPois(true);
-      })
-      .catch((error) => {
-        if (!Axios.isCancel(error)) {
-          setMountPois(false);
-        }
-      });
-    return () => {
-      source.cancel();
-    };
-  }, [setPointOptions, reef.id]);
+    if (pointOptions.length > 0) {
+      setEditPoiNameDraft(
+        pointOptions.reduce(
+          (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
+          {}
+        )
+      );
+    }
+  }, [pointOptions]);
 
   useEffect(() => {
     dispatch(setSelectedPoi(point));
   }, [dispatch, point]);
-
-  const onResize = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-    };
-  }, [onResize]);
 
   const onDeletePoiButtonClick = useCallback((id: number) => {
     setDeletePoiDialogOpen(true);
@@ -128,8 +100,10 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
       reefServices
         .deleteReefPoi(poiToDelete, user.token)
         .then(() =>
-          setPointOptions(
-            pointOptions.filter((option) => option.id !== poiToDelete)
+          dispatch(
+            setReefPois(
+              pointOptions.filter((option) => option.id !== poiToDelete)
+            )
           )
         )
         .then(() => {
@@ -192,16 +166,18 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             }
 
             // Update point options
-            setPointOptions(
-              pointOptions.map((item) => {
-                if (item.id === key) {
-                  return {
-                    ...item,
-                    name: newName,
-                  };
-                }
-                return item;
-              })
+            dispatch(
+              setReefPois(
+                pointOptions.map((item) => {
+                  if (item.id === key) {
+                    return {
+                      ...item,
+                      name: newName,
+                    };
+                  }
+                  return item;
+                })
+              )
             );
             setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
           })
@@ -256,7 +232,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
         >
           <Grid
             container
-            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            justify={matches ? "flex-start" : "center"}
             item
             md={12}
             lg={3}
@@ -265,7 +241,6 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
           </Grid>
           <PointSelector
             reefId={reef.id}
-            mountPois={mountPois}
             pointOptions={pointOptions}
             point={point}
             pointId={pointIdFinder(point)}
@@ -281,7 +256,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
           <Grid
             container
             alignItems="center"
-            justify={windowWidth < 1280 ? "flex-start" : "center"}
+            justify={matches ? "flex-start" : "center"}
             item
             md={12}
             lg={4}

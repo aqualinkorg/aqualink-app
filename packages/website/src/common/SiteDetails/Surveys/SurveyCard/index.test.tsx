@@ -23,7 +23,13 @@ describe("Survey Card", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <SurveyCard point={1} isAdmin reefId={0} survey={mockSurvey} />
+          <SurveyCard
+            pointName="Test Point"
+            pointId={1}
+            isAdmin
+            reefId={0}
+            survey={mockSurvey}
+          />
         </Router>
       </Provider>
     ).container;
