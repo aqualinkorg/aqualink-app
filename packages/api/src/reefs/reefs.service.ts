@@ -62,6 +62,8 @@ export class ReefsService {
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
     const timezones = getTimezones(latitude, longitude) as string[];
+
+    // TODO - Add MonthlyMax data on reef creation using getMonthlyMaximums
     const reef = await this.reefsRepository
       .save({
         name,
