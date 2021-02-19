@@ -5,7 +5,12 @@ import {
   Param,
   Query,
   ParseBoolPipe,
+  Post,
+  Body,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
@@ -54,5 +59,12 @@ export class TimeSeriesController {
   @Get('reefs/:reefId/pois/:poiId/range')
   findDataRange(@Param() dataRangeDto: DataRangeDto) {
     return this.timeSeriesService.findDataRange(dataRangeDto);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadHoboData(@Body('aliases') aliases: string, @UploadedFile() file) {
+    const parsedAliases = JSON.parse(aliases);
+    return this.timeSeriesService.uploadHoboData(file, parsedAliases);
   }
 }
