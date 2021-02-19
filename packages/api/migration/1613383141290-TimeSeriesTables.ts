@@ -23,7 +23,7 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       `ALTER TABLE "sources" ADD CONSTRAINT "FK_fc8de60fc92ac93f41a52ad01b7" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, "source_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_88a659ad442c11d3a5400b3def4" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -33,6 +33,9 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "time_series" ADD CONSTRAINT "FK_fb5d7b75a674607b65fa78d5c92" FOREIGN KEY ("source_id") REFERENCES "sources"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `CREATE VIEW "latest_data" AS SELECT DISTINCT ON (metric_id, reef_id, poi_id) "metric"."metric" AS "metric", "time_series"."id" AS "id", timestamp, value, reef_id, poi_id FROM "time_series" "time_series" INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id  ORDER BY reef_id, poi_id, metric_id, timestamp DESC WITH DATA`,
@@ -54,6 +57,9 @@ export class TimeSeriesTables1613383141290 implements MigrationInterface {
       ['public', 'latest_data'],
     );
     await queryRunner.query(`DROP VIEW "latest_data"`);
+    await queryRunner.query(
+      `ALTER TABLE "time_series" DROP CONSTRAINT "FK_fb5d7b75a674607b65fa78d5c92"`,
+    );
     await queryRunner.query(
       `ALTER TABLE "time_series" DROP CONSTRAINT "FK_769f6576134f6f18b1f23108c45"`,
     );
