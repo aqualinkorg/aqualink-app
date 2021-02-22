@@ -3,6 +3,7 @@ import {
   Connection,
   ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
   ViewEntity,
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
@@ -42,6 +43,9 @@ export class LatestData {
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;
+
+  @RelationId((latestData: LatestData) => latestData.reef)
+  reefId: number;
 
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   poi: ReefPointOfInterest;

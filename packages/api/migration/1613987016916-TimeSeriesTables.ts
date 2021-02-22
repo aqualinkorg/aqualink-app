@@ -62,6 +62,8 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "time_series"`);
     await queryRunner.query(`DROP TABLE "metrics"`);
     await queryRunner.query(`DROP TABLE "sources"`);
+    await queryRunner.query('DROP TYPE metrics_metric_enum');
+    await queryRunner.query('DROP TYPE metrics_units_enum');
     await queryRunner.query(`DROP TYPE "sources_type_enum"`);
   }
 }
