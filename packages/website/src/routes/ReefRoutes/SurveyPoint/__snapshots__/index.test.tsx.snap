@@ -794,7 +794,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
             class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
           >
             <div
-              class="MuiGrid-root Info-cardInfo-42 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+              class="MuiGrid-root Info-cardInfo-42 MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
             >
               <div
                 class="MuiGrid-root MuiGrid-container"

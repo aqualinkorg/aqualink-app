@@ -34,7 +34,7 @@ const Map = ({ reef, classes }: MapProps) => {
   ]);
 
   return (
-    <Grid item xs={12} md={6}>
+    <Grid className={classes.mapWrapper} item xs={12} md={4}>
       <LeafletMap
         zoomControl={false}
         className={classes.map}
@@ -60,8 +60,12 @@ const Map = ({ reef, classes }: MapProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
+    mapWrapper: {
+      padding: 16,
+    },
     map: {
-      height: 450,
+      borderRadius: 5,
+      height: 280,
       width: "100%",
       [theme.breakpoints.down("sm")]: {
         height: 300,

@@ -40,7 +40,7 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
   });
 
   return (
-    <Grid className={classes.cardInfo} item xs={12} md={6}>
+    <Grid className={classes.cardInfo} item xs={11} md={6}>
       <Grid container>
         <Box mb="24px">
           <Typography variant="subtitle2" color="textSecondary">
