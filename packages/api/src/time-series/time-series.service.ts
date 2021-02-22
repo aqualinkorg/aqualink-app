@@ -200,20 +200,25 @@ export class TimeSeriesService {
     const COLONY_DATA_FILE = 'Col{}_FullHOBO.xlsx';
     const validFiles = new Set(['png', 'jpeg', 'jpg']);
 
+    // Grab user and check if they exist
     const user = await this.userRepository.findOne({
       where: { email },
       relations: ['administeredReefs'],
     });
+
     if (!user) {
       this.logger.error(`No user was found with email ${email}`);
       throw new BadRequestException('User was not found');
     }
 
+    // Read and extract zip file
     const directory = await unzipper.Open.buffer(file.buffer);
     await directory.extract({ path: EXTRACT_PATH });
+    // Main folder can be found by just getting the first folder of the path of any file in the zip archive
     const rootPath = `${EXTRACT_PATH}/${directory.files[0].path.split('/')[0]}`;
     const reefIds = new Set<number>();
 
+    // Check that all reefs to be uploaded exist and add the ids to a set for quicker search
     aliases.forEach(([reefId, props]) => {
       const reefFolder = FOLDER_PREFIX + reefId;
       const reefFolderPath = path.join(rootPath, reefFolder);
@@ -225,15 +230,23 @@ export class TimeSeriesService {
       reefIds.add(reefId);
     });
 
+    // Create object from aliases array and also the reverse object (id -> alias, alias -> id)
     const aliasesMap: { [k: number]: string } = Object.fromEntries(aliases);
     const aliasesToId = Object.fromEntries(
       aliases.map(([id, alias]) => [alias, id]),
     );
 
+    // Read coords file
     const coordsFilePath = path.join(rootPath, COLONY_COORDS_FILE);
     const coordsHeaders = ['reef', 'colony', 'lat', 'long'];
-    const dataAsJson = this.parseXLSX<Coords>(coordsFilePath, coordsHeaders);
+    const dataAsJson = this.parseXLSX<Coords>(
+      coordsFilePath,
+      coordsHeaders,
+    ).filter((record) => {
+      return reefIds.has(record.reef);
+    });
 
+    // Group by reef
     const recordsGroupedByReef = groupBy(dataAsJson, 'reef');
     const reefs = Array.from(reefIds).map((reefId) => {
       const filteredReefCoords = recordsGroupedByReef[reefId];
@@ -378,8 +391,7 @@ export class TimeSeriesService {
       reef: image.reef,
       userId: user,
       diveDate: image.createdDate,
-      // Add default values to other required fields
-      weatherConditions: WeatherConditions.Calm,
+      weatherConditions: WeatherConditions.NoData,
     }));
 
     this.logger.log('Saving surveys');
@@ -428,8 +440,7 @@ export class TimeSeriesService {
         poiId: image.poi,
         survey: image.survey,
         metadata: JSON.stringify({}),
-        // Add default values to other required fields
-        observations: Observations.Healthy,
+        observations: Observations.NoData,
       }));
 
     this.logger.log('Saving survey media');

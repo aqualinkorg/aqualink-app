@@ -1,7 +1,8 @@
 import yargs from 'yargs';
 import fs from 'fs';
-import { createConnection } from 'typeorm';
+import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
+import { configService } from '../src/config/config.service';
 import { TimeSeriesService } from '../src/time-series/time-series.service';
 import { Reef } from '../src/reefs/reefs.entity';
 import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
@@ -11,7 +12,6 @@ import { User } from '../src/users/users.entity';
 import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
-import config from '../ormconfig';
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
@@ -68,6 +68,7 @@ async function run() {
     stream: fs.createReadStream(rootPath),
   };
 
+  const config = configService.getTypeOrmConfig() as ConnectionOptions;
   const connection = await createConnection(config);
   const googleCloudService = new GoogleCloudService(
     connection.getRepository(SurveyMedia),
