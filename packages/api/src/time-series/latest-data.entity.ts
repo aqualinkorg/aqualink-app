@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from '../reefs/reefs.entity';
+import { SourceType } from '../reefs/sources.entity';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 
@@ -15,17 +16,18 @@ import { TimeSeries } from './time-series.entity';
     connection
       .createQueryBuilder()
       .select(
-        'DISTINCT ON (metric_id, source_id, reef_id, poi_id) metric.metric',
+        'DISTINCT ON (metric_id, source_id, time_series.reef_id, time_series.poi_id) metric.metric',
         'metric',
       )
       .addSelect('time_series.id', 'id')
       .addSelect('timestamp')
       .addSelect('value')
-      .addSelect('reef_id')
-      .addSelect('poi_id')
+      .addSelect('time_series.reef_id', 'reef_id')
+      .addSelect('time_series.poi_id', 'poi_id')
+      .addSelect('source.type', 'source')
       .from(TimeSeries, 'time_series')
       .innerJoin('metrics', 'metric', 'metric.id = metric_id')
-      .innerJoin('sources', 'source_type', 'source_type.id = source_id')
+      .innerJoin('sources', 'source', 'source.id = source_id')
       .orderBy('reef_id, poi_id, metric_id, source_id, timestamp', 'DESC'),
 })
 export class LatestData {
@@ -43,6 +45,9 @@ export class LatestData {
 
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   poi: ReefPointOfInterest;
+
+  @Column({ type: 'enum', enum: SourceType })
+  source: SourceType;
 
   @Column({ type: 'enum', enum: Metric })
   metric: Metric;
