@@ -6,6 +6,8 @@ import {
   TableRow,
   Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -104,11 +106,19 @@ RowNumberCell.defaultProps = {
   decimalPlaces: 1,
 };
 
-const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
+const ReefTableBody = ({
+  order,
+  orderBy,
+  classes,
+  isDrawerOpen,
+}: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsToDisplayListSelector) || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
@@ -121,12 +131,17 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
     setSelectedRow(index);
   }, [reefOnMap, reefsList]);
 
+  // scroll to the relevant reef row when reef is selected.
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
-    if (child) {
-      child.scrollIntoView({ block: "center", behavior: "smooth" });
+    // only scroll if mobile drawer is open. Mobile drawer doesn't exist if not on mobile.
+    if (child && (isDrawerOpen || !isMobile)) {
+      setTimeout(
+        () => child.scrollIntoView({ block: "center", behavior: "smooth" }),
+        100
+      );
     }
-  }, [selectedRow]);
+  }, [isDrawerOpen, selectedRow]);
 
   return (
     <TableBody>
@@ -195,6 +210,8 @@ const styles = (theme: Theme) =>
 type ReefTableBodyIncomingProps = {
   order: Order;
   orderBy: OrderKeys;
+  // used when in mobile to decide when to autoscroll to the relevant reef.
+  isDrawerOpen: boolean;
 };
 
 type ReefTableBodyProps = WithStyles<typeof styles> &
