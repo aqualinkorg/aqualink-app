@@ -1,11 +1,13 @@
 import React from "react";
 import {
+  Box,
   Container,
   Card,
   withStyles,
   WithStyles,
   createStyles,
   Grid,
+  Theme,
 } from "@material-ui/core";
 
 import Info from "./Info";
@@ -14,25 +16,30 @@ import { Reef } from "../../../../store/Reefs/types";
 
 const InfoCard = ({ reef, pointId, classes }: InfoCardProps) => {
   return (
-    <Container>
-      <Grid className={classes.cardWrapper} container justify="center">
-        <Grid item xs={12} sm={12}>
-          <Card elevation={3}>
-            <Grid container justify="space-between">
-              <Info reef={reef} pointId={pointId} />
-              <Map reef={reef} />
-            </Grid>
-          </Card>
+    <Box bgcolor="rgb(245, 246, 246)">
+      <Container>
+        <Grid className={classes.cardWrapper} container justify="center">
+          <Grid item xs={12} sm={12}>
+            <Card elevation={3}>
+              <Grid container justify="space-between">
+                <Info reef={reef} pointId={pointId} />
+                <Map reef={reef} />
+              </Grid>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </Box>
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     cardWrapper: {
       marginBottom: 100,
+      [theme.breakpoints.down("xs")]: {
+        marginBottom: 50,
+      },
     },
   });
 

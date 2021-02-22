@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Box,
   Container,
   Grid,
   Typography,
@@ -13,20 +14,22 @@ import { Link } from "react-router-dom";
 
 const BackButton = ({ reefId, classes }: BackButtonProps) => {
   return (
-    <Container>
-      <Grid container className={classes.backButtonWrapper}>
-        <Button
-          color="primary"
-          startIcon={<ArrowBack />}
-          component={Link}
-          to={`/reefs/${reefId}`}
-        >
-          <Typography className={classes.backButtonText}>
-            Back to Site
-          </Typography>
-        </Button>
-      </Grid>
-    </Container>
+    <Box bgcolor="rgb(245, 246, 246)">
+      <Container>
+        <Grid container className={classes.backButtonWrapper}>
+          <Button
+            color="primary"
+            startIcon={<ArrowBack />}
+            component={Link}
+            to={`/reefs/${reefId}`}
+          >
+            <Typography className={classes.backButtonText}>
+              Back to Site
+            </Typography>
+          </Button>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

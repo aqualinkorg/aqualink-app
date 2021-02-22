@@ -90,7 +90,7 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
                 </Grid>
                 <Grid item>
                   <Typography variant="subtitle1" color="textSecondary">
-                    SURVEYS
+                    {nSurveys === 1 ? "SURVEY" : "SURVEYS"}
                   </Typography>
                 </Grid>
               </Grid>

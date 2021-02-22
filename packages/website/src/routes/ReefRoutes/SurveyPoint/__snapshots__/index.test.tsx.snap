@@ -758,158 +758,166 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       </mock-cardcontent>
     </mock-card>
   </mock-dialog>
-  <div
-    class="MuiContainer-root MuiContainer-maxWidthLg"
+  <mock-box
+    bgcolor="rgb(245, 246, 246)"
   >
     <div
-      class="MuiGrid-root BackButton-backButtonWrapper-39 MuiGrid-container"
-    >
-      <mock-button
-        color="primary"
-        component="[object Object]"
-        starticon="[object Object]"
-        to="/reefs/1"
-      >
-        <mock-typography
-          classname="BackButton-backButtonText-40"
-        >
-          Back to Site
-        </mock-typography>
-      </mock-button>
-    </div>
-  </div>
-  <div
-    class="MuiContainer-root MuiContainer-maxWidthLg"
-  >
-    <div
-      class="MuiGrid-root InfoCard-cardWrapper-41 MuiGrid-container MuiGrid-justify-xs-center"
+      class="MuiContainer-root MuiContainer-maxWidthLg"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12"
+        class="MuiGrid-root BackButton-backButtonWrapper-39 MuiGrid-container"
       >
-        <mock-card
-          elevation="3"
+        <mock-button
+          color="primary"
+          component="[object Object]"
+          starticon="[object Object]"
+          to="/reefs/1"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+          <mock-typography
+            classname="BackButton-backButtonText-40"
           >
-            <div
-              class="MuiGrid-root Info-cardInfo-42 MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container"
-              >
-                <mock-box
-                  mb="24px"
-                >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle2"
-                  >
-                    Last survreyed: 
-                  </mock-typography>
-                </mock-box>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        color="textSecondary"
-                        variant="h5"
-                      />
-                      <mock-typography
-                        color="textSecondary"
-                        variant="subtitle1"
-                      >
-                        Hawaii
-                      </mock-typography>
-                    </div>
-                    0
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-item MuiGrid-justify-xs-space-between"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
-                      >
-                        <div
-                          class="MuiGrid-root MuiGrid-item"
-                        >
-                          <mock-typography
-                            classname="Info-coloredText-44"
-                            variant="h5"
-                          >
-                            0
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-item"
-                        >
-                          <mock-typography
-                            color="textSecondary"
-                            variant="subtitle1"
-                          >
-                            SURVEYS
-                          </mock-typography>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
-                      >
-                        <div
-                          class="MuiGrid-root MuiGrid-item"
-                        >
-                          <mock-typography
-                            classname="Info-coloredText-44"
-                            variant="h5"
-                          >
-                            0
-                          </mock-typography>
-                        </div>
-                        <div
-                          class="MuiGrid-root MuiGrid-item"
-                        >
-                          <mock-typography
-                            color="textSecondary"
-                            variant="subtitle1"
-                          >
-                            IMAGES
-                          </mock-typography>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <mock-map
-              reef="[object Object]"
-            />
-          </div>
-        </mock-card>
+            Back to Site
+          </mock-typography>
+        </mock-button>
       </div>
     </div>
-  </div>
+  </mock-box>
+  <mock-box
+    bgcolor="rgb(245, 246, 246)"
+  >
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg"
+    >
+      <div
+        class="MuiGrid-root InfoCard-cardWrapper-41 MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12"
+        >
+          <mock-card
+            elevation="3"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
+            >
+              <div
+                class="MuiGrid-root Info-cardInfo-42 MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-md-6"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container"
+                >
+                  <mock-box
+                    mb="24px"
+                  >
+                    <mock-typography
+                      color="textSecondary"
+                      variant="subtitle2"
+                    >
+                      Last survreyed: 
+                    </mock-typography>
+                  </mock-box>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          color="textSecondary"
+                          variant="h5"
+                        />
+                        <mock-typography
+                          color="textSecondary"
+                          variant="subtitle1"
+                        >
+                          Hawaii
+                        </mock-typography>
+                      </div>
+                      0
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-item MuiGrid-justify-xs-space-between"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
+                          >
+                            <mock-typography
+                              classname="Info-coloredText-44"
+                              variant="h5"
+                            >
+                              0
+                            </mock-typography>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
+                          >
+                            <mock-typography
+                              color="textSecondary"
+                              variant="subtitle1"
+                            >
+                              SURVEYS
+                            </mock-typography>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
+                          >
+                            <mock-typography
+                              classname="Info-coloredText-44"
+                              variant="h5"
+                            >
+                              0
+                            </mock-typography>
+                          </div>
+                          <div
+                            class="MuiGrid-root MuiGrid-item"
+                          >
+                            <mock-typography
+                              color="textSecondary"
+                              variant="subtitle1"
+                            >
+                              IMAGES
+                            </mock-typography>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mock-map
+                reef="[object Object]"
+              />
+            </div>
+          </mock-card>
+        </div>
+      </div>
+    </div>
+  </mock-box>
   <div
     class="MuiContainer-root MuiContainer-maxWidthLg"
   />
@@ -923,7 +931,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
       >
         <mock-box
-          mt="100px"
+          classname="SurveyHistory-title-47"
         >
           <mock-typography
             variant="h4"
@@ -933,7 +941,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-57"
+        class="SurveyTimeline-root-58"
       >
         <mock-hidden
           mddown="true"
@@ -953,7 +961,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-63"
+    classname="Footer-appBar-64"
     position="static"
   >
     <mock-toolbar>
@@ -964,7 +972,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-64"
+            classname="Footer-navBarLink-65"
             href="/map"
           >
             <mock-typography

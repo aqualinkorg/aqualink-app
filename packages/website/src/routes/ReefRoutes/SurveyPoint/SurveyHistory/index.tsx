@@ -7,6 +7,7 @@ import {
   createStyles,
   Typography,
   Grid,
+  Theme,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -24,7 +25,7 @@ const SurveyHistory = ({ reef, pointId, classes }: SurveyHistoryProps) => {
     <Box className={classes.timelineWrapper}>
       <Container>
         <Grid container justify="center">
-          <Box mt="100px">
+          <Box className={classes.title}>
             <Typography variant="h4">{pointName} Survey History</Typography>
           </Box>
         </Grid>
@@ -42,10 +43,16 @@ const SurveyHistory = ({ reef, pointId, classes }: SurveyHistoryProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     timelineWrapper: {
       backgroundColor: "rgb(245, 246, 246)",
+    },
+    title: {
+      marginTop: 100,
+      [theme.breakpoints.down("xs")]: {
+        marginTop: 50,
+      },
     },
   });
 

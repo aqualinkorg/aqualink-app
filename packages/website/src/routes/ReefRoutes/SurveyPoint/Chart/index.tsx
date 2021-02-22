@@ -5,6 +5,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
 } from "@material-ui/core";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -86,8 +87,13 @@ const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
           </Grid>
           <Grid item xs={12} md={3}>
             <Grid container justify="center">
-              <Grid item xs={12} sm={5} md={12}>
-                <TempAnalysis />
+              <Grid item xs={11} sm={5} md={12}>
+                <TempAnalysis
+                  startDate={pickerStartDate}
+                  endDate={pickerEndDate}
+                  depth={reef.depth}
+                  spotterData={spotterData}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -97,10 +103,13 @@ const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     chartWrapper: {
-      marginBottom: 50,
+      margin: "80px 0 20px 0",
+      [theme.breakpoints.down("xs")]: {
+        margin: "40px 0 10px 0",
+      },
     },
   });
 
