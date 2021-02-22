@@ -106,12 +106,7 @@ RowNumberCell.defaultProps = {
   decimalPlaces: 1,
 };
 
-const ReefTableBody = ({
-  order,
-  orderBy,
-  classes,
-  isDrawerOpen,
-}: ReefTableBodyProps) => {
+const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const reefsList = useSelector(reefsToDisplayListSelector) || [];
   const reefOnMap = useSelector(reefOnMapSelector);
@@ -134,14 +129,11 @@ const ReefTableBody = ({
   // scroll to the relevant reef row when reef is selected.
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
-    // only scroll if mobile drawer is open. Mobile drawer doesn't exist if not on mobile.
-    if (child && (isDrawerOpen || !isMobile)) {
-      setTimeout(
-        () => child.scrollIntoView({ block: "center", behavior: "smooth" }),
-        100
-      );
+    // only scroll if not on mobile (info at the top is more useful than the reef row)
+    if (child && !isMobile) {
+      child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [isDrawerOpen, selectedRow]);
+  }, [isMobile, selectedRow]);
 
   return (
     <TableBody>
@@ -210,8 +202,6 @@ const styles = (theme: Theme) =>
 type ReefTableBodyIncomingProps = {
   order: Order;
   orderBy: OrderKeys;
-  // used when in mobile to decide when to autoscroll to the relevant reef.
-  isDrawerOpen: boolean;
 };
 
 type ReefTableBodyProps = WithStyles<typeof styles> &

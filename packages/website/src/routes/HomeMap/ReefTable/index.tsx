@@ -9,6 +9,8 @@ import {
   TableContainer,
   Theme,
   Typography,
+  withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,56 +34,10 @@ import {
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 
 const SMALL_HEIGHT = 720;
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    tableHolder: {
-      paddingLeft: 10,
-      [theme.breakpoints.down("xs")]: {
-        paddingLeft: 0,
-        height: "auto",
-      },
-    },
-    scrollable: {
-      overflowY: "auto",
-    },
-    table: {
-      [theme.breakpoints.down("xs")]: {
-        tableLayout: "fixed",
-      },
-    },
-    switchWrapper: {
-      padding: "0 16px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-    },
-    topHandle: {
-      width: 50,
-      height: 10,
-      backgroundColor: theme.palette.grey["400"],
-      borderRadius: "20px",
-    },
-    bounce: { animation: "$bounce 1s infinite alternate" },
-    allReefsText: {
-      position: "absolute",
-      left: 25,
-      top: 25,
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      maxWidth: "90vw",
-    },
-    "@keyframes bounce": {
-      "0%": { transform: "translateY(0px)" },
-      "100%": { transform: "translateY(-5px)" },
-    },
-  })
-);
 
-const ReefTable = ({ isDrawerOpen }: ReefTableProps) => {
+const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
-  const classes = useStyles();
   const user = useSelector(userInfoSelector);
   const withSpotterOnly = useSelector(withSpotterOnlySelector);
   const dispatch = useDispatch();
@@ -169,11 +125,7 @@ const ReefTable = ({ isDrawerOpen }: ReefTableProps) => {
                 onRequestSort={handleRequestSort}
               />
             </Hidden>
-            <ReefTableBody
-              order={order}
-              orderBy={orderBy}
-              isDrawerOpen={isDrawerOpen}
-            />
+            <ReefTableBody order={order} orderBy={orderBy} />
           </Table>
         </TableContainer>
         {loading && (
@@ -190,10 +142,58 @@ const ReefTable = ({ isDrawerOpen }: ReefTableProps) => {
     </>
   );
 };
+const styles = (theme: Theme) =>
+  createStyles({
+    tableHolder: {
+      paddingLeft: 10,
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: 0,
+        height: "auto",
+      },
+    },
+    scrollable: {
+      overflowY: "auto",
+    },
+    table: {
+      [theme.breakpoints.down("xs")]: {
+        tableLayout: "fixed",
+      },
+    },
+    switchWrapper: {
+      padding: "0 16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+    },
+    topHandle: {
+      width: 50,
+      height: 10,
+      backgroundColor: theme.palette.grey["400"],
+      borderRadius: "20px",
+    },
+    bounce: { animation: "$bounce 1s infinite alternate" },
+    allReefsText: {
+      position: "absolute",
+      left: 25,
+      top: 25,
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      maxWidth: "90vw",
+    },
+    "@keyframes bounce": {
+      "0%": { transform: "translateY(0px)" },
+      "100%": { transform: "translateY(-5px)" },
+    },
+  });
 
-interface ReefTableProps {
+interface ReefTableProps
+  extends ReefTableIncomingProps,
+    WithStyles<typeof styles> {}
+
+interface ReefTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
   isDrawerOpen: boolean;
 }
 
-export default ReefTable;
+export default withStyles(styles)(ReefTable);
