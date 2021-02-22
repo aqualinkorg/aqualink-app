@@ -21,6 +21,15 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
+const numberedIcon = (id: number) =>
+  L.divIcon({
+    className: "leaflet-numbered-marker",
+    iconSize: [36, 40.5],
+    iconAnchor: [10, 30],
+    popupAnchor: [0, -41],
+    html: `<span class="leaflet-numbered-marker-text">${id}</span>`,
+  });
+
 const Map = ({ reef, classes }: MapProps) => {
   const history = useHistory();
   const points = reef.surveyPoints;
@@ -49,7 +58,7 @@ const Map = ({ reef, classes }: MapProps) => {
             onclick={() =>
               history.push(`/reefs/${reef.id}/points/${points[index].id}`)
             }
-            icon={pinIcon}
+            icon={numberedIcon(points[index].id)}
             position={[point[0], point[1]]}
           />
         ))}
