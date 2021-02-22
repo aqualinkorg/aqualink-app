@@ -38,8 +38,8 @@ const Map = ({ reef, classes }: MapProps) => {
 
   // TODO: Replace these with the actual survey points locations
   const randomPoints = points.map(() => [
-    lat + Math.random(),
-    lng + Math.random(),
+    lat + Math.random() / 100,
+    lng + Math.random() / 100,
   ]);
 
   return (
@@ -48,7 +48,7 @@ const Map = ({ reef, classes }: MapProps) => {
         zoomControl={false}
         className={classes.map}
         center={[lat, lng]}
-        zoom={8}
+        zoom={13}
       >
         <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
         <Marker icon={pinIcon} position={[lat, lng]} />
