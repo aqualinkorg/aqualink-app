@@ -914,7 +914,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     class="MuiContainer-root MuiContainer-maxWidthLg"
   />
   <mock-box
-    classname="SurveyHistory-timelineWrapper-47"
+    classname="SurveyHistory-timelineWrapper-46"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -933,7 +933,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-58"
+        class="SurveyTimeline-root-57"
       >
         <mock-hidden
           mddown="true"
@@ -953,7 +953,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-64"
+    classname="Footer-appBar-63"
     position="static"
   >
     <mock-toolbar>
@@ -964,7 +964,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-65"
+            classname="Footer-navBarLink-64"
             href="/map"
           >
             <mock-typography

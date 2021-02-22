@@ -102,11 +102,6 @@ const styles = () =>
     chartWrapper: {
       marginBottom: 50,
     },
-    chart: {
-      height: 300,
-      marginBottom: "3rem",
-      marginTop: "1rem",
-    },
   });
 
 interface ChartWithCardIncomingProps {
