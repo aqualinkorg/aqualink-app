@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
   Container,
   Grid,
   withStyles,
   WithStyles,
   createStyles,
-  Typography,
-  CircularProgress,
 } from "@material-ui/core";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 
-import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
+import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
-import DatePicker from "../../../../common/Datepicker";
 import {
   reefSpotterDataRequest,
   reefSpotterDataSelector,
-  reefSpotterDataLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../../store/Reefs/types";
-import {
-  setTimeZone,
-  subtractFromDate,
-  convertDailyDataToLocalTime,
-  convertSpotterDataToLocalTime,
-} from "../../../../helpers/dates";
+import { setTimeZone, subtractFromDate } from "../../../../helpers/dates";
 
-const Chart = ({ reef, classes }: ChartProps) => {
+const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
   const dispatch = useDispatch();
   const spotterData = useSelector(reefSpotterDataSelector);
   const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
@@ -41,13 +31,6 @@ const Chart = ({ reef, classes }: ChartProps) => {
       "week"
     )
   );
-
-  const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
-  const hasSpotterDataSuccess =
-    !isSpotterDataLoading &&
-    spotterData &&
-    spotterData.bottomTemperature.length > 1;
-  const hasSpotterDataErrored = !isSpotterDataLoading && !hasSpotterDataSuccess;
 
   // Get spotter data
   useEffect(() => {
@@ -84,94 +67,22 @@ const Chart = ({ reef, classes }: ChartProps) => {
       {hasSpotterData && (
         <Grid className={classes.chartWrapper} container item spacing={2}>
           <Grid item xs={12} md={9}>
-            <Box ml="50px">
-              <Typography variant="h6" color="textSecondary">
-                TEMPERATURE
-              </Typography>
-            </Box>
-            {isSpotterDataLoading && (
-              <Box
-                height="240px"
-                mt="32px"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <CircularProgress size="120px" thickness={1} />
-              </Box>
-            )}
-            {hasSpotterDataSuccess && (
-              <Box>
-                <ChartWithTooltip
-                  className={classes.chart}
-                  reefId={reef.id}
-                  depth={reef.depth}
-                  dailyData={convertDailyDataToLocalTime(
-                    reef.dailyData,
-                    reef.timezone
-                  )}
-                  spotterData={convertSpotterDataToLocalTime(
-                    spotterData || {
-                      bottomTemperature: [],
-                      surfaceTemperature: [],
-                    },
-                    reef.timezone
-                  )}
-                  surveys={[]}
-                  temperatureThreshold={null}
-                  maxMonthlyMean={null}
-                  background
-                  chartPeriod={
-                    spotterData && spotterData.bottomTemperature.length > 0
-                      ? "day"
-                      : "week"
-                  }
-                  timeZone={reef.timezone}
-                />
-              </Box>
-            )}
-            {hasSpotterDataErrored && (
-              <Box height="240px" mt="32px">
-                <Typography>
-                  No Smart Buoy data available in this time range.
-                </Typography>
-              </Box>
-            )}
-            <Grid container justify="center">
-              <Grid item xs={11} container justify="space-between" spacing={1}>
-                <Grid item>
-                  <DatePicker
-                    value={pickerStartDate}
-                    dateName="START DATE"
-                    nameVariant="subtitle1"
-                    pickerSize="small"
-                    maxDate={new Date(pickerEndDate)}
-                    onChange={(date) =>
-                      setPickerStartDate(
-                        new Date(
-                          moment(date).format("MM/DD/YYYY")
-                        ).toISOString()
-                      )
-                    }
-                  />
-                </Grid>
-                <Grid item>
-                  <DatePicker
-                    value={pickerEndDate}
-                    dateName="END DATE"
-                    nameVariant="subtitle1"
-                    pickerSize="small"
-                    onChange={(date) =>
-                      setPickerEndDate(
-                        new Date(
-                          moment(date).format("MM/DD/YYYY")
-                        ).toISOString()
-                      )
-                    }
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
+            <Chart
+              reef={reef}
+              spotterData={spotterData}
+              pickerStartDate={pickerStartDate}
+              pickerEndDate={pickerEndDate}
+              onStartDateChange={(date) =>
+                setPickerStartDate(
+                  new Date(moment(date).format("MM/DD/YYYY")).toISOString()
+                )
+              }
+              onEndDateChange={(date) =>
+                setPickerEndDate(
+                  new Date(moment(date).format("MM/DD/YYYY")).toISOString()
+                )
+              }
+            />
           </Grid>
           <Grid item xs={12} md={3}>
             <Grid container justify="center">
@@ -198,10 +109,11 @@ const styles = () =>
     },
   });
 
-interface ChartIncomingProps {
+interface ChartWithCardIncomingProps {
   reef: Reef;
 }
 
-type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;
+type ChartWithCardProps = ChartWithCardIncomingProps &
+  WithStyles<typeof styles>;
 
-export default withStyles(styles)(Chart);
+export default withStyles(styles)(ChartWithCard);
