@@ -2,21 +2,15 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  Validate,
-  MaxLength,
   IsInt,
-  IsUrl,
   IsLatitude,
   IsLongitude,
+  IsDateString,
 } from 'class-validator';
-import { EntityExists } from '../../validations/entity-exists.constraint';
-import { User } from '../../users/users.entity';
-import { VideoStream } from '../video-streams.entity';
 
 export class CreateReefDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(100)
   readonly name: string;
 
   @IsLatitude()
@@ -26,22 +20,26 @@ export class CreateReefDto {
   readonly longitude: number;
 
   @IsInt()
-  readonly temperatureThreshold: number;
-
-  @IsInt()
   readonly depth: number;
+}
+
+export class CreateReefApplicationDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  readonly permitRequirements?: string;
 
   @IsOptional()
-  @IsUrl()
-  readonly videoStream: string;
+  @IsString()
+  @IsNotEmpty()
+  readonly fundingSource?: string;
 
   @IsOptional()
-  @IsInt({ each: true })
-  @Validate(EntityExists, [User], { each: true })
-  readonly admins?: User[];
+  @IsDateString()
+  readonly installationSchedule?: Date;
 
   @IsOptional()
-  @IsInt()
-  @Validate(EntityExists, [VideoStream])
-  readonly stream?: VideoStream;
+  @IsString()
+  @IsNotEmpty()
+  readonly installationResources?: string;
 }
