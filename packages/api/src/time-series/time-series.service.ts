@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import _, { chunk, groupBy, omit } from 'lodash';
+import _, { chunk, groupBy, minBy, omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import unzipper from 'unzipper';
@@ -25,6 +25,8 @@ import {
   Observations,
   SurveyMedia,
 } from '../surveys/survey-media.entity';
+import { Sources, SourceType } from '../reefs/sources.entity';
+import { backfillReefData } from '../workers/backfill-reef-data';
 
 interface Coords {
   reef: number;
@@ -35,7 +37,7 @@ interface Coords {
 
 interface Data {
   id: number;
-  timestamp: Date;
+  dateTime: Date;
   bottomTemperature: number;
 }
 
@@ -69,6 +71,9 @@ export class TimeSeriesService {
 
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository: Repository<SurveyMedia>,
+
+    @InjectRepository(Sources)
+    private sourcesRepository: Repository<Sources>,
 
     private googleCloudService: GoogleCloudService,
   ) {}
@@ -285,33 +290,71 @@ export class TimeSeriesService {
     this.logger.log('Saving reef points of interest');
     const poiEntities = await this.poiRepository.save(pois);
 
-    const parsedData = poiEntities
-      .map((poi) => {
-        const colonyId = poi.name.split(' ')[1].padStart(3, '0');
-        const dataFile = COLONY_DATA_FILE.replace('{}', colonyId);
-        const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-        const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
-        const filePath = path.join(
-          rootPath,
-          reefFolder,
-          colonyFolder,
-          dataFile,
-        );
-        const headers = ['id', 'dateTime', 'bottomTemperature'];
-        return this.parseXLSX<Data>(filePath, headers).map((data) => ({
-          ...data,
-          timestamp: moment(data.timestamp).add(8, 'h').toDate(),
-          reef: poi.reef,
-          poi,
-        }));
-      })
-      .flat();
+    const sources = poiEntities.map((poi) => {
+      return {
+        reef: poi.reef,
+        poi,
+        type: SourceType.HOBO,
+      };
+    });
 
-    const bottomTemperatureData = parsedData.map((data) => ({
+    this.logger.log('Saving sources');
+    const sourceEntities = await this.sourcesRepository.save(sources);
+    const poiToSourceMap = Object.fromEntries(
+      sourceEntities.map((source) => {
+        return [source.poi.id, source];
+      }),
+    );
+
+    const parsedData = poiEntities.map((poi) => {
+      const colonyId = poi.name.split(' ')[1].padStart(3, '0');
+      const dataFile = COLONY_DATA_FILE.replace('{}', colonyId);
+      const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
+      const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
+      const filePath = path.join(rootPath, reefFolder, colonyFolder, dataFile);
+      const headers = ['id', 'dateTime', 'bottomTemperature'];
+      return this.parseXLSX<Data>(filePath, headers).map((data) => ({
+        ...data,
+        timestamp: moment(data.dateTime).add(8, 'h').toDate(),
+        reef: poi.reef,
+        poi,
+        source: poiToSourceMap[poi.id],
+      }));
+    });
+
+    const startDates = parsedData.reduce((acc, data) => {
+      const minimum = minBy(data, (o) => o.timestamp);
+
+      if (!minimum) {
+        return acc;
+      }
+
+      return acc.concat([minimum]);
+    }, []);
+
+    const groupedStartedDates = groupBy(startDates, (o) => o.reef.id);
+
+    Object.keys(groupedStartedDates).forEach((reefId) => {
+      const startDate = minBy(groupedStartedDates[reefId], (o) => o.timestamp);
+      if (!startDate) {
+        return;
+      }
+
+      const start = moment(startDate.timestamp);
+      const end = moment();
+      const diff = end.diff(start, 'd');
+      this.logger.log(
+        `Performing backfill for reef ${startDate.reef.id} for ${diff} days`,
+      );
+      backfillReefData(startDate.reef.id, diff);
+    });
+
+    const bottomTemperatureData = parsedData.flat().map((data) => ({
       timestamp: data.timestamp,
       value: data.bottomTemperature,
       reef: data.reef,
       poi: data.poi,
+      source: data.source,
       metric: Metric.BOTTOM_TEMPERATURE,
     }));
 

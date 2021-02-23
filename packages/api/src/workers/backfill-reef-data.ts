@@ -27,8 +27,8 @@ async function run(reefId: number, days: number) {
   });
 }
 
-export const backfillReefData = (reefId: number) => {
+export const backfillReefData = (reefId: number, days: number = 90) => {
   logger.log(`Starting backfill data for reef ${reefId}`);
-  run(reefId, 90);
+  run(reefId, days);
   logger.log(`Finished backfill data for reef ${reefId}`);
 };
