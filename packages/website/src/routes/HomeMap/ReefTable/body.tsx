@@ -6,6 +6,8 @@ import {
   TableRow,
   Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -110,6 +112,9 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
+
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
     dispatch(setSearchResult());
@@ -121,12 +126,14 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
     setSelectedRow(index);
   }, [reefOnMap, reefsList]);
 
+  // scroll to the relevant reef row when reef is selected.
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
-    if (child) {
+    // only scroll if not on mobile (info at the top is more useful than the reef row)
+    if (child && !isMobile) {
       child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [selectedRow]);
+  }, [isMobile, selectedRow]);
 
   return (
     <TableBody>

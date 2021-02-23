@@ -28,7 +28,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
           class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-sm-6"
         >
           <mock-reeftable
-            opendrawer="false"
+            isdraweropen="false"
           />
         </div>
       </mock-hidden>
@@ -61,7 +61,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                     role="presentation"
                   >
                     <mock-reeftable
-                      opendrawer="false"
+                      isdraweropen="false"
                     />
                   </div>
                 </div>
