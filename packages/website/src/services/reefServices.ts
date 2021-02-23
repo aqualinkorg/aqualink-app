@@ -80,7 +80,7 @@ const registerReef = (
   };
 
   return requests.send<ReefRegisterResponseData>({
-    url: "reef-applications",
+    url: "reefs",
     method: "POST",
     data,
     token,

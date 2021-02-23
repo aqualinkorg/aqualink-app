@@ -1,4 +1,8 @@
-import { calculateDegreeHeatingDays, getMMM } from './temperature';
+import {
+  calculateDegreeHeatingDays,
+  getMMM,
+  getMonthlyMaximums,
+} from './temperature';
 
 // Mock functions
 function getSeaSurfaceTemperatures(reefID: number) {
@@ -32,4 +36,24 @@ test('Get MMM as expected.', async () => {
   await getMMM(0, 0).then((data) => expect(data).toEqual(28.95));
   await getMMM(-89.9, -10).then((data) => expect(data).toEqual(26.55));
   await getMMM(-108.0, -53.1).then((data) => expect(data).toEqual(7.94));
+});
+
+test('Get MonthlyMaximums as expected.', async () => {
+  jest.setTimeout(60000);
+  await getMonthlyMaximums(0, 0).then((data) =>
+    expect(data).toEqual([
+      { month: 1, temperature: 27.65 },
+      { month: 2, temperature: 28.24 },
+      { month: 3, temperature: 28.68 },
+      { month: 4, temperature: 28.95 },
+      { month: 5, temperature: 28.06 },
+      { month: 6, temperature: 25.83 },
+      { month: 7, temperature: 25.06 },
+      { month: 8, temperature: 24.82 },
+      { month: 9, temperature: 25.44 },
+      { month: 10, temperature: 26.25 },
+      { month: 11, temperature: 26.7 },
+      { month: 12, temperature: 27.03 },
+    ]),
+  );
 });
