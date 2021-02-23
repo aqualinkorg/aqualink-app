@@ -13,13 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
+  reefHoboDataRequest,
   reefSpotterDataRequest,
   reefSpotterDataSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
-import { Reef } from "../../../../store/Reefs/types";
+import { Metrics, Reef } from "../../../../store/Reefs/types";
 import { setTimeZone, subtractFromDate } from "../../../../helpers/dates";
 
-const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
+const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const dispatch = useDispatch();
   const spotterData = useSelector(reefSpotterDataSelector);
   const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
@@ -45,6 +46,16 @@ const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
       reef.timezone
     ) as string;
 
+    dispatch(
+      reefHoboDataRequest({
+        reefId: `${reef.id}`,
+        pointId,
+        start: reefLocalStartDate,
+        end: reefLocalEndDate,
+        metrics: [Metrics.bottomTemperature],
+      })
+    );
+
     if (hasSpotterData) {
       dispatch(
         reefSpotterDataRequest({
@@ -59,6 +70,7 @@ const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
     hasSpotterData,
     pickerEndDate,
     pickerStartDate,
+    pointId,
     reef.id,
     reef.timezone,
   ]);
@@ -115,6 +127,7 @@ const styles = (theme: Theme) =>
 
 interface ChartWithCardIncomingProps {
   reef: Reef;
+  pointId: string;
 }
 
 type ChartWithCardProps = ChartWithCardIncomingProps &

@@ -13,6 +13,8 @@ import {
   DeploySpotterParams,
   MaintainSpotterParams,
   ExclusionDateResponse,
+  Metrics,
+  HoboDataResponse,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -36,6 +38,18 @@ const getReefLiveData = (id: string) =>
 const getReefSpotterData = (id: string, startDate: string, endDate: string) =>
   requests.send<SelectedReefState["spotterData"]>({
     url: `reefs/${id}/spotter_data?endDate=${endDate}&startDate=${startDate}`,
+    method: "GET",
+  });
+
+const getReefHoboData = (
+  reefId: string,
+  pointId: string,
+  start: string,
+  end: string,
+  metrics: Metrics[]
+) =>
+  requests.send<HoboDataResponse>({
+    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}`,
     method: "GET",
   });
 
@@ -152,6 +166,7 @@ export default {
   getReefDailyData,
   getReefLiveData,
   getReefSpotterData,
+  getReefHoboData,
   getReefPois,
   deleteReefPoi,
   registerReef,

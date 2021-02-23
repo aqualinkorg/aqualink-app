@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import type { TableRow } from "../Homepage/types";
-import type { Reef } from "./types";
+import type { HoboData, HoboDataResponse, Reef } from "./types";
+import { Metrics } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
 export function getReefNameAndRegion(reef: Reef) {
@@ -36,4 +37,39 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       alertLevel: weeklyAlertLevel || null,
     };
   });
+};
+
+export const mapHoboData = (hoboData: HoboDataResponse): HoboData => {
+  return {
+    alert:
+      hoboData[Metrics.alert]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+    bottomTemperature:
+      hoboData[Metrics.bottomTemperature]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+    dhw:
+      hoboData[Metrics.dhw]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+    satelliteTemperature:
+      hoboData[Metrics.satelliteTemperature]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+    sstAnomaly:
+      hoboData[Metrics.sstAnomaly]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+    surfaceTemperature:
+      hoboData[Metrics.surfaceTemperature]?.map(({ value, timestamp }) => ({
+        value,
+        timestamp,
+      })) || [],
+  };
 };

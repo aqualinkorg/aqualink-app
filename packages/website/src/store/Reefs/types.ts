@@ -99,6 +99,32 @@ interface Region {
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
+export enum Metrics {
+  alert = "alert",
+  dhw = "dhw",
+  satelliteTemperature = "satellite_temperature",
+  surfaceTemperature = "surface_temperature",
+  bottomTemperature = "bottom_temperature",
+  sstAnomaly = "sst_anomaly",
+}
+
+export type HoboDataResponse = {
+  [key in Metrics]?: {
+    metric: key;
+    value: number;
+    timestamp: string;
+  }[];
+};
+
+export interface HoboData {
+  alert: SofarValue[];
+  dhw: SofarValue[];
+  satelliteTemperature: SofarValue[];
+  surfaceTemperature: SofarValue[];
+  bottomTemperature: SofarValue[];
+  sstAnomaly: SofarValue[];
+}
+
 export interface SpotterData {
   surfaceTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
@@ -129,6 +155,14 @@ export interface SpotterDataRequestParams {
   id: string;
   startDate: string;
   endDate: string;
+}
+
+export interface HoboDataRequestParams {
+  reefId: string;
+  pointId: string;
+  start: string;
+  end: string;
+  metrics: Metrics[];
 }
 
 export interface ReefRegisterResponseData {
@@ -183,6 +217,8 @@ export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
   spotterData?: SpotterData | null;
+  hoboData?: HoboData;
+  hoboDataLoading: boolean;
   spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;

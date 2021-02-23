@@ -54,7 +54,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
         <>
           <BackButton reefId={id} />
           <InfoCard reef={reef} pointId={pointIdNumber} />
-          <ChartWithCard reef={reef} />
+          <ChartWithCard reef={reef} pointId={pointId} />
           <SurveyHistory reef={reef} pointId={pointIdNumber} />
           <Footer />
         </>
