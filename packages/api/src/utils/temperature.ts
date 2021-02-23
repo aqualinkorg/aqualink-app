@@ -1,29 +1,9 @@
 import * as GeoTIFF from 'geotiff';
 import { pointToPixel } from './coordinates';
 
-const MMMFileUrl =
-  'https://storage.googleapis.com/reef_climatology/sst_clim_mmm.tiff';
+const MonthlyMaxRoot = 'https://storage.googleapis.com/reef_climatology/';
 
-/**
- * Corals start to become stressed when the SST is 1°C warmer than the maxiumum monthly mean temperature (MMM).
- * The MMM is the highest temperature out of the monthly mean temperatures over the year (warmest summer month)
- * 1°C above the MMM is called the "bleaching threshhold"
- * When the SST is warmer than the bleaching threshold temperature, the corals will experience heat stress. This heat stress is the main cause of mass coral bleaching.
- * The HotSpot highlights the areas where the SST is above the MMM.
- * The DHW shows how much heat stress has accumulated in an area over the past 12 weeks (3 months). The units for DHW are "degree C-weeks"
- * The DHW adds up the Coral Bleaching HotSpot values whenever the temperature exceeds the bleaching threshold.
- * Bleaching Alerts:
- *      No Stress (no heat stress or bleaching is present): HotSpot of less than or equal to 0.
- *      Bleaching Watch (low-level heat stress is present): HotSpot greater than 0 but less than 1; SST below bleaching threshhold.
- *      Bleaching Warning (heat stress is accumulating, possible coral bleaching): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than 0 but less than 4.
- *      Bleaching Alert Level 1 (significant bleaching likely): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than or equal to 4 but less than 8.
- *      Bleaching Alert Level 2 (severe bleaching and significant mortality likely): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than or equal to 8.
- *
- * DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
- * */
-
-export async function getMMM(long: number, lat: number) {
-  const tiff = await GeoTIFF.fromUrl(MMMFileUrl);
+async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();
 
   const gdalNoData = image.getGDALNoData();
@@ -48,6 +28,58 @@ export async function getMMM(long: number, lat: number) {
   );
 
   return filteredData[0][0] ? filteredData[0][0] / 100 : undefined;
+}
+
+/**
+ * Corals start to become stressed when the SST is 1°C warmer than the maxiumum monthly mean temperature (MMM).
+ * The MMM is the highest temperature out of the monthly mean temperatures over the year (warmest summer month)
+ * 1°C above the MMM is called the "bleaching threshhold"
+ * When the SST is warmer than the bleaching threshold temperature, the corals will experience heat stress. This heat stress is the main cause of mass coral bleaching.
+ * The HotSpot highlights the areas where the SST is above the MMM.
+ * The DHW shows how much heat stress has accumulated in an area over the past 12 weeks (3 months). The units for DHW are "degree C-weeks"
+ * The DHW adds up the Coral Bleaching HotSpot values whenever the temperature exceeds the bleaching threshold.
+ * Bleaching Alerts:
+ *      No Stress (no heat stress or bleaching is present): HotSpot of less than or equal to 0.
+ *      Bleaching Watch (low-level heat stress is present): HotSpot greater than 0 but less than 1; SST below bleaching threshhold.
+ *      Bleaching Warning (heat stress is accumulating, possible coral bleaching): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than 0 but less than 4.
+ *      Bleaching Alert Level 1 (significant bleaching likely): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than or equal to 4 but less than 8.
+ *      Bleaching Alert Level 2 (severe bleaching and significant mortality likely): HotSpot of 1 or greater; SST above bleaching threshold; DHW greater than or equal to 8.
+ *
+ * DHW = (1/7)*sum[1->84](HS(i) if HS(i) >= 1C)
+ * */
+
+export async function getMMM(long: number, lat: number) {
+  const tiff = await GeoTIFF.fromUrl(`${MonthlyMaxRoot}sst_clim_mmm.tiff`);
+  return getValueFromTiff(tiff, long, lat);
+}
+
+export async function getMonthlyMaximums(long: number, lat: number) {
+  const MonthlyMaxMapping = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december',
+  ];
+
+  return Promise.all(
+    MonthlyMaxMapping.map(async (month, index) => {
+      const tiff = await GeoTIFF.fromUrl(
+        `${MonthlyMaxRoot}sst_clim_${month}.tiff`,
+      );
+      return {
+        month: index + 1,
+        temperature: await getValueFromTiff(tiff, long, lat),
+      };
+    }),
+  );
 }
 
 /**

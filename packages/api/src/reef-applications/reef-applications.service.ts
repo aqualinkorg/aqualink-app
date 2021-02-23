@@ -3,23 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReefApplication } from './reef-applications.entity';
 import {
-  CreateReefApplicationDto,
-  CreateReefWithApplicationDto,
-} from './dto/create-reef-application.dto';
-import {
   UpdateReefApplicationDto,
   UpdateReefWithApplicationDto,
 } from './dto/update-reef-application.dto';
 import { Reef } from '../reefs/reefs.entity';
-import { Region } from '../regions/regions.entity';
-import {
-  getRegion,
-  getTimezones,
-  handleDuplicateReef,
-} from '../utils/reef.utils';
-import { getMMM } from '../utils/temperature';
-import { AdminLevel, User } from '../users/users.entity';
-import { backfillReefData } from '../workers/backfill-reef-data';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -29,65 +16,7 @@ export class ReefApplicationsService {
     private reefApplicationRepository: Repository<ReefApplication>,
     @InjectRepository(Reef)
     private reefRepository: Repository<Reef>,
-    @InjectRepository(Region)
-    private regionRepository: Repository<Region>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
-
-  async create(
-    appParams: CreateReefApplicationDto,
-    reefParams: CreateReefWithApplicationDto,
-    user: User,
-  ): Promise<ReefApplication> {
-    const { longitude, latitude, depth, name } = reefParams;
-    const region = await getRegion(longitude, latitude, this.regionRepository);
-    const maxMonthlyMean = await getMMM(longitude, latitude);
-    const timezones = getTimezones(latitude, longitude) as string[];
-
-    const reef = await this.reefRepository
-      .save({
-        name,
-        depth,
-        polygon: {
-          type: 'Point',
-          coordinates: [longitude, latitude],
-        },
-        maxMonthlyMean,
-        timezone: timezones[0],
-        approved: false,
-        region,
-      })
-      .catch(handleDuplicateReef);
-
-    // Elevate user to ReefManager
-    if (user.adminLevel === AdminLevel.Default) {
-      await this.userRepository.update(user.id, {
-        adminLevel: AdminLevel.ReefManager,
-      });
-    }
-
-    // Add reef ownership to user
-    await this.userRepository
-      .createQueryBuilder('users')
-      .relation('administeredReefs')
-      .of(user)
-      .add(reef);
-
-    if (!maxMonthlyMean) {
-      this.logger.warn(
-        `Max Monthly Mean appears to be null for Reef ${reef.id} at (lat, lon): (${latitude}, ${longitude}) `,
-      );
-    }
-
-    backfillReefData(reef.id);
-
-    return this.reefApplicationRepository.save({
-      ...appParams,
-      reef,
-      user,
-    });
-  }
 
   async findOneFromReef(reefId: number): Promise<ReefApplication> {
     const application = await this.reefApplicationRepository.findOne({

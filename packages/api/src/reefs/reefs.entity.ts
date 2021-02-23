@@ -18,6 +18,7 @@ import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { MonthlyMax } from './monthly-max.entity';
 
 export enum ReefStatus {
   InReview = 'in_review',
@@ -97,6 +98,9 @@ export class Reef {
 
   @OneToOne(() => ReefApplication, (reefApplication) => reefApplication.reef)
   reefApplication?: ReefApplication;
+
+  @OneToMany(() => MonthlyMax, (monthlyMax) => monthlyMax.reef)
+  monthlyMax: MonthlyMax[];
 
   @Expose()
   get applied(): boolean {

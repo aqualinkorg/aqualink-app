@@ -8,11 +8,22 @@ import { EntityExists } from '../validations/entity-exists.constraint';
 import { AuthModule } from '../auth/auth.module';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from './exclusion-dates.entity';
+import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { User } from '../users/users.entity';
+import { MonthlyMax } from './monthly-max.entity';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([Reef, DailyData, Region, ExclusionDates]),
+    TypeOrmModule.forFeature([
+      Reef,
+      ReefApplication,
+      DailyData,
+      Region,
+      ExclusionDates,
+      MonthlyMax,
+      User,
+    ]),
   ],
   controllers: [ReefsController],
   providers: [ReefsService, EntityExists],
