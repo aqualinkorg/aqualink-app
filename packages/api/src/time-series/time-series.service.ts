@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import _, { chunk, groupBy, minBy, omit } from 'lodash';
+import _, { chunk, groupBy, keyBy, minBy, omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import unzipper from 'unzipper';
@@ -222,6 +222,7 @@ export class TimeSeriesService {
 
     // Group by reef
     const recordsGroupedByReef = groupBy(dataAsJson, 'reef');
+    // Extract reef entities and calculate position of reef by averaging all each pois positions
     const reefs = Array.from(reefIds).map((reefId) => {
       const filteredReefCoords = recordsGroupedByReef[reefId];
 
@@ -252,16 +253,20 @@ export class TimeSeriesService {
 
     this.logger.log('Saving reefs');
     const reefEntities = await this.reefRepository.save(reefs);
+    // Create reverse map (db.reef.id => xlsx.reef_id)
     const dbIdToXLSXId = Object.fromEntries(
       reefEntities.map((reef) => {
         return [reef.id, aliasesToId[reef.name]];
       }),
     );
+    // Update administered reefs relationship
     await this.userRepository.save({
       id: user.id,
       administeredReefs: user.administeredReefs.concat(reefEntities),
     });
 
+    // Create reef points of interest entities for each imported reef
+    // Final result needs to be flattened since the resulting array is grouped by reef
     const pois = reefEntities
       .map((reef) => {
         const currentReefId = dbIdToXLSXId[reef.id];
@@ -290,6 +295,7 @@ export class TimeSeriesService {
     this.logger.log('Saving reef points of interest');
     const poiEntities = await this.poiRepository.save(pois);
 
+    // Create sources for each new poi
     const sources = poiEntities.map((poi) => {
       return {
         reef: poi.reef,
@@ -300,12 +306,11 @@ export class TimeSeriesService {
 
     this.logger.log('Saving sources');
     const sourceEntities = await this.sourcesRepository.save(sources);
-    const poiToSourceMap = Object.fromEntries(
-      sourceEntities.map((source) => {
-        return [source.poi.id, source];
-      }),
-    );
 
+    // Map pois to created sources
+    const poiToSourceMap = keyBy(sourceEntities, (o) => o.poi.id);
+
+    // Parse hobo data
     const parsedData = poiEntities.map((poi) => {
       const colonyId = poi.name.split(' ')[1].padStart(3, '0');
       const dataFile = COLONY_DATA_FILE.replace('{}', colonyId);
@@ -322,6 +327,7 @@ export class TimeSeriesService {
       }));
     });
 
+    // Find the earliest date of data
     const startDates = parsedData.reduce((acc, data) => {
       const minimum = minBy(data, (o) => o.timestamp);
 
@@ -334,6 +340,7 @@ export class TimeSeriesService {
 
     const groupedStartedDates = groupBy(startDates, (o) => o.reef.id);
 
+    // Start a backfill for each reef
     Object.keys(groupedStartedDates).forEach((reefId) => {
       const startDate = minBy(groupedStartedDates[reefId], (o) => o.timestamp);
       if (!startDate) {
@@ -349,6 +356,7 @@ export class TimeSeriesService {
       backfillReefData(startDate.reef.id, diff);
     });
 
+    // Grabs bottom temperature data
     const bottomTemperatureData = parsedData.flat().map((data) => ({
       timestamp: data.timestamp,
       value: data.bottomTemperature,
@@ -369,6 +377,7 @@ export class TimeSeriesService {
       this.logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
 
+    // Find and images and extract their metadata
     const imageData = poiEntities
       .map((poi) => {
         const colonyId = poi.name.split(' ')[1].padStart(3, '0');
@@ -399,40 +408,30 @@ export class TimeSeriesService {
       })
       .flat();
 
-    const surveys = imageData.map((image) => ({
-      reef: image.reef,
-      userId: user,
-      diveDate: image.createdDate,
-      weatherConditions: WeatherConditions.NoData,
-    }));
-
-    this.logger.log('Saving surveys');
-    const surveyEntities = await this.surveyRepository.save(surveys);
-
     this.logger.log('Upload photos to google cloud');
     const imageLength = imageData.length;
-    const uploadedImageData = await Bluebird.Promise.each(
+    const surveyMedia = await Bluebird.Promise.each(
       imageData.map((image) =>
         this.googleCloudService
           .uploadFile(image.imagePath, 'image')
-          .then((url) => {
-            const foundSurvey = surveyEntities.find((survey) => {
-              return (
-                survey.reef.id === image.reef.id &&
-                survey.diveDate.getTime() === image.createdDate.getTime()
-              );
-            });
+          .then(async (url) => {
+            const survey = {
+              reef: image.reef,
+              userId: user,
+              diveDate: image.createdDate,
+              weatherConditions: WeatherConditions.NoData,
+            };
 
-            if (!foundSurvey) {
-              this.logger.error(
-                `Could not match photo ${image.imagePath} to any survey`,
-              );
-            }
-
+            const surveyEntity = await this.surveyRepository.save(survey);
             return {
-              ...image,
               url,
-              survey: foundSurvey,
+              featured: true,
+              hidden: false,
+              type: MediaType.Image,
+              poiId: image.poi,
+              surveyId: surveyEntity,
+              metadata: JSON.stringify({}),
+              observations: Observations.NoData,
             };
           }),
       ),
@@ -441,19 +440,6 @@ export class TimeSeriesService {
         return data;
       },
     );
-
-    const surveyMedia = uploadedImageData
-      .filter((image) => image.survey)
-      .map((image) => ({
-        url: image.url,
-        featured: true,
-        hidden: false,
-        type: MediaType.Image,
-        poiId: image.poi,
-        survey: image.survey,
-        metadata: JSON.stringify({}),
-        observations: Observations.NoData,
-      }));
 
     this.logger.log('Saving survey media');
     await this.surveyMediaRepository.save(surveyMedia);

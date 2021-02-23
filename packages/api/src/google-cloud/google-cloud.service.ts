@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import path from 'path';
 import { SurveyMedia } from '../surveys/survey-media.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
+import { getRandomName } from '../uploads/file.decorator';
 
 @Injectable()
 export class GoogleCloudService {
@@ -39,13 +40,11 @@ export class GoogleCloudService {
       );
       throw new InternalServerErrorException();
     }
-    const ext = path.extname(filePath);
-    const basename = path.basename(filePath).replace(ext, '');
-    const randomString = Array(16)
-      .fill(null)
-      .map(() => Math.round(Math.random() * 15).toString(16))
-      .join('');
-    const destination = `${this.STORAGE_FOLDER}/surveys/${basename}-${type}-${randomString}`;
+    const folder = `${this.STORAGE_FOLDER}/surveys/`;
+    const prefix = 'reef_hobo_image';
+    const basename = path.basename(filePath);
+    const destination = getRandomName(folder, prefix, basename, type);
+
     const response = await this.storage
       .bucket(this.GCS_BUCKET)
       .upload(filePath, {
@@ -53,14 +52,10 @@ export class GoogleCloudService {
         public: true,
         gzip: true,
       });
-    const publicUrl = response[0].baseUrl;
 
-    if (!publicUrl) {
-      this.logger.error('Google cloud did not return any url');
-      return '';
-    }
+    const publicUrl = response[0].name;
 
-    return publicUrl;
+    return `https://storage.googleapis.com/${this.GCS_BUCKET}/${publicUrl}`;
   }
 
   public async findDanglingFiles(): Promise<string[]> {

@@ -1,5 +1,13 @@
 /** Worker to process daily data for all reefs. */
-import { isEmpty, isNil, isNull, isNumber, isUndefined, mapValues, omit, omitBy } from 'lodash';
+import {
+  isEmpty,
+  isNil,
+  isNumber,
+  isUndefined,
+  mapValues,
+  omit,
+  omitBy,
+} from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
