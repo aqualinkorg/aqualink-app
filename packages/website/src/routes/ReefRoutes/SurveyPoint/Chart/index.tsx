@@ -87,7 +87,7 @@ const ChartWithCard = ({ reef, classes }: ChartWithCardProps) => {
           </Grid>
           <Grid item xs={12} md={3}>
             <Grid container justify="center">
-              <Grid item xs={11} sm={5} md={12}>
+              <Grid item xs={11} sm={5} md={11} lg={10}>
                 <TempAnalysis
                   startDate={pickerStartDate}
                   endDate={pickerEndDate}
