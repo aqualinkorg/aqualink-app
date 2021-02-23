@@ -13,6 +13,7 @@ import {
   WithStyles,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import classNames from "classnames";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
@@ -25,14 +26,17 @@ import { useWindowSize } from "../../../helpers/useWindowSize";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isSuperAdmin } from "../../../helpers/user";
 import {
+  reefOnMapSelector,
   setWithSpotterOnly,
   withSpotterOnlySelector,
 } from "../../../store/Homepage/homepageSlice";
+import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 
 const SMALL_HEIGHT = 720;
 
-const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
+const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
+  const reefOnMap = useSelector(reefOnMapSelector);
   const user = useSelector(userInfoSelector);
   const withSpotterOnly = useSelector(withSpotterOnlySelector);
   const dispatch = useDispatch();
@@ -71,14 +75,18 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
           marginTop={2}
           marginBottom={3}
         >
-          <Box className={classes.topHandle} />
-          {!openDrawer && (
+          <Box
+            className={classNames(classes.topHandle, {
+              [classes.bounce]: !!reefOnMap && !isDrawerOpen,
+            })}
+          />
+          {!isDrawerOpen && (
             <Typography
               className={classes.allReefsText}
               variant="h5"
               color="textSecondary"
             >
-              All Reefs
+              {reefOnMap ? getReefNameAndRegion(reefOnMap).name : "All Reefs"}
             </Typography>
           )}
         </Box>
@@ -133,7 +141,6 @@ const ReefTable = ({ openDrawer, classes }: ReefTableProps) => {
     </>
   );
 };
-
 const styles = (theme: Theme) =>
   createStyles({
     tableHolder: {
@@ -163,16 +170,29 @@ const styles = (theme: Theme) =>
       backgroundColor: theme.palette.grey["400"],
       borderRadius: "20px",
     },
+    bounce: { animation: "$bounce 1s infinite alternate" },
     allReefsText: {
       position: "absolute",
       left: 25,
+      top: 25,
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      maxWidth: "90vw",
+    },
+    "@keyframes bounce": {
+      "0%": { transform: "translateY(0px)" },
+      "100%": { transform: "translateY(-5px)" },
     },
   });
 
-interface ReefTableIncomingProps {
-  openDrawer: boolean;
-}
+interface ReefTableProps
+  extends ReefTableIncomingProps,
+    WithStyles<typeof styles> {}
 
-type ReefTableProps = ReefTableIncomingProps & WithStyles<typeof styles>;
+interface ReefTableIncomingProps {
+  // used on mobile to add descriptive elements if the drawer is closed.
+  isDrawerOpen: boolean;
+}
 
 export default withStyles(styles)(ReefTable);
