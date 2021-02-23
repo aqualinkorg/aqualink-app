@@ -169,7 +169,7 @@ export class ReefsService {
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
-      relations: ['region', 'admins', 'stream'],
+      relations: ['region', 'admins', 'stream', 'monthlyMax'],
     });
 
     if (!found) {
