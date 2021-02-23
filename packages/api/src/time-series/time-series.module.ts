@@ -12,6 +12,7 @@ import { Metrics } from './metrics.entity';
 import { TimeSeriesController } from './time-series.controller';
 import { TimeSeries } from './time-series.entity';
 import { TimeSeriesService } from './time-series.service';
+import { Sources } from '../reefs/sources.entity';
 
 @Module({
   controllers: [TimeSeriesController],
@@ -25,6 +26,7 @@ import { TimeSeriesService } from './time-series.service';
       User,
       Survey,
       SurveyMedia,
+      Sources,
     ]),
     GoogleCloudModule,
   ],

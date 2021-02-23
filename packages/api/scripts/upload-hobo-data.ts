@@ -12,6 +12,7 @@ import { User } from '../src/users/users.entity';
 import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
+import { Sources } from '../src/reefs/sources.entity';
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
@@ -82,6 +83,7 @@ async function run() {
     connection.getRepository(User),
     connection.getRepository(Survey),
     connection.getRepository(SurveyMedia),
+    connection.getRepository(Sources),
     googleCloudService,
   );
 
