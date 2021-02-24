@@ -8,6 +8,7 @@ import {
   createStyles,
   CircularProgress,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { useSelector } from "react-redux";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
@@ -81,9 +82,11 @@ const Chart = ({
       )}
       {hasSpotterDataErrored && (
         <Box height="240px" mt="32px">
-          <Typography>
-            No Smart Buoy data available in this time range.
-          </Typography>
+          <Alert severity="warning">
+            <Typography>
+              No Smart Buoy or HOBO data available in this time range.
+            </Typography>
+          </Alert>
         </Box>
       )}
       <Grid container justify="center">

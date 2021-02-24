@@ -9,6 +9,7 @@ import {
   withStyles,
   WithStyles,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { useSelector } from "react-redux";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
@@ -109,9 +110,11 @@ const CombinedCharts = ({
           )}
           {hasSpotterDataErrored && (
             <Box mt="2rem">
-              <Typography>
-                No Smart Buoy data available in this time range.
-              </Typography>
+              <Alert severity="warning">
+                <Typography>
+                  No Smart Buoy data available in this time range.
+                </Typography>
+              </Alert>
             </Box>
           )}
         </>

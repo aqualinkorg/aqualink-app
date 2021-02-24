@@ -77,40 +77,38 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
 
   return (
     <Container>
-      {hasSpotterData && (
-        <Grid className={classes.chartWrapper} container item spacing={2}>
-          <Grid item xs={12} md={9}>
-            <Chart
-              reef={reef}
-              spotterData={spotterData}
-              pickerStartDate={pickerStartDate}
-              pickerEndDate={pickerEndDate}
-              onStartDateChange={(date) =>
-                setPickerStartDate(
-                  new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-                )
-              }
-              onEndDateChange={(date) =>
-                setPickerEndDate(
-                  new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-                )
-              }
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Grid container justify="center">
-              <Grid item xs={11} sm={5} md={11} lg={10}>
-                <TempAnalysis
-                  startDate={pickerStartDate}
-                  endDate={pickerEndDate}
-                  depth={reef.depth}
-                  spotterData={spotterData}
-                />
-              </Grid>
+      <Grid className={classes.chartWrapper} container item spacing={2}>
+        <Grid item xs={12} md={9}>
+          <Chart
+            reef={reef}
+            spotterData={spotterData}
+            pickerStartDate={pickerStartDate}
+            pickerEndDate={pickerEndDate}
+            onStartDateChange={(date) =>
+              setPickerStartDate(
+                new Date(moment(date).format("MM/DD/YYYY")).toISOString()
+              )
+            }
+            onEndDateChange={(date) =>
+              setPickerEndDate(
+                new Date(moment(date).format("MM/DD/YYYY")).toISOString()
+              )
+            }
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Grid container justify="center">
+            <Grid item xs={11} sm={5} md={11} lg={10}>
+              <TempAnalysis
+                startDate={pickerStartDate}
+                endDate={pickerEndDate}
+                depth={reef.depth}
+                spotterData={spotterData}
+              />
             </Grid>
           </Grid>
         </Grid>
-      )}
+      </Grid>
     </Container>
   );
 };

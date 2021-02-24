@@ -84,7 +84,7 @@ export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
     const diff = date.getTime() - localTime.getTime();
     return new Date(date.getTime() + diff).toISOString();
   }
-  return date;
+  return date?.toISOString() || null;
 };
 
 export const getTimeZoneName = (timeZone: string): string => {
