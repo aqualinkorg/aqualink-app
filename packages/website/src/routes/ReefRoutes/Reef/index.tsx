@@ -40,7 +40,7 @@ import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import {
   subtractFromDate,
-  findMaxDate,
+  findMarginalDate,
   findChartPeriod,
   setTimeZone,
 } from "../../../helpers/dates";
@@ -175,7 +175,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   // update the end date once spotter data changes. Happens when `range` is changed.
   useEffect(() => {
     if (dailyData && spotterData) {
-      const maxDataDate = new Date(findMaxDate(dailyData, spotterData));
+      const maxDataDate = new Date(findMarginalDate(dailyData, spotterData));
       const reefLocalEndDate = new Date(
         setTimeZone(
           new Date(moment(pickerDate).format("MM/DD/YYYY")),

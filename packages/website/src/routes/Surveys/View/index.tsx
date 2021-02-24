@@ -37,7 +37,7 @@ import {
 import {
   subtractFromDate,
   findChartPeriod,
-  findMaxDate,
+  findMarginalDate,
   displayTimeInLocalTimezone,
   convertDailyDataToLocalTime,
   convertSurveyDataToLocalTime,
@@ -99,7 +99,9 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
 
   useEffect(() => {
     if (reef.dailyData && spotterData && pickerDate) {
-      const maxDataDate = new Date(findMaxDate(reef.dailyData, spotterData));
+      const maxDataDate = new Date(
+        findMarginalDate(reef.dailyData, spotterData)
+      );
       if (maxDataDate.getTime() > new Date(pickerDate).getTime()) {
         setEndDate(pickerDate);
       } else {

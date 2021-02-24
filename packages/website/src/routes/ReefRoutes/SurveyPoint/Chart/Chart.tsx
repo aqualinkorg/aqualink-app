@@ -16,25 +16,36 @@ import DatePicker from "../../../../common/Datepicker";
 import {
   convertDailyDataToLocalTime,
   convertSpotterDataToLocalTime,
+  convertToLocalTime,
 } from "../../../../helpers/dates";
-import { Reef, SpotterData } from "../../../../store/Reefs/types";
-import { reefSpotterDataLoadingSelector } from "../../../../store/Reefs/selectedReefSlice";
+import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
+import {
+  reefHoboDataLoadingSelector,
+  reefSpotterDataLoadingSelector,
+} from "../../../../store/Reefs/selectedReefSlice";
 
 const Chart = ({
   reef,
   spotterData,
+  hoboBottomTemperature,
   pickerStartDate,
   pickerEndDate,
+  startDate,
+  endDate,
   onStartDateChange,
   onEndDateChange,
   classes,
 }: ChartProps) => {
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
+  const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+  const loading = isSpotterDataLoading || isHoboDataLoading;
   const hasSpotterDataSuccess =
     !isSpotterDataLoading &&
     spotterData &&
     spotterData.bottomTemperature.length > 1;
   const hasSpotterDataErrored = !isSpotterDataLoading && !hasSpotterDataSuccess;
+
+  console.warn(hoboBottomTemperature);
 
   return (
     <>
@@ -43,7 +54,7 @@ const Chart = ({
           TEMPERATURE
         </Typography>
       </Box>
-      {isSpotterDataLoading && (
+      {loading && (
         <Box
           height="240px"
           mt="32px"
@@ -77,6 +88,8 @@ const Chart = ({
             background
             chartPeriod="day"
             timeZone={reef.timezone}
+            startDate={convertToLocalTime(startDate, reef.timezone)}
+            endDate={convertToLocalTime(endDate, reef.timezone)}
           />
         </Box>
       )}
@@ -128,8 +141,11 @@ const styles = () =>
 interface ChartIncomingProps {
   reef: Reef;
   spotterData: SpotterData | null | undefined;
+  hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;
   pickerEndDate: string;
+  startDate: string;
+  endDate: string;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }

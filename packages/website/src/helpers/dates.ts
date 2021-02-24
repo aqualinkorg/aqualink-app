@@ -50,9 +50,10 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
   }
 };
 
-export const findMaxDate = (
+export const findMarginalDate = (
   dailyData: DailyData[],
-  spotterData: SpotterData
+  spotterData: SpotterData,
+  type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
     ...dailyData,
@@ -62,7 +63,11 @@ export const findMaxDate = (
     })),
   ];
 
-  const sortedData = sortByDate(combinedData, "date", "desc");
+  const sortedData = sortByDate(
+    combinedData,
+    "date",
+    type === "max" ? "desc" : "asc"
+  );
 
   return sortedData[0].date;
 };

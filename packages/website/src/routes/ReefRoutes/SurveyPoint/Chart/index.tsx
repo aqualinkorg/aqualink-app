@@ -14,15 +14,22 @@ import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
   reefHoboDataRequest,
+  reefHoboDataSelector,
   reefSpotterDataRequest,
   reefSpotterDataSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { Metrics, Reef } from "../../../../store/Reefs/types";
-import { setTimeZone, subtractFromDate } from "../../../../helpers/dates";
+import {
+  findMarginalDate,
+  setTimeZone,
+  subtractFromDate,
+} from "../../../../helpers/dates";
 
 const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const dispatch = useDispatch();
   const spotterData = useSelector(reefSpotterDataSelector);
+  const { bottomTemperature: hoboBottomTemperature } =
+    useSelector(reefHoboDataSelector) || {};
   const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
   const [pickerEndDate, setPickerEndDate] = useState<string>(
     new Date(moment().format("MM/DD/YYYY")).toISOString()
@@ -33,6 +40,8 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
       "week"
     )
   );
+  const [endDate, setEndDate] = useState<string>();
+  const [startDate, setStartDate] = useState<string>();
 
   // Get spotter data
   useEffect(() => {
@@ -75,6 +84,41 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
     reef.timezone,
   ]);
 
+  useEffect(() => {
+    if (reef.dailyData && spotterData) {
+      const maxDataDate = new Date(
+        findMarginalDate(reef.dailyData, spotterData)
+      );
+      const minDataDate = new Date(
+        findMarginalDate(reef.dailyData, spotterData, "min")
+      );
+      const reefLocalEndDate = new Date(
+        setTimeZone(
+          new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
+          reef?.timezone
+        ) as string
+      );
+      const reefLocalStartDate = new Date(
+        setTimeZone(
+          new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
+          reef?.timezone
+        ) as string
+      );
+
+      if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
+        setEndDate(reefLocalEndDate.toISOString());
+      } else {
+        setEndDate(maxDataDate.toISOString());
+      }
+
+      if (minDataDate.getTime() > reefLocalStartDate.getTime()) {
+        setStartDate(minDataDate.toISOString());
+      } else {
+        setStartDate(reefLocalStartDate.toISOString());
+      }
+    }
+  }, [pickerEndDate, pickerStartDate, reef, spotterData]);
+
   return (
     <Container>
       <Grid className={classes.chartWrapper} container item spacing={2}>
@@ -82,8 +126,11 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
           <Chart
             reef={reef}
             spotterData={spotterData}
+            hoboBottomTemperature={hoboBottomTemperature}
             pickerStartDate={pickerStartDate}
             pickerEndDate={pickerEndDate}
+            startDate={startDate || pickerStartDate}
+            endDate={endDate || pickerEndDate}
             onStartDateChange={(date) =>
               setPickerStartDate(
                 new Date(moment(date).format("MM/DD/YYYY")).toISOString()

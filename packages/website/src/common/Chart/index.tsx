@@ -200,7 +200,7 @@ function Chart({
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: xAxisMin,
+              min: startDate || xAxisMin,
               max: endDate || xAxisMax,
               padding: 10,
               callback: (value: number, index: number, values: string[]) =>
@@ -252,9 +252,9 @@ function Chart({
         tempWithSurvey,
         // Extend surface temperature line to the chart extremities.
         [
-          { x: xAxisMin, y: surfaceTemperatureData[0]?.y },
+          { x: startDate || xAxisMin, y: surfaceTemperatureData[0]?.y },
           ...surfaceTemperatureData,
-          { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+          { x: endDate || xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
         ],
         bottomTemperatureData,
         selectedSurvey?.diveDate
