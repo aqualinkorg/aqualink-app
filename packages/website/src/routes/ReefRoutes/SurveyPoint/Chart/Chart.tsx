@@ -84,7 +84,7 @@ const Chart = ({
               },
               reef.timezone
             )}
-            hoboData={convertHoboDataToLocalTime(
+            hoboBottomTemperature={convertHoboDataToLocalTime(
               hoboBottomTemperature || [],
               reef.timezone
             )}

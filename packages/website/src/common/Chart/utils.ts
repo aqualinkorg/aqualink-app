@@ -99,7 +99,7 @@ export const createDatasets = (
   dailyData: DailyData[],
   rawSpotterBottom: SpotterData["bottomTemperature"],
   rawSpotterSurface: SpotterData["surfaceTemperature"],
-  rawHoboData: SofarValue[],
+  rawHoboBottom: SofarValue[],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData
@@ -125,7 +125,7 @@ export const createDatasets = (
     y: item.value,
   }));
 
-  const hoboData = rawHoboData.map((item) => ({
+  const hoboBottomTemperatureData = rawHoboBottom.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -152,7 +152,7 @@ export const createDatasets = (
     surfaceTemperatureData: surfaceTemperature,
     spotterBottom,
     spotterSurface,
-    hoboData,
+    hoboBottomTemperatureData,
   };
 };
 
@@ -190,7 +190,7 @@ export const calculateAxisLimits = (
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
-    hoboData,
+    hoboBottomTemperatureData,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
@@ -204,7 +204,7 @@ export const calculateAxisLimits = (
     ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterSurface,
-    ...hoboData,
+    ...hoboBottomTemperatureData,
   ]
     .filter((value) => value)
     .map((value) => value.y);
@@ -236,7 +236,7 @@ export const calculateAxisLimits = (
 export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
-  hoboData: ChartProps["hoboData"],
+  hoboBottomTemperature: ChartProps["hoboBottomTemperature"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
   startDate: ChartProps["startDate"],
@@ -255,7 +255,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
-    hoboData || [],
+    hoboBottomTemperature || [],
     surveys
   );
 
@@ -263,7 +263,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
-    hoboData || [],
+    hoboBottomTemperature || [],
     surveys,
     temperatureThreshold
   );

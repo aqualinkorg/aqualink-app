@@ -25,7 +25,7 @@ export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
   spotterData?: SpotterData | null;
-  hoboData?: SofarValue[];
+  hoboBottomTemperature?: SofarValue[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -69,7 +69,7 @@ const makeAnnotation = (
 function Chart({
   dailyData,
   spotterData,
-  hoboData,
+  hoboBottomTemperature,
   surveys,
   timeZone,
   startDate,
@@ -107,11 +107,11 @@ function Chart({
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
-    hoboData: hoboBottom,
+    hoboBottomTemperatureData,
   } = useProcessedChartData(
     dailyData,
     spotterData,
-    hoboData,
+    hoboBottomTemperature,
     surveys,
     temperatureThreshold,
     startDate,
@@ -257,7 +257,7 @@ function Chart({
       data={createChartData(
         spotterBottom,
         spotterSurface,
-        hoboBottom,
+        hoboBottomTemperatureData,
         tempWithSurvey,
         // Extend surface temperature line to the chart extremities.
         [

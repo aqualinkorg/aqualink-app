@@ -1000,7 +1000,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       inputprops="[object Object]"
                       name="datePicker"
                       size="small"
-                      value="02/17/2021"
+                      value="02/18/2021"
                       variant="standard"
                     />
                     <mock-dialog
@@ -1391,7 +1391,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1406,7 +1406,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1500,7 +1500,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1515,8 +1515,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
+                                      classname="MuiPickersDay-day MuiPickersDay-current"
+                                      tabindex="0"
                                     >
                                       <mock-typography
                                         color="inherit"
@@ -1721,7 +1721,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       inputprops="[object Object]"
                       name="datePicker"
                       size="small"
-                      value="02/24/2021"
+                      value="02/25/2021"
                       variant="standard"
                     />
                     <mock-dialog
@@ -2221,7 +2221,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -2236,8 +2236,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      tabindex="0"
                                     >
                                       <mock-typography
                                         color="inherit"
@@ -2441,9 +2441,9 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 classname="TempAnalysis-dates-51"
                 variant="subtitle2"
               >
-                02/17/2021
+                02/18/2021
                  - 
-                02/24/2021
+                02/25/2021
               </mock-typography>
               <div
                 class="MuiGrid-root TempAnalysis-metricsWrapper-53 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
