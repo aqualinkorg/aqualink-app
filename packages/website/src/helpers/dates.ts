@@ -1,5 +1,10 @@
 import moment from "moment-timezone";
-import { DailyData, Range, SpotterData } from "../store/Reefs/types";
+import {
+  DailyData,
+  Range,
+  SofarValue,
+  SpotterData,
+} from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
@@ -179,6 +184,15 @@ export const convertSpotterDataToLocalTime = (
     timestamp: convertToLocalTime(item.timestamp, timeZone),
   })),
 });
+
+export const convertHoboDataToLocalTime = (
+  hoboData: SofarValue[],
+  timeZone?: string | null
+): SofarValue[] =>
+  hoboData.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  }));
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],

@@ -8,7 +8,11 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { mergeWith } from "lodash";
-import type { DailyData, SpotterData } from "../../store/Reefs/types";
+import type {
+  DailyData,
+  SofarValue,
+  SpotterData,
+} from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
 import { createChartData, useProcessedChartData } from "./utils";
@@ -21,6 +25,7 @@ export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
   spotterData?: SpotterData | null;
+  hoboData?: SofarValue[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -64,6 +69,7 @@ const makeAnnotation = (
 function Chart({
   dailyData,
   spotterData,
+  hoboData,
   surveys,
   timeZone,
   startDate,
@@ -101,9 +107,11 @@ function Chart({
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
+    hoboData: hoboBottom,
   } = useProcessedChartData(
     dailyData,
     spotterData,
+    hoboData,
     surveys,
     temperatureThreshold,
     startDate,
@@ -249,6 +257,7 @@ function Chart({
       data={createChartData(
         spotterBottom,
         spotterSurface,
+        hoboBottom,
         tempWithSurvey,
         // Extend surface temperature line to the chart extremities.
         [

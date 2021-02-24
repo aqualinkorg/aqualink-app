@@ -99,6 +99,7 @@ export const createDatasets = (
   dailyData: DailyData[],
   rawSpotterBottom: SpotterData["bottomTemperature"],
   rawSpotterSurface: SpotterData["surfaceTemperature"],
+  rawHoboData: SofarValue[],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData
@@ -120,6 +121,11 @@ export const createDatasets = (
   }));
 
   const spotterSurface = rawSpotterSurface.map((item) => ({
+    x: item.timestamp,
+    y: item.value,
+  }));
+
+  const hoboData = rawHoboData.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -146,6 +152,7 @@ export const createDatasets = (
     surfaceTemperatureData: surfaceTemperature,
     spotterBottom,
     spotterSurface,
+    hoboData,
   };
 };
 
@@ -153,6 +160,7 @@ export const calculateAxisLimits = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
   spotterSurfaceTemperature: SofarValue[],
+  hoboTemperatureData: SofarValue[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
@@ -182,10 +190,12 @@ export const calculateAxisLimits = (
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
+    hoboData,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
     spotterSurfaceTemperature,
+    hoboTemperatureData,
     surveys
   );
 
@@ -194,6 +204,7 @@ export const calculateAxisLimits = (
     ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterSurface,
+    ...hoboData,
   ]
     .filter((value) => value)
     .map((value) => value.y);
@@ -225,6 +236,7 @@ export const calculateAxisLimits = (
 export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
+  hoboData: ChartProps["hoboData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
   startDate: ChartProps["startDate"],
@@ -243,6 +255,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
+    hoboData || [],
     surveys
   );
 
@@ -250,6 +263,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
+    hoboData || [],
     surveys,
     temperatureThreshold
   );
@@ -308,6 +322,7 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
 export const createChartData = (
   spotterBottom: ChartPoint[],
   spotterSurface: ChartPoint[],
+  hoboBottom: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
@@ -330,7 +345,7 @@ export const createChartData = (
       {
         label: "SURFACE TEMP",
         data: surfaceTemps,
-        fill: !displaySpotterData,
+        fill: !displaySpotterData && hoboBottom.length === 0,
         borderColor: "#6bc1e1",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
@@ -346,6 +361,17 @@ export const createChartData = (
             ? bottomTemps
             : undefined,
         borderColor: "#46a5cf",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "HOBO BOTTOM",
+        data: hoboBottom,
+        fill: false,
+        borderColor: "#f78c21",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
         pointBorderWidth: 1.5,

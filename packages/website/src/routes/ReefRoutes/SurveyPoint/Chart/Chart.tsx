@@ -15,6 +15,7 @@ import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 import DatePicker from "../../../../common/Datepicker";
 import {
   convertDailyDataToLocalTime,
+  convertHoboDataToLocalTime,
   convertSpotterDataToLocalTime,
   convertToLocalTime,
 } from "../../../../helpers/dates";
@@ -38,14 +39,15 @@ const Chart = ({
 }: ChartProps) => {
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
-  const loading = isSpotterDataLoading || isHoboDataLoading;
-  const hasSpotterDataSuccess =
-    !isSpotterDataLoading &&
-    spotterData &&
-    spotterData.bottomTemperature.length > 1;
-  const hasSpotterDataErrored = !isSpotterDataLoading && !hasSpotterDataSuccess;
 
-  console.warn(hoboBottomTemperature);
+  const hasSpotterData =
+    spotterData && spotterData.bottomTemperature.length > 1;
+
+  const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
+
+  const loading = isSpotterDataLoading || isHoboDataLoading;
+  const success = !loading && (hasHoboData || hasSpotterData);
+  const error = !loading && !success;
 
   return (
     <>
@@ -65,7 +67,7 @@ const Chart = ({
           <CircularProgress size="120px" thickness={1} />
         </Box>
       )}
-      {hasSpotterDataSuccess && (
+      {success && (
         <Box>
           <ChartWithTooltip
             className={classes.chart}
@@ -82,6 +84,10 @@ const Chart = ({
               },
               reef.timezone
             )}
+            hoboData={convertHoboDataToLocalTime(
+              hoboBottomTemperature || [],
+              reef.timezone
+            )}
             surveys={[]}
             temperatureThreshold={null}
             maxMonthlyMean={null}
@@ -93,7 +99,7 @@ const Chart = ({
           />
         </Box>
       )}
-      {hasSpotterDataErrored && (
+      {error && (
         <Box height="240px" mt="32px">
           <Alert severity="warning">
             <Typography>
