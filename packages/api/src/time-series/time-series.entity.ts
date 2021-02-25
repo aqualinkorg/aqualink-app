@@ -28,7 +28,7 @@ export class TimeSeries {
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   poi: ReefPointOfInterest;
 
-  @ManyToOne(() => Metrics, { onDelete: 'SET NULL', nullable: true })
+  @ManyToOne(() => Metrics, { onDelete: 'CASCADE', nullable: false })
   metric: Metrics;
 
   @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })

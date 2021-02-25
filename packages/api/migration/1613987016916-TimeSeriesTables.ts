@@ -20,7 +20,17 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
       `CREATE TABLE "metrics" ("id" SERIAL NOT NULL, "metric" "metrics_metric_enum" NOT NULL, "description" character varying NOT NULL, "units" "metrics_units_enum" NOT NULL, CONSTRAINT "PK_5283cad666a83376e28a715bf0e" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "time_series" ("id" SERIAL NOT NULL, "timestamp" TIMESTAMP NOT NULL, "value" double precision NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "reef_id" integer, "poi_id" integer, "metric_id" integer, "source_id" integer, CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "time_series" (
+        "id" SERIAL NOT NULL,
+        "timestamp" TIMESTAMP NOT NULL,
+        "value" double precision NOT NULL,
+        "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+        "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+        "reef_id" integer, "poi_id" integer,
+        "metric_id" integer NOT NULL,
+        "source_id" integer,
+        CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id")
+      )`,
     );
     await queryRunner.query(
       `ALTER TABLE "sources" ADD CONSTRAINT "FK_fc8de60fc92ac93f41a52ad01b7" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -35,7 +45,7 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_97235131108c5dfd9a68150ff8e" FOREIGN KEY ("poi_id") REFERENCES "reef_point_of_interest"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
+      `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_fb5d7b75a674607b65fa78d5c92" FOREIGN KEY ("source_id") REFERENCES "sources"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
