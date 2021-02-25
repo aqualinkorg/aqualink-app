@@ -160,6 +160,8 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
                 endDate={pickerEndDate}
                 depth={reef.depth}
                 spotterData={spotterData}
+                dailyData={reef.dailyData}
+                hoboBottomTemperature={hoboBottomTemperature || []}
               />
             </Grid>
           </Grid>

@@ -13,17 +13,25 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 
 import { reefSpotterDataLoadingSelector } from "../../../../store/Reefs/selectedReefSlice";
-import { SpotterData } from "../../../../store/Reefs/types";
+import {
+  DailyData,
+  SofarValue,
+  SpotterData,
+} from "../../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
+import { filterDailyData } from "../../../../common/Chart/utils";
 
 const TempAnalysis = ({
   startDate,
   endDate,
   depth,
   spotterData,
+  dailyData,
+  hoboBottomTemperature,
   classes,
 }: TempAnalysisProps) => {
   const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
+  const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
   const {
     maxSurface,
     meanSurface,
@@ -31,9 +39,16 @@ const TempAnalysis = ({
     maxBottom,
     meanBottom,
     minBottom,
-  } = calculateCardMetrics(spotterData);
+  } = calculateCardMetrics(
+    filteredDailyData,
+    spotterData,
+    hoboBottomTemperature
+  );
   const formattedStartDate = moment(startDate).format("MM/DD/YYYY");
   const formattedEndDate = moment(endDate).format("MM/DD/YYYY");
+  const hasHoboData = hoboBottomTemperature.length > 0;
+  const hasSpotterData =
+    spotterData && spotterData.bottomTemperature.length > 0;
 
   return (
     <Card className={classes.tempAnalysisCard}>
@@ -129,7 +144,7 @@ const TempAnalysis = ({
               <Grid container direction="column" item spacing={3}>
                 <Grid item>
                   <Typography className={classes.buoyText} variant="subtitle2">
-                    BUOY {depth}m
+                    {hasSpotterData && !hasHoboData ? `BUOY ${depth}m` : "HOBO"}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -207,6 +222,8 @@ interface TempAnalysisIncomingProps {
   endDate: string;
   depth: number | null;
   spotterData: SpotterData | null | undefined;
+  dailyData: DailyData[];
+  hoboBottomTemperature: SofarValue[];
 }
 
 type TempAnalysisProps = TempAnalysisIncomingProps & WithStyles<typeof styles>;

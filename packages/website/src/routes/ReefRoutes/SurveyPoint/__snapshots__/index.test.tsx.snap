@@ -2510,6 +2510,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
@@ -2521,6 +2522,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
@@ -2532,6 +2534,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
@@ -2550,9 +2553,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         classname="TempAnalysis-buoyText-56"
                         variant="subtitle2"
                       >
-                        BUOY 
-                        0
-                        m
+                        HOBO
                       </mock-typography>
                     </div>
                     <div
@@ -2563,6 +2564,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
@@ -2574,6 +2576,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
@@ -2585,6 +2588,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         color="textSecondary"
                         variant="h5"
                       >
+                        --
                          °C
                       </mock-typography>
                     </div>
