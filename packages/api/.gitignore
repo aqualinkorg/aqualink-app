@@ -11,6 +11,7 @@
 
 # Import data
 /scripts/application_data/*
+/data/*
 
 # Database
 /db_data/
