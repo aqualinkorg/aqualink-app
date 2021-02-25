@@ -23,7 +23,7 @@ const InfoCard = ({ reef, pointId, classes }: InfoCardProps) => {
             <Card elevation={3}>
               <Grid container justify="space-between">
                 <Info reef={reef} pointId={pointId} />
-                <Map reef={reef} />
+                <Map reef={reef} selectedPointId={pointId} />
               </Grid>
             </Card>
           </Grid>

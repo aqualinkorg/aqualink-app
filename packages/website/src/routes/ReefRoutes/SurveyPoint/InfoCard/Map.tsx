@@ -7,11 +7,11 @@ import {
   createStyles,
   Theme,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import L from "leaflet";
 import { Map as LeafletMap, TileLayer, Marker } from "react-leaflet";
-import { Reef } from "../../../../store/Reefs/types";
 
+import SurveyPointPopup from "../../../../common/SiteDetails/Map/SurveyPointPopup";
+import { Reef } from "../../../../store/Reefs/types";
 import marker from "../../../../assets/marker.png";
 
 const pinIcon = L.icon({
@@ -21,26 +21,19 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const numberedIcon = (id: number) =>
+const numberedIcon = (pointId: number, selected: boolean) =>
   L.divIcon({
-    className: "leaflet-numbered-marker",
+    className: `leaflet${selected ? "-selected" : ""}-numbered-marker`,
     iconSize: [36, 40.5],
-    iconAnchor: [10, 30],
-    popupAnchor: [0, -41],
-    html: `<span class="leaflet-numbered-marker-text">${id}</span>`,
+    iconAnchor: [18, 40.5],
+    popupAnchor: [0, -40.5],
+    html: `<span class="leaflet-numbered-marker-text">${pointId}</span>`,
   });
 
-const Map = ({ reef, classes }: MapProps) => {
-  const history = useHistory();
+const Map = ({ reef, selectedPointId, classes }: MapProps) => {
   const points = reef.surveyPoints;
   const [lng, lat] =
     reef.polygon.type === "Point" ? reef.polygon.coordinates : [0, 0];
-
-  // TODO: Replace these with the actual survey points locations
-  const randomPoints = points.map(() => [
-    lat + Math.random() / 100,
-    lng + Math.random() / 100,
-  ]);
 
   return (
     <Grid className={classes.mapWrapper} item xs={12} md={4}>
@@ -52,16 +45,18 @@ const Map = ({ reef, classes }: MapProps) => {
       >
         <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
         <Marker icon={pinIcon} position={[lat, lng]} />
-        {randomPoints.map((point, index) => (
-          <Marker
-            key={points[index].id}
-            onclick={() =>
-              history.push(`/reefs/${reef.id}/points/${points[index].id}`)
-            }
-            icon={numberedIcon(points[index].id)}
-            position={[point[0], point[1]]}
-          />
-        ))}
+        {points.map(
+          (point) =>
+            point.coordinates && (
+              <Marker
+                key={point.id}
+                icon={numberedIcon(point.id, selectedPointId === point.id)}
+                position={[point.coordinates[1], point.coordinates[0]]}
+              >
+                <SurveyPointPopup reefId={reef.id} point={point} />
+              </Marker>
+            )
+        )}
       </LeafletMap>
     </Grid>
   );
@@ -84,6 +79,7 @@ const styles = (theme: Theme) =>
 
 interface MapIncomingProps {
   reef: Reef;
+  selectedPointId: number;
 }
 
 type MapProps = MapIncomingProps & WithStyles<typeof styles>;

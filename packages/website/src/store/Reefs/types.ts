@@ -16,6 +16,7 @@ export interface Point {
 export interface Pois {
   id: number;
   name: string | null;
+  coordinates?: Position;
 }
 
 export interface SofarValue {

@@ -25,11 +25,10 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
     "any",
     pointId
   );
-  const { name: pointName } =
+  const { name: pointName, coordinates: pointCoordinates } =
     reef.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
-  const [lng, lat] =
-    reef.polygon.type === "Point" ? reef.polygon.coordinates : [];
+  const [lng, lat] = pointCoordinates || [];
   const nSurveys = surveys.length;
   const nImages = findImagesAtSurveyPoint(surveys, pointId);
   const lastSurveyed = displayTimeInLocalTimezone({

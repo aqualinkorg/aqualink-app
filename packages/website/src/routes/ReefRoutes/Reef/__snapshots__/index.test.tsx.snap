@@ -953,6 +953,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           >
             <mock-map
               polygon="[object Object]"
+              reefid="1"
+              surveypoints=""
             />
           </div>
         </div>
@@ -3420,6 +3422,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           >
             <mock-map
               polygon="[object Object]"
+              reefid="1"
+              surveypoints=""
             />
           </div>
         </div>

@@ -840,7 +840,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                           Hawaii
                         </mock-typography>
                       </div>
-                      0
                     </div>
                   </div>
                   <div
@@ -911,6 +910,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               </div>
               <mock-map
                 reef="[object Object]"
+                selectedpointid="1"
               />
             </div>
           </mock-card>

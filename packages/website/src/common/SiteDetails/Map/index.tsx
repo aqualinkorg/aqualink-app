@@ -5,7 +5,13 @@ import L from "leaflet";
 import "./plugins/leaflet-tilelayer-subpixel-fix";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import { Reef, Position, SpotterPosition } from "../../../store/Reefs/types";
+import SurveyPointPopup from "./SurveyPointPopup";
+import {
+  Reef,
+  Position,
+  SpotterPosition,
+  Pois,
+} from "../../../store/Reefs/types";
 import { mapBounds } from "../../../helpers/mapBounds";
 
 import marker from "../../../assets/marker.png";
@@ -31,7 +37,22 @@ const buoyIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
+const surveyPointIcon = (pointId: number) =>
+  L.divIcon({
+    className: "leaflet-numbered-marker",
+    iconSize: [36, 40.5],
+    iconAnchor: [18, 40.5],
+    popupAnchor: [0, -40.5],
+    html: `<span class="leaflet-numbered-marker-text">${pointId}</span>`,
+  });
+
+const ReefMap = ({
+  reefId,
+  spotterPosition,
+  polygon,
+  surveyPoints,
+  classes,
+}: ReefMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
@@ -81,7 +102,7 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
   return (
     <Map
       ref={mapRef}
-      zoom={12}
+      zoom={13}
       dragging
       scrollWheelZoom={false}
       className={classes.map}
@@ -90,16 +111,30 @@ const ReefMap = ({ spotterPosition, polygon, classes }: ReefMapProps) => {
       {polygon.type === "Polygon" ? (
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (
-        <Marker
-          ref={markerRef}
-          draggable={Boolean(draftReef)}
-          ondragend={handleDragChange}
-          icon={pinIcon}
-          position={[
-            draftReef?.coordinates?.latitude || polygon.coordinates[1],
-            draftReef?.coordinates?.longitude || polygon.coordinates[0],
-          ]}
-        />
+        <>
+          <Marker
+            ref={markerRef}
+            draggable={Boolean(draftReef)}
+            ondragend={handleDragChange}
+            icon={pinIcon}
+            position={[
+              draftReef?.coordinates?.latitude || polygon.coordinates[1],
+              draftReef?.coordinates?.longitude || polygon.coordinates[0],
+            ]}
+          />
+          {surveyPoints.map(
+            (point) =>
+              point.coordinates && (
+                <Marker
+                  key={point.id}
+                  icon={surveyPointIcon(point.id)}
+                  position={[point.coordinates[1], point.coordinates[0]]}
+                >
+                  <SurveyPointPopup reefId={reefId} point={point} />
+                </Marker>
+              )
+          )}
+        </>
       )}
       {!draftReef && spotterPosition && isManager(user) && (
         <Marker
@@ -125,8 +160,10 @@ const styles = () => {
 };
 
 interface ReefMapIncomingProps {
+  reefId: number;
   polygon: Reef["polygon"];
   spotterPosition?: SpotterPosition | null;
+  surveyPoints: Pois[];
 }
 
 ReefMap.defaultProps = {

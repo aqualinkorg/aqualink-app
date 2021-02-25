@@ -123,8 +123,10 @@ const SiteDetails = ({
           )}
           <div className={classes.container}>
             <Map
+              reefId={reef.id}
               spotterPosition={reef.liveData?.spotterPosition}
               polygon={reef.polygon}
+              surveyPoints={reef.surveyPoints}
             />
           </div>
         </Grid>
