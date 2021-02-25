@@ -1,6 +1,9 @@
 import moment from "moment-timezone";
+import { range as createRange } from "lodash";
+
 import {
   DailyData,
+  MonthlyMax,
   Range,
   SofarValue,
   SpotterData,
@@ -53,6 +56,37 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
     default:
       return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
+};
+
+// Return a copy of montly max data for each year
+export const generateMonthlyMaxTimestamps = (
+  monthlyMax: MonthlyMax[],
+  startDate: string,
+  endDate: string
+) => {
+  const startYear = new Date(startDate).getFullYear();
+  const endYear = new Date(endDate).getFullYear();
+
+  const years = createRange(startYear, endYear + 1);
+
+  const yearlyData = years.map((year) => {
+    return monthlyMax.map(({ month, temperature }) => ({
+      value: temperature,
+      date: moment()
+        .set({
+          year,
+          month: month - 1,
+          date: 15,
+          hour: 0,
+          minute: 0,
+          second: 0,
+          millisecond: 0,
+        })
+        .toISOString(),
+    }));
+  });
+
+  return yearlyData.reduce((curr, item) => [...curr, ...item], []);
 };
 
 export const findMarginalDate = (
