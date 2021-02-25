@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
 import type {
   HoboDataRequestParams,
@@ -35,6 +36,11 @@ export const reefRequest = createAsyncThunk<
       ...data,
       dailyData,
       liveData,
+      monthlyMax: sortBy(data.monthlyMax, (item) => item.month).map((item) => ({
+        id: item.id,
+        month: item.month,
+        temperature: item.temperature,
+      })),
       surveyPoints: surveyPoints.map((point) => ({
         id: point.id,
         name: point.name,

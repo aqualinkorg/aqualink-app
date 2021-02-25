@@ -130,6 +130,12 @@ export interface SpotterData {
   bottomTemperature: SofarValue[];
 }
 
+export interface MonthlyMax {
+  id: number;
+  month: number;
+  temperature: number;
+}
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -149,6 +155,7 @@ export interface Reef {
   spotterId: string | null;
   timezone?: string | null;
   surveyPoints: Pois[];
+  monthlyMax: MonthlyMax[];
 }
 
 export interface SpotterDataRequestParams {
