@@ -85,40 +85,48 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   ]);
 
   useEffect(() => {
-    const maxDataDate = new Date(
-      findMarginalDate(reef.dailyData, spotterData, hoboBottomTemperature)
-    );
-    const minDataDate = new Date(
-      findMarginalDate(
-        reef.dailyData,
-        spotterData,
-        hoboBottomTemperature,
-        "min"
-      )
-    );
-    const reefLocalEndDate = new Date(
-      setTimeZone(
-        new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
-        reef?.timezone
-      ) as string
-    );
-    const reefLocalStartDate = new Date(
-      setTimeZone(
-        new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
-        reef?.timezone
-      ) as string
-    );
+    if (
+      (spotterData && spotterData.bottomTemperature.length > 0) ||
+      (hoboBottomTemperature && hoboBottomTemperature.length > 0)
+    ) {
+      const maxDataDate = new Date(
+        findMarginalDate(reef.dailyData, spotterData, hoboBottomTemperature)
+      );
+      const minDataDate = new Date(
+        findMarginalDate(
+          reef.dailyData,
+          spotterData,
+          hoboBottomTemperature,
+          "min"
+        )
+      );
+      const reefLocalEndDate = new Date(
+        setTimeZone(
+          new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
+          reef?.timezone
+        ) as string
+      );
+      const reefLocalStartDate = new Date(
+        setTimeZone(
+          new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
+          reef?.timezone
+        ) as string
+      );
 
-    if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
-      setEndDate(reefLocalEndDate.toISOString());
-    } else {
-      setEndDate(maxDataDate.toISOString());
-    }
+      if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
+        setEndDate(reefLocalEndDate.toISOString());
+      } else {
+        setEndDate(maxDataDate.toISOString());
+      }
 
-    if (minDataDate.getTime() > reefLocalStartDate.getTime()) {
-      setStartDate(minDataDate.toISOString());
+      if (minDataDate.getTime() > reefLocalStartDate.getTime()) {
+        setStartDate(minDataDate.toISOString());
+      } else {
+        setStartDate(reefLocalStartDate.toISOString());
+      }
     } else {
-      setStartDate(reefLocalStartDate.toISOString());
+      setStartDate(undefined);
+      setEndDate(undefined);
     }
   }, [
     hoboBottomTemperature,

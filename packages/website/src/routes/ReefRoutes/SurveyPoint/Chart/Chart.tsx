@@ -24,6 +24,7 @@ import {
   reefHoboDataLoadingSelector,
   reefSpotterDataLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
+import { findChartPeriod, showYear } from "./helpers";
 
 const Chart = ({
   reef,
@@ -92,10 +93,11 @@ const Chart = ({
             temperatureThreshold={null}
             maxMonthlyMean={null}
             background
-            chartPeriod="day"
+            chartPeriod={findChartPeriod(startDate, endDate)}
             timeZone={reef.timezone}
             startDate={convertToLocalTime(startDate, reef.timezone)}
             endDate={convertToLocalTime(endDate, reef.timezone)}
+            showYear={showYear(startDate, endDate)}
           />
         </Box>
       )}
