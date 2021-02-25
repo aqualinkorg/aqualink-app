@@ -15,7 +15,11 @@ import type {
 } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
-import { createChartData, useProcessedChartData } from "./utils";
+import {
+  createChartData,
+  useProcessedChartData,
+  augmentSurfaceTemperature,
+} from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Reefs/types";
@@ -259,12 +263,13 @@ function Chart({
         spotterSurface,
         hoboBottomTemperatureData,
         tempWithSurvey,
-        // Extend surface temperature line to the chart extremities.
-        [
-          { x: startDate || xAxisMin, y: surfaceTemperatureData[0]?.y },
-          ...surfaceTemperatureData,
-          { x: endDate || xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
-        ],
+        augmentSurfaceTemperature(
+          surfaceTemperatureData,
+          xAxisMin,
+          xAxisMax,
+          startDate,
+          endDate
+        ),
         bottomTemperatureData,
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))

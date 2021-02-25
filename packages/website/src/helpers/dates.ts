@@ -57,15 +57,20 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
 
 export const findMarginalDate = (
   dailyData: DailyData[],
-  spotterData: SpotterData,
+  spotterData?: SpotterData | null,
+  hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
     ...dailyData,
-    ...spotterData.surfaceTemperature.map((item) => ({
+    ...(spotterData?.surfaceTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
-    })),
+    })) || []),
+    ...(hoboBottomTemperature?.map((item) => ({
+      date: item.timestamp,
+      value: item.value,
+    })) || []),
   ];
 
   const sortedData = sortByDate(

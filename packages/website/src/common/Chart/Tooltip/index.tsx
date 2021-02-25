@@ -57,10 +57,11 @@ const Tooltip = ({
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
+  hoboBottomTemp,
   surveyId,
   classes,
 }: TooltipProps) => {
-  const hourlyData = !isNull(spotterSurfaceTemp);
+  const hourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
     format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
@@ -80,6 +81,11 @@ const Tooltip = ({
       temperature: bottomTemperature,
       color: "rgba(250, 141, 0)",
       title: `BUOY ${depth}m`,
+    },
+    {
+      temperature: hoboBottomTemp,
+      color: "rgba(250, 141, 0)",
+      title: "HOBO LOGGER",
     },
   ];
 
@@ -169,7 +175,7 @@ const styles = () =>
       padding: "0rem 1rem 0rem 1rem",
     },
     tooltipContentItem: {
-      width: "120px",
+      width: "140px",
       height: 20,
       margin: "0",
     },
@@ -199,6 +205,7 @@ export interface TooltipData {
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
   surveyId?: number | null;
+  hoboBottomTemp: number | null;
   reefTimeZone?: string | null;
   userTimeZone?: string;
 }

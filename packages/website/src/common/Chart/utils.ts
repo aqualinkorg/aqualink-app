@@ -67,6 +67,27 @@ export const findSurveyFromDate = (
   );
 };
 
+// Extend surface temperature line to the chart extremities.
+export const augmentSurfaceTemperature = (
+  surfaceTemperatureData: {
+    x: string;
+    y: number;
+  }[],
+  xAxisMin: string,
+  xAxisMax: string,
+  startDate?: string,
+  endDate?: string
+) => {
+  if (surfaceTemperatureData.length > 0) {
+    return [
+      { x: startDate || xAxisMin, y: surfaceTemperatureData[0]?.y },
+      ...surfaceTemperatureData,
+      { x: endDate || xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+    ];
+  }
+  return surfaceTemperatureData;
+};
+
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
   return dailyData.reduce((prevClosest, nextPoint) =>
     timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)

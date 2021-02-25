@@ -13,6 +13,7 @@ import {
   getSpotterDataClosestToDate,
   findSurveyFromDate,
   sameDay,
+  filterDailyData,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -29,7 +30,16 @@ function ChartWithTooltip({
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const { dailyData, spotterData, reefId, surveys, timeZone } = rest;
+  const {
+    dailyData,
+    spotterData,
+    hoboBottomTemperature,
+    reefId,
+    surveys,
+    timeZone,
+    startDate,
+    endDate,
+  } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -40,6 +50,7 @@ function ChartWithTooltip({
     bottomTemperature: 0,
     spotterSurfaceTemp: null,
     surfaceTemperature: 0,
+    hoboBottomTemp: null,
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -57,10 +68,13 @@ function ChartWithTooltip({
 
     const surveyId = findSurveyFromDate(date, surveys);
 
+    const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
+
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
-      dailyData.filter((data) => sameDay(data.date, date))[0] ||
-      getDailyDataClosestToDate(dailyData, new Date(date)) ||
+      filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
+      (filteredDailyData.length > 0 &&
+        getDailyDataClosestToDate(filteredDailyData, new Date(date))) ||
       {};
     const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
 
@@ -81,12 +95,19 @@ function ChartWithTooltip({
         )?.value) ||
       null;
 
+    const hoboBottomTemp =
+      (hoboBottomTemperature &&
+        getSpotterDataClosestToDate(hoboBottomTemperature, new Date(date), 6)
+          ?.value) ||
+      null;
+
     const bottomTemperature = bottomTemp || avgBottomTemperature;
 
     const nValues = [
       satelliteTemperature,
       bottomTemperature,
       spotterSurfaceTemp,
+      hoboBottomTemp,
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
@@ -97,9 +118,12 @@ function ChartWithTooltip({
       ((surveyId ? 30 : 0) + nValues * 20 + 48);
 
     if (
-      [satelliteTemperature, bottomTemperature, spotterSurfaceTemp].some(
-        Boolean
-      )
+      [
+        satelliteTemperature,
+        bottomTemperature,
+        spotterSurfaceTemp,
+        hoboBottomTemp,
+      ].some(Boolean)
     ) {
       setTooltipPosition({ top, left });
       setTooltipData({
@@ -109,6 +133,7 @@ function ChartWithTooltip({
         bottomTemperature,
         spotterSurfaceTemp,
         surfaceTemperature: satelliteTemperature,
+        hoboBottomTemp,
         surveyId,
       });
       setShowTooltip(true);
