@@ -377,7 +377,7 @@ export class TimeSeriesService {
 
       const start = moment(startDate.timestamp);
       const end = moment();
-      const diff = end.diff(start, 'd');
+      const diff = Math.min(end.diff(start, 'd'), 200);
       this.logger.log(
         `Performing backfill for reef ${startDate.reef.id} for ${diff} days`,
       );
