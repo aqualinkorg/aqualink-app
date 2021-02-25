@@ -110,8 +110,7 @@ export enum Metrics {
 }
 
 export type HoboDataResponse = {
-  [key in Metrics]?: {
-    metric: key;
+  [key in Metrics]: {
     value: number;
     timestamp: string;
   }[];

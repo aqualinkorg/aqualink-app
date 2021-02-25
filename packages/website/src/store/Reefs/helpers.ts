@@ -41,35 +41,11 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
 export const mapHoboData = (hoboData: HoboDataResponse): HoboData => {
   return {
-    alert:
-      hoboData[Metrics.alert]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
-    bottomTemperature:
-      hoboData[Metrics.bottomTemperature]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
-    dhw:
-      hoboData[Metrics.dhw]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
-    satelliteTemperature:
-      hoboData[Metrics.satelliteTemperature]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
-    sstAnomaly:
-      hoboData[Metrics.sstAnomaly]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
-    surfaceTemperature:
-      hoboData[Metrics.surfaceTemperature]?.map(({ value, timestamp }) => ({
-        value,
-        timestamp,
-      })) || [],
+    alert: hoboData[Metrics.alert],
+    bottomTemperature: hoboData[Metrics.bottomTemperature],
+    dhw: hoboData[Metrics.dhw],
+    satelliteTemperature: hoboData[Metrics.satelliteTemperature],
+    sstAnomaly: hoboData[Metrics.sstAnomaly],
+    surfaceTemperature: hoboData[Metrics.surfaceTemperature],
   };
 };
