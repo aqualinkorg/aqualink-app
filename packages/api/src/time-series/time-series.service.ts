@@ -24,9 +24,9 @@ export class TimeSeriesService {
 
     const data = await this.timeSeriesRepository
       .createQueryBuilder('time_series')
-      .select('avg(value)', 'value')
+      .select('value')
       .addSelect('metric.metric', 'metric')
-      .addSelect("date_trunc('day', timestamp)", 'timestamp')
+      .addSelect('timestamp')
       .innerJoin(
         'time_series.metric',
         'metric',
@@ -37,7 +37,6 @@ export class TimeSeriesService {
       .andWhere('poi_id = :poiId', { poiId })
       .andWhere('timestamp >= :startDate', { startDate })
       .andWhere('timestamp <= :endDate', { endDate })
-      .groupBy("date_trunc('day', timestamp), metric.metric, metric.id")
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
@@ -54,9 +53,9 @@ export class TimeSeriesService {
 
     const data = await this.timeSeriesRepository
       .createQueryBuilder('time_series')
-      .select('avg(value)', 'value')
+      .select('value')
       .addSelect('metric.metric', 'metric')
-      .addSelect("date_trunc('day', timestamp)", 'timestamp')
+      .addSelect('timestamp')
       .innerJoin(
         'time_series.metric',
         'metric',
@@ -67,7 +66,6 @@ export class TimeSeriesService {
       .andWhere('poi_id is NULL')
       .andWhere('timestamp >= :startDate', { startDate })
       .andWhere('timestamp <= :endDate', { endDate })
-      .groupBy("date_trunc('day', timestamp), metric.metric, metric.id")
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
