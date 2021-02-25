@@ -25,9 +25,12 @@ import {
   reefSpotterDataLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { findChartPeriod, showYear } from "./helpers";
+import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
+import { filterSurveys } from "../../../../helpers/surveys";
 
 const Chart = ({
   reef,
+  pointId,
   spotterData,
   hoboBottomTemperature,
   pickerStartDate,
@@ -40,6 +43,11 @@ const Chart = ({
 }: ChartProps) => {
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+  const surveys = filterSurveys(
+    useSelector(surveyListSelector),
+    "any",
+    pointId
+  );
 
   const hasSpotterData =
     spotterData && spotterData.bottomTemperature.length > 1;
@@ -89,7 +97,7 @@ const Chart = ({
               hoboBottomTemperature || [],
               reef.timezone
             )}
-            surveys={[]}
+            surveys={surveys}
             temperatureThreshold={null}
             maxMonthlyMean={null}
             background
@@ -148,6 +156,7 @@ const styles = () =>
 
 interface ChartIncomingProps {
   reef: Reef;
+  pointId: number;
   spotterData: SpotterData | null | undefined;
   hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;

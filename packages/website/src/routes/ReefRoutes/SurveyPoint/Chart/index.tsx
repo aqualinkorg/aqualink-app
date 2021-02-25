@@ -142,6 +142,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
         <Grid item xs={12} md={9}>
           <Chart
             reef={reef}
+            pointId={parseInt(pointId, 10)}
             spotterData={spotterData}
             hoboBottomTemperature={hoboBottomTemperature}
             pickerStartDate={pickerStartDate}
