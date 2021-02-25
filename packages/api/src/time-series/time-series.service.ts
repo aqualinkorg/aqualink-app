@@ -1,7 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import _, { chunk, groupBy, keyBy, minBy, omit } from 'lodash';
 import { Repository } from 'typeorm';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import unzipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
@@ -283,7 +288,30 @@ export class TimeSeriesService {
     });
 
     this.logger.log('Saving reefs');
-    const reefEntities = await this.reefRepository.save(reefs);
+    const reefEntities = await Promise.all(
+      reefs.map((reef) => {
+        return this.reefRepository.save(reef).catch((err) => {
+          if (err.code === '23505') {
+            return this.reefRepository
+              .createQueryBuilder('reefs')
+              .where(
+                'reefs.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry',
+                { polygon: reef.polygon },
+              )
+              .getOne()
+              .then((foundReef) => {
+                if (!foundReef) {
+                  throw new InternalServerErrorException('Reef mismatch');
+                }
+
+                return foundReef;
+              });
+          }
+
+          throw err;
+        });
+      }),
+    );
     // Create reverse map (db.reef.id => xlsx.reef_id)
     const dbIdToXLSXId = Object.fromEntries(
       reefEntities.map((reef) => {
