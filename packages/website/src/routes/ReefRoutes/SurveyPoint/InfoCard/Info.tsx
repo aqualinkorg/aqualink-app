@@ -19,6 +19,7 @@ import {
 } from "../../../../helpers/surveys";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 import { reefHoboDataSelector } from "../../../../store/Reefs/selectedReefSlice";
+import { formatNumber } from "../../../../helpers/numberUtils";
 
 const Info = ({ reef, pointId, classes }: InfoProps) => {
   const surveys = filterSurveys(
@@ -51,9 +52,19 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
           </Typography>
         </Box>
       </Grid>
-      <Grid container justify="space-between" spacing={2}>
+      <Grid
+        className={classes.autoWidth}
+        container
+        justify="space-between"
+        spacing={2}
+      >
         <Grid item>
-          <Grid container direction="column" spacing={2}>
+          <Grid
+            className={classes.autoWidth}
+            container
+            direction="column"
+            spacing={2}
+          >
             <Grid item>
               <Typography variant="h5" color="textSecondary">
                 {pointName}
@@ -66,15 +77,15 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
             {lat && lng && (
               <Grid item>
                 {/* TODO: Add survey point's coordinates */}
-                <Grid container item spacing={1}>
+                <Grid className={classes.autoWidth} container spacing={1}>
                   <Grid item>
                     <Typography variant="subtitle2" color="textSecondary">
-                      LAT: {lat}
+                      LAT: {formatNumber(lat, 6)}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle2" color="textSecondary">
-                      LNG: {lng}
+                      LNG: {formatNumber(lng, 6)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -90,9 +101,19 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container justify="space-between" item spacing={4}>
+          <Grid
+            className={classes.autoWidth}
+            container
+            justify="space-between"
+            spacing={4}
+          >
             <Grid item>
-              <Grid container alignItems="baseline" item spacing={1}>
+              <Grid
+                className={classes.autoWidth}
+                container
+                alignItems="baseline"
+                spacing={1}
+              >
                 <Grid item>
                   <Typography variant="h5" className={classes.coloredText}>
                     {nSurveys}
@@ -106,7 +127,12 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
               </Grid>
             </Grid>
             <Grid item>
-              <Grid container alignItems="baseline" item spacing={1}>
+              <Grid
+                className={classes.autoWidth}
+                container
+                alignItems="baseline"
+                spacing={1}
+              >
                 <Grid item>
                   <Typography variant="h5" className={classes.coloredText}>
                     {nImages}
@@ -138,6 +164,10 @@ const styles = (theme: Theme) =>
 
     coloredText: {
       color: theme.palette.primary.main,
+    },
+
+    autoWidth: {
+      width: "auto",
     },
   });
 
