@@ -18,6 +18,7 @@ import {
   findImagesAtSurveyPoint,
 } from "../../../../helpers/surveys";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
+import { reefHoboDataSelector } from "../../../../store/Reefs/selectedReefSlice";
 
 const Info = ({ reef, pointId, classes }: InfoProps) => {
   const surveys = filterSurveys(
@@ -25,10 +26,13 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
     "any",
     pointId
   );
+  const { bottomTemperature: hoboBottomTemperature } =
+    useSelector(reefHoboDataSelector) || {};
   const { name: pointName, coordinates: pointCoordinates } =
     reef.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
   const [lng, lat] = pointCoordinates || [];
+  const nHoboPoints = hoboBottomTemperature?.length || 0;
   const nSurveys = surveys.length;
   const nImages = findImagesAtSurveyPoint(surveys, pointId);
   const lastSurveyed = displayTimeInLocalTimezone({
@@ -74,6 +78,13 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
                     </Typography>
                   </Grid>
                 </Grid>
+              </Grid>
+            )}
+            {nHoboPoints > 0 && (
+              <Grid item>
+                <Typography variant="subtitle2" color="textSecondary">
+                  {nHoboPoints} HOBO DATA POINTS
+                </Typography>
               </Grid>
             )}
           </Grid>
