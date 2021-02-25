@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { groupBy } from 'lodash';
+import _, { omit, zipObject } from 'lodash';
 import { Repository } from 'typeorm';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
@@ -40,7 +40,16 @@ export class TimeSeriesService {
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
-    return groupBy(data, 'metric');
+    const metricsKeys = Object.keys(Metric).map((key) => Metric[key]);
+    const metricsValues = Object.keys(Metric).map((props) => []);
+    const metricsObject = zipObject(metricsKeys, metricsValues);
+
+    return _(data)
+      .groupBy('metric')
+      .mapValues((groupedData) => {
+        return groupedData.map((o) => omit(o, 'metric'));
+      })
+      .merge(metricsObject);
   }
 
   async findReefData(
@@ -69,6 +78,15 @@ export class TimeSeriesService {
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
-    return groupBy(data, 'metric');
+    const metricsKeys = Object.keys(Metric).map((key) => Metric[key]);
+    const metricsValues = Object.keys(Metric).map((props) => []);
+    const metricsObject = zipObject(metricsKeys, metricsValues);
+
+    return _(data)
+      .groupBy('metric')
+      .mapValues((groupedData) => {
+        return groupedData.map((o) => omit(o, 'metric'));
+      })
+      .merge(metricsObject);
   }
 }
