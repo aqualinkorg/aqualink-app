@@ -72,7 +72,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   {/* Transform wind speed from m/s to km/h */}
                   {formatNumber(windSpeed?.value && windSpeed.value * 3.6, 1)}
                 </Typography>
-                {windSpeed?.value && (
+                {windSpeed?.value.toString() && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
