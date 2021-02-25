@@ -14,6 +14,7 @@ import {
   findSurveyFromDate,
   sameDay,
   filterDailyData,
+  getMontlyMaxDataClosestToDate,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -34,6 +35,7 @@ function ChartWithTooltip({
     dailyData,
     spotterData,
     hoboBottomTemperature,
+    monthlyMax,
     reefId,
     surveys,
     timeZone,
@@ -51,6 +53,7 @@ function ChartWithTooltip({
     spotterSurfaceTemp: null,
     surfaceTemperature: 0,
     hoboBottomTemp: null,
+    monthlyMax: null,
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -73,10 +76,13 @@ function ChartWithTooltip({
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
       filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-      (filteredDailyData.length > 0 &&
-        getDailyDataClosestToDate(filteredDailyData, new Date(date))) ||
+      getDailyDataClosestToDate(filteredDailyData, new Date(date)) ||
       {};
     const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
+
+    const montlyMaxTemp =
+      (monthlyMax && getMontlyMaxDataClosestToDate(monthlyMax, new Date(date)))
+        ?.value || null;
 
     const bottomTemp =
       spotterData &&
@@ -108,6 +114,7 @@ function ChartWithTooltip({
       bottomTemperature,
       spotterSurfaceTemp,
       hoboBottomTemp,
+      montlyMaxTemp,
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
@@ -123,6 +130,7 @@ function ChartWithTooltip({
         bottomTemperature,
         spotterSurfaceTemp,
         hoboBottomTemp,
+        montlyMaxTemp,
       ].some(Boolean)
     ) {
       setTooltipPosition({ top, left });
@@ -134,6 +142,7 @@ function ChartWithTooltip({
         spotterSurfaceTemp,
         surfaceTemperature: satelliteTemperature,
         hoboBottomTemp,
+        monthlyMax: montlyMaxTemp,
         surveyId,
       });
       setShowTooltip(true);

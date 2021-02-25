@@ -6,6 +6,7 @@ import type { ChartProps } from ".";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type {
   DailyData,
+  MonthlyMaxData,
   SofarValue,
   SpotterData,
 } from "../../store/Reefs/types";
@@ -89,11 +90,26 @@ export const augmentSurfaceTemperature = (
 };
 
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
-  return dailyData.reduce((prevClosest, nextPoint) =>
-    timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
-      ? nextPoint
-      : prevClosest
-  );
+  return dailyData.length > 0
+    ? dailyData.reduce((prevClosest, nextPoint) =>
+        timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
+          ? nextPoint
+          : prevClosest
+      )
+    : undefined;
+}
+
+export function getMontlyMaxDataClosestToDate(
+  montlyMaxData: MonthlyMaxData[],
+  date: Date
+) {
+  return montlyMaxData.length > 0
+    ? montlyMaxData.reduce((prevClosest, nextPoint) =>
+        timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
+          ? nextPoint
+          : prevClosest
+      )
+    : undefined;
 }
 
 export function getSpotterDataClosestToDate(
@@ -121,6 +137,7 @@ export const createDatasets = (
   rawSpotterBottom: SpotterData["bottomTemperature"],
   rawSpotterSurface: SpotterData["surfaceTemperature"],
   rawHoboBottom: SofarValue[],
+  monthlyMaxData: MonthlyMaxData[],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData
@@ -151,6 +168,11 @@ export const createDatasets = (
     y: item.value,
   }));
 
+  const monthlyMaxTemp = monthlyMaxData.map((item) => ({
+    x: item.date,
+    y: item.value,
+  }));
+
   const tempWithSurvey = dailyData
     .filter(
       (item) =>
@@ -174,6 +196,7 @@ export const createDatasets = (
     spotterBottom,
     spotterSurface,
     hoboBottomTemperatureData,
+    monthlyMaxTemp,
   };
 };
 
@@ -182,6 +205,7 @@ export const calculateAxisLimits = (
   spotterBottomTemperature: SofarValue[],
   spotterSurfaceTemperature: SofarValue[],
   hoboTemperatureData: SofarValue[],
+  monthlyMaxData: MonthlyMaxData[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
@@ -212,11 +236,13 @@ export const calculateAxisLimits = (
     spotterBottom,
     spotterSurface,
     hoboBottomTemperatureData,
+    monthlyMaxTemp,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
     spotterSurfaceTemperature,
     hoboTemperatureData,
+    monthlyMaxData,
     surveys
   );
 
@@ -226,6 +252,7 @@ export const calculateAxisLimits = (
     ...spotterBottom,
     ...spotterSurface,
     ...hoboBottomTemperatureData,
+    ...monthlyMaxTemp,
   ]
     .filter((value) => value)
     .map((value) => value.y);
@@ -258,6 +285,7 @@ export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
   hoboBottomTemperature: ChartProps["hoboBottomTemperature"],
+  monthlyMaxData: ChartProps["monthlyMax"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
   startDate: ChartProps["startDate"],
@@ -277,6 +305,7 @@ export function useProcessedChartData(
     bottomTemperature || [],
     surfaceTemperature || [],
     hoboBottomTemperature || [],
+    monthlyMaxData || [],
     surveys
   );
 
@@ -285,6 +314,7 @@ export function useProcessedChartData(
     bottomTemperature || [],
     surfaceTemperature || [],
     hoboBottomTemperature || [],
+    monthlyMaxData || [],
     surveys,
     temperatureThreshold
   );
@@ -347,6 +377,7 @@ export const createChartData = (
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
+  monthlyMax: ChartPoint[],
   surveyDate: Date | null,
   temperatureThreshold: number | null
 ) => {
@@ -374,6 +405,17 @@ export const createChartData = (
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
         backgroundColor: fillColor(temperatureThreshold),
+      },
+      {
+        label: "MONTHLY MEAN",
+        data: monthlyMax,
+        fill: false,
+        borderColor: "#d84424",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
       },
       {
         label: "TEMP AT DEPTH",

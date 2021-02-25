@@ -94,6 +94,11 @@ export interface DailyData {
   weeklyAlertLevel?: number;
 }
 
+export interface MonthlyMaxData {
+  value: number;
+  date: string;
+}
+
 interface Region {
   name: string | null;
 }

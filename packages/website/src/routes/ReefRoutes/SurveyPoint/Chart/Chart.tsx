@@ -18,6 +18,7 @@ import {
   convertHoboDataToLocalTime,
   convertSpotterDataToLocalTime,
   convertToLocalTime,
+  generateMonthlyMaxTimestamps,
 } from "../../../../helpers/dates";
 import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
 import {
@@ -95,6 +96,12 @@ const Chart = ({
             )}
             hoboBottomTemperature={convertHoboDataToLocalTime(
               hoboBottomTemperature || [],
+              reef.timezone
+            )}
+            monthlyMax={generateMonthlyMaxTimestamps(
+              reef.monthlyMax,
+              startDate,
+              endDate,
               reef.timezone
             )}
             surveys={surveys}

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { mergeWith } from "lodash";
 import type {
   DailyData,
+  MonthlyMaxData,
   SofarValue,
   SpotterData,
 } from "../../store/Reefs/types";
@@ -30,6 +31,7 @@ export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: SpotterData | null;
   hoboBottomTemperature?: SofarValue[];
+  monthlyMax?: MonthlyMaxData[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -75,6 +77,7 @@ function Chart({
   dailyData,
   spotterData,
   hoboBottomTemperature,
+  monthlyMax,
   surveys,
   timeZone,
   startDate,
@@ -114,10 +117,12 @@ function Chart({
     spotterBottom,
     spotterSurface,
     hoboBottomTemperatureData,
+    monthlyMaxTemp,
   } = useProcessedChartData(
     dailyData,
     spotterData,
     hoboBottomTemperature,
+    monthlyMax,
     surveys,
     temperatureThreshold,
     startDate,
@@ -273,6 +278,7 @@ function Chart({
           endDate
         ),
         bottomTemperatureData,
+        monthlyMaxTemp,
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
           : null,

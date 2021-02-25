@@ -58,6 +58,7 @@ const Tooltip = ({
   spotterSurfaceTemp,
   surfaceTemperature,
   hoboBottomTemp,
+  monthlyMax,
   surveyId,
   classes,
 }: TooltipProps) => {
@@ -75,6 +76,7 @@ const Tooltip = ({
     color: string;
     title: string;
   }[] = [
+    { temperature: monthlyMax, color: "#d84424", title: "MONTHLY MEAN" },
     { temperature: surfaceTemperature, color: "#6bc1e1", title: "SURFACE" },
     { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
@@ -206,6 +208,7 @@ export interface TooltipData {
   surfaceTemperature: number | null;
   surveyId?: number | null;
   hoboBottomTemp: number | null;
+  monthlyMax: number | null;
   reefTimeZone?: string | null;
   userTimeZone?: string;
 }
