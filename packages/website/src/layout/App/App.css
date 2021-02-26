@@ -127,24 +127,3 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
-.leaflet-numbered-marker {
-  background-image: url(../../assets/alerts/pin_nostress.png);
-  background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.leaflet-selected-numbered-marker {
-  background-image: url(../../assets/alerts/pin_warning.png);
-  background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.leaflet-numbered-marker-text {
-  color: black;
-  font-weight: 700;
-}

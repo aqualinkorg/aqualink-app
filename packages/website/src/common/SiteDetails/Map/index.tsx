@@ -22,6 +22,8 @@ import {
 } from "../../../store/Reefs/selectedReefSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isManager } from "../../../helpers/user";
+import pointIcon from "../../../assets/alerts/pin_nostress.png";
+import selectedPointIcon from "../../../assets/alerts/pin_warning.png";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -37,13 +39,12 @@ const buoyIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const surveyPointIcon = (pointId: number) =>
-  L.divIcon({
-    className: "leaflet-numbered-marker",
+const surveyPointIcon = (selected: boolean) =>
+  L.icon({
+    iconUrl: selected ? selectedPointIcon : pointIcon,
     iconSize: [36, 40.5],
     iconAnchor: [18, 40.5],
     popupAnchor: [0, -40.5],
-    html: `<span class="leaflet-numbered-marker-text">${pointId}</span>`,
   });
 
 const ReefMap = ({
@@ -51,6 +52,7 @@ const ReefMap = ({
   spotterPosition,
   polygon,
   surveyPoints,
+  selectedPointId,
   classes,
 }: ReefMapProps) => {
   const dispatch = useDispatch();
@@ -127,7 +129,7 @@ const ReefMap = ({
               point.coordinates && (
                 <Marker
                   key={point.id}
-                  icon={surveyPointIcon(point.id)}
+                  icon={surveyPointIcon(point.id === selectedPointId)}
                   position={[point.coordinates[1], point.coordinates[0]]}
                 >
                   <SurveyPointPopup reefId={reefId} point={point} />
@@ -164,10 +166,12 @@ interface ReefMapIncomingProps {
   polygon: Reef["polygon"];
   spotterPosition?: SpotterPosition | null;
   surveyPoints: Pois[];
+  selectedPointId?: number;
 }
 
 ReefMap.defaultProps = {
   spotterPosition: null,
+  selectedPointId: 0,
 };
 
 type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
