@@ -11,7 +11,6 @@ import SurveyPoint from ".";
 import { mockSurvey } from "../../../mocks/mockSurvey";
 
 jest.mock("./InfoCard/Map", () => "Mock-Map");
-jest.mock("../../../common/Datepicker", () => "Mock-Datepicker");
 
 const mockMatch = {
   isExact: true,
