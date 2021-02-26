@@ -21,7 +21,7 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const numberedIcon = (pointId: number, selected: boolean) =>
+const numberedIcon = (selected: boolean) =>
   L.divIcon({
     className: `leaflet${selected ? "-selected" : ""}-numbered-marker`,
     iconSize: [36, 40.5],
@@ -49,7 +49,7 @@ const Map = ({ reef, selectedPointId, classes }: MapProps) => {
             point.coordinates && (
               <Marker
                 key={point.id}
-                icon={numberedIcon(point.id, selectedPointId === point.id)}
+                icon={numberedIcon(selectedPointId === point.id)}
                 position={[point.coordinates[1], point.coordinates[0]]}
               >
                 <SurveyPointPopup reefId={reef.id} point={point} />
