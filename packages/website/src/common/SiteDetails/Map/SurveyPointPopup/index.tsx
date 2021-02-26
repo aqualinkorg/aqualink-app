@@ -21,7 +21,7 @@ const SurveyPointPopup = ({
   classes,
 }: SurveyPointPopupProps) => {
   return (
-    <Popup>
+    <Popup closeButton={false} autoPan={false}>
       <Card className={classes.surveyPointPopup}>
         <Grid
           container

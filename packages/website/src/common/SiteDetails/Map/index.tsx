@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
@@ -60,10 +60,27 @@ const ReefMap = ({
   const markerRef = useRef<Marker>(null);
   const draftReef = useSelector(reefDraftSelector);
   const user = useSelector(userInfoSelector);
+  const [focusedPoint, setFocusedPoint] = useState<Pois>();
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
   };
+
+  const setCenter = (
+    inputMap: L.Map,
+    latLng: [number, number],
+    zoom: number
+  ) => {
+    const newZoom = Math.max(inputMap.getZoom() || 15, zoom);
+    return inputMap.flyTo(latLng, newZoom);
+  };
+
+  useEffect(() => {
+    if (mapRef?.current?.leafletElement && focusedPoint?.coordinates) {
+      const [lng, lat] = focusedPoint.coordinates;
+      setCenter(mapRef.current.leafletElement, [lat, lng], 15);
+    }
+  }, [focusedPoint]);
 
   useEffect(() => {
     const { current } = mapRef;
@@ -108,6 +125,7 @@ const ReefMap = ({
       dragging
       scrollWheelZoom={false}
       className={classes.map}
+      tap={false}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {polygon.type === "Polygon" ? (
@@ -131,6 +149,7 @@ const ReefMap = ({
                   key={point.id}
                   icon={surveyPointIcon(point.id === selectedPointId)}
                   position={[point.coordinates[1], point.coordinates[0]]}
+                  onclick={() => setFocusedPoint(point)}
                 >
                   <SurveyPointPopup reefId={reefId} point={point} />
                 </Marker>
