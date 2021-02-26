@@ -27,7 +27,6 @@ const numberedIcon = (pointId: number, selected: boolean) =>
     iconSize: [36, 40.5],
     iconAnchor: [18, 40.5],
     popupAnchor: [0, -40.5],
-    html: `<span class="leaflet-numbered-marker-text">${pointId}</span>`,
   });
 
 const Map = ({ reef, selectedPointId, classes }: MapProps) => {
