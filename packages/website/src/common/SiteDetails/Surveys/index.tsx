@@ -36,7 +36,7 @@ import { EditPoiNameDraft } from "./types";
 
 const Surveys = ({ reef, classes }: SurveysProps) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
   const pointOptions = reef.surveyPoints;
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
@@ -228,11 +228,11 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
           lg={12}
           xs={11}
           alignItems="baseline"
-          spacing={matches ? 4 : 1}
+          spacing={isTablet ? 4 : 1}
         >
           <Grid
             container
-            justify={matches ? "flex-start" : "center"}
+            justify={isTablet ? "flex-start" : "center"}
             item
             md={12}
             lg={3}
@@ -256,7 +256,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
           <Grid
             container
             alignItems="center"
-            justify={matches ? "flex-start" : "center"}
+            justify={isTablet ? "flex-start" : "center"}
             item
             md={12}
             lg={4}
