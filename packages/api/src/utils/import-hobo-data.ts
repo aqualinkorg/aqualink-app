@@ -15,7 +15,7 @@ import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import { Reef } from '../reefs/reefs.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
-import { Metric, Metrics } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { User } from '../users/users.entity';
 import { Survey, WeatherConditions } from '../surveys/surveys.entity';
@@ -44,7 +44,6 @@ interface Data {
 interface Repositories {
   reefRepository: Repository<Reef>;
   poiRepository: Repository<ReefPointOfInterest>;
-  metricsRepository: Repository<Metrics>;
   timeSeriesRepository: Repository<TimeSeries>;
   userRepository: Repository<User>;
   surveyRepository: Repository<Survey>;
@@ -260,7 +259,6 @@ const parseHoboData = (
   dbIdToXLSXId: Record<number, number>,
   rootPath: string,
   poiToSourceMap: Dictionary<Sources>,
-  metricToMetrics: Dictionary<Metrics>,
   timeSeriesRepository: Repository<TimeSeries>,
 ) => {
   // Parse hobo data
@@ -316,7 +314,7 @@ const parseHoboData = (
     reef: data.reef,
     poi: data.poi,
     source: data.source,
-    metric: metricToMetrics[Metric.BOTTOM_TEMPERATURE],
+    metric: Metric.BOTTOM_TEMPERATURE,
   }));
 
   const batchSize = 1000;
@@ -459,10 +457,6 @@ export const uploadHoboData = async (
     repositories.poiRepository,
   );
 
-  // Get metrics and create record from each metric to its entity
-  const metrics = await repositories.metricsRepository.find();
-  const metricToMetrics = keyBy(metrics, (o) => o.metric);
-
   const poiToSourceMap = await createSources(
     poiEntities,
     repositories.sourcesRepository,
@@ -473,7 +467,6 @@ export const uploadHoboData = async (
     dbIdToXLSXId,
     rootPath,
     poiToSourceMap,
-    metricToMetrics,
     repositories.timeSeriesRepository,
   );
 

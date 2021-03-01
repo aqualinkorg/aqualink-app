@@ -5,7 +5,6 @@ import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
 import { Reef } from '../src/reefs/reefs.entity';
 import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
-import { Metrics } from '../src/time-series/metrics.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { User } from '../src/users/users.entity';
 import { Survey } from '../src/surveys/surveys.entity';
@@ -82,7 +81,6 @@ async function run() {
     {
       reefRepository: connection.getRepository(Reef),
       poiRepository: connection.getRepository(ReefPointOfInterest),
-      metricsRepository: connection.getRepository(Metrics),
       timeSeriesRepository: connection.getRepository(TimeSeries),
       userRepository: connection.getRepository(User),
       surveyRepository: connection.getRepository(Survey),
