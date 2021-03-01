@@ -246,9 +246,7 @@ export async function getDailyData(
 }
 
 function hasNoData(data: SofarDailyData) {
-  const omitStaticData = omit(data, 'reef', 'date');
-  const setData = omitBy(omitStaticData, isUndefined);
-  return isEmpty(setData);
+  return Object.values(omit(data, 'reef', 'date')).every(isUndefined);
 }
 
 export async function getWeeklyAlertLevel(
@@ -309,7 +307,7 @@ export async function getReefsDailyData(
       const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
 
       if (hasNoData(dailyDataInput)) {
-        console.log('No data has been fetched skipping');
+        console.log('No data has been fetched. Skipping...');
         return;
       }
 
