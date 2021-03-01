@@ -15,10 +15,10 @@ test("renders as expected", () => {
         isReefAdmin={false}
         editPoiNameLoading={false}
         onChangePoiName={jest.fn()}
-        handlePointChange={jest.fn()}
-        toggleEditPoiNameEnabled={jest.fn()}
-        submitPoiNameUpdate={jest.fn()}
-        onDeleteButtonClick={jest.fn()}
+        handlePointChange={() => {}}
+        toggleEditPoiNameEnabled={() => {}}
+        submitPoiNameUpdate={() => {}}
+        onDeleteButtonClick={() => {}}
       />
     </Router>
   );
