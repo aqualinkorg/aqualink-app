@@ -55,9 +55,13 @@ exports[`Homepage should render with given state from Redux store 1`] = `
                   class="ReactSwipeableBottomSheet--closed"
                   style="overflow: hidden; background-color: white; max-height: 80vh; border-top-left-radius: 25px; border-top-right-radius: 25px;"
                 >
-                  <mock-reeftable
-                    isdraweropen="false"
-                  />
+                  <div
+                    role="presentation"
+                  >
+                    <mock-reeftable
+                      isdraweropen="false"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

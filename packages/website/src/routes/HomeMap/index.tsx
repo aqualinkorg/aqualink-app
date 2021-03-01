@@ -82,10 +82,9 @@ const Homepage = ({ classes }: HomepageProps) => {
               onChange={setDrawerOpen}
               open={isDrawerOpen}
             >
-              <ReefTable
-                setDrawerOpen={setDrawerOpen}
-                isDrawerOpen={isDrawerOpen}
-              />
+              <div role="presentation" onClick={toggleDrawer}>
+                <ReefTable isDrawerOpen={isDrawerOpen} />
+              </div>
             </SwipeableBottomSheet>
           </Hidden>
         </Grid>

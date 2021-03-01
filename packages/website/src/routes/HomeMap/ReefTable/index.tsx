@@ -121,7 +121,16 @@ const ReefTable = ({
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
       <Hidden smUp>
-        <Box paddingX={2} paddingY={3} display="flex" alignItems="center">
+        <Box
+          paddingX={2}
+          paddingY={3}
+          display="flex"
+          alignItems="center"
+          onClick={(event) =>
+            // Stop Propagation, since the parent (HomeMap) closes the drawer on any click.
+            event.stopPropagation()
+          }
+        >
           <Typography variant="h5">Sort By: </Typography>
           <Select
             value={`${orderBy}-${order}`}
