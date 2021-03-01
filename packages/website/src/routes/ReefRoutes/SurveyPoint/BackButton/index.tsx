@@ -12,9 +12,9 @@ import {
 import { ArrowBack } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-const BackButton = ({ reefId, classes }: BackButtonProps) => {
+const BackButton = ({ reefId, bgColor, classes }: BackButtonProps) => {
   return (
-    <Box bgcolor="rgb(245, 246, 246)">
+    <Box bgcolor={bgColor}>
       <Container>
         <Grid container className={classes.backButtonWrapper}>
           <Button
@@ -46,6 +46,7 @@ const styles = () =>
 
 interface BackButtonIncomingProps {
   reefId: string;
+  bgColor: string;
 }
 
 type BackButtonProps = BackButtonIncomingProps & WithStyles<typeof styles>;

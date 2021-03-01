@@ -16,13 +16,18 @@ import { Reef } from "../../../../store/Reefs/types";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { isAdmin } from "../../../../helpers/user";
 
-const SurveyHistory = ({ reef, pointId, classes }: SurveyHistoryProps) => {
+const SurveyHistory = ({
+  reef,
+  pointId,
+  bgColor,
+  classes,
+}: SurveyHistoryProps) => {
   const user = useSelector(userInfoSelector);
   const { name: pointName } =
     reef?.surveyPoints.filter((point) => point.id === pointId)[0] || {};
 
   return (
-    <Box className={classes.timelineWrapper}>
+    <Box bgcolor={bgColor}>
       <Container>
         <Grid container justify="center">
           <Box className={classes.title}>
@@ -45,9 +50,6 @@ const SurveyHistory = ({ reef, pointId, classes }: SurveyHistoryProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
-    timelineWrapper: {
-      backgroundColor: "rgb(245, 246, 246)",
-    },
     title: {
       marginTop: 100,
       [theme.breakpoints.down("xs")]: {
@@ -59,6 +61,7 @@ const styles = (theme: Theme) =>
 interface SurveyHistoryIncomingProps {
   reef: Reef;
   pointId: number;
+  bgColor: string;
 }
 
 type SurveyHistoryProps = SurveyHistoryIncomingProps &

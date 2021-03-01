@@ -14,9 +14,9 @@ import Info from "./Info";
 import Map from "./Map";
 import { Reef } from "../../../../store/Reefs/types";
 
-const InfoCard = ({ reef, pointId, classes }: InfoCardProps) => {
+const InfoCard = ({ reef, pointId, bgColor, classes }: InfoCardProps) => {
   return (
-    <Box bgcolor="rgb(245, 246, 246)">
+    <Box bgcolor={bgColor}>
       <Container>
         <Grid className={classes.cardWrapper} container justify="center">
           <Grid item xs={12} sm={12}>
@@ -46,6 +46,7 @@ const styles = (theme: Theme) =>
 interface InfoCardIncomingProps {
   reef: Reef;
   pointId: number;
+  bgColor: string;
 }
 
 type InfoCardProps = InfoCardIncomingProps & WithStyles<typeof styles>;

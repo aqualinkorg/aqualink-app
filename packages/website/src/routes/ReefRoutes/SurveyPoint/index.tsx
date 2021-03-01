@@ -23,6 +23,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
   const reefIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
+  const bgColor = "rgb(245, 246, 246)";
 
   const dispatch = useDispatch();
   const reef = useSelector(reefDetailsSelector);
@@ -47,10 +48,14 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
       {(reefLoading || surveysLoading) && <LinearProgress />}
       {reef && (
         <>
-          <BackButton reefId={id} />
-          <InfoCard reef={reef} pointId={pointIdNumber} />
+          <BackButton reefId={id} bgColor={bgColor} />
+          <InfoCard reef={reef} pointId={pointIdNumber} bgColor={bgColor} />
           <ChartWithCard reef={reef} pointId={pointId} />
-          <SurveyHistory reef={reef} pointId={pointIdNumber} />
+          <SurveyHistory
+            reef={reef}
+            pointId={pointIdNumber}
+            bgColor={bgColor}
+          />
           <Footer />
         </>
       )}

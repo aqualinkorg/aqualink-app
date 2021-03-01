@@ -2602,7 +2602,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </div>
   <mock-box
-    classname="SurveyHistory-timelineWrapper-58"
+    bgcolor="rgb(245, 246, 246)"
   >
     <div
       class="MuiContainer-root MuiContainer-maxWidthLg"
@@ -2611,7 +2611,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
       >
         <mock-box
-          classname="SurveyHistory-title-59"
+          classname="SurveyHistory-title-58"
         >
           <mock-typography
             variant="h4"
@@ -2621,7 +2621,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-70"
+        class="SurveyTimeline-root-69"
       >
         <mock-hidden
           mddown="true"
@@ -2641,7 +2641,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-76"
+    classname="Footer-appBar-75"
     position="static"
   >
     <mock-toolbar>
@@ -2652,7 +2652,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-77"
+            classname="Footer-navBarLink-76"
             href="/map"
           >
             <mock-typography
