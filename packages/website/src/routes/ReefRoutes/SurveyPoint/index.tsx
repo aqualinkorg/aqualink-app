@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  LinearProgress,
-} from "@material-ui/core";
+import { LinearProgress } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -63,18 +58,11 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   );
 };
 
-const styles = () =>
-  createStyles({
-    root: {},
-  });
-
 interface MatchProps
   extends RouteComponentProps<{ id: string; pointId: string }> {}
 
 interface SurveyPointIncomingProps {}
 
-type SurveyPointProps = MatchProps &
-  SurveyPointIncomingProps &
-  WithStyles<typeof styles>;
+type SurveyPointProps = MatchProps & SurveyPointIncomingProps;
 
-export default withStyles(styles)(SurveyPoint);
+export default SurveyPoint;
