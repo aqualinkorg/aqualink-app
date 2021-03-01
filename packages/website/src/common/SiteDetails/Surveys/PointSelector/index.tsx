@@ -3,8 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  useMediaQuery,
-  useTheme,
   Theme,
   Grid,
   Typography,
@@ -14,6 +12,7 @@ import {
   Button,
   Tooltip,
   TextField,
+  Hidden,
 } from "@material-ui/core";
 import { Create, DeleteOutline, Launch } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -37,8 +36,6 @@ const PointSelector = ({
   onDeleteButtonClick,
   classes,
 }: PointSelectorProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPoi, setEditPoi] = useState<Pois>();
 
@@ -215,13 +212,14 @@ const PointSelector = ({
             </Grid>
             {pointId !== -1 && (
               <Grid item>
-                {isMobile ? (
+                <Hidden smUp>
                   <Link to={`/reefs/${reefId}/points/${pointId}`}>
                     <IconButton className={classes.menuButton}>
                       <Launch color="primary" />
                     </IconButton>
                   </Link>
-                ) : (
+                </Hidden>
+                <Hidden xsDown>
                   <Button
                     variant="outlined"
                     color="primary"
@@ -231,7 +229,7 @@ const PointSelector = ({
                   >
                     View Survey Point
                   </Button>
-                )}
+                </Hidden>
               </Grid>
             )}
           </Grid>
