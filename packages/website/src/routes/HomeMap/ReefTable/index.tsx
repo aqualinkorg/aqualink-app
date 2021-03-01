@@ -17,12 +17,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
-import {
-  ArrowDownward,
-  ArrowDropDown,
-  ArrowDropUp,
-  ArrowUpward,
-} from "@material-ui/icons";
+import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
@@ -43,11 +38,7 @@ import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 
 const SMALL_HEIGHT = 720;
 
-const ReefTable = ({
-  isDrawerOpen,
-  setDrawerOpen,
-  classes,
-}: ReefTableProps) => {
+const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const user = useSelector(userInfoSelector);
@@ -261,12 +252,10 @@ interface ReefTableProps
 interface ReefTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
   isDrawerOpen?: boolean;
-  setDrawerOpen?: (isOpen: boolean) => void;
 }
 
 ReefTable.defaultProps = {
   isDrawerOpen: false,
-  setDrawerOpen: () => {},
 };
 
 export default withStyles(styles)(ReefTable);
