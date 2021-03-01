@@ -9,7 +9,7 @@ import {
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { Sources } from '../reefs/sources.entity';
-import { Metrics } from './metrics.entity';
+import { Metric } from './metrics.entity';
 
 @Entity()
 export class TimeSeries {
@@ -28,8 +28,8 @@ export class TimeSeries {
   @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
   poi: ReefPointOfInterest;
 
-  @ManyToOne(() => Metrics, { onDelete: 'CASCADE', nullable: false })
-  metric: Metrics;
+  @Column({ type: 'enum', enum: Metric })
+  metric: Metric;
 
   @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })
   source: Sources;

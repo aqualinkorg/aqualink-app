@@ -27,7 +27,7 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
         "created_at" TIMESTAMP NOT NULL DEFAULT now(),
         "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
         "reef_id" integer, "poi_id" integer,
-        "metric_id" integer NOT NULL,
+        "metric" "metrics_metric_enum" NOT NULL,
         "source_id" integer,
         CONSTRAINT "PK_e472f6a5f5bce1c709008a24fe8" PRIMARY KEY ("id")
       )`,
@@ -45,15 +45,12 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_97235131108c5dfd9a68150ff8e" FOREIGN KEY ("poi_id") REFERENCES "reef_point_of_interest"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "time_series" ADD CONSTRAINT "FK_769f6576134f6f18b1f23108c45" FOREIGN KEY ("metric_id") REFERENCES "metrics"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "FK_fb5d7b75a674607b65fa78d5c92" FOREIGN KEY ("source_id") REFERENCES "sources"("id") ON DELETE SET NULL ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `CREATE VIEW "latest_data" AS
         SELECT
-          DISTINCT ON (metric_id, source_id, time_series.reef_id, time_series.poi_id) "metric"."metric" AS "metric",
+          DISTINCT ON (metric, source_id, time_series.reef_id, time_series.poi_id) "metric",
           "time_series"."id" AS "id",
           "source"."type" AS "source",
           timestamp,
@@ -61,9 +58,8 @@ export class TimeSeriesTables1613987016916 implements MigrationInterface {
           "time_series"."reef_id" AS "reef_id",
           "time_series"."poi_id" AS "poi_id"
         FROM "time_series" "time_series"
-        INNER JOIN "metrics" "metric" ON "metric"."id" = metric_id
         INNER JOIN "sources" "source" ON "source"."id" = source_id
-        ORDER BY reef_id, poi_id, metric_id, source_id, timestamp DESC`,
+        ORDER BY reef_id, poi_id, metric, source_id, timestamp DESC`,
     );
   }
 
