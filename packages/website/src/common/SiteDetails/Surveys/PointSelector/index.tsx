@@ -119,7 +119,7 @@ const PointSelector = ({
                 id="survey-point"
                 name="survey-point"
                 value={
-                  pointOptions.map((item) => item.name).includes(point)
+                  pointOptions.some((item) => item.name === point)
                     ? point
                     : "All"
                 }
