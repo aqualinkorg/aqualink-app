@@ -1902,6 +1902,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           </div>
         </div>
         <mock-dialog
+          fullwidth="true"
           open="false"
         >
           <mock-dialogtitle

@@ -15,6 +15,7 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
     </svg>
   </mock-iconbutton>
   <mock-dialog
+    fullwidth="true"
     open="false"
   >
     <mock-dialogtitle

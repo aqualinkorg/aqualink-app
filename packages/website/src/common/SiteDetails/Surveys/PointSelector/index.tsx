@@ -11,9 +11,9 @@ import {
   MenuItem,
   Select,
   IconButton,
-  OutlinedInput,
   Button,
   Tooltip,
+  TextField,
 } from "@material-ui/core";
 import { Create, DeleteOutline, Launch } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -75,7 +75,8 @@ const PointSelector = ({
       color: "primary",
       text: editPoiNameLoading ? "Updating..." : "Save",
       action: onEditPoiSubmit,
-      disabled: editPoiNameLoading,
+      disabled:
+        editPoiNameLoading || (editPoi && !editPoiNameDraft[editPoi.id]),
     },
   ];
 
@@ -88,13 +89,17 @@ const PointSelector = ({
           header={editPoi.name || ""}
           onClose={onEditDialogClose}
           content={
-            <OutlinedInput
+            <TextField
+              variant="outlined"
               autoFocus
               className={classes.editPoiTextField}
               fullWidth
               value={editPoiNameDraft[editPoi.id]}
               onChange={onChangePoiName(editPoi.id)}
-              error={editPoiNameDraft[editPoi.id] === ""}
+              error={!editPoiNameDraft[editPoi.id]}
+              helperText={
+                !editPoiNameDraft[editPoi.id] ? "Cannot be empty" : ""
+              }
             />
           }
         />
@@ -268,8 +273,8 @@ const styles = (theme: Theme) =>
     },
     editPoiTextField: {
       color: "black",
-      height: "2.5rem",
       alignItems: "center",
+      padding: 8,
     },
     menuButton: {
       padding: 0,
