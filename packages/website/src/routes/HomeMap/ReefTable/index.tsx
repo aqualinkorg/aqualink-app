@@ -1,9 +1,12 @@
 import React, { ChangeEvent, MouseEvent, useState } from "react";
+import { startCase } from "lodash";
 import {
   Box,
   CircularProgress,
   createStyles,
   Hidden,
+  MenuItem,
+  Select,
   Switch,
   Table,
   TableContainer,
@@ -34,7 +37,11 @@ import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 
 const SMALL_HEIGHT = 720;
 
-const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
+const ReefTable = ({
+  isDrawerOpen,
+  setDrawerOpen,
+  classes,
+}: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const user = useSelector(userInfoSelector);
@@ -43,7 +50,7 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const { height } = useWindowSize() || {};
 
   const [order, setOrder] = useState<Order>("desc");
-  const [orderBy, setOrderBy] = useState<OrderKeys>("alert");
+  const [orderBy, setOrderBy] = useState<OrderKeys>(OrderKeys.ALERT);
 
   const handleRequestSort = (event: unknown, property: OrderKeys) => {
     const isAsc = orderBy === property && order === "asc";
@@ -67,6 +74,7 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   };
   return (
     <>
+      {/* Holds drawer handle and reef name text on mobile */}
       <Hidden smUp>
         <Box
           width="100vw"
@@ -105,6 +113,35 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
           </Typography>
         </Box>
       )}
+      {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
+      <Hidden smUp>
+        <Box paddingX={2} paddingY={3} display="flex" alignItems="center">
+          <Typography variant="h5">Sort By: </Typography>
+          <Select
+            value={`${orderBy}-${order}`}
+            className={classes.mobileSortSelect}
+            onChange={(newValue) => {
+              const value = newValue.target.value as string;
+              const [newOrderBy, newOrder] = value.split("-") as [
+                OrderKeys,
+                Order
+              ];
+              setOrder(newOrder);
+              setOrderBy(newOrderBy);
+            }}
+          >
+            {Object.values(OrderKeys).map((val) => {
+              return (
+                <MenuItem value={`${val}-desc`} key={val}>
+                  <Typography color="primary" variant="h4">
+                    {startCase(val)}
+                  </Typography>
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </Box>
+      </Hidden>
       <Box
         className={
           height && height > SMALL_HEIGHT
@@ -157,6 +194,7 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         tableLayout: "fixed",
       },
+      borderCollapse: "collapse",
     },
     switchWrapper: {
       padding: "0 16px",
@@ -170,7 +208,9 @@ const styles = (theme: Theme) =>
       backgroundColor: theme.palette.grey["400"],
       borderRadius: "20px",
     },
-    bounce: { animation: "$bounce 1s infinite alternate" },
+    mobileSortSelect: {
+      marginLeft: theme.spacing(2),
+    },
     allReefsText: {
       position: "absolute",
       left: 25,
@@ -180,6 +220,7 @@ const styles = (theme: Theme) =>
       textOverflow: "ellipsis",
       maxWidth: "90vw",
     },
+    bounce: { animation: "$bounce 1s infinite alternate" },
     "@keyframes bounce": {
       "0%": { transform: "translateY(0px)" },
       "100%": { transform: "translateY(-5px)" },
@@ -192,7 +233,13 @@ interface ReefTableProps
 
 interface ReefTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
-  isDrawerOpen: boolean;
+  isDrawerOpen?: boolean;
+  setDrawerOpen?: (isOpen: boolean) => void;
 }
+
+ReefTable.defaultProps = {
+  isDrawerOpen: false,
+  setDrawerOpen: () => {},
+};
 
 export default withStyles(styles)(ReefTable);

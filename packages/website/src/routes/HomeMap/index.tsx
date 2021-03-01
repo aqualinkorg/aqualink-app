@@ -68,7 +68,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
-              <ReefTable isDrawerOpen={isDrawerOpen} />
+              <ReefTable />
             </Grid>
           </Hidden>
           <Hidden smUp>
@@ -82,9 +82,10 @@ const Homepage = ({ classes }: HomepageProps) => {
               onChange={setDrawerOpen}
               open={isDrawerOpen}
             >
-              <div role="presentation" onClick={toggleDrawer}>
-                <ReefTable isDrawerOpen={isDrawerOpen} />
-              </div>
+              <ReefTable
+                setDrawerOpen={setDrawerOpen}
+                isDrawerOpen={isDrawerOpen}
+              />
             </SwipeableBottomSheet>
           </Hidden>
         </Grid>
