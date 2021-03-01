@@ -221,9 +221,15 @@ const createPois = async (
           return fs.existsSync(colonyFolderPath);
         })
         .map((record) => {
+          const point: Point = {
+            type: 'Point',
+            coordinates: [record.long, record.lat],
+          };
+
           return {
             name: COLONY_PREFIX + record.colony,
             reef,
+            polygon: point,
           };
         });
     })

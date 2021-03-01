@@ -6,7 +6,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  Index,
 } from 'typeorm';
+import { GeoJSON } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
 import { SurveyMedia } from '../surveys/survey-media.entity';
 
@@ -26,6 +28,15 @@ export class ReefPointOfInterest {
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;
+
+  @Column({
+    type: 'geometry',
+    unique: true,
+    srid: 4326,
+    nullable: true,
+  })
+  @Index({ spatial: true })
+  polygon: GeoJSON;
 
   @CreateDateColumn()
   createdAt: Date;
