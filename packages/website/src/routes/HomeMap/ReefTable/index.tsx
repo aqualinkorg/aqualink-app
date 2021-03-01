@@ -1,5 +1,5 @@
-import React, { ChangeEvent, MouseEvent, useState } from "react";
-import { startCase } from "lodash";
+import React, { ChangeEvent, MouseEvent, ReactNode, useState } from "react";
+import { startCase, times } from "lodash";
 import {
   Box,
   CircularProgress,
@@ -17,6 +17,12 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
+import {
+  ArrowDownward,
+  ArrowDropDown,
+  ArrowDropUp,
+  ArrowUpward,
+} from "@material-ui/icons";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
 import { Order, OrderKeys } from "./utils";
@@ -130,15 +136,27 @@ const ReefTable = ({
               setOrderBy(newOrderBy);
             }}
           >
-            {Object.values(OrderKeys).map((val) => {
-              return (
-                <MenuItem value={`${val}-desc`} key={val}>
-                  <Typography color="primary" variant="h4">
-                    {startCase(val)}
-                  </Typography>
-                </MenuItem>
-              );
-            })}
+            {Object.values(OrderKeys).reduce<ReactNode[]>((elements, val) => {
+              return [
+                ...elements,
+                ...times(2, (i) => {
+                  const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
+                  return (
+                    <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
+                      <Typography color="primary" variant="h4">
+                        {startCase(val)}
+                        {"  "}
+                        {itemOrder === "asc" ? (
+                          <ArrowDownward fontSize="small" />
+                        ) : (
+                          <ArrowUpward fontSize="small" />
+                        )}
+                      </Typography>
+                    </MenuItem>
+                  );
+                }),
+              ];
+            }, [])}
           </Select>
         </Box>
       </Hidden>
