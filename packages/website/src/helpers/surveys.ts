@@ -42,7 +42,7 @@ export const findImagesAtSurveyPoint = (
     (survey) => survey.surveyPointImage![point]
   );
   if (imagesAtPoint.length > 0) {
-    return sumBy(imagesAtPoint, (item) => item.length);
+    return sumBy(imagesAtPoint, "length");
   }
   return 0;
 };
