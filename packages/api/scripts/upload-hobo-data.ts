@@ -3,7 +3,6 @@ import fs from 'fs';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
-import { TimeSeriesService } from '../src/time-series/time-series.service';
 import { Reef } from '../src/reefs/reefs.entity';
 import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
 import { Metrics } from '../src/time-series/metrics.entity';
@@ -13,6 +12,7 @@ import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
+import { uploadHoboData } from '../src/utils/import-hobo-data';
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
@@ -41,8 +41,6 @@ const { argv } = yargs
     type: 'string',
     demandOption: true,
   });
-
-// const { BACKEND_URL } = process.env;
 
 async function run() {
   const logger = new Logger('ParseHoboData');
@@ -75,24 +73,24 @@ async function run() {
     connection.getRepository(SurveyMedia),
   );
 
-  const timeSeriesService = new TimeSeriesService(
-    connection.getRepository(Reef),
-    connection.getRepository(ReefPointOfInterest),
-    connection.getRepository(Metrics),
-    connection.getRepository(TimeSeries),
-    connection.getRepository(User),
-    connection.getRepository(Survey),
-    connection.getRepository(SurveyMedia),
-    connection.getRepository(Sources),
-    googleCloudService,
-  );
-
   logger.log('Uploading hobo data');
-  const dbIdtTReefId = await timeSeriesService.uploadHoboData(
+  const dbIdtTReefId = await uploadHoboData(
     file,
     aliasMap,
     userEmail,
+    googleCloudService,
+    {
+      reefRepository: connection.getRepository(Reef),
+      poiRepository: connection.getRepository(ReefPointOfInterest),
+      metricsRepository: connection.getRepository(Metrics),
+      timeSeriesRepository: connection.getRepository(TimeSeries),
+      userRepository: connection.getRepository(User),
+      surveyRepository: connection.getRepository(Survey),
+      surveyMediaRepository: connection.getRepository(SurveyMedia),
+      sourcesRepository: connection.getRepository(Sources),
+    },
   );
+
   logger.log('Finished uploading hobo data');
   logger.log(dbIdtTReefId);
 }

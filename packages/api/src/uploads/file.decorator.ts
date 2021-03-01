@@ -2,6 +2,7 @@ import { UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import MulterGoogleCloudStorage from 'multer-google-storage';
 import * as path from 'path';
+import { random, times } from 'lodash';
 import { validateMimetype } from './mimetypes';
 import { fileFilter } from './file.filter';
 
@@ -12,10 +13,7 @@ export const getRandomName = (
   type: string | undefined,
 ) => {
   const extension = path.extname(file);
-  const randomString = Array(16)
-    .fill(null)
-    .map(() => Math.round(Math.random() * 15).toString(16))
-    .join('');
+  const randomString = times(16, () => random(15).toString(16)).join('');
   const fullname = `${prefix}-${type}-${randomString}${extension}`;
   return path.join(folder, fullname);
 };
