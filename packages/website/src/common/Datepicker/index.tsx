@@ -32,7 +32,7 @@ const DatePicker = ({
     <Grid item>
       <Box display="flex" alignItems="flex-end">
         <Typography variant={nameVariant || "h6"} color="textSecondary">
-          {dateName ? `${dateName}:` : "Date:"}
+          {`${dateName || "Date"}:`}
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
