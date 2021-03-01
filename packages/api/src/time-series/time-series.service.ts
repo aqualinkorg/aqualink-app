@@ -1,18 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import _, { omit, zipObject } from 'lodash';
+import _, { omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
+import { DataRangeDto } from './dto/data-range.dto';
 
 @Injectable()
 export class TimeSeriesService {
+  private readonly metricsObject = Object.values(Metric).reduce(
+    (obj, key) => ({ ...obj, [key]: [] }),
+    {},
+  );
+
   constructor(
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
+
+  private groupByMetric(data: any[]) {
+    return _(data)
+      .groupBy('metric')
+      .mapValues((groupedData) => {
+        return groupedData.map((o) => omit(o, 'metric'));
+      })
+      .merge(this.metricsObject);
+  }
 
   async findPoiData(
     startDate: Date,
@@ -25,14 +40,9 @@ export class TimeSeriesService {
     const data = await this.timeSeriesRepository
       .createQueryBuilder('time_series')
       .select('value')
-      .addSelect('metric.metric', 'metric')
+      .addSelect('metric')
       .addSelect('timestamp')
-      .innerJoin(
-        'time_series.metric',
-        'metric',
-        'metric.metric IN (:...metrics)',
-        { metrics },
-      )
+      .andWhere('metric IN (:...metrics)', { metrics })
       .andWhere('reef_id = :reefId', { reefId })
       .andWhere('poi_id = :poiId', { poiId })
       .andWhere('timestamp >= :startDate', { startDate })
@@ -40,16 +50,7 @@ export class TimeSeriesService {
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
-    const metricsKeys = Object.keys(Metric).map((key) => Metric[key]);
-    const metricsValues = Object.keys(Metric).map((props) => []);
-    const metricsObject = zipObject(metricsKeys, metricsValues);
-
-    return _(data)
-      .groupBy('metric')
-      .mapValues((groupedData) => {
-        return groupedData.map((o) => omit(o, 'metric'));
-      })
-      .merge(metricsObject);
+    return this.groupByMetric(data);
   }
 
   async findReefData(
@@ -63,14 +64,9 @@ export class TimeSeriesService {
     const data = await this.timeSeriesRepository
       .createQueryBuilder('time_series')
       .select('value')
-      .addSelect('metric.metric', 'metric')
+      .addSelect('metric')
       .addSelect('timestamp')
-      .innerJoin(
-        'time_series.metric',
-        'metric',
-        'metric.metric IN (:...metrics)',
-        { metrics },
-      )
+      .andWhere('metric IN (:...metrics)', { metrics })
       .andWhere('reef_id = :reefId', { reefId })
       .andWhere('poi_id is NULL')
       .andWhere('timestamp >= :startDate', { startDate })
@@ -78,15 +74,22 @@ export class TimeSeriesService {
       .orderBy('timestamp', 'ASC')
       .getRawMany();
 
-    const metricsKeys = Object.keys(Metric).map((key) => Metric[key]);
-    const metricsValues = Object.keys(Metric).map((props) => []);
-    const metricsObject = zipObject(metricsKeys, metricsValues);
+    return this.groupByMetric(data);
+  }
 
-    return _(data)
+  async findDataRange(dataRangeDto: DataRangeDto) {
+    const { reefId, poiId } = dataRangeDto;
+
+    const data = await this.timeSeriesRepository
+      .createQueryBuilder('time_series')
+      .select('metric')
+      .addSelect('MIN(timestamp)', 'minDate')
+      .addSelect('MAX(timestamp)', 'maxDate')
+      .andWhere('reef_id = :reefId', { reefId })
+      .andWhere('poi_id = :poiId', { poiId })
       .groupBy('metric')
-      .mapValues((groupedData) => {
-        return groupedData.map((o) => omit(o, 'metric'));
-      })
-      .merge(metricsObject);
+      .getRawMany();
+
+    return this.groupByMetric(data);
   }
 }
