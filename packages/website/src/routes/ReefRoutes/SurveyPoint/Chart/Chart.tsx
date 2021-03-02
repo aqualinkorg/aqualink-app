@@ -157,29 +157,31 @@ const Chart = ({
           />
         </Box>
       )}
-      <Grid container justify="center">
-        <Grid item xs={11} container justify="space-between" spacing={1}>
-          <Grid item>
-            <DatePicker
-              value={pickerStartDate}
-              dateName="START DATE"
-              nameVariant="subtitle1"
-              pickerSize="small"
-              maxDate={new Date(pickerEndDate)}
-              onChange={onStartDateChange}
-            />
-          </Grid>
-          <Grid item>
-            <DatePicker
-              value={pickerEndDate}
-              dateName="END DATE"
-              nameVariant="subtitle1"
-              pickerSize="small"
-              onChange={onEndDateChange}
-            />
+      {!ishoboDataRangeLoading && (
+        <Grid container justify="center">
+          <Grid item xs={11} container justify="space-between" spacing={1}>
+            <Grid item>
+              <DatePicker
+                value={pickerStartDate}
+                dateName="START DATE"
+                nameVariant="subtitle1"
+                pickerSize="small"
+                maxDate={new Date(pickerEndDate)}
+                onChange={onStartDateChange}
+              />
+            </Grid>
+            <Grid item>
+              <DatePicker
+                value={pickerEndDate}
+                dateName="END DATE"
+                nameVariant="subtitle1"
+                pickerSize="small"
+                onChange={onEndDateChange}
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 };
