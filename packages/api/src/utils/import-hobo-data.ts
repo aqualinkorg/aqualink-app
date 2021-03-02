@@ -13,7 +13,7 @@ import { Point } from 'geojson';
 import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
-import { Reef } from '../reefs/reefs.entity';
+import { Reef, ReefStatus } from '../reefs/reefs.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -27,6 +27,10 @@ import {
 } from '../surveys/survey-media.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
+import { getRegion, getTimezones } from './reef.utils';
+import { getMMM, getMonthlyMaximums } from './temperature';
+import { Region } from '../regions/regions.entity';
+import { MonthlyMax } from '../reefs/monthly-max.entity';
 
 interface Coords {
   reef: number;
@@ -49,6 +53,8 @@ interface Repositories {
   surveyRepository: Repository<Survey>;
   surveyMediaRepository: Repository<SurveyMedia>;
   sourcesRepository: Repository<Sources>;
+  regionRepository: Repository<Region>;
+  monthlyMaxRepository: Repository<MonthlyMax>;
 }
 
 const EXTRACT_PATH = 'data';
@@ -105,42 +111,56 @@ const readCoordsFile = (rootPath: string, reefIds: Set<number>) => {
   });
 };
 
-const getReefRecords = (
+const getReefRecords = async (
   dataAsJson: Coords[],
   reefIds: Set<number>,
   aliasesMap: Record<number, string>,
+  regionRepository: Repository<Region>,
 ) => {
   // Group by reef
   const recordsGroupedByReef = groupBy(dataAsJson, 'reef');
 
   // Extract reef entities and calculate position of reef by averaging all each pois positions
-  const reefs = Array.from(reefIds).map((reefId) => {
-    const filteredReefCoords = recordsGroupedByReef[reefId];
+  const reefs = await Promise.all(
+    Array.from(reefIds).map(async (reefId) => {
+      const filteredReefCoords = recordsGroupedByReef[reefId];
 
-    const reefRecord = filteredReefCoords.reduce(
-      (previous, record) => {
-        return {
-          ...previous,
-          lat: previous.lat + record.lat,
-          long: previous.long + record.long,
-        };
-      },
-      { reef: reefId, colony: 0, lat: 0, long: 0 },
-    );
+      const reefRecord = filteredReefCoords.reduce(
+        (previous, record) => {
+          return {
+            ...previous,
+            lat: previous.lat + record.lat,
+            long: previous.long + record.long,
+          };
+        },
+        { reef: reefId, colony: 0, lat: 0, long: 0 },
+      );
 
-    const point: Point = {
-      type: 'Point',
-      coordinates: [
-        reefRecord.long / filteredReefCoords.length,
-        reefRecord.lat / filteredReefCoords.length,
-      ],
-    };
+      const point: Point = {
+        type: 'Point',
+        coordinates: [
+          reefRecord.long / filteredReefCoords.length,
+          reefRecord.lat / filteredReefCoords.length,
+        ],
+      };
 
-    return {
-      name: aliasesMap[reefId],
-      polygon: point,
-    };
-  });
+      const [longitude, latitude] = point.coordinates;
+      const region = await getRegion(longitude, latitude, regionRepository);
+      const maxMonthlyMean = await getMMM(longitude, latitude);
+
+      const timezones = getTimezones(latitude, longitude) as string[];
+
+      return {
+        name: aliasesMap[reefId],
+        polygon: point,
+        region,
+        maxMonthlyMean,
+        approved: true,
+        timezone: timezones[0],
+        status: ReefStatus.Approved,
+      };
+    }),
+  );
 
   return { recordsGroupedByReef, reefs };
 };
@@ -150,6 +170,7 @@ const createReefs = async (
   user: User,
   reefRepository: Repository<Reef>,
   userRepository: Repository<User>,
+  monthlyMaxRepository: Repository<MonthlyMax>,
   aliasesToId: Dictionary<string>,
 ) => {
   logger.log('Saving reefs');
@@ -175,6 +196,21 @@ const createReefs = async (
         }
 
         throw err;
+      });
+    }),
+  );
+
+  await Promise.all(
+    reefEntities.map(async (reef) => {
+      const point: Point = reef.polygon as Point;
+      const [longitude, latitude] = point.coordinates;
+      const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+
+      return monthlyMaximums.map(({ month, temperature }) => {
+        return (
+          temperature &&
+          monthlyMaxRepository.insert({ reef, month, temperature })
+        );
       });
     }),
   );
@@ -441,10 +477,11 @@ export const uploadHoboData = async (
 
   const dataAsJson = readCoordsFile(rootPath, reefIds);
 
-  const { recordsGroupedByReef, reefs } = getReefRecords(
+  const { recordsGroupedByReef, reefs } = await getReefRecords(
     dataAsJson,
     reefIds,
     aliasesMap,
+    repositories.regionRepository,
   );
 
   const { reefEntities, dbIdToXLSXId } = await createReefs(
@@ -452,6 +489,7 @@ export const uploadHoboData = async (
     user,
     repositories.reefRepository,
     repositories.userRepository,
+    repositories.monthlyMaxRepository,
     aliasesToId,
   );
 

@@ -12,6 +12,8 @@ import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
 import { uploadHoboData } from '../src/utils/import-hobo-data';
+import { Region } from '../src/regions/regions.entity';
+import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
@@ -86,6 +88,8 @@ async function run() {
       surveyRepository: connection.getRepository(Survey),
       surveyMediaRepository: connection.getRepository(SurveyMedia),
       sourcesRepository: connection.getRepository(Sources),
+      regionRepository: connection.getRepository(Region),
+      monthlyMaxRepository: connection.getRepository(MonthlyMax),
     },
   );
 
