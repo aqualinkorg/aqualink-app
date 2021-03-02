@@ -32,6 +32,8 @@ describe("Reef Map", () => {
             type: "Polygon",
             coordinates: [[[0, 0]]],
           }}
+          reefId={1}
+          surveyPoints={[]}
         />
       </Provider>
     ).container;

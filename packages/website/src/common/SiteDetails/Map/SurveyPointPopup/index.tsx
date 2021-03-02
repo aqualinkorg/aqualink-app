@@ -12,14 +12,20 @@ import {
 import { Popup } from "react-leaflet";
 import { Launch } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { Pois } from "../../../../store/Reefs/types";
+import {
+  clearHoboData,
+  clearHoboDataRange,
+} from "../../../../store/Reefs/selectedReefSlice";
 
 const SurveyPointPopup = ({
   reefId,
   point,
   classes,
 }: SurveyPointPopupProps) => {
+  const dispatch = useDispatch();
   return (
     <Popup closeButton={false} autoPan={false}>
       <Card className={classes.surveyPointPopup}>
@@ -38,7 +44,13 @@ const SurveyPointPopup = ({
           <Grid item>
             <Tooltip title="View survey point" placement="top" arrow>
               <Link to={`/reefs/${reefId}/points/${point.id}`}>
-                <IconButton className={classes.viewButton}>
+                <IconButton
+                  onClick={() => {
+                    dispatch(clearHoboData());
+                    dispatch(clearHoboDataRange());
+                  }}
+                  className={classes.viewButton}
+                >
                   <Launch color="primary" />
                 </IconButton>
               </Link>
