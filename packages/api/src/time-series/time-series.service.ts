@@ -44,7 +44,7 @@ export class TimeSeriesService {
     return hourly
       ? this.timeSeriesRepository
           .createQueryBuilder('time_series')
-          .select('avg(value)')
+          .select('avg(value)', 'value')
           .addSelect('metric')
           .addSelect("date_trunc('hour', timestamp)", 'timestamp')
           .andWhere('metric IN (:...metrics)', { metrics })
