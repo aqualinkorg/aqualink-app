@@ -168,6 +168,7 @@ const Chart = ({
                 nameVariant="subtitle1"
                 pickerSize="small"
                 maxDate={new Date(pickerEndDate)}
+                autoOk={false}
                 onChange={onStartDateChange}
               />
             </Grid>
@@ -177,6 +178,7 @@ const Chart = ({
                 dateName="END DATE"
                 nameVariant="subtitle1"
                 pickerSize="small"
+                autoOk={false}
                 onChange={onEndDateChange}
               />
             </Grid>
