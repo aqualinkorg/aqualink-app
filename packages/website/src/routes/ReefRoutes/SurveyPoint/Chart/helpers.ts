@@ -17,17 +17,13 @@ export const calculateCardMetrics = (
   const { bottomTemperature: spotterBottomTemperature } = spotterData || {};
   const hasHoboData = hoboBottomTemperature.length > 0;
 
-  const display =
-    hasHoboData ||
-    (spotterBottomTemperature && spotterBottomTemperature?.length > 0);
-
   const bottomTemperature = hasHoboData
     ? hoboBottomTemperature
     : spotterBottomTemperature;
 
-  const minSurface = display ? formatNumber(min(satelliteSurface), 1) : "--";
-  const maxSurface = display ? formatNumber(max(satelliteSurface), 1) : "--";
-  const meanSurface = display ? formatNumber(mean(satelliteSurface), 1) : "--";
+  const minSurface = formatNumber(min(satelliteSurface), 1);
+  const maxSurface = formatNumber(max(satelliteSurface), 1);
+  const meanSurface = formatNumber(mean(satelliteSurface), 1);
 
   const minBottom = bottomTemperature
     ? formatNumber(minBy(bottomTemperature, (item) => item.value)?.value, 1)

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
 import type {
+  HoboDataRangeRequestParams,
   HoboDataRequestParams,
   Pois,
   Position,
@@ -11,12 +12,13 @@ import type {
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
-import { mapHoboData } from "./helpers";
+import { mapHoboData, mapHoboDataRanges } from "./helpers";
 
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
   loading: true,
   hoboDataLoading: false,
+  hoboDataRangeLoading: false,
   spotterDataLoading: false,
   error: null,
 };
@@ -106,6 +108,35 @@ export const reefHoboDataRequest = createAsyncThunk<
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
     }
+  },
+  {
+    // If another hobo data action is pending, cancel this request before it starts.
+    condition(arg: HoboDataRequestParams, { getState }) {
+      const {
+        selectedReef: { hoboDataRangeLoading },
+      } = getState();
+      return !hoboDataRangeLoading;
+    },
+  }
+);
+
+export const reefHoboDataRangeRequest = createAsyncThunk<
+  SelectedReefState["hoboDataRange"],
+  HoboDataRangeRequestParams,
+  CreateAsyncThunkTypes
+>(
+  "selectedReef/hoboDataRangeRequest",
+  async (
+    { reefId, pointId }: HoboDataRangeRequestParams,
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await reefServices.getReefHoboDataRange(reefId, pointId);
+      return mapHoboDataRanges(data);
+    } catch (err) {
+      const error: AxiosError<SelectedReefState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -168,6 +199,8 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
+    clearHoboData: (state) => ({ ...state, hoboData: undefined }),
+    clearHoboDataRange: (state) => ({ ...state, hoboDataRange: undefined }),
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -257,6 +290,32 @@ const selectedReefSlice = createSlice({
         error: null,
       };
     });
+
+    builder.addCase(
+      reefHoboDataRangeRequest.fulfilled,
+      (state, action: PayloadAction<SelectedReefState["hoboDataRange"]>) => ({
+        ...state,
+        hoboDataRange: action.payload,
+        hoboDataRangeLoading: false,
+      })
+    );
+
+    builder.addCase(
+      reefHoboDataRangeRequest.rejected,
+      (state, action: PayloadAction<SelectedReefState["error"]>) => ({
+        ...state,
+        error: action.payload,
+        hoboDataRangeLoading: false,
+      })
+    );
+
+    builder.addCase(reefHoboDataRangeRequest.pending, (state) => {
+      return {
+        ...state,
+        hoboDataRangeLoading: true,
+        error: null,
+      };
+    });
   },
 });
 
@@ -271,6 +330,10 @@ export const reefSpotterDataSelector = (
 export const reefHoboDataSelector = (
   state: RootState
 ): SelectedReefState["hoboData"] => state.selectedReef.hoboData;
+
+export const reefHoboDataRangeSelector = (
+  state: RootState
+): SelectedReefState["hoboDataRange"] => state.selectedReef.hoboDataRange;
 
 export const reefDraftSelector = (
   state: RootState
@@ -289,6 +352,11 @@ export const reefHoboDataLoadingSelector = (
   state: RootState
 ): SelectedReefState["hoboDataLoading"] => state.selectedReef.hoboDataLoading;
 
+export const reefHoboDataRangeLoadingSelector = (
+  state: RootState
+): SelectedReefState["hoboDataRangeLoading"] =>
+  state.selectedReef.hoboDataRangeLoading;
+
 export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
@@ -298,6 +366,8 @@ export const {
   setSelectedReef,
   setReefData,
   clearReefSpotterData,
+  clearHoboData,
+  clearHoboDataRange,
   setReefPois,
 } = selectedReefSlice.actions;
 

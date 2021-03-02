@@ -8,11 +8,16 @@ import {
   WithStyles,
   createStyles,
   CircularProgress,
+  useTheme,
+  useMediaQuery,
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
-import { reefSpotterDataLoadingSelector } from "../../../../store/Reefs/selectedReefSlice";
+import {
+  reefHoboDataLoadingSelector,
+  reefSpotterDataLoadingSelector,
+} from "../../../../store/Reefs/selectedReefSlice";
 import {
   DailyData,
   SofarValue,
@@ -30,7 +35,11 @@ const TempAnalysis = ({
   hoboBottomTemperature,
   classes,
 }: TempAnalysisProps) => {
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
+  const hoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+  const loading = spotterDataLoading || hoboDataLoading;
   const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
   const {
     maxSurface,
@@ -46,140 +55,154 @@ const TempAnalysis = ({
   );
   const formattedStartDate = moment(startDate).format("MM/DD/YYYY");
   const formattedEndDate = moment(endDate).format("MM/DD/YYYY");
+  const hasDailyData = filteredDailyData.length > 0;
   const hasHoboData = hoboBottomTemperature.length > 0;
   const hasSpotterData =
     spotterData && spotterData.bottomTemperature.length > 0;
 
   return (
-    <Card className={classes.tempAnalysisCard}>
-      <Typography variant="subtitle1" color="textSecondary">
-        TEMP ANALYSIS
-      </Typography>
-      <Typography className={classes.dates} variant="subtitle2">
-        {formattedStartDate} - {formattedEndDate}
-      </Typography>
-      <Grid
-        className={classes.metricsWrapper}
-        container
-        justify="space-between"
-        alignItems="flex-end"
-      >
-        {spotterDataLoading ? (
-          <Box
-            height="100%"
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <CircularProgress size="120px" thickness={1} />
-          </Box>
-        ) : (
-          <>
-            <Grid item>
-              <Grid
-                className={classes.metrics}
-                container
-                direction="column"
-                item
-                spacing={3}
-              >
-                <Grid className={classes.rotatedText} item>
-                  <Typography variant="caption" color="textSecondary">
-                    MAX
-                  </Typography>
-                </Grid>
-                <Grid className={classes.rotatedText} item>
-                  <Typography variant="caption" color="textSecondary">
-                    MEAN
-                  </Typography>
-                </Grid>
-                <Grid className={classes.rotatedText} item>
-                  <Typography variant="caption" color="textSecondary">
-                    MIN
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container direction="column" item spacing={3}>
-                <Grid item>
-                  <Typography
-                    className={classes.surfaceText}
-                    variant="subtitle2"
-                  >
-                    SURFACE
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {maxSurface} °C
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {meanSurface} °C
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {minSurface} °C
-                  </Typography>
+    <Box
+      mt={
+        !isTablet && !loading && hasDailyData && !hasSpotterData && !hasHoboData
+          ? "115px"
+          : "0px"
+      }
+    >
+      <Card className={classes.tempAnalysisCard}>
+        <Typography variant="subtitle1" color="textSecondary">
+          TEMP ANALYSIS
+        </Typography>
+        <Typography className={classes.dates} variant="subtitle2">
+          {formattedStartDate} - {formattedEndDate}
+        </Typography>
+        <Grid
+          className={classes.metricsWrapper}
+          container
+          justify="space-between"
+          alignItems="flex-end"
+        >
+          {loading ? (
+            <Box
+              height="100%"
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <CircularProgress size="120px" thickness={1} />
+            </Box>
+          ) : (
+            <>
+              <Grid item>
+                <Grid
+                  className={classes.metrics}
+                  container
+                  direction="column"
+                  item
+                  spacing={3}
+                >
+                  <Grid className={classes.rotatedText} item>
+                    <Typography variant="caption" color="textSecondary">
+                      MAX
+                    </Typography>
+                  </Grid>
+                  <Grid className={classes.rotatedText} item>
+                    <Typography variant="caption" color="textSecondary">
+                      MEAN
+                    </Typography>
+                  </Grid>
+                  <Grid className={classes.rotatedText} item>
+                    <Typography variant="caption" color="textSecondary">
+                      MIN
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container direction="column" item spacing={3}>
-                <Grid item>
-                  <Typography className={classes.buoyText} variant="subtitle2">
-                    {hasSpotterData && !hasHoboData ? `BUOY ${depth}m` : "HOBO"}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {maxBottom} °C
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {meanBottom} °C
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography
-                    className={classes.values}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {minBottom} °C
-                  </Typography>
+              <Grid item>
+                <Grid container direction="column" item spacing={3}>
+                  <Grid item>
+                    <Typography
+                      className={classes.surfaceText}
+                      variant="subtitle2"
+                    >
+                      SURFACE
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {maxSurface} °C
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {meanSurface} °C
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {minSurface} °C
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </>
-        )}
-      </Grid>
-    </Card>
+              <Grid item>
+                <Grid container direction="column" item spacing={3}>
+                  <Grid item>
+                    <Typography
+                      className={classes.buoyText}
+                      variant="subtitle2"
+                    >
+                      {hasSpotterData && !hasHoboData
+                        ? `BUOY ${depth}m`
+                        : "HOBO"}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {maxBottom} °C
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {meanBottom} °C
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {minBottom} °C
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </>
+          )}
+        </Grid>
+      </Card>
+    </Box>
   );
 };
 

@@ -938,8 +938,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           </mock-typography>
         </mock-box>
         <mock-box
-          height="240px"
-          mt="32px"
+          mb="188px"
+          mt="16px"
         >
           <div
             class="MuiPaper-root MuiAlert-root MuiAlert-standardWarning MuiPaper-elevation0"
@@ -963,7 +963,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               class="MuiAlert-message"
             >
               <mock-typography>
-                No Smart Buoy or HOBO data available in this time range.
+                No HOBO data available - data available between 11/02/2017 and 02/02/2020.
               </mock-typography>
             </div>
           </div>
@@ -1000,7 +1000,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       inputprops="[object Object]"
                       name="datePicker"
                       size="small"
-                      value="02/22/2021"
+                      value="11/02/2017"
                       variant="standard"
                     />
                     <mock-dialog
@@ -1045,9 +1045,17 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                 >
                                   <mock-typography
                                     align="center"
+                                    class="MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
                                     variant="body1"
                                   >
-                                    February 2021
+                                    November 2017
+                                  </mock-typography>
+                                  <mock-typography
+                                    align="center"
+                                    class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
+                                    variant="body1"
+                                  >
+                                    March 2021
                                   </mock-typography>
                                 </div>
                                 <mock-iconbutton
@@ -1120,10 +1128,42 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                             <div
                               class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendar-transitionContainer"
                             >
-                              <div>
+                              <div
+                                class="MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
+                              >
                                 <div
                                   class="MuiPickersCalendar-week"
                                 >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
                                   <div
                                     role="presentation"
                                   >
@@ -1158,7 +1198,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1199,6 +1239,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1229,10 +1273,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
-                                </div>
-                                <div
-                                  class="MuiPickersCalendar-week"
-                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1308,6 +1348,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1338,10 +1382,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
-                                </div>
-                                <div
-                                  class="MuiPickersCalendar-week"
-                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1417,6 +1457,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1447,10 +1491,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
-                                </div>
-                                <div
-                                  class="MuiPickersCalendar-week"
-                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1470,7 +1510,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1481,6 +1521,1335 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        23
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        24
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        25
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        26
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        27
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        28
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        1
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        2
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
+                              >
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        28
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        1
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        2
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        3
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        4
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        5
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        6
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        7
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        8
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        9
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        10
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        11
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        12
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        13
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        14
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        15
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        16
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        17
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        18
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        19
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        20
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        21
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        22
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        23
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        24
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        25
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        26
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        27
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        28
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        31
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        1
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        2
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        3
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </mock-dialogcontent>
+                      <mock-dialogactions
+                        classes="[object Object]"
+                      >
+                        <mock-button
+                          color="primary"
+                        >
+                          Today
+                        </mock-button>
+                        <mock-button
+                          color="primary"
+                        >
+                          Cancel
+                        </mock-button>
+                        <mock-button
+                          color="primary"
+                        >
+                          OK
+                        </mock-button>
+                      </mock-dialogactions>
+                    </mock-dialog>
+                  </div>
+                </mock-box>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-box
+                  alignitems="flex-end"
+                  display="flex"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle1"
+                  >
+                    END DATE:
+                  </mock-typography>
+                  <div
+                    class="DatePicker-datePicker-47"
+                  >
+                    <mock-textfield
+                      classname="DatePicker-textField-49"
+                      error="false"
+                      helpertext=""
+                      inputprops="[object Object]"
+                      name="datePicker"
+                      size="small"
+                      value="02/02/2020"
+                      variant="standard"
+                    />
+                    <mock-dialog
+                      classes="[object Object]"
+                      open="false"
+                      role="dialog"
+                    >
+                      <mock-dialogcontent
+                        classname="MuiPickersModal-dialog"
+                      >
+                        <div
+                          class="MuiPickersBasePicker-container"
+                        >
+                          <div
+                            class="MuiPickersBasePicker-pickerView"
+                          >
+                            <div>
+                              <div
+                                class="MuiPickersCalendarHeader-switchHeader"
+                              >
+                                <mock-iconbutton
+                                  classname="MuiPickersCalendarHeader-iconButton"
+                                  disabled="false"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                                    />
+                                    <path
+                                      d="M0 0h24v24H0V0z"
+                                      fill="none"
+                                    />
+                                  </svg>
+                                </mock-iconbutton>
+                                <div
+                                  class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendarHeader-transitionContainer"
+                                >
+                                  <mock-typography
+                                    align="center"
+                                    class="MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
+                                    variant="body1"
+                                  >
+                                    February 2020
+                                  </mock-typography>
+                                  <mock-typography
+                                    align="center"
+                                    class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
+                                    variant="body1"
+                                  >
+                                    March 2021
+                                  </mock-typography>
+                                </div>
+                                <mock-iconbutton
+                                  classname="MuiPickersCalendarHeader-iconButton"
+                                  disabled="false"
+                                >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="MuiSvgIcon-root"
+                                    focusable="false"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                    />
+                                    <path
+                                      d="M0 0h24v24H0V0z"
+                                      fill="none"
+                                    />
+                                  </svg>
+                                </mock-iconbutton>
+                              </div>
+                              <div
+                                class="MuiPickersCalendarHeader-daysHeader"
+                              >
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Su
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Mo
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Tu
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  We
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Th
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Fr
+                                </mock-typography>
+                                <mock-typography
+                                  classname="MuiPickersCalendarHeader-dayLabel"
+                                  variant="caption"
+                                >
+                                  Sa
+                                </mock-typography>
+                              </div>
+                            </div>
+                            <div
+                              class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendar-transitionContainer"
+                            >
+                              <div
+                                class="MuiPickersSlideTransition-slideEnter-right MuiPickersSlideTransition-slideEnterActive"
+                              >
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        26
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        27
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        28
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
+                                      tabindex="-1"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        31
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        1
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        2
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        3
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        4
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        5
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        6
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        7
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        8
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        9
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        10
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        11
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        12
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        13
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        14
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        15
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        16
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        17
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        18
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        19
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        20
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        21
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        22
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                </div>
+                                <div
+                                  class="MuiPickersCalendar-week"
+                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1556,10 +2925,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
-                                </div>
-                                <div
-                                  class="MuiPickersCalendar-week"
-                                >
                                   <div
                                     role="presentation"
                                   >
@@ -1579,269 +2944,22 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-current"
-                                      tabindex="-1"
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
                                     >
                                       <mock-typography
                                         color="inherit"
                                         variant="body2"
                                       >
-                                        1
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        2
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        3
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        4
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        5
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        6
+                                        29
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </div>
-                      </mock-dialogcontent>
-                      <mock-dialogactions
-                        classes="[object Object]"
-                      >
-                        <mock-button
-                          color="primary"
-                        >
-                          Today
-                        </mock-button>
-                        <mock-button
-                          color="primary"
-                        >
-                          Cancel
-                        </mock-button>
-                        <mock-button
-                          color="primary"
-                        >
-                          OK
-                        </mock-button>
-                      </mock-dialogactions>
-                    </mock-dialog>
-                  </div>
-                </mock-box>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item"
-              >
-                <mock-box
-                  alignitems="flex-end"
-                  display="flex"
-                >
-                  <mock-typography
-                    color="textSecondary"
-                    variant="subtitle1"
-                  >
-                    END DATE:
-                  </mock-typography>
-                  <div
-                    class="DatePicker-datePicker-47"
-                  >
-                    <mock-textfield
-                      classname="DatePicker-textField-49"
-                      error="false"
-                      helpertext=""
-                      inputprops="[object Object]"
-                      name="datePicker"
-                      size="small"
-                      value="03/01/2021"
-                      variant="standard"
-                    />
-                    <mock-dialog
-                      classes="[object Object]"
-                      open="false"
-                      role="dialog"
-                    >
-                      <mock-dialogcontent
-                        classname="MuiPickersModal-dialog"
-                      >
-                        <div
-                          class="MuiPickersBasePicker-container"
-                        >
-                          <div
-                            class="MuiPickersBasePicker-pickerView"
-                          >
-                            <div>
                               <div
-                                class="MuiPickersCalendarHeader-switchHeader"
+                                class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
                               >
-                                <mock-iconbutton
-                                  classname="MuiPickersCalendarHeader-iconButton"
-                                  disabled="false"
-                                >
-                                  <svg
-                                    aria-hidden="true"
-                                    class="MuiSvgIcon-root"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
-                                    />
-                                    <path
-                                      d="M0 0h24v24H0V0z"
-                                      fill="none"
-                                    />
-                                  </svg>
-                                </mock-iconbutton>
-                                <div
-                                  class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendarHeader-transitionContainer"
-                                >
-                                  <mock-typography
-                                    align="center"
-                                    variant="body1"
-                                  >
-                                    March 2021
-                                  </mock-typography>
-                                </div>
-                                <mock-iconbutton
-                                  classname="MuiPickersCalendarHeader-iconButton"
-                                  disabled="true"
-                                >
-                                  <svg
-                                    aria-hidden="true"
-                                    class="MuiSvgIcon-root"
-                                    focusable="false"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
-                                    />
-                                    <path
-                                      d="M0 0h24v24H0V0z"
-                                      fill="none"
-                                    />
-                                  </svg>
-                                </mock-iconbutton>
-                              </div>
-                              <div
-                                class="MuiPickersCalendarHeader-daysHeader"
-                              >
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Su
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Mo
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Tu
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  We
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Th
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Fr
-                                </mock-typography>
-                                <mock-typography
-                                  classname="MuiPickersCalendarHeader-dayLabel"
-                                  variant="caption"
-                                >
-                                  Sa
-                                </mock-typography>
-                              </div>
-                            </div>
-                            <div
-                              class="MuiPickersSlideTransition-transitionContainer MuiPickersCalendar-transitionContainer"
-                            >
-                              <div>
                                 <div
                                   class="MuiPickersCalendar-week"
                                 >
@@ -1864,7 +2982,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1879,8 +2997,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-dayDisabled"
-                                      tabindex="-1"
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      tabindex="0"
                                     >
                                       <mock-typography
                                         color="inherit"
@@ -2428,174 +3546,178 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 MuiGrid-grid-sm-5 MuiGrid-grid-md-11 MuiGrid-grid-lg-10"
           >
-            <mock-card
-              classname="TempAnalysis-tempAnalysisCard-50"
+            <mock-box
+              mt="0px"
             >
-              <mock-typography
-                color="textSecondary"
-                variant="subtitle1"
+              <mock-card
+                classname="TempAnalysis-tempAnalysisCard-50"
               >
-                TEMP ANALYSIS
-              </mock-typography>
-              <mock-typography
-                classname="TempAnalysis-dates-51"
-                variant="subtitle2"
-              >
-                02/22/2021
-                 - 
-                03/01/2021
-              </mock-typography>
-              <div
-                class="MuiGrid-root TempAnalysis-metricsWrapper-53 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
-              >
+                <mock-typography
+                  color="textSecondary"
+                  variant="subtitle1"
+                >
+                  TEMP ANALYSIS
+                </mock-typography>
+                <mock-typography
+                  classname="TempAnalysis-dates-51"
+                  variant="subtitle2"
+                >
+                  11/02/2017
+                   - 
+                  02/02/2020
+                </mock-typography>
                 <div
-                  class="MuiGrid-root MuiGrid-item"
+                  class="MuiGrid-root TempAnalysis-metricsWrapper-53 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
                 >
                   <div
-                    class="MuiGrid-root TempAnalysis-metrics-54 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                    class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
+                      class="MuiGrid-root TempAnalysis-metrics-54 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
-                      <mock-typography
-                        color="textSecondary"
-                        variant="caption"
+                      <div
+                        class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
                       >
-                        MAX
-                      </mock-typography>
+                        <mock-typography
+                          color="textSecondary"
+                          variant="caption"
+                        >
+                          MAX
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
+                      >
+                        <mock-typography
+                          color="textSecondary"
+                          variant="caption"
+                        >
+                          MEAN
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
+                      >
+                        <mock-typography
+                          color="textSecondary"
+                          variant="caption"
+                        >
+                          MIN
+                        </mock-typography>
+                      </div>
                     </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
                     <div
-                      class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
-                      <mock-typography
-                        color="textSecondary"
-                        variant="caption"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        MEAN
-                      </mock-typography>
+                        <mock-typography
+                          classname="TempAnalysis-surfaceText-55"
+                          variant="subtitle2"
+                        >
+                          SURFACE
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          - -
+                           °C
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          - -
+                           °C
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          - -
+                           °C
+                        </mock-typography>
+                      </div>
                     </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
                     <div
-                      class="MuiGrid-root TempAnalysis-rotatedText-52 MuiGrid-item"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
-                      <mock-typography
-                        color="textSecondary"
-                        variant="caption"
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
                       >
-                        MIN
-                      </mock-typography>
+                        <mock-typography
+                          classname="TempAnalysis-buoyText-56"
+                          variant="subtitle2"
+                        >
+                          HOBO
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          --
+                           °C
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          --
+                           °C
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item"
+                      >
+                        <mock-typography
+                          classname="TempAnalysis-values-57"
+                          color="textSecondary"
+                          variant="h5"
+                        >
+                          --
+                           °C
+                        </mock-typography>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-surfaceText-55"
-                        variant="subtitle2"
-                      >
-                        SURFACE
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-buoyText-56"
-                        variant="subtitle2"
-                      >
-                        HOBO
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <mock-typography
-                        classname="TempAnalysis-values-57"
-                        color="textSecondary"
-                        variant="h5"
-                      >
-                        --
-                         °C
-                      </mock-typography>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </mock-card>
+              </mock-card>
+            </mock-box>
           </div>
         </div>
       </div>

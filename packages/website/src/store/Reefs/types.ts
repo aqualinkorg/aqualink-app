@@ -105,6 +105,11 @@ interface Region {
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
+interface DataRange {
+  minDate: string;
+  maxDate: string;
+}
+
 export enum Metrics {
   alert = "alert",
   dhw = "dhw",
@@ -116,9 +121,14 @@ export enum Metrics {
 
 export type HoboDataResponse = {
   [key in Metrics]: {
+    avg?: number;
     value: number;
     timestamp: string;
   }[];
+};
+
+export type HoboDataRangeResponse = {
+  [key in Metrics]: DataRange[];
 };
 
 export interface HoboData {
@@ -128,6 +138,15 @@ export interface HoboData {
   surfaceTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
   sstAnomaly: SofarValue[];
+}
+
+export interface HoboDataRange {
+  alert: DataRange[];
+  dhw: DataRange[];
+  satelliteTemperature: DataRange[];
+  surfaceTemperature: DataRange[];
+  bottomTemperature: DataRange[];
+  sstAnomaly: DataRange[];
 }
 
 export interface SpotterData {
@@ -175,6 +194,11 @@ export interface HoboDataRequestParams {
   start: string;
   end: string;
   metrics: Metrics[];
+}
+
+export interface HoboDataRangeRequestParams {
+  reefId: string;
+  pointId: string;
 }
 
 export interface ReefRegisterResponseData {
@@ -230,7 +254,9 @@ export interface SelectedReefState {
   details?: Reef | null;
   spotterData?: SpotterData | null;
   hoboData?: HoboData;
+  hoboDataRange?: HoboDataRange;
   hoboDataLoading: boolean;
+  hoboDataRangeLoading: boolean;
   spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;

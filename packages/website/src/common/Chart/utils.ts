@@ -38,6 +38,24 @@ export const filterDailyData = (
   return ret;
 };
 
+export const filterHoboData = (
+  hoboData: SofarValue[],
+  from?: string,
+  to?: string
+): SofarValue[] => {
+  if (!from || !to) return hoboData;
+  const startDate = moment(from);
+  const endDate = moment(to);
+
+  return hoboData.filter((item) =>
+    inRange(
+      moment(item.timestamp).valueOf(),
+      startDate.valueOf(),
+      endDate.valueOf()
+    )
+  );
+};
+
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
   const dates = surveys.map((survey) => {
     if (survey.diveDate) {

@@ -1,6 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import type { TableRow } from "../Homepage/types";
-import type { HoboData, HoboDataResponse, Reef } from "./types";
+import type {
+  HoboData,
+  HoboDataRange,
+  HoboDataRangeResponse,
+  HoboDataResponse,
+  Reef,
+} from "./types";
 import { Metrics } from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
@@ -39,13 +45,40 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
   });
 };
 
-export const mapHoboData = (hoboData: HoboDataResponse): HoboData => {
-  return {
-    alert: hoboData[Metrics.alert],
-    bottomTemperature: hoboData[Metrics.bottomTemperature],
-    dhw: hoboData[Metrics.dhw],
-    satelliteTemperature: hoboData[Metrics.satelliteTemperature],
-    sstAnomaly: hoboData[Metrics.sstAnomaly],
-    surfaceTemperature: hoboData[Metrics.surfaceTemperature],
-  };
-};
+export const mapHoboData = (hoboData: HoboDataResponse): HoboData => ({
+  alert: hoboData[Metrics.alert].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+  bottomTemperature: hoboData[Metrics.bottomTemperature].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+  dhw: hoboData[Metrics.dhw].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+  satelliteTemperature: hoboData[Metrics.satelliteTemperature].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+  sstAnomaly: hoboData[Metrics.sstAnomaly].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+  surfaceTemperature: hoboData[Metrics.surfaceTemperature].map((item) => ({
+    value: item.avg || item.value,
+    timestamp: item.timestamp,
+  })),
+});
+
+export const mapHoboDataRanges = (
+  ranges: HoboDataRangeResponse
+): HoboDataRange => ({
+  alert: ranges[Metrics.alert],
+  bottomTemperature: ranges[Metrics.bottomTemperature],
+  dhw: ranges[Metrics.dhw],
+  satelliteTemperature: ranges[Metrics.satelliteTemperature],
+  sstAnomaly: ranges[Metrics.sstAnomaly],
+  surfaceTemperature: ranges[Metrics.surfaceTemperature],
+});

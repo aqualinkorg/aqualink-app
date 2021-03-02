@@ -15,6 +15,7 @@ import {
   ExclusionDateResponse,
   Metrics,
   HoboDataResponse,
+  HoboDataRangeResponse,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -49,7 +50,13 @@ const getReefHoboData = (
   metrics: Metrics[]
 ) =>
   requests.send<HoboDataResponse>({
-    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}`,
+    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=true`,
+    method: "GET",
+  });
+
+const getReefHoboDataRange = (reefId: string, pointId: string) =>
+  requests.send<HoboDataRangeResponse>({
+    url: `time-series/reefs/${reefId}/pois/${pointId}/range`,
     method: "GET",
   });
 
@@ -167,6 +174,7 @@ export default {
   getReefLiveData,
   getReefSpotterData,
   getReefHoboData,
+  getReefHoboDataRange,
   getReefPois,
   deleteReefPoi,
   registerReef,

@@ -13,11 +13,17 @@ import {
   reefDetailsSelector,
   reefRequest,
   reefLoadingSelector,
+  reefHoboDataRangeRequest,
+  reefHoboDataRangeSelector,
+  reefHoboDataRequest,
+  clearHoboDataRange,
+  clearHoboData,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
+import { Metrics } from "../../../store/Reefs/types";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -29,24 +35,52 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
+  const { bottomTemperature: hoboBottomTemperatureRange } =
+    useSelector(reefHoboDataRangeSelector) || {};
+  const loading = reefLoading || surveysLoading;
 
   // Always scroll to top on first render
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    return () => {
+      dispatch(clearHoboDataRange());
+      dispatch(clearHoboData());
+    };
+  }, [dispatch]);
+
+  // Get HOBO data range
+  useEffect(() => {
+    dispatch(reefHoboDataRangeRequest({ reefId: id, pointId }));
+  }, [dispatch, id, pointId]);
+
+  // Get HOBO data
+  useEffect(() => {
+    if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
+      const { minDate, maxDate } = hoboBottomTemperatureRange[0];
+      dispatch(
+        reefHoboDataRequest({
+          reefId: id,
+          pointId,
+          start: minDate,
+          end: maxDate,
+          metrics: [Metrics.bottomTemperature],
+        })
+      );
+    }
+  }, [dispatch, hoboBottomTemperatureRange, id, pointId]);
 
   useEffect(() => {
     if (!reef || reef.id !== reefIdNumber) {
       dispatch(reefRequest(id));
       dispatch(surveysRequest(id));
     }
-  }, [dispatch, id, reef, reefIdNumber]);
+  }, [dispatch, id, pointId, reef, reefIdNumber]);
 
   return (
     <>
       <NavBar searchLocation />
       {(reefLoading || surveysLoading) && <LinearProgress />}
-      {reef && (
+      {!loading && reef && (
         <>
           <BackButton reefId={id} bgColor={bgColor} />
           <InfoCard reef={reef} pointId={pointIdNumber} bgColor={bgColor} />

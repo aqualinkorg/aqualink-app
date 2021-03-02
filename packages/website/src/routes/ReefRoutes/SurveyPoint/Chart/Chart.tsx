@@ -18,16 +18,19 @@ import {
   convertHoboDataToLocalTime,
   convertSpotterDataToLocalTime,
   convertToLocalTime,
+  displayTimeInLocalTimezone,
   generateMonthlyMaxTimestamps,
 } from "../../../../helpers/dates";
 import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
 import {
   reefHoboDataLoadingSelector,
+  reefHoboDataRangeSelector,
   reefSpotterDataLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
 import { findChartPeriod, showYear } from "./helpers";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../../helpers/surveys";
+import { filterDailyData } from "../../../../common/Chart/utils";
 
 const Chart = ({
   reef,
@@ -42,6 +45,14 @@ const Chart = ({
   onEndDateChange,
   classes,
 }: ChartProps) => {
+  const { bottomTemperature: hoboBottomTemperatureRange } =
+    useSelector(reefHoboDataRangeSelector) || {};
+  const { minDate, maxDate } =
+    (hoboBottomTemperatureRange &&
+      hoboBottomTemperatureRange.length > 0 &&
+      hoboBottomTemperatureRange[0]) ||
+    {};
+  const ishoboDataRangeLoading = useSelector(reefHoboDataLoadingSelector);
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
   const surveys = filterSurveys(
@@ -55,9 +66,28 @@ const Chart = ({
 
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
 
-  const loading = isSpotterDataLoading || isHoboDataLoading;
-  const success = !loading && (hasHoboData || hasSpotterData);
-  const error = !loading && !success;
+  const loading =
+    isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
+
+  const success =
+    !loading &&
+    (hasHoboData ||
+      hasSpotterData ||
+      filterDailyData(reef.dailyData, startDate, endDate).length > 0);
+  const warning = !loading && !hasHoboData && !hasSpotterData;
+
+  const minDateLocal = displayTimeInLocalTimezone({
+    isoDate: minDate,
+    timeZone: reef.timezone,
+    format: "MM/DD/YYYY",
+    displayTimezone: false,
+  });
+  const maxDateLocal = displayTimeInLocalTimezone({
+    isoDate: maxDate,
+    timeZone: reef.timezone,
+    format: "MM/DD/YYYY",
+    displayTimezone: false,
+  });
 
   return (
     <>
@@ -75,6 +105,17 @@ const Chart = ({
           alignItems="center"
         >
           <CircularProgress size="120px" thickness={1} />
+        </Box>
+      )}
+      {warning && (
+        <Box mt="16px" mb={success ? "0px" : "188px"}>
+          <Alert severity="warning">
+            <Typography>
+              {minDateLocal && maxDateLocal
+                ? `No HOBO data available - data available between ${minDateLocal} and ${maxDateLocal}.`
+                : "No Smart Buoy or HOBO data available in this time range."}
+            </Typography>
+          </Alert>
         </Box>
       )}
       {success && (
@@ -114,15 +155,6 @@ const Chart = ({
             endDate={convertToLocalTime(endDate, reef.timezone)}
             showYear={showYear(startDate, endDate)}
           />
-        </Box>
-      )}
-      {error && (
-        <Box height="240px" mt="32px">
-          <Alert severity="warning">
-            <Typography>
-              No Smart Buoy or HOBO data available in this time range.
-            </Typography>
-          </Alert>
         </Box>
       )}
       <Grid container justify="center">
