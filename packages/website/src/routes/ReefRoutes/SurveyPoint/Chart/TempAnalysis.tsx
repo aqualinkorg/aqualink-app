@@ -119,7 +119,13 @@ const TempAnalysis = ({
                 </Grid>
               </Grid>
               <Grid item>
-                <Grid container direction="column" item spacing={3}>
+                <Grid
+                  className={classes.autoWidth}
+                  container
+                  direction="column"
+                  item
+                  spacing={3}
+                >
                   <Grid item>
                     <Typography
                       className={classes.surfaceText}
@@ -158,7 +164,13 @@ const TempAnalysis = ({
                 </Grid>
               </Grid>
               <Grid item>
-                <Grid container direction="column" item spacing={3}>
+                <Grid
+                  className={classes.autoWidth}
+                  container
+                  direction="column"
+                  item
+                  spacing={3}
+                >
                   <Grid item>
                     <Typography
                       className={classes.buoyText}
@@ -208,6 +220,9 @@ const TempAnalysis = ({
 
 const styles = () =>
   createStyles({
+    autoWidth: {
+      width: "auto",
+    },
     tempAnalysisCard: {
       padding: 16,
       height: 265,
@@ -226,6 +241,7 @@ const styles = () =>
     metrics: {
       position: "relative",
       bottom: 7,
+      width: "auto",
     },
     surfaceText: {
       color: "#70c2e0",
