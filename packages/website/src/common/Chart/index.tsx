@@ -41,6 +41,7 @@ export interface ChartProps {
   maxMonthlyMean: number | null;
   background?: boolean;
   showYear?: boolean;
+  extendDailyData?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -87,6 +88,7 @@ function Chart({
   maxMonthlyMean,
   background,
   showYear,
+  extendDailyData = true,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -270,13 +272,15 @@ function Chart({
         spotterSurface,
         hoboBottomTemperatureData,
         tempWithSurvey,
-        augmentSurfaceTemperature(
-          surfaceTemperatureData,
-          xAxisMin,
-          xAxisMax,
-          startDate,
-          endDate
-        ),
+        extendDailyData
+          ? augmentSurfaceTemperature(
+              surfaceTemperatureData,
+              xAxisMin,
+              xAxisMax,
+              startDate,
+              endDate
+            )
+          : surfaceTemperatureData,
         bottomTemperatureData,
         monthlyMaxTemp,
         selectedSurvey?.diveDate
