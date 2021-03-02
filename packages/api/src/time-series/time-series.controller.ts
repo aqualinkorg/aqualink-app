@@ -1,4 +1,11 @@
-import { Controller, ParseArrayPipe, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  ParseArrayPipe,
+  Get,
+  Param,
+  Query,
+  ParseBoolPipe,
+} from '@nestjs/common';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
@@ -15,12 +22,14 @@ export class TimeSeriesController {
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: Metric[],
+    @Query('hourly', ParseBoolPipe) hourly: boolean,
     @Param() poiDataDto: PoiDataDto,
   ) {
     return this.timeSeriesService.findPoiData(
       startDate,
       endDate,
       metrics,
+      hourly,
       poiDataDto,
     );
   }
@@ -30,12 +39,14 @@ export class TimeSeriesController {
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: Metric[],
+    @Query('hourly', ParseBoolPipe) hourly: boolean,
     @Param() reefDataDto: ReefDataDto,
   ) {
     return this.timeSeriesService.findReefData(
       startDate,
       endDate,
       metrics,
+      hourly,
       reefDataDto,
     );
   }
