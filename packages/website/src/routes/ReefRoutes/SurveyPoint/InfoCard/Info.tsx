@@ -29,10 +29,11 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
   );
   const { bottomTemperature: hoboBottomTemperature } =
     useSelector(reefHoboDataSelector) || {};
-  const { name: pointName, coordinates: pointCoordinates } =
+  const { name: pointName, polygon: pointPolygon } =
     reef.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);
-  const [lng, lat] = pointCoordinates || [];
+  const [lng, lat] =
+    pointPolygon?.type === "Point" ? pointPolygon.coordinates : [];
   const nHoboPoints = hoboBottomTemperature?.length || 0;
   const nSurveys = surveys.length;
   const nImages = findImagesAtSurveyPoint(surveys, pointId);

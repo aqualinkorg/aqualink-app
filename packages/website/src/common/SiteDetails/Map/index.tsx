@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { Map, TileLayer, Polygon, Marker } from "react-leaflet";
 import { useDispatch, useSelector } from "react-redux";
-import L from "leaflet";
+import L, { LatLngTuple } from "leaflet";
 import "./plugins/leaflet-tilelayer-subpixel-fix";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
+import { some } from "lodash";
 
 import SurveyPointPopup from "./SurveyPointPopup";
 import {
@@ -11,6 +12,7 @@ import {
   Position,
   SpotterPosition,
   Pois,
+  Point,
 } from "../../../store/Reefs/types";
 import { mapBounds } from "../../../helpers/mapBounds";
 
@@ -75,9 +77,30 @@ const ReefMap = ({
     return inputMap.flyTo(latLng, newZoom);
   };
 
+  // Fit the polygon constructed by the reef's center and its survey points
+  const fitSurveyPointsPolygon = useCallback(
+    (inputMap: L.Map, reefCenter: Point) => {
+      inputMap.fitBounds(
+        L.polygon([
+          [reefCenter.coordinates[1], reefCenter.coordinates[0]],
+          ...surveyPoints
+            .filter((item) => item.polygon?.type === "Point")
+            .map((item) => {
+              const coords = item.polygon?.coordinates as Position;
+              return [coords[1], coords[0]] as LatLngTuple;
+            }),
+        ]).getBounds()
+      );
+    },
+    [surveyPoints]
+  );
+
   useEffect(() => {
-    if (mapRef?.current?.leafletElement && focusedPoint?.coordinates) {
-      const [lng, lat] = focusedPoint.coordinates;
+    if (
+      mapRef?.current?.leafletElement &&
+      focusedPoint?.polygon?.type === "Point"
+    ) {
+      const [lng, lat] = focusedPoint.polygon.coordinates;
       setCenter(mapRef.current.leafletElement, [lat, lng], 15);
     }
   }, [focusedPoint]);
@@ -96,11 +119,13 @@ const ReefMap = ({
             draftReef.coordinates.longitude || polygon.coordinates[0]
           )
         );
+      } else if (some(surveyPoints, (item) => item.polygon?.type === "Point")) {
+        fitSurveyPointsPolygon(map, polygon);
       } else {
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
       }
     }
-  }, [mapRef, draftReef, polygon]);
+  }, [draftReef, fitSurveyPointsPolygon, polygon, surveyPoints]);
 
   const handleDragChange = useCallback(() => {
     const { current } = markerRef;
@@ -121,6 +146,7 @@ const ReefMap = ({
   return (
     <Map
       ref={mapRef}
+      maxZoom={17}
       zoom={13}
       dragging
       scrollWheelZoom={false}
@@ -144,11 +170,14 @@ const ReefMap = ({
           />
           {surveyPoints.map(
             (point) =>
-              point.coordinates && (
+              point?.polygon?.type === "Point" && (
                 <Marker
                   key={point.id}
                   icon={surveyPointIcon(point.id === selectedPointId)}
-                  position={[point.coordinates[1], point.coordinates[0]]}
+                  position={[
+                    point.polygon.coordinates[1],
+                    point.polygon.coordinates[0],
+                  ]}
                   onclick={() => setFocusedPoint(point)}
                 >
                   <SurveyPointPopup reefId={reefId} point={point} />

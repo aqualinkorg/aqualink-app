@@ -5,7 +5,6 @@ import type {
   HoboDataRangeRequestParams,
   HoboDataRequestParams,
   Pois,
-  Position,
   ReefUpdateParams,
   SelectedReefState,
   SpotterDataRequestParams,
@@ -46,13 +45,7 @@ export const reefRequest = createAsyncThunk<
       surveyPoints: surveyPoints.map((point) => ({
         id: point.id,
         name: point.name,
-        // TODO: Replace this with actual coordinates
-        coordinates:
-          data.polygon.type === "Point"
-            ? (data.polygon.coordinates.map(
-                (coord) => coord + Math.random() / 100
-              ) as Position)
-            : undefined,
+        polygon: point.polygon,
       })),
     };
   } catch (err) {
