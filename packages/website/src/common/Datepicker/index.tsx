@@ -50,7 +50,8 @@ const DatePicker = ({
               disableFuture
               value={value || null}
               onChange={onChange}
-              inputProps={{
+              InputProps={{
+                readOnly: true,
                 className: classes.textField,
               }}
               inputVariant="standard"
