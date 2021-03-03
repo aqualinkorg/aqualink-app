@@ -1,5 +1,5 @@
 import React, { ChangeEvent, MouseEvent, ReactNode, useState } from "react";
-import { startCase, times } from "lodash";
+import { times } from "lodash";
 import {
   Box,
   CircularProgress,
@@ -7,6 +7,7 @@ import {
   Hidden,
   MenuItem,
   Select,
+  SelectProps,
   Switch,
   Table,
   TableContainer,
@@ -20,7 +21,7 @@ import classNames from "classnames";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import SelectedReefCard from "./SelectedReefCard";
 import ReefTableBody from "./body";
-import { Order, OrderKeys } from "./utils";
+import { getOrderKeysFriendlyString, Order, OrderKeys } from "./utils";
 import {
   filterReefsWithSpotter,
   reefsListLoadingSelector,
@@ -37,6 +38,29 @@ import {
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 
 const SMALL_HEIGHT = 720;
+
+const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys).reduce<ReactNode[]>(
+  (elements, val) => [
+    ...elements,
+    ...times(2, (i) => {
+      const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
+      return (
+        <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
+          <Typography color="primary" variant="h4">
+            {getOrderKeysFriendlyString(val)}
+            {"  "}
+            {itemOrder === "asc" ? (
+              <ArrowDownward fontSize="small" />
+            ) : (
+              <ArrowUpward fontSize="small" />
+            )}
+          </Typography>
+        </MenuItem>
+      );
+    }),
+  ],
+  []
+);
 
 const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
@@ -64,10 +88,17 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   };
 
   // This function is used to prevent the drawer onClick close effect on mobile
-  const onSwitchClick = (
+  const onInteractiveClick = (
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
     event.stopPropagation();
+  };
+
+  const onMobileSelectChange: SelectProps["onChange"] = (newValue) => {
+    const value = newValue.target.value as string;
+    const [newOrderBy, newOrder] = value.split("-") as [OrderKeys, Order];
+    setOrder(newOrder);
+    setOrderBy(newOrderBy);
   };
   return (
     <>
@@ -101,7 +132,7 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
         <Box className={classes.switchWrapper}>
           <Switch
             checked={withSpotterOnly}
-            onClick={onSwitchClick}
+            onClick={onInteractiveClick}
             onChange={toggleSwitch}
             color="primary"
           />
@@ -117,46 +148,15 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
           paddingY={3}
           display="flex"
           alignItems="center"
-          onClick={(event) =>
-            // Stop Propagation, since the parent (HomeMap) closes the drawer on any click.
-            event.stopPropagation()
-          }
+          onClick={onInteractiveClick}
         >
           <Typography variant="h5">Sort By: </Typography>
           <Select
             value={`${orderBy}-${order}`}
             className={classes.mobileSortSelect}
-            onChange={(newValue) => {
-              const value = newValue.target.value as string;
-              const [newOrderBy, newOrder] = value.split("-") as [
-                OrderKeys,
-                Order
-              ];
-              setOrder(newOrder);
-              setOrderBy(newOrderBy);
-            }}
+            onChange={onMobileSelectChange}
           >
-            {Object.values(OrderKeys).reduce<ReactNode[]>((elements, val) => {
-              return [
-                ...elements,
-                ...times(2, (i) => {
-                  const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
-                  return (
-                    <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
-                      <Typography color="primary" variant="h4">
-                        {startCase(val)}
-                        {"  "}
-                        {itemOrder === "asc" ? (
-                          <ArrowDownward fontSize="small" />
-                        ) : (
-                          <ArrowUpward fontSize="small" />
-                        )}
-                      </Typography>
-                    </MenuItem>
-                  );
-                }),
-              ];
-            }, [])}
+            {MOBILE_SELECT_MENU_ITEMS}
           </Select>
         </Box>
       </Hidden>

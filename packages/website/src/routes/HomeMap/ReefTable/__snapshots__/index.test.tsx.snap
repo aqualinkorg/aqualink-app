@@ -83,6 +83,103 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
           paperprops="[object Object]"
         >
           <mock-menuitem
+            data-value="alert-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Alert
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="true"
+            data-value="alert-desc"
+            role="option"
+            selected="true"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Alert
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="depth-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Depth
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="depth-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Depth
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="dhw-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              DHW
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="dhw-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              DHW
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
             data-value="locationName-asc"
             role="option"
             selected="false"
@@ -140,103 +237,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               variant="h4"
             >
               Temp
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="depth-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Depth
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="depth-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Depth
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="dhw-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Dhw
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="dhw-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Dhw
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="alert-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Alert
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            aria-selected="true"
-            data-value="alert-desc"
-            role="option"
-            selected="true"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Alert
                 
               <arrowupward
                 font-size="small"
