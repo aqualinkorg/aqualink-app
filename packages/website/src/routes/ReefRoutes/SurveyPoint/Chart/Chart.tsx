@@ -24,6 +24,7 @@ import {
 import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
 import {
   reefHoboDataLoadingSelector,
+  reefHoboDataRangeLoadingSelector,
   reefHoboDataRangeSelector,
   reefSpotterDataLoadingSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
@@ -52,7 +53,7 @@ const Chart = ({
       hoboBottomTemperatureRange.length > 0 &&
       hoboBottomTemperatureRange[0]) ||
     {};
-  const ishoboDataRangeLoading = useSelector(reefHoboDataLoadingSelector);
+  const ishoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
   const surveys = filterSurveys(
