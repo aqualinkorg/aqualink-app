@@ -1,4 +1,4 @@
-import { chunk, Dictionary, groupBy, invert, keyBy, minBy } from 'lodash';
+import { chunk, Dictionary, groupBy, keyBy, minBy } from 'lodash';
 import { Repository } from 'typeorm';
 import {
   BadRequestException,
@@ -9,11 +9,11 @@ import unzipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import xlsx from 'xlsx';
-import { Point } from 'geojson';
+import { Point, GeoJSON } from 'geojson';
 import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
-import { Reef } from '../reefs/reefs.entity';
+import { Reef, ReefStatus } from '../reefs/reefs.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -27,6 +27,10 @@ import {
 } from '../surveys/survey-media.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
+import { getRegion, getTimezones } from './reef.utils';
+import { getMMM, getMonthlyMaximums } from './temperature';
+import { Region } from '../regions/regions.entity';
+import { MonthlyMax } from '../reefs/monthly-max.entity';
 
 interface Coords {
   reef: number;
@@ -49,6 +53,8 @@ interface Repositories {
   surveyRepository: Repository<Survey>;
   surveyMediaRepository: Repository<SurveyMedia>;
   sourcesRepository: Repository<Sources>;
+  regionRepository: Repository<Region>;
+  monthlyMaxRepository: Repository<MonthlyMax>;
 }
 
 const EXTRACT_PATH = 'data';
@@ -71,76 +77,94 @@ const parseXLSX = <T>(
   return xlsx.utils.sheet_to_json(firstSheet, { header, range });
 };
 
-const parseAliases = (
-  aliases: [number, string][],
-  rootPath: string,
-  reefIds: Set<number>,
+const handleEntityDuplicate = <T>(
+  repository: Repository<T>,
+  entity: string,
+  polygon?: GeoJSON,
 ) => {
-  // Check that all reefs to be uploaded exist and add the ids to a set for quicker search
-  aliases.forEach(([reefId, props]) => {
-    const reefFolder = FOLDER_PREFIX + reefId;
-    const reefFolderPath = path.join(rootPath, reefFolder);
-    const exists = fs.existsSync(reefFolderPath);
-    if (!exists) {
-      logger.log(`Data folder for reef ${reefId} does not exist.`);
-      return;
+  return (err) => {
+    // Catch unique violation, i.e. there is already a reef at this location
+    if (err.code === '23505') {
+      return repository
+        .createQueryBuilder(`${entity}`)
+        .where(
+          `${entity}.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
+          { polygon },
+        )
+        .getOne()
+        .then((found) => {
+          if (!found) {
+            throw new InternalServerErrorException(
+              'Could not fetch conflict entry',
+            );
+          }
+
+          return found;
+        });
     }
 
-    reefIds.add(reefId);
-  });
-
-  // Create object from aliases array and also the reverse object (id -> alias, alias -> id)
-  const aliasesMap: Record<number, string> = Object.fromEntries(aliases);
-  const aliasesToId = invert(aliasesMap);
-
-  return { aliasesMap, aliasesToId };
+    throw err;
+  };
 };
 
-const readCoordsFile = (rootPath: string, reefIds: Set<number>) => {
+const readCoordsFile = (rootPath: string, reefIds: number[]) => {
   // Read coords file
   const coordsFilePath = path.join(rootPath, COLONY_COORDS_FILE);
   const coordsHeaders = ['reef', 'colony', 'lat', 'long'];
   return parseXLSX<Coords>(coordsFilePath, coordsHeaders).filter((record) => {
-    return reefIds.has(record.reef);
+    return reefIds.includes(record.reef);
   });
 };
 
-const getReefRecords = (
+const getReefRecords = async (
   dataAsJson: Coords[],
-  reefIds: Set<number>,
-  aliasesMap: Record<number, string>,
+  reefIds: number[],
+  regionRepository: Repository<Region>,
 ) => {
   // Group by reef
   const recordsGroupedByReef = groupBy(dataAsJson, 'reef');
 
   // Extract reef entities and calculate position of reef by averaging all each pois positions
-  const reefs = Array.from(reefIds).map((reefId) => {
-    const filteredReefCoords = recordsGroupedByReef[reefId];
+  const reefs = await Promise.all(
+    reefIds.map(async (reefId) => {
+      const filteredReefCoords = recordsGroupedByReef[reefId];
 
-    const reefRecord = filteredReefCoords.reduce(
-      (previous, record) => {
-        return {
-          ...previous,
-          lat: previous.lat + record.lat,
-          long: previous.long + record.long,
-        };
-      },
-      { reef: reefId, colony: 0, lat: 0, long: 0 },
-    );
+      const reefRecord = filteredReefCoords.reduce(
+        (previous, record) => {
+          return {
+            ...previous,
+            lat: previous.lat + record.lat,
+            long: previous.long + record.long,
+          };
+        },
+        { reef: reefId, colony: 0, lat: 0, long: 0 },
+      );
 
-    const point: Point = {
-      type: 'Point',
-      coordinates: [
-        reefRecord.long / filteredReefCoords.length,
-        reefRecord.lat / filteredReefCoords.length,
-      ],
-    };
+      const point: Point = {
+        type: 'Point',
+        coordinates: [
+          reefRecord.long / filteredReefCoords.length,
+          reefRecord.lat / filteredReefCoords.length,
+        ],
+      };
 
-    return {
-      name: aliasesMap[reefId],
-      polygon: point,
-    };
-  });
+      const [longitude, latitude] = point.coordinates;
+      const region = await getRegion(longitude, latitude, regionRepository);
+      const maxMonthlyMean = await getMMM(longitude, latitude);
+
+      const timezones = getTimezones(latitude, longitude) as string[];
+
+      return {
+        name: FOLDER_PREFIX + reefId,
+        polygon: point,
+        region,
+        maxMonthlyMean,
+        approved: true,
+        timezone: timezones[0],
+        status: ReefStatus.Approved,
+      };
+    }),
+  );
 
   return { recordsGroupedByReef, reefs };
 };
@@ -150,31 +174,35 @@ const createReefs = async (
   user: User,
   reefRepository: Repository<Reef>,
   userRepository: Repository<User>,
-  aliasesToId: Dictionary<string>,
+  monthlyMaxRepository: Repository<MonthlyMax>,
 ) => {
   logger.log('Saving reefs');
   const reefEntities = await Promise.all(
-    reefs.map((reef) => {
-      return reefRepository.save(reef).catch((err) => {
-        // Catch unique violation, i.e. there is already a reef at this location
-        if (err.code === '23505') {
-          return reefRepository
-            .createQueryBuilder('reefs')
-            .where(
-              'reefs.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry',
-              { polygon: reef.polygon },
-            )
-            .getOne()
-            .then((foundReef) => {
-              if (!foundReef) {
-                throw new InternalServerErrorException('Reef mismatch');
-              }
+    reefs.map((reef) =>
+      reefRepository
+        .save(reef)
+        .catch(handleEntityDuplicate(reefRepository, 'reefs', reef.polygon)),
+    ),
+  );
 
-              return foundReef;
-            });
-        }
+  logger.log(`Saving monthly max data`);
+  await Promise.all(
+    reefEntities.map(async (reef) => {
+      const point: Point = reef.polygon as Point;
+      const [longitude, latitude] = point.coordinates;
+      const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+      const found = await monthlyMaxRepository.findOne({ where: { reef } });
 
-        throw err;
+      if (found) {
+        logger.warn(`Reef ${reef.id} has already monthly max data`);
+        return null;
+      }
+
+      return monthlyMaximums.map(({ month, temperature }) => {
+        return (
+          temperature &&
+          monthlyMaxRepository.insert({ reef, month, temperature })
+        );
       });
     }),
   );
@@ -182,7 +210,8 @@ const createReefs = async (
   // Create reverse map (db.reef.id => xlsx.reef_id)
   const dbIdToXLSXId: Record<number, number> = Object.fromEntries(
     reefEntities.map((reef) => {
-      return [reef.id, parseInt(aliasesToId[reef.name], 10)];
+      const reefId = parseInt(reef.name.replace(FOLDER_PREFIX, ''), 10);
+      return [reef.id, reefId];
     }),
   );
 
@@ -236,7 +265,25 @@ const createPois = async (
     .flat();
 
   logger.log('Saving reef points of interest');
-  return poiRepository.save(pois);
+  const poiEntities = await Promise.all(
+    pois.map((poi) =>
+      poiRepository
+        .save(poi)
+        .catch(handleEntityDuplicate(poiRepository, 'pois', poi.polygon)),
+    ),
+  );
+
+  return Promise.all(
+    poiEntities.map((poi) =>
+      poiRepository.findOne(poi.id, { relations: ['reef'] }).then((p) => {
+        if (!p) {
+          throw new InternalServerErrorException('Could not find poi');
+        }
+
+        return p;
+      }),
+    ),
+  );
 };
 
 const createSources = async (
@@ -414,7 +461,6 @@ const uploadReefPhotos = async (
 
 export const uploadHoboData = async (
   file: Express.Multer.File,
-  aliases: [number, string][],
   email: string,
   googleCloudService: GoogleCloudService,
   repositories: Repositories,
@@ -435,16 +481,25 @@ export const uploadHoboData = async (
   await directory.extract({ path: EXTRACT_PATH });
   // Main folder can be found by just getting the first folder of the path of any file in the zip archive
   const rootPath = `${EXTRACT_PATH}/${directory.files[0].path.split('/')[0]}`;
-  const reefIds = new Set<number>();
+  const reefSet = fs
+    .readdirSync(rootPath)
+    .filter((f) => {
+      // File must be directory and be in PATCH_REEF_{reef_id} format
+      return (
+        fs.statSync(path.join(rootPath, f)).isDirectory() &&
+        f.includes(FOLDER_PREFIX)
+      );
+    })
+    .map((reefFolder) => {
+      return parseInt(reefFolder.replace(FOLDER_PREFIX, ''), 10);
+    });
 
-  const { aliasesMap, aliasesToId } = parseAliases(aliases, rootPath, reefIds);
+  const dataAsJson = readCoordsFile(rootPath, reefSet);
 
-  const dataAsJson = readCoordsFile(rootPath, reefIds);
-
-  const { recordsGroupedByReef, reefs } = getReefRecords(
+  const { recordsGroupedByReef, reefs } = await getReefRecords(
     dataAsJson,
-    reefIds,
-    aliasesMap,
+    reefSet,
+    repositories.regionRepository,
   );
 
   const { reefEntities, dbIdToXLSXId } = await createReefs(
@@ -452,7 +507,7 @@ export const uploadHoboData = async (
     user,
     repositories.reefRepository,
     repositories.userRepository,
-    aliasesToId,
+    repositories.monthlyMaxRepository,
   );
 
   const poiEntities = await createPois(

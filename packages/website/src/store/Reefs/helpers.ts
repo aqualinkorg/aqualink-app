@@ -46,30 +46,12 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 };
 
 export const mapHoboData = (hoboData: HoboDataResponse): HoboData => ({
-  alert: hoboData[Metrics.alert].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
-  bottomTemperature: hoboData[Metrics.bottomTemperature].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
-  dhw: hoboData[Metrics.dhw].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
-  satelliteTemperature: hoboData[Metrics.satelliteTemperature].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
-  sstAnomaly: hoboData[Metrics.sstAnomaly].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
-  surfaceTemperature: hoboData[Metrics.surfaceTemperature].map((item) => ({
-    value: item.avg || item.value,
-    timestamp: item.timestamp,
-  })),
+  alert: hoboData[Metrics.alert],
+  bottomTemperature: hoboData[Metrics.bottomTemperature],
+  dhw: hoboData[Metrics.dhw],
+  satelliteTemperature: hoboData[Metrics.satelliteTemperature],
+  sstAnomaly: hoboData[Metrics.sstAnomaly],
+  surfaceTemperature: hoboData[Metrics.surfaceTemperature],
 });
 
 export const mapHoboDataRanges = (

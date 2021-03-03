@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   Index,
+  RelationId,
 } from 'typeorm';
 import { GeoJSON } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
@@ -28,6 +29,9 @@ export class ReefPointOfInterest {
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;
+
+  @RelationId((poi: ReefPointOfInterest) => poi.reef)
+  reefId: number;
 
   @Column({
     type: 'geometry',

@@ -12,6 +12,8 @@ import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
 import { uploadHoboData } from '../src/utils/import-hobo-data';
+import { Region } from '../src/regions/regions.entity';
+import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
@@ -22,18 +24,6 @@ const { argv } = yargs
     demandOption: true,
     type: 'string',
   })
-  .option('r', {
-    alias: 'reefs',
-    describe: 'The reef id',
-    type: 'array',
-    demandOption: true,
-  })
-  .option('a', {
-    alias: 'alias',
-    describe: 'Override the name of the hobo data folder',
-    type: 'array',
-    demandOption: true,
-  })
   .option('u', {
     alias: 'user',
     describe: 'The email of the user to be used for the needed relationships',
@@ -43,15 +33,9 @@ const { argv } = yargs
 
 async function run() {
   const logger = new Logger('ParseHoboData');
-  const { p: rootPath, r: reefIds, a: aliases, u: userEmail } = argv;
-  const aliasMap: [number, string][] = reefIds.map((reefId, idx) => [
-    parseInt(reefId.toString(), 10),
-    aliases[idx].toString(),
-  ]);
+  const { p: rootPath, u: userEmail } = argv;
 
-  logger.log(
-    `Script params: rootPath: ${rootPath}, aliasMap: ${aliasMap}, userEmail: ${userEmail}`,
-  );
+  logger.log(`Script params: rootPath: ${rootPath}, userEmail: ${userEmail}`);
   // Create a dummy multer file to be able to get accepted by service
   const file: Express.Multer.File = {
     fieldname: 'file',
@@ -75,7 +59,6 @@ async function run() {
   logger.log('Uploading hobo data');
   const dbIdtTReefId = await uploadHoboData(
     file,
-    aliasMap,
     userEmail,
     googleCloudService,
     {
@@ -86,6 +69,8 @@ async function run() {
       surveyRepository: connection.getRepository(Survey),
       surveyMediaRepository: connection.getRepository(SurveyMedia),
       sourcesRepository: connection.getRepository(Sources),
+      regionRepository: connection.getRepository(Region),
+      monthlyMaxRepository: connection.getRepository(MonthlyMax),
     },
   );
 
