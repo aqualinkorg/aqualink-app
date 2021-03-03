@@ -1,15 +1,15 @@
 import React from "react";
 import {
+  createStyles,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
   TableSortLabel,
   Typography,
-  createStyles,
   withStyles,
   WithStyles,
 } from "@material-ui/core";
-import type { Order, OrderKeys } from "./utils";
+import { Order, OrderKeys } from "./utils";
 
 const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
   <Typography variant="h6" style={{ color: "black" }} noWrap>
@@ -37,22 +37,22 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 
   const headCells: HeadCell[] = [
     {
-      id: "locationName",
+      id: OrderKeys.LOCATION_NAME,
       label: "SITE",
       width: "40%",
     },
     {
-      id: "temp",
+      id: OrderKeys.TEMP,
       label: "SST",
       unit: "°C",
     },
     {
-      id: "dhw",
+      id: OrderKeys.DHW,
       label: "STRESS",
       unit: "DHW",
     },
     {
-      id: "alert",
+      id: OrderKeys.ALERT,
       label: "ALERT",
       width: "5%",
     },
