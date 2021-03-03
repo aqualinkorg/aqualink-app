@@ -22,15 +22,26 @@ interface DisplayDateParams {
   timeZoneToDisplay?: string | null;
 }
 
-export const subtractFromDate = (endDate: string, amount: Range): string => {
-  const date = new Date(endDate);
-  const day = 1000 * 60 * 60 * 24;
+export const subtractFromDate = (
+  endDate: string,
+  amount: Range,
+  multiple?: number
+): string => {
   switch (amount) {
     case "day":
-      return new Date(date.setTime(date.getTime() - 1 * day)).toISOString();
+      return moment(endDate)
+        .subtract(multiple || 1, "days")
+        .toISOString();
     case "week":
+      return moment(endDate)
+        .subtract(multiple || 1, "weeks")
+        .toISOString();
+    case "month":
+      return moment(endDate)
+        .subtract(multiple || 1, "months")
+        .toISOString();
     default:
-      return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
+      return endDate;
   }
 };
 

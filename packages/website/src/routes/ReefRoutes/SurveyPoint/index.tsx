@@ -18,12 +18,14 @@ import {
   reefHoboDataRequest,
   clearHoboDataRange,
   clearHoboData,
+  reefHoboDataRangeLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
 import { Metrics } from "../../../store/Reefs/types";
+import { subtractFromDate } from "../../../helpers/dates";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
@@ -35,9 +37,10 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
+  const hoboRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
-  const loading = reefLoading || surveysLoading;
+  const loading = reefLoading || surveysLoading || hoboRangeLoading;
 
   // Always scroll to top on first render
   useEffect(() => {
@@ -56,12 +59,13 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   // Get HOBO data
   useEffect(() => {
     if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
-      const { minDate, maxDate } = hoboBottomTemperatureRange[0];
+      const { maxDate } = hoboBottomTemperatureRange[0];
+      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
       dispatch(
         reefHoboDataRequest({
           reefId: id,
           pointId,
-          start: minDate,
+          start: pastThreeMonths,
           end: maxDate,
           metrics: [Metrics.bottomTemperature],
         })
@@ -79,7 +83,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   return (
     <>
       <NavBar searchLocation />
-      {(reefLoading || surveysLoading) && <LinearProgress />}
+      {loading && <LinearProgress />}
       {!loading && reef && (
         <>
           <BackButton reefId={id} bgColor={bgColor} />

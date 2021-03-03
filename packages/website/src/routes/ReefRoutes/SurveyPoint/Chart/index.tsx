@@ -9,16 +9,18 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
+import { maxBy } from "lodash";
 
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
   reefHoboDataRangeSelector,
+  reefHoboDataRequest,
   reefHoboDataSelector,
   reefSpotterDataRequest,
   reefSpotterDataSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
-import { Reef } from "../../../../store/Reefs/types";
+import { Metrics, Reef } from "../../../../store/Reefs/types";
 import {
   findMarginalDate,
   setTimeZone,
@@ -41,6 +43,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
+  const [pastLimit, setPastLimit] = useState<string>();
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
@@ -48,12 +51,17 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   useEffect(() => {
     if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
       const { minDate, maxDate } = hoboBottomTemperatureRange[0];
+      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
+      const start =
+        maxBy([minDate, pastThreeMonths], (date) => new Date(date).getTime()) ||
+        minDate;
       setPickerEndDate(
         new Date(moment(maxDate).format("MM/DD/YYYY")).toISOString()
       );
       setPickerStartDate(
-        new Date(moment(minDate).format("MM/DD/YYYY")).toISOString()
+        new Date(moment(start).format("MM/DD/YYYY")).toISOString()
       );
+      setPastLimit(new Date(moment(start).format("MM/DD/YYYY")).toISOString());
     } else {
       setPickerEndDate(today);
       setPickerStartDate(subtractFromDate(today, "week"));
@@ -88,6 +96,41 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
     hasSpotterData,
     pickerEndDate,
     pickerStartDate,
+    reef.id,
+    reef.timezone,
+  ]);
+
+  // Fetch HOBO data if picker start date is before the current past limit
+  useEffect(() => {
+    if (pickerStartDate && pickerEndDate && pastLimit) {
+      const reefLocalStartDate = setTimeZone(
+        new Date(pickerStartDate),
+        reef.timezone
+      ) as string;
+      const reefLocalEndDate = setTimeZone(
+        new Date(pickerEndDate),
+        reef.timezone
+      ) as string;
+
+      if (new Date(pickerStartDate).getTime() < new Date(pastLimit).getTime()) {
+        setPastLimit(pickerStartDate);
+        dispatch(
+          reefHoboDataRequest({
+            reefId: `${reef.id}`,
+            pointId,
+            start: reefLocalStartDate,
+            end: reefLocalEndDate,
+            metrics: [Metrics.bottomTemperature],
+          })
+        );
+      }
+    }
+  }, [
+    dispatch,
+    pastLimit,
+    pickerEndDate,
+    pickerStartDate,
+    pointId,
     reef.id,
     reef.timezone,
   ]);
