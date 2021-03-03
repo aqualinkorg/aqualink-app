@@ -813,7 +813,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                       color="textSecondary"
                       variant="subtitle2"
                     >
-                      Last survreyed: 
+                      Last surveyed: 
                     </mock-typography>
                   </mock-box>
                 </div>

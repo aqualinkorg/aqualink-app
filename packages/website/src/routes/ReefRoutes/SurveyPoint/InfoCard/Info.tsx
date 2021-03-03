@@ -49,7 +49,7 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
       <Grid container>
         <Box mb="24px">
           <Typography variant="subtitle2" color="textSecondary">
-            Last survreyed: {lastSurveyed}
+            Last surveyed: {lastSurveyed}
           </Typography>
         </Box>
       </Grid>
