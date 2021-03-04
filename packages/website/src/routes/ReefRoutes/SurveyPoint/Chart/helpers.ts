@@ -15,28 +15,40 @@ export const calculateCardMetrics = (
 ) => {
   const satelliteSurface = dailyData.map((item) => item.satelliteTemperature);
   const { bottomTemperature: spotterBottomTemperature } = spotterData || {};
-  const hasHoboData = hoboBottomTemperature.length > 0;
+  const hasSpotterData =
+    spotterData && spotterData.bottomTemperature.length > 1;
+  const hasHoboData = hoboBottomTemperature.length > 1;
+  const hasDailyData = dailyData.length > 1;
 
-  const bottomTemperature = hasHoboData
-    ? hoboBottomTemperature
-    : spotterBottomTemperature;
+  const hasLoggerData = hasSpotterData || hasHoboData;
 
-  const minSurface = formatNumber(min(satelliteSurface), 1);
-  const maxSurface = formatNumber(max(satelliteSurface), 1);
-  const meanSurface = formatNumber(mean(satelliteSurface), 1);
+  const bottomTemperature =
+    hasLoggerData && hasHoboData
+      ? hoboBottomTemperature
+      : spotterBottomTemperature;
+
+  const minSurface = hasDailyData
+    ? formatNumber(min(satelliteSurface), 1)
+    : "- -";
+  const maxSurface = hasDailyData
+    ? formatNumber(max(satelliteSurface), 1)
+    : "- -";
+  const meanSurface = hasDailyData
+    ? formatNumber(mean(satelliteSurface), 1)
+    : "- -";
 
   const minBottom = bottomTemperature
     ? formatNumber(minBy(bottomTemperature, (item) => item.value)?.value, 1)
-    : "--";
+    : "- -";
   const maxBottom = bottomTemperature
     ? formatNumber(maxBy(bottomTemperature, (item) => item.value)?.value, 1)
-    : "--";
+    : "- -";
   const meanBottom = bottomTemperature
     ? formatNumber(
         meanBy(bottomTemperature, (item) => item.value),
         1
       )
-    : "--";
+    : "- -";
 
   return {
     minSurface,

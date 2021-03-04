@@ -27,8 +27,10 @@ import { calculateCardMetrics } from "./helpers";
 import { filterDailyData } from "../../../../common/Chart/utils";
 
 const TempAnalysis = ({
-  startDate,
-  endDate,
+  pickerStartDate,
+  pickerEndDate,
+  chartStartDate,
+  chartEndDate,
   depth,
   spotterData,
   dailyData,
@@ -39,8 +41,20 @@ const TempAnalysis = ({
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const hoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+
   const loading = spotterDataLoading || hoboDataLoading;
-  const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
+
+  const filteredDailyData = filterDailyData(
+    dailyData,
+    chartStartDate,
+    chartEndDate
+  );
+
+  const hasDailyData = filteredDailyData.length > 1;
+  const hasHoboData = hoboBottomTemperature.length > 1;
+  const hasSpotterData =
+    spotterData && spotterData.bottomTemperature.length > 1;
+
   const {
     maxSurface,
     meanSurface,
@@ -53,12 +67,9 @@ const TempAnalysis = ({
     spotterData,
     hoboBottomTemperature
   );
-  const formattedStartDate = moment(startDate).format("MM/DD/YYYY");
-  const formattedEndDate = moment(endDate).format("MM/DD/YYYY");
-  const hasDailyData = filteredDailyData.length > 0;
-  const hasHoboData = hoboBottomTemperature.length > 0;
-  const hasSpotterData =
-    spotterData && spotterData.bottomTemperature.length > 0;
+
+  const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
+  const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
   return (
     <Box
@@ -73,7 +84,7 @@ const TempAnalysis = ({
           TEMP ANALYSIS
         </Typography>
         <Typography className={classes.dates} variant="subtitle2">
-          {formattedStartDate} - {formattedEndDate}
+          {formattedpickerStartDate} - {formattedpickerEndDate}
         </Typography>
         <Grid
           className={classes.metricsWrapper}
@@ -257,8 +268,10 @@ const styles = () =>
   });
 
 interface TempAnalysisIncomingProps {
-  startDate: string;
-  endDate: string;
+  pickerStartDate: string;
+  pickerEndDate: string;
+  chartStartDate: string;
+  chartEndDate: string;
   depth: number | null;
   spotterData: SpotterData | null | undefined;
   dailyData: DailyData[];

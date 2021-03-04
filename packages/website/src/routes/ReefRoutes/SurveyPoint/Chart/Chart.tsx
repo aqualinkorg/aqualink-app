@@ -67,14 +67,13 @@ const Chart = ({
 
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
 
+  const hasDailyData =
+    filterDailyData(reef.dailyData, startDate, endDate).length > 1;
+
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
 
-  const success =
-    !loading &&
-    (hasHoboData ||
-      hasSpotterData ||
-      filterDailyData(reef.dailyData, startDate, endDate).length > 0);
+  const success = !loading && (hasHoboData || hasSpotterData || hasDailyData);
   const warning = !loading && !hasHoboData && !hasSpotterData;
 
   const minDateLocal = displayTimeInLocalTimezone({

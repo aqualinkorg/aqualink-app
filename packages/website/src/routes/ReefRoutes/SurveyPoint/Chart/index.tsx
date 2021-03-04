@@ -212,9 +212,11 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
               startDate || pickerStartDate,
               endDate || pickerEndDate
             )}
-            pickerStartDate={pickerStartDate || today}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
-            startDate={startDate || pickerStartDate || today}
+            startDate={
+              startDate || pickerStartDate || subtractFromDate(today, "week")
+            }
             endDate={endDate || pickerEndDate || today}
             onStartDateChange={(date) =>
               setPickerStartDate(
@@ -232,8 +234,16 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
           <Grid container justify="center">
             <Grid item xs={11} sm={5} md={11} lg={10}>
               <TempAnalysis
-                startDate={pickerStartDate || today}
-                endDate={pickerEndDate || today}
+                pickerStartDate={
+                  pickerStartDate || subtractFromDate(today, "week")
+                }
+                pickerEndDate={pickerEndDate || today}
+                chartStartDate={
+                  startDate ||
+                  pickerStartDate ||
+                  subtractFromDate(today, "week")
+                }
+                chartEndDate={endDate || pickerEndDate || today}
                 depth={reef.depth}
                 spotterData={spotterData}
                 dailyData={reef.dailyData}
