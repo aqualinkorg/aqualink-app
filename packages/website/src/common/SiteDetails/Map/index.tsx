@@ -24,8 +24,8 @@ import {
 } from "../../../store/Reefs/selectedReefSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isManager } from "../../../helpers/user";
-import pointIcon from "../../../assets/alerts/pin_nostress.png";
-import selectedPointIcon from "../../../assets/alerts/pin_warning.png";
+import pointIcon from "../../../assets/alerts/pin_nostress@2x.png";
+import selectedPointIcon from "../../../assets/alerts/pin_warning@2x.png";
 
 const pinIcon = L.icon({
   iconUrl: marker,
