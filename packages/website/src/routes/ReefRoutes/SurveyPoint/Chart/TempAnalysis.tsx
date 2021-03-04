@@ -56,6 +56,8 @@ const TempAnalysis = ({
   const hasSpotterData =
     spotterData && spotterData.bottomTemperature.length > 1;
 
+  const warning = !error && !loading && !hasHoboData && !hasSpotterData;
+
   const {
     maxSurface,
     meanSurface,
@@ -74,13 +76,7 @@ const TempAnalysis = ({
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
   return (
-    <Box
-      mt={
-        !isTablet && !loading && hasDailyData && !hasSpotterData && !hasHoboData
-          ? "115px"
-          : "0px"
-      }
-    >
+    <Box mt={!isTablet && hasDailyData && warning ? "115px" : "0px"}>
       <Card className={classes.tempAnalysisCard}>
         <Typography variant="subtitle1" color="textSecondary">
           TEMP ANALYSIS
