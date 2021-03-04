@@ -5,14 +5,20 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GeoJSON } from 'geojson';
+import { omit } from 'lodash';
 import { ReefPointOfInterest } from './reef-pois.entity';
 import { CreateReefPoiDto } from './dto/create-reef-poi.dto';
 import { FilterReefPoiDto } from './dto/filter-reef-poi.dto';
 import { UpdateReefPoiDto } from './dto/update-reef-poi.dto';
+import { Reef } from '../reefs/reefs.entity';
 
 @Injectable()
 export class ReefPoisService {
   constructor(
+    @InjectRepository(Reef)
+    private reefRepository: Repository<Reef>,
+
     @InjectRepository(ReefPointOfInterest)
     private poisRepository: Repository<ReefPointOfInterest>,
   ) {}
@@ -20,7 +26,22 @@ export class ReefPoisService {
   async create(
     createReefPoiDto: CreateReefPoiDto,
   ): Promise<ReefPointOfInterest> {
-    return this.poisRepository.save(createReefPoiDto);
+    const { latitude, longitude, reef } = createReefPoiDto;
+    const reefEntity = await this.reefRepository.findOne(reef);
+
+    if (!reefEntity) {
+      throw new NotFoundException(`Reef with id ${reef} was not found`);
+    }
+
+    const polygon: GeoJSON =
+      longitude && latitude
+        ? {
+            type: 'Point',
+            coordinates: [longitude, latitude],
+          }
+        : reefEntity.polygon;
+
+    return this.poisRepository.save({ ...createReefPoiDto, polygon });
   }
 
   async find(filter: FilterReefPoiDto): Promise<ReefPointOfInterest[]> {
@@ -55,7 +76,21 @@ export class ReefPoisService {
     id: number,
     updateReefPoiDto: UpdateReefPoiDto,
   ): Promise<ReefPointOfInterest> {
-    const result = await this.poisRepository.update(id, updateReefPoiDto);
+    const { latitude, longitude } = updateReefPoiDto;
+    const polygon: { polygon: GeoJSON } | {} =
+      longitude && latitude
+        ? {
+            polygon: {
+              type: 'Point',
+              coordinates: [longitude, latitude],
+            },
+          }
+        : {};
+
+    const result = await this.poisRepository.update(id, {
+      ...omit(updateReefPoiDto, 'longitude', 'latitude'),
+      ...polygon,
+    });
     if (!result.affected) {
       throw new NotFoundException(
         `Reef Point of Interest with ID ${id} not found.`,
