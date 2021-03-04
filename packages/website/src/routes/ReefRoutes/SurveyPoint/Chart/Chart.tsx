@@ -175,7 +175,6 @@ const Chart = ({
                 dateName="START DATE"
                 nameVariant="subtitle1"
                 pickerSize="small"
-                maxDate={new Date(pickerEndDate)}
                 autoOk={false}
                 onChange={onStartDateChange}
               />

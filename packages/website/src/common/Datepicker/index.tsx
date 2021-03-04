@@ -23,8 +23,6 @@ const DatePicker = ({
   dateName,
   nameVariant,
   pickerSize,
-  minDate,
-  maxDate,
   autoOk,
   onChange,
   classes,
@@ -45,10 +43,7 @@ const DatePicker = ({
               format="MM/dd/yyyy"
               name="datePicker"
               autoOk={autoOk}
-              minDate={minDate}
-              maxDate={maxDate}
               showTodayButton
-              disableFuture
               value={value || null}
               onChange={onChange}
               InputProps={{
@@ -91,8 +86,6 @@ interface DatePickerIncomingProps {
   dateName?: string;
   nameVariant?: TypographyProps["variant"];
   pickerSize?: KeyboardDatePickerProps["size"];
-  minDate?: KeyboardDatePickerProps["minDate"];
-  maxDate?: KeyboardDatePickerProps["minDate"];
   autoOk?: boolean;
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
 }
@@ -101,8 +94,6 @@ DatePicker.defaultProps = {
   dateName: undefined,
   nameVariant: undefined,
   pickerSize: undefined,
-  minDate: undefined,
-  maxDate: undefined,
   autoOk: true,
 };
 
