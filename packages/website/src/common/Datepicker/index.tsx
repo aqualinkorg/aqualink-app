@@ -48,7 +48,6 @@ const DatePicker = ({
               minDate={minDate}
               maxDate={maxDate}
               showTodayButton
-              disableFuture
               value={value || null}
               onChange={onChange}
               InputProps={{
