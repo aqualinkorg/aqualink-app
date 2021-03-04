@@ -69,7 +69,7 @@ const Chart = ({
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
 
   const hasDailyData =
-    filterDailyData(reef.dailyData, startDate, endDate).length > 1;
+    filterDailyData(reef.dailyData, startDate, endDate).length > 0;
 
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
@@ -163,7 +163,6 @@ const Chart = ({
             startDate={convertToLocalTime(startDate, reef.timezone)}
             endDate={convertToLocalTime(endDate, reef.timezone)}
             showYear={showYear(startDate, endDate)}
-            extendDailyData={!hasHoboData}
           />
         </Box>
       )}

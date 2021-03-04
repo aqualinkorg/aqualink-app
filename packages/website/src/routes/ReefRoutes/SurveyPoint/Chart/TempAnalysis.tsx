@@ -51,7 +51,7 @@ const TempAnalysis = ({
     chartEndDate
   );
 
-  const hasDailyData = filteredDailyData.length > 1;
+  const hasDailyData = filteredDailyData.length > 0;
   const hasHoboData = hoboBottomTemperature.length > 1;
   const hasSpotterData =
     spotterData && spotterData.bottomTemperature.length > 1;

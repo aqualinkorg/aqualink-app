@@ -76,7 +76,7 @@ function ChartWithTooltip({
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
       filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-      getDailyDataClosestToDate(filteredDailyData, new Date(date)) ||
+      getDailyDataClosestToDate(filteredDailyData, new Date(date), 24) ||
       {};
     const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
 

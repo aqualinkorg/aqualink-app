@@ -91,30 +91,37 @@ export const augmentSurfaceTemperature = (
   surfaceTemperatureData: {
     x: string;
     y: number;
-  }[],
-  xAxisMin: string,
-  xAxisMax: string,
-  startDate?: string,
-  endDate?: string
+  }[]
 ) => {
   if (surfaceTemperatureData.length > 0) {
+    const first = surfaceTemperatureData[0];
+    const last = surfaceTemperatureData[surfaceTemperatureData.length - 1];
     return [
-      { x: startDate || xAxisMin, y: surfaceTemperatureData[0]?.y },
+      { x: moment(first.x).subtract(1, "days"), y: first.y },
       ...surfaceTemperatureData,
-      { x: endDate || xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
+      { x: moment(last.x).add(1, "days"), y: last.y },
     ];
   }
   return surfaceTemperatureData;
 };
 
-export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
-  return dailyData.length > 0
-    ? dailyData.reduce((prevClosest, nextPoint) =>
-        timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
-          ? nextPoint
-          : prevClosest
-      )
-    : undefined;
+export function getDailyDataClosestToDate(
+  dailyData: DailyData[],
+  date: Date,
+  maxHours: number
+) {
+  if (dailyData.length > 0) {
+    const closest = dailyData.reduce((prevClosest, nextPoint) =>
+      timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
+        ? nextPoint
+        : prevClosest
+    );
+
+    return timeDiff(closest.date, date) < maxHours * 60 * 60 * 1000
+      ? closest
+      : undefined;
+  }
+  return undefined;
 }
 
 export function getMontlyMaxDataClosestToDate(
