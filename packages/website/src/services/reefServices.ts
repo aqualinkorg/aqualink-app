@@ -13,7 +13,7 @@ import {
   DeploySpotterParams,
   MaintainSpotterParams,
   ExclusionDateResponse,
-  Metrics,
+  MetricsKeys,
   HoboDataResponse,
   HoboDataRangeResponse,
 } from "../store/Reefs/types";
@@ -47,7 +47,7 @@ const getReefHoboData = (
   pointId: string,
   start: string,
   end: string,
-  metrics: Metrics[]
+  metrics: MetricsKeys[]
 ) =>
   requests.send<HoboDataResponse>({
     url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=true`,

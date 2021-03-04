@@ -24,7 +24,6 @@ import {
   surveysRequest,
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { Metrics } from "../../../store/Reefs/types";
 import { subtractFromDate } from "../../../helpers/dates";
 
 const SurveyPoint = ({ match }: SurveyPointProps) => {
@@ -67,7 +66,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
           pointId,
           start: pastThreeMonths,
           end: maxDate,
-          metrics: [Metrics.bottomTemperature],
+          metrics: ["bottom_temperature"],
         })
       );
     }

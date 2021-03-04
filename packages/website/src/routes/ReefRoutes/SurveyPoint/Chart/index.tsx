@@ -19,7 +19,7 @@ import {
   reefSpotterDataRequest,
   reefSpotterDataSelector,
 } from "../../../../store/Reefs/selectedReefSlice";
-import { Metrics, Reef } from "../../../../store/Reefs/types";
+import { Reef } from "../../../../store/Reefs/types";
 import {
   findMarginalDate,
   setTimeZone,
@@ -143,7 +143,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
             pointId,
             start: reefLocalStartDate,
             end: reefLocalEndDate,
-            metrics: [Metrics.bottomTemperature],
+            metrics: ["bottom_temperature"],
           })
         );
       }

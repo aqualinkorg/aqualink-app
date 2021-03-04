@@ -103,51 +103,36 @@ interface Region {
   name: string | null;
 }
 
-type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
-
 interface DataRange {
   minDate: string;
   maxDate: string;
 }
 
-export enum Metrics {
-  alert = "alert",
-  dhw = "dhw",
-  satelliteTemperature = "satellite_temperature",
-  surfaceTemperature = "surface_temperature",
-  bottomTemperature = "bottom_temperature",
-  sstAnomaly = "sst_anomaly",
-}
+type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
-export type HoboDataResponse = {
-  [key in Metrics]: {
-    avg?: number;
-    value: number;
-    timestamp: string;
-  }[];
-};
+export type MetricsKeys =
+  | "alert"
+  | "dhw"
+  | "satellite_temperature"
+  | "surface_temperature"
+  | "bottom_temperature"
+  | "sst_anomaly";
 
-export type HoboDataRangeResponse = {
-  [key in Metrics]: DataRange[];
-};
+export type Metrics =
+  | "alert"
+  | "dhw"
+  | "satelliteTemperature"
+  | "surfaceTemperature"
+  | "bottomTemperature"
+  | "sstAnomaly";
 
-export interface HoboData {
-  alert: SofarValue[];
-  dhw: SofarValue[];
-  satelliteTemperature: SofarValue[];
-  surfaceTemperature: SofarValue[];
-  bottomTemperature: SofarValue[];
-  sstAnomaly: SofarValue[];
-}
+export type HoboDataResponse = Record<MetricsKeys, SofarValue[]>;
 
-export interface HoboDataRange {
-  alert: DataRange[];
-  dhw: DataRange[];
-  satelliteTemperature: DataRange[];
-  surfaceTemperature: DataRange[];
-  bottomTemperature: DataRange[];
-  sstAnomaly: DataRange[];
-}
+export type HoboDataRangeResponse = Record<MetricsKeys, DataRange[]>;
+
+export type HoboData = Record<Metrics, SofarValue[]>;
+
+export type HoboDataRange = Record<Metrics, DataRange[]>;
 
 export interface SpotterData {
   surfaceTemperature: SofarValue[];
@@ -193,7 +178,7 @@ export interface HoboDataRequestParams {
   pointId: string;
   start: string;
   end: string;
-  metrics: Metrics[];
+  metrics: MetricsKeys[];
 }
 
 export interface HoboDataRangeRequestParams {
