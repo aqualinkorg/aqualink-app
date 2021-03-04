@@ -10,7 +10,7 @@ import fs from 'fs';
 import path from 'path';
 import xlsx from 'xlsx';
 import { Point, GeoJSON } from 'geojson';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import { Reef, ReefStatus } from '../reefs/reefs.entity';
@@ -67,46 +67,97 @@ const validFiles = new Set(['png', 'jpeg', 'jpg']);
 
 const logger = new Logger('ParseHoboData');
 
+/**
+ * Parse XLSX data
+ * @param filePath The path to the xlsx file
+ * @param header The headers to be used
+ * @param range The amount or rows to skip
+ */
 const parseXLSX = <T>(
   filePath: string,
   header: string[],
   range: number = 1,
 ): T[] => {
+  // Get excel workbook (parse dates)
   const workbook = xlsx.readFile(filePath, { cellDates: true });
+  // Get first sheet as only the first sheet will be used
   const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+  // Convert first sheet to json skipping header row and renaming the headers
   return xlsx.utils.sheet_to_json(firstSheet, { header, range });
 };
 
+const reefQuery = (reefRepository: Repository<Reef>, polygon?: GeoJSON) => {
+  return reefRepository
+    .createQueryBuilder(`entity`)
+    .where(
+      `entity.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
+      { polygon },
+    )
+    .getOne();
+};
+
+const poiQuery = (
+  poiRepository: Repository<ReefPointOfInterest>,
+  polygon?: GeoJSON,
+) => {
+  return poiRepository
+    .createQueryBuilder(`pois`)
+    .innerJoinAndSelect('pois.reef', 'reef')
+    .where(
+      `pois.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
+      { polygon },
+    )
+    .getOne();
+};
+
+/**
+ * Handle entity duplication because of spatial key constraint
+ * @param repository The repository for the entity
+ * @param polygon The polygon value
+ */
 const handleEntityDuplicate = <T>(
   repository: Repository<T>,
-  entity: string,
+  query: (
+    repository: Repository<T>,
+    polygon?: GeoJSON,
+  ) => Promise<T | undefined>,
   polygon?: GeoJSON,
 ) => {
   return (err) => {
     // Catch unique violation, i.e. there is already a reef at this location
     if (err.code === '23505') {
-      return repository
-        .createQueryBuilder(`${entity}`)
-        .where(
-          `${entity}.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
-          { polygon },
-        )
-        .getOne()
-        .then((found) => {
-          if (!found) {
-            throw new InternalServerErrorException(
-              'Could not fetch conflict entry',
-            );
-          }
+      return query(repository, polygon).then((found) => {
+        if (!found) {
+          throw new InternalServerErrorException(
+            'Could not fetch conflicting entry',
+          );
+        }
 
-          return found;
-        });
+        return found;
+      });
     }
 
     throw err;
   };
 };
 
+/**
+ * Round up timestamp to the closest minute
+ * @param timestamp A moment timestamp
+ */
+const roundUpTimestamp = (timestamp: Moment) => {
+  const rounded =
+    timestamp.second() || timestamp.millisecond()
+      ? timestamp.add(1, 'minute')
+      : timestamp;
+  return rounded.startOf('minute').toDate();
+};
+
+/**
+ * Read Coords.xlsx file
+ * @param rootPath The path of the root of the data folder
+ * @param reefIds The reefIds to be imported
+ */
 const readCoordsFile = (rootPath: string, reefIds: number[]) => {
   // Read coords file
   const coordsFilePath = path.join(rootPath, COLONY_COORDS_FILE);
@@ -116,6 +167,13 @@ const readCoordsFile = (rootPath: string, reefIds: number[]) => {
   });
 };
 
+/**
+ * Create reef records
+ * Calculate their position by finding the average of the coordinates of all pois in xlsx file
+ * @param dataAsJson The json data from the xlsx file
+ * @param reefIds The reefs to be imported
+ * @param regionRepository The region repository
+ */
 const getReefRecords = async (
   dataAsJson: Coords[],
   reefIds: number[],
@@ -140,6 +198,7 @@ const getReefRecords = async (
         { reef: reefId, colony: 0, lat: 0, long: 0 },
       );
 
+      // Calculate reef position
       const point: Point = {
         type: 'Point',
         coordinates: [
@@ -148,6 +207,7 @@ const getReefRecords = async (
         ],
       };
 
+      // Augment reef information
       const [longitude, latitude] = point.coordinates;
       const region = await getRegion(longitude, latitude, regionRepository);
       const maxMonthlyMean = await getMMM(longitude, latitude);
@@ -169,6 +229,14 @@ const getReefRecords = async (
   return { recordsGroupedByReef, reefs };
 };
 
+/**
+ * Save reef records to database or fetch already existing reefs
+ * @param reefs The reef records to be saved
+ * @param user The user to associate reef with
+ * @param reefRepository The reef repository
+ * @param userRepository The user repository
+ * @param monthlyMaxRepository The monthly max repository
+ */
 const createReefs = async (
   reefs: Partial<Reef>[],
   user: User,
@@ -181,7 +249,7 @@ const createReefs = async (
     reefs.map((reef) =>
       reefRepository
         .save(reef)
-        .catch(handleEntityDuplicate(reefRepository, 'reefs', reef.polygon)),
+        .catch(handleEntityDuplicate(reefRepository, reefQuery, reef.polygon)),
     ),
   );
 
@@ -224,6 +292,14 @@ const createReefs = async (
   return { reefEntities, dbIdToXLSXId };
 };
 
+/**
+ * Create and save reef point of interest records
+ * @param reefEntities The saved reef entities
+ * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param recordsGroupedByReef The reef records grouped by reef id
+ * @param rootPath The path to the root of the data folder
+ * @param poiRepository The poi repository
+ */
 const createPois = async (
   reefEntities: Reef[],
   dbIdToXLSXId: Record<number, number>,
@@ -269,23 +345,18 @@ const createPois = async (
     pois.map((poi) =>
       poiRepository
         .save(poi)
-        .catch(handleEntityDuplicate(poiRepository, 'pois', poi.polygon)),
+        .catch(handleEntityDuplicate(poiRepository, poiQuery, poi.polygon)),
     ),
   );
 
-  return Promise.all(
-    poiEntities.map((poi) =>
-      poiRepository.findOne(poi.id, { relations: ['reef'] }).then((p) => {
-        if (!p) {
-          throw new InternalServerErrorException('Could not find poi');
-        }
-
-        return p;
-      }),
-    ),
-  );
+  return poiEntities;
 };
 
+/**
+ * Create source entities
+ * @param poiEntities The created poi entities
+ * @param sourcesRepository The sources repository
+ */
 const createSources = async (
   poiEntities: ReefPointOfInterest[],
   sourcesRepository: Repository<Sources>,
@@ -300,13 +371,33 @@ const createSources = async (
   });
 
   logger.log('Saving sources');
-  const sourceEntities = await sourcesRepository.save(sources);
-  // Map pois to created sources
-  const poiToSourceMap = keyBy(sourceEntities, (o) => o.poi.id);
+  const sourceEntities = await Promise.all(
+    sources.map(async (source) => {
+      const foundSource = await sourcesRepository.findOne({
+        relations: ['poi'],
+        where: { reef: source.reef, poi: source.poi, type: source.type },
+      });
 
-  return poiToSourceMap;
+      if (foundSource) {
+        return foundSource;
+      }
+
+      return sourcesRepository.save(source);
+    }),
+  );
+
+  // Map pois to created sources
+  return keyBy(sourceEntities, (o) => o.poi.id);
 };
 
+/**
+ * Parse hobo xlsx
+ * @param poiEntities The created poi entities
+ * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param rootPath The path to the root of the data folder
+ * @param poiToSourceMap A object to map pois to source entities
+ * @param timeSeriesRepository The time series repository
+ */
 const parseHoboData = (
   poiEntities: ReefPointOfInterest[],
   dbIdToXLSXId: Record<number, number>,
@@ -323,11 +414,12 @@ const parseHoboData = (
     const filePath = path.join(rootPath, reefFolder, colonyFolder, dataFile);
     const headers = ['id', 'dateTime', 'bottomTemperature'];
     return parseXLSX<Data>(filePath, headers).map((data) => ({
-      ...data,
-      timestamp: moment(data.dateTime).add(8, 'h').toDate(),
+      timestamp: roundUpTimestamp(moment(data.dateTime).add(8, 'h')),
       reef: poi.reef,
       poi,
+      value: data.bottomTemperature,
       source: poiToSourceMap[poi.id],
+      metric: Metric.BOTTOM_TEMPERATURE,
     }));
   });
 
@@ -360,28 +452,39 @@ const parseHoboData = (
     backfillReefData(startDate.reef.id, diff);
   });
 
-  // Grabs bottom temperature data
-  const bottomTemperatureData = parsedData.flat().map((data) => ({
-    timestamp: data.timestamp,
-    value: data.bottomTemperature,
-    reef: data.reef,
-    poi: data.poi,
-    source: data.source,
-    metric: Metric.BOTTOM_TEMPERATURE,
-  }));
+  const bottomTemperatureData = parsedData.flat();
 
+  // Data are to much to added with one bulk insert
+  // So we need to break them in batches
   const batchSize = 1000;
   logger.log(`Saving time series data in batches of ${batchSize}`);
   const inserts = chunk(bottomTemperatureData, batchSize).map((batch) => {
-    return timeSeriesRepository.save(batch);
+    return timeSeriesRepository
+      .createQueryBuilder('time_series')
+      .insert()
+      .values(batch)
+      .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
+      .execute();
   });
 
+  // Return insert promises and print progress updates
   const actionsLength = inserts.length;
   return Bluebird.Promise.each(inserts, (props, idx) => {
     logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
   });
 };
 
+/**
+ * Upload reef photos and create for each image a new survey and an associated survey media
+ * As diveDate the creation date of the image will be used
+ * @param poiEntities The create poi entities
+ * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param rootPath The path to the root of the data folder
+ * @param googleCloudService The google cloud service instance
+ * @param user A user to associate the surveys with
+ * @param surveyRepository The survey repository
+ * @param surveyMediaRepository The survey media repository
+ */
 const uploadReefPhotos = async (
   poiEntities: ReefPointOfInterest[],
   dbIdToXLSXId: Record<number, number>,
@@ -459,6 +562,8 @@ const uploadReefPhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
+// Upload hobo data
+// Returns a object with keys the db reef ids and values the corresponding imported reef ids
 export const uploadHoboData = async (
   file: Express.Multer.File,
   email: string,
@@ -484,7 +589,7 @@ export const uploadHoboData = async (
   const reefSet = fs
     .readdirSync(rootPath)
     .filter((f) => {
-      // File must be directory and be in PATCH_REEF_{reef_id} format
+      // File must be directory and be in Patch_Reef_{reef_id} format
       return (
         fs.statSync(path.join(rootPath, f)).isDirectory() &&
         f.includes(FOLDER_PREFIX)
