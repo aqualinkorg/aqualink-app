@@ -44,9 +44,9 @@ const buoyIcon = L.icon({
 const surveyPointIcon = (selected: boolean) =>
   L.icon({
     iconUrl: selected ? selectedPointIcon : pointIcon,
-    iconSize: [36, 40.5],
-    iconAnchor: [18, 40.5],
-    popupAnchor: [0, -40.5],
+    iconSize: [24, 27],
+    iconAnchor: [12, 27],
+    popupAnchor: [0, -27],
   });
 
 const ReefMap = ({
