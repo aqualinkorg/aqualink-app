@@ -180,7 +180,11 @@ const ReefMap = ({
                   ]}
                   onclick={() => setFocusedPoint(point)}
                 >
-                  <SurveyPointPopup reefId={reefId} point={point} />
+                  <SurveyPointPopup
+                    reefId={reefId}
+                    point={point}
+                    selectedPointId={selectedPointId}
+                  />
                 </Marker>
               )
           )}

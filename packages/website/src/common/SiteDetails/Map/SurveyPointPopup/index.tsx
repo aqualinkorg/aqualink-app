@@ -23,6 +23,7 @@ import {
 const SurveyPointPopup = ({
   reefId,
   point,
+  selectedPointId,
   classes,
 }: SurveyPointPopupProps) => {
   const dispatch = useDispatch();
@@ -46,8 +47,10 @@ const SurveyPointPopup = ({
               <Link to={`/reefs/${reefId}/points/${point.id}`}>
                 <IconButton
                   onClick={() => {
-                    dispatch(clearHoboData());
-                    dispatch(clearHoboDataRange());
+                    if (selectedPointId !== point.id) {
+                      dispatch(clearHoboData());
+                      dispatch(clearHoboDataRange());
+                    }
                   }}
                   className={classes.viewButton}
                 >
@@ -77,6 +80,7 @@ const styles = () =>
 interface SurveyPointPopupIncomingProps {
   reefId: number;
   point: Pois;
+  selectedPointId: number | undefined;
 }
 
 type SurveyPointPopupProps = SurveyPointPopupIncomingProps &
