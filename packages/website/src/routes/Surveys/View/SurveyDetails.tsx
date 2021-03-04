@@ -15,7 +15,7 @@ import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
-import ObservationBox from "./observationBox";
+import ObservationBox from "./ObservationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
