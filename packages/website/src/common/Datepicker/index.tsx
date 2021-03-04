@@ -40,6 +40,7 @@ const DatePicker = ({
             <KeyboardDatePicker
               size={pickerSize}
               className={classes.textField}
+              helperText=""
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"

@@ -11,14 +11,15 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 export const calculateCardMetrics = (
   dailyData: DailyData[],
   spotterData: SpotterData | null | undefined,
-  hoboBottomTemperature: SofarValue[]
+  hoboBottomTemperature: SofarValue[],
+  error: boolean
 ) => {
   const satelliteSurface = dailyData.map((item) => item.satelliteTemperature);
   const { bottomTemperature: spotterBottomTemperature } = spotterData || {};
   const hasSpotterData =
-    spotterData && spotterData.bottomTemperature.length > 1;
-  const hasHoboData = hoboBottomTemperature.length > 1;
-  const hasDailyData = dailyData.length > 1;
+    !error && spotterData && spotterData.bottomTemperature.length > 1;
+  const hasHoboData = !error && hoboBottomTemperature.length > 1;
+  const hasDailyData = !error && dailyData.length > 1;
 
   const hasLoggerData = hasSpotterData || hasHoboData;
 

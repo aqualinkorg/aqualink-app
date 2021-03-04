@@ -35,6 +35,7 @@ const TempAnalysis = ({
   spotterData,
   dailyData,
   hoboBottomTemperature,
+  error,
   classes,
 }: TempAnalysisProps) => {
   const theme = useTheme();
@@ -65,7 +66,8 @@ const TempAnalysis = ({
   } = calculateCardMetrics(
     filteredDailyData,
     spotterData,
-    hoboBottomTemperature
+    hoboBottomTemperature,
+    error
   );
 
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
@@ -276,6 +278,7 @@ interface TempAnalysisIncomingProps {
   spotterData: SpotterData | null | undefined;
   dailyData: DailyData[];
   hoboBottomTemperature: SofarValue[];
+  error: boolean;
 }
 
 type TempAnalysisProps = TempAnalysisIncomingProps & WithStyles<typeof styles>;

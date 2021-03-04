@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { maxBy } from "lodash";
 
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
@@ -25,6 +24,7 @@ import {
   findMarginalDate,
   setTimeZone,
   subtractFromDate,
+  isBefore,
 } from "../../../../helpers/dates";
 import {
   filterDailyData,
@@ -44,6 +44,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pastLimit, setPastLimit] = useState<string>();
+  const [pickerError, setPickerError] = useState(false);
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
@@ -51,26 +52,37 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   useEffect(() => {
     if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
       const { minDate, maxDate } = hoboBottomTemperatureRange[0];
-      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
-      const start =
-        maxBy([minDate, pastThreeMonths], (date) => new Date(date).getTime()) ||
-        minDate;
-      setPickerEndDate(
-        new Date(moment(maxDate).format("MM/DD/YYYY")).toISOString()
-      );
-      setPickerStartDate(
-        new Date(moment(start).format("MM/DD/YYYY")).toISOString()
-      );
-      setPastLimit(new Date(moment(start).format("MM/DD/YYYY")).toISOString());
+      const localizedMaxDate = new Date(
+        moment(maxDate)
+          .tz(reef.timezone || "UTC")
+          .format("MM/DD/YYYY")
+      ).toISOString();
+      const localizedMinDate = new Date(
+        moment(minDate)
+          .tz(reef.timezone || "UTC")
+          .format("MM/DD/YYYY")
+      ).toISOString();
+      const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
+      const start = isBefore(pastThreeMonths, localizedMinDate)
+        ? localizedMinDate
+        : pastThreeMonths;
+      setPickerEndDate(localizedMaxDate);
+      setPickerStartDate(start);
+      setPastLimit(start);
     } else {
+      setPastLimit(undefined);
       setPickerEndDate(today);
       setPickerStartDate(subtractFromDate(today, "week"));
     }
-  }, [hoboBottomTemperatureRange, today]);
+  }, [hoboBottomTemperatureRange, reef.timezone, today]);
 
   // Get spotter data
   useEffect(() => {
-    if (pickerStartDate && pickerEndDate) {
+    if (
+      pickerStartDate &&
+      pickerEndDate &&
+      isBefore(pickerStartDate, pickerEndDate)
+    ) {
       const reefLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
         reef.timezone
@@ -102,7 +114,15 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
 
   // Fetch HOBO data if picker start date is before the current past limit
   useEffect(() => {
-    if (pickerStartDate && pickerEndDate && pastLimit) {
+    if (
+      pickerStartDate &&
+      pickerEndDate &&
+      isBefore(pickerStartDate, pickerEndDate) &&
+      pastLimit &&
+      hoboBottomTemperatureRange &&
+      hoboBottomTemperatureRange.length > 0
+    ) {
+      const { minDate } = hoboBottomTemperatureRange[0];
       const reefLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
         reef.timezone
@@ -112,7 +132,10 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
         reef.timezone
       ) as string;
 
-      if (new Date(pickerStartDate).getTime() < new Date(pastLimit).getTime()) {
+      if (
+        new Date(pickerStartDate).getTime() < new Date(pastLimit).getTime() &&
+        new Date(pastLimit).getTime() > new Date(minDate).getTime()
+      ) {
         setPastLimit(pickerStartDate);
         dispatch(
           reefHoboDataRequest({
@@ -127,6 +150,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
     }
   }, [
     dispatch,
+    hoboBottomTemperatureRange,
     pastLimit,
     pickerEndDate,
     pickerStartDate,
@@ -199,6 +223,13 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
     spotterData,
   ]);
 
+  // Set picker error
+  useEffect(() => {
+    if (pickerStartDate && pickerEndDate) {
+      setPickerError(!isBefore(pickerStartDate, pickerEndDate));
+    }
+  }, [pickerEndDate, pickerStartDate]);
+
   return (
     <Container>
       <Grid className={classes.chartWrapper} container item spacing={2}>
@@ -228,6 +259,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
                 new Date(moment(date).format("MM/DD/YYYY")).toISOString()
               )
             }
+            error={pickerError}
           />
         </Grid>
         <Grid item xs={12} md={3}>
@@ -252,6 +284,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
                   startDate || pickerStartDate,
                   endDate || pickerEndDate
                 )}
+                error={pickerError}
               />
             </Grid>
           </Grid>

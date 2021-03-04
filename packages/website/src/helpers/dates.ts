@@ -22,6 +22,9 @@ interface DisplayDateParams {
   timeZoneToDisplay?: string | null;
 }
 
+export const isBefore = (start: string, end: string) =>
+  new Date(start).getTime() <= new Date(end).getTime();
+
 export const subtractFromDate = (
   endDate: string,
   amount: Range,

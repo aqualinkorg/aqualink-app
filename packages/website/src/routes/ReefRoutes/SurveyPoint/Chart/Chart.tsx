@@ -42,6 +42,7 @@ const Chart = ({
   pickerEndDate,
   startDate,
   endDate,
+  error,
   onStartDateChange,
   onEndDateChange,
   classes,
@@ -73,8 +74,9 @@ const Chart = ({
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
 
-  const success = !loading && (hasHoboData || hasSpotterData || hasDailyData);
-  const warning = !loading && !hasHoboData && !hasSpotterData;
+  const success =
+    !error && !loading && (hasHoboData || hasSpotterData || hasDailyData);
+  const warning = !error && !loading && !hasHoboData && !hasSpotterData;
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
@@ -105,6 +107,13 @@ const Chart = ({
           alignItems="center"
         >
           <CircularProgress size="120px" thickness={1} />
+        </Box>
+      )}
+      {error && (
+        <Box mt="16px" mb="188px">
+          <Alert severity="error">
+            <Typography>Start Date should not be after End Date</Typography>
+          </Alert>
         </Box>
       )}
       {warning && (
@@ -207,6 +216,7 @@ interface ChartIncomingProps {
   pickerEndDate: string;
   startDate: string;
   endDate: string;
+  error: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }
