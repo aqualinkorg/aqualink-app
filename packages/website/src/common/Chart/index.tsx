@@ -270,7 +270,11 @@ function Chart({
         spotterSurface,
         hoboBottomTemperatureData,
         tempWithSurvey,
-        augmentSurfaceTemperature(surfaceTemperatureData),
+        augmentSurfaceTemperature(
+          surfaceTemperatureData,
+          startDate || xAxisMin,
+          endDate || xAxisMax
+        ),
         bottomTemperatureData,
         monthlyMaxTemp,
         selectedSurvey?.diveDate

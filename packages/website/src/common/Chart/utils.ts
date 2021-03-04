@@ -3,6 +3,7 @@ import { ChartComponentProps } from "react-chartjs-2";
 import moment from "moment";
 import { inRange } from "lodash";
 import type { ChartProps } from ".";
+import { isBefore } from "../../helpers/dates";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type {
   DailyData,
@@ -91,15 +92,27 @@ export const augmentSurfaceTemperature = (
   surfaceTemperatureData: {
     x: string;
     y: number;
-  }[]
+  }[],
+  min: string,
+  max: string
 ) => {
   if (surfaceTemperatureData.length > 0) {
-    const first = surfaceTemperatureData[0];
-    const last = surfaceTemperatureData[surfaceTemperatureData.length - 1];
+    const firstData = surfaceTemperatureData[0];
+    const lastData = surfaceTemperatureData[surfaceTemperatureData.length - 1];
+
+    const firstDateExtension = moment(firstData.x).subtract(1, "days").format();
+    const lastDateExtension = moment(lastData.x).add(1, "days").format();
+
+    const startDate = isBefore(min, firstDateExtension)
+      ? firstDateExtension
+      : min;
+
+    const endDate = isBefore(max, lastDateExtension) ? max : lastDateExtension;
+
     return [
-      { x: moment(first.x).subtract(1, "days"), y: first.y },
+      { x: startDate, y: firstData.y },
       ...surfaceTemperatureData,
-      { x: moment(last.x).add(1, "days"), y: last.y },
+      { x: endDate, y: lastData.y },
     ];
   }
   return surfaceTemperatureData;

@@ -19,7 +19,7 @@ export const calculateCardMetrics = (
   const hasSpotterData =
     !error && spotterData && spotterData.bottomTemperature.length > 1;
   const hasHoboData = !error && hoboBottomTemperature.length > 1;
-  const hasDailyData = !error && dailyData.length > 0;
+  const hasDailyData = !error && dailyData.length > 1;
 
   const hasLoggerData = hasSpotterData || hasHoboData;
 

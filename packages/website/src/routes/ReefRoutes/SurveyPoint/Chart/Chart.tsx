@@ -69,7 +69,7 @@ const Chart = ({
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
 
   const hasDailyData =
-    filterDailyData(reef.dailyData, startDate, endDate).length > 0;
+    filterDailyData(reef.dailyData, startDate, endDate).length > 1;
 
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
