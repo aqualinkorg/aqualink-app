@@ -68,7 +68,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
-              <ReefTable isDrawerOpen={isDrawerOpen} />
+              <ReefTable />
             </Grid>
           </Hidden>
           <Hidden smUp>
