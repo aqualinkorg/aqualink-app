@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   createStyles,
   Grid,
@@ -7,9 +6,14 @@ import {
   WithStyles,
   Typography,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
+
 import { DailyData } from "../../../store/Reefs/types";
 import { getDailyDataClosestToDate } from "../../../helpers/sortDailyData";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { isBetween } from "../../../helpers/dates";
+import { reefHoboDataSelector } from "../../../store/Reefs/selectedReefSlice";
+import { getSpotterDataClosestToDate } from "../../../common/Chart/utils";
 
 const ObservationBox = ({
   depth,
@@ -17,12 +21,41 @@ const ObservationBox = ({
   date,
   classes,
 }: ObservationBoxProps) => {
-  const data = getDailyDataClosestToDate(dailyData, date);
-  const {
-    avgBottomTemperature,
-    surfaceTemperature,
-    satelliteTemperature,
-  } = data;
+  const { bottomTemperature, surfaceTemperature } =
+    useSelector(reefHoboDataSelector) || {};
+  const dailyDataLen = dailyData.length;
+  const surfaceData =
+    dailyDataLen > 0 &&
+    date &&
+    isBetween(date, dailyData[dailyDataLen - 1].date, dailyData[0].date)
+      ? getDailyDataClosestToDate(dailyData, new Date(date))
+      : undefined;
+  const { satelliteTemperature } = surfaceData || {};
+
+  const hoboSurfaceData =
+    date &&
+    surfaceTemperature &&
+    surfaceTemperature.length > 0 &&
+    isBetween(
+      date,
+      surfaceTemperature[0].timestamp,
+      surfaceTemperature[surfaceTemperature.length - 1].timestamp
+    )
+      ? getSpotterDataClosestToDate(surfaceTemperature, new Date(date), 6)
+          ?.value
+      : undefined;
+
+  const hoboBottomData =
+    date &&
+    bottomTemperature &&
+    bottomTemperature.length > 0 &&
+    isBetween(
+      date,
+      bottomTemperature[0].timestamp,
+      bottomTemperature[bottomTemperature.length - 1].timestamp
+    )
+      ? getSpotterDataClosestToDate(bottomTemperature, new Date(date), 6)?.value
+      : undefined;
 
   return (
     <div className={classes.outerDiv}>
@@ -55,7 +88,7 @@ const ObservationBox = ({
                   TEMP AT 1m
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(surfaceTemperature, 1)} °C`}
+                  {`${formatNumber(hoboSurfaceData, 1)} °C`}
                 </Typography>
               </Grid>
               <Grid container item direction="column" xs={6}>
@@ -63,7 +96,7 @@ const ObservationBox = ({
                   TEMP AT {depth ? `${depth}m` : "DEPTH"}
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(avgBottomTemperature, 1)} °C`}
+                  {`${formatNumber(hoboBottomData, 1)} °C`}
                 </Typography>
               </Grid>
             </Grid>
@@ -88,7 +121,7 @@ const styles = () =>
 interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
-  date: Date;
+  date: string | null | undefined;
 }
 
 type ObservationBoxProps = ObservationBoxIncomingProps &

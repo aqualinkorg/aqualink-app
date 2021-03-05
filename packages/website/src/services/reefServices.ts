@@ -47,10 +47,11 @@ const getReefHoboData = (
   pointId: string,
   start: string,
   end: string,
-  metrics: MetricsKeys[]
+  metrics: MetricsKeys[],
+  hourly: boolean = true
 ) =>
   requests.send<HoboDataResponse>({
-    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=true`,
+    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
     method: "GET",
   });
 

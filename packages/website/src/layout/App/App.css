@@ -64,24 +64,34 @@ body {
 }
 
 .slick-arrow:hover {
-  background-color: rgba(22, 141, 189, 0.5);
   border-radius: 40px;
+}
+
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+  height: 64px;
+  width: 64px;
+  top: 43%;
 }
 
 .slick-arrow.slick-prev {
-  background-color: rgba(22, 141, 189, 0.5);
-  border-radius: 40px;
-  height: 40px;
-  width: 40px;
-  left: -45px;
+  left: -60px;
 }
 
 .slick-arrow.slick-next {
-  background-color: rgba(22, 141, 189, 0.5);
-  border-radius: 40px;
-  height: 40px;
-  width: 40px;
-  right: -45px;
+  right: -60px;
+}
+
+.slick-arrow.slick-next::before,
+.slick-arrow.slick-prev::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  color: #168dbd;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 64px;
 }
 
 .mapbox-wordmark {

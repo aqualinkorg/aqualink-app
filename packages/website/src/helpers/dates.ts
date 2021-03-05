@@ -25,6 +25,9 @@ interface DisplayDateParams {
 export const isBefore = (start: string, end: string) =>
   new Date(start).getTime() <= new Date(end).getTime();
 
+export const isBetween = (date: string, start: string, end: string) =>
+  isBefore(date, end) && isBefore(start, date);
+
 export const subtractFromDate = (
   endDate: string,
   amount: Range,

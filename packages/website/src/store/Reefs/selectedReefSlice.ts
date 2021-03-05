@@ -85,7 +85,7 @@ export const reefHoboDataRequest = createAsyncThunk<
 >(
   "selectedReef/hoboDataRequest",
   async (
-    { reefId, pointId, start, end, metrics }: HoboDataRequestParams,
+    { reefId, pointId, start, end, metrics, hourly }: HoboDataRequestParams,
     { rejectWithValue }
   ) => {
     try {
@@ -94,7 +94,8 @@ export const reefHoboDataRequest = createAsyncThunk<
         pointId,
         start,
         end,
-        metrics
+        metrics,
+        hourly
       );
       return mapHoboData(hoboData);
     } catch (err) {

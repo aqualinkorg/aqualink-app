@@ -179,6 +179,7 @@ export interface HoboDataRequestParams {
   start: string;
   end: string;
   metrics: MetricsKeys[];
+  hourly?: boolean;
 }
 
 export interface HoboDataRangeRequestParams {
