@@ -24,7 +24,7 @@ export interface SofarValue {
   value: number;
 }
 
-export type Range = "day" | "week" | "month";
+export type Range = "day" | "week" | "month" | "year";
 
 export interface SpotterPosition {
   latitude: {

@@ -46,6 +46,10 @@ export const subtractFromDate = (
       return moment(endDate)
         .subtract(multiple || 1, "months")
         .toISOString();
+    case "year":
+      return moment(endDate)
+        .subtract(multiple || 1, "years")
+        .toISOString();
     default:
       return endDate;
   }

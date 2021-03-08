@@ -30,6 +30,7 @@ import {
   filterDailyData,
   filterHoboData,
 } from "../../../../common/Chart/utils";
+import { RangeValue } from "./types";
 
 const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const dispatch = useDispatch();
@@ -45,36 +46,24 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   const [startDate, setStartDate] = useState<string>();
   const [pastLimit, setPastLimit] = useState<string>();
   const [pickerError, setPickerError] = useState(false);
+  const [range, setRange] = useState<RangeValue>("three_months");
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
   // Set pickers dates
   useEffect(() => {
-    if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
-      const { minDate, maxDate } = hoboBottomTemperatureRange[0];
-      const localizedMaxDate = new Date(
-        moment(maxDate)
-          .tz(reef.timezone || "UTC")
-          .format("MM/DD/YYYY")
-      ).toISOString();
-      const localizedMinDate = new Date(
-        moment(minDate)
-          .tz(reef.timezone || "UTC")
-          .format("MM/DD/YYYY")
-      ).toISOString();
-      const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
-      const start = isBefore(pastThreeMonths, localizedMinDate)
-        ? localizedMinDate
-        : pastThreeMonths;
-      setPickerEndDate(localizedMaxDate);
-      setPickerStartDate(start);
-      setPastLimit(start);
-    } else {
-      setPastLimit(undefined);
-      setPickerEndDate(today);
-      setPickerStartDate(subtractFromDate(today, "week"));
-    }
-  }, [hoboBottomTemperatureRange, reef.timezone, today]);
+    const { maxDate } =
+      (hoboBottomTemperatureRange && hoboBottomTemperatureRange[0]) || {};
+    const localizedMaxDate = new Date(
+      moment(maxDate)
+        .tz(reef.timezone || "UTC")
+        .format("MM/DD/YYYY")
+    ).toISOString();
+    const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
+    setPickerEndDate(localizedMaxDate);
+    setPickerStartDate(pastThreeMonths);
+    setPastLimit(pastThreeMonths);
+  }, [hoboBottomTemperatureRange, reef.timezone]);
 
   // Get spotter data
   useEffect(() => {
@@ -230,6 +219,38 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
     }
   }, [pickerEndDate, pickerStartDate]);
 
+  const onRangeChange = (value: RangeValue) => {
+    const { minDate, maxDate } =
+      (hoboBottomTemperatureRange && hoboBottomTemperatureRange[0]) || {};
+    const localizedMinDate = new Date(
+      moment(minDate)
+        .tz(reef.timezone || "UTC")
+        .format("MM/DD/YYYY")
+    ).toISOString();
+    const localizedMaxDate = new Date(
+      moment(maxDate)
+        .tz(reef.timezone || "UTC")
+        .format("MM/DD/YYYY")
+    ).toISOString();
+    setRange(value);
+    switch (value) {
+      case "three_months":
+        setPickerEndDate(localizedMaxDate);
+        setPickerStartDate(subtractFromDate(localizedMaxDate, "month", 3));
+        break;
+      case "one_year":
+        setPickerEndDate(localizedMaxDate);
+        setPickerStartDate(subtractFromDate(localizedMaxDate, "year"));
+        break;
+      case "max":
+        setPickerEndDate(localizedMaxDate);
+        setPickerStartDate(localizedMinDate);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Container>
       <Grid className={classes.chartWrapper} container item spacing={2}>
@@ -249,17 +270,25 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
               startDate || pickerStartDate || subtractFromDate(today, "week")
             }
             endDate={endDate || pickerEndDate || today}
-            onStartDateChange={(date) =>
+            onStartDateChange={(date) => {
               setPickerStartDate(
                 new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-              )
-            }
-            onEndDateChange={(date) =>
+              );
+              setRange("custom");
+            }}
+            onEndDateChange={(date) => {
               setPickerEndDate(
                 new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-              )
-            }
+              );
+              setRange("custom");
+            }}
             error={pickerError}
+            range={range}
+            onRangeChange={onRangeChange}
+            disableMaxRange={
+              !hoboBottomTemperatureRange ||
+              hoboBottomTemperatureRange.length === 0
+            }
           />
         </Grid>
         <Grid item xs={12} md={3}>

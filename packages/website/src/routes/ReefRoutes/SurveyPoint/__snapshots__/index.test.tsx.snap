@@ -966,66 +966,99 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 <div
                   class="MuiGrid-root MuiGrid-item"
                 >
-                  <mock-button
-                    color="primary"
-                    fullwidth="true"
-                    size="small"
-                    variant="contained"
+                  <mock-tooltip
+                    arrow="true"
+                    placement="top"
+                    title="Range of 3 months from maximum date"
                   >
-                    <mock-typography
-                      variant="subtitle1"
-                    >
-                      3 Months
-                    </mock-typography>
-                  </mock-button>
+                    <div>
+                      <mock-button
+                        color="primary"
+                        fullwidth="true"
+                        size="small"
+                        variant="contained"
+                      >
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          3 Months
+                        </mock-typography>
+                      </mock-button>
+                    </div>
+                  </mock-tooltip>
                 </div>
                 <div
                   class="MuiGrid-root MuiGrid-item"
                 >
-                  <mock-button
-                    color="primary"
-                    fullwidth="true"
-                    size="small"
-                    variant="outlined"
+                  <mock-tooltip
+                    arrow="true"
+                    placement="top"
+                    title="Range of 1 year from maximum date"
                   >
-                    <mock-typography
-                      variant="subtitle1"
-                    >
-                      1 Year
-                    </mock-typography>
-                  </mock-button>
+                    <div>
+                      <mock-button
+                        color="primary"
+                        fullwidth="true"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          1 Year
+                        </mock-typography>
+                      </mock-button>
+                    </div>
+                  </mock-tooltip>
                 </div>
                 <div
                   class="MuiGrid-root MuiGrid-item"
                 >
-                  <mock-button
-                    color="primary"
-                    fullwidth="true"
-                    size="small"
-                    variant="outlined"
+                  <mock-tooltip
+                    arrow="true"
+                    placement="top"
+                    title="Maximun range"
                   >
-                    <mock-typography
-                      variant="subtitle1"
-                    >
-                      Max
-                    </mock-typography>
-                  </mock-button>
+                    <div>
+                      <mock-button
+                        color="primary"
+                        disabled="false"
+                        fullwidth="true"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          Max
+                        </mock-typography>
+                      </mock-button>
+                    </div>
+                  </mock-tooltip>
                 </div>
                 <div
                   class="MuiGrid-root MuiGrid-item"
                 >
-                  <mock-button
-                    color="primary"
-                    fullwidth="true"
-                    size="small"
-                    variant="outlined"
+                  <mock-tooltip
+                    arrow="true"
+                    placement="top"
+                    title="Custom range"
                   >
-                    <mock-typography
-                      variant="subtitle1"
-                    >
-                      Custom
-                    </mock-typography>
-                  </mock-button>
+                    <div>
+                      <mock-button
+                        color="primary"
+                        fullwidth="true"
+                        size="small"
+                        variant="outlined"
+                      >
+                        <mock-typography
+                          variant="subtitle1"
+                        >
+                          Custom
+                        </mock-typography>
+                      </mock-button>
+                    </div>
+                  </mock-tooltip>
                 </div>
               </div>
             </mock-box>

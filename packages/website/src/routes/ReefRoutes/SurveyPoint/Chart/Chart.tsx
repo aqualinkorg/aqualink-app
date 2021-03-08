@@ -33,6 +33,7 @@ import { findChartPeriod, showYear } from "./helpers";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../../helpers/surveys";
 import { filterDailyData } from "../../../../common/Chart/utils";
+import { RangeValue } from "./types";
 
 const Chart = ({
   reef,
@@ -44,8 +45,11 @@ const Chart = ({
   startDate,
   endDate,
   error,
+  range,
+  disableMaxRange,
   onStartDateChange,
   onEndDateChange,
+  onRangeChange,
   classes,
 }: ChartProps) => {
   const { bottomTemperature: hoboBottomTemperatureRange } =
@@ -94,7 +98,11 @@ const Chart = ({
 
   return (
     <>
-      <ViewRange />
+      <ViewRange
+        range={range}
+        onRangeChange={onRangeChange}
+        disableMaxRange={disableMaxRange}
+      />
       {loading && (
         <Box
           height="240px"
@@ -212,8 +220,11 @@ interface ChartIncomingProps {
   startDate: string;
   endDate: string;
   error: boolean;
+  range: RangeValue;
+  disableMaxRange: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
+  onRangeChange: (value: RangeValue) => void;
 }
 
 type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;

@@ -9,12 +9,44 @@ import {
   Button,
   useTheme,
   useMediaQuery,
+  Tooltip,
 } from "@material-ui/core";
+import { RangeButton, RangeValue } from "./types";
 
-const ViewRange = ({ classes }: ViewRangeProps) => {
+const ViewRange = ({
+  range,
+  disableMaxRange,
+  onRangeChange,
+  classes,
+}: ViewRangeProps) => {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const buttons: RangeButton[] = [
+    {
+      id: "three_months",
+      title: "3 Months",
+      tooltip: "Range of 3 months from maximum date",
+    },
+    {
+      id: "one_year",
+      title: "1 Year",
+      tooltip: "Range of 1 year from maximum date",
+    },
+    {
+      id: "max",
+      title: "Max",
+      disabled: disableMaxRange,
+      tooltip: disableMaxRange ? "No maximum range" : "Maximun range",
+    },
+    {
+      id: "custom",
+      title: "Custom",
+      tooltip: "Custom range",
+    },
+  ];
+
   return (
     <>
       <Grid
@@ -45,46 +77,26 @@ const ViewRange = ({ classes }: ViewRangeProps) => {
                   View Range:
                 </Typography>
               </Grid>
-              <Grid item xs={isMobile ? 10 : undefined}>
-                <Button
-                  size="small"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                >
-                  <Typography variant="subtitle1">3 Months</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={isMobile ? 10 : undefined}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                >
-                  <Typography variant="subtitle1">1 Year</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={isMobile ? 10 : undefined}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                >
-                  <Typography variant="subtitle1">Max</Typography>
-                </Button>
-              </Grid>
-              <Grid item xs={isMobile ? 10 : undefined}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                >
-                  <Typography variant="subtitle1">Custom</Typography>
-                </Button>
-              </Grid>
+              {buttons.map((button) => (
+                <Grid key={button.id} item xs={isMobile ? 10 : undefined}>
+                  <Tooltip arrow placement="top" title={button.tooltip}>
+                    <div>
+                      <Button
+                        onClick={() => onRangeChange(button.id)}
+                        size="small"
+                        variant={range === button.id ? "contained" : "outlined"}
+                        color="primary"
+                        disabled={button.disabled}
+                        fullWidth
+                      >
+                        <Typography variant="subtitle1">
+                          {button.title}
+                        </Typography>
+                      </Button>
+                    </div>
+                  </Tooltip>
+                </Grid>
+              ))}
             </Grid>
           </Box>
         </Grid>
@@ -100,7 +112,11 @@ const styles = () =>
     },
   });
 
-interface ViewRangeIncomingProps {}
+interface ViewRangeIncomingProps {
+  range: RangeValue;
+  disableMaxRange: boolean;
+  onRangeChange: (value: RangeValue) => void;
+}
 
 type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;
 
