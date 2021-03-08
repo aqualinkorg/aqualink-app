@@ -145,13 +145,12 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
           <TableRow
             id={`homepage-table-row-${reef.tableData.id}`}
             hover
+            className={classes.tableRow}
             style={{
               backgroundColor:
                 reef.tableData.id === selectedRow
                   ? colors.lighterBlue
                   : "white",
-              cursor: "pointer",
-              borderTop: "1px solid rgba(224, 224, 224, 1)",
             }}
             onClick={(event) => handleClick(event, reef)}
             role="button"
@@ -196,6 +195,10 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         textAlign: "right",
       },
+    },
+    tableRow: {
+      cursor: "pointer",
+      borderTop: `1px solid ${theme.palette.grey["300"]}`,
     },
   });
 

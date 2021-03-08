@@ -21,6 +21,8 @@ jest.mock("@material-ui/icons", () => ({
   GitHub: "GitHub",
   KeyboardArrowDown: "KeyboardArrowDown",
   KeyboardArrowUp: "KeyboardArrowUp",
+  ArrowDownward: "ArrowDownward",
+  ArrowUpward: "ArrowUpward",
   LocalOffer: "LocalOffer",
   Menu: "Menu",
   MoreVert: "MoreVert",
