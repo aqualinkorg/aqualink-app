@@ -10,6 +10,7 @@ import {
   CircularProgress,
   useTheme,
   useMediaQuery,
+  Theme,
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -76,7 +77,7 @@ const TempAnalysis = ({
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
   return (
-    <Box mt={!isTablet && hasDailyData && warning ? "115px" : "0px"}>
+    <Box mt={!isTablet && hasDailyData && warning ? "122px" : "0px"}>
       <Card className={classes.tempAnalysisCard}>
         <Typography variant="subtitle1" color="textSecondary">
           TEMP ANALYSIS
@@ -227,16 +228,19 @@ const TempAnalysis = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
       width: "auto",
     },
     tempAnalysisCard: {
       padding: 16,
-      height: 265,
-      marginTop: 45,
+      height: 263,
+      marginTop: 54,
       backgroundColor: "#f8f9f9",
+      [theme.breakpoints.down("sm")]: {
+        marginTop: 20,
+      },
     },
     dates: {
       color: "#979797",

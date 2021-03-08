@@ -927,19 +927,113 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-9"
       >
-        <mock-box
-          ml="50px"
+        <div
+          class="MuiGrid-root ViewRange-autoWidth-47 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
-          <mock-typography
-            color="textSecondary"
-            variant="h6"
+          <div
+            class="MuiGrid-root MuiGrid-item"
           >
-            TEMPERATURE
-          </mock-typography>
-        </mock-box>
+            <mock-box
+              ml="27px"
+            >
+              <mock-typography
+                color="textSecondary"
+                variant="h6"
+              >
+                TEMPERATURE
+              </mock-typography>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item"
+          >
+            <mock-box
+              ml="0px"
+            >
+              <div
+                class="MuiGrid-root ViewRange-autoWidth-47 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-center"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-typography
+                    color="textSecondary"
+                    variant="subtitle1"
+                  >
+                    View Range:
+                  </mock-typography>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-button
+                    color="primary"
+                    fullwidth="true"
+                    size="small"
+                    variant="contained"
+                  >
+                    <mock-typography
+                      variant="subtitle1"
+                    >
+                      3 Months
+                    </mock-typography>
+                  </mock-button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-button
+                    color="primary"
+                    fullwidth="true"
+                    size="small"
+                    variant="outlined"
+                  >
+                    <mock-typography
+                      variant="subtitle1"
+                    >
+                      1 Year
+                    </mock-typography>
+                  </mock-button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-button
+                    color="primary"
+                    fullwidth="true"
+                    size="small"
+                    variant="outlined"
+                  >
+                    <mock-typography
+                      variant="subtitle1"
+                    >
+                      Max
+                    </mock-typography>
+                  </mock-button>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-button
+                    color="primary"
+                    fullwidth="true"
+                    size="small"
+                    variant="outlined"
+                  >
+                    <mock-typography
+                      variant="subtitle1"
+                    >
+                      Custom
+                    </mock-typography>
+                  </mock-button>
+                </div>
+              </div>
+            </mock-box>
+          </div>
+        </div>
         <mock-box
           mb="188px"
-          mt="16px"
+          mt="22px"
         >
           <div
             class="MuiPaper-root MuiAlert-root MuiAlert-standardWarning MuiPaper-elevation0"
@@ -991,10 +1085,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     START DATE:
                   </mock-typography>
                   <div
-                    class="DatePicker-datePicker-47"
+                    class="DatePicker-datePicker-48"
                   >
                     <mock-textfield
-                      classname="DatePicker-textField-49"
+                      classname="DatePicker-textField-50"
                       error="false"
                       helpertext=""
                       inputprops="[object Object]"
@@ -1055,7 +1149,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
                                     variant="body1"
                                   >
-                                    February 2021
+                                    March 2021
                                   </mock-typography>
                                 </div>
                                 <mock-iconbutton
@@ -1694,7 +1788,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                         color="inherit"
                                         variant="body2"
                                       >
-                                        31
+                                        28
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
@@ -1702,7 +1796,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1811,7 +1905,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -2089,7 +2183,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -2138,6 +2232,51 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        31
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
                                       classname="MuiPickersDay-day MuiPickersDay-hidden"
                                       tabindex="-1"
                                     >
@@ -2176,51 +2315,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                         variant="body2"
                                       >
                                         3
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        4
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-current"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        5
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        6
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
@@ -2271,10 +2365,10 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     END DATE:
                   </mock-typography>
                   <div
-                    class="DatePicker-datePicker-47"
+                    class="DatePicker-datePicker-48"
                   >
                     <mock-textfield
-                      classname="DatePicker-textField-49"
+                      classname="DatePicker-textField-50"
                       error="false"
                       helpertext=""
                       inputprops="[object Object]"
@@ -3042,7 +3136,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3091,7 +3185,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3550,7 +3644,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               mt="0px"
             >
               <mock-card
-                classname="TempAnalysis-tempAnalysisCard-51"
+                classname="TempAnalysis-tempAnalysisCard-52"
               >
                 <mock-typography
                   color="textSecondary"
@@ -3559,7 +3653,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   TEMP ANALYSIS
                 </mock-typography>
                 <mock-typography
-                  classname="TempAnalysis-dates-52"
+                  classname="TempAnalysis-dates-53"
                   variant="subtitle2"
                 >
                   11/02/2019
@@ -3567,16 +3661,16 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                   02/02/2020
                 </mock-typography>
                 <div
-                  class="MuiGrid-root TempAnalysis-metricsWrapper-54 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root TempAnalysis-metricsWrapper-55 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiGrid-root TempAnalysis-metrics-55 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                      class="MuiGrid-root TempAnalysis-metrics-56 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
                       <div
-                        class="MuiGrid-root TempAnalysis-rotatedText-53 MuiGrid-item"
+                        class="MuiGrid-root TempAnalysis-rotatedText-54 MuiGrid-item"
                       >
                         <mock-typography
                           color="textSecondary"
@@ -3586,7 +3680,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         </mock-typography>
                       </div>
                       <div
-                        class="MuiGrid-root TempAnalysis-rotatedText-53 MuiGrid-item"
+                        class="MuiGrid-root TempAnalysis-rotatedText-54 MuiGrid-item"
                       >
                         <mock-typography
                           color="textSecondary"
@@ -3596,7 +3690,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         </mock-typography>
                       </div>
                       <div
-                        class="MuiGrid-root TempAnalysis-rotatedText-53 MuiGrid-item"
+                        class="MuiGrid-root TempAnalysis-rotatedText-54 MuiGrid-item"
                       >
                         <mock-typography
                           color="textSecondary"
@@ -3611,13 +3705,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiGrid-root TempAnalysis-autoWidth-50 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                      class="MuiGrid-root TempAnalysis-autoWidth-51 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-surfaceText-56"
+                          classname="TempAnalysis-surfaceText-57"
                           variant="subtitle2"
                         >
                           SURFACE
@@ -3627,7 +3721,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3639,7 +3733,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3651,7 +3745,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3665,13 +3759,13 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiGrid-root TempAnalysis-autoWidth-50 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
+                      class="MuiGrid-root TempAnalysis-autoWidth-51 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-buoyText-57"
+                          classname="TempAnalysis-buoyText-58"
                           variant="subtitle2"
                         >
                           HOBO
@@ -3681,7 +3775,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3693,7 +3787,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3705,7 +3799,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="TempAnalysis-values-58"
+                          classname="TempAnalysis-values-59"
                           color="textSecondary"
                           variant="h5"
                         >
@@ -3733,7 +3827,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
       >
         <mock-box
-          classname="SurveyHistory-title-59"
+          classname="SurveyHistory-title-60"
         >
           <mock-typography
             variant="h4"
@@ -3743,7 +3837,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-70"
+        class="SurveyTimeline-root-71"
       >
         <mock-hidden
           mddown="true"
@@ -3763,7 +3857,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-76"
+    classname="Footer-appBar-77"
     position="static"
   >
     <mock-toolbar>
@@ -3774,7 +3868,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-77"
+            classname="Footer-navBarLink-78"
             href="/map"
           >
             <mock-typography

@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
 import DatePicker from "../../../../common/Datepicker";
+import ViewRange from "./ViewRange";
 import {
   convertDailyDataToLocalTime,
   convertHoboDataToLocalTime,
@@ -93,11 +94,7 @@ const Chart = ({
 
   return (
     <>
-      <Box ml="50px">
-        <Typography variant="h6" color="textSecondary">
-          TEMPERATURE
-        </Typography>
-      </Box>
+      <ViewRange />
       {loading && (
         <Box
           height="240px"
@@ -110,14 +107,14 @@ const Chart = ({
         </Box>
       )}
       {error && (
-        <Box mt="16px" mb="188px">
+        <Box mt="22px" mb="188px">
           <Alert severity="error">
             <Typography>Start Date should not be after End Date</Typography>
           </Alert>
         </Box>
       )}
       {warning && (
-        <Box mt="16px" mb={success ? "0px" : "188px"}>
+        <Box mt={success ? "16px" : "22px"} mb={success ? "0px" : "188px"}>
           <Alert severity="warning">
             <Typography>
               {minDateLocal && maxDateLocal
