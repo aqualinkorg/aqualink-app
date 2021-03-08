@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import _, { omit } from 'lodash';
 import { Repository } from 'typeorm';
@@ -8,9 +8,17 @@ import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { DataRangeDto } from './dto/data-range.dto';
 
+interface TimeSeriesData {
+  value: number;
+  timestamp: Date;
+  metric: Metric;
+}
+
 @Injectable()
 export class TimeSeriesService {
-  private readonly metricsObject = Object.values(Metric).reduce(
+  private logger = new Logger(TimeSeriesService.name);
+
+  private readonly emptyMetricsObject = Object.values(Metric).reduce(
     (obj, key) => ({ ...obj, [key]: [] }),
     {},
   );
@@ -20,13 +28,13 @@ export class TimeSeriesService {
     private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
 
-  private groupByMetric(data: any[]) {
+  private groupByMetric(data: TimeSeriesData[]) {
     return _(data)
       .groupBy('metric')
       .mapValues((groupedData) => {
         return groupedData.map((o) => omit(o, 'metric'));
       })
-      .merge(this.metricsObject);
+      .merge(this.emptyMetricsObject);
   }
 
   private getDataQuery(
@@ -36,7 +44,7 @@ export class TimeSeriesService {
     hourly: boolean,
     reefId: number,
     poiId?: number,
-  ) {
+  ): Promise<TimeSeriesData[]> {
     const poiCondition = poiId ? `poi_id = ${poiId}` : 'poi_id is NULL';
 
     return hourly
@@ -76,7 +84,7 @@ export class TimeSeriesService {
   ) {
     const { reefId, poiId } = poiDataDto;
 
-    const data = await this.getDataQuery(
+    const data: TimeSeriesData[] = await this.getDataQuery(
       startDate,
       endDate,
       metrics,
@@ -97,7 +105,7 @@ export class TimeSeriesService {
   ) {
     const { reefId } = reefDataDto;
 
-    const data = await this.getDataQuery(
+    const data: TimeSeriesData[] = await this.getDataQuery(
       startDate,
       endDate,
       metrics,
