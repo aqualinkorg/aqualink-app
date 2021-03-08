@@ -1,5 +1,4 @@
 import { Factory, Seeder } from 'typeorm-seeding';
-import { Connection } from 'typeorm';
 import { times } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
@@ -9,7 +8,7 @@ import { Metric } from '../time-series/metrics.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 
 export class CreateReef implements Seeder {
-  public async run(factory: Factory, connection: Connection) {
+  public async run(factory: Factory) {
     const reef = await factory(Reef)().create();
 
     const startDate = new Date(2020, 1, 1);
