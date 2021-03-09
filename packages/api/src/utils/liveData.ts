@@ -137,7 +137,7 @@ export const getLiveData = async (
  * To achieve this, we assigned the MM value to the 15th day of each corresponding month, with the individual
  * days between these dates being derived using linear interpolation. We then calculate the SSTA product using:
  *
- *                                           SST_anomaly = SST - DC
+ * ST_anomaly = SST - DC
  *
  * where the SST is the value for the day in question, and DC is the corresponding daily climatology for that
  * day of the year.
