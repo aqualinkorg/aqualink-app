@@ -184,7 +184,7 @@ const getReefRecords = async (
 
   // Extract reef entities and calculate position of reef by averaging all each pois positions
   const reefs = await Promise.all(
-    reefIds.map(async (reefId) => {
+    reefIds.map((reefId) => {
       const filteredReefCoords = recordsGroupedByReef[reefId];
 
       const reefRecord = filteredReefCoords.reduce(
@@ -209,12 +209,12 @@ const getReefRecords = async (
 
       // Augment reef information
       const [longitude, latitude] = point.coordinates;
-      const region = await getRegion(longitude, latitude, regionRepository);
-      const maxMonthlyMean = await getMMM(longitude, latitude);
-
       const timezones = getTimezones(latitude, longitude) as string[];
 
-      return {
+      return Promise.all([
+        getRegion(longitude, latitude, regionRepository),
+        getMMM(longitude, latitude),
+      ]).then(([region, maxMonthlyMean]) => ({
         name: FOLDER_PREFIX + reefId,
         polygon: point,
         region,
@@ -222,7 +222,7 @@ const getReefRecords = async (
         approved: true,
         timezone: timezones[0],
         status: ReefStatus.Approved,
-      };
+      }));
     }),
   );
 
@@ -255,22 +255,25 @@ const createReefs = async (
 
   logger.log(`Saving monthly max data`);
   await Promise.all(
-    reefEntities.map(async (reef) => {
+    reefEntities.map((reef) => {
       const point: Point = reef.polygon as Point;
       const [longitude, latitude] = point.coordinates;
-      const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
-      const found = await monthlyMaxRepository.findOne({ where: { reef } });
 
-      if (found) {
-        logger.warn(`Reef ${reef.id} has already monthly max data`);
-        return null;
-      }
+      return Promise.all([
+        getMonthlyMaximums(longitude, latitude),
+        monthlyMaxRepository.findOne({ where: { reef } }),
+      ]).then(([monthlyMaximums, found]) => {
+        if (found || !monthlyMaximums) {
+          logger.warn(`Reef ${reef.id} has already monthly max data`);
+          return null;
+        }
 
-      return monthlyMaximums.map(({ month, temperature }) => {
-        return (
-          temperature &&
-          monthlyMaxRepository.insert({ reef, month, temperature })
-        );
+        return monthlyMaximums.map(({ month, temperature }) => {
+          return (
+            temperature &&
+            monthlyMaxRepository.save({ reef, month, temperature })
+          );
+        });
       });
     }),
   );
@@ -372,18 +375,20 @@ const createSources = async (
 
   logger.log('Saving sources');
   const sourceEntities = await Promise.all(
-    sources.map(async (source) => {
-      const foundSource = await sourcesRepository.findOne({
-        relations: ['poi'],
-        where: { reef: source.reef, poi: source.poi, type: source.type },
-      });
+    sources.map((source) =>
+      sourcesRepository
+        .findOne({
+          relations: ['poi'],
+          where: { reef: source.reef, poi: source.poi, type: source.type },
+        })
+        .then((foundSource) => {
+          if (foundSource) {
+            return foundSource;
+          }
 
-      if (foundSource) {
-        return foundSource;
-      }
-
-      return sourcesRepository.save(source);
-    }),
+          return sourcesRepository.save(source);
+        }),
+    ),
   );
 
   // Map pois to created sources
@@ -527,19 +532,17 @@ const uploadReefPhotos = async (
 
   logger.log('Upload photos to google cloud');
   const imageLength = imageData.length;
-  const surveyMedia = await Bluebird.Promise.each(
+  const surveyMedia = await Bluebird.each(
     imageData.map((image) =>
-      googleCloudService
-        .uploadFile(image.imagePath, 'image')
-        .then(async (url) => {
-          const survey = {
-            reef: image.reef,
-            userId: user,
-            diveDate: image.createdDate,
-            weatherConditions: WeatherConditions.NoData,
-          };
+      googleCloudService.uploadFile(image.imagePath, 'image').then((url) => {
+        const survey = {
+          reef: image.reef,
+          userId: user,
+          diveDate: image.createdDate,
+          weatherConditions: WeatherConditions.NoData,
+        };
 
-          const surveyEntity = await surveyRepository.save(survey);
+        return surveyRepository.save(survey).then((surveyEntity) => {
           return {
             url,
             featured: true,
@@ -550,7 +553,8 @@ const uploadReefPhotos = async (
             metadata: JSON.stringify({}),
             observations: Observations.NoData,
           };
-        }),
+        });
+      }),
     ),
     (data, idx) => {
       logger.log(`${idx + 1} images uploaded out of ${imageLength}`);
