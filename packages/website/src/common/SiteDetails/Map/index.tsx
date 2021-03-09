@@ -14,7 +14,7 @@ import {
   Pois,
   Point,
 } from "../../../store/Reefs/types";
-import { mapBounds } from "../../../helpers/mapBounds";
+import { mapBounds } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import buoy from "../../../assets/buoy-marker.svg";

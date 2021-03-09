@@ -5,7 +5,7 @@ import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
 import { Reef } from "../../../store/Reefs/types";
-import { mapBounds } from "../../../helpers/mapBounds";
+import { mapBounds } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import {
