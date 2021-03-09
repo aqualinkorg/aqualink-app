@@ -89,6 +89,7 @@ const UploadMedia = ({
         const points: Pois[] = response.data.map((item) => ({
           id: item.id,
           name: item.name,
+          polygon: null,
         }));
         dispatch(setReefPois(points));
 
