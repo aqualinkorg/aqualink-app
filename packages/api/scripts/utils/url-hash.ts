@@ -1,4 +1,4 @@
-import { hashId, idFromHash, isValidId } from '../src/utils/urls';
+import { hashId, idFromHash, isValidId } from '../../src/utils/urls';
 
 function usage() {
   return '\nUsage: url-hash [toHash/toId] <HASH_OR_ID>';

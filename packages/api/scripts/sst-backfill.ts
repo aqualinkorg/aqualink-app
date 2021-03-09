@@ -2,7 +2,7 @@ import { createConnection, In } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { Reef } from '../src/reefs/reefs.entity';
-import { getNOAAData } from '../src/utils/netcdf-utils';
+import { getNOAAData } from './utils/netcdf';
 import { DailyData } from '../src/reefs/daily-data.entity';
 
 const dbConfig = require('../ormconfig');

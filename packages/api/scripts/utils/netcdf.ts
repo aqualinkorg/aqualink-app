@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Extent, pointToPixel } from './coordinates';
+import { Extent, pointToPixel } from '../../src/utils/coordinates';
 
 const netcdf4 = require('netcdf4');
 
