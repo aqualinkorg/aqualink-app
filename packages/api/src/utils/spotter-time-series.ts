@@ -101,8 +101,14 @@ export const addSpotterData = async (
     reefs.map((reef) =>
       Promise.all(
         times(days, (i) => {
-          const startDate = moment().subtract(i, 'd').startOf('day').toDate();
-          const endDate = moment().subtract(i, 'd').endOf('day').toDate();
+          const startDate = moment()
+            .subtract(i + 1, 'd')
+            .startOf('day')
+            .toDate();
+          const endDate = moment()
+            .subtract(i + 1, 'd')
+            .endOf('day')
+            .toDate();
           return getSpotterData(reef.spotterId, endDate, startDate);
         }),
       ).then((backfillData) =>

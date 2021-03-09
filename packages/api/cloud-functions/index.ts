@@ -2,6 +2,7 @@ import Axios from 'axios';
 import * as functions from 'firebase-functions';
 import { createConnection } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
+import { runSpotterTimeSeriesUpdate } from '../src/workers/spotterTimeSeries';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -89,4 +90,28 @@ exports.pingService = functions.pubsub
     // eslint-disable-next-line no-console
     console.log('Pinging server');
     await Axios.get(`${backendBaseUrl}/health-check`);
+  });
+
+exports.scheduledSpotterTimeSeriesUpdate = functions
+  .runWith({ timeoutSeconds: 540 })
+  .pubsub.schedule('0 4 * * * *')
+  .timeZone('America/Los_Angeles')
+  .onRun(async () => {
+    const dbUrl = functions.config().database.url;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+    try {
+      await runSpotterTimeSeriesUpdate(conn);
+      // eslint-disable-next-line no-console
+      console.log(`Daily update on ${new Date()}`);
+    } finally {
+      conn.close();
+    }
   });
