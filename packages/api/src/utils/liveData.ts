@@ -131,6 +131,17 @@ export const getLiveData = async (
   };
 };
 
+/**
+ * The daily global 5km SSTA product requires a daily climatology to calculate the daily SST anomalies.
+ * Daily climatologies (DC) are derived from the monthly mean (MM) climatology via linear interpolation.
+ * To achieve this, we assigned the MM value to the 15th day of each corresponding month, with the individual
+ * days between these dates being derived using linear interpolation. We then calculate the SSTA product using:
+ *
+ *                                           SST_anomaly = SST - DC
+ *
+ * where the SST is the value for the day in question, and DC is the corresponding daily climatology for that
+ * day of the year.
+ * */
 export const findSstAnomaly = (
   monthlyMax: MonthlyMax[],
   satelliteTemperature?: SofarValue,
