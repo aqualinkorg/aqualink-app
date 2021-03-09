@@ -1055,7 +1055,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     class="MuiPickersSlideTransition-slideExit MuiPickersSlideTransition-slideExitActiveLeft-right"
                                     variant="body1"
                                   >
-                                    February 2021
+                                    March 2021
                                   </mock-typography>
                                 </div>
                                 <mock-iconbutton
@@ -1694,7 +1694,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                         color="inherit"
                                         variant="body2"
                                       >
-                                        31
+                                        28
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
@@ -1717,7 +1717,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1826,7 +1826,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -2089,7 +2089,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -2138,6 +2138,51 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        29
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        30
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
+                                      classname="MuiPickersDay-day"
+                                      tabindex="0"
+                                    >
+                                      <mock-typography
+                                        color="inherit"
+                                        variant="body2"
+                                      >
+                                        31
+                                      </mock-typography>
+                                    </mock-iconbutton>
+                                  </div>
+                                  <div
+                                    role="presentation"
+                                  >
+                                    <mock-iconbutton
                                       classname="MuiPickersDay-day MuiPickersDay-hidden"
                                       tabindex="-1"
                                     >
@@ -2176,51 +2221,6 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                         variant="body2"
                                       >
                                         3
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        4
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden MuiPickersDay-current"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        5
-                                      </mock-typography>
-                                    </mock-iconbutton>
-                                  </div>
-                                  <div
-                                    role="presentation"
-                                  >
-                                    <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-hidden"
-                                      tabindex="-1"
-                                    >
-                                      <mock-typography
-                                        color="inherit"
-                                        variant="body2"
-                                      >
-                                        6
                                       </mock-typography>
                                     </mock-iconbutton>
                                   </div>
@@ -3042,7 +3042,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3106,7 +3106,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
