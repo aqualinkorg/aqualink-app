@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from './reefs.entity';
 
@@ -9,6 +15,7 @@ export enum SourceType {
 }
 
 @Entity()
+@Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
 export class Sources {
   @PrimaryGeneratedColumn()
   id: number;
