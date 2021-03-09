@@ -1,5 +1,6 @@
 import { Point } from 'geojson';
-import { isNil, omitBy } from 'lodash';
+import { isNil, omitBy, keyBy } from 'lodash';
+import moment from 'moment';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
@@ -8,9 +9,10 @@ import {
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData } from './sofar.types';
+import { SofarLiveData, SofarValue } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
+import { MonthlyMax } from '../reefs/monthly-max.entity';
 
 export const getLiveData = async (
   reef: Reef,
@@ -127,4 +129,38 @@ export const getLiveData = async (
       }),
     dailyAlertLevel,
   };
+};
+
+export const findSstAnomaly = (
+  monthlyMax: MonthlyMax[],
+  satelliteTemperature?: SofarValue,
+) => {
+  if (monthlyMax.length === 0 || !satelliteTemperature) {
+    return undefined;
+  }
+
+  const groupedByMonth = keyBy(monthlyMax, 'month');
+
+  const now = moment().startOf('day');
+  const currentDate = now.date();
+
+  const start = now.clone().set('date', 15);
+
+  const end =
+    currentDate > 15
+      ? now.clone().add(1, 'month').set('date', 15).startOf('day')
+      : now.clone().subtract(1, 'month').set('date', 15).startOf('day');
+
+  const startPoint = {
+    x: start,
+    y: groupedByMonth[1 + start.month()].temperature,
+  };
+  const endPoint = { x: end, y: groupedByMonth[1 + end.month()].temperature };
+
+  const slope =
+    (endPoint.y - startPoint.y) / endPoint.x.diff(startPoint.x, 'days');
+
+  const interpolated = endPoint.y + slope * now.diff(endPoint.x, 'days');
+
+  return satelliteTemperature.value - interpolated;
 };
