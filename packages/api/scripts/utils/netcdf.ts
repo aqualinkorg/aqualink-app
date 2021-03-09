@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { Extent, pointToPixel } from '../../src/utils/coordinates';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 const netcdf4 = require('netcdf4');
 
 /**
