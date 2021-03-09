@@ -33,13 +33,13 @@ export class ReefPoisService {
       throw new NotFoundException(`Reef with id ${reef} was not found`);
     }
 
-    const polygon: GeoJSON =
-      longitude && latitude
+    const polygon: GeoJSON | undefined =
+      longitude !== undefined && latitude !== undefined
         ? {
             type: 'Point',
             coordinates: [longitude, latitude],
           }
-        : reefEntity.polygon;
+        : undefined;
 
     return this.poisRepository.save({ ...createReefPoiDto, polygon });
   }
