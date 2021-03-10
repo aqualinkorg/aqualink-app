@@ -14,7 +14,7 @@ import {
   Pois,
   Point,
 } from "../../../store/Reefs/types";
-import { mapBounds } from "../../../helpers/map";
+import { mapBounds, samePosition } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import buoy from "../../../assets/buoy-marker.svg";
@@ -170,7 +170,8 @@ const ReefMap = ({
           />
           {surveyPoints.map(
             (point) =>
-              point?.polygon?.type === "Point" && (
+              point?.polygon?.type === "Point" &&
+              !samePosition(polygon, point.polygon) && (
                 <Marker
                   key={point.id}
                   icon={surveyPointIcon(point.id === selectedPointId)}

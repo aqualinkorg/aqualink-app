@@ -1,4 +1,6 @@
 import { latLngBounds, LatLngBounds } from "leaflet";
+import { isEqual } from "lodash";
+
 import type { Point, Polygon, Position } from "../store/Reefs/types";
 
 export const locationCalculator = (point: Point | Polygon): Position => {
@@ -27,4 +29,20 @@ export const mapBounds = (polygon: Polygon): LatLngBounds => {
   const west = Math.min(...lngArr);
 
   return latLngBounds([south, west], [north, east]);
+};
+
+export const samePosition = (
+  polygon1: Polygon | Point,
+  polygon2: Polygon | Point
+) => {
+  const coords1 =
+    polygon1.type === "Polygon"
+      ? locationCalculator(polygon1)
+      : polygon1.coordinates;
+  const coords2 =
+    polygon2.type === "Polygon"
+      ? locationCalculator(polygon2)
+      : polygon2.coordinates;
+
+  return isEqual(coords1, coords2);
 };
