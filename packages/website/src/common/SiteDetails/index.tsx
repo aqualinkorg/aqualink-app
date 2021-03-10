@@ -1,4 +1,4 @@
-import React, { ElementType, ChangeEvent } from "react";
+import React, { ElementType } from "react";
 import {
   createStyles,
   Grid,
@@ -7,7 +7,6 @@ import {
   Theme,
   Box,
 } from "@material-ui/core";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -18,36 +17,23 @@ import Waves from "./Waves";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type { Range, Reef, SpotterData } from "../../store/Reefs/types";
+import type { Reef } from "../../store/Reefs/types";
 import { locationCalculator } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
-import {
-  convertDailyDataToLocalTime,
-  convertSpotterDataToLocalTime,
-  convertSurveyDataToLocalTime,
-  convertToLocalTime,
-  displayTimeInLocalTimezone,
-} from "../../helpers/dates";
+import { displayTimeInLocalTimezone } from "../../helpers/dates";
 
 const SiteDetails = ({
   classes,
   reef,
+  closestSurveyPointId,
   featuredSurveyId,
-  startDate,
-  endDate,
-  range,
-  pickerDate,
-  hasSpotterData,
-  chartPeriod,
-  spotterData,
   hasDailyData,
   surveys,
-  surveyPoint,
+  featuredSurveyPoint,
+  showSpotterChart,
   surveyDiveDate,
-  onRangeChange,
-  onDateChange,
 }: SiteDetailsProps) => {
   const [lng, lat] = locationCalculator(reef.polygon);
 
@@ -94,7 +80,7 @@ const SiteDetails = ({
       marginRight: "0.5rem",
     },
     {
-      text: `${surveyPoint?.name}`,
+      text: `${featuredSurveyPoint?.name}`,
       variant: "subtitle2",
       marginRight: "2rem",
     },
@@ -112,13 +98,13 @@ const SiteDetails = ({
 
   return (
     <Box mt="1rem">
-      {(!surveyDiveDate || !surveyPoint) && (
+      {(!surveyDiveDate || !featuredSurveyPoint) && (
         <CardTitle values={mapTitleItems} />
       )}
 
       <Grid container justify="space-between" spacing={2}>
         <Grid item xs={12} md={6}>
-          {surveyDiveDate && surveyPoint && (
+          {surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={mapTitleItems} />
           )}
           <div className={classes.container}>
@@ -131,7 +117,7 @@ const SiteDetails = ({
           </div>
         </Grid>
         <Grid item xs={12} md={6}>
-          {surveyDiveDate && surveyPoint && (
+          {surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={featuredMediaTitleItems} />
           )}
           <div className={classes.container}>
@@ -162,31 +148,10 @@ const SiteDetails = ({
 
           <Box mt="2rem">
             <CombinedCharts
-              reefId={reef.id}
-              dailyData={convertDailyDataToLocalTime(
-                reef.dailyData,
-                reef.timezone
-              )}
-              depth={reef.depth}
-              hasSpotterData={hasSpotterData}
-              maxMonthlyMean={reef.maxMonthlyMean || null}
-              temperatureThreshold={
-                reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
-              }
-              onDateChange={onDateChange}
-              onRangeChange={onRangeChange}
-              pickerDate={pickerDate}
-              range={range}
-              surveys={convertSurveyDataToLocalTime(surveys, reef.timezone)}
-              chartPeriod={chartPeriod}
-              spotterData={
-                spotterData
-                  ? convertSpotterDataToLocalTime(spotterData, reef.timezone)
-                  : { bottomTemperature: [], surfaceTemperature: [] }
-              }
-              startDate={convertToLocalTime(startDate, reef.timezone)}
-              endDate={convertToLocalTime(endDate, reef.timezone)}
-              timeZone={reef.timezone}
+              reef={reef}
+              closestSurveyPointId={closestSurveyPointId}
+              surveys={surveys}
+              showSpotterChart={showSpotterChart}
             />
             <Surveys reef={reef} />
           </Box>
@@ -217,26 +182,18 @@ const styles = (theme: Theme) =>
 
 interface SiteDetailsIncomingProps {
   reef: Reef;
+  closestSurveyPointId: string | undefined;
   featuredSurveyId?: number | null;
-  startDate: string;
-  endDate: string;
-  pickerDate: string;
-  range: Range;
-  chartPeriod: "hour" | Range;
-  hasSpotterData: boolean;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
-  spotterData?: SpotterData | null;
-  surveyPoint?: SurveyPoint | null;
+  featuredSurveyPoint?: SurveyPoint | null;
   surveyDiveDate?: string | null;
-  onRangeChange: (event: ChangeEvent<{ value: unknown }>) => void;
-  onDateChange: (date: MaterialUiPickersDate, value?: string | null) => void;
+  showSpotterChart: boolean;
 }
 
 SiteDetails.defaultProps = {
-  surveyPoint: null,
+  featuredSurveyPoint: null,
   surveyDiveDate: null,
-  spotterData: null,
   featuredSurveyId: null,
 };
 
