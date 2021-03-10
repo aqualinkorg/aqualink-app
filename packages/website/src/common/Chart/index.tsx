@@ -116,7 +116,7 @@ function Chart({
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
-    hoboBottomTemperatureData,
+    hoboBottom,
     monthlyMaxTemp,
   } = useProcessedChartData(
     dailyData,
@@ -268,7 +268,7 @@ function Chart({
       data={createChartData(
         spotterBottom,
         spotterSurface,
-        hoboBottomTemperatureData,
+        hoboBottom,
         tempWithSurvey,
         augmentSurfaceTemperature(
           surfaceTemperatureData,
