@@ -126,7 +126,7 @@ const Chart = ({
           <Alert severity="warning">
             <Typography>
               {minDateLocal && maxDateLocal
-                ? `No HOBO data available - data available between ${minDateLocal} and ${maxDateLocal}.`
+                ? `No HOBO data available - data available from ${minDateLocal} to ${maxDateLocal}.`
                 : "No Smart Buoy or HOBO data available in this time range."}
             </Typography>
           </Alert>

@@ -1090,7 +1090,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               class="MuiAlert-message"
             >
               <mock-typography>
-                No HOBO data available - data available between 11/02/2017 and 02/02/2020.
+                No HOBO data available - data available from 11/02/2017 to 02/02/2020.
               </mock-typography>
             </div>
           </div>
