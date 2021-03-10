@@ -16,6 +16,7 @@ import { RangeButton, RangeValue } from "./types";
 const ViewRange = ({
   range,
   disableMaxRange,
+  title,
   onRangeChange,
   classes,
 }: ViewRangeProps) => {
@@ -59,7 +60,7 @@ const ViewRange = ({
         <Grid item>
           <Box ml={isMobile ? "0px" : "27px"}>
             <Typography variant="h6" color="textSecondary">
-              TEMPERATURE
+              {title || "TEMPERATURE"}
             </Typography>
           </Box>
         </Grid>
@@ -115,8 +116,13 @@ const styles = () =>
 interface ViewRangeIncomingProps {
   range: RangeValue;
   disableMaxRange: boolean;
+  title?: string;
   onRangeChange: (value: RangeValue) => void;
 }
+
+ViewRange.defaultProps = {
+  title: "",
+};
 
 type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;
 

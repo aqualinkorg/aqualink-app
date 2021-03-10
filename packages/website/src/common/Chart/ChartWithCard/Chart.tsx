@@ -47,6 +47,7 @@ const Chart = ({
   error,
   range,
   disableMaxRange,
+  title,
   onStartDateChange,
   onEndDateChange,
   onRangeChange,
@@ -102,6 +103,7 @@ const Chart = ({
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={disableMaxRange}
+        title={title}
       />
       {loading && (
         <Box
@@ -222,10 +224,15 @@ interface ChartIncomingProps {
   error: boolean;
   range: RangeValue;
   disableMaxRange: boolean;
+  title?: string;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
   onRangeChange: (value: RangeValue) => void;
 }
+
+Chart.defaultProps = {
+  title: "",
+};
 
 type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;
 

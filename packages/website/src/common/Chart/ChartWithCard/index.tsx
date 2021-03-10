@@ -29,7 +29,12 @@ import {
 import { filterDailyData, filterHoboData } from "../utils";
 import { RangeValue } from "./types";
 
-const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
+const ChartWithCard = ({
+  reef,
+  pointId,
+  title,
+  classes,
+}: ChartWithCardProps) => {
   const dispatch = useDispatch();
   const spotterData = useSelector(reefSpotterDataSelector);
   const { bottomTemperature: hoboBottomTemperature } =
@@ -254,6 +259,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
       <Grid className={classes.chartWrapper} container item spacing={2}>
         <Grid item xs={12} md={9}>
           <Chart
+            title={title}
             reef={reef}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
             spotterData={spotterData}
@@ -334,7 +340,12 @@ const styles = (theme: Theme) =>
 interface ChartWithCardIncomingProps {
   reef: Reef;
   pointId: string | undefined;
+  title?: string;
 }
+
+ChartWithCard.defaultProps = {
+  title: "",
+};
 
 type ChartWithCardProps = ChartWithCardIncomingProps &
   WithStyles<typeof styles>;

@@ -38,11 +38,15 @@ const CombinedCharts = ({
         timeZone={timezone}
       >
         <Typography className={classes.graphTitle} variant="h6">
-          DAILY WATER TEMPERATURE (°C)
+          DAILY SATELLITE TEMPERATURE (°C)
         </Typography>
       </ChartWithTooltip>
       {showSpotterChart && (
-        <ChartWithCard reef={reef} pointId={closestSurveyPointId} />
+        <ChartWithCard
+          title="SENSOR TEMPERATURE (°C)"
+          reef={reef}
+          pointId={closestSurveyPointId}
+        />
       )}
     </div>
   );
