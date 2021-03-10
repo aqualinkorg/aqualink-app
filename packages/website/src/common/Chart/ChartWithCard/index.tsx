@@ -18,18 +18,15 @@ import {
   reefHoboDataSelector,
   reefSpotterDataRequest,
   reefSpotterDataSelector,
-} from "../../../../store/Reefs/selectedReefSlice";
-import { Reef } from "../../../../store/Reefs/types";
+} from "../../../store/Reefs/selectedReefSlice";
+import { Reef } from "../../../store/Reefs/types";
 import {
   findMarginalDate,
   setTimeZone,
   subtractFromDate,
   isBefore,
-} from "../../../../helpers/dates";
-import {
-  filterDailyData,
-  filterHoboData,
-} from "../../../../common/Chart/utils";
+} from "../../../helpers/dates";
+import { filterDailyData, filterHoboData } from "../utils";
 import { RangeValue } from "./types";
 
 const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
@@ -104,6 +101,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
   // Fetch HOBO data if picker start date is before the current past limit
   useEffect(() => {
     if (
+      pointId &&
       pickerStartDate &&
       pickerEndDate &&
       isBefore(pickerStartDate, pickerEndDate) &&
@@ -257,7 +255,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
         <Grid item xs={12} md={9}>
           <Chart
             reef={reef}
-            pointId={parseInt(pointId, 10)}
+            pointId={pointId ? parseInt(pointId, 10) : undefined}
             spotterData={spotterData}
             hoboBottomTemperature={filterHoboData(
               hoboBottomTemperature || [],
@@ -335,7 +333,7 @@ const styles = (theme: Theme) =>
 
 interface ChartWithCardIncomingProps {
   reef: Reef;
-  pointId: string;
+  pointId: string | undefined;
 }
 
 type ChartWithCardProps = ChartWithCardIncomingProps &

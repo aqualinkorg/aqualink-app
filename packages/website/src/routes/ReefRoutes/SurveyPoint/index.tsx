@@ -7,7 +7,7 @@ import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
 import InfoCard from "./InfoCard";
-import ChartWithCard from "./Chart";
+import ChartWithCard from "../../../common/Chart/ChartWithCard";
 import SurveyHistory from "./SurveyHistory";
 import {
   reefDetailsSelector,

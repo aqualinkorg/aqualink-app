@@ -1,12 +1,8 @@
 import { min, max, mean, minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 
-import {
-  DailyData,
-  SofarValue,
-  SpotterData,
-} from "../../../../store/Reefs/types";
-import { formatNumber } from "../../../../helpers/numberUtils";
+import { DailyData, SofarValue, SpotterData } from "../../../store/Reefs/types";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 export const calculateCardMetrics = (
   dailyData: DailyData[],

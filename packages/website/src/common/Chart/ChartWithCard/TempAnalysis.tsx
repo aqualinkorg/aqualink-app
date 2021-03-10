@@ -18,14 +18,10 @@ import { useSelector } from "react-redux";
 import {
   reefHoboDataLoadingSelector,
   reefSpotterDataLoadingSelector,
-} from "../../../../store/Reefs/selectedReefSlice";
-import {
-  DailyData,
-  SofarValue,
-  SpotterData,
-} from "../../../../store/Reefs/types";
+} from "../../../store/Reefs/selectedReefSlice";
+import { DailyData, SofarValue, SpotterData } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
-import { filterDailyData } from "../../../../common/Chart/utils";
+import { filterDailyData } from "../utils";
 
 const TempAnalysis = ({
   pickerStartDate,

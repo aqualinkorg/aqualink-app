@@ -28,6 +28,7 @@ import {
   reefSpotterDataRequest,
   reefSpotterDataSelector,
   clearReefSpotterData,
+  reefHoboDataRangeRequest,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -44,6 +45,7 @@ import {
   findChartPeriod,
   setTimeZone,
 } from "../../../helpers/dates";
+import { findClosestSurveyPoint } from "../../../helpers/map";
 import { Range } from "../../../store/Reefs/types";
 
 const getAlertMessage = (
@@ -110,7 +112,14 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id: selectedReefId, timezone } = reefDetails || {};
+  const {
+    id: selectedReefId,
+    timezone,
+    liveData,
+    dailyData,
+    surveyPoints,
+    polygon,
+  } = reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -121,7 +130,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     featuredMedia || {};
   const { poiId, url } = featuredSurveyMedia || {};
 
-  const { liveData, dailyData } = reefDetails || {};
+  const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
 
   const hasSpotterData = Boolean(liveData?.surfaceTemperature);
 
@@ -138,6 +147,15 @@ const Reef = ({ match, classes }: ReefProps) => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
   }, [dispatch, reefId]);
+
+  // Fetch HOBO data range for the reef's closest survey point
+  useEffect(() => {
+    if (closestSurveyPointId) {
+      dispatch(
+        reefHoboDataRangeRequest({ reefId, pointId: `${closestSurveyPointId}` })
+      );
+    }
+  }, [closestSurveyPointId, dispatch, reefId]);
 
   // fetch spotter data from api, also filter the range we're interested in.
   useEffect(() => {
@@ -179,7 +197,7 @@ const Reef = ({ match, classes }: ReefProps) => {
       const reefLocalEndDate = new Date(
         setTimeZone(
           new Date(moment(pickerDate).format("MM/DD/YYYY")),
-          reefDetails?.timezone
+          timezone
         ) as string
       );
       if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
@@ -188,7 +206,7 @@ const Reef = ({ match, classes }: ReefProps) => {
         setEndDate(maxDataDate.toISOString());
       }
     }
-  }, [dailyData, spotterData, pickerDate, reefDetails]);
+  }, [dailyData, pickerDate, spotterData, timezone]);
 
   const onRangeChange = useCallback(
     (event: ChangeEvent<{ value: unknown }>) => {

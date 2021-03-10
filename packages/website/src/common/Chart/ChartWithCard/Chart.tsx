@@ -11,8 +11,8 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useSelector } from "react-redux";
 
-import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
-import DatePicker from "../../../../common/Datepicker";
+import ChartWithTooltip from "../ChartWithTooltip";
+import DatePicker from "../../Datepicker";
 import ViewRange from "./ViewRange";
 import {
   convertDailyDataToLocalTime,
@@ -21,18 +21,18 @@ import {
   convertToLocalTime,
   displayTimeInLocalTimezone,
   generateMonthlyMaxTimestamps,
-} from "../../../../helpers/dates";
-import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
+} from "../../../helpers/dates";
+import { Reef, SofarValue, SpotterData } from "../../../store/Reefs/types";
 import {
   reefHoboDataLoadingSelector,
   reefHoboDataRangeLoadingSelector,
   reefHoboDataRangeSelector,
   reefSpotterDataLoadingSelector,
-} from "../../../../store/Reefs/selectedReefSlice";
+} from "../../../store/Reefs/selectedReefSlice";
 import { findChartPeriod, showYear } from "./helpers";
-import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { filterSurveys } from "../../../../helpers/surveys";
-import { filterDailyData } from "../../../../common/Chart/utils";
+import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
+import { filterSurveys } from "../../../helpers/surveys";
+import { filterDailyData } from "../utils";
 import { RangeValue } from "./types";
 
 const Chart = ({
@@ -65,7 +65,7 @@ const Chart = ({
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     "any",
-    pointId
+    pointId || -1
   );
 
   const hasSpotterData =
@@ -212,7 +212,7 @@ const styles = () =>
 
 interface ChartIncomingProps {
   reef: Reef;
-  pointId: number;
+  pointId: number | undefined;
   spotterData: SpotterData | null | undefined;
   hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;
