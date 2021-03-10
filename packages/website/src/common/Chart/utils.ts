@@ -201,7 +201,7 @@ export const createDatasets = (
     y: item.value,
   }));
 
-  const hoboBottomTemperatureData = rawHoboBottom.map((item) => ({
+  const hoboBottom = rawHoboBottom.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -233,7 +233,7 @@ export const createDatasets = (
     surfaceTemperatureData: surfaceTemperature,
     spotterBottom,
     spotterSurface,
-    hoboBottomTemperatureData,
+    hoboBottom,
     monthlyMaxTemp,
   };
 };
@@ -273,7 +273,7 @@ export const calculateAxisLimits = (
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
-    hoboBottomTemperatureData,
+    hoboBottom,
     monthlyMaxTemp,
   } = createDatasets(
     dailyData,
@@ -289,7 +289,7 @@ export const calculateAxisLimits = (
     ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterSurface,
-    ...hoboBottomTemperatureData,
+    ...hoboBottom,
     ...monthlyMaxTemp,
   ]
     .filter((value) => value)
