@@ -31,6 +31,7 @@ import { getRegion, getTimezones } from './reef.utils';
 import { getMMM, getMonthlyMaximums } from './temperature';
 import { Region } from '../regions/regions.entity';
 import { MonthlyMax } from '../reefs/monthly-max.entity';
+import { createPoint } from './coordinates';
 
 interface Coords {
   reef: number;
@@ -199,13 +200,10 @@ const getReefRecords = async (
       );
 
       // Calculate reef position
-      const point: Point = {
-        type: 'Point',
-        coordinates: [
-          reefRecord.long / filteredReefCoords.length,
-          reefRecord.lat / filteredReefCoords.length,
-        ],
-      };
+      const point: Point = createPoint(
+        reefRecord.long / filteredReefCoords.length,
+        reefRecord.lat / filteredReefCoords.length,
+      );
 
       // Augment reef information
       const [longitude, latitude] = point.coordinates;
@@ -329,10 +327,7 @@ const createPois = async (
           return fs.existsSync(colonyFolderPath);
         })
         .map((record) => {
-          const point: Point = {
-            type: 'Point',
-            coordinates: [record.long, record.lat],
-          };
+          const point: Point = createPoint(record.long, record.lat);
 
           return {
             name: COLONY_PREFIX + record.colony,

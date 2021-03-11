@@ -16,8 +16,12 @@ import { Region } from '../src/regions/regions.entity';
 import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 
 const { argv } = yargs
-  .scriptName('parse-hobo-data')
+  .scriptName('upload-hobo-data')
   .usage('$0 <cmd> [args]')
+  .example(
+    '$0 -p Aqualink.zip -u example@aqualink.com',
+    "This command will import the data contained in 'Aqualink.zip' and use the user with email 'ex@aqualink.com' for any user relations needed (reef-administrator, survey etc)",
+  )
   .option('p', {
     alias: 'path',
     describe: 'The path to the HOBO data zip',
@@ -29,7 +33,8 @@ const { argv } = yargs
     describe: 'The email of the user to be used for the needed relationships',
     type: 'string',
     demandOption: true,
-  });
+  })
+  .wrap(yargs.terminalWidth());
 
 async function run() {
   const logger = new Logger('ParseHoboData');
