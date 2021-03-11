@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import moment from "moment";
+import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 
 import Chart from "./Chart";
@@ -282,6 +283,24 @@ const ChartWithCard = ({
     }
   };
 
+  const onPickerDateChange = (type: "start" | "end") => (date: Date | null) => {
+    const time = date?.getTime();
+    if (date && time && !isNaN(time)) {
+      const dateString = date.toISOString();
+      setRange("custom");
+      switch (type) {
+        case "start":
+          setPickerStartDate(moment(dateString).startOf("day").toISOString());
+          break;
+        case "end":
+          setPickerEndDate(moment(dateString).startOf("day").toISOString());
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   return (
     <Container className={classes.chartWithRange}>
       <ViewRange
@@ -320,18 +339,8 @@ const ChartWithCard = ({
               startDate || pickerStartDate || subtractFromDate(today, "week")
             }
             endDate={endDate || pickerEndDate || today}
-            onStartDateChange={(date) => {
-              setPickerStartDate(
-                new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-              );
-              setRange("custom");
-            }}
-            onEndDateChange={(date) => {
-              setPickerEndDate(
-                new Date(moment(date).format("MM/DD/YYYY")).toISOString()
-              );
-              setRange("custom");
-            }}
+            onStartDateChange={onPickerDateChange("start")}
+            onEndDateChange={onPickerDateChange("end")}
             error={pickerError}
           />
         </Grid>
