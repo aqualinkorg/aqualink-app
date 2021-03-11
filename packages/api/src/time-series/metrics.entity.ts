@@ -4,7 +4,7 @@ export enum Metric {
   ALERT = 'alert',
   DHW = 'dhw',
   SATELLITE_TEMPERATURE = 'satellite_temperature',
-  SURFACE_TEMPERATURE = 'surface_temperature',
+  TOP_TEMPERATURE = 'top_temperature',
   BOTTOM_TEMPERATURE = 'bottom_temperature',
   SST_ANOMALY = 'sst_anomaly',
   SIGNIFICANT_WAVE_HEIGHT = 'significant_wave_height',

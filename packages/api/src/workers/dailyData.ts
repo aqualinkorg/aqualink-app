@@ -88,7 +88,7 @@ export async function getDailyData(
     spotterId
       ? getSpotterData(spotterId, endOfDate)
       : {
-          surfaceTemperature: [],
+          topTemperature: [],
           bottomTemperature: [],
           significantWaveHeight: [],
           wavePeakPeriod: [],
@@ -153,7 +153,7 @@ export async function getDailyData(
         v ? extractSofarValues(filterSpotterDataByDate(v, excludedDates)) : [],
       )
     : {
-        surfaceTemperature: [],
+        topTemperature: [],
         bottomTemperature: [],
         significantWaveHeight: [],
         wavePeakPeriod: [],
@@ -166,7 +166,7 @@ export async function getDailyData(
   const maxBottomTemperature = getMax(spotterData.bottomTemperature);
   const avgBottomTemperature = getAverage(spotterData.bottomTemperature);
 
-  const surfaceTemperature = getAverage(spotterData.surfaceTemperature);
+  const topTemperature = getAverage(spotterData.topTemperature);
 
   // Get satelliteTemperature
   const latestSatelliteTemperature =
@@ -230,7 +230,7 @@ export async function getDailyData(
     minBottomTemperature,
     maxBottomTemperature,
     avgBottomTemperature,
-    surfaceTemperature,
+    topTemperature,
     satelliteTemperature,
     degreeHeatingDays: degreeHeatingDays?.value,
     minWaveHeight,

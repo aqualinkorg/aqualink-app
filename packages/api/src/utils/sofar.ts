@@ -242,8 +242,8 @@ export async function getSpotterData(
   );
 
   // Sofar increments sensors by distance to the spotter.
-  // Sensor 0 -> surfaceTemp and Sensor 1 -> bottomTemp
-  const [sofarSurfaceTemperature, sofarBottomTemperature]: [
+  // Sensor 0 -> topTemp and Sensor 1 -> bottomTemp
+  const [sofarTopTemperature, sofarBottomTemperature]: [
     SofarValue[],
     SofarValue[],
   ] = smartMooringData.reduce(
@@ -264,9 +264,7 @@ export async function getSpotterData(
   );
 
   return {
-    surfaceTemperature: sofarSurfaceTemperature.filter(
-      (data) => !isNil(data.value),
-    ),
+    topTemperature: sofarTopTemperature.filter((data) => !isNil(data.value)),
     bottomTemperature: sofarBottomTemperature.filter(
       (data) => !isNil(data.value),
     ),
