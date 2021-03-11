@@ -28,7 +28,11 @@ export const filterDailyData = (
 
   const ret = dailyData.filter((item) =>
     // add one since inRange is exclusive for last param
-    inRange(moment(item.date).valueOf(), startDate.valueOf(), endDate.valueOf())
+    inRange(
+      moment(item.date).valueOf(),
+      startDate.valueOf(),
+      endDate.valueOf() + 1
+    )
   );
   // if this list is empty, it means satellite is behind. We want to display latest value, so lets just return the latest values.
   if (ret.length === 0) {
@@ -37,6 +41,23 @@ export const filterDailyData = (
     return ret.slice(-diffDays);
   }
   return ret;
+};
+
+export const filterMaxMonthlyData = (
+  monthlyMax: MonthlyMaxData[],
+  from?: string,
+  to?: string
+) => {
+  if (!from || !to) {
+    return monthlyMax;
+  }
+
+  const start = moment(from);
+  const end = moment(to);
+
+  return monthlyMax.filter((item) =>
+    inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
+  );
 };
 
 export const filterHoboData = (

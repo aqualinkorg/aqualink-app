@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -6,6 +7,8 @@ import {
   WithStyles,
   createStyles,
   Theme,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,9 +28,15 @@ import {
   setTimeZone,
   subtractFromDate,
   isBefore,
+  generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
-import { filterDailyData, filterHoboData } from "../utils";
+import {
+  filterDailyData,
+  filterHoboData,
+  filterMaxMonthlyData,
+} from "../utils";
 import { RangeValue } from "./types";
+import ViewRange from "./ViewRange";
 
 const ChartWithCard = ({
   reef,
@@ -35,6 +44,8 @@ const ChartWithCard = ({
   title,
   classes,
 }: ChartWithCardProps) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
   const spotterData = useSelector(reefSpotterDataSelector);
   const { bottomTemperature: hoboBottomTemperature } =
@@ -153,6 +164,16 @@ const ChartWithCard = ({
 
   // Set chart start/end dates
   useEffect(() => {
+    const maxMonthlyData = generateMonthlyMaxTimestamps(
+      reef.monthlyMax,
+      pickerStartDate,
+      pickerEndDate
+    );
+    const filteredMaxMonthlyData = filterMaxMonthlyData(
+      maxMonthlyData,
+      pickerStartDate,
+      pickerEndDate
+    );
     const filteredDailyData = filterDailyData(
       reef.dailyData,
       pickerStartDate,
@@ -164,15 +185,22 @@ const ChartWithCard = ({
       pickerEndDate
     );
     if (
+      filteredMaxMonthlyData.length > 0 ||
       filteredDailyData.length > 0 ||
       (spotterData && spotterData.bottomTemperature.length > 0) ||
       filteredHoboData.length > 0
     ) {
       const maxDataDate = new Date(
-        findMarginalDate(filteredDailyData, spotterData, filteredHoboData)
+        findMarginalDate(
+          filteredMaxMonthlyData,
+          filteredDailyData,
+          spotterData,
+          filteredHoboData
+        )
       );
       const minDataDate = new Date(
         findMarginalDate(
+          filteredMaxMonthlyData,
           filteredDailyData,
           spotterData,
           filteredHoboData,
@@ -255,11 +283,29 @@ const ChartWithCard = ({
   };
 
   return (
-    <Container>
-      <Grid className={classes.chartWrapper} container item spacing={2}>
-        <Grid item xs={12} md={9}>
+    <Container className={classes.chartWithRange}>
+      <ViewRange
+        range={range}
+        onRangeChange={onRangeChange}
+        disableMaxRange={
+          !hoboBottomTemperatureRange || hoboBottomTemperatureRange.length === 0
+        }
+        title={title}
+      />
+      <Grid
+        className={classes.chartWrapper}
+        container
+        justify="space-between"
+        item
+        spacing={1}
+      >
+        <Grid
+          item
+          xs={12}
+          md={hasSpotterData ? 12 : 8}
+          lg={hasSpotterData ? 8 : 9}
+        >
           <Chart
-            title={title}
             reef={reef}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
             spotterData={spotterData}
@@ -287,41 +333,55 @@ const ChartWithCard = ({
               setRange("custom");
             }}
             error={pickerError}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={
-              !hoboBottomTemperatureRange ||
-              hoboBottomTemperatureRange.length === 0
-            }
           />
         </Grid>
-        <Grid item xs={12} md={3}>
-          <Grid container justify="center">
-            <Grid item xs={11} sm={5} md={11} lg={10}>
-              <TempAnalysis
-                pickerStartDate={
-                  pickerStartDate || subtractFromDate(today, "week")
-                }
-                pickerEndDate={pickerEndDate || today}
-                chartStartDate={
-                  startDate ||
-                  pickerStartDate ||
-                  subtractFromDate(today, "week")
-                }
-                chartEndDate={endDate || pickerEndDate || today}
-                depth={reef.depth}
-                spotterData={spotterData}
-                dailyData={reef.dailyData}
-                hoboBottomTemperature={filterHoboData(
-                  hoboBottomTemperature || [],
-                  startDate || pickerStartDate,
-                  endDate || pickerEndDate
-                )}
-                error={pickerError}
-              />
+        {!pickerError && (
+          <Grid
+            item
+            xs={12}
+            md={hasSpotterData ? 12 : 4}
+            lg={hasSpotterData ? 4 : 3}
+          >
+            <Grid
+              container
+              justify={isDesktop && !hasSpotterData ? "flex-end" : "center"}
+            >
+              <Grid
+                item
+                xs={hasSpotterData ? 12 : 11}
+                sm={hasSpotterData ? 10 : 6}
+                md={hasSpotterData ? 6 : 10}
+                lg={hasSpotterData ? 12 : 11}
+              >
+                <TempAnalysis
+                  pickerStartDate={
+                    pickerStartDate || subtractFromDate(today, "week")
+                  }
+                  pickerEndDate={pickerEndDate || today}
+                  chartStartDate={
+                    startDate ||
+                    pickerStartDate ||
+                    subtractFromDate(today, "week")
+                  }
+                  chartEndDate={endDate || pickerEndDate || today}
+                  depth={reef.depth}
+                  spotterData={spotterData}
+                  hoboBottomTemperature={filterHoboData(
+                    hoboBottomTemperature || [],
+                    startDate || pickerStartDate,
+                    endDate || pickerEndDate
+                  )}
+                  monthlyMax={generateMonthlyMaxTimestamps(
+                    reef.monthlyMax,
+                    startDate,
+                    endDate,
+                    reef.timezone
+                  )}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     </Container>
   );
@@ -329,10 +389,13 @@ const ChartWithCard = ({
 
 const styles = (theme: Theme) =>
   createStyles({
+    chartWithRange: {
+      marginTop: 80,
+    },
     chartWrapper: {
-      margin: "80px 0 20px 0",
+      marginBottom: 20,
       [theme.breakpoints.down("xs")]: {
-        margin: "40px 0 10px 0",
+        marginBottom: 10,
       },
     },
   });

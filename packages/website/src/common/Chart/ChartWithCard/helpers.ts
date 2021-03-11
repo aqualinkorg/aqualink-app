@@ -1,59 +1,79 @@
-import { min, max, mean, minBy, maxBy, meanBy } from "lodash";
+import { minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 
-import { DailyData, SofarValue, SpotterData } from "../../../store/Reefs/types";
+import {
+  MonthlyMaxData,
+  SofarValue,
+  SpotterData,
+} from "../../../store/Reefs/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 export const calculateCardMetrics = (
-  dailyData: DailyData[],
+  monthlyMaxData: MonthlyMaxData[],
   spotterData: SpotterData | null | undefined,
-  hoboBottomTemperature: SofarValue[],
-  error: boolean
+  hoboBottomTemperature: SofarValue[]
 ) => {
-  const satelliteSurface = dailyData.map((item) => item.satelliteTemperature);
-  const { bottomTemperature: spotterBottomTemperature } = spotterData || {};
-  const hasSpotterData =
-    !error && spotterData && spotterData.bottomTemperature.length > 1;
-  const hasHoboData = !error && hoboBottomTemperature.length > 1;
-  const hasDailyData = !error && dailyData.length > 1;
+  const {
+    bottomTemperature: spotterBottomTemperature,
+    surfaceTemperature: spotterSurfaceTemperature,
+  } = spotterData || {};
 
-  const hasLoggerData = hasSpotterData || hasHoboData;
+  const maxMonthlyMax = formatNumber(maxBy(monthlyMaxData, "value")?.value, 1);
+  const meanMonthlyMax = formatNumber(meanBy(monthlyMaxData, "value"), 1);
+  const minMonthlyMax = formatNumber(minBy(monthlyMaxData, "value")?.value, 1);
 
-  const bottomTemperature =
-    hasLoggerData && hasHoboData
-      ? hoboBottomTemperature
-      : spotterBottomTemperature;
+  const maxSpotterBottom = formatNumber(
+    maxBy(spotterBottomTemperature, "value")?.value,
+    1
+  );
+  const meanSpotterBottom = formatNumber(
+    meanBy(spotterBottomTemperature, "value"),
+    1
+  );
+  const minSpotterBottom = formatNumber(
+    minBy(spotterBottomTemperature, "value")?.value,
+    1
+  );
 
-  const minSurface = hasDailyData
-    ? formatNumber(min(satelliteSurface), 1)
-    : "- -";
-  const maxSurface = hasDailyData
-    ? formatNumber(max(satelliteSurface), 1)
-    : "- -";
-  const meanSurface = hasDailyData
-    ? formatNumber(mean(satelliteSurface), 1)
-    : "- -";
+  const maxSpotterSurface = formatNumber(
+    maxBy(spotterSurfaceTemperature, "value")?.value,
+    1
+  );
+  const meanSpotterSurface = formatNumber(
+    meanBy(spotterSurfaceTemperature, "value"),
+    1
+  );
+  const minSpotterSurface = formatNumber(
+    minBy(spotterSurfaceTemperature, "value")?.value,
+    1
+  );
 
-  const minBottom = bottomTemperature
-    ? formatNumber(minBy(bottomTemperature, (item) => item.value)?.value, 1)
-    : "- -";
-  const maxBottom = bottomTemperature
-    ? formatNumber(maxBy(bottomTemperature, (item) => item.value)?.value, 1)
-    : "- -";
-  const meanBottom = bottomTemperature
-    ? formatNumber(
-        meanBy(bottomTemperature, (item) => item.value),
-        1
-      )
-    : "- -";
+  const maxHoboBottom = formatNumber(
+    maxBy(hoboBottomTemperature, "value")?.value,
+    1
+  );
+  const meanHoboBottom = formatNumber(
+    meanBy(hoboBottomTemperature, "value"),
+    1
+  );
+  const minHoboBottom = formatNumber(
+    minBy(hoboBottomTemperature, "value")?.value,
+    1
+  );
 
   return {
-    minSurface,
-    maxSurface,
-    meanSurface,
-    minBottom,
-    maxBottom,
-    meanBottom,
+    maxMonthlyMax,
+    meanMonthlyMax,
+    minMonthlyMax,
+    maxSpotterBottom,
+    meanSpotterBottom,
+    minSpotterBottom,
+    maxSpotterSurface,
+    meanSpotterSurface,
+    minSpotterSurface,
+    maxHoboBottom,
+    meanHoboBottom,
+    minHoboBottom,
   };
 };
 

@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 
 import ChartWithTooltip from "../ChartWithTooltip";
 import DatePicker from "../../Datepicker";
-import ViewRange from "./ViewRange";
 import {
   convertDailyDataToLocalTime,
   convertHoboDataToLocalTime,
@@ -32,8 +31,6 @@ import {
 import { findChartPeriod, showYear } from "./helpers";
 import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../helpers/surveys";
-import { filterDailyData } from "../utils";
-import { RangeValue } from "./types";
 
 const Chart = ({
   reef,
@@ -45,12 +42,8 @@ const Chart = ({
   startDate,
   endDate,
   error,
-  range,
-  disableMaxRange,
-  title,
   onStartDateChange,
   onEndDateChange,
-  onRangeChange,
   classes,
 }: ChartProps) => {
   const { bottomTemperature: hoboBottomTemperatureRange } =
@@ -69,19 +62,18 @@ const Chart = ({
     pointId || -1
   );
 
-  const hasSpotterData =
+  const hasSpotterBottom =
     spotterData && spotterData.bottomTemperature.length > 1;
+  const hasSpotterSurface =
+    spotterData && spotterData.surfaceTemperature.length > 1;
+  const hasSpotterData = hasSpotterBottom || hasSpotterSurface;
 
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
-
-  const hasDailyData =
-    filterDailyData(reef.dailyData, startDate, endDate).length > 1;
 
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
 
-  const success =
-    !error && !loading && (hasHoboData || hasSpotterData || hasDailyData);
+  const success = !error && !loading && (hasHoboData || hasSpotterData);
   const warning = !error && !loading && !hasHoboData && !hasSpotterData;
 
   const minDateLocal = displayTimeInLocalTimezone({
@@ -99,12 +91,6 @@ const Chart = ({
 
   return (
     <>
-      <ViewRange
-        range={range}
-        onRangeChange={onRangeChange}
-        disableMaxRange={disableMaxRange}
-        title={title}
-      />
       {loading && (
         <Box
           height="240px"
@@ -206,7 +192,7 @@ const Chart = ({
 const styles = () =>
   createStyles({
     chart: {
-      height: 300,
+      height: 285,
       marginBottom: "3rem",
       marginTop: "1rem",
     },
@@ -222,17 +208,9 @@ interface ChartIncomingProps {
   startDate: string;
   endDate: string;
   error: boolean;
-  range: RangeValue;
-  disableMaxRange: boolean;
-  title?: string;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
-  onRangeChange: (value: RangeValue) => void;
 }
-
-Chart.defaultProps = {
-  title: "",
-};
 
 type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;
 
