@@ -294,17 +294,14 @@ export class ReefsService {
       endDate,
     );
 
-    const { surfaceTemperature, bottomTemperature } = await getSpotterData(
+    const { topTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
       endDate,
       startDate,
     );
 
     return {
-      surfaceTemperature: filterSpotterDataByDate(
-        surfaceTemperature,
-        exclusionDates,
-      ),
+      topTemperature: filterSpotterDataByDate(topTemperature, exclusionDates),
       bottomTemperature: filterSpotterDataByDate(
         bottomTemperature,
         exclusionDates,
