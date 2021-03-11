@@ -86,6 +86,16 @@ const TempAnalysis = ({
       display: hasSpotterData || hasHoboData,
     },
     {
+      title: "HOBO",
+      titleClass: classes.hoboText,
+      rows: {
+        max: maxHoboBottom,
+        mean: meanHoboBottom,
+        min: minHoboBottom,
+      },
+      display: hasHoboData,
+    },
+    {
       title: "BUOY 1m",
       titleClass: classes.buoySurfaceText,
       rows: {
@@ -104,16 +114,6 @@ const TempAnalysis = ({
         min: minSpotterBottom,
       },
       display: hasSpotterBottom,
-    },
-    {
-      title: "HOBO",
-      titleClass: classes.hoboText,
-      rows: {
-        max: maxHoboBottom,
-        mean: meanHoboBottom,
-        min: minHoboBottom,
-      },
-      display: hasHoboData,
     },
   ];
 
