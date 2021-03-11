@@ -8,7 +8,7 @@ import { Sources, SourceType } from '../reefs/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
-import { SofarValue } from './sofar.types';
+import { SofarValue, SpotterData } from './sofar.types';
 
 interface Repositories {
   reefRepository: Repository<Reef>;
@@ -111,36 +111,38 @@ export const addSpotterData = async (
             .toDate();
           return getSpotterData(reef.spotterId, endDate, startDate);
         }),
-      ).then((backfillData) =>
-        Bluebird.each(
-          backfillData
-            .map(({ bottomTemperature, surfaceTemperature }) => [
-              // Save bottom temperature data
-              saveDataBatch(
-                bottomTemperature,
-                reef,
-                reefToSource,
-                Metric.BOTTOM_TEMPERATURE,
-                repositories.timeSeriesRepository,
-              ),
+      ).then((spotterData) => {
+        const dataLabels: [keyof SpotterData, Metric][] = [
+          ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
+          ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
+          ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
+          ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
+          ['wavePeakPeriod', Metric.WAVE_PEAK_PERIOD],
+          ['windDirection', Metric.WIND_DIRECTION],
+          ['windSpeed', Metric.WIND_SPEED],
+        ];
 
-              // Save surface temperature data
-              saveDataBatch(
-                surfaceTemperature,
-                reef,
-                reefToSource,
-                Metric.SURFACE_TEMPERATURE,
-                repositories.timeSeriesRepository,
+        return Bluebird.each(
+          spotterData
+            .map((dailySpotterData) =>
+              dataLabels.map((label) =>
+                saveDataBatch(
+                  dailySpotterData[label[0]] as SofarValue[], // We know that there would not be any undefined values here
+                  reef,
+                  reefToSource,
+                  label[1],
+                  repositories.timeSeriesRepository,
+                ),
               ),
-            ])
+            )
             .flat(),
           (props, i) => {
             logger.log(
               `Saved ${i + 1} out of ${2 * days} of daily spotter data`,
             );
           },
-        ),
-      ),
+        );
+      }),
     ),
   );
 };
