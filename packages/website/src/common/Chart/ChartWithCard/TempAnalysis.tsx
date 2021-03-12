@@ -23,6 +23,7 @@ import {
 } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
 import { filterMaxMonthlyData } from "../utils";
+import { CardColumn } from "./types";
 
 const TempAnalysis = ({
   pickerStartDate,
@@ -47,10 +48,12 @@ const TempAnalysis = ({
   );
 
   const hasHoboData = hoboBottomTemperature.length > 1;
-  const hasSpotterSurface =
-    spotterData && spotterData.surfaceTemperature.length > 1;
-  const hasSpotterBottom =
-    spotterData && spotterData.bottomTemperature.length > 1;
+  const hasSpotterSurface = !!(
+    spotterData && spotterData.surfaceTemperature.length > 1
+  );
+  const hasSpotterBottom = !!(
+    spotterData && spotterData.bottomTemperature.length > 1
+  );
   const hasSpotterData = hasSpotterBottom || hasSpotterSurface;
 
   const showCard = !loading && (hasHoboData || hasSpotterData);
@@ -74,7 +77,7 @@ const TempAnalysis = ({
     hoboBottomTemperature
   );
 
-  const cardColumns = [
+  const cardColumns: CardColumn[] = [
     {
       title: "HISTORIC",
       titleClass: classes.historicText,
@@ -107,7 +110,7 @@ const TempAnalysis = ({
     },
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
-      titleClass: classes.buoyBottomText,
+      titleClass: `${classes.buoyBottomText} ${!depth && classes.smallTitle}`,
       rows: {
         max: maxSpotterBottom,
         mean: meanSpotterBottom,
@@ -259,6 +262,9 @@ const styles = (theme: Theme) =>
       position: "relative",
       bottom: 7,
       width: "auto",
+    },
+    smallTitle: {
+      fontSize: 8,
     },
     historicText: {
       color: "#d84424",
