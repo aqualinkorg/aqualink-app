@@ -11,7 +11,7 @@ import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
-import { uploadHoboData } from '../src/utils/import-hobo-data';
+import { uploadHoboData } from '../src/utils/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 
