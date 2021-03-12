@@ -7,6 +7,7 @@ import {
   WithStyles,
   createStyles,
   Theme,
+  Button,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -20,13 +21,16 @@ import {
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 import { reefHoboDataSelector } from "../../../../store/Reefs/selectedReefSlice";
 import { formatNumber } from "../../../../helpers/numberUtils";
+import { isAdmin } from "../../../../helpers/user";
+import { userInfoSelector } from "../../../../store/User/userSlice";
 
-const Info = ({ reef, pointId, classes }: InfoProps) => {
+const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     "any",
     pointId
   );
+  const user = useSelector(userInfoSelector);
   const { bottomTemperature: hoboBottomTemperature } =
     useSelector(reefHoboDataSelector) || {};
   const { name: pointName, polygon: pointPolygon } =
@@ -149,6 +153,20 @@ const Info = ({ reef, pointId, classes }: InfoProps) => {
           </Grid>
         </Grid>
       </Grid>
+      {isAdmin(user, reef.id) && (
+        <Grid container>
+          <Box mt="24px">
+            <Button
+              color="primary"
+              variant="outlined"
+              size="small"
+              onClick={onEditButtonClick}
+            >
+              Edit Point Details
+            </Button>
+          </Box>
+        </Grid>
+      )}
     </Grid>
   );
 };
@@ -175,6 +193,7 @@ const styles = (theme: Theme) =>
 interface InfoIncomingProps {
   reef: Reef;
   pointId: number;
+  onEditButtonClick: () => void;
 }
 
 type InfoProps = InfoIncomingProps & WithStyles<typeof styles>;

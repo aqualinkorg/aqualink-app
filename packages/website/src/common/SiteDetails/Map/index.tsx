@@ -55,11 +55,16 @@ const ReefMap = ({
   polygon,
   surveyPoints,
   selectedPointId,
+  surveyPointEditModeEnabled,
+  editPointLatitude,
+  editPointLongitude,
+  onEditPointCoordinatesChange,
   classes,
 }: ReefMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
+  const editPointMarkerRer = useRef<Marker>(null);
   const draftReef = useSelector(reefDraftSelector);
   const user = useSelector(userInfoSelector);
   const [focusedPoint, setFocusedPoint] = useState<Pois>();
@@ -67,6 +72,10 @@ const ReefMap = ({
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
   };
+
+  const selectedSurveyPoint = surveyPoints.find(
+    (item) => item.id === selectedPointId
+  );
 
   const setCenter = (
     inputMap: L.Map,
@@ -143,6 +152,15 @@ const ReefMap = ({
     }
   }, [dispatch]);
 
+  const handleEditPointDragChange = () => {
+    const { current } = editPointMarkerRer;
+    if (current && current.leafletElement && onEditPointCoordinatesChange) {
+      const mapMarker = current.leafletElement;
+      const { lat, lng } = mapMarker.getLatLng().wrap();
+      onEditPointCoordinatesChange(lat.toString(), lng.toString());
+    }
+  };
+
   return (
     <Map
       ref={mapRef}
@@ -158,6 +176,26 @@ const ReefMap = ({
         <Polygon positions={reverseCoords(...polygon.coordinates)} />
       ) : (
         <>
+          {/* Marker to listen to survey point drag changes on edit mode */}
+          {surveyPointEditModeEnabled && (
+            <Marker
+              ref={editPointMarkerRer}
+              draggable={surveyPointEditModeEnabled}
+              ondragend={handleEditPointDragChange}
+              icon={surveyPointIcon(true)}
+              zIndexOffset={100}
+              position={[
+                editPointLatitude ||
+                  (selectedSurveyPoint?.polygon?.type === "Point" &&
+                    selectedSurveyPoint.polygon.coordinates[1]) ||
+                  polygon.coordinates[1],
+                editPointLongitude ||
+                  (selectedSurveyPoint?.polygon?.type === "Point" &&
+                    selectedSurveyPoint.polygon.coordinates[0]) ||
+                  polygon.coordinates[0],
+              ]}
+            />
+          )}
           <Marker
             ref={markerRef}
             draggable={Boolean(draftReef)}
@@ -171,7 +209,8 @@ const ReefMap = ({
           {surveyPoints.map(
             (point) =>
               point?.polygon?.type === "Point" &&
-              !samePosition(polygon, point.polygon) && (
+              !samePosition(polygon, point.polygon) &&
+              (point.id !== selectedPointId || !surveyPointEditModeEnabled) && ( // Hide selected survey point marker if it is in edit mode
                 <Marker
                   key={point.id}
                   icon={surveyPointIcon(point.id === selectedPointId)}
@@ -220,11 +259,19 @@ interface ReefMapIncomingProps {
   spotterPosition?: SpotterPosition | null;
   surveyPoints: Pois[];
   selectedPointId?: number;
+  surveyPointEditModeEnabled?: boolean;
+  editPointLatitude?: number | null;
+  editPointLongitude?: number | null;
+  onEditPointCoordinatesChange?: (lat: string, lng: string) => void;
 }
 
 ReefMap.defaultProps = {
   spotterPosition: null,
   selectedPointId: 0,
+  surveyPointEditModeEnabled: false,
+  editPointLatitude: null,
+  editPointLongitude: null,
+  onEditPointCoordinatesChange: () => {},
 };
 
 type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;

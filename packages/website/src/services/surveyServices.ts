@@ -4,8 +4,10 @@ import type {
   SurveyMediaData,
   SurveyListItem,
   SurveyMediaUpdateRequestData,
+  SurveyPointUpdateParams,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
+import { Pois } from "../store/Reefs/types";
 
 const getSurvey = (reefId: string, surveyId: string) =>
   requests.send<SurveyState>({
@@ -61,13 +63,15 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
   });
 };
 
-const updatePoi = (poiId: number, name: string, token: string) =>
-  requests.send({
+const updatePoi = (
+  poiId: number,
+  updateParams: SurveyPointUpdateParams,
+  token: string
+) =>
+  requests.send<Pois>({
     url: `pois/${poiId}`,
     method: "PUT",
-    data: {
-      name,
-    },
+    data: updateParams,
     token,
   });
 
