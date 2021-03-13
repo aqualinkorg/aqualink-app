@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
+  reefHoboDataRangeLoadingSelector,
   reefHoboDataRangeSelector,
   reefHoboDataRequest,
   reefHoboDataSelector,
@@ -53,6 +54,7 @@ const ChartWithCard = ({
     useSelector(reefHoboDataSelector) || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
+  const hoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
   const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
@@ -96,7 +98,7 @@ const ChartWithCard = ({
         reef.timezone
       ) as string;
 
-      if (hasSpotterData) {
+      if (hasSpotterData && !hoboDataRangeLoading) {
         dispatch(
           reefSpotterDataRequest({
             id: `${reef.id}`,
@@ -113,6 +115,7 @@ const ChartWithCard = ({
     pickerStartDate,
     reef.id,
     reef.timezone,
+    hoboDataRangeLoading,
   ]);
 
   // Fetch HOBO data if picker start date is before the current past limit
