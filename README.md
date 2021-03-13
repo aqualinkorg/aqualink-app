@@ -6,6 +6,8 @@ This is the main repository for the Aqualink Coral Monitoring Application.
 
 [Aqualink](https://aqualink.org) is a philanthropically funded system to help people manage their local marine ecosystems in the face of increasing Ocean temperatures. The system consists of satellite-connected underwater temperature sensors and photographic surveys to allow for remote collaboration with scientists across the world. If you are concerned about the effect of climate change on your local reef and want to do something about it then please apply to get a smart buoy for free.
 
+![Aqualink Screenshot - Map Page](packages/website/src/assets/img/readme-screenshot-map.png)
+
 ## Development
 The app is a monorepo managed by [Lerna](https://github.com/lerna/lerna) using 
 [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Individual packages are found in the `./packages
