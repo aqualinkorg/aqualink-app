@@ -1,5 +1,4 @@
 import yargs from 'yargs';
-import fs from 'fs';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
@@ -19,12 +18,12 @@ const { argv } = yargs
   .scriptName('upload-hobo-data')
   .usage('$0 <cmd> [args]')
   .example(
-    '$0 -p Aqualink.zip -u example@aqualink.com',
-    "This command will import the data contained in 'Aqualink.zip' and use the user with email 'ex@aqualink.com' for any user relations needed (reef-administrator, survey etc)",
+    '$0 -p data/Aqualink -u example@aqualink.com',
+    "This command will import the data contained in 'data/Aqualink' directory and use the user with email 'ex@aqualink.com' for any user relations needed (reef-administrator, survey etc)",
   )
   .option('p', {
     alias: 'path',
-    describe: 'The path to the HOBO data zip',
+    describe: 'The path to the HOBO data folder',
     demandOption: true,
     type: 'string',
   })
@@ -41,20 +40,6 @@ async function run() {
   const { p: rootPath, u: userEmail } = argv;
 
   logger.log(`Script params: rootPath: ${rootPath}, userEmail: ${userEmail}`);
-  // Create a dummy multer file to be able to get accepted by service
-  const file: Express.Multer.File = {
-    fieldname: 'file',
-    originalname: rootPath,
-    buffer: fs.readFileSync(rootPath),
-    path: rootPath,
-    size: 0,
-    encoding: 'utf-8',
-    mimetype: 'zip',
-    filename: rootPath,
-    destination: rootPath,
-    stream: fs.createReadStream(rootPath),
-  };
-
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
   const connection = await createConnection(config);
   const googleCloudService = new GoogleCloudService(
@@ -63,7 +48,7 @@ async function run() {
 
   logger.log('Uploading hobo data');
   const dbIdtTReefId = await uploadHoboData(
-    file,
+    rootPath,
     userEmail,
     googleCloudService,
     {

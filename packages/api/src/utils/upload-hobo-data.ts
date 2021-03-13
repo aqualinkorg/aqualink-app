@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import unzipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import xlsx from 'xlsx';
@@ -58,7 +57,6 @@ interface Repositories {
   monthlyMaxRepository: Repository<MonthlyMax>;
 }
 
-const EXTRACT_PATH = 'data';
 const FOLDER_PREFIX = 'Patch_Reef_';
 const COLONY_COORDS_FILE = 'Colony_Coords.xlsx';
 const COLONY_FOLDER_PREFIX = 'Col_';
@@ -564,7 +562,7 @@ const uploadReefPhotos = async (
 // Upload hobo data
 // Returns a object with keys the db reef ids and values the corresponding imported reef ids
 export const uploadHoboData = async (
-  file: Express.Multer.File,
+  rootPath: string,
   email: string,
   googleCloudService: GoogleCloudService,
   repositories: Repositories,
@@ -580,11 +578,6 @@ export const uploadHoboData = async (
     throw new BadRequestException('User was not found');
   }
 
-  // Read and extract zip file
-  const directory = await unzipper.Open.buffer(file.buffer);
-  await directory.extract({ path: EXTRACT_PATH });
-  // Main folder can be found by just getting the first folder of the path of any file in the zip archive
-  const rootPath = `${EXTRACT_PATH}/${directory.files[0].path.split('/')[0]}`;
   const reefSet = fs
     .readdirSync(rootPath)
     .filter((f) => {
