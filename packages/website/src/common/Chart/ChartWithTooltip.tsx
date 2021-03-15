@@ -42,35 +42,8 @@ function ChartWithTooltip({
     startDate,
     endDate,
   } = rest;
-  const chartDataRef = useRef<Line>(null);
 
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  const [tooltipData, setTooltipData] = useState<TooltipData>({
-    reefId,
-    date: "",
-    depth,
-    bottomTemperature: 0,
-    spotterSurfaceTemp: null,
-    surfaceTemperature: 0,
-    hoboBottomTemp: null,
-    monthlyMax: null,
-    surveyId: null,
-  });
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
-
-  const customTooltip = (ref: React.RefObject<Line>) => (
-    tooltipModel: ChartTooltipModel
-  ) => {
-    const chart = ref.current;
-    if (!chart?.chartInstance.canvas) {
-      return;
-    }
-
-    const date = tooltipModel.dataPoints?.[0]?.xLabel;
-    if (typeof date !== "string") return;
-
-    const surveyId = findSurveyFromDate(date, surveys);
-
+  function getValuesCloseToDate(date: string) {
     const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
 
     const dailyDataForDate =
@@ -108,6 +81,70 @@ function ChartWithTooltip({
       null;
 
     const bottomTemperature = bottomTemp || avgBottomTemperature;
+
+    return {
+      satelliteTemperature,
+      montlyMaxTemp,
+      spotterSurfaceTemp,
+      hoboBottomTemp,
+      bottomTemperature,
+    };
+  }
+
+  const availableDates = [
+    ...dailyData.map((daily) => daily.date),
+    ...(spotterData?.surfaceTemperature
+      ? spotterData.surfaceTemperature.map((data) => data.timestamp)
+      : []),
+    ...(hoboBottomTemperature
+      ? hoboBottomTemperature.map((daily) => daily.timestamp)
+      : []),
+  ];
+
+  const dataByDate = availableDates.reduce(
+    (acc, date) => ({
+      ...acc,
+      [date]: acc[date] || getValuesCloseToDate(date),
+    }),
+    {} as Record<string, any>
+  );
+
+  const chartDataRef = useRef<Line>(null);
+
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [tooltipData, setTooltipData] = useState<TooltipData>({
+    reefId,
+    date: "",
+    depth,
+    bottomTemperature: 0,
+    spotterSurfaceTemp: null,
+    surfaceTemperature: 0,
+    hoboBottomTemp: null,
+    monthlyMax: null,
+    surveyId: null,
+  });
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+
+  const customTooltip = (ref: React.RefObject<Line>) => (
+    tooltipModel: ChartTooltipModel
+  ) => {
+    const chart = ref.current;
+    if (!chart?.chartInstance.canvas) {
+      return;
+    }
+
+    const date = tooltipModel.dataPoints?.[0]?.xLabel;
+    if (typeof date !== "string") return;
+
+    const surveyId = findSurveyFromDate(date, surveys);
+
+    const {
+      satelliteTemperature,
+      bottomTemperature,
+      spotterSurfaceTemp,
+      hoboBottomTemp,
+      montlyMaxTemp,
+    } = dataByDate[date];
 
     const nValues = [
       satelliteTemperature,
