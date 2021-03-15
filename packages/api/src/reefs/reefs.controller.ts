@@ -9,6 +9,7 @@ import {
   Query,
   ParseIntPipe,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
@@ -17,21 +18,29 @@ import { UpdateReefDto } from './dto/update-reef.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
-import { CreateReefDto } from './dto/create-reef.dto';
+import { CreateReefApplicationDto, CreateReefDto } from './dto/create-reef.dto';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { ExclusionDates } from './exclusion-dates.entity';
+import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { AuthRequest } from '../auth/auth.types';
+import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
 @Controller('reefs')
 export class ReefsController {
   constructor(private reefsService: ReefsService) {}
 
+  @OverrideLevelAccess()
   @Post()
-  create(@Body() createReefDto: CreateReefDto): Promise<Reef> {
-    return this.reefsService.create(createReefDto);
+  create(
+    @Req() request: AuthRequest,
+    @Body('reefApplication') reefApplication: CreateReefApplicationDto,
+    @Body('reef') reef: CreateReefDto,
+  ): Promise<ReefApplication> {
+    return this.reefsService.create(reefApplication, reef, request.user);
   }
 
   @Public()

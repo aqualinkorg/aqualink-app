@@ -15,8 +15,9 @@ import { UpdateReefDto } from './dto/update-reef.dto';
 import { getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
-import { User } from '../users/users.entity';
-import { CreateReefDto } from './dto/create-reef.dto';
+import { AdminLevel, User } from '../users/users.entity';
+import { CreateReefDto, CreateReefApplicationDto } from './dto/create-reef.dto';
+import { MonthlyMax } from './monthly-max.entity';
 import { Region } from '../regions/regions.entity';
 import {
   getRegion,
@@ -25,11 +26,13 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
 } from '../utils/reef.utils';
-import { getMMM } from '../utils/temperature';
+import { getMMM, getMonthlyMaximums } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
+import { backfillReefData } from '../workers/backfill-reef-data';
+import { ReefApplication } from '../reef-applications/reef-applications.entity';
 
 @Injectable()
 export class ReefsService {
@@ -37,6 +40,9 @@ export class ReefsService {
   constructor(
     @InjectRepository(Reef)
     private reefsRepository: Repository<Reef>,
+
+    @InjectRepository(ReefApplication)
+    private reefApplicationRepository: Repository<ReefApplication>,
 
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
@@ -46,22 +52,26 @@ export class ReefsService {
 
     @InjectRepository(ExclusionDates)
     private exclusionDatesRepository: Repository<ExclusionDates>,
+
+    @InjectRepository(MonthlyMax)
+    private monthlyMaxRepository: Repository<MonthlyMax>,
+
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
-  async create(createReefDto: CreateReefDto): Promise<Reef> {
-    const {
-      name,
-      latitude,
-      longitude,
-      temperatureThreshold,
-      depth,
-      videoStream,
-      admins,
-      stream,
-    } = createReefDto;
+  async create(
+    appParams: CreateReefApplicationDto,
+    reefParams: CreateReefDto,
+    user: User,
+  ): Promise<ReefApplication> {
+    const { name, latitude, longitude, depth } = reefParams;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
+    const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+
     const timezones = getTimezones(latitude, longitude) as string[];
+
     const reef = await this.reefsRepository
       .save({
         name,
@@ -71,22 +81,47 @@ export class ReefsService {
           coordinates: [longitude, latitude],
         },
         maxMonthlyMean,
-        timezones,
-        temperatureThreshold,
+        timezone: timezones[0],
+        approved: false,
         depth,
-        videoStream,
-        stream,
       })
       .catch(handleDuplicateReef);
 
-    this.reefsRepository
-      .createQueryBuilder('reefs')
-      .update()
-      .relation('admins')
-      .of(reef)
-      .add(admins);
+    // Elevate user to ReefManager
+    if (user.adminLevel === AdminLevel.Default) {
+      await this.userRepository.update(user.id, {
+        adminLevel: AdminLevel.ReefManager,
+      });
+    }
 
-    return reef;
+    await this.userRepository
+      .createQueryBuilder('users')
+      .relation('administeredReefs')
+      .of(user)
+      .add(reef);
+
+    if (!maxMonthlyMean) {
+      this.logger.warn(
+        `Max Monthly Mean appears to be null for Reef ${reef.id} at (lat, lon): (${latitude}, ${longitude}) `,
+      );
+    }
+
+    backfillReefData(reef.id);
+
+    await Promise.all(
+      monthlyMaximums.map(async ({ month, temperature }) => {
+        return (
+          temperature &&
+          this.monthlyMaxRepository.insert({ reef, month, temperature })
+        );
+      }),
+    );
+
+    return this.reefApplicationRepository.save({
+      ...appParams,
+      reef,
+      user,
+    });
   }
 
   latestDailyDataSubquery(): string {
@@ -134,7 +169,7 @@ export class ReefsService {
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
-      relations: ['region', 'admins', 'stream'],
+      relations: ['region', 'admins', 'stream', 'monthlyMax'],
     });
 
     if (!found) {

@@ -23,3 +23,6 @@ cloud-functions/dist/*.js
 
 # Google Cloud Storage Congig
 gcloud.json*
+
+# Max Sea Surface Temperature Files
+sst_clim_*.tiff

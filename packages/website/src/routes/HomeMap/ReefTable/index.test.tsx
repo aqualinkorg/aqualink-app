@@ -39,7 +39,7 @@ describe("ReefTable", () => {
 
     element = render(
       <Provider store={store}>
-        <ReefTable openDrawer={openDrawer} />
+        <ReefTable isDrawerOpen={openDrawer} />
       </Provider>
     ).container;
   });

@@ -24,7 +24,7 @@ export class makeDailyDataNullable1594865084047 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "daily_data" DROP CONSTRAINT no_duplicate_date`);
+        await queryRunner.query(`ALTER TABLE "daily_data" DROP CONSTRAINT no_duplicated_date`);
         await queryRunner.query(`DROP EXTENSION btree_gist`);
         await queryRunner.query(`ALTER TABLE "daily_data" ALTER COLUMN "wind_direction" SET NOT NULL`);
         await queryRunner.query(`ALTER TABLE "daily_data" ALTER COLUMN "avg_wind_speed" SET NOT NULL`);

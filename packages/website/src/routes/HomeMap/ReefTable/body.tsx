@@ -6,6 +6,8 @@ import {
   TableRow,
   Theme,
   Typography,
+  useMediaQuery,
+  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -110,6 +112,9 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
+
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
     dispatch(setSearchResult());
@@ -121,12 +126,14 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
     setSelectedRow(index);
   }, [reefOnMap, reefsList]);
 
+  // scroll to the relevant reef row when reef is selected.
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
-    if (child) {
+    // only scroll if not on mobile (info at the top is more useful than the reef row)
+    if (child && !isMobile) {
       child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [selectedRow]);
+  }, [isMobile, selectedRow]);
 
   return (
     <TableBody>
@@ -138,13 +145,12 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
           <TableRow
             id={`homepage-table-row-${reef.tableData.id}`}
             hover
+            className={classes.tableRow}
             style={{
               backgroundColor:
                 reef.tableData.id === selectedRow
                   ? colors.lighterBlue
                   : "white",
-              cursor: "pointer",
-              borderTop: "1px solid rgba(224, 224, 224, 1)",
             }}
             onClick={(event) => handleClick(event, reef)}
             role="button"
@@ -189,6 +195,10 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         textAlign: "right",
       },
+    },
+    tableRow: {
+      cursor: "pointer",
+      borderTop: `1px solid ${theme.palette.grey["300"]}`,
     },
   });
 

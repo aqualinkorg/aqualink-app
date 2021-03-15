@@ -16,7 +16,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         classname="ReefTable-topHandle-5"
       />
       <mock-typography
-        classname="ReefTable-allReefsText-6"
+        classname="ReefTable-allReefsText-7"
         color="textSecondary"
         variant="h5"
       >
@@ -25,6 +25,228 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
     </mock-box>
   </mock-hidden>
   <mock-selectedreefcard />
+  <mock-hidden
+    smup="true"
+  >
+    <mock-box
+      alignitems="center"
+      display="flex"
+      paddingx="2"
+      paddingy="3"
+    >
+      <mock-typography
+        variant="h5"
+      >
+        Sort By: 
+      </mock-typography>
+      <div
+        class="MuiInputBase-root MuiInput-root MuiInput-underline ReefTable-mobileSortSelect-6"
+      >
+        <div
+          aria-haspopup="listbox"
+          class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+          role="button"
+          tabindex="0"
+        >
+          <mock-typography
+            color="primary"
+            variant="h4"
+          >
+            Alert
+              
+            <arrowupward
+              font-size="small"
+            />
+          </mock-typography>
+        </div>
+        <input
+          aria-hidden="true"
+          class="MuiSelect-nativeInput"
+          tabindex="-1"
+          value="alert-desc"
+        />
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSelect-icon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+        <mock-menu
+          anchorel="[object HTMLDivElement]"
+          id="menu-"
+          menulistprops="[object Object]"
+          open="false"
+          paperprops="[object Object]"
+        >
+          <mock-menuitem
+            data-value="alert-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Alert
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            aria-selected="true"
+            data-value="alert-desc"
+            role="option"
+            selected="true"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Alert
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="depth-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Depth
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="depth-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Depth
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="dhw-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              DHW
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="dhw-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              DHW
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="locationName-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Location Name
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="locationName-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Location Name
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="temp-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Temp
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="temp-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Temp
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+        </mock-menu>
+      </div>
+    </mock-box>
+  </mock-hidden>
   <mock-box
     classname="ReefTable-tableHolder-1 ReefTable-scrollable-2"
     display="flex"
@@ -45,7 +267,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             <mock-tablerow>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-7"
+                classname="EnhancedTableHead-headCells-10"
                 padding="default"
                 sortdirection="false"
                 style="width: 40%;"
@@ -65,7 +287,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-7"
+                classname="EnhancedTableHead-headCells-10"
                 padding="default"
                 sortdirection="false"
               >
@@ -91,7 +313,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-7"
+                classname="EnhancedTableHead-headCells-10"
                 padding="default"
                 sortdirection="false"
               >
@@ -117,7 +339,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-7"
+                classname="EnhancedTableHead-headCells-10"
                 padding="default"
                 sortdirection="desc"
                 style="width: 5%;"
@@ -140,14 +362,15 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         </mock-hidden>
         <mock-tablebody>
           <mock-tablerow
+            classname="ReefTableBody-tableRow-15"
             hover="true"
             id="homepage-table-row-0"
             role="button"
-            style="background-color: white; cursor: pointer;"
+            style="background-color: white;"
             tabindex="-1"
           >
             <mock-tablecell
-              classname="ReefTableBody-nameCells-8"
+              classname="ReefTableBody-nameCells-11"
             >
               <mock-typography
                 align="left"
@@ -158,10 +381,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-11"
+              classname="ReefTableBody-cellTextAlign-14"
             >
               <mock-typography
-                classname="ReefTableBody-numberCellsTitle-10"
+                classname="ReefTableBody-numberCellsTitle-13"
                 style="color: rgb(22, 141, 189);"
                 variant="h6"
               >
@@ -180,10 +403,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-11"
+              classname="ReefTableBody-cellTextAlign-14"
             >
               <mock-typography
-                classname="ReefTableBody-numberCellsTitle-10"
+                classname="ReefTableBody-numberCellsTitle-13"
                 style="color: rgb(117, 180, 114);"
                 variant="h6"
               >
@@ -202,7 +425,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-11"
+              classname="ReefTableBody-cellTextAlign-14"
             >
               <svg
                 aria-hidden="true"
