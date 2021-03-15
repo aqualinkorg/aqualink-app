@@ -40,7 +40,8 @@
     "seed:run": "yarn typeorm-seeding seed",
     "daily-worker": "ts-node -r dotenv/config scripts/daily-update.ts",
     "backfill-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
-    "augment-reefs": "ts-node -r dotenv/config scripts/augment-reef-data.ts"
+    "augment-reefs": "ts-node -r dotenv/config scripts/augment-reef-data.ts",
+    "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",
@@ -74,8 +75,10 @@
     "pg-native": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
+    "ts-exif-parser": "^0.2.1",
     "typeorm": "^0.2.25",
-    "typeorm-naming-strategies": "^1.1.0"
+    "typeorm-naming-strategies": "^1.1.0",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
@@ -91,7 +94,6 @@
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/supertest": "^2.0.8",
-    "csv-parser": "^2.3.3",
     "faker": "^4.1.0",
     "firebase-admin": "^9.0.0",
     "firebase-functions": "^3.8.0",

@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
@@ -12,6 +13,7 @@ import { Sources } from '../reefs/sources.entity';
 import { Metric } from './metrics.entity';
 
 @Entity()
+@Unique('no_duplicate_data', ['timestamp', 'reef', 'poi', 'metric', 'source'])
 export class TimeSeries {
   @PrimaryGeneratedColumn()
   id: number;

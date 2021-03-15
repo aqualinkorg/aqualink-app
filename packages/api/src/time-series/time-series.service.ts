@@ -1,11 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import _, { omit } from 'lodash';
 import { Repository } from 'typeorm';
-import { Metric } from './metrics.entity';
-import { TimeSeries } from './time-series.entity';
+import { Injectable, Logger } from '@nestjs/common';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
+import { Metric } from './metrics.entity';
+import { TimeSeries } from './time-series.entity';
 import { DataRangeDto } from './dto/data-range.dto';
 
 interface TimeSeriesData {

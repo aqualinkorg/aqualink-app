@@ -1,13 +1,14 @@
 import { isNil, omitBy } from 'lodash';
 import Bluebird from 'bluebird';
 import { Connection, createConnection, Repository } from 'typeorm';
-import { Point, GeoJSON } from 'geojson';
+import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Reef } from '../src/reefs/reefs.entity';
 import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 import { Region } from '../src/regions/regions.entity';
 import { getMMM, getMonthlyMaximums } from '../src/utils/temperature';
 import { getGoogleRegion } from '../src/utils/reef.utils';
+import { createPoint } from '../src/utils/coordinates';
 
 const dbConfig = require('../ormconfig');
 
@@ -27,10 +28,7 @@ async function getRegion(
   return googleRegion
     ? regionRepository.save({
         name: googleRegion,
-        polygon: {
-          coordinates: [longitude, latitude],
-          type: 'Point',
-        } as GeoJSON,
+        polygon: createPoint(longitude, latitude),
       })
     : undefined;
 }

@@ -1,5 +1,13 @@
 /** Worker to process daily data for all reefs. */
-import { isEmpty, isNil, isNumber, mapValues, omitBy } from 'lodash';
+import {
+  isEmpty,
+  isNil,
+  isNumber,
+  isUndefined,
+  mapValues,
+  omit,
+  omitBy,
+} from 'lodash';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
@@ -237,6 +245,10 @@ export async function getDailyData(
   };
 }
 
+function hasNoData(data: SofarDailyData) {
+  return Object.values(omit(data, 'reef', 'date')).every(isUndefined);
+}
+
 export async function getWeeklyAlertLevel(
   dailyDataRepository: Repository<DailyData>,
   date: Date,
@@ -293,6 +305,12 @@ export async function getReefsDailyData(
       );
 
       const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
+
+      if (hasNoData(dailyDataInput)) {
+        console.log('No data has been fetched. Skipping...');
+        return;
+      }
+
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         endOfDate,

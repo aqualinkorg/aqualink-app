@@ -19,6 +19,7 @@ export enum WeatherConditions {
   Calm = 'calm',
   Wavy = 'waves',
   Stormy = 'storm',
+  NoData = 'no-data',
 }
 
 @Entity()
