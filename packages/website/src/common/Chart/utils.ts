@@ -78,11 +78,7 @@ export const filterTimeSeriesData = (
       from,
       to
     ),
-    surfaceTemperature: filterSofarData(
-      timeSeries.surfaceTemperature,
-      from,
-      to
-    ),
+    topTemperature: filterSofarData(timeSeries.topTemperature, from, to),
     bottomTemperature: filterSofarData(timeSeries.bottomTemperature, from, to),
     sstAnomaly: filterSofarData(timeSeries.sstAnomaly, from, to),
     significantWaveHeight: filterSofarData(
@@ -248,7 +244,7 @@ export function getSofarDataClosestToDate(
 export const createDatasets = (
   dailyData: DailyData[],
   rawSpotterBottom: SofarValue[],
-  rawSpotterSurface: SofarValue[],
+  rawSpotterTop: SofarValue[],
   rawHoboBottom: SofarValue[],
   monthlyMaxData: MonthlyMaxData[],
   surveys: SurveyListItem[]
@@ -271,7 +267,7 @@ export const createDatasets = (
     y: item.value,
   }));
 
-  const spotterSurface = rawSpotterSurface.map((item) => ({
+  const spotterTop = rawSpotterTop.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -307,7 +303,7 @@ export const createDatasets = (
     bottomTemperatureData: CHART_BOTTOM_TEMP_ENABLED ? bottomTemperature : [],
     surfaceTemperatureData: surfaceTemperature,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
     monthlyMaxTemp,
   };
@@ -316,9 +312,9 @@ export const createDatasets = (
 export const calculateAxisLimits = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
-  spotterSurfaceTemperature: SofarValue[],
   hoboTemperatureData: SofarValue[],
   monthlyMaxData: MonthlyMaxData[],
+  spotterTopTemperature: SofarValue[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
@@ -328,8 +324,7 @@ export const calculateAxisLimits = (
       ? dailyData
           .filter(
             (item) =>
-              item.surfaceTemperature !== null ||
-              item.satelliteTemperature !== null
+              item.topTemperature !== null || item.satelliteTemperature !== null
           )
           .map((item) => item.date)
       : spotterBottomTemperature.map((item) => item.timestamp);
@@ -347,13 +342,13 @@ export const calculateAxisLimits = (
     surfaceTemperatureData,
     bottomTemperatureData,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
     monthlyMaxTemp,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
-    spotterSurfaceTemperature,
+    spotterTopTemperature,
     hoboTemperatureData,
     monthlyMaxData,
     surveys
@@ -363,7 +358,7 @@ export const calculateAxisLimits = (
     ...surfaceTemperatureData,
     ...bottomTemperatureData,
     ...spotterBottom,
-    ...spotterSurface,
+    ...spotterTop,
     ...hoboBottom,
     ...monthlyMaxTemp,
   ]
@@ -411,12 +406,12 @@ export function useProcessedChartData(
     endDate
   );
 
-  const { bottomTemperature, surfaceTemperature } = spotterData || {};
+  const { bottomTemperature, topTemperature } = spotterData || {};
 
   const datasets = createDatasets(
     sortedFilteredDailyData,
     bottomTemperature || [],
-    surfaceTemperature || [],
+    topTemperature || [],
     hoboBottomTemperatureData || [],
     monthlyMaxData || [],
     surveys
@@ -425,9 +420,9 @@ export function useProcessedChartData(
   const axisLimits = calculateAxisLimits(
     sortedFilteredDailyData,
     bottomTemperature || [],
-    surfaceTemperature || [],
     hoboBottomTemperatureData || [],
     monthlyMaxData || [],
+    topTemperature || [],
     surveys,
     temperatureThreshold
   );
@@ -485,7 +480,7 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
 
 export const createChartData = (
   spotterBottom: ChartPoint[],
-  spotterSurface: ChartPoint[],
+  spotterTop: ChartPoint[],
   hoboBottom: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
@@ -494,7 +489,7 @@ export const createChartData = (
   surveyDate: Date | null,
   temperatureThreshold: number | null
 ) => {
-  const displaySpotterData = spotterSurface.length > 0;
+  const displaySpotterData = spotterTop.length > 0;
   const data: ChartComponentProps["data"] = {
     datasets: [
       {
@@ -567,7 +562,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: spotterSurface,
+        data: spotterTop,
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,

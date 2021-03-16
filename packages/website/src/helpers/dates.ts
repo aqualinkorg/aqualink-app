@@ -98,7 +98,7 @@ export const findMarginalDate = (
   const combinedData = [
     ...monthlyMaxData,
     ...dailyData,
-    ...(spotterData?.surfaceTemperature?.map((item) => ({
+    ...(spotterData?.topTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
@@ -245,8 +245,8 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.satelliteTemperature,
       timeZone
     ),
-    surfaceTemperature: convertSofarDataToLocalTime(
-      timeSeries.surfaceTemperature,
+    topTemperature: convertSofarDataToLocalTime(
+      timeSeries.topTemperature,
       timeZone
     ),
     bottomTemperature: convertSofarDataToLocalTime(

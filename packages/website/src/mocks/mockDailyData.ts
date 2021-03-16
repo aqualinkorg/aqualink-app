@@ -13,7 +13,7 @@ export const mockDailyData: DailyData = {
   maxBottomTemperature: 27,
   avgBottomTemperature: 26,
   degreeHeatingDays: 29,
-  surfaceTemperature: 36,
+  topTemperature: 36,
   satelliteTemperature: 20,
   minWaveHeight: 1,
   maxWaveHeight: 3,

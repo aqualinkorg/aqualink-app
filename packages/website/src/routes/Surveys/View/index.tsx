@@ -89,7 +89,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           pointId: `${pointId}`,
           start,
           end,
-          metrics: ["bottom_temperature", "surface_temperature"],
+          metrics: ["bottom_temperature", "top_temperature"],
           hourly: false,
         })
       );

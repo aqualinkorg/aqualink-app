@@ -65,7 +65,7 @@ const ChartWithCard = ({
   const filteredSpotter = filterTimeSeriesData(spotterData, startDate, endDate);
   const hasSpotterData = Boolean(
     filteredSpotter?.bottomTemperature?.[0] ||
-      filteredSpotter?.surfaceTemperature?.[0]
+      filteredSpotter?.topTemperature?.[0]
   );
 
   // Set pickers initial values once the range request is completed
@@ -106,7 +106,7 @@ const ChartWithCard = ({
           pointId,
           start: reefLocalStartDate,
           end: reefLocalEndDate,
-          metrics: ["bottom_temperature", "surface_temperature"],
+          metrics: ["bottom_temperature", "top_temperature"],
           hourly: true,
         })
       );

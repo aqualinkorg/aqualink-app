@@ -53,7 +53,7 @@ function ChartWithTooltip({
     depth,
     monthlyMaxTemp: null,
     satelliteTemp: null,
-    spotterSurfaceTemp: null,
+    spotterTopTemp: null,
     spotterBottomTemp: null,
     hoboBottomTemp: null,
     surveyId: null,
@@ -90,13 +90,10 @@ function ChartWithTooltip({
 
     const satelliteTemp = satelliteTemperature || null;
 
-    const spotterSurfaceTemp =
+    const spotterTopTemp =
       (spotterData &&
-        getSofarDataClosestToDate(
-          spotterData.surfaceTemperature,
-          new Date(date),
-          6
-        )?.value) ||
+        getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
+          ?.value) ||
       null;
 
     const spotterBottomTemp =
@@ -117,7 +114,7 @@ function ChartWithTooltip({
     const nValues = [
       monthlyMaxTemp,
       satelliteTemp,
-      spotterSurfaceTemp,
+      spotterTopTemp,
       spotterBottomTemp,
       hoboBottomTemp,
     ].filter(Boolean).length;
@@ -143,7 +140,7 @@ function ChartWithTooltip({
         depth,
         monthlyMaxTemp,
         satelliteTemp,
-        spotterSurfaceTemp,
+        spotterTopTemp,
         spotterBottomTemp,
         hoboBottomTemp,
         surveyId,

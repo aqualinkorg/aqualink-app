@@ -63,24 +63,21 @@ const getApplicationTag = (
 };
 
 const Sensor = ({ reef, classes }: SensorProps) => {
-  const { surfaceTemperature, bottomTemperature } = reef.liveData;
+  const { topTemperature, bottomTemperature } = reef.liveData;
 
   const relativeTime =
-    (surfaceTemperature?.timestamp &&
-      toRelativeTime(surfaceTemperature.timestamp)) ||
+    (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
     (bottomTemperature?.timestamp &&
       toRelativeTime(bottomTemperature.timestamp));
 
-  const hasSpotter = Boolean(
-    surfaceTemperature?.value || bottomTemperature?.value
-  );
+  const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
 
   const user = useSelector(userInfoSelector);
 
   const metrics = [
     {
       label: "TEMP AT 1m",
-      value: `${formatNumber(surfaceTemperature?.value, 1)}°C`,
+      value: `${formatNumber(topTemperature?.value, 1)}°C`,
     },
     {
       label: `TEAMP AT ${reef.depth ? `${reef.depth}m` : "DEPTH"}`,
