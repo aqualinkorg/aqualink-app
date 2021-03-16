@@ -1,5 +1,4 @@
 import yargs from 'yargs';
-import fs from 'fs';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
@@ -11,16 +10,20 @@ import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
-import { uploadHoboData } from '../src/utils/import-hobo-data';
+import { uploadHoboData } from '../src/utils/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 
 const { argv } = yargs
-  .scriptName('parse-hobo-data')
+  .scriptName('upload-hobo-data')
   .usage('$0 <cmd> [args]')
+  .example(
+    '$0 -p data/Aqualink -u example@aqualink.com',
+    "This command will import the data contained in 'data/Aqualink' directory and use the user with email 'ex@aqualink.com' for any user relations needed (reef-administrator, survey etc)",
+  )
   .option('p', {
     alias: 'path',
-    describe: 'The path to the HOBO data zip',
+    describe: 'The path to the HOBO data folder',
     demandOption: true,
     type: 'string',
   })
@@ -29,27 +32,14 @@ const { argv } = yargs
     describe: 'The email of the user to be used for the needed relationships',
     type: 'string',
     demandOption: true,
-  });
+  })
+  .wrap(yargs.terminalWidth());
 
 async function run() {
   const logger = new Logger('ParseHoboData');
   const { p: rootPath, u: userEmail } = argv;
 
   logger.log(`Script params: rootPath: ${rootPath}, userEmail: ${userEmail}`);
-  // Create a dummy multer file to be able to get accepted by service
-  const file: Express.Multer.File = {
-    fieldname: 'file',
-    originalname: rootPath,
-    buffer: fs.readFileSync(rootPath),
-    path: rootPath,
-    size: 0,
-    encoding: 'utf-8',
-    mimetype: 'zip',
-    filename: rootPath,
-    destination: rootPath,
-    stream: fs.createReadStream(rootPath),
-  };
-
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
   const connection = await createConnection(config);
   const googleCloudService = new GoogleCloudService(
@@ -58,7 +48,7 @@ async function run() {
 
   logger.log('Uploading hobo data');
   const dbIdtTReefId = await uploadHoboData(
-    file,
+    rootPath,
     userEmail,
     googleCloudService,
     {

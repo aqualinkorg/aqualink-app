@@ -1,18 +1,18 @@
 import { Factory, Seeder } from 'typeorm-seeding';
-import { Connection } from 'typeorm';
+import { times } from 'lodash';
 import { Reef } from '../reefs/reefs.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { Metrics } from '../time-series/metrics.entity';
+import { Metric } from '../time-series/metrics.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 
 export class CreateReef implements Seeder {
-  public async run(factory: Factory, connection: Connection) {
+  public async run(factory: Factory) {
     const reef = await factory(Reef)().create();
 
     const startDate = new Date(2020, 1, 1);
-    const dates = [...Array(10).keys()].map((i) => {
+    const dates = times(10, (i) => {
       const date = new Date();
       date.setDate(startDate.getDate() + i);
       return date;
@@ -31,7 +31,7 @@ export class CreateReef implements Seeder {
     );
 
     const pois = await Promise.all(
-      [...Array(4).keys()].map(() => {
+      times(4, () => {
         return factory(ReefPointOfInterest)()
           .map(async (poi) => {
             poi.reef = reef;
@@ -41,10 +41,14 @@ export class CreateReef implements Seeder {
       }),
     );
 
-    const metrics = await connection
-      .createQueryBuilder()
-      .from(Metrics, 'metric')
-      .getRawMany();
+    const metrics = [
+      Metric.ALERT,
+      Metric.DHW,
+      Metric.SATELLITE_TEMPERATURE,
+      Metric.SURFACE_TEMPERATURE,
+      Metric.BOTTOM_TEMPERATURE,
+      Metric.SST_ANOMALY,
+    ];
 
     const sources = await Promise.all(
       pois.map((poi) => {
@@ -64,7 +68,7 @@ export class CreateReef implements Seeder {
     );
 
     await Promise.all(
-      [...Array(1000).keys()].map(() => {
+      times(1000, () => {
         return factory(TimeSeries)()
           .map(async (data) => {
             const metricId = Math.floor(Math.random() * 5);

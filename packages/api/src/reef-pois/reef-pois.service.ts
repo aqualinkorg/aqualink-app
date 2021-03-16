@@ -12,6 +12,7 @@ import { CreateReefPoiDto } from './dto/create-reef-poi.dto';
 import { FilterReefPoiDto } from './dto/filter-reef-poi.dto';
 import { UpdateReefPoiDto } from './dto/update-reef-poi.dto';
 import { Reef } from '../reefs/reefs.entity';
+import { createPoint } from '../utils/coordinates';
 
 @Injectable()
 export class ReefPoisService {
@@ -33,13 +34,10 @@ export class ReefPoisService {
       throw new NotFoundException(`Reef with id ${reef} was not found`);
     }
 
-    const polygon: GeoJSON =
-      longitude && latitude
-        ? {
-            type: 'Point',
-            coordinates: [longitude, latitude],
-          }
-        : reefEntity.polygon;
+    const polygon: GeoJSON | undefined =
+      longitude !== undefined && latitude !== undefined
+        ? createPoint(longitude, latitude)
+        : undefined;
 
     return this.poisRepository.save({ ...createReefPoiDto, polygon });
   }
@@ -78,12 +76,9 @@ export class ReefPoisService {
   ): Promise<ReefPointOfInterest> {
     const { latitude, longitude } = updateReefPoiDto;
     const polygon: { polygon: GeoJSON } | {} =
-      longitude && latitude
+      longitude !== undefined && latitude !== undefined
         ? {
-            polygon: {
-              type: 'Point',
-              coordinates: [longitude, latitude],
-            },
+            polygon: createPoint(longitude, latitude),
           }
         : {};
 

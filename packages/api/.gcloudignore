@@ -15,3 +15,7 @@
 
 # Node.js dependencies:
 node_modules/
+
+# Import data
+/scripts/application_data/*
+/data/*
