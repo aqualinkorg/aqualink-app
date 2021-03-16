@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
-  reefHoboDataRangeLoadingSelector,
   reefHoboDataRangeSelector,
   reefHoboDataRequest,
   reefHoboDataSelector,
@@ -36,6 +35,7 @@ import {
   filterDailyData,
   filterHoboData,
   filterMaxMonthlyData,
+  filterSpotterData,
 } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
@@ -54,7 +54,6 @@ const ChartWithCard = ({
     useSelector(reefHoboDataSelector) || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
-  const hoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
   const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
@@ -98,7 +97,7 @@ const ChartWithCard = ({
         reef.timezone
       ) as string;
 
-      if (hasSpotterData && !hoboDataRangeLoading) {
+      if (hasSpotterData) {
         dispatch(
           reefSpotterDataRequest({
             id: `${reef.id}`,
@@ -115,7 +114,6 @@ const ChartWithCard = ({
     pickerStartDate,
     reef.id,
     reef.timezone,
-    hoboDataRangeLoading,
   ]);
 
   // Fetch HOBO data if picker start date is before the current past limit
@@ -188,17 +186,24 @@ const ChartWithCard = ({
       pickerStartDate,
       pickerEndDate
     );
+    const filteredSpotterData = filterSpotterData(
+      spotterData,
+      pickerStartDate,
+      pickerEndDate
+    );
     if (
       filteredMaxMonthlyData.length > 0 ||
       filteredDailyData.length > 0 ||
-      (spotterData && spotterData.bottomTemperature.length > 0) ||
+      (filteredSpotterData &&
+        (filteredSpotterData.surfaceTemperature.length > 0 ||
+          filteredSpotterData.bottomTemperature.length > 0)) ||
       filteredHoboData.length > 0
     ) {
       const maxDataDate = new Date(
         findMarginalDate(
           filteredMaxMonthlyData,
           filteredDailyData,
-          spotterData,
+          filteredSpotterData,
           filteredHoboData
         )
       );
@@ -206,7 +211,7 @@ const ChartWithCard = ({
         findMarginalDate(
           filteredMaxMonthlyData,
           filteredDailyData,
-          spotterData,
+          filteredSpotterData,
           filteredHoboData,
           "min"
         )
@@ -330,7 +335,7 @@ const ChartWithCard = ({
           <Chart
             reef={reef}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
-            spotterData={spotterData}
+            spotterData={filterSpotterData(spotterData, startDate, endDate)}
             hoboBottomTemperature={filterHoboData(
               hoboBottomTemperature || [],
               startDate || pickerStartDate,
@@ -377,7 +382,11 @@ const ChartWithCard = ({
                   }
                   chartEndDate={endDate || pickerEndDate || today}
                   depth={reef.depth}
-                  spotterData={spotterData}
+                  spotterData={filterSpotterData(
+                    spotterData,
+                    startDate,
+                    endDate
+                  )}
                   hoboBottomTemperature={filterHoboData(
                     hoboBottomTemperature || [],
                     startDate || pickerStartDate,

@@ -94,6 +94,10 @@ export const findMarginalDate = (
       date: item.timestamp,
       value: item.value,
     })) || []),
+    ...(spotterData?.bottomTemperature?.map((item) => ({
+      date: item.timestamp,
+      value: item.value,
+    })) || []),
     ...(hoboBottomTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,

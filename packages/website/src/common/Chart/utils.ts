@@ -60,6 +60,35 @@ export const filterMaxMonthlyData = (
   );
 };
 
+export const filterSpotterData = (
+  spotterData?: SpotterData | null,
+  from?: string,
+  to?: string
+) => {
+  if (!spotterData || !from || !to) {
+    return spotterData;
+  }
+  const start = moment(from);
+  const end = moment(to);
+
+  return {
+    bottomTemperature: spotterData.bottomTemperature.filter((item) =>
+      inRange(
+        moment(item.timestamp).valueOf(),
+        start.valueOf(),
+        end.valueOf() + 1
+      )
+    ),
+    surfaceTemperature: spotterData.surfaceTemperature.filter((item) =>
+      inRange(
+        moment(item.timestamp).valueOf(),
+        start.valueOf(),
+        end.valueOf() + 1
+      )
+    ),
+  };
+};
+
 export const filterHoboData = (
   hoboData: SofarValue[],
   from?: string,
