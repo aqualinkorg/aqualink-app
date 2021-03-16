@@ -94,7 +94,8 @@ exports.pingService = functions.pubsub
 
 exports.scheduledSpotterTimeSeriesUpdate = functions
   .runWith({ timeoutSeconds: 540 })
-  .pubsub.schedule('0 4 * * * *')
+  // Run spotter data update every hour
+  .pubsub.schedule('0 * * * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
@@ -110,7 +111,7 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     try {
       await runSpotterTimeSeriesUpdate(conn);
       // eslint-disable-next-line no-console
-      console.log(`Daily update on ${new Date()}`);
+      console.log(`Spotter data hourly update on ${new Date()}`);
     } finally {
       conn.close();
     }
