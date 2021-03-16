@@ -1,3 +1,4 @@
+import { times } from 'lodash';
 import moment from 'moment';
 import { Extent, pointToPixel } from '../../src/utils/coordinates';
 
@@ -36,10 +37,9 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
     height,
   );
 
-  const dateIndexArray = Array.from(Array(dateRange).keys());
   const startDate = moment(new Date(year, 0, 1));
 
-  return dateIndexArray.map((dateIndex) => {
+  return times(dateRange, (dateIndex) => {
     const date = moment(startDate);
     date.day(startDate.day() + dateIndex);
     const data: number[] = variables.sst.readSlice(
