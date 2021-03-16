@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Box,
+  CircularProgress,
   createStyles,
   Grid,
   withStyles,
@@ -7,102 +9,103 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { some } from "lodash";
 
 import { DailyData } from "../../../store/Reefs/types";
-import { getDailyDataClosestToDate } from "../../../helpers/sortDailyData";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { isBetween } from "../../../helpers/dates";
-import { reefHoboDataSelector } from "../../../store/Reefs/selectedReefSlice";
-import { getSpotterDataClosestToDate } from "../../../common/Chart/utils";
+import {
+  reefHoboDataLoadingSelector,
+  reefHoboDataSelector,
+  reefSpotterDataLoadingSelector,
+  reefSpotterDataSelector,
+} from "../../../store/Reefs/selectedReefSlice";
+import { getCardSensorValues } from "./utils";
 
 const ObservationBox = ({
   depth,
   dailyData,
   date,
+  timeZone,
   classes,
 }: ObservationBoxProps) => {
-  const { bottomTemperature, surfaceTemperature } =
-    useSelector(reefHoboDataSelector) || {};
-  const dailyDataLen = dailyData.length;
-  const surfaceData =
-    dailyDataLen > 0 &&
-    date &&
-    isBetween(date, dailyData[dailyDataLen - 1].date, dailyData[0].date)
-      ? getDailyDataClosestToDate(dailyData, new Date(date))
-      : undefined;
-  const { satelliteTemperature } = surfaceData || {};
+  const hoboData = useSelector(reefHoboDataSelector);
+  const spotterData = useSelector(reefSpotterDataSelector);
+  const hoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
+  const loading = hoboDataLoading || spotterDataLoading;
 
-  const hoboSurfaceData =
-    date &&
-    surfaceTemperature &&
-    surfaceTemperature.length > 0 &&
-    isBetween(
-      date,
-      surfaceTemperature[0].timestamp,
-      surfaceTemperature[surfaceTemperature.length - 1].timestamp
-    )
-      ? getSpotterDataClosestToDate(surfaceTemperature, new Date(date), 6)
-          ?.value
-      : undefined;
-
-  const hoboBottomData =
-    date &&
-    bottomTemperature &&
-    bottomTemperature.length > 0 &&
-    isBetween(
-      date,
-      bottomTemperature[0].timestamp,
-      bottomTemperature[bottomTemperature.length - 1].timestamp
-    )
-      ? getSpotterDataClosestToDate(bottomTemperature, new Date(date), 6)?.value
-      : undefined;
+  const {
+    satelliteTemperature,
+    hoboBottom,
+    hoboSurface,
+    spotterBottom,
+    spotterSurface,
+  } = getCardSensorValues(dailyData, spotterData, hoboData, date, timeZone);
 
   return (
     <div className={classes.outerDiv}>
-      <Grid container direction="column">
-        <Grid container item direction="column" spacing={4}>
-          <Grid container item direction="column" spacing={1}>
-            <Grid item>
-              <Typography color="textPrimary" variant="subtitle1">
-                SATELLITE OBSERVATION
-              </Typography>
-            </Grid>
-            <Grid container item direction="column">
-              <Typography color="textPrimary" variant="overline">
-                SURFACE TEMP
-              </Typography>
-              <Typography color="textPrimary" variant="h4">
-                {`${formatNumber(satelliteTemperature, 1)} °C`}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid container item direction="column" spacing={1}>
-            <Grid item>
-              <Typography color="textPrimary" variant="subtitle1">
-                SENSOR OBSERVATION
-              </Typography>
-            </Grid>
-            <Grid container item spacing={2}>
-              <Grid container item direction="column" xs={6}>
-                <Typography color="textPrimary" variant="overline">
-                  TEMP AT 1m
-                </Typography>
-                <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(hoboSurfaceData, 1)} °C`}
+      {loading ? (
+        <Box
+          height="204px"
+          width="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <CircularProgress
+            className={classes.loading}
+            thickness={1}
+            size="102px"
+          />
+        </Box>
+      ) : (
+        <Grid container direction="column">
+          <Grid container item direction="column" spacing={4}>
+            <Grid container item direction="column" spacing={1}>
+              <Grid item>
+                <Typography color="textPrimary" variant="subtitle1">
+                  SATELLITE OBSERVATION
                 </Typography>
               </Grid>
-              <Grid container item direction="column" xs={6}>
+              <Grid container item direction="column">
                 <Typography color="textPrimary" variant="overline">
-                  TEMP AT {depth ? `${depth}m` : "DEPTH"}
+                  SURFACE TEMP
                 </Typography>
                 <Typography color="textPrimary" variant="h4">
-                  {`${formatNumber(hoboBottomData, 1)} °C`}
+                  {`${formatNumber(satelliteTemperature, 1)} °C`}
                 </Typography>
               </Grid>
             </Grid>
+            {some([hoboBottom, hoboSurface, spotterBottom, spotterSurface]) && (
+              <Grid container item direction="column" spacing={1}>
+                <Grid item>
+                  <Typography color="textPrimary" variant="subtitle1">
+                    SENSOR OBSERVATION
+                  </Typography>
+                </Grid>
+                <Grid container item spacing={2}>
+                  <Grid container item direction="column" xs={6}>
+                    <Typography color="textPrimary" variant="overline">
+                      TEMP AT 1m
+                    </Typography>
+                    <Typography color="textPrimary" variant="h4">
+                      {`${formatNumber(spotterSurface || hoboSurface, 1)} °C`}
+                    </Typography>
+                  </Grid>
+                  <Grid container item direction="column" xs={6}>
+                    <Typography color="textPrimary" variant="overline">
+                      TEMP AT {depth ? `${depth}m` : "DEPTH"}
+                    </Typography>
+                    <Typography color="textPrimary" variant="h4">
+                      {`${formatNumber(spotterBottom || hoboBottom, 1)} °C`}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 };
@@ -116,12 +119,17 @@ const styles = () =>
       padding: "1rem",
       flexGrow: 1,
     },
+
+    loading: {
+      color: "#ffffff",
+    },
   });
 
 interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
   date: string | null | undefined;
+  timeZone: string | null | undefined;
 }
 
 type ObservationBoxProps = ObservationBoxIncomingProps &
