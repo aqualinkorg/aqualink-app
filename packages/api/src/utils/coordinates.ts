@@ -1,3 +1,5 @@
+import { Point } from 'geojson';
+
 export type Extent = [number, number, number, number];
 
 export function pointToPixel(
@@ -21,3 +23,8 @@ export function pointToPixel(
 
   return { pixelX, pixelY };
 }
+
+export const createPoint = (longitude: number, latitude: number): Point => ({
+  type: 'Point',
+  coordinates: [longitude, latitude],
+});

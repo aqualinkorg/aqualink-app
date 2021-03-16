@@ -9,12 +9,12 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 import { SofarValue } from './sofar.types';
+import { createPoint } from './coordinates';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -83,10 +83,7 @@ export const getRegion = async (
   return country
     ? regionRepository.save({
         name: country,
-        polygon: {
-          coordinates: [longitude, latitude],
-          type: 'Point',
-        } as Point,
+        polygon: createPoint(longitude, latitude),
       })
     : undefined;
 };

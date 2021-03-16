@@ -33,6 +33,7 @@ import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { createPoint } from '../utils/coordinates';
 
 @Injectable()
 export class ReefsService {
@@ -76,10 +77,7 @@ export class ReefsService {
       .save({
         name,
         region,
-        polygon: {
-          type: 'Point',
-          coordinates: [longitude, latitude],
-        },
+        polygon: createPoint(longitude, latitude),
         maxMonthlyMean,
         timezone: timezones[0],
         approved: false,
@@ -186,10 +184,7 @@ export class ReefsService {
         ...omit(updateReefDto, ['admins', 'coordinates']),
         ...(coordinates
           ? {
-              polygon: {
-                type: 'Point',
-                coordinates: [coordinates.longitude, coordinates.latitude],
-              },
+              polygon: createPoint(coordinates.longitude, coordinates.latitude),
             }
           : {}),
       })
