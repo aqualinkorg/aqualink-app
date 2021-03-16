@@ -79,7 +79,6 @@
     "ts-exif-parser": "^0.2.1",
     "typeorm": "^0.2.25",
     "typeorm-naming-strategies": "^1.1.0",
-    "unzipper": "^0.10.11",
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
@@ -96,7 +95,6 @@
     "@types/passport": "^1.0.4",
     "@types/passport-strategy": "^0.2.35",
     "@types/supertest": "^2.0.8",
-    "@types/unzipper": "^0.10.3",
     "faker": "^4.1.0",
     "firebase-admin": "^9.0.0",
     "firebase-functions": "^3.8.0",
