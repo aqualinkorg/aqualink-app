@@ -14,6 +14,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import PermMediaIcon from "@material-ui/icons/PermMedia";
@@ -105,16 +106,23 @@ const SurveyMediaDetails = ({
                   <Grid item>
                     <Typography variant="h6">Survey Point: </Typography>
                   </Grid>
-                  <Grid item>
-                    <Typography
-                      className={`${classes.titleName} ${
-                        point.name === selectedPoi && classes.selectedPoi
-                      }`}
-                      variant="h6"
-                    >
-                      {point.name}
-                    </Typography>
-                  </Grid>
+                  <Tooltip title="View survey point" arrow placement="top">
+                    <Grid item>
+                      <Link
+                        className={classes.link}
+                        to={`/reefs/${reefId}/points/${point.pointId}`}
+                      >
+                        <Typography
+                          className={`${classes.titleName} ${
+                            point.name === selectedPoi && classes.selectedPoi
+                          }`}
+                          variant="h6"
+                        >
+                          {point.name}
+                        </Typography>
+                      </Link>
+                    </Grid>
+                  </Tooltip>
                 </Grid>
                 <Grid container item xs={12} md={6} lg={2} spacing={2}>
                   <Grid item xs={6} className={classes.imageLabel}>
@@ -305,6 +313,14 @@ const styles = (theme: Theme) =>
       padding: "1rem 1rem 1rem 1.5rem",
       [theme.breakpoints.down("sm")]: {
         height: "50%",
+      },
+    },
+    link: {
+      textDecoration: "none",
+      color: "inherit",
+      "&:hover": {
+        textDecoration: "none",
+        color: "inherit",
       },
     },
   });

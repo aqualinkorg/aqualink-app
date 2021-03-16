@@ -26,15 +26,18 @@ export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) => {
 
 export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
   const sortedByPoiName = sortBy(surveyMedia, (media) => media.poiId?.name);
-  const groupedMedia = groupBy(
+  const groupedMediaByPointName = groupBy(
     sortedByPoiName.map((media) => ({
       ...media,
       poiName: media.poiId?.name || "Other",
     })),
     "poiName"
   );
-  return Object.entries(groupedMedia).map(([name, pointSurveyMedia]) => ({
-    name,
-    surveyMedia: pointSurveyMedia,
-  }));
+  return Object.entries(groupedMediaByPointName).map(
+    ([name, pointSurveyMedia]) => ({
+      name,
+      pointId: pointSurveyMedia[0].poiId?.id,
+      surveyMedia: pointSurveyMedia,
+    })
+  );
 };
