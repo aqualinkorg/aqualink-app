@@ -1,4 +1,3 @@
-import { latLngBounds, LatLngBounds } from "leaflet";
 import { minBy, isEqual } from "lodash";
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
 
@@ -16,18 +15,6 @@ export const locationCalculator = (point: Point | Polygon): Position => {
   const latMean = latArray.reduce((a, b) => a + b) / len;
 
   return [lngMean, latMean];
-};
-
-export const mapBounds = (polygon: Polygon): LatLngBounds => {
-  const latArr = polygon.coordinates[0].map((coord) => coord[1]);
-  const lngArr = polygon.coordinates[0].map((coord) => coord[0]);
-
-  const north = Math.max(...latArr);
-  const south = Math.min(...latArr);
-  const east = Math.max(...lngArr);
-  const west = Math.min(...lngArr);
-
-  return latLngBounds([south, west], [north, east]);
 };
 
 export const samePosition = (

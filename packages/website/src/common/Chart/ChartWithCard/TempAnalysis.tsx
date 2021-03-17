@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { isNil } from "lodash";
 
 import {
   reefHoboDataLoadingSelector,
@@ -24,6 +25,7 @@ import {
 import { calculateCardMetrics } from "./helpers";
 import { filterMaxMonthlyData } from "../utils";
 import { CardColumn } from "./types";
+import { formatNumber } from "../../../helpers/numberUtils";
 
 const TempAnalysis = ({
   pickerStartDate,
@@ -58,74 +60,47 @@ const TempAnalysis = ({
 
   const showCard = !loading && (hasHoboData || hasSpotterData);
 
-  const {
-    maxMonthlyMax,
-    meanMonthlyMax,
-    minMonthlyMax,
-    maxSpotterBottom,
-    meanSpotterBottom,
-    minSpotterBottom,
-    maxSpotterSurface,
-    meanSpotterSurface,
-    minSpotterSurface,
-    maxHoboBottom,
-    meanHoboBottom,
-    minHoboBottom,
-  } = calculateCardMetrics(
-    filteredMaxMonthlyData,
-    spotterData,
-    hoboBottomTemperature
-  );
+  if (!showCard) {
+    return null;
+  }
 
   const cardColumns: CardColumn[] = [
     {
       title: "HISTORIC",
-      titleClass: classes.historicText,
-      rows: {
-        max: maxMonthlyMax,
-        mean: meanMonthlyMax,
-        min: minMonthlyMax,
-      },
-      display: hasSpotterData || hasHoboData,
+      key: "historic",
+      color: "#d84424",
+      rows: calculateCardMetrics(filteredMaxMonthlyData, "historic"),
     },
     {
       title: "HOBO",
-      titleClass: classes.hoboText,
-      rows: {
-        max: maxHoboBottom,
-        mean: meanHoboBottom,
-        min: minHoboBottom,
-      },
-      display: hasHoboData,
+      key: "hobo",
+      color: "#f78c21",
+      rows: calculateCardMetrics(hoboBottomTemperature, "hobo"),
     },
     {
       title: "BUOY 1m",
-      titleClass: classes.buoySurfaceText,
-      rows: {
-        max: maxSpotterSurface,
-        mean: meanSpotterSurface,
-        min: minSpotterSurface,
-      },
-      display: hasSpotterSurface,
+      key: "spotterSurface",
+      color: "#46a5cf",
+      rows: calculateCardMetrics(
+        spotterData?.surfaceTemperature,
+        "spotterSurface"
+      ),
     },
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
-      titleClass: `${classes.buoyBottomText} ${!depth && classes.smallTitle}`,
-      rows: {
-        max: maxSpotterBottom,
-        mean: meanSpotterBottom,
-        min: minSpotterBottom,
-      },
-      display: hasSpotterBottom,
+      key: "spotterBottom",
+      color: "#f78c21",
+      rows: calculateCardMetrics(
+        spotterData?.bottomTemperature,
+        "spotterBottom"
+      ),
     },
   ];
 
+  const rows = ["MAX", "MEAN", "MIN"];
+
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
-
-  if (!showCard) {
-    return null;
-  }
 
   return (
     <Box overflow="auto">
@@ -145,7 +120,7 @@ const TempAnalysis = ({
           container
           justify="space-between"
           alignItems="flex-end"
-          spacing={2}
+          spacing={1}
         >
           <Grid item>
             <Grid
@@ -155,69 +130,48 @@ const TempAnalysis = ({
               item
               spacing={3}
             >
-              <Grid className={classes.rotatedText} item>
-                <Typography variant="caption" color="textSecondary">
-                  MAX
-                </Typography>
-              </Grid>
-              <Grid className={classes.rotatedText} item>
-                <Typography variant="caption" color="textSecondary">
-                  MEAN
-                </Typography>
-              </Grid>
-              <Grid className={classes.rotatedText} item>
-                <Typography variant="caption" color="textSecondary">
-                  MIN
-                </Typography>
-              </Grid>
+              {rows.map((row) => (
+                <Grid key={row} className={classes.rotatedText} item>
+                  <Typography variant="caption" color="textSecondary">
+                    {row}
+                  </Typography>
+                </Grid>
+              ))}
             </Grid>
           </Grid>
           {cardColumns.map((item) => {
-            if (item.display) {
+            if (!isNil(item.rows[0].value)) {
               return (
-                <Grid key={item.title} item>
+                <Grid key={item.key} item>
                   <Grid
                     className={classes.autoWidth}
                     container
                     direction="column"
                     item
                     spacing={3}
+                    alignItems="center"
                   >
                     <Grid item>
                       <Typography
-                        className={item.titleClass}
+                        style={{
+                          color: item.color,
+                        }}
                         variant="subtitle2"
                       >
                         {item.title}
                       </Typography>
                     </Grid>
-                    <Grid item>
-                      <Typography
-                        className={classes.values}
-                        variant="h5"
-                        color="textSecondary"
-                      >
-                        {item.rows.max} °C
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        className={classes.values}
-                        variant="h5"
-                        color="textSecondary"
-                      >
-                        {item.rows.mean} °C
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        className={classes.values}
-                        variant="h5"
-                        color="textSecondary"
-                      >
-                        {item.rows.min} °C
-                      </Typography>
-                    </Grid>
+                    {item.rows.map(({ key, value }) => (
+                      <Grid key={key} item>
+                        <Typography
+                          className={classes.values}
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                          {formatNumber(value, 1)} °C
+                        </Typography>
+                      </Grid>
+                    ))}
                   </Grid>
                 </Grid>
               );
@@ -262,25 +216,6 @@ const styles = (theme: Theme) =>
       position: "relative",
       bottom: 7,
       width: "auto",
-    },
-    smallTitle: {
-      fontSize: 8,
-    },
-    historicText: {
-      color: "#d84424",
-      lineHeight: "17px",
-    },
-    buoyBottomText: {
-      color: "#f78c21",
-      lineHeight: "17px",
-    },
-    buoySurfaceText: {
-      color: "#46a5cf",
-      lineHeight: "17px",
-    },
-    hoboText: {
-      color: "#f78c21",
-      lineHeight: "17px",
     },
     values: {
       fontWeight: 300,

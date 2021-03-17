@@ -14,7 +14,7 @@ import {
   Pois,
   Point,
 } from "../../../store/Reefs/types";
-import { mapBounds, samePosition } from "../../../helpers/map";
+import { samePosition } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import buoy from "../../../assets/buoy-marker.svg";
@@ -120,7 +120,7 @@ const ReefMap = ({
       const map = current.leafletElement;
       // Initialize map's position to fit the given polygon
       if (polygon.type === "Polygon") {
-        map.fitBounds(mapBounds(polygon));
+        map.fitBounds(L.polygon(polygon.coordinates).getBounds());
       } else if (draftReef?.coordinates) {
         map.panTo(
           new L.LatLng(

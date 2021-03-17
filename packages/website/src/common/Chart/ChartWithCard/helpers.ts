@@ -1,81 +1,17 @@
 import { minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 
-import {
-  MonthlyMaxData,
-  SofarValue,
-  SpotterData,
-} from "../../../store/Reefs/types";
-import { formatNumber } from "../../../helpers/numberUtils";
+import { MonthlyMaxData, SofarValue } from "../../../store/Reefs/types";
+import { CardColumn } from "./types";
 
 export const calculateCardMetrics = (
-  monthlyMaxData: MonthlyMaxData[],
-  spotterData: SpotterData | null | undefined,
-  hoboBottomTemperature: SofarValue[]
-) => {
-  const {
-    bottomTemperature: spotterBottomTemperature,
-    surfaceTemperature: spotterSurfaceTemperature,
-  } = spotterData || {};
-
-  const maxMonthlyMax = formatNumber(maxBy(monthlyMaxData, "value")?.value, 1);
-  const meanMonthlyMax = formatNumber(meanBy(monthlyMaxData, "value"), 1);
-  const minMonthlyMax = formatNumber(minBy(monthlyMaxData, "value")?.value, 1);
-
-  const maxSpotterBottom = formatNumber(
-    maxBy(spotterBottomTemperature, "value")?.value,
-    1
-  );
-  const meanSpotterBottom = formatNumber(
-    meanBy(spotterBottomTemperature, "value"),
-    1
-  );
-  const minSpotterBottom = formatNumber(
-    minBy(spotterBottomTemperature, "value")?.value,
-    1
-  );
-
-  const maxSpotterSurface = formatNumber(
-    maxBy(spotterSurfaceTemperature, "value")?.value,
-    1
-  );
-  const meanSpotterSurface = formatNumber(
-    meanBy(spotterSurfaceTemperature, "value"),
-    1
-  );
-  const minSpotterSurface = formatNumber(
-    minBy(spotterSurfaceTemperature, "value")?.value,
-    1
-  );
-
-  const maxHoboBottom = formatNumber(
-    maxBy(hoboBottomTemperature, "value")?.value,
-    1
-  );
-  const meanHoboBottom = formatNumber(
-    meanBy(hoboBottomTemperature, "value"),
-    1
-  );
-  const minHoboBottom = formatNumber(
-    minBy(hoboBottomTemperature, "value")?.value,
-    1
-  );
-
-  return {
-    maxMonthlyMax,
-    meanMonthlyMax,
-    minMonthlyMax,
-    maxSpotterBottom,
-    meanSpotterBottom,
-    minSpotterBottom,
-    maxSpotterSurface,
-    meanSpotterSurface,
-    minSpotterSurface,
-    maxHoboBottom,
-    meanHoboBottom,
-    minHoboBottom,
-  };
-};
+  data?: (MonthlyMaxData | SofarValue)[],
+  keyPrefix?: string
+): CardColumn["rows"] => [
+  { key: `${keyPrefix}-max`, value: maxBy(data, "value")?.value },
+  { key: `${keyPrefix}-mean`, value: meanBy(data, "value") },
+  { key: `${keyPrefix}-min`, value: minBy(data, "value")?.value },
+];
 
 // Show at least 3 ticks on the chart
 export const findChartPeriod = (startDate: string, endDate: string) => {
