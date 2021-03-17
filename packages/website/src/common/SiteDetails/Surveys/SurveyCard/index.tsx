@@ -16,6 +16,7 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import DeleteButton from "../DeleteButton";
 import { SurveyListItem } from "../../../../store/Survey/types";
 import incomingStyles from "../styles";
+import CustomLink from "../../../Link";
 
 const SurveyCard = ({
   pointId,
@@ -25,6 +26,8 @@ const SurveyCard = ({
   survey,
   classes,
 }: SurveyCardProps) => {
+  const isShowingFeatured = pointId === -1;
+
   return (
     <Paper elevation={0} className={classes.surveyCard}>
       <Grid style={{ height: "100%" }} container justify="space-between">
@@ -33,7 +36,7 @@ const SurveyCard = ({
             <CardMedia
               className={classes.cardImage}
               image={
-                pointId === -1
+                isShowingFeatured
                   ? survey.featuredSurveyMedia?.url
                   : survey.surveyPointImage &&
                     survey.surveyPointImage[pointId][0]
@@ -62,22 +65,24 @@ const SurveyCard = ({
                   Survey Point:
                 </Typography>
                 <Typography
-                  className={`${classes.cardValues} ${classes.valuesWithMargin}`}
+                  className={`${classes.cardValues} ${classes.valuesWithMargin} ${classes.blueText}`}
                   variant="h6"
                   title={survey.featuredSurveyMedia.poiId.name}
                 >
-                  <Link
-                    className={classes.cardLink}
+                  <CustomLink
                     to={`/reefs/${reefId}/points/${
-                      pointId === -1
+                      isShowingFeatured
                         ? survey.featuredSurveyMedia.poiId.id
                         : pointId
                     }`}
-                  >
-                    {pointName === "All"
-                      ? survey.featuredSurveyMedia.poiId.name
-                      : pointName}
-                  </Link>
+                    isIcon={false}
+                    tooltipTitle=""
+                    content={
+                      pointName === "All"
+                        ? survey.featuredSurveyMedia.poiId.name
+                        : pointName
+                    }
+                  />
                 </Typography>
               </Grid>
             )}
@@ -170,6 +175,17 @@ const styles = (theme: Theme) =>
     comments: {
       height: "100%",
       overflowY: "auto",
+    },
+    valuesWithMargin: {
+      marginLeft: "1rem",
+      maxWidth: "60%",
+      display: "block",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+    blueText: {
+      color: theme.palette.primary.main,
     },
     info: {
       height: "100%",

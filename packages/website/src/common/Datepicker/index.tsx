@@ -21,7 +21,7 @@ import DateFnsUtils from "@date-io/date-fns";
 const DatePicker = ({
   value,
   dateName,
-  nameVariant,
+  dateNameTextVariant,
   pickerSize,
   autoOk,
   onChange,
@@ -30,7 +30,7 @@ const DatePicker = ({
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
-        <Typography variant={nameVariant || "h6"} color="textSecondary">
+        <Typography variant={dateNameTextVariant || "h6"} color="textSecondary">
           {`${dateName || "Date"}:`}
         </Typography>
         <div className={classes.datePicker}>
@@ -84,7 +84,7 @@ const styles = (theme: Theme) =>
 interface DatePickerIncomingProps {
   value: string | null;
   dateName?: string;
-  nameVariant?: TypographyProps["variant"];
+  dateNameTextVariant?: TypographyProps["variant"];
   pickerSize?: KeyboardDatePickerProps["size"];
   autoOk?: boolean;
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
@@ -92,7 +92,7 @@ interface DatePickerIncomingProps {
 
 DatePicker.defaultProps = {
   dateName: undefined,
-  nameVariant: undefined,
+  dateNameTextVariant: undefined,
   pickerSize: undefined,
   autoOk: true,
 };

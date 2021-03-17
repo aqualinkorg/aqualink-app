@@ -1826,7 +1826,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1841,7 +1841,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1935,7 +1935,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -1950,7 +1950,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3215,7 +3215,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
+                                      classname="MuiPickersDay-day"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3230,7 +3230,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                                     role="presentation"
                                   >
                                     <mock-iconbutton
-                                      classname="MuiPickersDay-day"
+                                      classname="MuiPickersDay-day MuiPickersDay-current MuiPickersDay-daySelected"
                                       tabindex="0"
                                     >
                                       <mock-typography
@@ -3743,7 +3743,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-70"
+        class="SurveyTimeline-root-68"
       >
         <mock-hidden
           mddown="true"
@@ -3763,7 +3763,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-76"
+    classname="Footer-appBar-74"
     position="static"
   >
     <mock-toolbar>
@@ -3774,7 +3774,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-77"
+            classname="Footer-navBarLink-75"
             href="/map"
           >
             <mock-typography

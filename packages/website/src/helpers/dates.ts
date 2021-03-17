@@ -76,6 +76,14 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
   }
 };
 
+/**
+ * Depending on the type param, it calculates the maximum or minimun date
+ * for the combined temperature data
+ * @param dailyData - Array of daily data
+ * @param spotterData - Object of spotterData (optional)
+ * @param hoboBottomTemperature - Array of HOBO data (optional)
+ * @param type - Type of date we seek (defaults to "max")
+ */
 export const findMarginalDate = (
   dailyData: DailyData[],
   spotterData?: SpotterData | null,
@@ -231,7 +239,7 @@ export const convertSurveyDataToLocalTime = (
       : survey.diveDate,
   }));
 
-// Return a copy of montly max data for each year
+// Return a copy of monthly max data for each year
 export const generateMonthlyMaxTimestamps = (
   monthlyMax: MonthlyMax[],
   startDate: string,
@@ -263,5 +271,8 @@ export const generateMonthlyMaxTimestamps = (
     }));
   });
 
-  return yearlyData.reduce((curr, item) => [...curr, ...item], []);
+  return yearlyData.reduce<MonthlyMaxData[]>(
+    (curr, item) => [...curr, ...item],
+    []
+  );
 };

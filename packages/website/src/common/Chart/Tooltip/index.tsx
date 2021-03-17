@@ -62,11 +62,11 @@ const Tooltip = ({
   surveyId,
   classes,
 }: TooltipProps) => {
-  const hourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
+  const hasHourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
-    format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
-    displayTimezone: hourlyData,
+    format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
+    displayTimezone: hasHourlyData,
     timeZone: userTimeZone,
     timeZoneToDisplay: reefTimeZone,
   });

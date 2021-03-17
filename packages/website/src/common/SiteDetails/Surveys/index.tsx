@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -32,7 +32,6 @@ import { isAdmin } from "../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../Dialog";
 import { useBodyLength } from "../../../helpers/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
-import { EditPoiNameDraft } from "./types";
 
 const Surveys = ({ reef, classes }: SurveysProps) => {
   const theme = useTheme();
@@ -42,9 +41,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
-  const [editPoiNameDraft, setEditPoiNameDraft] = useState<EditPoiNameDraft>(
-    {}
-  );
+  const [editPoiNameDraft, setEditPoiNameDraft] = useState<string | null>();
   const [editPoiNameLoading, setEditPoiNameLoading] = useState<boolean>(false);
   const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
   const [observation, setObservation] = useState<
@@ -57,24 +54,13 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
   const bodyLength = useBodyLength();
 
   useEffect(() => {
-    if (pointOptions.length > 0) {
-      setEditPoiNameDraft(
-        pointOptions.reduce(
-          (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
-          {}
-        )
-      );
-    }
-  }, [pointOptions]);
-
-  useEffect(() => {
     dispatch(setSelectedPoi(point));
   }, [dispatch, point]);
 
-  const onDeletePoiButtonClick = useCallback((id: number) => {
+  const onDeletePoiButtonClick = (id: number) => {
     setDeletePoiDialogOpen(true);
     setPoiToDelete(id);
-  }, []);
+  };
 
   const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setPoint(event.target.value as string);
@@ -116,76 +102,52 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
     }
   };
 
-  const toggleEditPoiNameEnabled = useCallback(
-    (enabled: boolean, key?: number) => {
-      if (key) {
-        // Reset Poi name draft on close
-        const poiName = pointOptions.find((item) => item.id === key)?.name;
-        if (poiName && !enabled) {
-          setEditPoiNameDraft({ ...editPoiNameDraft, [key]: poiName });
-        }
-      } else if (!enabled) {
-        // Reset Poi name draft for all Pois on close
-        setEditPoiNameDraft(
-          pointOptions.reduce(
-            (acc: EditPoiNameDraft, poi) => ({ ...acc, [poi.id]: poi.name }),
-            {}
-          )
-        );
-      }
-    },
-    [pointOptions, editPoiNameDraft]
-  );
+  const enableEditPoiName = (id: number) => {
+    const initialName = pointOptions.find((item) => item.id === id)?.name;
+    setEditPoiNameDraft(initialName);
+  };
 
-  const onChangePoiName = useCallback(
-    (key: number) => (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) =>
-      setEditPoiNameDraft({
-        ...editPoiNameDraft,
-        [key]: event.target.value,
-      }),
-    [editPoiNameDraft]
-  );
+  const disableEditPoiName = () => setEditPoiNameDraft(undefined);
 
-  const submitPoiNameUpdate = useCallback(
-    (key: number) => {
-      const newName = editPoiNameDraft[key];
-      if (newName && user?.token) {
-        setEditPoiNameLoading(true);
-        surveyServices
-          .updatePoi(key, newName, user.token)
-          .then(() => {
-            // Update point name for featured image card
-            dispatch(updatePoiName({ id: key, name: newName }));
+  const onChangePoiName = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setEditPoiNameDraft(event.target.value);
 
-            // If the updated point was previously selected, update its value
-            const prevName = pointOptions.find((item) => item.id === key)?.name;
-            if (prevName === point) {
-              setPoint(newName);
-            }
+  const submitPoiNameUpdate = (key: number) => {
+    const newName = editPoiNameDraft;
+    if (newName && user?.token) {
+      setEditPoiNameLoading(true);
+      surveyServices
+        .updatePoi(key, newName, user.token)
+        .then(() => {
+          // Update point name for featured image card
+          dispatch(updatePoiName({ id: key, name: newName }));
 
-            // Update point options
-            dispatch(
-              setReefPois(
-                pointOptions.map((item) => {
-                  if (item.id === key) {
-                    return {
-                      ...item,
-                      name: newName,
-                    };
-                  }
-                  return item;
-                })
-              )
-            );
-            setEditPoiNameDraft({ ...editPoiNameDraft, [key]: newName });
-          })
-          .finally(() => setEditPoiNameLoading(false));
-      }
-    },
-    [dispatch, editPoiNameDraft, point, pointOptions, user]
-  );
+          // If the updated point was previously selected, update its value
+          const prevName = pointOptions.find((item) => item.id === key)?.name;
+          if (prevName === point) {
+            setPoint(newName);
+          }
+
+          // Update point options
+          dispatch(
+            setReefPois(
+              pointOptions.map((item) => {
+                if (item.id === key) {
+                  return {
+                    ...item,
+                    name: newName,
+                  };
+                }
+                return item;
+              })
+            )
+          );
+          setEditPoiNameDraft(undefined);
+        })
+        .finally(() => setEditPoiNameLoading(false));
+    }
+  };
 
   const deletePoiDialogActions: Action[] = [
     {
@@ -249,7 +211,8 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             editPoiNameLoading={editPoiNameLoading}
             onChangePoiName={onChangePoiName}
             handlePointChange={handlePointChange}
-            toggleEditPoiNameEnabled={toggleEditPoiNameEnabled}
+            enableEditPoiName={enableEditPoiName}
+            disableEditPoiName={disableEditPoiName}
             submitPoiNameUpdate={submitPoiNameUpdate}
             onDeleteButtonClick={onDeletePoiButtonClick}
           />

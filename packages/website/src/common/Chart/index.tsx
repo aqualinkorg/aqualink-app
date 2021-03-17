@@ -30,8 +30,8 @@ export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
   spotterData?: SpotterData | null;
-  hoboBottomTemperature?: SofarValue[];
-  monthlyMax?: MonthlyMaxData[];
+  hoboBottomTemperatureData?: SofarValue[];
+  monthlyMaxData?: MonthlyMaxData[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -76,8 +76,8 @@ const makeAnnotation = (
 function Chart({
   dailyData,
   spotterData,
-  hoboBottomTemperature,
-  monthlyMax,
+  hoboBottomTemperatureData,
+  monthlyMaxData,
   surveys,
   timeZone,
   startDate,
@@ -121,8 +121,8 @@ function Chart({
   } = useProcessedChartData(
     dailyData,
     spotterData,
-    hoboBottomTemperature,
-    monthlyMax,
+    hoboBottomTemperatureData,
+    monthlyMaxData,
     surveys,
     temperatureThreshold,
     startDate,

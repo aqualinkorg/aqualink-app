@@ -45,21 +45,6 @@ const styles = {
     lineHeight: 2,
     color: "#2f2f2f",
   },
-  valuesWithMargin: {
-    marginLeft: "1rem",
-    maxWidth: "60%",
-  },
-  cardLink: {
-    display: "block",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    color: theme.palette.primary.main,
-    textDecoration: "none",
-    "&:hover": {
-      color: theme.palette.primary.main,
-      textDecoration: "none",
-    },
-  },
 };
 
 export default styles;

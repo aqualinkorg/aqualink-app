@@ -14,7 +14,7 @@ import {
   findSurveyFromDate,
   sameDay,
   filterDailyData,
-  getMontlyMaxDataClosestToDate,
+  getMonthlyMaxDataClosestToDate,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -34,8 +34,8 @@ function ChartWithTooltip({
   const {
     dailyData,
     spotterData,
-    hoboBottomTemperature,
-    monthlyMax,
+    hoboBottomTemperatureData,
+    monthlyMaxData,
     reefId,
     surveys,
     timeZone,
@@ -80,9 +80,11 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
 
-    const montlyMaxTemp =
-      (monthlyMax && getMontlyMaxDataClosestToDate(monthlyMax, new Date(date)))
-        ?.value || null;
+    const monthlyMaxTemp =
+      (
+        monthlyMaxData &&
+        getMonthlyMaxDataClosestToDate(monthlyMaxData, new Date(date))
+      )?.value || null;
 
     const bottomTemp =
       spotterData &&
@@ -102,9 +104,12 @@ function ChartWithTooltip({
       null;
 
     const hoboBottomTemp =
-      (hoboBottomTemperature &&
-        getSpotterDataClosestToDate(hoboBottomTemperature, new Date(date), 6)
-          ?.value) ||
+      (hoboBottomTemperatureData &&
+        getSpotterDataClosestToDate(
+          hoboBottomTemperatureData,
+          new Date(date),
+          6
+        )?.value) ||
       null;
 
     const bottomTemperature = bottomTemp || avgBottomTemperature;
@@ -114,7 +119,7 @@ function ChartWithTooltip({
       bottomTemperature,
       spotterSurfaceTemp,
       hoboBottomTemp,
-      montlyMaxTemp,
+      monthlyMaxTemp,
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
@@ -124,15 +129,7 @@ function ChartWithTooltip({
       tooltipModel.caretY -
       ((surveyId ? 30 : 0) + nValues * 20 + 48);
 
-    if (
-      [
-        satelliteTemperature,
-        bottomTemperature,
-        spotterSurfaceTemp,
-        hoboBottomTemp,
-        montlyMaxTemp,
-      ].some(Boolean)
-    ) {
+    if (nValues > 0) {
       setTooltipPosition({ top, left });
       setTooltipData({
         ...tooltipData,
@@ -142,7 +139,7 @@ function ChartWithTooltip({
         spotterSurfaceTemp,
         surfaceTemperature: satelliteTemperature,
         hoboBottomTemp,
-        monthlyMax: montlyMaxTemp,
+        monthlyMax: monthlyMaxTemp,
         surveyId,
       });
       setShowTooltip(true);

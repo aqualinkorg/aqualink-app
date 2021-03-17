@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -14,12 +14,12 @@ import {
   TextField,
   Hidden,
 } from "@material-ui/core";
-import { Create, DeleteOutline, Launch } from "@material-ui/icons";
+import { Create, DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 import { Pois } from "../../../../store/Reefs/types";
-import { EditPoiNameDraft } from "../types";
 import EditDialog, { Action } from "../../../Dialog";
+import CustomLink from "../../../Link";
 
 const PointSelector = ({
   reefId,
@@ -31,7 +31,8 @@ const PointSelector = ({
   editPoiNameLoading,
   onChangePoiName,
   handlePointChange,
-  toggleEditPoiNameEnabled,
+  enableEditPoiName,
+  disableEditPoiName,
   submitPoiNameUpdate,
   onDeleteButtonClick,
   classes,
@@ -39,17 +40,17 @@ const PointSelector = ({
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPoi, setEditPoi] = useState<Pois>();
 
-  const onEditDialogClose = useCallback(() => {
-    toggleEditPoiNameEnabled(false, editPoi?.id);
+  const onEditDialogClose = () => {
+    disableEditPoiName();
     setEditPoi(undefined);
     setEditDialogOpen(false);
-  }, [editPoi, toggleEditPoiNameEnabled]);
+  };
 
-  const onEditPoiSubmit = useCallback(() => {
+  const onEditPoiSubmit = () => {
     if (editPoi) {
       submitPoiNameUpdate(editPoi.id);
     }
-  }, [editPoi, submitPoiNameUpdate]);
+  };
 
   useEffect(() => {
     if (!editPoiNameLoading) {
@@ -72,8 +73,7 @@ const PointSelector = ({
       color: "primary",
       text: editPoiNameLoading ? "Updating..." : "Save",
       action: onEditPoiSubmit,
-      disabled:
-        editPoiNameLoading || (editPoi && !editPoiNameDraft[editPoi.id]),
+      disabled: editPoiNameLoading || (editPoi && !editPoiNameDraft),
     },
   ];
 
@@ -91,12 +91,10 @@ const PointSelector = ({
               autoFocus
               className={classes.editPoiTextField}
               fullWidth
-              value={editPoiNameDraft[editPoi.id]}
-              onChange={onChangePoiName(editPoi.id)}
-              error={!editPoiNameDraft[editPoi.id]}
-              helperText={
-                !editPoiNameDraft[editPoi.id] ? "Cannot be empty" : ""
-              }
+              value={editPoiNameDraft}
+              onChange={onChangePoiName}
+              error={!editPoiNameDraft}
+              helperText={!editPoiNameDraft ? "Cannot be empty" : ""}
             />
           }
         />
@@ -121,7 +119,7 @@ const PointSelector = ({
                     : "All"
                 }
                 onChange={handlePointChange}
-                onClose={() => toggleEditPoiNameEnabled(false)}
+                onClose={() => disableEditPoiName()}
                 renderValue={(selected) => selected as string}
               >
                 <MenuItem value="All">
@@ -149,31 +147,24 @@ const PointSelector = ({
                           <Grid item>
                             <Grid container item spacing={1}>
                               <Grid item>
-                                <Tooltip
-                                  title="View survey point"
-                                  placement="top"
-                                  arrow
-                                >
-                                  <Link
-                                    to={`/reefs/${reefId}/points/${item.id}`}
-                                  >
-                                    <IconButton className={classes.menuButton}>
-                                      <Launch color="primary" />
-                                    </IconButton>
-                                  </Link>
-                                </Tooltip>
+                                <CustomLink
+                                  to={`/reefs/${reefId}/points/${item.id}`}
+                                  isIcon
+                                  tooltipTitle="View survey point"
+                                />
                               </Grid>
                               {isReefAdmin && (
                                 <>
                                   <Grid item>
                                     <Tooltip
-                                      title="Edit survey point"
+                                      title="Edit survey point name"
                                       placement="top"
                                       arrow
                                     >
                                       <IconButton
                                         className={classes.menuButton}
                                         onClick={(event) => {
+                                          enableEditPoiName(item.id);
                                           setEditDialogOpen(true);
                                           setEditPoi(item);
                                           event.stopPropagation();
@@ -213,11 +204,11 @@ const PointSelector = ({
             {pointId !== -1 && (
               <Grid item>
                 <Hidden smUp>
-                  <Link to={`/reefs/${reefId}/points/${pointId}`}>
-                    <IconButton className={classes.menuButton}>
-                      <Launch color="primary" />
-                    </IconButton>
-                  </Link>
+                  <CustomLink
+                    to={`/reefs/${reefId}/points/${pointId}`}
+                    isIcon
+                    tooltipTitle="View survey point"
+                  />
                 </Hidden>
                 <Hidden xsDown>
                   <Button
@@ -290,17 +281,15 @@ interface PointSelectorIncomingProps {
   pointOptions: Pois[];
   point: string;
   pointId: number;
-  editPoiNameDraft: EditPoiNameDraft;
+  editPoiNameDraft: string | null | undefined;
   isReefAdmin: boolean;
   editPoiNameLoading: boolean;
   onChangePoiName: (
-    key: number
-  ) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
-  toggleEditPoiNameEnabled: (
-    enabled: boolean,
-    key?: number | undefined
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  enableEditPoiName: (id: number) => void;
+  disableEditPoiName: () => void;
   submitPoiNameUpdate: (key: number) => void;
   onDeleteButtonClick: (id: number) => void;
 }

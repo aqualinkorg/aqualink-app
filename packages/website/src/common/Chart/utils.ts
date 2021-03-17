@@ -137,12 +137,12 @@ export function getDailyDataClosestToDate(
   return undefined;
 }
 
-export function getMontlyMaxDataClosestToDate(
-  montlyMaxData: MonthlyMaxData[],
+export function getMonthlyMaxDataClosestToDate(
+  monthlyMaxData: MonthlyMaxData[],
   date: Date
 ) {
-  return montlyMaxData.length > 0
-    ? montlyMaxData.reduce((prevClosest, nextPoint) =>
+  return monthlyMaxData.length > 0
+    ? monthlyMaxData.reduce((prevClosest, nextPoint) =>
         timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
           ? nextPoint
           : prevClosest
@@ -322,8 +322,8 @@ export const calculateAxisLimits = (
 export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
-  hoboBottomTemperature: ChartProps["hoboBottomTemperature"],
-  monthlyMaxData: ChartProps["monthlyMax"],
+  hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
+  monthlyMaxData: ChartProps["monthlyMaxData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
   startDate: ChartProps["startDate"],
@@ -342,7 +342,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
-    hoboBottomTemperature || [],
+    hoboBottomTemperatureData || [],
     monthlyMaxData || [],
     surveys
   );
@@ -351,7 +351,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     surfaceTemperature || [],
-    hoboBottomTemperature || [],
+    hoboBottomTemperatureData || [],
     monthlyMaxData || [],
     surveys,
     temperatureThreshold

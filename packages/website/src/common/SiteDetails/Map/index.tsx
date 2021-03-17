@@ -87,6 +87,7 @@ const ReefMap = ({
             .filter((item) => item.polygon?.type === "Point")
             .map((item) => {
               const coords = item.polygon?.coordinates as Position;
+              // Reverse coordinates since they come as [lng, lat]
               return [coords[1], coords[0]] as LatLngTuple;
             }),
         ]).getBounds()
@@ -107,7 +108,7 @@ const ReefMap = ({
 
   useEffect(() => {
     const { current } = mapRef;
-    if (current && current.leafletElement) {
+    if (current?.leafletElement) {
       const map = current.leafletElement;
       // Initialize map's position to fit the given polygon
       if (polygon.type === "Polygon") {
@@ -127,9 +128,9 @@ const ReefMap = ({
     }
   }, [draftReef, fitSurveyPointsPolygon, polygon, surveyPoints]);
 
-  const handleDragChange = useCallback(() => {
+  const handleDragChange = () => {
     const { current } = markerRef;
-    if (current && current.leafletElement) {
+    if (current?.leafletElement) {
       const mapMarker = current.leafletElement;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       dispatch(
@@ -141,7 +142,7 @@ const ReefMap = ({
         })
       );
     }
-  }, [dispatch]);
+  };
 
   return (
     <Map
@@ -180,11 +181,7 @@ const ReefMap = ({
                   ]}
                   onclick={() => setFocusedPoint(point)}
                 >
-                  <SurveyPointPopup
-                    reefId={reefId}
-                    point={point}
-                    selectedPointId={selectedPointId}
-                  />
+                  <SurveyPointPopup reefId={reefId} point={point} />
                 </Marker>
               )
           )}

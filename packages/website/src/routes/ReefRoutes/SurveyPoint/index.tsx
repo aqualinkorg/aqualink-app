@@ -57,7 +57,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
 
   // Get HOBO data
   useEffect(() => {
-    if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
+    if (hoboBottomTemperatureRange?.[0]) {
       const { maxDate } = hoboBottomTemperatureRange[0];
       const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
       dispatch(

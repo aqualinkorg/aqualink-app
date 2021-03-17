@@ -3,30 +3,20 @@ import {
   Card,
   Grid,
   Typography,
-  IconButton,
-  Tooltip,
   withStyles,
   WithStyles,
   createStyles,
 } from "@material-ui/core";
 import { Popup } from "react-leaflet";
-import { Launch } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import { Pois } from "../../../../store/Reefs/types";
-import {
-  clearHoboData,
-  clearHoboDataRange,
-} from "../../../../store/Reefs/selectedReefSlice";
+import Link from "../../../Link";
 
 const SurveyPointPopup = ({
   reefId,
   point,
-  selectedPointId,
   classes,
 }: SurveyPointPopupProps) => {
-  const dispatch = useDispatch();
   return (
     <Popup closeButton={false} autoPan={false}>
       <Card className={classes.surveyPointPopup}>
@@ -43,21 +33,11 @@ const SurveyPointPopup = ({
             </Typography>
           </Grid>
           <Grid item>
-            <Tooltip title="View survey point" placement="top" arrow>
-              <Link to={`/reefs/${reefId}/points/${point.id}`}>
-                <IconButton
-                  onClick={() => {
-                    if (selectedPointId !== point.id) {
-                      dispatch(clearHoboData());
-                      dispatch(clearHoboDataRange());
-                    }
-                  }}
-                  className={classes.viewButton}
-                >
-                  <Launch color="primary" />
-                </IconButton>
-              </Link>
-            </Tooltip>
+            <Link
+              to={`/reefs/${reefId}/points/${point.id}`}
+              isIcon
+              tooltipTitle="View survey point"
+            />
           </Grid>
         </Grid>
       </Card>
@@ -72,15 +52,11 @@ const styles = () =>
       minHeight: 50,
       padding: 16,
     },
-    viewButton: {
-      padding: 0,
-    },
   });
 
 interface SurveyPointPopupIncomingProps {
   reefId: number;
   point: Pois;
-  selectedPointId: number | undefined;
 }
 
 type SurveyPointPopupProps = SurveyPointPopupIncomingProps &

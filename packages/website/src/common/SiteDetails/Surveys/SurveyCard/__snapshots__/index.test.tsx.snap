@@ -10,7 +10,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
       style="height: 100%;"
     >
       <div
-        class="MuiGrid-root SurveyCard-cardImageWrapper-11 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+        class="MuiGrid-root SurveyCard-cardImageWrapper-9 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
       >
         <a
           href="/reefs/0/survey_details/46"
@@ -21,7 +21,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
         </a>
       </div>
       <div
-        class="MuiGrid-root SurveyCard-infoWrapper-12 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+        class="MuiGrid-root SurveyCard-infoWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
       >
         <div
           class="MuiGrid-root SurveyCard-info-15 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
@@ -36,14 +36,14 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               User:
             </mock-typography>
             <mock-typography
-              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-9"
+              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-13"
               variant="h6"
             >
               Joe Doe
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root SurveyCard-commentsWrapper-13 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+            class="MuiGrid-root SurveyCard-commentsWrapper-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -56,7 +56,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 Comments:
               </mock-typography>
               <mock-typography
-                classname="SurveyCard-cardValues-8 SurveyCard-comments-14"
+                classname="SurveyCard-cardValues-8 SurveyCard-comments-12"
                 variant="h6"
               >
                 No comments
@@ -73,7 +73,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               Temp:
             </mock-typography>
             <mock-typography
-              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-9"
+              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-13"
               variant="h6"
             >
               10.0 °C

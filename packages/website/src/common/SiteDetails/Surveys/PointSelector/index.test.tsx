@@ -11,12 +11,13 @@ test("renders as expected", () => {
         pointOptions={[]}
         point="All"
         pointId={-1}
-        editPoiNameDraft={{}}
+        editPoiNameDraft={null}
         isReefAdmin={false}
         editPoiNameLoading={false}
-        onChangePoiName={jest.fn()}
+        onChangePoiName={() => {}}
         handlePointChange={() => {}}
-        toggleEditPoiNameEnabled={() => {}}
+        disableEditPoiName={() => {}}
+        enableEditPoiName={() => {}}
         submitPoiNameUpdate={() => {}}
         onDeleteButtonClick={() => {}}
       />

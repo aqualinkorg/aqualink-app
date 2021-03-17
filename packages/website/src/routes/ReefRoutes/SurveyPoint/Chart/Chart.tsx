@@ -49,12 +49,8 @@ const Chart = ({
 }: ChartProps) => {
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
-  const { minDate, maxDate } =
-    (hoboBottomTemperatureRange &&
-      hoboBottomTemperatureRange.length > 0 &&
-      hoboBottomTemperatureRange[0]) ||
-    {};
-  const ishoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
+  const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
+  const isHoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
   const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
   const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
   const surveys = filterSurveys(
@@ -72,7 +68,7 @@ const Chart = ({
     filterDailyData(reef.dailyData, startDate, endDate).length > 1;
 
   const loading =
-    isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
+    isSpotterDataLoading || isHoboDataLoading || isHoboDataRangeLoading;
 
   const success =
     !error && !loading && (hasHoboData || hasSpotterData || hasDailyData);
@@ -128,52 +124,47 @@ const Chart = ({
         </Box>
       )}
       {success && (
-        <Box>
-          <ChartWithTooltip
-            className={classes.chart}
-            reefId={reef.id}
-            depth={reef.depth}
-            dailyData={convertDailyDataToLocalTime(
-              reef.dailyData,
-              reef.timezone
-            )}
-            spotterData={convertSpotterDataToLocalTime(
-              spotterData || {
-                bottomTemperature: [],
-                surfaceTemperature: [],
-              },
-              reef.timezone
-            )}
-            hoboBottomTemperature={convertHoboDataToLocalTime(
-              hoboBottomTemperature || [],
-              reef.timezone
-            )}
-            monthlyMax={generateMonthlyMaxTimestamps(
-              reef.monthlyMax,
-              startDate,
-              endDate,
-              reef.timezone
-            )}
-            surveys={surveys}
-            temperatureThreshold={null}
-            maxMonthlyMean={null}
-            background
-            chartPeriod={findChartPeriod(startDate, endDate)}
-            timeZone={reef.timezone}
-            startDate={convertToLocalTime(startDate, reef.timezone)}
-            endDate={convertToLocalTime(endDate, reef.timezone)}
-            showYear={showYear(startDate, endDate)}
-          />
-        </Box>
+        <ChartWithTooltip
+          className={classes.chart}
+          reefId={reef.id}
+          depth={reef.depth}
+          dailyData={convertDailyDataToLocalTime(reef.dailyData, reef.timezone)}
+          spotterData={convertSpotterDataToLocalTime(
+            spotterData || {
+              bottomTemperature: [],
+              surfaceTemperature: [],
+            },
+            reef.timezone
+          )}
+          hoboBottomTemperatureData={convertHoboDataToLocalTime(
+            hoboBottomTemperature || [],
+            reef.timezone
+          )}
+          monthlyMaxData={generateMonthlyMaxTimestamps(
+            reef.monthlyMax,
+            startDate,
+            endDate,
+            reef.timezone
+          )}
+          surveys={surveys}
+          temperatureThreshold={null}
+          maxMonthlyMean={null}
+          background
+          chartPeriod={findChartPeriod(startDate, endDate)}
+          timeZone={reef.timezone}
+          startDate={convertToLocalTime(startDate, reef.timezone)}
+          endDate={convertToLocalTime(endDate, reef.timezone)}
+          showYear={showYear(startDate, endDate)}
+        />
       )}
-      {!ishoboDataRangeLoading && (
+      {!isHoboDataRangeLoading && (
         <Grid container justify="center">
           <Grid item xs={11} container justify="space-between" spacing={1}>
             <Grid item>
               <DatePicker
                 value={pickerStartDate}
                 dateName="START DATE"
-                nameVariant="subtitle1"
+                dateNameTextVariant="subtitle1"
                 pickerSize="small"
                 autoOk={false}
                 onChange={onStartDateChange}
@@ -183,7 +174,7 @@ const Chart = ({
               <DatePicker
                 value={pickerEndDate}
                 dateName="END DATE"
-                nameVariant="subtitle1"
+                dateNameTextVariant="subtitle1"
                 pickerSize="small"
                 autoOk={false}
                 onChange={onEndDateChange}

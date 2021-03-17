@@ -50,7 +50,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
 
   // Set pickers dates
   useEffect(() => {
-    if (hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0) {
+    if (hoboBottomTemperatureRange?.[0]) {
       const { minDate, maxDate } = hoboBottomTemperatureRange[0];
       const localizedMaxDate = new Date(
         moment(maxDate)
@@ -119,8 +119,7 @@ const ChartWithCard = ({ reef, pointId, classes }: ChartWithCardProps) => {
       pickerEndDate &&
       isBefore(pickerStartDate, pickerEndDate) &&
       pastLimit &&
-      hoboBottomTemperatureRange &&
-      hoboBottomTemperatureRange.length > 0
+      hoboBottomTemperatureRange?.[0]
     ) {
       const { minDate } = hoboBottomTemperatureRange[0];
       const reefLocalStartDate = setTimeZone(
