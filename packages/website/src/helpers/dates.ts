@@ -46,6 +46,10 @@ export const subtractFromDate = (
       return moment(endDate)
         .subtract(multiple || 1, "months")
         .toISOString();
+    case "year":
+      return moment(endDate)
+        .subtract(multiple || 1, "years")
+        .toISOString();
     default:
       return endDate;
   }
@@ -85,14 +89,20 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
  * @param type - Type of date we seek (defaults to "max")
  */
 export const findMarginalDate = (
+  monthlyMaxData: MonthlyMaxData[],
   dailyData: DailyData[],
   spotterData?: SpotterData | null,
   hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
+    ...monthlyMaxData,
     ...dailyData,
     ...(spotterData?.surfaceTemperature?.map((item) => ({
+      date: item.timestamp,
+      value: item.value,
+    })) || []),
+    ...(spotterData?.bottomTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
@@ -242,12 +252,16 @@ export const convertSurveyDataToLocalTime = (
 // Return a copy of monthly max data for each year
 export const generateMonthlyMaxTimestamps = (
   monthlyMax: MonthlyMax[],
-  startDate: string,
-  endDate: string,
+  startDate?: string,
+  endDate?: string,
   timeZone?: string | null
 ): MonthlyMaxData[] => {
-  const startYear = new Date(startDate).getFullYear();
-  const endYear = new Date(endDate).getFullYear();
+  const startYear = startDate
+    ? new Date(startDate).getFullYear()
+    : new Date().getFullYear();
+  const endYear = endDate
+    ? new Date(endDate).getFullYear()
+    : new Date().getFullYear();
 
   const years = createRange(startYear - 1, endYear + 1);
 

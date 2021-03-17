@@ -82,7 +82,7 @@ const Tooltip = ({
     {
       temperature: bottomTemperature,
       color: "rgba(250, 141, 0)",
-      title: `BUOY ${depth}m`,
+      title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
     },
     {
       temperature: hoboBottomTemp,

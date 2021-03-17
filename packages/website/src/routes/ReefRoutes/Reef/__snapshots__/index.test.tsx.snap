@@ -1896,7 +1896,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               classname="CombinedCharts-graphTitle-252"
               variant="h6"
             >
-              DAILY WATER TEMPERATURE (°C)
+              DAILY SATELLITE TEMPERATURE (°C)
             </mock-typography>
             Mock-Line
           </div>
