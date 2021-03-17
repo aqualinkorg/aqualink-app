@@ -7,7 +7,7 @@ import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
 import InfoCard from "./InfoCard";
-import ChartWithCard from "./Chart";
+import ChartWithCard from "../../../common/Chart/ChartWithCard";
 import SurveyHistory from "./SurveyHistory";
 import {
   reefDetailsSelector,
@@ -40,6 +40,12 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
   const loading = reefLoading || surveysLoading || hoboRangeLoading;
+
+  const hasSpotterData = Boolean(reef?.liveData?.surfaceTemperature);
+  const hasRange = !!(
+    hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
+  );
+  const showChart = hasSpotterData || hasRange;
 
   // Always scroll to top on first render
   useEffect(() => {
@@ -87,7 +93,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
         <>
           <BackButton reefId={id} bgColor={bgColor} />
           <InfoCard reef={reef} pointId={pointIdNumber} bgColor={bgColor} />
-          <ChartWithCard reef={reef} pointId={pointId} />
+          {showChart && <ChartWithCard reef={reef} pointId={pointId} />}
           <SurveyHistory
             reef={reef}
             pointId={pointIdNumber}

@@ -102,15 +102,6 @@ export const reefHoboDataRequest = createAsyncThunk<
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
     }
-  },
-  {
-    // If another hobo data action is pending, cancel this request before it starts.
-    condition(arg: HoboDataRequestParams, { getState }) {
-      const {
-        selectedReef: { hoboDataRangeLoading },
-      } = getState();
-      return !hoboDataRangeLoading;
-    },
   }
 );
 

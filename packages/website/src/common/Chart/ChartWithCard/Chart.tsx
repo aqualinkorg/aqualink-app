@@ -7,12 +7,13 @@ import {
   WithStyles,
   createStyles,
   CircularProgress,
+  useTheme,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector } from "react-redux";
 
-import ChartWithTooltip from "../../../../common/Chart/ChartWithTooltip";
-import DatePicker from "../../../../common/Datepicker";
+import ChartWithTooltip from "../ChartWithTooltip";
+import DatePicker from "../../Datepicker";
 import {
   convertDailyDataToLocalTime,
   convertHoboDataToLocalTime,
@@ -20,18 +21,17 @@ import {
   convertToLocalTime,
   displayTimeInLocalTimezone,
   generateMonthlyMaxTimestamps,
-} from "../../../../helpers/dates";
-import { Reef, SofarValue, SpotterData } from "../../../../store/Reefs/types";
+} from "../../../helpers/dates";
+import { Reef, SofarValue, SpotterData } from "../../../store/Reefs/types";
 import {
   reefHoboDataLoadingSelector,
   reefHoboDataRangeLoadingSelector,
   reefHoboDataRangeSelector,
   reefSpotterDataLoadingSelector,
-} from "../../../../store/Reefs/selectedReefSlice";
+} from "../../../store/Reefs/selectedReefSlice";
 import { findChartPeriod, showYear } from "./helpers";
-import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { filterSurveys } from "../../../../helpers/surveys";
-import { filterDailyData } from "../../../../common/Chart/utils";
+import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
+import { filterSurveys } from "../../../helpers/surveys";
 
 const Chart = ({
   reef,
@@ -47,6 +47,7 @@ const Chart = ({
   onEndDateChange,
   classes,
 }: ChartProps) => {
+  const theme = useTheme();
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefHoboDataRangeSelector) || {};
   const { minDate, maxDate } =
@@ -60,22 +61,21 @@ const Chart = ({
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     "any",
-    pointId
+    pointId || -1
   );
 
-  const hasSpotterData =
+  const hasSpotterBottom =
     spotterData && spotterData.bottomTemperature.length > 1;
+  const hasSpotterSurface =
+    spotterData && spotterData.surfaceTemperature.length > 1;
+  const hasSpotterData = hasSpotterBottom || hasSpotterSurface;
 
   const hasHoboData = hoboBottomTemperature && hoboBottomTemperature.length > 1;
-
-  const hasDailyData =
-    filterDailyData(reef.dailyData, startDate, endDate).length > 1;
 
   const loading =
     isSpotterDataLoading || isHoboDataLoading || ishoboDataRangeLoading;
 
-  const success =
-    !error && !loading && (hasHoboData || hasSpotterData || hasDailyData);
+  const success = !error && !loading && (hasHoboData || hasSpotterData);
   const warning = !error && !loading && !hasHoboData && !hasSpotterData;
 
   const minDateLocal = displayTimeInLocalTimezone({
@@ -91,17 +91,28 @@ const Chart = ({
     displayTimezone: false,
   });
 
+  const noDataMessage = () => (
+    <Box
+      mt="16px"
+      mb="48px"
+      height="217px"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      textAlign="center"
+      color={theme.palette.primary.main}
+    >
+      <Typography variant="h2">No data to display</Typography>
+    </Box>
+  );
+
   return (
     <>
-      <Box ml="50px">
-        <Typography variant="h6" color="textSecondary">
-          TEMPERATURE
-        </Typography>
-      </Box>
       {loading && (
         <Box
-          height="240px"
-          mt="32px"
+          height="285px"
+          mt="16px"
+          mb="48px"
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -110,22 +121,28 @@ const Chart = ({
         </Box>
       )}
       {error && (
-        <Box mt="16px" mb="188px">
-          <Alert severity="error">
-            <Typography>Start Date should not be after End Date</Typography>
-          </Alert>
-        </Box>
+        <>
+          <Box mt="16px">
+            <Alert severity="error">
+              <Typography>Start Date should not be after End Date</Typography>
+            </Alert>
+          </Box>
+          {noDataMessage()}
+        </>
       )}
       {warning && (
-        <Box mt="16px" mb={success ? "0px" : "188px"}>
-          <Alert severity="warning">
-            <Typography>
-              {minDateLocal && maxDateLocal
-                ? `No HOBO data available - data available between ${minDateLocal} and ${maxDateLocal}.`
-                : "No Smart Buoy or HOBO data available in this time range."}
-            </Typography>
-          </Alert>
-        </Box>
+        <>
+          <Box mt="16px">
+            <Alert severity="warning">
+              <Typography>
+                {minDateLocal && maxDateLocal
+                  ? `No HOBO data available - data available from ${minDateLocal} to ${maxDateLocal}.`
+                  : "No Smart Buoy or HOBO data available in this time range."}
+              </Typography>
+            </Alert>
+          </Box>
+          {noDataMessage()}
+        </>
       )}
       {success && (
         <Box>
@@ -199,15 +216,15 @@ const Chart = ({
 const styles = () =>
   createStyles({
     chart: {
-      height: 300,
-      marginBottom: "3rem",
-      marginTop: "1rem",
+      height: 285,
+      marginBottom: 48,
+      marginTop: 16,
     },
   });
 
 interface ChartIncomingProps {
   reef: Reef;
-  pointId: number;
+  pointId: number | undefined;
   spotterData: SpotterData | null | undefined;
   hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;

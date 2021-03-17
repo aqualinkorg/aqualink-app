@@ -47,7 +47,6 @@ const DatePicker = ({
               value={value || null}
               onChange={onChange}
               InputProps={{
-                readOnly: true,
                 className: classes.textField,
               }}
               inputVariant="standard"

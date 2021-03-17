@@ -154,7 +154,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
       if (newName && user?.token) {
         setEditPoiNameLoading(true);
         surveyServices
-          .updatePoi(key, newName, user.token)
+          .updatePoi(key, { name: newName }, user.token)
           .then(() => {
             // Update point name for featured image card
             dispatch(updatePoiName({ id: key, name: newName }));

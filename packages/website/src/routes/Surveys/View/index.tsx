@@ -32,7 +32,10 @@ import {
   surveyListSelector,
   surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
-import { reefHoboDataRequest } from "../../../store/Reefs/selectedReefSlice";
+import {
+  reefHoboDataRequest,
+  reefSpotterDataRequest,
+} from "../../../store/Reefs/selectedReefSlice";
 import {
   displayTimeInLocalTimezone,
   convertDailyDataToLocalTime,
@@ -50,6 +53,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
 
   const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
     ?.poiId?.id;
+
+  const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
 
   const dailyDataLen = reef.dailyData.length;
   const showChart =
@@ -78,13 +83,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
     };
   }, [dispatch, reef.id, surveyId]);
 
-  // Fetch HOBO data near the dive date
+  // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
     if (surveyDetails?.diveDate && pointId) {
-      const start = moment(surveyDetails.diveDate)
-        .subtract(6, "hours")
-        .toISOString();
-      const end = moment(surveyDetails.diveDate).add(6, "hours").toISOString();
+      const start = moment(surveyDetails.diveDate).startOf("day").toISOString();
+      const end = moment(surveyDetails.diveDate).endOf("day").toISOString();
       dispatch(
         reefHoboDataRequest({
           reefId: `${reef.id}`,
@@ -95,8 +98,17 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
           hourly: false,
         })
       );
+      if (hasSpotterData) {
+        dispatch(
+          reefSpotterDataRequest({
+            id: `${reef.id}`,
+            startDate: start,
+            endDate: end,
+          })
+        );
+      }
     }
-  }, [dispatch, pointId, reef.id, surveyDetails]);
+  }, [dispatch, hasSpotterData, pointId, reef.id, surveyDetails]);
 
   return loading ? (
     <LinearProgress className={classes.loading} />

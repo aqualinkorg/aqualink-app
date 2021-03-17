@@ -9,10 +9,15 @@ import {
 
 import { Reef } from "../../../../store/Reefs/types";
 import Map from "../../../../common/SiteDetails/Map";
+import { FormField } from "../../../../common/Forms/useFormField";
 
 const SurveyPointMap = ({
   reef,
   selectedPointId,
+  editModeEnabled,
+  editPointLatitude,
+  editPointLongitude,
+  onEditPointCoordinatesChange,
   classes,
 }: SurveyPointMapProps) => {
   return (
@@ -22,6 +27,10 @@ const SurveyPointMap = ({
         polygon={reef.polygon}
         surveyPoints={reef.surveyPoints}
         selectedPointId={selectedPointId}
+        surveyPointEditModeEnabled={editModeEnabled}
+        editPointLatitude={parseFloat(editPointLatitude.value)}
+        editPointLongitude={parseFloat(editPointLongitude.value)}
+        onEditPointCoordinatesChange={onEditPointCoordinatesChange}
       />
     </Grid>
   );
@@ -41,6 +50,10 @@ const styles = (theme: Theme) =>
 interface SurveyPointMapIncomingProps {
   reef: Reef;
   selectedPointId: number;
+  editModeEnabled: boolean;
+  editPointLatitude: FormField;
+  editPointLongitude: FormField;
+  onEditPointCoordinatesChange: (lat: string, lng: string) => void;
 }
 
 type SurveyPointMapProps = SurveyPointMapIncomingProps &

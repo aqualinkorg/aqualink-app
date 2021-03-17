@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,11 +10,9 @@ import {
   Typography,
   LinearProgress,
 } from "@material-ui/core";
-import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-import moment from "moment";
 
 import ReefNavBar from "../../../common/NavBar";
 import ReefFooter from "../../../common/Footer";
@@ -25,9 +23,11 @@ import {
   reefLoadingSelector,
   reefErrorSelector,
   reefRequest,
-  reefSpotterDataRequest,
-  reefSpotterDataSelector,
+  reefHoboDataRangeRequest,
   clearReefSpotterData,
+  reefHoboDataRangeSelector,
+  reefHoboDataRequest,
+  clearHoboData,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -38,13 +38,8 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
-import {
-  subtractFromDate,
-  findMarginalDate,
-  findChartPeriod,
-  setTimeZone,
-} from "../../../helpers/dates";
-import { Range } from "../../../store/Reefs/types";
+import { findClosestSurveyPoint } from "../../../helpers/map";
+import { subtractFromDate } from "../../../helpers/dates";
 
 const getAlertMessage = (
   user: User | null,
@@ -108,9 +103,11 @@ const Reef = ({ match, classes }: ReefProps) => {
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const surveyList = useSelector(surveyListSelector);
+  const { bottomTemperature: hoboBottomTemperatureRange } =
+    useSelector(reefHoboDataRangeSelector) || {};
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id: selectedReefId, timezone } = reefDetails || {};
+  const { liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -119,92 +116,60 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
     featuredMedia || {};
-  const { poiId, url } = featuredSurveyMedia || {};
+  const { poiId: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
-  const { liveData, dailyData } = reefDetails || {};
+  const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
 
   const hasSpotterData = Boolean(liveData?.surfaceTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
-  const spotterData = useSelector(reefSpotterDataSelector);
-  const [range, setRange] = useState<Range>("week");
-  const today = new Date();
-  const [endDate, setEndDate] = useState<string>();
-  const [pickerDate, setPickerDate] = useState<string>(today.toISOString());
+  const hasRange = !!(
+    hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
+  );
 
-  // fetch the reef and spotter data
+  const showSpotterChart = hasSpotterData || hasRange;
+
+  // Fetch reef and surveys
   useEffect(() => {
     dispatch(reefRequest(reefId));
     dispatch(surveysRequest(reefId));
+
+    return () => {
+      dispatch(clearReefSpotterData());
+      dispatch(clearHoboData());
+    };
   }, [dispatch, reefId]);
 
-  // fetch spotter data from api, also filter the range we're interested in.
+  // Fetch HOBO data range for the reef's closest survey point
   useEffect(() => {
-    // make sure we've loaded the reef, before attempting to get its spotter data.
-    if (reefId === selectedReefId?.toString() && hasSpotterData && !loading) {
-      const userLocalEndDate = new Date(
-        moment(pickerDate).format("MM/DD/YYYY")
-      );
-      const reefLocalEndDate = setTimeZone(
-        userLocalEndDate,
-        timezone
-      ) as string;
+    if (closestSurveyPointId) {
       dispatch(
-        reefSpotterDataRequest({
-          id: reefId,
-          startDate: subtractFromDate(reefLocalEndDate, range),
-          endDate: reefLocalEndDate,
+        reefHoboDataRangeRequest({ reefId, pointId: `${closestSurveyPointId}` })
+      );
+    }
+  }, [closestSurveyPointId, dispatch, reefId]);
+
+  // Get HOBO data
+  useEffect(() => {
+    if (
+      closestSurveyPointId &&
+      hoboBottomTemperatureRange &&
+      hoboBottomTemperatureRange.length > 0
+    ) {
+      const { maxDate } = hoboBottomTemperatureRange[0];
+      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
+      dispatch(
+        reefHoboDataRequest({
+          reefId,
+          pointId: `${closestSurveyPointId}`,
+          start: pastThreeMonths,
+          end: maxDate,
+          metrics: ["bottom_temperature"],
         })
       );
-    } else {
-      // Clear possible spotter data from previously selected reef
-      dispatch(clearReefSpotterData());
     }
-  }, [
-    dispatch,
-    hasSpotterData,
-    loading,
-    pickerDate,
-    range,
-    reefId,
-    selectedReefId,
-    timezone,
-  ]);
-
-  // update the end date once spotter data changes. Happens when `range` is changed.
-  useEffect(() => {
-    if (dailyData && spotterData) {
-      const maxDataDate = new Date(findMarginalDate(dailyData, spotterData));
-      const reefLocalEndDate = new Date(
-        setTimeZone(
-          new Date(moment(pickerDate).format("MM/DD/YYYY")),
-          reefDetails?.timezone
-        ) as string
-      );
-      if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
-        setEndDate(reefLocalEndDate.toISOString());
-      } else {
-        setEndDate(maxDataDate.toISOString());
-      }
-    }
-  }, [dailyData, spotterData, pickerDate, reefDetails]);
-
-  const onRangeChange = useCallback(
-    (event: ChangeEvent<{ value: unknown }>) => {
-      setRange(event.target.value as Range);
-    },
-    []
-  );
-
-  const onDateChange = useCallback(
-    (date: MaterialUiPickersDate, value?: string | null) => {
-      if (value) {
-        setPickerDate(new Date(value).toISOString());
-      }
-    },
-    []
-  );
+  }, [closestSurveyPointId, dispatch, hoboBottomTemperatureRange, reefId]);
 
   if (loading || (!reefDetails && !error)) {
     return (
@@ -239,20 +204,15 @@ const Reef = ({ match, classes }: ReefProps) => {
                 ...reefDetails,
                 featuredImage: url,
               }}
+              closestSurveyPointId={
+                closestSurveyPointId ? `${closestSurveyPointId}` : undefined
+              }
               featuredSurveyId={featuredSurveyId}
-              startDate={subtractFromDate(endDate || pickerDate, range)}
-              endDate={endDate || pickerDate}
-              pickerDate={pickerDate}
-              range={range}
-              onRangeChange={onRangeChange}
-              onDateChange={onDateChange}
-              hasSpotterData={hasSpotterData}
-              chartPeriod={findChartPeriod(range)}
               hasDailyData={hasDailyData}
-              spotterData={spotterData}
               surveys={surveyList}
-              surveyPoint={poiId}
+              featuredSurveyPoint={featuredSurveyPoint}
               surveyDiveDate={diveDate}
+              showSpotterChart={showSpotterChart}
             />
           </>
         ) : (
