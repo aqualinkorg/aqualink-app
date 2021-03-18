@@ -112,6 +112,8 @@ type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
 // The API sends HOBO data with the following snake_case keys.
 // We need to create a new type with the same keys but in camelCase
+// TODO: Combine these two types when we upgrade typescript to V4.1
+// as described in https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
 export type MetricsKeys =
   | "alert"
   | "dhw"
