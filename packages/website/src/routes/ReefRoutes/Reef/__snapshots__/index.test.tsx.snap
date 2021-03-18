@@ -1411,7 +1411,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       classname="Sensor-contentTextTitles-220"
                       variant="subtitle2"
                     >
-                      TEMP AT 0m
+                      TEAMP AT DEPTH
                     </mock-typography>
                     <mock-typography
                       classname="Sensor-contentTextValues-221"

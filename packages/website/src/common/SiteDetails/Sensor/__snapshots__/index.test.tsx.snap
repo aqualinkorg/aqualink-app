@@ -69,7 +69,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               classname="Sensor-contentTextTitles-4"
               variant="subtitle2"
             >
-              TEMP AT 0m
+              TEAMP AT DEPTH
             </mock-typography>
             <mock-typography
               classname="Sensor-contentTextValues-5"

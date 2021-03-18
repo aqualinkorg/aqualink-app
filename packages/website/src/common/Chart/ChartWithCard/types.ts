@@ -12,4 +12,5 @@ export interface CardColumn {
   key: string;
   color: string;
   rows: { key: string; value: number | undefined }[];
+  tooltip?: string;
 }

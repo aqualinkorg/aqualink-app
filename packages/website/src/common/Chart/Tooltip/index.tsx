@@ -76,7 +76,7 @@ const Tooltip = ({
     color: string;
     title: string;
   }[] = [
-    { temperature: monthlyMax, color: "#d84424", title: "MONTH. MEAN" },
+    { temperature: monthlyMax, color: "#d84424", title: "MONTHLY MEAN" },
     { temperature: surfaceTemperature, color: "#6bc1e1", title: "SURFACE" },
     { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
@@ -177,7 +177,7 @@ const styles = () =>
       padding: "0rem 1rem 0rem 1rem",
     },
     tooltipContentItem: {
-      width: "140px",
+      width: "150px",
       height: 20,
       margin: "0",
     },

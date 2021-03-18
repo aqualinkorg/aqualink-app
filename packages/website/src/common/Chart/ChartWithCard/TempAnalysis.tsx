@@ -8,6 +8,7 @@ import {
   WithStyles,
   createStyles,
   Theme,
+  Tooltip,
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -64,6 +65,8 @@ const TempAnalysis = ({
   const cardColumns: CardColumn[] = [
     {
       title: "HISTORIC",
+      tooltip:
+        "Historic satellite surface measurements for the 30 years before 2016",
       key: "historic",
       color: "#d84424",
       rows: calculateCardMetrics(filteredMaxMonthlyData, "historic"),
@@ -149,14 +152,16 @@ const TempAnalysis = ({
                     alignItems="center"
                   >
                     <Grid item>
-                      <Typography
-                        style={{
-                          color: item.color,
-                        }}
-                        variant="subtitle2"
-                      >
-                        {item.title}
-                      </Typography>
+                      <Tooltip title={item.tooltip || ""}>
+                        <Typography
+                          style={{
+                            color: item.color,
+                          }}
+                          variant="subtitle2"
+                        >
+                          {item.title}
+                        </Typography>
+                      </Tooltip>
                     </Grid>
                     {item.rows.map(({ key, value }) => (
                       <Grid key={key} item>
