@@ -216,20 +216,30 @@ export class ReefsService {
     }
   }
 
-  async findDailyData(id: number): Promise<DailyData[]> {
+  async findDailyData(
+    id: number,
+    start?: string,
+    end?: string,
+  ): Promise<DailyData[]> {
     const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    return this.dailyDataRepository.find({
-      where: { reef: id },
-      order: {
-        date: 'DESC',
-      },
-      take: 90,
-    });
+    const query = this.dailyDataRepository
+      .createQueryBuilder('daily_data')
+      .where('reef_id = :id', { id })
+      .orderBy('date', 'DESC');
+
+    if (!start || !end) {
+      return query.limit(90).getMany();
+    }
+
+    return query
+      .andWhere('date >= :startDate', { startDate: new Date(start) })
+      .andWhere('date <= :endDate', { endDate: new Date(end) })
+      .getMany();
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
