@@ -69,7 +69,7 @@ export class UsersService {
     return req.user;
   }
 
-  async getAdministeredReefs(req: AuthRequest): Promise<Reef[]> {
+  async getAdministeredReefs(req: AuthRequest): Promise<Partial<Reef>[]> {
     const user = await this.usersRepository
       .createQueryBuilder('users')
       .leftJoinAndSelect('users.administeredReefs', 'reefs')

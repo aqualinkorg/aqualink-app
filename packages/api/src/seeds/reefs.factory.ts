@@ -18,7 +18,6 @@ define(Reef, (faker: typeof Faker) => {
     type: 'Point',
     coordinates: [lng, lat],
   };
-  reef.temperatureThreshold = faker.random.number({ min: 25, max: 27 });
   reef.depth = faker.random.number({ min: 10, max: 40 });
   reef.status = statuses[Math.floor(Math.random() * statuses.length)];
   return reef;
