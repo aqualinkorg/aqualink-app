@@ -65,8 +65,7 @@ const TempAnalysis = ({
   const cardColumns: CardColumn[] = [
     {
       title: "HISTORIC",
-      tooltip:
-        "Historic satellite surface measurements for the 30 years before 2016",
+      tooltip: "Historic long-term average of satellite surface temperature",
       key: "historic",
       color: "#d84424",
       rows: calculateCardMetrics(filteredMaxMonthlyData, "historic"),
