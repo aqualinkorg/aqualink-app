@@ -19,7 +19,7 @@ import {
   reefSpotterDataLoadingSelector,
   reefSpotterDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
-import { getCardSensorValues } from "./utils";
+import { getCardTemperatureValues } from "./utils";
 
 const ObservationBox = ({
   depth,
@@ -40,7 +40,13 @@ const ObservationBox = ({
     hoboSurface,
     spotterBottom,
     spotterSurface,
-  } = getCardSensorValues(dailyData, spotterData, hoboData, date, timeZone);
+  } = getCardTemperatureValues(
+    dailyData,
+    spotterData,
+    hoboData,
+    date,
+    timeZone
+  );
 
   return (
     <div className={classes.outerDiv}>
@@ -128,9 +134,14 @@ const styles = () =>
 interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
-  date: string | null | undefined;
-  timeZone: string | null | undefined;
+  date?: string | null;
+  timeZone?: string | null;
 }
+
+ObservationBox.defaultProps = {
+  date: null,
+  timeZone: null,
+};
 
 type ObservationBoxProps = ObservationBoxIncomingProps &
   WithStyles<typeof styles>;

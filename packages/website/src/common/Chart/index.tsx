@@ -40,7 +40,7 @@ export interface ChartProps {
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   background?: boolean;
-  showYear?: boolean;
+  showYearInTicks?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -86,7 +86,7 @@ function Chart({
   temperatureThreshold,
   maxMonthlyMean,
   background,
-  showYear,
+  showYearInTicks,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -211,8 +211,8 @@ function Chart({
             type: "time",
             time: {
               displayFormats: {
-                week: `MMM D ${showYear ? "YY" : ""}`,
-                month: `MMM ${showYear ? "YY" : ""}`,
+                week: `MMM D ${showYearInTicks ? "YY" : ""}`,
+                month: `MMM ${showYearInTicks ? "YY" : ""}`,
               },
               unit: chartPeriod || xPeriod,
             },

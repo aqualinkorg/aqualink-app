@@ -60,12 +60,12 @@ const ChartWithCard = ({
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pastLimit, setPastLimit] = useState<string>();
-  const [pickerError, setPickerError] = useState(false);
+  const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>("three_months");
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
-  // Set pickers dates
+  // Set pickers initial values
   useEffect(() => {
     const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
     const localizedMaxDate = new Date(
@@ -89,12 +89,12 @@ const ChartWithCard = ({
       const reefLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
         reef.timezone
-      ) as string;
+      );
 
       const reefLocalEndDate = setTimeZone(
         new Date(pickerEndDate),
         reef.timezone
-      ) as string;
+      );
 
       if (hasSpotterData) {
         dispatch(
@@ -129,11 +129,11 @@ const ChartWithCard = ({
       const reefLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
         reef.timezone
-      ) as string;
+      );
       const reefLocalEndDate = setTimeZone(
         new Date(pickerEndDate),
         reef.timezone
-      ) as string;
+      );
 
       if (
         new Date(pickerStartDate).getTime() < new Date(pastLimit).getTime() &&
@@ -217,13 +217,13 @@ const ChartWithCard = ({
         setTimeZone(
           new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
           reef?.timezone
-        ) as string
+        )
       );
       const reefLocalStartDate = new Date(
         setTimeZone(
           new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
           reef?.timezone
-        ) as string
+        )
       );
 
       if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
@@ -252,7 +252,7 @@ const ChartWithCard = ({
   // Set picker error
   useEffect(() => {
     if (pickerStartDate && pickerEndDate) {
-      setPickerError(!isBefore(pickerStartDate, pickerEndDate));
+      setPickerErrored(!isBefore(pickerStartDate, pickerEndDate));
     }
   }, [pickerEndDate, pickerStartDate]);
 
@@ -343,10 +343,10 @@ const ChartWithCard = ({
             endDate={endDate || pickerEndDate || today}
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
-            error={pickerError}
+            pickerErrored={pickerErrored}
           />
         </Grid>
-        {!pickerError && (
+        {!pickerErrored && (
           <Grid
             item
             xs={12}

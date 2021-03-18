@@ -26,11 +26,12 @@ import {
 } from "../../../store/Survey/surveyListSlice";
 import { subtractFromDate } from "../../../helpers/dates";
 
+const BG_COLOR = "rgb(245, 246, 246)";
+
 const SurveyPoint = ({ match }: SurveyPointProps) => {
   const { id, pointId } = match.params;
   const reefIdNumber = parseInt(id, 10);
   const pointIdNumber = parseInt(pointId, 10);
-  const bgColor = "rgb(245, 246, 246)";
 
   const dispatch = useDispatch();
   const reef = useSelector(reefDetailsSelector);
@@ -91,13 +92,13 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
       {loading && <LinearProgress />}
       {!loading && reef && (
         <>
-          <BackButton reefId={id} bgColor={bgColor} />
-          <InfoCard reef={reef} pointId={pointIdNumber} bgColor={bgColor} />
+          <BackButton reefId={id} bgColor={BG_COLOR} />
+          <InfoCard reef={reef} pointId={pointIdNumber} bgColor={BG_COLOR} />
           {showChart && <ChartWithCard reef={reef} pointId={pointId} />}
           <SurveyHistory
             reef={reef}
             pointId={pointIdNumber}
-            bgColor={bgColor}
+            bgColor={BG_COLOR}
           />
           <Footer />
         </>

@@ -29,7 +29,7 @@ import {
   reefHoboDataRangeSelector,
   reefSpotterDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
-import { findChartPeriod, showYear } from "./helpers";
+import { findChartPeriod, moreThanOneYear } from "./helpers";
 import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../helpers/surveys";
 
@@ -42,7 +42,7 @@ const Chart = ({
   pickerEndDate,
   startDate,
   endDate,
-  error,
+  pickerErrored,
   onStartDateChange,
   onEndDateChange,
   classes,
@@ -69,8 +69,8 @@ const Chart = ({
   const loading =
     isSpotterDataLoading || isHoboDataLoading || isHoboDataRangeLoading;
 
-  const success = !error && !loading && (hasHoboData || hasSpotterData);
-  const warning = !error && !loading && !hasHoboData && !hasSpotterData;
+  const success = !pickerErrored && !loading && (hasHoboData || hasSpotterData);
+  const warning = !pickerErrored && !loading && !hasHoboData && !hasSpotterData;
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
@@ -114,7 +114,7 @@ const Chart = ({
           <CircularProgress size="120px" thickness={1} />
         </Box>
       )}
-      {error && (
+      {pickerErrored && (
         <>
           <Box mt="16px">
             <Alert severity="error">
@@ -169,7 +169,7 @@ const Chart = ({
           timeZone={reef.timezone}
           startDate={convertToLocalTime(startDate, reef.timezone)}
           endDate={convertToLocalTime(endDate, reef.timezone)}
-          showYear={showYear(startDate, endDate)}
+          showYearInTicks={moreThanOneYear(startDate, endDate)}
         />
       )}
       {!isHoboDataRangeLoading && (
@@ -220,7 +220,7 @@ interface ChartIncomingProps {
   pickerEndDate: string;
   startDate: string;
   endDate: string;
-  error: boolean;
+  pickerErrored: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }

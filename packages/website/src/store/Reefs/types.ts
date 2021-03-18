@@ -110,6 +110,8 @@ interface DataRange {
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
+// The API sends HOBO data with the following snake_case keys.
+// We need to create a new type with the same keys but in camelCase
 export type MetricsKeys =
   | "alert"
   | "dhw"

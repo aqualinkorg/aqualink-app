@@ -6,7 +6,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Theme,
   Button,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
@@ -14,15 +13,13 @@ import { useSelector } from "react-redux";
 import { Reef } from "../../../../store/Reefs/types";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
-import {
-  filterSurveys,
-  findImagesAtSurveyPoint,
-} from "../../../../helpers/surveys";
+import { filterSurveys } from "../../../../helpers/surveys";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 import { reefHoboDataSelector } from "../../../../store/Reefs/selectedReefSlice";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
+import SurveyInfo from "./SurveyInfo";
 
 const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
   const surveys = filterSurveys(
@@ -39,8 +36,6 @@ const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
   const [lng, lat] =
     pointPolygon?.type === "Point" ? pointPolygon.coordinates : [];
   const nHoboPoints = hoboBottomTemperature?.length || 0;
-  const nSurveys = surveys.length;
-  const nImages = findImagesAtSurveyPoint(surveys, pointId);
   const lastSurveyed = displayTimeInLocalTimezone({
     isoDate: surveys[0]?.diveDate,
     displayTimezone: false,
@@ -81,7 +76,6 @@ const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
             </Grid>
             {lat && lng && (
               <Grid item>
-                {/* TODO: Add survey point's coordinates */}
                 <Grid className={classes.autoWidth} container spacing={1}>
                   <Grid item>
                     <Typography variant="subtitle2" color="textSecondary">
@@ -105,53 +99,7 @@ const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
             )}
           </Grid>
         </Grid>
-        <Grid item>
-          <Grid
-            className={classes.autoWidth}
-            container
-            justify="space-between"
-            spacing={4}
-          >
-            <Grid item>
-              <Grid
-                className={classes.autoWidth}
-                container
-                alignItems="baseline"
-                spacing={1}
-              >
-                <Grid item>
-                  <Typography variant="h5" className={classes.coloredText}>
-                    {nSurveys}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {nSurveys === 1 ? "SURVEY" : "SURVEYS"}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid
-                className={classes.autoWidth}
-                container
-                alignItems="baseline"
-                spacing={1}
-              >
-                <Grid item>
-                  <Typography variant="h5" className={classes.coloredText}>
-                    {nImages}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {nImages === 1 ? "IMAGE" : "IMAGES"}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        <SurveyInfo pointId={pointId} surveys={surveys} />
       </Grid>
       {isAdmin(user, reef.id) && (
         <Grid container>
@@ -171,7 +119,7 @@ const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     cardInfo: {
       padding: 24,
@@ -179,10 +127,6 @@ const styles = (theme: Theme) =>
 
     coordinates: {
       marginTop: 16,
-    },
-
-    coloredText: {
-      color: theme.palette.primary.main,
     },
 
     autoWidth: {

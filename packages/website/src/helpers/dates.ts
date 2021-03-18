@@ -131,15 +131,22 @@ export const findChartPeriod = (range: Range) => {
   }
 };
 
+export function setTimeZone(date: Date, timeZone?: string | null): string;
+
+export function setTimeZone(
+  date: Date | null,
+  timeZone?: string | null
+): string | null;
+
 // Returns the same date but for a different time zone
-export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
+export function setTimeZone(date: Date | null, timeZone?: string | null) {
   if (date && timeZone) {
     const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
     const diff = date.getTime() - localTime.getTime();
     return new Date(date.getTime() + diff).toISOString();
   }
   return date?.toISOString() || null;
-};
+}
 
 export const getTimeZoneName = (timeZone: string): string => {
   const rawTimeZoneName = moment().tz(timeZone).format("z");

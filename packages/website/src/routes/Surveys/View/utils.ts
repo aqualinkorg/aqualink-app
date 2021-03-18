@@ -1,9 +1,19 @@
 import moment from "moment";
 
 import { getSpotterDataClosestToDate } from "../../../common/Chart/utils";
-import { DailyData, HoboData, SpotterData } from "../../../store/Reefs/types";
+import {
+  DailyData,
+  HoboData,
+  SofarValue,
+  SpotterData,
+} from "../../../store/Reefs/types";
 
-export const getCardSensorValues = (
+const getSensorValue = (data?: SofarValue[], date?: string | null) =>
+  date && data?.[0]
+    ? getSpotterDataClosestToDate(data, new Date(date), 6)?.value
+    : undefined;
+
+export const getCardTemperatureValues = (
   dailyData: DailyData[],
   spotterData: SpotterData | null | undefined,
   hoboData: HoboData | undefined,
@@ -20,46 +30,11 @@ export const getCardSensorValues = (
         .format("MM/DD/YYYY")
   );
 
-  const spotterBottom =
-    date && spotterData && spotterData.bottomTemperature.length > 0
-      ? getSpotterDataClosestToDate(
-          spotterData.bottomTemperature,
-          new Date(date),
-          6
-        )?.value
-      : undefined;
-  const spotterSurface =
-    date && spotterData && spotterData.surfaceTemperature.length > 0
-      ? getSpotterDataClosestToDate(
-          spotterData.surfaceTemperature,
-          new Date(date),
-          6
-        )?.value
-      : undefined;
-
-  const hoboBottom =
-    date && hoboData && hoboData.bottomTemperature.length > 0
-      ? getSpotterDataClosestToDate(
-          hoboData.bottomTemperature,
-          new Date(date),
-          6
-        )?.value
-      : undefined;
-
-  const hoboSurface =
-    date && hoboData && hoboData.surfaceTemperature.length > 0
-      ? getSpotterDataClosestToDate(
-          hoboData.surfaceTemperature,
-          new Date(date),
-          6
-        )?.value
-      : undefined;
-
   return {
     satelliteTemperature: surfaceData?.satelliteTemperature,
-    spotterBottom,
-    spotterSurface,
-    hoboBottom,
-    hoboSurface,
+    spotterBottom: getSensorValue(spotterData?.bottomTemperature, date),
+    spotterSurface: getSensorValue(spotterData?.surfaceTemperature, date),
+    hoboBottom: getSensorValue(hoboData?.bottomTemperature, date),
+    hoboSurface: getSensorValue(hoboData?.surfaceTemperature, date),
   };
 };
