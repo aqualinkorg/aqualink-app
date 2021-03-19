@@ -1,5 +1,5 @@
 import { Point } from 'geojson';
-import { isNil, omitBy, keyBy } from 'lodash';
+import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';
 import { Reef } from '../reefs/reefs.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
@@ -146,32 +146,35 @@ export const findSstAnomaly = (
   monthlyMax: MonthlyMax[],
   satelliteTemperature?: SofarValue,
 ) => {
-  if (monthlyMax.length === 0 || !satelliteTemperature) {
+  if (monthlyMax.length < 12 || !satelliteTemperature) {
     return undefined;
   }
 
-  const groupedByMonth = keyBy(monthlyMax, 'month');
-
+  const orderedMontlyMax = sortBy(monthlyMax, 'month');
   const now = moment().startOf('day');
-  const currentDate = now.date();
 
-  const start = now.clone().set('date', 15);
+  // The date of the previous value. Subtract 15 days from the current date
+  // and see in which month the result falls. The date we are looking for is
+  // the 15th day of this month.
+  const previousDate = now
+    .clone()
+    .subtract(15, 'days')
+    .set('date', 15)
+    .startOf('day');
 
-  const end =
-    currentDate > 15
-      ? now.clone().add(1, 'month').set('date', 15).startOf('day')
-      : now.clone().subtract(1, 'month').set('date', 15).startOf('day');
+  // The date of the next value. It must fall on the next month of the previous
+  // value.
+  const nextDate = previousDate.clone().add(1, 'month').startOf('day');
 
-  const startPoint = {
-    x: start,
-    y: groupedByMonth[1 + start.month()].temperature,
-  };
-  const endPoint = { x: end, y: groupedByMonth[1 + end.month()].temperature };
+  const previousValue = orderedMontlyMax[previousDate.get('month')].temperature;
+  const previousDistance = now.diff(previousDate, 'days');
+  const nextValue = orderedMontlyMax[nextDate.get('month')].temperature;
+  const nextDistance = nextDate.diff(now, 'days');
+  const deltaDays = nextDate.diff(previousDate, 'days');
 
-  const slope =
-    (endPoint.y - startPoint.y) / endPoint.x.diff(startPoint.x, 'days');
-
-  const interpolated = endPoint.y + slope * now.diff(endPoint.x, 'days');
+  const interpolated =
+    previousValue * (1 - previousDistance / deltaDays) +
+    nextValue * (1 - nextDistance / deltaDays);
 
   return satelliteTemperature.value - interpolated;
 };
