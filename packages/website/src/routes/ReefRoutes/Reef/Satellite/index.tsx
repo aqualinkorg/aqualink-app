@@ -25,7 +25,7 @@ import UpdateInfo from "../../../../common/UpdateInfo";
 import { toRelativeTime } from "../../../../helpers/dates";
 
 const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
-  const { degreeHeatingDays, satelliteTemperature } = liveData;
+  const { degreeHeatingDays, satelliteTemperature, sstAnomaly } = liveData;
   const relativeTime =
     satelliteTemperature?.timestamp &&
     toRelativeTime(satelliteTemperature.timestamp);
@@ -37,19 +37,26 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
   const metrics = [
     {
       label: "SURFACE TEMP",
-      value: `${formatNumber(satelliteTemperature?.value, 1)} °C`,
+      value: `${formatNumber(satelliteTemperature?.value, 1)}°C`,
     },
     {
       label: "HISTORICAL MAX",
-      value: `${formatNumber(maxMonthlyMean, 1)} °C`,
+      value: `${formatNumber(maxMonthlyMean, 1)}°C`,
       tooltipTitle: "Historical maximum monthly average over the past 20 years",
     },
     {
-      label: "HEAT STRESS",
-      large: true,
-      value: `${formatNumber(degreeHeatingWeeks, 1)} DHW`,
+      label: "DEGREE HEATING WEEKS",
+      value: formatNumber(degreeHeatingWeeks, 1),
       tooltipTitle:
         "Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures",
+    },
+    {
+      label: "SST ANOMALY",
+      value: `${
+        sstAnomaly
+          ? `${sstAnomaly > 0 ? "+" : ""}${formatNumber(sstAnomaly, 1)}`
+          : "- -"
+      }°C`,
     },
   ];
 
@@ -73,32 +80,23 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
 
       <CardContent className={classes.content}>
         <Box p="1rem" display="flex" flexGrow={1}>
-          <Grid container spacing={3}>
-            {metrics.map(({ label, large, value, tooltipTitle }) => (
-              <Grid key={label} item xs={large ? 12 : 6}>
+          <Grid container spacing={1}>
+            {metrics.map(({ label, value, tooltipTitle }) => (
+              <Grid key={label} item xs={6}>
                 <Typography
                   className={classes.contentTextTitles}
                   variant="subtitle2"
                 >
                   {label}
                 </Typography>
-                {tooltipTitle ? (
-                  <Tooltip title={tooltipTitle}>
-                    <Typography
-                      className={classes.contentTextValues}
-                      variant="h3"
-                    >
-                      {value}
-                    </Typography>
-                  </Tooltip>
-                ) : (
+                <Tooltip title={tooltipTitle || ""}>
                   <Typography
                     className={classes.contentTextValues}
                     variant="h3"
                   >
                     {value}
                   </Typography>
-                )}
+                </Tooltip>
               </Grid>
             ))}
           </Grid>

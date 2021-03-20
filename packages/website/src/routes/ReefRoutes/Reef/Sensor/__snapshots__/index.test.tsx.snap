@@ -44,7 +44,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
         style="position: relative;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -59,7 +59,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               classname="Sensor-contentTextValues-5"
               variant="h3"
             >
-              - - °C
+              - -°C
             </mock-typography>
           </div>
           <div
@@ -75,7 +75,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               classname="Sensor-contentTextValues-5"
               variant="h3"
             >
-              39.0 °C
+              39.0°C
             </mock-typography>
           </div>
         </div>

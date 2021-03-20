@@ -49,7 +49,10 @@ const Waves = ({ liveData, classes }: WavesProps) => {
           xs={12}
         >
           <Grid className={classes.paddingContainer} container item xs={12}>
-            <Typography className={classes.cardTitle} variant="h6">
+            <Typography
+              className={`${classes.cardTitle} ${classes.coloredText}`}
+              variant="h6"
+            >
               WIND
             </Typography>
             <img className={classes.titleImages} alt="wind" src={wind} />
@@ -115,7 +118,10 @@ const Waves = ({ liveData, classes }: WavesProps) => {
             </Grid>
           </Grid>
           <Grid className={classes.paddingContainer} container item xs={12}>
-            <Typography className={classes.cardTitle} variant="h6">
+            <Typography
+              className={`${classes.cardTitle} ${classes.coloredText}`}
+              variant="h6"
+            >
               WAVES
             </Typography>
             <img className={classes.titleImages} alt="waves" src={waves} />
@@ -237,8 +243,7 @@ const styles = (theme: Theme) =>
       display: "flex",
       flexDirection: "column",
     },
-    cardTitle: {
-      lineHeight: 1.5,
+    coloredText: {
       color: theme.palette.primary.main,
     },
     titleImages: {
