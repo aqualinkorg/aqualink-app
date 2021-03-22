@@ -125,12 +125,12 @@ export const addSpotterData = async (
         return Bluebird.each(
           spotterData
             .map((dailySpotterData) =>
-              dataLabels.map((label) =>
+              dataLabels.map(([spotterDataLabel, metric]) =>
                 saveDataBatch(
-                  dailySpotterData[label[0]] as SofarValue[], // We know that there would not be any undefined values here
+                  dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
                   reef,
                   reefToSource,
-                  label[1],
+                  metric,
                   repositories.timeSeriesRepository,
                 ),
               ),
@@ -138,7 +138,9 @@ export const addSpotterData = async (
             .flat(),
           (props, i) => {
             logger.log(
-              `Saved ${i + 1} out of ${2 * days} of daily spotter data`,
+              `Saved ${i + 1} out of ${
+                dataLabels.length * days
+              } of daily spotter data`,
             );
           },
         );
