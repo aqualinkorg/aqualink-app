@@ -232,21 +232,18 @@ export class ReefsService {
       throw new BadRequestException('Start or end is not a valid date');
     }
 
-    const baseQuery = this.dailyDataRepository
+    return this.dailyDataRepository
       .createQueryBuilder('daily_data')
       .where('reef_id = :id', { id })
       .orderBy('date', 'DESC')
-      .limit(start && end ? undefined : 90);
-
-    const queryStart = start
-      ? baseQuery.andWhere('date >= :startDate', { startDate: new Date(start) })
-      : baseQuery;
-
-    const finalQuery = end
-      ? queryStart.andWhere('date <= :endDate', { endDate: new Date(end) })
-      : queryStart;
-
-    return finalQuery.getMany();
+      .andWhere('date <= :endDate', {
+        endDate: (end && new Date(end)) || new Date(),
+      })
+      .andWhere('date >= :startDate', {
+        startDate: (start && new Date(start)) || new Date(0),
+      })
+      .limit(start && end ? undefined : 90)
+      .getMany();
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
