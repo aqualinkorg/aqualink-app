@@ -59,7 +59,7 @@ export class TimeSeriesService {
     poiId?: number,
   ): Promise<TimeSeriesData[]> {
     const poiCondition = poiId
-      ? `time_series.poi_id = ${poiId}`
+      ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
       : 'time_series.poi_id is NULL';
 
     return hourly
@@ -96,7 +96,7 @@ export class TimeSeriesService {
 
   private getDataRangeQuery(reefId: number, poiId?: number) {
     const poiCondition = poiId
-      ? `time_series.poi_id = ${poiId}`
+      ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
       : 'time_series.poi_id is NULL';
 
     return this.timeSeriesRepository
