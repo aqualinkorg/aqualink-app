@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { omit } from 'lodash';
+import moment from 'moment';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
@@ -216,20 +217,33 @@ export class ReefsService {
     }
   }
 
-  async findDailyData(id: number): Promise<DailyData[]> {
+  async findDailyData(
+    id: number,
+    start?: string,
+    end?: string,
+  ): Promise<DailyData[]> {
     const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    return this.dailyDataRepository.find({
-      where: { reef: id },
-      order: {
-        date: 'DESC',
-      },
-      take: 90,
-    });
+    if (!moment(start).isValid() || !moment(end).isValid()) {
+      throw new BadRequestException('Start or end is not a valid date');
+    }
+
+    return this.dailyDataRepository
+      .createQueryBuilder('daily_data')
+      .where('reef_id = :id', { id })
+      .orderBy('date', 'DESC')
+      .andWhere('date <= :endDate', {
+        endDate: (end && new Date(end)) || new Date(),
+      })
+      .andWhere('date >= :startDate', {
+        startDate: (start && new Date(start)) || new Date(0),
+      })
+      .limit(start && end ? undefined : 90)
+      .getMany();
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
