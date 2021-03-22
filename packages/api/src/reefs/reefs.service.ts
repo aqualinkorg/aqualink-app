@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { omit } from 'lodash';
+import moment from 'moment';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
@@ -234,6 +235,10 @@ export class ReefsService {
 
     if (!start || !end) {
       return query.limit(90).getMany();
+    }
+
+    if (!moment(start).isValid() || !moment(end).isValid()) {
+      throw new BadRequestException('Start or end is not a valid date');
     }
 
     return query
