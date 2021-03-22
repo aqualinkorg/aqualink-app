@@ -19,10 +19,10 @@ interface TimeSeriesData {
 export class TimeSeriesService {
   private logger = new Logger(TimeSeriesService.name);
 
-  private readonly emptyMetricsSourcesObject = Object.values(Metric).reduce(
+  private readonly emptyMetricsSourcesObject = Object.values(SourceType).reduce(
     (root, key) => ({
       ...root,
-      [key]: Object.values(SourceType).reduce(
+      [key]: Object.values(Metric).reduce(
         (sources, source) => ({ ...sources, [source]: [] }),
         {},
       ),
@@ -37,10 +37,10 @@ export class TimeSeriesService {
 
   private groupByMetricAndSource(data: TimeSeriesData[]) {
     return _(data)
-      .groupBy('metric')
+      .groupBy('source')
       .mapValues((grouped) => {
         return _(grouped)
-          .groupBy('source')
+          .groupBy('metric')
           .mapValues((groupedData) =>
             groupedData.map((o) => omit(o, 'metric', 'source')),
           )
