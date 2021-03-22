@@ -48,6 +48,7 @@ const DatePicker = ({
               onChange={onChange}
               InputProps={{
                 className: classes.textField,
+                inputProps: { className: classes.smallPadding },
               }}
               inputVariant="standard"
               KeyboardButtonProps={{ className: classes.calendarButton }}
@@ -66,7 +67,10 @@ const styles = (theme: Theme) =>
       marginLeft: "0.5rem",
     },
     calendarButton: {
-      padding: 0,
+      padding: "0 0 2px 0",
+    },
+    smallPadding: {
+      paddingBottom: 2,
     },
     textField: {
       width: "7.5rem",

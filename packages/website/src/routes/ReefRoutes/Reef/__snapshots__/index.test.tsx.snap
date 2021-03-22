@@ -1890,14 +1890,28 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <div
+            class="MuiContainer-root MuiContainer-maxWidthLg"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-box>
+                  <mock-typography
+                    classname="CombinedCharts-graphTitle-252"
+                    variant="h6"
+                  >
+                    DAILY SATELLITE TEMPERATURE (°C)
+                  </mock-typography>
+                </mock-box>
+              </div>
+            </div>
+          </div>
+          <div
             class="CombinedCharts-chart-251"
           >
-            <mock-typography
-              classname="CombinedCharts-graphTitle-252"
-              variant="h6"
-            >
-              DAILY SATELLITE TEMPERATURE (°C)
-            </mock-typography>
             Mock-Line
           </div>
         </div>

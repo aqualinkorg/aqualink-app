@@ -1,6 +1,9 @@
 import React from "react";
 import {
+  Box,
+  Container,
   createStyles,
+  Grid,
   Theme,
   Typography,
   withStyles,
@@ -26,6 +29,17 @@ const CombinedCharts = ({
   const { id, timezone, dailyData, depth, maxMonthlyMean } = reef;
   return (
     <div>
+      <Container>
+        <Grid container spacing={2}>
+          <Grid item>
+            <Box>
+              <Typography className={classes.graphTitle} variant="h6">
+                DAILY SATELLITE TEMPERATURE (°C)
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
       <ChartWithTooltip
         reefId={id}
         depth={depth}
@@ -36,11 +50,7 @@ const CombinedCharts = ({
         background
         className={classes.chart}
         timeZone={timezone}
-      >
-        <Typography className={classes.graphTitle} variant="h6">
-          DAILY SATELLITE TEMPERATURE (°C)
-        </Typography>
-      </ChartWithTooltip>
+      />
       {showSpotterChart && (
         <ChartWithCard
           title="SENSOR TEMPERATURE (°C)"
@@ -61,7 +71,7 @@ const styles = (theme: Theme) =>
     },
     graphTitle: {
       lineHeight: 1.5,
-      marginLeft: "4rem",
+      marginLeft: 27,
 
       [theme.breakpoints.down("xs")]: {
         marginLeft: 0,

@@ -206,7 +206,7 @@ const styles = () =>
   createStyles({
     chart: {
       height: 285,
-      marginBottom: 48,
+      marginBottom: 16,
       marginTop: 16,
     },
   });
