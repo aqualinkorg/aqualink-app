@@ -14,6 +14,7 @@ import { Metric } from './metrics.entity';
 
 @Entity()
 @Unique('no_duplicate_data', ['timestamp', 'reef', 'poi', 'metric', 'source'])
+@Unique('no_duplicate_reef_data', ['timestamp', 'reef', 'metric', 'source'])
 export class TimeSeries {
   @PrimaryGeneratedColumn()
   id: number;
