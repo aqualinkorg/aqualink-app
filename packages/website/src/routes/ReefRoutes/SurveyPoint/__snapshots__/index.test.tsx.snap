@@ -1161,7 +1161,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           display="flex"
           height="217px"
           justifycontent="center"
-          mb="48px"
+          mb="16px"
           mt="16px"
           textalign="center"
         >

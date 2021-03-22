@@ -88,7 +88,7 @@ const Chart = ({
   const noDataMessage = () => (
     <Box
       mt="16px"
-      mb="48px"
+      mb="16px"
       height="217px"
       display="flex"
       justifyContent="center"
@@ -106,7 +106,7 @@ const Chart = ({
         <Box
           height="285px"
           mt="16px"
-          mb="48px"
+          mb="16px"
           display="flex"
           justifyContent="center"
           alignItems="center"
