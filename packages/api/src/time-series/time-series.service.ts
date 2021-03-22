@@ -6,8 +6,9 @@ import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
-import { DataRangeDto } from './dto/data-range.dto';
+import { PoiDataRangeDto } from './dto/poi-data-range.dto';
 import { SourceType } from '../reefs/sources.entity';
+import { ReefDataRangeDto } from './dto/reef-data-range.dto';
 
 interface TimeSeriesData {
   value: number;
@@ -93,6 +94,24 @@ export class TimeSeriesService {
           .getRawMany();
   }
 
+  private getDataRangeQuery(reefId: number, poiId?: number) {
+    const poiCondition = poiId
+      ? `time_series.poi_id = ${poiId}`
+      : 'time_series.poi_id is NULL';
+
+    return this.timeSeriesRepository
+      .createQueryBuilder('time_series')
+      .select('metric')
+      .addSelect('source.type', 'source')
+      .addSelect('MIN(timestamp)', 'minDate')
+      .addSelect('MAX(timestamp)', 'maxDate')
+      .innerJoin('time_series.source', 'source')
+      .andWhere('time_series.reef_id = :reefId', { reefId })
+      .andWhere(poiCondition)
+      .groupBy('metric, source.type')
+      .getRawMany();
+  }
+
   async findPoiData(
     startDate: Date,
     endDate: Date,
@@ -134,20 +153,18 @@ export class TimeSeriesService {
     return _(this.groupByMetricAndSource(data));
   }
 
-  async findDataRange(dataRangeDto: DataRangeDto) {
-    const { reefId, poiId } = dataRangeDto;
+  async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
+    const { reefId, poiId } = poiDataRangeDto;
 
-    const data = await this.timeSeriesRepository
-      .createQueryBuilder('time_series')
-      .select('metric')
-      .addSelect('source.type', 'source')
-      .addSelect('MIN(timestamp)', 'minDate')
-      .addSelect('MAX(timestamp)', 'maxDate')
-      .innerJoin('time_series.source', 'source')
-      .andWhere('time_series.reef_id = :reefId', { reefId })
-      .andWhere('time_series.poi_id = :poiId', { poiId })
-      .groupBy('metric, source.type')
-      .getRawMany();
+    const data = await this.getDataRangeQuery(reefId, poiId);
+
+    return _(this.groupByMetricAndSource(data));
+  }
+
+  async findReefDataRange(reefDataRangeDto: ReefDataRangeDto) {
+    const { reefId } = reefDataRangeDto;
+
+    const data = await this.getDataRangeQuery(reefId);
 
     return _(this.groupByMetricAndSource(data));
   }
