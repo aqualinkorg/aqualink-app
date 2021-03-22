@@ -37,7 +37,7 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
  * @param endDate - The ending date
  */
 export const moreThanOneYear = (startDate: string, endDate: string) => {
-  const from = moment(new Date(startDate).toISOString());
-  const to = moment(new Date(endDate).toISOString());
+  const from = moment(startDate);
+  const to = moment(endDate);
   return to.diff(from, "years") >= 1;
 };
