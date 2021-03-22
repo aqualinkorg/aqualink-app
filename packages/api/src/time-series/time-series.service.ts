@@ -2,13 +2,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import _, { omit } from 'lodash';
 import { Repository } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
-import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 import { PoiDataRangeDto } from './dto/poi-data-range.dto';
 import { SourceType } from '../reefs/sources.entity';
-import { ReefDataRangeDto } from './dto/reef-data-range.dto';
 
 interface TimeSeriesData {
   value: number;
@@ -56,12 +54,8 @@ export class TimeSeriesService {
     metrics: Metric[],
     hourly: boolean,
     reefId: number,
-    poiId?: number,
+    poiId: number,
   ): Promise<TimeSeriesData[]> {
-    const poiCondition = poiId
-      ? `time_series.poi_id = ${poiId}`
-      : 'time_series.poi_id is NULL';
-
     return hourly
       ? this.timeSeriesRepository
           .createQueryBuilder('time_series')
@@ -72,7 +66,10 @@ export class TimeSeriesService {
           .innerJoin('time_series.source', 'source')
           .andWhere('metric IN (:...metrics)', { metrics })
           .andWhere('time_series.reef_id = :reefId', { reefId })
-          .andWhere(poiCondition)
+          .andWhere(
+            'time_series.poi_id = :poiId OR time_series.poi_id is NULL',
+            { poiId },
+          )
           .andWhere('timestamp >= :startDate', { startDate })
           .andWhere('timestamp <= :endDate', { endDate })
           .groupBy("date_trunc('hour', timestamp), metric, source.type")
@@ -87,7 +84,10 @@ export class TimeSeriesService {
           .innerJoin('time_series.source', 'source')
           .andWhere('metric IN (:...metrics)', { metrics })
           .andWhere('time_series.reef_id = :reefId', { reefId })
-          .andWhere(poiCondition)
+          .andWhere(
+            'time_series.poi_id = :poiId OR time_series.poi_id is NULL',
+            { poiId },
+          )
           .andWhere('timestamp >= :startDate', { startDate })
           .andWhere('timestamp <= :endDate', { endDate })
           .orderBy('timestamp', 'ASC')
@@ -95,10 +95,6 @@ export class TimeSeriesService {
   }
 
   private getDataRangeQuery(reefId: number, poiId?: number) {
-    const poiCondition = poiId
-      ? `time_series.poi_id = ${poiId}`
-      : 'time_series.poi_id is NULL';
-
     return this.timeSeriesRepository
       .createQueryBuilder('time_series')
       .select('metric')
@@ -107,7 +103,9 @@ export class TimeSeriesService {
       .addSelect('MAX(timestamp)', 'maxDate')
       .innerJoin('time_series.source', 'source')
       .andWhere('time_series.reef_id = :reefId', { reefId })
-      .andWhere(poiCondition)
+      .andWhere('time_series.poi_id = :poiId OR time_series.poi_id is NULL', {
+        poiId,
+      })
       .groupBy('metric, source.type')
       .getRawMany();
   }
@@ -133,38 +131,10 @@ export class TimeSeriesService {
     return _(this.groupByMetricAndSource(data));
   }
 
-  async findReefData(
-    startDate: Date,
-    endDate: Date,
-    metrics: Metric[],
-    hourly: boolean,
-    reefDataDto: ReefDataDto,
-  ) {
-    const { reefId } = reefDataDto;
-
-    const data: TimeSeriesData[] = await this.getDataQuery(
-      startDate,
-      endDate,
-      metrics,
-      hourly,
-      reefId,
-    );
-
-    return _(this.groupByMetricAndSource(data));
-  }
-
   async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
     const { reefId, poiId } = poiDataRangeDto;
 
     const data = await this.getDataRangeQuery(reefId, poiId);
-
-    return _(this.groupByMetricAndSource(data));
-  }
-
-  async findReefDataRange(reefDataRangeDto: ReefDataRangeDto) {
-    const { reefId } = reefDataRangeDto;
-
-    const data = await this.getDataRangeQuery(reefId);
 
     return _(this.groupByMetricAndSource(data));
   }
