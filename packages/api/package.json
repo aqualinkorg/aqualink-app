@@ -58,7 +58,6 @@
     "bluebird": "^3.7.2",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
-    "csv-parse": "^4.15.1",
     "firebase-admin": "^9.0.0",
     "geo-tz": "^6.0.0",
     "geojson": "^0.5.0",
