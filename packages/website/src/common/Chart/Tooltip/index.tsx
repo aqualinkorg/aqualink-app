@@ -57,14 +57,16 @@ const Tooltip = ({
   bottomTemperature,
   spotterSurfaceTemp,
   surfaceTemperature,
+  hoboBottomTemp,
+  monthlyMax,
   surveyId,
   classes,
 }: TooltipProps) => {
-  const hourlyData = !isNull(spotterSurfaceTemp);
+  const hasHourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
-    format: `MM/DD/YY${hourlyData ? " hh:mm A" : ""}`,
-    displayTimezone: hourlyData,
+    format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
+    displayTimezone: hasHourlyData,
     timeZone: userTimeZone,
     timeZoneToDisplay: reefTimeZone,
   });
@@ -74,12 +76,18 @@ const Tooltip = ({
     color: string;
     title: string;
   }[] = [
+    { temperature: monthlyMax, color: "#d84424", title: "MONTHLY MEAN" },
     { temperature: surfaceTemperature, color: "#6bc1e1", title: "SURFACE" },
     { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
       temperature: bottomTemperature,
       color: "rgba(250, 141, 0)",
-      title: `BUOY ${depth}m`,
+      title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
+    },
+    {
+      temperature: hoboBottomTemp,
+      color: "rgba(250, 141, 0)",
+      title: "HOBO LOGGER",
     },
   ];
 
@@ -169,7 +177,7 @@ const styles = () =>
       padding: "0rem 1rem 0rem 1rem",
     },
     tooltipContentItem: {
-      width: "120px",
+      width: "150px",
       height: 20,
       margin: "0",
     },
@@ -199,6 +207,8 @@ export interface TooltipData {
   bottomTemperature: number | null;
   surfaceTemperature: number | null;
   surveyId?: number | null;
+  hoboBottomTemp: number | null;
+  monthlyMax: number | null;
   reefTimeZone?: string | null;
   userTimeZone?: string;
 }

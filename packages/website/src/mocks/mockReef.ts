@@ -19,7 +19,9 @@ export const mockReef: Reef = {
   videoStream: null,
   region: { name: "Hawaii" },
   admins: [mockUser],
+  surveyPoints: [],
   stream: null,
+  monthlyMax: [],
   liveData: {
     reef: { id: 1 },
     bottomTemperature: {

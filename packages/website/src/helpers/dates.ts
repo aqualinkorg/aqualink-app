@@ -1,5 +1,14 @@
 import moment from "moment-timezone";
-import { DailyData, Range, SpotterData } from "../store/Reefs/types";
+import { range as createRange } from "lodash";
+
+import {
+  DailyData,
+  MonthlyMax,
+  MonthlyMaxData,
+  Range,
+  SofarValue,
+  SpotterData,
+} from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 
@@ -13,15 +22,36 @@ interface DisplayDateParams {
   timeZoneToDisplay?: string | null;
 }
 
-export const subtractFromDate = (endDate: string, amount: Range): string => {
-  const date = new Date(endDate);
-  const day = 1000 * 60 * 60 * 24;
+export const isBefore = (start: string, end: string) =>
+  new Date(start).getTime() <= new Date(end).getTime();
+
+export const isBetween = (date: string, start: string, end: string) =>
+  isBefore(date, end) && isBefore(start, date);
+
+export const subtractFromDate = (
+  endDate: string,
+  amount: Range,
+  multiple?: number
+): string => {
   switch (amount) {
     case "day":
-      return new Date(date.setTime(date.getTime() - 1 * day)).toISOString();
+      return moment(endDate)
+        .subtract(multiple || 1, "days")
+        .toISOString();
     case "week":
+      return moment(endDate)
+        .subtract(multiple || 1, "weeks")
+        .toISOString();
+    case "month":
+      return moment(endDate)
+        .subtract(multiple || 1, "months")
+        .toISOString();
+    case "year":
+      return moment(endDate)
+        .subtract(multiple || 1, "years")
+        .toISOString();
     default:
-      return new Date(date.setTime(date.getTime() - 7 * day)).toISOString();
+      return endDate;
   }
 };
 
@@ -50,19 +80,43 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
   }
 };
 
-export const findMaxDate = (
+/**
+ * Depending on the type param, it calculates the maximum or minimun date
+ * for the combined temperature data
+ * @param dailyData - Array of daily data
+ * @param spotterData - Object of spotterData (optional)
+ * @param hoboBottomTemperature - Array of HOBO data (optional)
+ * @param type - Type of date we seek (defaults to "max")
+ */
+export const findMarginalDate = (
+  monthlyMaxData: MonthlyMaxData[],
   dailyData: DailyData[],
-  spotterData: SpotterData
+  spotterData?: SpotterData | null,
+  hoboBottomTemperature?: SofarValue[],
+  type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
+    ...monthlyMaxData,
     ...dailyData,
-    ...spotterData.surfaceTemperature.map((item) => ({
+    ...(spotterData?.surfaceTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
-    })),
+    })) || []),
+    ...(spotterData?.bottomTemperature?.map((item) => ({
+      date: item.timestamp,
+      value: item.value,
+    })) || []),
+    ...(hoboBottomTemperature?.map((item) => ({
+      date: item.timestamp,
+      value: item.value,
+    })) || []),
   ];
 
-  const sortedData = sortByDate(combinedData, "date", "desc");
+  const sortedData = sortByDate(
+    combinedData,
+    "date",
+    type === "max" ? "desc" : "asc"
+  );
 
   return sortedData[0].date;
 };
@@ -77,15 +131,22 @@ export const findChartPeriod = (range: Range) => {
   }
 };
 
+export function setTimeZone(date: Date, timeZone?: string | null): string;
+
+export function setTimeZone(
+  date: Date | null,
+  timeZone?: string | null
+): string | null;
+
 // Returns the same date but for a different time zone
-export const setTimeZone = (date: Date | null, timeZone?: string | null) => {
+export function setTimeZone(date: Date | null, timeZone?: string | null) {
   if (date && timeZone) {
     const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
     const diff = date.getTime() - localTime.getTime();
     return new Date(date.getTime() + diff).toISOString();
   }
-  return date;
-};
+  return date?.toISOString() || null;
+}
 
 export const getTimeZoneName = (timeZone: string): string => {
   const rawTimeZoneName = moment().tz(timeZone).format("z");
@@ -175,6 +236,15 @@ export const convertSpotterDataToLocalTime = (
   })),
 });
 
+export const convertHoboDataToLocalTime = (
+  hoboData: SofarValue[],
+  timeZone?: string | null
+): SofarValue[] =>
+  hoboData.map((item) => ({
+    ...item,
+    timestamp: convertToLocalTime(item.timestamp, timeZone),
+  }));
+
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],
   timeZone?: string | null
@@ -185,3 +255,45 @@ export const convertSurveyDataToLocalTime = (
       ? convertToLocalTime(survey.diveDate, timeZone)
       : survey.diveDate,
   }));
+
+// Return a copy of monthly max data for each year
+export const generateMonthlyMaxTimestamps = (
+  monthlyMax: MonthlyMax[],
+  startDate?: string,
+  endDate?: string,
+  timeZone?: string | null
+): MonthlyMaxData[] => {
+  const startYear = startDate
+    ? new Date(startDate).getFullYear()
+    : new Date().getFullYear();
+  const endYear = endDate
+    ? new Date(endDate).getFullYear()
+    : new Date().getFullYear();
+
+  const years = createRange(startYear - 1, endYear + 1);
+
+  const yearlyData = years.map((year) => {
+    return monthlyMax.map(({ month, temperature }) => ({
+      value: temperature,
+      date: convertToLocalTime(
+        moment()
+          .set({
+            year,
+            month: month - 1,
+            date: 15,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0,
+          })
+          .toISOString(),
+        timeZone
+      ),
+    }));
+  });
+
+  return yearlyData.reduce<MonthlyMaxData[]>(
+    (curr, item) => [...curr, ...item],
+    []
+  );
+};

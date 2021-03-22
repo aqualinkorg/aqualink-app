@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEvent, useEffect } from "react";
+import React, { useState, useCallback, ChangeEvent } from "react";
 import {
   withStyles,
   WithStyles,
@@ -15,7 +15,7 @@ import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import Dropzone, { FileRejection } from "react-dropzone";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import MediaCard from "./MediaCard";
@@ -24,8 +24,12 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
-import { Pois } from "../../../store/Reefs/types";
 import reefServices from "../../../services/reefServices";
+import {
+  reefDetailsSelector,
+  setReefPois,
+} from "../../../store/Reefs/selectedReefSlice";
+import { Pois } from "../../../store/Reefs/types";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -36,16 +40,18 @@ const UploadMedia = ({
   classes,
 }: UploadMediaProps) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
+  const surveyPointOptions =
+    useSelector(reefDetailsSelector)?.surveyPoints || [];
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [featuredFile, setFeaturedFile] = useState<number>(0);
-  const [surveyPointOptions, setSurveyPointOptions] = useState<Pois[]>([]);
   const missingObservations =
     metadata.findIndex((item) => item.observation === null) > -1;
 
@@ -73,12 +79,6 @@ const UploadMedia = ({
     [files, previews, metadata]
   );
 
-  useEffect(() => {
-    reefServices
-      .getReefPois(`${reefId}`)
-      .then((response) => setSurveyPointOptions(response.data));
-  }, [setSurveyPointOptions, reefId]);
-
   const handlePoiOptionAdd = (index: number, name: string) => {
     surveyServices
       .addNewPoi(reefId, name, user?.token)
@@ -86,8 +86,12 @@ const UploadMedia = ({
         return reefServices.getReefPois(`${reefId}`);
       })
       .then((response) => {
-        const points = response.data;
-        setSurveyPointOptions(points);
+        const points: Pois[] = response.data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          polygon: null,
+        }));
+        dispatch(setReefPois(points));
 
         return points.find((point) => point.name === name)?.id;
       })

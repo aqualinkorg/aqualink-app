@@ -1,6 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import type { TableRow } from "../Homepage/types";
-import type { Reef } from "./types";
+import type {
+  HoboData,
+  HoboDataRange,
+  HoboDataRangeResponse,
+  HoboDataResponse,
+  Reef,
+} from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
 export function getReefNameAndRegion(reef: Reef) {
@@ -37,3 +43,23 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
     };
   });
 };
+
+export const mapHoboData = (hoboData: HoboDataResponse): HoboData => ({
+  alert: hoboData.alert,
+  bottomTemperature: hoboData.bottom_temperature,
+  dhw: hoboData.dhw,
+  satelliteTemperature: hoboData.satellite_temperature,
+  sstAnomaly: hoboData.sst_anomaly,
+  surfaceTemperature: hoboData.surface_temperature,
+});
+
+export const mapHoboDataRanges = (
+  ranges: HoboDataRangeResponse
+): HoboDataRange => ({
+  alert: ranges.alert,
+  bottomTemperature: ranges.bottom_temperature,
+  dhw: ranges.dhw,
+  satelliteTemperature: ranges.satellite_temperature,
+  sstAnomaly: ranges.sst_anomaly,
+  surfaceTemperature: ranges.surface_temperature,
+});

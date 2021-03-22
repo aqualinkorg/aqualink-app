@@ -16,6 +16,7 @@ export interface Point {
 export interface Pois {
   id: number;
   name: string | null;
+  polygon: Polygon | Point | null;
 }
 
 export interface SofarValue {
@@ -23,7 +24,7 @@ export interface SofarValue {
   value: number;
 }
 
-export type Range = "day" | "week";
+export type Range = "day" | "week" | "month" | "year";
 
 export interface SpotterPosition {
   latitude: {
@@ -93,15 +94,59 @@ export interface DailyData {
   weeklyAlertLevel?: number;
 }
 
+export interface MonthlyMaxData {
+  value: number;
+  date: string;
+}
+
 interface Region {
   name: string | null;
 }
 
+interface DataRange {
+  minDate: string;
+  maxDate: string;
+}
+
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
+
+// The API sends HOBO data with the following snake_case keys.
+// We need to create a new type with the same keys but in camelCase
+// TODO: Combine these two types when we upgrade typescript to V4.1
+// as described in https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+export type MetricsKeys =
+  | "alert"
+  | "dhw"
+  | "satellite_temperature"
+  | "surface_temperature"
+  | "bottom_temperature"
+  | "sst_anomaly";
+
+export type Metrics =
+  | "alert"
+  | "dhw"
+  | "satelliteTemperature"
+  | "surfaceTemperature"
+  | "bottomTemperature"
+  | "sstAnomaly";
+
+export type HoboDataResponse = Record<MetricsKeys, SofarValue[]>;
+
+export type HoboDataRangeResponse = Record<MetricsKeys, DataRange[]>;
+
+export type HoboData = Record<Metrics, SofarValue[]>;
+
+export type HoboDataRange = Record<Metrics, DataRange[]>;
 
 export interface SpotterData {
   surfaceTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
+}
+
+export interface MonthlyMax {
+  id: number;
+  month: number;
+  temperature: number;
 }
 
 export interface Reef {
@@ -122,12 +167,28 @@ export interface Reef {
   applied?: boolean;
   spotterId: string | null;
   timezone?: string | null;
+  surveyPoints: Pois[];
+  monthlyMax: MonthlyMax[];
 }
 
 export interface SpotterDataRequestParams {
   id: string;
   startDate: string;
   endDate: string;
+}
+
+export interface HoboDataRequestParams {
+  reefId: string;
+  pointId: string;
+  start: string;
+  end: string;
+  metrics: MetricsKeys[];
+  hourly?: boolean;
+}
+
+export interface HoboDataRangeRequestParams {
+  reefId: string;
+  pointId: string;
 }
 
 export interface ReefRegisterResponseData {
@@ -182,6 +243,10 @@ export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
   spotterData?: SpotterData | null;
+  hoboData?: HoboData;
+  hoboDataRange?: HoboDataRange;
+  hoboDataLoading: boolean;
+  hoboDataRangeLoading: boolean;
   spotterDataLoading: boolean;
   loading: boolean;
   error?: string | null;

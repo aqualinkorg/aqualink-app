@@ -7,41 +7,52 @@ import {
   Grid,
   Box,
   Typography,
+  TypographyProps,
 } from "@material-ui/core";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import {
   KeyboardDatePicker,
+  KeyboardDatePickerProps,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-const DatePicker = ({ value, onChange, classes }: DatePickerProps) => {
+const DatePicker = ({
+  value,
+  dateName,
+  dateNameTextVariant,
+  pickerSize,
+  autoOk,
+  onChange,
+  classes,
+}: DatePickerProps) => {
   return (
     <Grid item>
       <Box display="flex" alignItems="flex-end">
-        <Typography variant="h6" color="textSecondary">
-          Date:
+        <Typography variant={dateNameTextVariant || "h6"} color="textSecondary">
+          {`${dateName || "Date"}:`}
         </Typography>
         <div className={classes.datePicker}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+              size={pickerSize}
               className={classes.textField}
+              helperText=""
               disableToolbar
               format="MM/dd/yyyy"
-              id="date-picker"
               name="datePicker"
-              autoOk
+              autoOk={autoOk}
               showTodayButton
-              disableFuture
               value={value || null}
               onChange={onChange}
-              inputProps={{
+              InputProps={{
                 className: classes.textField,
+                inputProps: { className: classes.smallPadding },
               }}
               inputVariant="standard"
               KeyboardButtonProps={{ className: classes.calendarButton }}
-              keyboardIcon={<CalendarTodayIcon />}
+              keyboardIcon={<CalendarTodayIcon fontSize="small" />}
             />
           </MuiPickersUtilsProvider>
         </div>
@@ -56,7 +67,10 @@ const styles = (theme: Theme) =>
       marginLeft: "0.5rem",
     },
     calendarButton: {
-      padding: 0,
+      padding: "0 0 2px 0",
+    },
+    smallPadding: {
+      paddingBottom: 2,
     },
     textField: {
       width: "7.5rem",
@@ -72,8 +86,19 @@ const styles = (theme: Theme) =>
 
 interface DatePickerIncomingProps {
   value: string | null;
+  dateName?: string;
+  dateNameTextVariant?: TypographyProps["variant"];
+  pickerSize?: KeyboardDatePickerProps["size"];
+  autoOk?: boolean;
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
 }
+
+DatePicker.defaultProps = {
+  dateName: undefined,
+  dateNameTextVariant: undefined,
+  pickerSize: undefined,
+  autoOk: true,
+};
 
 type DatePickerProps = DatePickerIncomingProps & WithStyles<typeof styles>;
 

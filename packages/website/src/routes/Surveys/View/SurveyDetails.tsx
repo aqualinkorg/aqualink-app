@@ -15,20 +15,14 @@ import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
-import ObservationBox from "./observationBox";
+import ObservationBox from "./ObservationBox";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getReefNameAndRegion(reef);
   return (
-    <Grid
-      style={{ marginTop: 16 }}
-      container
-      item
-      xs={12}
-      justify="space-between"
-    >
+    <Grid container item xs={12} justify="space-between" spacing={2}>
       {survey && (
         <Grid container item direction="column" spacing={3} xs={12} lg={8}>
           <Grid item>
@@ -43,7 +37,9 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           </Grid>
           <Grid container item>
             <Grid container item direction="column" xs={12} md={4}>
-              <Typography style={{ fontSize: 18 }}>{regionName}</Typography>
+              <Typography className={classes.regionName}>
+                {regionName}
+              </Typography>
               <Typography variant="subtitle1">{reef.name}</Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -91,8 +87,9 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
       <Grid item xs={12} md={6} lg={3}>
         <ObservationBox
           depth={reef.depth}
-          date={survey?.diveDate ? new Date(survey?.diveDate) : new Date()}
+          date={survey?.diveDate}
           dailyData={reef.dailyData}
+          timeZone={reef.timezone}
         />
       </Grid>
     </Grid>
@@ -101,6 +98,9 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
 
 const styles = () =>
   createStyles({
+    regionName: {
+      fontSize: 18,
+    },
     inlineText: {
       display: "inline",
       fontWeight: "normal",
