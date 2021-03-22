@@ -25,6 +25,19 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
     </mock-box>
   </mock-hidden>
   <mock-selectedreefcard />
+  <mock-box
+    classname="ReefTable-switchWrapper-4"
+  >
+    <mock-switch
+      color="primary"
+    />
+    <mock-typography
+      color="textSecondary"
+      variant="h6"
+    >
+      deployed buoys only
+    </mock-typography>
+  </mock-box>
   <mock-hidden
     smup="true"
   >

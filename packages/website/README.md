@@ -23,7 +23,6 @@ REACT_APP_API_BASE_URL="http://localhost:8080/"
 REACT_APP_FIREBASE_API_KEY=
 REACT_APP_SOFAR_API_TOKEN=
 REACT_APP_FEATURED_REEF_ID=1
-REACT_APP_CARTO_API_KEY=
 ```
 
 In development, we optionally use [dotenv](https://www.npmjs.com/package/dotenv) to automatically load environment

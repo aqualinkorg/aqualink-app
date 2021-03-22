@@ -28,8 +28,6 @@ import {
 } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
 import { useWindowSize } from "../../../helpers/useWindowSize";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import { isSuperAdmin } from "../../../helpers/user";
 import {
   reefOnMapSelector,
   setWithSpotterOnly,
@@ -65,7 +63,6 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys).reduce<ReactNode[]>(
 const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
-  const user = useSelector(userInfoSelector);
   const withSpotterOnly = useSelector(withSpotterOnlySelector);
   const dispatch = useDispatch();
   const { height } = useWindowSize() || {};
@@ -128,19 +125,17 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
         </Box>
       </Hidden>
       <SelectedReefCard />
-      {isSuperAdmin(user) && (
-        <Box className={classes.switchWrapper}>
-          <Switch
-            checked={withSpotterOnly}
-            onClick={onInteractiveClick}
-            onChange={toggleSwitch}
-            color="primary"
-          />
-          <Typography color="textSecondary" variant="h6">
-            deployed buoys only
-          </Typography>
-        </Box>
-      )}
+      <Box className={classes.switchWrapper}>
+        <Switch
+          checked={withSpotterOnly}
+          onClick={onInteractiveClick}
+          onChange={toggleSwitch}
+          color="primary"
+        />
+        <Typography color="textSecondary" variant="h6">
+          deployed buoys only
+        </Typography>
+      </Box>
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
       <Hidden smUp>
         <Box
