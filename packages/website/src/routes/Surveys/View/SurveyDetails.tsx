@@ -6,18 +6,21 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
+
 import {
   getNumberOfImages,
   getNumberOfSurveyPoints,
 } from "../../../helpers/surveyMedia";
 import { displayTimeInLocalTimezone } from "../../../helpers/dates";
-
 import type { Reef } from "../../../store/Reefs/types";
 import type { SurveyState } from "../../../store/Survey/types";
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
 import ObservationBox from "./ObservationBox";
+import { reefGranularDailyDataSelector } from "../../../store/Reefs/selectedReefSlice";
 
 const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
+  const dailyData = useSelector(reefGranularDailyDataSelector);
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
   const { region: regionName } = getReefNameAndRegion(reef);
@@ -88,7 +91,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
         <ObservationBox
           depth={reef.depth}
           date={survey?.diveDate}
-          dailyData={reef.dailyData}
+          dailyData={dailyData || []}
           timeZone={reef.timezone}
         />
       </Grid>
