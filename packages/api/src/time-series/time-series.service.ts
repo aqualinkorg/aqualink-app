@@ -20,6 +20,7 @@ interface TimeSeriesData {
 export class TimeSeriesService {
   private logger = new Logger(TimeSeriesService.name);
 
+  // TODO: Revisit the response structure and simplify when we have more metrics and sources available
   private readonly emptyMetricsSourcesObject = Object.values(SourceType).reduce(
     (root, key) => ({
       ...root,
