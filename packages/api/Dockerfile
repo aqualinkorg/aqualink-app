@@ -4,3 +4,14 @@ FROM node:12
 RUN apt update
 RUN apt install -y sudo
 RUN sudo apt install -y libnetcdf-dev
+
+# Run application
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN yarn install --production
+
+COPY . .
+
+CMD [ "yarn", "start" ]
