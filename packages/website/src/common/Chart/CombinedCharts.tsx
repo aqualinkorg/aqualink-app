@@ -56,6 +56,7 @@ const CombinedCharts = ({
           title="SENSOR TEMPERATURE (°C)"
           reef={reef}
           pointId={closestSurveyPointId}
+          surveysFiltered={false}
         />
       )}
     </div>

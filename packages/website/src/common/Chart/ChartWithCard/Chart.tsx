@@ -47,6 +47,7 @@ const Chart = ({
   pickerEndDate,
   startDate,
   endDate,
+  surveysFiltered,
   pickerErrored,
   onStartDateChange,
   onEndDateChange,
@@ -65,7 +66,7 @@ const Chart = ({
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     "any",
-    pointId || -1
+    surveysFiltered ? pointId || -1 : -1
   );
 
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
@@ -223,6 +224,7 @@ interface ChartIncomingProps {
   startDate: string;
   endDate: string;
   pickerErrored: boolean;
+  surveysFiltered: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }

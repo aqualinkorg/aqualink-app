@@ -42,6 +42,7 @@ import ViewRange from "./ViewRange";
 const ChartWithCard = ({
   reef,
   pointId,
+  surveysFiltered,
   title,
   classes,
 }: ChartWithCardProps) => {
@@ -321,6 +322,7 @@ const ChartWithCard = ({
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
             pickerErrored={pickerErrored}
+            surveysFiltered={surveysFiltered}
           />
         </Grid>
         {!pickerErrored && (
@@ -395,6 +397,7 @@ const styles = (theme: Theme) =>
 interface ChartWithCardIncomingProps {
   reef: Reef;
   pointId: string | undefined;
+  surveysFiltered: boolean;
   title?: string;
 }
 
