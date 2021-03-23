@@ -92,7 +92,6 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
           depth={reef.depth}
           date={survey?.diveDate}
           dailyData={dailyData || []}
-          timeZone={reef.timezone}
         />
       </Grid>
     </Grid>

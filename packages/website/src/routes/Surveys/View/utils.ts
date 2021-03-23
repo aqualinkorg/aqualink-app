@@ -12,17 +12,12 @@ export const getCardTemperatureValues = (
   dailyData: DailyData[],
   spotterData: TimeSeries | undefined,
   hoboData: TimeSeries | undefined,
-  date: string | null | undefined,
-  timeZone: string | null | undefined
+  date: string | null | undefined
 ) => {
   const surfaceData = dailyData.find(
     (item) =>
-      moment(item.date)
-        .tz(timeZone || "UTC")
-        .format("MM/DD/YYYY") ===
-      moment(date)
-        .tz(timeZone || "UTC")
-        .format("MM/DD/YYYY")
+      moment(item.date).format("MM/DD/YYYY") ===
+      moment(date).format("MM/DD/YYYY")
   );
 
   return {

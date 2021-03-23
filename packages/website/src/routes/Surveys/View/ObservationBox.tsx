@@ -23,7 +23,6 @@ const ObservationBox = ({
   depth,
   dailyData,
   date,
-  timeZone,
   classes,
 }: ObservationBoxProps) => {
   const { hobo: hoboData, spotter: spotterData } =
@@ -36,13 +35,7 @@ const ObservationBox = ({
     hoboSurface,
     spotterBottom,
     spotterSurface,
-  } = getCardTemperatureValues(
-    dailyData,
-    spotterData,
-    hoboData,
-    date,
-    timeZone
-  );
+  } = getCardTemperatureValues(dailyData, spotterData, hoboData, date);
 
   return (
     <div className={classes.outerDiv}>
@@ -131,12 +124,10 @@ interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
   date?: string | null;
-  timeZone?: string | null;
 }
 
 ObservationBox.defaultProps = {
   date: null,
-  timeZone: null,
 };
 
 type ObservationBoxProps = ObservationBoxIncomingProps &
