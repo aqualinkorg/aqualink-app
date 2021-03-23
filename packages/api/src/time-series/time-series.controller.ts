@@ -11,7 +11,8 @@ import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeriesService } from './time-series.service';
-import { DataRangeDto } from './dto/data-range.dto';
+import { PoiDataRangeDto } from './dto/poi-data-range.dto';
+import { ReefDataRangeDto } from './dto/reef-data-range.dto';
 
 @Controller('time-series')
 export class TimeSeriesController {
@@ -52,7 +53,12 @@ export class TimeSeriesController {
   }
 
   @Get('reefs/:reefId/pois/:poiId/range')
-  findDataRange(@Param() dataRangeDto: DataRangeDto) {
-    return this.timeSeriesService.findDataRange(dataRangeDto);
+  findPoiDataRange(@Param() poiDataRangeDto: PoiDataRangeDto) {
+    return this.timeSeriesService.findPoiDataRange(poiDataRangeDto);
+  }
+
+  @Get('reefs/:reefId/range')
+  findReefDataRange(@Param() reefDataRangeDto: ReefDataRangeDto) {
+    return this.timeSeriesService.findReefDataRange(reefDataRangeDto);
   }
 }

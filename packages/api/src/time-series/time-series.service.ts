@@ -6,7 +6,9 @@ import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
-import { DataRangeDto } from './dto/data-range.dto';
+import { PoiDataRangeDto } from './dto/poi-data-range.dto';
+import { SourceType } from '../reefs/sources.entity';
+import { ReefDataRangeDto } from './dto/reef-data-range.dto';
 
 interface TimeSeriesData {
   value: number;
@@ -18,8 +20,15 @@ interface TimeSeriesData {
 export class TimeSeriesService {
   private logger = new Logger(TimeSeriesService.name);
 
-  private readonly emptyMetricsObject = Object.values(Metric).reduce(
-    (obj, key) => ({ ...obj, [key]: [] }),
+  // TODO: Revisit the response structure and simplify when we have more metrics and sources available
+  private readonly emptyMetricsSourcesObject = Object.values(SourceType).reduce(
+    (root, key) => ({
+      ...root,
+      [key]: Object.values(Metric).reduce(
+        (sources, source) => ({ ...sources, [source]: [] }),
+        {},
+      ),
+    }),
     {},
   );
 
@@ -28,13 +37,18 @@ export class TimeSeriesService {
     private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
 
-  private groupByMetric(data: TimeSeriesData[]) {
+  private groupByMetricAndSource(data: TimeSeriesData[]) {
     return _(data)
-      .groupBy('metric')
-      .mapValues((groupedData) => {
-        return groupedData.map((o) => omit(o, 'metric'));
+      .groupBy('source')
+      .mapValues((grouped) => {
+        return _(grouped)
+          .groupBy('metric')
+          .mapValues((groupedData) =>
+            groupedData.map((o) => omit(o, 'metric', 'source')),
+          )
+          .toJSON();
       })
-      .merge(this.emptyMetricsObject);
+      .merge(this.emptyMetricsSourcesObject);
   }
 
   private getDataQuery(
@@ -45,20 +59,24 @@ export class TimeSeriesService {
     reefId: number,
     poiId?: number,
   ): Promise<TimeSeriesData[]> {
-    const poiCondition = poiId ? `poi_id = ${poiId}` : 'poi_id is NULL';
+    const poiCondition = poiId
+      ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
+      : 'time_series.poi_id is NULL';
 
     return hourly
       ? this.timeSeriesRepository
           .createQueryBuilder('time_series')
           .select('avg(value)', 'value')
           .addSelect('metric')
+          .addSelect('source.type', 'source')
           .addSelect("date_trunc('hour', timestamp)", 'timestamp')
+          .innerJoin('time_series.source', 'source')
           .andWhere('metric IN (:...metrics)', { metrics })
-          .andWhere('reef_id = :reefId', { reefId })
+          .andWhere('time_series.reef_id = :reefId', { reefId })
           .andWhere(poiCondition)
           .andWhere('timestamp >= :startDate', { startDate })
           .andWhere('timestamp <= :endDate', { endDate })
-          .groupBy("date_trunc('hour', timestamp), metric")
+          .groupBy("date_trunc('hour', timestamp), metric, source.type")
           .orderBy("date_trunc('hour', timestamp)", 'ASC')
           .getRawMany()
       : this.timeSeriesRepository
@@ -66,13 +84,33 @@ export class TimeSeriesService {
           .select('value')
           .addSelect('metric')
           .addSelect('timestamp')
+          .addSelect('source.type', 'source')
+          .innerJoin('time_series.source', 'source')
           .andWhere('metric IN (:...metrics)', { metrics })
-          .andWhere('reef_id = :reefId', { reefId })
+          .andWhere('time_series.reef_id = :reefId', { reefId })
           .andWhere(poiCondition)
           .andWhere('timestamp >= :startDate', { startDate })
           .andWhere('timestamp <= :endDate', { endDate })
           .orderBy('timestamp', 'ASC')
           .getRawMany();
+  }
+
+  private getDataRangeQuery(reefId: number, poiId?: number) {
+    const poiCondition = poiId
+      ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
+      : 'time_series.poi_id is NULL';
+
+    return this.timeSeriesRepository
+      .createQueryBuilder('time_series')
+      .select('metric')
+      .addSelect('source.type', 'source')
+      .addSelect('MIN(timestamp)', 'minDate')
+      .addSelect('MAX(timestamp)', 'maxDate')
+      .innerJoin('time_series.source', 'source')
+      .andWhere('time_series.reef_id = :reefId', { reefId })
+      .andWhere(poiCondition)
+      .groupBy('metric, source.type')
+      .getRawMany();
   }
 
   async findPoiData(
@@ -93,7 +131,7 @@ export class TimeSeriesService {
       poiId,
     );
 
-    return this.groupByMetric(data);
+    return _(this.groupByMetricAndSource(data));
   }
 
   async findReefData(
@@ -113,22 +151,22 @@ export class TimeSeriesService {
       reefId,
     );
 
-    return this.groupByMetric(data);
+    return _(this.groupByMetricAndSource(data));
   }
 
-  async findDataRange(dataRangeDto: DataRangeDto) {
-    const { reefId, poiId } = dataRangeDto;
+  async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
+    const { reefId, poiId } = poiDataRangeDto;
 
-    const data = await this.timeSeriesRepository
-      .createQueryBuilder('time_series')
-      .select('metric')
-      .addSelect('MIN(timestamp)', 'minDate')
-      .addSelect('MAX(timestamp)', 'maxDate')
-      .andWhere('reef_id = :reefId', { reefId })
-      .andWhere('poi_id = :poiId', { poiId })
-      .groupBy('metric')
-      .getRawMany();
+    const data = await this.getDataRangeQuery(reefId, poiId);
 
-    return this.groupByMetric(data);
+    return _(this.groupByMetricAndSource(data));
+  }
+
+  async findReefDataRange(reefDataRangeDto: ReefDataRangeDto) {
+    const { reefId } = reefDataRangeDto;
+
+    const data = await this.getDataRangeQuery(reefId);
+
+    return _(this.groupByMetricAndSource(data));
   }
 }
