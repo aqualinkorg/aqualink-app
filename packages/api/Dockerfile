@@ -6,6 +6,7 @@ RUN apt install -y sudo
 RUN sudo apt install -y libnetcdf-dev
 
 # Run application
+ENV NODE_ENV=production
 WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
