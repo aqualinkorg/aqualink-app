@@ -13,18 +13,16 @@ import {
   reefDetailsSelector,
   reefRequest,
   reefLoadingSelector,
-  reefHoboDataRangeRequest,
-  reefHoboDataRangeSelector,
-  reefHoboDataRequest,
-  clearHoboDataRange,
-  clearHoboData,
-  reefHoboDataRangeLoadingSelector,
+  reefTimeSeriesDataRangeRequest,
+  reefTimeSeriesDataRangeSelector,
+  clearTimeSeriesDataRange,
+  clearTimeSeriesData,
+  reefTimeSeriesDataRangeLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
   surveyListLoadingSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { subtractFromDate } from "../../../helpers/dates";
 
 const BG_COLOR = "rgb(245, 246, 246)";
 
@@ -37,10 +35,12 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
-  const hoboRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
+  const timeSeriesRangeLoading = useSelector(
+    reefTimeSeriesDataRangeLoadingSelector
+  );
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefHoboDataRangeSelector) || {};
-  const loading = reefLoading || surveysLoading || hoboRangeLoading;
+    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
+  const loading = reefLoading || surveysLoading || timeSeriesRangeLoading;
 
   const hasSpotterData = Boolean(reef?.liveData?.surfaceTemperature);
   const hasRange = !!(
@@ -52,32 +52,15 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     return () => {
-      dispatch(clearHoboDataRange());
-      dispatch(clearHoboData());
+      dispatch(clearTimeSeriesDataRange());
+      dispatch(clearTimeSeriesData());
     };
   }, [dispatch]);
 
   // Get HOBO data range
   useEffect(() => {
-    dispatch(reefHoboDataRangeRequest({ reefId: id, pointId }));
+    dispatch(reefTimeSeriesDataRangeRequest({ reefId: id, pointId }));
   }, [dispatch, id, pointId]);
-
-  // Get HOBO data
-  useEffect(() => {
-    if (hoboBottomTemperatureRange?.[0]) {
-      const { maxDate } = hoboBottomTemperatureRange[0];
-      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
-      dispatch(
-        reefHoboDataRequest({
-          reefId: id,
-          pointId,
-          start: pastThreeMonths,
-          end: maxDate,
-          metrics: ["bottom_temperature"],
-        })
-      );
-    }
-  }, [dispatch, hoboBottomTemperatureRange, id, pointId]);
 
   useEffect(() => {
     if (!reef || reef.id !== reefIdNumber) {

@@ -8,9 +8,18 @@ export const calculateCardMetrics = (
   data?: (MonthlyMaxData | SofarValue)[],
   keyPrefix?: string
 ): CardColumn["rows"] => [
-  { key: `${keyPrefix}-max`, value: maxBy(data, "value")?.value },
-  { key: `${keyPrefix}-mean`, value: meanBy(data, "value") },
-  { key: `${keyPrefix}-min`, value: minBy(data, "value")?.value },
+  {
+    key: `${keyPrefix}-max`,
+    value: data?.[1] ? maxBy(data, "value")?.value : undefined,
+  },
+  {
+    key: `${keyPrefix}-mean`,
+    value: data?.[1] ? meanBy(data, "value") : undefined,
+  },
+  {
+    key: `${keyPrefix}-min`,
+    value: data?.[1] ? minBy(data, "value")?.value : undefined,
+  },
 ];
 
 // Show at least 3 ticks on the chart

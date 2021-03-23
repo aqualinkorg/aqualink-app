@@ -12,7 +12,7 @@ import type {
   DailyData,
   MonthlyMaxData,
   SofarValue,
-  SpotterData,
+  TimeSeries,
 } from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
@@ -29,7 +29,7 @@ import { convertToLocalTime } from "../../helpers/dates";
 export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
-  spotterData?: SpotterData | null;
+  spotterData?: TimeSeries;
   hoboBottomTemperatureData?: SofarValue[];
   monthlyMaxData?: MonthlyMaxData[];
   timeZone?: string | null;

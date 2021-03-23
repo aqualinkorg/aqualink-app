@@ -14,14 +14,11 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { isNil } from "lodash";
 
-import {
-  reefHoboDataLoadingSelector,
-  reefSpotterDataLoadingSelector,
-} from "../../../store/Reefs/selectedReefSlice";
+import { reefTimeSeriesDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import {
   MonthlyMaxData,
   SofarValue,
-  SpotterData,
+  TimeSeries,
 } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
 import { filterMaxMonthlyData } from "../utils";
@@ -39,10 +36,7 @@ const TempAnalysis = ({
   monthlyMax,
   classes,
 }: TempAnalysisProps) => {
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
-  const hoboDataLoading = useSelector(reefHoboDataLoadingSelector);
-
-  const loading = spotterDataLoading || hoboDataLoading;
+  const loading = useSelector(reefTimeSeriesDataLoadingSelector);
 
   const filteredMaxMonthlyData = filterMaxMonthlyData(
     monthlyMax,
@@ -229,7 +223,7 @@ interface TempAnalysisIncomingProps {
   chartStartDate: string;
   chartEndDate: string;
   depth: number | null;
-  spotterData: SpotterData | null | undefined;
+  spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[];
   monthlyMax: MonthlyMaxData[];
 }

@@ -120,7 +120,12 @@ export type MetricsKeys =
   | "satellite_temperature"
   | "surface_temperature"
   | "bottom_temperature"
-  | "sst_anomaly";
+  | "sst_anomaly"
+  | "significant_wave_height"
+  | "wave_peak_period"
+  | "wave_mean_direction"
+  | "wind_speed"
+  | "wind_direction";
 
 export type Metrics =
   | "alert"
@@ -128,20 +133,34 @@ export type Metrics =
   | "satelliteTemperature"
   | "surfaceTemperature"
   | "bottomTemperature"
-  | "sstAnomaly";
+  | "sstAnomaly"
+  | "significantWaveHeight"
+  | "wavePeakPeriod"
+  | "waveMeanDirection"
+  | "windSpeed"
+  | "windDirection";
 
-export type HoboDataResponse = Record<MetricsKeys, SofarValue[]>;
+export type SourcesKeys = "spotter" | "hobo" | "sofar_api";
 
-export type HoboDataRangeResponse = Record<MetricsKeys, DataRange[]>;
+export type Sources = "spotter" | "hobo" | "sofarApi";
 
-export type HoboData = Record<Metrics, SofarValue[]>;
+export type TimeSeries = Record<Metrics, SofarValue[]>;
 
-export type HoboDataRange = Record<Metrics, DataRange[]>;
+export type TimeSeriesRange = Record<Metrics, DataRange[]>;
 
-export interface SpotterData {
-  surfaceTemperature: SofarValue[];
-  bottomTemperature: SofarValue[];
-}
+export type TimeSeriesDataResponse = Record<
+  SourcesKeys,
+  Record<MetricsKeys, SofarValue[]>
+>;
+
+export type TimeSeriesData = Record<Sources, TimeSeries>;
+
+export type TimeSeriesDataRangeResponse = Record<
+  SourcesKeys,
+  Record<MetricsKeys, DataRange[]>
+>;
+
+export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
 
 export interface MonthlyMax {
   id: number;
@@ -171,24 +190,18 @@ export interface Reef {
   monthlyMax: MonthlyMax[];
 }
 
-export interface SpotterDataRequestParams {
-  id: string;
-  startDate: string;
-  endDate: string;
-}
-
-export interface HoboDataRequestParams {
+export interface TimeSeriesDataRequestParams {
   reefId: string;
-  pointId: string;
+  pointId?: string;
   start: string;
   end: string;
   metrics: MetricsKeys[];
-  hourly?: boolean;
+  hourly: boolean;
 }
 
-export interface HoboDataRangeRequestParams {
+export interface TimeSeriesDataRangeRequestParams {
   reefId: string;
-  pointId: string;
+  pointId?: string;
 }
 
 export interface ReefRegisterResponseData {
@@ -242,12 +255,10 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
-  spotterData?: SpotterData | null;
-  hoboData?: HoboData;
-  hoboDataRange?: HoboDataRange;
-  hoboDataLoading: boolean;
-  hoboDataRangeLoading: boolean;
-  spotterDataLoading: boolean;
+  timeSeriesData?: TimeSeriesData;
+  timeSeriesDataLoading: boolean;
+  timeSeriesDataRange?: TimeSeriesDataRange;
+  timeSeriesDataRangeLoading: boolean;
   loading: boolean;
   error?: string | null;
 }

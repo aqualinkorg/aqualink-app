@@ -1,22 +1,17 @@
 import moment from "moment";
 
-import { getSpotterDataClosestToDate } from "../../../common/Chart/utils";
-import {
-  DailyData,
-  HoboData,
-  SofarValue,
-  SpotterData,
-} from "../../../store/Reefs/types";
+import { getSofarDataClosestToDate } from "../../../common/Chart/utils";
+import { DailyData, SofarValue, TimeSeries } from "../../../store/Reefs/types";
 
 const getSensorValue = (data?: SofarValue[], date?: string | null) =>
   date && data?.[0]
-    ? getSpotterDataClosestToDate(data, new Date(date), 6)?.value
+    ? getSofarDataClosestToDate(data, new Date(date), 6)?.value
     : undefined;
 
 export const getCardTemperatureValues = (
   dailyData: DailyData[],
-  spotterData: SpotterData | null | undefined,
-  hoboData: HoboData | undefined,
+  spotterData: TimeSeries | undefined,
+  hoboData: TimeSeries | undefined,
   date: string | null | undefined,
   timeZone: string | null | undefined
 ) => {

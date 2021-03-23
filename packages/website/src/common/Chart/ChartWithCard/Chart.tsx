@@ -16,18 +16,17 @@ import ChartWithTooltip from "../ChartWithTooltip";
 import DatePicker from "../../Datepicker";
 import {
   convertDailyDataToLocalTime,
-  convertHoboDataToLocalTime,
-  convertSpotterDataToLocalTime,
+  convertSofarDataToLocalTime,
+  convertTimeSeriesToLocalTime,
   convertToLocalTime,
   displayTimeInLocalTimezone,
   generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
-import { Reef, SofarValue, SpotterData } from "../../../store/Reefs/types";
+import { Reef, SofarValue, TimeSeries } from "../../../store/Reefs/types";
 import {
-  reefHoboDataLoadingSelector,
-  reefHoboDataRangeLoadingSelector,
-  reefHoboDataRangeSelector,
-  reefSpotterDataLoadingSelector,
+  reefTimeSeriesDataLoadingSelector,
+  reefTimeSeriesDataRangeLoadingSelector,
+  reefTimeSeriesDataRangeSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { findChartPeriod, moreThanOneYear } from "./helpers";
 import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
@@ -49,11 +48,14 @@ const Chart = ({
 }: ChartProps) => {
   const theme = useTheme();
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefHoboDataRangeSelector) || {};
+    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
-  const isHoboDataRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
-  const isSpotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
-  const isHoboDataLoading = useSelector(reefHoboDataLoadingSelector);
+  const isTimeSeriesDataRangeLoading = useSelector(
+    reefTimeSeriesDataRangeLoadingSelector
+  );
+  const isTimeSeriesDataLoading = useSelector(
+    reefTimeSeriesDataLoadingSelector
+  );
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
     "any",
@@ -66,8 +68,7 @@ const Chart = ({
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
 
-  const loading =
-    isSpotterDataLoading || isHoboDataLoading || isHoboDataRangeLoading;
+  const loading = isTimeSeriesDataLoading || isTimeSeriesDataRangeLoading;
 
   const success = !pickerErrored && !loading && (hasHoboData || hasSpotterData);
   const warning = !pickerErrored && !loading && !hasHoboData && !hasSpotterData;
@@ -144,14 +145,8 @@ const Chart = ({
           reefId={reef.id}
           depth={reef.depth}
           dailyData={convertDailyDataToLocalTime(reef.dailyData, reef.timezone)}
-          spotterData={convertSpotterDataToLocalTime(
-            spotterData || {
-              bottomTemperature: [],
-              surfaceTemperature: [],
-            },
-            reef.timezone
-          )}
-          hoboBottomTemperatureData={convertHoboDataToLocalTime(
+          spotterData={convertTimeSeriesToLocalTime(spotterData, reef.timezone)}
+          hoboBottomTemperatureData={convertSofarDataToLocalTime(
             hoboBottomTemperature || [],
             reef.timezone
           )}
@@ -172,7 +167,7 @@ const Chart = ({
           showYearInTicks={moreThanOneYear(startDate, endDate)}
         />
       )}
-      {!isHoboDataRangeLoading && (
+      {!isTimeSeriesDataRangeLoading && (
         <Grid container justify="center">
           <Grid item xs={11} container justify="space-between" spacing={1}>
             <Grid item>
@@ -214,7 +209,7 @@ const styles = () =>
 interface ChartIncomingProps {
   reef: Reef;
   pointId: number | undefined;
-  spotterData: SpotterData | null | undefined;
+  spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;
   pickerEndDate: string;

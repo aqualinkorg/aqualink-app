@@ -9,7 +9,7 @@ import type {
   DailyData,
   MonthlyMaxData,
   SofarValue,
-  SpotterData,
+  TimeSeries,
 } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
 
@@ -60,51 +60,58 @@ export const filterMaxMonthlyData = (
   );
 };
 
-export const filterSpotterData = (
-  spotterData?: SpotterData | null,
-  from?: string,
-  to?: string
-) => {
-  if (!spotterData || !from || !to) {
-    return spotterData;
-  }
-  const start = moment(from);
-  const end = moment(to);
-
-  return {
-    bottomTemperature: spotterData.bottomTemperature.filter((item) =>
-      inRange(
-        moment(item.timestamp).valueOf(),
-        start.valueOf(),
-        end.valueOf() + 1
-      )
-    ),
-    surfaceTemperature: spotterData.surfaceTemperature.filter((item) =>
-      inRange(
-        moment(item.timestamp).valueOf(),
-        start.valueOf(),
-        end.valueOf() + 1
-      )
-    ),
-  };
-};
-
-export const filterHoboData = (
-  hoboData: SofarValue[],
+export const filterSofarData = (
+  sofarData: SofarValue[],
   from?: string,
   to?: string
 ): SofarValue[] => {
-  if (!from || !to) return hoboData;
+  if (!from || !to) return sofarData;
   const startDate = moment(from);
   const endDate = moment(to);
 
-  return hoboData.filter((item) =>
+  return sofarData.filter((item) =>
     inRange(
       moment(item.timestamp).valueOf(),
       startDate.valueOf(),
       endDate.valueOf()
     )
   );
+};
+
+export const filterTimeSeriesData = (
+  timeSeries?: TimeSeries,
+  from?: string,
+  to?: string
+): TimeSeries | undefined => {
+  if (!timeSeries) {
+    return timeSeries;
+  }
+
+  return {
+    alert: filterSofarData(timeSeries.alert, from, to),
+    dhw: filterSofarData(timeSeries.dhw, from, to),
+    satelliteTemperature: filterSofarData(
+      timeSeries.satelliteTemperature,
+      from,
+      to
+    ),
+    surfaceTemperature: filterSofarData(
+      timeSeries.surfaceTemperature,
+      from,
+      to
+    ),
+    bottomTemperature: filterSofarData(timeSeries.bottomTemperature, from, to),
+    sstAnomaly: filterSofarData(timeSeries.sstAnomaly, from, to),
+    significantWaveHeight: filterSofarData(
+      timeSeries.significantWaveHeight,
+      from,
+      to
+    ),
+    wavePeakPeriod: filterSofarData(timeSeries.wavePeakPeriod, from, to),
+    waveMeanDirection: filterSofarData(timeSeries.waveMeanDirection, from, to),
+    windSpeed: filterSofarData(timeSeries.windSpeed, from, to),
+    windDirection: filterSofarData(timeSeries.windDirection, from, to),
+  };
 };
 
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
@@ -200,7 +207,7 @@ export function getMonthlyMaxDataClosestToDate(
     : undefined;
 }
 
-export function getSpotterDataClosestToDate(
+export function getSofarDataClosestToDate(
   spotterData: SofarValue[],
   date: Date,
   maxHours: number
@@ -222,8 +229,8 @@ export function getSpotterDataClosestToDate(
 
 export const createDatasets = (
   dailyData: DailyData[],
-  rawSpotterBottom: SpotterData["bottomTemperature"],
-  rawSpotterSurface: SpotterData["surfaceTemperature"],
+  rawSpotterBottom: SofarValue[],
+  rawSpotterSurface: SofarValue[],
   rawHoboBottom: SofarValue[],
   monthlyMaxData: MonthlyMaxData[],
   surveys: SurveyListItem[]

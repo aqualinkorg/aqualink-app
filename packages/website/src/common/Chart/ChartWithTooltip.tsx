@@ -10,7 +10,7 @@ import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
   getDailyDataClosestToDate,
-  getSpotterDataClosestToDate,
+  getSofarDataClosestToDate,
   findSurveyFromDate,
   sameDay,
   filterDailyData,
@@ -88,7 +88,7 @@ function ChartWithTooltip({
 
     const bottomTemp =
       spotterData &&
-      getSpotterDataClosestToDate(
+      getSofarDataClosestToDate(
         spotterData.bottomTemperature,
         new Date(date),
         6
@@ -96,7 +96,7 @@ function ChartWithTooltip({
 
     const spotterSurfaceTemp =
       (spotterData &&
-        getSpotterDataClosestToDate(
+        getSofarDataClosestToDate(
           spotterData.surfaceTemperature,
           new Date(date),
           6
@@ -105,11 +105,8 @@ function ChartWithTooltip({
 
     const hoboBottomTemp =
       (hoboBottomTemperatureData &&
-        getSpotterDataClosestToDate(
-          hoboBottomTemperatureData,
-          new Date(date),
-          6
-        )?.value) ||
+        getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
+          ?.value) ||
       null;
 
     const bottomTemperature = bottomTemp || avgBottomTemperature;

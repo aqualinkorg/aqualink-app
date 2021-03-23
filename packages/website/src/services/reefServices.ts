@@ -9,13 +9,13 @@ import {
   ReefApplyParams,
   ReefApplication,
   ReefUpdateParams,
-  SelectedReefState,
   DeploySpotterParams,
   MaintainSpotterParams,
   ExclusionDateResponse,
-  MetricsKeys,
-  HoboDataResponse,
-  HoboDataRangeResponse,
+  TimeSeriesDataResponse,
+  TimeSeriesDataRangeResponse,
+  TimeSeriesDataRequestParams,
+  TimeSeriesDataRangeRequestParams,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -36,28 +36,29 @@ const getReefLiveData = (id: string) =>
     method: "GET",
   });
 
-const getReefSpotterData = (id: string, startDate: string, endDate: string) =>
-  requests.send<SelectedReefState["spotterData"]>({
-    url: `reefs/${id}/spotter_data?endDate=${endDate}&startDate=${startDate}`,
+const getReefTimeSeriesData = ({
+  reefId,
+  pointId,
+  start,
+  end,
+  metrics,
+  hourly,
+}: TimeSeriesDataRequestParams) =>
+  requests.send<TimeSeriesDataResponse>({
+    url: `time-series/reefs/${reefId}${
+      pointId ? `/pois/${pointId}` : ""
+    }?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
     method: "GET",
   });
 
-const getReefHoboData = (
-  reefId: string,
-  pointId: string,
-  start: string,
-  end: string,
-  metrics: MetricsKeys[],
-  hourly: boolean = true
-) =>
-  requests.send<HoboDataResponse>({
-    url: `time-series/reefs/${reefId}/pois/${pointId}?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
-    method: "GET",
-  });
-
-const getReefHoboDataRange = (reefId: string, pointId: string) =>
-  requests.send<HoboDataRangeResponse>({
-    url: `time-series/reefs/${reefId}/pois/${pointId}/range`,
+const getReefTimeSeriesDataRange = ({
+  reefId,
+  pointId,
+}: TimeSeriesDataRangeRequestParams) =>
+  requests.send<TimeSeriesDataRangeResponse>({
+    url: `time-series/reefs/${reefId}${
+      pointId ? `/pois/${pointId}` : ""
+    }/range`,
     method: "GET",
   });
 
@@ -173,9 +174,8 @@ export default {
   getReefs,
   getReefDailyData,
   getReefLiveData,
-  getReefSpotterData,
-  getReefHoboData,
-  getReefHoboDataRange,
+  getReefTimeSeriesData,
+  getReefTimeSeriesDataRange,
   getReefPois,
   deleteReefPoi,
   registerReef,

@@ -15,7 +15,7 @@ import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { filterSurveys } from "../../../../helpers/surveys";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
-import { reefHoboDataSelector } from "../../../../store/Reefs/selectedReefSlice";
+import { reefTimeSeriesDataSelector } from "../../../../store/Reefs/selectedReefSlice";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import { isAdmin } from "../../../../helpers/user";
 import { userInfoSelector } from "../../../../store/User/userSlice";
@@ -29,7 +29,7 @@ const Info = ({ reef, pointId, onEditButtonClick, classes }: InfoProps) => {
   );
   const user = useSelector(userInfoSelector);
   const { bottomTemperature: hoboBottomTemperature } =
-    useSelector(reefHoboDataSelector) || {};
+    useSelector(reefTimeSeriesDataSelector)?.hobo || {};
   const { name: pointName, polygon: pointPolygon } =
     reef.surveyPoints.filter((point) => point.id === pointId)[0] || {};
   const { name: reefName, region: reefRegion } = getReefNameAndRegion(reef);

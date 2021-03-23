@@ -7,7 +7,7 @@ import {
   MonthlyMaxData,
   Range,
   SofarValue,
-  SpotterData,
+  TimeSeries,
 } from "../store/Reefs/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
@@ -91,7 +91,7 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
 export const findMarginalDate = (
   monthlyMaxData: MonthlyMaxData[],
   dailyData: DailyData[],
-  spotterData?: SpotterData | null,
+  spotterData?: TimeSeries,
   hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
@@ -222,28 +222,57 @@ export const convertDailyDataToLocalTime = (
     date: convertToLocalTime(item.date, timeZone),
   }));
 
-export const convertSpotterDataToLocalTime = (
-  spotterData: SpotterData,
-  timeZone?: string | null
-): SpotterData => ({
-  bottomTemperature: spotterData.bottomTemperature.map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone),
-  })),
-  surfaceTemperature: spotterData.surfaceTemperature.map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone),
-  })),
-});
-
-export const convertHoboDataToLocalTime = (
-  hoboData: SofarValue[],
+export const convertSofarDataToLocalTime = (
+  sofarData: SofarValue[],
   timeZone?: string | null
 ): SofarValue[] =>
-  hoboData.map((item) => ({
+  sofarData.map((item) => ({
     ...item,
     timestamp: convertToLocalTime(item.timestamp, timeZone),
   }));
+
+export const convertTimeSeriesToLocalTime = (
+  timeSeries?: TimeSeries,
+  timeZone?: string | null
+): TimeSeries | undefined => {
+  if (!timeSeries) {
+    return timeSeries;
+  }
+  return {
+    alert: convertSofarDataToLocalTime(timeSeries.alert, timeZone),
+    dhw: convertSofarDataToLocalTime(timeSeries.dhw, timeZone),
+    satelliteTemperature: convertSofarDataToLocalTime(
+      timeSeries.satelliteTemperature,
+      timeZone
+    ),
+    surfaceTemperature: convertSofarDataToLocalTime(
+      timeSeries.surfaceTemperature,
+      timeZone
+    ),
+    bottomTemperature: convertSofarDataToLocalTime(
+      timeSeries.bottomTemperature,
+      timeZone
+    ),
+    sstAnomaly: convertSofarDataToLocalTime(timeSeries.sstAnomaly, timeZone),
+    significantWaveHeight: convertSofarDataToLocalTime(
+      timeSeries.significantWaveHeight,
+      timeZone
+    ),
+    wavePeakPeriod: convertSofarDataToLocalTime(
+      timeSeries.wavePeakPeriod,
+      timeZone
+    ),
+    waveMeanDirection: convertSofarDataToLocalTime(
+      timeSeries.waveMeanDirection,
+      timeZone
+    ),
+    windSpeed: convertSofarDataToLocalTime(timeSeries.windSpeed, timeZone),
+    windDirection: convertSofarDataToLocalTime(
+      timeSeries.windDirection,
+      timeZone
+    ),
+  };
+};
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],
