@@ -266,7 +266,14 @@ const ChartWithCard = ({
           setPickerStartDate(moment(dateString).startOf("day").toISOString());
           break;
         case "end":
-          setPickerEndDate(moment(dateString).startOf("day").toISOString());
+          // Set picker end date only if input date is before today
+          if (
+            moment(dateString)
+              .startOf("day")
+              .isSameOrBefore(moment().startOf("day"))
+          ) {
+            setPickerEndDate(moment(dateString).startOf("day").toISOString());
+          }
           break;
         default:
           break;

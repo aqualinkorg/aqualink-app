@@ -42,6 +42,7 @@ const DatePicker = ({
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"
+              disableFuture
               autoOk={autoOk}
               showTodayButton
               value={value || null}
