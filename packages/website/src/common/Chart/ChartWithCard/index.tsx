@@ -20,6 +20,7 @@ import {
   reefTimeSeriesDataRangeSelector,
   reefTimeSeriesDataSelector,
   reefTimeSeriesDataRequest,
+  reefGranularDailyDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
@@ -47,6 +48,7 @@ const ChartWithCard = ({
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
+  const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
     useSelector(reefTimeSeriesDataSelector) || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
@@ -141,7 +143,7 @@ const ChartWithCard = ({
       pickerEndDate
     );
     const filteredDailyData = filterDailyData(
-      reef.dailyData,
+      granularDailyData || [],
       pickerStartDate,
       pickerEndDate
     );
@@ -208,6 +210,7 @@ const ChartWithCard = ({
       setEndDate(undefined);
     }
   }, [
+    granularDailyData,
     hoboBottomTemperature,
     pickerEndDate,
     pickerStartDate,
@@ -294,6 +297,7 @@ const ChartWithCard = ({
         >
           <Chart
             reef={reef}
+            dailyData={granularDailyData || []}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
             spotterData={filterTimeSeriesData(spotterData, startDate, endDate)}
             hoboBottomTemperature={filterSofarData(

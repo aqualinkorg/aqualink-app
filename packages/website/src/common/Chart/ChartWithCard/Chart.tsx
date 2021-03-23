@@ -22,7 +22,12 @@ import {
   displayTimeInLocalTimezone,
   generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
-import { Reef, SofarValue, TimeSeries } from "../../../store/Reefs/types";
+import {
+  DailyData,
+  Reef,
+  SofarValue,
+  TimeSeries,
+} from "../../../store/Reefs/types";
 import {
   reefTimeSeriesDataLoadingSelector,
   reefTimeSeriesDataRangeLoadingSelector,
@@ -34,6 +39,7 @@ import { filterSurveys } from "../../../helpers/surveys";
 
 const Chart = ({
   reef,
+  dailyData,
   pointId,
   spotterData,
   hoboBottomTemperature,
@@ -144,7 +150,7 @@ const Chart = ({
           className={classes.chart}
           reefId={reef.id}
           depth={reef.depth}
-          dailyData={convertDailyDataToLocalTime(reef.dailyData, reef.timezone)}
+          dailyData={convertDailyDataToLocalTime(dailyData, reef.timezone)}
           spotterData={convertTimeSeriesToLocalTime(spotterData, reef.timezone)}
           hoboBottomTemperatureData={convertSofarDataToLocalTime(
             hoboBottomTemperature || [],
@@ -209,6 +215,7 @@ const styles = () =>
 interface ChartIncomingProps {
   reef: Reef;
   pointId: number | undefined;
+  dailyData: DailyData[];
   spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[] | undefined;
   pickerStartDate: string;

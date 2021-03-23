@@ -255,6 +255,7 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  granularDailyData?: DailyData[];
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
   timeSeriesDataRange?: TimeSeriesDataRange;

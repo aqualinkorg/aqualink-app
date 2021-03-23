@@ -53,15 +53,28 @@ export const reefRequest = createAsyncThunk<
 });
 
 export const reefTimeSeriesDataRequest = createAsyncThunk<
-  SelectedReefState["timeSeriesData"],
+  {
+    granularDailyData: SelectedReefState["granularDailyData"];
+    timeSeriesData: SelectedReefState["timeSeriesData"];
+  },
   TimeSeriesDataRequestParams,
   CreateAsyncThunkTypes
 >(
   "selectedReef/timeSeriesDataRequest",
   async (params: TimeSeriesDataRequestParams, { rejectWithValue }) => {
     try {
-      const { data } = await reefServices.getReefTimeSeriesData(params);
-      return mapTimeSeriesData(data);
+      const {
+        data: timeSeriesDataResponse,
+      } = await reefServices.getReefTimeSeriesData(params);
+      const { data: granularDailyData } = await reefServices.getReefDailyData(
+        params.reefId,
+        params.start,
+        params.end
+      );
+      return {
+        granularDailyData,
+        timeSeriesData: mapTimeSeriesData(timeSeriesDataResponse),
+      };
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
@@ -146,6 +159,10 @@ const selectedReefSlice = createSlice({
       ...state,
       timeSeriesDataRange: undefined,
     }),
+    clearGranularDailyData: (state) => ({
+      ...state,
+      granularDailyData: undefined,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -180,9 +197,16 @@ const selectedReefSlice = createSlice({
 
     builder.addCase(
       reefTimeSeriesDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedReefState["timeSeriesData"]>) => ({
+      (
+        state,
+        action: PayloadAction<{
+          granularDailyData: SelectedReefState["granularDailyData"];
+          timeSeriesData: SelectedReefState["timeSeriesData"];
+        }>
+      ) => ({
         ...state,
-        timeSeriesData: action.payload,
+        granularDailyData: action.payload.granularDailyData,
+        timeSeriesData: action.payload.timeSeriesData,
         timeSeriesDataLoading: false,
       })
     );
@@ -239,6 +263,11 @@ export const reefDetailsSelector = (
   state: RootState
 ): SelectedReefState["details"] => state.selectedReef.details;
 
+export const reefGranularDailyDataSelector = (
+  state: RootState
+): SelectedReefState["granularDailyData"] =>
+  state.selectedReef.granularDailyData;
+
 export const reefTimeSeriesDataSelector = (
   state: RootState
 ): SelectedReefState["timeSeriesData"] => state.selectedReef.timeSeriesData;
@@ -276,6 +305,7 @@ export const {
   setReefData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
+  clearGranularDailyData,
   setReefPois,
 } = selectedReefSlice.actions;
 

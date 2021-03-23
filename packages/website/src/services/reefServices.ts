@@ -24,9 +24,11 @@ const getReef = (id: string) =>
     method: "GET",
   });
 
-const getReefDailyData = (id: string) =>
+const getReefDailyData = (id: string, start?: string, end?: string) =>
   requests.send<DailyData[]>({
-    url: `reefs/${id}/daily_data`,
+    url: `reefs/${id}/daily_data${
+      start && end ? `?end=${end}&start=${start}` : ""
+    }`,
     method: "GET",
   });
 
