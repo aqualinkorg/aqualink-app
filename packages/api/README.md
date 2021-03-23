@@ -83,6 +83,14 @@ export $(grep -v '^#' .env.prod | xargs) && firebase functions:config:set databa
 
 #### Deploy
 
+##### API
+
+```
+yarn deploy:ENV
+```
+
+##### Cloud Functions
+
 ```
 yarn deploy:cloud-functions
 ```
