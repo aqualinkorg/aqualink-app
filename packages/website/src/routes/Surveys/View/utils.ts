@@ -1,6 +1,7 @@
-import moment from "moment";
-
-import { getSofarDataClosestToDate } from "../../../common/Chart/utils";
+import {
+  getSofarDataClosestToDate,
+  sameDay,
+} from "../../../common/Chart/utils";
 import { DailyData, SofarValue, TimeSeries } from "../../../store/Reefs/types";
 
 const getSensorValue = (data?: SofarValue[], date?: string | null) =>
@@ -14,11 +15,9 @@ export const getCardTemperatureValues = (
   hoboData: TimeSeries | undefined,
   date: string | null | undefined
 ) => {
-  const surfaceData = dailyData.find(
-    (item) =>
-      moment(item.date).format("MM/DD/YYYY") ===
-      moment(date).format("MM/DD/YYYY")
-  );
+  const surfaceData = date
+    ? dailyData.find((item) => sameDay(date, item.date))
+    : undefined;
 
   return {
     satelliteTemperature: surfaceData?.satelliteTemperature,
