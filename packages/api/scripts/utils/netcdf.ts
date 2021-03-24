@@ -1,6 +1,6 @@
 import { times } from 'lodash';
 import moment from 'moment';
-import { Extent, pointToPixel } from '../../src/utils/coordinates';
+import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 const netcdf4 = require('netcdf4');
@@ -17,7 +17,7 @@ const netcdf4 = require('netcdf4');
  * @param lat
  */
 export function getNOAAData(year: number = 2020, long: number, lat: number) {
-  const fileName = `data/sst.day.mean.${year}.nc`;
+  const fileName = `data/sst.day.mean.${year}.v2.nc`;
   const noaaData = new netcdf4.File(fileName, 'r');
   const { dimensions, variables } = noaaData.root;
 
@@ -29,7 +29,7 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
   const [minLat, maxLat] = variables.lat.attributes.actual_range.value;
   const boundingBox = [minLong, minLat, maxLong, maxLat] as Extent;
 
-  const { pixelX, pixelY } = pointToPixel(
+  const { indexLong, indexLat } = pointToIndex(
     long,
     lat,
     boundingBox,
@@ -45,9 +45,9 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
     const data: number[] = variables.sst.readSlice(
       dateIndex,
       1,
-      pixelY,
+      indexLat,
       10,
-      pixelX,
+      indexLong,
       10,
     );
     const filteredData = data.filter((value) => value <= 9999999);

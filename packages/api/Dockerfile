@@ -9,7 +9,9 @@ RUN sudo apt install -y libnetcdf-dev
 ENV NODE_ENV=production
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+# TODO - Find a way to get the yarn.lock which is "out of context".
+# Because we are in a sub-package ity is at ../../yarn.lock
+COPY ["package.json", "./"]
 
 RUN yarn install --production
 
