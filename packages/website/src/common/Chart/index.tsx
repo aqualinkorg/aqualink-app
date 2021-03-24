@@ -4,10 +4,11 @@ import React, {
   useEffect,
   useRef,
   useState,
+  memo,
 } from "react";
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { mergeWith } from "lodash";
+import { mergeWith, isEqual } from "lodash";
 import type {
   DailyData,
   MonthlyMaxData,
@@ -72,6 +73,22 @@ const makeAnnotation = (
     content: name,
   },
 });
+
+const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
+  isEqual(prevProps.dailyData, nextProps.dailyData) &&
+  isEqual(prevProps.maxMonthlyMean, nextProps.maxMonthlyMean) &&
+  isEqual(
+    prevProps.hoboBottomTemperatureData,
+    nextProps.hoboBottomTemperatureData
+  ) &&
+  isEqual(
+    prevProps.spotterData?.bottomTemperature,
+    nextProps.spotterData?.bottomTemperature
+  ) &&
+  isEqual(
+    prevProps.spotterData?.surfaceTemperature,
+    nextProps.spotterData?.surfaceTemperature
+  );
 
 function Chart({
   dailyData,
@@ -286,4 +303,4 @@ function Chart({
   );
 }
 
-export default Chart;
+export default memo(Chart, returnMemoized);
