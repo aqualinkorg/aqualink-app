@@ -1,36 +1,34 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Container,
-  createStyles,
   Grid,
+  withStyles,
+  WithStyles,
+  createStyles,
   Theme,
   useMediaQuery,
   useTheme,
-  WithStyles,
-  withStyles,
 } from "@material-ui/core";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CloudDownload } from "@material-ui/icons";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
-  reefGranularDailyDataSelector,
   reefTimeSeriesDataRangeSelector,
-  reefTimeSeriesDataRequest,
   reefTimeSeriesDataSelector,
+  reefTimeSeriesDataRequest,
+  reefGranularDailyDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
   findMarginalDate,
-  generateMonthlyMaxTimestamps,
-  isBefore,
   setTimeZone,
   subtractFromDate,
+  isBefore,
+  generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
 import {
   filterDailyData,
@@ -334,42 +332,48 @@ const ChartWithCard = ({
             md={hasSpotterData ? 12 : 4}
             lg={hasSpotterData ? 4 : 3}
           >
-            <TempAnalysis
-              pickerStartDate={
-                pickerStartDate || subtractFromDate(today, "week")
-              }
-              pickerEndDate={pickerEndDate || today}
-              chartStartDate={
-                startDate || pickerStartDate || subtractFromDate(today, "week")
-              }
-              chartEndDate={endDate || pickerEndDate || today}
-              depth={reef.depth}
-              spotterData={filterTimeSeriesData(
-                spotterData,
-                startDate,
-                endDate
-              )}
-              hoboBottomTemperature={filterSofarData(
-                hoboBottomTemperature || [],
-                startDate || pickerStartDate,
-                endDate || pickerEndDate
-              )}
-              monthlyMax={generateMonthlyMaxTimestamps(
-                reef.monthlyMax,
-                startDate,
-                endDate,
-                reef.timezone
-              )}
+            <Grid
+              container
+              justify={isDesktop && !hasSpotterData ? "flex-end" : "center"}
             >
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<CloudDownload />}
-                className={classes.button}
+              <Grid
+                item
+                xs={hasSpotterData ? 12 : 11}
+                sm={hasSpotterData ? 10 : 6}
+                md={hasSpotterData ? 6 : 10}
+                lg={hasSpotterData ? 12 : 11}
               >
-                Download CSV
-              </Button>
-            </TempAnalysis>
+                <TempAnalysis
+                  pickerStartDate={
+                    pickerStartDate || subtractFromDate(today, "week")
+                  }
+                  pickerEndDate={pickerEndDate || today}
+                  chartStartDate={
+                    startDate ||
+                    pickerStartDate ||
+                    subtractFromDate(today, "week")
+                  }
+                  chartEndDate={endDate || pickerEndDate || today}
+                  depth={reef.depth}
+                  spotterData={filterTimeSeriesData(
+                    spotterData,
+                    startDate,
+                    endDate
+                  )}
+                  hoboBottomTemperature={filterSofarData(
+                    hoboBottomTemperature || [],
+                    startDate || pickerStartDate,
+                    endDate || pickerEndDate
+                  )}
+                  monthlyMax={generateMonthlyMaxTimestamps(
+                    reef.monthlyMax,
+                    startDate,
+                    endDate,
+                    reef.timezone
+                  )}
+                />
+              </Grid>
+            </Grid>
           </Grid>
         )}
       </Grid>
@@ -387,9 +391,6 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         marginBottom: 10,
       },
-    },
-    button: {
-      maxWidth: 300,
     },
   });
 
