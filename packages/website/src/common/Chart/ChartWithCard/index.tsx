@@ -48,8 +48,6 @@ const ChartWithCard = ({
   title,
   classes,
 }: ChartWithCardProps) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
@@ -389,7 +387,7 @@ const styles = (theme: Theme) =>
       },
     },
     button: {
-      maxWidth: 300,
+      width: "auto",
     },
   });
 
