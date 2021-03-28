@@ -6,8 +6,6 @@ import {
   createStyles,
   Grid,
   Theme,
-  useMediaQuery,
-  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -15,7 +13,8 @@ import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 
-import { CloudDownload } from "@material-ui/icons";
+import { GetApp } from "@material-ui/icons";
+import { CSVLink } from "react-csv";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
@@ -40,6 +39,7 @@ import {
 } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
+import DownloadCSVButton from "./DownloadCSVButton";
 
 const ChartWithCard = ({
   reef,
@@ -359,14 +359,11 @@ const ChartWithCard = ({
                 reef.timezone
               )}
             >
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<CloudDownload />}
+              <DownloadCSVButton
+                startDate={startDate}
+                endDate={endDate}
                 className={classes.button}
-              >
-                Download CSV
-              </Button>
+              />
             </TempAnalysis>
           </Grid>
         )}
