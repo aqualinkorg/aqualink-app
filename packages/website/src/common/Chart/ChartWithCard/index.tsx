@@ -1,7 +1,5 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import {
-  Button,
   Container,
   createStyles,
   Grid,
@@ -12,9 +10,6 @@ import {
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-
-import { GetApp } from "@material-ui/icons";
-import { CSVLink } from "react-csv";
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
