@@ -4,6 +4,9 @@ import { Point } from 'geojson';
 import { Reef } from '../src/reefs/reefs.entity';
 import { getNOAAData } from './utils/netcdf';
 import { DailyData } from '../src/reefs/daily-data.entity';
+import { Sources } from '../src/reefs/sources.entity';
+import { insertSSTToTimeSeries } from '../src/utils/time-series.utils';
+import { TimeSeries } from '../src/time-series/time-series.entity';
 
 const dbConfig = require('../ormconfig');
 
@@ -15,6 +18,8 @@ async function main() {
   const connection = await createConnection(dbConfig);
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
+  const sourcesRepository = connection.getRepository(Sources);
+  const timeSeriesRepository = connection.getRepository(TimeSeries);
   const selectedReefs = await reefRepository.find({
     where:
       reefsToProcess.length > 0
@@ -62,6 +67,18 @@ async function main() {
       }
     }
     dailyDataRepository.create(entity);
+
+    if (!entity.satelliteTemperature) {
+      return;
+    }
+
+    await insertSSTToTimeSeries(
+      entity.reef,
+      entity.satelliteTemperature,
+      entity.date,
+      timeSeriesRepository,
+      sourcesRepository,
+    );
   });
 
   connection.close();

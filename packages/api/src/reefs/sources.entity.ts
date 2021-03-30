@@ -16,6 +16,7 @@ export enum SourceType {
 
 @Entity()
 @Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
+@Unique('no_duplicate_reef_sources', ['reef', 'type'])
 export class Sources {
   @PrimaryGeneratedColumn()
   id: number;
