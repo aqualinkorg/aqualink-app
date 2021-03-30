@@ -383,7 +383,10 @@ const styles = (theme: Theme) =>
       width: "auto",
     },
     tempAnalysisCell: {
-      maxWidth: "fit-content",
+      // fit-content makes sure the card doesn't extent to the edges of the screen when it has its own row
+      [theme.breakpoints.down("md")]: {
+        maxWidth: "fit-content",
+      },
       width: "inherit",
       margin: "0 auto",
     },
