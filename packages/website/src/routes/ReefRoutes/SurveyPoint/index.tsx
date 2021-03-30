@@ -78,7 +78,12 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
           <BackButton reefId={id} bgColor={BG_COLOR} />
           <InfoCard reef={reef} pointId={pointIdNumber} bgColor={BG_COLOR} />
           {showChart && (
-            <ChartWithCard reef={reef} pointId={pointId} surveysFiltered />
+            <ChartWithCard
+              disableGutters={false}
+              reef={reef}
+              pointId={pointId}
+              surveysFiltered
+            />
           )}
           <SurveyHistory
             reef={reef}

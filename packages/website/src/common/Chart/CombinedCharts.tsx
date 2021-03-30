@@ -48,6 +48,7 @@ const CombinedCharts = ({
           reef={reef}
           pointId={closestSurveyPointId}
           surveysFiltered={false}
+          disableGutters
         />
       )}
     </div>

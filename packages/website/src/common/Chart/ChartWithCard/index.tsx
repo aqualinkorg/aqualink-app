@@ -44,10 +44,12 @@ const ChartWithCard = ({
   pointId,
   surveysFiltered,
   title,
+  disableGutters,
   classes,
 }: ChartWithCardProps) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
@@ -283,7 +285,14 @@ const ChartWithCard = ({
   };
 
   return (
-    <Container disableGutters className={classes.chartWithRange}>
+    <Container
+      disableGutters={disableGutters}
+      className={`${classes.chartWithRange} ${
+        (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet)
+          ? classes.extraPadding
+          : ""
+      }`}
+    >
       <ViewRange
         range={range}
         onRangeChange={onRangeChange}
@@ -335,7 +344,7 @@ const ChartWithCard = ({
           >
             <Grid
               container
-              justify={isDesktop && !hasSpotterData ? "flex-end" : "center"}
+              justify={isTablet && !hasSpotterData ? "flex-end" : "center"}
             >
               <Grid
                 item
@@ -384,6 +393,9 @@ const ChartWithCard = ({
 
 const styles = (theme: Theme) =>
   createStyles({
+    extraPadding: {
+      paddingRight: 12,
+    },
     chartWithRange: {
       marginTop: 80,
     },
@@ -399,6 +411,7 @@ interface ChartWithCardIncomingProps {
   reef: Reef;
   pointId: string | undefined;
   surveysFiltered: boolean;
+  disableGutters: boolean;
   title?: string;
 }
 
