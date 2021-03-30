@@ -1,10 +1,7 @@
 import React from "react";
 import {
   Box,
-  Container,
   createStyles,
-  Grid,
-  Theme,
   Typography,
   withStyles,
   WithStyles,
@@ -29,17 +26,11 @@ const CombinedCharts = ({
   const { id, timezone, dailyData, depth, maxMonthlyMean } = reef;
   return (
     <div>
-      <Container>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Box>
-              <Typography className={classes.graphTitle} variant="h6">
-                DAILY SATELLITE TEMPERATURE (°C)
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
+      <Box className={classes.graphtTitleWrapper}>
+        <Typography className={classes.graphTitle} variant="h6">
+          DAILY SATELLITE TEMPERATURE (°C)
+        </Typography>
+      </Box>
       <ChartWithTooltip
         reefId={id}
         depth={depth}
@@ -63,20 +54,18 @@ const CombinedCharts = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     chart: {
       height: "16rem",
       marginBottom: "3rem",
       marginTop: "1rem",
     },
+    graphtTitleWrapper: {
+      marginLeft: 42,
+    },
     graphTitle: {
       lineHeight: 1.5,
-      marginLeft: 27,
-
-      [theme.breakpoints.down("xs")]: {
-        marginLeft: 0,
-      },
     },
   });
 

@@ -176,7 +176,14 @@ const Chart = ({
       )}
       {!isTimeSeriesDataRangeLoading && (
         <Grid container justify="center">
-          <Grid item xs={11} container justify="space-between" spacing={1}>
+          <Grid
+            className={classes.datePickersWrapper}
+            item
+            xs={12}
+            container
+            justify="space-between"
+            spacing={1}
+          >
             <Grid item>
               <DatePicker
                 value={pickerStartDate}
@@ -210,6 +217,10 @@ const styles = () =>
       height: 285,
       marginBottom: 16,
       marginTop: 16,
+    },
+
+    datePickersWrapper: {
+      margin: "0 7px 0 27px",
     },
   });
 

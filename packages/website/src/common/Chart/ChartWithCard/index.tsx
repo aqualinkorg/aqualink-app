@@ -283,12 +283,13 @@ const ChartWithCard = ({
   };
 
   return (
-    <Container className={classes.chartWithRange}>
+    <Container disableGutters className={classes.chartWithRange}>
       <ViewRange
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
+        hasSpotterData={hasSpotterData}
       />
       <Grid
         className={classes.chartWrapper}
