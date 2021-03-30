@@ -324,6 +324,7 @@ const ChartWithCard = ({
           <Grid
             item
             xs={12}
+            className={classes.tempAnalysisCell}
             md={hasSpotterData ? 12 : 4}
             lg={hasSpotterData ? 4 : 3}
           >
@@ -380,6 +381,11 @@ const styles = (theme: Theme) =>
     },
     button: {
       width: "auto",
+    },
+    tempAnalysisCell: {
+      maxWidth: "fit-content",
+      width: "inherit",
+      margin: "0 auto",
     },
   });
 
