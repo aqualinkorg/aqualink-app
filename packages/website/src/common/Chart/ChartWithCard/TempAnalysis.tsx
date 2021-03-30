@@ -4,15 +4,13 @@ import {
   Card,
   createStyles,
   Grid,
-  Theme,
   Tooltip,
   Typography,
-  WithStyles,
   withStyles,
+  WithStyles,
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { isNil } from "lodash";
 import { reefTimeSeriesDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import {
   MonthlyMaxData,
@@ -24,8 +22,11 @@ import { filterMaxMonthlyData } from "../utils";
 import { CardColumn } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
 
+const rows = ["MAX", "MEAN", "MIN"];
+
 /* eslint-disable react/prop-types */
 const TempAnalysis: FC<TempAnalysisProps> = ({
+  classes,
   pickerStartDate,
   pickerEndDate,
   chartStartDate,
@@ -34,7 +35,6 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   spotterData,
   hoboBottomTemperature,
   monthlyMax,
-  classes,
   children,
 }) => {
   const loading = useSelector(reefTimeSeriesDataLoadingSelector);
@@ -56,7 +56,6 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   if (!showCard) {
     return null;
   }
-
   const cardColumns: CardColumn[] = [
     {
       title: "HISTORIC",
@@ -89,10 +88,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
         "spotterBottom"
       ),
     },
-  ];
-
-  const rows = ["MAX", "MEAN", "MIN"];
-
+  ].filter((val) => val.rows[0].value);
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
@@ -102,94 +98,82 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       display="flex"
       justifyContent="space-between"
       flexDirection="column"
-      alignItems="center"
     >
-      <Box overflow="auto" width="100%">
-        <Card
-          className={`${classes.tempAnalysisCard} ${
-            hasSpotterData ? classes.scroll : ""
-          }`}
+      <Card className={classes.tempAnalysisCard}>
+        <Typography variant="subtitle1" color="textSecondary">
+          TEMP ANALYSIS
+        </Typography>
+        <Typography className={classes.dates} variant="subtitle2">
+          {formattedpickerStartDate} - {formattedpickerEndDate}
+        </Typography>
+        <Grid
+          className={classes.metricsWrapper}
+          container
+          justify="space-between"
+          alignItems="flex-end"
+          spacing={1}
         >
-          <Typography variant="subtitle1" color="textSecondary">
-            TEMP ANALYSIS
-          </Typography>
-          <Typography className={classes.dates} variant="subtitle2">
-            {formattedpickerStartDate} - {formattedpickerEndDate}
-          </Typography>
-          <Grid
-            className={classes.metricsWrapper}
-            container
-            justify="space-between"
-            alignItems="flex-end"
-            spacing={1}
-          >
-            <Grid item>
+          <Grid item>
+            <Grid
+              className={classes.metricsTitle}
+              container
+              direction="column"
+              item
+              spacing={3}
+            >
+              {rows.map((row) => (
+                <Grid key={row} className={classes.rotatedText} item>
+                  <Typography variant="caption" color="textSecondary">
+                    {row}
+                  </Typography>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          {cardColumns.map((item) => (
+            <Grid key={item.key} item>
               <Grid
-                className={classes.metrics}
+                className={classes.autoWidth}
                 container
                 direction="column"
                 item
                 spacing={3}
+                alignItems="center"
               >
-                {rows.map((row) => (
-                  <Grid key={row} className={classes.rotatedText} item>
-                    <Typography variant="caption" color="textSecondary">
-                      {row}
+                <Grid item>
+                  <Tooltip title={item.tooltip || ""}>
+                    <Typography
+                      style={{
+                        color: item.color,
+                      }}
+                      variant="subtitle2"
+                    >
+                      {item.title}
+                    </Typography>
+                  </Tooltip>
+                </Grid>
+                {item.rows.map(({ key, value }) => (
+                  <Grid key={key} item>
+                    <Typography
+                      className={classes.values}
+                      variant="h5"
+                      color="textSecondary"
+                    >
+                      {formatNumber(value, 1)} °C
                     </Typography>
                   </Grid>
                 ))}
               </Grid>
             </Grid>
-            {cardColumns.map((item) => {
-              if (!isNil(item.rows[0].value)) {
-                return (
-                  <Grid key={item.key} item>
-                    <Grid
-                      className={classes.autoWidth}
-                      container
-                      direction="column"
-                      item
-                      spacing={3}
-                      alignItems="center"
-                    >
-                      <Grid item>
-                        <Tooltip title={item.tooltip || ""}>
-                          <Typography
-                            style={{
-                              color: item.color,
-                            }}
-                            variant="subtitle2"
-                          >
-                            {item.title}
-                          </Typography>
-                        </Tooltip>
-                      </Grid>
-                      {item.rows.map(({ key, value }) => (
-                        <Grid key={key} item>
-                          <Typography
-                            className={classes.values}
-                            variant="h5"
-                            color="textSecondary"
-                          >
-                            {formatNumber(value, 1)} °C
-                          </Typography>
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Grid>
-                );
-              }
-              return null;
-            })}
-          </Grid>
-        </Card>
-      </Box>
+          ))}
+        </Grid>
+      </Card>
+
       {children}
     </Box>
   );
 };
-
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     autoWidth: {
       width: "auto",
@@ -199,16 +183,9 @@ const styles = (theme: Theme) =>
       minHeight: 250,
       borderRadius: "0 4px 4px 0",
       backgroundColor: "#f8f9f9",
-      margin: "22px auto",
-      overflow: "auto",
-      maxWidth: 400,
-    },
-    scroll: {
-      [theme.breakpoints.down("xs")]: {
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto",
-      },
+      margin: "22px 0",
+      // add horizontal scroll on mobile
+      overflowX: "auto",
     },
     dates: {
       color: "#979797",
@@ -216,18 +193,23 @@ const styles = (theme: Theme) =>
     rotatedText: {
       transform: "rotate(-90deg)",
     },
-    metricsWrapper: {
-      height: "85%",
-    },
-    metrics: {
+    // ensures wrapping never happens no matter the column amount.
+    metricsWrapper: { minWidth: "max-content" },
+    metricsTitle: {
       position: "relative",
       bottom: 7,
       width: "auto",
     },
     values: {
       fontWeight: 300,
+      // ensures metric numbers aren't too close together on mobile
+      margin: "0 10px",
     },
   });
+
+interface TempAnalysisProps
+  extends TempAnalysisIncomingProps,
+    WithStyles<typeof styles> {}
 
 interface TempAnalysisIncomingProps {
   pickerStartDate: string;
@@ -239,7 +221,5 @@ interface TempAnalysisIncomingProps {
   hoboBottomTemperature: SofarValue[];
   monthlyMax: MonthlyMaxData[];
 }
-
-type TempAnalysisProps = TempAnalysisIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(TempAnalysis);

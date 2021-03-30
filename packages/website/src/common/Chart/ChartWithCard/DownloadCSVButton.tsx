@@ -73,7 +73,10 @@ function constructCSVData({
       }))
     ).result;
 
-  return Object.values(mappedToTimestamp);
+  // eslint-disable-next-line fp/no-mutating-methods
+  return Object.values(mappedToTimestamp).sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
 }
 
 function DownloadCSVButton({
@@ -97,12 +100,7 @@ function DownloadCSVButton({
 
   return (
     <CSVLink filename={`export-${startDate}-to-${endDate}.csv`} data={csvData}>
-      <Button
-        variant="outlined"
-        color="primary"
-        startIcon={<GetApp />}
-        className={className}
-      >
+      <Button variant="outlined" color="primary" className={className}>
         Download CSV
       </Button>
     </CSVLink>
