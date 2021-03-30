@@ -203,7 +203,7 @@ const styles = () =>
     values: {
       fontWeight: 300,
       // ensures metric numbers aren't too close together on mobile
-      margin: "0 20px",
+      margin: "0 10px",
     },
   });
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
-import { GetApp } from "@material-ui/icons";
 import { CSVLink } from "react-csv";
 import {
   reefGranularDailyDataSelector,
