@@ -93,12 +93,9 @@ function DownloadCSVButton({
   endDate?: string;
   className?: string;
 }) {
-  console.time("loading data");
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
     useSelector(reefTimeSeriesDataSelector) || {};
-  console.timeEnd("loading data");
-  console.time("csv");
   const csvData = useMemo(
     () =>
       constructCSVData({
@@ -109,7 +106,6 @@ function DownloadCSVButton({
       }),
     [granularDailyData, hoboData, spotterData]
   );
-  console.timeEnd("csv");
   return (
     <CSVLink filename={`export-${startDate}-to-${endDate}.csv`} data={csvData}>
       <Button variant="outlined" color="primary" className={className}>
