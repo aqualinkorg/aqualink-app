@@ -4,6 +4,8 @@ import {
   createStyles,
   Grid,
   Theme,
+  useMediaQuery,
+  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -41,8 +43,13 @@ const ChartWithCard = ({
   pointId,
   surveysFiltered,
   title,
+  disableGutters,
   classes,
 }: ChartWithCardProps) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
@@ -278,12 +285,20 @@ const ChartWithCard = ({
   };
 
   return (
-    <Container className={classes.chartWithRange}>
+    <Container
+      disableGutters={disableGutters}
+      className={`${classes.chartWithRange} ${
+        (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet)
+          ? classes.extraPadding
+          : ""
+      }`}
+    >
       <ViewRange
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
+        hasSpotterData={hasSpotterData}
       />
       <Grid
         className={classes.chartWrapper}
@@ -370,6 +385,9 @@ const ChartWithCard = ({
 
 const styles = (theme: Theme) =>
   createStyles({
+    extraPadding: {
+      paddingRight: 12,
+    },
     chartWithRange: {
       marginTop: 80,
     },
@@ -396,6 +414,7 @@ interface ChartWithCardIncomingProps {
   reef: Reef;
   pointId: string | undefined;
   surveysFiltered: boolean;
+  disableGutters: boolean;
   title?: string;
 }
 

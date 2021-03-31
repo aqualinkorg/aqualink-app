@@ -10,6 +10,7 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
+  Paper,
 } from "@material-ui/core";
 import { RangeButton, RangeValue } from "./types";
 
@@ -17,11 +18,13 @@ const ViewRange = ({
   range,
   disableMaxRange,
   title,
+  hasSpotterData,
   onRangeChange,
   classes,
 }: ViewRangeProps) => {
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
   const buttons: RangeButton[] = [
@@ -58,14 +61,21 @@ const ViewRange = ({
         spacing={2}
       >
         <Grid item>
-          <Box ml={isMobile ? "0px" : "27px"}>
+          <Box ml="42px">
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={isMobile ? 12 : undefined}>
-          <Box ml={isTablet && !isMobile ? "27px" : "0px"}>
+          <Box
+            ml="30px"
+            mr={
+              (!isTablet && !hasSpotterData) || (!isDesktop && hasSpotterData)
+                ? "10px"
+                : "0px"
+            }
+          >
             <Grid
               className={classes.autoWidth}
               container
@@ -73,27 +83,32 @@ const ViewRange = ({
               alignItems="center"
               spacing={2}
             >
-              <Grid item xs={isMobile ? 10 : undefined}>
+              <Grid item xs={isMobile ? 12 : undefined}>
                 <Typography variant="subtitle1" color="textSecondary">
                   View Range:
                 </Typography>
               </Grid>
               {buttons.map((button) => (
-                <Grid key={button.id} item xs={isMobile ? 10 : undefined}>
+                <Grid key={button.id} item xs={isMobile ? 12 : undefined}>
                   <Tooltip arrow placement="top" title={button.tooltip}>
                     <div>
-                      <Button
-                        onClick={() => onRangeChange(button.id)}
-                        size="small"
-                        variant={range === button.id ? "contained" : "outlined"}
-                        color="primary"
-                        disabled={button.disabled}
-                        fullWidth
-                      >
-                        <Typography variant="subtitle1">
-                          {button.title}
-                        </Typography>
-                      </Button>
+                      <Paper elevation={1}>
+                        <Button
+                          onClick={() => onRangeChange(button.id)}
+                          size="small"
+                          variant={
+                            range === button.id ? "contained" : "outlined"
+                          }
+                          color="primary"
+                          disabled={button.disabled}
+                          fullWidth
+                          disableElevation
+                        >
+                          <Typography variant="subtitle1">
+                            {button.title}
+                          </Typography>
+                        </Button>
+                      </Paper>
                     </div>
                   </Tooltip>
                 </Grid>
@@ -117,6 +132,7 @@ interface ViewRangeIncomingProps {
   range: RangeValue;
   disableMaxRange: boolean;
   title?: string;
+  hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
 }
 
