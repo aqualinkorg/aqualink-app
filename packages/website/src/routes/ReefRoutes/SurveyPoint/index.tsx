@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { LinearProgress } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
@@ -10,18 +9,18 @@ import InfoCard from "./InfoCard";
 import ChartWithCard from "../../../common/Chart/ChartWithCard";
 import SurveyHistory from "./SurveyHistory";
 import {
+  clearTimeSeriesData,
+  clearTimeSeriesDataRange,
   reefDetailsSelector,
-  reefRequest,
   reefLoadingSelector,
+  reefRequest,
+  reefTimeSeriesDataRangeLoadingSelector,
   reefTimeSeriesDataRangeRequest,
   reefTimeSeriesDataRangeSelector,
-  clearTimeSeriesDataRange,
-  clearTimeSeriesData,
-  reefTimeSeriesDataRangeLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
-  surveysRequest,
   surveyListLoadingSelector,
+  surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
 
 const BG_COLOR = "rgb(245, 246, 246)";

@@ -1,34 +1,32 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Grid,
-  withStyles,
-  WithStyles,
   createStyles,
+  Grid,
   Theme,
   useMediaQuery,
   useTheme,
+  WithStyles,
+  withStyles,
 } from "@material-ui/core";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
-  reefTimeSeriesDataRangeSelector,
-  reefTimeSeriesDataSelector,
-  reefTimeSeriesDataRequest,
   reefGranularDailyDataSelector,
+  reefTimeSeriesDataRangeSelector,
+  reefTimeSeriesDataRequest,
+  reefTimeSeriesDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
   findMarginalDate,
+  generateMonthlyMaxTimestamps,
+  isBefore,
   setTimeZone,
   subtractFromDate,
-  isBefore,
-  generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
 import {
   filterDailyData,
@@ -38,6 +36,7 @@ import {
 } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
+import DownloadCSVButton from "./DownloadCSVButton";
 
 const ChartWithCard = ({
   reef,
@@ -50,6 +49,7 @@ const ChartWithCard = ({
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
   const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
@@ -339,51 +339,45 @@ const ChartWithCard = ({
           <Grid
             item
             xs={12}
+            className={classes.tempAnalysisCell}
             md={hasSpotterData ? 12 : 4}
             lg={hasSpotterData ? 4 : 3}
           >
-            <Grid
-              container
-              justify={isTablet && !hasSpotterData ? "flex-end" : "center"}
+            <TempAnalysis
+              pickerStartDate={
+                pickerStartDate || subtractFromDate(today, "week")
+              }
+              pickerEndDate={pickerEndDate || today}
+              chartStartDate={
+                startDate || pickerStartDate || subtractFromDate(today, "week")
+              }
+              chartEndDate={endDate || pickerEndDate || today}
+              depth={reef.depth}
+              spotterData={filterTimeSeriesData(
+                spotterData,
+                startDate,
+                endDate
+              )}
+              hoboBottomTemperature={filterSofarData(
+                hoboBottomTemperature || [],
+                startDate || pickerStartDate,
+                endDate || pickerEndDate
+              )}
+              monthlyMax={generateMonthlyMaxTimestamps(
+                reef.monthlyMax,
+                startDate,
+                endDate,
+                reef.timezone
+              )}
             >
-              <Grid
-                item
-                xs={hasSpotterData ? 12 : 11}
-                sm={hasSpotterData ? 10 : 6}
-                md={hasSpotterData ? 6 : 10}
-                lg={hasSpotterData ? 12 : 11}
-              >
-                <TempAnalysis
-                  pickerStartDate={
-                    pickerStartDate || subtractFromDate(today, "week")
-                  }
-                  pickerEndDate={pickerEndDate || today}
-                  chartStartDate={
-                    startDate ||
-                    pickerStartDate ||
-                    subtractFromDate(today, "week")
-                  }
-                  chartEndDate={endDate || pickerEndDate || today}
-                  depth={reef.depth}
-                  spotterData={filterTimeSeriesData(
-                    spotterData,
-                    startDate,
-                    endDate
-                  )}
-                  hoboBottomTemperature={filterSofarData(
-                    hoboBottomTemperature || [],
-                    startDate || pickerStartDate,
-                    endDate || pickerEndDate
-                  )}
-                  monthlyMax={generateMonthlyMaxTimestamps(
-                    reef.monthlyMax,
-                    startDate,
-                    endDate,
-                    reef.timezone
-                  )}
-                />
-              </Grid>
-            </Grid>
+              <DownloadCSVButton
+                startDate={startDate}
+                endDate={endDate}
+                reefId={reef.id}
+                pointId={pointId}
+                className={classes.button}
+              />
+            </TempAnalysis>
           </Grid>
         )}
       </Grid>
@@ -404,6 +398,17 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         marginBottom: 10,
       },
+    },
+    button: {
+      width: "fit-content",
+    },
+    tempAnalysisCell: {
+      // fit-content makes sure the card doesn't extent to the edges of the screen when it has its own row
+      [theme.breakpoints.down("md")]: {
+        maxWidth: "fit-content",
+      },
+      width: "inherit",
+      margin: "0 auto",
     },
   });
 

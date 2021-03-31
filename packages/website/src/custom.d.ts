@@ -10,5 +10,6 @@ declare module "*.css" {
   export = classNames;
 }
 
+declare module "download-csv";
 declare module "react-leaflet-markercluster";
 declare module "react-swipeable-bottom-sheet";
