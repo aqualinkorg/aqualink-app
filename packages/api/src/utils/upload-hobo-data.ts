@@ -238,7 +238,7 @@ const getReefRecords = async (
         polygon: point,
         region,
         maxMonthlyMean,
-        approved: true,
+        approved: false,
         timezone: timezones[0],
         status: ReefStatus.Approved,
       }));
