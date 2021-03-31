@@ -62,19 +62,20 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       tooltip: "Historic long-term average of satellite surface temperature",
       key: "historic",
       color: "#d84424",
-      rows: calculateCardMetrics(filteredMaxMonthlyData, "historic"),
+      rows: calculateCardMetrics(1, filteredMaxMonthlyData, "historic"),
     },
     {
       title: "HOBO",
       key: "hobo",
       color: "#f78c21",
-      rows: calculateCardMetrics(hoboBottomTemperature, "hobo"),
+      rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
     },
     {
       title: "BUOY 1m",
       key: "spotterSurface",
       color: "#46a5cf",
       rows: calculateCardMetrics(
+        2,
         spotterData?.surfaceTemperature,
         "spotterSurface"
       ),
@@ -84,6 +85,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       key: "spotterBottom",
       color: "#f78c21",
       rows: calculateCardMetrics(
+        2,
         spotterData?.bottomTemperature,
         "spotterBottom"
       ),

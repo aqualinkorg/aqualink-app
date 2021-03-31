@@ -5,20 +5,25 @@ import { MonthlyMaxData, SofarValue } from "../../../store/Reefs/types";
 import { CardColumn } from "./types";
 
 export const calculateCardMetrics = (
+  minNumberOfPoints: number,
   data?: (MonthlyMaxData | SofarValue)[],
   keyPrefix?: string
 ): CardColumn["rows"] => [
   {
     key: `${keyPrefix}-max`,
-    value: data?.[1] ? maxBy(data, "value")?.value : undefined,
+    value: data?.[minNumberOfPoints - 1]
+      ? maxBy(data, "value")?.value
+      : undefined,
   },
   {
     key: `${keyPrefix}-mean`,
-    value: data?.[1] ? meanBy(data, "value") : undefined,
+    value: data?.[minNumberOfPoints - 1] ? meanBy(data, "value") : undefined,
   },
   {
     key: `${keyPrefix}-min`,
-    value: data?.[1] ? minBy(data, "value")?.value : undefined,
+    value: data?.[minNumberOfPoints - 1]
+      ? minBy(data, "value")?.value
+      : undefined,
   },
 ];
 
