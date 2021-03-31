@@ -373,6 +373,8 @@ const ChartWithCard = ({
               <DownloadCSVButton
                 startDate={startDate}
                 endDate={endDate}
+                reefId={reef.id}
+                pointId={pointId}
                 className={classes.button}
               />
             </TempAnalysis>

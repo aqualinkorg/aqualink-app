@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
+import moment from "moment";
 import {
   reefGranularDailyDataSelector,
   reefTimeSeriesDataSelector,
@@ -17,6 +18,8 @@ type CSVDataColumn =
 interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
   timestamp: string;
 }
+
+const DATE_FORMAT = "YYYY_MM_DD";
 
 /**
  * Construct CSV data to pass into react-csv
@@ -55,10 +58,14 @@ function DownloadCSVButton({
   startDate,
   endDate,
   className,
+  pointId,
+  reefId,
 }: {
   startDate?: string;
   endDate?: string;
   className?: string;
+  reefId?: number | string;
+  pointId?: number | string;
 }) {
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
@@ -77,6 +84,11 @@ function DownloadCSVButton({
         }))
       )
       .result();
+  const fileName = `data_reef_${reefId}${
+    pointId ? `_poi_${pointId}` : ""
+  }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
+    DATE_FORMAT
+  )}`;
 
   return (
     <Button
@@ -88,11 +100,7 @@ function DownloadCSVButton({
         setLoading(true);
         // give time for the loading state to be rendered by react.
         setTimeout(() => {
-          downloadCsv(
-            getCSVData(),
-            undefined,
-            `export-${startDate}-to-${endDate}.csv`
-          );
+          downloadCsv(getCSVData(), undefined, fileName);
           setLoading(false);
         }, 5);
       }}
@@ -106,6 +114,8 @@ function DownloadCSVButton({
 DownloadCSVButton.defaultProps = {
   startDate: "unknown",
   endDate: "unknown",
+  pointId: undefined,
+  reefId: undefined,
   className: undefined,
 };
 
