@@ -1206,7 +1206,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         keyboardbuttonprops="[object Object]"
                         keyboardicon="[object Object]"
                         name="datePicker"
-                        value="2019-11-02T07:00:00.000Z"
+                        value="2019-11-02T00:00:00.000Z"
                       />
                     </muipickersutilsprovider>
                   </div>
@@ -1242,7 +1242,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                         keyboardbuttonprops="[object Object]"
                         keyboardicon="[object Object]"
                         name="datePicker"
-                        value="2020-02-02T08:00:00.000Z"
+                        value="2020-02-02T00:00:00.000Z"
                       />
                     </muipickersutilsprovider>
                   </div>
