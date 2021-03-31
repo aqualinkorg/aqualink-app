@@ -88,7 +88,7 @@ function DownloadCSVButton({
     pointId ? `_poi_${pointId}` : ""
   }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
     DATE_FORMAT
-  )}`;
+  )}.csv`;
 
   return (
     <Button
