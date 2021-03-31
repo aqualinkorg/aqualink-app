@@ -501,9 +501,7 @@ const parseHoboData = async (
   // Return insert promises and print progress updates
   const actionsLength = inserts.length;
   await Bluebird.Promise.each(inserts, (props, idx) => {
-    logger.log(
-      `Saved ${idx + 1} out of ${actionsLength} batches for reef ${reef.id}`,
-    );
+    logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
   });
 
   return reefDiffDays;
