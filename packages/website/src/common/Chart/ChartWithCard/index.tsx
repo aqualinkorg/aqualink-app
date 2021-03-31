@@ -57,7 +57,9 @@ const ChartWithCard = ({
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
-  const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
+  const hasSpotterData = Boolean(
+    spotterData?.bottomTemperature?.[0] || spotterData?.surfaceTemperature?.[0]
+  );
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
@@ -308,10 +310,12 @@ const ChartWithCard = ({
         spacing={1}
       >
         <Grid
+          className={
+            hasSpotterData
+              ? classes.chartWithSpotter
+              : classes.chartWithoutSpotter
+          }
           item
-          xs={12}
-          md={hasSpotterData ? 12 : 8}
-          lg={hasSpotterData ? 8 : 9}
         >
           <Chart
             reef={reef}
@@ -337,11 +341,12 @@ const ChartWithCard = ({
         </Grid>
         {!pickerErrored && (
           <Grid
+            className={
+              hasSpotterData
+                ? classes.cardWithSpotter
+                : classes.cardWithoutSpotter
+            }
             item
-            xs={12}
-            className={classes.tempAnalysisCell}
-            md={hasSpotterData ? 12 : 4}
-            lg={hasSpotterData ? 4 : 3}
           >
             <TempAnalysis
               pickerStartDate={
@@ -402,13 +407,44 @@ const styles = (theme: Theme) =>
     button: {
       width: "fit-content",
     },
-    tempAnalysisCell: {
-      // fit-content makes sure the card doesn't extent to the edges of the screen when it has its own row
-      [theme.breakpoints.down("md")]: {
-        maxWidth: "fit-content",
+    chartWithSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        width: "67%",
       },
-      width: "inherit",
-      margin: "0 auto",
+      [theme.breakpoints.down("md")]: {
+        width: "100%",
+      },
+    },
+    chartWithoutSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        width: "80%",
+      },
+      [theme.breakpoints.between("md", "md")]: {
+        width: "73%",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      },
+    },
+    cardWithSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        flexGrow: 1,
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "inherit",
+        maxWidth: "fit-content",
+        margin: "0 auto",
+      },
+    },
+    cardWithoutSpotter: {
+      [theme.breakpoints.up("md")]: {
+        flexGrow: 1,
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "inherit",
+        maxWidth: "fit-content",
+        margin: "0 auto",
+      },
     },
   });
 
