@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
-import { CSVLink } from "react-csv";
 import {
   reefGranularDailyDataSelector,
   reefTimeSeriesDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
-import { DailyData, SofarValue } from "../../../store/Reefs/types";
+import { SofarValue } from "../../../store/Reefs/types";
 
 type CSVDataColumn =
   | "spotterBottomTemp"
@@ -20,68 +20,35 @@ interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
 
 /**
  * Construct CSV data to pass into react-csv
- * @param dailyData - used to fetch satelliteTemp
- * @param hoboData - expects bottomTemperature metric from hoboData
- * @param spotterBottomTemp - expects bottomTemperature metric from spotterData
- * @param spotterTopTemp - expects surfaceTemperature metric from spotterData
  */
-function constructCSVData({
-  spotterTopTemp = [],
-  spotterBottomTemp = [],
-  hoboData = [],
-  dailyData = [],
-}: {
-  spotterBottomTemp?: SofarValue[];
-  spotterTopTemp?: SofarValue[];
-  dailyData?: DailyData[];
-  hoboData?: SofarValue[];
-}): CSVRow[] {
-  const chainedReduce = (
-    finalKey: CSVDataColumn,
-    data: SofarValue[],
-    existingData: Record<CSVRow["timestamp"], CSVRow> = {}
-  ) => {
-    // writing this in an immutable fashion will be detrimental to performance.
-    /* eslint-disable no-param-reassign,fp/no-mutation */
-    const result = data.reduce((obj, item) => {
-      if (obj[item.timestamp]) {
-        obj[item.timestamp][finalKey] = item.value;
-      } else {
-        obj[item.timestamp] = {
-          timestamp: item.timestamp,
-          [finalKey]: item.value,
-        };
-      }
-      return obj;
-    }, existingData);
-    return {
-      result,
-      chainedReduce: (
-        chainedFinalKey: CSVDataColumn,
-        chainedData: SofarValue[]
-      ) => chainedReduce(chainedFinalKey, chainedData, result),
-    };
-    /* eslint-enable no-param-reassign,fp/no-mutation */
+function constructCSVData(
+  finalKey: CSVDataColumn,
+  data: SofarValue[] = [],
+  existingData: Record<CSVRow["timestamp"], CSVRow> = {}
+) {
+  // writing this in an immutable fashion will be detrimental to performance.
+  /* eslint-disable no-param-reassign,fp/no-mutation,fp/no-mutating-methods */
+  const result = data.reduce((obj, item) => {
+    if (obj[item.timestamp]) {
+      obj[item.timestamp][finalKey] = item.value;
+    } else {
+      obj[item.timestamp] = {
+        timestamp: item.timestamp,
+        [finalKey]: item.value,
+      };
+    }
+    return obj;
+  }, existingData);
+  return {
+    result: () =>
+      Object.values(result).sort(
+        (a, b) =>
+          new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+      ),
+    chained: (chainedFinalKey: CSVDataColumn, chainedData: SofarValue[] = []) =>
+      constructCSVData(chainedFinalKey, chainedData, result),
   };
-
-  const mappedToTimestamp = chainedReduce(
-    "spotterBottomTemp",
-    spotterBottomTemp
-  )
-    .chainedReduce("spotterTopTemp", spotterTopTemp)
-    .chainedReduce("hoboTemp", hoboData)
-    .chainedReduce(
-      "dailySST",
-      dailyData.map((val) => ({
-        timestamp: val.date,
-        value: val.satelliteTemperature,
-      }))
-    ).result;
-
-  // eslint-disable-next-line fp/no-mutating-methods
-  return Object.values(mappedToTimestamp).sort(
-    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-  );
+  /* eslint-enable no-param-reassign,fp/no-mutation */
 }
 
 function DownloadCSVButton({
@@ -96,22 +63,43 @@ function DownloadCSVButton({
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
     useSelector(reefTimeSeriesDataSelector) || {};
-  const csvData = useMemo(
-    () =>
-      constructCSVData({
-        dailyData: granularDailyData,
-        spotterTopTemp: spotterData?.surfaceTemperature,
-        spotterBottomTemp: spotterData?.bottomTemperature,
-        hoboData: hoboData?.bottomTemperature,
-      }),
-    [granularDailyData, hoboData, spotterData]
-  );
+  const [loading, setLoading] = useState(false);
+
+  const getCSVData = () =>
+    constructCSVData("spotterBottomTemp", spotterData?.bottomTemperature)
+      .chained("spotterTopTemp", spotterData?.surfaceTemperature)
+      .chained("hoboTemp", hoboData?.bottomTemperature)
+      .chained(
+        "dailySST",
+        granularDailyData?.map((val) => ({
+          timestamp: val.date,
+          value: val.satelliteTemperature,
+        }))
+      )
+      .result();
+
   return (
-    <CSVLink filename={`export-${startDate}-to-${endDate}.csv`} data={csvData}>
-      <Button variant="outlined" color="primary" className={className}>
-        Download CSV
-      </Button>
-    </CSVLink>
+    <Button
+      disabled={loading}
+      variant="outlined"
+      color="primary"
+      className={className}
+      onClick={() => {
+        setLoading(true);
+        // give time for the loading state to be rendered by react.
+        setTimeout(() => {
+          downloadCsv(
+            getCSVData(),
+            undefined,
+            `export-${startDate}-to-${endDate}.csv`
+          );
+          setLoading(false);
+        }, 5);
+      }}
+    >
+      {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
+      {loading ? "Loading..." : "Download CSV"}
+    </Button>
   );
 }
 

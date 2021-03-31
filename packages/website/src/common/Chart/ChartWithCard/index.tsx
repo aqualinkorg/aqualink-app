@@ -380,7 +380,7 @@ const styles = (theme: Theme) =>
       },
     },
     button: {
-      width: "auto",
+      width: "fit-content",
     },
     tempAnalysisCell: {
       // fit-content makes sure the card doesn't extent to the edges of the screen when it has its own row
