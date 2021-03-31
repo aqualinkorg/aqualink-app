@@ -59,6 +59,7 @@ interface Repositories {
 }
 
 const FOLDER_PREFIX = 'Patch_Reef_';
+const REEF_PREFIX = 'Patch Reef ';
 const COLONY_COORDS_FILE = 'Colony_Coords.csv';
 const COLONY_FOLDER_PREFIX = 'Col_';
 const COLONY_PREFIX = 'Colony ';
@@ -233,7 +234,7 @@ const getReefRecords = async (
         getRegion(longitude, latitude, regionRepository),
         getMMM(longitude, latitude),
       ]).then(([region, maxMonthlyMean]) => ({
-        name: FOLDER_PREFIX + reefId,
+        name: REEF_PREFIX + reefId,
         polygon: point,
         region,
         maxMonthlyMean,
@@ -301,7 +302,7 @@ const createReefs = async (
   // Create reverse map (db.reef.id => xlsx.reef_id)
   const dbIdToXLSXId: Record<number, number> = Object.fromEntries(
     reefEntities.map((reef) => {
-      const reefId = parseInt(reef.name.replace(FOLDER_PREFIX, ''), 10);
+      const reefId = parseInt(reef.name.replace(REEF_PREFIX, ''), 10);
       return [reef.id, reefId];
     }),
   );
@@ -477,9 +478,6 @@ const parseHoboData = async (
       const start = moment(startDate.timestamp);
       const end = moment();
       const diff = Math.min(end.diff(start, 'd'), 200);
-      logger.log(
-        `Performing backfill for reef ${startDate.reef.id} for ${diff} days`,
-      );
 
       return [startDate.reef.id, diff];
     },
@@ -598,6 +596,7 @@ const uploadReefPhotos = async (
 
 export const performBackfill = (reefDiffDays: [number, number][]) => {
   reefDiffDays.forEach(([reefId, diff]) => {
+    logger.log(`Performing backfill for reef ${reefId} for ${diff} days`);
     backfillReefData(reefId, diff);
   });
 };
