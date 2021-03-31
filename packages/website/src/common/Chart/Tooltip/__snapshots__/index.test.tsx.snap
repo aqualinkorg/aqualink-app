@@ -37,21 +37,6 @@ exports[`renders as expected 1`] = `
             >
               <div
                 class="div-root-8 div-root-9"
-                color="#6bc1e1"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                SURFACE
-                 
-                20.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-10"
                 color="#46a5cf"
               />
               <mock-typography
@@ -60,21 +45,6 @@ exports[`renders as expected 1`] = `
                 BUOY 1m
                  
                 20.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-11"
-                color="rgba(250, 141, 0)"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                BUOY 10m
-                 
-                15.0 °C
               </mock-typography>
             </div>
           </div>

@@ -1,85 +1,93 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Grid,
-  withStyles,
-  WithStyles,
   createStyles,
+  Grid,
   Theme,
   useMediaQuery,
   useTheme,
+  WithStyles,
+  withStyles,
 } from "@material-ui/core";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
-  reefHoboDataRangeSelector,
-  reefHoboDataRequest,
-  reefHoboDataSelector,
-  reefSpotterDataRequest,
-  reefSpotterDataSelector,
+  reefGranularDailyDataSelector,
+  reefTimeSeriesDataRangeSelector,
+  reefTimeSeriesDataRequest,
+  reefTimeSeriesDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
   findMarginalDate,
+  generateMonthlyMaxTimestamps,
+  isBefore,
   setTimeZone,
   subtractFromDate,
-  isBefore,
-  generateMonthlyMaxTimestamps,
 } from "../../../helpers/dates";
 import {
   filterDailyData,
-  filterHoboData,
   filterMaxMonthlyData,
-  filterSpotterData,
+  filterSofarData,
+  filterTimeSeriesData,
 } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
+import DownloadCSVButton from "./DownloadCSVButton";
 
 const ChartWithCard = ({
   reef,
   pointId,
+  surveysFiltered,
   title,
+  disableGutters,
   classes,
 }: ChartWithCardProps) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
+
   const dispatch = useDispatch();
-  const spotterData = useSelector(reefSpotterDataSelector);
-  const { bottomTemperature: hoboBottomTemperature } =
-    useSelector(reefHoboDataSelector) || {};
+  const granularDailyData = useSelector(reefGranularDailyDataSelector);
+  const { hobo: hoboData, spotter: spotterData } =
+    useSelector(reefTimeSeriesDataSelector) || {};
+  const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefHoboDataRangeSelector) || {};
-  const hasSpotterData = Boolean(reef.liveData.surfaceTemperature);
+    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
-  const [pastLimit, setPastLimit] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>("three_months");
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
-  // Set pickers initial values
+  const filteredSpotter = filterTimeSeriesData(spotterData, startDate, endDate);
+  const hasSpotterData = Boolean(
+    filteredSpotter?.bottomTemperature?.[0] ||
+      filteredSpotter?.surfaceTemperature?.[0]
+  );
+
+  // Set pickers initial values once the range request is completed
   useEffect(() => {
-    const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
-    const localizedMaxDate = new Date(
-      moment(maxDate)
-        .tz(reef.timezone || "UTC")
-        .format("MM/DD/YYYY")
-    ).toISOString();
-    const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
-    setPickerEndDate(localizedMaxDate);
-    setPickerStartDate(pastThreeMonths);
-    setPastLimit(pastThreeMonths);
+    if (hoboBottomTemperatureRange) {
+      const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
+      const localizedMaxDate = new Date(
+        moment(maxDate)
+          .tz(reef.timezone || "UTC")
+          .format("MM/DD/YYYY")
+      ).toISOString();
+      const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
+      setPickerEndDate(localizedMaxDate);
+      setPickerStartDate(pastThreeMonths);
+    }
   }, [hoboBottomTemperatureRange, reef.timezone]);
 
-  // Get spotter data
+  // Get time series data
   useEffect(() => {
     if (
       pickerStartDate &&
@@ -96,65 +104,19 @@ const ChartWithCard = ({
         reef.timezone
       );
 
-      if (hasSpotterData) {
-        dispatch(
-          reefSpotterDataRequest({
-            id: `${reef.id}`,
-            startDate: reefLocalStartDate,
-            endDate: reefLocalEndDate,
-          })
-        );
-      }
+      dispatch(
+        reefTimeSeriesDataRequest({
+          reefId: `${reef.id}`,
+          pointId,
+          start: reefLocalStartDate,
+          end: reefLocalEndDate,
+          metrics: ["bottom_temperature", "surface_temperature"],
+          hourly: true,
+        })
+      );
     }
   }, [
     dispatch,
-    hasSpotterData,
-    pickerEndDate,
-    pickerStartDate,
-    reef.id,
-    reef.timezone,
-  ]);
-
-  // Fetch HOBO data if picker start date is before the current past limit
-  useEffect(() => {
-    if (
-      pointId &&
-      pickerStartDate &&
-      pickerEndDate &&
-      isBefore(pickerStartDate, pickerEndDate) &&
-      pastLimit &&
-      hoboBottomTemperatureRange?.[0]
-    ) {
-      const { minDate } = hoboBottomTemperatureRange[0];
-      const reefLocalStartDate = setTimeZone(
-        new Date(pickerStartDate),
-        reef.timezone
-      );
-      const reefLocalEndDate = setTimeZone(
-        new Date(pickerEndDate),
-        reef.timezone
-      );
-
-      if (
-        new Date(pickerStartDate).getTime() < new Date(pastLimit).getTime() &&
-        new Date(pastLimit).getTime() > new Date(minDate).getTime()
-      ) {
-        setPastLimit(pickerStartDate);
-        dispatch(
-          reefHoboDataRequest({
-            reefId: `${reef.id}`,
-            pointId,
-            start: reefLocalStartDate,
-            end: reefLocalEndDate,
-            metrics: ["bottom_temperature"],
-          })
-        );
-      }
-    }
-  }, [
-    dispatch,
-    hoboBottomTemperatureRange,
-    pastLimit,
     pickerEndDate,
     pickerStartDate,
     pointId,
@@ -162,7 +124,7 @@ const ChartWithCard = ({
     reef.timezone,
   ]);
 
-  // Set chart start/end dates
+  // Set chart start/end dates based on data received
   useEffect(() => {
     const maxMonthlyData = generateMonthlyMaxTimestamps(
       reef.monthlyMax,
@@ -175,16 +137,16 @@ const ChartWithCard = ({
       pickerEndDate
     );
     const filteredDailyData = filterDailyData(
-      reef.dailyData,
+      granularDailyData || [],
       pickerStartDate,
       pickerEndDate
     );
-    const filteredHoboData = filterHoboData(
+    const filteredHoboData = filterSofarData(
       hoboBottomTemperature || [],
       pickerStartDate,
       pickerEndDate
     );
-    const filteredSpotterData = filterSpotterData(
+    const filteredSpotterData = filterTimeSeriesData(
       spotterData,
       pickerStartDate,
       pickerEndDate
@@ -203,7 +165,7 @@ const ChartWithCard = ({
           filteredSpotterData,
           filteredHoboData
         )
-      );
+      ).toISOString();
       const minDataDate = new Date(
         findMarginalDate(
           filteredMaxMonthlyData,
@@ -212,36 +174,37 @@ const ChartWithCard = ({
           filteredHoboData,
           "min"
         )
-      );
+      ).toISOString();
       const reefLocalEndDate = new Date(
         setTimeZone(
           new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
           reef?.timezone
         )
-      );
+      ).toISOString();
       const reefLocalStartDate = new Date(
         setTimeZone(
           new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
           reef?.timezone
         )
-      );
+      ).toISOString();
 
-      if (maxDataDate.getTime() > reefLocalEndDate.getTime()) {
-        setEndDate(reefLocalEndDate.toISOString());
+      if (moment(maxDataDate).isAfter(moment(reefLocalEndDate))) {
+        setEndDate(reefLocalEndDate);
       } else {
-        setEndDate(maxDataDate.toISOString());
+        setEndDate(maxDataDate);
       }
 
-      if (minDataDate.getTime() > reefLocalStartDate.getTime()) {
-        setStartDate(minDataDate.toISOString());
+      if (moment(minDataDate).isAfter(moment(reefLocalStartDate))) {
+        setStartDate(minDataDate);
       } else {
-        setStartDate(reefLocalStartDate.toISOString());
+        setStartDate(reefLocalStartDate);
       }
     } else {
       setStartDate(undefined);
       setEndDate(undefined);
     }
   }, [
+    granularDailyData,
     hoboBottomTemperature,
     pickerEndDate,
     pickerStartDate,
@@ -297,7 +260,14 @@ const ChartWithCard = ({
           setPickerStartDate(moment(dateString).startOf("day").toISOString());
           break;
         case "end":
-          setPickerEndDate(moment(dateString).startOf("day").toISOString());
+          // Set picker end date only if input date is before today
+          if (
+            moment(dateString)
+              .startOf("day")
+              .isSameOrBefore(moment().startOf("day"))
+          ) {
+            setPickerEndDate(moment(dateString).startOf("day").toISOString());
+          }
           break;
         default:
           break;
@@ -306,12 +276,20 @@ const ChartWithCard = ({
   };
 
   return (
-    <Container className={classes.chartWithRange}>
+    <Container
+      disableGutters={disableGutters}
+      className={`${classes.chartWithRange} ${
+        (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet)
+          ? classes.extraPadding
+          : ""
+      }`}
+    >
       <ViewRange
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
+        hasSpotterData={hasSpotterData}
       />
       <Grid
         className={classes.chartWrapper}
@@ -321,16 +299,19 @@ const ChartWithCard = ({
         spacing={1}
       >
         <Grid
+          className={
+            hasSpotterData
+              ? classes.chartWithSpotter
+              : classes.chartWithoutSpotter
+          }
           item
-          xs={12}
-          md={hasSpotterData ? 12 : 8}
-          lg={hasSpotterData ? 8 : 9}
         >
           <Chart
             reef={reef}
+            dailyData={granularDailyData || []}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
-            spotterData={filterSpotterData(spotterData, startDate, endDate)}
-            hoboBottomTemperature={filterHoboData(
+            spotterData={filterTimeSeriesData(spotterData, startDate, endDate)}
+            hoboBottomTemperature={filterSofarData(
               hoboBottomTemperature || [],
               startDate || pickerStartDate,
               endDate || pickerEndDate
@@ -344,57 +325,53 @@ const ChartWithCard = ({
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
             pickerErrored={pickerErrored}
+            surveysFiltered={surveysFiltered}
           />
         </Grid>
         {!pickerErrored && (
           <Grid
+            className={
+              hasSpotterData
+                ? classes.cardWithSpotter
+                : classes.cardWithoutSpotter
+            }
             item
-            xs={12}
-            md={hasSpotterData ? 12 : 4}
-            lg={hasSpotterData ? 4 : 3}
           >
-            <Grid
-              container
-              justify={isDesktop && !hasSpotterData ? "flex-end" : "center"}
+            <TempAnalysis
+              pickerStartDate={
+                pickerStartDate || subtractFromDate(today, "week")
+              }
+              pickerEndDate={pickerEndDate || today}
+              chartStartDate={
+                startDate || pickerStartDate || subtractFromDate(today, "week")
+              }
+              chartEndDate={endDate || pickerEndDate || today}
+              depth={reef.depth}
+              spotterData={filterTimeSeriesData(
+                spotterData,
+                startDate,
+                endDate
+              )}
+              hoboBottomTemperature={filterSofarData(
+                hoboBottomTemperature || [],
+                startDate || pickerStartDate,
+                endDate || pickerEndDate
+              )}
+              monthlyMax={generateMonthlyMaxTimestamps(
+                reef.monthlyMax,
+                startDate,
+                endDate,
+                reef.timezone
+              )}
             >
-              <Grid
-                item
-                xs={hasSpotterData ? 12 : 11}
-                sm={hasSpotterData ? 10 : 6}
-                md={hasSpotterData ? 6 : 10}
-                lg={hasSpotterData ? 12 : 11}
-              >
-                <TempAnalysis
-                  pickerStartDate={
-                    pickerStartDate || subtractFromDate(today, "week")
-                  }
-                  pickerEndDate={pickerEndDate || today}
-                  chartStartDate={
-                    startDate ||
-                    pickerStartDate ||
-                    subtractFromDate(today, "week")
-                  }
-                  chartEndDate={endDate || pickerEndDate || today}
-                  depth={reef.depth}
-                  spotterData={filterSpotterData(
-                    spotterData,
-                    startDate,
-                    endDate
-                  )}
-                  hoboBottomTemperature={filterHoboData(
-                    hoboBottomTemperature || [],
-                    startDate || pickerStartDate,
-                    endDate || pickerEndDate
-                  )}
-                  monthlyMax={generateMonthlyMaxTimestamps(
-                    reef.monthlyMax,
-                    startDate,
-                    endDate,
-                    reef.timezone
-                  )}
-                />
-              </Grid>
-            </Grid>
+              <DownloadCSVButton
+                startDate={startDate}
+                endDate={endDate}
+                reefId={reef.id}
+                pointId={pointId}
+                className={classes.button}
+              />
+            </TempAnalysis>
           </Grid>
         )}
       </Grid>
@@ -404,6 +381,9 @@ const ChartWithCard = ({
 
 const styles = (theme: Theme) =>
   createStyles({
+    extraPadding: {
+      paddingRight: 12,
+    },
     chartWithRange: {
       marginTop: 80,
     },
@@ -413,11 +393,55 @@ const styles = (theme: Theme) =>
         marginBottom: 10,
       },
     },
+    button: {
+      width: "fit-content",
+    },
+    chartWithSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        width: "67%",
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "100%",
+      },
+    },
+    chartWithoutSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        width: "80%",
+      },
+      [theme.breakpoints.between("md", "md")]: {
+        width: "73%",
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      },
+    },
+    cardWithSpotter: {
+      [theme.breakpoints.up("lg")]: {
+        flexGrow: 1,
+      },
+      [theme.breakpoints.down("md")]: {
+        width: "inherit",
+        maxWidth: "fit-content",
+        margin: "0 auto",
+      },
+    },
+    cardWithoutSpotter: {
+      [theme.breakpoints.up("md")]: {
+        flexGrow: 1,
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "inherit",
+        maxWidth: "fit-content",
+        margin: "0 auto",
+      },
+    },
   });
 
 interface ChartWithCardIncomingProps {
   reef: Reef;
   pointId: string | undefined;
+  surveysFiltered: boolean;
+  disableGutters: boolean;
   title?: string;
 }
 

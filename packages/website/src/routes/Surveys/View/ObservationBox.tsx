@@ -14,10 +14,8 @@ import { some } from "lodash";
 import { DailyData } from "../../../store/Reefs/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import {
-  reefHoboDataLoadingSelector,
-  reefHoboDataSelector,
-  reefSpotterDataLoadingSelector,
-  reefSpotterDataSelector,
+  reefTimeSeriesDataLoadingSelector,
+  reefTimeSeriesDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { getCardTemperatureValues } from "./utils";
 
@@ -25,14 +23,11 @@ const ObservationBox = ({
   depth,
   dailyData,
   date,
-  timeZone,
   classes,
 }: ObservationBoxProps) => {
-  const hoboData = useSelector(reefHoboDataSelector);
-  const spotterData = useSelector(reefSpotterDataSelector);
-  const hoboDataLoading = useSelector(reefHoboDataLoadingSelector);
-  const spotterDataLoading = useSelector(reefSpotterDataLoadingSelector);
-  const loading = hoboDataLoading || spotterDataLoading;
+  const { hobo: hoboData, spotter: spotterData } =
+    useSelector(reefTimeSeriesDataSelector) || {};
+  const loading = useSelector(reefTimeSeriesDataLoadingSelector);
 
   const {
     satelliteTemperature,
@@ -40,13 +35,7 @@ const ObservationBox = ({
     hoboSurface,
     spotterBottom,
     spotterSurface,
-  } = getCardTemperatureValues(
-    dailyData,
-    spotterData,
-    hoboData,
-    date,
-    timeZone
-  );
+  } = getCardTemperatureValues(dailyData, spotterData, hoboData, date);
 
   return (
     <div className={classes.outerDiv}>
@@ -135,12 +124,10 @@ interface ObservationBoxIncomingProps {
   depth: number | null;
   dailyData: DailyData[];
   date?: string | null;
-  timeZone?: string | null;
 }
 
 ObservationBox.defaultProps = {
   date: null,
-  timeZone: null,
 };
 
 type ObservationBoxProps = ObservationBoxIncomingProps &

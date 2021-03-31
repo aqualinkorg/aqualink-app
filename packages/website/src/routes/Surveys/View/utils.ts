@@ -1,34 +1,23 @@
-import moment from "moment";
-
-import { getSpotterDataClosestToDate } from "../../../common/Chart/utils";
 import {
-  DailyData,
-  HoboData,
-  SofarValue,
-  SpotterData,
-} from "../../../store/Reefs/types";
+  getSofarDataClosestToDate,
+  sameDay,
+} from "../../../common/Chart/utils";
+import { DailyData, SofarValue, TimeSeries } from "../../../store/Reefs/types";
 
 const getSensorValue = (data?: SofarValue[], date?: string | null) =>
   date && data?.[0]
-    ? getSpotterDataClosestToDate(data, new Date(date), 6)?.value
+    ? getSofarDataClosestToDate(data, new Date(date), 6)?.value
     : undefined;
 
 export const getCardTemperatureValues = (
   dailyData: DailyData[],
-  spotterData: SpotterData | null | undefined,
-  hoboData: HoboData | undefined,
-  date: string | null | undefined,
-  timeZone: string | null | undefined
+  spotterData: TimeSeries | undefined,
+  hoboData: TimeSeries | undefined,
+  date: string | null | undefined
 ) => {
-  const surfaceData = dailyData.find(
-    (item) =>
-      moment(item.date)
-        .tz(timeZone || "UTC")
-        .format("MM/DD/YYYY") ===
-      moment(date)
-        .tz(timeZone || "UTC")
-        .format("MM/DD/YYYY")
-  );
+  const surfaceData = date
+    ? dailyData.find((item) => sameDay(date, item.date))
+    : undefined;
 
   return {
     satelliteTemperature: surfaceData?.satelliteTemperature,

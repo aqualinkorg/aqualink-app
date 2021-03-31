@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { LinearProgress } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
@@ -10,21 +9,19 @@ import InfoCard from "./InfoCard";
 import ChartWithCard from "../../../common/Chart/ChartWithCard";
 import SurveyHistory from "./SurveyHistory";
 import {
+  clearTimeSeriesData,
+  clearTimeSeriesDataRange,
   reefDetailsSelector,
-  reefRequest,
   reefLoadingSelector,
-  reefHoboDataRangeRequest,
-  reefHoboDataRangeSelector,
-  reefHoboDataRequest,
-  clearHoboDataRange,
-  clearHoboData,
-  reefHoboDataRangeLoadingSelector,
+  reefRequest,
+  reefTimeSeriesDataRangeLoadingSelector,
+  reefTimeSeriesDataRangeRequest,
+  reefTimeSeriesDataRangeSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
-  surveysRequest,
   surveyListLoadingSelector,
+  surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
-import { subtractFromDate } from "../../../helpers/dates";
 
 const BG_COLOR = "rgb(245, 246, 246)";
 
@@ -37,10 +34,12 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const reef = useSelector(reefDetailsSelector);
   const reefLoading = useSelector(reefLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
-  const hoboRangeLoading = useSelector(reefHoboDataRangeLoadingSelector);
+  const timeSeriesRangeLoading = useSelector(
+    reefTimeSeriesDataRangeLoadingSelector
+  );
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefHoboDataRangeSelector) || {};
-  const loading = reefLoading || surveysLoading || hoboRangeLoading;
+    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
+  const loading = reefLoading || surveysLoading || timeSeriesRangeLoading;
 
   const hasSpotterData = Boolean(reef?.liveData?.surfaceTemperature);
   const hasRange = !!(
@@ -52,32 +51,15 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     return () => {
-      dispatch(clearHoboDataRange());
-      dispatch(clearHoboData());
+      dispatch(clearTimeSeriesDataRange());
+      dispatch(clearTimeSeriesData());
     };
   }, [dispatch]);
 
   // Get HOBO data range
   useEffect(() => {
-    dispatch(reefHoboDataRangeRequest({ reefId: id, pointId }));
+    dispatch(reefTimeSeriesDataRangeRequest({ reefId: id, pointId }));
   }, [dispatch, id, pointId]);
-
-  // Get HOBO data
-  useEffect(() => {
-    if (hoboBottomTemperatureRange?.[0]) {
-      const { maxDate } = hoboBottomTemperatureRange[0];
-      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
-      dispatch(
-        reefHoboDataRequest({
-          reefId: id,
-          pointId,
-          start: pastThreeMonths,
-          end: maxDate,
-          metrics: ["bottom_temperature"],
-        })
-      );
-    }
-  }, [dispatch, hoboBottomTemperatureRange, id, pointId]);
 
   useEffect(() => {
     if (!reef || reef.id !== reefIdNumber) {
@@ -94,7 +76,14 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
         <>
           <BackButton reefId={id} bgColor={BG_COLOR} />
           <InfoCard reef={reef} pointId={pointIdNumber} bgColor={BG_COLOR} />
-          {showChart && <ChartWithCard reef={reef} pointId={pointId} />}
+          {showChart && (
+            <ChartWithCard
+              disableGutters={false}
+              reef={reef}
+              pointId={pointId}
+              surveysFiltered
+            />
+          )}
           <SurveyHistory
             reef={reef}
             pointId={pointIdNumber}

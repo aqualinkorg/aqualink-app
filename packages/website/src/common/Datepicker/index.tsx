@@ -42,6 +42,7 @@ const DatePicker = ({
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"
+              disableFuture
               autoOk={autoOk}
               showTodayButton
               value={value || null}
@@ -73,7 +74,7 @@ const styles = (theme: Theme) =>
       paddingBottom: 2,
     },
     textField: {
-      width: "7.5rem",
+      width: 110,
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",

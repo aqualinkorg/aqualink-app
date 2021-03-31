@@ -2,7 +2,7 @@ import { Point } from 'geojson';
 
 export type Extent = [number, number, number, number];
 
-export function pointToPixel(
+export function pointToIndex(
   long: number,
   lat: number,
   boundingBox: Extent,
@@ -23,10 +23,34 @@ export function pointToPixel(
   const tempLat =
     minLat >= 0 ? (((lat % 180) + 270) % 180) - 90 : ((lat + 90) % 180) - 90;
 
+  const indexLong = Math.round(
+    (Math.abs(tempLong - minLong) / geoWidth) * width,
+  );
+  const indexLat = Math.round(
+    (Math.abs(tempLat - minLat) / geoHeight) * height,
+  );
+
+  return { indexLong, indexLat };
+}
+
+export function pointToPixel(
+  long: number,
+  lat: number,
+  boundingBox: Extent,
+  width: number,
+  height: number,
+) {
+  const { indexLong, indexLat } = pointToIndex(
+    long,
+    lat,
+    boundingBox,
+    width,
+    height,
+  );
+
   // Pixel (0, 0) is the top left corner.
-  const pixelX = Math.round((Math.abs(tempLong - minLong) / geoWidth) * width);
-  const pixelY =
-    height - Math.round((Math.abs(tempLat - minLat) / geoHeight) * height);
+  const pixelX = indexLong;
+  const pixelY = height - indexLat;
 
   return { pixelX, pixelY };
 }

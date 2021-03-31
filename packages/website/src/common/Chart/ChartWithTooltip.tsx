@@ -10,7 +10,7 @@ import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
   getDailyDataClosestToDate,
-  getSpotterDataClosestToDate,
+  getSofarDataClosestToDate,
   findSurveyFromDate,
   sameDay,
   filterDailyData,
@@ -49,11 +49,11 @@ function ChartWithTooltip({
     reefId,
     date: "",
     depth,
-    bottomTemperature: 0,
+    monthlyMaxTemp: null,
+    satelliteTemp: null,
     spotterSurfaceTemp: null,
-    surfaceTemperature: 0,
+    spotterBottomTemp: null,
     hoboBottomTemp: null,
-    monthlyMax: null,
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -78,7 +78,7 @@ function ChartWithTooltip({
       filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
       getDailyDataClosestToDate(filteredDailyData, new Date(date), 24) ||
       {};
-    const { satelliteTemperature, avgBottomTemperature } = dailyDataForDate;
+    const { satelliteTemperature } = dailyDataForDate;
 
     const monthlyMaxTemp =
       (
@@ -86,18 +86,21 @@ function ChartWithTooltip({
         getMonthlyMaxDataClosestToDate(monthlyMaxData, new Date(date))
       )?.value || null;
 
-    const bottomTemp =
-      spotterData &&
-      getSpotterDataClosestToDate(
-        spotterData.bottomTemperature,
-        new Date(date),
-        6
-      )?.value;
+    const satelliteTemp = satelliteTemperature || null;
 
     const spotterSurfaceTemp =
       (spotterData &&
-        getSpotterDataClosestToDate(
+        getSofarDataClosestToDate(
           spotterData.surfaceTemperature,
+          new Date(date),
+          6
+        )?.value) ||
+      null;
+
+    const spotterBottomTemp =
+      (spotterData &&
+        getSofarDataClosestToDate(
+          spotterData.bottomTemperature,
           new Date(date),
           6
         )?.value) ||
@@ -105,21 +108,16 @@ function ChartWithTooltip({
 
     const hoboBottomTemp =
       (hoboBottomTemperatureData &&
-        getSpotterDataClosestToDate(
-          hoboBottomTemperatureData,
-          new Date(date),
-          6
-        )?.value) ||
+        getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
+          ?.value) ||
       null;
 
-    const bottomTemperature = bottomTemp || avgBottomTemperature;
-
     const nValues = [
-      satelliteTemperature,
-      bottomTemperature,
-      spotterSurfaceTemp,
-      hoboBottomTemp,
       monthlyMaxTemp,
+      satelliteTemp,
+      spotterSurfaceTemp,
+      spotterBottomTemp,
+      hoboBottomTemp,
     ].filter(Boolean).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
@@ -135,11 +133,11 @@ function ChartWithTooltip({
         ...tooltipData,
         date,
         depth,
-        bottomTemperature,
+        monthlyMaxTemp,
+        satelliteTemp,
         spotterSurfaceTemp,
-        surfaceTemperature: satelliteTemperature,
+        spotterBottomTemp,
         hoboBottomTemp,
-        monthlyMax: monthlyMaxTemp,
         surveyId,
       });
       setShowTooltip(true);

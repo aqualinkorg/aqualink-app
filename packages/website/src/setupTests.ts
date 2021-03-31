@@ -33,6 +33,13 @@ jest.mock("@material-ui/icons", () => ({
   ZoomOutMap: "ZoomOutMap",
 }));
 
+jest.mock("@material-ui/pickers", () => ({
+  __esModule: true,
+  KeyboardDatePicker: "KeyboardDatePicker",
+  KeyboardDatePickerProps: "KeyboardDatePickerProps",
+  MuiPickersUtilsProvider: "MuiPickersUtilsProvider",
+}));
+
 function stubMuiComponent(componentName: string, namedExports: any = {}) {
   jest.doMock(`@material-ui/core/${componentName}/${componentName}`, () => ({
     __esModule: true,
