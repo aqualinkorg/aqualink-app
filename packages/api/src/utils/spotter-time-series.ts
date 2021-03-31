@@ -143,7 +143,7 @@ export const addSpotterData = async (
             logger.log(
               `Saved ${i + 1} out of ${
                 dataLabels.length * days
-              } of daily spotter data`,
+              } of daily spotter data for ${reef.id}`,
             );
           },
         );
