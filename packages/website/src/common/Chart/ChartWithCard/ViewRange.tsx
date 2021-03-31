@@ -10,7 +10,6 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
-  Paper,
 } from "@material-ui/core";
 import { RangeButton, RangeValue } from "./types";
 
@@ -92,23 +91,18 @@ const ViewRange = ({
                 <Grid key={button.id} item xs={isMobile ? 12 : undefined}>
                   <Tooltip arrow placement="top" title={button.tooltip}>
                     <div>
-                      <Paper elevation={1}>
-                        <Button
-                          onClick={() => onRangeChange(button.id)}
-                          size="small"
-                          variant={
-                            range === button.id ? "contained" : "outlined"
-                          }
-                          color="primary"
-                          disabled={button.disabled}
-                          fullWidth
-                          disableElevation
-                        >
-                          <Typography variant="subtitle1">
-                            {button.title}
-                          </Typography>
-                        </Button>
-                      </Paper>
+                      <Button
+                        onClick={() => onRangeChange(button.id)}
+                        size="small"
+                        variant={range === button.id ? "contained" : "outlined"}
+                        color="primary"
+                        disabled={button.disabled}
+                        fullWidth
+                      >
+                        <Typography variant="subtitle1">
+                          {button.title}
+                        </Typography>
+                      </Button>
                     </div>
                   </Tooltip>
                 </Grid>
