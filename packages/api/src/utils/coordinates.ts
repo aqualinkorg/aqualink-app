@@ -31,7 +31,17 @@ export function pointToPixel(
   return { pixelX, pixelY };
 }
 
-export const createPoint = (longitude: number, latitude: number): Point => ({
-  type: 'Point',
-  coordinates: [longitude, latitude],
-});
+export const createPoint = (
+  longitude: number,
+  latitude: number,
+  numberOfDecimals: number = 5,
+): Point => {
+  const precision = 10 ** numberOfDecimals;
+  return {
+    type: 'Point',
+    coordinates: [
+      Math.round((longitude + Number.EPSILON) * precision) / precision,
+      Math.round((latitude + Number.EPSILON) * precision) / precision,
+    ],
+  };
+};
