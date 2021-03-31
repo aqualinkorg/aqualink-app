@@ -23,11 +23,10 @@ import {
   reefLoadingSelector,
   reefErrorSelector,
   reefRequest,
-  reefHoboDataRangeRequest,
-  clearReefSpotterData,
-  reefHoboDataRangeSelector,
-  reefHoboDataRequest,
-  clearHoboData,
+  reefTimeSeriesDataRangeRequest,
+  reefTimeSeriesDataRangeSelector,
+  clearTimeSeriesData,
+  clearTimeSeriesDataRange,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -39,7 +38,6 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
-import { subtractFromDate } from "../../../helpers/dates";
 
 const getAlertMessage = (
   user: User | null,
@@ -104,10 +102,10 @@ const Reef = ({ match, classes }: ReefProps) => {
   const error = useSelector(reefErrorSelector);
   const surveyList = useSelector(surveyListSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefHoboDataRangeSelector) || {};
+    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
+  const { id, liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -136,40 +134,23 @@ const Reef = ({ match, classes }: ReefProps) => {
     dispatch(surveysRequest(reefId));
 
     return () => {
-      dispatch(clearReefSpotterData());
-      dispatch(clearHoboData());
+      dispatch(clearTimeSeriesDataRange());
+      dispatch(clearTimeSeriesData());
     };
   }, [dispatch, reefId]);
 
-  // Fetch HOBO data range for the reef's closest survey point
+  // Fetch time series data range for the reef's closest survey point
+  // once the survey points are successfully fetched
   useEffect(() => {
-    if (closestSurveyPointId) {
+    if (reefId === id?.toString()) {
       dispatch(
-        reefHoboDataRangeRequest({ reefId, pointId: `${closestSurveyPointId}` })
-      );
-    }
-  }, [closestSurveyPointId, dispatch, reefId]);
-
-  // Get HOBO data
-  useEffect(() => {
-    if (
-      closestSurveyPointId &&
-      hoboBottomTemperatureRange &&
-      hoboBottomTemperatureRange.length > 0
-    ) {
-      const { maxDate } = hoboBottomTemperatureRange[0];
-      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
-      dispatch(
-        reefHoboDataRequest({
+        reefTimeSeriesDataRangeRequest({
           reefId,
-          pointId: `${closestSurveyPointId}`,
-          start: pastThreeMonths,
-          end: maxDate,
-          metrics: ["bottom_temperature"],
+          pointId: closestSurveyPointId ? `${closestSurveyPointId}` : undefined,
         })
       );
     }
-  }, [closestSurveyPointId, dispatch, hoboBottomTemperatureRange, reefId]);
+  }, [closestSurveyPointId, dispatch, id, reefId]);
 
   if (loading || (!reefDetails && !error)) {
     return (

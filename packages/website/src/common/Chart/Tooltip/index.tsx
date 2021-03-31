@@ -52,14 +52,14 @@ const Tooltip = ({
   reefId,
   date,
   depth,
+  monthlyMaxTemp,
+  satelliteTemp,
+  spotterSurfaceTemp,
+  spotterBottomTemp,
+  hoboBottomTemp,
+  surveyId,
   reefTimeZone,
   userTimeZone,
-  bottomTemperature,
-  spotterSurfaceTemp,
-  surfaceTemperature,
-  hoboBottomTemp,
-  monthlyMax,
-  surveyId,
   classes,
 }: TooltipProps) => {
   const hasHourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
@@ -76,11 +76,11 @@ const Tooltip = ({
     color: string;
     title: string;
   }[] = [
-    { temperature: monthlyMax, color: "#d84424", title: "MONTHLY MEAN" },
-    { temperature: surfaceTemperature, color: "#6bc1e1", title: "SURFACE" },
+    { temperature: monthlyMaxTemp, color: "#d84424", title: "MONTHLY MEAN" },
+    { temperature: satelliteTemp, color: "#6bc1e1", title: "SURFACE" },
     { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
-      temperature: bottomTemperature,
+      temperature: spotterBottomTemp,
       color: "rgba(250, 141, 0)",
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
     },
@@ -203,12 +203,12 @@ export interface TooltipData {
   reefId: number;
   date: string;
   depth: number | null;
+  monthlyMaxTemp: number | null;
+  satelliteTemp: number | null;
   spotterSurfaceTemp: number | null;
-  bottomTemperature: number | null;
-  surfaceTemperature: number | null;
-  surveyId?: number | null;
+  spotterBottomTemp: number | null;
   hoboBottomTemp: number | null;
-  monthlyMax: number | null;
+  surveyId?: number | null;
   reefTimeZone?: string | null;
   userTimeZone?: string;
 }
