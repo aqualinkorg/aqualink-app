@@ -11,7 +11,9 @@ services:
       POSTGRES_PASSWORD: '!ChangeMe!'
     volumes:
       - ./db_data:/var/lib/postgresql
+
   app:
     build: .
     volumes:
       - ./data:/data/
+      - ../../tsconfig.json:/app/../../tsconfig.json
