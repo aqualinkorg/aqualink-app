@@ -97,10 +97,12 @@ export const addSpotterData = async (
   );
 
   logger.log('Saving spotter data');
-  await Promise.all(
-    reefs.map((reef) =>
-      Promise.all(
-        times(days, (i) => {
+  await Bluebird.map(
+    reefs,
+    (reef) =>
+      Bluebird.map(
+        times(days, (i) => i),
+        (i) => {
           const startDate = moment()
             .subtract(i + 1, 'd')
             .startOf('day')
@@ -110,7 +112,8 @@ export const addSpotterData = async (
             .endOf('day')
             .toDate();
           return getSpotterData(reef.spotterId, endDate, startDate);
-        }),
+        },
+        { concurrency: 100 },
       ).then((spotterData) => {
         const dataLabels: [keyof SpotterData, Metric][] = [
           ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
@@ -145,6 +148,6 @@ export const addSpotterData = async (
           },
         );
       }),
-    ),
+    { concurrency: 1 },
   );
 };
