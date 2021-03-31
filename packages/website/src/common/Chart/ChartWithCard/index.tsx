@@ -57,21 +57,20 @@ const ChartWithCard = ({
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
-  const hasSpotterData = Boolean(
-    spotterData?.bottomTemperature?.[0] || spotterData?.surfaceTemperature?.[0]
-  );
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
-  const [pastLimit, setPastLimit] = useState<string>(moment().toISOString());
-  const [futureLimit, setFutureLimit] = useState<string>(
-    moment(0).toISOString()
-  );
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>("three_months");
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
+
+  const filteredSpotter = filterTimeSeriesData(spotterData, startDate, endDate);
+  const hasSpotterData = Boolean(
+    filteredSpotter?.bottomTemperature?.[0] ||
+      filteredSpotter?.surfaceTemperature?.[0]
+  );
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
@@ -88,18 +87,12 @@ const ChartWithCard = ({
     }
   }, [hoboBottomTemperatureRange, reef.timezone]);
 
-  // Get time series data and set past/future limits.
-  // Only make requests if any of pickerStartDate and pickerEndDate
-  // is not inside the [pastLimit, futureLimit] interval.
+  // Get time series data
   useEffect(() => {
     if (
-      pastLimit &&
-      futureLimit &&
       pickerStartDate &&
       pickerEndDate &&
-      isBefore(pickerStartDate, pickerEndDate) &&
-      (moment(pickerStartDate).isBefore(moment(pastLimit)) ||
-        moment(pickerEndDate).isAfter(moment(futureLimit)))
+      isBefore(pickerStartDate, pickerEndDate)
     ) {
       const reefLocalStartDate = setTimeZone(
         new Date(pickerStartDate),
@@ -111,8 +104,6 @@ const ChartWithCard = ({
         reef.timezone
       );
 
-      setPastLimit(pickerStartDate);
-      setFutureLimit(pickerEndDate);
       dispatch(
         reefTimeSeriesDataRequest({
           reefId: `${reef.id}`,
@@ -126,8 +117,6 @@ const ChartWithCard = ({
     }
   }, [
     dispatch,
-    futureLimit,
-    pastLimit,
     pickerEndDate,
     pickerStartDate,
     pointId,
