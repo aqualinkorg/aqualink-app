@@ -7,16 +7,19 @@ import { DailyData } from '../src/reefs/daily-data.entity';
 
 const dbConfig = require('../ormconfig');
 
-const palauReefIds = [1632];
+const selectedReefs = [];
 
 async function main() {
   const connection = await createConnection(dbConfig);
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const PalauReefs = await reefRepository.find({
-    where: {
-      id: In(palauReefIds),
-    },
+    where:
+      selectedReefs.length > 0
+        ? {
+            id: In(selectedReefs),
+          }
+        : {},
   });
 
   const dailyDataEntities = PalauReefs.reduce((entities: DailyData[], reef) => {
