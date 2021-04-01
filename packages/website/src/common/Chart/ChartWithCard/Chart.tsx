@@ -192,6 +192,7 @@ const Chart = ({
                 pickerSize="small"
                 autoOk={false}
                 onChange={onStartDateChange}
+                timeZone={reef.timezone}
               />
             </Grid>
             <Grid item>
@@ -202,6 +203,7 @@ const Chart = ({
                 pickerSize="small"
                 autoOk={false}
                 onChange={onEndDateChange}
+                timeZone={reef.timezone}
               />
             </Grid>
           </Grid>
