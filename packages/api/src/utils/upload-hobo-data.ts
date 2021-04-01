@@ -1,4 +1,4 @@
-import { chunk, Dictionary, groupBy, keyBy, minBy } from 'lodash';
+import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
 import { Repository } from 'typeorm';
 import {
   BadRequestException,
@@ -7,9 +7,10 @@ import {
 } from '@nestjs/common';
 import fs from 'fs';
 import path from 'path';
-import xlsx from 'xlsx';
+import { CastingContext, CastingFunction } from 'csv-parse';
+import parse from 'csv-parse/lib/sync';
 import { Point, GeoJSON } from 'geojson';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import { Reef, ReefStatus } from '../reefs/reefs.entity';
@@ -58,10 +59,11 @@ interface Repositories {
 }
 
 const FOLDER_PREFIX = 'Patch_Reef_';
-const COLONY_COORDS_FILE = 'Colony_Coords.xlsx';
+const REEF_PREFIX = 'Patch Reef ';
+const COLONY_COORDS_FILE = 'Colony_Coords.csv';
 const COLONY_FOLDER_PREFIX = 'Col_';
 const COLONY_PREFIX = 'Colony ';
-const COLONY_DATA_FILE = 'Col{}_FullHOBO.xlsx';
+const COLONY_DATA_FILE = 'Col{}_FullHOBO_zoned.csv';
 const validFiles = new Set(['png', 'jpeg', 'jpg']);
 
 const logger = new Logger('ParseHoboData');
@@ -69,20 +71,23 @@ const logger = new Logger('ParseHoboData');
 /**
  * Parse XLSX data
  * @param filePath The path to the xlsx file
- * @param header The headers to be used
+ * @param header The headers to be used. If undefined the column will be ignored
  * @param range The amount or rows to skip
  */
-const parseXLSX = <T>(
+const parseCSV = <T>(
   filePath: string,
-  header: string[],
-  range: number = 1,
+  header: (string | undefined)[],
+  castFunction: CastingFunction,
+  range: number = 2,
 ): T[] => {
-  // Get excel workbook (parse dates)
-  const workbook = xlsx.readFile(filePath, { cellDates: true });
-  // Get first sheet as only the first sheet will be used
-  const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-  // Convert first sheet to json skipping header row and renaming the headers
-  return xlsx.utils.sheet_to_json(firstSheet, { header, range });
+  // Read csv file
+  const csv = fs.readFileSync(filePath);
+  // Parse csv and transform it to T
+  return parse(csv, {
+    cast: castFunction,
+    columns: header,
+    fromLine: range,
+  }) as T[];
 };
 
 const reefQuery = (reefRepository: Repository<Reef>, polygon?: GeoJSON) => {
@@ -107,6 +112,30 @@ const poiQuery = (
       { polygon },
     )
     .getOne();
+};
+
+const castCsvValues = (
+  integerColumns: string[],
+  floatColumns: string[],
+  dateColumns: string[],
+) => (value: string, context: CastingContext) => {
+  if (!context.column) {
+    return value;
+  }
+
+  if (integerColumns.includes(context.column.toString())) {
+    return parseInt(value, 10);
+  }
+
+  if (floatColumns.includes(context.column.toString())) {
+    return parseFloat(value);
+  }
+
+  if (dateColumns.includes(context.column.toString())) {
+    return new Date(value);
+  }
+
+  return value;
 };
 
 /**
@@ -141,18 +170,6 @@ const handleEntityDuplicate = <T>(
 };
 
 /**
- * Round up timestamp to the closest minute
- * @param timestamp A moment timestamp
- */
-const roundUpTimestamp = (timestamp: Moment) => {
-  const rounded =
-    timestamp.second() || timestamp.millisecond()
-      ? timestamp.add(1, 'minute')
-      : timestamp;
-  return rounded.startOf('minute').toDate();
-};
-
-/**
  * Read Coords.xlsx file
  * @param rootPath The path of the root of the data folder
  * @param reefIds The reefIds to be imported
@@ -161,9 +178,12 @@ const readCoordsFile = (rootPath: string, reefIds: number[]) => {
   // Read coords file
   const coordsFilePath = path.join(rootPath, COLONY_COORDS_FILE);
   const coordsHeaders = ['reef', 'colony', 'lat', 'long'];
-  return parseXLSX<Coords>(coordsFilePath, coordsHeaders).filter((record) => {
-    return reefIds.includes(record.reef);
-  });
+  const castFunction = castCsvValues(['reef', 'colony'], ['lat', 'long'], []);
+  return parseCSV<Coords>(coordsFilePath, coordsHeaders, castFunction).filter(
+    (record) => {
+      return reefIds.includes(record.reef);
+    },
+  );
 };
 
 /**
@@ -184,7 +204,10 @@ const getReefRecords = async (
   // Extract reef entities and calculate position of reef by averaging all each pois positions
   const reefs = await Promise.all(
     reefIds.map((reefId) => {
-      const filteredReefCoords = recordsGroupedByReef[reefId];
+      // Filter out NaN values
+      const filteredReefCoords = recordsGroupedByReef[reefId].filter(
+        (record) => !isNaN(record.lat) && !isNaN(record.long),
+      );
 
       const reefRecord = filteredReefCoords.reduce(
         (previous, record) => {
@@ -211,11 +234,11 @@ const getReefRecords = async (
         getRegion(longitude, latitude, regionRepository),
         getMMM(longitude, latitude),
       ]).then(([region, maxMonthlyMean]) => ({
-        name: FOLDER_PREFIX + reefId,
+        name: REEF_PREFIX + reefId,
         polygon: point,
         region,
         maxMonthlyMean,
-        approved: true,
+        approved: false,
         timezone: timezones[0],
         status: ReefStatus.Approved,
       }));
@@ -250,8 +273,9 @@ const createReefs = async (
   );
 
   logger.log(`Saving monthly max data`);
-  await Promise.all(
-    reefEntities.map((reef) => {
+  await Bluebird.map(
+    reefEntities,
+    (reef) => {
       const point: Point = reef.polygon as Point;
       const [longitude, latitude] = point.coordinates;
 
@@ -271,13 +295,14 @@ const createReefs = async (
           );
         });
       });
-    }),
+    },
+    { concurrency: 4 },
   );
 
   // Create reverse map (db.reef.id => xlsx.reef_id)
   const dbIdToXLSXId: Record<number, number> = Object.fromEntries(
     reefEntities.map((reef) => {
-      const reefId = parseInt(reef.name.replace(FOLDER_PREFIX, ''), 10);
+      const reefId = parseInt(reef.name.replace(REEF_PREFIX, ''), 10);
       return [reef.id, reefId];
     }),
   );
@@ -325,7 +350,10 @@ const createPois = async (
           return fs.existsSync(colonyFolderPath);
         })
         .map((record) => {
-          const point: Point = createPoint(record.long, record.lat);
+          const point: Point | undefined =
+            !isNaN(record.long) && !isNaN(record.lat)
+              ? createPoint(record.long, record.lat)
+              : undefined;
 
           return {
             name: COLONY_PREFIX + record.colony,
@@ -396,7 +424,7 @@ const createSources = async (
  * @param poiToSourceMap A object to map pois to source entities
  * @param timeSeriesRepository The time series repository
  */
-const parseHoboData = (
+const parseHoboData = async (
   poiEntities: ReefPointOfInterest[],
   dbIdToXLSXId: Record<number, number>,
   rootPath: string,
@@ -410,9 +438,14 @@ const parseHoboData = (
     const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
     const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
     const filePath = path.join(rootPath, reefFolder, colonyFolder, dataFile);
-    const headers = ['id', 'dateTime', 'bottomTemperature'];
-    return parseXLSX<Data>(filePath, headers).map((data) => ({
-      timestamp: roundUpTimestamp(moment(data.dateTime).add(8, 'h')),
+    const headers = [undefined, 'id', 'dateTime', 'bottomTemperature'];
+    const castFunction = castCsvValues(
+      ['id'],
+      ['bottomTemperature'],
+      ['dateTime'],
+    );
+    return parseCSV<Data>(filePath, headers, castFunction).map((data) => ({
+      timestamp: data.dateTime,
       reef: poi.reef,
       poi,
       value: data.bottomTemperature,
@@ -435,20 +468,20 @@ const parseHoboData = (
   const groupedStartedDates = groupBy(startDates, (o) => o.reef.id);
 
   // Start a backfill for each reef
-  Object.keys(groupedStartedDates).forEach((reefId) => {
-    const startDate = minBy(groupedStartedDates[reefId], (o) => o.timestamp);
-    if (!startDate) {
-      return;
-    }
+  const reefDiffDays: [number, number][] = Object.keys(groupedStartedDates).map(
+    (reefId) => {
+      const startDate = minBy(groupedStartedDates[reefId], (o) => o.timestamp);
+      if (!startDate) {
+        return [parseInt(reefId, 10), 0];
+      }
 
-    const start = moment(startDate.timestamp);
-    const end = moment();
-    const diff = Math.min(end.diff(start, 'd'), 200);
-    logger.log(
-      `Performing backfill for reef ${startDate.reef.id} for ${diff} days`,
-    );
-    backfillReefData(startDate.reef.id, diff);
-  });
+      const start = moment(startDate.timestamp);
+      const end = moment();
+      const diff = Math.min(end.diff(start, 'd'), 200);
+
+      return [startDate.reef.id, diff];
+    },
+  );
 
   const bottomTemperatureData = parsedData.flat();
 
@@ -467,9 +500,11 @@ const parseHoboData = (
 
   // Return insert promises and print progress updates
   const actionsLength = inserts.length;
-  return Bluebird.Promise.each(inserts, (props, idx) => {
+  await Bluebird.Promise.each(inserts, (props, idx) => {
     logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
   });
+
+  return reefDiffDays;
 };
 
 /**
@@ -559,6 +594,13 @@ const uploadReefPhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
+export const performBackfill = (reefDiffDays: [number, number][]) => {
+  reefDiffDays.forEach(([reefId, diff]) => {
+    logger.log(`Performing backfill for reef ${reefId} for ${diff} days`);
+    backfillReefData(reefId, diff);
+  });
+};
+
 // Upload hobo data
 // Returns a object with keys the db reef ids and values the corresponding imported reef ids
 export const uploadHoboData = async (
@@ -620,23 +662,37 @@ export const uploadHoboData = async (
     repositories.sourcesRepository,
   );
 
-  await parseHoboData(
-    poiEntities,
-    dbIdToXLSXId,
-    rootPath,
-    poiToSourceMap,
-    repositories.timeSeriesRepository,
+  const poisGroupedByReef = groupBy(poiEntities, (poi) => poi.reef.id);
+
+  const reefDiffArray = await Bluebird.map(
+    Object.values(poisGroupedByReef),
+    (pois) =>
+      parseHoboData(
+        pois,
+        dbIdToXLSXId,
+        rootPath,
+        poiToSourceMap,
+        repositories.timeSeriesRepository,
+      ),
+    { concurrency: 1 },
   );
 
-  await uploadReefPhotos(
-    poiEntities,
-    dbIdToXLSXId,
-    rootPath,
-    googleCloudService,
-    user,
-    repositories.surveyRepository,
-    repositories.surveyMediaRepository,
+  await Bluebird.map(
+    Object.values(poisGroupedByReef),
+    (pois) =>
+      uploadReefPhotos(
+        pois,
+        dbIdToXLSXId,
+        rootPath,
+        googleCloudService,
+        user,
+        repositories.surveyRepository,
+        repositories.surveyMediaRepository,
+      ),
+    { concurrency: 1 },
   );
+
+  performBackfill(reefDiffArray.flat());
 
   return dbIdToXLSXId;
 };

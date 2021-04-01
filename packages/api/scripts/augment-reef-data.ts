@@ -79,10 +79,14 @@ async function augmentReefs(connection: Connection) {
       const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
       await Promise.all(
         monthlyMaximums.map(async ({ month, temperature }) => {
-          return (
-            temperature &&
-            monthlyMaxRepository.insert({ reef, month, temperature })
-          );
+          try {
+            await (temperature &&
+              monthlyMaxRepository.insert({ reef, month, temperature }));
+          } catch {
+            console.warn(
+              `Monthly max values not imported for ${reef.id} - the data was likely there already.`,
+            );
+          }
         }),
       );
     },

@@ -907,7 +907,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
+          Currently no Smart Buoy deployed at this reef location. Real-time values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </mock-box>
@@ -1369,7 +1369,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         classname="Sensor-cardTitle-219"
                         variant="h6"
                       >
-                        SENSOR OBSERVATION
+                        BUOY OBSERVATION
                       </mock-typography>
                     </div>
                   </div>
@@ -3381,7 +3381,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         <div
           class="MuiAlert-message"
         >
-          Currently no Smart Buoy deployed at this reef location. All values are derived from a combination of NOAA satellite readings and weather models.
+          Currently no Smart Buoy deployed at this reef location. Real-time values are derived from a combination of NOAA satellite readings and weather models.
         </div>
       </div>
     </mock-box>
