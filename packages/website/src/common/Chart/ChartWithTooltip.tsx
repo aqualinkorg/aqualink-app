@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
+import moment from "moment";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
@@ -127,7 +128,10 @@ function ChartWithTooltip({
       tooltipModel.caretY -
       ((surveyId ? 30 : 0) + nValues * 20 + 48);
 
-    if (nValues > 0) {
+    if (
+      nValues > 0 &&
+      moment(date).isBetween(moment(startDate), moment(endDate))
+    ) {
       setTooltipPosition({ top, left });
       setTooltipData({
         ...tooltipData,
