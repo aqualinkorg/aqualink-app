@@ -43,23 +43,6 @@ export const filterDailyData = (
   return ret;
 };
 
-export const filterMaxMonthlyData = (
-  monthlyMax: MonthlyMaxData[],
-  from?: string,
-  to?: string
-) => {
-  if (!from || !to) {
-    return monthlyMax;
-  }
-
-  const start = moment(from);
-  const end = moment(to);
-
-  return monthlyMax.filter((item) =>
-    inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
-  );
-};
-
 export const filterSofarData = (
   sofarData: SofarValue[],
   from?: string,
@@ -206,6 +189,43 @@ export function getMonthlyMaxDataClosestToDate(
       )
     : undefined;
 }
+
+export const filterMaxMonthlyData = (
+  monthlyMax: MonthlyMaxData[],
+  from?: string,
+  to?: string
+) => {
+  if (!from || !to) {
+    return monthlyMax;
+  }
+
+  const start = moment(from);
+  const end = moment(to);
+
+  const closestToStart = getMonthlyMaxDataClosestToDate(
+    monthlyMax,
+    new Date(start.toISOString())
+  )?.value;
+  const closestToEnd = getMonthlyMaxDataClosestToDate(
+    monthlyMax,
+    new Date(end.toISOString())
+  )?.value;
+
+  const closestToStartArray: MonthlyMaxData[] = closestToStart
+    ? [{ date: start.toISOString(), value: closestToStart }]
+    : [];
+  const closestToEndArray: MonthlyMaxData[] = closestToEnd
+    ? [{ date: end.toISOString(), value: closestToEnd }]
+    : [];
+
+  const filteredData = monthlyMax.filter((item) =>
+    inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
+  );
+
+  return filteredData.length > 0
+    ? filteredData
+    : [...closestToStartArray, ...closestToEndArray];
+};
 
 export function getSofarDataClosestToDate(
   spotterData: SofarValue[],

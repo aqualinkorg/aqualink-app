@@ -74,7 +74,7 @@ const styles = (theme: Theme) =>
       paddingBottom: 2,
     },
     textField: {
-      width: 110,
+      width: 115,
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
