@@ -27,7 +27,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                 classname="Sensor-cardTitle-2"
                 variant="h6"
               >
-                SENSOR OBSERVATION
+                BUOY OBSERVATION
               </mock-typography>
             </div>
           </div>

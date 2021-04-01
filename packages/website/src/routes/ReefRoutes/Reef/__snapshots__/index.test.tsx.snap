@@ -1369,7 +1369,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         classname="Sensor-cardTitle-219"
                         variant="h6"
                       >
-                        SENSOR OBSERVATION
+                        BUOY OBSERVATION
                       </mock-typography>
                     </div>
                   </div>

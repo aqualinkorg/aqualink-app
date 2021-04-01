@@ -98,7 +98,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           <Grid container>
             <Grid item>
               <Typography className={classes.cardTitle} variant="h6">
-                SENSOR OBSERVATION
+                BUOY OBSERVATION
               </Typography>
             </Grid>
           </Grid>
