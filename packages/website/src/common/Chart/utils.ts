@@ -222,9 +222,7 @@ export const filterMaxMonthlyData = (
     inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
   );
 
-  return filteredData.length > 0
-    ? filteredData
-    : [...closestToStartArray, ...closestToEndArray];
+  return [...closestToStartArray, ...filteredData, ...closestToEndArray];
 };
 
 export function getSofarDataClosestToDate(
