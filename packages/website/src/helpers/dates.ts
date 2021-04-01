@@ -293,6 +293,10 @@ export const generateMonthlyMaxTimestamps = (
   endDate?: string,
   timeZone?: string | null
 ): MonthlyMaxData[] => {
+  if (monthlyMax.length < 12) {
+    return [];
+  }
+
   const firstDate = moment(startDate)
     .tz(timeZone || "UTC")
     .subtract(1, "months")

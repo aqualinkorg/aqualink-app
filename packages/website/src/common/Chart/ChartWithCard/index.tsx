@@ -365,8 +365,8 @@ const ChartWithCard = ({
               )}
             >
               <DownloadCSVButton
-                startDate={startDate}
-                endDate={endDate}
+                startDate={pickerStartDate}
+                endDate={pickerEndDate}
                 reefId={reef.id}
                 pointId={pointId}
                 className={classes.button}
