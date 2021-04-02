@@ -64,11 +64,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
         </Box>
       )}
       <div>
-        <Box
-          display="flex"
-          alignItems="center"
-          className={classes.landingImage}
-        >
+        <Box display="flex" alignItems="top" className={classes.landingImage}>
           <Container className={classes.container}>
             <Grid container item xs={9}>
               <Box display="flex">
@@ -161,9 +157,10 @@ const styles = (theme: Theme) =>
     },
     container: {
       [theme.breakpoints.up("sm")]: {
-        paddingLeft: "12vw",
+        paddingLeft: 60,
         paddingRight: 40,
       },
+      paddingTop: 60,
     },
     aqualinkSecondPart: {
       opacity: 0.5,
