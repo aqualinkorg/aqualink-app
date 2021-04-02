@@ -1,7 +1,23 @@
-import { minBy, maxBy, meanBy } from "lodash";
+import { minBy, maxBy, meanBy, some } from "lodash";
 import moment from "moment";
+import {
+  findMarginalDate,
+  generateMonthlyMaxTimestamps,
+} from "../../../helpers/dates";
 
-import { MonthlyMaxData, SofarValue } from "../../../store/Reefs/types";
+import {
+  DailyData,
+  MonthlyMax,
+  MonthlyMaxData,
+  SofarValue,
+  TimeSeriesData,
+} from "../../../store/Reefs/types";
+import {
+  filterDailyData,
+  filterMaxMonthlyData,
+  filterSofarData,
+  filterTimeSeriesData,
+} from "../utils";
 import { CardColumn } from "./types";
 
 export const calculateCardMetrics = (
@@ -43,6 +59,72 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
     default:
       return "month";
   }
+};
+
+export const findDataLimits = (
+  monthlyMax: MonthlyMax[],
+  dailyData: DailyData[] | undefined,
+  timeSeriesData: TimeSeriesData | undefined,
+  startDate: string | undefined,
+  endDate: string | undefined
+): [string | undefined, string | undefined] => {
+  const { hobo, spotter } = timeSeriesData || {};
+  const maxMonthlyData = generateMonthlyMaxTimestamps(
+    monthlyMax,
+    startDate,
+    endDate
+  );
+  const filteredMaxMonthlyData = filterMaxMonthlyData(
+    maxMonthlyData,
+    startDate,
+    endDate
+  );
+  const filteredDailyData = filterDailyData(
+    dailyData || [],
+    startDate,
+    endDate
+  );
+  const filteredHoboData = filterSofarData(
+    hobo?.bottomTemperature || [],
+    startDate,
+    endDate
+  );
+  const filteredSpotterData = filterTimeSeriesData(spotter, startDate, endDate);
+
+  const hasData = some(
+    [
+      filteredMaxMonthlyData,
+      filteredDailyData,
+      filteredSpotterData?.bottomTemperature,
+      filteredSpotterData?.surfaceTemperature,
+      filteredHoboData,
+    ],
+    (item) => !!item?.[0]
+  );
+
+  return [
+    hasData
+      ? new Date(
+          findMarginalDate(
+            filteredMaxMonthlyData,
+            filteredDailyData,
+            filteredSpotterData,
+            filteredHoboData,
+            "min"
+          )
+        ).toISOString()
+      : undefined,
+    hasData
+      ? new Date(
+          findMarginalDate(
+            filteredMaxMonthlyData,
+            filteredDailyData,
+            filteredSpotterData,
+            filteredHoboData
+          )
+        ).toISOString()
+      : undefined,
+  ];
 };
 
 /**

@@ -47,6 +47,7 @@ const DatePicker = ({
               maxDate={moment()
                 .tz(timeZone || "UTC")
                 .format("YYYY/MM/DD")}
+              minDate={moment(0).format("YYYY/MM/DD")}
               autoOk={autoOk}
               showTodayButton
               value={value || null}
