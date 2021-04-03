@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   createStyles,
   Grid,
@@ -11,20 +12,42 @@ import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
 import ReefTable from "./ReefTable";
-import { reefsRequest } from "../../store/Reefs/reefsListSlice";
+import {
+  reefsRequest,
+  reefsListSelector,
+} from "../../store/Reefs/reefsListSlice";
 import { reefRequest } from "../../store/Reefs/selectedReefSlice";
-import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
-import { surveysRequest } from "../../store/Survey/surveyListSlice";
+import {
+  reefOnMapSelector,
+  setReefOnMap,
+} from "../../store/Homepage/homepageSlice";
 
-const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+import { surveysRequest } from "../../store/Survey/surveyListSlice";
+import { Reef } from "../../store/Reefs/types";
+
+function useQueryReefIParam() {
+  const query = new URLSearchParams(useLocation().search);
+  return query.get("reef_id") || process.env.REACT_APP_FEATURED_REEF_ID || "";
+}
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const reefOnMap = useSelector(reefOnMapSelector);
+  const reefsList = useSelector(reefsListSelector) || [];
+  const featuredReefId = useQueryReefIParam();
 
   useEffect(() => {
     dispatch(reefsRequest());
   }, [dispatch]);
+
+  useEffect(() => {
+    const featuredReef = reefsList.find((reef: Reef) => {
+      return reef.id.toString() === featuredReefId;
+    });
+    if (featuredReef) {
+      dispatch(setReefOnMap(featuredReef));
+    }
+  }, [dispatch, featuredReefId, reefsList]);
 
   useEffect(() => {
     if (!reefOnMap) {
@@ -34,7 +57,7 @@ const Homepage = ({ classes }: HomepageProps) => {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
-  }, [dispatch, reefOnMap]);
+  }, [dispatch, featuredReefId, reefOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
