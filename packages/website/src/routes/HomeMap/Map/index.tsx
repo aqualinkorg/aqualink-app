@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Map, TileLayer, Marker, Circle } from "react-leaflet";
 import L, { LatLng, LayersControlEvent } from "leaflet";
 import {
@@ -41,6 +42,13 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
+function useQueryZoomParam() {
+  const query = new URLSearchParams(useLocation().search);
+  const zoomParam = query.get("zoom");
+  const zoom: number = zoomParam ? +zoomParam : INITIAL_ZOOM;
+  return zoom;
+}
+
 const HomepageMap = ({ classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
@@ -55,6 +63,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
+  const zoom = useQueryZoomParam();
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -117,7 +126,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       maxBoundsViscosity={1.0}
       className={classes.map}
       center={findMaxAlertReefPosition(reefs) || INITIAL_CENTER}
-      zoom={INITIAL_ZOOM}
+      zoom={zoom}
       minZoom={2}
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
