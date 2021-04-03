@@ -1,9 +1,4 @@
-import React, {
-  BaseSyntheticEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -31,6 +26,7 @@ import {
   userInfoSelector,
   userLoadingSelector,
   userErrorSelector,
+  clearError,
 } from "../../store/User/userSlice";
 import { UserSignInParams } from "../../store/User/types";
 import dialogStyles from "../styles/dialogStyles";
@@ -51,23 +47,6 @@ const SignInDialog = ({
     reValidateMode: "onSubmit",
   });
 
-  const onSubmit = useCallback(
-    (
-      data: any,
-      event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
-    ) => {
-      if (event) {
-        event.preventDefault();
-      }
-      const registerInfo: UserSignInParams = {
-        email: data.emailAddress,
-        password: data.password,
-      };
-      dispatch(signInUser(registerInfo));
-    },
-    [dispatch]
-  );
-
   useEffect(() => {
     if (user) {
       handleSignInOpen(false);
@@ -77,35 +56,42 @@ const SignInDialog = ({
     }
   }, [user, handleSignInOpen, error]);
 
-  const onResetPassword = useCallback(
-    (
-      data: any,
-      event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
-    ) => {
-      if (event) {
-        event.preventDefault();
-      }
-      dispatch(resetPassword({ email: data.emailAddress }));
-      setPasswordResetEmail(data.emailAddress);
-    },
-    [dispatch]
-  );
+  const onSubmit = (
+    data: any,
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+  ) => {
+    if (event) {
+      event.preventDefault();
+    }
+    const registerInfo: UserSignInParams = {
+      email: data.emailAddress,
+      password: data.password,
+    };
+    dispatch(signInUser(registerInfo));
+  };
+
+  const onResetPassword = (
+    data: any,
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+  ) => {
+    if (event) {
+      event.preventDefault();
+    }
+    dispatch(resetPassword({ email: data.emailAddress }));
+    setPasswordResetEmail(data.emailAddress);
+  };
+
+  const clearUserError = () => dispatch(clearError());
 
   return (
-    <Dialog open={open} maxWidth="md">
-      <Card>
+    <Dialog onEnter={clearUserError} open={open} maxWidth="xs">
+      <Card elevation={0}>
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container justify="center" item xs={12}>
-              <Grid
-                container
-                alignItems="center"
-                justify="space-around"
-                item
-                xs={12}
-              >
-                <Grid container item xs={6}>
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item>
+                <Grid container>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography
                     className={classes.dialogHeaderSecondPart}
@@ -114,15 +100,15 @@ const SignInDialog = ({
                     link
                   </Typography>
                 </Grid>
-                <Grid container justify="flex-end" item xs={1}>
-                  <IconButton
-                    className={classes.closeButton}
-                    size="small"
-                    onClick={() => handleSignInOpen(false)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </Grid>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  className={classes.closeButton}
+                  size="small"
+                  onClick={() => handleSignInOpen(false)}
+                >
+                  <CloseIcon />
+                </IconButton>
               </Grid>
             </Grid>
           }
@@ -180,9 +166,10 @@ const SignInDialog = ({
             <Grid container item xs={10}>
               <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
                 <Grid className={classes.textFieldWrapper} item xs={12}>
-                  <Typography className={classes.formText} variant="subtitle2">
+                  {/* TODO: ADD THIS WHEN WE ENABLE GOOGLE LOGIN */}
+                  {/* <Typography className={classes.formText} variant="subtitle2">
                     or login with email address
-                  </Typography>
+                  </Typography> */}
                   <TextField
                     id="emailAddress"
                     name="emailAddress"
@@ -272,10 +259,6 @@ const SignInDialog = ({
 const styles = () =>
   createStyles({
     ...dialogStyles,
-    formText: {
-      ...dialogStyles.formText,
-      marginBottom: "1rem",
-    },
     forgotPasswordButton: {
       color: "inherit",
       textDecoration: "none",

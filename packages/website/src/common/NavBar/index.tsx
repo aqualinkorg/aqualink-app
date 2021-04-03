@@ -15,6 +15,8 @@ import {
   WithStyles,
   createStyles,
   Theme,
+  useTheme,
+  useMediaQuery,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -37,6 +39,8 @@ const NavBar = ({
 }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.up(768));
   const [registerDialogOpen, setRegisterDialogOpen] = useState<boolean>(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState<boolean>(false);
   const [menuDrawerOpen, setMenuDrawerOpen] = useState<boolean>(false);
@@ -73,8 +77,13 @@ const NavBar = ({
             alignItems="center"
             spacing={1}
           >
-            {/* eslint-disable-next-line no-nested-ternary */}
-            <Grid item xs={5} sm={routeButtons ? 2 : searchLocation ? 6 : 4}>
+            <Grid
+              item
+              xs={5}
+              sm={2}
+              // eslint-disable-next-line no-nested-ternary
+              md={routeButtons ? 2 : searchLocation ? 6 : 4}
+            >
               <Box display="flex" flexWrap="nowrap" alignItems="center">
                 <IconButton
                   edge="start"
@@ -97,24 +106,21 @@ const NavBar = ({
 
             {searchLocation && (
               <Hidden xsDown>
-                <Grid item sm={3}>
+                <Grid item sm={4} md={3}>
                   <Search geocodingEnabled={geocodingEnabled} />
                 </Grid>
               </Hidden>
             )}
 
-            {routeButtons && (
-              <Hidden xsDown>
-                <RouteButtons />
-              </Hidden>
-            )}
+            {routeButtons && isTablet && <RouteButtons />}
 
             <Grid
               container
               justify="flex-end"
               item
               xs={7}
-              sm={searchLocation || routeButtons ? 3 : 8}
+              sm={routeButtons && isTablet ? 3 : 4}
+              md={searchLocation || (routeButtons && isTablet) ? 3 : 8}
             >
               {user ? (
                 <>
