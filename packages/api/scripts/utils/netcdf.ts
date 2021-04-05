@@ -25,9 +25,7 @@ export function getNOAAData(year: number = 2020, long: number, lat: number) {
   const height = dimensions.lat.length;
   const dateRange = dimensions.time.length;
 
-  const [minLong, maxLong] = variables.lon.attributes.actual_range.value;
-  const [minLat, maxLat] = variables.lat.attributes.actual_range.value;
-  const boundingBox = [minLong, minLat, maxLong, maxLat] as Extent;
+  const boundingBox = [0.125, -89.875, 359.875, 89.875] as Extent;
 
   const { indexLong, indexLat } = pointToIndex(
     long,
