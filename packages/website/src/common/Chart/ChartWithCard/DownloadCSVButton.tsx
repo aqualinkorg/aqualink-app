@@ -22,7 +22,10 @@ interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
 const DATE_FORMAT = "YYYY_MM_DD";
 
 /**
- * Construct CSV data to pass into react-csv
+ * Construct CSV data to pass into download-csv
+ * @param finalKey - The name of the new column
+ * @param data - The data corresponding to the new column
+ * @param existingData - The data that already exists in the CSV object
  */
 function constructCSVData(
   finalKey: CSVDataColumn,
