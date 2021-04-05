@@ -170,7 +170,7 @@ export const findSstAnomaly = (
   const previousDistance = now.diff(previousDate, 'days');
   const nextValue = orderedMontlyMax[nextDate.get('month')].temperature;
   const nextDistance = nextDate.diff(now, 'days');
-  const deltaDays = nextDate.diff(previousDate, 'days');
+  const deltaDays = previousDistance + nextDistance;
 
   const interpolated =
     previousValue * (1 - previousDistance / deltaDays) +
