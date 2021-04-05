@@ -1,4 +1,4 @@
-import { minBy, maxBy, meanBy, some } from "lodash";
+import { minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 import {
   findMarginalDate,
@@ -91,15 +91,12 @@ export const findDataLimits = (
   );
   const filteredSpotterData = filterTimeSeriesData(spotter, startDate, endDate);
 
-  const hasData = some(
-    [
-      filteredMaxMonthlyData,
-      filteredDailyData,
-      filteredSpotterData?.bottomTemperature,
-      filteredSpotterData?.surfaceTemperature,
-      filteredHoboData,
-    ],
-    (item) => !!item?.[0]
+  const hasData = Boolean(
+    filteredMaxMonthlyData?.[0] ||
+      filteredDailyData?.[0] ||
+      filteredSpotterData?.bottomTemperature?.[0] ||
+      filteredSpotterData?.surfaceTemperature?.[0] ||
+      filteredHoboData?.[0]
   );
 
   return [
