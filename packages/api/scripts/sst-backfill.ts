@@ -7,7 +7,10 @@ import { DailyData } from '../src/reefs/daily-data.entity';
 
 const dbConfig = require('../ormconfig');
 
-const selectedReefs = [];
+// The reefs to backfill sst
+const selectedReefs: number[] = [];
+// The years to backfill
+const yearsArray = [2017, 2018, 2019, 2020];
 
 async function main() {
   const connection = await createConnection(dbConfig);
@@ -24,7 +27,7 @@ async function main() {
 
   const dailyDataEntities = PalauReefs.reduce((entities: DailyData[], reef) => {
     console.log(`Processing reef ${reef.name || reef.id}...`);
-    const allYearEntities = [2017, 2018, 2019, 2020].reduce(
+    const allYearEntities = yearsArray.reduce(
       (yearEntities: DailyData[], year) => {
         console.log(`Processing year ${year}...`);
         const [longitude, latitude] = (reef.polygon as Point).coordinates;
