@@ -7,9 +7,8 @@ import { DailyData } from '../src/reefs/daily-data.entity';
 
 const dbConfig = require('../ormconfig');
 
-// The reefs to backfill sst
+// Reefs and years to backfill SST for
 const selectedReefs: number[] = [];
-// The years to backfill
 const yearsArray = [2017, 2018, 2019, 2020];
 
 async function main() {
