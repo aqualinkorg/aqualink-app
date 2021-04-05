@@ -27,7 +27,9 @@ export class UsersService {
     if (!firebaseUser) {
       throw new BadRequestException('Invalid Firebase token.');
     }
-    if (firebaseUser.email !== createUserDto.email) {
+    if (
+      firebaseUser.email?.toLowerCase() !== createUserDto.email.toLowerCase()
+    ) {
       throw new BadRequestException('Invalid user email.');
     }
     const firebaseUid = firebaseUser.uid;
@@ -38,7 +40,7 @@ export class UsersService {
       );
     }
     const { email } = firebaseUser;
-    const priorAccount = await this.findByEmail(email);
+    const priorAccount = await this.findByEmail(email.toLowerCase());
     if (priorAccount && priorAccount.firebaseUid) {
       throw new BadRequestException(
         `Email ${email} is already connected to a different firebaseUid.`,
@@ -60,6 +62,7 @@ export class UsersService {
     const user = {
       ...priorAccount,
       ...createUserDto,
+      email: createUserDto.email.toLowerCase(),
       firebaseUid,
     };
     return this.usersRepository.save(user);
@@ -91,7 +94,9 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { email } });
+    return this.usersRepository.findOne({
+      where: { email: email.toLowerCase() },
+    });
   }
 
   async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
