@@ -20,34 +20,50 @@ import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 import {
   reefOnMapSelector,
   setReefOnMap,
+  setMapInitialReef,
 } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
 import { Reef } from "../../store/Reefs/types";
+import NotFound from "../NotFound";
 
-function useQueryReefIParam() {
-  const query = new URLSearchParams(useLocation().search);
-  return query.get("reef_id") || process.env.REACT_APP_FEATURED_REEF_ID || "";
+enum QueryParamKeys {
+  reefId = "reef_id",
+  zoomLevel = "zoom",
+}
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const reefOnMap = useSelector(reefOnMapSelector);
   const reefsList = useSelector(reefsListSelector) || [];
-  const featuredReefId = useQueryReefIParam();
+
+  const urlParams: URLSearchParams = useQuery();
+  const zoomLevelParam = urlParams.get(QueryParamKeys.zoomLevel);
+  const mapZoomLevel: number = zoomLevelParam ? +zoomLevelParam : 0;
+
+  const featuredReefId =
+    urlParams.get(QueryParamKeys.reefId) ||
+    process.env.REACT_APP_FEATURED_REEF_ID ||
+    "";
+
+  const featuredReef = reefsList.find((reef: Reef) => {
+    return reef.id.toString() === featuredReefId;
+  });
 
   useEffect(() => {
     dispatch(reefsRequest());
   }, [dispatch]);
 
   useEffect(() => {
-    const featuredReef = reefsList.find((reef: Reef) => {
-      return reef.id.toString() === featuredReefId;
-    });
     if (featuredReef) {
+      dispatch(setMapInitialReef(featuredReef));
       dispatch(setReefOnMap(featuredReef));
     }
-  }, [dispatch, featuredReefId, reefsList]);
+  }, [dispatch, featuredReef, reefsList]);
 
   useEffect(() => {
     if (!reefOnMap) {
@@ -79,7 +95,11 @@ const Homepage = ({ classes }: HomepageProps) => {
     drawer.scrollTop = 0;
   });
 
-  return (
+  return reefsList.length > 0 && featuredReefId && !featuredReef ? (
+    <div>
+      <NotFound />
+    </div>
+  ) : (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
@@ -87,7 +107,7 @@ const Homepage = ({ classes }: HomepageProps) => {
       <div className={classes.root}>
         <Grid container>
           <Grid className={classes.map} item xs={12} sm={6}>
-            <HomepageMap />
+            <HomepageMap zoomLevel={mapZoomLevel} />
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>

@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 
 import {
   setReefOnMap,
+  unsetMapInitialReef,
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
 import type { Reef } from "../../store/Reefs/types";
@@ -73,6 +74,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedReef(null);
       dispatch(setReefOnMap(value));
+      dispatch(unsetMapInitialReef());
       if (!geocodingEnabled) {
         browserHistory.push(`/reefs/${value.id}`);
       }

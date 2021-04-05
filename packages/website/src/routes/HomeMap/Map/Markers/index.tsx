@@ -9,6 +9,8 @@ import {
   reefOnMapSelector,
   setReefOnMap,
   setSearchResult,
+  mapInitialReefSelector,
+  unsetMapInitialReef,
 } from "../../../../store/Homepage/homepageSlice";
 import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
@@ -47,6 +49,7 @@ const clusterIcon = (cluster: any) => {
 export const ReefMarkers = () => {
   const reefsList = useSelector(reefsToDisplayListSelector) || [];
   const reefOnMap = useSelector(reefOnMapSelector);
+  const initialReef = useSelector(mapInitialReefSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();
 
@@ -84,13 +87,20 @@ export const ReefMarkers = () => {
               <Marker
                 onClick={() => {
                   dispatch(setSearchResult());
+                  dispatch(unsetMapInitialReef());
                   dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
                 icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
                 position={[lat, lng + offset]}
               >
-                <Popup reef={reef} autoOpen={offset === 0} />
+                <Popup
+                  reef={reef}
+                  autoOpen={
+                    offset === 0 &&
+                    reef.id !== (initialReef ? initialReef.id : 0)
+                  }
+                />
               </Marker>
             ));
           }

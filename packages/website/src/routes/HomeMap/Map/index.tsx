@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { Map, TileLayer, Marker, Circle } from "react-leaflet";
 import L, { LatLng, LayersControlEvent } from "leaflet";
 import {
@@ -42,14 +41,7 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
-function useQueryZoomParam() {
-  const query = new URLSearchParams(useLocation().search);
-  const zoomParam = query.get("zoom");
-  const zoom: number = zoomParam ? +zoomParam : INITIAL_ZOOM;
-  return zoom;
-}
-
-const HomepageMap = ({ classes }: HomepageMapProps) => {
+const HomepageMap = ({ zoomLevel, classes }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
@@ -63,7 +55,7 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
   const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
-  const zoom = useQueryZoomParam();
+  const zoom = zoomLevel > 0 ? zoomLevel : INITIAL_ZOOM;
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -196,6 +188,6 @@ const styles = () =>
     },
   });
 
-type HomepageMapProps = WithStyles<typeof styles>;
+type HomepageMapProps = WithStyles<typeof styles> & { zoomLevel: number };
 
 export default withStyles(styles)(HomepageMap);
