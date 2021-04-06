@@ -66,6 +66,7 @@ export interface LiveData {
   windDirection?: SofarValue;
   weeklyAlertLevel?: number;
   spotterPosition?: SpotterPosition;
+  sstAnomaly?: number;
 }
 
 export interface DailyData {
