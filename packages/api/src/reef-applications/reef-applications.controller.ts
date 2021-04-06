@@ -14,7 +14,6 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiNotFoundResponse,
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
@@ -29,7 +28,7 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { AdminLevel } from '../users/users.entity';
-import { ErrorResponse } from '../docs/error.dto';
+import { CustomApiNotFoundResponse } from '../docs/api-properties';
 
 @ApiTags('ReefApplications')
 @Auth()
@@ -42,10 +41,9 @@ export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
   @ApiBearerAuth()
-  @ApiNotFoundResponse({
-    description: 'Reef application for specified reef was not found',
-    type: ErrorResponse,
-  })
+  @CustomApiNotFoundResponse(
+    'No reef application for specified reef was not found',
+  )
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -55,10 +53,7 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
-  @ApiNotFoundResponse({
-    description: 'Reef application was not found',
-    type: ErrorResponse,
-  })
+  @CustomApiNotFoundResponse('No reef application was not found')
   @Public()
   @Get(':id')
   async findOne(
@@ -75,10 +70,7 @@ export class ReefApplicationsController {
     return app;
   }
 
-  @ApiNotFoundResponse({
-    description: 'Reef application was not found',
-    type: ErrorResponse,
-  })
+  @CustomApiNotFoundResponse('No reef application was not found')
   @Public()
   @Put(':hashId')
   updateWithHash(

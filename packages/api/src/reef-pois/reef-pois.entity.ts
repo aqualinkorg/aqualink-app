@@ -5,13 +5,12 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
   Index,
   RelationId,
 } from 'typeorm';
 import { GeoJSON } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
-import { SurveyMedia } from '../surveys/survey-media.entity';
+import { PointApiProperty } from '../docs/api-properties';
 
 @Entity()
 export class ReefPointOfInterest {
@@ -19,20 +18,21 @@ export class ReefPointOfInterest {
   id: number;
 
   @Column({ nullable: true })
-  poiLabelId: number;
+  poiLabelId?: number;
 
   @Column({ nullable: true })
-  imageUrl: string;
+  imageUrl?: string;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
   @RelationId((poi: ReefPointOfInterest) => poi.reef)
   reefId: number;
 
+  @PointApiProperty()
   @Column({
     type: 'geometry',
     unique: true,
@@ -40,14 +40,11 @@ export class ReefPointOfInterest {
     nullable: true,
   })
   @Index({ spatial: true })
-  polygon: GeoJSON;
+  polygon?: GeoJSON;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToMany(() => SurveyMedia, (surveyMedia) => surveyMedia.poiId)
-  surveyMedia: SurveyMedia[];
 }

@@ -11,15 +11,11 @@ import { ReefPointOfInterest } from './reef-pois.entity';
 import { CreateReefPoiDto } from './dto/create-reef-poi.dto';
 import { FilterReefPoiDto } from './dto/filter-reef-poi.dto';
 import { UpdateReefPoiDto } from './dto/update-reef-poi.dto';
-import { Reef } from '../reefs/reefs.entity';
 import { createPoint } from '../utils/coordinates';
 
 @Injectable()
 export class ReefPoisService {
   constructor(
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
-
     @InjectRepository(ReefPointOfInterest)
     private poisRepository: Repository<ReefPointOfInterest>,
   ) {}
@@ -27,19 +23,18 @@ export class ReefPoisService {
   async create(
     createReefPoiDto: CreateReefPoiDto,
   ): Promise<ReefPointOfInterest> {
-    const { latitude, longitude, reef } = createReefPoiDto;
-    const reefEntity = await this.reefRepository.findOne(reef);
-
-    if (!reefEntity) {
-      throw new NotFoundException(`Reef with id ${reef} was not found`);
-    }
+    const { latitude, longitude, reefId } = createReefPoiDto;
 
     const polygon: GeoJSON | undefined =
       longitude !== undefined && latitude !== undefined
         ? createPoint(longitude, latitude)
         : undefined;
 
-    return this.poisRepository.save({ ...createReefPoiDto, polygon });
+    return this.poisRepository.save({
+      ...createReefPoiDto,
+      reef: { id: reefId },
+      polygon,
+    });
   }
 
   async find(filter: FilterReefPoiDto): Promise<ReefPointOfInterest[]> {
@@ -49,9 +44,9 @@ export class ReefPoisService {
         name: `%${filter.name.toLowerCase()}%`,
       });
     }
-    if (filter.reef) {
-      query.andWhere('poi.reef = :reef', {
-        reef: filter.reef,
+    if (filter.reefId) {
+      query.andWhere('poi.reef_id = :reef', {
+        reef: filter.reefId,
       });
     }
     query.leftJoinAndSelect('poi.reef', 'reef');
@@ -74,16 +69,18 @@ export class ReefPoisService {
     id: number,
     updateReefPoiDto: UpdateReefPoiDto,
   ): Promise<ReefPointOfInterest> {
-    const { latitude, longitude } = updateReefPoiDto;
+    const { latitude, longitude, reefId } = updateReefPoiDto;
     const polygon: { polygon: GeoJSON } | {} =
       longitude !== undefined && latitude !== undefined
         ? {
             polygon: createPoint(longitude, latitude),
           }
         : {};
+    const updateReef = (reefId && { reef: { id: reefId } }) || {};
 
     const result = await this.poisRepository.update(id, {
-      ...omit(updateReefPoiDto, 'longitude', 'latitude'),
+      ...omit(updateReefPoiDto, 'longitude', 'latitude', 'reefId'),
+      ...updateReef,
       ...polygon,
     });
     if (!result.affected) {
