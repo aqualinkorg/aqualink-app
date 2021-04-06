@@ -9,6 +9,7 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
+import classnames from "classnames";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
@@ -231,11 +232,10 @@ const ChartWithCard = ({
   return (
     <Container
       disableGutters={disableGutters}
-      className={`${classes.chartWithRange} ${
-        (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet)
-          ? classes.extraPadding
-          : ""
-      }`}
+      className={classnames(classes.chartWithRange, {
+        [classes.extraPadding]:
+          (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet),
+      })}
     >
       <ViewRange
         range={range}
@@ -346,10 +346,10 @@ const styles = (theme: Theme) =>
       width: "fit-content",
     },
     chartWithSpotter: {
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up("lg")]: {
         width: "67%",
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("md")]: {
         width: "100%",
       },
     },
@@ -365,10 +365,10 @@ const styles = (theme: Theme) =>
       },
     },
     cardWithSpotter: {
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up("lg")]: {
         flexGrow: 1,
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("md")]: {
         width: "inherit",
         maxWidth: "fit-content",
         margin: "0 auto",
