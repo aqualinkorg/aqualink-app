@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
@@ -16,7 +17,7 @@ export enum SourceType {
 
 @Entity()
 @Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
-@Unique('no_duplicate_reef_sources', ['reef', 'type'])
+@Index(['reef', 'type'], { unique: true, where: '"poi_id" IS NULL' })
 export class Sources {
   @PrimaryGeneratedColumn()
   id: number;
