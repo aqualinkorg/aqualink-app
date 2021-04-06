@@ -13,7 +13,7 @@ import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
-import { getLiveData } from '../utils/liveData';
+import { getSstAnomaly, getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
@@ -247,7 +247,9 @@ export class ReefsService {
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
-    const reef = await this.reefsRepository.findOne(id);
+    const reef = await this.reefsRepository.findOne(id, {
+      relations: ['monthlyMax'],
+    });
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
@@ -269,6 +271,7 @@ export class ReefsService {
 
     return {
       ...liveData,
+      sstAnomaly: getSstAnomaly(reef.monthlyMax, liveData.satelliteTemperature),
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }

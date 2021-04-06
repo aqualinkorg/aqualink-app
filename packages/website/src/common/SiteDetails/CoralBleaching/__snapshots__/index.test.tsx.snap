@@ -24,6 +24,7 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
             >
               <mock-typography
+                classname="Bleaching-cardTitle-2"
                 color="textSecondary"
                 variant="h6"
               >
