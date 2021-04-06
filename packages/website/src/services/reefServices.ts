@@ -9,10 +9,13 @@ import {
   ReefApplyParams,
   ReefApplication,
   ReefUpdateParams,
-  SelectedReefState,
   DeploySpotterParams,
   MaintainSpotterParams,
   ExclusionDateResponse,
+  TimeSeriesDataResponse,
+  TimeSeriesDataRangeResponse,
+  TimeSeriesDataRequestParams,
+  TimeSeriesDataRangeRequestParams,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -21,9 +24,11 @@ const getReef = (id: string) =>
     method: "GET",
   });
 
-const getReefDailyData = (id: string) =>
+const getReefDailyData = (id: string, start?: string, end?: string) =>
   requests.send<DailyData[]>({
-    url: `reefs/${id}/daily_data`,
+    url: `reefs/${id}/daily_data${
+      start && end ? `?end=${end}&start=${start}` : ""
+    }`,
     method: "GET",
   });
 
@@ -33,9 +38,29 @@ const getReefLiveData = (id: string) =>
     method: "GET",
   });
 
-const getReefSpotterData = (id: string, startDate: string, endDate: string) =>
-  requests.send<SelectedReefState["spotterData"]>({
-    url: `reefs/${id}/spotter_data?endDate=${endDate}&startDate=${startDate}`,
+const getReefTimeSeriesData = ({
+  reefId,
+  pointId,
+  start,
+  end,
+  metrics,
+  hourly,
+}: TimeSeriesDataRequestParams) =>
+  requests.send<TimeSeriesDataResponse>({
+    url: `time-series/reefs/${reefId}${
+      pointId ? `/pois/${pointId}` : ""
+    }?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
+    method: "GET",
+  });
+
+const getReefTimeSeriesDataRange = ({
+  reefId,
+  pointId,
+}: TimeSeriesDataRangeRequestParams) =>
+  requests.send<TimeSeriesDataRangeResponse>({
+    url: `time-series/reefs/${reefId}${
+      pointId ? `/pois/${pointId}` : ""
+    }/range`,
     method: "GET",
   });
 
@@ -151,7 +176,8 @@ export default {
   getReefs,
   getReefDailyData,
   getReefLiveData,
-  getReefSpotterData,
+  getReefTimeSeriesData,
+  getReefTimeSeriesDataRange,
   getReefPois,
   deleteReefPoi,
   registerReef,

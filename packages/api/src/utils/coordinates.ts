@@ -1,6 +1,8 @@
+import { Point } from 'geojson';
+
 export type Extent = [number, number, number, number];
 
-export function pointToPixel(
+export function pointToIndex(
   long: number,
   lat: number,
   boundingBox: Extent,
@@ -12,12 +14,58 @@ export function pointToPixel(
   const geoWidth = Math.abs(maxLong - minLong);
   const geoHeight = Math.abs(maxLat - minLat);
 
-  const tempLong = ((long - minLong) % 360) + minLong;
-  const tempLat = ((lat - minLat) % 180) + minLat;
+  // Normalize longitude and latitude depending on the boundingBox convention
+  const tempLong =
+    minLong >= 0
+      ? (((long % 360) + 540) % 360) - 180
+      : ((long + 180) % 360) - 180;
+
+  const tempLat =
+    minLat >= 0 ? (((lat % 180) + 270) % 180) - 90 : ((lat + 90) % 180) - 90;
+
+  const indexLong = Math.round(
+    (Math.abs(tempLong - minLong) / geoWidth) * width,
+  );
+  const indexLat = Math.round(
+    (Math.abs(tempLat - minLat) / geoHeight) * height,
+  );
+
+  return { indexLong, indexLat };
+}
+
+export function pointToPixel(
+  long: number,
+  lat: number,
+  boundingBox: Extent,
+  width: number,
+  height: number,
+) {
+  const { indexLong, indexLat } = pointToIndex(
+    long,
+    lat,
+    boundingBox,
+    width,
+    height,
+  );
 
   // Pixel (0, 0) is the top left corner.
-  const pixelX = Math.round(((tempLong - minLong) / geoWidth) * width);
-  const pixelY = height - Math.round(((tempLat - minLat) / geoHeight) * height);
+  const pixelX = indexLong;
+  const pixelY = height - indexLat;
 
   return { pixelX, pixelY };
 }
+
+export const createPoint = (
+  longitude: number,
+  latitude: number,
+  numberOfDecimals: number = 5,
+): Point => {
+  const precision = 10 ** numberOfDecimals;
+  return {
+    type: 'Point',
+    coordinates: [
+      Math.round((longitude + Number.EPSILON) * precision) / precision,
+      Math.round((latitude + Number.EPSILON) * precision) / precision,
+    ],
+  };
+};

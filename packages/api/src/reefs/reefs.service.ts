@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { omit } from 'lodash';
+import moment from 'moment';
 import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
@@ -33,6 +34,7 @@ import { DeploySpotterDto } from './dto/deploy-spotter.dto';
 import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
+import { createPoint } from '../utils/coordinates';
 
 @Injectable()
 export class ReefsService {
@@ -76,10 +78,7 @@ export class ReefsService {
       .save({
         name,
         region,
-        polygon: {
-          type: 'Point',
-          coordinates: [longitude, latitude],
-        },
+        polygon: createPoint(longitude, latitude),
         maxMonthlyMean,
         timezone: timezones[0],
         approved: false,
@@ -186,10 +185,7 @@ export class ReefsService {
         ...omit(updateReefDto, ['admins', 'coordinates']),
         ...(coordinates
           ? {
-              polygon: {
-                type: 'Point',
-                coordinates: [coordinates.longitude, coordinates.latitude],
-              },
+              polygon: createPoint(coordinates.longitude, coordinates.latitude),
             }
           : {}),
       })
@@ -221,20 +217,33 @@ export class ReefsService {
     }
   }
 
-  async findDailyData(id: number): Promise<DailyData[]> {
+  async findDailyData(
+    id: number,
+    start?: string,
+    end?: string,
+  ): Promise<DailyData[]> {
     const reef = await this.reefsRepository.findOne(id);
 
     if (!reef) {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    return this.dailyDataRepository.find({
-      where: { reef: id },
-      order: {
-        date: 'DESC',
-      },
-      take: 90,
-    });
+    if (!moment(start).isValid() || !moment(end).isValid()) {
+      throw new BadRequestException('Start or end is not a valid date');
+    }
+
+    return this.dailyDataRepository
+      .createQueryBuilder('daily_data')
+      .where('reef_id = :id', { id })
+      .orderBy('date', 'DESC')
+      .andWhere('date <= :endDate', {
+        endDate: (end && new Date(end)) || new Date(),
+      })
+      .andWhere('date >= :startDate', {
+        startDate: new Date(start || 0),
+      })
+      .limit(start && end ? undefined : 90)
+      .getMany();
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
