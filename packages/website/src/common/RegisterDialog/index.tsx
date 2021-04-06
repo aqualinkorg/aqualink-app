@@ -50,7 +50,7 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit, getValues, setValue } = useForm({
     reValidateMode: "onSubmit",
   });
 
@@ -214,6 +214,12 @@ const RegisterDialog = ({
                           ? "Invalid email address"
                           : errors.emailAddress.message)) ||
                       ""
+                    }
+                    onChange={() =>
+                      setValue(
+                        "emailAddress",
+                        getValues("emailAddress").toLowerCase()
+                      )
                     }
                     label="Email Address"
                     inputRef={register({
