@@ -25,7 +25,6 @@ import {
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
 import { Reef } from "../../store/Reefs/types";
-import NotFound from "../NotFound";
 
 enum QueryParamKeys {
   reefId = "reef_id",
@@ -45,13 +44,11 @@ const Homepage = ({ classes }: HomepageProps) => {
   const zoomLevelParam = urlParams.get(QueryParamKeys.zoomLevel);
   const mapZoomLevel: number = zoomLevelParam ? +zoomLevelParam : 0;
 
-  const featuredReefId =
-    urlParams.get(QueryParamKeys.reefId) ||
-    process.env.REACT_APP_FEATURED_REEF_ID ||
-    "";
+  const queryParamReefId = urlParams.get(QueryParamKeys.reefId) || "";
+  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
-  const featuredReef = reefsList.find((reef: Reef) => {
-    return reef.id.toString() === featuredReefId;
+  const queryParamReef = reefsList.find((reef: Reef) => {
+    return reef.id.toString() === queryParamReefId;
   });
 
   useEffect(() => {
@@ -59,11 +56,11 @@ const Homepage = ({ classes }: HomepageProps) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (featuredReef) {
-      dispatch(setMapInitialReef(featuredReef));
-      dispatch(setReefOnMap(featuredReef));
+    if (queryParamReef) {
+      dispatch(setMapInitialReef(queryParamReef));
+      dispatch(setReefOnMap(queryParamReef));
     }
-  }, [dispatch, featuredReef, reefsList]);
+  }, [dispatch, queryParamReef, reefsList]);
 
   useEffect(() => {
     if (!reefOnMap) {
@@ -95,11 +92,7 @@ const Homepage = ({ classes }: HomepageProps) => {
     drawer.scrollTop = 0;
   });
 
-  return reefsList.length > 0 && featuredReefId && !featuredReef ? (
-    <div>
-      <NotFound />
-    </div>
-  ) : (
+  return (
     <>
       <div role="presentation" onClick={isDrawerOpen ? toggleDrawer : () => {}}>
         <HomepageNavBar searchLocation geocodingEnabled />
