@@ -41,6 +41,12 @@ export interface SurveyPoint {
   surveyMedia: SurveyMedia[];
 }
 
+export interface SurveyPointUpdateParams {
+  name?: string;
+  longitude?: number;
+  latitude?: number;
+}
+
 export interface SurveyState {
   id?: number;
   diveLocation?: DiveLocation | null;

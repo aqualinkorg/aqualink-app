@@ -3,6 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-dialog
+    fullwidth="true"
     open="true"
   >
     <mock-dialogtitle

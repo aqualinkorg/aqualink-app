@@ -1,13 +1,13 @@
 # Aqualink - API
 
-The primary purpose of the API is to serve Aqualink data to the website. In thre future, we will also thrive to make the API open and avilable for developers.
+The primary purpose of the API is to serve Aqualink data to the website. In the future, we will also thrive to make the API open and available for developers.
 
 ### Installation
 
 ```bash
 $ yarn install
 ```
-
+Follow the instructions to install netcdf [here.](https://github.com/parro-it/netcdf4#installation)
 ### Settings
 
 The database connection must be configured before you can run the app. Configuration is sourced from environment
@@ -82,6 +82,14 @@ export $(grep -v '^#' .env.prod | xargs) && firebase functions:config:set databa
 ```
 
 #### Deploy
+
+##### API
+
+```
+yarn deploy:ENV
+```
+
+##### Cloud Functions
 
 ```
 yarn deploy:cloud-functions

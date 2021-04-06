@@ -6,8 +6,10 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Storage } from '@google-cloud/storage';
 import { Repository } from 'typeorm';
+import path from 'path';
 import { SurveyMedia } from '../surveys/survey-media.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
+import { getRandomName } from '../uploads/file.decorator';
 
 @Injectable()
 export class GoogleCloudService {
@@ -29,6 +31,31 @@ export class GoogleCloudService {
       projectId: this.GCS_PROJECT,
       maxRetries: 3,
     });
+  }
+
+  public async uploadFile(filePath: string, type: string): Promise<string> {
+    if (!this.GCS_BUCKET || !this.STORAGE_FOLDER) {
+      this.logger.error(
+        'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
+      );
+      throw new InternalServerErrorException();
+    }
+    const folder = `${this.STORAGE_FOLDER}/surveys/`;
+    const prefix = 'reef_hobo_image';
+    const basename = path.basename(filePath);
+    const destination = getRandomName(folder, prefix, basename, type);
+
+    const response = await this.storage
+      .bucket(this.GCS_BUCKET)
+      .upload(filePath, {
+        destination,
+        public: true,
+        gzip: true,
+      });
+
+    const publicUrl = response[0].name;
+
+    return `https://storage.googleapis.com/${this.GCS_BUCKET}/${publicUrl}`;
   }
 
   public async findDanglingFiles(): Promise<string[]> {

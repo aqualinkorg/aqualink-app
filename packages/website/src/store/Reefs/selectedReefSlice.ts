@@ -1,17 +1,22 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
 import type {
+  Pois,
   ReefUpdateParams,
   SelectedReefState,
-  SpotterDataRequestParams,
+  TimeSeriesDataRangeRequestParams,
+  TimeSeriesDataRequestParams,
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
+import { mapTimeSeriesData, mapTimeSeriesDataRanges } from "./helpers";
 
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
   loading: true,
-  spotterDataLoading: false,
+  timeSeriesDataLoading: false,
+  timeSeriesDataRangeLoading: false,
   error: null,
 };
 
@@ -24,31 +29,69 @@ export const reefRequest = createAsyncThunk<
     const { data } = await reefServices.getReef(id);
     const { data: dailyData } = await reefServices.getReefDailyData(id);
     const { data: liveData } = await reefServices.getReefLiveData(id);
+    const { data: surveyPoints } = await reefServices.getReefPois(id);
 
-    return { ...data, dailyData, liveData };
+    return {
+      ...data,
+      dailyData,
+      liveData,
+      monthlyMax: sortBy(data.monthlyMax, (item) => item.month).map((item) => ({
+        id: item.id,
+        month: item.month,
+        temperature: item.temperature,
+      })),
+      surveyPoints: surveyPoints.map((point) => ({
+        id: point.id,
+        name: point.name,
+        polygon: point.polygon,
+      })),
+    };
   } catch (err) {
     const error: AxiosError<SelectedReefState["error"]> = err;
     return rejectWithValue(error.message);
   }
 });
 
-export const reefSpotterDataRequest = createAsyncThunk<
-  SelectedReefState["spotterData"],
-  SpotterDataRequestParams,
+export const reefTimeSeriesDataRequest = createAsyncThunk<
+  {
+    granularDailyData: SelectedReefState["granularDailyData"];
+    timeSeriesData: SelectedReefState["timeSeriesData"];
+  },
+  TimeSeriesDataRequestParams,
   CreateAsyncThunkTypes
 >(
-  "selectedReef/spotterDataRequest",
-  async (
-    { id, startDate, endDate }: SpotterDataRequestParams,
-    { rejectWithValue }
-  ) => {
+  "selectedReef/timeSeriesDataRequest",
+  async (params: TimeSeriesDataRequestParams, { rejectWithValue }) => {
     try {
-      const { data: spotterData } = await reefServices.getReefSpotterData(
-        id,
-        startDate,
-        endDate
+      const {
+        data: timeSeriesDataResponse,
+      } = await reefServices.getReefTimeSeriesData(params);
+      const { data: granularDailyData } = await reefServices.getReefDailyData(
+        params.reefId,
+        params.start,
+        params.end
       );
-      return spotterData;
+      return {
+        granularDailyData,
+        timeSeriesData: mapTimeSeriesData(timeSeriesDataResponse),
+      };
+    } catch (err) {
+      const error: AxiosError<SelectedReefState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const reefTimeSeriesDataRangeRequest = createAsyncThunk<
+  SelectedReefState["timeSeriesDataRange"],
+  TimeSeriesDataRangeRequestParams,
+  CreateAsyncThunkTypes
+>(
+  "selectedReef/timeSeriesDataRangeRequest",
+  async (params: TimeSeriesDataRangeRequestParams, { rejectWithValue }) => {
+    try {
+      const { data } = await reefServices.getReefTimeSeriesDataRange(params);
+      return mapTimeSeriesDataRanges(data);
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
@@ -99,9 +142,26 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
-    clearReefSpotterData: (state) => ({
+    setReefPois: (state, action: PayloadAction<Pois[]>) => {
+      if (state.details) {
+        return {
+          ...state,
+          details: {
+            ...state.details,
+            surveyPoints: action.payload,
+          },
+        };
+      }
+      return state;
+    },
+    clearTimeSeriesData: (state) => ({ ...state, timeSeriesData: undefined }),
+    clearTimeSeriesDataRange: (state) => ({
       ...state,
-      spotterData: null,
+      timeSeriesDataRange: undefined,
+    }),
+    clearGranularDailyData: (state) => ({
+      ...state,
+      granularDailyData: undefined,
     }),
   },
   extraReducers: (builder) => {
@@ -136,31 +196,63 @@ const selectedReefSlice = createSlice({
     });
 
     builder.addCase(
-      reefSpotterDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedReefState["spotterData"]>) => {
-        return {
-          ...state,
-          spotterData: action.payload,
-          spotterDataLoading: false,
-        };
-      }
+      reefTimeSeriesDataRequest.fulfilled,
+      (
+        state,
+        action: PayloadAction<{
+          granularDailyData: SelectedReefState["granularDailyData"];
+          timeSeriesData: SelectedReefState["timeSeriesData"];
+        }>
+      ) => ({
+        ...state,
+        granularDailyData: action.payload.granularDailyData,
+        timeSeriesData: action.payload.timeSeriesData,
+        timeSeriesDataLoading: false,
+      })
     );
 
     builder.addCase(
-      reefSpotterDataRequest.rejected,
-      (state, action: PayloadAction<SelectedReefState["error"]>) => {
-        return {
-          ...state,
-          error: action.payload,
-          spotterDataLoading: false,
-        };
-      }
+      reefTimeSeriesDataRequest.rejected,
+      (state, action: PayloadAction<SelectedReefState["error"]>) => ({
+        ...state,
+        error: action.payload,
+        timeSeriesDataLoading: false,
+      })
     );
 
-    builder.addCase(reefSpotterDataRequest.pending, (state) => {
+    builder.addCase(reefTimeSeriesDataRequest.pending, (state) => {
       return {
         ...state,
-        spotterDataLoading: true,
+        timeSeriesDataLoading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      reefTimeSeriesDataRangeRequest.fulfilled,
+      (
+        state,
+        action: PayloadAction<SelectedReefState["timeSeriesDataRange"]>
+      ) => ({
+        ...state,
+        timeSeriesDataRange: action.payload,
+        timeSeriesDataRangeLoading: false,
+      })
+    );
+
+    builder.addCase(
+      reefTimeSeriesDataRangeRequest.rejected,
+      (state, action: PayloadAction<SelectedReefState["error"]>) => ({
+        ...state,
+        error: action.payload,
+        timeSeriesDataRangeLoading: false,
+      })
+    );
+
+    builder.addCase(reefTimeSeriesDataRangeRequest.pending, (state) => {
+      return {
+        ...state,
+        timeSeriesDataRangeLoading: true,
         error: null,
       };
     });
@@ -171,9 +263,29 @@ export const reefDetailsSelector = (
   state: RootState
 ): SelectedReefState["details"] => state.selectedReef.details;
 
-export const reefSpotterDataSelector = (
+export const reefGranularDailyDataSelector = (
   state: RootState
-): SelectedReefState["spotterData"] => state.selectedReef.spotterData;
+): SelectedReefState["granularDailyData"] =>
+  state.selectedReef.granularDailyData;
+
+export const reefTimeSeriesDataSelector = (
+  state: RootState
+): SelectedReefState["timeSeriesData"] => state.selectedReef.timeSeriesData;
+
+export const reefTimeSeriesDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["timeSeriesDataLoading"] =>
+  state.selectedReef.timeSeriesDataLoading;
+
+export const reefTimeSeriesDataRangeSelector = (
+  state: RootState
+): SelectedReefState["timeSeriesDataRange"] =>
+  state.selectedReef.timeSeriesDataRange;
+
+export const reefTimeSeriesDataRangeLoadingSelector = (
+  state: RootState
+): SelectedReefState["timeSeriesDataRangeLoading"] =>
+  state.selectedReef.timeSeriesDataRangeLoading;
 
 export const reefDraftSelector = (
   state: RootState
@@ -183,11 +295,6 @@ export const reefLoadingSelector = (
   state: RootState
 ): SelectedReefState["loading"] => state.selectedReef.loading;
 
-export const reefSpotterDataLoadingSelector = (
-  state: RootState
-): SelectedReefState["spotterDataLoading"] =>
-  state.selectedReef.spotterDataLoading;
-
 export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
@@ -196,7 +303,10 @@ export const {
   setReefDraft,
   setSelectedReef,
   setReefData,
-  clearReefSpotterData,
+  clearTimeSeriesData,
+  clearTimeSeriesDataRange,
+  clearGranularDailyData,
+  setReefPois,
 } = selectedReefSlice.actions;
 
 export default selectedReefSlice.reducer;

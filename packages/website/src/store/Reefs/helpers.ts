@@ -1,6 +1,14 @@
 /* eslint-disable no-nested-ternary */
 import type { TableRow } from "../Homepage/types";
-import type { Reef } from "./types";
+import type {
+  Metrics,
+  MetricsKeys,
+  Reef,
+  TimeSeriesData,
+  TimeSeriesDataRange,
+  TimeSeriesDataRangeResponse,
+  TimeSeriesDataResponse,
+} from "./types";
 import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
 export function getReefNameAndRegion(reef: Reef) {
@@ -37,3 +45,35 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
     };
   });
 };
+
+const mapMetrics = <T>(
+  data: Record<MetricsKeys, T[]>
+): Record<Metrics, T[]> => ({
+  alert: data.alert,
+  bottomTemperature: data.bottom_temperature,
+  dhw: data.dhw,
+  satelliteTemperature: data.satellite_temperature,
+  sstAnomaly: data.sst_anomaly,
+  surfaceTemperature: data.surface_temperature,
+  significantWaveHeight: data.significant_wave_height,
+  waveMeanDirection: data.wave_mean_direction,
+  wavePeakPeriod: data.wave_peak_period,
+  windDirection: data.wind_direction,
+  windSpeed: data.wind_speed,
+});
+
+export const mapTimeSeriesData = (
+  timeSeriesData: TimeSeriesDataResponse
+): TimeSeriesData => ({
+  hobo: mapMetrics(timeSeriesData.hobo),
+  spotter: mapMetrics(timeSeriesData.spotter),
+  sofarApi: mapMetrics(timeSeriesData.sofar_api),
+});
+
+export const mapTimeSeriesDataRanges = (
+  ranges: TimeSeriesDataRangeResponse
+): TimeSeriesDataRange => ({
+  hobo: mapMetrics(ranges.hobo),
+  spotter: mapMetrics(ranges.spotter),
+  sofarApi: mapMetrics(ranges.sofar_api),
+});

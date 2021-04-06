@@ -18,7 +18,7 @@
       }
     },
     {
-      "files": ["scripts/*"],
+      "files": ["scripts/**"],
       "rules": {
         "no-console": "off",
         "import/no-extraneous-dependencies": [
@@ -32,6 +32,7 @@
     {
       "files": ["cloud-functions/*"],
       "rules": {
+        "no-console": "off",
         "import/no-extraneous-dependencies": [
           "error",
           {

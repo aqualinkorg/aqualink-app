@@ -27,6 +27,7 @@ module.exports = {
   externals: {
     'firebase-admin': 'firebase-admin',
     'firebase-functions': 'firebase-functions',
+    'cache-manager': 'cache-manager',
   },
   optimization: {
     minimize: false,
