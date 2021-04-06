@@ -13,7 +13,7 @@ import { Reef, ReefStatus } from './reefs.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
-import { findSstAnomaly, getLiveData } from '../utils/liveData';
+import { getSstAnomaly, getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
@@ -271,10 +271,7 @@ export class ReefsService {
 
     return {
       ...liveData,
-      sstAnomaly: findSstAnomaly(
-        reef.monthlyMax,
-        liveData.satelliteTemperature,
-      ),
+      sstAnomaly: getSstAnomaly(reef.monthlyMax, liveData.satelliteTemperature),
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }

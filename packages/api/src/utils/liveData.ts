@@ -142,7 +142,7 @@ export const getLiveData = async (
  * where the SST is the value for the day in question, and DC is the corresponding daily climatology for that
  * day of the year.
  * */
-export const findSstAnomaly = (
+export const getSstAnomaly = (
   monthlyMax: MonthlyMax[],
   satelliteTemperature?: SofarValue,
 ) => {
