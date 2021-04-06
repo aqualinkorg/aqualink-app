@@ -11,14 +11,14 @@ import Alert from "@material-ui/lab/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { find } from "lodash";
 
-import TextField from "./TextField";
+import TextField from "../../../../../common/Forms/TextField";
 import { Reef, ReefUpdateParams } from "../../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../../store/Reefs/helpers";
 import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
-import { useFormField } from "./useFormField";
+import { useFormField } from "../../../../../common/Forms/useFormField";
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 

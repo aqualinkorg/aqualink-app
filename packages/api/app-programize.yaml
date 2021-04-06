@@ -1,5 +1,6 @@
 service: programize
-runtime: nodejs12
+runtime: custom
+env: flex
 
 manual_scaling:
   instances: 1

@@ -1,0 +1,392 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-card
+    classname="Satellite-card-1"
+    style="background-color: rgb(117, 180, 114);"
+  >
+    <div
+      class="MuiCardHeader-root Satellite-header-3"
+    >
+      <div
+        class="MuiCardHeader-content"
+      >
+        <mock-typography
+          classname="MuiCardHeader-title"
+          component="span"
+          display="block"
+          variant="h5"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-typography
+                classname="Satellite-cardTitle-2"
+                variant="h6"
+              >
+                SATELLITE OBSERVATION
+              </mock-typography>
+            </div>
+          </div>
+        </mock-typography>
+      </div>
+    </div>
+    <mock-cardcontent
+      classname="Satellite-content-8"
+    >
+      <mock-box
+        display="flex"
+        flexgrow="1"
+        p="1rem"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-4"
+              variant="subtitle2"
+            >
+              SURFACE TEMP
+            </mock-typography>
+            <mock-tooltip
+              title=""
+            >
+              <mock-typography
+                classname="Satellite-contentTextValues-5"
+                variant="h3"
+              >
+                26.0°C
+              </mock-typography>
+            </mock-tooltip>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-4"
+              variant="subtitle2"
+            >
+              HISTORICAL MAX
+            </mock-typography>
+            <mock-tooltip
+              title="Historical maximum monthly average over the past 20 years"
+            >
+              <mock-typography
+                classname="Satellite-contentTextValues-5"
+                variant="h3"
+              >
+                24.0°C
+              </mock-typography>
+            </mock-tooltip>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-4"
+              variant="subtitle2"
+            >
+              DEGREE HEATING WEEKS
+            </mock-typography>
+            <mock-tooltip
+              title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
+            >
+              <mock-typography
+                classname="Satellite-contentTextValues-5"
+                variant="h3"
+              >
+                4.1
+              </mock-typography>
+            </mock-tooltip>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+          >
+            <mock-typography
+              classname="Satellite-contentTextTitles-4"
+              variant="subtitle2"
+            >
+              SST ANOMALY
+            </mock-typography>
+            <mock-tooltip
+              title=""
+            >
+              <mock-typography
+                classname="Satellite-contentTextValues-5"
+                variant="h3"
+              >
+                - -°C
+              </mock-typography>
+            </mock-tooltip>
+          </div>
+        </div>
+      </mock-box>
+      <div
+        class="MuiGrid-root MuiGrid-container"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(8, 91, 163); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              0
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(12, 157, 165); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              2
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(117, 180, 114); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              4
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(123, 217, 37); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              6
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(193, 229, 34); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              8
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(229, 187, 43); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              10
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(230, 121, 40); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              12
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(232, 79, 46); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              14
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(216, 69, 36); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              16
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(128, 58, 32); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              18
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(185, 41, 68); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              20
+            </mock-typography>
+          </mock-box>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
+          style="background-color: rgb(128, 48, 126); height: 2rem;"
+        >
+          <mock-box
+            textalign="center"
+          >
+            <mock-typography
+              align="center"
+              variant="caption"
+            >
+              25
+            </mock-typography>
+          </mock-box>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root UpdateInfo-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root UpdateInfo-updateIcon-12 MuiSvgIcon-fontSizeSmall"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-box
+                display="flex"
+                flexdirection="column"
+              >
+                <mock-typography
+                  classname="UpdateInfo-updateInfoText-13"
+                  variant="caption"
+                >
+                  Last data received
+                   
+                  5 min. ago
+                </mock-typography>
+                <mock-typography
+                  classname="UpdateInfo-updateInfoText-13"
+                  variant="caption"
+                >
+                  Updated 
+                  daily
+                </mock-typography>
+              </mock-box>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root UpdateInfo-nooaChip-14 MuiGrid-item"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+          >
+            <a
+              class="UpdateInfo-nooaLink-15"
+              href="https://coralreefwatch.noaa.gov/"
+              target="_blank"
+            >
+              <mock-typography
+                classname="UpdateInfo-nooaChipText-16"
+              >
+                NOAA
+              </mock-typography>
+              <img
+                alt="sensor-type"
+                class="UpdateInfo-sensorImage-17"
+                src="satellite.svg"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </mock-cardcontent>
+  </mock-card>
+</div>
+`;

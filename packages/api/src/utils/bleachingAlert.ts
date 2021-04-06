@@ -3,7 +3,7 @@ import { isNil, isNumber, inRange } from 'lodash';
 /**
  * Calculating bleaching alert level based on NOAA defintions:
  * available at https://coralreefwatch.noaa.gov/subscriptions/vs.php
- * @param temperatureThreshold
+ * @param maxMonthlyMean
  * @param satelliteTemperature
  * @param degreeHeatingDays
  */

@@ -14,7 +14,6 @@ test('It processes Sofar API for daily data.', async () => {
       coordinates: [-122.699036598, 37.893756314],
     },
     spotterId: 'SPOT-300434063450120',
-    temperatureThreshold: null,
     depth: null,
     maxMonthlyMean: 22,
     status: 0,
