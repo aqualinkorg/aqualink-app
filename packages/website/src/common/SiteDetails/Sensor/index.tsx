@@ -80,11 +80,11 @@ const Sensor = ({ reef, classes }: SensorProps) => {
   const metrics = [
     {
       label: "TEMP AT 1m",
-      value: `${formatNumber(surfaceTemperature?.value, 1)} °C`,
+      value: `${formatNumber(surfaceTemperature?.value, 1)}°C`,
     },
     {
       label: `TEAMP AT ${reef.depth ? `${reef.depth}m` : "DEPTH"}`,
-      value: `${formatNumber(bottomTemperature?.value, 1)} °C`,
+      value: `${formatNumber(bottomTemperature?.value, 1)}°C`,
     },
   ];
 
@@ -112,7 +112,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
           flexGrow={1}
           style={{ position: "relative" }}
         >
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
             {metrics.map(({ label, value }) => (
               <Grid key={label} item xs={12}>
                 <Typography
