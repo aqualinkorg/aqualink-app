@@ -126,7 +126,7 @@ body {
 }
 
 .homepage-map-spotter-icon-blinking {
-  animation: pulse 1s infinite;
+  animation: pulse 1.5s infinite;
   transform: scale(1);
   border-radius: 50%;
 }
