@@ -12,9 +12,9 @@ RUN yarn global add ts-node
 ENV NODE_ENV=production
 WORKDIR /app
 
-# TODO - Find a way to get the yarn.lock and parent tsconfig.json which are "out of context".
-# Because we are in a sub-package ity is at ../../yarn.lock
-COPY ["package.json", "./"]
+# TODO - Find a way to get the yarn.lock which is "out of context".
+# Because we are in a sub-package it is located at ../../yarn.lock
+COPY ["package.json", "yarn.lock", "./"]
 
 RUN yarn install --production
 

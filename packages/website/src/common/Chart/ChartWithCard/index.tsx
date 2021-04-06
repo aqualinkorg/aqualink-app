@@ -9,6 +9,7 @@ import {
   WithStyles,
   withStyles,
 } from "@material-ui/core";
+import classnames from "classnames";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,18 +23,13 @@ import {
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
-  findMarginalDate,
   generateMonthlyMaxTimestamps,
   isBefore,
   setTimeZone,
   subtractFromDate,
 } from "../../../helpers/dates";
-import {
-  filterDailyData,
-  filterMaxMonthlyData,
-  filterSofarData,
-  filterTimeSeriesData,
-} from "../utils";
+import { findDataLimits } from "./helpers";
+import { filterSofarData, filterTimeSeriesData } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
@@ -52,8 +48,8 @@ const ChartWithCard = ({
 
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
-  const { hobo: hoboData, spotter: spotterData } =
-    useSelector(reefTimeSeriesDataSelector) || {};
+  const timeSeriesData = useSelector(reefTimeSeriesDataSelector);
+  const { hobo: hoboData, spotter: spotterData } = timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
@@ -126,91 +122,42 @@ const ChartWithCard = ({
 
   // Set chart start/end dates based on data received
   useEffect(() => {
-    const maxMonthlyData = generateMonthlyMaxTimestamps(
+    const [minDataDate, maxDataDate] = findDataLimits(
       reef.monthlyMax,
+      granularDailyData,
+      timeSeriesData,
       pickerStartDate,
       pickerEndDate
     );
-    const filteredMaxMonthlyData = filterMaxMonthlyData(
-      maxMonthlyData,
-      pickerStartDate,
-      pickerEndDate
-    );
-    const filteredDailyData = filterDailyData(
-      granularDailyData || [],
-      pickerStartDate,
-      pickerEndDate
-    );
-    const filteredHoboData = filterSofarData(
-      hoboBottomTemperature || [],
-      pickerStartDate,
-      pickerEndDate
-    );
-    const filteredSpotterData = filterTimeSeriesData(
-      spotterData,
-      pickerStartDate,
-      pickerEndDate
-    );
-    if (
-      filteredMaxMonthlyData?.[0] ||
-      filteredDailyData?.[0] ||
-      filteredSpotterData?.bottomTemperature?.[0] ||
-      filteredSpotterData?.surfaceTemperature?.[0] ||
-      filteredHoboData?.[0]
-    ) {
-      const maxDataDate = new Date(
-        findMarginalDate(
-          filteredMaxMonthlyData,
-          filteredDailyData,
-          filteredSpotterData,
-          filteredHoboData
-        )
-      ).toISOString();
-      const minDataDate = new Date(
-        findMarginalDate(
-          filteredMaxMonthlyData,
-          filteredDailyData,
-          filteredSpotterData,
-          filteredHoboData,
-          "min"
-        )
-      ).toISOString();
-      const reefLocalEndDate = new Date(
-        setTimeZone(
-          new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
-          reef?.timezone
-        )
-      ).toISOString();
-      const reefLocalStartDate = new Date(
-        setTimeZone(
-          new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
-          reef?.timezone
-        )
-      ).toISOString();
+    const pickerLocalEndDate = new Date(
+      setTimeZone(
+        new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
+        reef?.timezone
+      )
+    ).toISOString();
+    const pickerLocalStartDate = new Date(
+      setTimeZone(
+        new Date(moment(pickerStartDate).format("MM/DD/YYYY")),
+        reef?.timezone
+      )
+    ).toISOString();
 
-      if (moment(maxDataDate).isAfter(moment(reefLocalEndDate))) {
-        setEndDate(reefLocalEndDate);
-      } else {
-        setEndDate(maxDataDate);
-      }
+    setStartDate(
+      minDataDate
+        ? moment
+            .max(moment(minDataDate), moment(pickerLocalStartDate))
+            .toISOString()
+        : pickerLocalStartDate
+    );
 
-      if (moment(minDataDate).isAfter(moment(reefLocalStartDate))) {
-        setStartDate(minDataDate);
-      } else {
-        setStartDate(reefLocalStartDate);
-      }
-    } else {
-      setStartDate(undefined);
-      setEndDate(undefined);
-    }
-  }, [
-    granularDailyData,
-    hoboBottomTemperature,
-    pickerEndDate,
-    pickerStartDate,
-    reef,
-    spotterData,
-  ]);
+    setEndDate(
+      maxDataDate
+        ? moment
+            .min(moment(maxDataDate), moment(pickerLocalEndDate))
+            .toISOString()
+        : pickerLocalEndDate
+    );
+  }, [granularDailyData, pickerEndDate, pickerStartDate, reef, timeSeriesData]);
 
   // Set picker error
   useEffect(() => {
@@ -257,7 +204,14 @@ const ChartWithCard = ({
       setRange("custom");
       switch (type) {
         case "start":
-          setPickerStartDate(moment(dateString).startOf("day").toISOString());
+          // Set picker start date only if input date is after zero time
+          if (
+            moment(dateString)
+              .startOf("day")
+              .isSameOrAfter(moment(0).startOf("day"))
+          ) {
+            setPickerStartDate(moment(dateString).startOf("day").toISOString());
+          }
           break;
         case "end":
           // Set picker end date only if input date is before today
@@ -278,11 +232,10 @@ const ChartWithCard = ({
   return (
     <Container
       disableGutters={disableGutters}
-      className={`${classes.chartWithRange} ${
-        (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet)
-          ? classes.extraPadding
-          : ""
-      }`}
+      className={classnames(classes.chartWithRange, {
+        [classes.extraPadding]:
+          (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet),
+      })}
     >
       <ViewRange
         range={range}
@@ -318,10 +271,8 @@ const ChartWithCard = ({
             )}
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
-            startDate={
-              startDate || pickerStartDate || subtractFromDate(today, "week")
-            }
-            endDate={endDate || pickerEndDate || today}
+            startDate={startDate || subtractFromDate(today, "week")}
+            endDate={endDate || today}
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
             pickerErrored={pickerErrored}
@@ -342,10 +293,8 @@ const ChartWithCard = ({
                 pickerStartDate || subtractFromDate(today, "week")
               }
               pickerEndDate={pickerEndDate || today}
-              chartStartDate={
-                startDate || pickerStartDate || subtractFromDate(today, "week")
-              }
-              chartEndDate={endDate || pickerEndDate || today}
+              chartStartDate={startDate || subtractFromDate(today, "week")}
+              chartEndDate={endDate || today}
               depth={reef.depth}
               spotterData={filterTimeSeriesData(
                 spotterData,
@@ -365,8 +314,8 @@ const ChartWithCard = ({
               )}
             >
               <DownloadCSVButton
-                startDate={startDate}
-                endDate={endDate}
+                startDate={pickerStartDate}
+                endDate={pickerEndDate}
                 reefId={reef.id}
                 pointId={pointId}
                 className={classes.button}
@@ -397,10 +346,10 @@ const styles = (theme: Theme) =>
       width: "fit-content",
     },
     chartWithSpotter: {
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up("lg")]: {
         width: "67%",
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("md")]: {
         width: "100%",
       },
     },
@@ -416,10 +365,10 @@ const styles = (theme: Theme) =>
       },
     },
     cardWithSpotter: {
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up("lg")]: {
         flexGrow: 1,
       },
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("md")]: {
         width: "inherit",
         maxWidth: "fit-content",
         margin: "0 auto",
