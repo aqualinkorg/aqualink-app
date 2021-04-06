@@ -6,6 +6,7 @@ import {
   Validate,
 } from 'class-validator';
 import { GeoJSON } from 'geojson';
+import { ApiPointProperty } from '../../docs/api-properties';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../regions.entity';
 
@@ -15,6 +16,7 @@ export class UpdateRegionDto {
   @IsNotEmpty()
   readonly name?: string;
 
+  @ApiPointProperty()
   @IsOptional()
   @IsNotEmpty()
   readonly polygon?: GeoJSON;
@@ -22,5 +24,5 @@ export class UpdateRegionDto {
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [Region])
-  readonly parent?: Region;
+  readonly parentId?: number;
 }

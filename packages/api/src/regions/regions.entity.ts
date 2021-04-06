@@ -6,8 +6,11 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  RelationId,
 } from 'typeorm';
 import { GeoJSON } from 'geojson';
+import { ApiProperty } from '@nestjs/swagger';
+import { ApiPointProperty } from '../docs/api-properties';
 
 @Entity()
 export class Region {
@@ -17,6 +20,7 @@ export class Region {
   @Column()
   name: string;
 
+  @ApiPointProperty()
   @Column({
     type: 'geometry',
     unique: true,
@@ -31,6 +35,10 @@ export class Region {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @ApiProperty({ type: () => Region })
   @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
   parent?: Region;
+
+  @RelationId((region: Region) => region.parent)
+  parentId?: number;
 }

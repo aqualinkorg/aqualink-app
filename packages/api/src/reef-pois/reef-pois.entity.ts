@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { GeoJSON } from 'geojson';
 import { Reef } from '../reefs/reefs.entity';
-import { PointApiProperty } from '../docs/api-properties';
+import { ApiPointProperty } from '../docs/api-properties';
 
 @Entity()
 export class ReefPointOfInterest {
@@ -32,7 +32,7 @@ export class ReefPointOfInterest {
   @RelationId((poi: ReefPointOfInterest) => poi.reef)
   reefId: number;
 
-  @PointApiProperty()
+  @ApiPointProperty()
   @Column({
     type: 'geometry',
     unique: true,

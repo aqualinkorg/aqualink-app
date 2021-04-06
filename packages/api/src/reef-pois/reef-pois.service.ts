@@ -76,7 +76,7 @@ export class ReefPoisService {
             polygon: createPoint(longitude, latitude),
           }
         : {};
-    const updateReef = (reefId && { reef: { id: reefId } }) || {};
+    const updateReef = reefId !== undefined ? { reef: { id: reefId } } : {};
 
     const result = await this.poisRepository.update(id, {
       ...omit(updateReefPoiDto, 'longitude', 'latitude', 'reefId'),

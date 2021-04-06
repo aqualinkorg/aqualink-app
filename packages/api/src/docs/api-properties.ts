@@ -6,7 +6,7 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponse } from './error.dto';
 
-export const PointApiProperty = () => {
+export const ApiPointProperty = () => {
   const schema: ApiPropertyOptions = {
     type: 'object',
     properties: {

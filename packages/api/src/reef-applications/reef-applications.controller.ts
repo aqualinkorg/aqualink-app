@@ -41,9 +41,7 @@ export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse(
-    'No reef application for specified reef was not found',
-  )
+  @CustomApiNotFoundResponse('No reef application for specified reef was found')
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -53,7 +51,7 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
-  @CustomApiNotFoundResponse('No reef application was not found')
+  @CustomApiNotFoundResponse('No reef application was found')
   @Public()
   @Get(':id')
   async findOne(
@@ -70,7 +68,7 @@ export class ReefApplicationsController {
     return app;
   }
 
-  @CustomApiNotFoundResponse('No reef application was not found')
+  @CustomApiNotFoundResponse('No reef application was found')
   @Public()
   @Put(':hashId')
   updateWithHash(

@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { omit } from 'lodash';
 import { Region } from './regions.entity';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { FilterRegionDto } from './dto/filter-region.dto';
@@ -18,7 +19,11 @@ export class RegionsService {
   ) {}
 
   async create(createRegionDto: CreateRegionDto): Promise<Region> {
-    return this.regionsRepository.save(createRegionDto);
+    const { parentId } = createRegionDto;
+    return this.regionsRepository.save({
+      ...createRegionDto,
+      parent: parentId === undefined ? undefined : { id: parentId },
+    });
   }
 
   async find(filter: FilterRegionDto): Promise<Region[]> {
@@ -48,7 +53,13 @@ export class RegionsService {
   }
 
   async update(id: number, updateRegionDto: UpdateRegionDto) {
-    const result = await this.regionsRepository.update(id, updateRegionDto);
+    const { parentId } = updateRegionDto;
+    const updateParent =
+      parentId !== undefined ? { parent: { id: parentId } } : {};
+    const result = await this.regionsRepository.update(id, {
+      ...omit(updateRegionDto, 'parentId'),
+      ...updateParent,
+    });
     if (!result.affected) {
       throw new NotFoundException(`Region with ID ${id} not found.`);
     }
