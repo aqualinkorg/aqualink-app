@@ -11,12 +11,17 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
-import {
-  UpdateReefApplicationDto,
-  UpdateReefWithApplicationDto,
-} from './dto/update-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
+import { UpdateReefWithApplicationDto } from './dto/update-reef-with-application.dto';
 import { idFromHash, isValidId } from '../utils/urls';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
@@ -24,7 +29,9 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { AdminLevel } from '../users/users.entity';
+import { ErrorResponse } from '../docs/error.dto';
 
+@ApiTags('ReefApplications')
 @Auth()
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
@@ -34,6 +41,11 @@ import { AdminLevel } from '../users/users.entity';
 export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
+  @ApiBearerAuth()
+  @ApiNotFoundResponse({
+    description: 'Reef application for specified reef was not found',
+    type: ErrorResponse,
+  })
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -43,6 +55,10 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
+  @ApiNotFoundResponse({
+    description: 'Reef application was not found',
+    type: ErrorResponse,
+  })
   @Public()
   @Get(':id')
   async findOne(
@@ -59,6 +75,10 @@ export class ReefApplicationsController {
     return app;
   }
 
+  @ApiNotFoundResponse({
+    description: 'Reef application was not found',
+    type: ErrorResponse,
+  })
   @Public()
   @Put(':hashId')
   updateWithHash(
@@ -69,6 +89,20 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.update(id, reefApplication, reef);
   }
 
+  @ApiBearerAuth()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        reef: {
+          $ref: getSchemaPath(UpdateReefWithApplicationDto),
+        },
+        reefApplication: {
+          $ref: getSchemaPath(UpdateReefApplicationDto),
+        },
+      },
+    },
+  })
   @UseGuards(IsReefAdminGuard)
   @Put(':hashId/reefs/:reef_id')
   update(
