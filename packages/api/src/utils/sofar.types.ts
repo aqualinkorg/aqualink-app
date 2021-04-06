@@ -38,6 +38,7 @@ export interface SofarLiveData {
   wavePeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
+  sstAnomaly?: number;
   spotterPosition?: {
     latitude: SofarValue;
     longitude: SofarValue;
