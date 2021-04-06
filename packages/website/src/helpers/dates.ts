@@ -285,44 +285,39 @@ export const convertSurveyDataToLocalTime = (
       : survey.diveDate,
   }));
 
-// Return a copy of monthly max data for each year
+// Generate data for all months between start date's previous month and
+// end date's next month
 export const generateMonthlyMaxTimestamps = (
   monthlyMax: MonthlyMax[],
   startDate?: string,
   endDate?: string,
   timeZone?: string | null
 ): MonthlyMaxData[] => {
-  const startYear = startDate
-    ? new Date(startDate).getFullYear()
-    : new Date().getFullYear();
-  const endYear = endDate
-    ? new Date(endDate).getFullYear()
-    : new Date().getFullYear();
+  if (monthlyMax.length < 12) {
+    return [];
+  }
 
-  const years = createRange(startYear - 1, endYear + 1);
+  const firstDate = moment(startDate)
+    .tz(timeZone || "UTC")
+    .subtract(1, "months")
+    .set("date", 15)
+    .startOf("day");
+  const lastDate = moment(endDate)
+    .tz(timeZone || "UTC")
+    .add(1, "months")
+    .set("date", 15)
+    .startOf("day");
 
-  const yearlyData = years.map((year) => {
-    return monthlyMax.map(({ month, temperature }) => ({
-      value: temperature,
-      date: convertToLocalTime(
-        moment()
-          .set({
-            year,
-            month: month - 1,
-            date: 15,
-            hour: 0,
-            minute: 0,
-            second: 0,
-            millisecond: 0,
-          })
-          .toISOString(),
-        timeZone
-      ),
-    }));
-  });
-
-  return yearlyData.reduce<MonthlyMaxData[]>(
-    (curr, item) => [...curr, ...item],
-    []
+  const monthsRange = createRange(
+    moment(lastDate).diff(moment(firstDate), "months") + 1
   );
+
+  return monthsRange.map((months) => {
+    const date = moment(firstDate).add(months, "months");
+
+    return {
+      date: date.toISOString(),
+      value: monthlyMax[date.month()].temperature,
+    };
+  });
 };

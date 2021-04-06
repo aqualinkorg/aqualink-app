@@ -17,6 +17,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
 
 const DatePicker = ({
   value,
@@ -24,6 +25,7 @@ const DatePicker = ({
   dateNameTextVariant,
   pickerSize,
   autoOk,
+  timeZone,
   onChange,
   classes,
 }: DatePickerProps) => {
@@ -42,7 +44,10 @@ const DatePicker = ({
               disableToolbar
               format="MM/dd/yyyy"
               name="datePicker"
-              disableFuture
+              maxDate={moment()
+                .tz(timeZone || "UTC")
+                .format("YYYY/MM/DD")}
+              minDate={moment(0).format("YYYY/MM/DD")}
               autoOk={autoOk}
               showTodayButton
               value={value || null}
@@ -74,7 +79,7 @@ const styles = (theme: Theme) =>
       paddingBottom: 2,
     },
     textField: {
-      width: 110,
+      width: 115,
       color: "black",
       "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.23)",
@@ -91,6 +96,7 @@ interface DatePickerIncomingProps {
   dateNameTextVariant?: TypographyProps["variant"];
   pickerSize?: KeyboardDatePickerProps["size"];
   autoOk?: boolean;
+  timeZone: string | null | undefined;
   onChange: (date: MaterialUiPickersDate, value?: string | null) => void;
 }
 

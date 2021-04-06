@@ -1,4 +1,4 @@
-import { minBy, isEqual } from "lodash";
+import { minBy, isEqual, mean } from "lodash";
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
 
 export const locationCalculator = (point: Point | Polygon): Position => {
@@ -7,12 +7,11 @@ export const locationCalculator = (point: Point | Polygon): Position => {
   }
 
   const coordArray = point.coordinates[0];
-  const len = coordArray.length;
   const lngArray = coordArray.map((item) => item[0]);
   const latArray = coordArray.map((item) => item[1]);
 
-  const lngMean = lngArray.reduce((a, b) => a + b) / len;
-  const latMean = latArray.reduce((a, b) => a + b) / len;
+  const lngMean = mean(lngArray);
+  const latMean = mean(latArray);
 
   return [lngMean, latMean];
 };
