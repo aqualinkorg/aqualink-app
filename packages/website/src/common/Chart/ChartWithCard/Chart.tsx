@@ -217,8 +217,7 @@ const styles = () =>
   createStyles({
     chart: {
       height: 285,
-      marginBottom: 16,
-      marginTop: 16,
+      margin: "16px 0",
     },
 
     datePickersWrapper: {

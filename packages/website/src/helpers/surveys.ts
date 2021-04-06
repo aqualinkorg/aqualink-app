@@ -39,7 +39,7 @@ export const findImagesAtSurveyPoint = (
   point: number
 ) => {
   const imagesAtPoint = surveyList.map(
-    (survey) => survey.surveyPointImage![point]
+    (survey) => survey.surveyPointImage?.[point]
   );
   if (imagesAtPoint.length > 0) {
     return sumBy(imagesAtPoint, "length");

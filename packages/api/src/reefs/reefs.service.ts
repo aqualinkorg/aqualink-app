@@ -240,7 +240,7 @@ export class ReefsService {
         endDate: (end && new Date(end)) || new Date(),
       })
       .andWhere('date >= :startDate', {
-        startDate: (start && new Date(start)) || new Date(0),
+        startDate: new Date(start || 0),
       })
       .limit(start && end ? undefined : 90)
       .getMany();

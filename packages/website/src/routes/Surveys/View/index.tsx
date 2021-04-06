@@ -96,9 +96,11 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
     }
   }, [dispatch, pointId, reef.id, surveyDetails]);
 
-  return loading ? (
-    <LinearProgress className={classes.loading} />
-  ) : (
+  if (loading) {
+    return <LinearProgress className={classes.loading} />;
+  }
+
+  return (
     <>
       <Box bgcolor="#f5f6f6">
         <Container className={classes.infoWrapper}>

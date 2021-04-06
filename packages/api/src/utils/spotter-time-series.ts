@@ -103,14 +103,8 @@ export const addSpotterData = async (
       Bluebird.map(
         times(days, (i) => i),
         (i) => {
-          const startDate = moment()
-            .subtract(i + 1, 'd')
-            .startOf('day')
-            .toDate();
-          const endDate = moment()
-            .subtract(i + 1, 'd')
-            .endOf('day')
-            .toDate();
+          const startDate = moment().subtract(i, 'd').startOf('day').toDate();
+          const endDate = moment().subtract(i, 'd').endOf('day').toDate();
           return getSpotterData(reef.spotterId, endDate, startDate);
         },
         { concurrency: 100 },
@@ -143,7 +137,7 @@ export const addSpotterData = async (
             logger.log(
               `Saved ${i + 1} out of ${
                 dataLabels.length * days
-              } of daily spotter data for ${reef.id}`,
+              } of daily spotter data for reef with id ${reef.id}`,
             );
           },
         );

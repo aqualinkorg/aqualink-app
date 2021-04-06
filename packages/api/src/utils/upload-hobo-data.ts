@@ -69,8 +69,8 @@ const validFiles = new Set(['png', 'jpeg', 'jpg']);
 const logger = new Logger('ParseHoboData');
 
 /**
- * Parse XLSX data
- * @param filePath The path to the xlsx file
+ * Parse csv data
+ * @param filePath The path to the csv file
  * @param header The headers to be used. If undefined the column will be ignored
  * @param range The amount or rows to skip
  */
@@ -170,7 +170,7 @@ const handleEntityDuplicate = <T>(
 };
 
 /**
- * Read Coords.xlsx file
+ * Read Coords.csv file
  * @param rootPath The path of the root of the data folder
  * @param reefIds The reefIds to be imported
  */
@@ -188,8 +188,8 @@ const readCoordsFile = (rootPath: string, reefIds: number[]) => {
 
 /**
  * Create reef records
- * Calculate their position by finding the average of the coordinates of all pois in xlsx file
- * @param dataAsJson The json data from the xlsx file
+ * Calculate their position by finding the average of the coordinates of all pois in csv file
+ * @param dataAsJson The json data from the csv file
  * @param reefIds The reefs to be imported
  * @param regionRepository The region repository
  */
@@ -299,8 +299,8 @@ const createReefs = async (
     { concurrency: 4 },
   );
 
-  // Create reverse map (db.reef.id => xlsx.reef_id)
-  const dbIdToXLSXId: Record<number, number> = Object.fromEntries(
+  // Create reverse map (db.reef.id => csv.reef_id)
+  const dbIdToCSVId: Record<number, number> = Object.fromEntries(
     reefEntities.map((reef) => {
       const reefId = parseInt(reef.name.replace(REEF_PREFIX, ''), 10);
       return [reef.id, reefId];
@@ -313,20 +313,20 @@ const createReefs = async (
     administeredReefs: user.administeredReefs.concat(reefEntities),
   });
 
-  return { reefEntities, dbIdToXLSXId };
+  return { reefEntities, dbIdToCSVId };
 };
 
 /**
  * Create and save reef point of interest records
  * @param reefEntities The saved reef entities
- * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
  * @param recordsGroupedByReef The reef records grouped by reef id
  * @param rootPath The path to the root of the data folder
  * @param poiRepository The poi repository
  */
 const createPois = async (
   reefEntities: Reef[],
-  dbIdToXLSXId: Record<number, number>,
+  dbIdToCSVId: Record<number, number>,
   recordsGroupedByReef: Dictionary<Coords[]>,
   rootPath: string,
   poiRepository: Repository<ReefPointOfInterest>,
@@ -335,7 +335,7 @@ const createPois = async (
   // Final result needs to be flattened since the resulting array is grouped by reef
   const pois = reefEntities
     .map((reef) => {
-      const currentReefId = dbIdToXLSXId[reef.id];
+      const currentReefId = dbIdToCSVId[reef.id];
       const reefFolder = FOLDER_PREFIX + currentReefId;
       return recordsGroupedByReef[currentReefId]
         .filter((record) => {
@@ -417,16 +417,16 @@ const createSources = async (
 };
 
 /**
- * Parse hobo xlsx
+ * Parse hobo csv
  * @param poiEntities The created poi entities
- * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
  * @param rootPath The path to the root of the data folder
  * @param poiToSourceMap A object to map pois to source entities
  * @param timeSeriesRepository The time series repository
  */
 const parseHoboData = async (
   poiEntities: ReefPointOfInterest[],
-  dbIdToXLSXId: Record<number, number>,
+  dbIdToCSVId: Record<number, number>,
   rootPath: string,
   poiToSourceMap: Dictionary<Sources>,
   timeSeriesRepository: Repository<TimeSeries>,
@@ -436,7 +436,7 @@ const parseHoboData = async (
     const colonyId = poi.name.split(' ')[1].padStart(3, '0');
     const dataFile = COLONY_DATA_FILE.replace('{}', colonyId);
     const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-    const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
+    const reefFolder = FOLDER_PREFIX + dbIdToCSVId[poi.reef.id];
     const filePath = path.join(rootPath, reefFolder, colonyFolder, dataFile);
     const headers = [undefined, 'id', 'dateTime', 'bottomTemperature'];
     const castFunction = castCsvValues(
@@ -511,7 +511,7 @@ const parseHoboData = async (
  * Upload reef photos and create for each image a new survey and an associated survey media
  * As diveDate the creation date of the image will be used
  * @param poiEntities The create poi entities
- * @param dbIdToXLSXId The reverse map (db.reef.id => xlsx.reef_id)
+ * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
  * @param rootPath The path to the root of the data folder
  * @param googleCloudService The google cloud service instance
  * @param user A user to associate the surveys with
@@ -520,7 +520,7 @@ const parseHoboData = async (
  */
 const uploadReefPhotos = async (
   poiEntities: ReefPointOfInterest[],
-  dbIdToXLSXId: Record<number, number>,
+  dbIdToCSVId: Record<number, number>,
   rootPath: string,
   googleCloudService: GoogleCloudService,
   user: User,
@@ -532,7 +532,7 @@ const uploadReefPhotos = async (
     .map((poi) => {
       const colonyId = poi.name.split(' ')[1].padStart(3, '0');
       const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-      const reefFolder = FOLDER_PREFIX + dbIdToXLSXId[poi.reef.id];
+      const reefFolder = FOLDER_PREFIX + dbIdToCSVId[poi.reef.id];
       const colonyFolderPath = path.join(rootPath, reefFolder, colonyFolder);
       const contents = fs.readdirSync(colonyFolderPath);
       const images = contents.filter((f) => {
@@ -641,7 +641,7 @@ export const uploadHoboData = async (
     repositories.regionRepository,
   );
 
-  const { reefEntities, dbIdToXLSXId } = await createReefs(
+  const { reefEntities, dbIdToCSVId } = await createReefs(
     reefs,
     user,
     repositories.reefRepository,
@@ -651,7 +651,7 @@ export const uploadHoboData = async (
 
   const poiEntities = await createPois(
     reefEntities,
-    dbIdToXLSXId,
+    dbIdToCSVId,
     recordsGroupedByReef,
     rootPath,
     repositories.poiRepository,
@@ -669,7 +669,7 @@ export const uploadHoboData = async (
     (pois) =>
       parseHoboData(
         pois,
-        dbIdToXLSXId,
+        dbIdToCSVId,
         rootPath,
         poiToSourceMap,
         repositories.timeSeriesRepository,
@@ -682,7 +682,7 @@ export const uploadHoboData = async (
     (pois) =>
       uploadReefPhotos(
         pois,
-        dbIdToXLSXId,
+        dbIdToCSVId,
         rootPath,
         googleCloudService,
         user,
@@ -694,5 +694,5 @@ export const uploadHoboData = async (
 
   performBackfill(reefDiffArray.flat());
 
-  return dbIdToXLSXId;
+  return dbIdToCSVId;
 };
