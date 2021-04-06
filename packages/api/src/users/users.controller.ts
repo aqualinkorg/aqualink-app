@@ -51,7 +51,7 @@ export class UsersController {
 
   @OverrideLevelAccess(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Get('current/administered-reefs')
-  getAdministeredReefs(@Req() req: AuthRequest): Promise<Partial<Reef>[]> {
+  getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
     return this.usersService.getAdministeredReefs(req);
   }
 }

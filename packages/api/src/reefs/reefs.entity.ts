@@ -10,7 +10,6 @@ import {
   OneToOne,
   OneToMany,
   ManyToMany,
-  AfterLoad,
 } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { Region } from '../regions/regions.entity';
@@ -100,15 +99,8 @@ export class Reef {
   @OneToMany(() => MonthlyMax, (monthlyMax) => monthlyMax.reef)
   monthlyMax: MonthlyMax[];
 
-  temperatureThreshold: number | null;
-
   @Expose()
   get applied(): boolean {
     return !!this.reefApplication?.permitRequirements;
-  }
-
-  @AfterLoad()
-  setTemperatureThreshold() {
-    this.temperatureThreshold = this.maxMonthlyMean && this.maxMonthlyMean + 1;
   }
 }
