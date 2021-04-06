@@ -19,6 +19,7 @@ export class CreateReefDto {
   @IsLongitude()
   readonly longitude: number;
 
+  @IsOptional()
   @IsInt()
   readonly depth: number;
 }

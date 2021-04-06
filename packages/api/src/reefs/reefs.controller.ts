@@ -57,8 +57,12 @@ export class ReefsController {
 
   @Public()
   @Get(':id/daily_data')
-  findDailyData(@Param('id') id: number) {
-    return this.reefsService.findDailyData(id);
+  findDailyData(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('start') start?: string,
+    @Query('end') end?: string,
+  ) {
+    return this.reefsService.findDailyData(id, start, end);
   }
 
   @Public()

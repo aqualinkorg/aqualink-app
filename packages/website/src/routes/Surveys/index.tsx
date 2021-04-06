@@ -31,7 +31,7 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
   const surveyId = match.params.sid;
 
   useEffect(() => {
-    if (!reefDetails) {
+    if (!reefDetails || `${reefDetails.id}` !== reefId) {
       dispatch(reefRequest(reefId));
     }
   }, [dispatch, reefId, reefDetails]);

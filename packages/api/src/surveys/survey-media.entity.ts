@@ -17,6 +17,7 @@ export enum Observations {
   Mortality = 'mortality',
   Environmental = 'environmental',
   Anthropogenic = 'anthropogenic',
+  NoData = 'no-data',
 }
 
 export enum MediaType {

@@ -5,6 +5,7 @@ import Reef from "./Reef";
 import ReefApplication from "./ReefApplication";
 import ReefsList from "./ReefsList";
 import Surveys from "../Surveys";
+import SurveyPoint from "./SurveyPoint";
 
 const ReefRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const ReefRoutes = () => {
       <Route exact path="/reefs" component={ReefsList} />
       <Route exact path="/reefs/:id" component={Reef} />
       <Route exact path="/reefs/:id/apply" component={ReefApplication} />
+      <Route exact path="/reefs/:id/points/:pointId" component={SurveyPoint} />
       <Route
         exact
         path="/reefs/:id/new_survey"

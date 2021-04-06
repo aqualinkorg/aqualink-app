@@ -23,7 +23,7 @@ const Dialog = ({
   classes,
 }: DialogProps) => {
   return (
-    <MuiDialog onClose={onClose} open={open}>
+    <MuiDialog fullWidth onClose={onClose} open={open}>
       <DialogTitle className={classes.dialogTitle}>
         <Typography>{header}</Typography>
       </DialogTitle>

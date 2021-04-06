@@ -4,14 +4,24 @@ import React, {
   useEffect,
   useRef,
   useState,
+  memo,
 } from "react";
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { mergeWith } from "lodash";
-import type { DailyData, SpotterData } from "../../store/Reefs/types";
+import { mergeWith, isEqual } from "lodash";
+import type {
+  DailyData,
+  MonthlyMaxData,
+  SofarValue,
+  TimeSeries,
+} from "../../store/Reefs/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
-import { createChartData, useProcessedChartData } from "./utils";
+import {
+  createChartData,
+  useProcessedChartData,
+  augmentSurfaceTemperature,
+} from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Reefs/types";
@@ -20,7 +30,9 @@ import { convertToLocalTime } from "../../helpers/dates";
 export interface ChartProps {
   reefId: number;
   dailyData: DailyData[];
-  spotterData?: SpotterData | null;
+  spotterData?: TimeSeries;
+  hoboBottomTemperatureData?: SofarValue[];
+  monthlyMaxData?: MonthlyMaxData[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -29,13 +41,14 @@ export interface ChartProps {
   temperatureThreshold: number | null;
   maxMonthlyMean: number | null;
   background?: boolean;
+  showYearInTicks?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
 }
 
 const SMALL_WINDOW = 400;
-const X_TICK_THRESHOLD = 70;
+const X_TICK_THRESHOLD = 90;
 
 const makeAnnotation = (
   name: string,
@@ -61,9 +74,27 @@ const makeAnnotation = (
   },
 });
 
+const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
+  isEqual(prevProps.dailyData, nextProps.dailyData) &&
+  isEqual(prevProps.maxMonthlyMean, nextProps.maxMonthlyMean) &&
+  isEqual(
+    prevProps.hoboBottomTemperatureData,
+    nextProps.hoboBottomTemperatureData
+  ) &&
+  isEqual(
+    prevProps.spotterData?.bottomTemperature,
+    nextProps.spotterData?.bottomTemperature
+  ) &&
+  isEqual(
+    prevProps.spotterData?.surfaceTemperature,
+    nextProps.spotterData?.surfaceTemperature
+  );
+
 function Chart({
   dailyData,
   spotterData,
+  hoboBottomTemperatureData,
+  monthlyMaxData,
   surveys,
   timeZone,
   startDate,
@@ -72,6 +103,7 @@ function Chart({
   temperatureThreshold,
   maxMonthlyMean,
   background,
+  showYearInTicks,
   chartSettings = {},
   chartRef: forwardRef,
 }: ChartProps) {
@@ -101,9 +133,13 @@ function Chart({
     bottomTemperatureData,
     spotterBottom,
     spotterSurface,
+    hoboBottom,
+    monthlyMaxTemp,
   } = useProcessedChartData(
     dailyData,
     spotterData,
+    hoboBottomTemperatureData,
+    monthlyMaxData,
     surveys,
     temperatureThreshold,
     startDate,
@@ -192,15 +228,15 @@ function Chart({
             type: "time",
             time: {
               displayFormats: {
-                week: "MMM D",
-                month: "MMM",
+                week: `MMM D ${showYearInTicks ? "YY" : ""}`,
+                month: `MMM ${showYearInTicks ? "YY" : ""}`,
               },
               unit: chartPeriod || xPeriod,
             },
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: xAxisMin,
+              min: startDate || xAxisMin,
               max: endDate || xAxisMax,
               padding: 10,
               callback: (value: number, index: number, values: string[]) =>
@@ -249,14 +285,15 @@ function Chart({
       data={createChartData(
         spotterBottom,
         spotterSurface,
+        hoboBottom,
         tempWithSurvey,
-        // Extend surface temperature line to the chart extremities.
-        [
-          { x: xAxisMin, y: surfaceTemperatureData[0]?.y },
-          ...surfaceTemperatureData,
-          { x: xAxisMax, y: surfaceTemperatureData.slice(-1)[0]?.y },
-        ],
+        augmentSurfaceTemperature(
+          surfaceTemperatureData,
+          startDate || xAxisMin,
+          endDate || xAxisMax
+        ),
         bottomTemperatureData,
+        monthlyMaxTemp,
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
           : null,
@@ -266,4 +303,4 @@ function Chart({
   );
 }
 
-export default Chart;
+export default memo(Chart, returnMemoized);
