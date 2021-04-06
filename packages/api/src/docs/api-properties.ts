@@ -1,10 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import {
-  ApiNotFoundResponse,
-  ApiProperty,
-  ApiPropertyOptions,
-} from '@nestjs/swagger';
-import { ErrorResponse } from './error.dto';
+import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
 export const ApiPointProperty = () => {
   const schema: ApiPropertyOptions = {
@@ -25,13 +20,4 @@ export const ApiPointProperty = () => {
   };
 
   return applyDecorators(ApiProperty(schema));
-};
-
-export const CustomApiNotFoundResponse = (description: string) => {
-  return applyDecorators(
-    ApiNotFoundResponse({
-      type: ErrorResponse,
-      description,
-    }),
-  );
 };

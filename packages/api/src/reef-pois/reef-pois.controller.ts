@@ -18,7 +18,7 @@ import { UpdateReefPoiDto } from './dto/update-reef-poi.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-properties';
+import { CustomApiNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Reef Points of Interest')
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)

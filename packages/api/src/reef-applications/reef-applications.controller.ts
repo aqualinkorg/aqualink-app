@@ -28,7 +28,7 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { AdminLevel } from '../users/users.entity';
-import { CustomApiNotFoundResponse } from '../docs/api-properties';
+import { CustomApiNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('ReefApplications')
 @Auth()

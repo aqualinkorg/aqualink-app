@@ -18,7 +18,7 @@ import { AuthRequest } from '../auth/auth.types';
 import { Reef } from '../reefs/reefs.entity';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-properties';
+import { CustomApiNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Users')
 @Auth()

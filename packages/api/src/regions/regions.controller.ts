@@ -18,7 +18,7 @@ import { UpdateRegionDto } from './dto/update-region.dto';
 import { Auth } from '../auth/auth.decorator';
 import { AdminLevel } from '../users/users.entity';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-properties';
+import { CustomApiNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Regions')
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
