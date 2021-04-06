@@ -40,10 +40,6 @@ export class UpdateReefDto {
 
   @IsOptional()
   @IsInt()
-  readonly temperatureThreshold?: number;
-
-  @IsOptional()
-  @IsInt()
   readonly depth?: number;
 
   @IsOptional()
