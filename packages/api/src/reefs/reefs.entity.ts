@@ -48,9 +48,6 @@ export class Reef {
   @Index({ spatial: true })
   polygon: GeoJSON;
 
-  @Column('float', { nullable: true })
-  temperatureThreshold: number;
-
   @Column({ nullable: true })
   depth: number;
 
