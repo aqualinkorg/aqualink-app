@@ -76,7 +76,6 @@ exports.scheduledDailyUpdate = functions
     });
     try {
       await runDailyUpdate(conn);
-      // eslint-disable-next-line no-console
       console.log(`Daily update on ${new Date()}`);
     } finally {
       conn.close();
@@ -87,7 +86,6 @@ exports.pingService = functions.pubsub
   .schedule('*/5 * * * *')
   .onRun(async () => {
     const backendBaseUrl = functions.config().api.base_url;
-    // eslint-disable-next-line no-console
     console.log('Pinging server');
     await Axios.get(`${backendBaseUrl}/health-check`);
   });
@@ -110,7 +108,6 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     });
     try {
       await runSpotterTimeSeriesUpdate(conn);
-      // eslint-disable-next-line no-console
       console.log(`Spotter data hourly update on ${new Date()}`);
     } finally {
       conn.close();
