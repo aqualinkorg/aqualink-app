@@ -7,7 +7,6 @@ import type { RootState } from "../configure";
 const homepageInitialState: HomePageState = {
   reefOnMap: null,
   withSpotterOnly: false,
-  mapInitialReef: null,
 };
 
 const homepageSlice = createSlice({
@@ -33,14 +32,6 @@ const homepageSlice = createSlice({
       ...state,
       reefOnMap: null,
     }),
-    setMapInitialReef: (state, action: PayloadAction<Reef>) => ({
-      ...state,
-      mapInitialReef: action.payload,
-    }),
-    unsetMapInitialReef: (state) => ({
-      ...state,
-      mapInitialReef: null,
-    }),
   },
 });
 
@@ -56,17 +47,11 @@ export const withSpotterOnlySelector = (
   state: RootState
 ): HomePageState["withSpotterOnly"] => state.homepage.withSpotterOnly;
 
-export const mapInitialReefSelector = (
-  state: RootState
-): HomePageState["mapInitialReef"] => state.homepage.mapInitialReef;
-
 export const {
   setSearchResult,
   setReefOnMap,
   unsetReefOnMap,
   setWithSpotterOnly,
-  setMapInitialReef,
-  unsetMapInitialReef,
 } = homepageSlice.actions;
 
 export default homepageSlice.reducer;

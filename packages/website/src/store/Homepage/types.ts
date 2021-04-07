@@ -12,7 +12,6 @@ export interface HomePageState {
   reefOnMap: Reef | null;
   searchResult?: MapboxGeolocationData;
   withSpotterOnly: boolean;
-  mapInitialReef: Reef | null;
 }
 
 export interface TableRow {

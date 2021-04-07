@@ -22,7 +22,7 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { findMaxAlertReefPosition } from "../../../helpers/reefUtils";
+import { findInitialReefPosition } from "../../../helpers/reefUtils";
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
 const INITIAL_ZOOM = 5;
@@ -41,7 +41,11 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
-const HomepageMap = ({ zoomLevel, classes }: HomepageMapProps) => {
+const HomepageMap = ({
+  initialZoom,
+  initialReefId,
+  classes,
+}: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
@@ -55,7 +59,7 @@ const HomepageMap = ({ zoomLevel, classes }: HomepageMapProps) => {
   const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
-  const zoom = zoomLevel > 0 ? zoomLevel : INITIAL_ZOOM;
+  const zoom = initialZoom > 0 ? initialZoom : INITIAL_ZOOM;
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -117,7 +121,7 @@ const HomepageMap = ({ zoomLevel, classes }: HomepageMapProps) => {
       preferCanvas
       maxBoundsViscosity={1.0}
       className={classes.map}
-      center={findMaxAlertReefPosition(reefs) || INITIAL_CENTER}
+      center={findInitialReefPosition(reefs, initialReefId) || INITIAL_CENTER}
       zoom={zoom}
       minZoom={2}
       worldCopyJump
@@ -188,6 +192,11 @@ const styles = () =>
     },
   });
 
-type HomepageMapProps = WithStyles<typeof styles> & { zoomLevel: number };
+interface HomepageMapIncomingProps {
+  initialZoom: number;
+  initialReefId: string;
+}
+
+type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 
 export default withStyles(styles)(HomepageMap);

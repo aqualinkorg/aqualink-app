@@ -17,18 +17,14 @@ import {
   reefsListSelector,
 } from "../../store/Reefs/reefsListSlice";
 import { reefRequest } from "../../store/Reefs/selectedReefSlice";
-import {
-  reefOnMapSelector,
-  setReefOnMap,
-  setMapInitialReef,
-} from "../../store/Homepage/homepageSlice";
+import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
-import { Reef } from "../../store/Reefs/types";
+import { findReefById } from "../../helpers/reefUtils";
 
 enum QueryParamKeys {
-  reefId = "reef_id",
-  zoomLevel = "zoom",
+  REEF_ID = "reef_id",
+  ZOOM_LEVEL = "zoom",
 }
 
 function useQuery() {
@@ -41,36 +37,28 @@ const Homepage = ({ classes }: HomepageProps) => {
   const reefsList = useSelector(reefsListSelector) || [];
 
   const urlParams: URLSearchParams = useQuery();
-  const zoomLevelParam = urlParams.get(QueryParamKeys.zoomLevel);
-  const mapZoomLevel: number = zoomLevelParam ? +zoomLevelParam : 0;
+  const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
+  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : 0;
 
-  const queryParamReefId = urlParams.get(QueryParamKeys.reefId) || "";
+  const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
-  const queryParamReef = reefsList.find((reef: Reef) => {
-    return reef.id.toString() === queryParamReefId;
-  });
+  const initialReefId =
+    findReefById(reefsList, queryParamReefId)?.id.toString() || featuredReefId;
 
   useEffect(() => {
     dispatch(reefsRequest());
   }, [dispatch]);
 
   useEffect(() => {
-    if (queryParamReef) {
-      dispatch(setMapInitialReef(queryParamReef));
-      dispatch(setReefOnMap(queryParamReef));
-    }
-  }, [dispatch, queryParamReef, reefsList]);
-
-  useEffect(() => {
     if (!reefOnMap) {
-      dispatch(reefRequest(featuredReefId));
-      dispatch(surveysRequest(featuredReefId));
+      dispatch(reefRequest(initialReefId));
+      dispatch(surveysRequest(initialReefId));
     } else {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
-  }, [dispatch, featuredReefId, reefOnMap]);
+  }, [dispatch, initialReefId, reefOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -100,7 +88,10 @@ const Homepage = ({ classes }: HomepageProps) => {
       <div className={classes.root}>
         <Grid container>
           <Grid className={classes.map} item xs={12} sm={6}>
-            <HomepageMap zoomLevel={mapZoomLevel} />
+            <HomepageMap
+              initialZoom={initialZoom}
+              initialReefId={initialReefId}
+            />
           </Grid>
           <Hidden xsDown>
             <Grid className={classes.reefTable} item sm={6}>
