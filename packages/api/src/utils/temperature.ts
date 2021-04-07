@@ -53,7 +53,7 @@ export async function getMMM(long: number, lat: number) {
   return getValueFromTiff(tiff, long, lat);
 }
 
-export async function getMonthlyMaximums(long: number, lat: number) {
+export async function getMonthlyClimatology(long: number, lat: number) {
   const MonthlyMaxMapping = [
     'january',
     'february',

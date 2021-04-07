@@ -28,7 +28,7 @@ import {
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { getRegion, getTimezones } from './reef.utils';
-import { getMMM, getMonthlyMaximums } from './temperature';
+import { getMMM, getMonthlyClimatology } from './temperature';
 import { Region } from '../regions/regions.entity';
 import { MonthlyMax } from '../reefs/monthly-max.entity';
 import { createPoint } from './coordinates';
@@ -280,7 +280,7 @@ const createReefs = async (
       const [longitude, latitude] = point.coordinates;
 
       return Promise.all([
-        getMonthlyMaximums(longitude, latitude),
+        getMonthlyClimatology(longitude, latitude),
         monthlyMaxRepository.findOne({ where: { reef } }),
       ]).then(([monthlyMaximums, found]) => {
         if (found || !monthlyMaximums) {

@@ -6,7 +6,7 @@ import geoTz from 'geo-tz';
 import { Reef } from '../src/reefs/reefs.entity';
 import { MonthlyMax } from '../src/reefs/monthly-max.entity';
 import { Region } from '../src/regions/regions.entity';
-import { getMMM, getMonthlyMaximums } from '../src/utils/temperature';
+import { getMMM, getMonthlyClimatology } from '../src/utils/temperature';
 import { getGoogleRegion } from '../src/utils/reef.utils';
 import { createPoint } from '../src/utils/coordinates';
 
@@ -76,7 +76,7 @@ async function augmentReefs(connection: Connection) {
       await reefRepository.update(reef.id, augmentedData);
       // Add monthlyMaximums
       const [longitude, latitude] = (reef.polygon as Point).coordinates;
-      const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+      const monthlyMaximums = await getMonthlyClimatology(longitude, latitude);
       await Promise.all(
         monthlyMaximums.map(async ({ month, temperature }) => {
           try {
