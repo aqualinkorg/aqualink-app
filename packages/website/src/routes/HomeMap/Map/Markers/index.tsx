@@ -23,6 +23,7 @@ import {
 } from "../../../../helpers/bleachingAlertIntervals";
 import { spotter } from "../../../../assets/spotter";
 import { spotterSelected } from "../../../../assets/spotterSelected";
+import { spotterAnimation } from "../../../../assets/spotterAnimation";
 import { hobo } from "../../../../assets/hobo";
 import { hoboSelected } from "../../../../assets/hoboSelected";
 
@@ -35,18 +36,23 @@ const buoyIcon = (iconUrl: string) =>
   });
 
 const sensorIcon = (isSpotter: boolean, selected: boolean, color: string) => {
+  const iconWidth = isSpotter ? 24 : 30;
+  const iconHeight = isSpotter ? 24 : 30;
   return L.divIcon({
-    iconSize: [24, 27],
-    iconAnchor: [12, 0],
+    iconSize: [iconWidth, iconHeight],
+    iconAnchor: [iconWidth / 2, 0],
     html: isSpotter
       ? `
-        <div class="homepage-map-spotter-icon-blinking" style="color: ${color};">
-          ${selected ? spotterSelected() : spotter()}
+        <div class="homepage-map-spotter-icon-blinking">
+          ${spotterAnimation(color)}
+        </div>
+        <div class="homepage-map-spotter-icon-steady">
+          ${selected ? spotterSelected(color) : spotter(color)}
         </div>`
-      : `<div style="color: ${color};">
-          ${selected ? hoboSelected() : hobo()}
+      : `<div class="homepage-map-hobo-icon">
+          ${selected ? hoboSelected(color) : hobo(color)}
         </div>`,
-    className: "homepage-map-spotter-icon-wrap",
+    className: "homepage-map-spotter-icon-wrapper",
   });
 };
 
