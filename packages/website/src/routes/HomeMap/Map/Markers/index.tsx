@@ -57,7 +57,6 @@ export const ReefMarkers = () => {
   const setCenter = useCallback(
     (inputMap: L.Map, latLng: [number, number], zoom: number) => {
       const newZoom = Math.max(inputMap.getZoom() || 6, zoom);
-      console.log(newZoom);
       return inputMap.flyTo(latLng, newZoom, { duration: 2 });
     },
     []
