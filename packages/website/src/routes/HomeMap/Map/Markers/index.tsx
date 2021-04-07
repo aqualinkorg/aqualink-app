@@ -36,8 +36,8 @@ const buoyIcon = (iconUrl: string) =>
   });
 
 const sensorIcon = (isSpotter: boolean, selected: boolean, color: string) => {
-  const iconWidth = isSpotter ? 24 : 30;
-  const iconHeight = isSpotter ? 24 : 30;
+  const iconWidth = isSpotter ? 20 : 25;
+  const iconHeight = isSpotter ? 20 : 25;
   return L.divIcon({
     iconSize: [iconWidth, iconHeight],
     iconAnchor: [iconWidth / 2, 0],
