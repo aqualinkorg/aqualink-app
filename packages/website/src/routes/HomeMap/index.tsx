@@ -43,8 +43,10 @@ const Homepage = ({ classes }: HomepageProps) => {
   const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
 
-  const initialReefId =
-    findReefById(reefsList, queryParamReefId)?.id.toString() || featuredReefId;
+  const initialReefId = findReefById(
+    reefsList,
+    queryParamReefId
+  )?.id.toString();
 
   useEffect(() => {
     dispatch(reefsRequest());
@@ -52,13 +54,13 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   useEffect(() => {
     if (!reefOnMap) {
-      dispatch(reefRequest(initialReefId));
-      dispatch(surveysRequest(initialReefId));
+      dispatch(reefRequest(initialReefId || featuredReefId));
+      dispatch(surveysRequest(initialReefId || featuredReefId));
     } else {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
-  }, [dispatch, initialReefId, reefOnMap]);
+  }, [dispatch, initialReefId, featuredReefId, reefOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -90,7 +92,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           <Grid className={classes.map} item xs={12} sm={6}>
             <HomepageMap
               initialZoom={initialZoom}
-              initialReefId={queryParamReefId && initialReefId}
+              initialReefId={initialReefId}
             />
           </Grid>
           <Hidden xsDown>

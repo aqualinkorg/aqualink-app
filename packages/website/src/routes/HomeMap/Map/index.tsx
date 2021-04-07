@@ -194,8 +194,12 @@ const styles = () =>
 
 interface HomepageMapIncomingProps {
   initialZoom: number;
-  initialReefId: string;
+  initialReefId?: string;
 }
+
+HomepageMap.defaultProps = {
+  initialReefId: "",
+};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 
