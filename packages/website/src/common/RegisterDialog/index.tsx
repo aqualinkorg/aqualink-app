@@ -1,9 +1,4 @@
-import React, {
-  BaseSyntheticEvent,
-  useCallback,
-  useState,
-  useEffect,
-} from "react";
+import React, { BaseSyntheticEvent, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 import {
@@ -22,6 +17,7 @@ import {
   Checkbox,
   LinearProgress,
   Collapse,
+  Box,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import CloseIcon from "@material-ui/icons/Close";
@@ -33,9 +29,11 @@ import {
   userInfoSelector,
   userLoadingSelector,
   userErrorSelector,
+  clearError,
 } from "../../store/User/userSlice";
 import { UserRegisterParams } from "../../store/User/types";
 import dialogStyles from "../styles/dialogStyles";
+import { RegisterFormFields } from "../types";
 
 const RegisterDialog = ({
   open,
@@ -50,28 +48,29 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit, getValues, setValue } = useForm({
+  const { register, errors, handleSubmit, getValues, setValue } = useForm<
+    RegisterFormFields
+  >({
     reValidateMode: "onSubmit",
   });
 
-  const onSubmit = useCallback(
-    (
-      data: any,
-      event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
-    ) => {
-      if (event) {
-        event.preventDefault();
-      }
-      const registerInfo: UserRegisterParams = {
-        fullName: `${data.firstName} ${data.lastName}`,
-        organization: data.organization,
-        email: data.emailAddress.toLowerCase(),
-        password: data.password,
-      };
-      dispatch(createUser(registerInfo));
-    },
-    [dispatch]
-  );
+  const onSubmit = (
+    data: RegisterFormFields,
+    event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
+  ) => {
+    if (event) {
+      event.preventDefault();
+    }
+    const registerInfo: UserRegisterParams = {
+      fullName: `${data.firstName} ${data.lastName}`,
+      organization: data.organization,
+      email: data.emailAddress,
+      password: data.password,
+    };
+    dispatch(createUser(registerInfo));
+  };
+
+  const clearUserError = () => dispatch(clearError());
 
   useEffect(() => {
     if (user) {
@@ -83,20 +82,22 @@ const RegisterDialog = ({
   }, [user, handleRegisterOpen, error]);
 
   return (
-    <Dialog scroll="body" open={open} maxWidth="md">
+    <Dialog
+      onEnter={() => {
+        clearUserError();
+        setReadTerms(false);
+      }}
+      scroll="body"
+      open={open}
+      maxWidth="xs"
+    >
       <Card>
         <CardHeader
           className={classes.dialogHeader}
           title={
-            <Grid container justify="center" item xs={12}>
-              <Grid
-                container
-                alignItems="center"
-                justify="space-around"
-                item
-                xs={12}
-              >
-                <Grid container item xs={6}>
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item>
+                <Grid container>
                   <Typography variant="h4">Aqua</Typography>
                   <Typography
                     className={classes.dialogHeaderSecondPart}
@@ -105,15 +106,17 @@ const RegisterDialog = ({
                     link
                   </Typography>
                 </Grid>
-                <Grid container justify="flex-end" item xs={1}>
-                  <IconButton
-                    className={classes.closeButton}
-                    size="small"
-                    onClick={() => handleRegisterOpen(false)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </Grid>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  className={classes.closeButton}
+                  size="small"
+                  onClick={() => {
+                    handleRegisterOpen(false);
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
               </Grid>
             </Grid>
           }
@@ -140,7 +143,7 @@ const RegisterDialog = ({
             </Alert>
           </Collapse>
         )}
-        <CardContent className={classes.contentWrapper}>
+        <CardContent>
           <Grid container justify="center" item xs={12}>
             <Grid className={classes.dialogContentTitle} container item xs={10}>
               <Grid item>
@@ -253,7 +256,13 @@ const RegisterDialog = ({
                     variant="outlined"
                   />
                 </Grid>
-                <Grid container justify="space-around" item xs={11}>
+                <Grid
+                  container
+                  justify="space-between"
+                  alignItems="center"
+                  item
+                  xs={12}
+                >
                   <Grid item xs={1}>
                     <Checkbox
                       className={classes.termsCheckbox}
@@ -262,17 +271,19 @@ const RegisterDialog = ({
                       color="primary"
                     />
                   </Grid>
-                  <Grid item xs={10}>
-                    <Typography
-                      className={classes.formText}
-                      variant="subtitle1"
-                      color="textSecondary"
-                    >
-                      I have read the{" "}
-                      <Link className={classes.termsLink} to="/terms">
-                        Terms and Conditions
-                      </Link>
-                    </Typography>
+                  <Grid item xs={10} sm={11}>
+                    <Box>
+                      <Typography
+                        className={classes.formText}
+                        variant="subtitle1"
+                        color="textSecondary"
+                      >
+                        I have read the{" "}
+                        <Link className={classes.termsLink} to="/terms">
+                          Terms and Conditions
+                        </Link>
+                      </Typography>
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid className={classes.button} item xs={12}>
@@ -317,9 +328,6 @@ const RegisterDialog = ({
 const styles = () =>
   createStyles({
     ...dialogStyles,
-    contentWrapper: {
-      padding: 0,
-    },
     termsCheckbox: {
       padding: 0,
       margin: "0 0 1rem 0",
