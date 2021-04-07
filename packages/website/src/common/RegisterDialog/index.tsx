@@ -32,6 +32,7 @@ import {
 } from "../../store/User/userSlice";
 import { UserRegisterParams } from "../../store/User/types";
 import dialogStyles from "../styles/dialogStyles";
+import { RegisterFormFields } from "../types";
 
 const RegisterDialog = ({
   open,
@@ -46,12 +47,12 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit } = useForm<RegisterFormFields>({
     reValidateMode: "onSubmit",
   });
 
   const onSubmit = (
-    data: any,
+    data: RegisterFormFields,
     event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
   ) => {
     if (event) {

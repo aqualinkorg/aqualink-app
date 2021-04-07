@@ -30,6 +30,7 @@ import {
 } from "../../store/User/userSlice";
 import { UserSignInParams } from "../../store/User/types";
 import dialogStyles from "../styles/dialogStyles";
+import { SignInFormFields } from "../types";
 
 const SignInDialog = ({
   open,
@@ -43,7 +44,7 @@ const SignInDialog = ({
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit } = useForm<SignInFormFields>({
     reValidateMode: "onSubmit",
   });
 
@@ -57,7 +58,7 @@ const SignInDialog = ({
   }, [user, handleSignInOpen, error]);
 
   const onSubmit = (
-    data: any,
+    data: SignInFormFields,
     event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
   ) => {
     if (event) {
@@ -71,20 +72,27 @@ const SignInDialog = ({
   };
 
   const onResetPassword = (
-    data: any,
+    { emailAddress }: SignInFormFields,
     event?: BaseSyntheticEvent<object, HTMLElement, HTMLElement>
   ) => {
     if (event) {
       event.preventDefault();
     }
-    dispatch(resetPassword({ email: data.emailAddress }));
-    setPasswordResetEmail(data.emailAddress);
+    dispatch(resetPassword({ email: emailAddress }));
+    setPasswordResetEmail(emailAddress);
   };
 
   const clearUserError = () => dispatch(clearError());
 
   return (
-    <Dialog onEnter={clearUserError} open={open} maxWidth="xs">
+    <Dialog
+      onEnter={() => {
+        clearUserError();
+        setPasswordResetEmail("");
+      }}
+      open={open}
+      maxWidth="xs"
+    >
       <Card elevation={0}>
         <CardHeader
           className={classes.dialogHeader}
