@@ -27,26 +27,34 @@ enum QueryParamKeys {
   ZOOM_LEVEL = "zoom",
 }
 
+interface MapQueryParams {
+  initialZoom: number;
+  initialReefId: string | undefined;
+}
+
 function useQuery() {
-  return new URLSearchParams(useLocation().search);
+  const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
+  const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
+  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : 0;
+  const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
+  const reefsList = useSelector(reefsListSelector) || [];
+  const initialReefId = findReefById(
+    reefsList,
+    queryParamReefId
+  )?.id.toString();
+
+  return {
+    initialZoom,
+    initialReefId,
+  };
 }
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const reefOnMap = useSelector(reefOnMapSelector);
-  const reefsList = useSelector(reefsListSelector) || [];
 
-  const urlParams: URLSearchParams = useQuery();
-  const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
-  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : 0;
-
-  const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
+  const { initialZoom, initialReefId }: MapQueryParams = useQuery();
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
-
-  const initialReefId = findReefById(
-    reefsList,
-    queryParamReefId
-  )?.id.toString();
 
   useEffect(() => {
     dispatch(reefsRequest());
