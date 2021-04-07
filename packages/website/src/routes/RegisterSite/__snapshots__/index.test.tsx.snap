@@ -298,7 +298,7 @@ exports[`Site registration page should render with given state from Redux store 
     </mock-toolbar>
   </mock-appbar>
   <mock-dialog
-    maxwidth="md"
+    maxwidth="xs"
     open="false"
     scroll="body"
   >
@@ -316,13 +316,13 @@ exports[`Site registration page should render with given state from Redux store 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+                  class="MuiGrid-root MuiGrid-container"
                 >
                   <mock-typography
                     variant="h4"
@@ -336,33 +336,31 @@ exports[`Site registration page should render with given state from Redux store 
                     link
                   </mock-typography>
                 </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-iconbutton
+                  classname="RegisterDialog-closeButton-8"
+                  size="small"
                 >
-                  <mock-iconbutton
-                    classname="RegisterDialog-closeButton-8"
-                    size="small"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </mock-iconbutton>
-                </div>
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </mock-iconbutton>
               </div>
             </div>
           </mock-typography>
         </div>
       </div>
-      <mock-cardcontent
-        classname="RegisterDialog-contentWrapper-17"
-      >
+      <mock-cardcontent>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
@@ -463,34 +461,36 @@ exports[`Site registration page should render with given state from Redux store 
                 />
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-around MuiGrid-grid-xs-11"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1"
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-18"
+                    classname="RegisterDialog-termsCheckbox-17"
                     color="primary"
                   />
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 MuiGrid-grid-sm-11"
                 >
-                  <mock-typography
-                    classname="RegisterDialog-formText-15"
-                    color="textSecondary"
-                    variant="subtitle1"
-                  >
-                    I have read the
-                     
-                    <a
-                      class="RegisterDialog-termsLink-19"
-                      href="/terms"
+                  <mock-box>
+                    <mock-typography
+                      classname="RegisterDialog-formText-15"
+                      color="textSecondary"
+                      variant="subtitle1"
                     >
-                      Terms and Conditions
-                    </a>
-                  </mock-typography>
+                      I have read the
+                       
+                      <a
+                        class="RegisterDialog-termsLink-18"
+                        href="/terms"
+                      >
+                        Terms and Conditions
+                      </a>
+                    </mock-typography>
+                  </mock-box>
                 </div>
               </div>
               <div
@@ -531,12 +531,14 @@ exports[`Site registration page should render with given state from Redux store 
     </mock-card>
   </mock-dialog>
   <mock-dialog
-    maxwidth="md"
+    maxwidth="xs"
     open="false"
   >
-    <mock-card>
+    <mock-card
+      elevation="0"
+    >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-21"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-20"
       >
         <div
           class="MuiCardHeader-content"
@@ -548,13 +550,13 @@ exports[`Site registration page should render with given state from Redux store 
             variant="h5"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+              class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-around MuiGrid-grid-xs-12"
+                class="MuiGrid-root MuiGrid-item"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-6"
+                  class="MuiGrid-root MuiGrid-container"
                 >
                   <mock-typography
                     variant="h4"
@@ -562,31 +564,31 @@ exports[`Site registration page should render with given state from Redux store 
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-22"
+                    classname="SignInDialog-dialogHeaderSecondPart-21"
                     variant="h4"
                   >
                     link
                   </mock-typography>
                 </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-1"
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <mock-iconbutton
+                  classname="SignInDialog-closeButton-19"
+                  size="small"
                 >
-                  <mock-iconbutton
-                    classname="SignInDialog-closeButton-20"
-                    size="small"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </mock-iconbutton>
-                </div>
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                </mock-iconbutton>
               </div>
             </div>
           </mock-typography>
@@ -654,7 +656,7 @@ exports[`Site registration page should render with given state from Redux store 
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-23 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-22 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -671,17 +673,11 @@ exports[`Site registration page should render with given state from Redux store 
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-24"
+              class="SignInDialog-form-23"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-25 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-24 MuiGrid-item MuiGrid-grid-xs-12"
               >
-                <mock-typography
-                  classname="SignInDialog-formText-27"
-                  variant="subtitle2"
-                >
-                  or login with email address
-                </mock-typography>
                 <mock-textfield
                   error="false"
                   fullwidth="true"
@@ -695,7 +691,7 @@ exports[`Site registration page should render with given state from Redux store 
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-25 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-24 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -714,7 +710,7 @@ exports[`Site registration page should render with given state from Redux store 
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-29"
+                  classname="SignInDialog-forgotPasswordButton-28"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -725,7 +721,7 @@ exports[`Site registration page should render with given state from Redux store 
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-28 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-27 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -741,7 +737,7 @@ exports[`Site registration page should render with given state from Redux store 
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-27"
+                  classname="SignInDialog-formText-26"
                   color="textSecondary"
                   variant="subtitle1"
                 >
