@@ -1,7 +1,7 @@
 import {
   calculateDegreeHeatingDays,
   getMMM,
-  getMonthlyClimatology,
+  getHistoricalMonthlyMeans,
 } from './temperature';
 
 // Mock functions
@@ -40,7 +40,7 @@ test('Get MMM as expected.', async () => {
 
 test('Get MonthlyMaximums as expected.', async () => {
   jest.setTimeout(60000);
-  await getMonthlyClimatology(0, 0).then((data) =>
+  await getHistoricalMonthlyMeans(0, 0).then((data) =>
     expect(data).toEqual([
       { month: 1, temperature: 27.65 },
       { month: 2, temperature: 28.24 },

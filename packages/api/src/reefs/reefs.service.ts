@@ -27,7 +27,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
 } from '../utils/reef.utils';
-import { getMMM, getMonthlyClimatology } from '../utils/temperature';
+import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
@@ -74,7 +74,10 @@ export class ReefsService {
     const { name, latitude, longitude, depth } = reefParams;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
-    const monthlyMaximums = await getMonthlyClimatology(longitude, latitude);
+    const monthlyMaximums = await getHistoricalMonthlyMeans(
+      longitude,
+      latitude,
+    );
 
     const timezones = getTimezones(latitude, longitude) as string[];
 
