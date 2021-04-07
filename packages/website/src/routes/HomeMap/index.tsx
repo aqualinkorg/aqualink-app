@@ -90,7 +90,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           <Grid className={classes.map} item xs={12} sm={6}>
             <HomepageMap
               initialZoom={initialZoom}
-              initialReefId={initialReefId}
+              initialReefId={queryParamReefId && initialReefId}
             />
           </Grid>
           <Hidden xsDown>
