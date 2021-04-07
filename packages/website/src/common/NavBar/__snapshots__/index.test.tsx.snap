@@ -17,7 +17,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-2"
         >
           <mock-box
             alignitems="center"
@@ -58,49 +58,8 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
             </mock-link>
           </mock-box>
         </div>
-        <mock-hidden
-          xsdown="true"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-evenly MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-4"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/map"
-              >
-                MAP
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/about"
-              >
-                ABOUT
-              </mock-button>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <mock-button
-                component="[object Object]"
-                style="color: white;"
-                to="/register"
-              >
-                REGISTER YOUR SITE
-              </mock-button>
-            </div>
-          </div>
-        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-3"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-box
             alignitems="center"
@@ -164,7 +123,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-4"
         >
           <mock-box
             alignitems="center"
@@ -206,7 +165,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
           </mock-box>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
         >
           <mock-box
             alignitems="center"

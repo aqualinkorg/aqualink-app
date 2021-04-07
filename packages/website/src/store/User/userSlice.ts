@@ -202,6 +202,7 @@ const userSlice = createSlice({
       }
       return state;
     },
+    clearError: (state) => ({ ...state, error: null }),
   },
   extraReducers: (builder) => {
     // User Create
@@ -230,6 +231,6 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
 
-export const { setToken } = userSlice.actions;
+export const { setToken, clearError } = userSlice.actions;
 
 export default userSlice.reducer;
