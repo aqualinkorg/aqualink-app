@@ -483,6 +483,37 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
   return "#ffffff";
 };
 
+const createGaps = (data: ChartPoint[], maxDaysGap: number): ChartPoint[] => {
+  const nPoints = data.length;
+  if (nPoints > 0) {
+    return data.reduce<ChartPoint[]>((acc, curr, currIndex) => {
+      // If current and next point differ more than maxDaysGap then
+      // insert a point in their middle with no value so that chartJS
+      // will notice the gap.
+      if (
+        currIndex !== 0 &&
+        currIndex !== nPoints - 1 &&
+        moment(data[currIndex + 1].x).diff(moment(curr.x), "days") > maxDaysGap
+      ) {
+        return [
+          ...acc,
+          curr,
+          {
+            y: undefined,
+            x: new Date(
+              (moment(data[currIndex + 1].x).valueOf() +
+                moment(curr.x).valueOf()) /
+                2
+            ).toISOString(),
+          },
+        ];
+      }
+      return [...acc, curr];
+    }, []);
+  }
+  return data;
+};
+
 export const createChartData = (
   spotterBottom: ChartPoint[],
   spotterSurface: ChartPoint[],
@@ -509,7 +540,7 @@ export const createChartData = (
       },
       {
         label: "SURFACE TEMP",
-        data: surfaceTemps,
+        data: createGaps(surfaceTemps, 2),
         fill: !displaySpotterData && hoboBottom.length === 0,
         borderColor: "#6bc1e1",
         borderWidth: 2,
@@ -556,7 +587,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER BOTTOM",
-        data: spotterBottom,
+        data: createGaps(spotterBottom, 1),
         fill: false,
         borderColor: "rgba(250, 141, 0)",
         borderWidth: 2,
@@ -567,7 +598,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: spotterSurface,
+        data: createGaps(spotterSurface, 1),
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,
