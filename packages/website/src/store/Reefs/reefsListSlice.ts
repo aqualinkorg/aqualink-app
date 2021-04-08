@@ -6,6 +6,7 @@ import { ReefsListState, ReefsRequestData } from "./types";
 
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
+import { hasDeployedSpotter } from "../../helpers/reefUtils";
 
 const reefsListInitialState: ReefsListState = {
   loading: false,
@@ -26,7 +27,7 @@ export const reefsRequest = createAsyncThunk<
     return {
       list: sortedData,
       reefsToDisplay: withSpotterOnly
-        ? sortedData.filter((item) => item.spotterId)
+        ? sortedData.filter((item) => hasDeployedSpotter(item))
         : sortedData,
     };
   } catch (err) {
@@ -42,9 +43,7 @@ const reefsListSlice = createSlice({
     filterReefsWithSpotter: (state, action: PayloadAction<boolean>) => ({
       ...state,
       reefsToDisplay: action.payload
-        ? state.list?.filter(
-            (item) => item.spotterId && item.status === "deployed"
-          )
+        ? state.list?.filter((item) => hasDeployedSpotter(item))
         : state.list,
     }),
   },
