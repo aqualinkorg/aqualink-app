@@ -25,6 +25,7 @@ const styles = {
   formText: {
     color: theme.palette.grey[500],
     fontWeight: 400,
+    marginBottom: "1rem",
   },
   button: {
     marginBottom: "0.5rem",
