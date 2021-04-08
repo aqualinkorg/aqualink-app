@@ -565,7 +565,7 @@ export const createChartData = (
         label: "TEMP AT DEPTH",
         data:
           CHART_BOTTOM_TEMP_ENABLED && !displaySpotterData
-            ? bottomTemps
+            ? createGaps(bottomTemps, 2)
             : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
@@ -576,7 +576,7 @@ export const createChartData = (
       },
       {
         label: "HOBO BOTTOM",
-        data: hoboBottom,
+        data: createGaps(hoboBottom, 1),
         fill: false,
         borderColor: "#f78c21",
         borderWidth: 2,
