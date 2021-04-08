@@ -12,6 +12,7 @@ export const mockReef: Reef = {
     coordinates: [0, 0],
     type: "Point",
   },
+  hasHobo: false,
   spotterId: null,
   maxMonthlyMean: 0,
   depth: 0,
