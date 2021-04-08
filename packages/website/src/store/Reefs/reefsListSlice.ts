@@ -26,7 +26,9 @@ export const reefsRequest = createAsyncThunk<
     return {
       list: sortedData,
       reefsToDisplay: withSpotterOnly
-        ? sortedData.filter((item) => item.spotterId)
+        ? sortedData.filter(
+            (item) => item.spotterId && item.status === "deployed"
+          )
         : sortedData,
     };
   } catch (err) {
