@@ -44,10 +44,12 @@ function useQuery() {
   const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
   const reefsList = useSelector(reefsListSelector) || [];
   const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
-  const initialReefId =
-    findReefById(reefsList, queryParamReefId)?.id.toString() ||
-    findReefById(reefsList, featuredReefId)?.id.toString() ||
-    "";
+  const initialReefId = queryParamReefId
+    ? findReefById(reefsList, queryParamReefId)?.id.toString() ||
+      findReefById(reefsList, featuredReefId)?.id.toString() ||
+      ""
+    : featuredReefId;
+
   // Focus on the reef provided in the queryParamReefId or the reef with highest alert level.
   const initialCenter =
     findInitialReefPosition(
