@@ -52,6 +52,7 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
     },
     {
       label: "SST ANOMALY",
+      tooltipTitle: "Difference between current SST and longterm average",
       value: `${
         sstAnomaly
           ? `${sstAnomaly > 0 ? "+" : ""}${formatNumber(sstAnomaly, 1)}`

@@ -101,6 +101,8 @@ export class Reef {
   @OneToMany(() => MonthlyMax, (monthlyMax) => monthlyMax.reef)
   monthlyMax: MonthlyMax[];
 
+  hasHobo: boolean;
+
   @Expose()
   get applied(): boolean {
     return !!this.reefApplication?.permitRequirements;
