@@ -48,9 +48,7 @@ const RegisterDialog = ({
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [readTerms, setReadTerms] = useState<boolean>(false);
 
-  const { register, errors, handleSubmit, getValues, setValue } = useForm<
-    RegisterFormFields
-  >({
+  const { register, errors, handleSubmit } = useForm<RegisterFormFields>({
     reValidateMode: "onSubmit",
   });
 
@@ -64,7 +62,7 @@ const RegisterDialog = ({
     const registerInfo: UserRegisterParams = {
       fullName: `${data.firstName} ${data.lastName}`,
       organization: data.organization,
-      email: data.emailAddress,
+      email: data.emailAddress.toLowerCase(),
       password: data.password,
     };
     dispatch(createUser(registerInfo));
@@ -217,12 +215,6 @@ const RegisterDialog = ({
                           ? "Invalid email address"
                           : errors.emailAddress.message)) ||
                       ""
-                    }
-                    onChange={() =>
-                      setValue(
-                        "emailAddress",
-                        getValues("emailAddress").toLowerCase()
-                      )
                     }
                     label="Email Address"
                     inputRef={register({

@@ -45,9 +45,7 @@ const SignInDialog = ({
   const error = useSelector(userErrorSelector);
   const [errorAlertOpen, setErrorAlertOpen] = useState<boolean>(false);
   const [passwordResetEmail, setPasswordResetEmail] = useState<string>("");
-  const { register, errors, handleSubmit, setValue, getValues } = useForm<
-    SignInFormFields
-  >({
+  const { register, errors, handleSubmit } = useForm<SignInFormFields>({
     reValidateMode: "onSubmit",
   });
 
@@ -68,7 +66,7 @@ const SignInDialog = ({
       event.preventDefault();
     }
     const registerInfo: UserSignInParams = {
-      email: data.emailAddress,
+      email: data.emailAddress.toLowerCase(),
       password: data.password,
     };
     dispatch(signInUser(registerInfo));
@@ -81,8 +79,8 @@ const SignInDialog = ({
     if (event) {
       event.preventDefault();
     }
-    dispatch(resetPassword({ email: emailAddress }));
-    setPasswordResetEmail(emailAddress);
+    dispatch(resetPassword({ email: emailAddress.toLowerCase() }));
+    setPasswordResetEmail(emailAddress.toLowerCase());
   };
 
   const clearUserError = () => dispatch(clearError());
@@ -193,12 +191,6 @@ const SignInDialog = ({
                       ""
                     }
                     label="Email Address"
-                    onChange={() =>
-                      setValue(
-                        "emailAddress",
-                        getValues("emailAddress").toLowerCase()
-                      )
-                    }
                     inputRef={register({
                       required: "This is a required field",
                       validate: (value) => isEmail(value),
