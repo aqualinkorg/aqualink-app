@@ -1,5 +1,6 @@
 import React, { BaseSyntheticEvent, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import isEmail from "validator/lib/isEmail";
 import {
   withStyles,
   WithStyles,
@@ -61,7 +62,7 @@ const RegisterDialog = ({
     const registerInfo: UserRegisterParams = {
       fullName: `${data.firstName} ${data.lastName}`,
       organization: data.organization,
-      email: data.emailAddress,
+      email: data.emailAddress.toLowerCase(),
       password: data.password,
     };
     dispatch(createUser(registerInfo));
@@ -209,15 +210,16 @@ const RegisterDialog = ({
                     name="emailAddress"
                     placeholder="Email Address"
                     helperText={
-                      errors.emailAddress ? errors.emailAddress.message : ""
+                      (errors.emailAddress &&
+                        (errors.emailAddress.type === "validate"
+                          ? "Invalid email address"
+                          : errors.emailAddress.message)) ||
+                      ""
                     }
                     label="Email Address"
                     inputRef={register({
                       required: "This is a required field",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid email address",
-                      },
+                      validate: (value) => isEmail(value),
                     })}
                     error={!!errors.emailAddress}
                     inputProps={{ className: classes.textField }}

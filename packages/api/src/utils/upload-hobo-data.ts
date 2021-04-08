@@ -611,7 +611,7 @@ export const uploadHoboData = async (
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
   const user = await repositories.userRepository.findOne({
-    where: { email },
+    where: { email: email.toLowerCase() },
     relations: ['administeredReefs'],
   });
 
