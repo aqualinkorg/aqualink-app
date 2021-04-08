@@ -1,8 +1,8 @@
 import { times } from 'lodash';
 import moment from 'moment';
-import netcdf4 from 'netcdf4';
 import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
+const netcdf4 = require('netcdf4');
 /**
  * Generate NOAA SST data for a year at a speciic location.
  * This script assumes that the necessary NETCDF data files are
