@@ -44,6 +44,7 @@ export class Reef {
     type: 'geometry',
     unique: true,
     srid: 4326,
+    nullable: false,
   })
   @Index({ spatial: true })
   polygon: GeoJSON;
@@ -57,6 +58,7 @@ export class Reef {
     type: 'enum',
     enum: ReefStatus,
     default: ReefStatus.InReview,
+    nullable: false,
   })
   status: ReefStatus;
 

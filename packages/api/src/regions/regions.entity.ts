@@ -17,7 +17,7 @@ export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @ApiPointProperty()
@@ -25,6 +25,7 @@ export class Region {
     type: 'geometry',
     unique: true,
     srid: 4326,
+    nullable: false,
   })
   @Index({ spatial: true })
   polygon: GeoJSON;

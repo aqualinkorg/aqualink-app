@@ -34,19 +34,19 @@ export class LatestData {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   timestamp: Date;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: false })
   value: number;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
   @RelationId((latestData: LatestData) => latestData.reef)
   reefId: number;
 
-  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
+  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
   poi: ReefPointOfInterest;
 
   @Column({ type: 'enum', enum: SourceType })

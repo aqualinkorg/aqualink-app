@@ -55,6 +55,7 @@ export class User {
     type: 'enum',
     enum: AdminLevel,
     default: AdminLevel.Default,
+    nullable: false,
   })
   adminLevel: AdminLevel;
 
