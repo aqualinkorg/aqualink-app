@@ -35,23 +35,31 @@ const buoyIcon = (iconUrl: string) =>
     popupAnchor: [0, -28],
   });
 
-const sensorIcon = (isSpotter: boolean, selected: boolean, color: string) => {
-  const iconWidth = isSpotter ? 20 : 25;
-  const iconHeight = isSpotter ? 20 : 25;
+const sensorIcon = (
+  sensor: "spotter" | "hobo",
+  selected: boolean,
+  color: string
+) => {
+  const iconWidth = sensor === "spotter" ? 20 : 25;
+  const iconHeight = sensor === "spotter" ? 20 : 25;
   return L.divIcon({
     iconSize: [iconWidth, iconHeight],
     iconAnchor: [iconWidth / 2, 0],
-    html: isSpotter
-      ? `
-        <div class="homepage-map-spotter-icon-blinking">
-          ${spotterAnimation(color)}
-        </div>
-        <div class="homepage-map-spotter-icon-steady">
-          ${selected ? spotterSelected(color) : spotter(color)}
-        </div>`
-      : `<div class="homepage-map-hobo-icon">
-          ${selected ? hoboSelected(color) : hobo(color)}
-        </div>`,
+    html:
+      sensor === "spotter"
+        ? `
+          <div class="homepage-map-spotter-icon-blinking">
+            ${spotterAnimation(color)}
+          </div>
+          <div class="homepage-map-spotter-icon-steady">
+            ${selected ? spotterSelected(color) : spotter(color)}
+          </div>
+        `
+        : `
+          <div class="homepage-map-hobo-icon">
+            ${selected ? hoboSelected(color) : hobo(color)}
+          </div>
+        `,
     className: "homepage-map-spotter-icon-wrapper",
   });
 };
@@ -65,13 +73,11 @@ const markerIcon = (
 ) => {
   switch (true) {
     case hasSpotter && hasHobo:
-      return sensorIcon(true, selected, color);
+      return sensorIcon("spotter", selected, color);
     case hasSpotter && !hasHobo:
-      return sensorIcon(true, selected, color);
+      return sensorIcon("spotter", selected, color);
     case !hasSpotter && hasHobo:
-      return sensorIcon(false, selected, color);
-    case !hasSpotter && !hasHobo:
-      return buoyIcon(iconUrl);
+      return sensorIcon("hobo", selected, color);
     default:
       return buoyIcon(iconUrl);
   }
