@@ -116,7 +116,7 @@ exports[`renders as expected 1`] = `
               SST ANOMALY
             </mock-typography>
             <mock-tooltip
-              title=""
+              title="Difference between current SST and longterm average"
             >
               <mock-typography
                 classname="Satellite-contentTextValues-5"
