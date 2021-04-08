@@ -11,6 +11,7 @@ import { ExclusionDates } from './exclusion-dates.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { User } from '../users/users.entity';
 import { MonthlyMax } from './monthly-max.entity';
+import { Sources } from './sources.entity';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MonthlyMax } from './monthly-max.entity';
       ExclusionDates,
       MonthlyMax,
       User,
+      Sources,
     ]),
   ],
   controllers: [ReefsController],
