@@ -38,7 +38,7 @@ test('Get MMM as expected.', async () => {
   await getMMM(-108.0, -53.1).then((data) => expect(data).toEqual(7.94));
 });
 
-test('Get MonthlyMaximums as expected.', async () => {
+test('Get HistoricalMonthlyMeans as expected.', async () => {
   jest.setTimeout(60000);
   await getHistoricalMonthlyMeans(0, 0).then((data) =>
     expect(data).toEqual([

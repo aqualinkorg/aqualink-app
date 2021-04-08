@@ -4,7 +4,7 @@ import { Connection, createConnection, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import geoTz from 'geo-tz';
 import { Reef } from '../src/reefs/reefs.entity';
-import { MonthlyMax } from '../src/reefs/monthly-max.entity';
+import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
 import { Region } from '../src/regions/regions.entity';
 import { getMMM, getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { getGoogleRegion } from '../src/utils/reef.utils';
@@ -64,7 +64,9 @@ async function getAugmentedData(
 async function augmentReefs(connection: Connection) {
   const reefRepository = connection.getRepository(Reef);
   const regionRepository = connection.getRepository(Region);
-  const monthlyMaxRepository = connection.getRepository(MonthlyMax);
+  const HistoricalMonthlyMeanRepository = connection.getRepository(
+    HistoricalMonthlyMean,
+  );
   const allReefs = await reefRepository.find();
 
   const start = new Date();
@@ -74,17 +76,21 @@ async function augmentReefs(connection: Connection) {
     async (reef) => {
       const augmentedData = await getAugmentedData(reef, regionRepository);
       await reefRepository.update(reef.id, augmentedData);
-      // Add monthlyMaximums
+      // Add HistoricalMonthlyMeanimums
       const [longitude, latitude] = (reef.polygon as Point).coordinates;
-      const monthlyMaximums = await getHistoricalMonthlyMeans(
+      const HistoricalMonthlyMeanimums = await getHistoricalMonthlyMeans(
         longitude,
         latitude,
       );
       await Promise.all(
-        monthlyMaximums.map(async ({ month, temperature }) => {
+        HistoricalMonthlyMeanimums.map(async ({ month, temperature }) => {
           try {
             await (temperature &&
-              monthlyMaxRepository.insert({ reef, month, temperature }));
+              HistoricalMonthlyMeanRepository.insert({
+                reef,
+                month,
+                temperature,
+              }));
           } catch {
             console.warn(
               `Monthly max values not imported for ${reef.id} - the data was likely there already.`,
@@ -101,7 +107,7 @@ async function augmentReefs(connection: Connection) {
     } seconds`,
   );
 
-  // TODO - Add MonthlyMax data for every reef.
+  // TODO - Add HistoricalMonthlyMean data for every reef.
 }
 
 async function run() {

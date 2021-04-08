@@ -10,7 +10,7 @@ import { Reef } from './reefs.entity';
 
 @Entity()
 @Unique('UQ_MONTHS', ['reef', 'month'])
-export class MonthlyMax {
+export class HistoricalMonthlyMean {
   @PrimaryGeneratedColumn()
   id: number;
 

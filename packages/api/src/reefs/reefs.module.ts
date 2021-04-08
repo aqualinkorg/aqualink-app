@@ -10,8 +10,8 @@ import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { User } from '../users/users.entity';
-import { MonthlyMax } from './monthly-max.entity';
 import { Sources } from './sources.entity';
+import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { Sources } from './sources.entity';
       DailyData,
       Region,
       ExclusionDates,
-      MonthlyMax,
+      HistoricalMonthlyMean,
       User,
       Sources,
     ]),

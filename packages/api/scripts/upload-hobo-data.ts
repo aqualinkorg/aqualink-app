@@ -12,7 +12,7 @@ import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/reefs/sources.entity';
 import { uploadHoboData } from '../src/utils/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
-import { MonthlyMax } from '../src/reefs/monthly-max.entity';
+import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
 
 const { argv } = yargs
   .scriptName('upload-hobo-data')
@@ -60,7 +60,9 @@ async function run() {
       surveyMediaRepository: connection.getRepository(SurveyMedia),
       sourcesRepository: connection.getRepository(Sources),
       regionRepository: connection.getRepository(Region),
-      monthlyMaxRepository: connection.getRepository(MonthlyMax),
+      historicalMonthlyMeanRepository: connection.getRepository(
+        HistoricalMonthlyMean,
+      ),
     },
   );
 

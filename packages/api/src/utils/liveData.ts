@@ -12,7 +12,7 @@ import {
 import { SofarLiveData, SofarValue } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
-import { MonthlyMax } from '../reefs/monthly-max.entity';
+import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 
 export const getLiveData = async (
   reef: Reef,
@@ -143,14 +143,14 @@ export const getLiveData = async (
  * day of the year.
  * */
 export const getSstAnomaly = (
-  monthlyMax: MonthlyMax[],
+  historicalMonthlyMean: HistoricalMonthlyMean[],
   satelliteTemperature?: SofarValue,
 ) => {
-  if (monthlyMax.length < 12 || !satelliteTemperature) {
+  if (historicalMonthlyMean.length < 12 || !satelliteTemperature) {
     return undefined;
   }
 
-  const orderedMontlyMax = sortBy(monthlyMax, 'month');
+  const orderedMontlyMax = sortBy(historicalMonthlyMean, 'month');
   const now = moment().startOf('day');
 
   // The date of the previous value. Subtract 15 days from the current date
