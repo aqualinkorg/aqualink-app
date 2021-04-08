@@ -4,7 +4,6 @@ import {
   IsOptional,
   IsUrl,
   IsEmail,
-  IsLowercase,
 } from 'class-validator';
 import { GeoJSON } from 'geojson';
 
@@ -15,7 +14,6 @@ export class CreateUserDto {
   readonly fullName?: string;
 
   @IsEmail()
-  @IsLowercase()
   readonly email: string;
 
   @IsOptional()
