@@ -45,7 +45,7 @@ export class Survey {
 
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
-  userId?: User;
+  user?: User;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'reef_id' })

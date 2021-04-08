@@ -565,7 +565,7 @@ const uploadReefPhotos = async (
       googleCloudService.uploadFile(image.imagePath, 'image').then((url) => {
         const survey = {
           reef: image.reef,
-          userId: user,
+          user,
           diveDate: image.createdDate,
           weatherConditions: WeatherConditions.NoData,
         };
