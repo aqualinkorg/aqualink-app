@@ -189,6 +189,7 @@ export interface Reef {
   timezone?: string | null;
   surveyPoints: Pois[];
   monthlyMax: MonthlyMax[];
+  hasHobo: boolean;
 }
 
 export interface TimeSeriesDataRequestParams {
