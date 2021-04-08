@@ -5,31 +5,51 @@ import { longDHW } from "../store/Reefs/helpers";
 import { Reef } from "../store/Reefs/types";
 import { degreeHeatingWeeksCalculator } from "./degreeHeatingWeeks";
 
-export const findMaxAlertReefPosition = (reefs: Reef[]): LatLng | null => {
-  const maxDhwReef = maxBy(
-    reefs,
-    (reef) =>
-      `${reef.latestDailyData?.weeklyAlertLevel || 0},${longDHW(
-        degreeHeatingWeeksCalculator(reef.latestDailyData?.degreeHeatingDays)
-      )}`
+export const findReefById = (reefs: Reef[], reefId: string): Reef | null => {
+  return (
+    reefs.find((reef: Reef) => {
+      return reef.id.toString() === reefId;
+    }) || null
   );
+};
+
+/**
+ * If an initial reef is provided we try to load it, otherwise we find the reef with the highest
+ * alert level.
+ * @param reefs
+ * @param initialReefId
+ * @returns LatLng of the initial Reef
+ */
+export const findInitialReefPosition = (
+  reefs: Reef[],
+  initialReefId?: string
+): LatLng | null => {
+  const initialReef =
+    (initialReefId && findReefById(reefs, initialReefId)) ||
+    maxBy(
+      reefs,
+      (reef) =>
+        `${reef.latestDailyData?.weeklyAlertLevel || 0},${longDHW(
+          degreeHeatingWeeksCalculator(reef.latestDailyData?.degreeHeatingDays)
+        )}`
+    );
 
   // If the polygon type is a Point, return its coordinates
-  if (maxDhwReef?.polygon.type === "Point") {
+  if (initialReef?.polygon.type === "Point") {
     return new LatLng(
-      maxDhwReef.polygon.coordinates[1],
-      maxDhwReef.polygon.coordinates[0]
+      initialReef.polygon.coordinates[1],
+      initialReef.polygon.coordinates[0]
     );
   }
 
   // If the polygon type is a Polygon, return the coordinates of its centroid
-  if (maxDhwReef?.polygon.type === "Polygon") {
+  if (initialReef?.polygon.type === "Polygon") {
     const centroidLat = meanBy(
-      maxDhwReef.polygon.coordinates[0],
+      initialReef.polygon.coordinates[0],
       (coords) => coords[1]
     );
     const centroidLng = meanBy(
-      maxDhwReef.polygon.coordinates[0],
+      initialReef.polygon.coordinates[0],
       (coords) => coords[0]
     );
 

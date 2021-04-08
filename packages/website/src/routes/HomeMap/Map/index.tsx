@@ -13,19 +13,13 @@ import {
 import { Alert } from "@material-ui/lab";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
-import {
-  reefsListLoadingSelector,
-  reefsListSelector,
-} from "../../../store/Reefs/reefsListSlice";
+import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { findMaxAlertReefPosition } from "../../../helpers/reefUtils";
 
-const INITIAL_CENTER = new LatLng(0, 121.3);
-const INITIAL_ZOOM = 5;
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
@@ -41,7 +35,11 @@ const currentLocationMarker = L.divIcon({
   iconSize: L.point(16, 16, true),
 });
 
-const HomepageMap = ({ classes }: HomepageMapProps) => {
+const HomepageMap = ({
+  initialCenter,
+  initialZoom,
+  classes,
+}: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
@@ -52,7 +50,6 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
     setCurrentLocationErrorMessage,
   ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
-  const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 
@@ -116,8 +113,8 @@ const HomepageMap = ({ classes }: HomepageMapProps) => {
       preferCanvas
       maxBoundsViscosity={1.0}
       className={classes.map}
-      center={findMaxAlertReefPosition(reefs) || INITIAL_CENTER}
-      zoom={INITIAL_ZOOM}
+      center={initialCenter}
+      zoom={initialZoom}
       minZoom={2}
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
@@ -187,6 +184,11 @@ const styles = () =>
     },
   });
 
-type HomepageMapProps = WithStyles<typeof styles>;
+interface HomepageMapIncomingProps {
+  initialCenter: LatLng;
+  initialZoom: number;
+}
+
+type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 
 export default withStyles(styles)(HomepageMap);
