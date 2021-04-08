@@ -1,3 +1,4 @@
+import { LatLng } from "leaflet";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -20,7 +21,7 @@ import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
-import { findReefById } from "../../helpers/reefUtils";
+import { findReefById, findInitialReefPosition } from "../../helpers/reefUtils";
 
 enum QueryParamKeys {
   REEF_ID = "reef_id",
@@ -28,24 +29,36 @@ enum QueryParamKeys {
 }
 
 interface MapQueryParams {
+  initialCenter: LatLng;
   initialZoom: number;
   initialReefId: string | undefined;
 }
 
+const INITIAL_CENTER = new LatLng(0, 121.3);
+const INITIAL_ZOOM = 5;
+
 function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
-  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : 0;
+  const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
   const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
   const reefsList = useSelector(reefsListSelector) || [];
-  const initialReefId = findReefById(
-    reefsList,
-    queryParamReefId
-  )?.id.toString();
+  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+  const initialReefId =
+    findReefById(reefsList, queryParamReefId)?.id.toString() ||
+    findReefById(reefsList, featuredReefId)?.id.toString() ||
+    "";
+  // Focus on the reef provided in the queryParamReefId or the reef with highest alert level.
+  const initialCenter =
+    findInitialReefPosition(
+      reefsList,
+      queryParamReefId === initialReefId ? initialReefId : undefined
+    ) || INITIAL_CENTER;
 
   return {
-    initialZoom,
+    initialCenter,
     initialReefId,
+    initialZoom,
   };
 }
 
@@ -53,22 +66,25 @@ const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const reefOnMap = useSelector(reefOnMapSelector);
 
-  const { initialZoom, initialReefId }: MapQueryParams = useQuery();
-  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
+  const {
+    initialZoom,
+    initialReefId,
+    initialCenter,
+  }: MapQueryParams = useQuery();
 
   useEffect(() => {
     dispatch(reefsRequest());
   }, [dispatch]);
 
   useEffect(() => {
-    if (!reefOnMap) {
-      dispatch(reefRequest(initialReefId || featuredReefId));
-      dispatch(surveysRequest(initialReefId || featuredReefId));
-    } else {
+    if (!reefOnMap && initialReefId) {
+      dispatch(reefRequest(initialReefId));
+      dispatch(surveysRequest(initialReefId));
+    } else if (reefOnMap) {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
-  }, [dispatch, initialReefId, featuredReefId, reefOnMap]);
+  }, [dispatch, initialReefId, reefOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -100,7 +116,7 @@ const Homepage = ({ classes }: HomepageProps) => {
           <Grid className={classes.map} item xs={12} sm={6}>
             <HomepageMap
               initialZoom={initialZoom}
-              initialReefId={initialReefId}
+              initialCenter={initialCenter}
             />
           </Grid>
           <Hidden xsDown>

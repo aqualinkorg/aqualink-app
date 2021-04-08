@@ -13,19 +13,13 @@ import {
 import { Alert } from "@material-ui/lab";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
-import {
-  reefsListLoadingSelector,
-  reefsListSelector,
-} from "../../../store/Reefs/reefsListSlice";
+import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
 import { ReefMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { findInitialReefPosition } from "../../../helpers/reefUtils";
 
-const INITIAL_CENTER = new LatLng(0, 121.3);
-const INITIAL_ZOOM = 5;
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const tileURL = accessToken
@@ -42,8 +36,8 @@ const currentLocationMarker = L.divIcon({
 });
 
 const HomepageMap = ({
+  initialCenter,
   initialZoom,
-  initialReefId,
   classes,
 }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
@@ -56,10 +50,8 @@ const HomepageMap = ({
     setCurrentLocationErrorMessage,
   ] = useState<string>();
   const loading = useSelector(reefsListLoadingSelector);
-  const reefs = useSelector(reefsListSelector) || [];
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
-  const zoom = initialZoom > 0 ? initialZoom : INITIAL_ZOOM;
 
   const onLocationSearch = () => {
     if (navigator.geolocation) {
@@ -121,8 +113,8 @@ const HomepageMap = ({
       preferCanvas
       maxBoundsViscosity={1.0}
       className={classes.map}
-      center={findInitialReefPosition(reefs, initialReefId) || INITIAL_CENTER}
-      zoom={zoom}
+      center={initialCenter}
+      zoom={initialZoom}
       minZoom={2}
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
@@ -193,13 +185,9 @@ const styles = () =>
   });
 
 interface HomepageMapIncomingProps {
+  initialCenter: LatLng;
   initialZoom: number;
-  initialReefId?: string;
 }
-
-HomepageMap.defaultProps = {
-  initialReefId: "",
-};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 
