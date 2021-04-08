@@ -8,7 +8,11 @@ import { Sources, SourceType } from '../reefs/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
-import { SofarValue, SpotterData } from './sofar.types';
+import {
+  DEFAULT_SPOTTER_DATA_VALUE,
+  SofarValue,
+  SpotterData,
+} from './sofar.types';
 
 interface Repositories {
   reefRepository: Repository<Reef>;
@@ -105,6 +109,11 @@ export const addSpotterData = async (
         (i) => {
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
+
+          if (!reef.spotterId) {
+            return DEFAULT_SPOTTER_DATA_VALUE;
+          }
+
           return getSpotterData(reef.spotterId, endDate, startDate);
         },
         { concurrency: 100 },

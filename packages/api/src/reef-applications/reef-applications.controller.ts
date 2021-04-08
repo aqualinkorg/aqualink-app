@@ -11,12 +11,7 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiBody,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
 import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
@@ -28,7 +23,8 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { AdminLevel } from '../users/users.entity';
-import { CustomApiNotFoundResponse } from '../docs/api-response';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
+import { ApiUpdateReefApplicationBody } from '../docs/api-properties';
 
 @ApiTags('ReefApplications')
 @Auth()
@@ -41,7 +37,7 @@ export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No reef application for specified reef was found')
+  @ApiNestNotFoundResponse('No reef application for specified reef was found')
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -51,7 +47,7 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
-  @CustomApiNotFoundResponse('No reef application was found')
+  @ApiNestNotFoundResponse('No reef application was found')
   @Public()
   @Get(':id')
   async findOne(
@@ -68,7 +64,7 @@ export class ReefApplicationsController {
     return app;
   }
 
-  @CustomApiNotFoundResponse('No reef application was found')
+  @ApiNestNotFoundResponse('No reef application was found')
   @Public()
   @Put(':hashId')
   updateWithHash(
@@ -80,19 +76,7 @@ export class ReefApplicationsController {
   }
 
   @ApiBearerAuth()
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        reef: {
-          $ref: getSchemaPath(UpdateReefWithApplicationDto),
-        },
-        reefApplication: {
-          $ref: getSchemaPath(UpdateReefApplicationDto),
-        },
-      },
-    },
-  })
+  @ApiUpdateReefApplicationBody()
   @UseGuards(IsReefAdminGuard)
   @Put(':hashId/reefs/:reef_id')
   update(

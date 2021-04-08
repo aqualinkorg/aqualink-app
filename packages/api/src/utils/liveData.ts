@@ -16,7 +16,7 @@ import { MonthlyMax } from '../reefs/monthly-max.entity';
 
 export const getLiveData = async (
   reef: Reef,
-  includeSpotterData: boolean,
+  isDeployed: boolean,
 ): Promise<SofarLiveData> => {
   const { polygon, spotterId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
@@ -34,8 +34,8 @@ export const getLiveData = async (
     windSpeed,
     windDirection,
   ] = await Promise.all([
-    includeSpotterData ? getSpotterData(spotterId) : undefined,
-    getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, now),
+    spotterId && isDeployed ? getSpotterData(spotterId) : undefined,
+    getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]

@@ -18,7 +18,7 @@ import { AuthRequest } from '../auth/auth.types';
 import { Reef } from '../reefs/reefs.entity';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-response';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Users')
 @Auth()
@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No user was found with the specified id')
+  @ApiNestNotFoundResponse('No user was found with the specified id')
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Put(':id/level')
   setAdminLevel(
@@ -50,7 +50,7 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No user was found with the specified id')
+  @ApiNestNotFoundResponse('No user was found with the specified id')
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {

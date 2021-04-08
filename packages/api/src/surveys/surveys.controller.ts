@@ -26,7 +26,7 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { AuthRequest } from '../auth/auth.types';
 import { Public } from '../auth/public.decorator';
 import { ApiFileUpload } from '../docs/api-properties';
-import { CustomApiNotFoundResponse } from '../docs/api-response';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Surveys')
 @UseGuards(IsReefAdminGuard)
@@ -54,7 +54,7 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No reef was found with the specified id')
+  @ApiNestNotFoundResponse('No reef was found with the specified id')
   @Post()
   create(
     @Body() createSurveyDto: CreateSurveyDto,
@@ -65,7 +65,7 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No survey was found with the specified id')
+  @ApiNestNotFoundResponse('No survey was found with the specified id')
   @Post(':id/media')
   createMedia(
     @Body() createSurveyMediaDto: CreateSurveyMediaDto,
@@ -82,7 +82,7 @@ export class SurveysController {
   }
 
   @Public()
-  @CustomApiNotFoundResponse('No survey was found with the specified id')
+  @ApiNestNotFoundResponse('No survey was found with the specified id')
   @Get(':id')
   findOne(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -101,7 +101,7 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No survey media was found with the specified id')
+  @ApiNestNotFoundResponse('No survey media was found with the specified id')
   @Put('media/:id')
   updateMedia(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -112,7 +112,7 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No survey was found with the specified id')
+  @ApiNestNotFoundResponse('No survey was found with the specified id')
   @Put(':id')
   update(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -123,7 +123,7 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No survey was found with the specified id')
+  @ApiNestNotFoundResponse('No survey was found with the specified id')
   @Delete(':id')
   delete(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -134,7 +134,7 @@ export class SurveysController {
 
   @ApiBearerAuth()
   @Delete('media/:id')
-  @CustomApiNotFoundResponse('No survey media was found with the specified id')
+  @ApiNestNotFoundResponse('No survey media was found with the specified id')
   deleteMedia(
     @Param('reef_id', ParseIntPipe) reefId: number,
     @Param('id', ParseIntPipe) mediaId: number,

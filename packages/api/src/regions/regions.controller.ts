@@ -18,7 +18,7 @@ import { UpdateRegionDto } from './dto/update-region.dto';
 import { Auth } from '../auth/auth.decorator';
 import { AdminLevel } from '../users/users.entity';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-response';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Regions')
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
@@ -38,7 +38,7 @@ export class RegionsController {
     return this.regionsService.find(filterRegionDto);
   }
 
-  @CustomApiNotFoundResponse('No region was found with the specified id')
+  @ApiNestNotFoundResponse('No region was found with the specified id')
   @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Region> {
@@ -46,7 +46,7 @@ export class RegionsController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No region was found with the specified id')
+  @ApiNestNotFoundResponse('No region was found with the specified id')
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -56,7 +56,7 @@ export class RegionsController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse('No region was found with the specified id')
+  @ApiNestNotFoundResponse('No region was found with the specified id')
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.regionsService.delete(id);

@@ -1,7 +1,12 @@
-import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsInt,
+  IsEnum,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { Region } from '../../regions/regions.entity';
-import { User } from '../../users/users.entity';
+import { ReefStatus } from '../reefs.entity';
 
 export class FilterReefDto {
   @IsOptional()
@@ -10,16 +15,17 @@ export class FilterReefDto {
   readonly name?: string;
 
   @IsOptional()
-  @IsInt()
-  readonly status?: number;
+  @IsString()
+  @IsEnum(ReefStatus)
+  readonly status?: ReefStatus;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  readonly region?: Region;
+  readonly regionId?: number;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  readonly admin?: User;
+  readonly adminId?: number;
 }

@@ -17,55 +17,55 @@ export class DailyData {
   date: Date;
 
   @Column('float', { nullable: true })
-  minBottomTemperature: number;
+  minBottomTemperature?: number;
 
   @Column('float', { nullable: true })
-  maxBottomTemperature: number;
+  maxBottomTemperature?: number;
 
   @Column('float', { nullable: true })
-  avgBottomTemperature: number;
+  avgBottomTemperature?: number;
 
   @Column('float', { nullable: true })
-  degreeHeatingDays: number;
+  degreeHeatingDays?: number;
 
   @Column('float', { nullable: true })
-  surfaceTemperature: number;
+  surfaceTemperature?: number;
 
   @Column('float', { nullable: true })
-  satelliteTemperature: number;
+  satelliteTemperature?: number;
 
   @Column('float', { nullable: true })
-  minWaveHeight: number;
+  minWaveHeight?: number;
 
   @Column('float', { nullable: true })
-  maxWaveHeight: number;
+  maxWaveHeight?: number;
 
   @Column('float', { nullable: true })
-  avgWaveHeight: number;
+  avgWaveHeight?: number;
 
   @Column({ nullable: true })
-  waveDirection: number;
+  waveDirection?: number;
 
   @Column({ nullable: true })
-  wavePeriod: number;
+  wavePeriod?: number;
 
   @Column('float', { nullable: true })
-  minWindSpeed: number;
+  minWindSpeed?: number;
 
   @Column('float', { nullable: true })
-  maxWindSpeed: number;
+  maxWindSpeed?: number;
 
   @Column('float', { nullable: true })
-  avgWindSpeed: number;
+  avgWindSpeed?: number;
 
   @Column({ nullable: true })
-  windDirection: number;
+  windDirection?: number;
 
   @Column('integer', { nullable: true })
-  dailyAlertLevel: number;
+  dailyAlertLevel?: number;
 
   @Column('integer', { nullable: true })
-  weeklyAlertLevel: number;
+  weeklyAlertLevel?: number;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;

@@ -97,12 +97,16 @@ export async function getMonthlyMaximums(long: number, lat: number) {
 
 export function calculateDegreeHeatingDays(
   seaSurfaceTemperatures: number[],
-  maximumMonthlyMean: number,
+  maximumMonthlyMean?: number,
 ) {
   if (seaSurfaceTemperatures.length !== 84) {
     throw new Error(
       'Calculating Degree Heating Days requires exactly 84 days of data.',
     );
+  }
+
+  if (!maximumMonthlyMean) {
+    throw new Error('Max monthly mean is undefined');
   }
 
   return seaSurfaceTemperatures.reduce((sum, value) => {

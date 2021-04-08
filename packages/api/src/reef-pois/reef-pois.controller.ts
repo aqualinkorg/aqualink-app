@@ -18,7 +18,7 @@ import { UpdateReefPoiDto } from './dto/update-reef-poi.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
-import { CustomApiNotFoundResponse } from '../docs/api-response';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Reef Points of Interest')
 @Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
@@ -42,7 +42,7 @@ export class ReefPoisController {
     return this.poisService.find(filterReefPoiDto);
   }
 
-  @CustomApiNotFoundResponse(
+  @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
   @Public()
@@ -52,7 +52,7 @@ export class ReefPoisController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse(
+  @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
   @Put(':id')
@@ -64,7 +64,7 @@ export class ReefPoisController {
   }
 
   @ApiBearerAuth()
-  @CustomApiNotFoundResponse(
+  @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
   @Delete(':id')

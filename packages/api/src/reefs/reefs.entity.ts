@@ -35,10 +35,10 @@ export class Reef {
   id: number;
 
   @Column({ nullable: true })
-  name: string;
+  name?: string;
 
   @Column({ nullable: true })
-  spotterId: string;
+  spotterId?: string;
 
   @Column({
     type: 'geometry',
@@ -49,7 +49,7 @@ export class Reef {
   polygon: GeoJSON;
 
   @Column({ nullable: true })
-  depth: number;
+  depth?: number;
 
   // TODO:  This field should be transferred to reef-application table
   //        The transition has to be in sync with changes in admin dashboards in internal.io
@@ -61,13 +61,13 @@ export class Reef {
   status: ReefStatus;
 
   @Column({ nullable: true })
-  videoStream: string;
+  videoStream?: string;
 
   @Column('float', { nullable: true })
-  maxMonthlyMean: number;
+  maxMonthlyMean?: number;
 
   @Column({ nullable: true })
-  timezone: string;
+  timezone?: string;
 
   @Column({ default: true })
   approved: boolean;

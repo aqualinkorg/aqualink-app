@@ -4,7 +4,14 @@ import {
   ApiConsumes,
   ApiProperty,
   ApiPropertyOptions,
+  getSchemaPath,
 } from '@nestjs/swagger';
+import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
+import { UpdateReefWithApplicationDto } from '../reef-applications/dto/update-reef-with-application.dto';
+import {
+  CreateReefApplicationDto,
+  CreateReefDto,
+} from '../reefs/dto/create-reef.dto';
 
 export const ApiPointProperty = () => {
   const schema: ApiPropertyOptions = {
@@ -42,6 +49,42 @@ export const ApiFileUpload = () => {
             description: `The image to upload (image/jpeg, image/png, image/tiff). Max size: ${maxFileSizeMB}MB`,
             type: 'string',
             format: 'binary',
+          },
+        },
+      },
+    }),
+  );
+};
+
+export const ApiUpdateReefApplicationBody = () => {
+  return applyDecorators(
+    ApiBody({
+      schema: {
+        type: 'object',
+        properties: {
+          reef: {
+            $ref: getSchemaPath(UpdateReefWithApplicationDto),
+          },
+          reefApplication: {
+            $ref: getSchemaPath(UpdateReefApplicationDto),
+          },
+        },
+      },
+    }),
+  );
+};
+
+export const ApiCreateReefBody = () => {
+  return applyDecorators(
+    ApiBody({
+      schema: {
+        type: 'object',
+        properties: {
+          reef: {
+            $ref: getSchemaPath(CreateReefDto),
+          },
+          reefApplication: {
+            $ref: getSchemaPath(CreateReefApplicationDto),
           },
         },
       },
