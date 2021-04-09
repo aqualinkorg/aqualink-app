@@ -26,6 +26,7 @@ import { spotterSelected } from "../../../../assets/spotterSelected";
 import { spotterAnimation } from "../../../../assets/spotterAnimation";
 import { hobo } from "../../../../assets/hobo";
 import { hoboSelected } from "../../../../assets/hoboSelected";
+import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
 
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
@@ -142,7 +143,7 @@ export const ReefMarkers = () => {
                 }}
                 key={`${reef.id}-${offset}`}
                 icon={markerIcon(
-                  Boolean(reef.spotterId && reef.status === "deployed"),
+                  hasDeployedSpotter(reef),
                   reef.hasHobo,
                   reefOnMap?.id === reef.id,
                   alertColorFinder(weeklyAlertLevel),
