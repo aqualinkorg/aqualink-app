@@ -58,3 +58,7 @@ export const findInitialReefPosition = (
 
   return null;
 };
+
+// Util function that checks if a reef has a deployed spotter
+export const hasDeployedSpotter = (reef?: Reef | null) =>
+  Boolean(reef?.spotterId && reef?.status === "deployed");

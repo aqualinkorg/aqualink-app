@@ -46,7 +46,7 @@ const SurveyCard = ({
         </Grid>
         <Grid className={classes.infoWrapper} container item xs={12} md={7}>
           <Grid className={classes.info} container item xs={12}>
-            {survey.userId!.fullName && (
+            {survey.userId?.fullName && (
               <Grid container alignItems="center" item xs={12}>
                 <Typography className={classes.cardFields} variant="h6">
                   User:
@@ -55,7 +55,7 @@ const SurveyCard = ({
                   className={`${classes.cardValues} ${classes.valuesWithMargin}`}
                   variant="h6"
                 >
-                  {survey.userId!.fullName}
+                  {survey.userId.fullName}
                 </Typography>
               </Grid>
             )}
