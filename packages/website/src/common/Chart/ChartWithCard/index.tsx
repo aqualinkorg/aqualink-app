@@ -29,7 +29,6 @@ import {
   subtractFromDate,
 } from "../../../helpers/dates";
 import { findDataLimits } from "./helpers";
-import { filterSofarData, filterTimeSeriesData } from "../utils";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
@@ -62,10 +61,8 @@ const ChartWithCard = ({
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
-  const filteredSpotter = filterTimeSeriesData(spotterData, startDate, endDate);
   const hasSpotterData = Boolean(
-    filteredSpotter?.bottomTemperature?.[0] ||
-      filteredSpotter?.surfaceTemperature?.[0]
+    spotterData?.bottomTemperature?.[0] || spotterData?.surfaceTemperature?.[0]
   );
 
   // Set pickers initial values once the range request is completed
@@ -142,7 +139,10 @@ const ChartWithCard = ({
       granularDailyData,
       timeSeriesData,
       pickerLocalStartDate,
-      moment(pickerLocalEndDate).endOf("day").toISOString()
+      moment(pickerLocalEndDate)
+        .tz(reef.timezone || "UTC")
+        .endOf("day")
+        .toISOString()
     );
 
     setStartDate(
@@ -266,16 +266,15 @@ const ChartWithCard = ({
             reef={reef}
             dailyData={granularDailyData || []}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
-            spotterData={filterTimeSeriesData(spotterData, startDate, endDate)}
-            hoboBottomTemperature={filterSofarData(
-              hoboBottomTemperature || [],
-              startDate || pickerStartDate,
-              endDate || pickerEndDate
-            )}
+            spotterData={spotterData}
+            hoboBottomTemperature={hoboBottomTemperature || []}
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
             startDate={startDate || subtractFromDate(today, "week")}
-            endDate={endDate || today}
+            endDate={moment(endDate)
+              .tz(reef.timezone || "UTC")
+              .endOf("day")
+              .toISOString()}
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
             pickerErrored={pickerErrored}
@@ -297,18 +296,13 @@ const ChartWithCard = ({
               }
               pickerEndDate={pickerEndDate || today}
               chartStartDate={startDate || subtractFromDate(today, "week")}
-              chartEndDate={endDate || today}
+              chartEndDate={moment(endDate)
+                .tz(reef.timezone || "UTC")
+                .endOf("day")
+                .toISOString()}
               depth={reef.depth}
-              spotterData={filterTimeSeriesData(
-                spotterData,
-                startDate,
-                endDate
-              )}
-              hoboBottomTemperature={filterSofarData(
-                hoboBottomTemperature || [],
-                startDate || pickerStartDate,
-                endDate || pickerEndDate
-              )}
+              spotterData={spotterData}
+              hoboBottomTemperature={hoboBottomTemperature || []}
               monthlyMax={generateMonthlyMaxTimestamps(
                 reef.monthlyMax,
                 startDate,
