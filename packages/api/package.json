@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "nest build -p tsconfig.build.json --tsc",
     "build:cloud-functions": "webpack-cli --config cloud-functions/webpack.config.js",
     "gcp-build": "npm install yarn",
     "predeploy:app": "mv .env .env.bkp && cp .env.${DEPLOY_ENV} .env && yarn run build && cp ../../yarn.lock .",
