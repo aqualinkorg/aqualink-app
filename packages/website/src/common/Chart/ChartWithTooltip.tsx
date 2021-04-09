@@ -16,7 +16,7 @@ import {
   findSurveyFromDate,
   sameDay,
   filterDailyData,
-  getMonthlyMaxDataClosestToDate,
+  getHistoricalMonthlyMeanDataClosestToDate,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -37,7 +37,7 @@ function ChartWithTooltip({
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
-    monthlyMaxData,
+    historicalMonthlyMeanData,
     reefId,
     surveys,
     timeZone,
@@ -51,7 +51,7 @@ function ChartWithTooltip({
     reefId,
     date: "",
     depth,
-    monthlyMaxTemp: null,
+    historicalMonthlyMeanTemp: null,
     satelliteTemp: null,
     spotterSurfaceTemp: null,
     spotterBottomTemp: null,
@@ -82,10 +82,13 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const monthlyMaxTemp =
+    const historicalMonthlyMeanTemp =
       (
-        monthlyMaxData &&
-        getMonthlyMaxDataClosestToDate(monthlyMaxData, new Date(date))
+        historicalMonthlyMeanData &&
+        getHistoricalMonthlyMeanDataClosestToDate(
+          historicalMonthlyMeanData,
+          new Date(date)
+        )
       )?.value || null;
 
     const satelliteTemp = satelliteTemperature || null;
@@ -115,7 +118,7 @@ function ChartWithTooltip({
       null;
 
     const nValues = [
-      monthlyMaxTemp,
+      historicalMonthlyMeanTemp,
       satelliteTemp,
       spotterSurfaceTemp,
       spotterBottomTemp,
@@ -141,7 +144,7 @@ function ChartWithTooltip({
         ...tooltipData,
         date,
         depth,
-        monthlyMaxTemp,
+        historicalMonthlyMeanTemp,
         satelliteTemp,
         spotterSurfaceTemp,
         spotterBottomTemp,

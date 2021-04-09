@@ -2,19 +2,19 @@ import { minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 import {
   findMarginalDate,
-  generateMonthlyMaxTimestamps,
+  generateHistoricalMonthlyMeanTimestamps,
 } from "../../../helpers/dates";
 
 import {
   DailyData,
-  MonthlyMax,
-  MonthlyMaxData,
+  HistoricalMonthlyMean,
+  HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Reefs/types";
 import {
   filterDailyData,
-  filterMaxMonthlyData,
+  filterHistoricalMonthlyMeanData,
   filterSofarData,
   filterTimeSeriesData,
 } from "../utils";
@@ -22,7 +22,7 @@ import { CardColumn } from "./types";
 
 export const calculateCardMetrics = (
   minNumberOfPoints: number,
-  data?: (MonthlyMaxData | SofarValue)[],
+  data?: (HistoricalMonthlyMeanData | SofarValue)[],
   keyPrefix?: string
 ): CardColumn["rows"] => [
   {
@@ -62,20 +62,20 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
 };
 
 export const findDataLimits = (
-  monthlyMax: MonthlyMax[],
+  historicalMonthlyMean: HistoricalMonthlyMean[],
   dailyData: DailyData[] | undefined,
   timeSeriesData: TimeSeriesData | undefined,
   startDate: string | undefined,
   endDate: string | undefined
 ): [string | undefined, string | undefined] => {
   const { hobo, spotter } = timeSeriesData || {};
-  const maxMonthlyData = generateMonthlyMaxTimestamps(
-    monthlyMax,
+  const historicalMonthlyMeanData = generateHistoricalMonthlyMeanTimestamps(
+    historicalMonthlyMean,
     startDate,
     endDate
   );
-  const filteredMaxMonthlyData = filterMaxMonthlyData(
-    maxMonthlyData,
+  const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
+    historicalMonthlyMeanData,
     startDate,
     endDate
   );
@@ -92,7 +92,7 @@ export const findDataLimits = (
   const filteredSpotterData = filterTimeSeriesData(spotter, startDate, endDate);
 
   const hasData = Boolean(
-    filteredMaxMonthlyData?.[0] ||
+    filteredHistoricalMonthlyMeanData?.[0] ||
       filteredDailyData?.[0] ||
       filteredSpotterData?.bottomTemperature?.[0] ||
       filteredSpotterData?.surfaceTemperature?.[0] ||
@@ -103,7 +103,7 @@ export const findDataLimits = (
     hasData
       ? new Date(
           findMarginalDate(
-            filteredMaxMonthlyData,
+            filteredHistoricalMonthlyMeanData,
             filteredDailyData,
             filteredSpotterData,
             filteredHoboData,
@@ -114,7 +114,7 @@ export const findDataLimits = (
     hasData
       ? new Date(
           findMarginalDate(
-            filteredMaxMonthlyData,
+            filteredHistoricalMonthlyMeanData,
             filteredDailyData,
             filteredSpotterData,
             filteredHoboData

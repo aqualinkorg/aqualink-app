@@ -23,7 +23,7 @@ import {
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
-  generateMonthlyMaxTimestamps,
+  generateHistoricalMonthlyMeanTimestamps,
   isBefore,
   setTimeZone,
   subtractFromDate,
@@ -123,7 +123,7 @@ const ChartWithCard = ({
   // Set chart start/end dates based on data received
   useEffect(() => {
     const [minDataDate, maxDataDate] = findDataLimits(
-      reef.monthlyMax,
+      reef.historicalMonthlyMean,
       granularDailyData,
       timeSeriesData,
       pickerStartDate,
@@ -306,8 +306,8 @@ const ChartWithCard = ({
                 startDate || pickerStartDate,
                 endDate || pickerEndDate
               )}
-              monthlyMax={generateMonthlyMaxTimestamps(
-                reef.monthlyMax,
+              historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
+                reef.historicalMonthlyMean,
                 startDate,
                 endDate,
                 reef.timezone
