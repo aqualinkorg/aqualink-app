@@ -122,13 +122,6 @@ const ChartWithCard = ({
 
   // Set chart start/end dates based on data received
   useEffect(() => {
-    const [minDataDate, maxDataDate] = findDataLimits(
-      reef.monthlyMax,
-      granularDailyData,
-      timeSeriesData,
-      pickerStartDate,
-      pickerEndDate
-    );
     const pickerLocalEndDate = new Date(
       setTimeZone(
         new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
@@ -141,6 +134,14 @@ const ChartWithCard = ({
         reef?.timezone
       )
     ).toISOString();
+
+    const [minDataDate, maxDataDate] = findDataLimits(
+      reef.monthlyMax,
+      granularDailyData,
+      timeSeriesData,
+      pickerLocalStartDate,
+      pickerLocalEndDate
+    );
 
     setStartDate(
       minDataDate

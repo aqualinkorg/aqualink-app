@@ -56,7 +56,7 @@ export const filterSofarData = (
     inRange(
       moment(item.timestamp).valueOf(),
       startDate.valueOf(),
-      endDate.valueOf()
+      endDate.valueOf() + 1
     )
   );
 };

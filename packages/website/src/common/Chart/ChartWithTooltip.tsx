@@ -133,7 +133,9 @@ function ChartWithTooltip({
       nValues > 0 &&
       moment(date).isBetween(
         moment(startDate || last(filteredDailyData)?.date),
-        moment(endDate || filteredDailyData?.[0]?.date)
+        moment(endDate || filteredDailyData?.[0]?.date),
+        undefined,
+        "[]"
       )
     ) {
       setTooltipPosition({ top, left });
