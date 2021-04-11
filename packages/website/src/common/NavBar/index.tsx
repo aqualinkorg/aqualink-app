@@ -17,8 +17,10 @@ import {
   Theme,
   useTheme,
   useMediaQuery,
+  Divider,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import { sortBy } from "lodash";
@@ -139,12 +141,19 @@ const NavBar = ({
                       keepMounted
                       open={Boolean(anchorEl)}
                       onClose={handleMenuClose}
+                      MenuListProps={{ className: classes.userMenu }}
+                      PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
                       {sortBy(user.administeredReefs, "id").map(
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (
-                            <Link href={`/reefs/${id}`} key={`reef-link-${id}`}>
+                            <Link
+                              underline="none"
+                              href={`/reefs/${id}`}
+                              key={`reef-link-${id}`}
+                              className={classes.menuItemLink}
+                            >
                               <MenuItem className={classes.menuItem}>
                                 {reefIdentifier || `Reef ${index + 1}`}
                               </MenuItem>
@@ -152,6 +161,7 @@ const NavBar = ({
                           );
                         }
                       )}
+                      <Divider className={classes.userMenuDivider} />
                       <MenuItem
                         key="user-menu-logout"
                         className={classes.menuItem}
@@ -160,7 +170,12 @@ const NavBar = ({
                           handleMenuClose();
                         }}
                       >
-                        Logout
+                        <Grid container spacing={1}>
+                          <Grid item>
+                            <PowerSettingsNewIcon fontSize="small" />
+                          </Grid>
+                          <Grid item>Logout</Grid>
+                        </Grid>
                       </MenuItem>
                     </Menu>
                   </Box>
@@ -228,12 +243,29 @@ const styles = (theme: Theme) =>
     toolbar: {
       padding: theme.spacing(0, 1),
     },
+    userMenuWrapper: {
+      marginTop: 36,
+      border: "1px solid black",
+    },
+    userMenuDivider: {
+      margin: "4px 0",
+    },
     userMenu: {
-      marginTop: "3rem",
+      padding: "4px 0",
     },
     menuItem: {
       margin: 0,
       color: theme.palette.text.secondary,
+      fontSize: 14,
+      "&:hover": {
+        backgroundColor: "rgba(22, 141, 189, 0.8)",
+        color: theme.palette.text.primary,
+      },
+    },
+    menuItemLink: {
+      "&:hover": {
+        textDecoration: "none",
+      },
     },
     notificationIcon: {
       color: "#a9e6ff",
