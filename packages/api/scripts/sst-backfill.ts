@@ -81,7 +81,6 @@ async function main() {
         console.error(err);
       }
     }
-    dailyDataRepository.create(entity);
 
     if (!entity.satelliteTemperature) {
       return;
