@@ -271,9 +271,13 @@ const ChartWithCard = ({
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
             startDate={startDate || subtractFromDate(today, "week")}
-            endDate={moment(endDate)
-              .tz(reef.timezone || "UTC")
-              .endOf("day")
+            endDate={moment
+              .min(
+                moment(),
+                moment(endDate)
+                  .tz(reef.timezone || "UTC")
+                  .endOf("day")
+              )
               .toISOString()}
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
@@ -296,9 +300,13 @@ const ChartWithCard = ({
               }
               pickerEndDate={pickerEndDate || today}
               chartStartDate={startDate || subtractFromDate(today, "week")}
-              chartEndDate={moment(endDate)
-                .tz(reef.timezone || "UTC")
-                .endOf("day")
+              chartEndDate={moment
+                .min(
+                  moment(),
+                  moment(endDate)
+                    .tz(reef.timezone || "UTC")
+                    .endOf("day")
+                )
                 .toISOString()}
               depth={reef.depth}
               spotterData={spotterData}
