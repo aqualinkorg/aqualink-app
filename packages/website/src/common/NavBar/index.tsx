@@ -8,7 +8,7 @@ import {
   Button,
   Menu,
   MenuItem,
-  Link,
+  Link as MuiLink,
   Box,
   Hidden,
   withStyles,
@@ -19,11 +19,12 @@ import {
   useMediaQuery,
   Divider,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
-import { sortBy } from "lodash";
 import classNames from "classnames";
 
 import RegisterDialog from "../RegisterDialog";
@@ -95,14 +96,14 @@ const NavBar = ({
                   <MenuIcon />
                 </IconButton>
 
-                <Link className={classes.navBarLink} href="/map">
+                <MuiLink className={classes.navBarLink} href="/map">
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
                   </Typography>
-                </Link>
+                </MuiLink>
               </Box>
             </Grid>
 
@@ -144,23 +145,22 @@ const NavBar = ({
                       MenuListProps={{ className: classes.userMenu }}
                       PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
-                      {sortBy(user.administeredReefs, "id").map(
-                        ({ id, name, region }, index) => {
-                          const reefIdentifier = name || region;
-                          return (
-                            <Link
-                              underline="none"
-                              href={`/reefs/${id}`}
-                              key={`reef-link-${id}`}
-                              className={classes.menuItemLink}
-                            >
-                              <MenuItem className={classes.menuItem}>
-                                {reefIdentifier || `Reef ${index + 1}`}
-                              </MenuItem>
-                            </Link>
-                          );
-                        }
-                      )}
+                      <Link
+                        to={`/user/${user.id}/dashboard`}
+                        className={classes.menuItemLink}
+                      >
+                        <MenuItem
+                          key="user-menu-dashboard"
+                          className={classes.menuItem}
+                        >
+                          <Grid container spacing={1}>
+                            <Grid item>
+                              <DashboardTwoToneIcon fontSize="small" />
+                            </Grid>
+                            <Grid item>Dashboard</Grid>
+                          </Grid>
+                        </MenuItem>
+                      </Link>
                       <Divider className={classes.userMenuDivider} />
                       <MenuItem
                         key="user-menu-logout"
@@ -263,6 +263,7 @@ const styles = (theme: Theme) =>
       },
     },
     menuItemLink: {
+      textDecoration: "none",
       "&:hover": {
         textDecoration: "none",
       },

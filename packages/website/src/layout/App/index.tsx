@@ -13,6 +13,7 @@ import RegisterSite from "../../routes/RegisterSite";
 import Buoy from "../../routes/Buoy";
 import Drones from "../../routes/Drones";
 import Faq from "../../routes/Faq";
+import Dashboard from "../../routes/Dashboard";
 import theme from "./theme";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
@@ -57,6 +58,11 @@ function App() {
                 <Route exact path="/faq" component={Faq} />
                 <Route exact path="/terms" component={Terms} />
                 <Route path="/reefs" component={ReefRoutes} />
+                <Route
+                  exact
+                  path="/user/:userId/dashboard"
+                  component={Dashboard}
+                />
                 <Route default component={NotFound} />
               </Switch>
             )}

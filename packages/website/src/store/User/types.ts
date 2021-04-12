@@ -8,6 +8,7 @@ export interface User {
   organization?: string | null;
   administeredReefs?: Reef[];
   token?: string | null;
+  id: number;
 }
 
 export interface UserState {

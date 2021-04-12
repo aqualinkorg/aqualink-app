@@ -48,6 +48,7 @@ export const createUser = createAsyncThunk<
       );
 
       return {
+        id: data.id,
         email: data.email,
         fullName: data.fullName,
         organization: data.organization,
@@ -78,6 +79,7 @@ export const signInUser = createAsyncThunk<
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
       return {
+        id: userData.id,
         email: userData.email,
         fullName: userData.fullName,
         organization: userData.organization,
@@ -113,6 +115,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
     try {
       const { data: userData } = await userServices.getSelf(token);
       return {
+        id: userData.id,
         email: userData.email,
         fullName: userData.fullName,
         organization: userData.organization,
