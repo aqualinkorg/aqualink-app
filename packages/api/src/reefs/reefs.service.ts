@@ -35,6 +35,7 @@ import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { createPoint } from '../utils/coordinates';
+import { Sources, SourceType } from './sources.entity';
 
 @Injectable()
 export class ReefsService {
@@ -60,6 +61,9 @@ export class ReefsService {
 
     @InjectRepository(User)
     private userRepository: Repository<User>,
+
+    @InjectRepository(Sources)
+    private sourceRepository: Repository<Sources>,
   ) {}
 
   async create(
@@ -123,7 +127,7 @@ export class ReefsService {
     });
   }
 
-  latestDailyDataSubquery(): string {
+  latestDailyDataSubQuery(): string {
     const query = this.dailyDataRepository.createQueryBuilder('dailyData');
     query.select('MAX(date)', 'date');
     query.addSelect('reef_id');
@@ -131,8 +135,27 @@ export class ReefsService {
     return query.getQuery();
   }
 
+  async hasHoboDataSubQuery(): Promise<Set<number>> {
+    const hasHoboData: {
+      reefId: number;
+    }[] = await this.sourceRepository
+      .createQueryBuilder('sources')
+      .select('reef_id', 'reefId')
+      .where(`type = '${SourceType.HOBO}'`)
+      .groupBy('reef_id')
+      .getRawMany();
+
+    const hasHoboDataSet = new Set<number>();
+    hasHoboData.forEach((row) => {
+      hasHoboDataSet.add(row.reefId);
+    });
+
+    return hasHoboDataSet;
+  }
+
   async find(filter: FilterReefDto): Promise<Reef[]> {
     const query = this.reefsRepository.createQueryBuilder('reef');
+
     if (filter.name) {
       query.andWhere('(lower(reef.name) LIKE :name)', {
         name: `%${filter.name.toLowerCase()}%`,
@@ -154,16 +177,25 @@ export class ReefsService {
         { adminId: filter.admin },
       );
     }
-    query.leftJoinAndSelect('reef.region', 'region');
-    query.leftJoinAndSelect('reef.admins', 'admins');
-    query.leftJoinAndSelect('reef.stream', 'stream');
-    query.leftJoinAndSelect(
-      'reef.latestDailyData',
-      'latestDailyData',
-      `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubquery()})`,
-    );
-    query.andWhere('approved = true');
-    return query.getMany();
+    const res = await query
+      .leftJoinAndSelect('reef.region', 'region')
+      .leftJoinAndSelect('reef.admins', 'admins')
+      .leftJoinAndSelect('reef.stream', 'stream')
+      .leftJoinAndSelect(
+        'reef.latestDailyData',
+        'latestDailyData',
+        `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubQuery()})`,
+      )
+      .andWhere('approved = true')
+      .getMany();
+
+    const hasHoboDataSet = await this.hasHoboDataSubQuery();
+
+    return res.map((reef) => ({
+      ...reef,
+      applied: reef.applied,
+      hasHobo: hasHoboDataSet.has(reef.id),
+    }));
   }
 
   async findOne(id: number): Promise<Reef> {

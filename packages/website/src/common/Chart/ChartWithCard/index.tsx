@@ -78,7 +78,7 @@ const ChartWithCard = ({
           .format("MM/DD/YYYY")
       ).toISOString();
       const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
-      setPickerEndDate(localizedMaxDate);
+      setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
       setPickerStartDate(pastThreeMonths);
     }
   }, [hoboBottomTemperatureRange, reef.timezone]);
@@ -107,7 +107,9 @@ const ChartWithCard = ({
           start: reefLocalStartDate,
           end: reefLocalEndDate,
           metrics: ["bottom_temperature", "top_temperature"],
-          hourly: true,
+          hourly:
+            moment(reefLocalEndDate).diff(moment(reefLocalStartDate), "days") >
+            2,
         })
       );
     }
@@ -122,13 +124,6 @@ const ChartWithCard = ({
 
   // Set chart start/end dates based on data received
   useEffect(() => {
-    const [minDataDate, maxDataDate] = findDataLimits(
-      reef.monthlyMax,
-      granularDailyData,
-      timeSeriesData,
-      pickerStartDate,
-      pickerEndDate
-    );
     const pickerLocalEndDate = new Date(
       setTimeZone(
         new Date(moment(pickerEndDate).format("MM/DD/YYYY")),
@@ -142,6 +137,14 @@ const ChartWithCard = ({
       )
     ).toISOString();
 
+    const [minDataDate, maxDataDate] = findDataLimits(
+      reef.monthlyMax,
+      granularDailyData,
+      timeSeriesData,
+      pickerLocalStartDate,
+      moment(pickerLocalEndDate).endOf("day").toISOString()
+    );
+
     setStartDate(
       minDataDate
         ? moment
@@ -153,9 +156,9 @@ const ChartWithCard = ({
     setEndDate(
       maxDataDate
         ? moment
-            .min(moment(maxDataDate), moment(pickerLocalEndDate))
+            .min(moment(maxDataDate), moment(pickerLocalEndDate).endOf("day"))
             .toISOString()
-        : pickerLocalEndDate
+        : moment(pickerLocalEndDate).endOf("day").toISOString()
     );
   }, [granularDailyData, pickerEndDate, pickerStartDate, reef, timeSeriesData]);
 
@@ -181,15 +184,15 @@ const ChartWithCard = ({
     setRange(value);
     switch (value) {
       case "three_months":
-        setPickerEndDate(localizedMaxDate);
+        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
         setPickerStartDate(subtractFromDate(localizedMaxDate, "month", 3));
         break;
       case "one_year":
-        setPickerEndDate(localizedMaxDate);
+        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
         setPickerStartDate(subtractFromDate(localizedMaxDate, "year"));
         break;
       case "max":
-        setPickerEndDate(localizedMaxDate);
+        setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
         setPickerStartDate(localizedMinDate);
         break;
       default:
@@ -217,10 +220,10 @@ const ChartWithCard = ({
           // Set picker end date only if input date is before today
           if (
             moment(dateString)
-              .startOf("day")
-              .isSameOrBefore(moment().startOf("day"))
+              .endOf("day")
+              .isSameOrBefore(moment().endOf("day"))
           ) {
-            setPickerEndDate(moment(dateString).startOf("day").toISOString());
+            setPickerEndDate(moment(dateString).endOf("day").toISOString());
           }
           break;
         default:

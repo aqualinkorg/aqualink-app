@@ -14,12 +14,19 @@ import Popup from "../Popup";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
+  alertColorFinder,
   alertIconFinder,
   findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
+import { spotter } from "../../../../assets/spotter";
+import { spotterSelected } from "../../../../assets/spotterSelected";
+import { spotterAnimation } from "../../../../assets/spotterAnimation";
+import { hobo } from "../../../../assets/hobo";
+import { hoboSelected } from "../../../../assets/hoboSelected";
+import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
 
 const buoyIcon = (iconUrl: string) =>
   new L.Icon({
@@ -28,6 +35,54 @@ const buoyIcon = (iconUrl: string) =>
     iconAnchor: [12, 27],
     popupAnchor: [0, -28],
   });
+
+const sensorIcon = (
+  sensor: "spotter" | "hobo",
+  selected: boolean,
+  color: string
+) => {
+  const iconWidth = sensor === "spotter" ? 20 : 25;
+  const iconHeight = sensor === "spotter" ? 20 : 25;
+  return L.divIcon({
+    iconSize: [iconWidth, iconHeight],
+    iconAnchor: [iconWidth / 2, 0],
+    html:
+      sensor === "spotter"
+        ? `
+          <div class="homepage-map-spotter-icon-blinking">
+            ${spotterAnimation(color)}
+          </div>
+          <div class="homepage-map-spotter-icon-steady">
+            ${selected ? spotterSelected(color) : spotter(color)}
+          </div>
+        `
+        : `
+          <div class="homepage-map-hobo-icon">
+            ${selected ? hoboSelected(color) : hobo(color)}
+          </div>
+        `,
+    className: "homepage-map-spotter-icon-wrapper",
+  });
+};
+
+const markerIcon = (
+  hasSpotter: boolean,
+  hasHobo: boolean,
+  selected: boolean,
+  color: string,
+  iconUrl: string
+) => {
+  switch (true) {
+    case hasSpotter && hasHobo:
+      return sensorIcon("spotter", selected, color);
+    case hasSpotter && !hasHobo:
+      return sensorIcon("spotter", selected, color);
+    case !hasSpotter && hasHobo:
+      return sensorIcon("hobo", selected, color);
+    default:
+      return buoyIcon(iconUrl);
+  }
+};
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
@@ -87,7 +142,13 @@ export const ReefMarkers = () => {
                   dispatch(setReefOnMap(reef));
                 }}
                 key={`${reef.id}-${offset}`}
-                icon={buoyIcon(alertIconFinder(weeklyAlertLevel))}
+                icon={markerIcon(
+                  hasDeployedSpotter(reef),
+                  reef.hasHobo,
+                  reefOnMap?.id === reef.id,
+                  alertColorFinder(weeklyAlertLevel),
+                  alertIconFinder(weeklyAlertLevel)
+                )}
                 position={[lat, lng + offset]}
               >
                 <Popup reef={reef} autoOpen={offset === 0} />

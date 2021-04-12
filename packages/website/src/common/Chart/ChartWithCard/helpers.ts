@@ -52,6 +52,8 @@ export const findChartPeriod = (startDate: string, endDate: string) => {
   const diffDays = to.diff(from, "days");
 
   switch (true) {
+    case diffDays < 2:
+      return "hour";
     case diffDays < 3 * week:
       return "day";
     case diffDays < 3 * month:

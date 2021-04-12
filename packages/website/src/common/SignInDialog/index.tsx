@@ -1,4 +1,5 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
+import isEmail from "validator/lib/isEmail";
 import {
   withStyles,
   WithStyles,
@@ -65,7 +66,7 @@ const SignInDialog = ({
       event.preventDefault();
     }
     const registerInfo: UserSignInParams = {
-      email: data.emailAddress,
+      email: data.emailAddress.toLowerCase(),
       password: data.password,
     };
     dispatch(signInUser(registerInfo));
@@ -78,8 +79,8 @@ const SignInDialog = ({
     if (event) {
       event.preventDefault();
     }
-    dispatch(resetPassword({ email: emailAddress }));
-    setPasswordResetEmail(emailAddress);
+    dispatch(resetPassword({ email: emailAddress.toLowerCase() }));
+    setPasswordResetEmail(emailAddress.toLowerCase());
   };
 
   const clearUserError = () => dispatch(clearError());
@@ -183,15 +184,16 @@ const SignInDialog = ({
                     name="emailAddress"
                     placeholder="Email Address"
                     helperText={
-                      errors.emailAddress ? errors.emailAddress.message : ""
+                      (errors.emailAddress &&
+                        (errors.emailAddress.type === "validate"
+                          ? "Invalid email address"
+                          : errors.emailAddress.message)) ||
+                      ""
                     }
                     label="Email Address"
                     inputRef={register({
                       required: "This is a required field",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid email address",
-                      },
+                      validate: (value) => isEmail(value),
                     })}
                     error={!!errors.emailAddress}
                     inputProps={{ className: classes.textField }}

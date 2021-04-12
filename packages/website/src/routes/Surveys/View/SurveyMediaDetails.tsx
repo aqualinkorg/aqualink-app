@@ -106,23 +106,34 @@ const SurveyMediaDetails = ({
                   <Grid item>
                     <Typography variant="h6">Survey Point: </Typography>
                   </Grid>
-                  <Tooltip title="View survey point" arrow placement="top">
-                    <Grid item>
-                      <Link
-                        className={classes.link}
-                        to={`/reefs/${reefId}/points/${point.pointId}`}
-                      >
-                        <Typography
-                          className={`${classes.titleName} ${
-                            point.name === selectedPoi && classes.selectedPoi
-                          }`}
-                          variant="h6"
+                  {point.pointId ? (
+                    <Tooltip title="View survey point" arrow placement="top">
+                      <Grid item>
+                        <Link
+                          className={classes.link}
+                          to={`/reefs/${reefId}/points/${point.pointId}`}
                         >
-                          {point.name}
-                        </Typography>
-                      </Link>
-                    </Grid>
-                  </Tooltip>
+                          <Typography
+                            className={`${classes.titleName} ${
+                              point.name === selectedPoi && classes.selectedPoi
+                            }`}
+                            variant="h6"
+                          >
+                            {point.name}
+                          </Typography>
+                        </Link>
+                      </Grid>
+                    </Tooltip>
+                  ) : (
+                    <Typography
+                      className={`${classes.titleName} ${
+                        point.name === selectedPoi && classes.selectedPoi
+                      }`}
+                      variant="h6"
+                    >
+                      {point.name}
+                    </Typography>
+                  )}
                 </Grid>
                 <Grid container item xs={12} md={6} lg={2} spacing={2}>
                   <Grid item xs={6} className={classes.imageLabel}>
