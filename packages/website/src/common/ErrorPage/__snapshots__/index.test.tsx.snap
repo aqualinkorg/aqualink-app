@@ -189,7 +189,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
             >
               <a
                 class="NavBar-menuItemLink-9"
-                href="/user/1/dashboard"
+                href="/dashboard"
               >
                 <mock-menuitem
                   classname="NavBar-menuItem-8"

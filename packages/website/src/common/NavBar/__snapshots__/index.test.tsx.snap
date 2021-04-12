@@ -90,7 +90,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
             >
               <a
                 class="NavBar-menuItemLink-9"
-                href="/user/1/dashboard"
+                href="/dashboard"
               >
                 <mock-menuitem
                   classname="NavBar-menuItem-8"
@@ -259,7 +259,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
             >
               <a
                 class="NavBar-menuItemLink-21"
-                href="/user/1/dashboard"
+                href="/dashboard"
               >
                 <mock-menuitem
                   classname="NavBar-menuItem-20"

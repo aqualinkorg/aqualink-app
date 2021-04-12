@@ -4,8 +4,11 @@ import {
   WithStyles,
   createStyles,
   Container,
+  LinearProgress,
+  Box,
+  Typography,
+  Theme,
 } from "@material-ui/core";
-import { RouteComponentProps, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import NavBar from "../../common/NavBar";
@@ -14,37 +17,53 @@ import {
   userInfoSelector,
   userLoadingSelector,
 } from "../../store/User/userSlice";
+import Delayed from "../../common/Delayed";
 
-const Dashboard = ({ match, classes }: DashboardProps) => {
-  const storedUser = useSelector(userInfoSelector);
+const Dashboard = ({ classes }: DashboardProps) => {
+  const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const { userId } = match.params;
-  const unauthorized = !userLoading && userId !== storedUser?.id.toString();
   return (
     <>
-      {unauthorized && <Redirect to="/" />}
       <NavBar searchLocation={false} />
-      <Container className={classes.root}>
-        <h1>{`Dashboard for user ${userId} works!`}</h1>
-      </Container>
+      <div className={classes.root}>
+        {!user && !userLoading && (
+          <Delayed waitBeforeShow={1000}>
+            <Box
+              height="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+            >
+              <Typography variant="h2" className={classes.noUserMessage}>
+                Please sign in to view your dashboard
+              </Typography>
+            </Box>
+          </Delayed>
+        )}
+        {userLoading && <LinearProgress />}
+        {user && (
+          <Container className={classes.root}>
+            <h1>{`Dashboard for user ${user?.fullName} works!`}</h1>
+          </Container>
+        )}
+      </div>
       <Footer />
     </>
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
     },
+
+    noUserMessage: {
+      color: theme.palette.primary.main,
+    },
   });
 
-interface MatchProps extends RouteComponentProps<{ userId: string }> {}
-
-interface DashboardIncomingProps {}
-
-type DashboardProps = MatchProps &
-  DashboardIncomingProps &
-  WithStyles<typeof styles>;
+type DashboardProps = WithStyles<typeof styles>;
 
 export default withStyles(styles)(Dashboard);

@@ -145,10 +145,7 @@ const NavBar = ({
                       MenuListProps={{ className: classes.userMenu }}
                       PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
-                      <Link
-                        to={`/user/${user.id}/dashboard`}
-                        className={classes.menuItemLink}
-                      >
+                      <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"
                           className={classes.menuItem}

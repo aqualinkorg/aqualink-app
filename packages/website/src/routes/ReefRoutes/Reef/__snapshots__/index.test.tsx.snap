@@ -238,7 +238,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             >
               <a
                 class="NavBar-menuItemLink-165"
-                href="/user/1/dashboard"
+                href="/dashboard"
               >
                 <mock-menuitem
                   classname="NavBar-menuItem-164"
@@ -2803,7 +2803,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             >
               <a
                 class="NavBar-menuItemLink-11"
-                href="/user/1/dashboard"
+                href="/dashboard"
               >
                 <mock-menuitem
                   classname="NavBar-menuItem-10"

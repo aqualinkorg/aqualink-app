@@ -58,11 +58,7 @@ function App() {
                 <Route exact path="/faq" component={Faq} />
                 <Route exact path="/terms" component={Terms} />
                 <Route path="/reefs" component={ReefRoutes} />
-                <Route
-                  exact
-                  path="/user/:userId/dashboard"
-                  component={Dashboard}
-                />
+                <Route exact path="/dashboard" component={Dashboard} />
                 <Route default component={NotFound} />
               </Switch>
             )}
