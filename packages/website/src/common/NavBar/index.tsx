@@ -245,7 +245,7 @@ const styles = (theme: Theme) =>
     },
     userMenuWrapper: {
       marginTop: 36,
-      border: "1px solid black",
+      border: "1px solid rgba(0, 0, 0, 0.12)",
     },
     userMenuDivider: {
       margin: "4px 0",
