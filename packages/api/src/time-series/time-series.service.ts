@@ -29,9 +29,7 @@ interface TimeSeriesGroupable {
   source: SourceType;
 }
 
-type TimeSeriesResponse<T> = {
-  [key in SourceType]: { [key in Metric]: T[] };
-};
+type TimeSeriesResponse<T> = Record<SourceType, Record<Metric, T[]>>;
 
 @Injectable()
 export class TimeSeriesService {
