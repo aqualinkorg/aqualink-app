@@ -46,7 +46,8 @@
     "backfill-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
     "augment-reefs": "ts-node -r dotenv/config scripts/augment-reef-data.ts",
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
-    "backfill-spotter-data": "ts-node -r dotenv/config scripts/backfill-spotter-data.ts"
+    "backfill-spotter-data": "ts-node -r dotenv/config scripts/backfill-spotter-data.ts",
+    "backfill-sst-sofar": "ts-node -r dotenv/config scripts/backfill-sst-sofar.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",

@@ -12,7 +12,8 @@ import { Reef } from './reefs.entity';
 export enum SourceType {
   SPOTTER = 'spotter',
   HOBO = 'hobo',
-  SOFAR_API = 'sofar_api',
+  NOAA = 'noaa',
+  GFS = 'gfs',
 }
 
 @Entity()

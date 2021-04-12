@@ -4,18 +4,18 @@ import { Sources, SourceType } from '../reefs/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 
-export const insertSSTToTimeSeries = async (
+export const getNOAASource = async (
   reef: Reef,
-  satelliteTemperature: number,
-  timestamp: Date,
-  timeSeriesRepository: Repository<TimeSeries>,
   sourcesRepository: Repository<Sources>,
 ) => {
-  const sofarSource = await sourcesRepository
+  return sourcesRepository
     .findOne({
-      reef,
-      type: SourceType.SOFAR_API,
-      poi: IsNull(),
+      where: {
+        reef,
+        type: SourceType.NOAA,
+        poi: IsNull(),
+      },
+      relations: ['reef'],
     })
     .then((source) => {
       if (source) {
@@ -24,15 +24,23 @@ export const insertSSTToTimeSeries = async (
 
       return sourcesRepository.save({
         reef,
-        type: SourceType.SOFAR_API,
+        type: SourceType.NOAA,
       });
     });
+};
 
-  await timeSeriesRepository
+export const insertSSTToTimeSeries = async (
+  reef: Reef,
+  satelliteTemperature: number,
+  timestamp: Date,
+  NOAASource: Sources,
+  timeSeriesRepository: Repository<TimeSeries>,
+) => {
+  return timeSeriesRepository
     .createQueryBuilder('time_series')
     .insert()
     .values({
-      source: sofarSource,
+      source: NOAASource,
       metric: Metric.SATELLITE_TEMPERATURE,
       timestamp,
       reef,

@@ -1,18 +1,22 @@
 import { createConnection, In } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
+import { keyBy } from 'lodash';
 import { Reef } from '../src/reefs/reefs.entity';
 import { getNOAAData } from './utils/netcdf';
 import { DailyData } from '../src/reefs/daily-data.entity';
 import { Sources } from '../src/reefs/sources.entity';
-import { insertSSTToTimeSeries } from '../src/utils/time-series.utils';
+import {
+  getNOAASource,
+  insertSSTToTimeSeries,
+} from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 
 const dbConfig = require('../ormconfig');
 
 // Reefs and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020];
-const reefsToProcess: number[] = [];
+const reefsToProcess: number[] = [533];
 
 async function main() {
   const connection = await createConnection(dbConfig);
@@ -54,6 +58,17 @@ async function main() {
     [],
   );
 
+  const sources = await Promise.all(
+    selectedReefs.map((reef) => {
+      return getNOAASource(reef, sourcesRepository);
+    }),
+  );
+
+  const reefToSource: Record<number, Sources> = keyBy(
+    sources,
+    (source) => source.reef.id,
+  );
+
   await Bluebird.map(dailyDataEntities, async (entity) => {
     try {
       await dailyDataRepository.save(entity);
@@ -76,8 +91,8 @@ async function main() {
       entity.reef,
       entity.satelliteTemperature,
       entity.date,
+      reefToSource[entity.reef.id],
       timeSeriesRepository,
-      sourcesRepository,
     );
   });
 

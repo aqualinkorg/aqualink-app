@@ -30,9 +30,6 @@ import {
   filterSpotterDataByDate,
   getExclusionDates,
 } from '../utils/reef.utils';
-import { TimeSeries } from '../time-series/time-series.entity';
-import { Sources } from '../reefs/sources.entity';
-import { insertSSTToTimeSeries } from '../utils/time-series.utils';
 
 export async function getDegreeHeatingDays(
   maxMonthlyMean: number,
@@ -286,8 +283,6 @@ export async function getReefsDailyData(
   const reefRepository = connection.getRepository(Reef);
   const dailyDataRepository = connection.getRepository(DailyData);
   const exclusionDatesRepository = connection.getRepository(ExclusionDates);
-  const timeSeriesRepository = connection.getRepository(TimeSeries);
-  const sourcesRepository = connection.getRepository(Sources);
   const allReefs = await reefRepository.find(
     reefIds && reefIds.length > 0
       ? {
@@ -350,19 +345,6 @@ export async function getReefsDailyData(
           );
         }
       }
-
-      // If no satellite temperature was returned then skip time-series update
-      if (!dailyDataInput.satelliteTemperature) {
-        return;
-      }
-
-      await insertSSTToTimeSeries(
-        reef,
-        dailyDataInput.satelliteTemperature,
-        endOfDate,
-        timeSeriesRepository,
-        sourcesRepository,
-      );
     },
     { concurrency: 8 },
   );
