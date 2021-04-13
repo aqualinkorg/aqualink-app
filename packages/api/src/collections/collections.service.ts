@@ -1,23 +1,44 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { isUndefined, omitBy } from 'lodash';
-import { Repository } from 'typeorm';
-import { Reef } from '../reefs/reefs.entity';
-import { Collection } from './collections.entity';
+import { isUndefined, keyBy, omitBy } from 'lodash';
+import { In, Repository } from 'typeorm';
+import { DailyData } from '../reefs/daily-data.entity';
+import { SourceType } from '../reefs/sources.entity';
+import { LatestData } from '../time-series/latest-data.entity';
+import { Metric } from '../time-series/metrics.entity';
+import { getSstAnomaly } from '../utils/liveData';
+import { SofarValue } from '../utils/sofar.types';
+import { metricToKey } from '../utils/time-series.utils';
+import { Collection, CollectionData } from './collections.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
+interface LatestDailyData {
+  // reefId
+  id: number;
+  date: string;
+  // satelliteTemperature
+  sst?: number;
+  // degreeHeatingStress
+  dhd?: number;
+  // weekly alert
+  alert?: number;
+}
+
 @Injectable()
 export class CollectionsService {
-  private logger: Logger = new Logger(CollectionsService.name);
+  private logger: Logger = new Logger(CollectionsService.name, true);
 
   constructor(
     @InjectRepository(Collection)
     private collectionRepository: Repository<Collection>,
 
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
+    @InjectRepository(LatestData)
+    private latestDataRepository: Repository<LatestData>,
+
+    @InjectRepository(DailyData)
+    private dailyDataRepository: Repository<DailyData>,
   ) {}
 
   create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
@@ -60,8 +81,90 @@ export class CollectionsService {
     return query.getMany();
   }
 
-  findOne(collectionId: number): Promise<Collection | undefined> {
-    return this.collectionRepository.findOne(collectionId);
+  async findOne(collectionId: number): Promise<Collection> {
+    const collection = await this.collectionRepository.findOne({
+      where: { id: collectionId },
+      relations: ['reefs', 'reefs.historicalMonthlyMean'],
+    });
+
+    if (!collection) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
+
+    // Get buoy data
+    const latestData = await this.latestDataRepository.find({
+      where: {
+        reef: In(collection.reefs.map((reef) => reef.id)),
+        source: SourceType.SPOTTER,
+        metric: In([Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE]),
+      },
+    });
+
+    const mappedlatestData = latestData.reduce((obj, data) => {
+      return {
+        ...obj,
+        [data.reefId]: {
+          ...obj[data.reefId],
+          [metricToKey(data.metric)]: data.value,
+        },
+      };
+    }, {}) as Record<
+      number,
+      Record<'bottomTemperature' | 'topTemperature', SofarValue>
+    >;
+
+    this.logger.log('Getting latest daily data');
+    // Get latest sst and degree_heating days
+    // Query builder doesn't apply correctly the select and DISTINCT must be first
+    // So we use a raw query to achieve this
+    const latestDailyData: LatestDailyData[] = await this.dailyDataRepository
+      .createQueryBuilder('dailyData')
+      .select(
+        'DISTINCT ON (reef_id) reef_id AS id, satellite_temperature sst, degree_heating_days dhd, weekly_alert_level alert, date',
+      )
+      .orderBy('reef_id, date', 'DESC')
+      .getRawMany();
+    this.logger.log('Got latest daily data');
+
+    const mappedLatestDailyData: Record<number, LatestDailyData> = keyBy(
+      latestDailyData,
+      'id',
+    );
+
+    const mappedReefData = collection.reefs.reduce((obj, reef) => {
+      const sst =
+        mappedLatestDailyData[reef.id] &&
+        mappedLatestDailyData[reef.id].sst !== undefined
+          ? ({
+              value: mappedLatestDailyData[reef.id].sst,
+              timestamp: mappedLatestDailyData[reef.id].date,
+            } as SofarValue)
+          : undefined;
+
+      return {
+        ...obj,
+        [reef.id]: {
+          ...mappedlatestData[reef.id],
+          satelliteTemperature: mappedLatestDailyData[reef.id]?.sst,
+          degreeHeatingDays: mappedLatestDailyData[reef.id]?.dhd,
+          weeklyAlert: mappedLatestDailyData[reef.id]?.alert,
+          sstAnomaly: getSstAnomaly(reef.historicalMonthlyMean, sst),
+        },
+      };
+    }, {}) as Record<number, CollectionData>;
+
+    return {
+      ...collection,
+      reefs: collection.reefs.map((reef) => {
+        return {
+          ...reef,
+          applied: reef.applied,
+          collectionData: mappedReefData[reef.id],
+        };
+      }),
+    };
   }
 
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
