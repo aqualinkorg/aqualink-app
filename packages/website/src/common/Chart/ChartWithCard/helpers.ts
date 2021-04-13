@@ -12,12 +12,7 @@ import {
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Reefs/types";
-import {
-  filterDailyData,
-  filterMaxMonthlyData,
-  filterSofarData,
-  filterTimeSeriesData,
-} from "../utils";
+import { filterMaxMonthlyData } from "../utils";
 import { CardColumn } from "./types";
 
 export const calculateCardMetrics = (
@@ -81,24 +76,13 @@ export const findDataLimits = (
     startDate,
     endDate
   );
-  const filteredDailyData = filterDailyData(
-    dailyData || [],
-    startDate,
-    endDate
-  );
-  const filteredHoboData = filterSofarData(
-    hobo?.bottomTemperature || [],
-    startDate,
-    endDate
-  );
-  const filteredSpotterData = filterTimeSeriesData(spotter, startDate, endDate);
 
   const hasData = Boolean(
     filteredMaxMonthlyData?.[0] ||
-      filteredDailyData?.[0] ||
-      filteredSpotterData?.bottomTemperature?.[0] ||
-      filteredSpotterData?.surfaceTemperature?.[0] ||
-      filteredHoboData?.[0]
+      dailyData?.[0] ||
+      spotter?.bottomTemperature?.[0] ||
+      spotter?.surfaceTemperature?.[0] ||
+      hobo?.bottomTemperature?.[0]
   );
 
   return [
@@ -106,9 +90,9 @@ export const findDataLimits = (
       ? new Date(
           findMarginalDate(
             filteredMaxMonthlyData,
-            filteredDailyData,
-            filteredSpotterData,
-            filteredHoboData,
+            dailyData || [],
+            spotter,
+            hobo?.bottomTemperature || [],
             "min"
           )
         ).toISOString()
@@ -117,9 +101,9 @@ export const findDataLimits = (
       ? new Date(
           findMarginalDate(
             filteredMaxMonthlyData,
-            filteredDailyData,
-            filteredSpotterData,
-            filteredHoboData
+            dailyData || [],
+            spotter,
+            hobo?.bottomTemperature || []
           )
         ).toISOString()
       : undefined,
