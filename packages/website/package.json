@@ -68,7 +68,7 @@
     "validator": "^13.1.1"
   },
   "resolutions": {
-    "terser": "3.14.1"
+    "terser": "3.16.1"
   },
   "jest": {
     "snapshotSerializers": [
