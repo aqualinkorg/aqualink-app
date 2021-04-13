@@ -14,6 +14,7 @@ export type Interval = {
   color: string;
   icon: string;
   level: number;
+  label: string;
 };
 
 /**
@@ -31,6 +32,7 @@ export const findIntervalByLevel = (
     case undefined:
     case 0:
       return {
+        label: "no alert",
         image: noStress,
         color: "#C6E5FA",
         icon: pinNoStress,
@@ -39,6 +41,7 @@ export const findIntervalByLevel = (
 
     case 1:
       return {
+        label: "watch",
         image: watch,
         color: "#FFF200",
         icon: pinWatch,
@@ -47,6 +50,7 @@ export const findIntervalByLevel = (
 
     case 2:
       return {
+        label: "warning",
         image: warning,
         color: "#F8AB00",
         icon: pinWarning,
@@ -55,6 +59,7 @@ export const findIntervalByLevel = (
 
     case 3:
       return {
+        label: "level 1",
         image: lvl1,
         color: "#EF0000",
         icon: pinLvl1,
@@ -63,6 +68,7 @@ export const findIntervalByLevel = (
 
     case 4:
       return {
+        label: "level 2",
         image: lvl2,
         color: "#940000",
         icon: pinLvl2,
@@ -71,6 +77,7 @@ export const findIntervalByLevel = (
 
     default:
       return {
+        label: "no alert",
         image: noStress,
         color: "#C6E5FA",
         icon: pinNoStress,

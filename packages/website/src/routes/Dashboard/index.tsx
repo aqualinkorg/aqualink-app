@@ -3,7 +3,6 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  Container,
   LinearProgress,
   Box,
   Typography,
@@ -18,6 +17,7 @@ import {
   userLoadingSelector,
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
+import DashboardContent from "./Content";
 
 const Dashboard = ({ classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
@@ -42,11 +42,7 @@ const Dashboard = ({ classes }: DashboardProps) => {
           </Delayed>
         )}
         {userLoading && <LinearProgress />}
-        {user && (
-          <Container className={classes.root}>
-            <h1>{`Dashboard for user ${user?.fullName} works!`}</h1>
-          </Container>
-        )}
+        {user && <DashboardContent user={user} />}
       </div>
       <Footer />
     </>

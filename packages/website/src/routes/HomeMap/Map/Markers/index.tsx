@@ -21,68 +21,8 @@ import {
   getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
-import { spotter } from "../../../../assets/spotter";
-import { spotterSelected } from "../../../../assets/spotterSelected";
-import { spotterAnimation } from "../../../../assets/spotterAnimation";
-import { hobo } from "../../../../assets/hobo";
-import { hoboSelected } from "../../../../assets/hoboSelected";
+import { markerIcon } from "../../../../helpers/map";
 import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
-
-const buoyIcon = (iconUrl: string) =>
-  new L.Icon({
-    iconUrl,
-    iconSize: [24, 27],
-    iconAnchor: [12, 27],
-    popupAnchor: [0, -28],
-  });
-
-const sensorIcon = (
-  sensor: "spotter" | "hobo",
-  selected: boolean,
-  color: string
-) => {
-  const iconWidth = sensor === "spotter" ? 20 : 25;
-  const iconHeight = sensor === "spotter" ? 20 : 25;
-  return L.divIcon({
-    iconSize: [iconWidth, iconHeight],
-    iconAnchor: [iconWidth / 2, 0],
-    html:
-      sensor === "spotter"
-        ? `
-          <div class="homepage-map-spotter-icon-blinking">
-            ${spotterAnimation(color)}
-          </div>
-          <div class="homepage-map-spotter-icon-steady">
-            ${selected ? spotterSelected(color) : spotter(color)}
-          </div>
-        `
-        : `
-          <div class="homepage-map-hobo-icon">
-            ${selected ? hoboSelected(color) : hobo(color)}
-          </div>
-        `,
-    className: "homepage-map-spotter-icon-wrapper",
-  });
-};
-
-const markerIcon = (
-  hasSpotter: boolean,
-  hasHobo: boolean,
-  selected: boolean,
-  color: string,
-  iconUrl: string
-) => {
-  switch (true) {
-    case hasSpotter && hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case hasSpotter && !hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case !hasSpotter && hasHobo:
-      return sensorIcon("hobo", selected, color);
-    default:
-      return buoyIcon(iconUrl);
-  }
-};
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {

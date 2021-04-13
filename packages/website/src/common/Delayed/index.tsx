@@ -9,9 +9,10 @@ const Delayed = ({ children, waitBeforeShow = 500 }: DelayedProps) => {
   const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setIsShown(true);
     }, waitBeforeShow);
+    return () => clearTimeout(timeout);
   }, [waitBeforeShow]);
 
   return isShown ? children : null;
