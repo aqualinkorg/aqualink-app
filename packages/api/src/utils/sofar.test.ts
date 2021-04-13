@@ -8,11 +8,11 @@ test('It processes Sofar API for daily data.', async () => {
     'analysedSeaSurfaceTemperature',
     -3.5976336810301888,
     -178.0000002552476,
-    new Date('2020-11-07'),
+    new Date('2021-04-06'),
   );
 
   expect(values).toEqual([
-    { timestamp: '2020-11-06T12:00:00.000Z', value: 28.9400005340576 },
+    { timestamp: '2021-04-05T12:00:00.000Z', value: 28.8700008392334 },
   ]);
 });
 
