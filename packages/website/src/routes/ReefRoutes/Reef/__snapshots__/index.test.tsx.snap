@@ -236,6 +236,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-162"
+              />
               <a
                 class="NavBar-menuItemLink-165"
                 href="/dashboard"
@@ -2801,6 +2804,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-8"
+              />
               <a
                 class="NavBar-menuItemLink-11"
                 href="/dashboard"

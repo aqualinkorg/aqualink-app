@@ -24,6 +24,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { sortBy } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 
@@ -145,6 +146,24 @@ const NavBar = ({
                       MenuListProps={{ className: classes.userMenu }}
                       PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
+                      {sortBy(user.administeredReefs, "id").map(
+                        ({ id, name, region }, index) => {
+                          const reefIdentifier = name || region;
+                          return (
+                            <MuiLink
+                              underline="none"
+                              href={`/reefs/${id}`}
+                              key={`reef-link-${id}`}
+                              className={classes.menuItemLink}
+                            >
+                              <MenuItem className={classes.menuItem}>
+                                {reefIdentifier || `Reef ${index + 1}`}
+                              </MenuItem>
+                            </MuiLink>
+                          );
+                        }
+                      )}
+                      <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"

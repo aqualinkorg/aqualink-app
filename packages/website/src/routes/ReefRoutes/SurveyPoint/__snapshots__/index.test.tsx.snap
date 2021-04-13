@@ -236,6 +236,9 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-6"
+              />
               <a
                 class="NavBar-menuItemLink-9"
                 href="/dashboard"

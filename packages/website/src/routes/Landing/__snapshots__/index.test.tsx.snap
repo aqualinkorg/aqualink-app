@@ -187,6 +187,9 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-11"
+              />
               <a
                 class="NavBar-menuItemLink-14"
                 href="/dashboard"

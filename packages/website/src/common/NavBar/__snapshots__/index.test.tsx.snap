@@ -88,6 +88,9 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-6"
+              />
               <a
                 class="NavBar-menuItemLink-9"
                 href="/dashboard"
@@ -257,6 +260,9 @@ exports[`NavBar without routeButtons should render with given state from Redux s
               open="false"
               popoverclasses="[object Object]"
             >
+              <mock-divider
+                classname="NavBar-userMenuDivider-18"
+              />
               <a
                 class="NavBar-menuItemLink-21"
                 href="/dashboard"
