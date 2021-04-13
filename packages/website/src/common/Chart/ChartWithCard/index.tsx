@@ -65,6 +65,16 @@ const ChartWithCard = ({
     spotterData?.bottomTemperature?.[0] || spotterData?.surfaceTemperature?.[0]
   );
 
+  const chartStartDate = startDate || subtractFromDate(today, "week");
+  const chartEndDate = moment
+    .min(
+      moment(),
+      moment(endDate)
+        .tz(reef.timezone || "UTC")
+        .endOf("day")
+    )
+    .toISOString();
+
   // Set pickers initial values once the range request is completed
   useEffect(() => {
     if (hoboBottomTemperatureRange) {
@@ -270,15 +280,8 @@ const ChartWithCard = ({
             hoboBottomTemperature={hoboBottomTemperature || []}
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
-            startDate={startDate || subtractFromDate(today, "week")}
-            endDate={moment
-              .min(
-                moment(),
-                moment(endDate)
-                  .tz(reef.timezone || "UTC")
-                  .endOf("day")
-              )
-              .toISOString()}
+            startDate={chartStartDate}
+            endDate={chartEndDate}
             onStartDateChange={onPickerDateChange("start")}
             onEndDateChange={onPickerDateChange("end")}
             pickerErrored={pickerErrored}
@@ -299,15 +302,8 @@ const ChartWithCard = ({
                 pickerStartDate || subtractFromDate(today, "week")
               }
               pickerEndDate={pickerEndDate || today}
-              chartStartDate={startDate || subtractFromDate(today, "week")}
-              chartEndDate={moment
-                .min(
-                  moment(),
-                  moment(endDate)
-                    .tz(reef.timezone || "UTC")
-                    .endOf("day")
-                )
-                .toISOString()}
+              chartStartDate={chartStartDate}
+              chartEndDate={chartEndDate}
               depth={reef.depth}
               spotterData={spotterData}
               hoboBottomTemperature={hoboBottomTemperature || []}
