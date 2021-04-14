@@ -67,9 +67,6 @@
     "typescript": "~3.8.2",
     "validator": "^13.1.1"
   },
-  "resolutions": {
-    "terser": "4.6.13"
-  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
