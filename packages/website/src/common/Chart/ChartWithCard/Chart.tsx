@@ -20,7 +20,7 @@ import {
   convertTimeSeriesToLocalTime,
   convertToLocalTime,
   displayTimeInLocalTimezone,
-  generateMonthlyMaxTimestamps,
+  generateHistoricalMonthlyMeanTimestamps,
 } from "../../../helpers/dates";
 import {
   DailyData,
@@ -157,8 +157,8 @@ const Chart = ({
             hoboBottomTemperature || [],
             reef.timezone
           )}
-          monthlyMaxData={generateMonthlyMaxTimestamps(
-            reef.monthlyMax,
+          historicalMonthlyMeanData={generateHistoricalMonthlyMeanTimestamps(
+            reef.historicalMonthlyMean,
             startDate,
             endDate,
             reef.timezone

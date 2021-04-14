@@ -22,7 +22,7 @@ export const mockReef: Reef = {
   admins: [mockUser],
   surveyPoints: [],
   stream: null,
-  monthlyMax: [],
+  historicalMonthlyMean: [],
   liveData: {
     reef: { id: 1 },
     bottomTemperature: {

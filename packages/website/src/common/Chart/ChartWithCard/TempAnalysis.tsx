@@ -13,12 +13,12 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { reefTimeSeriesDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
 import {
-  MonthlyMaxData,
+  HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
 } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
-import { filterMaxMonthlyData } from "../utils";
+import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
 
@@ -34,13 +34,13 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   depth,
   spotterData,
   hoboBottomTemperature,
-  monthlyMax,
+  historicalMonthlyMean,
   children,
 }) => {
   const loading = useSelector(reefTimeSeriesDataLoadingSelector);
 
-  const filteredMaxMonthlyData = filterMaxMonthlyData(
-    monthlyMax,
+  const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
+    historicalMonthlyMean,
     chartStartDate,
     chartEndDate
   );
@@ -62,7 +62,11 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       tooltip: "Historic long-term average of satellite surface temperature",
       key: "historic",
       color: "#d84424",
-      rows: calculateCardMetrics(1, filteredMaxMonthlyData, "historic"),
+      rows: calculateCardMetrics(
+        1,
+        filteredHistoricalMonthlyMeanData,
+        "historic"
+      ),
     },
     {
       title: "HOBO",
@@ -217,7 +221,7 @@ interface TempAnalysisIncomingProps {
   depth: number | null;
   spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[];
-  monthlyMax: MonthlyMaxData[];
+  historicalMonthlyMean: HistoricalMonthlyMeanData[];
 }
 
 export default withStyles(styles)(TempAnalysis);

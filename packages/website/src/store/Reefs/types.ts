@@ -95,7 +95,7 @@ export interface DailyData {
   weeklyAlertLevel?: number;
 }
 
-export interface MonthlyMaxData {
+export interface HistoricalMonthlyMeanData {
   value: number;
   date: string;
 }
@@ -163,7 +163,7 @@ export type TimeSeriesDataRangeResponse = Record<
 
 export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
 
-export interface MonthlyMax {
+export interface HistoricalMonthlyMean {
   id: number;
   month: number;
   temperature: number;
@@ -188,7 +188,7 @@ export interface Reef {
   spotterId: string | null;
   timezone?: string | null;
   surveyPoints: Pois[];
-  monthlyMax: MonthlyMax[];
+  historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
 }
 

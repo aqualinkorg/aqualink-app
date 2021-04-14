@@ -52,7 +52,7 @@ const Tooltip = ({
   reefId,
   date,
   depth,
-  monthlyMaxTemp,
+  historicalMonthlyMeanTemp,
   satelliteTemp,
   spotterTopTemp,
   spotterBottomTemp,
@@ -76,7 +76,11 @@ const Tooltip = ({
     color: string;
     title: string;
   }[] = [
-    { temperature: monthlyMaxTemp, color: "#d84424", title: "MONTHLY MEAN" },
+    {
+      temperature: historicalMonthlyMeanTemp,
+      color: "#d84424",
+      title: "MONTHLY MEAN",
+    },
     { temperature: satelliteTemp, color: "#6bc1e1", title: "SURFACE" },
     { temperature: spotterTopTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
@@ -203,7 +207,7 @@ export interface TooltipData {
   reefId: number;
   date: string;
   depth: number | null;
-  monthlyMaxTemp: number | null;
+  historicalMonthlyMeanTemp: number | null;
   satelliteTemp: number | null;
   spotterTopTemp: number | null;
   spotterBottomTemp: number | null;
