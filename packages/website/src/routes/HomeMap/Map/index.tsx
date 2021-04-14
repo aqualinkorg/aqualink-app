@@ -19,6 +19,7 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
+import { Collection } from "../../Dashboard/collection";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -38,6 +39,14 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  collection,
+  showAlertLevelLegend,
+  showWaterMark,
+  geolocationEnabled,
+  defaultLayerName,
+  layerControlsEnabled,
+  legendBottom,
+  legendLeft,
   classes,
 }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>("");
@@ -130,8 +139,11 @@ const HomepageMap = ({
         </Alert>
       </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
-      <SofarLayers />
-      <ReefMarkers />
+      <SofarLayers
+        layerControlsEnabled={layerControlsEnabled}
+        defaultLayerName={defaultLayerName}
+      />
+      <ReefMarkers collection={collection} />
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
       )}
@@ -141,14 +153,20 @@ const HomepageMap = ({
           radius={currentLocationAccuracy}
         />
       )}
-      <Legend legendName={legendName} />
-      <AlertLevelLegend />
-      <div className="mapbox-wordmark" />
-      <div className={classes.locationIconButton}>
-        <IconButton onClick={onLocationSearch}>
-          <MyLocationIcon color="primary" />
-        </IconButton>
-      </div>
+      <Legend
+        legendName={defaultLayerName || legendName}
+        bottom={legendBottom}
+        left={legendLeft}
+      />
+      {showAlertLevelLegend && <AlertLevelLegend />}
+      {showWaterMark && <div className="mapbox-wordmark" />}
+      {geolocationEnabled && (
+        <div className={classes.locationIconButton}>
+          <IconButton onClick={onLocationSearch}>
+            <MyLocationIcon color="primary" />
+          </IconButton>
+        </div>
+      )}
     </Map>
   );
 };
@@ -187,7 +205,26 @@ const styles = () =>
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  collection?: Collection;
+  showAlertLevelLegend?: boolean;
+  showWaterMark?: boolean;
+  geolocationEnabled?: boolean;
+  defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
+  layerControlsEnabled?: boolean;
+  legendBottom?: number;
+  legendLeft?: number;
 }
+
+HomepageMap.defaultProps = {
+  collection: undefined,
+  showAlertLevelLegend: true,
+  showWaterMark: true,
+  geolocationEnabled: true,
+  defaultLayerName: undefined,
+  layerControlsEnabled: true,
+  legendBottom: undefined,
+  legendLeft: undefined,
+};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 

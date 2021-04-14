@@ -23,6 +23,7 @@ import {
 } from "../../../../helpers/bleachingAlertIntervals";
 import { markerIcon } from "../../../../helpers/map";
 import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
+import { Collection } from "../../../Dashboard/collection";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
@@ -39,8 +40,9 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
-export const ReefMarkers = () => {
-  const reefsList = useSelector(reefsToDisplayListSelector) || [];
+export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
+  const storedReefs = useSelector(reefsToDisplayListSelector);
+  const reefsList = collection?.reefs || storedReefs || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();
@@ -100,6 +102,14 @@ export const ReefMarkers = () => {
       </MarkerClusterGroup>
     </LayerGroup>
   );
+};
+
+interface ReefMarkersProps {
+  collection?: Collection;
+}
+
+ReefMarkers.defaultProps = {
+  collection: undefined,
 };
 
 export default ReefMarkers;

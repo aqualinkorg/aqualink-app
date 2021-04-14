@@ -17,7 +17,12 @@ export interface HomePageState {
 export interface TableRow {
   locationName: string | null;
   region?: string | null;
-  temp: number | null;
+  sst: number | null;
+  week: number | null;
+  historicMax: number | null;
+  sstAnomaly: number | null;
+  buoyTop: number | null;
+  buoyBottom: number | null;
   maxMonthlyMean: number | null;
   depth: number | null;
   dhw: number | null;

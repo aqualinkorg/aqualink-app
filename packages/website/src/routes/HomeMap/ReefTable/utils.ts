@@ -8,7 +8,12 @@ export enum OrderKeys {
   DEPTH = "depth",
   DHW = "dhw",
   LOCATION_NAME = "locationName",
-  TEMP = "temp",
+  SST = "sst",
+  WEEK = "week",
+  HISTORIC_MAX = "historicMax",
+  SST_ANOMALY = "sstAnomaly",
+  BUOY_TOP = "buoyTop",
+  BUOY_BOTTOM = "buoyBottom",
 }
 
 // This type isn't used anywhere, it just forces the above enum to only hold valid keys to TableRow.

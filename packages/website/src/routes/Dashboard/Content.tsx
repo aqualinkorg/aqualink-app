@@ -1,13 +1,15 @@
 import React from "react";
 import { Container, Grid } from "@material-ui/core";
 import { User } from "../../store/User/types";
-import { collection } from "./collection";
+import { createCollection } from "./collection";
 import BackButton from "./BackButton";
 import Map from "./Map";
 import Info from "./Info";
 import Table from "./Table";
+import { Reef } from "../../store/Reefs/types";
 
-const Content = ({ user }: ContentProps) => {
+const Content = ({ user, reefsList }: ContentProps) => {
+  const collection = createCollection(reefsList, 8);
   return (
     <Container>
       <BackButton collectionName={collection.name} />
@@ -19,13 +21,14 @@ const Content = ({ user }: ContentProps) => {
           <Info user={user} collection={collection} />
         </Grid>
       </Grid>
-      <Table />
+      <Table collection={collection} />
     </Container>
   );
 };
 
 interface ContentIncomingProps {
   user: User;
+  reefsList: Reef[];
 }
 
 type ContentProps = ContentIncomingProps;

@@ -24,7 +24,10 @@ const percentageCalculator = (count: number, total: number) => {
 
 const BarChart = ({ collection, classes }: BarChartProps) => {
   const nSites = collection.reefs.length;
-  const groupedByAlert = groupBy(collection.reefs, "weeklyAlertLevel");
+  const groupedByAlert = groupBy(
+    collection.reefs,
+    (reef) => reef.latestDailyData.weeklyAlertLevel
+  );
 
   return (
     <>

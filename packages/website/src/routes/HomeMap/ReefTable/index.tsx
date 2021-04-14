@@ -34,6 +34,7 @@ import {
   withSpotterOnlySelector,
 } from "../../../store/Homepage/homepageSlice";
 import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
+import { Collection } from "../../Dashboard/collection";
 
 const SMALL_HEIGHT = 720;
 
@@ -60,7 +61,15 @@ const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys).reduce<ReactNode[]>(
   []
 );
 
-const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
+const ReefTable = ({
+  isDrawerOpen,
+  showCard,
+  showSpottersOnlySwitch,
+  extended,
+  collection,
+  scrollOnSelection,
+  classes,
+}: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
   const reefOnMap = useSelector(reefOnMapSelector);
   const withSpotterOnly = useSelector(withSpotterOnlySelector);
@@ -100,42 +109,46 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
   return (
     <>
       {/* Holds drawer handle and reef name text on mobile */}
-      <Hidden smUp>
-        <Box
-          width="100vw"
-          display="flex"
-          justifyContent="center"
-          marginTop={2}
-          marginBottom={3}
-        >
+      {showCard && (
+        <Hidden smUp>
           <Box
-            className={classNames(classes.topHandle, {
-              [classes.bounce]: !!reefOnMap && !isDrawerOpen,
-            })}
+            width="100vw"
+            display="flex"
+            justifyContent="center"
+            marginTop={2}
+            marginBottom={3}
+          >
+            <Box
+              className={classNames(classes.topHandle, {
+                [classes.bounce]: !!reefOnMap && !isDrawerOpen,
+              })}
+            />
+            {!isDrawerOpen && (
+              <Typography
+                className={classes.allReefsText}
+                variant="h5"
+                color="textSecondary"
+              >
+                {reefOnMap ? getReefNameAndRegion(reefOnMap).name : "All Reefs"}
+              </Typography>
+            )}
+          </Box>
+        </Hidden>
+      )}
+      {showCard && <SelectedReefCard />}
+      {showSpottersOnlySwitch && (
+        <Box className={classes.switchWrapper}>
+          <Switch
+            checked={withSpotterOnly}
+            onClick={onInteractiveClick}
+            onChange={toggleSwitch}
+            color="primary"
           />
-          {!isDrawerOpen && (
-            <Typography
-              className={classes.allReefsText}
-              variant="h5"
-              color="textSecondary"
-            >
-              {reefOnMap ? getReefNameAndRegion(reefOnMap).name : "All Reefs"}
-            </Typography>
-          )}
+          <Typography color="textSecondary" variant="h6">
+            deployed buoys only
+          </Typography>
         </Box>
-      </Hidden>
-      <SelectedReefCard />
-      <Box className={classes.switchWrapper}>
-        <Switch
-          checked={withSpotterOnly}
-          onClick={onInteractiveClick}
-          onChange={toggleSwitch}
-          color="primary"
-        />
-        <Typography color="textSecondary" variant="h6">
-          deployed buoys only
-        </Typography>
-      </Box>
+      )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
       <Hidden smUp>
         <Box
@@ -166,15 +179,25 @@ const ReefTable = ({ isDrawerOpen, classes }: ReefTableProps) => {
         flex={1}
       >
         <TableContainer>
-          <Table stickyHeader className={classes.table}>
+          <Table
+            stickyHeader
+            className={extended ? classes.extendedTable : classes.table}
+          >
             <Hidden xsDown>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
+                extended={extended}
               />
             </Hidden>
-            <ReefTableBody order={order} orderBy={orderBy} />
+            <ReefTableBody
+              order={order}
+              orderBy={orderBy}
+              extended={extended}
+              collection={collection}
+              scrollOnSelection={scrollOnSelection}
+            />
           </Table>
         </TableContainer>
         {loading && (
@@ -206,6 +229,12 @@ const styles = (theme: Theme) =>
     table: {
       [theme.breakpoints.down("xs")]: {
         tableLayout: "fixed",
+      },
+      borderCollapse: "collapse",
+    },
+    extendedTable: {
+      [theme.breakpoints.down("xs")]: {
+        minWidth: 1220,
       },
       borderCollapse: "collapse",
     },
@@ -247,10 +276,20 @@ interface ReefTableProps
 interface ReefTableIncomingProps {
   // used on mobile to add descriptive elements if the drawer is closed.
   isDrawerOpen?: boolean;
+  showCard?: boolean;
+  showSpottersOnlySwitch?: boolean;
+  extended?: boolean;
+  collection?: Collection;
+  scrollOnSelection?: boolean;
 }
 
 ReefTable.defaultProps = {
   isDrawerOpen: false,
+  showCard: true,
+  showSpottersOnlySwitch: true,
+  extended: false,
+  collection: undefined,
+  scrollOnSelection: true,
 };
 
 export default withStyles(styles)(ReefTable);

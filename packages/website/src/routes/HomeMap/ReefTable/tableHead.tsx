@@ -11,8 +11,20 @@ import {
 } from "@material-ui/core";
 import { Order, OrderKeys } from "./utils";
 
-const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
-  <Typography variant="h6" style={{ color: "black" }} noWrap>
+const ColumnTitle = ({
+  title,
+  unit,
+  bigText,
+}: {
+  title: string;
+  unit?: string;
+  bigText?: boolean;
+}) => (
+  <Typography
+    variant={bigText ? "h6" : "subtitle1"}
+    style={{ color: "black" }}
+    noWrap
+  >
     {title}
     {unit && (
       <Typography
@@ -26,6 +38,7 @@ const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
 
 ColumnTitle.defaultProps = {
   unit: undefined,
+  bigText: undefined,
 };
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
@@ -35,28 +48,76 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     props.onRequestSort(event, property);
   };
 
-  const headCells: HeadCell[] = [
-    {
-      id: OrderKeys.LOCATION_NAME,
-      label: "SITE",
-      width: "40%",
-    },
-    {
-      id: OrderKeys.TEMP,
-      label: "SST",
-      unit: "°C",
-    },
-    {
-      id: OrderKeys.DHW,
-      label: "STRESS",
-      unit: "DHW",
-    },
-    {
-      id: OrderKeys.ALERT,
-      label: "ALERT",
-      width: "5%",
-    },
-  ];
+  const { extended } = props;
+
+  const headCells: HeadCell[] = extended
+    ? [
+        {
+          id: OrderKeys.LOCATION_NAME,
+          label: "SITE",
+          width: "20%",
+        },
+        {
+          id: OrderKeys.WEEK,
+          label: "WEEK/WEEK",
+        },
+        {
+          id: OrderKeys.SST,
+          label: "SST",
+          unit: "°C",
+        },
+        {
+          id: OrderKeys.HISTORIC_MAX,
+          label: "HISTORIC MAX",
+          unit: "°C",
+        },
+        {
+          id: OrderKeys.SST_ANOMALY,
+          label: "SST ANOMALY",
+          unit: "°C",
+        },
+        {
+          id: OrderKeys.DHW,
+          label: "STRESS",
+          unit: "DHW",
+        },
+        {
+          id: OrderKeys.BUOY_TOP,
+          label: "BUOY",
+          unit: "1m",
+        },
+        {
+          id: OrderKeys.BUOY_BOTTOM,
+          label: "BUOY",
+          unit: "DEPTH",
+        },
+        {
+          id: OrderKeys.ALERT,
+          label: "ALERT",
+        },
+      ]
+    : [
+        {
+          id: OrderKeys.LOCATION_NAME,
+          label: "SITE",
+          width: "40%",
+        },
+        {
+          id: OrderKeys.SST,
+          label: "SST",
+          unit: "°C",
+        },
+        {
+          id: OrderKeys.DHW,
+          label: "STRESS",
+          unit: "DHW",
+        },
+        {
+          id: OrderKeys.ALERT,
+          label: "ALERT",
+          width: "5%",
+        },
+      ];
 
   return (
     <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
@@ -75,7 +136,11 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
               direction={props.orderBy === headCell.id ? props.order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              <ColumnTitle title={headCell.label} unit={headCell.unit} />
+              <ColumnTitle
+                title={headCell.label}
+                unit={headCell.unit}
+                bigText={!extended}
+              />
             </TableSortLabel>
           </TableCell>
         ))}
@@ -98,6 +163,7 @@ interface EnhancedTableIncomingProps {
   ) => void;
   order: Order;
   orderBy: OrderKeys;
+  extended?: boolean;
 }
 
 const styles = () =>
@@ -107,6 +173,10 @@ const styles = () =>
       paddingLeft: 10,
     },
   });
+
+EnhancedTableHead.defaultProps = {
+  extended: false,
+};
 
 type EnhancedTableProps = WithStyles<typeof styles> &
   EnhancedTableIncomingProps;

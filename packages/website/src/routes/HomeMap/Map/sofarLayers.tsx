@@ -28,7 +28,23 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-export const SofarLayers = () => {
+export const SofarLayers = ({
+  defaultLayerName,
+  layerControlsEnabled,
+}: SofarLayersProps) => {
+  const layer = SOFAR_LAYERS.find((item) => item.name === defaultLayerName);
+
+  if (defaultLayerName && !layerControlsEnabled && layer) {
+    return (
+      <TileLayer
+        // Sofar tiles have a max native zoom of 9
+        maxNativeZoom={9}
+        url={sofarUrlFromDef(layer)}
+        opacity={0.5}
+      />
+    );
+  }
+
   return (
     <LayersControl position="topright">
       <LayersControl.BaseLayer checked name="Satellite Imagery" key="no-verlay">
@@ -47,6 +63,16 @@ export const SofarLayers = () => {
       ))}
     </LayersControl>
   );
+};
+
+interface SofarLayersProps {
+  defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
+  layerControlsEnabled?: boolean;
+}
+
+SofarLayers.defaultProps = {
+  defaultLayerName: undefined,
+  layerControlsEnabled: true,
 };
 
 export default SofarLayers;

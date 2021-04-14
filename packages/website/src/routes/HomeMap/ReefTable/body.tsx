@@ -27,6 +27,7 @@ import {
 } from "../../../store/Homepage/homepageSlice";
 import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
+import { Collection } from "../../Dashboard/collection";
 
 const RowNameCell = ({
   reef: { locationName, region },
@@ -106,9 +107,17 @@ RowNumberCell.defaultProps = {
   decimalPlaces: 1,
 };
 
-const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
+const ReefTableBody = ({
+  order,
+  orderBy,
+  extended,
+  collection,
+  scrollOnSelection,
+  classes,
+}: ReefTableBodyProps) => {
   const dispatch = useDispatch();
-  const reefsList = useSelector(reefsToDisplayListSelector) || [];
+  const storedReefs = useSelector(reefsToDisplayListSelector);
+  const reefsList = collection?.reefs || storedReefs || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
@@ -130,10 +139,10 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
     // only scroll if not on mobile (info at the top is more useful than the reef row)
-    if (child && !isMobile) {
+    if (child && !isMobile && scrollOnSelection) {
       child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [isMobile, selectedRow]);
+  }, [isMobile, scrollOnSelection, selectedRow]);
 
   return (
     <TableBody>
@@ -157,19 +166,66 @@ const ReefTableBody = ({ order, orderBy, classes }: ReefTableBodyProps) => {
             tabIndex={-1}
             key={reef.tableData.id}
           >
-            <RowNameCell reef={reef} classes={classes} />
+            <RowNameCell
+              reef={reef}
+              classes={{
+                ...classes,
+                nameCells: extended
+                  ? classes.extendedTableNameCells
+                  : classes.nameCells,
+              }}
+            />
+            {extended && (
+              <RowNumberCell
+                classes={classes}
+                value={reef.week}
+                color="black"
+              />
+            )}
             <RowNumberCell
               classes={classes}
-              value={reef.temp}
-              color={colors.lightBlue}
+              value={reef.sst}
+              color={extended ? "black" : colors.lightBlue}
               unit="°C"
             />
+            {extended && (
+              <RowNumberCell
+                classes={classes}
+                value={reef.historicMax}
+                color="black"
+                unit="°C"
+              />
+            )}
+            {extended && (
+              <RowNumberCell
+                classes={classes}
+                value={reef.sstAnomaly}
+                color="black"
+                unit="°C"
+              />
+            )}
             <RowNumberCell
               classes={classes}
               value={reef.dhw}
               color={dhwColorFinder(reef.dhw)}
               unit="DHW"
             />
+            {extended && (
+              <RowNumberCell
+                classes={classes}
+                value={reef.buoyTop}
+                color="black"
+                unit="°C"
+              />
+            )}
+            {extended && (
+              <RowNumberCell
+                classes={classes}
+                value={reef.buoyBottom}
+                color="black"
+                unit="°C"
+              />
+            )}
             <RowAlertCell reef={reef} classes={classes} />
           </TableRow>
         );
@@ -183,6 +239,10 @@ const styles = (theme: Theme) =>
     nameCells: {
       paddingLeft: 10,
       [theme.breakpoints.down("xs")]: { width: "35%", paddingRight: 0 },
+    },
+    extendedTableNameCells: {
+      paddingLeft: 10,
+      [theme.breakpoints.down("xs")]: { width: "10%", paddingRight: 0 },
     },
     regionName: {
       color: "gray",
@@ -205,6 +265,15 @@ const styles = (theme: Theme) =>
 type ReefTableBodyIncomingProps = {
   order: Order;
   orderBy: OrderKeys;
+  extended?: boolean;
+  collection?: Collection;
+  scrollOnSelection?: boolean;
+};
+
+ReefTableBody.defaultProps = {
+  extended: false,
+  collection: undefined,
+  scrollOnSelection: true,
 };
 
 type ReefTableBodyProps = WithStyles<typeof styles> &
