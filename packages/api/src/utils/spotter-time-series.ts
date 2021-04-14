@@ -110,7 +110,7 @@ export const addSpotterData = async (
         { concurrency: 100 },
       ).then((spotterData) => {
         const dataLabels: [keyof SpotterData, Metric][] = [
-          ['surfaceTemperature', Metric.SURFACE_TEMPERATURE],
+          ['topTemperature', Metric.TOP_TEMPERATURE],
           ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
           ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
           ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],

@@ -56,7 +56,7 @@ export type ExclusionDateResponse = {
 export interface LiveData {
   reef: { id: number };
   bottomTemperature?: SofarValue;
-  surfaceTemperature?: SofarValue;
+  topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
   waveHeight?: SofarValue;
@@ -78,7 +78,7 @@ export interface DailyData {
   avgBottomTemperature: number;
 
   degreeHeatingDays: number;
-  surfaceTemperature: number;
+  topTemperature: number;
   satelliteTemperature: number;
 
   minWindSpeed: number;
@@ -119,7 +119,7 @@ export type MetricsKeys =
   | "alert"
   | "dhw"
   | "satellite_temperature"
-  | "surface_temperature"
+  | "top_temperature"
   | "bottom_temperature"
   | "sst_anomaly"
   | "significant_wave_height"
@@ -132,7 +132,7 @@ export type Metrics =
   | "alert"
   | "dhw"
   | "satelliteTemperature"
-  | "surfaceTemperature"
+  | "topTemperature"
   | "bottomTemperature"
   | "sstAnomaly"
   | "significantWaveHeight"

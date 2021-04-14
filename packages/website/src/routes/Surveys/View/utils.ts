@@ -22,8 +22,8 @@ export const getCardTemperatureValues = (
   return {
     satelliteTemperature: surfaceData?.satelliteTemperature,
     spotterBottom: getSensorValue(spotterData?.bottomTemperature, date),
-    spotterSurface: getSensorValue(spotterData?.surfaceTemperature, date),
+    spotterTop: getSensorValue(spotterData?.topTemperature, date),
     hoboBottom: getSensorValue(hoboData?.bottomTemperature, date),
-    hoboSurface: getSensorValue(hoboData?.surfaceTemperature, date),
+    hoboSurface: getSensorValue(hoboData?.topTemperature, date),
   };
 };

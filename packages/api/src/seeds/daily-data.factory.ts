@@ -13,7 +13,7 @@ define(DailyData, (faker: typeof Faker) => {
   dailyData.avgBottomTemperature = avgBottomTemperature;
 
   dailyData.degreeHeatingDays = faker.random.number({ min: 20, max: 40 });
-  dailyData.surfaceTemperature = faker.random.number({ min: 20, max: 40 });
+  dailyData.topTemperature = faker.random.number({ min: 20, max: 40 });
   dailyData.satelliteTemperature = faker.random.number({ min: 20, max: 40 });
 
   const avgWaveHeight = faker.random.number({ min: 2, max: 4 });
