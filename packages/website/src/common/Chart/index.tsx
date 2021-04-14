@@ -89,8 +89,8 @@ const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
     nextProps.spotterData?.bottomTemperature
   ) &&
   isEqual(
-    prevProps.spotterData?.surfaceTemperature,
-    nextProps.spotterData?.surfaceTemperature
+    prevProps.spotterData?.topTemperature,
+    nextProps.spotterData?.topTemperature
   );
 
 function Chart({
@@ -135,7 +135,7 @@ function Chart({
     tempWithSurvey,
     bottomTemperatureData,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
     historicalMonthlyMeanTemp,
   } = useProcessedChartData(
@@ -287,7 +287,7 @@ function Chart({
       options={settings}
       data={createChartData(
         spotterBottom,
-        spotterSurface,
+        spotterTop,
         hoboBottom,
         tempWithSurvey,
         augmentSurfaceTemperature(

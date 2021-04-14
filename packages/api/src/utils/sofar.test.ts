@@ -24,7 +24,7 @@ test('It processes Sofar Spotter API for daily data.', async () => {
   );
 
   expect(values.bottomTemperature.length).toEqual(144);
-  expect(values.surfaceTemperature.length).toEqual(144);
+  expect(values.topTemperature.length).toEqual(144);
 });
 
 test('it process Sofar Forecast API for live data', async () => {

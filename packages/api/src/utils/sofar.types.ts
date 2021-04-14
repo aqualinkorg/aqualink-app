@@ -11,7 +11,7 @@ export interface SofarDailyData {
   minBottomTemperature?: number;
   maxBottomTemperature?: number;
   avgBottomTemperature?: number;
-  surfaceTemperature?: number;
+  topTemperature?: number;
   satelliteTemperature?: number;
   degreeHeatingDays?: number;
   minWaveHeight?: number;
@@ -30,7 +30,7 @@ export interface SofarLiveData {
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
   bottomTemperature?: SofarValue;
-  surfaceTemperature?: SofarValue;
+  topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
   waveHeight?: SofarValue;
@@ -46,7 +46,7 @@ export interface SofarLiveData {
 }
 
 export interface SpotterData {
-  surfaceTemperature: SofarValue[];
+  topTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
   significantWaveHeight: SofarValue[];
   wavePeakPeriod: SofarValue[];

@@ -54,7 +54,7 @@ const Tooltip = ({
   depth,
   historicalMonthlyMeanTemp,
   satelliteTemp,
-  spotterSurfaceTemp,
+  spotterTopTemp,
   spotterBottomTemp,
   hoboBottomTemp,
   surveyId,
@@ -62,7 +62,7 @@ const Tooltip = ({
   userTimeZone,
   classes,
 }: TooltipProps) => {
-  const hasHourlyData = !isNull(spotterSurfaceTemp) || !isNull(hoboBottomTemp);
+  const hasHourlyData = !isNull(spotterTopTemp) || !isNull(hoboBottomTemp);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
     format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
@@ -82,7 +82,7 @@ const Tooltip = ({
       title: "MONTHLY MEAN",
     },
     { temperature: satelliteTemp, color: "#6bc1e1", title: "SURFACE" },
-    { temperature: spotterSurfaceTemp, color: "#46a5cf", title: "BUOY 1m" },
+    { temperature: spotterTopTemp, color: "#46a5cf", title: "BUOY 1m" },
     {
       temperature: spotterBottomTemp,
       color: "rgba(250, 141, 0)",
@@ -209,7 +209,7 @@ export interface TooltipData {
   depth: number | null;
   historicalMonthlyMeanTemp: number | null;
   satelliteTemp: number | null;
-  spotterSurfaceTemp: number | null;
+  spotterTopTemp: number | null;
   spotterBottomTemp: number | null;
   hoboBottomTemp: number | null;
   surveyId?: number | null;

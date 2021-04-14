@@ -48,8 +48,8 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   const hasHoboData = !!hoboBottomTemperature?.[1];
 
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
-  const hasSpotterSurface = !!spotterData?.surfaceTemperature?.[1];
-  const hasSpotterData = hasSpotterBottom || hasSpotterSurface;
+  const hasSpotterTop = !!spotterData?.topTemperature?.[1];
+  const hasSpotterData = hasSpotterBottom || hasSpotterTop;
 
   const showCard = !loading && (hasHoboData || hasSpotterData);
 
@@ -76,13 +76,9 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     },
     {
       title: "BUOY 1m",
-      key: "spotterSurface",
+      key: "spotterTop",
       color: "#46a5cf",
-      rows: calculateCardMetrics(
-        2,
-        spotterData?.surfaceTemperature,
-        "spotterSurface"
-      ),
+      rows: calculateCardMetrics(2, spotterData?.topTemperature, "spotterTop"),
     },
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",

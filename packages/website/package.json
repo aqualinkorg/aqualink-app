@@ -67,9 +67,6 @@
     "typescript": "~3.8.2",
     "validator": "^13.1.1"
   },
-  "resolutions": {
-    "terser": "3.16.1"
-  },
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
@@ -108,6 +105,7 @@
     "@types/redux-mock-store": "^1.0.2",
     "@types/validator": "^13.1.0",
     "canvas": "^2.6.1",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "dotenv-cli": "^4.0.0"
   }
 }

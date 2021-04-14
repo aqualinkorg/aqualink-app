@@ -107,11 +107,8 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
 
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
-  const {
-    maxBottomTemperature,
-    satelliteTemperature,
-    degreeHeatingDays,
-  } = sortedDailyData[dailyDataLen - 1];
+  const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
+    (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
 
   const metrics = [
     {

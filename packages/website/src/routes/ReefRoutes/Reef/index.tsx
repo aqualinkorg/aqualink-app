@@ -118,7 +118,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
 
-  const hasSpotterData = Boolean(liveData?.surfaceTemperature);
+  const hasSpotterData = Boolean(liveData?.topTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
