@@ -80,7 +80,7 @@ function DownloadCSVButton({
 
   const getCSVData = () =>
     constructCSVData("spotterBottomTemp", spotterData?.bottomTemperature)
-      .chained("spotterTopTemp", spotterData?.surfaceTemperature)
+      .chained("spotterTopTemp", spotterData?.topTemperature)
       .chained("hoboTemp", hoboData?.bottomTemperature)
       .chained(
         "dailySST",

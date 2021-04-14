@@ -81,7 +81,7 @@ export const findDataLimits = (
     filteredMaxMonthlyData?.[0] ||
       dailyData?.[0] ||
       spotter?.bottomTemperature?.[0] ||
-      spotter?.surfaceTemperature?.[0] ||
+      spotter?.topTemperature?.[0] ||
       hobo?.bottomTemperature?.[0]
   );
 

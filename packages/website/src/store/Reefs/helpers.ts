@@ -59,7 +59,7 @@ const mapMetrics = <T>(
   dhw: data.dhw,
   satelliteTemperature: data.satellite_temperature,
   sstAnomaly: data.sst_anomaly,
-  surfaceTemperature: data.surface_temperature,
+  topTemperature: data.top_temperature,
   significantWaveHeight: data.significant_wave_height,
   waveMeanDirection: data.wave_mean_direction,
   wavePeakPeriod: data.wave_peak_period,

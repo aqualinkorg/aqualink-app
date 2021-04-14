@@ -62,7 +62,7 @@ const ChartWithCard = ({
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
   const hasSpotterData = Boolean(
-    spotterData?.bottomTemperature?.[0] || spotterData?.surfaceTemperature?.[0]
+    spotterData?.bottomTemperature?.[0] || spotterData?.topTemperature?.[0]
   );
 
   const chartStartDate = startDate || subtractFromDate(today, "week");
@@ -113,7 +113,7 @@ const ChartWithCard = ({
           pointId,
           start: reefLocalStartDate,
           end: reefLocalEndDate,
-          metrics: ["bottom_temperature", "surface_temperature"],
+          metrics: ["bottom_temperature", "top_temperature"],
           hourly:
             moment(reefLocalEndDate).diff(moment(reefLocalStartDate), "days") >
             2,

@@ -34,7 +34,7 @@ const ObservationBox = ({
     hoboBottom,
     hoboSurface,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
   } = getCardTemperatureValues(dailyData, spotterData, hoboData, date);
 
   return (
@@ -71,7 +71,7 @@ const ObservationBox = ({
                 </Typography>
               </Grid>
             </Grid>
-            {some([hoboBottom, hoboSurface, spotterBottom, spotterSurface]) && (
+            {some([hoboBottom, hoboSurface, spotterBottom, spotterTop]) && (
               <Grid container item direction="column" spacing={1}>
                 <Grid item>
                   <Typography color="textPrimary" variant="subtitle1">
@@ -84,7 +84,7 @@ const ObservationBox = ({
                       TEMP AT 1m
                     </Typography>
                     <Typography color="textPrimary" variant="h4">
-                      {`${formatNumber(spotterSurface || hoboSurface, 1)} °C`}
+                      {`${formatNumber(spotterTop || hoboSurface, 1)} °C`}
                     </Typography>
                   </Grid>
                   <Grid container item direction="column" xs={6}>
