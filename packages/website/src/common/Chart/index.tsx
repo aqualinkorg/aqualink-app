@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
 import type {
   DailyData,
-  MonthlyMaxData,
+  HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
 } from "../../store/Reefs/types";
@@ -32,7 +32,7 @@ export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: TimeSeries;
   hoboBottomTemperatureData?: SofarValue[];
-  monthlyMaxData?: MonthlyMaxData[];
+  historicalMonthlyMeanData?: HistoricalMonthlyMeanData[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -76,7 +76,10 @@ const makeAnnotation = (
 
 const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
   isEqual(prevProps.dailyData, nextProps.dailyData) &&
-  isEqual(prevProps.maxMonthlyMean, nextProps.maxMonthlyMean) &&
+  isEqual(
+    prevProps.historicalMonthlyMeanData,
+    nextProps.historicalMonthlyMeanData
+  ) &&
   isEqual(
     prevProps.hoboBottomTemperatureData,
     nextProps.hoboBottomTemperatureData
@@ -94,7 +97,7 @@ function Chart({
   dailyData,
   spotterData,
   hoboBottomTemperatureData,
-  monthlyMaxData,
+  historicalMonthlyMeanData,
   surveys,
   timeZone,
   startDate,
@@ -134,12 +137,12 @@ function Chart({
     spotterBottom,
     spotterTop,
     hoboBottom,
-    monthlyMaxTemp,
+    historicalMonthlyMeanTemp,
   } = useProcessedChartData(
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
-    monthlyMaxData,
+    historicalMonthlyMeanData,
     surveys,
     temperatureThreshold,
     startDate,
@@ -293,7 +296,7 @@ function Chart({
           endDate || xAxisMax
         ),
         bottomTemperatureData,
-        monthlyMaxTemp,
+        historicalMonthlyMeanTemp,
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
           : null,

@@ -23,7 +23,7 @@ import {
 } from "../../../store/Reefs/selectedReefSlice";
 import { Reef } from "../../../store/Reefs/types";
 import {
-  generateMonthlyMaxTimestamps,
+  generateHistoricalMonthlyMeanTimestamps,
   isBefore,
   setTimeZone,
   subtractFromDate,
@@ -145,7 +145,7 @@ const ChartWithCard = ({
     ).toISOString();
 
     const [minDataDate, maxDataDate] = findDataLimits(
-      reef.monthlyMax,
+      reef.historicalMonthlyMean,
       granularDailyData,
       timeSeriesData,
       pickerLocalStartDate,
@@ -307,8 +307,8 @@ const ChartWithCard = ({
               depth={reef.depth}
               spotterData={spotterData}
               hoboBottomTemperature={hoboBottomTemperature || []}
-              monthlyMax={generateMonthlyMaxTimestamps(
-                reef.monthlyMax,
+              historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
+                reef.historicalMonthlyMean,
                 startDate,
                 endDate,
                 reef.timezone
