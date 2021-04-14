@@ -106,8 +106,6 @@ async function augmentReefs(connection: Connection) {
       (new Date().valueOf() - start.valueOf()) / 1000
     } seconds`,
   );
-
-  // TODO - Add HistoricalMonthlyMean data for every reef.
 }
 
 async function run() {
