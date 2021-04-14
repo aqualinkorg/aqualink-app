@@ -7,7 +7,7 @@ import { isBefore } from "../../helpers/dates";
 import { sortByDate } from "../../helpers/sortDailyData";
 import type {
   DailyData,
-  MonthlyMaxData,
+  HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
 } from "../../store/Reefs/types";
@@ -78,11 +78,7 @@ export const filterTimeSeriesData = (
       from,
       to
     ),
-    surfaceTemperature: filterSofarData(
-      timeSeries.surfaceTemperature,
-      from,
-      to
-    ),
+    topTemperature: filterSofarData(timeSeries.topTemperature, from, to),
     bottomTemperature: filterSofarData(timeSeries.bottomTemperature, from, to),
     sstAnomaly: filterSofarData(timeSeries.sstAnomaly, from, to),
     significantWaveHeight: filterSofarData(
@@ -177,12 +173,12 @@ export function getDailyDataClosestToDate(
   return undefined;
 }
 
-export function getMonthlyMaxDataClosestToDate(
-  monthlyMaxData: MonthlyMaxData[],
+export function getHistoricalMonthlyMeanDataClosestToDate(
+  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   date: Date
 ) {
-  return monthlyMaxData.length > 0
-    ? monthlyMaxData.reduce((prevClosest, nextPoint) =>
+  return historicalMonthlyMeanData.length > 0
+    ? historicalMonthlyMeanData.reduce((prevClosest, nextPoint) =>
         timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
           ? nextPoint
           : prevClosest
@@ -190,35 +186,35 @@ export function getMonthlyMaxDataClosestToDate(
     : undefined;
 }
 
-export const filterMaxMonthlyData = (
-  monthlyMax: MonthlyMaxData[],
+export const filterHistoricalMonthlyMeanData = (
+  historicalMonthlyMean: HistoricalMonthlyMeanData[],
   from?: string,
   to?: string
 ) => {
   if (!from || !to) {
-    return monthlyMax;
+    return historicalMonthlyMean;
   }
 
   const start = moment(from);
   const end = moment(to);
 
-  const closestToStart = getMonthlyMaxDataClosestToDate(
-    monthlyMax,
+  const closestToStart = getHistoricalMonthlyMeanDataClosestToDate(
+    historicalMonthlyMean,
     new Date(start.toISOString())
   )?.value;
-  const closestToEnd = getMonthlyMaxDataClosestToDate(
-    monthlyMax,
+  const closestToEnd = getHistoricalMonthlyMeanDataClosestToDate(
+    historicalMonthlyMean,
     new Date(end.toISOString())
   )?.value;
 
-  const closestToStartArray: MonthlyMaxData[] = closestToStart
+  const closestToStartArray: HistoricalMonthlyMeanData[] = closestToStart
     ? [{ date: start.toISOString(), value: closestToStart }]
     : [];
-  const closestToEndArray: MonthlyMaxData[] = closestToEnd
+  const closestToEndArray: HistoricalMonthlyMeanData[] = closestToEnd
     ? [{ date: end.toISOString(), value: closestToEnd }]
     : [];
 
-  const filteredData = monthlyMax.filter((item) =>
+  const filteredData = historicalMonthlyMean.filter((item) =>
     inRange(moment(item.date).valueOf(), start.valueOf(), end.valueOf() + 1)
   );
 
@@ -248,9 +244,9 @@ export function getSofarDataClosestToDate(
 export const createDatasets = (
   dailyData: DailyData[],
   rawSpotterBottom: SofarValue[],
-  rawSpotterSurface: SofarValue[],
+  rawSpotterTop: SofarValue[],
   rawHoboBottom: SofarValue[],
-  monthlyMaxData: MonthlyMaxData[],
+  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   surveys: SurveyListItem[]
 ) => {
   const bottomTemperature = dailyData
@@ -271,7 +267,7 @@ export const createDatasets = (
     y: item.value,
   }));
 
-  const spotterSurface = rawSpotterSurface.map((item) => ({
+  const spotterTop = rawSpotterTop.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -281,7 +277,7 @@ export const createDatasets = (
     y: item.value,
   }));
 
-  const monthlyMaxTemp = monthlyMaxData.map((item) => ({
+  const historicalMonthlyMeanTemp = historicalMonthlyMeanData.map((item) => ({
     x: item.date,
     y: item.value,
   }));
@@ -307,18 +303,18 @@ export const createDatasets = (
     bottomTemperatureData: CHART_BOTTOM_TEMP_ENABLED ? bottomTemperature : [],
     surfaceTemperatureData: surfaceTemperature,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
-    monthlyMaxTemp,
+    historicalMonthlyMeanTemp,
   };
 };
 
 export const calculateAxisLimits = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
-  spotterSurfaceTemperature: SofarValue[],
   hoboTemperatureData: SofarValue[],
-  monthlyMaxData: MonthlyMaxData[],
+  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
+  spotterTopTemperature: SofarValue[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
@@ -328,8 +324,7 @@ export const calculateAxisLimits = (
       ? dailyData
           .filter(
             (item) =>
-              item.surfaceTemperature !== null ||
-              item.satelliteTemperature !== null
+              item.topTemperature !== null || item.satelliteTemperature !== null
           )
           .map((item) => item.date)
       : spotterBottomTemperature.map((item) => item.timestamp);
@@ -347,15 +342,15 @@ export const calculateAxisLimits = (
     surfaceTemperatureData,
     bottomTemperatureData,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
-    monthlyMaxTemp,
+    historicalMonthlyMeanTemp,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
-    spotterSurfaceTemperature,
+    spotterTopTemperature,
     hoboTemperatureData,
-    monthlyMaxData,
+    historicalMonthlyMeanData,
     surveys
   );
 
@@ -363,9 +358,9 @@ export const calculateAxisLimits = (
     ...surfaceTemperatureData,
     ...bottomTemperatureData,
     ...spotterBottom,
-    ...spotterSurface,
+    ...spotterTop,
     ...hoboBottom,
-    ...monthlyMaxTemp,
+    ...historicalMonthlyMeanTemp,
   ]
     .filter((value) => value)
     .map((value) => value.y);
@@ -398,7 +393,7 @@ export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
   hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
-  monthlyMaxData: ChartProps["monthlyMaxData"],
+  historicalMonthlyMeanData: ChartProps["historicalMonthlyMeanData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
   startDate: ChartProps["startDate"],
@@ -411,23 +406,23 @@ export function useProcessedChartData(
     endDate
   );
 
-  const { bottomTemperature, surfaceTemperature } = spotterData || {};
+  const { bottomTemperature, topTemperature } = spotterData || {};
 
   const datasets = createDatasets(
     sortedFilteredDailyData,
     bottomTemperature || [],
-    surfaceTemperature || [],
+    topTemperature || [],
     hoboBottomTemperatureData || [],
-    monthlyMaxData || [],
+    historicalMonthlyMeanData || [],
     surveys
   );
 
   const axisLimits = calculateAxisLimits(
     sortedFilteredDailyData,
     bottomTemperature || [],
-    surfaceTemperature || [],
     hoboBottomTemperatureData || [],
-    monthlyMaxData || [],
+    historicalMonthlyMeanData || [],
+    topTemperature || [],
     surveys,
     temperatureThreshold
   );
@@ -516,16 +511,16 @@ const createGaps = (data: ChartPoint[], maxDaysGap: number): ChartPoint[] => {
 
 export const createChartData = (
   spotterBottom: ChartPoint[],
-  spotterSurface: ChartPoint[],
+  spotterTop: ChartPoint[],
   hoboBottom: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
-  monthlyMax: ChartPoint[],
+  historicalMonthlyMean: ChartPoint[],
   surveyDate: Date | null,
   temperatureThreshold: number | null
 ) => {
-  const displaySpotterData = spotterSurface.length > 0;
+  const displaySpotterData = spotterTop.length > 0;
   const data: ChartComponentProps["data"] = {
     datasets: [
       {
@@ -552,7 +547,7 @@ export const createChartData = (
       },
       {
         label: "MONTHLY MEAN",
-        data: monthlyMax,
+        data: historicalMonthlyMean,
         fill: false,
         borderColor: "#d84424",
         borderWidth: 2,
@@ -598,7 +593,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: createGaps(spotterSurface, 1),
+        data: createGaps(spotterTop, 1),
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,

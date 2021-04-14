@@ -16,7 +16,7 @@ import {
   findSurveyFromDate,
   sameDay,
   filterDailyData,
-  getMonthlyMaxDataClosestToDate,
+  getHistoricalMonthlyMeanDataClosestToDate,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -37,7 +37,7 @@ function ChartWithTooltip({
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
-    monthlyMaxData,
+    historicalMonthlyMeanData,
     reefId,
     surveys,
     timeZone,
@@ -51,9 +51,9 @@ function ChartWithTooltip({
     reefId,
     date: "",
     depth,
-    monthlyMaxTemp: null,
+    historicalMonthlyMeanTemp: null,
     satelliteTemp: null,
-    spotterSurfaceTemp: null,
+    spotterTopTemp: null,
     spotterBottomTemp: null,
     hoboBottomTemp: null,
     surveyId: null,
@@ -82,21 +82,21 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const monthlyMaxTemp =
+    const historicalMonthlyMeanTemp =
       (
-        monthlyMaxData &&
-        getMonthlyMaxDataClosestToDate(monthlyMaxData, new Date(date))
+        historicalMonthlyMeanData &&
+        getHistoricalMonthlyMeanDataClosestToDate(
+          historicalMonthlyMeanData,
+          new Date(date)
+        )
       )?.value || null;
 
     const satelliteTemp = satelliteTemperature || null;
 
-    const spotterSurfaceTemp =
+    const spotterTopTemp =
       (spotterData &&
-        getSofarDataClosestToDate(
-          spotterData.surfaceTemperature,
-          new Date(date),
-          6
-        )?.value) ||
+        getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
+          ?.value) ||
       null;
 
     const spotterBottomTemp =
@@ -115,9 +115,9 @@ function ChartWithTooltip({
       null;
 
     const nValues = [
-      monthlyMaxTemp,
+      historicalMonthlyMeanTemp,
       satelliteTemp,
-      spotterSurfaceTemp,
+      spotterTopTemp,
       spotterBottomTemp,
       hoboBottomTemp,
     ].filter(Boolean).length;
@@ -143,9 +143,9 @@ function ChartWithTooltip({
         ...tooltipData,
         date,
         depth,
-        monthlyMaxTemp,
+        historicalMonthlyMeanTemp,
         satelliteTemp,
-        spotterSurfaceTemp,
+        spotterTopTemp,
         spotterBottomTemp,
         hoboBottomTemp,
         surveyId,

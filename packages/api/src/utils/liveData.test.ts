@@ -23,5 +23,5 @@ test('It creates a liveData object using Sofar API.', async () => {
 
   const liveData = await getLiveData((reef as unknown) as Reef, true);
 
-  expect(liveData.surfaceTemperature).toBeDefined();
+  expect(liveData.topTemperature).toBeDefined();
 });

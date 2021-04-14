@@ -35,7 +35,10 @@ export const reefRequest = createAsyncThunk<
       ...data,
       dailyData,
       liveData,
-      monthlyMax: sortBy(data.monthlyMax, (item) => item.month).map((item) => ({
+      historicalMonthlyMean: sortBy(
+        data.historicalMonthlyMean,
+        (item) => item.month
+      ).map((item) => ({
         id: item.id,
         month: item.month,
         temperature: item.temperature,

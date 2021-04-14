@@ -9,9 +9,11 @@ test("renders as expected", () => {
       reefId={0}
       date="12/20/20, 02:19 AM GMT-5"
       depth={10}
-      spotterSurfaceTemp={20}
-      bottomTemperature={15}
-      surfaceTemperature={20}
+      historicalMonthlyMeanTemp={20}
+      satelliteTemp={20}
+      spotterTopTemp={10}
+      spotterBottomTemp={15}
+      hoboBottomTemp={20}
       userTimeZone="UTC"
       reefTimeZone="UTC"
     />
