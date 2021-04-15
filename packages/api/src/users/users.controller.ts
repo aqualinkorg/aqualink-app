@@ -9,7 +9,7 @@ import {
   Get,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { AdminLevel, User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -26,6 +26,7 @@ import { ApiNestNotFoundResponse } from '../docs/api-response';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @ApiOperation({ summary: 'Creates a new user' })
   @Public()
   @Post()
   create(@Req() req: any, @Body() createUserDto: CreateUserDto): Promise<User> {
@@ -33,6 +34,7 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Returns the currently signed in user' })
   @Get('current')
   getSelf(@Req() req: AuthRequest): Promise<User> {
     return this.usersService.getSelf(req);
@@ -40,6 +42,7 @@ export class UsersController {
 
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No user was found with the specified id')
+  @ApiOperation({ summary: 'Updates the access level of a user' })
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Put(':id/level')
   setAdminLevel(
@@ -51,6 +54,7 @@ export class UsersController {
 
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No user was found with the specified id')
+  @ApiOperation({ summary: 'Deletes specified user' })
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
@@ -58,6 +62,9 @@ export class UsersController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Returns the administered reefs of the signed in user',
+  })
   @OverrideLevelAccess(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Get('current/administered-reefs')
   getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {

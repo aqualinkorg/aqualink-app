@@ -6,7 +6,7 @@ import {
   Query,
   ParseBoolPipe,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
@@ -25,6 +25,10 @@ export class TimeSeriesController {
   constructor(private timeSeriesService: TimeSeriesService) {}
 
   @ApiTimeSeriesResponse()
+  @ApiOperation({
+    summary:
+      'Returns specified time series data for a specified reef point of interest',
+  })
   @Get('reefs/:reefId/pois/:poiId')
   findPoiData(
     @Query('start', ParseDatePipe) startDate: Date,
@@ -43,6 +47,9 @@ export class TimeSeriesController {
   }
 
   @ApiTimeSeriesResponse()
+  @ApiOperation({
+    summary: 'Returns specified time series data for a specified reef',
+  })
   @Get('reefs/:reefId')
   findReefData(
     @Query('start', ParseDatePipe) startDate: Date,
@@ -61,12 +68,20 @@ export class TimeSeriesController {
   }
 
   @ApiTimeSeriesRangeResponse()
+  @ApiOperation({
+    summary:
+      'Returns the range of the available time series data for a specified reef point of interest',
+  })
   @Get('reefs/:reefId/pois/:poiId/range')
   findPoiDataRange(@Param() poiDataRangeDto: PoiDataRangeDto) {
     return this.timeSeriesService.findPoiDataRange(poiDataRangeDto);
   }
 
   @ApiTimeSeriesRangeResponse()
+  @ApiOperation({
+    summary:
+      'Returns the range of the available time series data for a specified reef',
+  })
   @Get('reefs/:reefId/range')
   findReefDataRange(@Param() reefDataRangeDto: ReefDataRangeDto) {
     return this.timeSeriesService.findReefDataRange(reefDataRangeDto);

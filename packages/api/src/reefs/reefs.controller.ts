@@ -11,7 +11,7 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ReefsService } from './reefs.service';
 import { Reef } from './reefs.entity';
 import { FilterReefDto } from './dto/filter-reef.dto';
@@ -44,6 +44,7 @@ export class ReefsController {
 
   @ApiBearerAuth()
   @ApiCreateReefBody()
+  @ApiOperation({ summary: 'Creates a new reef and its reef application' })
   @OverrideLevelAccess()
   @Post()
   create(
@@ -54,6 +55,7 @@ export class ReefsController {
     return this.reefsService.create(reefApplication, reef, request.user);
   }
 
+  @ApiOperation({ summary: 'Returns reefs filtered by provided filters' })
   @Public()
   @Get()
   find(@Query() filterReefDto: FilterReefDto): Promise<Reef[]> {
@@ -61,6 +63,7 @@ export class ReefsController {
   }
 
   @ApiNestNotFoundResponse('No reef was found with the specified id')
+  @ApiOperation({ summary: 'Returns specified reef' })
   @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Reef> {
@@ -69,6 +72,7 @@ export class ReefsController {
 
   @ApiNestNotFoundResponse('No reef was found with the specified id')
   @ApiNestBadRequestResponse('Start or end is not a valid date')
+  @ApiOperation({ summary: 'Returns daily data of the specified reef' })
   @Public()
   @Get(':id/daily_data')
   findDailyData(
@@ -80,6 +84,7 @@ export class ReefsController {
   }
 
   @ApiNestNotFoundResponse('No reef was found with the specified id')
+  @ApiOperation({ summary: 'Returns live data of the specified reef' })
   @Public()
   @Get(':id/live_data')
   findLiveData(
@@ -89,6 +94,7 @@ export class ReefsController {
   }
 
   @ApiNestNotFoundResponse('No reef was found or found reef had no spotter')
+  @ApiOperation({ summary: 'Returns spotter data of the specified reef' })
   @Public()
   @Get(':id/spotter_data')
   getSpotterData(
@@ -101,6 +107,7 @@ export class ReefsController {
 
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No reef was found with the specified id')
+  @ApiOperation({ summary: 'Updates specified reef' })
   @UseGuards(IsReefAdminGuard)
   @Put(':reef_id')
   update(
@@ -112,6 +119,7 @@ export class ReefsController {
 
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No reef was found with the specified id')
+  @ApiOperation({ summary: 'Deletes specified reef' })
   @UseGuards(IsReefAdminGuard)
   @Delete(':reef_id')
   delete(@Param('reef_id', ParseIntPipe) id: number): Promise<void> {
@@ -123,6 +131,7 @@ export class ReefsController {
   @ApiNestBadRequestResponse(
     'Reef has no spotter or spotter is already deployed',
   )
+  @ApiOperation({ summary: "Deploys reef's spotter" })
   @UseGuards(IsReefAdminGuard)
   @Post(':reef_id/deploy')
   deploySpotter(
@@ -137,6 +146,7 @@ export class ReefsController {
   @ApiNestBadRequestResponse(
     'Reef has no spotter or start date is larger than end date',
   )
+  @ApiOperation({ summary: "Adds exclusion dates to spotter's data" })
   @UseGuards(IsReefAdminGuard)
   @Post(':reef_id/exclusion_dates')
   addExclusionDates(
@@ -147,6 +157,9 @@ export class ReefsController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: "Returns exclusion dates of specified reef's spotter",
+  })
   @UseGuards(IsReefAdminGuard)
   @Get(':reef_id/exclusion_dates')
   findExclusionDates(

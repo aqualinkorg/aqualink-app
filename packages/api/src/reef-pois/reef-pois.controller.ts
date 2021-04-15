@@ -9,7 +9,7 @@ import {
   Query,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ReefPoisService } from './reef-pois.service';
 import { ReefPointOfInterest } from './reef-pois.entity';
 import { CreateReefPoiDto } from './dto/create-reef-poi.dto';
@@ -27,6 +27,7 @@ export class ReefPoisController {
   constructor(private poisService: ReefPoisService) {}
 
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Creates a new reef point of interest' })
   @Post()
   create(
     @Body() createReefPoiDto: CreateReefPoiDto,
@@ -34,6 +35,9 @@ export class ReefPoisController {
     return this.poisService.create(createReefPoiDto);
   }
 
+  @ApiOperation({
+    summary: 'Returns reef points of interest filtered by the provided filters',
+  })
   @Public()
   @Get()
   find(
@@ -45,6 +49,9 @@ export class ReefPoisController {
   @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
+  @ApiOperation({
+    summary: 'Returns specified reef point of interest',
+  })
   @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<ReefPointOfInterest> {
@@ -55,6 +62,7 @@ export class ReefPoisController {
   @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
+  @ApiOperation({ summary: 'Updates specified reef point of interest' })
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -67,6 +75,7 @@ export class ReefPoisController {
   @ApiNestNotFoundResponse(
     'No reef point of interest was found with the specified id',
   )
+  @ApiOperation({ summary: 'Deletes specified reef point of interest' })
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.poisService.delete(id);
