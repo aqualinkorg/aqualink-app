@@ -41,7 +41,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const loading = reefLoading || surveysLoading || timeSeriesRangeLoading;
 
-  const hasSpotterData = Boolean(reef?.liveData?.surfaceTemperature);
+  const hasSpotterData = Boolean(reef?.liveData?.topTemperature);
   const hasRange = !!(
     hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
   );

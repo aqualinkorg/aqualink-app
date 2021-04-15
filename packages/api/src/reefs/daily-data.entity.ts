@@ -29,7 +29,7 @@ export class DailyData {
   degreeHeatingDays?: number;
 
   @Column('float', { nullable: true })
-  surfaceTemperature?: number;
+  topTemperature?: number;
 
   @Column('float', { nullable: true })
   satelliteTemperature?: number;

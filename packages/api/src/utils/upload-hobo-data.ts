@@ -28,9 +28,9 @@ import {
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { getRegion, getTimezones } from './reef.utils';
-import { getMMM, getMonthlyMaximums } from './temperature';
+import { getMMM, getHistoricalMonthlyMeans } from './temperature';
 import { Region } from '../regions/regions.entity';
-import { MonthlyMax } from '../reefs/monthly-max.entity';
+import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 import { createPoint } from './coordinates';
 
 interface Coords {
@@ -55,7 +55,7 @@ interface Repositories {
   surveyMediaRepository: Repository<SurveyMedia>;
   sourcesRepository: Repository<Sources>;
   regionRepository: Repository<Region>;
-  monthlyMaxRepository: Repository<MonthlyMax>;
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>;
 }
 
 const FOLDER_PREFIX = 'Patch_Reef_';
@@ -254,14 +254,14 @@ const getReefRecords = async (
  * @param user The user to associate reef with
  * @param reefRepository The reef repository
  * @param userRepository The user repository
- * @param monthlyMaxRepository The monthly max repository
+ * @param historicalMonthlyMeanRepository The monthly max repository
  */
 const createReefs = async (
   reefs: Partial<Reef>[],
   user: User,
   reefRepository: Repository<Reef>,
   userRepository: Repository<User>,
-  monthlyMaxRepository: Repository<MonthlyMax>,
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
 ) => {
   logger.log('Saving reefs');
   const reefEntities = await Promise.all(
@@ -280,18 +280,18 @@ const createReefs = async (
       const [longitude, latitude] = point.coordinates;
 
       return Promise.all([
-        getMonthlyMaximums(longitude, latitude),
-        monthlyMaxRepository.findOne({ where: { reef } }),
-      ]).then(([monthlyMaximums, found]) => {
-        if (found || !monthlyMaximums) {
+        getHistoricalMonthlyMeans(longitude, latitude),
+        historicalMonthlyMeanRepository.findOne({ where: { reef } }),
+      ]).then(([historicalMonthlyMean, found]) => {
+        if (found || !historicalMonthlyMean) {
           logger.warn(`Reef ${reef.id} has already monthly max data`);
           return null;
         }
 
-        return monthlyMaximums.map(({ month, temperature }) => {
+        return historicalMonthlyMean.map(({ month, temperature }) => {
           return (
             temperature &&
-            monthlyMaxRepository.save({ reef, month, temperature })
+            historicalMonthlyMeanRepository.save({ reef, month, temperature })
           );
         });
       });
@@ -650,7 +650,7 @@ export const uploadHoboData = async (
     user,
     repositories.reefRepository,
     repositories.userRepository,
-    repositories.monthlyMaxRepository,
+    repositories.historicalMonthlyMeanRepository,
   );
 
   const poiEntities = await createPois(

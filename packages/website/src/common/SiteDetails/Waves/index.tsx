@@ -21,7 +21,7 @@ import { styles as incomingStyles } from "../styles";
 
 const Waves = ({ liveData, classes }: WavesProps) => {
   const {
-    surfaceTemperature,
+    topTemperature,
     bottomTemperature,
     waveHeight,
     waveDirection,
@@ -30,9 +30,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     windDirection,
   } = liveData;
 
-  const hasSpotter = Boolean(
-    surfaceTemperature?.value || bottomTemperature?.value
-  );
+  const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
 
   const windRelativeTime =
     windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);

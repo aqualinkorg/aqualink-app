@@ -1,7 +1,8 @@
 import * as GeoTIFF from 'geotiff';
 import { pointToPixel } from './coordinates';
 
-const MonthlyMaxRoot = 'https://storage.googleapis.com/reef_climatology/';
+const HistoricalMonthlyMeanRoot =
+  'https://storage.googleapis.com/reef_climatology/';
 
 async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();
@@ -49,12 +50,14 @@ async function getValueFromTiff(tiff: any, long: number, lat: number) {
  * */
 
 export async function getMMM(long: number, lat: number) {
-  const tiff = await GeoTIFF.fromUrl(`${MonthlyMaxRoot}sst_clim_mmm.tiff`);
+  const tiff = await GeoTIFF.fromUrl(
+    `${HistoricalMonthlyMeanRoot}sst_clim_mmm.tiff`,
+  );
   return getValueFromTiff(tiff, long, lat);
 }
 
-export async function getMonthlyMaximums(long: number, lat: number) {
-  const MonthlyMaxMapping = [
+export async function getHistoricalMonthlyMeans(long: number, lat: number) {
+  const HistoricalMonthlyMeanMapping = [
     'january',
     'february',
     'march',
@@ -70,9 +73,9 @@ export async function getMonthlyMaximums(long: number, lat: number) {
   ];
 
   return Promise.all(
-    MonthlyMaxMapping.map(async (month, index) => {
+    HistoricalMonthlyMeanMapping.map(async (month, index) => {
       const tiff = await GeoTIFF.fromUrl(
-        `${MonthlyMaxRoot}sst_clim_${month}.tiff`,
+        `${HistoricalMonthlyMeanRoot}sst_clim_${month}.tiff`,
       );
       return {
         month: index + 1,

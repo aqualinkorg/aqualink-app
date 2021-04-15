@@ -18,7 +18,7 @@ import { SofarLiveData } from '../utils/sofar.types';
 import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateReefDto, CreateReefApplicationDto } from './dto/create-reef.dto';
-import { MonthlyMax } from './monthly-max.entity';
+import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { Region } from '../regions/regions.entity';
 import {
   getRegion,
@@ -27,7 +27,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
 } from '../utils/reef.utils';
-import { getMMM, getMonthlyMaximums } from '../utils/temperature';
+import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
 import { ExclusionDates } from './exclusion-dates.entity';
 import { DeploySpotterDto } from './dto/deploy-spotter.dto';
@@ -56,8 +56,8 @@ export class ReefsService {
     @InjectRepository(ExclusionDates)
     private exclusionDatesRepository: Repository<ExclusionDates>,
 
-    @InjectRepository(MonthlyMax)
-    private monthlyMaxRepository: Repository<MonthlyMax>,
+    @InjectRepository(HistoricalMonthlyMean)
+    private historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
 
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -74,7 +74,10 @@ export class ReefsService {
     const { name, latitude, longitude, depth } = reefParams;
     const region = await getRegion(longitude, latitude, this.regionRepository);
     const maxMonthlyMean = await getMMM(longitude, latitude);
-    const monthlyMaximums = await getMonthlyMaximums(longitude, latitude);
+    const historicalMonthlyMeans = await getHistoricalMonthlyMeans(
+      longitude,
+      latitude,
+    );
 
     const timezones = getTimezones(latitude, longitude) as string[];
 
@@ -112,10 +115,14 @@ export class ReefsService {
     backfillReefData(reef.id);
 
     await Promise.all(
-      monthlyMaximums.map(async ({ month, temperature }) => {
+      historicalMonthlyMeans.map(async ({ month, temperature }) => {
         return (
           temperature &&
-          this.monthlyMaxRepository.insert({ reef, month, temperature })
+          this.historicalMonthlyMeanRepository.insert({
+            reef,
+            month,
+            temperature,
+          })
         );
       }),
     );
@@ -200,7 +207,7 @@ export class ReefsService {
 
   async findOne(id: number): Promise<Reef> {
     const found = await this.reefsRepository.findOne(id, {
-      relations: ['region', 'admins', 'stream', 'monthlyMax'],
+      relations: ['region', 'admins', 'stream', 'historicalMonthlyMean'],
     });
 
     if (!found) {
@@ -293,7 +300,7 @@ export class ReefsService {
 
   async findLiveData(id: number): Promise<SofarLiveData> {
     const reef = await this.reefsRepository.findOne(id, {
-      relations: ['monthlyMax'],
+      relations: ['historicalMonthlyMean'],
     });
 
     if (!reef) {
@@ -314,7 +321,10 @@ export class ReefsService {
 
     return {
       ...liveData,
-      sstAnomaly: getSstAnomaly(reef.monthlyMax, liveData.satelliteTemperature),
+      sstAnomaly: getSstAnomaly(
+        reef.historicalMonthlyMean,
+        liveData.satelliteTemperature,
+      ),
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
@@ -337,17 +347,14 @@ export class ReefsService {
       endDate,
     );
 
-    const { surfaceTemperature, bottomTemperature } = await getSpotterData(
+    const { topTemperature, bottomTemperature } = await getSpotterData(
       reef.spotterId,
       endDate,
       startDate,
     );
 
     return {
-      surfaceTemperature: filterSpotterDataByDate(
-        surfaceTemperature,
-        exclusionDates,
-      ),
+      topTemperature: filterSpotterDataByDate(topTemperature, exclusionDates),
       bottomTemperature: filterSpotterDataByDate(
         bottomTemperature,
         exclusionDates,

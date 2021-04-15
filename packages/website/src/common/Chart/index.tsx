@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
 import type {
   DailyData,
-  MonthlyMaxData,
+  HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
 } from "../../store/Reefs/types";
@@ -32,7 +32,7 @@ export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: TimeSeries;
   hoboBottomTemperatureData?: SofarValue[];
-  monthlyMaxData?: MonthlyMaxData[];
+  historicalMonthlyMeanData?: HistoricalMonthlyMeanData[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -76,7 +76,10 @@ const makeAnnotation = (
 
 const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
   isEqual(prevProps.dailyData, nextProps.dailyData) &&
-  isEqual(prevProps.maxMonthlyMean, nextProps.maxMonthlyMean) &&
+  isEqual(
+    prevProps.historicalMonthlyMeanData,
+    nextProps.historicalMonthlyMeanData
+  ) &&
   isEqual(
     prevProps.hoboBottomTemperatureData,
     nextProps.hoboBottomTemperatureData
@@ -86,15 +89,15 @@ const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
     nextProps.spotterData?.bottomTemperature
   ) &&
   isEqual(
-    prevProps.spotterData?.surfaceTemperature,
-    nextProps.spotterData?.surfaceTemperature
+    prevProps.spotterData?.topTemperature,
+    nextProps.spotterData?.topTemperature
   );
 
 function Chart({
   dailyData,
   spotterData,
   hoboBottomTemperatureData,
-  monthlyMaxData,
+  historicalMonthlyMeanData,
   surveys,
   timeZone,
   startDate,
@@ -132,14 +135,14 @@ function Chart({
     tempWithSurvey,
     bottomTemperatureData,
     spotterBottom,
-    spotterSurface,
+    spotterTop,
     hoboBottom,
-    monthlyMaxTemp,
+    historicalMonthlyMeanTemp,
   } = useProcessedChartData(
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
-    monthlyMaxData,
+    historicalMonthlyMeanData,
     surveys,
     temperatureThreshold,
     startDate,
@@ -284,7 +287,7 @@ function Chart({
       options={settings}
       data={createChartData(
         spotterBottom,
-        spotterSurface,
+        spotterTop,
         hoboBottom,
         tempWithSurvey,
         augmentSurfaceTemperature(
@@ -293,7 +296,7 @@ function Chart({
           endDate || xAxisMax
         ),
         bottomTemperatureData,
-        monthlyMaxTemp,
+        historicalMonthlyMeanTemp,
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
           : null,

@@ -4,8 +4,8 @@ import { zonedTimeToUtc } from "date-fns-tz";
 
 import {
   DailyData,
-  MonthlyMax,
-  MonthlyMaxData,
+  HistoricalMonthlyMean,
+  HistoricalMonthlyMeanData,
   Range,
   SofarValue,
   TimeSeries,
@@ -90,16 +90,16 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
  * @param type - Type of date we seek (defaults to "max")
  */
 export const findMarginalDate = (
-  monthlyMaxData: MonthlyMaxData[],
+  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   dailyData: DailyData[],
   spotterData?: TimeSeries,
   hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
-    ...monthlyMaxData,
+    ...historicalMonthlyMeanData,
     ...dailyData,
-    ...(spotterData?.surfaceTemperature?.map((item) => ({
+    ...(spotterData?.topTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
@@ -237,8 +237,8 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.satelliteTemperature,
       timeZone
     ),
-    surfaceTemperature: convertSofarDataToLocalTime(
-      timeSeries.surfaceTemperature,
+    topTemperature: convertSofarDataToLocalTime(
+      timeSeries.topTemperature,
       timeZone
     ),
     bottomTemperature: convertSofarDataToLocalTime(
@@ -279,13 +279,13 @@ export const convertSurveyDataToLocalTime = (
 
 // Generate data for all months between start date's previous month and
 // end date's next month
-export const generateMonthlyMaxTimestamps = (
-  monthlyMax: MonthlyMax[],
+export const generateHistoricalMonthlyMeanTimestamps = (
+  historicalMonthlyMean: HistoricalMonthlyMean[],
   startDate?: string,
   endDate?: string,
   timeZone?: string | null
-): MonthlyMaxData[] => {
-  if (monthlyMax.length < 12) {
+): HistoricalMonthlyMeanData[] => {
+  if (historicalMonthlyMean.length < 12) {
     return [];
   }
 
@@ -309,7 +309,7 @@ export const generateMonthlyMaxTimestamps = (
 
     return {
       date: date.toISOString(),
-      value: monthlyMax[date.month()].temperature,
+      value: historicalMonthlyMean[date.month()].temperature,
     };
   });
 };
