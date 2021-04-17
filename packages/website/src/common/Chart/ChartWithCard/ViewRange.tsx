@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   Tooltip,
 } from "@material-ui/core";
+import moment from "moment";
 import { RangeButton, RangeValue } from "./types";
 
 const ViewRange = ({
@@ -20,6 +21,8 @@ const ViewRange = ({
   hasSpotterData,
   onRangeChange,
   classes,
+  pickerStartDate,
+  pickerEndDate,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -50,12 +53,15 @@ const ViewRange = ({
     },
   ];
 
+  const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
+  const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
+
   return (
     <>
       <Grid
         className={classes.autoWidth}
         container
-        alignItems="center"
+        alignItems="flex-end"
         justify="space-between"
         spacing={2}
       >
@@ -63,6 +69,10 @@ const ViewRange = ({
           <Box ml="42px">
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
+            </Typography>
+            <Typography className={classes.titleHoboRange} variant="subtitle2">
+              &#9432; HOBO range: {formattedpickerStartDate} -{" "}
+              {formattedpickerEndDate}
             </Typography>
           </Box>
         </Grid>
@@ -120,6 +130,13 @@ const styles = () =>
     autoWidth: {
       width: "auto",
     },
+    titleHoboRange: {
+      padding: "2px 5px",
+      marginTop: 8,
+      borderRadius: 5,
+      backgroundColor: "#f8f9f9",
+      color: "#979797",
+    },
   });
 
 interface ViewRangeIncomingProps {
@@ -128,6 +145,8 @@ interface ViewRangeIncomingProps {
   title?: string;
   hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
+  pickerStartDate: string;
+  pickerEndDate: string;
 }
 
 ViewRange.defaultProps = {

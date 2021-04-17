@@ -256,6 +256,8 @@ const ChartWithCard = ({
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
         hasSpotterData={hasSpotterData}
+        pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+        pickerEndDate={pickerEndDate || today}
       />
       <Grid
         className={classes.chartWrapper}
