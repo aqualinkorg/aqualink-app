@@ -6,6 +6,7 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { SourceType } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
+import { User } from '../users/users.entity';
 import { getSstAnomaly } from '../utils/liveData';
 import { SofarValue } from '../utils/sofar.types';
 import { metricToKey } from '../utils/time-series.utils';
@@ -53,8 +54,11 @@ export class CollectionsService {
     });
   }
 
-  find(filterCollectionDto: FilterCollectionDto): Promise<Collection[]> {
-    const { name, isPublic, reefId, userId } = filterCollectionDto;
+  find(
+    filterCollectionDto: FilterCollectionDto,
+    user: User,
+  ): Promise<Collection[]> {
+    const { name, isPublic, reefId } = filterCollectionDto;
 
     const query = this.collectionRepository.createQueryBuilder('collection');
 
@@ -62,14 +66,11 @@ export class CollectionsService {
       query.andWhere('collection.name = :name', { name });
     }
 
-    if (isPublic) {
-      query.andWhere('collection.is_public = :isPublic', {
-        isPublic: isPublic === 'true',
-      });
-    }
-
-    if (userId) {
-      query.andWhere('collection.user_id = :userId', { userId });
+    if (isPublic && isPublic === 'true') {
+      query.andWhere('collection.is_public = TRUE');
+    } else if (!isPublic || isPublic === 'false') {
+      query.andWhere('collection.is_public = FALSE');
+      query.andWhere('collection.user_id = :userId', { userId: user.id });
     }
 
     if (reefId) {
