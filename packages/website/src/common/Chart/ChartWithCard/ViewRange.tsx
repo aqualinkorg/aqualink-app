@@ -21,8 +21,8 @@ const ViewRange = ({
   hasSpotterData,
   onRangeChange,
   classes,
-  pickerStartDate,
-  pickerEndDate,
+  startDate,
+  endDate,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -53,8 +53,10 @@ const ViewRange = ({
     },
   ];
 
-  const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
-  const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
+  const formattedStartDate = moment.utc(startDate).format("MM/DD/YYYY");
+  const formattedEndDate = moment.utc(endDate).format("MM/DD/YYYY");
+  const type = hasSpotterData ? "Spotter" : "HOBO";
+  const dateRangeString = `${type} range: ${formattedStartDate} - ${formattedEndDate}`;
 
   return (
     <>
@@ -70,9 +72,9 @@ const ViewRange = ({
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
             </Typography>
-            <Typography className={classes.titleHoboRange} variant="subtitle2">
-              &#9432; HOBO range: {formattedpickerStartDate} -{" "}
-              {formattedpickerEndDate}
+            <Typography className={classes.titleDateRange} variant="subtitle2">
+              &#9432;&nbsp;
+              {startDate && endDate ? dateRangeString : "No Range Available"}
             </Typography>
           </Box>
         </Grid>
@@ -130,7 +132,7 @@ const styles = () =>
     autoWidth: {
       width: "auto",
     },
-    titleHoboRange: {
+    titleDateRange: {
       padding: "2px 5px",
       marginTop: 8,
       borderRadius: 5,
@@ -145,8 +147,8 @@ interface ViewRangeIncomingProps {
   title?: string;
   hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
-  pickerStartDate: string;
-  pickerEndDate: string;
+  startDate: string | undefined;
+  endDate: string | undefined;
 }
 
 ViewRange.defaultProps = {
