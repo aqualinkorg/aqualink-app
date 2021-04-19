@@ -57,15 +57,21 @@ const RowNumberCell = ({
   decimalPlaces,
   value,
   classes,
+  extended,
 }: {
   color?: string;
   unit?: string;
   value: number | null;
   decimalPlaces?: number;
   classes: ReefTableBodyProps["classes"];
+  extended?: boolean;
 }) => {
   return (
-    <TableCell className={classes.cellTextAlign}>
+    <TableCell
+      className={
+        extended ? classes.cellTextAlignExtended : classes.cellTextAlign
+      }
+    >
       <Typography
         variant="h6"
         style={{ color }}
@@ -103,8 +109,9 @@ const RowAlertCell = ({
 
 RowNumberCell.defaultProps = {
   unit: "",
-  color: "black",
+  color: colors.black,
   decimalPlaces: 1,
+  extended: false,
 };
 
 const ReefTableBody = ({
@@ -176,28 +183,32 @@ const ReefTableBody = ({
               }}
             />
             <RowNumberCell
+              extended={extended}
               classes={classes}
               value={reef.sst}
-              color={extended ? "black" : colors.lightBlue}
+              color={extended ? colors.black : colors.lightBlue}
               unit="°C"
             />
             {extended && (
               <RowNumberCell
+                extended={extended}
                 classes={classes}
                 value={reef.historicMax}
-                color="black"
+                color={colors.black}
                 unit="°C"
               />
             )}
             {extended && (
               <RowNumberCell
+                extended={extended}
                 classes={classes}
                 value={reef.sstAnomaly}
-                color="black"
+                color={colors.black}
                 unit="°C"
               />
             )}
             <RowNumberCell
+              extended={extended}
               classes={classes}
               value={reef.dhw}
               color={dhwColorFinder(reef.dhw)}
@@ -205,17 +216,19 @@ const ReefTableBody = ({
             />
             {extended && (
               <RowNumberCell
+                extended={extended}
                 classes={classes}
                 value={reef.buoyTop}
-                color="black"
+                color={colors.black}
                 unit="°C"
               />
             )}
             {extended && (
               <RowNumberCell
+                extended={extended}
                 classes={classes}
                 value={reef.buoyBottom}
-                color="black"
+                color={colors.black}
                 unit="°C"
               />
             )}
@@ -247,6 +260,13 @@ const styles = (theme: Theme) =>
       textAlign: "left",
       [theme.breakpoints.down("xs")]: {
         textAlign: "right",
+      },
+    },
+    cellTextAlignExtended: {
+      [theme.breakpoints.down("xs")]: {
+        paddingLeft: 10,
+        paddingRight: 0,
+        textAlign: "left",
       },
     },
     tableRow: {

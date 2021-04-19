@@ -150,24 +150,26 @@ const ReefTable = ({
         </Box>
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
-      <Hidden smUp>
-        <Box
-          paddingX={2}
-          paddingY={3}
-          display="flex"
-          alignItems="center"
-          onClick={onInteractiveClick}
-        >
-          <Typography variant="h5">Sort By: </Typography>
-          <Select
-            value={`${orderBy}-${order}`}
-            className={classes.mobileSortSelect}
-            onChange={onMobileSelectChange}
+      {!extended && (
+        <Hidden smUp>
+          <Box
+            paddingX={2}
+            paddingY={3}
+            display="flex"
+            alignItems="center"
+            onClick={onInteractiveClick}
           >
-            {MOBILE_SELECT_MENU_ITEMS}
-          </Select>
-        </Box>
-      </Hidden>
+            <Typography variant="h5">Sort By: </Typography>
+            <Select
+              value={`${orderBy}-${order}`}
+              className={classes.mobileSortSelect}
+              onChange={onMobileSelectChange}
+            >
+              {MOBILE_SELECT_MENU_ITEMS}
+            </Select>
+          </Box>
+        </Hidden>
+      )}
       <Box
         className={
           height && height > SMALL_HEIGHT
@@ -183,7 +185,7 @@ const ReefTable = ({
             stickyHeader
             className={extended ? classes.extendedTable : classes.table}
           >
-            <Hidden xsDown>
+            <Hidden xsDown={!extended}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}

@@ -21,7 +21,7 @@ const lightGray = "#939393";
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
 
-export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue };
+export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue, black };
 
 const breakpoints = createBreakpoints({});
 
