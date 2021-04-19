@@ -57,3 +57,4 @@ jobs:
 
       # Ensure that a normal build succeeds
       - run: yarn build
+      - run: cd packages/api && yarn build:cloud-functions
