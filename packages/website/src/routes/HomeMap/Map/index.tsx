@@ -44,12 +44,11 @@ const HomepageMap = ({
   showWaterMark,
   geolocationEnabled,
   defaultLayerName,
-  layerControlsEnabled,
   legendBottom,
   legendLeft,
   classes,
 }: HomepageMapProps) => {
-  const [legendName, setLegendName] = useState<string>("");
+  const [legendName, setLegendName] = useState<string>(defaultLayerName || "");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
     number
@@ -139,10 +138,7 @@ const HomepageMap = ({
         </Alert>
       </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
-      <SofarLayers
-        layerControlsEnabled={layerControlsEnabled}
-        defaultLayerName={defaultLayerName}
-      />
+      <SofarLayers defaultLayerName={defaultLayerName} />
       <ReefMarkers collection={collection} />
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
@@ -153,11 +149,7 @@ const HomepageMap = ({
           radius={currentLocationAccuracy}
         />
       )}
-      <Legend
-        legendName={defaultLayerName || legendName}
-        bottom={legendBottom}
-        left={legendLeft}
-      />
+      <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
       {showAlertLevelLegend && <AlertLevelLegend />}
       {showWaterMark && <div className="mapbox-wordmark" />}
       {geolocationEnabled && (
@@ -210,7 +202,6 @@ interface HomepageMapIncomingProps {
   showWaterMark?: boolean;
   geolocationEnabled?: boolean;
   defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
-  layerControlsEnabled?: boolean;
   legendBottom?: number;
   legendLeft?: number;
 }
@@ -221,7 +212,6 @@ HomepageMap.defaultProps = {
   showWaterMark: true,
   geolocationEnabled: true,
   defaultLayerName: undefined,
-  layerControlsEnabled: true,
   legendBottom: undefined,
   legendLeft: undefined,
 };

@@ -27,7 +27,6 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
         showWaterMark={false}
         geolocationEnabled={false}
         defaultLayerName="Heat Stress"
-        layerControlsEnabled={false}
         legendBottom={isMobile ? 35 : 20}
         legendLeft={isMobile ? 2 : 4}
       />

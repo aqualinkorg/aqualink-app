@@ -28,30 +28,22 @@ const { REACT_APP_SOFAR_API_TOKEN: API_TOKEN } = process.env;
 const sofarUrlFromDef = ({ model, cmap, variableId }: SofarLayerDefinition) =>
   `https://api.sofarocean.com/marine-weather/v1/models/${model}/tile/{z}/{x}/{y}.png?colormap=${cmap}&token=${API_TOKEN}&variableID=${variableId}`;
 
-export const SofarLayers = ({
-  defaultLayerName,
-  layerControlsEnabled,
-}: SofarLayersProps) => {
-  const layer = SOFAR_LAYERS.find((item) => item.name === defaultLayerName);
-
-  if (defaultLayerName && !layerControlsEnabled && layer) {
-    return (
-      <TileLayer
-        // Sofar tiles have a max native zoom of 9
-        maxNativeZoom={9}
-        url={sofarUrlFromDef(layer)}
-        opacity={0.5}
-      />
-    );
-  }
-
+export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
   return (
     <LayersControl position="topright">
-      <LayersControl.BaseLayer checked name="Satellite Imagery" key="no-verlay">
+      <LayersControl.BaseLayer
+        checked={!defaultLayerName}
+        name="Satellite Imagery"
+        key="no-verlay"
+      >
         <TileLayer url="" key="no-overlay" />
       </LayersControl.BaseLayer>
       {SOFAR_LAYERS.map((def) => (
-        <LayersControl.BaseLayer name={def.name} key={def.name}>
+        <LayersControl.BaseLayer
+          checked={def.name === defaultLayerName}
+          name={def.name}
+          key={def.name}
+        >
           <TileLayer
             // Sofar tiles have a max native zoom of 9
             maxNativeZoom={9}
@@ -67,12 +59,10 @@ export const SofarLayers = ({
 
 interface SofarLayersProps {
   defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
-  layerControlsEnabled?: boolean;
 }
 
 SofarLayers.defaultProps = {
   defaultLayerName: undefined,
-  layerControlsEnabled: true,
 };
 
 export default SofarLayers;
