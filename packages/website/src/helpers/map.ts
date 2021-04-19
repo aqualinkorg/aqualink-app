@@ -1,5 +1,5 @@
-import { minBy, isEqual, mean } from "lodash";
-import L from "leaflet";
+import { minBy, isEqual, mean, meanBy } from "lodash";
+import L, { LatLng, Polygon as LeafletPolygon, LatLngBounds } from "leaflet";
 
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
 import { spotter } from "../assets/spotter";
@@ -7,6 +7,7 @@ import { spotterSelected } from "../assets/spotterSelected";
 import { spotterAnimation } from "../assets/spotterAnimation";
 import { hobo } from "../assets/hobo";
 import { hoboSelected } from "../assets/hoboSelected";
+import { Collection } from "../routes/Dashboard/collection";
 
 export const locationCalculator = (point: Point | Polygon): Position => {
   if (point.type === "Point") {
@@ -37,6 +38,29 @@ export const samePosition = (
       : polygon2.coordinates;
 
   return isEqual(coords1, coords2);
+};
+
+export const getCollectionCenterAndBounds = (
+  collection?: Collection
+): [LatLng | undefined, LatLngBounds | undefined] => {
+  if (!collection) {
+    return [undefined, undefined];
+  }
+
+  const coordinates = collection.reefs.map((item) =>
+    locationCalculator(item.polygon)
+  );
+
+  const center = new LatLng(
+    meanBy(coordinates, (item) => item[1]),
+    meanBy(coordinates, (item) => item[0])
+  );
+
+  const bounds = new LeafletPolygon(
+    coordinates.map((item) => new LatLng(item[1], item[0]))
+  ).getBounds();
+
+  return [center, bounds];
 };
 
 // Returns the distance between two points in radians

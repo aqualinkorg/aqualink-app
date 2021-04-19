@@ -27,8 +27,8 @@ import { Collection } from "../../../Dashboard/collection";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
-    const { reef } = marker.options.children[0].props;
-    const { weeklyAlertLevel } = reef.latestDailyData;
+    const { reef } = marker?.options?.children?.[0]?.props || {};
+    const { weeklyAlertLevel } = reef?.latestDailyData || {};
     return findIntervalByLevel(weeklyAlertLevel);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
@@ -70,7 +70,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
     <LayerGroup>
       <MarkerClusterGroup
         iconCreateFunction={clusterIcon}
-        disableClusteringAtZoom={2}
+        disableClusteringAtZoom={collection ? 1 : 2}
       >
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {

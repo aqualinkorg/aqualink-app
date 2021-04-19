@@ -12,15 +12,21 @@ import { LatLng } from "leaflet";
 
 import Map from "../../HomeMap/Map";
 import { Collection } from "../collection";
+import { getCollectionCenterAndBounds } from "../../../helpers/map";
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(320));
+  const [collectionCenter, collectionBounds] = getCollectionCenterAndBounds(
+    collection
+  );
+
   return (
     <Box className={classes.root} borderRadius="5px" height="480px" mt="46px">
       <Map
         classes={{ map: classes.map }}
-        initialCenter={new LatLng(0, 0)}
+        initialCenter={collectionCenter || new LatLng(0, 0)}
+        initialBounds={collectionBounds}
         initialZoom={3}
         collection={collection}
         showAlertLevelLegend={false}

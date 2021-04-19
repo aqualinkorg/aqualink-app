@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Map, TileLayer, Marker, Circle } from "react-leaflet";
-import L, { LatLng, LayersControlEvent } from "leaflet";
+import L, { LatLng, LatLngBounds, LayersControlEvent } from "leaflet";
 import {
   createStyles,
   withStyles,
@@ -39,6 +39,7 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  initialBounds,
   collection,
   showAlertLevelLegend,
   showWaterMark,
@@ -123,9 +124,10 @@ const HomepageMap = ({
       className={classes.map}
       center={initialCenter}
       zoom={initialZoom}
-      minZoom={2}
+      minZoom={collection ? 1 : 2}
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
+      bounds={initialBounds}
     >
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}
@@ -197,6 +199,7 @@ const styles = () =>
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  initialBounds?: LatLngBounds;
   collection?: Collection;
   showAlertLevelLegend?: boolean;
   showWaterMark?: boolean;
@@ -207,6 +210,7 @@ interface HomepageMapIncomingProps {
 }
 
 HomepageMap.defaultProps = {
+  initialBounds: undefined,
   collection: undefined,
   showAlertLevelLegend: true,
   showWaterMark: true,
