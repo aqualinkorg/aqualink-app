@@ -58,10 +58,6 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
           width: "20%",
         },
         {
-          id: OrderKeys.WEEK,
-          label: "WEEK/WEEK",
-        },
-        {
           id: OrderKeys.SST,
           label: "SST",
           unit: "°C",

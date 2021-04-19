@@ -175,13 +175,6 @@ const ReefTableBody = ({
                   : classes.nameCells,
               }}
             />
-            {extended && (
-              <RowNumberCell
-                classes={classes}
-                value={reef.week}
-                color="black"
-              />
-            )}
             <RowNumberCell
               classes={classes}
               value={reef.sst}

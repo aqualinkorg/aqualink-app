@@ -257,38 +257,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-typography>
           </mock-menuitem>
           <mock-menuitem
-            data-value="week-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Week
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="week-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Week
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
             data-value="historicMax-asc"
             role="option"
             selected="false"

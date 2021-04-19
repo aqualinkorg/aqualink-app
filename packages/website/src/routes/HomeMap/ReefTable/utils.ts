@@ -9,7 +9,6 @@ export enum OrderKeys {
   DHW = "dhw",
   LOCATION_NAME = "locationName",
   SST = "sst",
-  WEEK = "week",
   HISTORIC_MAX = "historicMax",
   SST_ANOMALY = "sstAnomaly",
   BUOY_TOP = "buoyTop",

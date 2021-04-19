@@ -33,7 +33,6 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
     return {
       locationName,
       sst: satelliteTemperature,
-      week: null,
       historicMax: null,
       sstAnomaly: null,
       buoyTop: null,

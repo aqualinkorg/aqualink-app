@@ -18,7 +18,6 @@ export interface TableRow {
   locationName: string | null;
   region?: string | null;
   sst: number | null;
-  week: number | null;
   historicMax: number | null;
   sstAnomaly: number | null;
   buoyTop: number | null;
