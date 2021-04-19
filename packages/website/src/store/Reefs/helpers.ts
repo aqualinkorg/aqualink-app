@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import { isNumber } from "lodash";
 import type { TableRow } from "../Homepage/types";
 import type {
   Metrics,
@@ -22,9 +23,24 @@ export const longDHW = (dhw: number | null): string =>
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
-      value.latestDailyData || {};
-    const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
+    const {
+      degreeHeatingDays: latestDhd,
+      satelliteTemperature: latestSst,
+      weeklyAlertLevel: latestWeeklyAlert,
+    } = value.latestDailyData || {};
+
+    const {
+      bottomTemperature,
+      topTemperature,
+      degreeHeatingDays: collectionDhd,
+      satelliteTemperature: collectionSst,
+      sstAnomaly,
+      weeklyAlert: collectionWeeklyAlert,
+    } = value?.collectionData || {};
+
+    const dhw = degreeHeatingWeeksCalculator(
+      [latestDhd, collectionDhd].find((item) => isNumber(item))
+    );
     const { maxMonthlyMean } = value;
     const { name: locationName = "", region = "" } = getReefNameAndRegion(
       value
@@ -32,11 +48,11 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
     return {
       locationName,
-      sst: satelliteTemperature,
-      historicMax: null,
-      sstAnomaly: null,
-      buoyTop: null,
-      buoyBottom: null,
+      sst: collectionSst || latestSst || null,
+      historicMax: maxMonthlyMean,
+      sstAnomaly: sstAnomaly || null,
+      buoyTop: topTemperature || null,
+      buoyBottom: bottomTemperature || null,
       maxMonthlyMean,
       depth: value.depth,
       dhw,
@@ -44,8 +60,10 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${weeklyAlertLevel || 0},${longDHW(dhw)}`,
-      alertLevel: weeklyAlertLevel || null,
+      alert: `${latestWeeklyAlert || collectionWeeklyAlert || 0},${longDHW(
+        dhw
+      )}`,
+      alertLevel: latestWeeklyAlert || collectionWeeklyAlert || null,
     };
   });
 };

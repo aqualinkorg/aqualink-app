@@ -17,6 +17,7 @@ import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
 import { useSelector } from "react-redux";
 
 import type { LatLngTuple } from "leaflet";
+import { isNumber } from "lodash";
 import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
@@ -32,8 +33,20 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { degreeHeatingDays, maxBottomTemperature, satelliteTemperature } =
-    reef.latestDailyData || {};
+  const {
+    degreeHeatingDays: latestDhd,
+    maxBottomTemperature,
+    satelliteTemperature: latestSst,
+  } = reef.latestDailyData || {};
+
+  const {
+    degreeHeatingDays: collectionDhd,
+    satelliteTemperature: collectionSst,
+  } = reef?.collectionData || {};
+
+  const dhw = degreeHeatingWeeksCalculator(
+    [latestDhd, collectionDhd].find((item) => isNumber(item))
+  );
 
   useEffect(() => {
     if (
@@ -100,7 +113,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
                     variant="h5"
                     color="textSecondary"
                   >
-                    {`${formatNumber(satelliteTemperature, 1)}  °C`}
+                    {`${formatNumber(latestSst || collectionSst, 1)}  °C`}
                   </Typography>
                 </Grid>
               </Grid>
@@ -114,25 +127,18 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
               <Grid container alignItems="flex-end" item xs={12}>
                 <Typography
                   style={{
-                    color: `${dhwColorFinder(
-                      degreeHeatingWeeksCalculator(degreeHeatingDays)
-                    )}`,
+                    color: `${dhwColorFinder(dhw)}`,
                   }}
                   variant="h5"
                   color="textSecondary"
                 >
-                  {formatNumber(
-                    degreeHeatingWeeksCalculator(degreeHeatingDays),
-                    1
-                  )}
+                  {formatNumber(dhw, 1)}
                   &nbsp;
                 </Typography>
                 <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                   <Typography
                     style={{
-                      color: `${dhwColorFinder(
-                        degreeHeatingWeeksCalculator(degreeHeatingDays)
-                      )}`,
+                      color: `${dhwColorFinder(dhw)}`,
                       position: "relative",
                       bottom: 0,
                     }}

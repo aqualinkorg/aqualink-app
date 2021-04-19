@@ -1,15 +1,30 @@
 import React from "react";
-import { Container, Grid } from "@material-ui/core";
+import { Container, Grid, Box, Typography, useTheme } from "@material-ui/core";
 import { User } from "../../store/User/types";
-import { createCollection } from "./collection";
 import BackButton from "./BackButton";
 import Map from "./Map";
 import Info from "./Info";
 import Table from "./Table";
-import { Reef } from "../../store/Reefs/types";
 
-const Content = ({ user, reefsList }: ContentProps) => {
-  const collection = createCollection(reefsList, 8);
+const Content = ({ user }: ContentProps) => {
+  const { collection } = user;
+  const theme = useTheme();
+
+  if (!collection || collection.reefs.length === 0) {
+    return (
+      <Box
+        height="100%"
+        textAlign="center"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        color={theme.palette.primary.main}
+      >
+        <Typography variant="h2">No sites added to your collection</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Container>
       <BackButton collectionName={collection.name} />
@@ -28,7 +43,6 @@ const Content = ({ user, reefsList }: ContentProps) => {
 
 interface ContentIncomingProps {
   user: User;
-  reefsList: Reef[];
 }
 
 type ContentProps = ContentIncomingProps;

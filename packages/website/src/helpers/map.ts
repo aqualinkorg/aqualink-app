@@ -7,7 +7,7 @@ import { spotterSelected } from "../assets/spotterSelected";
 import { spotterAnimation } from "../assets/spotterAnimation";
 import { hobo } from "../assets/hobo";
 import { hoboSelected } from "../assets/hoboSelected";
-import { Collection } from "../routes/Dashboard/collection";
+import { CollectionDetails } from "../store/User/types";
 
 export const locationCalculator = (point: Point | Polygon): Position => {
   if (point.type === "Point") {
@@ -41,7 +41,7 @@ export const samePosition = (
 };
 
 export const getCollectionCenterAndBounds = (
-  collection?: Collection
+  collection?: CollectionDetails
 ): [LatLng | undefined, LatLngBounds | undefined] => {
   if (!collection) {
     return [undefined, undefined];

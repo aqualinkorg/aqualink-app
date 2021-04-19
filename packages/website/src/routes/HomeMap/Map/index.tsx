@@ -19,7 +19,7 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { Collection } from "../../Dashboard/collection";
+import { CollectionDetails } from "../../../store/User/types";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -200,7 +200,7 @@ interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
   initialBounds?: LatLngBounds;
-  collection?: Collection;
+  collection?: CollectionDetails;
   showAlertLevelLegend?: boolean;
   showWaterMark?: boolean;
   geolocationEnabled?: boolean;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   withStyles,
   WithStyles,
@@ -8,7 +8,7 @@ import {
   Typography,
   Theme,
 } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -18,32 +18,16 @@ import {
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
-import {
-  reefsListLoadingSelector,
-  reefsListSelector,
-  reefsRequest,
-} from "../../store/Reefs/reefsListSlice";
 
 const Dashboard = ({ classes }: DashboardProps) => {
-  const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const reefsList = useSelector(reefsListSelector);
-  const reefsListLoading = useSelector(reefsListLoadingSelector);
-
-  const loading = userLoading || reefsListLoading;
-
-  useEffect(() => {
-    if (!reefsList) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefsList]);
 
   return (
     <>
       <NavBar searchLocation={false} />
       <div className={classes.root}>
-        {!user && !loading && (
+        {!user && !userLoading && (
           <Delayed waitBeforeShow={1000}>
             <Box
               height="100%"
@@ -58,10 +42,8 @@ const Dashboard = ({ classes }: DashboardProps) => {
             </Box>
           </Delayed>
         )}
-        {loading && <LinearProgress />}
-        {user && reefsList && (
-          <DashboardContent user={user} reefsList={reefsList} />
-        )}
+        {userLoading && <LinearProgress />}
+        {user && <DashboardContent user={user} />}
       </div>
       <Footer />
     </>

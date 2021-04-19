@@ -11,8 +11,8 @@ import {
 import { LatLng } from "leaflet";
 
 import Map from "../../HomeMap/Map";
-import { Collection } from "../collection";
 import { getCollectionCenterAndBounds } from "../../../helpers/map";
+import { CollectionDetails } from "../../../store/User/types";
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
@@ -58,7 +58,7 @@ const styles = (theme: Theme) =>
   });
 
 interface DashboardMapIncomingProps {
-  collection: Collection;
+  collection: CollectionDetails;
 }
 
 type DashboardMapProps = DashboardMapIncomingProps & WithStyles<typeof styles>;

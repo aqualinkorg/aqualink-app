@@ -10,8 +10,7 @@ import {
 import EmailIcon from "@material-ui/icons/Email";
 import classNames from "classnames";
 
-import { Collection } from "../collection";
-import { User } from "../../../store/User/types";
+import { CollectionDetails, User } from "../../../store/User/types";
 
 const Header = ({ user, collection, classes }: HeaderProps) => {
   const nSites = collection.reefs.length;
@@ -97,7 +96,7 @@ const styles = (theme: Theme) =>
 
 interface HeaderIncomingProps {
   user: User;
-  collection: Collection;
+  collection: CollectionDetails;
 }
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

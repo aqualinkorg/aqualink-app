@@ -8,8 +8,7 @@ import {
   Divider,
 } from "@material-ui/core";
 
-import { User } from "../../../store/User/types";
-import { Collection } from "../collection";
+import { CollectionDetails, User } from "../../../store/User/types";
 import Header from "./Header";
 import BarChart from "./BarChart";
 
@@ -51,7 +50,7 @@ const styles = (theme: Theme) =>
 
 interface InfoIncomingProps {
   user: User;
-  collection: Collection;
+  collection: CollectionDetails;
 }
 
 type InfoProps = InfoIncomingProps & WithStyles<typeof styles>;

@@ -11,10 +11,10 @@ import {
 } from "@material-ui/core";
 import { groupBy, range } from "lodash";
 
-import { Collection } from "../collection";
 import { findIntervalByLevel } from "../../../helpers/bleachingAlertIntervals";
 
 import { formatNumber } from "../../../helpers/numberUtils";
+import { CollectionDetails } from "../../../store/User/types";
 
 const percentageCalculator = (count: number, total: number) => {
   // Max width should be 80%
@@ -26,7 +26,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
   const nSites = collection.reefs.length;
   const groupedByAlert = groupBy(
     collection.reefs,
-    (reef) => reef.latestDailyData.weeklyAlertLevel
+    (reef) => reef.collectionData?.weeklyAlert
   );
 
   return (
@@ -147,7 +147,7 @@ const styles = (theme: Theme) =>
   });
 
 interface BarChartIncomingProps {
-  collection: Collection;
+  collection: CollectionDetails;
 }
 
 type BarChartProps = BarChartIncomingProps & WithStyles<typeof styles>;

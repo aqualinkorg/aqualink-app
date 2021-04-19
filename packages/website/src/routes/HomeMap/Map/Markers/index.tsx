@@ -23,7 +23,7 @@ import {
 } from "../../../../helpers/bleachingAlertIntervals";
 import { markerIcon } from "../../../../helpers/map";
 import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
-import { Collection } from "../../../Dashboard/collection";
+import { CollectionDetails } from "../../../../store/User/types";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
@@ -76,6 +76,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
             const { weeklyAlertLevel } = reef.latestDailyData || {};
+            const { weeklyAlert } = reef?.collectionData || {};
 
             return lngOffsets.map((offset) => (
               <Marker
@@ -88,8 +89,8 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
                   hasDeployedSpotter(reef),
                   reef.hasHobo,
                   reefOnMap?.id === reef.id,
-                  alertColorFinder(weeklyAlertLevel),
-                  alertIconFinder(weeklyAlertLevel)
+                  alertColorFinder(weeklyAlertLevel || weeklyAlert),
+                  alertIconFinder(weeklyAlertLevel || weeklyAlert)
                 )}
                 position={[lat, lng + offset]}
               >
@@ -105,7 +106,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
 };
 
 interface ReefMarkersProps {
-  collection?: Collection;
+  collection?: CollectionDetails;
 }
 
 ReefMarkers.defaultProps = {
