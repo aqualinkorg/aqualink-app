@@ -15,10 +15,12 @@ import { Auth } from '../auth/auth.decorator';
 import { AuthRequest } from '../auth/auth.types';
 import { CollectionGuard } from '../auth/collection.guard';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
+import { Public } from '../auth/public.decorator';
 import { AdminLevel } from '../users/users.entity';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
+import { FilterPublicCollection } from './dto/filter-public-collcetion.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 @Auth()
@@ -38,6 +40,18 @@ export class CollectionsController {
     @Req() request: AuthRequest,
   ) {
     return this.collectionsService.find(filterCollectionDto, request.user);
+  }
+
+  @Public()
+  @Get('public')
+  findPublic(@Query() filterPublicCollectionDto: FilterPublicCollection) {
+    return this.collectionsService.findPublic(filterPublicCollectionDto);
+  }
+
+  @Public()
+  @Get('public/:collectionId')
+  findOnePublic(@Param('collectionId', ParseIntPipe) collectionId: number) {
+    return this.collectionsService.findOnePublic(collectionId);
   }
 
   @UseGuards(CollectionGuard)

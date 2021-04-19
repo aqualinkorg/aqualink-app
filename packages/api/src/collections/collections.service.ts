@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
@@ -13,6 +18,7 @@ import { metricToKey } from '../utils/time-series.utils';
 import { Collection, CollectionData } from './collections.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
+import { FilterPublicCollection } from './dto/filter-public-collcetion.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 interface LatestDailyData {
@@ -58,28 +64,15 @@ export class CollectionsService {
     filterCollectionDto: FilterCollectionDto,
     user: User,
   ): Promise<Collection[]> {
-    const { name, isPublic, reefId } = filterCollectionDto;
+    const { name, reefId } = filterCollectionDto;
 
-    const query = this.collectionRepository.createQueryBuilder('collection');
+    return this.filterCollectionQuery(name, reefId, user);
+  }
 
-    if (name) {
-      query.andWhere('collection.name = :name', { name });
-    }
+  findPublic(filterPublicCollectionDto: FilterPublicCollection) {
+    const { name, reefId } = filterPublicCollectionDto;
 
-    if (isPublic && isPublic === 'true') {
-      query.andWhere('collection.is_public = TRUE');
-    } else if (!isPublic || isPublic === 'false') {
-      query.andWhere('collection.is_public = FALSE');
-      query.andWhere('collection.user_id = :userId', { userId: user.id });
-    }
-
-    if (reefId) {
-      query
-        .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.reef_id = :reefId', { reefId });
-    }
-
-    return query.getMany();
+    return this.filterCollectionQuery(name, reefId);
   }
 
   async findOne(collectionId: number): Promise<Collection> {
@@ -94,6 +87,83 @@ export class CollectionsService {
       );
     }
 
+    return this.getCollectionData(collection);
+  }
+
+  async findOnePublic(collectionId: number) {
+    const collection = await this.collectionRepository.findOne({
+      where: { id: collectionId },
+      relations: ['reefs', 'reefs.historicalMonthlyMean'],
+    });
+
+    if (!collection) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
+
+    if (!collection.isPublic) {
+      throw new UnauthorizedException(
+        `You are not allowed to access this collection with ${collectionId}`,
+      );
+    }
+
+    return this.getCollectionData(collection);
+  }
+
+  async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
+    const collection = await this.collectionRepository.findOne(collectionId);
+
+    if (!collection) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
+    const { name, isPublic, userId, reefIds } = updateCollectionDto;
+
+    const reefs = reefIds && reefIds.map((reefId) => ({ id: reefId }));
+    await this.collectionRepository.save({
+      id: collectionId,
+      ...omitBy({ name, isPublic }, isUndefined),
+      reefs,
+      user: userId === undefined ? undefined : { id: userId },
+    });
+  }
+
+  async delete(collectionId: number) {
+    const result = await this.collectionRepository.delete(collectionId);
+
+    if (!result.affected) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
+  }
+
+  private filterCollectionQuery(name?: string, reefId?: number, user?: User) {
+    const query = this.collectionRepository.createQueryBuilder('collection');
+
+    if (user) {
+      query.andWhere('collection.user_id = :userId', { userId: user.id });
+      query.andWhere('collection.is_public = FALSE');
+    } else {
+      query.andWhere('collection.is_public = TRUE');
+    }
+
+    if (name) {
+      query.andWhere('collection.name = :name', { name });
+    }
+
+    if (reefId) {
+      query
+        .innerJoin('collection.reefs', 'reef')
+        .andWhere('reef.reef_id = :reefId', { reefId });
+    }
+
+    return query.getMany();
+  }
+
+  private async getCollectionData(collection: Collection): Promise<Collection> {
     // Get buoy data
     const latestData = await this.latestDataRepository.find({
       where: {
@@ -166,34 +236,5 @@ export class CollectionsService {
         };
       }),
     };
-  }
-
-  async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
-    const collection = await this.collectionRepository.findOne(collectionId);
-
-    if (!collection) {
-      throw new NotFoundException(
-        `Collection with ID ${collectionId} not found.`,
-      );
-    }
-    const { name, isPublic, userId, reefIds } = updateCollectionDto;
-
-    const reefs = reefIds && reefIds.map((reefId) => ({ id: reefId }));
-    await this.collectionRepository.save({
-      id: collectionId,
-      ...omitBy({ name, isPublic }, isUndefined),
-      reefs,
-      user: userId === undefined ? undefined : { id: userId },
-    });
-  }
-
-  async delete(collectionId: number) {
-    const result = await this.collectionRepository.delete(collectionId);
-
-    if (!result.affected) {
-      throw new NotFoundException(
-        `Collection with ID ${collectionId} not found.`,
-      );
-    }
   }
 }
