@@ -12,6 +12,12 @@ import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, sofarHindcast } from './sofar';
 import { getNOAASource, insertSSTToTimeSeries } from './time-series.utils';
 
+interface Repositories {
+  reefRepository: Repository<Reef>;
+  sourceRepository: Repository<Sources>;
+  timeSeriesRepository: Repository<TimeSeries>;
+}
+
 const logger = new Logger('SSTTimeSeries');
 
 const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
@@ -23,16 +29,20 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
 export const updateSST = async (
   reefIds: number[],
   days: number,
-  reefRepository: Repository<Reef>,
-  timeSeriesRepository: Repository<TimeSeries>,
-  sourcesRepository: Repository<Sources>,
+  repositories: Repositories,
 ) => {
+  const {
+    reefRepository,
+    timeSeriesRepository,
+    sourceRepository,
+  } = repositories;
+
   logger.log('Fetching reefs');
   const reefs = await getReefs(reefIds, reefRepository);
 
   const sources = await Promise.all(
     reefs.map((reef) => {
-      return getNOAASource(reef, sourcesRepository);
+      return getNOAASource(reef, sourceRepository);
     }),
   );
 

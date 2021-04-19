@@ -5,11 +5,9 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { updateSST } from '../utils/sst-time-series';
 
 export function runSSTTimeSeriesUpdate(connection: Connection) {
-  return updateSST(
-    [],
-    1,
-    connection.getRepository(Reef),
-    connection.getRepository(TimeSeries),
-    connection.getRepository(Sources),
-  );
+  return updateSST([], 1, {
+    reefRepository: connection.getRepository(Reef),
+    timeSeriesRepository: connection.getRepository(TimeSeries),
+    sourceRepository: connection.getRepository(Sources),
+  });
 }

@@ -4,11 +4,25 @@ import { configService } from '../src/config/config.service';
 import { Reef } from '../src/reefs/reefs.entity';
 import { Sources } from '../src/reefs/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
+import { addSpotterData } from '../src/utils/spotter-time-series';
 import { updateSST } from '../src/utils/sst-time-series';
+
+enum TaskType {
+  SpotterBackfill = 'spotter_backfill',
+  SSTBackfill = 'sst_backfill',
+}
+
+const tasks = Object.values(TaskType).join(', ');
 
 const { argv } = yargs
   .scriptName('parse-hobo-data')
   .usage('$0 <cmd> [args]')
+  .option('t', {
+    alias: 'task',
+    describe: `The task to run [${tasks}]`,
+    demandOption: true,
+    type: 'string',
+  })
   .option('d', {
     alias: 'days',
     describe: 'Specify how far back we should backfill',
@@ -19,10 +33,30 @@ const { argv } = yargs
     alias: 'reefs',
     describe: 'The reefs that should be backfilled with spotter data',
     type: 'array',
-  });
+  })
+  .check((args) => {
+    console.log(args.t);
+    if (!Object.values(TaskType).includes(args.t as TaskType)) {
+      throw new Error(`Task must be one of the following: [${tasks}]`);
+    }
+
+    return true;
+  })
+  .wrap(yargs.terminalWidth());
+
+function getTaskFn(task: string) {
+  switch (task) {
+    case TaskType.SSTBackfill:
+      return updateSST;
+    case TaskType.SpotterBackfill:
+      return addSpotterData;
+    default:
+      return null;
+  }
+}
 
 async function run() {
-  const { d: days, r: reefIds } = argv;
+  const { d: days, r: reefIds, t: task } = argv;
 
   const parsedReefIds = reefIds ? reefIds.map(Number) : [];
 
@@ -32,13 +66,17 @@ async function run() {
   const sourceRepository = connection.getRepository(Sources);
   const timeSeriesRepository = connection.getRepository(TimeSeries);
 
-  return updateSST(
-    parsedReefIds,
-    days,
+  const fn = getTaskFn(task);
+
+  if (!fn) {
+    return null;
+  }
+
+  return fn(parsedReefIds, days, {
     reefRepository,
-    timeSeriesRepository,
     sourceRepository,
-  );
+    timeSeriesRepository,
+  });
 }
 
 run();
