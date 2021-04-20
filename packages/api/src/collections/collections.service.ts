@@ -78,7 +78,7 @@ export class CollectionsService {
   async findOne(collectionId: number): Promise<Collection> {
     const collection = await this.collectionRepository.findOne({
       where: { id: collectionId },
-      relations: ['reefs', 'reefs.historicalMonthlyMean'],
+      relations: ['reefs', 'reefs.historicalMonthlyMean', 'user'],
     });
 
     if (!collection) {
@@ -97,7 +97,7 @@ export class CollectionsService {
   async findOnePublic(collectionId: number) {
     const collection = await this.collectionRepository.findOne({
       where: { id: collectionId },
-      relations: ['reefs', 'reefs.historicalMonthlyMean'],
+      relations: ['reefs', 'reefs.historicalMonthlyMean', 'user'],
     });
 
     if (!collection) {
@@ -237,6 +237,10 @@ export class CollectionsService {
 
     return {
       ...collection,
+      user: {
+        ...collection.user,
+        firebaseUid: undefined,
+      },
       reefs: collection.reefs.map((reef) => {
         return {
           ...reef,
