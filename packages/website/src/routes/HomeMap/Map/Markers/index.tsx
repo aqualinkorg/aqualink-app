@@ -76,7 +76,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
             const { weeklyAlertLevel } = reef.latestDailyData || {};
-            const { weeklyAlert } = reef?.collectionData || {};
+            const { weeklyAlert } = reef.collectionData || {};
 
             return lngOffsets.map((offset) => (
               <Marker

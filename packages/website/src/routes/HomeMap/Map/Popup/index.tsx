@@ -42,7 +42,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const {
     degreeHeatingDays: collectionDhd,
     satelliteTemperature: collectionSst,
-  } = reef?.collectionData || {};
+  } = reef.collectionData || {};
 
   const dhw = degreeHeatingWeeksCalculator(
     [latestDhd, collectionDhd].find((item) => isNumber(item))

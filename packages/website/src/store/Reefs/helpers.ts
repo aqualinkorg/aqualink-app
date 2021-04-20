@@ -36,7 +36,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       satelliteTemperature: collectionSst,
       sstAnomaly,
       weeklyAlert: collectionWeeklyAlert,
-    } = value?.collectionData || {};
+    } = value.collectionData || {};
 
     const dhw = degreeHeatingWeeksCalculator(
       [latestDhd, collectionDhd].find((item) => isNumber(item))
