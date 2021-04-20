@@ -45,7 +45,7 @@ export class CreateReef implements Seeder {
       Metric.ALERT,
       Metric.DHW,
       Metric.SATELLITE_TEMPERATURE,
-      Metric.SURFACE_TEMPERATURE,
+      Metric.TOP_TEMPERATURE,
       Metric.BOTTOM_TEMPERATURE,
       Metric.SST_ANOMALY,
     ];
