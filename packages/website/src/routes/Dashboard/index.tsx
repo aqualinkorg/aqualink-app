@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import {
   withStyles,
@@ -18,8 +19,9 @@ import {
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
+import { mockUser } from "../../mocks/mockUser";
 
-const Dashboard = ({ classes }: DashboardProps) => {
+const Dashboard = ({ staticMode, classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
 
@@ -27,7 +29,7 @@ const Dashboard = ({ classes }: DashboardProps) => {
     <>
       <NavBar searchLocation={false} />
       <div className={classes.root}>
-        {!user && !userLoading && (
+        {!user && !userLoading && !staticMode && (
           <Delayed waitBeforeShow={1000}>
             <Box
               height="100%"
@@ -42,8 +44,12 @@ const Dashboard = ({ classes }: DashboardProps) => {
             </Box>
           </Delayed>
         )}
-        {userLoading && <LinearProgress />}
-        {user && <DashboardContent user={user} />}
+        {userLoading && !staticMode && <LinearProgress />}
+        {staticMode ? (
+          <DashboardContent user={mockUser} />
+        ) : user ? (
+          <DashboardContent user={user} />
+        ) : null}
       </div>
       <Footer />
     </>
@@ -61,6 +67,14 @@ const styles = (theme: Theme) =>
     },
   });
 
-type DashboardProps = WithStyles<typeof styles>;
+interface DashboardIncomingProps {
+  staticMode?: boolean;
+}
+
+Dashboard.defaultProps = {
+  staticMode: false,
+};
+
+type DashboardProps = DashboardIncomingProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Dashboard);

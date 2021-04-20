@@ -59,6 +59,11 @@ function App() {
                 <Route exact path="/terms" component={Terms} />
                 <Route path="/reefs" component={ReefRoutes} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route
+                  exact
+                  path="/collections/minderoo"
+                  render={() => <Dashboard staticMode />}
+                />
                 <Route default component={NotFound} />
               </Switch>
             )}

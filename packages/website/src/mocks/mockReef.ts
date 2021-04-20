@@ -1,5 +1,4 @@
-import { Reef } from "../store/Reefs/types";
-import { mockUser } from "./mockUser";
+import { CollectionMetrics, Point, Reef } from "../store/Reefs/types";
 
 const now = new Date();
 const minutesAgo = 5;
@@ -19,7 +18,7 @@ export const mockReef: Reef = {
   status: "in_review",
   videoStream: null,
   region: { name: "Hawaii" },
-  admins: [mockUser],
+  admins: [],
   surveyPoints: [],
   stream: null,
   historicalMonthlyMean: [],
@@ -98,4 +97,43 @@ export const mockReef: Reef = {
     avgWindSpeed: 4,
     windDirection: 229,
   },
+  collectionData: {
+    topTemperature: 9.54,
+    bottomTemperature: 10.719999999999999,
+    satelliteTemperature: 15.8900003433228,
+    degreeHeatingDays: 0,
+    weeklyAlert: 0,
+    sstAnomaly: 1.2,
+  },
 };
+
+export const generateMockReef = ({
+  id,
+  name,
+  regionName,
+  deployed,
+  isCollection,
+  historicMax,
+  collectionData,
+  polygon,
+}: {
+  id: number;
+  name: string;
+  regionName: string;
+  deployed: boolean;
+  isCollection: boolean;
+  historicMax: number;
+  collectionData: CollectionMetrics;
+  polygon: Point;
+}): Reef => ({
+  ...mockReef,
+  id,
+  name,
+  region: { ...mockReef.region, name: regionName },
+  polygon,
+  status: deployed ? "deployed" : mockReef.status,
+  spotterId: deployed ? "SPOT-0930" : mockReef.spotterId,
+  collectionData,
+  latestDailyData: isCollection ? undefined : mockReef.latestDailyData,
+  maxMonthlyMean: historicMax,
+});
