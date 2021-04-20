@@ -7,10 +7,8 @@ import {
   Grid,
   Typography,
   Button,
-  IconButton,
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
 
 const BackButton = ({ collectionName, classes }: BackButtonProps) => {
@@ -27,12 +25,12 @@ const BackButton = ({ collectionName, classes }: BackButtonProps) => {
             {collectionName}
           </Typography>
         </Grid>
-        <Grid item>
+        {/* TODO: Add collection name edit functionality */}
+        {/* <Grid item>
           <IconButton>
-            {/* TODO: Add collection name edit functionality */}
             <EditIcon fontSize="small" color="primary" />
           </IconButton>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );

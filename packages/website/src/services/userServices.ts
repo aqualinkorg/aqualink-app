@@ -55,6 +55,12 @@ const getCollections = (token?: string) =>
     token,
   });
 
+const getPublicCollection = (id: string) =>
+  requests.send<CollectionDetails>({
+    method: "GET",
+    url: `collections/public/${id}`,
+  });
+
 const getCollection = (id: number, token?: string) =>
   requests.send<CollectionDetails>({
     method: "GET",
@@ -72,6 +78,7 @@ export default {
   storeUser,
   getAdministeredReefs,
   getCollections,
+  getPublicCollection,
   getCollection,
   getSelf,
   resetPassword,

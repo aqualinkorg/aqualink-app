@@ -13,7 +13,7 @@ export interface CollectionDetails {
   name: string;
   isPublic: boolean;
   reefs: Reef[];
-  userId: number;
+  user: User;
   reefIds: number[];
 }
 

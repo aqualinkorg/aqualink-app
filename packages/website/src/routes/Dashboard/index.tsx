@@ -19,7 +19,6 @@ import {
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
-import { mockUser } from "../../mocks/mockUser";
 
 const Dashboard = ({ staticMode, classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
@@ -46,7 +45,7 @@ const Dashboard = ({ staticMode, classes }: DashboardProps) => {
         )}
         {userLoading && !staticMode && <LinearProgress />}
         {staticMode ? (
-          <DashboardContent user={mockUser} />
+          <DashboardContent user={null} staticMode />
         ) : user ? (
           <DashboardContent user={user} />
         ) : null}

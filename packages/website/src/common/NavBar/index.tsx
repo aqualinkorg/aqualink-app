@@ -19,10 +19,8 @@ import {
   useMediaQuery,
   Divider,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { sortBy } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
@@ -163,7 +161,8 @@ const NavBar = ({
                           );
                         }
                       )}
-                      <Divider className={classes.userMenuDivider} />
+                      {/* TODO: Add dashboard button */}
+                      {/* <Divider className={classes.userMenuDivider} />
                       <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"
@@ -176,7 +175,7 @@ const NavBar = ({
                             <Grid item>Dashboard</Grid>
                           </Grid>
                         </MenuItem>
-                      </Link>
+                      </Link> */}
                       <Divider className={classes.userMenuDivider} />
                       <MenuItem
                         key="user-menu-logout"

@@ -239,45 +239,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               <mock-divider
                 classname="NavBar-userMenuDivider-162"
               />
-              <a
-                class="NavBar-menuItemLink-165"
-                href="/dashboard"
-              >
-                <mock-menuitem
-                  classname="NavBar-menuItem-164"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
-                          opacity=".3"
-                        />
-                        <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      Dashboard
-                    </div>
-                  </div>
-                </mock-menuitem>
-              </a>
-              <mock-divider
-                classname="NavBar-userMenuDivider-162"
-              />
               <mock-menuitem
                 classname="NavBar-menuItem-164"
               >
@@ -2797,45 +2758,6 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               open="false"
               popoverclasses="[object Object]"
             >
-              <mock-divider
-                classname="NavBar-userMenuDivider-8"
-              />
-              <a
-                class="NavBar-menuItemLink-11"
-                href="/dashboard"
-              >
-                <mock-menuitem
-                  classname="NavBar-menuItem-10"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M5 5h4v6H5zm10 8h4v6h-4zM5 17h4v2H5zM15 5h4v2h-4z"
-                          opacity=".3"
-                        />
-                        <path
-                          d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM13 3v6h8V3h-8zm6 4h-4V5h4v2zM3 21h8v-6H3v6zm2-4h4v2H5v-2z"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item"
-                    >
-                      Dashboard
-                    </div>
-                  </div>
-                </mock-menuitem>
-              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-8"
               />
