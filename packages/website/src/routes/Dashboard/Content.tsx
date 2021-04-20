@@ -26,7 +26,7 @@ const Content = ({ staticMode, user }: ContentProps) => {
   const collection = staticMode ? staticCollection : userCollection;
 
   useEffect(() => {
-    if (staticMode && FEATURED_COLLECTION_ID) {
+    if (staticMode) {
       setStaticCollectionLoading(true);
       userServices
         .getPublicCollection(FEATURED_COLLECTION_ID)
