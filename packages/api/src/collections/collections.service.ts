@@ -35,7 +35,7 @@ interface LatestDailyData {
 
 @Injectable()
 export class CollectionsService {
-  private logger: Logger = new Logger(CollectionsService.name, true);
+  private logger: Logger = new Logger(CollectionsService.name);
 
   constructor(
     @InjectRepository(Collection)
@@ -87,6 +87,10 @@ export class CollectionsService {
       );
     }
 
+    if (collection.reefs.length === 0) {
+      return collection;
+    }
+
     return this.getCollectionData(collection);
   }
 
@@ -106,6 +110,10 @@ export class CollectionsService {
       throw new UnauthorizedException(
         `You are not allowed to access this collection with ${collectionId}`,
       );
+    }
+
+    if (collection.reefs.length === 0) {
+      return collection;
     }
 
     return this.getCollectionData(collection);
@@ -186,7 +194,6 @@ export class CollectionsService {
       Record<'bottomTemperature' | 'topTemperature', SofarValue>
     >;
 
-    this.logger.log('Getting latest daily data');
     // Get latest sst and degree_heating days
     // Query builder doesn't apply correctly the select and DISTINCT must be first
     // So we use a raw query to achieve this
@@ -195,9 +202,11 @@ export class CollectionsService {
       .select(
         'DISTINCT ON (reef_id) reef_id AS id, satellite_temperature sst, degree_heating_days dhd, weekly_alert_level alert, date',
       )
+      .where('reef_id IN (:...reefIds)', {
+        reefIds: collection.reefs.map((reef) => reef.id),
+      })
       .orderBy('reef_id, date', 'DESC')
       .getRawMany();
-    this.logger.log('Got latest daily data');
 
     const mappedLatestDailyData: Record<number, LatestDailyData> = keyBy(
       latestDailyData,
