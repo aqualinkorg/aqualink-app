@@ -44,10 +44,11 @@ const Dashboard = ({ staticMode, classes }: DashboardProps) => {
           </Delayed>
         )}
         {userLoading && !staticMode && <LinearProgress />}
-        {staticMode ? (
-          <DashboardContent user={null} staticMode />
-        ) : user ? (
-          <DashboardContent user={user} />
+        {staticMode || user ? (
+          <DashboardContent
+            user={staticMode ? null : user}
+            staticMode={staticMode}
+          />
         ) : null}
       </div>
       <Footer />
