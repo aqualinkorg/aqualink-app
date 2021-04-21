@@ -5,9 +5,6 @@ import {
   WithStyles,
   createStyles,
   LinearProgress,
-  Box,
-  Typography,
-  Theme,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -19,6 +16,7 @@ import {
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
+import Message from "../../common/Message";
 
 const Dashboard = ({ staticMode, classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
@@ -30,17 +28,7 @@ const Dashboard = ({ staticMode, classes }: DashboardProps) => {
       <div className={classes.root}>
         {!user && !userLoading && !staticMode && (
           <Delayed waitBeforeShow={1000}>
-            <Box
-              height="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
-            >
-              <Typography variant="h2" className={classes.noUserMessage}>
-                Please sign in to view your dashboard
-              </Typography>
-            </Box>
+            <Message message="Please sign in to view your dashboard" />
           </Delayed>
         )}
         {userLoading && !staticMode && <LinearProgress />}
@@ -56,14 +44,10 @@ const Dashboard = ({ staticMode, classes }: DashboardProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     root: {
       flexGrow: 1,
-    },
-
-    noUserMessage: {
-      color: theme.palette.primary.main,
     },
   });
 

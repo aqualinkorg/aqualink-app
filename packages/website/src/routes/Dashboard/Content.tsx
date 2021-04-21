@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Grid,
-  Box,
-  Typography,
-  useTheme,
-  LinearProgress,
-} from "@material-ui/core";
+import { Container, Grid, LinearProgress } from "@material-ui/core";
 import { CollectionDetails, User } from "../../store/User/types";
 import BackButton from "./BackButton";
 import Map from "./Map";
 import Info from "./Info";
 import Table from "./Table";
 import userServices from "../../services/userServices";
+import Message from "../../common/Message";
 
 const FEATURED_COLLECTION_ID = "1";
 
@@ -21,7 +15,6 @@ const Content = ({ staticMode, user }: ContentProps) => {
   const [staticCollection, setStaticCollection] = useState<CollectionDetails>();
   const [staticCollectionLoading, setStaticCollectionLoading] = useState(false);
   const [staticCollectionErrored, setStaticCollectionErrored] = useState(false);
-  const theme = useTheme();
 
   const collection = staticMode ? staticCollection : userCollection;
 
@@ -41,33 +34,11 @@ const Content = ({ staticMode, user }: ContentProps) => {
   }
 
   if (staticMode && staticCollectionErrored) {
-    return (
-      <Box
-        height="100%"
-        textAlign="center"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        color={theme.palette.primary.main}
-      >
-        <Typography variant="h2">Collection not found</Typography>
-      </Box>
-    );
+    return <Message message="Collection not found" />;
   }
 
   if (!collection || collection.reefs.length === 0) {
-    return (
-      <Box
-        height="100%"
-        textAlign="center"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        color={theme.palette.primary.main}
-      >
-        <Typography variant="h2">No sites added to your collection</Typography>
-      </Box>
-    );
+    return <Message message="No sites added to your collection" />;
   }
 
   return (
@@ -86,7 +57,7 @@ const Content = ({ staticMode, user }: ContentProps) => {
   );
 };
 
-interface ContentIncomingProps {
+interface ContentProps {
   user: User | null;
   staticMode?: boolean;
 }
@@ -94,7 +65,5 @@ interface ContentIncomingProps {
 Content.defaultProps = {
   staticMode: false,
 };
-
-type ContentProps = ContentIncomingProps;
 
 export default Content;
