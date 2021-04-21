@@ -7,26 +7,29 @@ import {
   Grid,
   Typography,
   Theme,
-  Divider,
 } from "@material-ui/core";
-import { groupBy, range } from "lodash";
+import { groupBy, maxBy } from "lodash";
 
 import { findIntervalByLevel } from "../../../helpers/bleachingAlertIntervals";
 
 import { formatNumber } from "../../../helpers/numberUtils";
 import { CollectionDetails } from "../../../store/User/types";
 
-const percentageCalculator = (count: number, total: number) => {
+const percentageCalculator = (count: number, max?: number) => {
   // Max width should be 80%
-  const percentage = total !== 0 ? formatNumber((count / total) * 80, 1) : 0;
+  const percentage = max && max !== 0 ? formatNumber((count / max) * 80, 1) : 0;
   return `${percentage}%`;
 };
 
 const BarChart = ({ collection, classes }: BarChartProps) => {
-  const nSites = collection.reefs.length;
   const groupedByAlert = groupBy(
     collection.reefs,
     (reef) => reef.collectionData?.weeklyAlert
+  );
+
+  const mostFrequentAlert = maxBy(
+    Object.values(groupedByAlert),
+    (item) => item.length
   );
 
   return (
@@ -41,7 +44,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
           justify="space-between"
           direction="column"
         >
-          {[4, 3, 2, 1, 0].map((level, index) => {
+          {[4, 3, 2, 1, 0].map((level) => {
             const interval = findIntervalByLevel(level);
             return (
               <Grid item key={interval.label}>
@@ -72,30 +75,11 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
                     </Box>
                   </Grid>
                   <Grid className={classes.barWrapper} item>
-                    {/* The barchart's x axis */}
-                    {index === 0 && (
-                      <>
-                        <Box display="flex">
-                          {range(0, nSites).map((value) => (
-                            <Box
-                              key={`barchart-tick-${value}`}
-                              width={percentageCalculator(1, nSites)}
-                              height="4px"
-                              borderLeft={
-                                value === 0 ? "1px solid #D8D8D8" : undefined
-                              }
-                              borderRight="1px solid #D8D8D8"
-                            />
-                          ))}
-                        </Box>
-                        <Divider className={classes.xAxis} />
-                      </>
-                    )}
                     <Box width="100%" display="flex" alignItems="center">
                       <Box
                         width={percentageCalculator(
                           groupedByAlert?.[level]?.length || 0,
-                          nSites
+                          mostFrequentAlert?.length
                         )}
                         height="28px"
                         bgcolor={interval.color}
