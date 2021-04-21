@@ -191,6 +191,17 @@ const userSlice = createSlice({
       return state;
     },
     clearError: (state) => ({ ...state, error: null }),
+    setUserCollectionName: (state, action: PayloadAction<string>) => ({
+      ...state,
+      userInfo: state.userInfo
+        ? {
+            ...state.userInfo,
+            collection: state.userInfo.collection
+              ? { ...state.userInfo.collection, name: action.payload }
+              : state.userInfo.collection,
+          }
+        : state.userInfo,
+    }),
   },
   extraReducers: (builder) => {
     // User Create
@@ -219,6 +230,10 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
 
-export const { setToken, clearError } = userSlice.actions;
+export const {
+  setToken,
+  clearError,
+  setUserCollectionName,
+} = userSlice.actions;
 
 export default userSlice.reducer;

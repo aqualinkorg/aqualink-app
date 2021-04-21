@@ -1,4 +1,4 @@
-import { User } from "../store/User/types";
+import { CollectionDetails, User } from "../store/User/types";
 
 export const isAdmin = (user: User | null, reefId: number): boolean => {
   return user
@@ -17,3 +17,8 @@ export const isSuperAdmin = (user: User | null) =>
   user ? user.adminLevel === "super_admin" : false;
 
 export const hasCollection = (user: User | null) => !!user?.collection;
+
+export const isCollectionOwner = (
+  user: User | null,
+  collection: CollectionDetails
+) => user?.adminLevel === "super_admin" || user?.id === collection.user.id;

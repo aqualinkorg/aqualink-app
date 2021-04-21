@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -7,31 +7,53 @@ import {
   Grid,
   Typography,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { useHistory } from "react-router-dom";
+import EditIcon from "@material-ui/icons/Edit";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Header = ({ collectionName, classes }: HeaderProps) => {
-  const history = useHistory();
+import EditNameForm from "./EditNameForm";
+import { CollectionDetails } from "../../../store/User/types";
+import { userInfoSelector } from "../../../store/User/userSlice";
+import { isCollectionOwner } from "../../../helpers/user";
+
+const Header = ({ collection, editable, classes }: HeaderProps) => {
+  const signedInUser = useSelector(userInfoSelector);
+  const [editNameEnabled, setEditNameEnabled] = useState(false);
+
   return (
     <Box mt="50px">
       <Grid container alignItems="center" spacing={1}>
-        <Grid item>
-          <Button onClick={() => history.goBack()}>
-            <ArrowBackIcon color="primary" />
-          </Button>
-        </Grid>
-        <Grid item>
-          <Typography className={classes.name} color="textSecondary">
-            {collectionName}
-          </Typography>
-        </Grid>
-        {/* TODO: Add collection name edit functionality */}
-        {/* <Grid item>
-          <IconButton>
-            <EditIcon fontSize="small" color="primary" />
-          </IconButton>
-        </Grid> */}
+        {editNameEnabled ? (
+          <EditNameForm
+            collectionId={collection.id}
+            signedInUser={signedInUser}
+            initialName={collection.name}
+            onClose={() => setEditNameEnabled(false)}
+          />
+        ) : (
+          <>
+            <Grid item>
+              <Button component={Link} to="/map">
+                <ArrowBackIcon color="primary" />
+              </Button>
+            </Grid>
+            <Grid item>
+              <Typography className={classes.name} color="textSecondary">
+                {collection.name}
+              </Typography>
+            </Grid>
+            {isCollectionOwner(signedInUser, collection) && editable && (
+              <Grid item>
+                <IconButton onClick={() => setEditNameEnabled(true)}>
+                  <EditIcon fontSize="small" color="primary" />
+                </IconButton>
+              </Grid>
+            )}
+          </>
+        )}
       </Grid>
     </Box>
   );
@@ -45,8 +67,13 @@ const styles = () =>
   });
 
 interface HeaderIncomingProps {
-  collectionName: string;
+  collection: CollectionDetails;
+  editable?: boolean;
 }
+
+Header.defaultProps = {
+  editable: false,
+};
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 

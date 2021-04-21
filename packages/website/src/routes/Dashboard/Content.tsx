@@ -15,9 +15,12 @@ const collections: { [key: string]: string } = {
   minderoo: "1",
 };
 
-const DashboardContentComponent = (collection: CollectionDetails) => (
+const DashboardContentComponent = (
+  collection: CollectionDetails,
+  editable: boolean
+) => (
   <Container>
-    <Header collectionName={collection.name} />
+    <Header collection={collection} editable={editable} />
     <Grid container justify="center" spacing={2}>
       <Grid item xs={12} sm={11} md={6}>
         <Map collection={collection} />
@@ -67,12 +70,12 @@ const Content = ({ defaultCollectionName }: ContentProps) => {
         return <FullScreenMessage message="Collection not found" />;
       }
       if (defaultCollection?.reefs.length) {
-        return DashboardContentComponent(defaultCollection);
+        return DashboardContentComponent(defaultCollection, false);
       }
       return <FullScreenMessage message="No sites added to this collection" />;
     case !!signedInUserCollection:
       if (signedInUserCollection?.reefs.length) {
-        return DashboardContentComponent(signedInUserCollection);
+        return DashboardContentComponent(signedInUserCollection, true);
       }
       return <FullScreenMessage message="No sites added to your collection" />;
     default:

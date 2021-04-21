@@ -4,6 +4,7 @@ import {
   WithStyles,
   createStyles,
   TextField,
+  BaseTextFieldProps,
 } from "@material-ui/core";
 
 import { FormField } from "./useFormField";
@@ -15,6 +16,8 @@ const CustomTextfield = ({
   name,
   isNumeric,
   step,
+  fullWidth,
+  size,
   onChange,
   classes,
 }: CustomTextfieldProps) => {
@@ -23,7 +26,7 @@ const CustomTextfield = ({
       className={classes.textField}
       variant="outlined"
       inputProps={{ className: classes.textField, step: step || undefined }}
-      fullWidth
+      fullWidth={fullWidth}
       type={isNumeric ? "number" : "text"}
       value={formField.value}
       onChange={onChange}
@@ -32,6 +35,7 @@ const CustomTextfield = ({
       name={name}
       error={Boolean(formField.error)}
       helperText={formField.error}
+      size={size}
     />
   );
 };
@@ -51,6 +55,8 @@ interface CustomTextfieldIncomingProps {
   name: string;
   isNumeric?: boolean;
   step?: number;
+  fullWidth?: boolean;
+  size?: BaseTextFieldProps["size"];
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
@@ -58,6 +64,8 @@ interface CustomTextfieldIncomingProps {
 
 CustomTextfield.defaultProps = {
   isNumeric: false,
+  fullWidth: true,
+  size: undefined,
   step: 0,
 };
 
