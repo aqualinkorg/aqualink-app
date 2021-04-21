@@ -8,11 +8,11 @@ import {
   Divider,
 } from "@material-ui/core";
 
-import { CollectionDetails, User } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/User/types";
 import Header from "./Header";
 import BarChart from "./BarChart";
 
-const Info = ({ user, collection, classes }: InfoProps) => {
+const Info = ({ collection, classes }: InfoProps) => {
   return (
     <Box
       className={classes.root}
@@ -24,7 +24,7 @@ const Info = ({ user, collection, classes }: InfoProps) => {
       display="flex"
       flexDirection="column"
     >
-      <Header user={user} collection={collection} />
+      <Header collection={collection} />
       <Divider className={classes.divider} />
       <BarChart collection={collection} />
     </Box>
@@ -49,7 +49,6 @@ const styles = (theme: Theme) =>
   });
 
 interface InfoIncomingProps {
-  user: User;
   collection: CollectionDetails;
 }
 

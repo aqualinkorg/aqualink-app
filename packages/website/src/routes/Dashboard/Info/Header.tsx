@@ -10,9 +10,9 @@ import {
 import EmailIcon from "@material-ui/icons/Email";
 import classNames from "classnames";
 
-import { CollectionDetails, User } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/User/types";
 
-const Header = ({ user, collection, classes }: HeaderProps) => {
+const Header = ({ collection, classes }: HeaderProps) => {
   const nSites = collection.reefs.length;
 
   return (
@@ -26,7 +26,7 @@ const Header = ({ user, collection, classes }: HeaderProps) => {
           </Grid>
           <Grid item>
             <Typography variant="h5" color="textSecondary">
-              {user.organization}
+              {collection.user.organization}
             </Typography>
           </Grid>
           <Grid item>
@@ -51,7 +51,7 @@ const Header = ({ user, collection, classes }: HeaderProps) => {
         <Grid container direction="column">
           <Grid item>
             <Typography variant="subtitle1" color="textSecondary">
-              {user.fullName}
+              {collection.user.fullName}
             </Typography>
           </Grid>
           <Grid item>
@@ -61,7 +61,7 @@ const Header = ({ user, collection, classes }: HeaderProps) => {
               </Grid>
               <Grid item>
                 <Typography variant="caption" color="textSecondary">
-                  {user.email}
+                  {collection.user.email}
                 </Typography>
               </Grid>
             </Grid>
@@ -95,7 +95,6 @@ const styles = (theme: Theme) =>
   });
 
 interface HeaderIncomingProps {
-  user: User;
   collection: CollectionDetails;
 }
 

@@ -10,13 +10,13 @@ import Message from "../../common/Message";
 
 const FEATURED_COLLECTION_ID = "1";
 
-const Content = ({ staticMode, user }: ContentProps) => {
-  const { collection: userCollection } = user || {};
+const Content = ({ staticMode, signedInUser }: ContentProps) => {
+  const { collection: signedInUserCollection } = signedInUser || {};
   const [staticCollection, setStaticCollection] = useState<CollectionDetails>();
   const [staticCollectionLoading, setStaticCollectionLoading] = useState(false);
   const [staticCollectionErrored, setStaticCollectionErrored] = useState(false);
 
-  const collection = staticMode ? staticCollection : userCollection;
+  const collection = staticMode ? staticCollection : signedInUserCollection;
 
   useEffect(() => {
     if (staticMode) {
@@ -49,7 +49,7 @@ const Content = ({ staticMode, user }: ContentProps) => {
           <Map collection={collection} />
         </Grid>
         <Grid item xs={12} sm={11} md={6}>
-          <Info user={collection.user} collection={collection} />
+          <Info collection={collection} />
         </Grid>
       </Grid>
       <Table collection={collection} />
@@ -58,7 +58,7 @@ const Content = ({ staticMode, user }: ContentProps) => {
 };
 
 interface ContentProps {
-  user: User | null;
+  signedInUser: User | null;
   staticMode?: boolean;
 }
 
