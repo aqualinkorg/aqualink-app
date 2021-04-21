@@ -4,6 +4,7 @@ import requests from "../helpers/requests";
 import {
   CollectionDetails,
   CollectionSummary,
+  CollectionUpdateParams,
   User,
 } from "../store/User/types";
 import type { Reef } from "../store/Reefs/types";
@@ -68,6 +69,17 @@ const getCollection = (id: number, token?: string) =>
     token,
   });
 
+const updateCollection = (
+  { id, name, addReefIds, removeReefIds }: CollectionUpdateParams,
+  token?: string
+) =>
+  requests.send({
+    method: "PUT",
+    url: `collections/${id}`,
+    data: { name, addReefIds, removeReefIds },
+    token,
+  });
+
 const signInUser = (email: string, password: string) =>
   app && app.auth().signInWithEmailAndPassword(email, password);
 
@@ -80,6 +92,7 @@ export default {
   getCollections,
   getPublicCollection,
   getCollection,
+  updateCollection,
   getSelf,
   resetPassword,
   signInUser,

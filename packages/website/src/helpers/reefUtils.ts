@@ -3,6 +3,7 @@ import { maxBy, meanBy } from "lodash";
 
 import { longDHW } from "../store/Reefs/helpers";
 import { Reef } from "../store/Reefs/types";
+import { CollectionDetails } from "../store/User/types";
 import { degreeHeatingWeeksCalculator } from "./degreeHeatingWeeks";
 
 export const findReefById = (reefs: Reef[], reefId: string): Reef | null => {
@@ -62,3 +63,8 @@ export const findInitialReefPosition = (
 // Util function that checks if a reef has a deployed spotter
 export const hasDeployedSpotter = (reef?: Reef | null) =>
   Boolean(reef?.spotterId && reef?.status === "deployed");
+
+export const belongsToCollection = (
+  reefId: number,
+  collection?: CollectionDetails
+) => !!collection?.reefIds?.includes(reefId);

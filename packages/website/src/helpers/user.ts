@@ -15,3 +15,5 @@ export const isManager = (user: User | null) =>
 
 export const isSuperAdmin = (user: User | null) =>
   user ? user.adminLevel === "super_admin" : false;
+
+export const hasCollection = (user: User | null) => !!user?.collection;

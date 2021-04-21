@@ -17,6 +17,13 @@ export interface CollectionDetails {
   reefIds: number[];
 }
 
+export interface CollectionUpdateParams {
+  id: number;
+  name?: string;
+  addReefIds?: number[];
+  removeReefIds?: number[];
+}
+
 export interface User {
   email?: string | null;
   fullName?: string | null;
