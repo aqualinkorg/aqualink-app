@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Tooltip, IconButton } from "@material-ui/core";
+import { Tooltip, IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,13 +18,12 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
   const [collectionActionLoading, setCollectionActionLoading] = useState(false);
+  const reefBelongsToCollection = belongsToCollection(reefId, user?.collection);
+  const loading = collectionActionLoading || userLoading;
+  const buttonColor = loading ? "gray" : "black";
 
   const onAddReefToCollection = () => {
-    if (
-      user?.token &&
-      user?.collection &&
-      !belongsToCollection(reefId, user?.collection)
-    ) {
+    if (user?.token && user?.collection && !reefBelongsToCollection) {
       setCollectionActionLoading(true);
       userServices
         .updateCollection(
@@ -45,11 +44,7 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
   };
 
   const onRemoveReefFromCollection = () => {
-    if (
-      user?.token &&
-      user?.collection &&
-      belongsToCollection(reefId, user?.collection)
-    ) {
+    if (user?.token && user?.collection && reefBelongsToCollection) {
       setCollectionActionLoading(true);
       userServices
         .updateCollection(
@@ -73,32 +68,31 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
     return null;
   }
 
-  return belongsToCollection(reefId, user?.collection) ? (
-    <Grid item>
-      <Tooltip title="Remove from your collection" arrow placement="top">
-        <IconButton
-          disabled={collectionActionLoading || userLoading}
-          onClick={onRemoveReefFromCollection}
-        >
-          <UnWatchIcon
-            color={collectionActionLoading || userLoading ? "gray" : "black"}
-          />
-        </IconButton>
-      </Tooltip>
-    </Grid>
-  ) : (
-    <Grid item>
-      <Tooltip title="Add to your collection" arrow placement="top">
-        <IconButton
-          disabled={collectionActionLoading || userLoading}
-          onClick={onAddReefToCollection}
-        >
-          <WatchIcon
-            color={collectionActionLoading || userLoading ? "gray" : "black"}
-          />
-        </IconButton>
-      </Tooltip>
-    </Grid>
+  return (
+    <Tooltip
+      title={
+        reefBelongsToCollection
+          ? "Remove from your collection"
+          : "Add to your collection"
+      }
+      arrow
+      placement="top"
+    >
+      <IconButton
+        disabled={loading}
+        onClick={
+          reefBelongsToCollection
+            ? onRemoveReefFromCollection
+            : onAddReefToCollection
+        }
+      >
+        {reefBelongsToCollection ? (
+          <UnWatchIcon color={buttonColor} />
+        ) : (
+          <WatchIcon color={buttonColor} />
+        )}
+      </IconButton>
+    </Tooltip>
   );
 };
 

@@ -204,13 +204,15 @@ const ReefNavBar = ({
                       )}
                     </Grid>
                   </Grid>
-                  <CollectionButton
-                    reefId={reef.id}
-                    errorCallback={() => {
-                      setAlertOpen(true);
-                      setAlertSeverity("error");
-                    }}
-                  />
+                  <Grid item>
+                    <CollectionButton
+                      reefId={reef.id}
+                      errorCallback={() => {
+                        setAlertOpen(true);
+                        setAlertSeverity("error");
+                      }}
+                    />
+                  </Grid>
                 </Grid>
                 {isAdmin && (
                   <Grid
