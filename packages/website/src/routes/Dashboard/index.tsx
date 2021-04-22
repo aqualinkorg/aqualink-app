@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from "react";
 import {
   withStyles,
@@ -7,6 +6,7 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -18,26 +18,22 @@ import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
 import Message from "../../common/Message";
 
-const Dashboard = ({ staticMode, classes }: DashboardProps) => {
+const Dashboard = ({ match, classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
+  const { collectionName } = match.params;
 
   return (
     <>
       <NavBar searchLocation={false} />
       <div className={classes.root}>
-        {!user && !userLoading && !staticMode && (
+        {!user && !userLoading && !collectionName && (
           <Delayed waitBeforeShow={1000}>
             <Message message="Please sign in to view your dashboard" />
           </Delayed>
         )}
-        {userLoading && !staticMode && <LinearProgress />}
-        {staticMode || user ? (
-          <DashboardContent
-            signedInUser={staticMode ? null : user}
-            staticMode={staticMode}
-          />
-        ) : null}
+        {userLoading && !collectionName && <LinearProgress />}
+        <DashboardContent defaultCollectionName={collectionName} />
       </div>
       <Footer />
     </>
@@ -51,14 +47,8 @@ const styles = () =>
     },
   });
 
-interface DashboardIncomingProps {
-  staticMode?: boolean;
-}
+interface MatchProps extends RouteComponentProps<{ collectionName?: string }> {}
 
-Dashboard.defaultProps = {
-  staticMode: false,
-};
-
-type DashboardProps = DashboardIncomingProps & WithStyles<typeof styles>;
+type DashboardProps = MatchProps & WithStyles<typeof styles>;
 
 export default withStyles(styles)(Dashboard);

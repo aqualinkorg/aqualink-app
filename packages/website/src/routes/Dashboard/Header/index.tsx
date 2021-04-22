@@ -9,14 +9,15 @@ import {
   Button,
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const BackButton = ({ collectionName, classes }: BackButtonProps) => {
+const Header = ({ collectionName, classes }: HeaderProps) => {
+  const history = useHistory();
   return (
     <Box mt="50px">
       <Grid container alignItems="center" spacing={1}>
         <Grid item>
-          <Button component={Link} to="/map">
+          <Button onClick={() => history.goBack()}>
             <ArrowBackIcon color="primary" />
           </Button>
         </Grid>
@@ -43,10 +44,10 @@ const styles = () =>
     },
   });
 
-interface BackButtonIncomingProps {
+interface HeaderIncomingProps {
   collectionName: string;
 }
 
-type BackButtonProps = BackButtonIncomingProps & WithStyles<typeof styles>;
+type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 
-export default withStyles(styles)(BackButton);
+export default withStyles(styles)(Header);

@@ -174,7 +174,7 @@ export interface CollectionMetrics {
   bottomTemperature?: number;
   satelliteTemperature?: number;
   degreeHeatingDays?: number;
-  weeklyAlert?: number;
+  weeklyAlertLevel?: number;
   sstAnomaly?: number;
 }
 

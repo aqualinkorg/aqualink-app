@@ -1,8 +1,9 @@
 import React from "react";
 import { LayersControl, TileLayer } from "react-leaflet";
+import { MapLayerName } from "../../../store/Homepage/types";
 
 type SofarLayerDefinition = {
-  name: string;
+  name: MapLayerName;
   model: string;
   variableId: string;
   cmap: string;
@@ -58,7 +59,7 @@ export const SofarLayers = ({ defaultLayerName }: SofarLayersProps) => {
 };
 
 interface SofarLayersProps {
-  defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
+  defaultLayerName?: MapLayerName;
 }
 
 SofarLayers.defaultProps = {

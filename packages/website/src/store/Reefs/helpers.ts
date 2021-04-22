@@ -1,5 +1,3 @@
-/* eslint-disable no-nested-ternary */
-import { isNumber } from "lodash";
 import type { TableRow } from "../Homepage/types";
 import type {
   Metrics,
@@ -23,24 +21,13 @@ export const longDHW = (dhw: number | null): string =>
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const {
-      degreeHeatingDays: latestDhd,
-      satelliteTemperature: latestSst,
-      weeklyAlertLevel: latestWeeklyAlert,
-    } = value.latestDailyData || {};
+    const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
+      value.latestDailyData || value.collectionData || {};
 
-    const {
-      bottomTemperature,
-      topTemperature,
-      degreeHeatingDays: collectionDhd,
-      satelliteTemperature: collectionSst,
-      sstAnomaly,
-      weeklyAlert: collectionWeeklyAlert,
-    } = value.collectionData || {};
+    const { bottomTemperature, topTemperature, sstAnomaly } =
+      value.collectionData || {};
 
-    const dhw = degreeHeatingWeeksCalculator(
-      [latestDhd, collectionDhd].find((item) => isNumber(item))
-    );
+    const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
     const { name: locationName = "", region = "" } = getReefNameAndRegion(
       value
@@ -48,7 +35,7 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
     return {
       locationName,
-      sst: collectionSst || latestSst || null,
+      sst: satelliteTemperature || null,
       historicMax: maxMonthlyMean,
       sstAnomaly: sstAnomaly || null,
       buoyTop: topTemperature || null,
@@ -60,10 +47,8 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${latestWeeklyAlert || collectionWeeklyAlert || 0},${longDHW(
-        dhw
-      )}`,
-      alertLevel: latestWeeklyAlert || collectionWeeklyAlert || null,
+      alert: `${weeklyAlertLevel || 0},${longDHW(dhw)}`,
+      alertLevel: weeklyAlertLevel || null,
     };
   });
 };

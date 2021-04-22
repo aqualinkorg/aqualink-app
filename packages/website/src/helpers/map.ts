@@ -167,11 +167,9 @@ export const markerIcon = (
   iconUrl: string
 ) => {
   switch (true) {
-    case hasSpotter && hasHobo:
+    case hasSpotter:
       return sensorIcon("spotter", selected, color);
-    case hasSpotter && !hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case !hasSpotter && hasHobo:
+    case hasHobo:
       return sensorIcon("hobo", selected, color);
     default:
       return buoyIcon(iconUrl);

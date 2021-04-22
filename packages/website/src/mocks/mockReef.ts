@@ -1,4 +1,5 @@
 import { CollectionMetrics, Point, Reef } from "../store/Reefs/types";
+import { mockUser } from "./mockUser";
 
 const now = new Date();
 const minutesAgo = 5;
@@ -18,7 +19,7 @@ export const mockReef: Reef = {
   status: "in_review",
   videoStream: null,
   region: { name: "Hawaii" },
-  admins: [],
+  admins: [mockUser],
   surveyPoints: [],
   stream: null,
   historicalMonthlyMean: [],
@@ -102,7 +103,7 @@ export const mockReef: Reef = {
     bottomTemperature: 10.719999999999999,
     satelliteTemperature: 15.8900003433228,
     degreeHeatingDays: 0,
-    weeklyAlert: 0,
+    weeklyAlertLevel: 0,
     sstAnomaly: 1.2,
   },
 };

@@ -61,8 +61,8 @@ function App() {
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route
                   exact
-                  path="/collections/minderoo"
-                  render={() => <Dashboard staticMode />}
+                  path="/collections/:collectionName"
+                  component={Dashboard}
                 />
                 <Route default component={NotFound} />
               </Switch>

@@ -17,7 +17,6 @@ import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
 import { useSelector } from "react-redux";
 
 import type { LatLngTuple } from "leaflet";
-import { isNumber } from "lodash";
 import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
@@ -33,20 +32,11 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const {
-    degreeHeatingDays: latestDhd,
-    maxBottomTemperature,
-    satelliteTemperature: latestSst,
-  } = reef.latestDailyData || {};
+  const { degreeHeatingDays, satelliteTemperature } =
+    reef.latestDailyData || reef.collectionData || {};
+  const { maxBottomTemperature } = reef.latestDailyData || {};
 
-  const {
-    degreeHeatingDays: collectionDhd,
-    satelliteTemperature: collectionSst,
-  } = reef.collectionData || {};
-
-  const dhw = degreeHeatingWeeksCalculator(
-    [latestDhd, collectionDhd].find((item) => isNumber(item))
-  );
+  const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
   useEffect(() => {
     if (
@@ -113,7 +103,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
                     variant="h5"
                     color="textSecondary"
                   >
-                    {`${formatNumber(latestSst || collectionSst, 1)}  °C`}
+                    {`${formatNumber(satelliteTemperature, 1)}  °C`}
                   </Typography>
                 </Grid>
               </Grid>

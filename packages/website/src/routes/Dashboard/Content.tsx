@@ -1,49 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { Container, Grid, LinearProgress } from "@material-ui/core";
-import { CollectionDetails, User } from "../../store/User/types";
-import BackButton from "./BackButton";
+import { useSelector } from "react-redux";
+
+import { CollectionDetails } from "../../store/User/types";
+import Header from "./Header";
 import Map from "./Map";
 import Info from "./Info";
 import Table from "./Table";
 import userServices from "../../services/userServices";
 import Message from "../../common/Message";
+import { userInfoSelector } from "../../store/User/userSlice";
 
-const FEATURED_COLLECTION_ID = "1";
+const collections: { [key: string]: string } = {
+  minderoo: "1",
+};
 
-const Content = ({ staticMode, signedInUser }: ContentProps) => {
+const Content = ({ defaultCollectionName }: ContentProps) => {
+  const signedInUser = useSelector(userInfoSelector);
   const { collection: signedInUserCollection } = signedInUser || {};
-  const [staticCollection, setStaticCollection] = useState<CollectionDetails>();
-  const [staticCollectionLoading, setStaticCollectionLoading] = useState(false);
-  const [staticCollectionErrored, setStaticCollectionErrored] = useState(false);
+  const [defaultCollection, setDefaultCollection] = useState<
+    CollectionDetails
+  >();
+  const [defaultCollectionLoading, setDefaultCollectionLoading] = useState(
+    false
+  );
+  const [defaultCollectionErrored, setDefaultCollectionErrored] = useState(
+    false
+  );
 
-  const collection = staticMode ? staticCollection : signedInUserCollection;
+  const defaultCollectionId = defaultCollectionName
+    ? collections[defaultCollectionName]
+    : undefined;
+
+  const collection = defaultCollectionId
+    ? defaultCollection
+    : signedInUserCollection;
 
   useEffect(() => {
-    if (staticMode) {
-      setStaticCollectionLoading(true);
+    if (defaultCollectionId) {
+      setDefaultCollectionLoading(true);
       userServices
-        .getPublicCollection(FEATURED_COLLECTION_ID)
-        .then(({ data }) => setStaticCollection(data))
-        .catch(() => setStaticCollectionErrored(true))
-        .finally(() => setStaticCollectionLoading(false));
+        .getPublicCollection(defaultCollectionId)
+        .then(({ data }) => setDefaultCollection(data))
+        .catch(() => setDefaultCollectionErrored(true))
+        .finally(() => setDefaultCollectionLoading(false));
     }
-  }, [staticMode]);
+  }, [defaultCollectionId]);
 
-  if (staticCollectionLoading) {
+  if (defaultCollectionLoading) {
     return <LinearProgress />;
   }
 
-  if (staticMode && staticCollectionErrored) {
+  if (!collection && !defaultCollectionId) {
+    return null;
+  }
+
+  if (defaultCollectionId && defaultCollectionErrored) {
     return <Message message="Collection not found" />;
   }
 
   if (!collection || collection.reefs.length === 0) {
-    return <Message message="No sites added to your collection" />;
+    return <Message message="No sites added to this collection" />;
   }
 
   return (
     <Container>
-      <BackButton collectionName={collection.name} />
+      <Header collectionName={collection.name} />
       <Grid container justify="center" spacing={2}>
         <Grid item xs={12} sm={11} md={6}>
           <Map collection={collection} />
@@ -58,12 +80,11 @@ const Content = ({ staticMode, signedInUser }: ContentProps) => {
 };
 
 interface ContentProps {
-  signedInUser: User | null;
-  staticMode?: boolean;
+  defaultCollectionName?: string;
 }
 
 Content.defaultProps = {
-  staticMode: false,
+  defaultCollectionName: undefined,
 };
 
 export default Content;

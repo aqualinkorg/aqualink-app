@@ -24,7 +24,7 @@ const percentageCalculator = (count: number, max?: number) => {
 const BarChart = ({ collection, classes }: BarChartProps) => {
   const groupedByAlert = groupBy(
     collection.reefs,
-    (reef) => reef.collectionData?.weeklyAlert
+    (reef) => reef.collectionData?.weeklyAlertLevel
   );
 
   const mostFrequentAlert = maxBy(

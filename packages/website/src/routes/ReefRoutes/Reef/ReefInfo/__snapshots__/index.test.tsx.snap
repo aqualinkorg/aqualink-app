@@ -107,6 +107,13 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
             </mock-box>
             <mock-box>
               <mock-typography
+                variant="h6"
+              >
+                Managed by Some organization
+              </mock-typography>
+            </mock-box>
+            <mock-box>
+              <mock-typography
                 variant="subtitle1"
               >
                 Last surveyed: Sep 10, 2020

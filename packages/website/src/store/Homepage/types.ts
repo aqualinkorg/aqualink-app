@@ -8,6 +8,8 @@ export interface MapboxGeolocationData {
   placeName: string;
 }
 
+export type MapLayerName = "Heat Stress" | "Sea Surface Temperature";
+
 export interface HomePageState {
   reefOnMap: Reef | null;
   searchResult?: MapboxGeolocationData;

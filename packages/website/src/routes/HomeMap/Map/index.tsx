@@ -20,6 +20,7 @@ import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
 import { CollectionDetails } from "../../../store/User/types";
+import { MapLayerName } from "../../../store/Homepage/types";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -204,7 +205,7 @@ interface HomepageMapIncomingProps {
   showAlertLevelLegend?: boolean;
   showWaterMark?: boolean;
   geolocationEnabled?: boolean;
-  defaultLayerName?: "Heat Stress" | "Sea Surface Temperature";
+  defaultLayerName?: MapLayerName;
   legendBottom?: number;
   legendLeft?: number;
 }

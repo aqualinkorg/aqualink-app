@@ -70,13 +70,13 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
     <LayerGroup>
       <MarkerClusterGroup
         iconCreateFunction={clusterIcon}
-        disableClusteringAtZoom={collection ? 1 : 2}
+        disableClusteringAtZoom={1}
       >
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { weeklyAlertLevel } = reef.latestDailyData || {};
-            const { weeklyAlert } = reef.collectionData || {};
+            const { weeklyAlertLevel } =
+              reef.latestDailyData || reef.collectionData || {};
 
             return lngOffsets.map((offset) => (
               <Marker
@@ -89,8 +89,8 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
                   hasDeployedSpotter(reef),
                   reef.hasHobo,
                   reefOnMap?.id === reef.id,
-                  alertColorFinder(weeklyAlertLevel || weeklyAlert),
-                  alertIconFinder(weeklyAlertLevel || weeklyAlert)
+                  alertColorFinder(weeklyAlertLevel),
+                  alertIconFinder(weeklyAlertLevel)
                 )}
                 position={[lat, lng + offset]}
               >
