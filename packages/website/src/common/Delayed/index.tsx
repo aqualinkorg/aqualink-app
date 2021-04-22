@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, PropsWithChildren } from "react";
 
 type DelayedProps = {
-  children: JSX.Element;
   waitBeforeShow?: number;
 };
 
-const Delayed = ({ children, waitBeforeShow = 500 }: DelayedProps) => {
+const Delayed = ({
+  children,
+  waitBeforeShow = 500,
+}: PropsWithChildren<DelayedProps>) => {
   const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const Delayed = ({ children, waitBeforeShow = 500 }: DelayedProps) => {
     return () => clearTimeout(timeout);
   }, [waitBeforeShow]);
 
-  return isShown ? children : null;
+  return <>{isShown ? children : null}</>;
 };
 
 export default Delayed;
