@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { isUndefined, keyBy, omitBy } from 'lodash';
+import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
 import { DailyData } from '../reefs/daily-data.entity';
 import { SourceType } from '../reefs/sources.entity';
@@ -13,12 +13,9 @@ import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { User } from '../users/users.entity';
 import { getSstAnomaly } from '../utils/liveData';
-import { SofarValue } from '../utils/sofar.types';
-import { metricToKey } from '../utils/time-series.utils';
 import { Collection, CollectionData } from './collections.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
-import { FilterPublicCollection } from './dto/filter-public-collcetion.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 interface LatestDailyData {
@@ -62,20 +59,36 @@ export class CollectionsService {
 
   find(
     filterCollectionDto: FilterCollectionDto,
-    user: User,
+    user?: User,
   ): Promise<Collection[]> {
     const { name, reefId } = filterCollectionDto;
 
-    return this.filterCollectionQuery(name, reefId, user);
+    const query = this.collectionRepository.createQueryBuilder('collection');
+
+    if (user) {
+      query.andWhere('collection.user_id = :userId', { userId: user.id });
+      query.andWhere('collection.is_public = FALSE');
+    } else {
+      query.andWhere('collection.is_public = TRUE');
+    }
+
+    if (name) {
+      query.andWhere('collection.name = :name', { name });
+    }
+
+    if (reefId) {
+      query
+        .innerJoin('collection.reefs', 'reef')
+        .andWhere('reef.reef_id = :reefId', { reefId });
+    }
+
+    return query.getMany();
   }
 
-  findPublic(filterPublicCollectionDto: FilterPublicCollection) {
-    const { name, reefId } = filterPublicCollectionDto;
-
-    return this.filterCollectionQuery(name, reefId);
-  }
-
-  async findOne(collectionId: number): Promise<Collection> {
+  async findOne(
+    collectionId: number,
+    publicOnly: boolean = false,
+  ): Promise<Collection> {
     const collection = await this.collectionRepository.findOne({
       where: { id: collectionId },
       relations: [
@@ -92,31 +105,7 @@ export class CollectionsService {
       );
     }
 
-    if (collection.reefs.length === 0) {
-      return collection;
-    }
-
-    return this.getCollectionData(collection);
-  }
-
-  async findOnePublic(collectionId: number) {
-    const collection = await this.collectionRepository.findOne({
-      where: { id: collectionId },
-      relations: [
-        'reefs',
-        'reefs.historicalMonthlyMean',
-        'reefs.region',
-        'user',
-      ],
-    });
-
-    if (!collection) {
-      throw new NotFoundException(
-        `Collection with ID ${collectionId} not found.`,
-      );
-    }
-
-    if (!collection.isPublic) {
+    if (publicOnly && !collection.isPublic) {
       throw new UnauthorizedException(
         `You are not allowed to access this collection with ${collectionId}`,
       );
@@ -158,29 +147,6 @@ export class CollectionsService {
     }
   }
 
-  private filterCollectionQuery(name?: string, reefId?: number, user?: User) {
-    const query = this.collectionRepository.createQueryBuilder('collection');
-
-    if (user) {
-      query.andWhere('collection.user_id = :userId', { userId: user.id });
-      query.andWhere('collection.is_public = FALSE');
-    } else {
-      query.andWhere('collection.is_public = TRUE');
-    }
-
-    if (name) {
-      query.andWhere('collection.name = :name', { name });
-    }
-
-    if (reefId) {
-      query
-        .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.reef_id = :reefId', { reefId });
-    }
-
-    return query.getMany();
-  }
-
   private async getCollectionData(collection: Collection): Promise<Collection> {
     // Get buoy data
     const latestData = await this.latestDataRepository.find({
@@ -191,18 +157,17 @@ export class CollectionsService {
       },
     });
 
-    const mappedlatestData = latestData.reduce((obj, data) => {
+    const mappedlatestData = latestData.reduce<
+      Record<number, Record<'bottomTemperature' | 'topTemperature', number>>
+    >((acc, data) => {
       return {
-        ...obj,
+        ...acc,
         [data.reefId]: {
-          ...obj[data.reefId],
-          [metricToKey(data.metric)]: data.value,
+          ...acc[data.reefId],
+          [camelCase(data.metric)]: data.value,
         },
       };
-    }, {}) as Record<
-      number,
-      Record<'bottomTemperature' | 'topTemperature', SofarValue>
-    >;
+    }, {});
 
     // Get latest sst and degree_heating days
     // Query builder doesn't apply correctly the select and DISTINCT must be first
@@ -223,27 +188,29 @@ export class CollectionsService {
       'id',
     );
 
-    const mappedReefData = collection.reefs.reduce((obj, reef) => {
+    const mappedReefData = collection.reefs.reduce<
+      Record<number, CollectionData>
+    >((acc, reef) => {
+      const sstValue = mappedLatestDailyData[reef.id]?.sst;
       const sst =
-        mappedLatestDailyData[reef.id] &&
-        mappedLatestDailyData[reef.id].sst !== undefined
-          ? ({
-              value: mappedLatestDailyData[reef.id].sst,
+        sstValue || sstValue === 0
+          ? {
+              value: sstValue,
               timestamp: mappedLatestDailyData[reef.id].date,
-            } as SofarValue)
+            }
           : undefined;
 
       return {
-        ...obj,
+        ...acc,
         [reef.id]: {
           ...mappedlatestData[reef.id],
           satelliteTemperature: mappedLatestDailyData[reef.id]?.sst,
           degreeHeatingDays: mappedLatestDailyData[reef.id]?.dhd,
-          weeklyAlert: mappedLatestDailyData[reef.id]?.alert,
+          weeklyAlertLevel: mappedLatestDailyData[reef.id]?.alert,
           sstAnomaly: getSstAnomaly(reef.historicalMonthlyMean, sst),
         },
       };
-    }, {}) as Record<number, CollectionData>;
+    }, {});
 
     return {
       ...collection,

@@ -17,7 +17,7 @@ export interface CollectionData {
   topTemperature: number | undefined;
   satelliteTemperature: number | undefined;
   degreeHeatingDays: number | undefined;
-  weeklyAlert: number | undefined;
+  weeklyAlertLevel: number | undefined;
   sstAnomaly: number | undefined;
 }
 

@@ -20,7 +20,6 @@ import { AdminLevel } from '../users/users.entity';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
-import { FilterPublicCollection } from './dto/filter-public-collcetion.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 
 @Auth()
@@ -44,14 +43,14 @@ export class CollectionsController {
 
   @Public()
   @Get('public')
-  findPublic(@Query() filterPublicCollectionDto: FilterPublicCollection) {
-    return this.collectionsService.findPublic(filterPublicCollectionDto);
+  findPublic(@Query() filterCollectionDto: FilterCollectionDto) {
+    return this.collectionsService.find(filterCollectionDto);
   }
 
   @Public()
   @Get('public/:collectionId')
   findOnePublic(@Param('collectionId', ParseIntPipe) collectionId: number) {
-    return this.collectionsService.findOnePublic(collectionId);
+    return this.collectionsService.findOne(collectionId, true);
   }
 
   @UseGuards(CollectionGuard)
