@@ -26,5 +26,10 @@ export class UpdateCollectionDto {
   @IsOptional()
   @IsNumber({}, { each: true })
   @Validate(EntityExists, [Reef], { each: true })
-  reefIds?: number[];
+  addReefIds?: number[];
+
+  @IsOptional()
+  @IsNumber({}, { each: true })
+  @Validate(EntityExists, [Reef], { each: true })
+  removeReefIds?: number[];
 }

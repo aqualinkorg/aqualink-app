@@ -126,15 +126,36 @@ export class CollectionsService {
         `Collection with ID ${collectionId} not found.`,
       );
     }
-    const { name, isPublic, userId, reefIds } = updateCollectionDto;
 
-    const reefs = reefIds && reefIds.map((reefId) => ({ id: reefId }));
-    await this.collectionRepository.save({
-      id: collectionId,
-      ...omitBy({ name, isPublic }, isUndefined),
-      reefs,
-      user: userId === undefined ? undefined : { id: userId },
-    });
+    const {
+      name,
+      isPublic,
+      userId,
+      addReefIds,
+      removeReefIds,
+    } = updateCollectionDto;
+
+    const filteredAddReefIds = addReefIds?.filter(
+      (reefId) => !collection.reefIds.includes(reefId),
+    );
+
+    await this.collectionRepository
+      .createQueryBuilder('collection')
+      .relation('reefs')
+      .of(collection)
+      .addAndRemove(filteredAddReefIds || [], removeReefIds || []);
+
+    await this.collectionRepository.update(
+      {
+        id: collectionId,
+      },
+      {
+        ...omitBy({ name, isPublic }, isUndefined),
+        ...(userId !== undefined ? { user: { id: userId } } : {}),
+      },
+    );
+
+    return this.collectionRepository.findOne(collection.id);
   }
 
   async delete(collectionId: number) {
