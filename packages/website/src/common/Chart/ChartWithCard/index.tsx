@@ -348,7 +348,7 @@ const styles = (theme: Theme) =>
     },
     chartWithSpotter: {
       [theme.breakpoints.up("lg")]: {
-        width: "80%",
+        width: "75%",
       },
       [theme.breakpoints.between("md", "md")]: {
         width: "67%",
