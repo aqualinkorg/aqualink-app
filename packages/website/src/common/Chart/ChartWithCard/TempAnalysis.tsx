@@ -181,7 +181,7 @@ const styles = () =>
       width: "auto",
     },
     tempAnalysisCard: {
-      padding: 16,
+      padding: 12,
       minHeight: 250,
       borderRadius: "0 4px 4px 0",
       backgroundColor: "#f8f9f9",
@@ -191,6 +191,7 @@ const styles = () =>
     },
     dates: {
       color: "#979797",
+      marginBottom: 7,
     },
     rotatedText: {
       transform: "rotate(-90deg)",

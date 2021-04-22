@@ -348,9 +348,12 @@ const styles = (theme: Theme) =>
     },
     chartWithSpotter: {
       [theme.breakpoints.up("lg")]: {
+        width: "80%",
+      },
+      [theme.breakpoints.between("md", "md")]: {
         width: "67%",
       },
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down("sm")]: {
         width: "100%",
       },
     },
@@ -366,10 +369,10 @@ const styles = (theme: Theme) =>
       },
     },
     cardWithSpotter: {
-      [theme.breakpoints.up("lg")]: {
+      [theme.breakpoints.up("md")]: {
         flexGrow: 1,
       },
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.down("sm")]: {
         width: "inherit",
         maxWidth: "fit-content",
         margin: "0 auto",
