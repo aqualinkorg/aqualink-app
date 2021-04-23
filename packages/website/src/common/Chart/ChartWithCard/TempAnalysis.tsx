@@ -181,7 +181,7 @@ const styles = () =>
       width: "auto",
     },
     tempAnalysisCard: {
-      padding: 12,
+      padding: 8,
       minHeight: 250,
       borderRadius: "0 4px 4px 0",
       backgroundColor: "#f8f9f9",
@@ -191,7 +191,7 @@ const styles = () =>
     },
     dates: {
       color: "#979797",
-      marginBottom: 7,
+      marginBottom: 12,
     },
     rotatedText: {
       transform: "rotate(-90deg)",
@@ -204,9 +204,9 @@ const styles = () =>
       width: "auto",
     },
     values: {
-      fontWeight: 300,
+      fontWeight: 250,
       // ensures metric numbers aren't too close together on mobile
-      margin: "0 5px",
+      margin: "0 4px",
     },
   });
 

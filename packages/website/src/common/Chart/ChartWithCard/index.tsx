@@ -351,7 +351,7 @@ const styles = (theme: Theme) =>
         width: "75%",
       },
       [theme.breakpoints.between("md", "md")]: {
-        width: "67%",
+        width: "70%",
       },
       [theme.breakpoints.down("sm")]: {
         width: "100%",
@@ -359,10 +359,10 @@ const styles = (theme: Theme) =>
     },
     chartWithoutSpotter: {
       [theme.breakpoints.up("lg")]: {
-        width: "80%",
+        width: "75%",
       },
       [theme.breakpoints.between("md", "md")]: {
-        width: "73%",
+        width: "75%",
       },
       [theme.breakpoints.down("sm")]: {
         width: "100%",
