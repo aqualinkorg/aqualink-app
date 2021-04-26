@@ -32,8 +32,11 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { degreeHeatingDays, maxBottomTemperature, satelliteTemperature } =
-    reef.latestDailyData || {};
+  const { degreeHeatingDays, satelliteTemperature } =
+    reef.latestDailyData || reef.collectionData || {};
+  const { maxBottomTemperature } = reef.latestDailyData || {};
+
+  const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
   useEffect(() => {
     if (
@@ -114,25 +117,18 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
               <Grid container alignItems="flex-end" item xs={12}>
                 <Typography
                   style={{
-                    color: `${dhwColorFinder(
-                      degreeHeatingWeeksCalculator(degreeHeatingDays)
-                    )}`,
+                    color: `${dhwColorFinder(dhw)}`,
                   }}
                   variant="h5"
                   color="textSecondary"
                 >
-                  {formatNumber(
-                    degreeHeatingWeeksCalculator(degreeHeatingDays),
-                    1
-                  )}
+                  {formatNumber(dhw, 1)}
                   &nbsp;
                 </Typography>
                 <Tooltip title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures">
                   <Typography
                     style={{
-                      color: `${dhwColorFinder(
-                        degreeHeatingWeeksCalculator(degreeHeatingDays)
-                      )}`,
+                      color: `${dhwColorFinder(dhw)}`,
                       position: "relative",
                       bottom: 0,
                     }}

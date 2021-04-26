@@ -21,73 +21,14 @@ import {
   getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
-import { spotter } from "../../../../assets/spotter";
-import { spotterSelected } from "../../../../assets/spotterSelected";
-import { spotterAnimation } from "../../../../assets/spotterAnimation";
-import { hobo } from "../../../../assets/hobo";
-import { hoboSelected } from "../../../../assets/hoboSelected";
+import { markerIcon } from "../../../../helpers/map";
 import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
-
-const buoyIcon = (iconUrl: string) =>
-  new L.Icon({
-    iconUrl,
-    iconSize: [24, 27],
-    iconAnchor: [12, 27],
-    popupAnchor: [0, -28],
-  });
-
-const sensorIcon = (
-  sensor: "spotter" | "hobo",
-  selected: boolean,
-  color: string
-) => {
-  const iconWidth = sensor === "spotter" ? 20 : 25;
-  const iconHeight = sensor === "spotter" ? 20 : 25;
-  return L.divIcon({
-    iconSize: [iconWidth, iconHeight],
-    iconAnchor: [iconWidth / 2, 0],
-    html:
-      sensor === "spotter"
-        ? `
-          <div class="homepage-map-spotter-icon-blinking">
-            ${spotterAnimation(color)}
-          </div>
-          <div class="homepage-map-spotter-icon-steady">
-            ${selected ? spotterSelected(color) : spotter(color)}
-          </div>
-        `
-        : `
-          <div class="homepage-map-hobo-icon">
-            ${selected ? hoboSelected(color) : hobo(color)}
-          </div>
-        `,
-    className: "homepage-map-spotter-icon-wrapper",
-  });
-};
-
-const markerIcon = (
-  hasSpotter: boolean,
-  hasHobo: boolean,
-  selected: boolean,
-  color: string,
-  iconUrl: string
-) => {
-  switch (true) {
-    case hasSpotter && hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case hasSpotter && !hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case !hasSpotter && hasHobo:
-      return sensorIcon("hobo", selected, color);
-    default:
-      return buoyIcon(iconUrl);
-  }
-};
+import { CollectionDetails } from "../../../../store/User/types";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
-    const { reef } = marker.options.children[0].props;
-    const { weeklyAlertLevel } = reef.latestDailyData;
+    const { reef } = marker?.options?.children?.[0]?.props || {};
+    const { weeklyAlertLevel } = reef?.latestDailyData || {};
     return findIntervalByLevel(weeklyAlertLevel);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
@@ -99,8 +40,9 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
-export const ReefMarkers = () => {
-  const reefsList = useSelector(reefsToDisplayListSelector) || [];
+export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
+  const storedReefs = useSelector(reefsToDisplayListSelector);
+  const reefsList = collection?.reefs || storedReefs || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();
@@ -128,12 +70,13 @@ export const ReefMarkers = () => {
     <LayerGroup>
       <MarkerClusterGroup
         iconCreateFunction={clusterIcon}
-        disableClusteringAtZoom={2}
+        disableClusteringAtZoom={1}
       >
         {reefsList.map((reef: Reef) => {
           if (reef.polygon.type === "Point") {
             const [lng, lat] = reef.polygon.coordinates;
-            const { weeklyAlertLevel } = reef.latestDailyData || {};
+            const { weeklyAlertLevel } =
+              reef.latestDailyData || reef.collectionData || {};
 
             return lngOffsets.map((offset) => (
               <Marker
@@ -160,6 +103,14 @@ export const ReefMarkers = () => {
       </MarkerClusterGroup>
     </LayerGroup>
   );
+};
+
+interface ReefMarkersProps {
+  collection?: CollectionDetails;
+}
+
+ReefMarkers.defaultProps = {
+  collection: undefined,
 };
 
 export default ReefMarkers;

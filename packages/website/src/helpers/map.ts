@@ -1,5 +1,14 @@
-import { minBy, isEqual, mean } from "lodash";
+import { minBy, isEqual, mean, meanBy } from "lodash";
+import L, { LatLng, Polygon as LeafletPolygon, LatLngBounds } from "leaflet";
+import { makeStyles } from "@material-ui/core";
+
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
+import { spotter } from "../assets/spotter";
+import { spotterSelected } from "../assets/spotterSelected";
+import { spotterAnimation } from "../assets/spotterAnimation";
+import { hobo } from "../assets/hobo";
+import { hoboSelected } from "../assets/hoboSelected";
+import { CollectionDetails } from "../store/User/types";
 
 export const locationCalculator = (point: Point | Polygon): Position => {
   if (point.type === "Point") {
@@ -30,6 +39,29 @@ export const samePosition = (
       : polygon2.coordinates;
 
   return isEqual(coords1, coords2);
+};
+
+export const getCollectionCenterAndBounds = (
+  collection?: CollectionDetails
+): [LatLng | undefined, LatLngBounds | undefined] => {
+  if (!collection) {
+    return [undefined, undefined];
+  }
+
+  const coordinates = collection.reefs.map((item) =>
+    locationCalculator(item.polygon)
+  );
+
+  const center = new LatLng(
+    meanBy(coordinates, (item) => item[1]),
+    meanBy(coordinates, (item) => item[0])
+  );
+
+  const bounds = new LeafletPolygon(
+    coordinates.map((item) => new LatLng(item[1], item[0]))
+  ).getBounds();
+
+  return [center, bounds];
 };
 
 // Returns the distance between two points in radians
@@ -89,4 +121,85 @@ export const findClosestSurveyPoint = (
     });
 
   return minBy(distances, "distance")?.pointId;
+};
+
+const markerStyles = makeStyles({
+  spotterIconWrapper: {},
+  hoboIcon: {
+    height: "inherit",
+    width: "inherit",
+  },
+  spotterIconSteady: {
+    height: "inherit",
+    width: "inherit",
+    position: "relative",
+    left: 0,
+    right: 0,
+    top: "-100%",
+  },
+  spotterIconBlinking: {
+    width: "inherit",
+    height: "inherit",
+    animation: "$pulse 2s infinite",
+  },
+  "@keyframes pulse": {
+    "0%": { strokeOpacity: 1 },
+    "50%": { strokeOpacity: 1, transform: "scale(1)" },
+    "100%": { strokeOpacity: 0, transform: "scale(3)" },
+  },
+});
+
+export const buoyIcon = (iconUrl: string) =>
+  new L.Icon({
+    iconUrl,
+    iconSize: [24, 27],
+    iconAnchor: [12, 27],
+    popupAnchor: [0, -28],
+  });
+
+export const sensorIcon = (
+  sensor: "spotter" | "hobo",
+  selected: boolean,
+  color: string
+) => {
+  const classes = markerStyles();
+  const iconWidth = sensor === "spotter" ? 20 : 25;
+  const iconHeight = sensor === "spotter" ? 20 : 25;
+  return L.divIcon({
+    iconSize: [iconWidth, iconHeight],
+    iconAnchor: [iconWidth / 2, 0],
+    html:
+      sensor === "spotter"
+        ? `
+          <div class=${classes.spotterIconBlinking}>
+            ${spotterAnimation(color)}
+          </div>
+          <div class=${classes.spotterIconSteady}>
+            ${selected ? spotterSelected(color) : spotter(color)}
+          </div>
+        `
+        : `
+          <div class=${classes.hoboIcon}>
+            ${selected ? hoboSelected(color) : hobo(color)}
+          </div>
+        `,
+    className: classes.spotterIconWrapper,
+  });
+};
+
+export const markerIcon = (
+  hasSpotter: boolean,
+  hasHobo: boolean,
+  selected: boolean,
+  color: string,
+  iconUrl: string
+) => {
+  switch (true) {
+    case hasSpotter:
+      return sensorIcon("spotter", selected, color);
+    case hasHobo:
+      return sensorIcon("hobo", selected, color);
+    default:
+      return buoyIcon(iconUrl);
+  }
 };
