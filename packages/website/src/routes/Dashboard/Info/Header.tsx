@@ -83,11 +83,11 @@ const styles = (theme: Theme) =>
     },
 
     grayText: {
-      color: "#AAB1B4",
+      color: theme.palette.grey[400],
     },
 
     emailIcon: {
-      color: "#757575",
+      color: theme.palette.grey[600],
       height: 11,
       width: 14,
       marginRight: 4,

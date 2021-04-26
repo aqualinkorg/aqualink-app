@@ -7,6 +7,7 @@ import {
   Grid,
   Typography,
   Theme,
+  useTheme,
 } from "@material-ui/core";
 import { groupBy, maxBy, times, reverse } from "lodash";
 
@@ -21,6 +22,7 @@ const percentageCalculator = (count: number, max?: number) => {
 };
 
 const BarChart = ({ collection, classes }: BarChartProps) => {
+  const theme = useTheme();
   const nLevels = 5;
   const groupedByAlert = groupBy(
     collection.reefs,
@@ -31,7 +33,7 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
 
   return (
     <>
-      <Box color="#979797" margin="0 0 14px 97px">
+      <Box color={theme.palette.grey[500]} margin="0 0 14px 97px">
         <Typography variant="subtitle2">Sites by Alert Level</Typography>
       </Box>
       <Box flexGrow={1} width="100%">
@@ -123,10 +125,6 @@ const styles = (theme: Theme) =>
         fontSize: 16,
         paddingLeft: 4,
       },
-    },
-
-    xAxis: {
-      width: "80%",
     },
   });
 
