@@ -125,7 +125,7 @@ const HomepageMap = ({
       className={classes.map}
       center={initialCenter}
       zoom={initialZoom}
-      minZoom={collection ? 1 : 2} // If we're on dashboard change, the map's wrapping div is smaller, so we need to allow higher zoom
+      minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
       bounds={initialBounds}
