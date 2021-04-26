@@ -125,32 +125,6 @@ body {
   }
 }
 
-.homepage-map-hobo-icon {
-  height: inherit;
-  width: inherit;
-}
-
-.homepage-map-spotter-icon-steady {
-  height: inherit;
-  width: inherit;
-  position: relative;
-  left: 0;
-  right: 0;
-  top: -100%;
-}
-
-.homepage-map-spotter-icon-blinking {
-  width: inherit;
-  height: inherit;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { stroke-opacity: 1; }
-  50% { stroke-opacity: 1; transform: scale(1); }
-  100% { stroke-opacity: 0; transform: scale(3); }
-}
-
 /* Hide input type "number" increase/decrease arrows */
 
 /* Chrome, Safari, Edge, Opera */

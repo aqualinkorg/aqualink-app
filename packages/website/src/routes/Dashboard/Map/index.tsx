@@ -16,13 +16,13 @@ import { CollectionDetails } from "../../../store/User/types";
 
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down(320));
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [collectionCenter, collectionBounds] = getCollectionCenterAndBounds(
     collection
   );
 
   return (
-    <Box className={classes.root} borderRadius="5px" height="480px" mt="46px">
+    <Box className={classes.root}>
       <Map
         classes={{ map: classes.map }}
         initialCenter={collectionCenter || new LatLng(0, 0)}
@@ -43,7 +43,10 @@ const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      [theme.breakpoints.between("md", "md")]: {
+      borderRadius: 5,
+      height: 480,
+      marginTop: 46,
+      [theme.breakpoints.only("md")]: {
         height: 420,
       },
       [theme.breakpoints.down("xs")]: {

@@ -17,6 +17,7 @@ import type {
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
+import { constructUserObject } from "./helpers";
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -83,21 +84,7 @@ export const signInUser = createAsyncThunk<
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
       const { data: collections } = await userServices.getCollections(token);
-      return {
-        id: userData.id,
-        email: userData.email,
-        fullName: userData.fullName,
-        organization: userData.organization,
-        adminLevel: userData.adminLevel,
-        firebaseUid: userData.firebaseUid,
-        administeredReefs: isManager(userData)
-          ? (await userServices.getAdministeredReefs(token)).data
-          : [],
-        collection: collections?.[0]?.id
-          ? (await userServices.getCollection(collections[0].id, token)).data
-          : undefined,
-        token,
-      };
+      return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
     }
@@ -123,21 +110,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
     try {
       const { data: userData } = await userServices.getSelf(token);
       const { data: collections } = await userServices.getCollections(token);
-      return {
-        id: userData.id,
-        email: userData.email,
-        fullName: userData.fullName,
-        organization: userData.organization,
-        adminLevel: userData.adminLevel,
-        firebaseUid: userData.firebaseUid,
-        administeredReefs: isManager(userData)
-          ? (await userServices.getAdministeredReefs(token)).data
-          : [],
-        token,
-        collection: collections?.[0]?.id
-          ? (await userServices.getCollection(collections[0].id, token)).data
-          : undefined,
-      };
+      return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
     }

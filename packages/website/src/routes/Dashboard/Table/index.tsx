@@ -9,7 +9,7 @@ const Table = ({ collection }: TableIncomingProps) => {
       <ReefTable
         showCard={false}
         showSpottersOnlySwitch={false}
-        extended
+        isExtended
         collection={collection}
         scrollOnSelection={false}
       />

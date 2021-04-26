@@ -57,19 +57,19 @@ const RowNumberCell = ({
   decimalPlaces,
   value,
   classes,
-  extended,
+  isExtended,
 }: {
   color?: string;
   unit?: string;
   value: number | null;
   decimalPlaces?: number;
   classes: ReefTableBodyProps["classes"];
-  extended?: boolean;
+  isExtended?: boolean;
 }) => {
   return (
     <TableCell
       className={
-        extended ? classes.cellTextAlignExtended : classes.cellTextAlign
+        isExtended ? classes.cellTextAlignExtended : classes.cellTextAlign
       }
     >
       <Typography
@@ -111,13 +111,13 @@ RowNumberCell.defaultProps = {
   unit: "",
   color: colors.black,
   decimalPlaces: 1,
-  extended: false,
+  isExtended: false,
 };
 
 const ReefTableBody = ({
   order,
   orderBy,
-  extended,
+  isExtended,
   collection,
   scrollOnSelection,
   classes,
@@ -177,30 +177,30 @@ const ReefTableBody = ({
               reef={reef}
               classes={{
                 ...classes,
-                nameCells: extended
+                nameCells: isExtended
                   ? classes.extendedTableNameCells
                   : classes.nameCells,
               }}
             />
             <RowNumberCell
-              extended={extended}
+              isExtended={isExtended}
               classes={classes}
               value={reef.sst}
-              color={extended ? colors.black : colors.lightBlue}
+              color={isExtended ? colors.black : colors.lightBlue}
               unit="°C"
             />
-            {extended && (
+            {isExtended && (
               <RowNumberCell
-                extended={extended}
+                isExtended={isExtended}
                 classes={classes}
                 value={reef.historicMax}
                 color={colors.black}
                 unit="°C"
               />
             )}
-            {extended && (
+            {isExtended && (
               <RowNumberCell
-                extended={extended}
+                isExtended={isExtended}
                 classes={classes}
                 value={reef.sstAnomaly}
                 color={colors.black}
@@ -208,24 +208,24 @@ const ReefTableBody = ({
               />
             )}
             <RowNumberCell
-              extended={extended}
+              isExtended={isExtended}
               classes={classes}
               value={reef.dhw}
               color={dhwColorFinder(reef.dhw)}
               unit="DHW"
             />
-            {extended && (
+            {isExtended && (
               <RowNumberCell
-                extended={extended}
+                isExtended={isExtended}
                 classes={classes}
                 value={reef.buoyTop}
                 color={colors.black}
                 unit="°C"
               />
             )}
-            {extended && (
+            {isExtended && (
               <RowNumberCell
-                extended={extended}
+                isExtended={isExtended}
                 classes={classes}
                 value={reef.buoyBottom}
                 color={colors.black}
@@ -278,13 +278,13 @@ const styles = (theme: Theme) =>
 type ReefTableBodyIncomingProps = {
   order: Order;
   orderBy: OrderKeys;
-  extended?: boolean;
+  isExtended?: boolean;
   collection?: Collection;
   scrollOnSelection?: boolean;
 };
 
 ReefTableBody.defaultProps = {
-  extended: false,
+  isExtended: false,
   collection: undefined,
   scrollOnSelection: true,
 };

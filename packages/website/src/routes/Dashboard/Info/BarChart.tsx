@@ -8,10 +8,9 @@ import {
   Typography,
   Theme,
 } from "@material-ui/core";
-import { groupBy, maxBy } from "lodash";
+import { groupBy, maxBy, times, reverse } from "lodash";
 
 import { findIntervalByLevel } from "../../../helpers/bleachingAlertIntervals";
-
 import { formatNumber } from "../../../helpers/numberUtils";
 import { CollectionDetails } from "../../../store/User/types";
 
@@ -22,15 +21,13 @@ const percentageCalculator = (count: number, max?: number) => {
 };
 
 const BarChart = ({ collection, classes }: BarChartProps) => {
+  const nLevels = 5;
   const groupedByAlert = groupBy(
     collection.reefs,
     (reef) => reef.collectionData?.weeklyAlertLevel
   );
 
-  const mostFrequentAlert = maxBy(
-    Object.values(groupedByAlert),
-    (item) => item.length
-  );
+  const mostFrequentAlert = maxBy(Object.values(groupedByAlert), "length");
 
   return (
     <>
@@ -44,22 +41,15 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
           justify="space-between"
           direction="column"
         >
-          {[4, 3, 2, 1, 0].map((level) => {
+          {reverse(times(nLevels, Number)).map((level) => {
             const interval = findIntervalByLevel(level);
             return (
               <Grid item key={interval.label}>
                 <Grid container alignItems="center">
                   <Grid item>
                     <Box
-                      width="77px"
-                      height="22px"
-                      borderRadius="10px"
+                      className={classes.alertLabelWrapper}
                       bgcolor={interval.color}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      fontWeight="700"
-                      mr="20px"
                     >
                       <Typography
                         className={classes.alertLabel}
@@ -101,6 +91,16 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
 
 const styles = (theme: Theme) =>
   createStyles({
+    alertLabelWrapper: {
+      width: 77,
+      height: 22,
+      borderRadius: 10,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 20,
+    },
+
     alertLabel: {
       fontWeight: 700,
     },

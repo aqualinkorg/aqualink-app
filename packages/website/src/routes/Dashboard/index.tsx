@@ -16,7 +16,7 @@ import {
 } from "../../store/User/userSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
-import Message from "../../common/Message";
+import FullScreenMessage from "../../common/FullScreenMessage";
 
 const Dashboard = ({ match, classes }: DashboardProps) => {
   const user = useSelector(userInfoSelector);
@@ -29,7 +29,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
       <div className={classes.root}>
         {!user && !userLoading && !collectionName && (
           <Delayed waitBeforeShow={1000}>
-            <Message message="Please sign in to view your dashboard" />
+            <FullScreenMessage message="Please sign in to view your dashboard" />
           </Delayed>
         )}
         {userLoading && !collectionName && <LinearProgress />}

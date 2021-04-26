@@ -65,7 +65,7 @@ const ReefTable = ({
   isDrawerOpen,
   showCard,
   showSpottersOnlySwitch,
-  extended,
+  isExtended,
   collection,
   scrollOnSelection,
   classes,
@@ -150,7 +150,7 @@ const ReefTable = ({
         </Box>
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
-      {!extended && (
+      {!isExtended && (
         <Hidden smUp>
           <Box
             paddingX={2}
@@ -183,20 +183,20 @@ const ReefTable = ({
         <TableContainer>
           <Table
             stickyHeader
-            className={extended ? classes.extendedTable : classes.table}
+            className={isExtended ? classes.extendedTable : classes.table}
           >
-            <Hidden xsDown={!extended}>
+            <Hidden xsDown={!isExtended}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                extended={extended}
+                isExtended={isExtended}
               />
             </Hidden>
             <ReefTableBody
               order={order}
               orderBy={orderBy}
-              extended={extended}
+              isExtended={isExtended}
               collection={collection}
               scrollOnSelection={scrollOnSelection}
             />
@@ -280,7 +280,7 @@ interface ReefTableIncomingProps {
   isDrawerOpen?: boolean;
   showCard?: boolean;
   showSpottersOnlySwitch?: boolean;
-  extended?: boolean;
+  isExtended?: boolean; // Determines whether an extended version of the table will be displayed or not
   collection?: Collection;
   scrollOnSelection?: boolean;
 }
@@ -289,7 +289,7 @@ ReefTable.defaultProps = {
   isDrawerOpen: false,
   showCard: true,
   showSpottersOnlySwitch: true,
-  extended: false,
+  isExtended: false,
   collection: undefined,
   scrollOnSelection: true,
 };

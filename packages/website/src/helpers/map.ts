@@ -1,5 +1,6 @@
 import { minBy, isEqual, mean, meanBy } from "lodash";
 import L, { LatLng, Polygon as LeafletPolygon, LatLngBounds } from "leaflet";
+import { makeStyles } from "@material-ui/core";
 
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
 import { spotter } from "../assets/spotter";
@@ -122,6 +123,32 @@ export const findClosestSurveyPoint = (
   return minBy(distances, "distance")?.pointId;
 };
 
+const markerStyles = makeStyles({
+  spotterIconWrapper: {},
+  hoboIcon: {
+    height: "inherit",
+    width: "inherit",
+  },
+  spotterIconSteady: {
+    height: "inherit",
+    width: "inherit",
+    position: "relative",
+    left: 0,
+    right: 0,
+    top: "-100%",
+  },
+  spotterIconBlinking: {
+    width: "inherit",
+    height: "inherit",
+    animation: "$pulse 2s infinite",
+  },
+  "@keyframes pulse": {
+    "0%": { strokeOpacity: 1 },
+    "50%": { strokeOpacity: 1, transform: "scale(1)" },
+    "100%": { strokeOpacity: 0, transform: "scale(3)" },
+  },
+});
+
 export const buoyIcon = (iconUrl: string) =>
   new L.Icon({
     iconUrl,
@@ -135,6 +162,7 @@ export const sensorIcon = (
   selected: boolean,
   color: string
 ) => {
+  const classes = markerStyles();
   const iconWidth = sensor === "spotter" ? 20 : 25;
   const iconHeight = sensor === "spotter" ? 20 : 25;
   return L.divIcon({
@@ -143,19 +171,19 @@ export const sensorIcon = (
     html:
       sensor === "spotter"
         ? `
-          <div class="homepage-map-spotter-icon-blinking">
+          <div class=${classes.spotterIconBlinking}>
             ${spotterAnimation(color)}
           </div>
-          <div class="homepage-map-spotter-icon-steady">
+          <div class=${classes.spotterIconSteady}>
             ${selected ? spotterSelected(color) : spotter(color)}
           </div>
         `
         : `
-          <div class="homepage-map-hobo-icon">
+          <div class=${classes.hoboIcon}>
             ${selected ? hoboSelected(color) : hobo(color)}
           </div>
         `,
-    className: "homepage-map-spotter-icon-wrapper",
+    className: classes.spotterIconWrapper,
   });
 };
 

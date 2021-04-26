@@ -14,16 +14,7 @@ import BarChart from "./BarChart";
 
 const Info = ({ collection, classes }: InfoProps) => {
   return (
-    <Box
-      className={classes.root}
-      borderRadius="5px"
-      border="2px solid #EEEEEE"
-      height="480px"
-      padding="18px 23px"
-      mt="46px"
-      display="flex"
-      flexDirection="column"
-    >
+    <Box className={classes.root}>
       <Header collection={collection} />
       <Divider className={classes.divider} />
       <BarChart collection={collection} />
@@ -34,12 +25,19 @@ const Info = ({ collection, classes }: InfoProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      [theme.breakpoints.between("md", "md")]: {
+      borderRadius: 5,
+      border: `2px solid ${theme.palette.grey[200]}`,
+      height: 480,
+      padding: theme.spacing(3),
+      marginTop: 46,
+      display: "flex",
+      flexDirection: "column",
+      [theme.breakpoints.only("md")]: {
         height: 420,
       },
       [theme.breakpoints.down("xs")]: {
         height: 440,
-        padding: "18px 16px",
+        padding: theme.spacing(2),
       },
     },
 

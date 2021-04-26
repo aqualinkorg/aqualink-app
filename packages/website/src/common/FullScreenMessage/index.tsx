@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme, Box, Typography } from "@material-ui/core";
 
-const Message = ({ message }: MessageProps) => {
+const FullScreenMessage = ({ message }: FullScreenMessageProps) => {
   const theme = useTheme();
   return (
     <Box
@@ -17,8 +17,8 @@ const Message = ({ message }: MessageProps) => {
   );
 };
 
-interface MessageProps {
+interface FullScreenMessageProps {
   message: string;
 }
 
-export default Message;
+export default FullScreenMessage;
