@@ -1,12 +1,10 @@
 import { sortBy } from "lodash";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
-
-import { ReefsListState, ReefsRequestData } from "./types";
-
-import type { CreateAsyncThunkTypes, RootState } from "../configure";
+import type { AxiosError } from "axios";
 import reefServices from "../../services/reefServices";
 import { hasDeployedSpotter } from "../../helpers/reefUtils";
+import type { ReefsListState, ReefsRequestData } from "./types";
+import type { CreateAsyncThunkTypes, RootState } from "../configure";
 
 const reefsListInitialState: ReefsListState = {
   loading: false,
