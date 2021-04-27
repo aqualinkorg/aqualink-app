@@ -20,9 +20,7 @@ export type Interval = {
 /**
  * Calculating bleaching alert level based on NOAA defintions:
  * available at https://coralreefwatch.noaa.gov/subscriptions/vs.php
- * @param temperatureThreshold
- * @param satelliteTemperature
- * @param degreeHeatingWeeks
+ * @param weeklyAlertLevel
  */
 export const findIntervalByLevel = (
   weeklyAlertLevel?: number | null

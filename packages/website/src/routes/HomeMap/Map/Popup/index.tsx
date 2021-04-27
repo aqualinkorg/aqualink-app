@@ -52,7 +52,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
       const point: LatLngTuple = [lat, lng];
       popup.setLatLng(point).openOn(map);
     }
-  }, [autoOpen, map, reefOnMap]);
+  }, [autoOpen, map, reef.id, reefOnMap]);
 
   return (
     <LeafletPopup
