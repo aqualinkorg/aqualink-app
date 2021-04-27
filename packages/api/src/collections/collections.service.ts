@@ -8,11 +8,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
 import { DailyData } from '../reefs/daily-data.entity';
-import { SourceType } from '../reefs/sources.entity';
+import { Sources, SourceType } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { User } from '../users/users.entity';
 import { getSstAnomaly } from '../utils/liveData';
+import { hasHoboDataSubQuery } from '../utils/reef.utils';
 import { Collection, CollectionData } from './collections.entity';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
@@ -43,6 +44,9 @@ export class CollectionsService {
 
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
+
+    @InjectRepository(Sources)
+    private sourcesRepository: Repository<Sources>,
   ) {}
 
   create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
@@ -233,6 +237,8 @@ export class CollectionsService {
       };
     }, {});
 
+    const hasHoboDataSet = await hasHoboDataSubQuery(this.sourcesRepository);
+
     return {
       ...collection,
       user: {
@@ -242,6 +248,7 @@ export class CollectionsService {
       reefs: collection.reefs.map((reef) => {
         return {
           ...reef,
+          hasHobo: hasHoboDataSet.has(reef.id),
           applied: reef.applied,
           collectionData: mappedReefData[reef.id],
         };

@@ -26,6 +26,7 @@ import {
   handleDuplicateReef,
   filterSpotterDataByDate,
   getConflictingExclusionDates,
+  hasHoboDataSubQuery,
 } from '../utils/reef.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -35,7 +36,7 @@ import { ExcludeSpotterDatesDto } from './dto/exclude-spotter-dates.dto';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { createPoint } from '../utils/coordinates';
-import { Sources, SourceType } from './sources.entity';
+import { Sources } from './sources.entity';
 
 @Injectable()
 export class ReefsService {
@@ -142,24 +143,6 @@ export class ReefsService {
     return query.getQuery();
   }
 
-  async hasHoboDataSubQuery(): Promise<Set<number>> {
-    const hasHoboData: {
-      reefId: number;
-    }[] = await this.sourceRepository
-      .createQueryBuilder('sources')
-      .select('reef_id', 'reefId')
-      .where(`type = '${SourceType.HOBO}'`)
-      .groupBy('reef_id')
-      .getRawMany();
-
-    const hasHoboDataSet = new Set<number>();
-    hasHoboData.forEach((row) => {
-      hasHoboDataSet.add(row.reefId);
-    });
-
-    return hasHoboDataSet;
-  }
-
   async find(filter: FilterReefDto): Promise<Reef[]> {
     const query = this.reefsRepository.createQueryBuilder('reef');
 
@@ -196,7 +179,7 @@ export class ReefsService {
       .andWhere('approved = true')
       .getMany();
 
-    const hasHoboDataSet = await this.hasHoboDataSubQuery();
+    const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
     return res.map((reef) => ({
       ...reef,

@@ -15,6 +15,7 @@ import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 import { SofarValue } from './sofar.types';
 import { createPoint } from './coordinates';
+import { Sources, SourceType } from '../reefs/sources.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -143,4 +144,24 @@ export const filterSpotterDataByDate = (
     return isExcluded;
   });
   return data;
+};
+
+export const hasHoboDataSubQuery = async (
+  sourceRepository: Repository<Sources>,
+): Promise<Set<number>> => {
+  const hasHoboData: {
+    reefId: number;
+  }[] = await sourceRepository
+    .createQueryBuilder('sources')
+    .select('reef_id', 'reefId')
+    .where(`type = '${SourceType.HOBO}'`)
+    .groupBy('reef_id')
+    .getRawMany();
+
+  const hasHoboDataSet = new Set<number>();
+  hasHoboData.forEach((row) => {
+    hasHoboDataSet.add(row.reefId);
+  });
+
+  return hasHoboDataSet;
 };
