@@ -1,10 +1,10 @@
 import { sortBy } from "lodash";
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 import { ReefsListState, ReefsRequestData } from "./types";
 
-import type { RootState, CreateAsyncThunkTypes } from "../configure";
+import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import reefServices from "../../services/reefServices";
 import { hasDeployedSpotter } from "../../helpers/reefUtils";
 
@@ -27,7 +27,7 @@ export const reefsRequest = createAsyncThunk<
     return {
       list: sortedData,
       reefsToDisplay: withSpotterOnly
-        ? sortedData.filter((item) => hasDeployedSpotter(item))
+        ? sortedData.filter(hasDeployedSpotter)
         : sortedData,
     };
   } catch (err) {
@@ -43,7 +43,7 @@ const reefsListSlice = createSlice({
     filterReefsWithSpotter: (state, action: PayloadAction<boolean>) => ({
       ...state,
       reefsToDisplay: action.payload
-        ? state.list?.filter((item) => hasDeployedSpotter(item))
+        ? state.list?.filter(hasDeployedSpotter)
         : state.list,
     }),
   },

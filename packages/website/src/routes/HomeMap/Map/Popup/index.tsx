@@ -42,16 +42,15 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
     if (
       map &&
       popupRef?.current &&
+      reefOnMap?.id === reef.id &&
       reefOnMap?.polygon.type === "Point" &&
       autoOpen
     ) {
       const { leafletElement: popup } = popupRef.current;
       const [lng, lat] = reefOnMap.polygon.coordinates;
-      const moveFunc = () => {
-        const point: LatLngTuple = [lat, lng];
-        popup.setLatLng(point).openOn(map);
-      };
-      moveFunc();
+
+      const point: LatLngTuple = [lat, lng];
+      popup.setLatLng(point).openOn(map);
     }
   }, [autoOpen, map, reefOnMap]);
 
@@ -180,6 +179,7 @@ const styles = (theme: Theme) =>
 
 interface PopupIncomingProps {
   reef: Reef;
+  // Dictates whether the popup automatically opens when the reef is selected (reef on map is set)
   autoOpen?: boolean;
 }
 

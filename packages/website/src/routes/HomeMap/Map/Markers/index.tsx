@@ -40,16 +40,15 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
+// To make sure we can see all the reefs all the time, and especially
+// around -180/+180, we create dummy copies of each reef.
+const lngOffsets = [-360, 0, 360];
 export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
   const storedReefs = useSelector(reefsToDisplayListSelector);
   const reefsList = collection?.reefs || storedReefs || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
   const dispatch = useDispatch();
-
-  // To make sure we can see all the reefs all the time, and especially
-  // around -180/+180, we create dummy copies of each reef.
-  const lngOffsets = [-360, 0, 360];
 
   const setCenter = useCallback(
     (inputMap: L.Map, latLng: [number, number], zoom: number) => {
