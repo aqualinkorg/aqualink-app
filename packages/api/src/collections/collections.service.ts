@@ -1,8 +1,8 @@
 import {
+  ForbiddenException,
   Injectable,
   Logger,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
@@ -110,7 +110,7 @@ export class CollectionsService {
     }
 
     if (publicOnly && !collection.isPublic) {
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         `You are not allowed to access this collection with ${collectionId}`,
       );
     }

@@ -18,6 +18,10 @@ describe("Landing Page", () => {
         loading: false,
         error: null,
       },
+      collection: {
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();

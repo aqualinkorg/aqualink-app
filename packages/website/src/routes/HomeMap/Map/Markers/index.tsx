@@ -14,7 +14,7 @@ import {
   getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
-import { CollectionDetails } from "../../../../store/User/types";
+import { CollectionDetails } from "../../../../store/Collection/types";
 import ReefMarker from "./ReefMarker";
 
 const clusterIcon = (cluster: any) => {
@@ -60,7 +60,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
         disableClusteringAtZoom={1}
       >
         {reefsList.map((reef: Reef) => (
-          <ReefMarker reef={reef} />
+          <ReefMarker key={reef.id} reef={reef} />
         ))}
       </MarkerClusterGroup>
     </LayerGroup>

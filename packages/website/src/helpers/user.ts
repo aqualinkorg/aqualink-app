@@ -1,4 +1,5 @@
-import { CollectionDetails, User } from "../store/User/types";
+import { User } from "../store/User/types";
+import { CollectionDetails } from "../store/Collection/types";
 
 export const isAdmin = (user: User | null, reefId: number): boolean => {
   return user

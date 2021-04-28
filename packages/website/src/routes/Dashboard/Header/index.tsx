@@ -15,11 +15,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import EditNameForm from "./EditNameForm";
-import { CollectionDetails } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/Collection/types";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isCollectionOwner } from "../../../helpers/user";
 
-const Header = ({ collection, editable, classes }: HeaderProps) => {
+const Header = ({ collection, classes }: HeaderProps) => {
   const signedInUser = useSelector(userInfoSelector);
   const [editNameEnabled, setEditNameEnabled] = useState(false);
 
@@ -45,7 +45,7 @@ const Header = ({ collection, editable, classes }: HeaderProps) => {
                 {collection.name}
               </Typography>
             </Grid>
-            {isCollectionOwner(signedInUser, collection) && editable && (
+            {isCollectionOwner(signedInUser, collection) && (
               <Grid item>
                 <IconButton onClick={() => setEditNameEnabled(true)}>
                   <EditIcon fontSize="small" color="primary" />
@@ -68,12 +68,7 @@ const styles = () =>
 
 interface HeaderIncomingProps {
   collection: CollectionDetails;
-  editable?: boolean;
 }
-
-Header.defaultProps = {
-  editable: false,
-};
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 

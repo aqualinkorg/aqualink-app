@@ -1,12 +1,6 @@
 import app from "../firebase";
 import requests from "../helpers/requests";
-
-import {
-  CollectionDetails,
-  CollectionSummary,
-  CollectionUpdateParams,
-  User,
-} from "../store/User/types";
+import { User } from "../store/User/types";
 import type { Reef } from "../store/Reefs/types";
 
 const createUser = (email: string, password: string) =>
@@ -49,37 +43,6 @@ const getAdministeredReefs = (token?: string) =>
     token,
   });
 
-const getCollections = (token?: string) =>
-  requests.send<CollectionSummary[]>({
-    method: "GET",
-    url: "collections",
-    token,
-  });
-
-const getPublicCollection = (id: string) =>
-  requests.send<CollectionDetails>({
-    method: "GET",
-    url: `collections/public/${id}`,
-  });
-
-const getCollection = (id: number, token?: string) =>
-  requests.send<CollectionDetails>({
-    method: "GET",
-    url: `collections/${id}`,
-    token,
-  });
-
-const updateCollection = (
-  { id, name, addReefIds, removeReefIds }: CollectionUpdateParams,
-  token?: string
-) =>
-  requests.send({
-    method: "PUT",
-    url: `collections/${id}`,
-    data: { name, addReefIds, removeReefIds },
-    token,
-  });
-
 const signInUser = (email: string, password: string) =>
   app && app.auth().signInWithEmailAndPassword(email, password);
 
@@ -89,10 +52,6 @@ export default {
   createUser,
   storeUser,
   getAdministeredReefs,
-  getCollections,
-  getPublicCollection,
-  getCollection,
-  updateCollection,
   getSelf,
   resetPassword,
   signInUser,

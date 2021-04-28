@@ -1,94 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, Grid, LinearProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-import { CollectionDetails } from "../../store/User/types";
 import Header from "./Header";
 import Map from "./Map";
 import Info from "./Info";
 import Table from "./Table";
-import userServices from "../../services/userServices";
 import FullScreenMessage from "../../common/FullScreenMessage";
-import { userInfoSelector } from "../../store/User/userSlice";
+import {
+  collectionDetailsSelector,
+  collectionErrorSelector,
+  collectionLoadingSelector,
+} from "../../store/Collection/collectionSlice";
 
-const collections: { [key: string]: string } = {
-  minderoo: "1",
-};
+const Content = () => {
+  const collection = useSelector(collectionDetailsSelector);
+  const collectioLoading = useSelector(collectionLoadingSelector);
+  const collectionErrored = useSelector(collectionErrorSelector);
 
-const DashboardContentComponent = (
-  collection: CollectionDetails,
-  editable: boolean
-) => (
-  <Container>
-    <Header collection={collection} editable={editable} />
-    <Grid container justify="center" spacing={2}>
-      <Grid item xs={12} sm={11} md={6}>
-        <Map collection={collection} />
-      </Grid>
-      <Grid item xs={12} sm={11} md={6}>
-        <Info collection={collection} />
-      </Grid>
-    </Grid>
-    <Table collection={collection} />
-  </Container>
-);
-
-const Content = ({ defaultCollectionName }: ContentProps) => {
-  const signedInUser = useSelector(userInfoSelector);
-  const { collection: signedInUserCollection } = signedInUser || {};
-  const [defaultCollection, setDefaultCollection] = useState<
-    CollectionDetails
-  >();
-  const [defaultCollectionLoading, setDefaultCollectionLoading] = useState(
-    false
-  );
-  const [defaultCollectionErrored, setDefaultCollectionErrored] = useState(
-    false
-  );
-
-  const defaultCollectionId = defaultCollectionName
-    ? collections[defaultCollectionName]
-    : undefined;
-
-  useEffect(() => {
-    if (defaultCollectionId) {
-      setDefaultCollectionLoading(true);
-      userServices
-        .getPublicCollection(defaultCollectionId)
-        .then(({ data }) => setDefaultCollection(data))
-        .catch(() => setDefaultCollectionErrored(true))
-        .finally(() => setDefaultCollectionLoading(false));
-    }
-  }, [defaultCollectionId]);
-
-  switch (true) {
-    case !!defaultCollectionId:
-      if (defaultCollectionLoading) {
-        return <LinearProgress />;
-      }
-      if (defaultCollectionErrored) {
-        return <FullScreenMessage message="Collection not found" />;
-      }
-      if (defaultCollection?.reefs.length) {
-        return DashboardContentComponent(defaultCollection, false);
-      }
-      return <FullScreenMessage message="No sites added to this collection" />;
-    case !!signedInUserCollection:
-      if (signedInUserCollection?.reefs.length) {
-        return DashboardContentComponent(signedInUserCollection, true);
-      }
-      return <FullScreenMessage message="No sites added to your collection" />;
-    default:
-      return null;
+  if (collectioLoading) {
+    return <LinearProgress />;
   }
-};
 
-interface ContentProps {
-  defaultCollectionName?: string;
-}
+  if (collectionErrored) {
+    return <FullScreenMessage message="Collection not found" />;
+  }
 
-Content.defaultProps = {
-  defaultCollectionName: undefined,
+  if (collection?.reefs.length === 0) {
+    return <FullScreenMessage message="No sites added to this collection" />;
+  }
+
+  return collection ? (
+    <Container>
+      <Header collection={collection} />
+      <Grid container justify="center" spacing={2}>
+        <Grid item xs={12} sm={11} md={6}>
+          <Map collection={collection} />
+        </Grid>
+        <Grid item xs={12} sm={11} md={6}>
+          <Info collection={collection} />
+        </Grid>
+      </Grid>
+      <Table collection={collection} />
+    </Container>
+  ) : null;
 };
 
 export default Content;

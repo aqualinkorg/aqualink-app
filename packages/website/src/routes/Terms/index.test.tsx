@@ -16,6 +16,10 @@ describe("Terms page", () => {
       user: {
         userInfo: mockUser,
       },
+      collection: {
+        loading: false,
+        error: null,
+      },
     });
 
     element = render(

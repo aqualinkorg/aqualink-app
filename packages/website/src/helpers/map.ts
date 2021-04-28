@@ -8,7 +8,7 @@ import { spotterSelected } from "../assets/spotterSelected";
 import { spotterAnimation } from "../assets/spotterAnimation";
 import { hobo } from "../assets/hobo";
 import { hoboSelected } from "../assets/hoboSelected";
-import { CollectionDetails } from "../store/User/types";
+import { CollectionDetails } from "../store/Collection/types";
 
 /**
  * Get the middle point of a polygon (average of all points). Returns the point itself if input isn't a polygon.

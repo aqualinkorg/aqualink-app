@@ -1,23 +1,28 @@
 import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
-import { CollectionSummary, User } from "./types";
+import { User } from "./types";
+import { CollectionSummary } from "../Collection/types";
 
 export const constructUserObject = async (
   user: User,
   collections: CollectionSummary[],
   token?: string
-): Promise<User> => ({
-  id: user.id,
-  email: user.email,
-  fullName: user.fullName,
-  organization: user.organization,
-  adminLevel: user.adminLevel,
-  firebaseUid: user.firebaseUid,
-  administeredReefs: isManager(user)
-    ? (await userServices.getAdministeredReefs(token)).data
-    : [],
-  collection: collections?.[0]?.id
-    ? (await userServices.getCollection(collections[0].id, token)).data
-    : undefined,
-  token,
-});
+): Promise<User> => {
+  const { data: administeredReefs } = await userServices.getAdministeredReefs(
+    token
+  );
+
+  return {
+    id: user.id,
+    email: user.email,
+    fullName: user.fullName,
+    organization: user.organization,
+    adminLevel: user.adminLevel,
+    firebaseUid: user.firebaseUid,
+    administeredReefs: isManager(user) ? administeredReefs : [],
+    collection: collections?.[0]?.id
+      ? { id: collections[0].id, reefIds: collections[0].reefIds }
+      : undefined,
+    token,
+  };
+};

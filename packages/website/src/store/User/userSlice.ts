@@ -17,6 +17,7 @@ import type {
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
+import collectionServices from "../../services/collectionServices";
 import { constructUserObject } from "./helpers";
 
 const userInitialState: UserState = {
@@ -47,7 +48,9 @@ export const createUser = createAsyncThunk<
         organization,
         token
       );
-      const { data: collections } = await userServices.getCollections(token);
+      const { data: collections } = await collectionServices.getCollections(
+        token
+      );
 
       return {
         id: data.id,
@@ -60,7 +63,7 @@ export const createUser = createAsyncThunk<
           ? (await userServices.getAdministeredReefs(token)).data
           : [],
         collection: collections?.[0]?.id
-          ? (await userServices.getCollection(collections[0].id, token)).data
+          ? { id: collections[0].id, reefIds: collections[0].reefIds }
           : undefined,
         token: await user?.getIdToken(),
       };
@@ -83,7 +86,9 @@ export const signInUser = createAsyncThunk<
       const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } = await userServices.getCollections(token);
+      const { data: collections } = await collectionServices.getCollections(
+        token
+      );
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
@@ -109,7 +114,9 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
-      const { data: collections } = await userServices.getCollections(token);
+      const { data: collections } = await collectionServices.getCollections(
+        token
+      );
       return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
@@ -191,13 +198,13 @@ const userSlice = createSlice({
       return state;
     },
     clearError: (state) => ({ ...state, error: null }),
-    setUserCollectionName: (state, action: PayloadAction<string>) => ({
+    setCollectionReefs: (state, action: PayloadAction<number[]>) => ({
       ...state,
       userInfo: state.userInfo
         ? {
             ...state.userInfo,
             collection: state.userInfo.collection
-              ? { ...state.userInfo.collection, name: action.payload }
+              ? { ...state.userInfo.collection, reefIds: action.payload }
               : state.userInfo.collection,
           }
         : state.userInfo,
@@ -230,10 +237,6 @@ export const userLoadingSelector = (state: RootState): UserState["loading"] =>
 export const userErrorSelector = (state: RootState): UserState["error"] =>
   state.user.error;
 
-export const {
-  setToken,
-  clearError,
-  setUserCollectionName,
-} = userSlice.actions;
+export const { setToken, clearError, setCollectionReefs } = userSlice.actions;
 
 export default userSlice.reducer;

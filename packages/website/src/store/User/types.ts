@@ -1,29 +1,5 @@
 import type { Reef } from "../Reefs/types";
 
-export interface CollectionSummary {
-  id: number;
-  name: string;
-  isPublic: boolean;
-  userId: number;
-  reefIds: number[];
-}
-
-export interface CollectionDetails {
-  id: number;
-  name: string;
-  isPublic: boolean;
-  reefs: Reef[];
-  user: User;
-  reefIds: number[];
-}
-
-export interface CollectionUpdateParams {
-  id: number;
-  name?: string;
-  addReefIds?: number[];
-  removeReefIds?: number[];
-}
-
 export interface User {
   email?: string | null;
   fullName?: string | null;
@@ -31,7 +7,10 @@ export interface User {
   firebaseUid?: string | null;
   organization?: string | null;
   administeredReefs?: Reef[];
-  collection?: CollectionDetails;
+  collection?: {
+    id: number;
+    reefIds: number[];
+  };
   token?: string | null;
   id: number;
 }

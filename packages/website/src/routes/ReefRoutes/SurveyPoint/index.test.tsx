@@ -48,6 +48,10 @@ describe("Survey Point Detail Page", () => {
       surveyList: {
         list: [mockSurvey],
       },
+      collection: {
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();

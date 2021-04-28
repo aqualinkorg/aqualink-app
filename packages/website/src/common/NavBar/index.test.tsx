@@ -23,6 +23,10 @@ describe("NavBar with routeButtons", () => {
         loading: false,
         error: null,
       },
+      collection: {
+        loading: false,
+        error: null,
+      },
     });
 
     store.dispatch = jest.fn();
@@ -47,6 +51,10 @@ describe("NavBar without routeButtons", () => {
     const store = mockStore({
       user: {
         userInfo: mockUser,
+        loading: false,
+        error: null,
+      },
+      collection: {
         loading: false,
         error: null,
       },

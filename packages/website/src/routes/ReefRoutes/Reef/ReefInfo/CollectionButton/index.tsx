@@ -3,29 +3,29 @@ import { Tooltip, IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getSelf,
+  setCollectionReefs,
   userInfoSelector,
-  userLoadingSelector,
 } from "../../../../../store/User/userSlice";
 import { belongsToCollection } from "../../../../../helpers/reefUtils";
 import { hasCollection } from "../../../../../helpers/user";
 import { ReactComponent as WatchIcon } from "../../../../../assets/watch.svg";
 import { ReactComponent as UnWatchIcon } from "../../../../../assets/unwatch.svg";
-import userServices from "../../../../../services/userServices";
+import collectionServices from "../../../../../services/collectionServices";
 
 const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
-  const userLoading = useSelector(userLoadingSelector);
   const [collectionActionLoading, setCollectionActionLoading] = useState(false);
-  const reefBelongsToCollection = belongsToCollection(reefId, user?.collection);
-  const loading = collectionActionLoading || userLoading;
-  const buttonColor = loading ? "gray" : "black";
+  const reefBelongsToCollection = belongsToCollection(
+    reefId,
+    user?.collection?.reefIds
+  );
+  const buttonColor = collectionActionLoading ? "gray" : "black";
 
   const onAddReefToCollection = () => {
     if (user?.token && user?.collection && !reefBelongsToCollection) {
       setCollectionActionLoading(true);
-      userServices
+      collectionServices
         .updateCollection(
           {
             id: user.collection.id,
@@ -34,8 +34,8 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
           user.token
         )
         .then(() => {
-          if (user?.token) {
-            dispatch(getSelf(user.token));
+          if (user?.collection) {
+            dispatch(setCollectionReefs([...user.collection.reefIds, reefId]));
           }
         })
         .catch(() => errorCallback())
@@ -46,7 +46,7 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
   const onRemoveReefFromCollection = () => {
     if (user?.token && user?.collection && reefBelongsToCollection) {
       setCollectionActionLoading(true);
-      userServices
+      collectionServices
         .updateCollection(
           {
             id: user.collection.id,
@@ -55,8 +55,12 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
           user.token
         )
         .then(() => {
-          if (user?.token) {
-            dispatch(getSelf(user.token));
+          if (user?.collection) {
+            dispatch(
+              setCollectionReefs(
+                user.collection.reefIds.filter((item) => item !== reefId)
+              )
+            );
           }
         })
         .catch(() => errorCallback())
@@ -79,7 +83,7 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
       placement="top"
     >
       <IconButton
-        disabled={loading}
+        disabled={collectionActionLoading}
         onClick={
           reefBelongsToCollection
             ? onRemoveReefFromCollection

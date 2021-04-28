@@ -16,8 +16,8 @@ import { useDispatch } from "react-redux";
 import TextField from "../../../common/Forms/TextField";
 import { useFormField } from "../../../common/Forms/useFormField";
 import { User } from "../../../store/User/types";
-import userServices from "../../../services/userServices";
-import { setUserCollectionName } from "../../../store/User/userSlice";
+import collectionServices from "../../../services/collectionServices";
+import { setName } from "../../../store/Collection/collectionSlice";
 
 const EditNameForm = ({
   collectionId,
@@ -42,12 +42,12 @@ const EditNameForm = ({
 
   const onSubmit = () => {
     if (signedInUser?.token) {
-      userServices
+      collectionServices
         .updateCollection(
           { id: collectionId, name: collectionName.value },
           signedInUser.token
         )
-        .then(() => dispatch(setUserCollectionName(collectionName.value)))
+        .then(() => dispatch(setName(collectionName.value)))
         .catch((error) => console.error(error))
         .finally(() => onClose());
     }
