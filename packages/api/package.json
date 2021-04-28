@@ -11,7 +11,7 @@
     "build:cloud-functions": "webpack-cli --config cloud-functions/webpack.config.js",
     "gcp-build": "npm install yarn",
     "predeploy:app": "mv .env .env.bkp && cp .env.${DEPLOY_ENV} .env && yarn run build && cp ../../yarn.lock .",
-    "deploy:app": "gcloud app deploy app-${DEPLOY_ENV}.yaml",
+    "deploy:app": "gcloud app deploy app-${DEPLOY_ENV}.yaml && yarn migration:run",
     "postdeploy:app": "rm yarn.lock && mv .env.bkp .env",
     "deploy:prod": "export DEPLOY_ENV=prod && yarn deploy:app",
     "deploy:staging": "export DEPLOY_ENV=staging && yarn deploy:app",
