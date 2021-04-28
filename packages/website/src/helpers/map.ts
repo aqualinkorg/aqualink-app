@@ -1,5 +1,5 @@
-import { minBy, isEqual, mean, meanBy } from "lodash";
-import L, { LatLng, Polygon as LeafletPolygon, LatLngBounds } from "leaflet";
+import { isEqual, mean, meanBy, minBy } from "lodash";
+import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from "leaflet";
 import { makeStyles } from "@material-ui/core";
 
 import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
@@ -10,7 +10,10 @@ import { hobo } from "../assets/hobo";
 import { hoboSelected } from "../assets/hoboSelected";
 import { CollectionDetails } from "../store/User/types";
 
-export const locationCalculator = (point: Point | Polygon): Position => {
+/**
+ * Get the middle point of a polygon (average of all points). Returns the point itself if input isn't a polygon.
+ */
+export const getMiddlePoint = (point: Point | Polygon): Position => {
   if (point.type === "Point") {
     return point.coordinates;
   }
@@ -31,11 +34,11 @@ export const samePosition = (
 ) => {
   const coords1 =
     polygon1.type === "Polygon"
-      ? locationCalculator(polygon1)
+      ? getMiddlePoint(polygon1)
       : polygon1.coordinates;
   const coords2 =
     polygon2.type === "Polygon"
-      ? locationCalculator(polygon2)
+      ? getMiddlePoint(polygon2)
       : polygon2.coordinates;
 
   return isEqual(coords1, coords2);
@@ -49,7 +52,7 @@ export const getCollectionCenterAndBounds = (
   }
 
   const coordinates = collection.reefs.map((item) =>
-    locationCalculator(item.polygon)
+    getMiddlePoint(item.polygon)
   );
 
   const center = new LatLng(
@@ -64,7 +67,9 @@ export const getCollectionCenterAndBounds = (
   return [center, bounds];
 };
 
-// Returns the distance between two points in radians
+/**
+ * Returns the distance between two points in radians
+ */
 export const radDistanceCalculator = (point1: Position, point2: Position) => {
   const [lng1, lat1] = point1;
   const [lng2, lat2] = point2;
@@ -95,7 +100,7 @@ export const findClosestSurveyPoint = (
 
   const [reefLng, reefLat] =
     reefPolygon.type === "Polygon"
-      ? locationCalculator(reefPolygon)
+      ? getMiddlePoint(reefPolygon)
       : reefPolygon.coordinates;
   const distances = points
     .filter((item) => item.polygon)
@@ -115,7 +120,7 @@ export const findClosestSurveyPoint = (
         pointId: point.id,
         distance: radDistanceCalculator(
           [reefLng, reefLat],
-          locationCalculator(polygon)
+          getMiddlePoint(polygon)
         ),
       };
     });
@@ -123,7 +128,7 @@ export const findClosestSurveyPoint = (
   return minBy(distances, "distance")?.pointId;
 };
 
-const markerStyles = makeStyles({
+const useMarkerStyles = makeStyles({
   spotterIconWrapper: {},
   hoboIcon: {
     height: "inherit",
@@ -157,12 +162,12 @@ export const buoyIcon = (iconUrl: string) =>
     popupAnchor: [0, -28],
   });
 
-export const sensorIcon = (
+export const useSensorIcon = (
   sensor: "spotter" | "hobo",
   selected: boolean,
   color: string
 ) => {
-  const classes = markerStyles();
+  const classes = useMarkerStyles();
   const iconWidth = sensor === "spotter" ? 20 : 25;
   const iconHeight = sensor === "spotter" ? 20 : 25;
   return L.divIcon({
@@ -187,19 +192,18 @@ export const sensorIcon = (
   });
 };
 
-export const markerIcon = (
+export const useMarkerIcon = (
   hasSpotter: boolean,
   hasHobo: boolean,
   selected: boolean,
   color: string,
   iconUrl: string
 ) => {
-  switch (true) {
-    case hasSpotter:
-      return sensorIcon("spotter", selected, color);
-    case hasHobo:
-      return sensorIcon("hobo", selected, color);
-    default:
-      return buoyIcon(iconUrl);
-  }
+  const sensorIcon = useSensorIcon(
+    hasSpotter ? "spotter" : "hobo",
+    selected,
+    color
+  );
+  if (hasSpotter || hasHobo) return sensorIcon;
+  return buoyIcon(iconUrl);
 };
