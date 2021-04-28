@@ -32,7 +32,7 @@ async function run() {
   const sourceRepository = connection.getRepository(Sources);
   const timeSeriesRepository = connection.getRepository(TimeSeries);
 
-  addSpotterData(parsedReefIds, days, {
+  addSpotterData(parsedReefIds, days, connection, {
     reefRepository,
     sourceRepository,
     timeSeriesRepository,
