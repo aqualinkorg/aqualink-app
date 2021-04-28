@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tooltip, IconButton } from "@material-ui/core";
+import { Tooltip, IconButton, useTheme } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -13,6 +13,7 @@ import { ReactComponent as UnWatchIcon } from "../../../../../assets/unwatch.svg
 import collectionServices from "../../../../../services/collectionServices";
 
 const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const [collectionActionLoading, setCollectionActionLoading] = useState(false);
@@ -20,7 +21,6 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
     reefId,
     user?.collection?.reefIds
   );
-  const buttonColor = collectionActionLoading ? "gray" : "black";
 
   const onAddReefToCollection = () => {
     if (user?.token && user?.collection && !reefBelongsToCollection) {
@@ -91,9 +91,21 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
         }
       >
         {reefBelongsToCollection ? (
-          <UnWatchIcon color={buttonColor} />
+          <UnWatchIcon
+            color={
+              collectionActionLoading
+                ? theme.palette.grey[500]
+                : theme.palette.error.main
+            }
+          />
         ) : (
-          <WatchIcon color={buttonColor} />
+          <WatchIcon
+            color={
+              collectionActionLoading
+                ? theme.palette.grey[500]
+                : theme.palette.primary.main
+            }
+          />
         )}
       </IconButton>
     </Tooltip>

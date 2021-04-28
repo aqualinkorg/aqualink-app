@@ -9,6 +9,8 @@ import {
   useTheme,
   useMediaQuery,
 } from "@material-ui/core";
+import red from "@material-ui/core/colors/red";
+import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useDispatch } from "react-redux";
@@ -101,10 +103,10 @@ const EditNameForm = ({
 const styles = () =>
   createStyles({
     checkButton: {
-      color: "#4caf50",
+      color: green[500],
     },
     clearIcon: {
-      color: "#f44336",
+      color: red[500],
     },
   });
 
