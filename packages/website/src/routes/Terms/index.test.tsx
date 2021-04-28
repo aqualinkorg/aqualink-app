@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 
 import Terms from ".";
 import { mockUser } from "../../mocks/mockUser";
+import { mockCollection } from "../../mocks/mockCollection";
 
 const mockStore = configureStore([]);
 
@@ -17,6 +18,7 @@ describe("Terms page", () => {
         userInfo: mockUser,
       },
       collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },

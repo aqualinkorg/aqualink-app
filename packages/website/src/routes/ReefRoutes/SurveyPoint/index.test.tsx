@@ -10,6 +10,7 @@ import { mockUser } from "../../../mocks/mockUser";
 import SurveyPoint from ".";
 import { mockSurvey } from "../../../mocks/mockSurvey";
 import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
+import { mockCollection } from "../../../mocks/mockCollection";
 
 jest.mock("./InfoCard/Map", () => "Mock-Map");
 
@@ -49,6 +50,7 @@ describe("Survey Point Detail Page", () => {
         list: [mockSurvey],
       },
       collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },

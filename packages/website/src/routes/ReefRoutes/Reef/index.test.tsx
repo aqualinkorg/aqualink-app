@@ -8,6 +8,7 @@ import Reef from ".";
 import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockCollection } from "../../../mocks/mockCollection";
 
 const mockStore = configureStore([]);
 
@@ -60,6 +61,7 @@ describe("Reef Detail Page", () => {
         },
       },
       collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },
@@ -95,6 +97,7 @@ describe("Reef Detail Page", () => {
         },
       },
       collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },
