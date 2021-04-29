@@ -18,7 +18,7 @@ import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import CombinedCharts from "../Chart/CombinedCharts";
 import type { Reef } from "../../store/Reefs/types";
-import { locationCalculator } from "../../helpers/map";
+import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -35,7 +35,7 @@ const SiteDetails = ({
   showSpotterChart,
   surveyDiveDate,
 }: SiteDetailsProps) => {
-  const [lng, lat] = locationCalculator(reef.polygon);
+  const [lng, lat] = getMiddlePoint(reef.polygon);
 
   const { dailyData, liveData, maxMonthlyMean } = reef;
   const cards = [
