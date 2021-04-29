@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import type { TableRow } from "../Homepage/types";
 import type {
   Metrics,
@@ -23,7 +22,11 @@ export const longDHW = (dhw: number | null): string =>
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
     const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
-      value.latestDailyData || {};
+      value.latestDailyData || value.collectionData || {};
+
+    const { bottomTemperature, topTemperature, sstAnomaly } =
+      value.collectionData || {};
+
     const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
     const { name: locationName = "", region = "" } = getReefNameAndRegion(
@@ -32,7 +35,11 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
     return {
       locationName,
-      temp: satelliteTemperature,
+      sst: satelliteTemperature || null,
+      historicMax: maxMonthlyMean,
+      sstAnomaly: sstAnomaly || null,
+      buoyTop: topTemperature || null,
+      buoyBottom: bottomTemperature || null,
       maxMonthlyMean,
       depth: value.depth,
       dhw,

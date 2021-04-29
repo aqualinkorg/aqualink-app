@@ -29,6 +29,7 @@ import { TimeSeries } from './time-series.entity';
       .from(TimeSeries, 'time_series')
       .innerJoin('sources', 'source', 'source.id = source_id')
       .orderBy('reef_id, poi_id, metric, source_id, timestamp', 'DESC'),
+  materialized: true,
 })
 export class LatestData {
   @PrimaryGeneratedColumn()

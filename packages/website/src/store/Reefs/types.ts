@@ -169,6 +169,15 @@ export interface HistoricalMonthlyMean {
   temperature: number;
 }
 
+export interface CollectionMetrics {
+  topTemperature?: number;
+  bottomTemperature?: number;
+  satelliteTemperature?: number;
+  degreeHeatingDays?: number;
+  weeklyAlertLevel?: number;
+  sstAnomaly?: number;
+}
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -182,7 +191,7 @@ export interface Reef {
   stream: string | null;
   dailyData: DailyData[];
   liveData: LiveData;
-  latestDailyData: DailyData;
+  latestDailyData?: DailyData;
   featuredImage?: string;
   applied?: boolean;
   spotterId: string | null;
@@ -190,6 +199,7 @@ export interface Reef {
   surveyPoints: Pois[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
+  collectionData?: CollectionMetrics;
 }
 
 export interface TimeSeriesDataRequestParams {
