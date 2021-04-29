@@ -204,7 +204,7 @@ const styles = () =>
       width: "auto",
     },
     values: {
-      fontWeight: 250,
+      fontWeight: 300,
       // ensures metric numbers aren't too close together on mobile
       margin: "0 4px",
     },
