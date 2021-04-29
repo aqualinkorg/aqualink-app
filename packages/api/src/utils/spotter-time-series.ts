@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { times } from 'lodash';
 import moment from 'moment';
-import { In, IsNull, Not, Repository } from 'typeorm';
+import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
@@ -82,6 +82,7 @@ const saveDataBatch = (
 export const addSpotterData = async (
   reefIds: number[],
   days: number,
+  connection: Connection,
   repositories: Repositories,
 ) => {
   logger.log('Fetching reefs');
@@ -144,4 +145,8 @@ export const addSpotterData = async (
       }),
     { concurrency: 1 },
   );
+
+  // Update materialized view
+  logger.log('Refreshing materialized view latest_data');
+  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
 };

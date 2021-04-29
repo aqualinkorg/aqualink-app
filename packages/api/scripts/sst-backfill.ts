@@ -95,6 +95,10 @@ async function main() {
     );
   });
 
+  // Update materialized view
+  console.log('Refreshing materialized view latest_data');
+  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+
   connection.close();
   process.exit(0);
 }

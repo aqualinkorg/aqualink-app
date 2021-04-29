@@ -1,93 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import { LayerGroup, Marker, useLeaflet } from "react-leaflet";
+import { useSelector } from "react-redux";
+import { LayerGroup, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useCallback, useEffect } from "react";
 import L from "leaflet";
 import { reefsToDisplayListSelector } from "../../../../store/Reefs/reefsListSlice";
 import { Reef } from "../../../../store/Reefs/types";
-import {
-  reefOnMapSelector,
-  setReefOnMap,
-  setSearchResult,
-} from "../../../../store/Homepage/homepageSlice";
-import Popup from "../Popup";
+import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
-  alertColorFinder,
-  alertIconFinder,
   findIntervalByLevel,
   findMaxLevel,
   getColorByLevel,
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
-import { spotter } from "../../../../assets/spotter";
-import { spotterSelected } from "../../../../assets/spotterSelected";
-import { spotterAnimation } from "../../../../assets/spotterAnimation";
-import { hobo } from "../../../../assets/hobo";
-import { hoboSelected } from "../../../../assets/hoboSelected";
-import { hasDeployedSpotter } from "../../../../helpers/reefUtils";
-
-const buoyIcon = (iconUrl: string) =>
-  new L.Icon({
-    iconUrl,
-    iconSize: [24, 27],
-    iconAnchor: [12, 27],
-    popupAnchor: [0, -28],
-  });
-
-const sensorIcon = (
-  sensor: "spotter" | "hobo",
-  selected: boolean,
-  color: string
-) => {
-  const iconWidth = sensor === "spotter" ? 20 : 25;
-  const iconHeight = sensor === "spotter" ? 20 : 25;
-  return L.divIcon({
-    iconSize: [iconWidth, iconHeight],
-    iconAnchor: [iconWidth / 2, 0],
-    html:
-      sensor === "spotter"
-        ? `
-          <div class="homepage-map-spotter-icon-blinking">
-            ${spotterAnimation(color)}
-          </div>
-          <div class="homepage-map-spotter-icon-steady">
-            ${selected ? spotterSelected(color) : spotter(color)}
-          </div>
-        `
-        : `
-          <div class="homepage-map-hobo-icon">
-            ${selected ? hoboSelected(color) : hobo(color)}
-          </div>
-        `,
-    className: "homepage-map-spotter-icon-wrapper",
-  });
-};
-
-const markerIcon = (
-  hasSpotter: boolean,
-  hasHobo: boolean,
-  selected: boolean,
-  color: string,
-  iconUrl: string
-) => {
-  switch (true) {
-    case hasSpotter && hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case hasSpotter && !hasHobo:
-      return sensorIcon("spotter", selected, color);
-    case !hasSpotter && hasHobo:
-      return sensorIcon("hobo", selected, color);
-    default:
-      return buoyIcon(iconUrl);
-  }
-};
+import { CollectionDetails } from "../../../../store/User/types";
+import ReefMarker from "./ReefMarker";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
-    const { reef } = marker.options.children[0].props;
-    const { weeklyAlertLevel } = reef.latestDailyData;
+    const { reef } = marker?.options?.children?.[0]?.props || {};
+    const { weeklyAlertLevel } = reef?.latestDailyData || {};
     return findIntervalByLevel(weeklyAlertLevel);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
@@ -99,15 +32,11 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
-export const ReefMarkers = () => {
-  const reefsList = useSelector(reefsToDisplayListSelector) || [];
+export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
+  const storedReefs = useSelector(reefsToDisplayListSelector);
+  const reefsList = collection?.reefs || storedReefs || [];
   const reefOnMap = useSelector(reefOnMapSelector);
   const { map } = useLeaflet();
-  const dispatch = useDispatch();
-
-  // To make sure we can see all the reefs all the time, and especially
-  // around -180/+180, we create dummy copies of each reef.
-  const lngOffsets = [-360, 0, 360];
 
   const setCenter = useCallback(
     (inputMap: L.Map, latLng: [number, number], zoom: number) => {
@@ -116,7 +45,7 @@ export const ReefMarkers = () => {
     },
     []
   );
-
+  // zoom in and center on reef marker when it's clicked
   useEffect(() => {
     if (map && reefOnMap?.polygon.type === "Point") {
       const [lng, lat] = reefOnMap.polygon.coordinates;
@@ -128,38 +57,22 @@ export const ReefMarkers = () => {
     <LayerGroup>
       <MarkerClusterGroup
         iconCreateFunction={clusterIcon}
-        disableClusteringAtZoom={2}
+        disableClusteringAtZoom={1}
       >
-        {reefsList.map((reef: Reef) => {
-          if (reef.polygon.type === "Point") {
-            const [lng, lat] = reef.polygon.coordinates;
-            const { weeklyAlertLevel } = reef.latestDailyData || {};
-
-            return lngOffsets.map((offset) => (
-              <Marker
-                onClick={() => {
-                  dispatch(setSearchResult());
-                  dispatch(setReefOnMap(reef));
-                }}
-                key={`${reef.id}-${offset}`}
-                icon={markerIcon(
-                  hasDeployedSpotter(reef),
-                  reef.hasHobo,
-                  reefOnMap?.id === reef.id,
-                  alertColorFinder(weeklyAlertLevel),
-                  alertIconFinder(weeklyAlertLevel)
-                )}
-                position={[lat, lng + offset]}
-              >
-                <Popup reef={reef} autoOpen={offset === 0} />
-              </Marker>
-            ));
-          }
-          return null;
-        })}
+        {reefsList.map((reef: Reef) => (
+          <ReefMarker reef={reef} />
+        ))}
       </MarkerClusterGroup>
     </LayerGroup>
   );
+};
+
+interface ReefMarkersProps {
+  collection?: CollectionDetails;
+}
+
+ReefMarkers.defaultProps = {
+  collection: undefined,
 };
 
 export default ReefMarkers;

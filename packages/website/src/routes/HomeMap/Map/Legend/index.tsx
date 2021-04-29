@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
+import classNames from "classnames";
 
 import CustomLegend from "../../../../common/Legend";
 import {
@@ -18,9 +19,18 @@ const legends = [
   },
 ];
 
-const Legend = ({ legendName, classes }: LegendProps) => {
+const Legend = ({ legendName, bottom, left, classes }: LegendProps) => {
   const legend = legends.find((item) => item.name === legendName);
-  return <div className={classes.root}>{legend?.element}</div>;
+  return (
+    <div
+      style={{ bottom, left }}
+      className={classNames(classes.root, {
+        [classes.defaultPosition]: !bottom && !left,
+      })}
+    >
+      {legend?.element}
+    </div>
+  );
 };
 
 const styles = (theme: Theme) =>
@@ -28,6 +38,9 @@ const styles = (theme: Theme) =>
     root: {
       zIndex: 401,
       position: "absolute",
+    },
+
+    defaultPosition: {
       bottom: 40,
       left: 10,
       [theme.breakpoints.down("md")]: {
@@ -41,7 +54,14 @@ const styles = (theme: Theme) =>
 
 interface LegendIncomingProps {
   legendName: string;
+  bottom?: number;
+  left?: number;
 }
+
+Legend.defaultProps = {
+  bottom: undefined,
+  left: undefined,
+};
 
 type LegendProps = LegendIncomingProps & WithStyles<typeof styles>;
 

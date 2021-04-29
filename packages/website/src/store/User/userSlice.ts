@@ -17,6 +17,7 @@ import type {
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
+import { constructUserObject } from "./helpers";
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -46,8 +47,10 @@ export const createUser = createAsyncThunk<
         organization,
         token
       );
+      const { data: collections } = await userServices.getCollections(token);
 
       return {
+        id: data.id,
         email: data.email,
         fullName: data.fullName,
         organization: data.organization,
@@ -56,6 +59,9 @@ export const createUser = createAsyncThunk<
         administeredReefs: isManager(data)
           ? (await userServices.getAdministeredReefs(token)).data
           : [],
+        collection: collections?.[0]?.id
+          ? (await userServices.getCollection(collections[0].id, token)).data
+          : undefined,
         token: await user?.getIdToken(),
       };
     } catch (err) {
@@ -77,17 +83,8 @@ export const signInUser = createAsyncThunk<
       const { user } = (await userServices.signInUser(email, password)) || {};
       const token = await user?.getIdToken();
       const { data: userData } = await userServices.getSelf(token);
-      return {
-        email: userData.email,
-        fullName: userData.fullName,
-        organization: userData.organization,
-        adminLevel: userData.adminLevel,
-        firebaseUid: userData.firebaseUid,
-        administeredReefs: isManager(userData)
-          ? (await userServices.getAdministeredReefs(token)).data
-          : [],
-        token,
-      };
+      const { data: collections } = await userServices.getCollections(token);
+      return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
     }
@@ -112,17 +109,8 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data: userData } = await userServices.getSelf(token);
-      return {
-        email: userData.email,
-        fullName: userData.fullName,
-        organization: userData.organization,
-        adminLevel: userData.adminLevel,
-        firebaseUid: userData.firebaseUid,
-        administeredReefs: isManager(userData)
-          ? (await userServices.getAdministeredReefs(token)).data
-          : [],
-        token,
-      };
+      const { data: collections } = await userServices.getCollections(token);
+      return constructUserObject(userData, collections, token);
     } catch (err) {
       return rejectWithValue(err.message);
     }

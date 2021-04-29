@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
-import { In, Repository } from 'typeorm';
+import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import { keyBy, times } from 'lodash';
 import moment from 'moment';
@@ -29,6 +29,7 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
 export const updateSST = async (
   reefIds: number[],
   days: number,
+  connection: Connection,
   repositories: Repositories,
 ) => {
   const {
@@ -92,4 +93,8 @@ export const updateSST = async (
     },
     { concurrency: 1 },
   );
+
+  // Update materialized view
+  logger.log('Refreshing materialized view latest_data');
+  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
 };

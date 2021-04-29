@@ -1,5 +1,5 @@
 import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -607,6 +607,7 @@ export const uploadHoboData = async (
   rootPath: string,
   email: string,
   googleCloudService: GoogleCloudService,
+  connection: Connection,
   repositories: Repositories,
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
@@ -693,6 +694,10 @@ export const uploadHoboData = async (
   );
 
   performBackfill(reefDiffArray.flat());
+
+  // Update materialized view
+  logger.log('Refreshing materialized view latest_data');
+  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
 
   return dbIdToCSVId;
 };

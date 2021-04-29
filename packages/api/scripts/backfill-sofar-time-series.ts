@@ -72,7 +72,7 @@ async function run() {
     return null;
   }
 
-  return fn(parsedReefIds, days, {
+  return fn(parsedReefIds, days, connection, {
     reefRepository,
     sourceRepository,
     timeSeriesRepository,
