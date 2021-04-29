@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Tooltip, IconButton, useTheme } from "@material-ui/core";
+import {
+  Tooltip,
+  IconButton,
+  useTheme,
+  createStyles,
+  WithStyles,
+  withStyles,
+} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -12,7 +19,11 @@ import { ReactComponent as WatchIcon } from "../../../../../assets/watch.svg";
 import { ReactComponent as UnWatchIcon } from "../../../../../assets/unwatch.svg";
 import collectionServices from "../../../../../services/collectionServices";
 
-const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
+const CollectionButton = ({
+  reefId,
+  errorCallback,
+  classes,
+}: CollectionButtonProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
@@ -83,6 +94,7 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
       placement="top"
     >
       <IconButton
+        className={classes.root}
         disabled={collectionActionLoading}
         onClick={
           reefBelongsToCollection
@@ -112,9 +124,20 @@ const CollectionButton = ({ reefId, errorCallback }: CollectionButtonProps) => {
   );
 };
 
-interface CollectionButtonProps {
+const styles = () =>
+  createStyles({
+    root: {
+      padding: 8,
+      marginLeft: 4,
+    },
+  });
+
+interface CollectionIncomingButtonProps {
   reefId: number;
   errorCallback: () => void;
 }
 
-export default CollectionButton;
+type CollectionButtonProps = CollectionIncomingButtonProps &
+  WithStyles<typeof styles>;
+
+export default withStyles(styles)(CollectionButton);

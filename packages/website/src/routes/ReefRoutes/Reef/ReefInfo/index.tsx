@@ -179,11 +179,18 @@ const ReefNavBar = ({
                 >
                   <Grid item>
                     <Grid container direction="column">
-                      <Box>
+                      <Box display="flex" alignItems="center">
                         <Typography variant="h4">
                           {reefName}
                           {reefRegion && `, ${reefRegion}`}
                         </Typography>
+                        <CollectionButton
+                          reefId={reef.id}
+                          errorCallback={() => {
+                            setAlertOpen(true);
+                            setAlertSeverity("error");
+                          }}
+                        />
                       </Box>
                       {organizationName && (
                         <Box>
@@ -203,15 +210,6 @@ const ReefNavBar = ({
                         </Box>
                       )}
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <CollectionButton
-                      reefId={reef.id}
-                      errorCallback={() => {
-                        setAlertOpen(true);
-                        setAlertSeverity("error");
-                      }}
-                    />
                   </Grid>
                 </Grid>
                 {isAdmin && (

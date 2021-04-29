@@ -104,7 +104,10 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
               >
-                <mock-box>
+                <mock-box
+                  alignitems="center"
+                  display="flex"
+                >
                   <mock-typography
                     variant="h4"
                   >
@@ -127,9 +130,6 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
                 </mock-box>
               </div>
             </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            />
           </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
