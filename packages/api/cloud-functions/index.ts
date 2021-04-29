@@ -87,7 +87,7 @@ exports.pingService = functions.pubsub
   .onRun(async () => {
     const backendBaseUrl = functions.config().api.base_url;
     console.log('Pinging server');
-    await Axios.get(`${backendBaseUrl}/health-check`);
+    await Axios.get(`${backendBaseUrl}health-check`);
   });
 
 exports.scheduledSpotterTimeSeriesUpdate = functions
