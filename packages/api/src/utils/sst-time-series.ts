@@ -52,7 +52,7 @@ export const updateSST = async (
     (source) => source.reef.id,
   );
 
-  Bluebird.map(
+  await Bluebird.map(
     reefs,
     (reef) => {
       logger.log(`Back-filling reef with id ${reef.id}.`);

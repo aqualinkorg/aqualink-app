@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class SplitSofarMetric1618233737868 implements MigrationInterface {
-  name = 'SplitSofarMetric1618233737868';
+export class SplitSofarMetric1618833737868 implements MigrationInterface {
+  name = 'SplitSofarMetric1618833737868';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP VIEW "latest_data"`);
+    await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
     await queryRunner.query(
       `ALTER TABLE "sources" DROP CONSTRAINT "no_duplicate_sources"`,
     );
@@ -28,7 +28,7 @@ export class SplitSofarMetric1618233737868 implements MigrationInterface {
       `ALTER TABLE "sources" ADD CONSTRAINT "no_duplicate_sources" UNIQUE ("reef_id", "poi_id", "type")`,
     );
     await queryRunner.query(
-      `CREATE VIEW "latest_data" AS SELECT
+      `CREATE MATERIALIZED VIEW "latest_data" AS SELECT
           DISTINCT ON (metric, source_id, time_series.reef_id, time_series.poi_id) "metric",
           "time_series"."id" AS "id",
           "source"."type" AS "source",
@@ -43,7 +43,7 @@ export class SplitSofarMetric1618233737868 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP VIEW "latest_data"`);
+    await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
     await queryRunner.query(
       `ALTER TABLE "sources" DROP CONSTRAINT "no_duplicate_sources"`,
     );
@@ -67,7 +67,7 @@ export class SplitSofarMetric1618233737868 implements MigrationInterface {
       `ALTER TABLE "sources" ADD CONSTRAINT "no_duplicate_sources" UNIQUE ("reef_id", "poi_id", "type")`,
     );
     await queryRunner.query(
-      `CREATE VIEW "latest_data" AS SELECT
+      `CREATE MATERIALIZED VIEW "latest_data" AS SELECT
           DISTINCT ON (metric, source_id, time_series.reef_id, time_series.poi_id) "metric",
           "time_series"."id" AS "id",
           "source"."type" AS "source",
