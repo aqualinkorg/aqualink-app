@@ -370,6 +370,8 @@ const styles = (theme: Theme) =>
     card: {
       width: "fit-content",
       [theme.breakpoints.down("sm")]: {
+        width: "inherit",
+        maxWidth: "fit-content",
         margin: "0 auto",
       },
     },
