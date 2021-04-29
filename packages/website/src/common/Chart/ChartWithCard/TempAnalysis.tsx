@@ -181,7 +181,7 @@ const styles = () =>
       width: "auto",
     },
     tempAnalysisCard: {
-      padding: 8,
+      padding: 16,
       minHeight: 250,
       borderRadius: "0 4px 4px 0",
       backgroundColor: "#f8f9f9",

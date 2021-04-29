@@ -62,8 +62,23 @@ const ChartWithCard = ({
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
   const hasSpotterData = Boolean(
-    spotterData?.bottomTemperature?.[0] || spotterData?.topTemperature?.[0]
+    spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
+
+  const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
+
+  const chartWidthClass = () => {
+    switch (true) {
+      case hasSpotterData && hasHoboData:
+        return classes.smallChart;
+      case hasSpotterData && !hasHoboData:
+        return classes.mediumChart;
+      case !hasSpotterData && hasHoboData:
+        return classes.largeChart;
+      default:
+        return "";
+    }
+  };
 
   const chartStartDate = startDate || subtractFromDate(today, "week");
   const chartEndDate = moment
@@ -264,14 +279,7 @@ const ChartWithCard = ({
         item
         spacing={1}
       >
-        <Grid
-          className={
-            hasSpotterData
-              ? classes.chartWithSpotter
-              : classes.chartWithoutSpotter
-          }
-          item
-        >
+        <Grid className={classnames(classes.chart, chartWidthClass())} item>
           <Chart
             reef={reef}
             dailyData={granularDailyData || []}
@@ -289,14 +297,7 @@ const ChartWithCard = ({
           />
         </Grid>
         {!pickerErrored && (
-          <Grid
-            className={
-              hasSpotterData
-                ? classes.cardWithSpotter
-                : classes.cardWithoutSpotter
-            }
-            item
-          >
+          <Grid className={classes.card} item>
             <TempAnalysis
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
@@ -346,45 +347,29 @@ const styles = (theme: Theme) =>
     button: {
       width: "fit-content",
     },
-    chartWithSpotter: {
-      [theme.breakpoints.up("lg")]: {
-        width: "75%",
-      },
-      [theme.breakpoints.between("md", "md")]: {
-        width: "70%",
-      },
+    chart: {
       [theme.breakpoints.down("sm")]: {
         width: "100%",
       },
     },
-    chartWithoutSpotter: {
-      [theme.breakpoints.up("lg")]: {
-        width: "75%",
-      },
-      [theme.breakpoints.between("md", "md")]: {
-        width: "75%",
-      },
-      [theme.breakpoints.down("sm")]: {
-        width: "100%",
+    largeChart: {
+      [theme.breakpoints.up("md")]: {
+        width: "calc(100% - 235px)",
       },
     },
-    cardWithSpotter: {
+    mediumChart: {
       [theme.breakpoints.up("md")]: {
-        flexGrow: 1,
-      },
-      [theme.breakpoints.down("sm")]: {
-        width: "inherit",
-        maxWidth: "fit-content",
-        margin: "0 auto",
+        width: "calc(100% - 315px)",
       },
     },
-    cardWithoutSpotter: {
+    smallChart: {
       [theme.breakpoints.up("md")]: {
-        flexGrow: 1,
+        width: "calc(100% - 400px)",
       },
+    },
+    card: {
+      width: "fit-content",
       [theme.breakpoints.down("sm")]: {
-        width: "inherit",
-        maxWidth: "fit-content",
         margin: "0 auto",
       },
     },
