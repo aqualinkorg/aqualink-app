@@ -51,6 +51,7 @@ async function run() {
     rootPath,
     userEmail,
     googleCloudService,
+    connection,
     {
       reefRepository: connection.getRepository(Reef),
       poiRepository: connection.getRepository(ReefPointOfInterest),

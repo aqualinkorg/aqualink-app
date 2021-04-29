@@ -146,7 +146,7 @@ export const getSstAnomaly = (
   historicalMonthlyMean: HistoricalMonthlyMean[],
   satelliteTemperature?: SofarValue,
 ) => {
-  if (historicalMonthlyMean.length < 12 || !satelliteTemperature) {
+  if (historicalMonthlyMean.length < 12 || !satelliteTemperature?.value) {
     return undefined;
   }
 

@@ -11,8 +11,20 @@ import {
 } from "@material-ui/core";
 import { Order, OrderKeys } from "./utils";
 
-const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
-  <Typography variant="h6" style={{ color: "black" }} noWrap>
+const ColumnTitle = ({
+  title,
+  unit,
+  bigText,
+}: {
+  title: string;
+  unit?: string;
+  bigText?: boolean;
+}) => (
+  <Typography
+    variant={bigText ? "h6" : "subtitle1"}
+    style={{ color: "black" }}
+    noWrap
+  >
     {title}
     {unit && (
       <Typography
@@ -26,6 +38,7 @@ const ColumnTitle = ({ title, unit }: { title: string; unit?: string }) => (
 
 ColumnTitle.defaultProps = {
   unit: undefined,
+  bigText: undefined,
 };
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
@@ -35,50 +48,91 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     props.onRequestSort(event, property);
   };
 
+  const { isExtended } = props;
+
   const headCells: HeadCell[] = [
     {
       id: OrderKeys.LOCATION_NAME,
       label: "SITE",
-      width: "40%",
+      width: isExtended ? "20%" : "40%",
+      display: true,
     },
     {
-      id: OrderKeys.TEMP,
+      id: OrderKeys.SST,
       label: "SST",
       unit: "°C",
+      display: true,
+    },
+    {
+      id: OrderKeys.HISTORIC_MAX,
+      label: "HISTORIC MAX",
+      unit: "°C",
+      display: !!isExtended,
+    },
+    {
+      id: OrderKeys.SST_ANOMALY,
+      label: "SST ANOMALY",
+      unit: "°C",
+      display: !!isExtended,
     },
     {
       id: OrderKeys.DHW,
       label: "STRESS",
       unit: "DHW",
+      display: true,
+    },
+    {
+      id: OrderKeys.BUOY_TOP,
+      label: "BUOY",
+      unit: "1m",
+      display: !!isExtended,
+    },
+    {
+      id: OrderKeys.BUOY_BOTTOM,
+      label: "BUOY",
+      unit: "DEPTH",
+      display: !!isExtended,
     },
     {
       id: OrderKeys.ALERT,
       label: "ALERT",
-      width: "5%",
+      display: true,
+      width: isExtended ? undefined : "5%",
     },
   ];
 
   return (
     <TableHead style={{ backgroundColor: "rgb(244, 244, 244)" }}>
       <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            className={props.classes.headCells}
-            key={headCell.id}
-            style={{ width: headCell.width }}
-            align="left"
-            padding="default"
-            sortDirection={props.orderBy === headCell.id ? props.order : false}
-          >
-            <TableSortLabel
-              active={props.orderBy === headCell.id}
-              direction={props.orderBy === headCell.id ? props.order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              <ColumnTitle title={headCell.label} unit={headCell.unit} />
-            </TableSortLabel>
-          </TableCell>
-        ))}
+        {headCells.map(
+          (headCell) =>
+            headCell.display && (
+              <TableCell
+                className={props.classes.headCells}
+                key={headCell.id}
+                style={{ width: headCell.width }}
+                align="left"
+                padding="default"
+                sortDirection={
+                  props.orderBy === headCell.id ? props.order : false
+                }
+              >
+                <TableSortLabel
+                  active={props.orderBy === headCell.id}
+                  direction={
+                    props.orderBy === headCell.id ? props.order : "asc"
+                  }
+                  onClick={createSortHandler(headCell.id)}
+                >
+                  <ColumnTitle
+                    title={headCell.label}
+                    unit={headCell.unit}
+                    bigText={!isExtended}
+                  />
+                </TableSortLabel>
+              </TableCell>
+            )
+        )}
       </TableRow>
     </TableHead>
   );
@@ -89,6 +143,7 @@ interface HeadCell {
   label: string;
   unit?: string;
   width?: string;
+  display: boolean;
 }
 
 interface EnhancedTableIncomingProps {
@@ -98,6 +153,7 @@ interface EnhancedTableIncomingProps {
   ) => void;
   order: Order;
   orderBy: OrderKeys;
+  isExtended?: boolean;
 }
 
 const styles = () =>
@@ -107,6 +163,10 @@ const styles = () =>
       paddingLeft: 10,
     },
   });
+
+EnhancedTableHead.defaultProps = {
+  isExtended: false,
+};
 
 type EnhancedTableProps = WithStyles<typeof styles> &
   EnhancedTableIncomingProps;

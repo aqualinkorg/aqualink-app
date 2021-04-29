@@ -1,6 +1,7 @@
 import { User } from "../store/User/types";
 
 export const mockUser: User = {
+  id: 1,
   adminLevel: "default",
   administeredReefs: [],
   email: "mail@mail.com",

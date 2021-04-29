@@ -19,6 +19,8 @@ import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
+import { SofarLiveData } from '../utils/sofar.types';
+import { CollectionData } from '../collections/collections.entity';
 
 export enum ReefStatus {
   InReview = 'in_review',
@@ -105,6 +107,10 @@ export class Reef {
   historicalMonthlyMean: HistoricalMonthlyMean[];
 
   hasHobo: boolean;
+
+  liveData?: SofarLiveData[];
+
+  collectionData?: CollectionData;
 
   @Expose()
   get applied(): boolean {
