@@ -13,10 +13,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
       width="100vw"
     >
       <mock-box
-        classname="ReefTable-topHandle-5"
+        classname="ReefTable-topHandle-6"
       />
       <mock-typography
-        classname="ReefTable-allReefsText-7"
+        classname="ReefTable-allReefsText-8"
         color="textSecondary"
         variant="h5"
       >
@@ -26,7 +26,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
   </mock-hidden>
   <mock-selectedreefcard />
   <mock-box
-    classname="ReefTable-switchWrapper-4"
+    classname="ReefTable-switchWrapper-5"
   >
     <mock-switch
       color="primary"
@@ -53,7 +53,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         Sort By: 
       </mock-typography>
       <div
-        class="MuiInputBase-root MuiInput-root MuiInput-underline ReefTable-mobileSortSelect-6"
+        class="MuiInputBase-root MuiInput-root MuiInput-underline ReefTable-mobileSortSelect-7"
       >
         <div
           aria-haspopup="listbox"
@@ -225,7 +225,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-typography>
           </mock-menuitem>
           <mock-menuitem
-            data-value="temp-asc"
+            data-value="sst-asc"
             role="option"
             selected="false"
           >
@@ -233,7 +233,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               color="primary"
               variant="h4"
             >
-              Temp
+              Sst
                 
               <arrowdownward
                 font-size="small"
@@ -241,7 +241,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             </mock-typography>
           </mock-menuitem>
           <mock-menuitem
-            data-value="temp-desc"
+            data-value="sst-desc"
             role="option"
             selected="false"
           >
@@ -249,7 +249,135 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               color="primary"
               variant="h4"
             >
-              Temp
+              Sst
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="historicMax-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Historic Max
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="historicMax-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Historic Max
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="sstAnomaly-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Sst Anomaly
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="sstAnomaly-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Sst Anomaly
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="buoyTop-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Buoy Top
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="buoyTop-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Buoy Top
+                
+              <arrowupward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="buoyBottom-asc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Buoy Bottom
+                
+              <arrowdownward
+                font-size="small"
+              />
+            </mock-typography>
+          </mock-menuitem>
+          <mock-menuitem
+            data-value="buoyBottom-desc"
+            role="option"
+            selected="false"
+          >
+            <mock-typography
+              color="primary"
+              variant="h4"
+            >
+              Buoy Bottom
                 
               <arrowupward
                 font-size="small"
@@ -280,7 +408,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             <mock-tablerow>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-10"
+                classname="EnhancedTableHead-headCells-11"
                 padding="default"
                 sortdirection="false"
                 style="width: 40%;"
@@ -300,7 +428,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-10"
+                classname="EnhancedTableHead-headCells-11"
                 padding="default"
                 sortdirection="false"
               >
@@ -326,7 +454,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-10"
+                classname="EnhancedTableHead-headCells-11"
                 padding="default"
                 sortdirection="false"
               >
@@ -352,7 +480,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-tablecell>
               <mock-tablecell
                 align="left"
-                classname="EnhancedTableHead-headCells-10"
+                classname="EnhancedTableHead-headCells-11"
                 padding="default"
                 sortdirection="desc"
                 style="width: 5%;"
@@ -375,7 +503,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         </mock-hidden>
         <mock-tablebody>
           <mock-tablerow
-            classname="ReefTableBody-tableRow-15"
+            classname="ReefTableBody-tableRow-18"
             hover="true"
             id="homepage-table-row-0"
             role="button"
@@ -383,7 +511,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             tabindex="-1"
           >
             <mock-tablecell
-              classname="ReefTableBody-nameCells-11"
+              classname="ReefTableBody-nameCells-12"
             >
               <mock-typography
                 align="left"
@@ -394,10 +522,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-14"
+              classname="ReefTableBody-cellTextAlign-16"
             >
               <mock-typography
-                classname="ReefTableBody-numberCellsTitle-13"
+                classname="ReefTableBody-numberCellsTitle-15"
                 style="color: rgb(22, 141, 189);"
                 variant="h6"
               >
@@ -416,10 +544,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-14"
+              classname="ReefTableBody-cellTextAlign-16"
             >
               <mock-typography
-                classname="ReefTableBody-numberCellsTitle-13"
+                classname="ReefTableBody-numberCellsTitle-15"
                 style="color: rgb(117, 180, 114);"
                 variant="h6"
               >
@@ -438,7 +566,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               </mock-typography>
             </mock-tablecell>
             <mock-tablecell
-              classname="ReefTableBody-cellTextAlign-14"
+              classname="ReefTableBody-cellTextAlign-16"
             >
               <svg
                 aria-hidden="true"

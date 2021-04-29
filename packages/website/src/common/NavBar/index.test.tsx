@@ -2,6 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import HomePageNavBar from ".";
 import { mockUser } from "../../mocks/mockUser";
@@ -27,9 +28,11 @@ describe("NavBar with routeButtons", () => {
     store.dispatch = jest.fn();
 
     element = render(
-      <Provider store={store}>
-        <HomePageNavBar routeButtons searchLocation={false} />
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <HomePageNavBar routeButtons searchLocation={false} />
+        </Provider>
+      </Router>
     ).container;
   });
 
@@ -52,9 +55,11 @@ describe("NavBar without routeButtons", () => {
     store.dispatch = jest.fn();
 
     element = render(
-      <Provider store={store}>
-        <HomePageNavBar searchLocation={false} />
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <HomePageNavBar searchLocation={false} />
+        </Provider>
+      </Router>
     ).container;
   });
 

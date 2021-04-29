@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Map, TileLayer, Marker, Circle } from "react-leaflet";
-import L, { LatLng, LayersControlEvent } from "leaflet";
+import L, { LatLng, LatLngBounds, LayersControlEvent } from "leaflet";
 import {
   createStyles,
   withStyles,
@@ -19,6 +19,8 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
+import { CollectionDetails } from "../../../store/User/types";
+import { MapLayerName } from "../../../store/Homepage/types";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -38,9 +40,17 @@ const currentLocationMarker = L.divIcon({
 const HomepageMap = ({
   initialCenter,
   initialZoom,
+  initialBounds,
+  collection,
+  showAlertLevelLegend,
+  showWaterMark,
+  geolocationEnabled,
+  defaultLayerName,
+  legendBottom,
+  legendLeft,
   classes,
 }: HomepageMapProps) => {
-  const [legendName, setLegendName] = useState<string>("");
+  const [legendName, setLegendName] = useState<string>(defaultLayerName || "");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
   const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
     number
@@ -115,9 +125,10 @@ const HomepageMap = ({
       className={classes.map}
       center={initialCenter}
       zoom={initialZoom}
-      minZoom={2}
+      minZoom={collection ? 1 : 2} // If we're on dashboard page, the map's wrapping div is smaller, so we need to allow higher zoom
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
+      bounds={initialBounds}
     >
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}
@@ -130,8 +141,8 @@ const HomepageMap = ({
         </Alert>
       </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
-      <SofarLayers />
-      <ReefMarkers />
+      <SofarLayers defaultLayerName={defaultLayerName} />
+      <ReefMarkers collection={collection} />
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
       )}
@@ -141,14 +152,16 @@ const HomepageMap = ({
           radius={currentLocationAccuracy}
         />
       )}
-      <Legend legendName={legendName} />
-      <AlertLevelLegend />
-      <div className="mapbox-wordmark" />
-      <div className={classes.locationIconButton}>
-        <IconButton onClick={onLocationSearch}>
-          <MyLocationIcon color="primary" />
-        </IconButton>
-      </div>
+      <Legend legendName={legendName} bottom={legendBottom} left={legendLeft} />
+      {showAlertLevelLegend && <AlertLevelLegend />}
+      {showWaterMark && <div className="mapbox-wordmark" />}
+      {geolocationEnabled && (
+        <div className={classes.locationIconButton}>
+          <IconButton onClick={onLocationSearch}>
+            <MyLocationIcon color="primary" />
+          </IconButton>
+        </div>
+      )}
     </Map>
   );
 };
@@ -187,7 +200,26 @@ const styles = () =>
 interface HomepageMapIncomingProps {
   initialCenter: LatLng;
   initialZoom: number;
+  initialBounds?: LatLngBounds;
+  collection?: CollectionDetails;
+  showAlertLevelLegend?: boolean;
+  showWaterMark?: boolean;
+  geolocationEnabled?: boolean;
+  defaultLayerName?: MapLayerName;
+  legendBottom?: number;
+  legendLeft?: number;
 }
+
+HomepageMap.defaultProps = {
+  initialBounds: undefined,
+  collection: undefined,
+  showAlertLevelLegend: true,
+  showWaterMark: true,
+  geolocationEnabled: true,
+  defaultLayerName: undefined,
+  legendBottom: undefined,
+  legendLeft: undefined,
+};
 
 type HomepageMapProps = WithStyles<typeof styles> & HomepageMapIncomingProps;
 
