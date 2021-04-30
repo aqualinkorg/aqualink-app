@@ -4862,10 +4862,10 @@ axe-core@^3.5.4:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
   integrity sha512-5P0QZ6J5xGikH780pghEdbEKijCTrruK9KxtPZCFWUpef0f6GipO+xEZ5GKCb020mmqgbiNO6TcA55CriL784Q==
 
-axios-retry@^3.1.8:
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/axios-retry/-/axios-retry-3.1.8.tgz#ffcfed757e1fab8cbf832f8505bb0e0af47c520c"
-  integrity sha512-yPw5Y4Bg6Dgmhm35KaJFtlh23s1TecW0HsUerK4/IS1UKl0gtN2aJqdEKtVomiOS/bDo5w4P3sqgki/M10eF8Q==
+axios-retry@^3.1.9:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/axios-retry/-/axios-retry-3.1.9.tgz#6c30fc9aeb4519aebaec758b90ef56fa03fe72e8"
+  integrity sha512-NFCoNIHq8lYkJa6ku4m+V1837TP6lCa7n79Iuf8/AqATAHYB0ISaAS1eyIenDOfHOLtym34W65Sjke2xjg2fsA==
   dependencies:
     is-retry-allowed "^1.1.0"
 
@@ -4884,12 +4884,19 @@ axios@^0.18.0:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
+
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axobject-query@^2.0.2, axobject-query@^2.1.2:
   version "2.2.0"
