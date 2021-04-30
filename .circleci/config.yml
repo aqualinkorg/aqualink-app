@@ -25,9 +25,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v2-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v2-dependencies-
 
       - run: apt update
       - run: apt install -y sudo
@@ -43,7 +43,7 @@ jobs:
             - packages/website/node_modules
             - packages/api/node_modules
             - /usr/local/share/.cache/yarn/v4/
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v2-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
           name: Install psql
