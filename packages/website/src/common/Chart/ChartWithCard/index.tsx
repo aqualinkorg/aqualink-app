@@ -354,17 +354,17 @@ const styles = (theme: Theme) =>
     },
     largeChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 235px)",
+        width: "calc(100% - 240px)",
       },
     },
     mediumChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 315px)",
+        width: "calc(100% - 320px)",
       },
     },
     smallChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 400px)",
+        width: "calc(100% - 405px)",
       },
     },
     card: {
