@@ -216,7 +216,7 @@ const Chart = ({
 const styles = () =>
   createStyles({
     chart: {
-      height: 285,
+      height: 290,
       margin: "16px 0",
     },
 
