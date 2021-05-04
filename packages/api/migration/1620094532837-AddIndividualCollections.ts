@@ -8,7 +8,7 @@ export class AddIndividualCollections1620094532837
     await queryRunner.query(
       `
       insert into collection (name, user_id)
-      select 'My Collection' as name, users.id as user_id
+      select 'My Dashboard' as name, users.id as user_id
       from users
       where users.id not in (select user_id from collection)
       `,

@@ -6,7 +6,7 @@ export const createCollection = (reefs: Reef[], nReefs: number): Collection => {
   const sample = sampleSize(reefs, nReefs);
 
   return {
-    name: "My collection",
+    name: "My dashboard",
     reefs: sample,
   };
 };

@@ -78,7 +78,7 @@ export class UsersService {
     if (!collection) {
       await this.collectionRepository.save({
         user: createdUser,
-        name: 'My Collection',
+        name: 'My Dashboard',
       });
     }
 
