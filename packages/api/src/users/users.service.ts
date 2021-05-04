@@ -11,6 +11,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { Reef } from '../reefs/reefs.entity';
+import { Collection } from '../collections/collections.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,9 @@ export class UsersService {
 
     @InjectRepository(ReefApplication)
     private reefApplicationRepository: Repository<ReefApplication>,
+
+    @InjectRepository(Collection)
+    private collectionRepository: Repository<Collection>,
   ) {}
 
   async create(req: any, createUserDto: CreateUserDto): Promise<User> {
@@ -65,7 +69,20 @@ export class UsersService {
       email: email.toLowerCase(),
       firebaseUid,
     };
-    return this.usersRepository.save(user);
+    const createdUser = await this.usersRepository.save(user);
+
+    const collection = await this.collectionRepository.findOne({
+      where: { user: createdUser },
+    });
+
+    if (!collection) {
+      await this.collectionRepository.save({
+        user: createdUser,
+        name: 'My Collection',
+      });
+    }
+
+    return createdUser;
   }
 
   async getSelf(req: AuthRequest): Promise<User | undefined> {
