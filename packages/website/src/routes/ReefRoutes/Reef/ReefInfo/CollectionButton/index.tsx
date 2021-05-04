@@ -87,8 +87,8 @@ const CollectionButton = ({
     <Tooltip
       title={
         reefBelongsToCollection
-          ? "Remove from your collection"
-          : "Add to your collection"
+          ? "Remove from your dashboard"
+          : "Add to your dashboard"
       }
       arrow
       placement="top"

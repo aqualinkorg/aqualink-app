@@ -27,7 +27,9 @@ const Content = () => {
   }
 
   if (collection?.reefs.length === 0) {
-    return <FullScreenMessage message="No sites added to this collection" />;
+    return (
+      <FullScreenMessage message="There are no sites in your dashboard. Add sites to your dashboard to monitor multiple locations in a single view." />
+    );
   }
 
   return collection ? (
