@@ -199,7 +199,7 @@ const styles = (theme: Theme) =>
       width: "auto",
     },
     rangesWrapper: {
-      marginTop: theme.spacing(1),
+      marginTop: 0,
     },
     rangeItem: {
       height: 28,
