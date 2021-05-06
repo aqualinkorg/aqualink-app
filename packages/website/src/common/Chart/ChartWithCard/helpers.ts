@@ -1,3 +1,4 @@
+import { utcToZonedTime } from "date-fns-tz";
 import { minBy, maxBy, meanBy } from "lodash";
 import moment from "moment";
 import {
@@ -7,6 +8,7 @@ import {
 
 import {
   DailyData,
+  DataRange,
   HistoricalMonthlyMean,
   HistoricalMonthlyMeanData,
   SofarValue,
@@ -108,6 +110,23 @@ export const findDataLimits = (
         ).toISOString()
       : undefined,
   ];
+};
+
+export const availableRangeString = (
+  sensor: string,
+  range?: DataRange,
+  timeZone?: string | null
+): string | undefined => {
+  const { minDate, maxDate } = range || {};
+  const formattedStartDate = minDate
+    ? moment(utcToZonedTime(minDate, timeZone || "UTC")).format("MM/DD/YYYY")
+    : undefined;
+  const formattedEndDate = maxDate
+    ? moment(utcToZonedTime(maxDate, timeZone || "UTC")).format("MM/DD/YYYY")
+    : undefined;
+  return formattedStartDate && formattedEndDate
+    ? `${sensor} range: ${formattedStartDate} - ${formattedEndDate}`
+    : undefined;
 };
 
 /**

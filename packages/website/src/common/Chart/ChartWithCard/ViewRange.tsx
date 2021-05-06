@@ -14,10 +14,9 @@ import {
 } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import { Alert } from "@material-ui/lab";
-import moment from "moment";
-import { utcToZonedTime } from "date-fns-tz";
 import { RangeButton, RangeValue } from "./types";
 import { DataRange } from "../../../store/Reefs/types";
+import { availableRangeString } from "./helpers";
 
 const ViewRange = ({
   range,
@@ -59,37 +58,12 @@ const ViewRange = ({
     },
   ];
 
-  const { minDate: spotterMinDate, maxDate: spotterMaxDate } =
-    spotterRange || {};
-  const { minDate: hoboMinDate, maxDate: hoboMaxDate } = hoboRange || {};
-  const spotterFormattedStartDate = spotterMinDate
-    ? moment(utcToZonedTime(spotterMinDate, timeZone || "UTC")).format(
-        "MM/DD/YYYY"
-      )
-    : undefined;
-  const spotterFormattedEndDate = spotterMaxDate
-    ? moment(utcToZonedTime(spotterMaxDate, timeZone || "UTC")).format(
-        "MM/DD/YYYY"
-      )
-    : undefined;
-  const hoboFormattedStartDate = hoboMinDate
-    ? moment(utcToZonedTime(hoboMinDate, timeZone || "UTC")).format(
-        "MM/DD/YYYY"
-      )
-    : undefined;
-  const hoboFormattedEndDate = hoboMaxDate
-    ? moment(utcToZonedTime(hoboMaxDate, timeZone || "UTC")).format(
-        "MM/DD/YYYY"
-      )
-    : undefined;
-  const spotterRangeString =
-    spotterFormattedStartDate && spotterFormattedEndDate
-      ? `Spotter range: ${spotterFormattedStartDate} - ${spotterFormattedEndDate}`
-      : undefined;
-  const hoboRangeString =
-    hoboFormattedStartDate && hoboFormattedEndDate
-      ? `HOBO range: ${hoboFormattedStartDate} - ${hoboFormattedEndDate}`
-      : undefined;
+  const spotterRangeString = availableRangeString(
+    "Spotter",
+    spotterRange,
+    timeZone
+  );
+  const hoboRangeString = availableRangeString("HOBO", hoboRange, timeZone);
 
   return (
     <>
