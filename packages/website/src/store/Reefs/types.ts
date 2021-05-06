@@ -104,7 +104,7 @@ interface Region {
   name: string | null;
 }
 
-interface DataRange {
+export interface DataRange {
   minDate: string;
   maxDate: string;
 }

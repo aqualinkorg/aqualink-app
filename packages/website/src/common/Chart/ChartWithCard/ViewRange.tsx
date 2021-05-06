@@ -10,9 +10,14 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
+  Theme,
 } from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
+import { Alert } from "@material-ui/lab";
 import moment from "moment";
+import { utcToZonedTime } from "date-fns-tz";
 import { RangeButton, RangeValue } from "./types";
+import { DataRange } from "../../../store/Reefs/types";
 
 const ViewRange = ({
   range,
@@ -21,8 +26,9 @@ const ViewRange = ({
   hasSpotterData,
   onRangeChange,
   classes,
-  startDate,
-  endDate,
+  spotterRange,
+  hoboRange,
+  timeZone,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -53,10 +59,37 @@ const ViewRange = ({
     },
   ];
 
-  const formattedStartDate = moment.utc(startDate).format("MM/DD/YYYY");
-  const formattedEndDate = moment.utc(endDate).format("MM/DD/YYYY");
-  const type = hasSpotterData ? "Spotter" : "HOBO";
-  const dateRangeString = `${type} range: ${formattedStartDate} - ${formattedEndDate}`;
+  const { minDate: spotterMinDate, maxDate: spotterMaxDate } =
+    spotterRange || {};
+  const { minDate: hoboMinDate, maxDate: hoboMaxDate } = hoboRange || {};
+  const spotterFormattedStartDate = spotterMinDate
+    ? moment(utcToZonedTime(spotterMinDate, timeZone || "UTC")).format(
+        "MM/DD/YYYY"
+      )
+    : undefined;
+  const spotterFormattedEndDate = spotterMaxDate
+    ? moment(utcToZonedTime(spotterMaxDate, timeZone || "UTC")).format(
+        "MM/DD/YYYY"
+      )
+    : undefined;
+  const hoboFormattedStartDate = hoboMinDate
+    ? moment(utcToZonedTime(hoboMinDate, timeZone || "UTC")).format(
+        "MM/DD/YYYY"
+      )
+    : undefined;
+  const hoboFormattedEndDate = hoboMaxDate
+    ? moment(utcToZonedTime(hoboMaxDate, timeZone || "UTC")).format(
+        "MM/DD/YYYY"
+      )
+    : undefined;
+  const spotterRangeString =
+    spotterFormattedStartDate && spotterFormattedEndDate
+      ? `Spotter range: ${spotterFormattedStartDate} - ${spotterFormattedEndDate}`
+      : undefined;
+  const hoboRangeString =
+    hoboFormattedStartDate && hoboFormattedEndDate
+      ? `HOBO range: ${hoboFormattedStartDate} - ${hoboFormattedEndDate}`
+      : undefined;
 
   return (
     <>
@@ -72,10 +105,43 @@ const ViewRange = ({
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
             </Typography>
-            <Typography className={classes.titleDateRange} variant="subtitle2">
-              &#9432;&nbsp;
-              {startDate && endDate ? dateRangeString : "No Range Available"}
-            </Typography>
+            <Grid
+              className={classes.rangesWrapper}
+              container
+              alignItems="center"
+              spacing={2}
+            >
+              {hoboRangeString && (
+                <Grid item>
+                  <Alert
+                    classes={{
+                      icon: classes.rangeIcon,
+                      root: classes.rangeItem,
+                    }}
+                    severity="info"
+                  >
+                    <Typography variant="subtitle2">
+                      {hoboRangeString}
+                    </Typography>
+                  </Alert>
+                </Grid>
+              )}
+              {spotterRangeString && (
+                <Grid item>
+                  <Alert
+                    classes={{
+                      icon: classes.rangeIcon,
+                      root: classes.rangeItem,
+                    }}
+                    severity="info"
+                  >
+                    <Typography variant="subtitle2">
+                      {spotterRangeString}
+                    </Typography>
+                  </Alert>
+                </Grid>
+              )}
+            </Grid>
           </Box>
         </Grid>
         <Grid item xs={isMobile ? 12 : undefined}>
@@ -127,17 +193,27 @@ const ViewRange = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
       width: "auto",
     },
-    titleDateRange: {
-      padding: "2px 5px",
-      marginTop: 8,
+    rangesWrapper: {
+      marginTop: theme.spacing(1),
+    },
+    rangeItem: {
+      height: 28,
+      display: "flex",
+      alignItems: "center",
+      backgroundColor: grey[100],
+      color: grey[600],
       borderRadius: 5,
-      backgroundColor: "#f8f9f9",
-      color: "#979797",
+      padding: "2px 5px",
+    },
+    rangeIcon: {
+      color: "inherit !important",
+      fontSize: theme.spacing(2),
+      marginRight: 5,
     },
   });
 
@@ -147,12 +223,14 @@ interface ViewRangeIncomingProps {
   title?: string;
   hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
-  startDate: string | undefined;
-  endDate: string | undefined;
+  spotterRange: DataRange | undefined;
+  hoboRange: DataRange | undefined;
+  timeZone?: string | null;
 }
 
 ViewRange.defaultProps = {
   title: "",
+  timeZone: null,
 };
 
 type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;
