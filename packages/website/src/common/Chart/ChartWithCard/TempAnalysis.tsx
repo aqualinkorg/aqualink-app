@@ -4,6 +4,7 @@ import {
   Card,
   createStyles,
   Grid,
+  Theme,
   Tooltip,
   Typography,
   withStyles,
@@ -19,7 +20,7 @@ import {
 } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
 import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn } from "./types";
+import { CardColumn, CardType } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const rows = ["MAX", "MEAN", "MIN"];
@@ -27,11 +28,13 @@ const rows = ["MAX", "MEAN", "MIN"];
 /* eslint-disable react/prop-types */
 const TempAnalysis: FC<TempAnalysisProps> = ({
   classes,
+  cardType,
   pickerStartDate,
   pickerEndDate,
   chartStartDate,
   chartEndDate,
   depth,
+  dailyDataSst,
   spotterData,
   hoboBottomTemperature,
   historicalMonthlyMean,
@@ -50,8 +53,9 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
   const hasSpotterTop = !!spotterData?.topTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
+  const hasDailyData = !!dailyDataSst?.[1];
 
-  const showCard = !loading && (hasHoboData || hasSpotterData);
+  const showCard = !loading && (hasHoboData || hasSpotterData || hasDailyData);
 
   if (!showCard) {
     return null;
@@ -67,18 +71,21 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
         filteredHistoricalMonthlyMeanData,
         "historic"
       ),
+      display: true,
     },
     {
       title: "HOBO",
       key: "hobo",
       color: "#f78c21",
       rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
+      display: cardType === "hobo",
     },
     {
       title: "BUOY 1m",
       key: "spotterTop",
       color: "#46a5cf",
       rows: calculateCardMetrics(2, spotterData?.topTemperature, "spotterTop"),
+      display: cardType === "spotter",
     },
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
@@ -89,6 +96,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
         spotterData?.bottomTemperature,
         "spotterBottom"
       ),
+      display: cardType === "spotter",
+    },
+    {
+      title: "SST",
+      key: "sst",
+      color: "#6bc1e1",
+      rows: calculateCardMetrics(2, dailyDataSst, "sst"),
+      display: cardType === "sst",
     },
   ].filter((val) => val.rows[0].value);
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
@@ -102,10 +117,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       flexDirection="column"
     >
       <Card className={classes.tempAnalysisCard}>
-        <Typography variant="subtitle1" color="textSecondary">
-          TEMP ANALYSIS
-        </Typography>
-        <Typography className={classes.dates} variant="subtitle2">
+        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           {formattedpickerStartDate} - {formattedpickerEndDate}
         </Typography>
         <Grid
@@ -132,42 +144,45 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
               ))}
             </Grid>
           </Grid>
-          {cardColumns.map((item) => (
-            <Grid key={item.key} item>
-              <Grid
-                className={classes.autoWidth}
-                container
-                direction="column"
-                item
-                spacing={3}
-                alignItems="center"
-              >
-                <Grid item>
-                  <Tooltip title={item.tooltip || ""}>
-                    <Typography
-                      style={{
-                        color: item.color,
-                      }}
-                      variant="subtitle2"
-                    >
-                      {item.title}
-                    </Typography>
-                  </Tooltip>
-                </Grid>
-                {item.rows.map(({ key, value }) => (
-                  <Grid key={key} item>
-                    <Typography
-                      className={classes.values}
-                      variant="h5"
-                      color="textSecondary"
-                    >
-                      {formatNumber(value, 1)} °C
-                    </Typography>
+          {cardColumns.map(
+            (item) =>
+              item.display && (
+                <Grid key={item.key} item>
+                  <Grid
+                    className={classes.autoWidth}
+                    container
+                    direction="column"
+                    item
+                    spacing={3}
+                    alignItems="center"
+                  >
+                    <Grid item>
+                      <Tooltip title={item.tooltip || ""}>
+                        <Typography
+                          style={{
+                            color: item.color,
+                          }}
+                          variant="subtitle2"
+                        >
+                          {item.title}
+                        </Typography>
+                      </Tooltip>
+                    </Grid>
+                    {item.rows.map(({ key, value }) => (
+                      <Grid key={key} item>
+                        <Typography
+                          className={classes.values}
+                          variant="h5"
+                          color="textSecondary"
+                        >
+                          {formatNumber(value, 1)} °C
+                        </Typography>
+                      </Grid>
+                    ))}
                   </Grid>
-                ))}
-              </Grid>
-            </Grid>
-          ))}
+                </Grid>
+              )
+          )}
         </Grid>
       </Card>
 
@@ -175,23 +190,19 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     </Box>
   );
 };
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
       width: "auto",
     },
     tempAnalysisCard: {
-      padding: 16,
-      minHeight: 250,
+      padding: theme.spacing(2),
+      minHeight: 240,
       borderRadius: "0 4px 4px 0",
       backgroundColor: "#f8f9f9",
-      margin: "22px 0",
+      margin: "14px 0",
       // add horizontal scroll on mobile
       overflowX: "auto",
-    },
-    dates: {
-      color: "#979797",
-      marginBottom: 12,
     },
     rotatedText: {
       transform: "rotate(-90deg)",
@@ -215,11 +226,13 @@ interface TempAnalysisProps
     WithStyles<typeof styles> {}
 
 interface TempAnalysisIncomingProps {
+  cardType: CardType;
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
   depth: number | null;
+  dailyDataSst: SofarValue[];
   spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[];
   historicalMonthlyMean: HistoricalMonthlyMeanData[];

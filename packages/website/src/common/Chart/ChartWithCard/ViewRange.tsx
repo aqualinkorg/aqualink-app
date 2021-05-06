@@ -17,13 +17,10 @@ const ViewRange = ({
   range,
   disableMaxRange,
   title,
-  hasSpotterData,
   onRangeChange,
   classes,
 }: ViewRangeProps) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
   const buttons: RangeButton[] = [
@@ -67,14 +64,7 @@ const ViewRange = ({
           </Box>
         </Grid>
         <Grid item xs={isMobile ? 12 : undefined}>
-          <Box
-            ml="30px"
-            mr={
-              (!isTablet && !hasSpotterData) || (!isDesktop && hasSpotterData)
-                ? "10px"
-                : "0px"
-            }
-          >
+          <Box ml="32px">
             <Grid
               className={classes.autoWidth}
               container
@@ -126,7 +116,6 @@ interface ViewRangeIncomingProps {
   range: RangeValue;
   disableMaxRange: boolean;
   title?: string;
-  hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
 }
 

@@ -1944,7 +1944,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               classname="CombinedCharts-graphTitle-260"
               variant="h6"
             >
-              DAILY SATELLITE TEMPERATURE (°C)
+              HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
@@ -1952,6 +1952,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           >
             Mock-Line
           </div>
+          <mock-chartwithcard
+            disablegutters="true"
+            reef="[object Object]"
+            surveysfiltered="false"
+            title="TEMPERATURE ANALYSIS"
+          />
         </div>
         <mock-dialog
           fullwidth="true"

@@ -13,7 +13,7 @@ import {
   TimeSeriesData,
 } from "../../../store/Reefs/types";
 import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn } from "./types";
+import { CardColumn, CardType } from "./types";
 
 export const calculateCardMetrics = (
   minNumberOfPoints: number,
@@ -108,6 +108,23 @@ export const findDataLimits = (
         ).toISOString()
       : undefined,
   ];
+};
+
+export const findCardType = (
+  hasSpotterData: boolean,
+  hasHoboData: boolean,
+  hasDailyData: boolean
+): CardType => {
+  switch (true) {
+    case hasSpotterData:
+      return "spotter";
+    case hasHoboData:
+      return "hobo";
+    case hasDailyData:
+      return "sst";
+    default:
+      return "sst";
+  }
 };
 
 /**
