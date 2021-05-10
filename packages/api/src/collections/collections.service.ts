@@ -237,7 +237,7 @@ export class CollectionsService {
       };
     }, {});
 
-    const hasHoboDataSet = await hasHoboDataSubQuery(this.sourcesRepository);
+    const hasHoboData = await hasHoboDataSubQuery(this.sourcesRepository);
 
     return {
       ...collection,
@@ -248,7 +248,7 @@ export class CollectionsService {
       reefs: collection.reefs.map((reef) => {
         return {
           ...reef,
-          hasHobo: hasHoboDataSet.has(reef.id),
+          hasHobo: hasHoboData.has(reef.id),
           applied: reef.applied,
           collectionData: mappedReefData[reef.id],
         };
