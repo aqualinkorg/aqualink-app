@@ -191,6 +191,7 @@ const styles = () =>
     },
     dates: {
       color: "#979797",
+      marginBottom: 12,
     },
     rotatedText: {
       transform: "rotate(-90deg)",
@@ -205,7 +206,7 @@ const styles = () =>
     values: {
       fontWeight: 300,
       // ensures metric numbers aren't too close together on mobile
-      margin: "0 5px",
+      margin: "0 4px",
     },
   });
 
