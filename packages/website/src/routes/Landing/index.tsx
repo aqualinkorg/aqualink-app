@@ -26,6 +26,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const seeMore = () => {
     window.scrollTo({
@@ -94,10 +95,10 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <Box mt="2rem">
                 <Grid container spacing={2}>
-                  <Grid item>
+                  <Grid item xs={isTablet ? 12 : undefined}>
                     <Button
                       component={Link}
                       to="/map"
@@ -108,7 +109,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                       <Typography variant="h5">View The Map</Typography>
                     </Button>
                   </Grid>
-                  <Grid item>
+                  <Grid item xs={isTablet ? 12 : undefined}>
                     <Button
                       component={Link}
                       to="/register"
@@ -117,6 +118,17 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                       color="primary"
                     >
                       <Typography variant="h5">Register Your Site</Typography>
+                    </Button>
+                  </Grid>
+                  <Grid item xs={isTablet ? 12 : undefined}>
+                    <Button
+                      component={Link}
+                      to="/tracker"
+                      className={`${classes.buttons} ${classes.registerButton}`}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      <Typography variant="h5">Track a Heatwave</Typography>
                     </Button>
                   </Grid>
                 </Grid>

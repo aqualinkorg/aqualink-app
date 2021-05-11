@@ -57,6 +57,12 @@ exports[`Error Page should render with given state from Redux store 1`] = `
           FAQ
         </mock-link>
         <mock-link
+          href="/tracker"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          TRACK A HEATWAVE
+        </mock-link>
+        <mock-link
           href="/register"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
