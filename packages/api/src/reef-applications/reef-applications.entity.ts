@@ -20,22 +20,22 @@ export class ReefApplication {
   id: number;
 
   @Column({ nullable: true })
-  permitRequirements: string;
+  permitRequirements?: string;
 
   @Column({ nullable: true })
-  fundingSource: string;
+  fundingSource?: string;
 
   @Column({ nullable: true })
-  installationSchedule: Date;
+  installationSchedule?: Date;
 
   @Column({ nullable: true })
-  installationResources: string;
+  installationResources?: string;
 
   @Column({ nullable: true })
-  targetShipdate: Date;
+  targetShipdate?: Date;
 
   @Column({ nullable: true })
-  trackingUrl: string;
+  trackingUrl?: string;
 
   @Exclude()
   @Column({ default: () => 'gen_random_uuid()', unique: true })

@@ -56,3 +56,13 @@ export interface SpotterData {
   latitude?: SofarValue[];
   longitude?: SofarValue[];
 }
+
+export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
+  topTemperature: [],
+  bottomTemperature: [],
+  significantWaveHeight: [],
+  wavePeakPeriod: [],
+  waveMeanDirection: [],
+  windSpeed: [],
+  windDirection: [],
+};

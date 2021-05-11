@@ -171,17 +171,17 @@ export class ReefsService {
     if (filter.status) {
       query.andWhere('reef.status = :status', { status: filter.status });
     }
-    if (filter.region) {
+    if (filter.regionId) {
       query.andWhere('reef.region = :region', {
-        region: filter.region,
+        region: filter.regionId,
       });
     }
-    if (filter.admin) {
+    if (filter.adminId) {
       query.innerJoin(
         'reef.admins',
         'adminsAssociation',
         'adminsAssociation.id = :adminId',
-        { adminId: filter.admin },
+        { adminId: filter.adminId },
       );
     }
     const res = await query
@@ -218,20 +218,33 @@ export class ReefsService {
   }
 
   async update(id: number, updateReefDto: UpdateReefDto): Promise<Reef> {
-    const { coordinates, admins } = updateReefDto;
+    const { coordinates, adminIds, regionId, streamId } = updateReefDto;
+    const updateRegion =
+      regionId !== undefined ? { region: { id: regionId } } : {};
+    const updateStream =
+      streamId !== undefined ? { region: { id: streamId } } : {};
+    const updateCoordinates = coordinates
+      ? {
+          polygon: createPoint(coordinates.longitude, coordinates.latitude),
+        }
+      : {};
+
     const result = await this.reefsRepository
       .update(id, {
-        ...omit(updateReefDto, ['admins', 'coordinates']),
-        ...(coordinates
-          ? {
-              polygon: createPoint(coordinates.longitude, coordinates.latitude),
-            }
-          : {}),
+        ...omit(updateReefDto, [
+          'adminIds',
+          'coordinates',
+          'regionId',
+          'streamId',
+        ]),
+        ...updateRegion,
+        ...updateStream,
+        ...updateCoordinates,
       })
       .catch(handleDuplicateReef);
 
-    if (admins) {
-      await this.updateAdmins(id, admins);
+    if (adminIds) {
+      await this.updateAdmins(id, adminIds);
     }
 
     if (!result.affected) {
@@ -302,11 +315,9 @@ export class ReefsService {
       reef,
     );
 
-    const includeSpotterData = Boolean(
-      reef.spotterId && reef.status === ReefStatus.Deployed,
-    );
+    const isDeployed = reef.status === ReefStatus.Deployed;
 
-    const liveData = await getLiveData(reef, includeSpotterData);
+    const liveData = await getLiveData(reef, isDeployed);
 
     return {
       ...liveData,
@@ -427,7 +438,7 @@ export class ReefsService {
     });
   }
 
-  private async updateAdmins(id: number, admins: User[]) {
+  private async updateAdmins(id: number, adminIds: number[]) {
     const reef = await this.reefsRepository.findOne(id, {
       relations: ['admins'],
     });
@@ -440,6 +451,6 @@ export class ReefsService {
       .update()
       .relation('admins')
       .of(reef)
-      .addAndRemove(admins, reef.admins);
+      .addAndRemove(adminIds, reef.admins);
   }
 }

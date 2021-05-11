@@ -14,7 +14,22 @@ interface TimeSeriesData {
   value: number;
   timestamp: Date;
   metric: Metric;
+  source: SourceType;
 }
+
+interface TimeSeriesRange {
+  maxDate: Date;
+  minDate: Date;
+  metric: Metric;
+  source: SourceType;
+}
+
+interface TimeSeriesGroupable {
+  metric: Metric;
+  source: SourceType;
+}
+
+type TimeSeriesResponse<T> = Record<SourceType, Record<Metric, T[]>>;
 
 @Injectable()
 export class TimeSeriesService {
@@ -30,14 +45,16 @@ export class TimeSeriesService {
       ),
     }),
     {},
-  );
+  ) as TimeSeriesResponse<TimeSeriesGroupable>;
 
   constructor(
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
 
-  private groupByMetricAndSource(data: TimeSeriesData[]) {
+  private groupByMetricAndSource<T extends TimeSeriesGroupable>(
+    data: T[],
+  ): TimeSeriesResponse<Pick<T, 'metric' | 'source'>> {
     return _(data)
       .groupBy('source')
       .mapValues((grouped) => {
@@ -48,7 +65,8 @@ export class TimeSeriesService {
           )
           .toJSON();
       })
-      .merge(this.emptyMetricsSourcesObject);
+      .merge(this.emptyMetricsSourcesObject)
+      .toJSON();
   }
 
   private getDataQuery(
@@ -95,7 +113,10 @@ export class TimeSeriesService {
           .getRawMany();
   }
 
-  private getDataRangeQuery(reefId: number, poiId?: number) {
+  private getDataRangeQuery(
+    reefId: number,
+    poiId?: number,
+  ): Promise<TimeSeriesRange[]> {
     const poiCondition = poiId
       ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
       : 'time_series.poi_id is NULL';
@@ -131,7 +152,7 @@ export class TimeSeriesService {
       poiId,
     );
 
-    return _(this.groupByMetricAndSource(data));
+    return this.groupByMetricAndSource(data);
   }
 
   async findReefData(
@@ -151,7 +172,7 @@ export class TimeSeriesService {
       reefId,
     );
 
-    return _(this.groupByMetricAndSource(data));
+    return this.groupByMetricAndSource(data);
   }
 
   async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
@@ -159,7 +180,7 @@ export class TimeSeriesService {
 
     const data = await this.getDataRangeQuery(reefId, poiId);
 
-    return _(this.groupByMetricAndSource(data));
+    return this.groupByMetricAndSource(data);
   }
 
   async findReefDataRange(reefDataRangeDto: ReefDataRangeDto) {
@@ -167,6 +188,6 @@ export class TimeSeriesService {
 
     const data = await this.getDataRangeQuery(reefId);
 
-    return _(this.groupByMetricAndSource(data));
+    return this.groupByMetricAndSource(data);
   }
 }

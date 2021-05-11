@@ -7,7 +7,7 @@ export const mockSurvey: SurveyListItem = {
   temperature: 10,
   weatherConditions: "calm",
   observations: ["anthropogenic"],
-  userId: {
+  user: {
     id: 0,
     fullName: "Joe Doe",
   },

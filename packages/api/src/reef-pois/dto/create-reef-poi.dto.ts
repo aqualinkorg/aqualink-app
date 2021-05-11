@@ -34,5 +34,5 @@ export class CreateReefPoiDto {
 
   @IsInt()
   @Validate(EntityExists, [Reef])
-  readonly reef: Reef;
+  readonly reefId: number;
 }

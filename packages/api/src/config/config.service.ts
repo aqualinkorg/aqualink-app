@@ -1,4 +1,11 @@
+import { DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
+import { UpdateReefWithApplicationDto } from '../reef-applications/dto/update-reef-with-application.dto';
+import {
+  CreateReefApplicationDto,
+  CreateReefDto,
+} from '../reefs/dto/create-reef.dto';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
@@ -46,6 +53,25 @@ class ConfigService {
     return {
       ...dbConfig,
     };
+  }
+
+  public getSwaggerConfig() {
+    const config = new DocumentBuilder()
+      .setTitle('Aqualink API documentation')
+      .setDescription('The Aqualink public API documentation')
+      .addBearerAuth()
+      .build();
+
+    const options: SwaggerDocumentOptions = {
+      extraModels: [
+        UpdateReefWithApplicationDto,
+        UpdateReefApplicationDto,
+        CreateReefDto,
+        CreateReefApplicationDto,
+      ],
+    };
+
+    return { config, options };
   }
 }
 

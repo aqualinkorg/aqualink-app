@@ -104,8 +104,12 @@ export const handleDuplicateReef = (err) => {
 
 export const getExclusionDates = async (
   exclusionDatesRepository: Repository<ExclusionDates>,
-  spotterId: string,
+  spotterId?: string,
 ) => {
+  if (!spotterId) {
+    return [];
+  }
+
   return exclusionDatesRepository
     .createQueryBuilder('exclusion')
     .where('exclusion.spotter_id = :spotterId', {

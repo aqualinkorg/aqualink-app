@@ -19,23 +19,23 @@ export class TimeSeries {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   timestamp: Date;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: false })
   value: number;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
-  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE' })
-  poi: ReefPointOfInterest;
+  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
+  poi?: ReefPointOfInterest;
 
-  @Column({ type: 'enum', enum: Metric })
+  @Column({ type: 'enum', enum: Metric, nullable: false })
   metric: Metric;
 
   @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })
-  source: Sources;
+  source?: Sources;
 
   @CreateDateColumn()
   createdAt: Date;
