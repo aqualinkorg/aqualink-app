@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
+import { ApiPointProperty } from '../docs/api-properties';
 
 export enum AdminLevel {
   Default = 'default',
@@ -37,6 +38,7 @@ export class User {
   @Column({ nullable: true })
   organization?: string;
 
+  @ApiPointProperty()
   @Column({
     type: 'geometry',
     spatialFeatureType: 'Point',
@@ -53,6 +55,7 @@ export class User {
     type: 'enum',
     enum: AdminLevel,
     default: AdminLevel.Default,
+    nullable: false,
   })
   adminLevel: AdminLevel;
 

@@ -75,7 +75,7 @@ const getReefPois = (
   cancelToken?: AxiosRequestConfig["cancelToken"]
 ) =>
   requests.send<Pois[]>({
-    url: `pois?reef=${id}`,
+    url: `pois?reefId=${id}`,
     method: "GET",
     cancelToken,
   });
