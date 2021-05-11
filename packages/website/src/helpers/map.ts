@@ -148,6 +148,9 @@ const useMarkerStyles = makeStyles({
     WebkitAnimationName: "pulse",
     WebkitAnimationDuration: "2s",
     WebkitAnimationIterationCount: "infinite",
+    animationName: "pulse",
+    animationDuration: "2s",
+    animationIterationCount: "infinite",
   },
 });
 
