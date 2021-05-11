@@ -26,12 +26,12 @@ export class Metrics {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: Metric })
+  @Column({ type: 'enum', enum: Metric, nullable: false })
   metric: Metric;
 
-  @Column()
+  @Column({ nullable: false })
   description: string;
 
-  @Column({ type: 'enum', enum: Units })
+  @Column({ type: 'enum', enum: Units, nullable: false })
   units: Units;
 }

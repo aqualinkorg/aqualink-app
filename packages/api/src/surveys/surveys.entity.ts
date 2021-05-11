@@ -31,6 +31,8 @@ export class Survey {
     name: 'weather_conditions',
     type: 'enum',
     enum: WeatherConditions,
+    default: 'no-data',
+    nullable: false,
   })
   weatherConditions: WeatherConditions;
 
@@ -40,16 +42,16 @@ export class Survey {
   @Column('text', { nullable: true })
   comments?: string;
 
-  @Column()
+  @Column({ nullable: false })
   diveDate: Date;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'user_id' })
-  userId?: User;
+  user: User;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'reef_id' })
-  reef?: Reef;
+  reef: Reef;
 
   @CreateDateColumn()
   createdAt?: Date;

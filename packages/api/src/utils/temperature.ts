@@ -52,6 +52,7 @@ async function getValueFromTiff(tiff: any, long: number, lat: number) {
 export async function getMMM(long: number, lat: number) {
   const tiff = await GeoTIFF.fromUrl(
     `${HistoricalMonthlyMeanRoot}sst_clim_mmm.tiff`,
+    { forceXHR: true },
   );
   return getValueFromTiff(tiff, long, lat);
 }
@@ -76,6 +77,7 @@ export async function getHistoricalMonthlyMeans(long: number, lat: number) {
     HistoricalMonthlyMeanMapping.map(async (month, index) => {
       const tiff = await GeoTIFF.fromUrl(
         `${HistoricalMonthlyMeanRoot}sst_clim_${month}.tiff`,
+        { forceXHR: true },
       );
       return {
         month: index + 1,
@@ -100,12 +102,16 @@ export async function getHistoricalMonthlyMeans(long: number, lat: number) {
 
 export function calculateDegreeHeatingDays(
   seaSurfaceTemperatures: number[],
-  maximumMonthlyMean: number,
+  maximumMonthlyMean?: number,
 ) {
   if (seaSurfaceTemperatures.length !== 84) {
     throw new Error(
       'Calculating Degree Heating Days requires exactly 84 days of data.',
     );
+  }
+
+  if (!maximumMonthlyMean) {
+    throw new Error('Max monthly mean is undefined');
   }
 
   return seaSurfaceTemperatures.reduce((sum, value) => {

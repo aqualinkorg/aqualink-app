@@ -2,11 +2,9 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReefApplication } from './reef-applications.entity';
-import {
-  UpdateReefApplicationDto,
-  UpdateReefWithApplicationDto,
-} from './dto/update-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
 import { Reef } from '../reefs/reefs.entity';
+import { UpdateReefWithApplicationDto } from './dto/update-reef-with-application.dto';
 
 @Injectable()
 export class ReefApplicationsService {

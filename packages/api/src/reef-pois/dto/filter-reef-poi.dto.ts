@@ -1,6 +1,5 @@
-import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Reef } from '../../reefs/reefs.entity';
+import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
 
 export class FilterReefPoiDto {
   @IsOptional()
@@ -11,5 +10,5 @@ export class FilterReefPoiDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  readonly reef?: Reef;
+  readonly reefId?: number;
 }
