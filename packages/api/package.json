@@ -72,7 +72,7 @@
     "firebase-admin": "^9.0.0",
     "geo-tz": "^6.0.0",
     "geojson": "^0.5.0",
-    "geotiff": "^1.0.0-beta.12",
+    "geotiff": "^1.0.4",
     "hashids": "^2.2.1",
     "lodash": "^4.17.15",
     "moment": "^2.27.0",
