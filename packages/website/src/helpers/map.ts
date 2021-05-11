@@ -145,12 +145,12 @@ const useMarkerStyles = makeStyles({
   spotterIconBlinking: {
     width: "inherit",
     height: "inherit",
-    animation: "$pulse 2s infinite",
-  },
-  "@keyframes pulse": {
-    "0%": { strokeOpacity: 1 },
-    "50%": { strokeOpacity: 1, transform: "scale(1)" },
-    "100%": { strokeOpacity: 0, transform: "scale(3)" },
+    WebkitAnimationName: "pulse",
+    WebkitAnimationDuration: "2s",
+    WebkitAnimationIterationCount: "infinite",
+    animationName: "pulse",
+    animationDuration: "2s",
+    animationIterationCount: "infinite",
   },
 });
 
