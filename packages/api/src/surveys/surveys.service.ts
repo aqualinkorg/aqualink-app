@@ -50,7 +50,7 @@ export class SurveysService {
     }
 
     const survey = await this.surveyRepository.save({
-      userId: user,
+      user,
       reef,
       ...createSurveyDto,
       comments: this.transformComments(createSurveyDto.comments),
@@ -107,7 +107,7 @@ export class SurveysService {
         'data',
         'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
-      .innerJoin('survey.userId', 'users')
+      .innerJoin('survey.user', 'users')
       .leftJoinAndSelect(
         'survey.featuredSurveyMedia',
         'featuredSurveyMedia',
@@ -168,7 +168,8 @@ export class SurveysService {
         diveDate: survey.diveDate,
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
-        userId: survey.userId,
+        user: survey.user,
+        reef: survey.reef,
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||

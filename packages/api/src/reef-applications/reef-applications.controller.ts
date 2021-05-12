@@ -11,12 +11,11 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
-import {
-  UpdateReefApplicationDto,
-  UpdateReefWithApplicationDto,
-} from './dto/update-reef-application.dto';
+import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
+import { UpdateReefWithApplicationDto } from './dto/update-reef-with-application.dto';
 import { idFromHash, isValidId } from '../utils/urls';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
@@ -24,7 +23,10 @@ import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { AdminLevel } from '../users/users.entity';
+import { ApiNestNotFoundResponse } from '../docs/api-response';
+import { ApiUpdateReefApplicationBody } from '../docs/api-properties';
 
+@ApiTags('ReefApplications')
 @Auth()
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('reef-applications')
@@ -34,6 +36,9 @@ import { AdminLevel } from '../users/users.entity';
 export class ReefApplicationsController {
   constructor(private reefApplicationsService: ReefApplicationsService) {}
 
+  @ApiBearerAuth()
+  @ApiNestNotFoundResponse('No reef application for specified reef was found')
+  @ApiOperation({ summary: 'Returns reef application of specified reef' })
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -43,6 +48,8 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
+  @ApiNestNotFoundResponse('No reef application was found')
+  @ApiOperation({ summary: 'Returns reef application by its id and uid' })
   @Public()
   @Get(':id')
   async findOne(
@@ -59,6 +66,8 @@ export class ReefApplicationsController {
     return app;
   }
 
+  @ApiNestNotFoundResponse('No reef application was found')
+  @ApiOperation({ summary: 'Updates reef application by providing its hashId' })
   @Public()
   @Put(':hashId')
   updateWithHash(
@@ -69,6 +78,12 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.update(id, reefApplication, reef);
   }
 
+  @ApiBearerAuth()
+  @ApiUpdateReefApplicationBody()
+  @ApiOperation({
+    summary:
+      'Updates reef application by providing its hashId. Needs authentication.',
+  })
   @UseGuards(IsReefAdminGuard)
   @Put(':hashId/reefs/:reef_id')
   update(
