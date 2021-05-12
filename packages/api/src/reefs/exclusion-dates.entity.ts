@@ -10,7 +10,7 @@ export class ExclusionDates {
 
   // The start of the exclusive range. Inclusive
   @Column({ nullable: true })
-  startDate: Date;
+  startDate?: Date;
 
   // The end of the exclusive range. Inclusive
   @Column()

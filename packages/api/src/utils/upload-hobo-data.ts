@@ -302,6 +302,10 @@ const createReefs = async (
   // Create reverse map (db.reef.id => csv.reef_id)
   const dbIdToCSVId: Record<number, number> = Object.fromEntries(
     reefEntities.map((reef) => {
+      if (!reef.name) {
+        throw new InternalServerErrorException('Reef name was not defined');
+      }
+
       const reefId = parseInt(reef.name.replace(REEF_PREFIX, ''), 10);
       return [reef.id, reefId];
     }),
@@ -565,7 +569,7 @@ const uploadReefPhotos = async (
       googleCloudService.uploadFile(image.imagePath, 'image').then((url) => {
         const survey = {
           reef: image.reef,
-          userId: user,
+          user,
           diveDate: image.createdDate,
           weatherConditions: WeatherConditions.NoData,
         };

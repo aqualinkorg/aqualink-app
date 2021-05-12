@@ -22,7 +22,11 @@ import {
   getSpotterData,
 } from '../utils/sofar';
 import { calculateDegreeHeatingDays } from '../utils/temperature';
-import { SofarDailyData, SofarValue } from '../utils/sofar.types';
+import {
+  DEFAULT_SPOTTER_DATA_VALUE,
+  SofarDailyData,
+  SofarValue,
+} from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
@@ -32,10 +36,10 @@ import {
 } from '../utils/reef.utils';
 
 export async function getDegreeHeatingDays(
-  maxMonthlyMean: number,
   latitude: number,
   longitude: number,
   endOfDate: Date,
+  maxMonthlyMean?: number,
 ): Promise<SofarValue | undefined> {
   try {
     // TODO - Get data for the past 84 days.
@@ -87,18 +91,10 @@ export async function getDailyData(
   ] = await Promise.all([
     spotterId
       ? getSpotterData(spotterId, endOfDate)
-      : {
-          topTemperature: [],
-          bottomTemperature: [],
-          significantWaveHeight: [],
-          wavePeakPeriod: [],
-          waveMeanDirection: [],
-          windSpeed: [],
-          windDirection: [],
-        },
+      : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
-    getDegreeHeatingDays(maxMonthlyMean, latitude, longitude, endOfDate),
+    getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,
       sofarVariableIDs[SofarModels.NOAACoralReefWatch]
