@@ -15,7 +15,7 @@ import {
 import grey from "@material-ui/core/colors/grey";
 import { Alert } from "@material-ui/lab";
 import { RangeButton, RangeValue } from "./types";
-import { DataRange } from "../../../store/Reefs/types";
+import { Sources, TimeSeriesDataRange } from "../../../store/Reefs/types";
 import { availableRangeString } from "./helpers";
 
 const ViewRange = ({
@@ -25,14 +25,18 @@ const ViewRange = ({
   hasSpotterData,
   onRangeChange,
   classes,
-  spotterRange,
-  hoboRange,
+  timeSeriesDataRanges,
   timeZone,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
   const isTablet = useMediaQuery(theme.breakpoints.up("md"));
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const allSensors: { id: Sources; name: string }[] = [
+    { id: "hobo", name: "HOBO" },
+    { id: "spotter", name: "Spotter" },
+  ];
 
   const buttons: RangeButton[] = [
     {
@@ -58,13 +62,6 @@ const ViewRange = ({
     },
   ];
 
-  const spotterRangeString = availableRangeString(
-    "Spotter",
-    spotterRange,
-    timeZone
-  );
-  const hoboRangeString = availableRangeString("HOBO", hoboRange, timeZone);
-
   return (
     <>
       <Grid
@@ -79,43 +76,42 @@ const ViewRange = ({
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
             </Typography>
-            <Grid
-              className={classes.rangesWrapper}
-              container
-              alignItems="center"
-              spacing={2}
-            >
-              {hoboRangeString && (
-                <Grid item>
-                  <Alert
-                    classes={{
-                      icon: classes.rangeIcon,
-                      root: classes.rangeItem,
-                    }}
-                    severity="info"
-                  >
-                    <Typography variant="subtitle2">
-                      {hoboRangeString}
-                    </Typography>
-                  </Alert>
-                </Grid>
-              )}
-              {spotterRangeString && (
-                <Grid item>
-                  <Alert
-                    classes={{
-                      icon: classes.rangeIcon,
-                      root: classes.rangeItem,
-                    }}
-                    severity="info"
-                  >
-                    <Typography variant="subtitle2">
-                      {spotterRangeString}
-                    </Typography>
-                  </Alert>
-                </Grid>
-              )}
-            </Grid>
+            {timeSeriesDataRanges && (
+              <Grid
+                className={classes.rangesWrapper}
+                container
+                alignItems="center"
+                spacing={2}
+              >
+                {allSensors.map((sensor) => {
+                  const dateRangeString = availableRangeString(
+                    sensor.name,
+                    timeSeriesDataRanges[sensor.id]?.bottomTemperature?.[0],
+                    timeZone
+                  );
+
+                  if (!dateRangeString) {
+                    return null;
+                  }
+
+                  return (
+                    <Grid key={sensor.id} item>
+                      <Alert
+                        classes={{
+                          icon: classes.rangeIcon,
+                          root: classes.rangeItem,
+                        }}
+                        severity="info"
+                      >
+                        <Typography variant="subtitle2">
+                          {dateRangeString}
+                        </Typography>
+                      </Alert>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            )}
           </Box>
         </Grid>
         <Grid item xs={isMobile ? 12 : undefined}>
@@ -197,8 +193,7 @@ interface ViewRangeIncomingProps {
   title?: string;
   hasSpotterData: boolean;
   onRangeChange: (value: RangeValue) => void;
-  spotterRange: DataRange | undefined;
-  hoboRange: DataRange | undefined;
+  timeSeriesDataRanges: TimeSeriesDataRange | undefined;
   timeZone?: string | null;
 }
 
