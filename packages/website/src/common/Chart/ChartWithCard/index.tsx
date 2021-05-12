@@ -28,7 +28,7 @@ import {
   setTimeZone,
   subtractFromDate,
 } from "../../../helpers/dates";
-import { findCardType, findDataLimits } from "./helpers";
+import { findCardDataset, findDataLimits } from "./helpers";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
@@ -67,12 +67,11 @@ const ChartWithCard = ({
   );
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
-  const hasDailyData = Boolean(dailyDataSst?.[1]);
 
-  const cardType = findCardType(hasSpotterData, hasHoboData, hasDailyData);
+  const cardDataset = findCardDataset(hasSpotterData, hasHoboData);
 
   const chartWidthClass =
-    cardType === "spotter" ? classes.smallChart : classes.largeChart;
+    cardDataset === "spotter" ? classes.smallChart : classes.largeChart;
 
   const chartStartDate = startDate || subtractFromDate(today, "week");
   const chartEndDate = moment
@@ -86,17 +85,17 @@ const ChartWithCard = ({
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
-    if (hoboBottomTemperatureRange?.[0]) {
-      const { maxDate } = hoboBottomTemperatureRange[0];
-      const pastThreeMonths = subtractFromDate(maxDate, "month", 3);
+    if (hoboBottomTemperatureRange) {
+      const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
+      const pastThreeMonths = subtractFromDate(maxDate || today, "month", 3);
       setPickerEndDate(
-        utcToZonedTime(maxDate, reef.timezone || "UTC").toISOString()
+        utcToZonedTime(maxDate || today, reef.timezone || "UTC").toISOString()
       );
       setPickerStartDate(
         utcToZonedTime(pastThreeMonths, reef.timezone || "UTC").toISOString()
       );
     }
-  }, [hoboBottomTemperatureRange, reef.timezone]);
+  }, [hoboBottomTemperatureRange, reef.timezone, today]);
 
   // Get time series data
   useEffect(() => {
@@ -288,7 +287,7 @@ const ChartWithCard = ({
         {!pickerErrored && (
           <Grid className={classes.card} item>
             <TempAnalysis
-              cardType={cardType}
+              dataset={cardDataset}
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
               }

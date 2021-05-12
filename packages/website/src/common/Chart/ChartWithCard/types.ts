@@ -16,4 +16,4 @@ export interface CardColumn {
   display: boolean;
 }
 
-export type CardType = "spotter" | "hobo" | "sst";
+export type Dataset = "spotter" | "hobo" | "sst";

@@ -20,7 +20,7 @@ import {
 } from "../../../store/Reefs/types";
 import { calculateCardMetrics } from "./helpers";
 import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn, CardType } from "./types";
+import { CardColumn, Dataset } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
 
 const rows = ["MAX", "MEAN", "MIN"];
@@ -28,7 +28,7 @@ const rows = ["MAX", "MEAN", "MIN"];
 /* eslint-disable react/prop-types */
 const TempAnalysis: FC<TempAnalysisProps> = ({
   classes,
-  cardType,
+  dataset,
   pickerStartDate,
   pickerEndDate,
   chartStartDate,
@@ -78,14 +78,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       key: "hobo",
       color: "#f78c21",
       rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
-      display: cardType === "hobo",
+      display: dataset === "hobo",
     },
     {
       title: "BUOY 1m",
       key: "spotterTop",
       color: "#46a5cf",
       rows: calculateCardMetrics(2, spotterData?.topTemperature, "spotterTop"),
-      display: cardType === "spotter",
+      display: dataset === "spotter",
     },
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
@@ -96,14 +96,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
         spotterData?.bottomTemperature,
         "spotterBottom"
       ),
-      display: cardType === "spotter",
+      display: dataset === "spotter",
     },
     {
       title: "SST",
       key: "sst",
       color: "#6bc1e1",
       rows: calculateCardMetrics(2, dailyDataSst, "sst"),
-      display: cardType === "sst",
+      display: dataset === "sst",
     },
   ].filter((val) => val.rows[0].value);
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
@@ -226,7 +226,7 @@ interface TempAnalysisProps
     WithStyles<typeof styles> {}
 
 interface TempAnalysisIncomingProps {
-  cardType: CardType;
+  dataset: Dataset;
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;
