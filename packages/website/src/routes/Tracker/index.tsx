@@ -9,6 +9,7 @@ import {
   withStyles,
   WithStyles,
   createStyles,
+  Theme,
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
@@ -35,18 +36,47 @@ const Tracker = ({ classes }: TrackerProps) => {
               get critical information at a glance. We have launched a new
               feature called Dashboards where anyone can create a customized
               collection of sensors to track this information. For example, the
-              Minderoo Foudnation worked with us and the University of Western
-              Australila to deploy Smart Buoys along the Western coast of
-              Australia. This was done in a critical time for the region where
-              an extreme heatwave, known as the La Nina, was exptected to come
-              through the area, potentially bringing devastating affects to the
-              local ecosystems. They created a dashboard here that aggregrates
-              all the sensors involved in tracking this event to get a real-time
-              view of the severity. Scientists, media, and the general public
-              can use this feature to get a holistic view of regional and
-              event-based information, and we hope to enable a better
-              understanding of how to protect the ecosystems during such times
-              as the La Nina Heatwave.
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://www.minderoo.org/"
+              >
+                {" "}
+                Minderoo Foundation
+              </a>{" "}
+              worked with us and the{" "}
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://www.uwa.edu.au"
+              >
+                University of Western Australila
+              </a>{" "}
+              to deploy Smart Buoys along the Western coast of Australia. This
+              was done in a critical time for the region where an extreme
+              heatwave, known as the{" "}
+              <a
+                className={classes.link}
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://en.wikipedia.org/wiki/La_Ni%C3%B1a"
+              >
+                La Nina
+              </a>
+              , was exptected to come through the area, potentially bringing
+              devastating affects to the local ecosystems. They created a
+              dashboard{" "}
+              <a className={classes.link} href="/collections/minderoo">
+                here
+              </a>{" "}
+              that aggregrates all the sensors involved in tracking this event
+              to get a real-time view of the severity. Scientists, media, and
+              the general public can use this feature to get a holistic view of
+              regional and event-based information, and we hope to enable a
+              better understanding of how to protect the ecosystems during such
+              times as the La Nina Heatwave.
             </Typography>
           </Grid>
           <Grid item xs={12} md={7} lg={8}>
@@ -94,7 +124,13 @@ const Tracker = ({ classes }: TrackerProps) => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={3} lg={2}>
-              <img src={footprint} alt="footprint" />
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://www.footprintcoalition.com/"
+              >
+                <img src={footprint} alt="footprint" />
+              </a>
             </Grid>
           </Grid>
         </Box>
@@ -104,7 +140,7 @@ const Tracker = ({ classes }: TrackerProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
@@ -115,7 +151,7 @@ const styles = () =>
     },
     card1: {
       width: "100%",
-      paddingTop: "calc(100% / 1.27)",
+      paddingTop: "calc(100% / 1.29)",
       position: "relative",
       borderRadius: 10,
     },
@@ -131,6 +167,13 @@ const styles = () =>
       position: "absolute",
       top: 0,
       left: 0,
+    },
+    link: {
+      color: theme.palette.primary.main,
+      "&:hover": {
+        color: theme.palette.primary.main,
+        textDecoration: "none",
+      },
     },
   });
 
