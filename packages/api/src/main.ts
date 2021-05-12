@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule } from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
@@ -7,12 +8,18 @@ import { serviceAccount } from '../firebaseConfig';
 import { UnauthorizedExceptionFilter } from './exception-filters/unauthorized.filter';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filter';
 import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
+import { configService } from './config/config.service';
 
 async function bootstrap() {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
   const app = await NestFactory.create(AppModule);
+
+  const { config, options } = configService.getSwaggerConfig();
+  const document = SwaggerModule.createDocument(app, config, options);
+  SwaggerModule.setup('api', app, document);
+
   app.enableCors();
   app.useGlobalPipes(
     new GlobalValidationPipe({ transform: true, skipTransformIds: ['hashId'] }),

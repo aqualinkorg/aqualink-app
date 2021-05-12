@@ -68,7 +68,7 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async getSelf(req: AuthRequest): Promise<User | undefined> {
+  async getSelf(req: AuthRequest): Promise<User> {
     return req.user;
   }
 

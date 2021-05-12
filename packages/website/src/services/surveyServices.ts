@@ -56,7 +56,7 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
     url: "pois",
     method: "POST",
     data: {
-      reef: reefId,
+      reefId,
       name,
     },
     token: token === null ? undefined : token,

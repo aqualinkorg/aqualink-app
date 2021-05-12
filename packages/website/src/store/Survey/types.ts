@@ -54,7 +54,7 @@ export interface SurveyState {
   weatherConditions?: WeatherConditions;
   comments?: string;
   temperature?: number;
-  userId?: publicUser;
+  user?: publicUser;
   surveyMedia?: SurveyMedia[];
   featuredSurveyMedia?: SurveyMedia;
 }
@@ -67,7 +67,7 @@ export interface SurveyListItem {
   observations: Observations[];
   comments?: string;
   temperature?: number;
-  userId?: publicUser;
+  user?: publicUser;
   surveyPoints?: number[];
   featuredSurveyMedia?: SurveyMedia;
   surveyPointImage?: {

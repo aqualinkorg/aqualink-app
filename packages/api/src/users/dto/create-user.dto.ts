@@ -6,6 +6,7 @@ import {
   IsEmail,
 } from 'class-validator';
 import { GeoJSON } from 'geojson';
+import { ApiPointProperty } from '../../docs/api-properties';
 
 export class CreateUserDto {
   @IsOptional()
@@ -21,6 +22,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   readonly organization?: string;
 
+  @ApiPointProperty()
   @IsOptional()
   @IsNotEmpty()
   readonly location?: GeoJSON;

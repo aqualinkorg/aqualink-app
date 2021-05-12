@@ -8,7 +8,7 @@ import { isNil, isNumber, inRange } from 'lodash';
  * @param degreeHeatingDays
  */
 export const calculateAlertLevel = (
-  maxMonthlyMean: number | null,
+  maxMonthlyMean?: number | null,
   satelliteTemperature?: number | null,
   degreeHeatingDays?: number | null,
 ): number | undefined => {
