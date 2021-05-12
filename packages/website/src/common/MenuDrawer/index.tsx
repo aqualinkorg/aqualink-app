@@ -40,6 +40,10 @@ const menuRoutes = [
     href: "/faq",
   },
   {
+    text: "TRACK A HEATWAVE",
+    href: "/tracker",
+  },
+  {
     text: "REGISTER A SITE",
     href: "/register",
   },
