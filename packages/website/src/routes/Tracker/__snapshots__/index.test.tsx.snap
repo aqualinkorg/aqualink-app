@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tracker should render with given state from Redux store 1`] = `
+<div>
+  <mock-navbar
+    searchlocation="false"
+  />
+  <div
+    class="MuiContainer-root Tracker-root-1 MuiContainer-maxWidthLg"
+  >
+    <mock-box
+      margin="48px 0"
+    >
+      <mock-typography
+        classname="Tracker-title-2"
+        variant="h2"
+      >
+        Tracking Heatwaves
+      </mock-typography>
+    </mock-box>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+      >
+        <mock-typography
+          variant="h6"
+        >
+          The ability for sensors to be grouped for a particular event, such as a Heatwave, or a particular region, is important for users to get critical information at a glance. We have launched a new feature called Dashboards where anyone can create a customized collection of sensors to track this information. For example, the
+          <a
+            class="Tracker-link-6"
+            href="https://www.minderoo.org/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+             
+            Minderoo Foundation
+          </a>
+           
+          worked with us and the
+           
+          <a
+            class="Tracker-link-6"
+            href="https://www.uwa.edu.au"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            University of Western Australila
+          </a>
+           
+          to deploy Smart Buoys along the Western coast of Australia. This was done in a critical time for the region where an extreme heatwave, known as the
+           
+          <a
+            class="Tracker-link-6"
+            href="https://en.wikipedia.org/wiki/La_Ni%C3%B1a"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            La Nina
+          </a>
+          , was exptected to come through the area, potentially bringing devastating affects to the local ecosystems. They created a dashboard
+           
+          <a
+            class="Tracker-link-6"
+            href="/collections/minderoo"
+          >
+            here
+          </a>
+           
+          that aggregrates all the sensors involved in tracking this event to get a real-time view of the severity. Scientists, media, and the general public can use this feature to get a holistic view of regional and event-based information, and we hope to enable a better understanding of how to protect the ecosystems during such times as the La Nina Heatwave.
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+      >
+        <mock-card
+          classname="Tracker-card1-3"
+          variant="outlined"
+        >
+          <div
+            class="MuiCardMedia-root Tracker-image-5"
+            style="background-image: url(image1.png);"
+          />
+        </mock-card>
+      </div>
+    </div>
+    <mock-box
+      margin="72px 0 48px 0"
+    >
+      <mock-typography
+        classname="Tracker-title-2"
+        variant="h2"
+      >
+        Create Your Dashboard
+      </mock-typography>
+    </mock-box>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+      >
+        <mock-card
+          classname="Tracker-card2-4"
+          variant="outlined"
+        >
+          <div
+            class="MuiCardMedia-root Tracker-image-5"
+            style="background-image: url(image2.png);"
+          />
+        </mock-card>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+      >
+        <mock-typography
+          variant="h6"
+        >
+          To get started, head over to one of the sites you are interested in adding to your Dashboard. A bookmark icon will appear next to the site name in the heading. Clicking this will add the site. To remove it, simply click the bookmark icon again. Your dashboard page will aggregate all the sites that you add this way, and the name of the collection can be customized to reflect the region, event, or other interest.
+        </mock-typography>
+      </div>
+    </div>
+    <mock-box
+      margin="48px 0 72px 0"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-9"
+        >
+          <mock-typography
+            variant="h6"
+          >
+            We worked closely with the Minderoo Foundation to build this feature. The funding for the Heatwave Tracker development was provided by the FootPrint Coalition and we would like to thank them for their support.
+          </mock-typography>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 MuiGrid-grid-lg-2"
+        >
+          <a
+            href="https://www.footprintcoalition.com/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img
+              alt="footprint"
+              src="footprint.png"
+            />
+          </a>
+        </div>
+      </div>
+    </mock-box>
+  </div>
+  <mock-footer />
+</div>
+`;
