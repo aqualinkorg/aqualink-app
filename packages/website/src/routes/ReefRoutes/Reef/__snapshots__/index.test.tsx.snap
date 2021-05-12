@@ -925,30 +925,44 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
                 >
-                  <mock-box
-                    alignitems="center"
-                    display="flex"
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
                   >
-                    <mock-typography
-                      variant="h4"
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                     >
-                      Hawaii
-                    </mock-typography>
-                  </mock-box>
-                  <mock-box>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                      >
+                        <mock-typography
+                          variant="h4"
+                        >
+                          Hawaii
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
                     <mock-typography
                       variant="h6"
                     >
                       Managed by Some organization
                     </mock-typography>
-                  </mock-box>
-                  <mock-box>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
                     <mock-typography
                       variant="subtitle1"
                     >
                       Last surveyed: Sep 10, 2020
                     </mock-typography>
-                  </mock-box>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3504,23 +3518,35 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
                 >
-                  <mock-box
-                    alignitems="center"
-                    display="flex"
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
                   >
-                    <mock-typography
-                      variant="h4"
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
                     >
-                      Hawaii
-                    </mock-typography>
-                  </mock-box>
-                  <mock-box>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                      >
+                        <mock-typography
+                          variant="h4"
+                        >
+                          Hawaii
+                        </mock-typography>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item"
+                  >
                     <mock-typography
                       variant="h6"
                     >
                       Managed by Some organization
                     </mock-typography>
-                  </mock-box>
+                  </div>
                 </div>
               </div>
             </div>

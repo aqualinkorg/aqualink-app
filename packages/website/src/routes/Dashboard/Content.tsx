@@ -15,10 +15,10 @@ import {
 
 const Content = () => {
   const collection = useSelector(collectionDetailsSelector);
-  const collectioLoading = useSelector(collectionLoadingSelector);
+  const collectionLoading = useSelector(collectionLoadingSelector);
   const collectionErrored = useSelector(collectionErrorSelector);
 
-  if (collectioLoading) {
+  if (collectionLoading) {
     return <LinearProgress />;
   }
 

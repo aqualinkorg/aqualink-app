@@ -11,14 +11,15 @@ export const constructUserObject = async (
   const { data: administeredReefs } = await userServices.getAdministeredReefs(
     token
   );
+  const { id, email, fullName, organization, adminLevel, firebaseUid } = user;
 
   return {
-    id: user.id,
-    email: user.email,
-    fullName: user.fullName,
-    organization: user.organization,
-    adminLevel: user.adminLevel,
-    firebaseUid: user.firebaseUid,
+    id,
+    email,
+    fullName,
+    organization,
+    adminLevel,
+    firebaseUid,
     administeredReefs: isManager(user) ? administeredReefs : [],
     collection: collections?.[0]?.id
       ? { id: collections[0].id, reefIds: collections[0].reefIds }

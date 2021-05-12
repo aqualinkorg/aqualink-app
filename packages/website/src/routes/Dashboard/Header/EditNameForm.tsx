@@ -50,7 +50,7 @@ const EditNameForm = ({
           signedInUser.token
         )
         .then(() => dispatch(setName(collectionName.value)))
-        .catch((error) => console.error(error))
+        .catch(console.error)
         .finally(() => onClose());
     }
   };

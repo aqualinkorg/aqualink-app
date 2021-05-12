@@ -7,7 +7,6 @@ import {
   WithStyles,
   createStyles,
   Button,
-  Box,
   Collapse,
   useMediaQuery,
   useTheme,
@@ -179,26 +178,32 @@ const ReefNavBar = ({
                 >
                   <Grid item>
                     <Grid container direction="column">
-                      <Box display="flex" alignItems="center">
-                        <Typography variant="h4">
-                          {reefName}
-                          {reefRegion && `, ${reefRegion}`}
-                        </Typography>
-                        <CollectionButton
-                          reefId={reef.id}
-                          errorCallback={() => {
-                            setAlertOpen(true);
-                            setAlertSeverity("error");
-                          }}
-                        />
-                      </Box>
+                      <Grid item>
+                        <Grid container alignItems="center">
+                          <Grid item xs={10}>
+                            <Typography variant="h4">
+                              {reefName}
+                              {reefRegion && `, ${reefRegion}`}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <CollectionButton
+                              reefId={reef.id}
+                              errorCallback={() => {
+                                setAlertOpen(true);
+                                setAlertSeverity("error");
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
                       {organizationName && (
-                        <Box>
+                        <Grid item>
                           <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
-                        </Box>
+                        </Grid>
                       )}
                       {lastSurvey && (
-                        <Box>
+                        <Grid item>
                           <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
                             {
                               isoDate: lastSurvey,
@@ -207,7 +212,7 @@ const ReefNavBar = ({
                               timeZone: reef.timezone,
                             }
                           )}`}</Typography>
-                        </Box>
+                        </Grid>
                       )}
                     </Grid>
                   </Grid>

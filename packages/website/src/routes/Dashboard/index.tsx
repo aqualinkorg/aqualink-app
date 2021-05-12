@@ -19,7 +19,9 @@ import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
 import FullScreenMessage from "../../common/FullScreenMessage";
 
-const collections: { [key: string]: number } = {
+// This will be removed when the idea of public collections will be introduced.
+// For now only this static one is being used.
+const collections: Record<string, number> = {
   minderoo: 1,
 };
 
