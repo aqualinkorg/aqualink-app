@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import {
   withStyles,
   WithStyles,
@@ -32,8 +32,8 @@ import {
 } from "../../../helpers/surveyMedia";
 import {
   surveyLoadingSelector,
-  surveyGetRequest,
   selectedPoiSelector,
+  setFeaturedImage,
 } from "../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import surveyServices from "../../../services/surveyServices";
@@ -57,7 +57,6 @@ const carouselSettings = {
 
 const SurveyMediaDetails = ({
   reefId,
-  surveyId,
   surveyMedia,
   classes,
 }: SurveyMediaDetailsProps) => {
@@ -66,23 +65,16 @@ const SurveyMediaDetails = ({
   const selectedPoi = useSelector(selectedPoiSelector);
   const dispatch = useDispatch();
 
-  const onSurveyMediaUpdate = useCallback(
-    (media: SurveyMedia) => {
-      if (user && user.token) {
-        surveyServices
-          .editSurveyMedia(reefId, media.id, { featured: true }, user.token)
-          .then(() => {
-            dispatch(
-              surveyGetRequest({
-                reefId: `${reefId}`,
-                surveyId,
-              })
-            );
-          });
-      }
-    },
-    [reefId, user, dispatch, surveyId]
-  );
+  const onSurveyMediaUpdate = (mediaId: number) => {
+    if (user && user.token) {
+      surveyServices
+        .editSurveyMedia(reefId, mediaId, { featured: true }, user.token)
+        .then(() => {
+          dispatch(setFeaturedImage(mediaId));
+        })
+        .catch(console.error);
+    }
+  };
 
   return (
     <>
@@ -236,7 +228,9 @@ const SurveyMediaDetails = ({
                                 ) : (
                                   <Tooltip title="Set as featured image">
                                     <IconButton
-                                      onClick={() => onSurveyMediaUpdate(media)}
+                                      onClick={() =>
+                                        onSurveyMediaUpdate(media.id)
+                                      }
                                       className={classes.featuredIcon}
                                     >
                                       <StarBorderIcon color="primary" />
@@ -338,7 +332,6 @@ const styles = (theme: Theme) =>
 
 interface SurveyMediaDetailsIncomingProps {
   reefId: number;
-  surveyId: string;
   surveyMedia?: SurveyMedia[] | null;
 }
 
