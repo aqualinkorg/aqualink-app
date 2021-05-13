@@ -183,7 +183,6 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
               <Grid item xs={12}>
                 <SurveyMediaDetails
                   reefId={reef.id}
-                  surveyId={surveyId}
                   surveyMedia={surveyDetails?.surveyMedia}
                 />
               </Grid>
