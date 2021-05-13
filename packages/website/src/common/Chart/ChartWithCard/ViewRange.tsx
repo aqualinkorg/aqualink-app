@@ -10,8 +10,13 @@ import {
   useTheme,
   useMediaQuery,
   Tooltip,
+  Theme,
 } from "@material-ui/core";
+import grey from "@material-ui/core/colors/grey";
+import { Alert } from "@material-ui/lab";
 import { RangeButton, RangeValue } from "./types";
+import { Sources, TimeSeriesDataRange } from "../../../store/Reefs/types";
+import { availableRangeString } from "./helpers";
 
 const ViewRange = ({
   range,
@@ -19,9 +24,16 @@ const ViewRange = ({
   title,
   onRangeChange,
   classes,
+  timeSeriesDataRanges,
+  timeZone,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const allSensors: { id: Sources; name: string }[] = [
+    { id: "hobo", name: "HOBO" },
+    { id: "spotter", name: "Spotter" },
+  ];
 
   const buttons: RangeButton[] = [
     {
@@ -52,7 +64,7 @@ const ViewRange = ({
       <Grid
         className={classes.autoWidth}
         container
-        alignItems="center"
+        alignItems="flex-end"
         justify="space-between"
         spacing={2}
       >
@@ -61,6 +73,42 @@ const ViewRange = ({
             <Typography variant="h6" color="textSecondary">
               {title || "TEMPERATURE"}
             </Typography>
+            {timeSeriesDataRanges && (
+              <Grid
+                className={classes.rangesWrapper}
+                container
+                alignItems="center"
+                spacing={2}
+              >
+                {allSensors.map((sensor) => {
+                  const dateRangeString = availableRangeString(
+                    sensor.name,
+                    timeSeriesDataRanges[sensor.id]?.bottomTemperature?.[0],
+                    timeZone
+                  );
+
+                  if (!dateRangeString) {
+                    return null;
+                  }
+
+                  return (
+                    <Grid key={sensor.id} item>
+                      <Alert
+                        classes={{
+                          icon: classes.rangeIcon,
+                          root: classes.rangeItem,
+                        }}
+                        severity="info"
+                      >
+                        <Typography variant="subtitle2">
+                          {dateRangeString}
+                        </Typography>
+                      </Alert>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            )}
           </Box>
         </Grid>
         <Grid item xs={isMobile ? 12 : undefined}>
@@ -105,10 +153,27 @@ const ViewRange = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     autoWidth: {
       width: "auto",
+    },
+    rangesWrapper: {
+      marginTop: 0,
+    },
+    rangeItem: {
+      height: 28,
+      display: "flex",
+      alignItems: "center",
+      backgroundColor: grey[100],
+      color: grey[600],
+      borderRadius: 5,
+      padding: "2px 5px",
+    },
+    rangeIcon: {
+      color: "inherit !important",
+      fontSize: theme.spacing(2),
+      marginRight: 5,
     },
   });
 
@@ -117,10 +182,13 @@ interface ViewRangeIncomingProps {
   disableMaxRange: boolean;
   title?: string;
   onRangeChange: (value: RangeValue) => void;
+  timeSeriesDataRanges: TimeSeriesDataRange | undefined;
+  timeZone?: string | null;
 }
 
 ViewRange.defaultProps = {
   title: "",
+  timeZone: null,
 };
 
 type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;

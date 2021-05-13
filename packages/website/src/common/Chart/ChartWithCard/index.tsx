@@ -46,8 +46,9 @@ const ChartWithCard = ({
   const timeSeriesData = useSelector(reefTimeSeriesDataSelector);
   const { hobo: hoboData, spotter: spotterData } = timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
+  const timeSeriesDataRanges = useSelector(reefTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
+    timeSeriesDataRanges?.hobo || {};
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
@@ -259,6 +260,8 @@ const ChartWithCard = ({
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
+        timeSeriesDataRanges={timeSeriesDataRanges}
+        timeZone={reef.timezone}
       />
       <Grid
         className={classes.chartWrapper}
