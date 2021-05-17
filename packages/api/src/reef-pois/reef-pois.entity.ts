@@ -9,11 +9,13 @@ import {
   RelationId,
 } from 'typeorm';
 import { GeoJSON } from 'geojson';
+import { ApiProperty } from '@nestjs/swagger';
 import { Reef } from '../reefs/reefs.entity';
 import { ApiPointProperty } from '../docs/api-properties';
 
 @Entity()
 export class ReefPointOfInterest {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,12 +25,14 @@ export class ReefPointOfInterest {
   @Column({ nullable: true })
   imageUrl?: string;
 
+  @ApiProperty({ example: 'Reef Point Of Interest Name' })
   @Column({ nullable: false })
   name: string;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
+  @ApiProperty({ example: [1, 2, 3] })
   @RelationId((poi: ReefPointOfInterest) => poi.reef)
   reefId: number;
 

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Metric {
@@ -23,12 +24,14 @@ export enum Units {
 
 @Entity()
 export class Metrics {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'enum', enum: Metric, nullable: false })
   metric: Metric;
 
+  @ApiProperty({ example: 'Metric Description' })
   @Column({ nullable: false })
   description: string;
 

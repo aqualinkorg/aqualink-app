@@ -19,6 +19,7 @@ export const ApiPointProperty = () => {
     properties: {
       type: {
         type: 'string',
+        enum: ['Point'],
       },
       coordinates: {
         type: 'array',
@@ -26,7 +27,7 @@ export const ApiPointProperty = () => {
         items: {
           type: 'number',
         },
-        example: [0, 0],
+        example: [15.24012, -10.05412],
       },
     },
   };

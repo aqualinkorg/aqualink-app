@@ -14,9 +14,11 @@ import { ApiPointProperty } from '../docs/api-properties';
 
 @Entity()
 export class Region {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 'Region Name' })
   @Column({ nullable: false })
   name: string;
 
@@ -40,6 +42,7 @@ export class Region {
   @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
   parent?: Region;
 
+  @ApiProperty({ example: 1 })
   @RelationId((region: Region) => region.parent)
   parentId?: number;
 }
