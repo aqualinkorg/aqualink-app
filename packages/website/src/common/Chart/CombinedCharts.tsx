@@ -20,7 +20,6 @@ const CombinedCharts = ({
   reef,
   closestSurveyPointId,
   surveys,
-  showSpotterChart,
   classes,
 }: CombinedChartsProps) => {
   const { id, timezone, dailyData, depth, maxMonthlyMean } = reef;
@@ -28,7 +27,7 @@ const CombinedCharts = ({
     <div>
       <Box className={classes.graphtTitleWrapper}>
         <Typography className={classes.graphTitle} variant="h6">
-          DAILY SATELLITE TEMPERATURE (°C)
+          HEAT STRESS ANALYSIS (°C)
         </Typography>
       </Box>
       <ChartWithTooltip
@@ -42,15 +41,13 @@ const CombinedCharts = ({
         className={classes.chart}
         timeZone={timezone}
       />
-      {showSpotterChart && (
-        <ChartWithCard
-          title="SENSOR TEMPERATURE (°C)"
-          reef={reef}
-          pointId={closestSurveyPointId}
-          surveysFiltered={false}
-          disableGutters
-        />
-      )}
+      <ChartWithCard
+        title="TEMPERATURE ANALYSIS"
+        reef={reef}
+        pointId={closestSurveyPointId}
+        surveysFiltered={false}
+        disableGutters
+      />
     </div>
   );
 };
@@ -74,7 +71,6 @@ interface CombinedChartsIncomingProps {
   reef: Reef;
   closestSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
-  showSpotterChart: boolean;
 }
 
 type CombinedChartsProps = CombinedChartsIncomingProps &

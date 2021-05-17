@@ -9,6 +9,7 @@ import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSurvey } from "../../../mocks/mockSurvey";
 import { mockCollection } from "../../../mocks/mockCollection";
+import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
 
 const mockStore = configureStore([]);
 
@@ -17,6 +18,8 @@ jest.mock(
   "../../../common/SiteDetails/FeaturedMedia",
   () => "Mock-FeaturedMedia"
 );
+
+jest.mock("../../../common/Chart/ChartWithCard", () => "Mock-ChartWithCard");
 
 jest.mock("react-chartjs-2", () => ({
   Line: () => "Mock-Line",
@@ -34,6 +37,7 @@ describe("Reef Detail Page", () => {
     const emptyStore = mockStore({
       selectedReef: {
         details: { ...mockReef, dailyData: [] },
+        timeSeriesDataRange: mockHoboDataRange,
         loading: false,
         error: null,
       },
@@ -70,6 +74,7 @@ describe("Reef Detail Page", () => {
     const fullStore = mockStore({
       selectedReef: {
         details: mockReef,
+        timeSeriesDataRange: mockHoboDataRange,
         loading: false,
         error: null,
       },

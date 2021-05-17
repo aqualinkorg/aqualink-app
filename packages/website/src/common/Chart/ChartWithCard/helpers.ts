@@ -15,7 +15,7 @@ import {
   TimeSeriesData,
 } from "../../../store/Reefs/types";
 import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn } from "./types";
+import { CardColumn, Dataset } from "./types";
 
 export const calculateCardMetrics = (
   minNumberOfPoints: number,
@@ -110,6 +110,20 @@ export const findDataLimits = (
         ).toISOString()
       : undefined,
   ];
+};
+
+export const findCardDataset = (
+  hasSpotterData: boolean,
+  hasHoboData: boolean
+): Dataset => {
+  switch (true) {
+    case hasSpotterData:
+      return "spotter";
+    case hasHoboData:
+      return "hobo";
+    default:
+      return "sst";
+  }
 };
 
 export const availableRangeString = (
