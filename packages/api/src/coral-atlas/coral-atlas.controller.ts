@@ -1,6 +1,8 @@
 import { Controller, Get, Param, ParseArrayPipe, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCloudAtlasSensorsResponse } from '../docs/api-cloud-atlas-response';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
+import { ApiTimeSeriesResponse } from '../docs/api-time-series-response';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { Metric } from '../time-series/metrics.entity';
 import { CoralAtlasService } from './coral-atlas.service';
@@ -10,12 +12,14 @@ import { CoralAtlasService } from './coral-atlas.service';
 export class CoralAtlasController {
   constructor(private coralAtlasService: CoralAtlasService) {}
 
+  @ApiCloudAtlasSensorsResponse()
   @ApiOperation({ summary: 'Get all sites having sensors' })
   @Get('sensors')
   findSensors() {
     return this.coralAtlasService.findSensors();
   }
 
+  @ApiTimeSeriesResponse()
   @ApiNestNotFoundResponse('No data were found with the specified sensor id')
   @ApiOperation({ summary: 'Get data from a specified sensor' })
   @Get('sensors/:id/data')

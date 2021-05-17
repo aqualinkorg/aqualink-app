@@ -3,7 +3,6 @@ import {
   ApiBody,
   ApiConsumes,
   ApiProperty,
-  ApiPropertyOptions,
   getSchemaPath,
 } from '@nestjs/swagger';
 import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
@@ -12,26 +11,10 @@ import {
   CreateReefApplicationDto,
   CreateReefDto,
 } from '../reefs/dto/create-reef.dto';
+import { PointSchema } from './api-schemas';
 
 export const ApiPointProperty = () => {
-  const schema: ApiPropertyOptions = {
-    type: 'object',
-    properties: {
-      type: {
-        type: 'string',
-      },
-      coordinates: {
-        type: 'array',
-        description: 'Longitude and latitude',
-        items: {
-          type: 'number',
-        },
-        example: [0, 0],
-      },
-    },
-  };
-
-  return applyDecorators(ApiProperty(schema));
+  return applyDecorators(ApiProperty(PointSchema));
 };
 
 export const ApiFileUpload = () => {

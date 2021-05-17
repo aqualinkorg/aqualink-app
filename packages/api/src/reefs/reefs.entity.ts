@@ -21,6 +21,7 @@ import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { SofarLiveData } from '../utils/sofar.types';
 import { CollectionData } from '../collections/collections.entity';
+import { ApiPointProperty } from '../docs/api-properties';
 
 export enum ReefStatus {
   InReview = 'in_review',
@@ -31,8 +32,8 @@ export enum ReefStatus {
   Maintenance = 'maintenance',
 }
 
-export enum SpotterType {
-  SofarSpotter = 'spotter_sensor',
+export enum SensorType {
+  SofarSpotter = 'sofar_spotter',
 }
 
 @Entity()
@@ -46,6 +47,7 @@ export class Reef {
   @Column({ nullable: true })
   spotterId?: string;
 
+  @ApiPointProperty()
   @Column({
     type: 'geometry',
     unique: true,

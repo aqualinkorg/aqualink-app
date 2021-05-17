@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Bluebird from 'bluebird';
 import { keyBy } from 'lodash';
-import { Point } from 'geojson';
+import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
-import { Reef, SpotterType } from '../reefs/reefs.entity';
+import { Reef, SensorType } from '../reefs/reefs.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -30,7 +30,9 @@ export class CoralAtlasService {
     private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
 
-  async findSensors() {
+  async findSensors(): Promise<
+    (Reef & { sensorPosition: GeoJSON; sensorType: SensorType })[]
+  > {
     const reefs = await this.reefRepository.find({
       where: { spotterId: Not(IsNull()) },
     });
@@ -74,11 +76,12 @@ export class CoralAtlasService {
       // If no longitude or latitude is provided by the spotter fallback to the site coordinates
       return {
         ...reef,
+        applied: reef.applied,
         sensorPosition: createPoint(
           longitude || reefPosition.coordinates[0],
           latitude || reefPosition.coordinates[1],
         ),
-        sensorType: SpotterType.SofarSpotter,
+        sensorType: SensorType.SofarSpotter,
       };
     });
   }

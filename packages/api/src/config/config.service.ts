@@ -6,6 +6,7 @@ import {
   CreateReefApplicationDto,
   CreateReefDto,
 } from '../reefs/dto/create-reef.dto';
+import { Reef } from '../reefs/reefs.entity';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
 try {
@@ -68,6 +69,7 @@ class ConfigService {
         UpdateReefApplicationDto,
         CreateReefDto,
         CreateReefApplicationDto,
+        Reef,
       ],
     };
 

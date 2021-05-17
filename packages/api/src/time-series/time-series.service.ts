@@ -1,5 +1,4 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import _ from 'lodash';
 import { Repository } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { ReefDataDto } from './dto/reef-data.dto';
@@ -43,7 +42,7 @@ export class TimeSeriesService {
       poiId,
     );
 
-    return _(groupByMetricAndSource(data));
+    return groupByMetricAndSource(data);
   }
 
   async findReefData(
