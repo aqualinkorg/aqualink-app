@@ -29,7 +29,6 @@ export class ReefApplication {
   @Column({ nullable: true })
   fundingSource?: string;
 
-  @ApiProperty({ example: 'Installation Schedule' })
   @Column({ nullable: true })
   installationSchedule?: Date;
 
@@ -37,7 +36,6 @@ export class ReefApplication {
   @Column({ nullable: true })
   installationResources?: string;
 
-  @ApiProperty({ example: 'Target Shipdate' })
   @Column({ nullable: true })
   targetShipdate?: Date;
 

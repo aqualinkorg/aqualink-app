@@ -16,9 +16,13 @@ async function bootstrap() {
   });
   const app = await NestFactory.create(AppModule);
 
-  const { config, options } = configService.getSwaggerConfig();
-  const document = SwaggerModule.createDocument(app, config, options);
-  SwaggerModule.setup('api', app, document);
+  const {
+    config,
+    documentOptions,
+    customOptions,
+  } = configService.getSwaggerConfig();
+  const document = SwaggerModule.createDocument(app, config, documentOptions);
+  SwaggerModule.setup('api', app, document, customOptions);
 
   app.enableCors();
   app.useGlobalPipes(

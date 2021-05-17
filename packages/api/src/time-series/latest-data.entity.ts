@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   Connection,
@@ -32,18 +33,21 @@ import { TimeSeries } from './time-series.entity';
   materialized: true,
 })
 export class LatestData {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
   timestamp: Date;
 
+  @ApiProperty({ example: 11.05 })
   @Column({ type: 'float', nullable: false })
   value: number;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
+  @ApiProperty({ example: 15 })
   @RelationId((latestData: LatestData) => latestData.reef)
   reefId: number;
 

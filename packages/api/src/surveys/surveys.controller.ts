@@ -44,7 +44,11 @@ export class SurveysController {
   @ApiFileUpload()
   @ApiCreatedResponse({
     description: 'Returns the public url to access the uploaded media',
-    type: String,
+    schema: {
+      type: 'string',
+      example:
+        'https://storage.googleapis.com/storage/reef-image-1029381082910831.jpg',
+    },
   })
   @ApiOperation({ summary: 'Uploads a new survey media' })
   @Post('upload')

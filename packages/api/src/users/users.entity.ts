@@ -66,9 +66,11 @@ export class User {
   })
   adminLevel: AdminLevel;
 
+  @ApiProperty({ example: 'Some description' })
   @Column({ nullable: true })
   description?: string;
 
+  @ApiProperty({ example: 'http://some-sample-url.com' })
   @Column({ nullable: true })
   imageUrl?: string;
 

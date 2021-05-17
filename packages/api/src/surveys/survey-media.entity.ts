@@ -78,7 +78,7 @@ export class SurveyMedia {
     nullable: true,
   })
   @JoinColumn({ name: 'poi_id' })
-  poiId?: ReefPointOfInterest;
+  poi?: ReefPointOfInterest;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -13,15 +13,6 @@ import {
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 
-export interface CollectionData {
-  bottomTemperature: number | undefined;
-  topTemperature: number | undefined;
-  satelliteTemperature: number | undefined;
-  degreeHeatingDays: number | undefined;
-  weeklyAlertLevel: number | undefined;
-  sstAnomaly: number | undefined;
-}
-
 @Entity()
 export class Collection {
   @ApiProperty({ example: 1 })

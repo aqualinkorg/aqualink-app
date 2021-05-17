@@ -19,9 +19,11 @@ export class ReefPointOfInterest {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 1 })
   @Column({ nullable: true })
   poiLabelId?: number;
 
+  @ApiProperty({ example: 'http://some-sample-url.com' })
   @Column({ nullable: true })
   imageUrl?: string;
 
@@ -32,7 +34,7 @@ export class ReefPointOfInterest {
   @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   reef: Reef;
 
-  @ApiProperty({ example: [1, 2, 3] })
+  @ApiProperty({ example: 1 })
   @RelationId((poi: ReefPointOfInterest) => poi.reef)
   reefId: number;
 
