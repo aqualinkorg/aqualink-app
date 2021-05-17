@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsInt,
   IsEnum,
+  IsBooleanString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ReefStatus } from '../reefs.entity';
@@ -28,4 +29,8 @@ export class FilterReefDto {
   @Type(() => Number)
   @IsInt()
   readonly adminId?: number;
+
+  @IsOptional()
+  @IsBooleanString()
+  readonly hasSpotter?: string;
 }

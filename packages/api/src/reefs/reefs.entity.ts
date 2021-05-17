@@ -31,6 +31,10 @@ export enum ReefStatus {
   Maintenance = 'maintenance',
 }
 
+export enum SpotterType {
+  SofarSpotter = 'spotter_sensor',
+}
+
 @Entity()
 export class Reef {
   @PrimaryGeneratedColumn()

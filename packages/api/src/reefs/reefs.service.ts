@@ -168,14 +168,17 @@ export class ReefsService {
         name: `%${filter.name.toLowerCase()}%`,
       });
     }
+
     if (filter.status) {
       query.andWhere('reef.status = :status', { status: filter.status });
     }
+
     if (filter.regionId) {
       query.andWhere('reef.region = :region', {
         region: filter.regionId,
       });
     }
+
     if (filter.adminId) {
       query.innerJoin(
         'reef.admins',
@@ -184,6 +187,14 @@ export class ReefsService {
         { adminId: filter.adminId },
       );
     }
+
+    if (filter.hasSpotter) {
+      const hasSpotter = filter.hasSpotter.toLowerCase() === 'true';
+      query.andWhere(
+        hasSpotter ? 'reef.spotter_id IS NOT NULL' : 'reef.spotter_id IS NULL',
+      );
+    }
+
     const res = await query
       .leftJoinAndSelect('reef.region', 'region')
       .leftJoinAndSelect('reef.admins', 'admins')
