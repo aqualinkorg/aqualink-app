@@ -13,4 +13,7 @@ export interface CardColumn {
   color: string;
   rows: { key: string; value: number | undefined }[];
   tooltip?: string;
+  display: boolean;
 }
+
+export type Dataset = "spotter" | "hobo" | "sst";

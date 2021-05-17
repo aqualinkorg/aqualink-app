@@ -8,6 +8,7 @@ import {
   createStyles,
   CircularProgress,
   useTheme,
+  Theme,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector } from "react-redux";
@@ -69,16 +70,31 @@ const Chart = ({
     surveysFiltered ? pointId || -1 : -1
   );
 
+  const dailyDataSst = dailyData.map((item) => ({
+    timestamp: item.date,
+    value: item.satelliteTemperature,
+  }));
+
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
   const hasSpotterTop = !!spotterData?.topTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
 
+  const hasDailyData = !!dailyDataSst?.[1];
+
   const loading = isTimeSeriesDataLoading || isTimeSeriesDataRangeLoading;
 
-  const success = !pickerErrored && !loading && (hasHoboData || hasSpotterData);
-  const warning = !pickerErrored && !loading && !hasHoboData && !hasSpotterData;
+  const success =
+    !pickerErrored &&
+    !loading &&
+    (hasHoboData || hasSpotterData || hasDailyData);
+  const warning =
+    !pickerErrored &&
+    !loading &&
+    !hasHoboData &&
+    !hasSpotterData &&
+    !hasDailyData;
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
@@ -95,9 +111,8 @@ const Chart = ({
 
   const noDataMessage = () => (
     <Box
-      mt="16px"
-      mb="16px"
-      height="217px"
+      margin="8px 0"
+      height="215px"
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -112,9 +127,9 @@ const Chart = ({
     <>
       {loading && (
         <Box
-          height="285px"
-          mt="16px"
-          mb="16px"
+          height="275px"
+          mt="8px"
+          mb="8px"
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -124,7 +139,7 @@ const Chart = ({
       )}
       {pickerErrored && (
         <>
-          <Box mt="16px">
+          <Box mt="8px">
             <Alert severity="error">
               <Typography>Start Date should not be after End Date</Typography>
             </Alert>
@@ -134,7 +149,7 @@ const Chart = ({
       )}
       {warning && (
         <>
-          <Box mt="16px">
+          <Box mt="8px">
             <Alert severity="warning">
               <Typography>
                 {minDateLocal && maxDateLocal
@@ -172,6 +187,7 @@ const Chart = ({
           startDate={convertToLocalTime(startDate, reef.timezone)}
           endDate={convertToLocalTime(endDate, reef.timezone)}
           showYearInTicks={moreThanOneYear(startDate, endDate)}
+          fill={false}
         />
       )}
       {!isTimeSeriesDataRangeLoading && (
@@ -213,11 +229,11 @@ const Chart = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     chart: {
-      height: 290,
-      margin: "16px 0",
+      height: 275,
+      margin: `${theme.spacing(1)}px 0`,
     },
 
     datePickersWrapper: {

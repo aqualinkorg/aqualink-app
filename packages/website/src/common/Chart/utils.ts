@@ -518,7 +518,8 @@ export const createChartData = (
   bottomTemps: ChartPoint[],
   historicalMonthlyMean: ChartPoint[],
   surveyDate: Date | null,
-  temperatureThreshold: number | null
+  temperatureThreshold: number | null,
+  fill: boolean
 ) => {
   const displaySpotterData = spotterTop.length > 0;
   const data: ChartComponentProps["data"] = {
@@ -536,7 +537,7 @@ export const createChartData = (
       {
         label: "SURFACE TEMP",
         data: createGaps(surfaceTemps, 2),
-        fill: !displaySpotterData && hoboBottom.length === 0,
+        fill,
         borderColor: "#6bc1e1",
         borderWidth: 2,
         pointBackgroundColor: "#ffffff",
