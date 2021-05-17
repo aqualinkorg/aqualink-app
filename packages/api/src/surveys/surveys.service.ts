@@ -91,7 +91,7 @@ export class SurveysService {
 
     return this.surveyMediaRepository.save({
       ...createSurveyMediaDto,
-      poi: { id: createSurveyMediaDto.poi },
+      poi: { id: createSurveyMediaDto.poiId },
       featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
       type: MediaType.Image,
       surveyId: survey,
@@ -268,9 +268,9 @@ export class SurveysService {
 
     const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
     await this.surveyMediaRepository.update(mediaId, {
-      ...omit(editSurveyMediaDto, 'poi'),
-      ...(editSurveyMediaDto.poi
-        ? { poi: { id: editSurveyMediaDto.poi } }
+      ...omit(editSurveyMediaDto, 'poiId'),
+      ...(editSurveyMediaDto.poiId
+        ? { poi: { id: editSurveyMediaDto.poiId } }
         : {}),
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
       ...(trimmedComments ? { comments: trimmedComments } : {}),

@@ -48,5 +48,5 @@ export class CreateSurveyMediaDto {
   @IsInt()
   @IsOptional()
   @Validate(EntityExists, [ReefPointOfInterest])
-  readonly poi: number;
+  readonly poiId: number;
 }
