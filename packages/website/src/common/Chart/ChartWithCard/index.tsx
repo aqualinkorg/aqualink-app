@@ -4,8 +4,6 @@ import {
   createStyles,
   Grid,
   Theme,
-  useMediaQuery,
-  useTheme,
   WithStyles,
   withStyles,
 } from "@material-ui/core";
@@ -13,6 +11,8 @@ import classnames from "classnames";
 import moment from "moment";
 import { isNaN } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import { utcToZonedTime } from "date-fns-tz";
+
 import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
@@ -28,7 +28,7 @@ import {
   setTimeZone,
   subtractFromDate,
 } from "../../../helpers/dates";
-import { findDataLimits } from "./helpers";
+import { findCardDataset, findDataLimits } from "./helpers";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
@@ -41,10 +41,6 @@ const ChartWithCard = ({
   disableGutters,
   classes,
 }: ChartWithCardProps) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const isTablet = useMediaQuery(theme.breakpoints.up("md"));
-
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const timeSeriesData = useSelector(reefTimeSeriesDataSelector);
@@ -62,24 +58,21 @@ const ChartWithCard = ({
 
   const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
 
+  const dailyDataSst = granularDailyData?.map((item) => ({
+    timestamp: item.date,
+    value: item.satelliteTemperature,
+  }));
+
   const hasSpotterData = Boolean(
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 
-  const chartWidthClass = () => {
-    switch (true) {
-      case hasSpotterData && hasHoboData:
-        return classes.smallChart;
-      case hasSpotterData && !hasHoboData:
-        return classes.mediumChart;
-      case !hasSpotterData && hasHoboData:
-        return classes.largeChart;
-      default:
-        return "";
-    }
-  };
+  const cardDataset = findCardDataset(hasSpotterData, hasHoboData);
+
+  const chartWidthClass =
+    cardDataset === "spotter" ? classes.smallChart : classes.largeChart;
 
   const chartStartDate = startDate || subtractFromDate(today, "week");
   const chartEndDate = moment
@@ -95,16 +88,15 @@ const ChartWithCard = ({
   useEffect(() => {
     if (hoboBottomTemperatureRange) {
       const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
-      const localizedMaxDate = new Date(
-        moment(maxDate)
-          .tz(reef.timezone || "UTC")
-          .format("MM/DD/YYYY")
-      ).toISOString();
-      const pastThreeMonths = subtractFromDate(localizedMaxDate, "month", 3);
-      setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
-      setPickerStartDate(pastThreeMonths);
+      const pastThreeMonths = subtractFromDate(maxDate || today, "month", 3);
+      setPickerEndDate(
+        utcToZonedTime(maxDate || today, reef.timezone || "UTC").toISOString()
+      );
+      setPickerStartDate(
+        utcToZonedTime(pastThreeMonths, reef.timezone || "UTC").toISOString()
+      );
     }
-  }, [hoboBottomTemperatureRange, reef.timezone]);
+  }, [hoboBottomTemperatureRange, reef.timezone, today]);
 
   // Get time series data
   useEffect(() => {
@@ -261,17 +253,13 @@ const ChartWithCard = ({
   return (
     <Container
       disableGutters={disableGutters}
-      className={classnames(classes.chartWithRange, {
-        [classes.extraPadding]:
-          (hasSpotterData && isDesktop) || (!hasSpotterData && isTablet),
-      })}
+      className={classes.chartWithRange}
     >
       <ViewRange
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
         title={title}
-        hasSpotterData={hasSpotterData}
         timeSeriesDataRanges={timeSeriesDataRanges}
         timeZone={reef.timezone}
       />
@@ -282,7 +270,7 @@ const ChartWithCard = ({
         item
         spacing={1}
       >
-        <Grid className={classnames(classes.chart, chartWidthClass())} item>
+        <Grid className={classnames(classes.chart, chartWidthClass)} item>
           <Chart
             reef={reef}
             dailyData={granularDailyData || []}
@@ -302,6 +290,7 @@ const ChartWithCard = ({
         {!pickerErrored && (
           <Grid className={classes.card} item>
             <TempAnalysis
+              dataset={cardDataset}
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
               }
@@ -309,6 +298,7 @@ const ChartWithCard = ({
               chartStartDate={chartStartDate}
               chartEndDate={chartEndDate}
               depth={reef.depth}
+              dailyDataSst={dailyDataSst || []}
               spotterData={spotterData}
               hoboBottomTemperature={hoboBottomTemperature || []}
               historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
@@ -335,11 +325,8 @@ const ChartWithCard = ({
 
 const styles = (theme: Theme) =>
   createStyles({
-    extraPadding: {
-      paddingRight: 12,
-    },
     chartWithRange: {
-      marginTop: 80,
+      marginTop: theme.spacing(4),
     },
     chartWrapper: {
       marginBottom: 20,
@@ -360,14 +347,9 @@ const styles = (theme: Theme) =>
         width: "calc(100% - 240px)",
       },
     },
-    mediumChart: {
-      [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 320px)",
-      },
-    },
     smallChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 405px)",
+        width: "calc(100% - 320px)",
       },
     },
     card: {
