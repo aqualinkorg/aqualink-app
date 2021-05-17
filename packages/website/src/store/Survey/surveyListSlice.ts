@@ -40,13 +40,13 @@ const surveyListSlice = createSlice({
       return {
         ...state,
         list: state.list.map((item) => {
-          if (item.featuredSurveyMedia?.poiId?.id === action.payload.id) {
+          if (item.featuredSurveyMedia?.poi?.id === action.payload.id) {
             return {
               ...item,
               featuredSurveyMedia: {
                 ...item.featuredSurveyMedia,
-                poiId: {
-                  ...item.featuredSurveyMedia.poiId,
+                poi: {
+                  ...item.featuredSurveyMedia.poi,
                   name: action.payload.name,
                 },
               },

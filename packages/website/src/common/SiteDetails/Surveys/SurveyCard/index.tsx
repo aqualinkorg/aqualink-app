@@ -59,7 +59,7 @@ const SurveyCard = ({
                 </Typography>
               </Grid>
             )}
-            {survey.featuredSurveyMedia?.poiId?.name && (
+            {survey.featuredSurveyMedia?.poi?.name && (
               <Grid container alignItems="center" item xs={12}>
                 <Typography className={classes.cardFields} variant="h6">
                   Survey Point:
@@ -67,19 +67,19 @@ const SurveyCard = ({
                 <Typography
                   className={`${classes.cardValues} ${classes.valuesWithMargin} ${classes.blueText}`}
                   variant="h6"
-                  title={survey.featuredSurveyMedia.poiId.name}
+                  title={survey.featuredSurveyMedia.poi.name}
                 >
                   <CustomLink
                     to={`/reefs/${reefId}/points/${
                       isShowingFeatured
-                        ? survey.featuredSurveyMedia.poiId.id
+                        ? survey.featuredSurveyMedia.poi.id
                         : pointId
                     }`}
                     isIcon={false}
                     tooltipTitle=""
                     content={
                       pointName === "All"
-                        ? survey.featuredSurveyMedia.poiId.name
+                        ? survey.featuredSurveyMedia.poi.name
                         : pointName
                     }
                   />

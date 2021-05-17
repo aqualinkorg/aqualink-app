@@ -15,7 +15,7 @@ export const getNumberOfVideos = (surveyMedia: SurveyMedia[]) => {
 };
 
 export const getSurveyPointNames = (surveyMedia: SurveyMedia[]) => {
-  return [...new Set(surveyMedia.map((media) => media.poiId?.name))].filter(
+  return [...new Set(surveyMedia.map((media) => media.poi?.name))].filter(
     (value) => value
   );
 };
@@ -25,18 +25,18 @@ export const getNumberOfSurveyPoints = (surveyMedia: SurveyMedia[]) => {
 };
 
 export const getSurveyPointsByName = (surveyMedia: SurveyMedia[]) => {
-  const sortedByPoiName = sortBy(surveyMedia, (media) => media.poiId?.name);
+  const sortedByPoiName = sortBy(surveyMedia, (media) => media.poi?.name);
   const groupedMediaByPointName = groupBy(
     sortedByPoiName.map((media) => ({
       ...media,
-      poiName: media.poiId?.name || "Other",
+      poiName: media.poi?.name || "Other",
     })),
     "poiName"
   );
   return Object.entries(groupedMediaByPointName).map(
     ([name, pointSurveyMedia]) => ({
       name,
-      pointId: pointSurveyMedia[0].poiId?.id,
+      pointId: pointSurveyMedia[0].poi?.id,
       surveyMedia: pointSurveyMedia,
     })
   );
