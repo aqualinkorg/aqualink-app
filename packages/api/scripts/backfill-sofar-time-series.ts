@@ -69,7 +69,7 @@ async function run() {
   const fn = getTaskFn(task);
 
   if (!fn) {
-    return null;
+    throw new Error(`Task ${task} does not exist`);
   }
 
   return fn(parsedReefIds, days, connection, {
