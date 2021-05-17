@@ -14,6 +14,7 @@ import Buoy from "../../routes/Buoy";
 import Drones from "../../routes/Drones";
 import Faq from "../../routes/Faq";
 import Dashboard from "../../routes/Dashboard";
+import Tracker from "../../routes/Tracker";
 import theme from "./theme";
 import "leaflet/dist/leaflet.css";
 import "./App.css";
@@ -59,6 +60,7 @@ function App() {
                 <Route exact path="/terms" component={Terms} />
                 <Route path="/reefs" component={ReefRoutes} />
                 <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/tracker" component={Tracker} />
                 <Route
                   exact
                   path="/collections/:collectionName"

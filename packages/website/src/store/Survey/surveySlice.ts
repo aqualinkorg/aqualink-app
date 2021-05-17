@@ -98,6 +98,20 @@ const selectedSurvey = createSlice({
       ...state,
       selectedPoi: action.payload,
     }),
+    setFeaturedImage: (state, action: PayloadAction<number>) => ({
+      ...state,
+      details: state.details
+        ? {
+            ...state.details,
+            surveyMedia: state.details.surveyMedia
+              ? state.details.surveyMedia.map((media) => ({
+                  ...media,
+                  featured: media.id === action.payload,
+                }))
+              : state.details.surveyMedia,
+          }
+        : state.details,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -185,6 +199,10 @@ export const surveyErrorSelector = (
 ): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
 
 export const { setDiveLocation } = surveyFormDraft.actions;
-export const { setSelectedPoi, clearSurvey } = selectedSurvey.actions;
+export const {
+  setSelectedPoi,
+  clearSurvey,
+  setFeaturedImage,
+} = selectedSurvey.actions;
 
 export default survey;

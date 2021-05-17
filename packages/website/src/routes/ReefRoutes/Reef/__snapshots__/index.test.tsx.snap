@@ -57,6 +57,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           FAQ
         </mock-link>
         <mock-link
+          href="/tracker"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          TRACK A HEATWAVE
+        </mock-link>
+        <mock-link
           href="/register"
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
@@ -2584,6 +2590,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
         >
           FAQ
+        </mock-link>
+        <mock-link
+          href="/tracker"
+          style="margin: 1rem 2rem 2rem; font-size: 1rem; color: white;"
+        >
+          TRACK A HEATWAVE
         </mock-link>
         <mock-link
           href="/register"
