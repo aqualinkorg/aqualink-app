@@ -13,13 +13,13 @@ const { argv } = yargs
     alias: 'days',
     describe: 'Specify how far back we should backfill',
     type: 'number',
+    demandOption: true,
   })
   .option('r', {
     alias: 'reefs',
     describe: 'Specify the reefs which will be backfilled with data',
     type: 'array',
   })
-  .required('d')
   .help();
 
 async function run() {
