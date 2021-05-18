@@ -333,13 +333,13 @@ export async function getReefsDailyData(
             .andWhere('Date(date) = Date(:date)', { date: entity.date })
             .set(filteredData)
             .execute();
-          return;
+        } else {
+          console.error(
+            `Error updating data for Reef ${
+              reef.id
+            } & ${endOfDate.toDateString()}: ${err}.`,
+          );
         }
-        console.error(
-          `Error updating data for Reef ${
-            reef.id
-          } & ${endOfDate.toDateString()}: ${err}.`,
-        );
       }
     },
     { concurrency: 8 },
@@ -369,4 +369,3 @@ export async function runDailyUpdate(conn: Connection) {
     console.error(error);
   }
 }
-/* eslint-enable no-console */
