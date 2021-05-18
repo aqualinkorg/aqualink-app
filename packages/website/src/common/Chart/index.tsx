@@ -42,6 +42,7 @@ export interface ChartProps {
   maxMonthlyMean: number | null;
   background?: boolean;
   showYearInTicks?: boolean;
+  fill?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -108,6 +109,7 @@ function Chart({
   background,
   showYearInTicks,
   chartSettings = {},
+  fill = true,
   chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
@@ -300,7 +302,8 @@ function Chart({
         selectedSurvey?.diveDate
           ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
           : null,
-        temperatureThreshold
+        temperatureThreshold,
+        fill
       )}
     />
   );

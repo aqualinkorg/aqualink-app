@@ -32,7 +32,6 @@ const SiteDetails = ({
   hasDailyData,
   surveys,
   featuredSurveyPoint,
-  showSpotterChart,
   surveyDiveDate,
 }: SiteDetailsProps) => {
   const [lng, lat] = getMiddlePoint(reef.polygon);
@@ -151,7 +150,6 @@ const SiteDetails = ({
               reef={reef}
               closestSurveyPointId={closestSurveyPointId}
               surveys={surveys}
-              showSpotterChart={showSpotterChart}
             />
             <Surveys reef={reef} />
           </Box>
@@ -188,7 +186,6 @@ interface SiteDetailsIncomingProps {
   surveys: SurveyListItem[];
   featuredSurveyPoint?: SurveyPoint | null;
   surveyDiveDate?: string | null;
-  showSpotterChart: boolean;
 }
 
 SiteDetails.defaultProps = {

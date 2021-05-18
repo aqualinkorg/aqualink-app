@@ -24,7 +24,6 @@ import {
   reefErrorSelector,
   reefRequest,
   reefTimeSeriesDataRangeRequest,
-  reefTimeSeriesDataRangeSelector,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
 } from "../../../store/Reefs/selectedReefSlice";
@@ -101,8 +100,6 @@ const Reef = ({ match, classes }: ReefProps) => {
   const loading = useSelector(reefLoadingSelector);
   const error = useSelector(reefErrorSelector);
   const surveyList = useSelector(surveyListSelector);
-  const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const dispatch = useDispatch();
   const reefId = match.params.id;
   const { id, liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
@@ -121,12 +118,6 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasSpotterData = Boolean(liveData?.topTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
-
-  const hasRange = !!(
-    hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
-  );
-
-  const showSpotterChart = hasSpotterData || hasRange;
 
   // Fetch reef and surveys
   useEffect(() => {
@@ -193,7 +184,6 @@ const Reef = ({ match, classes }: ReefProps) => {
               surveys={surveyList}
               featuredSurveyPoint={featuredSurveyPoint}
               surveyDiveDate={diveDate}
-              showSpotterChart={showSpotterChart}
             />
           </>
         ) : (

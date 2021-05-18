@@ -4,8 +4,8 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
   hobo: {
     bottomTemperature: [
       {
-        minDate: "2017-11-02T14:59:08.000Z",
-        maxDate: "2020-02-02T20:59:08.000Z",
+        minDate: "2017-11-02T15:00:00.000Z",
+        maxDate: "2020-02-02T21:00:00.000Z",
       },
     ],
     alert: [],
