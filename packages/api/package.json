@@ -20,6 +20,8 @@
     "deploy:staging": "export DEPLOY_ENV=staging && yarn deploy:app",
     "deploy:programize": "export DEPLOY_ENV=programize && yarn deploy:app",
     "deploy:cloud-functions": "yarn build:cloud-functions && firebase deploy --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
+    "deploy:cloud-functions:staging": "yarn build:cloud-functions && firebase deploy -P aqualink-dev --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
+    "deploy:cloud-functions:programize": "yarn build:cloud-functions && firebase deploy -P aqualink-programize --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
     "start:dev": "cp .env.local .env && nodemon --config nodemon.json",
