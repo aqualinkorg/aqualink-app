@@ -120,7 +120,7 @@ export class SurveysController {
   @Get(':id/media')
   findMedia(
     @Param('reef_id', ParseIntPipe) reefId: number,
-    @Param('id', ParseIntPipe) surveyId,
+    @Param('id', ParseIntPipe) surveyId: number,
   ): Promise<SurveyMedia[]> {
     return this.surveyService.findMedia(surveyId);
   }
