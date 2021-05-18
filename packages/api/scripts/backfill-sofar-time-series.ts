@@ -51,7 +51,7 @@ function getTaskFn(task: string) {
     case TaskType.SpotterBackfill:
       return addSpotterData;
     default:
-      return null;
+      throw new Error(`Task ${task} does not exist`);
   }
 }
 
@@ -67,10 +67,6 @@ async function run() {
   const timeSeriesRepository = connection.getRepository(TimeSeries);
 
   const fn = getTaskFn(task);
-
-  if (!fn) {
-    throw new Error(`Task ${task} does not exist`);
-  }
 
   return fn(parsedReefIds, days, connection, {
     reefRepository,
