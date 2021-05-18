@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { CoralAtlasController } from './coral-atlas.controller';
-import { CoralAtlasService } from './coral-atlas.service';
+import { SensorsController } from './sensors.controller';
+import { SensorsService } from './sensors.service';
 
 @Module({
-  controllers: [CoralAtlasController],
-  providers: [CoralAtlasService],
+  controllers: [SensorsController],
+  providers: [SensorsService],
   imports: [TypeOrmModule.forFeature([Reef, Survey, TimeSeries])],
 })
-export class CoralAtlasModule {}
+export class SensorsModule {}

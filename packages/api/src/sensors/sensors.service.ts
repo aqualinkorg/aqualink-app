@@ -18,7 +18,7 @@ import {
 } from '../utils/time-series.utils';
 
 @Injectable()
-export class CoralAtlasService {
+export class SensorsService {
   constructor(
     @InjectRepository(Reef)
     private reefRepository: Repository<Reef>,

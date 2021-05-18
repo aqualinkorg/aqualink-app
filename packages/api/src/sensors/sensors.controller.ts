@@ -5,16 +5,16 @@ import { ApiNestNotFoundResponse } from '../docs/api-response';
 import { ApiTimeSeriesResponse } from '../docs/api-time-series-response';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { Metric } from '../time-series/metrics.entity';
-import { CoralAtlasService } from './coral-atlas.service';
+import { SensorsService } from './sensors.service';
 
-@ApiTags('Coral Atlas')
-@Controller('coral-atlas')
-export class CoralAtlasController {
-  constructor(private coralAtlasService: CoralAtlasService) {}
+@ApiTags('Sensors')
+@Controller('sensors')
+export class SensorsController {
+  constructor(private coralAtlasService: SensorsService) {}
 
   @ApiCloudAtlasSensorsResponse()
   @ApiOperation({ summary: 'Get all sites having sensors' })
-  @Get('sensors')
+  @Get()
   findSensors() {
     return this.coralAtlasService.findSensors();
   }
@@ -22,7 +22,7 @@ export class CoralAtlasController {
   @ApiTimeSeriesResponse()
   @ApiNestNotFoundResponse('No data were found with the specified sensor id')
   @ApiOperation({ summary: 'Get data from a specified sensor' })
-  @Get('sensors/:id/data')
+  @Get(':id/data')
   findSensorData(
     @Param('id') sensorId: string,
     @Query('startDate', ParseDatePipe) startDate: Date,
@@ -41,7 +41,7 @@ export class CoralAtlasController {
   @ApiOperation({
     summary: 'Get surveys and survey media from a specified sensor',
   })
-  @Get('sensors/:id/surveys')
+  @Get(':id/surveys')
   findSensorSurveys(@Param('id') sensorId: string) {
     return this.coralAtlasService.findSensorSurveys(sensorId);
   }

@@ -14,7 +14,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { HealthCheckModule } from './health-check/health-check.module';
 import { TimeSeriesModule } from './time-series/time-series.module';
 import { CollectionsModule } from './collections/collections.module';
-import { CoralAtlasModule } from './coral-atlas/coral-atlas.module';
+import { SensorsModule } from './sensors/sensors.module';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { CoralAtlasModule } from './coral-atlas/coral-atlas.module';
     HealthCheckModule,
     TimeSeriesModule,
     CollectionsModule,
-    CoralAtlasModule,
+    SensorsModule,
   ],
 })
 export class AppModule {}
