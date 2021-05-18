@@ -29,7 +29,7 @@ export class Collection {
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
 
-  @ApiProperty({ example: [1, 2, 3] })
+  @ApiProperty({ example: 1 })
   @RelationId((collection: Collection) => collection.user)
   userId: number;
 

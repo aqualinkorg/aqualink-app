@@ -75,7 +75,7 @@ class ConfigService {
       ],
     };
 
-    // Disable try it out option as it will only add extra workload to the server
+    // Disable 'try it out' option as it will only add extra workload to the server
     // Reference: https://github.com/swagger-api/swagger-ui/issues/3725
     const customOptions: SwaggerCustomOptions = {
       swaggerOptions: {

@@ -29,6 +29,7 @@ export const ApiTimeSeriesResponse = () => {
                     },
                     value: {
                       type: 'number',
+                      example: '12.32',
                     },
                   },
                 },

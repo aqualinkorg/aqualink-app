@@ -1,11 +1,14 @@
-import { IsDateString, IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty } from 'class-validator';
 
 export class ExcludeSpotterDatesDto {
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @IsNotEmpty()
   startDate: Date;
 
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @IsNotEmpty()
   endDate: Date;
 }

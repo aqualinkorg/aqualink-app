@@ -80,7 +80,7 @@ export class CollectionsService {
     if (reefId) {
       query
         .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.reef_id = :reefId', { reefId });
+        .andWhere('reef.id = :reefId', { reefId });
     }
 
     return query.getMany();

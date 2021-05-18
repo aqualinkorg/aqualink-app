@@ -1,10 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsString,
-  IsOptional,
-  IsDateString,
-} from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, IsOptional, IsDate } from 'class-validator';
 
 export class UpdateReefApplicationDto {
   @ApiProperty({ example: 'Permit requirements' })
@@ -18,7 +14,8 @@ export class UpdateReefApplicationDto {
   readonly fundingSource: string;
 
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   readonly installationSchedule?: Date;
 
   @ApiProperty({ example: 'Installation Resources' })

@@ -15,6 +15,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { AcceptFile } from '../uploads/file.decorator';
@@ -51,6 +52,7 @@ export class SurveysController {
     },
   })
   @ApiOperation({ summary: 'Uploads a new survey media' })
+  @ApiParam({ name: 'reef_id', example: 1 })
   @Post('upload')
   @AcceptFile('file', ['image', 'video'], 'surveys', 'reef')
   upload(
@@ -66,6 +68,7 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No reef was found with the specified id')
   @ApiOperation({ summary: 'Creates a new survey' })
+  @ApiParam({ name: 'reef_id', example: 1 })
   @Post()
   create(
     @Body() createSurveyDto: CreateSurveyDto,
@@ -78,6 +81,8 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Creates a new survey media' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Post(':id/media')
   createMedia(
     @Body() createSurveyMediaDto: CreateSurveyMediaDto,
@@ -88,6 +93,7 @@ export class SurveysController {
   }
 
   @ApiOperation({ summary: "Returns all reef's survey" })
+  @ApiParam({ name: 'reef_id', example: 1 })
   @Public()
   @Get()
   find(@Param('reef_id', ParseIntPipe) reefId: number): Promise<Survey[]> {
@@ -96,6 +102,8 @@ export class SurveysController {
 
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Returns specified survey' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
   findOne(
@@ -106,6 +114,8 @@ export class SurveysController {
   }
 
   @ApiOperation({ summary: 'Returns all media of a specified survey' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/media')
   findMedia(
@@ -118,6 +128,8 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey media was found with the specified id')
   @ApiOperation({ summary: 'Updates a specified survey media' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Put('media/:id')
   updateMedia(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -130,6 +142,8 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Updates a specified survey' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Put(':id')
   update(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -142,6 +156,8 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Deletes a specified survey' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Delete(':id')
   delete(
     @Param('reef_id', ParseIntPipe) reefId: number,
@@ -153,6 +169,8 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey media was found with the specified id')
   @ApiOperation({ summary: 'Deletes a specified survey media' })
+  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'id', example: 1 })
   @Delete('media/:id')
   deleteMedia(
     @Param('reef_id', ParseIntPipe) reefId: number,

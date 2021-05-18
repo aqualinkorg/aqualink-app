@@ -19,6 +19,9 @@ export const ApiPointProperty = () => {
     properties: {
       type: {
         type: 'string',
+        // Since type can only be 'Point' for now, we declare it as a enum with a single value
+        // This is the only way to declare a constant value on a property
+        // Reference: https://swagger.io/docs/specification/describing-parameters/#constant
         enum: ['Point'],
       },
       coordinates: {

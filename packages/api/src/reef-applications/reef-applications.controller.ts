@@ -11,7 +11,13 @@ import {
   NotFoundException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
 import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
@@ -39,6 +45,7 @@ export class ReefApplicationsController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No reef application for specified reef was found')
   @ApiOperation({ summary: 'Returns reef application of specified reef' })
+  @ApiParam({ name: 'reef_id', example: 1 })
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.ReefManager)
   @UseGuards(IsReefAdminGuard)
   @Get('/reefs/:reef_id')
@@ -50,6 +57,8 @@ export class ReefApplicationsController {
 
   @ApiNestNotFoundResponse('No reef application was found')
   @ApiOperation({ summary: 'Returns reef application by its id and uid' })
+  @ApiParam({ name: 'id', example: '1' })
+  @ApiQuery({ name: 'uid', example: 'deadbeef42' })
   @Public()
   @Get(':id')
   async findOne(
@@ -68,6 +77,7 @@ export class ReefApplicationsController {
 
   @ApiNestNotFoundResponse('No reef application was found')
   @ApiOperation({ summary: 'Updates reef application by providing its hashId' })
+  @ApiParam({ name: 'hashId', example: 1 })
   @Public()
   @Put(':hashId')
   updateWithHash(
@@ -84,6 +94,7 @@ export class ReefApplicationsController {
     summary:
       'Updates reef application by providing its hashId. Needs authentication.',
   })
+  @ApiParam({ name: 'hashId', example: 1 })
   @UseGuards(IsReefAdminGuard)
   @Put(':hashId/reefs/:reef_id')
   update(

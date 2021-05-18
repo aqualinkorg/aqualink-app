@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsString, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEnum, IsString, IsOptional, IsDate } from 'class-validator';
 import { WeatherConditions } from '../surveys.entity';
 
 export class EditSurveyDto {
   @IsOptional()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   readonly diveDate?: Date;
 
   @IsOptional()
