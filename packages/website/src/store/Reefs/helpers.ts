@@ -74,7 +74,8 @@ export const mapTimeSeriesData = (
 ): TimeSeriesData => ({
   hobo: mapMetrics(timeSeriesData.hobo),
   spotter: mapMetrics(timeSeriesData.spotter),
-  sofarApi: mapMetrics(timeSeriesData.sofar_api),
+  sofarNoaa: mapMetrics(timeSeriesData.noaa),
+  sofarGfs: mapMetrics(timeSeriesData.gfs),
 });
 
 export const mapTimeSeriesDataRanges = (
@@ -82,5 +83,6 @@ export const mapTimeSeriesDataRanges = (
 ): TimeSeriesDataRange => ({
   hobo: mapMetrics(ranges.hobo),
   spotter: mapMetrics(ranges.spotter),
-  sofarApi: mapMetrics(ranges.sofar_api),
+  sofarNoaa: mapMetrics(ranges.noaa),
+  sofarGfs: mapMetrics(ranges.gfs),
 });
