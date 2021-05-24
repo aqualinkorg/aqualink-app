@@ -141,9 +141,9 @@ export type Metrics =
   | "windSpeed"
   | "windDirection";
 
-export type SourcesKeys = "spotter" | "hobo" | "sofar_api";
+export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs";
 
-export type Sources = "spotter" | "hobo" | "sofarApi";
+export type Sources = "spotter" | "hobo" | "sofarNoaa" | "sofarGfs";
 
 export type TimeSeries = Record<Metrics, SofarValue[]>;
 
