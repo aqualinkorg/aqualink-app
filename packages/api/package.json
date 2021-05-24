@@ -19,9 +19,9 @@
     "deploy:prod": "export DEPLOY_ENV=prod && yarn deploy:app",
     "deploy:staging": "export DEPLOY_ENV=staging && yarn deploy:app",
     "deploy:programize": "export DEPLOY_ENV=programize && yarn deploy:app",
-    "deploy:cloud-functions": "yarn build:cloud-functions && firebase deploy --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
-    "deploy:cloud-functions:staging": "yarn build:cloud-functions && firebase deploy -P aqualink-dev --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
-    "deploy:cloud-functions:programize": "yarn build:cloud-functions && firebase deploy -P aqualink-programize --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate",
+    "deploy:cloud-functions": "yarn build:cloud-functions && firebase deploy --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate,functions:scheduledSSTTimeSeriesUpdate",
+    "deploy:cloud-functions:staging": "yarn build:cloud-functions && firebase deploy -P aqualink-dev --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate,functions:scheduledSSTTimeSeriesUpdate",
+    "deploy:cloud-functions:programize": "yarn build:cloud-functions && firebase deploy -P aqualink-programize --only functions:pingService,functions:scheduledDailyUpdate,functions:scheduledSpotterTimeSeriesUpdate,functions:scheduledSSTTimeSeriesUpdate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "yarn run start:prod",
     "start:dev": "cp .env.local .env && nodemon --config nodemon.json",
@@ -48,10 +48,10 @@
     "seed:config": "yarn typeorm-seeding config",
     "seed:run": "yarn typeorm-seeding seed",
     "daily-worker": "ts-node -r dotenv/config scripts/daily-update.ts",
-    "backfill-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
+    "backfill-daily-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
     "augment-reefs": "ts-node -r dotenv/config scripts/augment-reef-data.ts",
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
-    "backfill-spotter-data": "ts-node -r dotenv/config scripts/backfill-spotter-data.ts"
+    "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",

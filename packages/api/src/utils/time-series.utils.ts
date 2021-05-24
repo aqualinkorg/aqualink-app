@@ -1,8 +1,9 @@
 import _, { omit } from 'lodash';
-import { Repository } from 'typeorm';
-import { SourceType } from '../reefs/sources.entity';
+import { IsNull, Repository } from 'typeorm';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
+import { Reef } from '../reefs/reefs.entity';
+import { Sources, SourceType } from '../reefs/sources.entity';
 
 export interface TimeSeriesData {
   value: number;
@@ -119,4 +120,50 @@ export const getDataRangeQuery = (
     .andWhere(poiCondition)
     .groupBy('metric, source.type')
     .getRawMany();
+};
+
+export const getNOAASource = async (
+  reef: Reef,
+  sourcesRepository: Repository<Sources>,
+) => {
+  return sourcesRepository
+    .findOne({
+      where: {
+        reef,
+        type: SourceType.NOAA,
+        poi: IsNull(),
+      },
+      relations: ['reef'],
+    })
+    .then((source) => {
+      if (source) {
+        return source;
+      }
+
+      return sourcesRepository.save({
+        reef,
+        type: SourceType.NOAA,
+      });
+    });
+};
+
+export const insertSSTToTimeSeries = async (
+  reef: Reef,
+  satelliteTemperature: number,
+  timestamp: Date,
+  NOAASource: Sources,
+  timeSeriesRepository: Repository<TimeSeries>,
+) => {
+  return timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .insert()
+    .values({
+      source: NOAASource,
+      metric: Metric.SATELLITE_TEMPERATURE,
+      timestamp,
+      reef,
+      value: satelliteTemperature,
+    })
+    .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
+    .execute();
 };

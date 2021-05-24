@@ -32,7 +32,20 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     windSpeed: [],
     windDirection: [],
   },
-  sofarApi: {
+  sofarNoaa: {
+    bottomTemperature: [],
+    alert: [],
+    dhw: [],
+    satelliteTemperature: [],
+    topTemperature: [],
+    sstAnomaly: [],
+    significantWaveHeight: [],
+    wavePeakPeriod: [],
+    waveMeanDirection: [],
+    windSpeed: [],
+    windDirection: [],
+  },
+  sofarGfs: {
     bottomTemperature: [],
     alert: [],
     dhw: [],

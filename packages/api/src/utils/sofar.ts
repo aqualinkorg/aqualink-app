@@ -29,6 +29,14 @@ export const getLatestData = (
 export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
   sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);
 
+export const filterSofarResponse = (responseData: any) => {
+  return (responseData
+    ? responseData.values.filter(
+        (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
+      )
+    : []) as SofarValue[];
+};
+
 axiosRetry(axios, { retries: 3 });
 
 export async function sofarHindcast(
@@ -150,11 +158,7 @@ export async function getSofarHindcastData(
   );
 
   // Filter out unkown values
-  return (hindcastVariables
-    ? hindcastVariables.values.filter(
-        (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
-      )
-    : []) as SofarValue[];
+  return filterSofarResponse(hindcastVariables);
 }
 
 function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
