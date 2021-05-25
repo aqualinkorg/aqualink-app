@@ -71,7 +71,6 @@ export class CollectionsService {
 
     if (user) {
       query.andWhere('collection.user_id = :userId', { userId: user.id });
-      query.andWhere('collection.is_public = FALSE');
     } else {
       query.andWhere('collection.is_public = TRUE');
     }
