@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -6,7 +6,7 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useLocation } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -29,42 +29,64 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
-  const { collectionName: urlCollectionName } = match.params;
+  const [publicNotFound, setPublicNotFound] = useState(false);
+  const { pathname } = useLocation();
+  const atDashboard = pathname.endsWith("/dashboard");
 
-  const urlCollectionId = urlCollectionName
-    ? collections[urlCollectionName]
-    : undefined;
-
+  // If we are at `/dashboard`, make a request for
+  // user's personal collection.
   useEffect(() => {
-    if (urlCollectionId) {
-      dispatch(collectionRequest({ id: urlCollectionId, isPublic: true }));
-    }
-  }, [urlCollectionId, dispatch]);
-
-  useEffect(() => {
-    if (!urlCollectionId && user?.token && user.collection?.id) {
+    if (atDashboard && user?.token && user.collection?.id) {
       dispatch(
         collectionRequest({
           id: user.collection.id,
-          isPublic: false,
           token: user.token,
         })
       );
     }
-  }, [urlCollectionId, dispatch, user]);
+  }, [atDashboard, dispatch, user]);
+
+  // If we are at `/collections/:collectionName`, look for this
+  // collection in the static public collections object. If it exists,
+  // make a request for this public collection, otherwise inform
+  // the user that this public collection does not exist.
+  useEffect(() => {
+    if (!atDashboard) {
+      const { collectionName: urlCollectionName } = match.params;
+      const urlCollectionId = urlCollectionName
+        ? collections[urlCollectionName]
+        : undefined;
+
+      if (urlCollectionId) {
+        setPublicNotFound(false);
+        dispatch(collectionRequest({ id: urlCollectionId, isPublic: true }));
+      } else {
+        setPublicNotFound(true);
+      }
+    }
+  }, [atDashboard, dispatch, match.params]);
+
+  const DashboardComponent = () => {
+    switch (true) {
+      case atDashboard && userLoading:
+        return <LinearProgress />;
+      case atDashboard && !user && !userLoading:
+        return (
+          <Delayed waitBeforeShow={1000}>
+            <FullScreenMessage message="Please sign in to view your dashboard" />
+          </Delayed>
+        );
+      case !atDashboard && publicNotFound:
+        return <FullScreenMessage message="Collection not found" />;
+      default:
+        return <DashboardContent />;
+    }
+  };
 
   return (
     <>
       <NavBar searchLocation={false} />
-      <div className={classes.root}>
-        {!user && !userLoading && !urlCollectionName && (
-          <Delayed waitBeforeShow={1000}>
-            <FullScreenMessage message="Please sign in to view your dashboard" />
-          </Delayed>
-        )}
-        {userLoading && !urlCollectionName && <LinearProgress />}
-        <DashboardContent />
-      </div>
+      <div className={classes.root}>{DashboardComponent()}</div>
       <Footer />
     </>
   );
