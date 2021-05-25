@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Survey } from './surveys.entity';
+import { SensorData, Survey } from './surveys.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
 export enum Observations {
@@ -76,4 +76,6 @@ export class SurveyMedia {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  sensorData?: SensorData;
 }

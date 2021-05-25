@@ -170,6 +170,7 @@ export class SurveysService {
         weatherConditions: survey.weatherConditions,
         user: survey.user,
         reef: survey.reef,
+        reefId: survey.reefId,
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||

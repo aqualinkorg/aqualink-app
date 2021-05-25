@@ -12,6 +12,11 @@ import { Reef } from '../reefs/reefs.entity';
 import { Sources } from '../reefs/sources.entity';
 import { Metric } from './metrics.entity';
 
+export interface TimeSeriesPoint {
+  timestamp: Date;
+  value: number;
+}
+
 @Entity()
 @Unique('no_duplicate_data', ['timestamp', 'reef', 'poi', 'metric', 'source'])
 @Unique('no_duplicate_reef_data', ['timestamp', 'reef', 'metric', 'source'])
