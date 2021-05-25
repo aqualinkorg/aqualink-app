@@ -18,7 +18,7 @@ export class Region {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 'Region Name' })
+  @ApiProperty({ example: 'United States' })
   @Column({ nullable: false })
   name: string;
 

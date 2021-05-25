@@ -20,7 +20,7 @@ export class CreateUserDto {
   @IsEmail()
   readonly email: string;
 
-  @ApiProperty({ example: 'Random Organization' })
+  @ApiProperty({ example: 'Ovio' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -31,7 +31,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   readonly location?: GeoJSON;
 
-  @ApiProperty({ example: 'Some country' })
+  @ApiProperty({ example: 'United States' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

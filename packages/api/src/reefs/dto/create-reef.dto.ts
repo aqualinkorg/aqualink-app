@@ -11,7 +11,7 @@ import {
 } from 'class-validator';
 
 export class CreateReefDto {
-  @ApiProperty({ example: 'New reef name' })
+  @ApiProperty({ example: 'Duxbury Reef' })
   @IsString()
   @IsNotEmpty()
   readonly name: string;

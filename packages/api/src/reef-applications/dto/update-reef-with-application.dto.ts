@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class UpdateReefWithApplicationDto {
-  @ApiProperty({ example: 'New reef name' })
+  @ApiProperty({ example: 'Duxbury Reef' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

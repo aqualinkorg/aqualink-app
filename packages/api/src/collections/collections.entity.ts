@@ -19,7 +19,7 @@ export class Collection {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 'Collection Name' })
+  @ApiProperty({ example: 'La Niña heatwave 20/21' })
   @Column({ nullable: false })
   name: string;
 

@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class FilterRegionDto {
-  @ApiProperty({ example: 'Some region name' })
+  @ApiProperty({ example: 'United States' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

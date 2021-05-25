@@ -12,7 +12,7 @@ import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../regions.entity';
 
 export class UpdateRegionDto {
-  @ApiProperty({ example: 'Some region name' })
+  @ApiProperty({ example: 'United States' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

@@ -29,7 +29,7 @@ class Coordinates {
 }
 
 export class UpdateReefDto {
-  @ApiProperty({ example: 'Updated reef name' })
+  @ApiProperty({ example: 'Duxbury Reef' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

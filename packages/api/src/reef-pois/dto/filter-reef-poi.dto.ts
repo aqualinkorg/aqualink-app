@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, IsOptional, IsInt } from 'class-validator';
 
 export class FilterReefPoiDto {
-  @ApiProperty({ example: 'Reef point of interest name' })
+  @ApiProperty({ example: 'Outer tide pool' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

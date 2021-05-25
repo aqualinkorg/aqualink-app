@@ -5,7 +5,7 @@ import { Reef } from '../../reefs/reefs.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class FilterCollectionDto {
-  @ApiProperty({ example: 'Some collection name' })
+  @ApiProperty({ example: 'La Niña heatwave 20/21' })
   @IsOptional()
   @IsString()
   name?: string;

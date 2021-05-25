@@ -10,7 +10,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ReefStatus } from '../reefs.entity';
 
 export class FilterReefDto {
-  @ApiProperty({ example: 'Some reef name' })
+  @ApiProperty({ example: 'Duxbury Reef' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

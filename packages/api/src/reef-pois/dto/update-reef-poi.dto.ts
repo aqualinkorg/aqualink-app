@@ -13,7 +13,7 @@ import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Reef } from '../../reefs/reefs.entity';
 
 export class UpdateReefPoiDto {
-  @ApiProperty({ example: 'Updated reef point of interest name' })
+  @ApiProperty({ example: 'Outer tide pool' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()

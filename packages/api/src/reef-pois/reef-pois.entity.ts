@@ -27,7 +27,7 @@ export class ReefPointOfInterest {
   @Column({ nullable: true })
   imageUrl?: string;
 
-  @ApiProperty({ example: 'Reef Point Of Interest Name' })
+  @ApiProperty({ example: 'Outer tide pool' })
   @Column({ nullable: false })
   name: string;
 

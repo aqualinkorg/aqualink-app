@@ -12,7 +12,7 @@ import { User } from '../../users/users.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class CreateCollectionDto {
-  @ApiProperty({ example: 'Some collection name' })
+  @ApiProperty({ example: 'La Niña heatwave 20/21' })
   @IsNotEmpty()
   @IsString()
   name: string;

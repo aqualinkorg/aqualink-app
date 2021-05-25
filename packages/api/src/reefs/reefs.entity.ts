@@ -39,7 +39,7 @@ export class Reef {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 'Reef Name' })
+  @ApiProperty({ example: 'Duxbury Reef' })
   @Column({ nullable: true })
   name?: string;
 

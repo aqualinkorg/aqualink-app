@@ -11,7 +11,7 @@ import { User } from '../../users/users.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class UpdateCollectionDto {
-  @ApiProperty({ example: 'Updated collection name' })
+  @ApiProperty({ example: 'La Niña heatwave 20/21' })
   @IsOptional()
   @IsString()
   name?: string;
