@@ -6,7 +6,7 @@ import {
   Query,
   ParseBoolPipe,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { ReefDataDto } from './dto/reef-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
@@ -29,6 +29,13 @@ export class TimeSeriesController {
     summary:
       'Returns specified time series data for a specified reef point of interest',
   })
+  @ApiQuery({ name: 'start', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({ name: 'end', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({
+    name: 'metrics',
+    example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
+  })
+  @ApiQuery({ name: 'hourly', example: false })
   @Get('reefs/:reefId/pois/:poiId')
   findPoiData(
     @Query('start', ParseDatePipe) startDate: Date,
@@ -50,6 +57,13 @@ export class TimeSeriesController {
   @ApiOperation({
     summary: 'Returns specified time series data for a specified reef',
   })
+  @ApiQuery({ name: 'start', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({ name: 'end', example: '2021-05-18T10:20:28.017Z' })
+  @ApiQuery({
+    name: 'metrics',
+    example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
+  })
+  @ApiQuery({ name: 'hourly', example: false })
   @Get('reefs/:reefId')
   findReefData(
     @Query('start', ParseDatePipe) startDate: Date,

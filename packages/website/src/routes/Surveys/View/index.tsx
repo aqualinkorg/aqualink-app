@@ -48,8 +48,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyListLoading = useSelector(surveyListLoadingSelector);
   const loading = surveyLoading || surveyListLoading;
 
-  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
-    ?.poiId?.id;
+  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)?.poi
+    ?.id;
 
   const dailyDataLen = reef.dailyData.length;
   const showChart =

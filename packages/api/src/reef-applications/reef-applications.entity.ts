@@ -8,6 +8,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
@@ -15,25 +16,30 @@ import { hashId } from '../utils/urls';
 
 @Entity()
 export class ReefApplication {
+  @ApiProperty({ example: 1 })
   @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 'Permit Requirements' })
   @Column({ nullable: true })
   permitRequirements?: string;
 
+  @ApiProperty({ example: 'Funding Source' })
   @Column({ nullable: true })
   fundingSource?: string;
 
   @Column({ nullable: true })
   installationSchedule?: Date;
 
+  @ApiProperty({ example: 'Installation Resource' })
   @Column({ nullable: true })
   installationResources?: string;
 
   @Column({ nullable: true })
   targetShipdate?: Date;
 
+  @ApiProperty({ example: 'Tracking URL' })
   @Column({ nullable: true })
   trackingUrl?: string;
 

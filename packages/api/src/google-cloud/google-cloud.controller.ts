@@ -18,7 +18,14 @@ export class GoogleCloudController {
   @ApiBearerAuth()
   @ApiOkResponse({
     description: 'An array of all dangling files',
-    type: [String],
+    schema: {
+      type: 'array',
+      items: {
+        type: 'string',
+        example:
+          'https://storage.googleapis.com/storage/reef-image-a5b5f5c5d5da5d5e.jpg',
+      },
+    },
   })
   @ApiOperation({ summary: 'Returns all files stored that are not used' })
   @Get('dangling')

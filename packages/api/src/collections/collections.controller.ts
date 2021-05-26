@@ -11,7 +11,12 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Auth } from '../auth/auth.decorator';
 import { AuthRequest } from '../auth/auth.types';
 import { CollectionGuard } from '../auth/collection.guard';
@@ -62,6 +67,7 @@ export class CollectionsController {
     summary: 'Fetch detailed data from specified public collection',
   })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
+  @ApiParam({ name: 'collectionId', example: 1 })
   @Public()
   @Get('public/:collectionId')
   findOnePublic(@Param('collectionId', ParseIntPipe) collectionId: number) {
@@ -74,6 +80,7 @@ export class CollectionsController {
   })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
   @ApiNestUnauthorizedResponse('Collection selected is not public')
+  @ApiParam({ name: 'collectionId', example: 1 })
   @UseGuards(CollectionGuard)
   @Get(':collectionId')
   findOne(@Param('collectionId', ParseIntPipe) collectionId: number) {
@@ -83,6 +90,7 @@ export class CollectionsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update specified collection' })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
+  @ApiParam({ name: 'collectionId', example: 1 })
   @UseGuards(CollectionGuard)
   @Put(':collectionId')
   update(
@@ -95,6 +103,7 @@ export class CollectionsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete specified collection' })
   @ApiNestNotFoundResponse('No collection was found with the specified id')
+  @ApiParam({ name: 'collectionId', example: 1 })
   @UseGuards(CollectionGuard)
   @Delete(':collectionId')
   delete(@Param('collectionId', ParseIntPipe) collectionId: number) {

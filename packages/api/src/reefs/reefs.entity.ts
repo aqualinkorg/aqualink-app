@@ -12,6 +12,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { Expose } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 import { Region } from '../regions/regions.entity';
 import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
@@ -19,8 +20,9 @@ import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
-import { SofarLiveData } from '../utils/sofar.types';
-import { CollectionData } from '../collections/collections.entity';
+import { ApiPointProperty } from '../docs/api-properties';
+import { SofarLiveDataDto } from './dto/live-data.dto';
+import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 
 export enum ReefStatus {
   InReview = 'in_review',
@@ -33,15 +35,19 @@ export enum ReefStatus {
 
 @Entity()
 export class Reef {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 'Duxbury Reef' })
   @Column({ nullable: true })
   name?: string;
 
+  @ApiProperty({ example: 'SPOT-0000' })
   @Column({ nullable: true })
   spotterId?: string;
 
+  @ApiPointProperty()
   @Column({
     type: 'geometry',
     unique: true,
@@ -51,6 +57,7 @@ export class Reef {
   @Index({ spatial: true })
   polygon: GeoJSON;
 
+  @ApiProperty({ example: 23 })
   @Column({ nullable: true })
   depth?: number;
 
@@ -67,9 +74,11 @@ export class Reef {
   @Column({ nullable: true })
   videoStream?: string;
 
+  @ApiProperty({ example: 33.54 })
   @Column('float', { nullable: true })
   maxMonthlyMean?: number;
 
+  @ApiProperty({ example: 'Pacific/Palau' })
   @Column({ nullable: true })
   timezone?: string;
 
@@ -108,9 +117,9 @@ export class Reef {
 
   hasHobo: boolean;
 
-  liveData?: SofarLiveData[];
+  liveData?: SofarLiveDataDto[];
 
-  collectionData?: CollectionData;
+  collectionData?: CollectionDataDto;
 
   @Expose()
   get applied(): boolean {

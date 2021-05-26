@@ -9,7 +9,12 @@ import {
   Get,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { AdminLevel, User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -43,6 +48,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No user was found with the specified id')
   @ApiOperation({ summary: 'Updates the access level of a user' })
+  @ApiParam({ name: 'id', example: 1 })
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Put(':id/level')
   setAdminLevel(
@@ -55,6 +61,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No user was found with the specified id')
   @ApiOperation({ summary: 'Deletes specified user' })
+  @ApiParam({ name: 'id', example: 1 })
   @OverrideLevelAccess(AdminLevel.SuperAdmin)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -16,12 +17,14 @@ import { Metric } from './metrics.entity';
 @Unique('no_duplicate_data', ['timestamp', 'reef', 'poi', 'metric', 'source'])
 @Unique('no_duplicate_reef_data', ['timestamp', 'reef', 'metric', 'source'])
 export class TimeSeries {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
   timestamp: Date;
 
+  @ApiProperty({ example: 11.05 })
   @Column({ type: 'float', nullable: false })
   value: number;
 

@@ -6,9 +6,11 @@ import {
   IsEnum,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 import { ReefStatus } from '../reefs.entity';
 
 export class FilterReefDto {
+  @ApiProperty({ example: 'Duxbury Reef' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -19,11 +21,13 @@ export class FilterReefDto {
   @IsEnum(ReefStatus)
   readonly status?: ReefStatus;
 
+  @ApiProperty({ example: 1 })
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   readonly regionId?: number;
 
+  @ApiProperty({ example: 1 })
   @IsOptional()
   @Type(() => Number)
   @IsInt()

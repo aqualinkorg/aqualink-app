@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { Survey } from './surveys.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 
@@ -27,12 +28,18 @@ export enum MediaType {
 
 @Entity()
 export class SurveyMedia {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({
+    example:
+      'https://storage.googleapis.com/storage/reef-image-a5b5f5c5d5da5d5e.jpg',
+  })
   @Column()
   url: string;
 
+  @ApiProperty({ example: 1 })
   @Column({ default: 1 })
   quality: number;
 
@@ -42,6 +49,7 @@ export class SurveyMedia {
   @Column()
   hidden: boolean;
 
+  @ApiProperty({ example: {} })
   @Column('json')
   metadata: string;
 
@@ -51,6 +59,7 @@ export class SurveyMedia {
   })
   observations: Observations;
 
+  @ApiProperty({ example: 'Survey media comments' })
   @Column({ nullable: true })
   comments: string;
 
@@ -69,7 +78,7 @@ export class SurveyMedia {
     nullable: true,
   })
   @JoinColumn({ name: 'poi_id' })
-  poiId?: ReefPointOfInterest;
+  poi?: ReefPointOfInterest;
 
   @CreateDateColumn()
   createdAt: Date;

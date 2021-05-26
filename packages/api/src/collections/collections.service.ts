@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
+import { Collection } from './collections.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
@@ -14,7 +15,7 @@ import { Metric } from '../time-series/metrics.entity';
 import { User } from '../users/users.entity';
 import { getSstAnomaly } from '../utils/liveData';
 import { hasHoboDataSubQuery } from '../utils/reef.utils';
-import { Collection, CollectionData } from './collections.entity';
+import { CollectionDataDto } from './dto/collection-data.dto';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
@@ -82,7 +83,7 @@ export class CollectionsService {
     if (reefId) {
       query
         .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.reef_id = :reefId', { reefId });
+        .andWhere('reef.id = :reefId', { reefId });
     }
 
     return query.getMany();
@@ -213,7 +214,7 @@ export class CollectionsService {
     );
 
     const mappedReefData = collection.reefs.reduce<
-      Record<number, CollectionData>
+      Record<number, CollectionDataDto>
     >((acc, reef) => {
       const sstValue = mappedLatestDailyData[reef.id]?.sst;
       const sst =
