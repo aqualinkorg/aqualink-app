@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
-import { Collection, CollectionData } from './collections.entity';
+import { Collection } from './collections.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { Sources, SourceType } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
