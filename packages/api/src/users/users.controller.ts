@@ -72,7 +72,6 @@ export class UsersController {
   @ApiOperation({
     summary: 'Returns the administered reefs of the signed in user',
   })
-  @OverrideLevelAccess(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
   @Get('current/administered-reefs')
   getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
     return this.usersService.getAdministeredReefs(req);

@@ -78,10 +78,16 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           classname="Tracker-card1-3"
           variant="outlined"
         >
-          <div
-            class="MuiCardMedia-root Tracker-image-5"
-            style="background-image: url(image1.png);"
-          />
+          <a
+            href="/collections/minderoo"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div
+              class="MuiCardMedia-root Tracker-image-5"
+              style="background-image: url(image1.png);"
+            />
+          </a>
         </mock-card>
       </div>
     </div>

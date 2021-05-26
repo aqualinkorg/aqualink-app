@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Typography,
@@ -7,7 +7,6 @@ import {
   WithStyles,
   createStyles,
   Button,
-  Box,
   Collapse,
   useMediaQuery,
   useTheme,
@@ -30,6 +29,7 @@ import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import reefServices from "../../../../services/reefServices";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
+import CollectionButton from "./CollectionButton";
 
 const ReefNavBar = ({
   hasDailyData,
@@ -53,18 +53,18 @@ const ReefNavBar = ({
     setExclusionDatesDeployDialogOpen,
   ] = useState(false);
 
-  const clearReefInfo = useCallback(() => {
+  const clearReefInfo = () => {
     if (!hasDailyData) {
       dispatch(setSelectedReef(null));
     }
-  }, [hasDailyData, dispatch]);
+  };
 
-  const onCloseForm = useCallback(() => {
+  const onCloseForm = () => {
     dispatch(setReefDraft(null));
     setEditEnabled(false);
-  }, [dispatch]);
+  };
 
-  const onOpenForm = useCallback(() => {
+  const onOpenForm = () => {
     if (reef.depth && reef.polygon.type === "Point") {
       dispatch(
         setReefDraft({
@@ -78,33 +78,24 @@ const ReefNavBar = ({
       );
     }
     setEditEnabled(true);
-  }, [
-    dispatch,
-    reef.depth,
-    reef.polygon.coordinates,
-    reef.polygon.type,
-    reefName,
-  ]);
+  };
 
-  const handleFormSubmit = useCallback(
-    (data: ReefUpdateParams) => {
-      if (user && user.token) {
-        setFormSubmitLoading(true);
-        reefServices
-          .updateReef(reef.id, data, user.token)
-          .then(() => dispatch(setReefData(data)))
-          .then(() => setAlertSeverity("success"))
-          .catch(() => setAlertSeverity("error"))
-          .finally(() => {
-            dispatch(setReefDraft(null));
-            setEditEnabled(false);
-            setAlertOpen(true);
-            setFormSubmitLoading(false);
-          });
-      }
-    },
-    [user, reef.id, dispatch]
-  );
+  const handleFormSubmit = (data: ReefUpdateParams) => {
+    if (user && user.token) {
+      setFormSubmitLoading(true);
+      reefServices
+        .updateReef(reef.id, data, user.token)
+        .then(() => dispatch(setReefData(data)))
+        .then(() => setAlertSeverity("success"))
+        .catch(() => setAlertSeverity("error"))
+        .finally(() => {
+          dispatch(setReefDraft(null));
+          setEditEnabled(false);
+          setAlertOpen(true);
+          setFormSubmitLoading(false);
+        });
+    }
+  };
 
   return (
     <>
@@ -177,30 +168,54 @@ const ReefNavBar = ({
               </Grid>
             ) : (
               <Grid container alignItems="center" item xs={10} spacing={1}>
-                <Grid item xs={12} md={8} direction="column" container>
-                  <Box>
-                    <Typography variant="h4">
-                      {reefName}
-                      {reefRegion && `, ${reefRegion}`}
-                    </Typography>
-                  </Box>
-                  {organizationName && (
-                    <Box>
-                      <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
-                    </Box>
-                  )}
-                  {lastSurvey && (
-                    <Box>
-                      <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
-                        {
-                          isoDate: lastSurvey,
-                          format: "MMM DD[,] YYYY",
-                          displayTimezone: false,
-                          timeZone: reef.timezone,
-                        }
-                      )}`}</Typography>
-                    </Box>
-                  )}
+                <Grid
+                  item
+                  xs={12}
+                  md={8}
+                  container
+                  alignItems="center"
+                  spacing={3}
+                >
+                  <Grid item>
+                    <Grid container direction="column">
+                      <Grid item>
+                        <Grid container alignItems="center">
+                          <Grid item xs={10}>
+                            <Typography variant="h4">
+                              {reefName}
+                              {reefRegion && `, ${reefRegion}`}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <CollectionButton
+                              reefId={reef.id}
+                              errorCallback={() => {
+                                setAlertOpen(true);
+                                setAlertSeverity("error");
+                              }}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      {organizationName && (
+                        <Grid item>
+                          <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
+                        </Grid>
+                      )}
+                      {lastSurvey && (
+                        <Grid item>
+                          <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
+                            {
+                              isoDate: lastSurvey,
+                              format: "MMM DD[,] YYYY",
+                              displayTimezone: false,
+                              timeZone: reef.timezone,
+                            }
+                          )}`}</Typography>
+                        </Grid>
+                      )}
+                    </Grid>
+                  </Grid>
                 </Grid>
                 {isAdmin && (
                   <Grid

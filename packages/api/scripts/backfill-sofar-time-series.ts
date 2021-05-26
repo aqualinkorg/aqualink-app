@@ -35,7 +35,6 @@ const { argv } = yargs
     type: 'array',
   })
   .check((args) => {
-    console.log(args.t);
     if (!Object.values(TaskType).includes(args.t as TaskType)) {
       throw new Error(`Task must be one of the following: [${tasks}]`);
     }
