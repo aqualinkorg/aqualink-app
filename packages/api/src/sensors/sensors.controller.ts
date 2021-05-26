@@ -4,7 +4,6 @@ import { ApiCloudAtlasSensorsResponse } from '../docs/api-cloud-atlas-response';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
 import { ApiTimeSeriesResponse } from '../docs/api-time-series-response';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
-import { Metric } from '../time-series/metrics.entity';
 import { SensorsService } from './sensors.service';
 
 @ApiTags('Sensors')
@@ -27,7 +26,7 @@ export class SensorsController {
     @Param('id') sensorId: string,
     @Query('startDate', ParseDatePipe) startDate: Date,
     @Query('endDate', ParseDatePipe) endDate: Date,
-    @Query('metrics', ParseArrayPipe) metrics: Metric[],
+    @Query('metrics', ParseArrayPipe) metrics: string[],
   ) {
     return this.coralAtlasService.findSensorData(
       sensorId,

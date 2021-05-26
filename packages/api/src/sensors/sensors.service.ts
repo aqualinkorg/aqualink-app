@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Bluebird from 'bluebird';
 import { groupBy, keyBy, mapValues } from 'lodash';
@@ -99,15 +99,25 @@ export class SensorsService {
     sensorId: string,
     startDate: Date,
     endDate: Date,
-    metrics: Metric[],
+    metrics: string[],
   ) {
+    metrics.forEach((metric) => {
+      if (!(Object as any).values(Metric).includes(metric)) {
+        throw new BadRequestException(
+          `Metrics array must be in the following format: metric1,metric2 where metric is one of ${Object.values(
+            Metric,
+          )}`,
+        );
+      }
+    });
+
     const reef = await getReefFromSensorId(sensorId, this.reefRepository);
 
     const data = await getDataQuery(
       this.timeSeriesRepository,
       startDate,
       endDate,
-      metrics,
+      metrics as Metric[],
       false,
       reef.id,
     );
