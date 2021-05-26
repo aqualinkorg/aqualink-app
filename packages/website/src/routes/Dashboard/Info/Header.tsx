@@ -10,7 +10,7 @@ import {
 import EmailIcon from "@material-ui/icons/Email";
 import classNames from "classnames";
 
-import { CollectionDetails } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/Collection/types";
 
 const Header = ({ collection, classes }: HeaderProps) => {
   const nSites = collection.reefs.length;

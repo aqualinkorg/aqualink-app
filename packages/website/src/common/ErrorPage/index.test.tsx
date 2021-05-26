@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 
 import ErrorPage from ".";
 import { mockUser } from "../../mocks/mockUser";
+import { mockCollection } from "../../mocks/mockCollection";
 
 const mockStore = configureStore([]);
 
@@ -15,6 +16,11 @@ describe("Error Page", () => {
     const store = mockStore({
       user: {
         userInfo: mockUser,
+        loading: false,
+        error: null,
+      },
+      collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },

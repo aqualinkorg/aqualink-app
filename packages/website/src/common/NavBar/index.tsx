@@ -8,7 +8,7 @@ import {
   Button,
   Menu,
   MenuItem,
-  Link as MuiLink,
+  Link,
   Box,
   Hidden,
   withStyles,
@@ -19,6 +19,7 @@ import {
   useMediaQuery,
   Divider,
 } from "@material-ui/core";
+import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -32,6 +33,10 @@ import Search from "../Search";
 import RouteButtons from "../RouteButtons";
 import MenuDrawer from "../MenuDrawer";
 import { userInfoSelector, signOutUser } from "../../store/User/userSlice";
+import {
+  clearCollection,
+  collectionDetailsSelector,
+} from "../../store/Collection/collectionSlice";
 
 const NavBar = ({
   searchLocation,
@@ -40,6 +45,7 @@ const NavBar = ({
   classes,
 }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
+  const storedCollection = useSelector(collectionDetailsSelector);
   const dispatch = useDispatch();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.up("md"));
@@ -57,6 +63,15 @@ const NavBar = ({
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const onUserSignOut = () => {
+    // Clear collection if it belongs to the signed in user
+    if (storedCollection?.id === user?.collection?.id) {
+      dispatch(clearCollection());
+    }
+    dispatch(signOutUser());
+    handleMenuClose();
   };
 
   return (
@@ -95,14 +110,14 @@ const NavBar = ({
                   <MenuIcon />
                 </IconButton>
 
-                <MuiLink className={classes.navBarLink} href="/map">
+                <Link className={classes.navBarLink} href="/map">
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
                   </Typography>
-                </MuiLink>
+                </Link>
               </Box>
             </Grid>
 
@@ -148,7 +163,7 @@ const NavBar = ({
                         ({ id, name, region }, index) => {
                           const reefIdentifier = name || region;
                           return (
-                            <MuiLink
+                            <Link
                               underline="none"
                               href={`/reefs/${id}`}
                               key={`reef-link-${id}`}
@@ -157,13 +172,12 @@ const NavBar = ({
                               <MenuItem className={classes.menuItem}>
                                 {reefIdentifier || `Reef ${index + 1}`}
                               </MenuItem>
-                            </MuiLink>
+                            </Link>
                           );
                         }
                       )}
-                      {/* TODO: Add dashboard button */}
-                      {/* <Divider className={classes.userMenuDivider} />
-                      <Link to="/dashboard" className={classes.menuItemLink}>
+                      <Divider className={classes.userMenuDivider} />
+                      <Link href="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"
                           className={classes.menuItem}
@@ -175,15 +189,12 @@ const NavBar = ({
                             <Grid item>Dashboard</Grid>
                           </Grid>
                         </MenuItem>
-                      </Link> */}
+                      </Link>
                       <Divider className={classes.userMenuDivider} />
                       <MenuItem
                         key="user-menu-logout"
                         className={classes.menuItem}
-                        onClick={() => {
-                          dispatch(signOutUser());
-                          handleMenuClose();
-                        }}
+                        onClick={onUserSignOut}
                       >
                         <Grid container spacing={1}>
                           <Grid item>
