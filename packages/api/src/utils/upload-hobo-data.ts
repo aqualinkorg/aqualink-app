@@ -450,8 +450,6 @@ const parseHoboData = async (
     );
     return parseCSV<Data>(filePath, headers, castFunction).map((data) => ({
       timestamp: data.dateTime,
-      reef: poi.reef,
-      poi,
       value: data.bottomTemperature,
       source: poiToSourceMap[poi.id],
       metric: Metric.BOTTOM_TEMPERATURE,
@@ -469,7 +467,7 @@ const parseHoboData = async (
     return acc.concat(minimum);
   }, []);
 
-  const groupedStartedDates = groupBy(startDates, (o) => o.reef.id);
+  const groupedStartedDates = groupBy(startDates, (o) => o.source.id);
 
   // Start a backfill for each reef
   const reefDiffDays: [number, number][] = Object.keys(groupedStartedDates).map(
@@ -483,7 +481,7 @@ const parseHoboData = async (
       const end = moment();
       const diff = Math.min(end.diff(start, 'd'), 200);
 
-      return [startDate.reef.id, diff];
+      return [startDate.source.reef.id, diff];
     },
   );
 

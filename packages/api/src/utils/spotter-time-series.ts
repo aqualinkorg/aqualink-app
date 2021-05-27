@@ -62,8 +62,7 @@ const getSpotterSources = (
 
 const saveDataBatch = (
   batch: SofarValue[],
-  reef: Reef,
-  reefToSource: Record<number, Sources>,
+  source: Sources,
   metric: Metric,
   timeSeriesRepository: Repository<TimeSeries>,
 ) => {
@@ -75,8 +74,7 @@ const saveDataBatch = (
         metric,
         value: data.value,
         timestamp: moment(data.timestamp).startOf('minute').toDate(),
-        reef,
-        source: reefToSource[reef.id],
+        source,
       })),
     )
     .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
@@ -135,8 +133,7 @@ export const addSpotterData = async (
               dataLabels.map(([spotterDataLabel, metric]) =>
                 saveDataBatch(
                   dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
-                  reef,
-                  reefToSource,
+                  reefToSource[reef.id],
                   metric,
                   repositories.timeSeriesRepository,
                 ),
