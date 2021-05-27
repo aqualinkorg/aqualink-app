@@ -111,7 +111,7 @@ const Reef = ({ match, classes }: ReefProps) => {
 
   const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
     featuredMedia || {};
-  const { poiId: featuredSurveyPoint, url } = featuredSurveyMedia || {};
+  const { poi: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
   const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
 

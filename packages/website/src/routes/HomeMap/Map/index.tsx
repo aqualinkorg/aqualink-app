@@ -19,7 +19,7 @@ import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
-import { CollectionDetails } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/Collection/types";
 import { MapLayerName } from "../../../store/Homepage/types";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;

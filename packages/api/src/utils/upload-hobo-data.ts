@@ -580,7 +580,7 @@ const uploadReefPhotos = async (
             featured: true,
             hidden: false,
             type: MediaType.Image,
-            poiId: image.poi,
+            poi: image.poi,
             surveyId: surveyEntity,
             metadata: JSON.stringify({}),
             observations: Observations.NoData,

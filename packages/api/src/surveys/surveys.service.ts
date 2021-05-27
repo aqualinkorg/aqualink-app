@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { omit } from 'lodash';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { Survey } from './surveys.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
@@ -90,6 +91,7 @@ export class SurveysService {
 
     return this.surveyMediaRepository.save({
       ...createSurveyMediaDto,
+      poi: { id: createSurveyMediaDto.poiId },
       featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
       type: MediaType.Image,
       surveyId: survey,
@@ -113,7 +115,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
-      .leftJoinAndSelect('featuredSurveyMedia.poiId', 'poi')
+      .leftJoinAndSelect('featuredSurveyMedia.poi', 'poi')
       .addSelect(['users.fullName', 'users.id'])
       .where('survey.reef_id = :reefId', { reefId })
       .getMany();
@@ -138,10 +140,10 @@ export class SurveysService {
         'surveys.reef_id = :reefId',
         { reefId },
       )
-      .groupBy('surveyMedia.surveyId, surveyMedia.poiId')
+      .groupBy('surveyMedia.surveyId, surveyMedia.poi')
       .select([
         'surveyMedia.surveyId',
-        'surveyMedia.poiId',
+        'surveyMedia.poi',
         'array_agg(surveyMedia.url) poi_images',
       ])
       .getRawMany();
@@ -191,7 +193,7 @@ export class SurveysService {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poiId', 'pois')
+      .leftJoinAndSelect('surveyMedia.poi', 'pois')
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -206,7 +208,7 @@ export class SurveysService {
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
     return this.surveyMediaRepository
       .createQueryBuilder('surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poiId', 'poi')
+      .leftJoinAndSelect('surveyMedia.poi', 'poi')
       .where('surveyMedia.surveyId = :surveyId', { surveyId })
       .getMany();
   }
@@ -267,7 +269,10 @@ export class SurveysService {
 
     const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
     await this.surveyMediaRepository.update(mediaId, {
-      ...editSurveyMediaDto,
+      ...omit(editSurveyMediaDto, 'poiId'),
+      ...(editSurveyMediaDto.poiId
+        ? { poi: { id: editSurveyMediaDto.poiId } }
+        : {}),
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
       ...(trimmedComments ? { comments: trimmedComments } : {}),
     });

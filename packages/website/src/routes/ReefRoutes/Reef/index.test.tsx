@@ -8,6 +8,7 @@ import Reef from ".";
 import { mockReef } from "../../../mocks/mockReef";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSurvey } from "../../../mocks/mockSurvey";
+import { mockCollection } from "../../../mocks/mockCollection";
 import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
 
 const mockStore = configureStore([]);
@@ -63,6 +64,11 @@ describe("Reef Detail Page", () => {
           details: null,
         },
       },
+      collection: {
+        details: mockCollection,
+        loading: false,
+        error: null,
+      },
     });
 
     const fullStore = mockStore({
@@ -94,6 +100,11 @@ describe("Reef Detail Page", () => {
         selectedSurvey: {
           details: mockSurvey,
         },
+      },
+      collection: {
+        details: mockCollection,
+        loading: false,
+        error: null,
       },
     });
 

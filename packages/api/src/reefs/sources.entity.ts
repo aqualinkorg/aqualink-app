@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   Entity,
@@ -20,6 +21,7 @@ export enum SourceType {
 @Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
 @Index(['reef', 'type'], { unique: true, where: '"poi_id" IS NULL' })
 export class Sources {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,9 +34,11 @@ export class Sources {
   @Column({ type: 'enum', enum: SourceType })
   type: SourceType;
 
+  @ApiProperty({ example: 12 })
   @Column('float', { nullable: true })
   depth: number;
 
+  @ApiProperty({ example: 'SPOT-0000' })
   @Column({ nullable: true })
   spotterId: string;
 }

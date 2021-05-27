@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,12 +12,15 @@ import { Reef } from './reefs.entity';
 @Entity()
 @Unique('UQ_MONTHS', ['reef', 'month'])
 export class HistoricalMonthlyMean {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 1, minimum: 1, maximum: 12 })
   @Column({ type: 'integer' })
   month: number;
 
+  @ApiProperty({ example: 24.21 })
   @Column({ type: 'float' })
   temperature: number;
 

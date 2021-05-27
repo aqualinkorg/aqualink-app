@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -12,20 +13,13 @@ import {
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 
-export interface CollectionData {
-  bottomTemperature: number | undefined;
-  topTemperature: number | undefined;
-  satelliteTemperature: number | undefined;
-  degreeHeatingDays: number | undefined;
-  weeklyAlertLevel: number | undefined;
-  sstAnomaly: number | undefined;
-}
-
 @Entity()
 export class Collection {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({ example: 'La Niña heatwave 20/21' })
   @Column({ nullable: false })
   name: string;
 
@@ -35,6 +29,7 @@ export class Collection {
   @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
 
+  @ApiProperty({ example: 1 })
   @RelationId((collection: Collection) => collection.user)
   userId: number;
 
@@ -42,6 +37,7 @@ export class Collection {
   @JoinTable()
   reefs: Reef[];
 
+  @ApiProperty({ example: [1, 2, 3] })
   @RelationId((collection: Collection) => collection.reefs)
   reefIds: number[];
 

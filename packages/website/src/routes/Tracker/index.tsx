@@ -81,7 +81,13 @@ const Tracker = ({ classes }: TrackerProps) => {
           </Grid>
           <Grid item xs={12} md={7} lg={8}>
             <Card className={classes.card1} variant="outlined">
-              <CardMedia className={classes.image} image={image1} />
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="/collections/minderoo"
+              >
+                <CardMedia className={classes.image} image={image1} />
+              </a>
             </Card>
           </Grid>
         </Grid>

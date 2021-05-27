@@ -25,7 +25,7 @@ export interface SurveyMedia {
   observations: Observations;
   comments: string | null;
   type: "image" | "video";
-  poiId?: SurveyPoint;
+  poi?: SurveyPoint;
 }
 
 export interface SurveyMediaUpdateRequestData {
@@ -33,7 +33,7 @@ export interface SurveyMediaUpdateRequestData {
   hidden?: boolean;
   observations?: Observations;
   comments?: string;
-  poiId?: SurveyPoint;
+  poi?: SurveyPoint;
 }
 export interface SurveyPoint {
   id?: number;

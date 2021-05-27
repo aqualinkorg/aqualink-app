@@ -1,4 +1,8 @@
-import { DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerCustomOptions,
+  SwaggerDocumentOptions,
+} from '@nestjs/swagger';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
 import { UpdateReefWithApplicationDto } from '../reef-applications/dto/update-reef-with-application.dto';
@@ -63,7 +67,7 @@ class ConfigService {
       .addBearerAuth()
       .build();
 
-    const options: SwaggerDocumentOptions = {
+    const documentOptions: SwaggerDocumentOptions = {
       extraModels: [
         UpdateReefWithApplicationDto,
         UpdateReefApplicationDto,
@@ -73,7 +77,19 @@ class ConfigService {
       ],
     };
 
-    return { config, options };
+    // Disable 'try it out' option as it will only add extra workload to the server
+    // Reference: https://github.com/swagger-api/swagger-ui/issues/3725
+    const customOptions: SwaggerCustomOptions = {
+      swaggerOptions: {
+        plugins: {
+          statePlugins: {
+            spec: { wrapSelectors: { allowTryItOutFor: () => () => false } },
+          },
+        },
+      },
+    };
+
+    return { config, documentOptions, customOptions };
   }
 }
 

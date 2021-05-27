@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@material-ui/core";
 
-import { CollectionDetails } from "../../../store/User/types";
+import { CollectionDetails } from "../../../store/Collection/types";
 import Header from "./Header";
 import BarChart from "./BarChart";
 

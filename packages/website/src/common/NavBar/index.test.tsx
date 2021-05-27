@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 import HomePageNavBar from ".";
 import { mockUser } from "../../mocks/mockUser";
+import { mockCollection } from "../../mocks/mockCollection";
 
 jest.mock("../RegisterDialog", () => "Mock-RegisterDialog");
 jest.mock("../SignInDialog", () => "Mock-SignInDialog");
@@ -20,6 +21,11 @@ describe("NavBar with routeButtons", () => {
     const store = mockStore({
       user: {
         userInfo: mockUser,
+        loading: false,
+        error: null,
+      },
+      collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },
@@ -47,6 +53,11 @@ describe("NavBar without routeButtons", () => {
     const store = mockStore({
       user: {
         userInfo: mockUser,
+        loading: false,
+        error: null,
+      },
+      collection: {
+        details: mockCollection,
         loading: false,
         error: null,
       },

@@ -9,6 +9,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Reef } from '../reefs/reefs.entity';
 import { ApiPointProperty } from '../docs/api-properties';
@@ -21,20 +22,25 @@ export enum AdminLevel {
 
 @Entity({ name: 'users' })
 export class User {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiHideProperty()
   @Exclude()
   @Column({ nullable: true })
   firebaseUid?: string;
 
+  @ApiProperty({ example: 'Full Name' })
   @Column({ nullable: true })
   fullName?: string;
 
+  @ApiProperty({ example: 'fullname@example.com' })
   @Column()
   @Index({ unique: true })
   email: string;
 
+  @ApiProperty({ example: 'Random organization' })
   @Column({ nullable: true })
   organization?: string;
 
@@ -48,6 +54,7 @@ export class User {
   @Index({ spatial: true })
   location?: GeoJSON;
 
+  @ApiProperty({ example: 'Some country' })
   @Column({ nullable: true })
   country?: string;
 
@@ -59,9 +66,11 @@ export class User {
   })
   adminLevel: AdminLevel;
 
+  @ApiProperty({ example: 'Some description' })
   @Column({ nullable: true })
   description?: string;
 
+  @ApiProperty({ example: 'http://some-sample-url.com' })
   @Column({ nullable: true })
   imageUrl?: string;
 

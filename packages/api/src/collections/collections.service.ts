@@ -1,19 +1,21 @@
 import {
+  ForbiddenException,
   Injectable,
   Logger,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
+import { Collection } from './collections.entity';
 import { DailyData } from '../reefs/daily-data.entity';
-import { SourceType } from '../reefs/sources.entity';
+import { Sources, SourceType } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { User } from '../users/users.entity';
 import { getSstAnomaly } from '../utils/liveData';
-import { Collection, CollectionData } from './collections.entity';
+import { hasHoboDataSubQuery } from '../utils/reef.utils';
+import { CollectionDataDto } from './dto/collection-data.dto';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
@@ -43,6 +45,9 @@ export class CollectionsService {
 
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
+
+    @InjectRepository(Sources)
+    private sourcesRepository: Repository<Sources>,
   ) {}
 
   create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
@@ -67,7 +72,6 @@ export class CollectionsService {
 
     if (user) {
       query.andWhere('collection.user_id = :userId', { userId: user.id });
-      query.andWhere('collection.is_public = FALSE');
     } else {
       query.andWhere('collection.is_public = TRUE');
     }
@@ -79,7 +83,7 @@ export class CollectionsService {
     if (reefId) {
       query
         .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.reef_id = :reefId', { reefId });
+        .andWhere('reef.id = :reefId', { reefId });
     }
 
     return query.getMany();
@@ -106,7 +110,7 @@ export class CollectionsService {
     }
 
     if (publicOnly && !collection.isPublic) {
-      throw new UnauthorizedException(
+      throw new ForbiddenException(
         `You are not allowed to access this collection with ${collectionId}`,
       );
     }
@@ -210,7 +214,7 @@ export class CollectionsService {
     );
 
     const mappedReefData = collection.reefs.reduce<
-      Record<number, CollectionData>
+      Record<number, CollectionDataDto>
     >((acc, reef) => {
       const sstValue = mappedLatestDailyData[reef.id]?.sst;
       const sst =
@@ -233,6 +237,8 @@ export class CollectionsService {
       };
     }, {});
 
+    const hasHoboData = await hasHoboDataSubQuery(this.sourcesRepository);
+
     return {
       ...collection,
       user: {
@@ -242,6 +248,7 @@ export class CollectionsService {
       reefs: collection.reefs.map((reef) => {
         return {
           ...reef,
+          hasHobo: hasHoboData.has(reef.id),
           applied: reef.applied,
           collectionData: mappedReefData[reef.id],
         };

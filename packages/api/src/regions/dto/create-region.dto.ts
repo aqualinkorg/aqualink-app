@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsOptional,
@@ -11,6 +12,7 @@ import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Region } from '../regions.entity';
 
 export class CreateRegionDto {
+  @ApiProperty({ example: 'United States' })
   @IsString()
   @IsNotEmpty()
   readonly name: string;
@@ -19,6 +21,7 @@ export class CreateRegionDto {
   @IsNotEmpty()
   readonly polygon: GeoJSON;
 
+  @ApiProperty({ example: 1 })
   @IsOptional()
   @IsInt()
   @Validate(EntityExists, [Region])

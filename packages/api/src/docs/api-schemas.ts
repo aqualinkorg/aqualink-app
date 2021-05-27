@@ -6,7 +6,10 @@ export const PointSchema: SchemaObject & ApiPropertyOptions = {
   properties: {
     type: {
       type: 'string',
-      example: 'Point',
+      // Since type can only be 'Point' for now, we declare it as a enum with a single value
+      // This is the only way to declare a constant value on a property
+      // Reference: https://swagger.io/docs/specification/describing-parameters/#constant
+      enum: ['Point'],
     },
     coordinates: {
       type: 'array',
@@ -14,7 +17,7 @@ export const PointSchema: SchemaObject & ApiPropertyOptions = {
       items: {
         type: 'number',
       },
-      example: [0, 0],
+      example: [15.24012, -10.05412],
     },
   },
 };

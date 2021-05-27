@@ -10,6 +10,7 @@ import {
   OneToMany,
   RelationId,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { Reef } from '../reefs/reefs.entity';
 import { User } from '../users/users.entity';
 import { DailyData } from '../reefs/daily-data.entity';
@@ -41,6 +42,7 @@ export interface SensorData {
 
 @Entity()
 export class Survey {
+  @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -53,9 +55,11 @@ export class Survey {
   })
   weatherConditions: WeatherConditions;
 
+  @ApiProperty({ example: 33.2 })
   @Column('float', { nullable: true })
   temperature?: number;
 
+  @ApiProperty({ example: 'Survey comment' })
   @Column('text', { nullable: true })
   comments?: string;
 

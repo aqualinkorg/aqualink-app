@@ -165,7 +165,7 @@ export class SensorsService {
               survey.reefId,
               [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
               [SourceType.HOBO],
-              media.poiId?.id,
+              media.poiId,
             );
 
             return {

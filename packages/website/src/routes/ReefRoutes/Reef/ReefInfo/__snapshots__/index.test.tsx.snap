@@ -96,29 +96,54 @@ exports[`ReefNavBar should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-10"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
           >
-            <mock-box>
-              <mock-typography
-                variant="h4"
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
               >
-                Hawaii
-              </mock-typography>
-            </mock-box>
-            <mock-box>
-              <mock-typography
-                variant="h6"
-              >
-                Managed by Some organization
-              </mock-typography>
-            </mock-box>
-            <mock-box>
-              <mock-typography
-                variant="subtitle1"
-              >
-                Last surveyed: Sep 10, 2020
-              </mock-typography>
-            </mock-box>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+                    >
+                      <mock-typography
+                        variant="h4"
+                      >
+                        Hawaii
+                      </mock-typography>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-typography
+                    variant="h6"
+                  >
+                    Managed by Some organization
+                  </mock-typography>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <mock-typography
+                    variant="subtitle1"
+                  >
+                    Last surveyed: Sep 10, 2020
+                  </mock-typography>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-grid-xs-12 MuiGrid-grid-md-4"

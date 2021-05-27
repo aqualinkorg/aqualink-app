@@ -9,7 +9,12 @@ import {
   Query,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RegionsService } from './regions.service';
 import { Region } from './regions.entity';
 import { CreateRegionDto } from './dto/create-region.dto';
@@ -42,6 +47,7 @@ export class RegionsController {
 
   @ApiNestNotFoundResponse('No region was found with the specified id')
   @ApiOperation({ summary: 'Returns specified region' })
+  @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Region> {
@@ -51,6 +57,7 @@ export class RegionsController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No region was found with the specified id')
   @ApiOperation({ summary: 'Updates specified region' })
+  @ApiParam({ name: 'id', example: 1 })
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -62,6 +69,7 @@ export class RegionsController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No region was found with the specified id')
   @ApiOperation({ summary: 'Deletes specified region' })
+  @ApiParam({ name: 'id', example: 1 })
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.regionsService.delete(id);
