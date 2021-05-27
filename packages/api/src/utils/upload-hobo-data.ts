@@ -25,13 +25,14 @@ import {
   Observations,
   SurveyMedia,
 } from '../surveys/survey-media.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
 import { backfillReefData } from '../workers/backfill-reef-data';
 import { getRegion, getTimezones } from './reef.utils';
 import { getMMM, getHistoricalMonthlyMeans } from './temperature';
 import { Region } from '../regions/regions.entity';
 import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 import { createPoint } from './coordinates';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 interface Coords {
   reef: number;

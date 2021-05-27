@@ -3,7 +3,8 @@ import { IsNull, Repository } from 'typeorm';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { Reef } from '../reefs/reefs.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 export interface TimeSeriesData {
   value: number;

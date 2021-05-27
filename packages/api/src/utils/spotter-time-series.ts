@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
@@ -13,6 +13,7 @@ import {
   SofarValue,
   SpotterData,
 } from './sofar.types';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 interface Repositories {
   reefRepository: Repository<Reef>;

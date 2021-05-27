@@ -17,7 +17,8 @@ import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 import { SofarValue } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Reef } from '../reefs/reefs.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');

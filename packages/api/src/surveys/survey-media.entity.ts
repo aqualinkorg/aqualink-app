@@ -9,8 +9,10 @@ import {
   RelationId,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { SensorData, Survey } from './surveys.entity';
+import { Survey } from './surveys.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
+import { sensorDataSchema } from '../docs/api-sensor-data';
 
 export enum Observations {
   Healthy = 'healthy',
@@ -90,5 +92,6 @@ export class SurveyMedia {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  sensorData?: SensorData;
+  @ApiProperty(sensorDataSchema)
+  sensorData?: SensorDataDto;
 }

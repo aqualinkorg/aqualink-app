@@ -16,28 +16,14 @@ import { User } from '../users/users.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Observations, SurveyMedia } from './survey-media.entity';
-import { SourceType } from '../reefs/sources.entity';
-import { Metric } from '../time-series/metrics.entity';
-import { TimeSeriesPoint } from '../time-series/time-series.entity';
+import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
+import { sensorDataSchema } from '../docs/api-sensor-data';
 
 export enum WeatherConditions {
   Calm = 'calm',
   Wavy = 'waves',
   Stormy = 'storm',
   NoData = 'no-data',
-}
-
-export interface SensorData {
-  [SourceType.SPOTTER]?: {
-    [Metric.BOTTOM_TEMPERATURE]?: TimeSeriesPoint;
-    [Metric.TOP_TEMPERATURE]?: TimeSeriesPoint;
-  };
-  [SourceType.HOBO]?: {
-    [Metric.BOTTOM_TEMPERATURE]?: TimeSeriesPoint;
-  };
-  [SourceType.NOAA]?: {
-    [Metric.SATELLITE_TEMPERATURE]?: TimeSeriesPoint;
-  };
 }
 
 @Entity()
@@ -95,5 +81,6 @@ export class Survey {
 
   observations?: Observations[];
 
-  sensorData?: SensorData;
+  @ApiProperty(sensorDataSchema)
+  sensorData?: SensorDataDto;
 }

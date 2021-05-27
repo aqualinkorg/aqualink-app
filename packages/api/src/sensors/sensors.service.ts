@@ -5,7 +5,7 @@ import { groupBy, keyBy, mapValues } from 'lodash';
 import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Reef, SensorType } from '../reefs/reefs.entity';
-import { SensorData, Survey } from '../surveys/surveys.entity';
+import { Survey } from '../surveys/surveys.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getReefFromSensorId } from '../utils/reef.utils';
@@ -18,7 +18,9 @@ import {
   groupByMetricAndSource,
 } from '../utils/time-series.utils';
 import { DailyData } from '../reefs/daily-data.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
+import { SensorDataDto } from './dto/sensor-data.dto';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 @Injectable()
 export class SensorsService {
@@ -190,7 +192,7 @@ export class SensorsService {
   private async getClosestDailyData(
     diveDate: Date,
     reefId: number,
-  ): Promise<SensorData | {}> {
+  ): Promise<SensorDataDto | {}> {
     // We will use this many times in our query, so we declare it as constant
     const diff = `(daily_data.date::timestamp - '${diveDate.toISOString()}'::timestamp)`;
 
@@ -270,7 +272,7 @@ export class SensorsService {
     // Group the data by source id
     const groupedData = groupBy(timeSeriesData, (o) => o.source);
 
-    return Object.keys(groupedData).reduce<SensorData>((data, key) => {
+    return Object.keys(groupedData).reduce<SensorDataDto>((data, key) => {
       return {
         ...data,
         // Replace source id by source using the mapped source object
