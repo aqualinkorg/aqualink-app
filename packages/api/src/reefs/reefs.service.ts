@@ -176,6 +176,10 @@ export class ReefsService {
       .leftJoinAndSelect('reef.region', 'region')
       .leftJoinAndSelect('reef.admins', 'admins')
       .leftJoinAndSelect('reef.stream', 'stream')
+      .leftJoinAndSelect(
+        'reef.historicalMonthlyMean',
+        'historical_monthly_mean',
+      )
       .andWhere('approved = true')
       .getMany();
 

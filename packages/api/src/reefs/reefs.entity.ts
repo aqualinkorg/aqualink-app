@@ -14,7 +14,6 @@ import {
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Region } from '../regions/regions.entity';
-import { DailyData } from './daily-data.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { User } from '../users/users.entity';
@@ -99,9 +98,6 @@ export class Reef {
 
   @ManyToMany(() => User, (user) => user.administeredReefs)
   admins: User[];
-
-  @OneToOne(() => DailyData, (latestDailyData) => latestDailyData.reef)
-  latestDailyData?: DailyData;
 
   @OneToMany(() => Survey, (survey) => survey.reef)
   surveys: Survey[];
