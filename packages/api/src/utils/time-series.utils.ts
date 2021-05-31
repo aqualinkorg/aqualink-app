@@ -44,6 +44,6 @@ export const insertSSTToTimeSeries = async (
       timestamp,
       value: satelliteTemperature,
     })
-    .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
+    .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
 };

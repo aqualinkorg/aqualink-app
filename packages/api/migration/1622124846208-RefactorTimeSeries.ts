@@ -20,13 +20,19 @@ export class RefactorTimeSeries1622124846208 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "sources" RENAME COLUMN "spotter_id" TO "sensor_id"`,
     );
+    await queryRunner.query(
+      `ALTER TABLE "exclusion_dates" RENAME COLUMN "spotter_id" TO "sensor_id"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "reef" RENAME COLUMN "spotter_id" TO "sensor_id"`,
+    );
     await queryRunner.query(`ALTER TABLE "time_series" DROP COLUMN "reef_id"`);
     await queryRunner.query(`ALTER TABLE "time_series" DROP COLUMN "poi_id"`);
     await queryRunner.query(
       `ALTER TABLE "time_series" ADD CONSTRAINT "no_duplicate_data" UNIQUE ("metric", "source_id", "timestamp")`,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_cb2f3e83c09f83e8ce007ffd6f" ON "time_series" ("metric", "source_id", "timestamp") `,
+      `CREATE INDEX "IDX_cb2f3e83c09f83e8ce007ffd6f" ON "time_series" ("metric", "source_id", "timestamp" DESC )`,
     );
     await queryRunner.query(
       `CREATE MATERIALIZED VIEW "latest_data" AS
@@ -53,10 +59,17 @@ export class RefactorTimeSeries1622124846208 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
+    await queryRunner.query(`DROP INDEX "IDX_cb2f3e83c09f83e8ce007ffd6f"`);
     await queryRunner.query(`ALTER TABLE "time_series" ADD "poi_id" integer`);
     await queryRunner.query(`ALTER TABLE "time_series" ADD "reef_id" integer`);
     await queryRunner.query(
       `ALTER TABLE "sources" RENAME COLUMN "sensor_id" TO "spotter_id"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "exclusion_dates" RENAME COLUMN "sensor_id" TO "spotter_id"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "reef" RENAME COLUMN "sensor_id" TO "spotter_id"`,
     );
     await queryRunner.query(
       `ALTER TABLE "time_series" DROP CONSTRAINT "no_duplicate_data"`,

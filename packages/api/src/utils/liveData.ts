@@ -18,7 +18,7 @@ export const getLiveData = async (
   reef: Reef,
   isDeployed: boolean,
 ): Promise<SofarLiveData> => {
-  const { polygon, spotterId, maxMonthlyMean } = reef;
+  const { polygon, sensorId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -34,7 +34,7 @@ export const getLiveData = async (
     windSpeed,
     windDirection,
   ] = await Promise.all([
-    spotterId && isDeployed ? getSpotterData(spotterId) : undefined,
+    sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
     getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
     getSofarHindcastData(
       SofarModels.NOAACoralReefWatch,

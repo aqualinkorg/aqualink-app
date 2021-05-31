@@ -26,7 +26,7 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   return reefRepository.find({
     where: {
       ...(reefIds.length > 0 ? { id: In(reefIds) } : {}),
-      spotterId: Not(IsNull()),
+      sensorId: Not(IsNull()),
     },
   });
 };
@@ -43,7 +43,7 @@ const getSpotterSources = (
           reef,
           poi: IsNull(),
           type: SourceType.SPOTTER,
-          spotterId: reef.spotterId,
+          sensorId: reef.sensorId,
         },
       })
       .then((source) => {
@@ -54,7 +54,7 @@ const getSpotterSources = (
         return sourceRepository.save({
           reef,
           type: SourceType.SPOTTER,
-          spotterId: reef.spotterId,
+          sensorId: reef.sensorId,
         });
       }),
   );
@@ -77,7 +77,7 @@ const saveDataBatch = (
         source,
       })),
     )
-    .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
+    .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
 };
 
@@ -109,11 +109,11 @@ export const addSpotterData = async (
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
 
-          if (!reef.spotterId) {
+          if (!reef.sensorId) {
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
-          return getSpotterData(reef.spotterId, endDate, startDate);
+          return getSpotterData(reef.sensorId, endDate, startDate);
         },
         { concurrency: 100 },
       ).then((spotterData) => {
