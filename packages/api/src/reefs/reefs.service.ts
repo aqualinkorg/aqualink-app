@@ -37,6 +37,8 @@ import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
+import { getCollectionData } from '../utils/collections.utils';
+import { LatestData } from '../time-series/latest-data.entity';
 
 @Injectable()
 export class ReefsService {
@@ -65,6 +67,9 @@ export class ReefsService {
 
     @InjectRepository(Sources)
     private sourceRepository: Repository<Sources>,
+
+    @InjectRepository(LatestData)
+    private latestDataRepository: Repository<LatestData>,
   ) {}
 
   async create(
@@ -171,19 +176,21 @@ export class ReefsService {
       .leftJoinAndSelect('reef.region', 'region')
       .leftJoinAndSelect('reef.admins', 'admins')
       .leftJoinAndSelect('reef.stream', 'stream')
-      .leftJoinAndSelect(
-        'reef.latestDailyData',
-        'latestDailyData',
-        `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubQuery()})`,
-      )
       .andWhere('approved = true')
       .getMany();
+
+    const mappedReefData = await getCollectionData(
+      res,
+      this.latestDataRepository,
+      this.dailyDataRepository,
+    );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
     return res.map((reef) => ({
       ...reef,
       applied: reef.applied,
+      collectionData: mappedReefData[reef.id],
       hasHobo: hasHoboDataSet.has(reef.id),
     }));
   }
