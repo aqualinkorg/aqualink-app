@@ -56,7 +56,10 @@ const ChartWithCard = ({
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>("three_months");
 
-  const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
+  const today = moment()
+    .tz(reef.timezone || "UTC")
+    .endOf("day")
+    .toISOString();
 
   const dailyDataSst = granularDailyData?.map((item) => ({
     timestamp: item.date,
@@ -88,9 +91,21 @@ const ChartWithCard = ({
   useEffect(() => {
     if (hoboBottomTemperatureRange) {
       const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
-      const pastThreeMonths = subtractFromDate(maxDate || today, "month", 3);
+      const localizedMaxDate = moment(maxDate)
+        .tz(reef.timezone || "UTC")
+        .endOf("day")
+        .toISOString();
+      const pastThreeMonths = moment(
+        subtractFromDate(localizedMaxDate || today, "month", 3)
+      )
+        .tz(reef.timezone || "UTC")
+        .startOf("day")
+        .toISOString();
       setPickerEndDate(
-        utcToZonedTime(maxDate || today, reef.timezone || "UTC").toISOString()
+        utcToZonedTime(
+          localizedMaxDate || today,
+          reef.timezone || "UTC"
+        ).toISOString()
       );
       setPickerStartDate(
         utcToZonedTime(pastThreeMonths, reef.timezone || "UTC").toISOString()
