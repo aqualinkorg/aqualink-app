@@ -32,9 +32,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { degreeHeatingDays, satelliteTemperature } =
-    reef.latestDailyData || reef.collectionData || {};
-  const { maxBottomTemperature } = reef.latestDailyData || {};
+  const { degreeHeatingDays, satelliteTemperature } = reef.collectionData || {};
 
   const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
 
@@ -72,41 +70,22 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
         />
         <CardContent>
           <Grid container item xs={12}>
-            {maxBottomTemperature ? (
-              <Grid item xs={6}>
-                <Grid container item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    {`TEMP AT ${reef.depth}m`}
-                  </Typography>
-                </Grid>
-                <Grid container item xs={12}>
-                  <Typography
-                    style={{ color: colors.lightBlue }}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(maxBottomTemperature, 1)}  °C`}
-                  </Typography>
-                </Grid>
+            <Grid item xs={6}>
+              <Grid container item xs={12}>
+                <Typography variant="caption" color="textSecondary">
+                  SST
+                </Typography>
               </Grid>
-            ) : (
-              <Grid item xs={6}>
-                <Grid container item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    SST
-                  </Typography>
-                </Grid>
-                <Grid container item xs={12}>
-                  <Typography
-                    style={{ color: colors.lightBlue }}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(satelliteTemperature, 1)}  °C`}
-                  </Typography>
-                </Grid>
+              <Grid container item xs={12}>
+                <Typography
+                  style={{ color: colors.lightBlue }}
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  {`${formatNumber(satelliteTemperature, 1)}  °C`}
+                </Typography>
               </Grid>
-            )}
+            </Grid>
             <Grid item xs={6}>
               <Grid container item xs={12}>
                 <Typography variant="caption" color="textSecondary">

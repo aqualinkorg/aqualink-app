@@ -191,7 +191,6 @@ export interface Reef {
   stream: string | null;
   dailyData: DailyData[];
   liveData: LiveData;
-  latestDailyData?: DailyData;
   featuredImage?: string;
   applied?: boolean;
   spotterId: string | null;

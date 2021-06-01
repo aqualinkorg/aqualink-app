@@ -25,8 +25,7 @@ const LNG_OFFSETS = [-360, 0, 360];
 export default function ReefMarker({ reef }: { reef: Reef }) {
   const reefOnMap = useSelector(reefOnMapSelector);
   const dispatch = useDispatch();
-  const { weeklyAlertLevel } =
-    reef.latestDailyData || reef.collectionData || {};
+  const { weeklyAlertLevel } = reef.collectionData || {};
   const markerIcon = useMarkerIcon(
     hasDeployedSpotter(reef),
     reef.hasHobo,

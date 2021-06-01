@@ -29,8 +29,8 @@ export const findInitialReefPosition = (
     maxBy(
       reefs,
       (reef) =>
-        `${reef.latestDailyData?.weeklyAlertLevel || 0},${longDHW(
-          degreeHeatingWeeksCalculator(reef.latestDailyData?.degreeHeatingDays)
+        `${reef.collectionData?.weeklyAlertLevel || 0},${longDHW(
+          degreeHeatingWeeksCalculator(reef.collectionData?.degreeHeatingDays)
         )}`
     );
 

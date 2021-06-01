@@ -21,11 +21,14 @@ export const longDHW = (dhw: number | null): string =>
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
-      value.latestDailyData || value.collectionData || {};
-
-    const { bottomTemperature, topTemperature, sstAnomaly } =
-      value.collectionData || {};
+    const {
+      degreeHeatingDays,
+      satelliteTemperature,
+      weeklyAlertLevel,
+      bottomTemperature,
+      topTemperature,
+      sstAnomaly,
+    } = value.collectionData || {};
 
     const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
