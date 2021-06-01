@@ -144,8 +144,8 @@ export const addSpotterData = async (
               ),
             )
             .flat(),
-          (props, i) => {
-            logger.log(
+          (_, i) => {
+            logger.debug(
               `Saved ${i + 1} out of ${
                 dataLabels.length * days
               } of daily spotter data for reef with id ${reef.id}`,
