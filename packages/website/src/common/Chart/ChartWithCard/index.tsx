@@ -28,7 +28,7 @@ import {
   setTimeZone,
   subtractFromDate,
 } from "../../../helpers/dates";
-import { findCardDataset, findDataLimits } from "./helpers";
+import { findCardDataset, findDataLimits, localizedEndOfDay } from "./helpers";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
@@ -56,7 +56,7 @@ const ChartWithCard = ({
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>("three_months");
 
-  const today = new Date(moment().format("MM/DD/YYYY")).toISOString();
+  const today = localizedEndOfDay(undefined, reef.timezone);
 
   const dailyDataSst = granularDailyData?.map((item) => ({
     timestamp: item.date,
@@ -88,9 +88,18 @@ const ChartWithCard = ({
   useEffect(() => {
     if (hoboBottomTemperatureRange) {
       const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
-      const pastThreeMonths = subtractFromDate(maxDate || today, "month", 3);
+      const localizedMaxDate = localizedEndOfDay(maxDate, reef.timezone);
+      const pastThreeMonths = moment(
+        subtractFromDate(localizedMaxDate || today, "month", 3)
+      )
+        .tz(reef.timezone || "UTC")
+        .startOf("day")
+        .toISOString();
       setPickerEndDate(
-        utcToZonedTime(maxDate || today, reef.timezone || "UTC").toISOString()
+        utcToZonedTime(
+          localizedMaxDate || today,
+          reef.timezone || "UTC"
+        ).toISOString()
       );
       setPickerStartDate(
         utcToZonedTime(pastThreeMonths, reef.timezone || "UTC").toISOString()
@@ -157,10 +166,7 @@ const ChartWithCard = ({
       granularDailyData,
       timeSeriesData,
       pickerLocalStartDate,
-      moment(pickerLocalEndDate)
-        .tz(reef.timezone || "UTC")
-        .endOf("day")
-        .toISOString()
+      localizedEndOfDay(pickerLocalEndDate, reef.timezone)
     );
 
     setStartDate(
