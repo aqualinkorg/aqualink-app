@@ -20,6 +20,15 @@ export interface LatestDailyData {
   alert?: number;
 }
 
+type MetricCamelCase =
+  | 'bottomTemperature'
+  | 'topTemperature'
+  | 'significantWaveHeight'
+  | 'waveMeanDirection'
+  | 'wavePeakPeriod'
+  | 'windDirection'
+  | 'windSpeed';
+
 export const getCollectionData = async (
   reefs: Reef[],
   latestDataRepository: Repository<LatestData>,
@@ -30,12 +39,20 @@ export const getCollectionData = async (
     where: {
       reef: In(reefs.map((reef) => reef.id)),
       source: SourceType.SPOTTER,
-      metric: In([Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE]),
+      metric: In([
+        Metric.BOTTOM_TEMPERATURE,
+        Metric.TOP_TEMPERATURE,
+        Metric.SIGNIFICANT_WAVE_HEIGHT,
+        Metric.WAVE_MEAN_DIRECTION,
+        Metric.WAVE_PEAK_PERIOD,
+        Metric.WIND_DIRECTION,
+        Metric.WIND_SPEED,
+      ]),
     },
   });
 
   const mappedlatestData = latestData.reduce<
-    Record<number, Record<'bottomTemperature' | 'topTemperature', number>>
+    Record<number, Record<MetricCamelCase, number>>
   >((acc, data) => {
     return {
       ...acc,
