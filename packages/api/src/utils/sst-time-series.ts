@@ -81,7 +81,6 @@ export const updateSST = async (
         return Promise.all(
           sstData.flat().map((data) => {
             return insertSSTToTimeSeries(
-              reef,
               data.value,
               new Date(data.timestamp),
               reefToSource[reef.id],

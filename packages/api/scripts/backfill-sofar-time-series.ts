@@ -15,7 +15,7 @@ enum TaskType {
 const tasks = Object.values(TaskType).join(', ');
 
 const { argv } = yargs
-  .scriptName('parse-hobo-data')
+  .scriptName('backfill-sofar-time-series')
   .usage('$0 <cmd> [args]')
   .option('t', {
     alias: 'task',

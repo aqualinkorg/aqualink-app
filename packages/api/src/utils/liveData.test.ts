@@ -11,7 +11,7 @@ test('It creates a liveData object using Sofar API.', async () => {
       type: 'Polygon',
       coordinates: [-122.699036598, 37.893756314],
     },
-    spotterId: 'SPOT-0795',
+    sensorId: 'SPOT-0795',
     depth: null,
     maxMonthlyMean: 22,
     status: 0,

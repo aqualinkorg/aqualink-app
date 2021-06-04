@@ -75,7 +75,7 @@ export async function getDailyData(
   endOfDate: Date,
   excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
-  const { polygon, spotterId, maxMonthlyMean } = reef;
+  const { polygon, sensorId, maxMonthlyMean } = reef;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -89,9 +89,7 @@ export async function getDailyData(
     windSpeedsRaw,
     windDirectionsRaw,
   ] = await Promise.all([
-    spotterId
-      ? getSpotterData(spotterId, endOfDate)
-      : DEFAULT_SPOTTER_DATA_VALUE,
+    sensorId ? getSpotterData(sensorId, endOfDate) : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
     // Calculating Degree Heating Days requires exactly 84 days of data.
     getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
@@ -297,7 +295,7 @@ export async function getReefsDailyData(
     async (reef) => {
       const excludedDates = await getExclusionDates(
         exclusionDatesRepository,
-        reef.spotterId,
+        reef.sensorId,
       );
 
       const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);

@@ -44,7 +44,7 @@ export class Reef {
 
   @ApiProperty({ example: 'SPOT-0000' })
   @Column({ nullable: true })
-  spotterId?: string;
+  sensorId?: string;
 
   @ApiPointProperty()
   @Column({

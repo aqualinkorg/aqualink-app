@@ -26,7 +26,7 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   return reefRepository.find({
     where: {
       ...(reefIds.length > 0 ? { id: In(reefIds) } : {}),
-      spotterId: Not(IsNull()),
+      sensorId: Not(IsNull()),
     },
   });
 };
@@ -43,7 +43,7 @@ const getSpotterSources = (
           reef,
           poi: IsNull(),
           type: SourceType.SPOTTER,
-          spotterId: reef.spotterId,
+          sensorId: reef.sensorId,
         },
       })
       .then((source) => {
@@ -54,7 +54,7 @@ const getSpotterSources = (
         return sourceRepository.save({
           reef,
           type: SourceType.SPOTTER,
-          spotterId: reef.spotterId,
+          sensorId: reef.sensorId,
         });
       }),
   );
@@ -62,8 +62,7 @@ const getSpotterSources = (
 
 const saveDataBatch = (
   batch: SofarValue[],
-  reef: Reef,
-  reefToSource: Record<number, Sources>,
+  source: Sources,
   metric: Metric,
   timeSeriesRepository: Repository<TimeSeries>,
 ) => {
@@ -75,11 +74,10 @@ const saveDataBatch = (
         metric,
         value: data.value,
         timestamp: moment(data.timestamp).startOf('minute').toDate(),
-        reef,
-        source: reefToSource[reef.id],
+        source,
       })),
     )
-    .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
+    .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
 };
 
@@ -111,11 +109,11 @@ export const addSpotterData = async (
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
 
-          if (!reef.spotterId) {
+          if (!reef.sensorId) {
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
-          return getSpotterData(reef.spotterId, endDate, startDate);
+          return getSpotterData(reef.sensorId, endDate, startDate);
         },
         { concurrency: 100 },
       ).then((spotterData) => {
@@ -135,8 +133,7 @@ export const addSpotterData = async (
               dataLabels.map(([spotterDataLabel, metric]) =>
                 saveDataBatch(
                   dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
-                  reef,
-                  reefToSource,
+                  reefToSource[reef.id],
                   metric,
                   repositories.timeSeriesRepository,
                 ),
