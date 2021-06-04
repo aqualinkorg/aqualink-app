@@ -113,7 +113,7 @@ export const getExclusionDates = async (
 
   return exclusionDatesRepository
     .createQueryBuilder('exclusion')
-    .where('exclusion.spotter_id = :sensorId', {
+    .where('exclusion.sensor_id = :sensorId', {
       sensorId,
     })
     .getMany();
