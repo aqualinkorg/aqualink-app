@@ -13,7 +13,7 @@ test('It processes Sofar API for daily data.', async () => {
       type: 'Polygon',
       coordinates: [-122.699036598, 37.893756314],
     },
-    spotterId: 'SPOT-300434063450120',
+    sensorId: 'SPOT-300434063450120',
     depth: null,
     maxMonthlyMean: 22,
     status: 0,

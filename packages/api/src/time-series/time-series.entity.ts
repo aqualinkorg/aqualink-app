@@ -3,19 +3,18 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
-import { Reef } from '../reefs/reefs.entity';
 import { Sources } from '../reefs/sources.entity';
 import { Metric } from './metrics.entity';
 
 @Entity()
-@Unique('no_duplicate_data', ['timestamp', 'reef', 'poi', 'metric', 'source'])
-@Unique('no_duplicate_reef_data', ['timestamp', 'reef', 'metric', 'source'])
+@Unique('no_duplicate_data', ['metric', 'source', 'timestamp'])
+@Index(['metric', 'source', 'timestamp'])
 export class TimeSeries {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
@@ -27,12 +26,6 @@ export class TimeSeries {
   @ApiProperty({ example: 11.05 })
   @Column({ type: 'float', nullable: false })
   value: number;
-
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
-  reef: Reef;
-
-  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
-  poi?: ReefPointOfInterest;
 
   @Column({ type: 'enum', enum: Metric, nullable: false })
   metric: Metric;

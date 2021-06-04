@@ -9,7 +9,7 @@ export class ExclusionDates {
 
   @ApiProperty({ example: 'SPOT-0000' })
   @Column()
-  spotterId: string;
+  sensorId: string;
 
   // The start of the exclusive range. Inclusive
   @Column({ nullable: true })

@@ -403,7 +403,7 @@ const createSources = async (
     sources.map((source) =>
       sourcesRepository
         .findOne({
-          relations: ['poi'],
+          relations: ['poi', 'reef'],
           where: { reef: source.reef, poi: source.poi, type: source.type },
         })
         .then((foundSource) => {
@@ -450,8 +450,6 @@ const parseHoboData = async (
     );
     return parseCSV<Data>(filePath, headers, castFunction).map((data) => ({
       timestamp: data.dateTime,
-      reef: poi.reef,
-      poi,
       value: data.bottomTemperature,
       source: poiToSourceMap[poi.id],
       metric: Metric.BOTTOM_TEMPERATURE,
@@ -469,12 +467,12 @@ const parseHoboData = async (
     return acc.concat(minimum);
   }, []);
 
-  const groupedStartedDates = groupBy(startDates, (o) => o.reef.id);
+  const groupedStartedDates = keyBy(startDates, (o) => o.source.reef.id);
 
   // Start a backfill for each reef
   const reefDiffDays: [number, number][] = Object.keys(groupedStartedDates).map(
     (reefId) => {
-      const startDate = minBy(groupedStartedDates[reefId], (o) => o.timestamp);
+      const startDate = groupedStartedDates[reefId];
       if (!startDate) {
         return [parseInt(reefId, 10), 0];
       }
@@ -483,7 +481,7 @@ const parseHoboData = async (
       const end = moment();
       const diff = Math.min(end.diff(start, 'd'), 200);
 
-      return [startDate.reef.id, diff];
+      return [startDate.source.reef.id, diff];
     },
   );
 

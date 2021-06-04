@@ -48,7 +48,7 @@ export interface MaintainSpotterParams {
 
 export type ExclusionDateResponse = {
   id: number;
-  spotterId: string;
+  sensorId: string;
   startDate: string | null;
   endDate: string;
 }[];
@@ -194,7 +194,7 @@ export interface Reef {
   latestDailyData?: DailyData;
   featuredImage?: string;
   applied?: boolean;
-  spotterId: string | null;
+  sensorId: string | null;
   timezone?: string | null;
   surveyPoints: Pois[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
