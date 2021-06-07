@@ -16,6 +16,8 @@ import {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataRangeRequestParams,
+  OceanSenseDataRequestParams,
+  OceanSenseDataResponse,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -171,6 +173,17 @@ const maintainSpotter = (
     token,
   });
 
+const getOceanSenseData = ({
+  param,
+  sensorID,
+  startDate,
+  endDate,
+}: OceanSenseDataRequestParams) =>
+  requests.send<OceanSenseDataResponse>({
+    url: `https://us-central1-oceansense-app.cloudfunctions.net/queryData?sensorID=${sensorID}&param=${param}&startDate=${startDate}&endDate=${endDate}`,
+    method: "GET",
+  });
+
 export default {
   getReef,
   getReefs,
@@ -187,4 +200,5 @@ export default {
   getExclusionDates,
   deploySpotter,
   maintainSpotter,
+  getOceanSenseData,
 };

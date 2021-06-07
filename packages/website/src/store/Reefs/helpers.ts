@@ -2,7 +2,9 @@ import type { TableRow } from "../Homepage/types";
 import type {
   Metrics,
   MetricsKeys,
+  OceanSenseDataResponse,
   Reef,
+  SofarValue,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
@@ -86,3 +88,12 @@ export const mapTimeSeriesDataRanges = (
   sofarNoaa: mapMetrics(ranges.noaa),
   sofarGfs: mapMetrics(ranges.gfs),
 });
+
+export const mapOceanSenseData = (
+  response: OceanSenseDataResponse
+): SofarValue[] => {
+  return response.data.map((value, index) => ({
+    value,
+    timestamp: response.timestamps[index],
+  }));
+};
