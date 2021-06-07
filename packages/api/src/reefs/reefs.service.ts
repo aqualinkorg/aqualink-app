@@ -140,14 +140,6 @@ export class ReefsService {
     });
   }
 
-  latestDailyDataSubQuery(): string {
-    const query = this.dailyDataRepository.createQueryBuilder('dailyData');
-    query.select('MAX(date)', 'date');
-    query.addSelect('reef_id');
-    query.groupBy('reef_id');
-    return query.getQuery();
-  }
-
   async find(filter: FilterReefDto): Promise<Reef[]> {
     const query = this.reefsRepository.createQueryBuilder('reef');
 
@@ -186,7 +178,6 @@ export class ReefsService {
     const mappedReefData = await getCollectionData(
       res,
       this.latestDataRepository,
-      this.dailyDataRepository,
     );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);

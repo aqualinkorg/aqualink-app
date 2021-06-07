@@ -8,15 +8,16 @@ import { DailyData } from '../src/reefs/daily-data.entity';
 import { Sources } from '../src/reefs/sources.entity';
 import {
   getNOAASource,
-  insertSSTToTimeSeries,
+  insertReefDataToTimeSeries,
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
+import { Metric } from '../src/time-series/metrics.entity';
 
 const dbConfig = require('../ormconfig');
 
 // Reefs and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020];
-const reefsToProcess: number[] = [];
+const reefsToProcess: number[] = [497];
 
 async function main() {
   const connection = await createConnection(dbConfig);
@@ -86,10 +87,14 @@ async function main() {
       return;
     }
 
-    await insertSSTToTimeSeries(
-      entity.reef,
-      entity.satelliteTemperature,
-      entity.date,
+    await insertReefDataToTimeSeries(
+      [
+        {
+          value: entity.satelliteTemperature,
+          timestamp: entity.date.toISOString(),
+        },
+      ],
+      Metric.SATELLITE_TEMPERATURE,
       reefToSource[entity.reef.id],
       timeSeriesRepository,
     );

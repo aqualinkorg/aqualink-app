@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { isUndefined, omitBy } from 'lodash';
 import { Repository } from 'typeorm';
 import { Collection } from './collections.entity';
-import { DailyData } from '../reefs/daily-data.entity';
 import { Sources } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { User } from '../users/users.entity';
@@ -28,9 +27,6 @@ export class CollectionsService {
 
     @InjectRepository(LatestData)
     private latestDataRepository: Repository<LatestData>,
-
-    @InjectRepository(DailyData)
-    private dailyDataRepository: Repository<DailyData>,
 
     @InjectRepository(Sources)
     private sourcesRepository: Repository<Sources>,
@@ -108,7 +104,6 @@ export class CollectionsService {
     const mappedReefData = await getCollectionData(
       collection.reefs,
       this.latestDataRepository,
-      this.dailyDataRepository,
     );
 
     const hasHoboData = await hasHoboDataSubQuery(this.sourcesRepository);
