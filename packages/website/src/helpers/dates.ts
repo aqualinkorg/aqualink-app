@@ -143,7 +143,7 @@ export function setTimeZone(
 export function setTimeZone(date: Date | null, timeZone?: string | null) {
   if (date && timeZone) {
     const localTime = new Date(date.toLocaleString("en-US", { timeZone }));
-    const diff = date.getTime() - localTime.getTime();
+    const diff = date.getTime() - date.getMilliseconds() - localTime.getTime();
     return new Date(date.getTime() + diff).toISOString();
   }
   return date?.toISOString() || null;

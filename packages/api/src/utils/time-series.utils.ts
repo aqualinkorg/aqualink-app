@@ -149,7 +149,6 @@ export const getNOAASource = async (
 };
 
 export const insertSSTToTimeSeries = async (
-  reef: Reef,
   satelliteTemperature: number,
   timestamp: Date,
   NOAASource: Sources,
@@ -162,9 +161,8 @@ export const insertSSTToTimeSeries = async (
       source: NOAASource,
       metric: Metric.SATELLITE_TEMPERATURE,
       timestamp,
-      reef,
       value: satelliteTemperature,
     })
-    .onConflict('ON CONSTRAINT "no_duplicate_reef_data" DO NOTHING')
+    .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
 };

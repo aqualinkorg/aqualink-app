@@ -107,14 +107,14 @@ export async function sofarForecast(
 }
 
 export async function sofarSpotter(
-  spotterId: string,
+  sensorId: string,
   start?: string,
   end?: string,
 ) {
   return axios
     .get(SOFAR_SPOTTER_URL, {
       params: {
-        spotterId,
+        spotterId: sensorId,
         startDate: start,
         endDate: end,
         limit: start && end ? 500 : 100,
@@ -130,7 +130,7 @@ export async function sofarSpotter(
     .catch((error) => {
       if (error.response) {
         console.error(
-          `Sofar API responded with a ${error.response.status} status for spotter ${spotterId}. ${error.response.data.message}`,
+          `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
         console.error(`An error occured accessing the Sofar API - ${error}`);
@@ -166,7 +166,7 @@ function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
 }
 
 export async function getSpotterData(
-  spotterId: string,
+  sensorId: string,
   endDate?: Date,
   startDate?: Date,
 ): Promise<SpotterData> {
@@ -180,7 +180,7 @@ export async function getSpotterData(
 
   const {
     data: { waves = [], wind = [], smartMooringData = [] },
-  } = (await sofarSpotter(spotterId, start, end)) || { data: {} };
+  } = (await sofarSpotter(sensorId, start, end)) || { data: {} };
 
   const [
     sofarSignificantWaveHeight,

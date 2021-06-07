@@ -153,3 +153,12 @@ export const moreThanOneYear = (startDate: string, endDate: string) => {
   const to = moment(endDate);
   return to.diff(from, "years") >= 1;
 };
+
+export const localizedEndOfDay = (
+  date?: string,
+  timeZone?: string | null | undefined
+): string =>
+  moment(date)
+    .tz(timeZone || "UTC")
+    .endOf("day")
+    .toISOString();

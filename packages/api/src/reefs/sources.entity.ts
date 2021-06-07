@@ -34,5 +34,5 @@ export class Sources {
 
   @ApiProperty({ example: 'SPOT-0000' })
   @Column({ nullable: true })
-  spotterId: string;
+  sensorId: string;
 }

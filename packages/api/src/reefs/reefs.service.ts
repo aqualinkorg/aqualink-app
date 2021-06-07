@@ -330,19 +330,19 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    if (!reef.spotterId) {
+    if (!reef.sensorId) {
       throw new NotFoundException(`Reef with ${id} has no spotter.`);
     }
 
     const exclusionDates = await getConflictingExclusionDates(
       this.exclusionDatesRepository,
-      reef.spotterId,
+      reef.sensorId,
       startDate,
       endDate,
     );
 
     const { topTemperature, bottomTemperature } = await getSpotterData(
-      reef.spotterId,
+      reef.sensorId,
       endDate,
       startDate,
     );
@@ -365,7 +365,7 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found`);
     }
 
-    if (!reef.spotterId) {
+    if (!reef.sensorId) {
       throw new BadRequestException(`Reef with ID ${id} has no spotter`);
     }
 
@@ -379,7 +379,7 @@ export class ReefsService {
         status: ReefStatus.Deployed,
       }),
       this.exclusionDatesRepository.save({
-        spotterId: reef.spotterId,
+        sensorId: reef.sensorId,
         endDate,
       }),
     ]);
@@ -397,7 +397,7 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found`);
     }
 
-    if (!reef.spotterId) {
+    if (!reef.sensorId) {
       throw new BadRequestException(`Reef with ID ${id} has no spotter`);
     }
 
@@ -408,7 +408,7 @@ export class ReefsService {
     }
 
     await this.exclusionDatesRepository.save({
-      spotterId: reef.spotterId,
+      sensorId: reef.sensorId,
       endDate,
       startDate,
     });
@@ -421,13 +421,13 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found`);
     }
 
-    if (!reef.spotterId) {
+    if (!reef.sensorId) {
       throw new BadRequestException(`Reef with ID ${id} has no spotter`);
     }
 
     return this.exclusionDatesRepository.find({
       where: {
-        spotterId: reef.spotterId,
+        sensorId: reef.sensorId,
       },
     });
   }

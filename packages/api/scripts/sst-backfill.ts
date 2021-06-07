@@ -87,7 +87,6 @@ async function main() {
     }
 
     await insertSSTToTimeSeries(
-      entity.reef,
       entity.satelliteTemperature,
       entity.date,
       reefToSource[entity.reef.id],

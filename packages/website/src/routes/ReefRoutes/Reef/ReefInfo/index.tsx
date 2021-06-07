@@ -237,7 +237,7 @@ const ReefNavBar = ({
                         EDIT SITE DETAILS
                       </Button>
                     </Grid>
-                    {reef.spotterId &&
+                    {reef.sensorId &&
                       (reef.status === "shipped" ||
                         reef.status === "deployed") && (
                         <Grid item>

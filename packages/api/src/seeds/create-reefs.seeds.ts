@@ -74,8 +74,6 @@ export class CreateReef implements Seeder {
           .map(async (data) => {
             const metricId = Math.floor(Math.random() * 5);
             const poiId = Math.floor(Math.random() * 4);
-            data.reef = reef;
-            data.poi = pois[poiId];
             data.source = sourcesMap[pois[poiId].id];
             data.metric = metrics[metricId];
             return data;
