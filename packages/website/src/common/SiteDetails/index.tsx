@@ -14,6 +14,7 @@ import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
+import OceanSenseMetrics from "./OceanSenseMetrics";
 import Surveys from "./Surveys";
 import CardTitle, { Value } from "./CardTitle";
 import CombinedCharts from "../Chart/CombinedCharts";
@@ -144,6 +145,8 @@ const SiteDetails = ({
               </Grid>
             ))}
           </Grid>
+
+          <OceanSenseMetrics />
 
           <Box mt="2rem">
             <CombinedCharts
