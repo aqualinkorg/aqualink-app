@@ -157,7 +157,7 @@ export const getReefFromSensorId = async (
   sensorId: string,
   reefRepository: Repository<Reef>,
 ) => {
-  const reef = await reefRepository.findOne({ where: { spotterId: sensorId } });
+  const reef = await reefRepository.findOne({ where: { sensorId } });
 
   if (!reef) {
     throw new NotFoundException(`No site exists with sensor ID ${sensorId}`);

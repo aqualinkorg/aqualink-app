@@ -45,14 +45,14 @@ export class SensorsService {
     (Reef & { sensorPosition: GeoJSON; sensorType: SensorType })[]
   > {
     const reefs = await this.reefRepository.find({
-      where: { spotterId: Not(IsNull()) },
+      where: { sensorId: Not(IsNull()) },
     });
 
     // Get spotter data and add reef id to distinguish them
     const spotterData = await Bluebird.map(
       reefs,
       (reef) => {
-        if (!reef.spotterId) {
+        if (!reef.sensorId) {
           return {
             id: reef.id,
             ...DEFAULT_SPOTTER_DATA_VALUE,
@@ -61,7 +61,7 @@ export class SensorsService {
           };
         }
 
-        return getSpotterData(reef.spotterId).then((data) => {
+        return getSpotterData(reef.sensorId).then((data) => {
           return {
             id: reef.id,
             ...data,
