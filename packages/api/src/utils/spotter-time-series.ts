@@ -104,7 +104,7 @@ export const addSpotterData = async (
     reefs,
     (reef) =>
       Bluebird.map(
-        times(days, (i) => i),
+        times(days),
         (i) => {
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
