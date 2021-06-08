@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Reef } from '../reefs/reefs.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
@@ -13,6 +13,7 @@ import {
   SofarValue,
   SpotterData,
 } from './sofar.types';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 interface Repositories {
   reefRepository: Repository<Reef>;
@@ -116,39 +117,42 @@ export const addSpotterData = async (
           return getSpotterData(reef.sensorId, endDate, startDate);
         },
         { concurrency: 100 },
-      ).then((spotterData) => {
-        const dataLabels: [keyof SpotterData, Metric][] = [
-          ['topTemperature', Metric.TOP_TEMPERATURE],
-          ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
-          ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
-          ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
-          ['wavePeakPeriod', Metric.WAVE_PEAK_PERIOD],
-          ['windDirection', Metric.WIND_DIRECTION],
-          ['windSpeed', Metric.WIND_SPEED],
-        ];
+      )
+        .then((spotterData) => {
+          const dataLabels: [keyof SpotterData, Metric][] = [
+            ['topTemperature', Metric.TOP_TEMPERATURE],
+            ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
+            ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
+            ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
+            ['wavePeakPeriod', Metric.WAVE_PEAK_PERIOD],
+            ['windDirection', Metric.WIND_DIRECTION],
+            ['windSpeed', Metric.WIND_SPEED],
+          ];
 
-        return Bluebird.each(
-          spotterData
-            .map((dailySpotterData) =>
-              dataLabels.map(([spotterDataLabel, metric]) =>
-                saveDataBatch(
-                  dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
-                  reefToSource[reef.id],
-                  metric,
-                  repositories.timeSeriesRepository,
+          return Promise.all(
+            spotterData
+              .map((dailySpotterData) =>
+                dataLabels.map(([spotterDataLabel, metric]) =>
+                  saveDataBatch(
+                    dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
+                    reefToSource[reef.id],
+                    metric,
+                    repositories.timeSeriesRepository,
+                  ),
                 ),
-              ),
-            )
-            .flat(),
-          (props, i) => {
-            logger.log(
-              `Saved ${i + 1} out of ${
-                dataLabels.length * days
-              } of daily spotter data for reef with id ${reef.id}`,
-            );
-          },
-        );
-      }),
+              )
+              .flat(),
+          );
+        })
+        .then(() => {
+          const startDate = moment()
+            .subtract(days - 1, 'd')
+            .startOf('day');
+          const endDate = moment().endOf('day');
+          logger.debug(
+            `Spotter data updated for ${reef.sensorId} between ${startDate} and ${endDate}`,
+          );
+        }),
     { concurrency: 1 },
   );
 

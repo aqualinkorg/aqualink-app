@@ -9,7 +9,7 @@ import { camelCase, isUndefined, keyBy, omitBy } from 'lodash';
 import { In, Repository } from 'typeorm';
 import { Collection } from './collections.entity';
 import { DailyData } from '../reefs/daily-data.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { User } from '../users/users.entity';
@@ -19,6 +19,7 @@ import { CollectionDataDto } from './dto/collection-data.dto';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 interface LatestDailyData {
   // reefId

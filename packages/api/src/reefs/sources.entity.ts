@@ -9,13 +9,7 @@ import {
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from './reefs.entity';
-
-export enum SourceType {
-  SPOTTER = 'spotter',
-  HOBO = 'hobo',
-  NOAA = 'noaa',
-  GFS = 'gfs',
-}
+import { SourceType } from './schemas/source-type.enum';
 
 @Entity()
 @Unique('no_duplicate_sources', ['reef', 'poi', 'type'])

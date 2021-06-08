@@ -13,13 +13,18 @@ type SensorData = {
 };
 
 export const getLatestData = (
-  sofarValues: SofarValue[],
-): SofarValue | undefined =>
-  sofarValues.reduce(
+  sofarValues: SofarValue[] | undefined,
+): SofarValue | undefined => {
+  if (!sofarValues) {
+    return undefined;
+  }
+
+  return sofarValues.reduce(
     (max, entry) =>
       new Date(entry.timestamp) > new Date(max.timestamp) ? entry : max,
     sofarValues[0],
   );
+};
 
 export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
   sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);

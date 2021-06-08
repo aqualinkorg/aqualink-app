@@ -5,7 +5,8 @@ import { DailyData } from '../reefs/daily-data.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { Metric } from '../time-series/metrics.entity';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Sources } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 export class CreateReef implements Seeder {
   public async run(factory: Factory) {
