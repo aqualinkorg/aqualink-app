@@ -33,6 +33,10 @@ export enum ReefStatus {
   Maintenance = 'maintenance',
 }
 
+export enum SensorType {
+  SofarSpotter = 'sofar_spotter',
+}
+
 @Entity()
 export class Reef {
   @ApiProperty({ example: 1 })

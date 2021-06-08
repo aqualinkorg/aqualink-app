@@ -6,10 +6,13 @@ import {
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  RelationId,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Survey } from './surveys.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
+import { sensorDataSchema } from '../docs/api-sensor-data';
 
 export enum Observations {
   Healthy = 'healthy',
@@ -73,6 +76,9 @@ export class SurveyMedia {
   })
   type: MediaType;
 
+  @RelationId((surveyMedia: SurveyMedia) => surveyMedia.poi)
+  poiId: number;
+
   @ManyToOne(() => ReefPointOfInterest, {
     onDelete: 'SET NULL',
     nullable: true,
@@ -85,4 +91,7 @@ export class SurveyMedia {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ApiProperty(sensorDataSchema)
+  sensorData?: SensorDataDto;
 }

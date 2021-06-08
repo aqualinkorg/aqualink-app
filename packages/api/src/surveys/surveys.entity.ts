@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   OneToOne,
   OneToMany,
+  RelationId,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Reef } from '../reefs/reefs.entity';
@@ -15,6 +16,8 @@ import { User } from '../users/users.entity';
 import { DailyData } from '../reefs/daily-data.entity';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Observations, SurveyMedia } from './survey-media.entity';
+import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
+import { sensorDataSchema } from '../docs/api-sensor-data';
 
 export enum WeatherConditions {
   Calm = 'calm',
@@ -53,6 +56,9 @@ export class Survey {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @RelationId((survey: Survey) => survey.reef)
+  reefId: number;
+
   @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'reef_id' })
   reef: Reef;
@@ -74,4 +80,7 @@ export class Survey {
   surveyPoints?: ReefPointOfInterest[];
 
   observations?: Observations[];
+
+  @ApiProperty(sensorDataSchema)
+  sensorData?: SensorDataDto;
 }

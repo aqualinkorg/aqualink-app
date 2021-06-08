@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsInt,
   IsEnum,
+  IsBooleanString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
@@ -32,4 +33,8 @@ export class FilterReefDto {
   @Type(() => Number)
   @IsInt()
   readonly adminId?: number;
+
+  @IsOptional()
+  @IsBooleanString()
+  readonly hasSpotter?: string;
 }
