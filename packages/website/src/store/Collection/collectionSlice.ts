@@ -4,6 +4,7 @@ import type { AxiosError } from "axios";
 import collectionServices from "../../services/collectionServices";
 import { CollectionState, CollectionRequestParams } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
+import { mapCollectionData } from "../Reefs/helpers";
 
 const collectionInitialState: CollectionState = {
   loading: false,
@@ -21,7 +22,13 @@ export const collectionRequest = createAsyncThunk<
       const { data } = isPublic
         ? await collectionServices.getPublicCollection(id)
         : await collectionServices.getCollection(id, token);
-      return data;
+      return {
+        ...data,
+        reefs: data.reefs.map((item) => ({
+          ...item,
+          collectionData: mapCollectionData(item.collectionData || {}),
+        })),
+      };
     } catch (err) {
       const error: AxiosError<CollectionState["error"]> = err;
       return rejectWithValue(error.message);

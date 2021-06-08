@@ -21,10 +21,7 @@ import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import {
-  degreeHeatingWeeksCalculator,
-  dhwColorFinder,
-} from "../../../../helpers/degreeHeatingWeeks";
+import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
 const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
@@ -32,9 +29,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { degreeHeatingDays, satelliteTemperature } = reef.collectionData || {};
-
-  const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
+  const { dhw, satelliteTemperature } = reef.collectionData || {};
 
   useEffect(() => {
     if (

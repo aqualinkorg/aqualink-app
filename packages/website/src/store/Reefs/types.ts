@@ -126,7 +126,8 @@ export type MetricsKeys =
   | "wave_peak_period"
   | "wave_mean_direction"
   | "wind_speed"
-  | "wind_direction";
+  | "wind_direction"
+  | "weekly_alert";
 
 export type Metrics =
   | "alert"
@@ -139,7 +140,8 @@ export type Metrics =
   | "wavePeakPeriod"
   | "waveMeanDirection"
   | "windSpeed"
-  | "windDirection";
+  | "windDirection"
+  | "weeklyAlert";
 
 export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs";
 
@@ -178,6 +180,10 @@ export interface CollectionMetrics {
   sstAnomaly?: number;
 }
 
+export type CollectionDataResponse = Partial<Record<MetricsKeys, number>>;
+
+export type CollectionData = Partial<Record<Metrics, number>>;
+
 export interface Reef {
   id: number;
   name: string | null;
@@ -198,7 +204,11 @@ export interface Reef {
   surveyPoints: Pois[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
-  collectionData?: CollectionMetrics;
+  collectionData?: CollectionData;
+}
+
+export interface ReefResponse extends Reef {
+  collectionData?: CollectionDataResponse;
 }
 
 export interface TimeSeriesDataRequestParams {
