@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from '../reefs/reefs.entity';
-import { SourceType } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 
