@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { In, Not, Repository } from 'typeorm';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
 import { Reef } from '../reefs/reefs.entity';
-import { SourceType } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { getSstAnomaly } from './liveData';
