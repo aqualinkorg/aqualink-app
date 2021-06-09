@@ -215,7 +215,6 @@ export interface Reef {
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
   collectionData?: CollectionMetrics;
-  oceanSenseId?: string;
 }
 
 export interface TimeSeriesDataRequestParams {
@@ -283,6 +282,7 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  latestOceanSenseData?: OceanSenseData;
   oceanSenseData?: OceanSenseData;
   oceanSenseDataLoading: boolean;
   oceanSenseDataError?: string | null;

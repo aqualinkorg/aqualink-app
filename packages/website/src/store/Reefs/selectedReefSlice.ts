@@ -64,15 +64,15 @@ export const reefRequest = createAsyncThunk<
 });
 
 export const reefOceanSenseDataRequest = createAsyncThunk<
-  OceanSenseData,
-  OceanSenseDataRequestParams,
+  { data: OceanSenseData; latest?: boolean },
+  OceanSenseDataRequestParams & { latest?: boolean },
   CreateAsyncThunkTypes
 >(
   "selectedReef/oceanSenseDataRequest",
-  async (params: OceanSenseDataRequestParams, { rejectWithValue }) => {
+  async ({ latest, ...params }, { rejectWithValue }) => {
     try {
       const { data } = await reefServices.getOceanSenseData(params);
-      return mapOceanSenseData(data);
+      return { data: mapOceanSenseData(data), latest };
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
@@ -225,9 +225,17 @@ const selectedReefSlice = createSlice({
 
     builder.addCase(
       reefOceanSenseDataRequest.fulfilled,
-      (state, action: PayloadAction<OceanSenseData>) => ({
+      (
+        state,
+        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>
+      ) => ({
         ...state,
-        oceanSenseData: action.payload,
+        latestOceanSenseData: action.payload.latest
+          ? action.payload.data
+          : undefined,
+        oceanSenseData: !action.payload.latest
+          ? action.payload.data
+          : undefined,
         oceanSenseDataLoading: false,
       })
     );
@@ -361,6 +369,11 @@ export const reefErrorSelector = (
 export const reefOceanSenseDataSelector = (
   state: RootState
 ): SelectedReefState["oceanSenseData"] => state.selectedReef.oceanSenseData;
+
+export const reefLatestOceanSenseDataSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseData"] =>
+  state.selectedReef.latestOceanSenseData;
 
 export const reefOceanSenseDataLoadingSelector = (
   state: RootState

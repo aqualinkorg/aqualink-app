@@ -38,6 +38,8 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
+import { localizedEndOfDay } from "../../../common/Chart/ChartWithCard/helpers";
+import { subtractFromDate } from "../../../helpers/dates";
 
 const getAlertMessage = (
   user: User | null,
@@ -103,7 +105,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon, oceanSenseId } =
+  const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
     reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
@@ -120,6 +122,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasSpotterData = Boolean(liveData?.topTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
+
+  const today = localizedEndOfDay(undefined, timezone);
 
   // Fetch reef and surveys
   useEffect(() => {
@@ -153,12 +157,13 @@ const Reef = ({ match, classes }: ReefProps) => {
       dispatch(
         reefOceanSenseDataRequest({
           sensorID: "oceansense-2",
-          startDate: "2021-04-11T16:00:00Z",
-          endDate: "2021-04-11T17:00:00Z",
+          startDate: subtractFromDate(today, "month", 6),
+          endDate: today,
+          latest: true,
         })
       );
     }
-  }, [dispatch, id, oceanSenseId, reefId]);
+  }, [dispatch, id, reefId, today]);
 
   if (loading || (!reefDetails && !error)) {
     return (
