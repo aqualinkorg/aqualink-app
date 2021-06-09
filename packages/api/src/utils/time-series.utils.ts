@@ -66,8 +66,8 @@ export const getDataQuery = (
   poiId?: number,
 ): Promise<TimeSeriesData[]> => {
   const poiCondition = poiId
-    ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
-    : 'time_series.poi_id is NULL';
+    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
+    : 'source.poi_id is NULL';
 
   return hourly
     ? timeSeriesRepository
@@ -76,10 +76,13 @@ export const getDataQuery = (
         .addSelect('metric')
         .addSelect('source.type', 'source')
         .addSelect("date_trunc('hour', timestamp)", 'timestamp')
-        .innerJoin('time_series.source', 'source')
+        .innerJoin(
+          'time_series.source',
+          'source',
+          `source.reef_id = :reefId AND ${poiCondition}`,
+          { reefId },
+        )
         .andWhere('metric IN (:...metrics)', { metrics })
-        .andWhere('time_series.reef_id = :reefId', { reefId })
-        .andWhere(poiCondition)
         .andWhere('timestamp >= :startDate', { startDate })
         .andWhere('timestamp <= :endDate', { endDate })
         .groupBy("date_trunc('hour', timestamp), metric, source.type")
@@ -91,10 +94,13 @@ export const getDataQuery = (
         .addSelect('metric')
         .addSelect('timestamp')
         .addSelect('source.type', 'source')
-        .innerJoin('time_series.source', 'source')
+        .innerJoin(
+          'time_series.source',
+          'source',
+          `source.reef_id = :reefId AND ${poiCondition}`,
+          { reefId },
+        )
         .andWhere('metric IN (:...metrics)', { metrics })
-        .andWhere('time_series.reef_id = :reefId', { reefId })
-        .andWhere(poiCondition)
         .andWhere('timestamp >= :startDate', { startDate })
         .andWhere('timestamp <= :endDate', { endDate })
         .orderBy('timestamp', 'ASC')
@@ -107,8 +113,8 @@ export const getDataRangeQuery = (
   poiId?: number,
 ): Promise<TimeSeriesRange[]> => {
   const poiCondition = poiId
-    ? `(time_series.poi_id = ${poiId} OR time_series.poi_id is NULL)`
-    : 'time_series.poi_id is NULL';
+    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
+    : 'source.poi_id is NULL';
 
   return timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -116,9 +122,12 @@ export const getDataRangeQuery = (
     .addSelect('source.type', 'source')
     .addSelect('MIN(timestamp)', 'minDate')
     .addSelect('MAX(timestamp)', 'maxDate')
-    .innerJoin('time_series.source', 'source')
-    .andWhere('time_series.reef_id = :reefId', { reefId })
-    .andWhere(poiCondition)
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.reef_id = :reefId AND ${poiCondition}`,
+      { reefId },
+    )
     .groupBy('metric, source.type')
     .getRawMany();
 };
