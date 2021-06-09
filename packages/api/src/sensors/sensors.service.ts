@@ -133,7 +133,7 @@ export class SensorsService {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poiId', 'pois')
+      .leftJoinAndSelect('surveyMedia.poi', 'pois')
       .where('survey.reef_id = :reefId', { reefId: reef.id })
       .andWhere('surveyMedia.hidden = False')
       .getMany();
@@ -231,7 +231,9 @@ export class SensorsService {
     sourceTypes: SourceType[],
     poiId?: number,
   ) {
-    const poiCondition = poiId ? `poi_id = ${poiId}` : 'poi_id IS NULL';
+    const poiCondition = poiId
+      ? `source.poi_id = ${poiId}`
+      : 'source.poi_id IS NULL';
     // We will use this many times in our query, so we declare it as constant
     const diff = `(time_series.timestamp::timestamp - '${diveDate.toISOString()}'::timestamp)`;
 
@@ -255,9 +257,7 @@ export class SensorsService {
       .addSelect('time_series.value', 'value')
       .addSelect('time_series.metric', 'metric')
       .addSelect('time_series.source_id', 'source')
-      .where('time_series.reef_id = :reefId', { reefId })
-      .andWhere(poiCondition)
-      .andWhere(`${diff} < INTERVAL '1 d'`)
+      .where(`${diff} < INTERVAL '1 d'`)
       .andWhere(`${diff} > INTERVAL '-1 d'`)
       .andWhere('time_series.metric IN (:...metrics)', { metrics })
       .andWhere('time_series.source_id IN (:...sourceIds)', {
