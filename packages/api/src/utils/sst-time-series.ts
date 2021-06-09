@@ -60,14 +60,15 @@ export const updateSST = async (
 
       const data = await Bluebird.map(
         times(days),
-        async (i) => {
+        (i) => {
           const endDate =
             i === 0
               ? moment().format()
               : moment().subtract(i, 'd').endOf('day').format();
           const startDate = moment().subtract(i, 'd').startOf('day').format();
 
-          const [SofarSSTRaw, sofarDegreeHeatingWeekRaw] = await Promise.all([
+          // use Promise/then to increase concurrency since await halts the event loop
+          return Promise.all([
             sofarHindcast(
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -86,43 +87,43 @@ export const updateSST = async (
               startDate,
               endDate,
             ),
-          ]);
+          ]).then(([SofarSSTRaw, sofarDegreeHeatingWeekRaw]) => {
+            // Filter out null values
+            const sstFiltered = filterSofarResponse(SofarSSTRaw);
+            const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
+            // Get latest dhw
+            const latestDhw = getLatestData(dhwFiltered);
+            // Get alert level
+            const alertLevel = calculateAlertLevel(
+              reef.maxMonthlyMean,
+              getLatestData(sstFiltered)?.value,
+              // Calculate degree heating days
+              latestDhw && latestDhw.value * 7,
+            );
 
-          // Filter out null values
-          const sstFiltered = filterSofarResponse(SofarSSTRaw);
-          const dhwFiltered = filterSofarResponse(sofarDegreeHeatingWeekRaw);
-          // Get latest dhw
-          const latestDhw = getLatestData(dhwFiltered);
-          // Get alert level
-          const alertLevel = calculateAlertLevel(
-            reef.maxMonthlyMean,
-            getLatestData(sstFiltered)?.value,
-            // Calculate degree heating days
-            latestDhw && latestDhw.value * 7,
-          );
-
-          // return calculated metrics (sst, dhw, alert)
-          return {
-            sst: sstFiltered,
-            dhw: dhwFiltered,
-            alert:
-              alertLevel !== undefined
-                ? [
-                    {
-                      value: alertLevel,
-                      timestamp: moment().subtract(i, 'd').hour(12).format(),
-                    },
-                  ]
-                : [],
-          };
+            // return calculated metrics (sst, dhw, alert)
+            return {
+              sst: sstFiltered,
+              dhw: dhwFiltered,
+              alert:
+                alertLevel !== undefined
+                  ? [
+                      {
+                        value: alertLevel,
+                        timestamp: moment().subtract(i, 'd').hour(12).format(),
+                      },
+                    ]
+                  : [],
+            };
+          });
         },
         { concurrency: 100 },
       );
 
       return Bluebird.map(
         data,
-        ({ sst, dhw, alert }) => {
-          return Promise.all([
+        ({ sst, dhw, alert }) =>
+          Promise.all([
             insertReefDataToTimeSeries(
               sst,
               Metric.SATELLITE_TEMPERATURE,
@@ -141,13 +142,12 @@ export const updateSST = async (
               source,
               timeSeriesRepository,
             ),
-          ]);
-        },
+          ]),
         { concurrency: 100 },
       );
     },
     // Speed up if this is just a daily update
-    { concurrency: days === 1 ? 10 : 1 },
+    { concurrency: days <= 5 ? 10 : 1 },
   );
 
   logger.log('Back-filling weekly alert level');
@@ -163,7 +163,7 @@ export const updateSST = async (
       const maxAlert = await repositories.timeSeriesRepository
         .createQueryBuilder('time_series')
         .select('MAX(value)', 'value')
-        .addSelect('source_id')
+        .addSelect('source_id', 'source')
         .addSelect('MAX(timestamp)', 'timestamp')
         .where('timestamp <= :endDate::timestamp', { endDate })
         .andWhere("timestamp >= :endDate::timestamp - INTERVAL '7 days'", {
