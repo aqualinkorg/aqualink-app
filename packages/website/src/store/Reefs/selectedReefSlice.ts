@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { merge, sortBy } from "lodash";
+import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
 import type {
+  OceanSenseData,
   OceanSenseDataRequestParams,
   Pois,
   ReefUpdateParams,
   SelectedReefState,
-  SofarValue,
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
 } from "./types";
@@ -24,10 +24,9 @@ const selectedReefInitialState: SelectedReefState = {
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   oceanSenseDataLoading: false,
+  oceanSenseDataError: null,
   error: null,
 };
-
-const OCEAN_SENSOR_ID = "oceansense-2";
 
 export const reefRequest = createAsyncThunk<
   SelectedReefState["details"],
@@ -44,7 +43,6 @@ export const reefRequest = createAsyncThunk<
       ...data,
       dailyData,
       liveData,
-      oceanSenseId: OCEAN_SENSOR_ID, // TODO: Replace this with the actual value
       historicalMonthlyMean: sortBy(
         data.historicalMonthlyMean,
         (item) => item.month
@@ -66,7 +64,7 @@ export const reefRequest = createAsyncThunk<
 });
 
 export const reefOceanSenseDataRequest = createAsyncThunk<
-  Partial<Record<OceanSenseDataRequestParams["param"], SofarValue[]>>,
+  OceanSenseData,
   OceanSenseDataRequestParams,
   CreateAsyncThunkTypes
 >(
@@ -74,7 +72,7 @@ export const reefOceanSenseDataRequest = createAsyncThunk<
   async (params: OceanSenseDataRequestParams, { rejectWithValue }) => {
     try {
       const { data } = await reefServices.getOceanSenseData(params);
-      return { [params.param]: mapOceanSenseData(data) };
+      return mapOceanSenseData(data);
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
       return rejectWithValue(error.message);
@@ -227,23 +225,22 @@ const selectedReefSlice = createSlice({
 
     builder.addCase(
       reefOceanSenseDataRequest.fulfilled,
-      (
-        state,
-        action: PayloadAction<
-          Partial<Record<OceanSenseDataRequestParams["param"], SofarValue[]>>
-        >
-      ) => ({
+      (state, action: PayloadAction<OceanSenseData>) => ({
         ...state,
-        oceanSenseData: merge(state.oceanSenseData, action.payload),
+        oceanSenseData: action.payload,
+        oceanSenseDataLoading: false,
       })
     );
 
     builder.addCase(
       reefOceanSenseDataRequest.rejected,
-      (state, action: PayloadAction<SelectedReefState["error"]>) => {
+      (
+        state,
+        action: PayloadAction<SelectedReefState["oceanSenseDataError"]>
+      ) => {
         return {
           ...state,
-          error: action.payload,
+          oceanSenseDataError: action.payload,
           oceanSenseDataLoading: false,
         };
       }
@@ -253,7 +250,7 @@ const selectedReefSlice = createSlice({
       return {
         ...state,
         oceanSenseDataLoading: true,
-        error: null,
+        oceanSenseDataError: null,
       };
     });
 
@@ -369,6 +366,11 @@ export const reefOceanSenseDataLoadingSelector = (
   state: RootState
 ): SelectedReefState["oceanSenseDataLoading"] =>
   state.selectedReef.oceanSenseDataLoading;
+
+export const reefOceanSenseDataErrorSelector = (
+  state: RootState
+): SelectedReefState["oceanSenseDataError"] =>
+  state.selectedReef.oceanSenseDataError;
 
 export const {
   setReefDraft,

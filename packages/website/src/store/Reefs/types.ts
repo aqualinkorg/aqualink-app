@@ -163,21 +163,20 @@ export type TimeSeriesDataRangeResponse = Record<
 
 export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
 
+export type OceanSenseKeys = "TEMP" | "DO" | "EC" | "ORP" | "PH" | "PRESS";
+
 export interface OceanSenseDataRequestParams {
-  param: "TEMP" | "PH" | "OR" | "DO" | "PR" | "EC";
   sensorID: string;
   startDate: string;
   endDate: string;
 }
 
 export interface OceanSenseDataResponse {
-  data: number[];
+  data: Record<OceanSenseKeys, number[]>;
   timestamps: string[];
 }
 
-export type OceanSenseData = Partial<
-  Record<OceanSenseDataRequestParams["param"], SofarValue[]>
->;
+export type OceanSenseData = Record<OceanSenseKeys, SofarValue[]>;
 
 export interface HistoricalMonthlyMean {
   id: number;
@@ -286,6 +285,7 @@ export interface SelectedReefState {
   details?: Reef | null;
   oceanSenseData?: OceanSenseData;
   oceanSenseDataLoading: boolean;
+  oceanSenseDataError?: string | null;
   granularDailyData?: DailyData[];
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;

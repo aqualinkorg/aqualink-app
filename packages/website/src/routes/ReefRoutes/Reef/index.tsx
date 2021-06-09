@@ -26,6 +26,7 @@ import {
   reefTimeSeriesDataRangeRequest,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
+  reefOceanSenseDataRequest,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -102,7 +103,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
+  const { id, liveData, dailyData, surveyPoints, polygon, oceanSenseId } =
+    reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -142,6 +144,21 @@ const Reef = ({ match, classes }: ReefProps) => {
       );
     }
   }, [closestSurveyPointId, dispatch, id, reefId]);
+
+  useEffect(() => {
+    if (
+      reefId === process.env.REACT_APP_OCEAN_SENSE_REEF &&
+      reefId === id?.toString()
+    ) {
+      dispatch(
+        reefOceanSenseDataRequest({
+          sensorID: "oceansense-2",
+          startDate: "2021-04-11T16:00:00Z",
+          endDate: "2021-04-11T17:00:00Z",
+        })
+      );
+    }
+  }, [dispatch, id, oceanSenseId, reefId]);
 
   if (loading || (!reefDetails && !error)) {
     return (

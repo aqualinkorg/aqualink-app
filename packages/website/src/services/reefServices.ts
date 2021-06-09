@@ -174,13 +174,12 @@ const maintainSpotter = (
   });
 
 const getOceanSenseData = ({
-  param,
   sensorID,
   startDate,
   endDate,
 }: OceanSenseDataRequestParams) =>
   requests.send<OceanSenseDataResponse>({
-    url: `https://us-central1-oceansense-app.cloudfunctions.net/queryData?sensorID=${sensorID}&param=${param}&startDate=${startDate}&endDate=${endDate}`,
+    url: `https://us-central1-oceansense-app.cloudfunctions.net/queryData?sensorID=${sensorID}&param=all&startDate=${startDate}&endDate=${endDate}`,
     method: "GET",
   });
 

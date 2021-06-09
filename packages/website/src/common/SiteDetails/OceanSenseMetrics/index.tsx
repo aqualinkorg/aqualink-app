@@ -34,7 +34,7 @@ const metrics: Metric[] = [
     icon: <AcidityIcon />,
   },
   {
-    label: "CUNDUCTIVITY",
+    label: "CONDUCTIVITY",
     value: 83.17,
     measure: "\u00B5S",
     icon: <ConductivityIcon />,

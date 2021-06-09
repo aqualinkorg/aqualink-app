@@ -146,7 +146,9 @@ const SiteDetails = ({
             ))}
           </Grid>
 
-          <OceanSenseMetrics />
+          {`${reef.id}` === process.env.REACT_APP_OCEAN_SENSE_REEF && (
+            <OceanSenseMetrics />
+          )}
 
           <Box mt="2rem">
             <CombinedCharts
