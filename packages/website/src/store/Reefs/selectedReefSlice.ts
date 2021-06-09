@@ -232,10 +232,10 @@ const selectedReefSlice = createSlice({
         ...state,
         latestOceanSenseData: action.payload.latest
           ? action.payload.data
-          : undefined,
+          : state.latestOceanSenseData,
         oceanSenseData: !action.payload.latest
           ? action.payload.data
-          : undefined,
+          : state.oceanSenseData,
         oceanSenseDataLoading: false,
       })
     );
