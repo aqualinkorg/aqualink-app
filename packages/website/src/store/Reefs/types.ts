@@ -283,6 +283,8 @@ export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
   latestOceanSenseData?: OceanSenseData;
+  latestOceanSenseDataLoading: boolean;
+  latestOceanSenseDataError?: string | null;
   oceanSenseData?: OceanSenseData;
   oceanSenseDataLoading: boolean;
   oceanSenseDataError?: string | null;

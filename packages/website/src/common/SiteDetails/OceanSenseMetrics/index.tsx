@@ -23,8 +23,8 @@ import { ReactComponent as PressureIcon } from "../../../assets/pressure.svg";
 import { ReactComponent as DissolvedOxygenIcon } from "../../../assets/dissolved_oxygen.svg";
 import { ReactComponent as OrpIcon } from "../../../assets/orp.svg";
 import {
+  reefLatestOceanSenseDataLoadingSelector,
   reefLatestOceanSenseDataSelector,
-  reefOceanSenseDataLoadingSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { OceanSenseData } from "../../../store/Reefs/types";
 import { formatNumber } from "../../../helpers/numberUtils";
@@ -75,7 +75,7 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const isTablet = useMediaQuery(theme.breakpoints.up("md"));
   const data = useSelector(reefLatestOceanSenseDataSelector);
-  const loading = useSelector(reefOceanSenseDataLoadingSelector);
+  const loading = useSelector(reefLatestOceanSenseDataLoadingSelector);
 
   const lastTimestamp = last(data?.PH)?.timestamp;
   const relativeTime = lastTimestamp
@@ -104,7 +104,7 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
                   <Typography display="block" variant="caption">
                     {item.label}
                   </Typography>
-                  {loading && !data ? (
+                  {loading ? (
                     <Box py={0.5}>
                       <CircularProgress size={22} thickness={2} />
                     </Box>

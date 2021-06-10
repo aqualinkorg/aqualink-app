@@ -23,6 +23,8 @@ const selectedReefInitialState: SelectedReefState = {
   loading: true,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
+  latestOceanSenseDataLoading: false,
+  latestOceanSenseDataError: null,
   oceanSenseDataLoading: false,
   oceanSenseDataError: null,
   error: null,
@@ -233,32 +235,51 @@ const selectedReefSlice = createSlice({
         latestOceanSenseData: action.payload.latest
           ? action.payload.data
           : state.latestOceanSenseData,
+        latestOceanSenseDataLoading: action.payload.latest
+          ? false
+          : state.latestOceanSenseDataLoading,
         oceanSenseData: !action.payload.latest
           ? action.payload.data
           : state.oceanSenseData,
-        oceanSenseDataLoading: false,
+        oceanSenseDataLoading: !action.payload.latest
+          ? false
+          : state.oceanSenseDataLoading,
       })
     );
 
-    builder.addCase(
-      reefOceanSenseDataRequest.rejected,
-      (
-        state,
-        action: PayloadAction<SelectedReefState["oceanSenseDataError"]>
-      ) => {
-        return {
-          ...state,
-          oceanSenseDataError: action.payload,
-          oceanSenseDataLoading: false,
-        };
-      }
-    );
-
-    builder.addCase(reefOceanSenseDataRequest.pending, (state) => {
+    builder.addCase(reefOceanSenseDataRequest.rejected, (state, action) => {
       return {
         ...state,
-        oceanSenseDataLoading: true,
-        oceanSenseDataError: null,
+        latestOceanSenseDataError: action.meta.arg.latest
+          ? action.error.message
+          : state.latestOceanSenseDataError,
+        latestOceanSenseDataLoading: action.meta.arg.latest
+          ? false
+          : state.latestOceanSenseDataLoading,
+        oceanSenseDataError: !action.meta.arg.latest
+          ? action.error.message
+          : state.oceanSenseDataError,
+        oceanSenseDataLoading: !action.meta.arg.latest
+          ? false
+          : state.oceanSenseDataLoading,
+      };
+    });
+
+    builder.addCase(reefOceanSenseDataRequest.pending, (state, action) => {
+      return {
+        ...state,
+        latestOceanSenseDataLoading: action.meta.arg.latest
+          ? true
+          : state.latestOceanSenseDataLoading,
+        latestOceanSenseDataError: action.meta.arg.latest
+          ? null
+          : state.latestOceanSenseDataError,
+        oceanSenseDataLoading: !action.meta.arg.latest
+          ? true
+          : state.oceanSenseDataLoading,
+        oceanSenseDataError: !action.meta.arg.latest
+          ? null
+          : state.oceanSenseDataError,
       };
     });
 
@@ -366,14 +387,24 @@ export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
 
-export const reefOceanSenseDataSelector = (
-  state: RootState
-): SelectedReefState["oceanSenseData"] => state.selectedReef.oceanSenseData;
-
 export const reefLatestOceanSenseDataSelector = (
   state: RootState
 ): SelectedReefState["latestOceanSenseData"] =>
   state.selectedReef.latestOceanSenseData;
+
+export const reefLatestOceanSenseDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseDataLoading"] =>
+  state.selectedReef.latestOceanSenseDataLoading;
+
+export const reefLatestOceanSenseDataErrorSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseDataError"] =>
+  state.selectedReef.latestOceanSenseDataError;
+
+export const reefOceanSenseDataSelector = (
+  state: RootState
+): SelectedReefState["oceanSenseData"] => state.selectedReef.oceanSenseData;
 
 export const reefOceanSenseDataLoadingSelector = (
   state: RootState
