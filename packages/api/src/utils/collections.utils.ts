@@ -1,6 +1,7 @@
-import _ from 'lodash';
+import _, { groupBy } from 'lodash';
 import { In, Not, Repository } from 'typeorm';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
+import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { SourceType } from '../reefs/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
@@ -9,16 +10,27 @@ import { getSstAnomaly } from './liveData';
 
 export const getCollectionData = async (
   reefs: Reef[],
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
   latestDataRepository: Repository<LatestData>,
 ): Promise<Record<number, CollectionDataDto>> => {
+  const reefIds = reefs.map((reef) => reef.id);
+
   // Get latest data
   const latestData = await latestDataRepository.find({
     where: {
-      reef: In(reefs.map((reef) => reef.id)),
+      reef: In(reefIds),
       source: Not(SourceType.HOBO),
     },
-    relations: ['reef', 'reef.historicalMonthlyMean'],
   });
+
+  const historicalMonthlyMean = await historicalMonthlyMeanRepository.find({
+    where: { reefId: In(reefIds) },
+  });
+
+  const mappedHistoricalMonthlyMean = groupBy(
+    historicalMonthlyMean,
+    (hmm) => hmm.reefId,
+  );
 
   // Map data to each reef and map each reef's data to the CollectionDataDto
   return _(latestData)
@@ -31,7 +43,7 @@ export const getCollectionData = async (
           ...(reefData.metric === Metric.SATELLITE_TEMPERATURE
             ? {
                 sst_anomaly: getSstAnomaly(
-                  reefData.reef.historicalMonthlyMean,
+                  mappedHistoricalMonthlyMean[reefData.reefId] || [],
                   {
                     value: reefData.value,
                     timestamp: reefData.timestamp.toISOString(),

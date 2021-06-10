@@ -171,7 +171,7 @@ export class ReefsService {
     if (filter.hasSpotter) {
       const hasSpotter = filter.hasSpotter.toLowerCase() === 'true';
       query.andWhere(
-        hasSpotter ? 'reef.spotter_id IS NOT NULL' : 'reef.spotter_id IS NULL',
+        hasSpotter ? 'reef.sensor_id IS NOT NULL' : 'reef.sensor_id IS NULL',
       );
     }
 
@@ -179,15 +179,12 @@ export class ReefsService {
       .leftJoinAndSelect('reef.region', 'region')
       .leftJoinAndSelect('reef.admins', 'admins')
       .leftJoinAndSelect('reef.stream', 'stream')
-      .leftJoinAndSelect(
-        'reef.historicalMonthlyMean',
-        'historical_monthly_mean',
-      )
       .andWhere('approved = true')
       .getMany();
 
     const mappedReefData = await getCollectionData(
       res,
+      this.historicalMonthlyMeanRepository,
       this.latestDataRepository,
     );
 
