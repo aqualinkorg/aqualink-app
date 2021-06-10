@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
-import { last } from "lodash";
+import { last, isNumber } from "lodash";
 import moment from "moment";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
@@ -37,6 +37,8 @@ function ChartWithTooltip({
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
+    oceanSenseData,
+    oceanSenseDataUnit,
     historicalMonthlyMeanData,
     reefId,
     surveys,
@@ -56,6 +58,8 @@ function ChartWithTooltip({
     spotterTopTemp: null,
     spotterBottomTemp: null,
     hoboBottomTemp: null,
+    oceanSense: null,
+    oceanSenseUnit: null,
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -82,37 +86,50 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const historicalMonthlyMeanTemp =
-      (
-        historicalMonthlyMeanData &&
-        getHistoricalMonthlyMeanDataClosestToDate(
-          historicalMonthlyMeanData,
-          new Date(date)
-        )
-      )?.value || null;
+    const closestHistorical =
+      historicalMonthlyMeanData &&
+      getHistoricalMonthlyMeanDataClosestToDate(
+        historicalMonthlyMeanData,
+        new Date(date)
+      )?.value;
+    const closestSpotterTop =
+      spotterData &&
+      getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
+        ?.value;
+    const closestSpotterBottom =
+      spotterData &&
+      getSofarDataClosestToDate(
+        spotterData.bottomTemperature,
+        new Date(date),
+        6
+      )?.value;
+    const closestHoboBottom =
+      hoboBottomTemperatureData &&
+      getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
+        ?.value;
+    const closestOceanSense =
+      oceanSenseData &&
+      getSofarDataClosestToDate(oceanSenseData, new Date(date), 6)?.value;
+
+    const historicalMonthlyMeanTemp = isNumber(closestHistorical)
+      ? closestHistorical
+      : null;
 
     const satelliteTemp = satelliteTemperature || null;
 
-    const spotterTopTemp =
-      (spotterData &&
-        getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
-          ?.value) ||
-      null;
+    const spotterTopTemp = isNumber(closestSpotterTop)
+      ? closestSpotterTop
+      : null;
 
-    const spotterBottomTemp =
-      (spotterData &&
-        getSofarDataClosestToDate(
-          spotterData.bottomTemperature,
-          new Date(date),
-          6
-        )?.value) ||
-      null;
+    const spotterBottomTemp = isNumber(closestSpotterBottom)
+      ? closestSpotterBottom
+      : null;
 
-    const hoboBottomTemp =
-      (hoboBottomTemperatureData &&
-        getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
-          ?.value) ||
-      null;
+    const hoboBottomTemp = isNumber(closestHoboBottom)
+      ? closestHoboBottom
+      : null;
+
+    const oceanSense = isNumber(closestOceanSense) ? closestOceanSense : null;
 
     const nValues = [
       historicalMonthlyMeanTemp,
@@ -120,7 +137,8 @@ function ChartWithTooltip({
       spotterTopTemp,
       spotterBottomTemp,
       hoboBottomTemp,
-    ].filter(Boolean).length;
+      oceanSense,
+    ].filter(isNumber).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 95;
@@ -148,6 +166,8 @@ function ChartWithTooltip({
         spotterTopTemp,
         spotterBottomTemp,
         hoboBottomTemp,
+        oceanSense,
+        oceanSenseUnit: oceanSenseDataUnit || null,
         surveyId,
       });
       setShowTooltip(true);

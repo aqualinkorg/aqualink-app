@@ -32,6 +32,8 @@ export interface ChartProps {
   dailyData: DailyData[];
   spotterData?: TimeSeries;
   hoboBottomTemperatureData?: SofarValue[];
+  oceanSenseData?: SofarValue[];
+  oceanSenseDataUnit?: string;
   historicalMonthlyMeanData?: HistoricalMonthlyMeanData[];
   timeZone?: string | null;
   startDate?: string;
@@ -43,6 +45,7 @@ export interface ChartProps {
   background?: boolean;
   showYearInTicks?: boolean;
   fill?: boolean;
+  hideYAxisUnits?: boolean;
 
   chartSettings?: {};
   chartRef?: MutableRefObject<Line | null>;
@@ -85,6 +88,7 @@ const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
     prevProps.hoboBottomTemperatureData,
     nextProps.hoboBottomTemperatureData
   ) &&
+  isEqual(prevProps.oceanSenseData, nextProps.oceanSenseData) &&
   isEqual(
     prevProps.spotterData?.bottomTemperature,
     nextProps.spotterData?.bottomTemperature
@@ -98,6 +102,7 @@ function Chart({
   dailyData,
   spotterData,
   hoboBottomTemperatureData,
+  oceanSenseData,
   historicalMonthlyMeanData,
   surveys,
   timeZone,
@@ -108,6 +113,7 @@ function Chart({
   maxMonthlyMean,
   background,
   showYearInTicks,
+  hideYAxisUnits,
   chartSettings = {},
   fill = true,
   chartRef: forwardRef,
@@ -139,11 +145,13 @@ function Chart({
     spotterBottom,
     spotterTop,
     hoboBottom,
+    oceanSense,
     historicalMonthlyMeanTemp,
   } = useProcessedChartData(
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
+    oceanSenseData,
     historicalMonthlyMeanData,
     surveys,
     temperatureThreshold,
@@ -265,7 +273,7 @@ function Chart({
               max: yAxisMax,
               callback: (value: number) => {
                 if (![1, yStepSize - 1].includes(value % yStepSize)) {
-                  return `${value}°  `;
+                  return `${value}${!hideYAxisUnits ? "°" : ""}  `;
                 }
                 return "";
               },
@@ -291,6 +299,7 @@ function Chart({
         spotterBottom,
         spotterTop,
         hoboBottom,
+        oceanSense,
         tempWithSurvey,
         augmentSurfaceTemperature(
           surfaceTemperatureData,

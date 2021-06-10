@@ -4,6 +4,7 @@ import {
   Card,
   createStyles,
   Grid,
+  GridProps,
   Theme,
   Tooltip,
   Typography,
@@ -12,7 +13,12 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { reefTimeSeriesDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
+import { isNumber } from "lodash";
+
+import {
+  reefOceanSenseDataLoadingSelector,
+  reefTimeSeriesDataLoadingSelector,
+} from "../../../store/Reefs/selectedReefSlice";
 import {
   HistoricalMonthlyMeanData,
   SofarValue,
@@ -37,10 +43,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   dailyDataSst,
   spotterData,
   hoboBottomTemperature,
+  oceanSenseData,
+  oceanSenseUnit,
+  columnJustification,
   historicalMonthlyMean,
   children,
 }) => {
   const loading = useSelector(reefTimeSeriesDataLoadingSelector);
+  const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
 
   const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
     historicalMonthlyMean,
@@ -49,13 +59,17 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   );
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
+  const hasOceanSenseData = !!oceanSenseData?.[1];
 
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
   const hasSpotterTop = !!spotterData?.topTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
   const hasDailyData = !!dailyDataSst?.[1];
 
-  const showCard = !loading && (hasHoboData || hasSpotterData || hasDailyData);
+  const showCard =
+    !loading &&
+    (!oceanSenseData || !oceanSenseDataLoading) &&
+    (hasHoboData || hasOceanSenseData || hasSpotterData || hasDailyData);
 
   if (!showCard) {
     return null;
@@ -79,6 +93,13 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       color: "#f78c21",
       rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
       display: dataset === "hobo",
+    },
+    {
+      title: "SENSOR",
+      key: "oceanSense",
+      color: "#f78c21",
+      rows: calculateCardMetrics(2, oceanSenseData, "oceanSense"),
+      display: dataset === "oceanSense",
     },
     {
       title: "BUOY 1m",
@@ -105,7 +126,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       rows: calculateCardMetrics(2, dailyDataSst, "sst"),
       display: dataset === "sst",
     },
-  ].filter((val) => val.rows[0].value);
+  ].filter((val) => isNumber(val.rows[0].value));
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
@@ -123,7 +144,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
         <Grid
           className={classes.metricsWrapper}
           container
-          justify="space-between"
+          justify={columnJustification || "space-between"}
           alignItems="flex-end"
           spacing={1}
         >
@@ -175,7 +196,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} °C
+                          {formatNumber(value, 1)} {oceanSenseUnit || "°C"}
                         </Typography>
                       </Grid>
                     ))}
@@ -235,6 +256,9 @@ interface TempAnalysisIncomingProps {
   dailyDataSst: SofarValue[];
   spotterData: TimeSeries | undefined;
   hoboBottomTemperature: SofarValue[];
+  oceanSenseData?: SofarValue[];
+  oceanSenseUnit?: string;
+  columnJustification?: GridProps["justify"];
   historicalMonthlyMean: HistoricalMonthlyMeanData[];
 }
 

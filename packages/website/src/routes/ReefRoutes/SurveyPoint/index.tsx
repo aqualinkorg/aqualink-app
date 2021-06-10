@@ -82,6 +82,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
               reef={reef}
               pointId={pointId}
               surveysFiltered
+              displayOceanSenseCharts={false}
             />
           )}
           <SurveyHistory

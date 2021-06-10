@@ -246,6 +246,7 @@ export const createDatasets = (
   rawSpotterBottom: SofarValue[],
   rawSpotterTop: SofarValue[],
   rawHoboBottom: SofarValue[],
+  rawOceanSense: SofarValue[],
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   surveys: SurveyListItem[]
 ) => {
@@ -273,6 +274,11 @@ export const createDatasets = (
   }));
 
   const hoboBottom = rawHoboBottom.map((item) => ({
+    x: item.timestamp,
+    y: item.value,
+  }));
+
+  const oceanSense = rawOceanSense.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -305,6 +311,7 @@ export const createDatasets = (
     spotterBottom,
     spotterTop,
     hoboBottom,
+    oceanSense,
     historicalMonthlyMeanTemp,
   };
 };
@@ -313,6 +320,7 @@ export const calculateAxisLimits = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
   hoboTemperatureData: SofarValue[],
+  oceanSenseData: SofarValue[],
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   spotterTopTemperature: SofarValue[],
   surveys: SurveyListItem[],
@@ -344,30 +352,33 @@ export const calculateAxisLimits = (
     spotterBottom,
     spotterTop,
     hoboBottom,
+    oceanSense,
     historicalMonthlyMeanTemp,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
     spotterTopTemperature,
     hoboTemperatureData,
+    oceanSenseData,
     historicalMonthlyMeanData,
     surveys
   );
 
-  const temperatureData = [
+  const accumulatedData = [
     ...surfaceTemperatureData,
     ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterTop,
     ...hoboBottom,
+    ...oceanSense,
     ...historicalMonthlyMeanTemp,
   ]
     .filter((value) => value)
     .map((value) => value.y);
 
-  const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
+  const yAxisMinTemp = Math.min(...accumulatedData) - ySpacing;
 
-  const yAxisMaxTemp = Math.max(...temperatureData) + ySpacing;
+  const yAxisMaxTemp = Math.max(...accumulatedData) + ySpacing;
 
   const yAxisMin = Math.round(
     temperatureThreshold
@@ -393,6 +404,7 @@ export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
   hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
+  oceanSenseData: ChartProps["oceanSenseData"],
   historicalMonthlyMeanData: ChartProps["historicalMonthlyMeanData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
@@ -413,6 +425,7 @@ export function useProcessedChartData(
     bottomTemperature || [],
     topTemperature || [],
     hoboBottomTemperatureData || [],
+    oceanSenseData || [],
     historicalMonthlyMeanData || [],
     surveys
   );
@@ -421,6 +434,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     hoboBottomTemperatureData || [],
+    oceanSenseData || [],
     historicalMonthlyMeanData || [],
     topTemperature || [],
     surveys,
@@ -513,6 +527,7 @@ export const createChartData = (
   spotterBottom: ChartPoint[],
   spotterTop: ChartPoint[],
   hoboBottom: ChartPoint[],
+  oceanSense: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
@@ -573,6 +588,17 @@ export const createChartData = (
       {
         label: "HOBO BOTTOM",
         data: createGaps(hoboBottom, 1),
+        fill: false,
+        borderColor: "#f78c21",
+        borderWidth: 2,
+        pointBackgroundColor: "#ffffff",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "OCEAN SENSE",
+        data: createGaps(oceanSense, 1),
         fill: false,
         borderColor: "#f78c21",
         borderWidth: 2,

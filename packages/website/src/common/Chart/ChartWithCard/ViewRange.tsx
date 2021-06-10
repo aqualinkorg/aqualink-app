@@ -26,6 +26,7 @@ const ViewRange = ({
   classes,
   timeSeriesDataRanges,
   timeZone,
+  showRangeButtons,
 }: ViewRangeProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -111,43 +112,47 @@ const ViewRange = ({
             )}
           </Box>
         </Grid>
-        <Grid item xs={isMobile ? 12 : undefined}>
-          <Box ml="32px">
-            <Grid
-              className={classes.autoWidth}
-              container
-              justify={isMobile ? "center" : "flex-start"}
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item xs={isMobile ? 12 : undefined}>
-                <Typography variant="subtitle1" color="textSecondary">
-                  View Range:
-                </Typography>
-              </Grid>
-              {buttons.map((button) => (
-                <Grid key={button.id} item xs={isMobile ? 12 : undefined}>
-                  <Tooltip arrow placement="top" title={button.tooltip}>
-                    <div>
-                      <Button
-                        onClick={() => onRangeChange(button.id)}
-                        size="small"
-                        variant={range === button.id ? "contained" : "outlined"}
-                        color="primary"
-                        disabled={button.disabled}
-                        fullWidth
-                      >
-                        <Typography variant="subtitle1">
-                          {button.title}
-                        </Typography>
-                      </Button>
-                    </div>
-                  </Tooltip>
+        {showRangeButtons && (
+          <Grid item xs={isMobile ? 12 : undefined}>
+            <Box ml="32px">
+              <Grid
+                className={classes.autoWidth}
+                container
+                justify={isMobile ? "center" : "flex-start"}
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item xs={isMobile ? 12 : undefined}>
+                  <Typography variant="subtitle1" color="textSecondary">
+                    View Range:
+                  </Typography>
                 </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </Grid>
+                {buttons.map((button) => (
+                  <Grid key={button.id} item xs={isMobile ? 12 : undefined}>
+                    <Tooltip arrow placement="top" title={button.tooltip}>
+                      <div>
+                        <Button
+                          onClick={() => onRangeChange(button.id)}
+                          size="small"
+                          variant={
+                            range === button.id ? "contained" : "outlined"
+                          }
+                          color="primary"
+                          disabled={button.disabled}
+                          fullWidth
+                        >
+                          <Typography variant="subtitle1">
+                            {button.title}
+                          </Typography>
+                        </Button>
+                      </div>
+                    </Tooltip>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </>
   );
@@ -184,11 +189,13 @@ interface ViewRangeIncomingProps {
   onRangeChange: (value: RangeValue) => void;
   timeSeriesDataRanges: TimeSeriesDataRange | undefined;
   timeZone?: string | null;
+  showRangeButtons?: boolean;
 }
 
 ViewRange.defaultProps = {
   title: "",
   timeZone: null,
+  showRangeButtons: true,
 };
 
 type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;
