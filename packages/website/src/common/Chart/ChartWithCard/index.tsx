@@ -17,6 +17,7 @@ import Chart from "./Chart";
 import TempAnalysis from "./TempAnalysis";
 import {
   reefGranularDailyDataSelector,
+  reefOceanSenseDataRequest,
   reefTimeSeriesDataRangeSelector,
   reefTimeSeriesDataRequest,
   reefTimeSeriesDataSelector,
@@ -32,6 +33,7 @@ import { findCardDataset, findDataLimits, localizedEndOfDay } from "./helpers";
 import { RangeValue } from "./types";
 import ViewRange from "./ViewRange";
 import DownloadCSVButton from "./DownloadCSVButton";
+import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 
 const ChartWithCard = ({
   reef,
@@ -136,6 +138,17 @@ const ChartWithCard = ({
             2,
         })
       );
+
+      if (oceanSenseConfig?.[reef.id]) {
+        dispatch(
+          reefOceanSenseDataRequest({
+            sensorID: oceanSenseConfig[reef.id],
+            startDate: reefLocalStartDate,
+            endDate: reefLocalEndDate,
+            latest: false,
+          })
+        );
+      }
     }
   }, [
     dispatch,

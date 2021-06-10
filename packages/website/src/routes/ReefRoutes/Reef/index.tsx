@@ -40,6 +40,7 @@ import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
 import { localizedEndOfDay } from "../../../common/Chart/ChartWithCard/helpers";
 import { subtractFromDate } from "../../../helpers/dates";
+import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 
 const getAlertMessage = (
   user: User | null,
@@ -150,10 +151,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   }, [closestSurveyPointId, dispatch, id, reefId]);
 
   useEffect(() => {
-    if (
-      reefId === process.env.REACT_APP_OCEAN_SENSE_REEF &&
-      reefId === id?.toString()
-    ) {
+    if (id && oceanSenseConfig?.[id] && reefId === id.toString()) {
       dispatch(
         reefOceanSenseDataRequest({
           sensorID: "oceansense-2",

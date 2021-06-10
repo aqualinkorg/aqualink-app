@@ -24,6 +24,7 @@ import { formatNumber } from "../../helpers/numberUtils";
 import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
+import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 
 const SiteDetails = ({
   classes,
@@ -146,9 +147,7 @@ const SiteDetails = ({
             ))}
           </Grid>
 
-          {`${reef.id}` === process.env.REACT_APP_OCEAN_SENSE_REEF && (
-            <OceanSenseMetrics />
-          )}
+          {oceanSenseConfig?.[reef.id] && <OceanSenseMetrics />}
 
           <Box mt="2rem">
             <CombinedCharts
