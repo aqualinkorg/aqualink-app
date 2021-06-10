@@ -13,16 +13,19 @@ try {
 const env = process.env.NODE_ENV || 'development';
 
 // If we have a DATABASE_URL, use that
-const connectionInfo = process.env.DATABASE_URL
-  ? { url: process.env.DATABASE_URL }
+const prefix = env === 'test' ? 'TEST_' : '';
+const connectionInfo = process.env[`${prefix}DATABASE_URL`]
+  ? { url: process.env[`${prefix}DATABASE_URL`] }
   : {
       host: process.env.POSTGRES_HOST || 'localhost',
       port:
         (process.env.POSTGRES_PORT &&
           parseInt(process.env.POSTGRES_PORT, 10)) ||
         5432,
-      database: process.env.POSTGRES_DATABASE || 'postgres',
-      ...(process.env.POSTGRES_USER && { username: process.env.POSTGRES_USER }),
+      database: process.env[`${prefix}POSTGRES_DATABASE`] || 'postgres',
+      ...(process.env.POSTGRES_USER && {
+        username: process.env.POSTGRES_USER,
+      }),
       ...(process.env.POSTGRES_PASSWORD && {
         password: process.env.POSTGRES_PASSWORD,
       }),
@@ -37,6 +40,7 @@ export = ({
   // We don't want to auto-synchronize production data - we should deliberately run migrations.
   synchronize: false,
   logging: false,
+  logger: 'advanced-console',
   namingStrategy: new SnakeNamingStrategy(),
   entities: [
     // Needed to get a TS context on entity imports.
