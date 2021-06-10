@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Connection, EntityMetadata } from 'typeorm';
 import mocks from './mock';
 import { AppModule } from '../src/app.module';
+import { FirebaseAuthGuard } from '../src/auth/firebase-auth.guard';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -13,7 +14,10 @@ export class TestService {
   private async initializeApp() {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideGuard(FirebaseAuthGuard)
+      .useValue({ canActivate: () => true })
+      .compile();
 
     this.app = moduleFixture.createNestApplication();
 

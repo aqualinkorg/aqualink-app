@@ -1,19 +1,15 @@
-import { INestApplication } from '@nestjs/common';
-import { healthCheckTests } from '../src/health-check/health-check.spec';
 import { TestService } from './test.service';
-import { cleanUpApp } from './utils';
+import { healthCheckTests } from '../src/health-check/health-check.spec';
+import { userTests } from '../src/users/users.spec';
 
 describe('AppController (e2e)', () => {
-  let app: INestApplication;
   const testService = TestService.getInstance();
-
-  beforeAll(async () => {
-    app = await testService.getApp();
-  });
 
   describe('HealthCheck (e2e)', healthCheckTests);
 
+  describe('User (e2e)', userTests);
+
   afterAll(async () => {
-    await cleanUpApp(app);
+    await testService.cleanUpApp();
   });
 });
