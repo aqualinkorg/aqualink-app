@@ -24,7 +24,7 @@ export const getCollectionData = async (
   });
 
   const historicalMonthlyMean = await historicalMonthlyMeanRepository.find({
-    where: { reefId: In(reefIds) },
+    where: { reef: In(reefIds) },
   });
 
   const mappedHistoricalMonthlyMean = groupBy(
