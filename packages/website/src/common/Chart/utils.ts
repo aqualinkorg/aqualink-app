@@ -492,17 +492,18 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
   return "#ffffff";
 };
 
-const createGaps = (data: ChartPoint[], maxDaysGap: number): ChartPoint[] => {
+const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   const nPoints = data.length;
   if (nPoints > 0) {
     return data.reduce<ChartPoint[]>((acc, curr, currIndex) => {
-      // If current and next point differ more than maxDaysGap then
+      // If current and next point differ more than maxHoursGap then
       // insert a point in their middle with no value so that chartJS
       // will notice the gap.
       if (
         currIndex !== 0 &&
         currIndex !== nPoints - 1 &&
-        moment(data[currIndex + 1].x).diff(moment(curr.x), "days") > maxDaysGap
+        moment(data[currIndex + 1].x).diff(moment(curr.x), "hours") >
+          maxHoursGap
       ) {
         return [
           ...acc,
@@ -551,7 +552,7 @@ export const createChartData = (
       },
       {
         label: "SURFACE TEMP",
-        data: createGaps(surfaceTemps, 2),
+        data: createGaps(surfaceTemps, 48),
         fill,
         borderColor: "#6bc1e1",
         borderWidth: 2,
@@ -576,7 +577,7 @@ export const createChartData = (
         label: "TEMP AT DEPTH",
         data:
           CHART_BOTTOM_TEMP_ENABLED && !displaySpotterData
-            ? createGaps(bottomTemps, 2)
+            ? createGaps(bottomTemps, 48)
             : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
@@ -587,7 +588,7 @@ export const createChartData = (
       },
       {
         label: "HOBO BOTTOM",
-        data: createGaps(hoboBottom, 1),
+        data: createGaps(hoboBottom, 24),
         fill: false,
         borderColor: "#f78c21",
         borderWidth: 2,
@@ -598,7 +599,7 @@ export const createChartData = (
       },
       {
         label: "OCEAN SENSE",
-        data: createGaps(oceanSense, 1),
+        data: createGaps(oceanSense, 6),
         fill: false,
         borderColor: "#f78c21",
         borderWidth: 2,
@@ -609,7 +610,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER BOTTOM",
-        data: createGaps(spotterBottom, 1),
+        data: createGaps(spotterBottom, 24),
         fill: false,
         borderColor: "rgba(250, 141, 0)",
         borderWidth: 2,
@@ -620,7 +621,7 @@ export const createChartData = (
       },
       {
         label: "SPOTTER SURFACE",
-        data: createGaps(spotterTop, 1),
+        data: createGaps(spotterTop, 24),
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,
