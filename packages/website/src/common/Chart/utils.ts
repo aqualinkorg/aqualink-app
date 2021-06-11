@@ -326,7 +326,6 @@ export const calculateAxisLimits = (
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
-  const ySpacing = 1;
   const dates =
     dailyData.length > 0
       ? dailyData
@@ -376,9 +375,15 @@ export const calculateAxisLimits = (
     .filter((value) => value)
     .map((value) => value.y);
 
-  const yAxisMinTemp = Math.min(...accumulatedData) - ySpacing;
+  const minValue = Math.min(...accumulatedData);
+  const maxValue = Math.max(...accumulatedData);
 
-  const yAxisMaxTemp = Math.max(...accumulatedData) + ySpacing;
+  const spacingPercentage = 0.1;
+  const ySpacing = Math.ceil(spacingPercentage * (maxValue - minValue)); // Set ySpacing as a percentage of the data range
+
+  const yAxisMinTemp = minValue - ySpacing;
+
+  const yAxisMaxTemp = maxValue + ySpacing;
 
   const yAxisMin = Math.round(
     temperatureThreshold

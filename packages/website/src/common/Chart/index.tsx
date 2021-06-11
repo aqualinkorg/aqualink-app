@@ -159,7 +159,8 @@ function Chart({
     endDate
   );
 
-  const yStepSize = yAxisMax - yAxisMin > 6 ? 5 : 2;
+  const nYTicks = 5;
+  const yStepSize = Math.floor((yAxisMax - yAxisMin) / nYTicks);
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;
@@ -271,8 +272,20 @@ function Chart({
               min: yAxisMin,
               stepSize: yStepSize,
               max: yAxisMax,
-              callback: (value: number) => {
-                if (![1, yStepSize - 1].includes(value % yStepSize)) {
+              callback: (value: number, index: number, values: number[]) => {
+                // Only show ticks when at least one of the following conditions holds:
+                //   1: step size is equal to one
+                //   2: it's not a marginal value (i.e. its index is between 1 and L - 2)
+                //   3: it's the first value (index is 0) and its difference from the next one exceeds 80% of the step size
+                //   4: it's the last value (index is L - 1) and its difference from the previous one exceeds 80% of the step size
+                if (
+                  yStepSize === 1 ||
+                  (index > 0 && index < values.length - 1) ||
+                  (index === 0 &&
+                    value - values[index + 1] > 0.8 * yStepSize) ||
+                  (index === values.length - 1 &&
+                    values[index - 1] - value > 0.8 * yStepSize)
+                ) {
                   return `${value}${!hideYAxisUnits ? "°" : ""}  `;
                 }
                 return "";

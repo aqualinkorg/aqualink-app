@@ -173,11 +173,11 @@ export const constructOceanSenseDatasets = (
       unit: "pH",
       title: "ACIDITY (pH)",
     },
-    // {
-    //   data: data?.EC || [],
-    //   unit: "μS",
-    //   title: "CONDUCTIVITY (μS)",
-    // },
+    {
+      data: data?.EC || [],
+      unit: "μS",
+      title: "CONDUCTIVITY (μS)",
+    },
     {
       data: data?.PRESS || [],
       unit: "dbar",
