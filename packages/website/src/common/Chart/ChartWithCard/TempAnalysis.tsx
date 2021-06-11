@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { isNumber } from "lodash";
+import classNames from "classnames";
 
 import {
   reefOceanSenseDataLoadingSelector,
@@ -51,6 +52,8 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
 }) => {
   const loading = useSelector(reefTimeSeriesDataLoadingSelector);
   const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
+
+  const isOceanSense = dataset === "oceanSense";
 
   const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
     historicalMonthlyMean,
@@ -99,7 +102,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       key: "oceanSense",
       color: "#f78c21",
       rows: calculateCardMetrics(2, oceanSenseData, "oceanSense"),
-      display: dataset === "oceanSense",
+      display: isOceanSense,
     },
     {
       title: "BUOY 1m",
@@ -146,9 +149,9 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
           container
           justify={columnJustification || "space-between"}
           alignItems="flex-end"
-          spacing={1}
+          spacing={isOceanSense ? 2 : 1}
         >
-          <Grid item>
+          <Grid item xs={isOceanSense ? 2 : undefined}>
             <Grid
               className={classes.metricsTitle}
               container
@@ -168,18 +171,21 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
           {cardColumns.map(
             (item) =>
               item.display && (
-                <Grid key={item.key} item>
+                <Grid key={item.key} item xs={isOceanSense ? 10 : undefined}>
                   <Grid
                     className={classes.autoWidth}
                     container
                     direction="column"
                     item
                     spacing={3}
-                    alignItems="center"
+                    alignItems={isOceanSense ? "flex-start" : "center"}
                   >
                     <Grid item>
                       <Tooltip title={item.tooltip || ""}>
                         <Typography
+                          className={classNames({
+                            [classes.extraPadding]: isOceanSense,
+                          })}
                           style={{
                             color: item.color,
                           }}
@@ -239,6 +245,10 @@ const styles = (theme: Theme) =>
       fontWeight: 300,
       // ensures metric numbers aren't too close together on mobile
       margin: "0 4px",
+    },
+
+    extraPadding: {
+      paddingLeft: theme.spacing(1),
     },
   });
 
