@@ -160,7 +160,7 @@ function Chart({
   );
 
   const nYTicks = 5;
-  const yStepSize = Math.floor((yAxisMax - yAxisMin) / nYTicks);
+  const yStepSize = Math.ceil((yAxisMax - yAxisMin) / nYTicks);
 
   const changeXTickShiftAndPeriod = () => {
     const { current } = chartRef;

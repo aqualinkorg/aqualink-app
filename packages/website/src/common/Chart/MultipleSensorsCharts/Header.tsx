@@ -18,7 +18,7 @@ import { RangeButton, RangeValue } from "./types";
 import { Sources, TimeSeriesDataRange } from "../../../store/Reefs/types";
 import { availableRangeString } from "./helpers";
 
-const ViewRange = ({
+const Header = ({
   range,
   disableMaxRange,
   title,
@@ -27,7 +27,7 @@ const ViewRange = ({
   timeSeriesDataRanges,
   timeZone,
   showRangeButtons,
-}: ViewRangeProps) => {
+}: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
@@ -182,7 +182,7 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface ViewRangeIncomingProps {
+interface HeaderIncomingProps {
   range: RangeValue;
   disableMaxRange: boolean;
   title?: string;
@@ -192,12 +192,12 @@ interface ViewRangeIncomingProps {
   showRangeButtons?: boolean;
 }
 
-ViewRange.defaultProps = {
+Header.defaultProps = {
   title: "",
   timeZone: null,
   showRangeButtons: true,
 };
 
-type ViewRangeProps = ViewRangeIncomingProps & WithStyles<typeof styles>;
+type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;
 
-export default withStyles(styles)(ViewRange);
+export default withStyles(styles)(Header);

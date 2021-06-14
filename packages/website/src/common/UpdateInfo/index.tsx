@@ -8,6 +8,7 @@ import {
   Box,
   Typography,
 } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
 import UpdateIcon from "@material-ui/icons/Update";
 import { Link } from "react-router-dom";
 
@@ -83,8 +84,8 @@ const UpdateInfo = ({
 const styles = (theme: Theme) =>
   createStyles({
     updateInfo: {
-      backgroundColor: "#c4c4c4",
-      color: "#757575",
+      backgroundColor: grey[400],
+      color: grey[700],
       padding: 4,
       minHeight: 40,
     },

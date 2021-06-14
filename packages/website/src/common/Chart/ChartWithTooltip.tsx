@@ -75,6 +75,8 @@ function ChartWithTooltip({
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     if (typeof date !== "string") return;
 
+    const dateObject = new Date(date);
+
     const surveyId = findSurveyFromDate(date, surveys);
 
     const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
@@ -82,7 +84,7 @@ function ChartWithTooltip({
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
       filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-      getDailyDataClosestToDate(filteredDailyData, new Date(date), 24) ||
+      getDailyDataClosestToDate(filteredDailyData, dateObject, 24) ||
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
@@ -90,26 +92,23 @@ function ChartWithTooltip({
       historicalMonthlyMeanData &&
       getHistoricalMonthlyMeanDataClosestToDate(
         historicalMonthlyMeanData,
-        new Date(date)
+        dateObject
       )?.value;
     const closestSpotterTop =
       spotterData &&
-      getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
+      getSofarDataClosestToDate(spotterData.topTemperature, dateObject, 6)
         ?.value;
     const closestSpotterBottom =
       spotterData &&
-      getSofarDataClosestToDate(
-        spotterData.bottomTemperature,
-        new Date(date),
-        6
-      )?.value;
+      getSofarDataClosestToDate(spotterData.bottomTemperature, dateObject, 6)
+        ?.value;
     const closestHoboBottom =
       hoboBottomTemperatureData &&
-      getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
+      getSofarDataClosestToDate(hoboBottomTemperatureData, dateObject, 6)
         ?.value;
     const closestOceanSense =
       oceanSenseData &&
-      getSofarDataClosestToDate(oceanSenseData, new Date(date), 6)?.value;
+      getSofarDataClosestToDate(oceanSenseData, dateObject, 6)?.value;
 
     const historicalMonthlyMeanTemp = isNumber(closestHistorical)
       ? closestHistorical

@@ -38,7 +38,7 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
-import { localizedEndOfDay } from "../../../common/Chart/ChartWithCard/helpers";
+import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 import { subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 

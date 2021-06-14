@@ -6,7 +6,7 @@ import NavBar from "../../../common/NavBar";
 import Footer from "../../../common/Footer";
 import BackButton from "./BackButton";
 import InfoCard from "./InfoCard";
-import ChartWithCard from "../../../common/Chart/ChartWithCard";
+import MultipleSensorsCharts from "../../../common/Chart/MultipleSensorsCharts";
 import SurveyHistory from "./SurveyHistory";
 import {
   clearTimeSeriesData,
@@ -77,7 +77,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
           <BackButton reefId={id} bgColor={BG_COLOR} />
           <InfoCard reef={reef} pointId={pointIdNumber} bgColor={BG_COLOR} />
           {showChart && (
-            <ChartWithCard
+            <MultipleSensorsCharts
               disableGutters={false}
               reef={reef}
               pointId={pointId}

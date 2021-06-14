@@ -26,7 +26,7 @@ import {
   reefLatestOceanSenseDataLoadingSelector,
   reefLatestOceanSenseDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
-import { OceanSenseData } from "../../../store/Reefs/types";
+import { OceanSenseData, OceanSenseKeys } from "../../../store/Reefs/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 
@@ -37,38 +37,38 @@ interface Metric {
   icon: JSX.Element;
 }
 
-const metrics = (data?: OceanSenseData): Metric[] => [
-  {
+const metrics = (data?: OceanSenseData): Record<OceanSenseKeys, Metric> => ({
+  PH: {
     label: "ACIDITY",
     value: formatNumber(last(data?.PH)?.value, 2),
     measure: "pH",
     icon: <AcidityIcon />,
   },
-  {
+  EC: {
     label: "CONDUCTIVITY",
     value: formatNumber(last(data?.EC)?.value, 2),
     measure: "\u00B5S",
     icon: <ConductivityIcon />,
   },
-  {
+  PRESS: {
     label: "PRESSURE",
     value: formatNumber(last(data?.PRESS)?.value, 2),
     measure: "dbar",
     icon: <PressureIcon />,
   },
-  {
+  DO: {
     label: "DISSOLVED OXYGEN",
     value: formatNumber(last(data?.DO)?.value, 2),
     measure: "mg/L",
     icon: <DissolvedOxygenIcon />,
   },
-  {
+  ORP: {
     label: "ORP",
     value: formatNumber(last(data?.ORP)?.value, 2),
     measure: "mV",
     icon: <OrpIcon />,
   },
-];
+});
 
 const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
   const theme = useTheme();
@@ -86,7 +86,7 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
     <>
       <Box className={classes.root}>
         <Grid container justify="space-between" alignItems="center" spacing={2}>
-          {metrics(data).map((item) => (
+          {Object.values(metrics(data)).map((item) => (
             <Grid
               item
               xs={isMobile ? 12 : undefined}
@@ -151,7 +151,7 @@ const styles = (theme: Theme) =>
       height: 0,
       borderStyle: "solid",
       borderWidth: "40px 40px 0 0",
-      borderColor: "#c4c4c4 transparent transparent transparent",
+      borderColor: `${grey[400]} transparent transparent transparent`,
     },
 
     cardItem: {

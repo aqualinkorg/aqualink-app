@@ -29,11 +29,12 @@ import { calculateCardMetrics } from "./helpers";
 import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn, Dataset } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { colors } from "../../../layout/App/theme";
 
 const rows = ["MAX", "MEAN", "MIN"];
 
 /* eslint-disable react/prop-types */
-const TempAnalysis: FC<TempAnalysisProps> = ({
+const AnalysisCard: FC<AnalysisCardProps> = ({
   classes,
   dataset,
   pickerStartDate,
@@ -56,7 +57,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   const isOceanSense = dataset === "oceanSense";
 
   const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
-    historicalMonthlyMean,
+    historicalMonthlyMean || [],
     chartStartDate,
     chartEndDate
   );
@@ -93,14 +94,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     {
       title: "HOBO",
       key: "hobo",
-      color: "#f78c21",
+      color: colors.specialSensorColor,
       rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
       display: dataset === "hobo",
     },
     {
       title: "SENSOR",
       key: "oceanSense",
-      color: "#f78c21",
+      color: colors.specialSensorColor,
       rows: calculateCardMetrics(2, oceanSenseData, "oceanSense"),
       display: isOceanSense,
     },
@@ -114,7 +115,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
       key: "spotterBottom",
-      color: "#f78c21",
+      color: colors.specialSensorColor,
       rows: calculateCardMetrics(
         2,
         spotterData?.bottomTemperature,
@@ -140,7 +141,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       justifyContent="space-between"
       flexDirection="column"
     >
-      <Card className={classes.tempAnalysisCard}>
+      <Card className={classes.AnalysisCardCard}>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           {formattedpickerStartDate} - {formattedpickerEndDate}
         </Typography>
@@ -222,7 +223,7 @@ const styles = (theme: Theme) =>
     autoWidth: {
       width: "auto",
     },
-    tempAnalysisCard: {
+    AnalysisCardCard: {
       padding: theme.spacing(2),
       minHeight: 240,
       borderRadius: "0 4px 4px 0",
@@ -252,24 +253,24 @@ const styles = (theme: Theme) =>
     },
   });
 
-interface TempAnalysisProps
-  extends TempAnalysisIncomingProps,
+interface AnalysisCardProps
+  extends AnalysisCardIncomingProps,
     WithStyles<typeof styles> {}
 
-interface TempAnalysisIncomingProps {
+interface AnalysisCardIncomingProps {
   dataset: Dataset;
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
   depth: number | null;
-  dailyDataSst: SofarValue[];
-  spotterData: TimeSeries | undefined;
-  hoboBottomTemperature: SofarValue[];
+  dailyDataSst?: SofarValue[];
+  spotterData?: TimeSeries;
+  hoboBottomTemperature?: SofarValue[];
   oceanSenseData?: SofarValue[];
   oceanSenseUnit?: string;
   columnJustification?: GridProps["justify"];
-  historicalMonthlyMean: HistoricalMonthlyMeanData[];
+  historicalMonthlyMean?: HistoricalMonthlyMeanData[];
 }
 
-export default withStyles(styles)(TempAnalysis);
+export default withStyles(styles)(AnalysisCard);

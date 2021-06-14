@@ -163,7 +163,7 @@ export type TimeSeriesDataRangeResponse = Record<
 
 export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
 
-export type OceanSenseKeys = "TEMP" | "DO" | "EC" | "ORP" | "PH" | "PRESS";
+export type OceanSenseKeys = "DO" | "EC" | "ORP" | "PH" | "PRESS";
 
 export interface OceanSenseDataRequestParams {
   sensorID: string;

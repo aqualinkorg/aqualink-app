@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import ChartWithTooltip from "./ChartWithTooltip";
-import ChartWithCard from "./ChartWithCard";
+import MultipleSensorsCharts from "./MultipleSensorsCharts";
 import { Reef } from "../../store/Reefs/types";
 import {
   convertDailyDataToLocalTime,
@@ -41,8 +41,7 @@ const CombinedCharts = ({
         className={classes.chart}
         timeZone={timezone}
       />
-      <ChartWithCard
-        title="TEMPERATURE ANALYSIS"
+      <MultipleSensorsCharts
         reef={reef}
         pointId={closestSurveyPointId}
         surveysFiltered={false}

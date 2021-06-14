@@ -12,6 +12,7 @@ import type {
   TimeSeries,
 } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
+import { colors } from "../../layout/App/theme";
 
 // TODO make bottom temp permanent once we work UI caveats
 export const CHART_BOTTOM_TEMP_ENABLED = false;
@@ -492,9 +493,9 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
   ) {
     const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
-    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
+    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "white";
   }
-  return "#ffffff";
+  return "white";
 };
 
 const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
@@ -550,7 +551,7 @@ export const createChartData = (
         label: "SURVEYS",
         data: tempWithSurvey,
         pointRadius: 5,
-        backgroundColor: "#ffffff",
+        backgroundColor: "white",
         pointBackgroundColor: pointColor(surveyDate),
         borderWidth: 1.5,
         borderColor: "#128cc0",
@@ -561,7 +562,7 @@ export const createChartData = (
         fill,
         borderColor: "#6bc1e1",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -573,7 +574,7 @@ export const createChartData = (
         fill: false,
         borderColor: "#d84424",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -586,7 +587,7 @@ export const createChartData = (
             : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -595,9 +596,9 @@ export const createChartData = (
         label: "HOBO BOTTOM",
         data: createGaps(hoboBottom, 24),
         fill: false,
-        borderColor: "#f78c21",
+        borderColor: colors.specialSensorColor,
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -606,9 +607,9 @@ export const createChartData = (
         label: "OCEAN SENSE",
         data: createGaps(oceanSense, 6),
         fill: false,
-        borderColor: "#f78c21",
+        borderColor: colors.specialSensorColor,
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -619,7 +620,7 @@ export const createChartData = (
         fill: false,
         borderColor: "rgba(250, 141, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -630,7 +631,7 @@ export const createChartData = (
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",

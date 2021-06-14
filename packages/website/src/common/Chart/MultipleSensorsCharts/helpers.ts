@@ -12,6 +12,7 @@ import {
   HistoricalMonthlyMean,
   HistoricalMonthlyMeanData,
   OceanSenseData,
+  OceanSenseKeys,
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Reefs/types";
@@ -166,32 +167,30 @@ export const localizedEndOfDay = (
 
 export const constructOceanSenseDatasets = (
   data?: OceanSenseData
-): OceanSenseDataset[] => {
-  return [
-    {
-      data: data?.PH || [],
-      unit: "pH",
-      title: "ACIDITY (pH)",
-    },
-    {
-      data: data?.EC || [],
-      unit: "μS",
-      title: "CONDUCTIVITY (μS)",
-    },
-    {
-      data: data?.PRESS || [],
-      unit: "dbar",
-      title: "PRESSURE (dbar)",
-    },
-    {
-      data: data?.DO || [],
-      unit: "mg/L",
-      title: "DISSOLVED OXYGEN (mg/L)",
-    },
-    {
-      data: data?.ORP || [],
-      unit: "mV",
-      title: "OXIDATION REDUCTION POTENTIAL (mV)",
-    },
-  ];
-};
+): Record<OceanSenseKeys, OceanSenseDataset> => ({
+  PH: {
+    data: data?.PH || [],
+    unit: "pH",
+    title: "ACIDITY (pH)",
+  },
+  EC: {
+    data: data?.EC || [],
+    unit: "μS",
+    title: "CONDUCTIVITY (μS)",
+  },
+  PRESS: {
+    data: data?.PRESS || [],
+    unit: "dbar",
+    title: "PRESSURE (dbar)",
+  },
+  DO: {
+    data: data?.DO || [],
+    unit: "mg/L",
+    title: "DISSOLVED OXYGEN (mg/L)",
+  },
+  ORP: {
+    data: data?.ORP || [],
+    unit: "mV",
+    title: "OXIDATION REDUCTION POTENTIAL (mV)",
+  },
+});

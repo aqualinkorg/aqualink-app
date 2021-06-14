@@ -104,7 +104,6 @@ export const mapOceanSenseData = (
   response: OceanSenseDataResponse
 ): OceanSenseData => {
   return {
-    TEMP: mapOceanSenseMetric(response, "TEMP"),
     DO: mapOceanSenseMetric(response, "DO"),
     EC: mapOceanSenseMetric(response, "EC"),
     ORP: mapOceanSenseMetric(response, "ORP"),

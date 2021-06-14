@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
 import Chart from "./Chart";
-import TempAnalysis from "./TempAnalysis";
+import AnalysisCard from "./AnalysisCard";
 import {
   reefGranularDailyDataSelector,
   reefOceanSenseDataRequest,
@@ -38,7 +38,7 @@ import {
   localizedEndOfDay,
 } from "./helpers";
 import { RangeValue } from "./types";
-import ViewRange from "./ViewRange";
+import Header from "./Header";
 import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 
@@ -46,7 +46,6 @@ const ChartWithCard = ({
   reef,
   pointId,
   surveysFiltered,
-  title,
   disableGutters,
   displayOceanSenseCharts,
   classes,
@@ -94,6 +93,8 @@ const ChartWithCard = ({
         .endOf("day")
     )
     .toISOString();
+
+  const hasOceanSenseId = Boolean(oceanSenseConfig?.[reef.id]);
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
@@ -148,7 +149,7 @@ const ChartWithCard = ({
         })
       );
 
-      if (oceanSenseConfig?.[reef.id]) {
+      if (hasOceanSenseId) {
         dispatch(
           reefOceanSenseDataRequest({
             sensorID: oceanSenseConfig[reef.id],
@@ -161,6 +162,7 @@ const ChartWithCard = ({
     }
   }, [
     dispatch,
+    hasOceanSenseId,
     pickerEndDate,
     pickerStartDate,
     pointId,
@@ -283,11 +285,11 @@ const ChartWithCard = ({
       disableGutters={disableGutters}
       className={classes.chartWithRange}
     >
-      <ViewRange
+      <Header
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-        title={title}
+        title="TEMPERATURE ANALYSIS"
         timeSeriesDataRanges={timeSeriesDataRanges}
         timeZone={reef.timezone}
       />
@@ -317,7 +319,7 @@ const ChartWithCard = ({
         </Grid>
         {!pickerErrored && (
           <Grid className={classes.card} item>
-            <TempAnalysis
+            <AnalysisCard
               dataset={cardDataset}
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
@@ -343,77 +345,74 @@ const ChartWithCard = ({
                 pointId={pointId}
                 className={classes.button}
               />
-            </TempAnalysis>
+            </AnalysisCard>
           </Grid>
         )}
       </Grid>
       {displayOceanSenseCharts &&
-        constructOceanSenseDatasets(oceanSenseData).map((item) => (
-          <Box mt={4} key={item.title}>
-            <ViewRange
-              range={range}
-              onRangeChange={onRangeChange}
-              disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-              title={item.title}
-              timeSeriesDataRanges={timeSeriesDataRanges}
-              timeZone={reef.timezone}
-              showRangeButtons={false}
-            />
-            <Grid
-              className={classes.chartWrapper}
-              container
-              justify="space-between"
-              item
-              spacing={1}
-            >
-              <Grid className={classnames(classes.chart, chartWidthClass)} item>
-                <Chart
-                  reef={reef}
-                  dailyData={[]}
-                  pointId={undefined}
-                  spotterData={undefined}
-                  hoboBottomTemperature={undefined}
-                  pickerStartDate={
-                    pickerStartDate || subtractFromDate(today, "week")
-                  }
-                  pickerEndDate={pickerEndDate || today}
-                  startDate={chartStartDate}
-                  endDate={chartEndDate}
-                  onStartDateChange={onPickerDateChange("start")}
-                  onEndDateChange={onPickerDateChange("end")}
-                  pickerErrored={pickerErrored}
-                  surveysFiltered={surveysFiltered}
-                  showDatePickers={false}
-                  oceanSenseData={item.data}
-                  oceanSenseDataUnit={item.unit}
-                  hideYAxisUnits
-                  displayHistoricalMonthlyMean={false}
-                />
-              </Grid>
-              {!pickerErrored && (
-                <Grid className={classes.card} item>
-                  <TempAnalysis
-                    dataset="oceanSense"
+        hasOceanSenseId &&
+        Object.values(constructOceanSenseDatasets(oceanSenseData)).map(
+          (item) => (
+            <Box mt={4} key={item.title}>
+              <Header
+                range={range}
+                onRangeChange={onRangeChange}
+                disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                title={item.title}
+                timeSeriesDataRanges={timeSeriesDataRanges}
+                timeZone={reef.timezone}
+                showRangeButtons={false}
+              />
+              <Grid
+                className={classes.chartWrapper}
+                container
+                justify="space-between"
+                item
+                spacing={1}
+              >
+                <Grid
+                  className={classnames(classes.chart, chartWidthClass)}
+                  item
+                >
+                  <Chart
+                    reef={reef}
                     pickerStartDate={
                       pickerStartDate || subtractFromDate(today, "week")
                     }
                     pickerEndDate={pickerEndDate || today}
-                    chartStartDate={chartStartDate}
-                    chartEndDate={chartEndDate}
-                    depth={reef.depth}
-                    dailyDataSst={[]}
-                    spotterData={undefined}
-                    hoboBottomTemperature={[]}
-                    historicalMonthlyMean={[]}
+                    startDate={chartStartDate}
+                    endDate={chartEndDate}
+                    onStartDateChange={onPickerDateChange("start")}
+                    onEndDateChange={onPickerDateChange("end")}
+                    pickerErrored={pickerErrored}
+                    showDatePickers={false}
                     oceanSenseData={item.data}
-                    oceanSenseUnit={item.unit}
-                    columnJustification="flex-start"
+                    oceanSenseDataUnit={item.unit}
+                    hideYAxisUnits
+                    displayHistoricalMonthlyMean={false}
                   />
                 </Grid>
-              )}
-            </Grid>
-          </Box>
-        ))}
+                {!pickerErrored && (
+                  <Grid className={classes.card} item>
+                    <AnalysisCard
+                      dataset="oceanSense"
+                      pickerStartDate={
+                        pickerStartDate || subtractFromDate(today, "week")
+                      }
+                      pickerEndDate={pickerEndDate || today}
+                      chartStartDate={chartStartDate}
+                      chartEndDate={chartEndDate}
+                      depth={reef.depth}
+                      oceanSenseData={item.data}
+                      oceanSenseUnit={item.unit}
+                      columnJustification="flex-start"
+                    />
+                  </Grid>
+                )}
+              </Grid>
+            </Box>
+          )
+        )}
     </Container>
   );
 };
@@ -463,12 +462,10 @@ interface ChartWithCardIncomingProps {
   pointId: string | undefined;
   surveysFiltered: boolean;
   disableGutters: boolean;
-  title?: string;
   displayOceanSenseCharts?: boolean;
 }
 
 ChartWithCard.defaultProps = {
-  title: "",
   displayOceanSenseCharts: true,
 };
 
