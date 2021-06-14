@@ -144,7 +144,7 @@ export const getNOAASource = async (
         type: SourceType.NOAA,
         poi: IsNull(),
       },
-      relations: ['reef'],
+      relations: ['reef', 'reef.historicalMonthlyMean'],
     })
     .then((source) => {
       if (source) {

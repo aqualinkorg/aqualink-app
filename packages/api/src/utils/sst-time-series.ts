@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
 import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
-import { times } from 'lodash';
+import { isNil, times } from 'lodash';
 import moment from 'moment';
 
 import { Reef } from '../reefs/reefs.entity';
@@ -13,6 +13,8 @@ import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
 import { getNOAASource, insertReefDataToTimeSeries } from './time-series.utils';
 import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
+import { getSstAnomaly } from './liveData';
+import { SofarValue } from './sofar.types';
 
 interface Repositories {
   reefRepository: Repository<Reef>;
@@ -25,6 +27,7 @@ const logger = new Logger('SSTTimeSeries');
 const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   return reefRepository.find({
     where: reefIds.length > 0 ? { id: In(reefIds) } : {},
+    relations: ['historicalMonthlyMean'],
   });
 };
 
@@ -101,10 +104,20 @@ export const updateSST = async (
               latestDhw && latestDhw.value * 7,
             );
 
-            // return calculated metrics (sst, dhw, alert)
+            const sstAnomaly = sstFiltered
+              .map((sst) => ({
+                value: getSstAnomaly(reef.historicalMonthlyMean, sst),
+                timestamp: sst.timestamp,
+              }))
+              .filter((sstAnomalyValue) => {
+                return !isNil(sstAnomalyValue.value);
+              }) as SofarValue[];
+
+            // return calculated metrics (sst, dhw, sstAnomaly alert)
             return {
               sst: sstFiltered,
               dhw: dhwFiltered,
+              sstAnomaly,
               alert:
                 alertLevel !== undefined
                   ? [
@@ -122,7 +135,7 @@ export const updateSST = async (
 
       return Bluebird.map(
         data,
-        ({ sst, dhw, alert }) =>
+        ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
             insertReefDataToTimeSeries(
               sst,
@@ -139,6 +152,12 @@ export const updateSST = async (
             insertReefDataToTimeSeries(
               alert,
               Metric.ALERT,
+              source,
+              timeSeriesRepository,
+            ),
+            insertReefDataToTimeSeries(
+              sstAnomaly,
+              Metric.SST_ANOMALY,
               source,
               timeSeriesRepository,
             ),

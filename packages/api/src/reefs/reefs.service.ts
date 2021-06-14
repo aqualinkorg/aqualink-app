@@ -184,7 +184,6 @@ export class ReefsService {
 
     const mappedReefData = await getCollectionData(
       res,
-      this.historicalMonthlyMeanRepository,
       this.latestDataRepository,
     );
 

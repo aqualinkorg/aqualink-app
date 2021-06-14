@@ -1,36 +1,29 @@
-import _, { groupBy } from 'lodash';
-import { In, Not, Repository } from 'typeorm';
+import _ from 'lodash';
+import { Repository } from 'typeorm';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
-import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { SourceType } from '../reefs/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
-import { Metric } from '../time-series/metrics.entity';
-import { getSstAnomaly } from './liveData';
 
 export const getCollectionData = async (
   reefs: Reef[],
-  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
   latestDataRepository: Repository<LatestData>,
 ): Promise<Record<number, CollectionDataDto>> => {
   const reefIds = reefs.map((reef) => reef.id);
 
   // Get latest data
-  const latestData = await latestDataRepository.find({
-    where: {
-      reef: In(reefIds),
-      source: Not(SourceType.HOBO),
-    },
-  });
-
-  const historicalMonthlyMean = await historicalMonthlyMeanRepository.find({
-    where: { reef: In(reefIds) },
-  });
-
-  const mappedHistoricalMonthlyMean = groupBy(
-    historicalMonthlyMean,
-    (hmm) => hmm.reefId,
-  );
+  const latestData: LatestData[] = await latestDataRepository
+    .createQueryBuilder('latest_data')
+    .select('id')
+    .addSelect('timestamp')
+    .addSelect('value')
+    .addSelect('reef_id', 'reefId')
+    .addSelect('poi_id', 'poiId')
+    .addSelect('metric')
+    .addSelect('source')
+    .where('reef_id IN (:...reefIds)', { reefIds })
+    .andWhere('source != :hoboSource', { hoboSource: SourceType.HOBO })
+    .getRawMany();
 
   // Map data to each reef and map each reef's data to the CollectionDataDto
   return _(latestData)
@@ -40,17 +33,6 @@ export const getCollectionData = async (
         return {
           ...acc,
           [reefData.metric]: reefData.value,
-          ...(reefData.metric === Metric.SATELLITE_TEMPERATURE
-            ? {
-                sst_anomaly: getSstAnomaly(
-                  mappedHistoricalMonthlyMean[reefData.reefId] || [],
-                  {
-                    value: reefData.value,
-                    timestamp: reefData.timestamp.toISOString(),
-                  },
-                ),
-              }
-            : {}),
         };
       }, {}),
     )

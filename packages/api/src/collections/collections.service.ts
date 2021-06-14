@@ -16,7 +16,6 @@ import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { getCollectionData } from '../utils/collections.utils';
-import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
 
 @Injectable()
 export class CollectionsService {
@@ -28,9 +27,6 @@ export class CollectionsService {
 
     @InjectRepository(LatestData)
     private latestDataRepository: Repository<LatestData>,
-
-    @InjectRepository(HistoricalMonthlyMean)
-    private historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
 
     @InjectRepository(Sources)
     private sourcesRepository: Repository<Sources>,
@@ -107,7 +103,6 @@ export class CollectionsService {
 
     const mappedReefData = await getCollectionData(
       collection.reefs,
-      this.historicalMonthlyMeanRepository,
       this.latestDataRepository,
     );
 
