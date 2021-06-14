@@ -24,7 +24,13 @@ export class TestService {
     this.app.init();
 
     const connection = this.app.get(Connection);
+    // Clean up database
     await this.cleanAllEntities(connection);
+
+    // Make sure database is up-to-date
+    await connection.runMigrations({ transaction: 'each' });
+
+    // Load mock entities
     await this.loadMocks(connection);
   }
 
