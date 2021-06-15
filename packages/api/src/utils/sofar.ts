@@ -4,7 +4,11 @@ import { isNil } from 'lodash';
 import axiosRetry from 'axios-retry';
 import moment from 'moment';
 import { getStartEndDate } from './dates';
-import { SOFAR_MARINE_URL, SOFAR_SPOTTER_URL } from './constants';
+import {
+  SOFAR_MARINE_URL,
+  SOFAR_SENSOR_DATA_URL,
+  SOFAR_WAVE_DATA_URL,
+} from './constants';
 import { SofarValue, SpotterData } from './sofar.types';
 
 type SensorData = {
@@ -106,27 +110,42 @@ export async function sofarForecast(
     });
 }
 
-export async function sofarSpotter(
-  sensorId: string,
-  start?: string,
-  end?: string,
-) {
+export function sofarSensor(sensorId: string, start?: string, end?: string) {
   return axios
-    .get(SOFAR_SPOTTER_URL, {
+    .get(SOFAR_SENSOR_DATA_URL, {
+      params: {
+        spotterId: sensorId,
+        startDate: start,
+        endDate: end,
+        token: process.env.SOFAR_API_TOKEN,
+      },
+    })
+    .then((response) => response.data)
+    .catch((error) => {
+      if (error.response) {
+        console.error(
+          `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
+        );
+      } else {
+        console.error(`An error occured accessing the Sofar API - ${error}`);
+      }
+    });
+}
+
+export function sofarWaveData(sensorId: string, start?: string, end?: string) {
+  return axios
+    .get(SOFAR_WAVE_DATA_URL, {
       params: {
         spotterId: sensorId,
         startDate: start,
         endDate: end,
         limit: start && end ? 500 : 100,
         token: process.env.SOFAR_API_TOKEN,
-        includeSmartMooringData: true,
         includeSurfaceTempData: true,
         includeWindData: true,
       },
     })
-    .then((response) => {
-      return response.data;
-    })
+    .then((response) => response.data)
     .catch((error) => {
       if (error.response) {
         console.error(
@@ -161,10 +180,6 @@ export async function getSofarHindcastData(
   return filterSofarResponse(hindcastVariables);
 }
 
-function getDataBySensorPosition(data: SensorData[], sensorPosition: number) {
-  return data.find((d) => d.sensorPosition === sensorPosition)?.degrees;
-}
-
 export async function getSpotterData(
   sensorId: string,
   endDate?: Date,
@@ -179,8 +194,13 @@ export async function getSpotterData(
         ];
 
   const {
-    data: { waves = [], wind = [], smartMooringData = [] },
-  } = (await sofarSpotter(sensorId, start, end)) || { data: {} };
+    data: { waves = [], wind = [] },
+  } = (await sofarWaveData(sensorId, start, end)) || { data: {} };
+  const { data: smartMooringData } = (await sofarSensor(
+    sensorId,
+    start,
+    end,
+  )) || { data: [] };
 
   const [
     sofarSignificantWaveHeight,
@@ -251,23 +271,34 @@ export async function getSpotterData(
   );
 
   // Sofar increments sensors by distance to the spotter.
-  // Sensor 0 -> topTemp and Sensor 1 -> bottomTemp
+  // Sensor 1 -> topTemp and Sensor 2 -> bottomTemp
   const [sofarTopTemperature, sofarBottomTemperature]: [
     SofarValue[],
     SofarValue[],
   ] = smartMooringData.reduce(
-    ([sensor0Data, sensor1Data], data) => {
-      getDataBySensorPosition(data.sensorData, 0);
-      return [
-        sensor0Data.concat({
-          timestamp: data.timestamp,
-          value: getDataBySensorPosition(data.sensorData, 0),
-        }),
-        sensor1Data.concat({
-          timestamp: data.timestamp,
-          value: getDataBySensorPosition(data.sensorData, 1),
-        }),
-      ];
+    ([sensor1Data, sensor2Data], data) => {
+      const { sensorPosition, unit_type: unitType } = data;
+
+      if (sensorPosition === 1 && unitType === 'temperature') {
+        return [
+          sensor1Data.concat({
+            timestamp: data.timestamp,
+            value: data.value,
+          }),
+          sensor2Data,
+        ];
+      }
+      if (sensorPosition === 2 && unitType === 'temperature') {
+        return [
+          sensor1Data,
+          sensor2Data.concat({
+            timestamp: data.timestamp,
+            value: data.value,
+          }),
+        ];
+      }
+
+      return [sensor1Data, sensor2Data];
     },
     [[], []],
   );
