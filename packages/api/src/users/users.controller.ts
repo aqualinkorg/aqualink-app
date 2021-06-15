@@ -24,6 +24,7 @@ import { Reef } from '../reefs/reefs.entity';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { Public } from '../auth/public.decorator';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
+import { SetAdminLevelDto } from './dto/set-admin-level.dto';
 
 @ApiTags('Users')
 @Auth()
@@ -53,9 +54,9 @@ export class UsersController {
   @Put(':id/level')
   setAdminLevel(
     @Param('id', ParseIntPipe) id: number,
-    @Body('level') adminLevel: AdminLevel,
+    @Body() setAdminLevelDto: SetAdminLevelDto,
   ): Promise<void> {
-    return this.usersService.setAdminLevel(id, adminLevel);
+    return this.usersService.setAdminLevel(id, setAdminLevelDto.level);
   }
 
   @ApiBearerAuth()

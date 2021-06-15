@@ -4,6 +4,20 @@
   "testEnvironment": "node",
   "testRegex": ["app.spec.ts$", "test.ts$"],
   "testTimeout": 30000,
+  "verbose": true,
+  "collectCoverage": true,
+  "coveragePathIgnorePatterns": [
+    "node_modules",
+    "migration",
+    "entity.ts",
+    "module.ts",
+    "dto.ts",
+    "ormconfig.ts",
+    "spec.ts",
+    "test",
+    "docs",
+    "config"
+  ],
   "transform": {
     "\\.ts$": "ts-jest"
   }

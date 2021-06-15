@@ -1,9 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Connection, EntityMetadata } from 'typeorm';
-import mocks from './mock';
 import { AppModule } from '../src/app.module';
-import { FirebaseAuthGuard } from '../src/auth/firebase-auth.guard';
+import { users } from './mock/user.mock';
+import { User } from '../src/users/users.entity';
+import { Reef } from '../src/reefs/reefs.entity';
+import { reefs } from './mock/reef.mock';
+import { ReefApplication } from '../src/reef-applications/reef-applications.entity';
+import { reefApplications } from './mock/reef-application.mock';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -14,10 +18,7 @@ export class TestService {
   private async initializeApp() {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideGuard(FirebaseAuthGuard)
-      .useValue({ canActivate: () => true })
-      .compile();
+    }).compile();
 
     this.app = moduleFixture.createNestApplication();
 
@@ -34,13 +35,10 @@ export class TestService {
     await this.loadMocks(connection);
   }
 
-  private loadMocks(connection: Connection) {
-    return Promise.all(
-      mocks.map(([Entity, entities]) => {
-        const repository = connection.getRepository(Entity);
-        return repository.save(entities);
-      }),
-    );
+  private async loadMocks(connection: Connection) {
+    await connection.getRepository(User).save(users);
+    await connection.getRepository(Reef).save(reefs);
+    await connection.getRepository(ReefApplication).save(reefApplications);
   }
 
   public static getInstance() {

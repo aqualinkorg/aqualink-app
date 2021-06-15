@@ -10,7 +10,7 @@ export const healthCheckTests = () => {
     app = await testService.getApp();
   });
 
-  it('GET /health-check', async () => {
+  it('GET /health-check.', async () => {
     const rsp = await request(app.getHttpServer()).get('/health-check');
     expect(rsp.body).toStrictEqual({ status: 200 });
   });

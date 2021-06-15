@@ -16,9 +16,9 @@ describe('AppController (e2e)', () => {
     expect(app).toBeDefined();
   });
 
-  describe('HealthCheck (e2e)', healthCheckTests);
+  describe('HealthCheck (e2e) /health-check', healthCheckTests);
 
-  describe('User (e2e)', userTests);
+  describe('User (e2e) /users', userTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();

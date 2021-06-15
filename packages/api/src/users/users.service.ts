@@ -4,14 +4,14 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { AuthRequest } from '../auth/auth.types';
-import { extractAndVerifyToken } from '../auth/firebase-auth.strategy';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { Collection } from '../collections/collections.entity';
+import { extractAndVerifyToken } from '../auth/firebase-auth.utils';
 
 @Injectable()
 export class UsersService {
@@ -63,9 +63,10 @@ export class UsersService {
       }
     }
 
-    const user = {
+    const user: DeepPartial<User> = {
       ...priorAccount,
       ...createUserDto,
+      adminLevel: AdminLevel.Default,
       email: email.toLowerCase(),
       firebaseUid,
     };
@@ -97,11 +98,7 @@ export class UsersService {
       .where('users.id = :id', { id: req.user.id })
       .getOne();
 
-    if (!user) {
-      throw new NotFoundException(`User with ID ${req.user.id} not found.`);
-    }
-
-    return user.administeredReefs.map((reef) => {
+    return user!.administeredReefs.map((reef) => {
       return {
         ...reef,
         reefApplication: undefined,
@@ -111,7 +108,12 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { email } });
+    // Use query builder to include the firebaseUid
+    return this.usersRepository
+      .createQueryBuilder('users')
+      .addSelect('users.firebaseUid')
+      .where('email = :email', { email })
+      .getOne();
   }
 
   async findByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
