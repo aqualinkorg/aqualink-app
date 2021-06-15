@@ -12,6 +12,7 @@ import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { User } from '../users/users.entity';
 import { Sources } from './sources.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
+import { LatestData } from '../time-series/latest-data.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
       HistoricalMonthlyMean,
       User,
       Sources,
+      LatestData,
     ]),
   ],
   controllers: [ReefsController],

@@ -263,6 +263,7 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.windDirection,
       timeZone
     ),
+    weeklyAlert: convertSofarDataToLocalTime(timeSeries.weeklyAlert, timeZone),
   };
 };
 

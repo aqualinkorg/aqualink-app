@@ -1,4 +1,4 @@
-import { Reef } from "../Reefs/types";
+import { Reef, ReefResponse } from "../Reefs/types";
 import { User } from "../User/types";
 
 export interface CollectionSummary {
@@ -16,6 +16,10 @@ export interface CollectionDetails {
   reefs: Reef[];
   user: User;
   reefIds: number[];
+}
+
+export interface CollectionDetailsResponse extends CollectionDetails {
+  reefs: ReefResponse[];
 }
 
 export interface CollectionRequestParams {
