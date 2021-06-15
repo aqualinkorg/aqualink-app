@@ -529,7 +529,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="h6"
               >
-                23.0
+                15.9
                 <mock-hidden
                   smup="true"
                 >
@@ -548,10 +548,10 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
             >
               <mock-typography
                 classname="ReefTableBody-numberCellsTitle-15"
-                style="color: rgb(117, 180, 114);"
+                style="color: rgb(8, 91, 163);"
                 variant="h6"
               >
-                4.9
+                0.0
                 <mock-hidden
                   smup="true"
                 >

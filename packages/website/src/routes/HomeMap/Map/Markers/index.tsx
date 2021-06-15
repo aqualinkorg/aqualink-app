@@ -20,8 +20,8 @@ import ReefMarker from "./ReefMarker";
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
     const { reef } = marker?.options?.children?.[0]?.props || {};
-    const { weeklyAlertLevel } = reef?.latestDailyData || {};
-    return findIntervalByLevel(weeklyAlertLevel);
+    const { weeklyAlert } = reef?.collectionData || {};
+    return findIntervalByLevel(weeklyAlert);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
   const count = cluster.getChildCount();

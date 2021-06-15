@@ -11,6 +11,7 @@ import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { User } from '../users/users.entity';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { Sources } from './sources.entity';
+import { LatestData } from '../time-series/latest-data.entity';
 
 describe('Reefs Controller', () => {
   let controller: ReefsController;
@@ -33,6 +34,7 @@ describe('Reefs Controller', () => {
         { provide: getRepositoryToken(User), useClass: Repository },
         { provide: getRepositoryToken(ReefApplication), useClass: Repository },
         { provide: getRepositoryToken(Sources), useClass: Repository },
+        { provide: getRepositoryToken(LatestData), useClass: Repository },
       ],
       // You could also provide it the real ReefRepository, but then you'll also have to take care of providing *its*
       // dependencies too (e.g. with an `imports` block.

@@ -1,6 +1,6 @@
 import requests from "../helpers/requests";
 import {
-  CollectionDetails,
+  CollectionDetailsResponse,
   CollectionSummary,
   CollectionUpdateParams,
 } from "../store/Collection/types";
@@ -13,13 +13,13 @@ const getCollections = (token?: string) =>
   });
 
 const getPublicCollection = (id: number) =>
-  requests.send<CollectionDetails>({
+  requests.send<CollectionDetailsResponse>({
     method: "GET",
     url: `collections/public/${id}`,
   });
 
 const getCollection = (id: number, token?: string) =>
-  requests.send<CollectionDetails>({
+  requests.send<CollectionDetailsResponse>({
     method: "GET",
     url: `collections/${id}`,
     token,
