@@ -6,6 +6,7 @@ import {
   ManyToOne,
   UpdateDateColumn,
   Unique,
+  RelationId,
 } from 'typeorm';
 import { Reef } from './reefs.entity';
 
@@ -23,6 +24,12 @@ export class HistoricalMonthlyMean {
   @ApiProperty({ example: 24.21 })
   @Column({ type: 'float' })
   temperature: number;
+
+  @RelationId(
+    (historicalMonthlyMean: HistoricalMonthlyMean) =>
+      historicalMonthlyMean.reef,
+  )
+  reefId: number;
 
   @ManyToOne(() => Reef, { onDelete: 'CASCADE' })
   reef: Reef;

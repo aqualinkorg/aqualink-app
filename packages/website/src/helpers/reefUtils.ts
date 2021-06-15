@@ -3,7 +3,6 @@ import { maxBy, meanBy } from "lodash";
 
 import { longDHW } from "../store/Reefs/helpers";
 import { Reef } from "../store/Reefs/types";
-import { degreeHeatingWeeksCalculator } from "./degreeHeatingWeeks";
 
 export const findReefById = (reefs: Reef[], reefId: string): Reef | null => {
   return (
@@ -29,8 +28,8 @@ export const findInitialReefPosition = (
     maxBy(
       reefs,
       (reef) =>
-        `${reef.latestDailyData?.weeklyAlertLevel || 0},${longDHW(
-          degreeHeatingWeeksCalculator(reef.latestDailyData?.degreeHeatingDays)
+        `${reef.collectionData?.weeklyAlert || 0},${longDHW(
+          reef.collectionData?.dhw || null
         )}`
     );
 

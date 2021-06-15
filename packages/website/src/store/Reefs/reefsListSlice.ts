@@ -5,6 +5,7 @@ import reefServices from "../../services/reefServices";
 import { hasDeployedSpotter } from "../../helpers/reefUtils";
 import type { ReefsListState, ReefsRequestData } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
+import { mapCollectionData } from "./helpers";
 
 const reefsListInitialState: ReefsListState = {
   loading: false,
@@ -22,11 +23,15 @@ export const reefsRequest = createAsyncThunk<
       homepage: { withSpotterOnly },
     } = getState();
     const sortedData = sortBy(data, "name");
+    const transformedData = sortedData.map((item) => ({
+      ...item,
+      collectionData: mapCollectionData(item.collectionData || {}),
+    }));
     return {
-      list: sortedData,
+      list: transformedData,
       reefsToDisplay: withSpotterOnly
-        ? sortedData.filter(hasDeployedSpotter)
-        : sortedData,
+        ? transformedData.filter(hasDeployedSpotter)
+        : transformedData,
     };
   } catch (err) {
     const error: AxiosError<ReefsListState["error"]> = err;

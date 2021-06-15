@@ -1,5 +1,9 @@
+import { isNil } from "lodash";
+
 import type { TableRow } from "../Homepage/types";
 import type {
+  CollectionData,
+  CollectionDataResponse,
   Metrics,
   MetricsKeys,
   OceanSenseData,
@@ -12,7 +16,6 @@ import type {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataResponse,
 } from "./types";
-import { degreeHeatingWeeksCalculator } from "../../helpers/degreeHeatingWeeks";
 
 export function getReefNameAndRegion(reef: Reef) {
   const name = reef.name || reef.region?.name || null;
@@ -25,13 +28,15 @@ export const longDHW = (dhw: number | null): string =>
 
 export const constructTableData = (list: Reef[]): TableRow[] => {
   return list.map((value, key) => {
-    const { degreeHeatingDays, satelliteTemperature, weeklyAlertLevel } =
-      value.latestDailyData || value.collectionData || {};
+    const {
+      dhw,
+      satelliteTemperature,
+      weeklyAlert,
+      bottomTemperature,
+      topTemperature,
+      sstAnomaly,
+    } = value.collectionData || {};
 
-    const { bottomTemperature, topTemperature, sstAnomaly } =
-      value.collectionData || {};
-
-    const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
     const { maxMonthlyMean } = value;
     const { name: locationName = "", region = "" } = getReefNameAndRegion(
       value
@@ -39,23 +44,40 @@ export const constructTableData = (list: Reef[]): TableRow[] => {
 
     return {
       locationName,
-      sst: satelliteTemperature || null,
+      sst: isNil(satelliteTemperature) ? null : satelliteTemperature,
       historicMax: maxMonthlyMean,
-      sstAnomaly: sstAnomaly || null,
-      buoyTop: topTemperature || null,
-      buoyBottom: bottomTemperature || null,
+      sstAnomaly: isNil(sstAnomaly) ? null : sstAnomaly,
+      buoyTop: isNil(topTemperature) ? null : topTemperature,
+      buoyBottom: isNil(bottomTemperature) ? null : bottomTemperature,
       maxMonthlyMean,
       depth: value.depth,
-      dhw,
+      dhw: isNil(dhw) ? null : dhw,
       region,
       tableData: {
         id: key,
       },
-      alert: `${weeklyAlertLevel || 0},${longDHW(dhw)}`,
-      alertLevel: weeklyAlertLevel || null,
+      alert: `${weeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
+      alertLevel: isNil(weeklyAlert) ? null : weeklyAlert,
     };
   });
 };
+
+export const mapCollectionData = (
+  data: CollectionDataResponse
+): CollectionData => ({
+  alert: data.alert,
+  bottomTemperature: data.bottom_temperature,
+  dhw: data.dhw,
+  satelliteTemperature: data.satellite_temperature,
+  sstAnomaly: data.sst_anomaly,
+  topTemperature: data.top_temperature,
+  significantWaveHeight: data.significant_wave_height,
+  waveMeanDirection: data.wave_mean_direction,
+  wavePeakPeriod: data.wave_peak_period,
+  windDirection: data.wind_direction,
+  windSpeed: data.wind_speed,
+  weeklyAlert: data.weekly_alert,
+});
 
 const mapMetrics = <T>(
   data: Record<MetricsKeys, T[]>
@@ -71,6 +93,7 @@ const mapMetrics = <T>(
   wavePeakPeriod: data.wave_peak_period,
   windDirection: data.wind_direction,
   windSpeed: data.wind_speed,
+  weeklyAlert: data.weekly_alert,
 });
 
 export const mapTimeSeriesData = (

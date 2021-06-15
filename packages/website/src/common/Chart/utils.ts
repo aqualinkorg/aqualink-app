@@ -91,6 +91,7 @@ export const filterTimeSeriesData = (
     waveMeanDirection: filterSofarData(timeSeries.waveMeanDirection, from, to),
     windSpeed: filterSofarData(timeSeries.windSpeed, from, to),
     windDirection: filterSofarData(timeSeries.windDirection, from, to),
+    weeklyAlert: filterSofarData(timeSeries.weeklyAlert, from, to),
   };
 };
 

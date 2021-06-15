@@ -3,6 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Metric {
   ALERT = 'alert',
+  WEEKLY_ALERT = 'weekly_alert',
   DHW = 'dhw',
   SATELLITE_TEMPERATURE = 'satellite_temperature',
   TOP_TEMPERATURE = 'top_temperature',

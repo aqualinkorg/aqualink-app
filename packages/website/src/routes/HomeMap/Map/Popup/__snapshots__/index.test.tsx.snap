@@ -38,7 +38,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
                 color="textSecondary"
                 variant="caption"
               >
-                TEMP AT 0m
+                SST
               </mock-typography>
             </div>
             <div
@@ -49,7 +49,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
                 style="color: rgb(22, 141, 189);"
                 variant="h5"
               >
-                39.0  °C
+                15.9  °C
               </mock-typography>
             </div>
           </div>
@@ -71,10 +71,10 @@ exports[`Popup should render with given state from Redux store 1`] = `
             >
               <mock-typography
                 color="textSecondary"
-                style="color: rgb(117, 180, 114);"
+                style="color: rgb(8, 91, 163);"
                 variant="h5"
               >
-                4.9
+                0.0
                  
               </mock-typography>
               <mock-tooltip
@@ -82,7 +82,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
               >
                 <mock-typography
                   color="textSecondary"
-                  style="color: rgb(117, 180, 114); position: relative; bottom: 0px;"
+                  style="color: rgb(8, 91, 163); position: relative; bottom: 0px;"
                   variant="h6"
                 >
                   DHW

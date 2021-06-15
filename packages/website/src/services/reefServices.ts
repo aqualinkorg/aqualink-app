@@ -18,6 +18,7 @@ import {
   TimeSeriesDataRangeRequestParams,
   OceanSenseDataRequestParams,
   OceanSenseDataResponse,
+  ReefResponse,
 } from "../store/Reefs/types";
 
 const getReef = (id: string) =>
@@ -67,7 +68,7 @@ const getReefTimeSeriesDataRange = ({
   });
 
 const getReefs = () =>
-  requests.send<Reef[]>({
+  requests.send<ReefResponse[]>({
     url: "reefs",
     method: "GET",
   });
