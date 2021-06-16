@@ -10,7 +10,9 @@ try {
 export const { SOFAR_API_TOKEN } = process.env;
 export const SOFAR_MARINE_URL =
   'https://api.sofarocean.com/marine-weather/v1/models/';
-export const SOFAR_SPOTTER_URL = 'https://api.sofarocean.com/api/wave-data';
+export const SOFAR_WAVE_DATA_URL = 'https://api.sofarocean.com/api/wave-data';
+export const SOFAR_SENSOR_DATA_URL =
+  'https://api.sofarocean.com/api/sensor-data';
 
 export enum SofarModels {
   NOAAOperationalWaveModel = 'NOAAOperationalWaveModel',
