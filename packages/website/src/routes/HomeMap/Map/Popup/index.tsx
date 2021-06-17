@@ -21,10 +21,7 @@ import type { Reef } from "../../../../store/Reefs/types";
 import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import {
-  degreeHeatingWeeksCalculator,
-  dhwColorFinder,
-} from "../../../../helpers/degreeHeatingWeeks";
+import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 
 const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
@@ -32,11 +29,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
 
-  const { degreeHeatingDays, satelliteTemperature } =
-    reef.latestDailyData || reef.collectionData || {};
-  const { maxBottomTemperature } = reef.latestDailyData || {};
-
-  const dhw = degreeHeatingWeeksCalculator(degreeHeatingDays);
+  const { dhw, satelliteTemperature } = reef.collectionData || {};
 
   useEffect(() => {
     if (
@@ -72,41 +65,22 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
         />
         <CardContent>
           <Grid container item xs={12}>
-            {maxBottomTemperature ? (
-              <Grid item xs={6}>
-                <Grid container item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    {`TEMP AT ${reef.depth}m`}
-                  </Typography>
-                </Grid>
-                <Grid container item xs={12}>
-                  <Typography
-                    style={{ color: colors.lightBlue }}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(maxBottomTemperature, 1)}  °C`}
-                  </Typography>
-                </Grid>
+            <Grid item xs={6}>
+              <Grid container item xs={12}>
+                <Typography variant="caption" color="textSecondary">
+                  SST
+                </Typography>
               </Grid>
-            ) : (
-              <Grid item xs={6}>
-                <Grid container item xs={12}>
-                  <Typography variant="caption" color="textSecondary">
-                    SST
-                  </Typography>
-                </Grid>
-                <Grid container item xs={12}>
-                  <Typography
-                    style={{ color: colors.lightBlue }}
-                    variant="h5"
-                    color="textSecondary"
-                  >
-                    {`${formatNumber(satelliteTemperature, 1)}  °C`}
-                  </Typography>
-                </Grid>
+              <Grid container item xs={12}>
+                <Typography
+                  style={{ color: colors.lightBlue }}
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  {`${formatNumber(satelliteTemperature, 1)}  °C`}
+                </Typography>
               </Grid>
-            )}
+            </Grid>
             <Grid item xs={6}>
               <Grid container item xs={12}>
                 <Typography variant="caption" color="textSecondary">

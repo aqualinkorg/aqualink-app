@@ -37,6 +37,8 @@ import { backfillReefData } from '../workers/backfill-reef-data';
 import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
+import { getCollectionData } from '../utils/collections.utils';
+import { LatestData } from '../time-series/latest-data.entity';
 
 @Injectable()
 export class ReefsService {
@@ -65,6 +67,9 @@ export class ReefsService {
 
     @InjectRepository(Sources)
     private sourceRepository: Repository<Sources>,
+
+    @InjectRepository(LatestData)
+    private latestDataRepository: Repository<LatestData>,
   ) {}
 
   async create(
@@ -135,14 +140,6 @@ export class ReefsService {
     });
   }
 
-  latestDailyDataSubQuery(): string {
-    const query = this.dailyDataRepository.createQueryBuilder('dailyData');
-    query.select('MAX(date)', 'date');
-    query.addSelect('reef_id');
-    query.groupBy('reef_id');
-    return query.getQuery();
-  }
-
   async find(filter: FilterReefDto): Promise<Reef[]> {
     const query = this.reefsRepository.createQueryBuilder('reef');
 
@@ -151,14 +148,17 @@ export class ReefsService {
         name: `%${filter.name.toLowerCase()}%`,
       });
     }
+
     if (filter.status) {
       query.andWhere('reef.status = :status', { status: filter.status });
     }
+
     if (filter.regionId) {
       query.andWhere('reef.region = :region', {
         region: filter.regionId,
       });
     }
+
     if (filter.adminId) {
       query.innerJoin(
         'reef.admins',
@@ -167,23 +167,32 @@ export class ReefsService {
         { adminId: filter.adminId },
       );
     }
+
+    if (filter.hasSpotter) {
+      const hasSpotter = filter.hasSpotter.toLowerCase() === 'true';
+      query.andWhere(
+        hasSpotter ? 'reef.sensor_id IS NOT NULL' : 'reef.sensor_id IS NULL',
+      );
+    }
+
     const res = await query
       .leftJoinAndSelect('reef.region', 'region')
       .leftJoinAndSelect('reef.admins', 'admins')
       .leftJoinAndSelect('reef.stream', 'stream')
-      .leftJoinAndSelect(
-        'reef.latestDailyData',
-        'latestDailyData',
-        `(latestDailyData.date, latestDailyData.reef_id) IN (${this.latestDailyDataSubQuery()})`,
-      )
       .andWhere('approved = true')
       .getMany();
+
+    const mappedReefData = await getCollectionData(
+      res,
+      this.latestDataRepository,
+    );
 
     const hasHoboDataSet = await hasHoboDataSubQuery(this.sourceRepository);
 
     return res.map((reef) => ({
       ...reef,
       applied: reef.applied,
+      collectionData: mappedReefData[reef.id],
       hasHobo: hasHoboDataSet.has(reef.id),
     }));
   }

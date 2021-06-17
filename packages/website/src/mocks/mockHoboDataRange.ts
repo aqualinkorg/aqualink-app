@@ -18,6 +18,7 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     waveMeanDirection: [],
     windSpeed: [],
     windDirection: [],
+    weeklyAlert: [],
   },
   spotter: {
     bottomTemperature: [],
@@ -31,6 +32,7 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     waveMeanDirection: [],
     windSpeed: [],
     windDirection: [],
+    weeklyAlert: [],
   },
   sofarNoaa: {
     bottomTemperature: [],
@@ -44,6 +46,7 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     waveMeanDirection: [],
     windSpeed: [],
     windDirection: [],
+    weeklyAlert: [],
   },
   sofarGfs: {
     bottomTemperature: [],
@@ -57,5 +60,6 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     waveMeanDirection: [],
     windSpeed: [],
     windDirection: [],
+    weeklyAlert: [],
   },
 };

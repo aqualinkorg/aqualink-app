@@ -7,6 +7,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { isNil } from 'lodash';
@@ -15,7 +16,9 @@ import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
 import { SofarValue } from './sofar.types';
 import { createPoint } from './coordinates';
-import { Sources, SourceType } from '../reefs/sources.entity';
+import { Reef } from '../reefs/reefs.entity';
+import { Sources } from '../reefs/sources.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -148,6 +151,19 @@ export const filterSpotterDataByDate = (
     return isExcluded;
   });
   return data;
+};
+
+export const getReefFromSensorId = async (
+  sensorId: string,
+  reefRepository: Repository<Reef>,
+) => {
+  const reef = await reefRepository.findOne({ where: { sensorId } });
+
+  if (!reef) {
+    throw new NotFoundException(`No site exists with sensor ID ${sensorId}`);
+  }
+
+  return reef;
 };
 
 export const hasHoboDataSubQuery = async (
