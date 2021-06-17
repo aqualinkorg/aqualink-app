@@ -36,7 +36,7 @@ const SiteDetails = ({
 }: SiteDetailsProps) => {
   const [lng, lat] = getMiddlePoint(reef.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean } = reef;
+  const { dailyData, liveData, maxMonthlyMean, videoStream } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -102,11 +102,18 @@ const SiteDetails = ({
       )}
 
       <Grid container justify="space-between" spacing={2}>
-        <Grid item xs={12} md={6}>
-          {surveyDiveDate && featuredSurveyPoint && (
+        <Grid
+          item
+          xs={12}
+          md={6}
+          className={videoStream ? classes.featuredWrapper : ""}
+        >
+          {!videoStream && surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={mapTitleItems} />
           )}
-          <div className={classes.container}>
+          <div
+            className={videoStream ? classes.videoContainer : classes.container}
+          >
             <Map
               reefId={reef.id}
               spotterPosition={reef.liveData?.spotterPosition}
@@ -115,14 +122,21 @@ const SiteDetails = ({
             />
           </div>
         </Grid>
-        <Grid item xs={12} md={6}>
-          {surveyDiveDate && featuredSurveyPoint && (
+        <Grid
+          item
+          xs={12}
+          md={6}
+          className={videoStream ? classes.featuredWrapper : ""}
+        >
+          {!videoStream && surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={featuredMediaTitleItems} />
           )}
-          <div className={classes.container}>
+          <div
+            className={videoStream ? classes.videoContainer : classes.container}
+          >
             <FeaturedMedia
               reefId={reef.id}
-              url={reef.videoStream}
+              url={videoStream}
               featuredImage={reef.featuredImage}
               surveyId={featuredSurveyId}
             />
@@ -172,6 +186,22 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         height: "20rem",
       },
+    },
+    featuredWrapper: {
+      padding: "0 !important",
+      paddingTop: "calc((50% - 16px) / 16 * 9 + 16px) !important",
+      position: "relative",
+      [theme.breakpoints.down(960)]: {
+        paddingTop: "calc((100% - 16px) / 16 * 9 + 16px) !important",
+      },
+    },
+    videoContainer: {
+      position: "absolute",
+      top: "0px",
+      left: "0px",
+      padding: "8px",
+      width: "100%",
+      height: "100%",
     },
     metricsWrapper: {
       marginTop: "1rem",
