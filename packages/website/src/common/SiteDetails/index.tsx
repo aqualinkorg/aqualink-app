@@ -7,6 +7,7 @@ import {
   Theme,
   Box,
 } from "@material-ui/core";
+import classNames from "classnames";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -101,18 +102,31 @@ const SiteDetails = ({
         <CardTitle values={mapTitleItems} />
       )}
 
-      <Grid container justify="space-between" spacing={2}>
+      <Grid
+        container
+        justify="space-between"
+        spacing={videoStream ? 0 : 2}
+        className={classNames({
+          [classes.forcedWidth]: !!videoStream,
+        })}
+      >
         <Grid
           item
           xs={12}
           md={6}
-          className={videoStream ? classes.featuredWrapper : ""}
+          className={classNames({
+            [classes.forcedAspectRatioWrapper]: !!videoStream,
+          })}
         >
           {!videoStream && surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={mapTitleItems} />
           )}
           <div
-            className={videoStream ? classes.videoContainer : classes.container}
+            className={
+              videoStream
+                ? classes.absolutePositionedContainer
+                : classes.container
+            }
           >
             <Map
               reefId={reef.id}
@@ -126,13 +140,19 @@ const SiteDetails = ({
           item
           xs={12}
           md={6}
-          className={videoStream ? classes.featuredWrapper : ""}
+          className={classNames({
+            [classes.forcedAspectRatioWrapper]: !!videoStream,
+          })}
         >
           {!videoStream && surveyDiveDate && featuredSurveyPoint && (
             <CardTitle values={featuredMediaTitleItems} />
           )}
           <div
-            className={videoStream ? classes.videoContainer : classes.container}
+            className={
+              videoStream
+                ? classes.absolutePositionedContainer
+                : classes.container
+            }
           >
             <FeaturedMedia
               reefId={reef.id}
@@ -178,6 +198,10 @@ const styles = (theme: Theme) =>
     root: {
       marginTop: "2rem",
     },
+    forcedWidth: {
+      width: `calc(100% + ${theme.spacing(2)}px)`,
+      margin: -theme.spacing(1),
+    },
     container: {
       height: "30rem",
       [theme.breakpoints.between("md", 1440)]: {
@@ -187,19 +211,22 @@ const styles = (theme: Theme) =>
         height: "20rem",
       },
     },
-    featuredWrapper: {
-      padding: "0 !important",
-      paddingTop: "calc((50% - 16px) / 16 * 9 + 16px) !important",
+    forcedAspectRatioWrapper: {
+      paddingTop: `calc((50% - ${theme.spacing(
+        2
+      )}px) / 16 * 9 + ${theme.spacing(2)}px)`,
       position: "relative",
       [theme.breakpoints.down(960)]: {
-        paddingTop: "calc((100% - 16px) / 16 * 9 + 16px) !important",
+        paddingTop: `calc((100% - ${theme.spacing(
+          2
+        )}px) / 16 * 9 + ${theme.spacing(2)}px)`,
       },
     },
-    videoContainer: {
+    absolutePositionedContainer: {
       position: "absolute",
-      top: "0px",
-      left: "0px",
-      padding: "8px",
+      top: 0,
+      left: 0,
+      padding: theme.spacing(1),
       width: "100%",
       height: "100%",
     },

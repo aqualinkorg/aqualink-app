@@ -34,11 +34,8 @@ const FeaturedMedia = ({
       <Card className={classes.card}>
         <CardContent className={classes.content}>
           <CardMedia
-            src="https://www.youtube.com/embed/F109TZt3nRc?autoplay=1&controls=0&mute=1"
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
+            src={`${url}?autoplay=1&controls=0&mute=1`}
+            className={classes.card}
             component="iframe"
           />
         </CardContent>
