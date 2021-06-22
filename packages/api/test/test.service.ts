@@ -4,12 +4,14 @@ import { Connection, EntityMetadata } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Reef } from '../src/reefs/reefs.entity';
+import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
 import { ReefApplication } from '../src/reef-applications/reef-applications.entity';
 import { Sources } from '../src/reefs/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
 import { users } from './mock/user.mock';
 import { reefs } from './mock/reef.mock';
+import { pois } from './mock/poi.mock';
 import { reefApplications } from './mock/reef-application.mock';
 import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
@@ -31,19 +33,38 @@ export class TestService {
     await this.app.init();
 
     const connection = this.app.get(Connection);
-    // Clean up database
-    await this.cleanAllEntities(connection);
+    try {
+      // Clean up database
+      await this.cleanAllEntities(connection);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Clean up failed');
+      throw err;
+    }
 
-    // Make sure database is up-to-date
-    await connection.runMigrations({ transaction: 'each' });
+    try {
+      // Make sure database is up-to-date
+      await connection.runMigrations({ transaction: 'each' });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Migrations failed to run');
+      throw err;
+    }
 
-    // Load mock entities
-    await this.loadMocks(connection);
+    try {
+      // Load mock entities
+      await this.loadMocks(connection);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Mocks failed to load');
+      throw err;
+    }
   }
 
   private async loadMocks(connection: Connection) {
     await connection.getRepository(User).save(users);
     await connection.getRepository(Reef).save(reefs);
+    await connection.getRepository(ReefPointOfInterest).save(pois);
     await connection.getRepository(ReefApplication).save(reefApplications);
     await connection.getRepository(Sources).save(sources);
     await connection.getRepository(TimeSeries).save(timeSeries);
@@ -88,6 +109,7 @@ export class TestService {
         if (entity.tableType === 'view') {
           return null;
         }
+
         return connection.query(`DELETE FROM ${entity.tableName};`);
       }),
     );

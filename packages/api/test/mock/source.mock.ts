@@ -2,6 +2,7 @@ import { DeepPartial } from 'typeorm';
 import { SourceType } from '../../src/reefs/schemas/source-type.enum';
 import { Sources } from '../../src/reefs/sources.entity';
 import { athensReef, californiaReef, floridaReef } from './reef.mock';
+import { athensPoiPiraeus } from './poi.mock';
 
 export const californiaSpotterSource: DeepPartial<Sources> = {
   reef: californiaReef,
@@ -24,9 +25,16 @@ export const athensNOAASource: DeepPartial<Sources> = {
   type: SourceType.NOAA,
 };
 
+export const athensPiraeusHoboSource: DeepPartial<Sources> = {
+  reef: athensReef,
+  poi: athensPoiPiraeus,
+  type: SourceType.HOBO,
+};
+
 export const sources = [
   californiaSpotterSource,
   californiaNOAASource,
   floridaNOAASource,
   athensNOAASource,
+  athensPiraeusHoboSource,
 ];

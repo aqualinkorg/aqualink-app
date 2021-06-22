@@ -6,20 +6,21 @@ import { Sources } from '../../src/reefs/sources.entity';
 import { Metric } from '../../src/time-series/metrics.entity';
 import { TimeSeries } from '../../src/time-series/time-series.entity';
 import {
+  athensPiraeusHoboSource,
   athensNOAASource,
   californiaNOAASource,
   californiaSpotterSource,
   floridaNOAASource,
 } from './source.mock';
 
-const NOAAMetrics = [
+export const NOAAMetrics = [
   Metric.ALERT,
   Metric.SST_ANOMALY,
   Metric.DHW,
   Metric.SATELLITE_TEMPERATURE,
 ];
 
-const spotterMetrics = [
+export const spotterMetrics = [
   Metric.BOTTOM_TEMPERATURE,
   Metric.TOP_TEMPERATURE,
   Metric.SIGNIFICANT_WAVE_HEIGHT,
@@ -29,7 +30,7 @@ const spotterMetrics = [
   Metric.WIND_SPEED,
 ];
 
-const hoboMetrics = [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE];
+export const hoboMetrics = [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE];
 
 const getFakerValue = (metric: Metric) => {
   switch (metric) {
@@ -98,7 +99,10 @@ export const californiaTimeSeries = [
 
 export const floridaTimeSeries = createTimeSeriesData(floridaNOAASource);
 
-export const athensTimeSeries = createTimeSeriesData(athensNOAASource);
+export const athensTimeSeries = [
+  ...createTimeSeriesData(athensNOAASource),
+  ...createTimeSeriesData(athensPiraeusHoboSource),
+];
 
 export const timeSeries = [
   ...californiaTimeSeries,

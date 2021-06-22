@@ -25,6 +25,7 @@ import {
 } from '../../test/mock/user.mock';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
+import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { DEFAULT_COLLECTION_NAME } from '../utils/collections.utils';
 import { CreateCollectionDto } from './dto/create-collection.dto';
@@ -236,7 +237,10 @@ export const collectionTests = () => {
     const californiaLatestData = getLatestData(californiaTimeSeries);
     const floridaLatestData = getLatestData(floridaTimeSeries);
 
-    expect(sortedReefs[0].collectionData).toStrictEqual(athensLatestData);
+    expect(sortedReefs[0].collectionData).toStrictEqual(
+      // Omit top and bottom temperature since hobo data are not included in collection data
+      omit(athensLatestData, Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE),
+    );
     expect(sortedReefs[1].collectionData).toStrictEqual(californiaLatestData);
     expect(sortedReefs[2].collectionData).toStrictEqual(floridaLatestData);
   });
