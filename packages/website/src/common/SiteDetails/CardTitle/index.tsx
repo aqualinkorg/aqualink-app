@@ -27,8 +27,7 @@ const CardTitle = ({ classes, values }: CardTitleProps) => {
 const styles = () =>
   createStyles({
     root: {
-      height: "1.6rem",
-      margin: "0 0 0.2rem 0.5rem",
+      margin: "0 0 0.2rem 1rem",
     },
   });
 

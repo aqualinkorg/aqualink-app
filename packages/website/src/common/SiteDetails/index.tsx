@@ -73,94 +73,118 @@ const SiteDetails = ({
     },
   ];
 
-  const featuredMediaTitleItems: Value[] = [
-    {
-      text: "SURVEY POINT:",
-      variant: "h6",
-      marginRight: "0.5rem",
-    },
-    {
-      text: `${featuredSurveyPoint?.name}`,
-      variant: "subtitle2",
-      marginRight: "2rem",
-    },
-    {
-      text: `${displayTimeInLocalTimezone({
-        isoDate: surveyDiveDate,
-        format: "MMM DD[,] YYYY",
-        displayTimezone: false,
-        timeZone: reef.timezone,
-      })}`,
-      variant: "subtitle2",
-      marginRight: 0,
-    },
-  ];
+  const featuredMediaTitleItems = (): Value[] => {
+    switch (true) {
+      case !!surveyDiveDate && !!featuredSurveyPoint:
+        return [
+          {
+            text: "SURVEY POINT:",
+            variant: "h6",
+            marginRight: "0.5rem",
+          },
+          {
+            text: `${featuredSurveyPoint?.name}`,
+            variant: "subtitle2",
+            marginRight: "2rem",
+          },
+          {
+            text: `${displayTimeInLocalTimezone({
+              isoDate: surveyDiveDate,
+              format: "MMM DD[,] YYYY",
+              displayTimezone: false,
+              timeZone: reef.timezone,
+            })}`,
+            variant: "subtitle2",
+            marginRight: 0,
+          },
+        ];
+      case !!videoStream:
+        return [
+          {
+            text: "LIVE VIDEO",
+            marginRight: 0,
+            variant: "h6",
+          },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const featuredMediaTitle = featuredMediaTitleItems();
 
   return (
-    <Box mt="1rem">
-      {(!surveyDiveDate || !featuredSurveyPoint) && (
-        <CardTitle values={mapTitleItems} />
-      )}
-
+    <Box mt="1.5rem">
       <Grid
         container
         justify="space-between"
+        alignItems="flex-end"
         spacing={videoStream ? 0 : 2}
         className={classNames({
           [classes.forcedWidth]: !!videoStream,
         })}
       >
-        <Grid
-          item
-          xs={12}
-          md={6}
-          className={classNames({
-            [classes.forcedAspectRatioWrapper]: !!videoStream,
-          })}
-        >
-          {!videoStream && surveyDiveDate && featuredSurveyPoint && (
+        <Grid container item xs={12} md={6}>
+          <Grid item>
             <CardTitle values={mapTitleItems} />
-          )}
-          <div
-            className={
-              videoStream
-                ? classes.absolutePositionedContainer
-                : classes.container
-            }
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            className={classNames({
+              [classes.forcedAspectRatioWrapper]: !!videoStream,
+            })}
           >
-            <Map
-              reefId={reef.id}
-              spotterPosition={reef.liveData?.spotterPosition}
-              polygon={reef.polygon}
-              surveyPoints={reef.surveyPoints}
-            />
-          </div>
+            <div
+              className={
+                videoStream
+                  ? classes.absolutePositionedContainer
+                  : classes.container
+              }
+            >
+              <Map
+                reefId={reef.id}
+                spotterPosition={reef.liveData?.spotterPosition}
+                polygon={reef.polygon}
+                surveyPoints={reef.surveyPoints}
+              />
+            </div>
+          </Grid>
         </Grid>
         <Grid
+          container
           item
           xs={12}
           md={6}
-          className={classNames({
-            [classes.forcedAspectRatioWrapper]: !!videoStream,
-          })}
+          className={classNames({ [classes.mediaWrapper]: !!videoStream })}
         >
-          {!videoStream && surveyDiveDate && featuredSurveyPoint && (
-            <CardTitle values={featuredMediaTitleItems} />
+          {featuredMediaTitle.length > 0 && (
+            <Grid item>
+              <CardTitle values={featuredMediaTitle} />
+            </Grid>
           )}
-          <div
-            className={
-              videoStream
-                ? classes.absolutePositionedContainer
-                : classes.container
-            }
+          <Grid
+            item
+            xs={12}
+            className={classNames({
+              [classes.forcedAspectRatioWrapper]: !!videoStream,
+            })}
           >
-            <FeaturedMedia
-              reefId={reef.id}
-              url={videoStream}
-              featuredImage={reef.featuredImage}
-              surveyId={featuredSurveyId}
-            />
-          </div>
+            <div
+              className={
+                videoStream
+                  ? classes.absolutePositionedContainer
+                  : classes.container
+              }
+            >
+              <FeaturedMedia
+                reefId={reef.id}
+                url={videoStream}
+                featuredImage={reef.featuredImage}
+                surveyId={featuredSurveyId}
+              />
+            </div>
+          </Grid>
         </Grid>
       </Grid>
 
@@ -193,8 +217,10 @@ const SiteDetails = ({
   );
 };
 
-const styles = (theme: Theme) =>
-  createStyles({
+const styles = (theme: Theme) => {
+  const aspectRatio = "16 * 9";
+
+  return createStyles({
     root: {
       marginTop: "2rem",
     },
@@ -211,16 +237,17 @@ const styles = (theme: Theme) =>
         height: "20rem",
       },
     },
-    forcedAspectRatioWrapper: {
-      paddingTop: `calc((50% - ${theme.spacing(
-        2
-      )}px) / 16 * 9 + ${theme.spacing(2)}px)`,
-      position: "relative",
-      [theme.breakpoints.down(960)]: {
-        paddingTop: `calc((100% - ${theme.spacing(
-          2
-        )}px) / 16 * 9 + ${theme.spacing(2)}px)`,
+    mediaWrapper: {
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(1),
       },
+    },
+    forcedAspectRatioWrapper: {
+      paddingTop: `calc((100% - ${theme.spacing(
+        2
+      )}px) / ${aspectRatio} + ${theme.spacing(2)}px)`,
+      marginTop: -theme.spacing(1),
+      position: "relative",
     },
     absolutePositionedContainer: {
       position: "absolute",
@@ -234,6 +261,7 @@ const styles = (theme: Theme) =>
       marginTop: "1rem",
     },
   });
+};
 
 interface SiteDetailsIncomingProps {
   reef: Reef;
