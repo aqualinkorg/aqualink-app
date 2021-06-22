@@ -13,10 +13,7 @@ import {
   testFirebaseUserMock,
   testUserMock,
 } from '../../test/mock/user.mock';
-import {
-  convertGeneratedDateColumns,
-  mockExtractAndVerifyToken,
-} from '../../test/utils';
+import { mockExtractAndVerifyToken } from '../../test/utils';
 import { CreateUserDto } from './dto/create-user.dto';
 import { californiaReef, floridaReef } from '../../test/mock/reef.mock';
 
@@ -48,8 +45,7 @@ export const userTests = () => {
     expect(rsp.status).toBe(200);
     expect(rsp.body).not.toHaveProperty('firebaseUid');
     expect(rsp.body).toMatchObject({
-      ...omit(adminUserMock, 'firebaseUid', 'updatedAt'),
-      ...convertGeneratedDateColumns(adminUserMock),
+      ...omit(adminUserMock, 'firebaseUid', 'updatedAt', 'createdAt'),
     });
     expect(rsp.body).toHaveProperty('id');
     expect(rsp.body).toHaveProperty('createdAt');
@@ -133,12 +129,10 @@ export const userTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
       expect(rsp.body[0]).toMatchObject({
-        ...omit(californiaReef, 'updatedAt'),
-        ...convertGeneratedDateColumns(californiaReef),
+        ...omit(californiaReef, 'updatedAt', 'createdAt'),
       });
       expect(rsp.body[1]).toMatchObject({
-        ...omit(floridaReef, 'updatedAt'),
-        ...convertGeneratedDateColumns(floridaReef),
+        ...omit(floridaReef, 'updatedAt', 'createdAt'),
       });
     });
   });

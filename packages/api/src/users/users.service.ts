@@ -12,6 +12,7 @@ import { ReefApplication } from '../reef-applications/reef-applications.entity';
 import { Reef } from '../reefs/reefs.entity';
 import { Collection } from '../collections/collections.entity';
 import { extractAndVerifyToken } from '../auth/firebase-auth.utils';
+import { defaultUserCollection } from '../utils/collections.utils';
 
 @Injectable()
 export class UsersService {
@@ -60,6 +61,8 @@ export class UsersService {
       ) {
         // eslint-disable-next-line fp/no-mutation
         priorAccount.adminLevel = AdminLevel.ReefManager;
+        // eslint-disable-next-line fp/no-mutation
+        priorAccount.administeredReefs = newUser.administeredReefs;
       }
     }
 
@@ -77,10 +80,12 @@ export class UsersService {
     });
 
     if (!collection) {
-      await this.collectionRepository.save({
-        user: createdUser,
-        name: 'My Dashboard',
-      });
+      await this.collectionRepository.save(
+        defaultUserCollection(
+          createdUser.id,
+          priorAccount?.administeredReefs.map((reef) => reef.id),
+        ),
+      );
     }
 
     return createdUser;

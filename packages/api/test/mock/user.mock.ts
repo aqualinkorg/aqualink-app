@@ -68,3 +68,8 @@ export const reefManagerFirebaseUserMock = createMockFirebaseUser(
   'abc1234manager',
   reefManagerUserMock.email as string,
 );
+
+export const defaultFirebaseUserMock = createMockFirebaseUser(
+  defaultUserMock.firebaseUid as string,
+  defaultUserMock.email as string,
+);

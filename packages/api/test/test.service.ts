@@ -2,12 +2,18 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Connection, EntityMetadata } from 'typeorm';
 import { AppModule } from '../src/app.module';
-import { users } from './mock/user.mock';
 import { User } from '../src/users/users.entity';
 import { Reef } from '../src/reefs/reefs.entity';
-import { reefs } from './mock/reef.mock';
 import { ReefApplication } from '../src/reef-applications/reef-applications.entity';
+import { Sources } from '../src/reefs/sources.entity';
+import { TimeSeries } from '../src/time-series/time-series.entity';
+import { Collection } from '../src/collections/collections.entity';
+import { users } from './mock/user.mock';
+import { reefs } from './mock/reef.mock';
 import { reefApplications } from './mock/reef-application.mock';
+import { sources } from './mock/source.mock';
+import { timeSeries } from './mock/time-series.mock';
+import { collections } from './mock/collection.mock';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -22,7 +28,7 @@ export class TestService {
 
     this.app = moduleFixture.createNestApplication();
 
-    this.app.init();
+    await this.app.init();
 
     const connection = this.app.get(Connection);
     // Clean up database
@@ -39,6 +45,10 @@ export class TestService {
     await connection.getRepository(User).save(users);
     await connection.getRepository(Reef).save(reefs);
     await connection.getRepository(ReefApplication).save(reefApplications);
+    await connection.getRepository(Sources).save(sources);
+    await connection.getRepository(TimeSeries).save(timeSeries);
+    await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+    await connection.getRepository(Collection).save(collections);
   }
 
   public static getInstance() {

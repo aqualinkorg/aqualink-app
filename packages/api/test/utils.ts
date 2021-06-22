@@ -1,5 +1,4 @@
 import admin from 'firebase-admin';
-import { DeepPartial } from 'typeorm';
 import * as firebaseAuthStrategy from '../src/auth/firebase-auth.utils';
 
 export const mockExtractAndVerifyToken = (
@@ -27,15 +26,3 @@ export const createMockFirebaseUser = (
   sub: 'sub',
   uid,
 });
-
-interface StateTrackable {
-  createdAt?: DeepPartial<Date>;
-}
-
-export const convertGeneratedDateColumns = (entity: StateTrackable) => {
-  return {
-    ...(entity.createdAt
-      ? { createdAt: (entity.createdAt as Date).toISOString() }
-      : {}),
-  };
-};

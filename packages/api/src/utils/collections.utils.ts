@@ -38,3 +38,15 @@ export const getCollectionData = async (
     )
     .toJSON();
 };
+
+export const DEFAULT_COLLECTION_NAME = 'My Dashboard';
+
+export const defaultUserCollection = (
+  userId: number,
+  reefIds: number[] = [],
+  name = DEFAULT_COLLECTION_NAME,
+) => ({
+  user: { id: userId },
+  name,
+  reefs: reefIds.map((reefId) => ({ id: reefId })),
+});

@@ -128,12 +128,6 @@ export class CollectionsService {
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
     const collection = await this.collectionRepository.findOne(collectionId);
 
-    if (!collection) {
-      throw new NotFoundException(
-        `Collection with ID ${collectionId} not found.`,
-      );
-    }
-
     const {
       name,
       isPublic,
@@ -142,8 +136,10 @@ export class CollectionsService {
       removeReefIds,
     } = updateCollectionDto;
 
+    // No need to check if collectionId exists because the reef guard had made sure
+    // that a collection with this collectionId exists
     const filteredAddReefIds = addReefIds?.filter(
-      (reefId) => !collection.reefIds.includes(reefId),
+      (reefId) => !collection!.reefIds.includes(reefId),
     );
 
     await this.collectionRepository
@@ -162,16 +158,12 @@ export class CollectionsService {
       },
     );
 
-    return this.collectionRepository.findOne(collection.id);
+    return this.collectionRepository.findOne(collection!.id);
   }
 
   async delete(collectionId: number) {
-    const result = await this.collectionRepository.delete(collectionId);
-
-    if (!result.affected) {
-      throw new NotFoundException(
-        `Collection with ID ${collectionId} not found.`,
-      );
-    }
+    // No need to check if collectionId exists because the reef guard had made sure
+    // that a collection with this collectionId exists
+    await this.collectionRepository.delete(collectionId);
   }
 }
