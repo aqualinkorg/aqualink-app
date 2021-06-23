@@ -12,7 +12,6 @@ import {
   Theme,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import ReactPlayer from "react-player";
 import { useSelector } from "react-redux";
 
 import reefImage from "../../../assets/reef-image.jpg";
@@ -34,13 +33,10 @@ const FeaturedMedia = ({
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
-          <ReactPlayer
-            height="100%"
-            width="100%"
-            playing
-            muted
-            light
-            url={`${url}`}
+          <CardMedia
+            src={`${url}?autoplay=1&controls=0&mute=1`}
+            className={classes.card}
+            component="iframe"
           />
         </CardContent>
       </Card>

@@ -7,6 +7,7 @@ import {
   Theme,
   Box,
 } from "@material-ui/core";
+import classNames from "classnames";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -16,7 +17,8 @@ import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import OceanSenseMetrics from "./OceanSenseMetrics";
 import Surveys from "./Surveys";
-import CardTitle, { Value } from "./CardTitle";
+import CardWithTitle from "./CardWithTitle";
+import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
 import type { Reef } from "../../store/Reefs/types";
 import { getMiddlePoint } from "../../helpers/map";
@@ -38,7 +40,7 @@ const SiteDetails = ({
 }: SiteDetailsProps) => {
   const [lng, lat] = getMiddlePoint(reef.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean } = reef;
+  const { dailyData, liveData, maxMonthlyMean, videoStream } = reef;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -74,62 +76,81 @@ const SiteDetails = ({
     },
   ];
 
-  const featuredMediaTitleItems: Value[] = [
-    {
-      text: "SURVEY POINT:",
-      variant: "h6",
-      marginRight: "0.5rem",
-    },
-    {
-      text: `${featuredSurveyPoint?.name}`,
-      variant: "subtitle2",
-      marginRight: "2rem",
-    },
-    {
-      text: `${displayTimeInLocalTimezone({
-        isoDate: surveyDiveDate,
-        format: "MMM DD[,] YYYY",
-        displayTimezone: false,
-        timeZone: reef.timezone,
-      })}`,
-      variant: "subtitle2",
-      marginRight: 0,
-    },
-  ];
+  const featuredMediaTitleItems = (): Value[] => {
+    switch (true) {
+      case !!videoStream:
+        return [
+          {
+            text: "LIVE VIDEO",
+            marginRight: 0,
+            variant: "h6",
+          },
+        ];
+      case !!surveyDiveDate && !!featuredSurveyPoint:
+        return [
+          {
+            text: "SURVEY POINT:",
+            variant: "h6",
+            marginRight: "0.5rem",
+          },
+          {
+            text: `${featuredSurveyPoint?.name}`,
+            variant: "subtitle2",
+            marginRight: "2rem",
+          },
+          {
+            text: `${displayTimeInLocalTimezone({
+              isoDate: surveyDiveDate,
+              format: "MMM DD[,] YYYY",
+              displayTimezone: false,
+              timeZone: reef.timezone,
+            })}`,
+            variant: "subtitle2",
+            marginRight: 0,
+          },
+        ];
+      default:
+        return [];
+    }
+  };
 
   return (
-    <Box mt="1rem">
-      {(!surveyDiveDate || !featuredSurveyPoint) && (
-        <CardTitle values={mapTitleItems} />
-      )}
+    <Box mt="1.5rem">
+      <Grid
+        container
+        justify="space-between"
+        alignItems="flex-end"
+        spacing={videoStream ? 0 : 2}
+        className={classNames({
+          [classes.forcedWidth]: !!videoStream,
+        })}
+      >
+        <CardWithTitle
+          titleItems={mapTitleItems}
+          gridProps={{ xs: 12, md: 6 }}
+          forcedAspectRatio={!!videoStream}
+        >
+          <Map
+            reefId={reef.id}
+            spotterPosition={reef.liveData?.spotterPosition}
+            polygon={reef.polygon}
+            surveyPoints={reef.surveyPoints}
+          />
+        </CardWithTitle>
 
-      <Grid container justify="space-between" spacing={2}>
-        <Grid item xs={12} md={6}>
-          {surveyDiveDate && featuredSurveyPoint && (
-            <CardTitle values={mapTitleItems} />
-          )}
-          <div className={classes.container}>
-            <Map
-              reefId={reef.id}
-              spotterPosition={reef.liveData?.spotterPosition}
-              polygon={reef.polygon}
-              surveyPoints={reef.surveyPoints}
-            />
-          </div>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          {surveyDiveDate && featuredSurveyPoint && (
-            <CardTitle values={featuredMediaTitleItems} />
-          )}
-          <div className={classes.container}>
-            <FeaturedMedia
-              reefId={reef.id}
-              url={reef.videoStream}
-              featuredImage={reef.featuredImage}
-              surveyId={featuredSurveyId}
-            />
-          </div>
-        </Grid>
+        <CardWithTitle
+          className={classNames({ [classes.mediaWrapper]: !!videoStream })}
+          titleItems={featuredMediaTitleItems()}
+          gridProps={{ xs: 12, md: 6 }}
+          forcedAspectRatio={!!videoStream}
+        >
+          <FeaturedMedia
+            reefId={reef.id}
+            url={videoStream}
+            featuredImage={reef.featuredImage}
+            surveyId={featuredSurveyId}
+          />
+        </CardWithTitle>
       </Grid>
 
       {hasDailyData && (
@@ -168,13 +189,13 @@ const styles = (theme: Theme) =>
     root: {
       marginTop: "2rem",
     },
-    container: {
-      height: "30rem",
-      [theme.breakpoints.between("md", 1440)]: {
-        height: "25rem",
-      },
-      [theme.breakpoints.down("xs")]: {
-        height: "20rem",
+    forcedWidth: {
+      width: `calc(100% + ${theme.spacing(2)}px)`,
+      margin: -theme.spacing(1),
+    },
+    mediaWrapper: {
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(1),
       },
     },
     metricsWrapper: {
