@@ -1017,7 +1017,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <mock-box
-              classname="CardTitle-root-212"
+              classname="Title-root-212"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
@@ -1049,7 +1049,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="SiteDetails-container-207"
+              class="CardWithTitle-container-210"
             >
               <mock-map
                 polygon="[object Object]"
@@ -1066,7 +1066,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="SiteDetails-container-207"
+              class="CardWithTitle-container-210"
             >
               <mock-featuredmedia
                 featuredimage=""
@@ -1078,7 +1078,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-211 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root SiteDetails-metricsWrapper-208 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
@@ -3625,7 +3625,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item"
           >
             <mock-box
-              classname="CardTitle-root-53"
+              classname="Title-root-53"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
@@ -3657,7 +3657,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="SiteDetails-container-48"
+              class="CardWithTitle-container-51"
             >
               <mock-map
                 polygon="[object Object]"
@@ -3674,7 +3674,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="SiteDetails-container-48"
+              class="CardWithTitle-container-51"
             >
               <mock-featuredmedia
                 reefid="1"

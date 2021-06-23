@@ -3,14 +3,14 @@ import {
   withStyles,
   WithStyles,
   createStyles,
-  TypographyTypeMap,
   Box,
   Grid,
   Typography,
 } from "@material-ui/core";
-import { CSSProperties } from "@material-ui/core/styles/withStyles";
 
-const CardTitle = ({ classes, values }: CardTitleProps) => {
+import { Value } from "./types";
+
+const Title = ({ classes, values }: TitleProps) => {
   return (
     <Box className={classes.root}>
       <Grid container alignItems="baseline">
@@ -31,16 +31,10 @@ const styles = () =>
     },
   });
 
-export interface Value {
-  text: string;
-  variant: TypographyTypeMap["props"]["variant"];
-  marginRight: CSSProperties["marginRight"];
-}
-
-interface CardTitleIncomingProps {
+interface TitleIncomingProps {
   values: Value[];
 }
 
-type CardTitleProps = CardTitleIncomingProps & WithStyles<typeof styles>;
+type TitleProps = TitleIncomingProps & WithStyles<typeof styles>;
 
-export default withStyles(styles)(CardTitle);
+export default withStyles(styles)(Title);

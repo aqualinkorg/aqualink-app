@@ -16,7 +16,8 @@ import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
 import Surveys from "./Surveys";
-import CardTitle, { Value } from "./CardTitle";
+import CardWithTitle from "./CardWithTitle";
+import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
 import type { Reef } from "../../store/Reefs/types";
 import { getMiddlePoint } from "../../helpers/map";
@@ -75,6 +76,14 @@ const SiteDetails = ({
 
   const featuredMediaTitleItems = (): Value[] => {
     switch (true) {
+      case !!videoStream:
+        return [
+          {
+            text: "LIVE VIDEO",
+            marginRight: 0,
+            variant: "h6",
+          },
+        ];
       case !!surveyDiveDate && !!featuredSurveyPoint:
         return [
           {
@@ -98,20 +107,10 @@ const SiteDetails = ({
             marginRight: 0,
           },
         ];
-      case !!videoStream:
-        return [
-          {
-            text: "LIVE VIDEO",
-            marginRight: 0,
-            variant: "h6",
-          },
-        ];
       default:
         return [];
     }
   };
-
-  const featuredMediaTitle = featuredMediaTitleItems();
 
   return (
     <Box mt="1.5rem">
@@ -124,68 +123,32 @@ const SiteDetails = ({
           [classes.forcedWidth]: !!videoStream,
         })}
       >
-        <Grid container item xs={12} md={6}>
-          <Grid item>
-            <CardTitle values={mapTitleItems} />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            className={classNames({
-              [classes.forcedAspectRatioWrapper]: !!videoStream,
-            })}
-          >
-            <div
-              className={
-                videoStream
-                  ? classes.absolutePositionedContainer
-                  : classes.container
-              }
-            >
-              <Map
-                reefId={reef.id}
-                spotterPosition={reef.liveData?.spotterPosition}
-                polygon={reef.polygon}
-                surveyPoints={reef.surveyPoints}
-              />
-            </div>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          md={6}
-          className={classNames({ [classes.mediaWrapper]: !!videoStream })}
+        <CardWithTitle
+          titleItems={mapTitleItems}
+          gridProps={{ xs: 12, md: 6 }}
+          forcedAspectRatio={!!videoStream}
         >
-          {featuredMediaTitle.length > 0 && (
-            <Grid item>
-              <CardTitle values={featuredMediaTitle} />
-            </Grid>
-          )}
-          <Grid
-            item
-            xs={12}
-            className={classNames({
-              [classes.forcedAspectRatioWrapper]: !!videoStream,
-            })}
-          >
-            <div
-              className={
-                videoStream
-                  ? classes.absolutePositionedContainer
-                  : classes.container
-              }
-            >
-              <FeaturedMedia
-                reefId={reef.id}
-                url={videoStream}
-                featuredImage={reef.featuredImage}
-                surveyId={featuredSurveyId}
-              />
-            </div>
-          </Grid>
-        </Grid>
+          <Map
+            reefId={reef.id}
+            spotterPosition={reef.liveData?.spotterPosition}
+            polygon={reef.polygon}
+            surveyPoints={reef.surveyPoints}
+          />
+        </CardWithTitle>
+
+        <CardWithTitle
+          className={classNames({ [classes.mediaWrapper]: !!videoStream })}
+          titleItems={featuredMediaTitleItems()}
+          gridProps={{ xs: 12, md: 6 }}
+          forcedAspectRatio={!!videoStream}
+        >
+          <FeaturedMedia
+            reefId={reef.id}
+            url={videoStream}
+            featuredImage={reef.featuredImage}
+            surveyId={featuredSurveyId}
+          />
+        </CardWithTitle>
       </Grid>
 
       {hasDailyData && (
@@ -217,10 +180,8 @@ const SiteDetails = ({
   );
 };
 
-const styles = (theme: Theme) => {
-  const aspectRatio = "16 * 9";
-
-  return createStyles({
+const styles = (theme: Theme) =>
+  createStyles({
     root: {
       marginTop: "2rem",
     },
@@ -228,40 +189,15 @@ const styles = (theme: Theme) => {
       width: `calc(100% + ${theme.spacing(2)}px)`,
       margin: -theme.spacing(1),
     },
-    container: {
-      height: "30rem",
-      [theme.breakpoints.between("md", 1440)]: {
-        height: "25rem",
-      },
-      [theme.breakpoints.down("xs")]: {
-        height: "20rem",
-      },
-    },
     mediaWrapper: {
       [theme.breakpoints.down("sm")]: {
         marginTop: theme.spacing(1),
       },
     },
-    forcedAspectRatioWrapper: {
-      paddingTop: `calc((100% - ${theme.spacing(
-        2
-      )}px) / ${aspectRatio} + ${theme.spacing(2)}px)`,
-      marginTop: -theme.spacing(1),
-      position: "relative",
-    },
-    absolutePositionedContainer: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      padding: theme.spacing(1),
-      width: "100%",
-      height: "100%",
-    },
     metricsWrapper: {
       marginTop: "1rem",
     },
   });
-};
 
 interface SiteDetailsIncomingProps {
   reef: Reef;
