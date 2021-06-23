@@ -1,11 +1,12 @@
 import React from "react";
-import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
+  CardMedia,
 } from "@material-ui/core";
+import classNames from "classnames";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -44,11 +45,17 @@ const About = ({ classes }: AboutProps) => {
                       taking a survey and using the Aqualink system.
                     </p>
                   </div>
-                  <div className="offset-lg-0 col-lg-12 order-lg-1">
-                    <ReactPlayer
-                      url="https://www.youtube.com/embed/E_nXCl612lg"
-                      width="100%"
+                  <div
+                    className={classNames("offset-lg-0 col-lg-12 order-lg-1", [
+                      classes.videoWrapper,
+                    ])}
+                  >
+                    <CardMedia
+                      className={classes.video}
+                      src="https://www.youtube.com/embed/E_nXCl612lg"
                       title="field_guide"
+                      component="iframe"
+                      allow="fullscreen"
                     />
                   </div>
                 </div>
@@ -145,6 +152,17 @@ const styles = () =>
     title: {
       marginTop: "1rem",
       marginBottom: "1rem",
+    },
+    videoWrapper: {
+      position: "relative",
+      paddingTop: "calc(100% / 16 * 9)",
+    },
+    video: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
     },
   });
 

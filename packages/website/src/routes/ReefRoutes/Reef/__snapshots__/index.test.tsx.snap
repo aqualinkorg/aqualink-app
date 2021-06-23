@@ -3,12 +3,12 @@
 exports[`Reef Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-158 NavBar-appBarXs-160"
+    classname="NavBar-appBar-162 NavBar-appBarXs-164"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-161"
+      classname="NavBar-toolbar-165"
     >
       <mock-drawer
         anchor="left"
@@ -82,7 +82,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             role="group"
           >
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-171"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-175"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -98,7 +98,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               GitHub
             </mock-button>
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-171"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-175"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -145,7 +145,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-159"
+              classname="NavBar-navBarLink-163"
               href="/map"
             >
               <mock-typography
@@ -170,10 +170,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
           >
             <div
-              class="Search-searchBar-172"
+              class="Search-searchBar-176"
             >
               <div
-                class="Search-searchBarIcon-173"
+                class="Search-searchBarIcon-177"
               >
                 <mock-iconbutton
                   size="small"
@@ -191,11 +191,11 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-iconbutton>
               </div>
               <div
-                class="Search-searchBarText-174"
+                class="Search-searchBarText-178"
               >
                 <div
                   aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-175 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  class="MuiAutocomplete-root Search-searchBarInput-179 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                   role="combobox"
                 >
                   <mock-textfield
@@ -222,11 +222,11 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-169"
+              classname="NavBar-button-173"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-168"
+                class="MuiSvgIcon-root NavBar-expandIcon-172"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -236,21 +236,21 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-164"
+              classname="NavBar-userMenu-168"
               keepmounted="true"
               menulistprops="[object Object]"
               open="false"
               popoverclasses="[object Object]"
             >
               <mock-divider
-                classname="NavBar-userMenuDivider-163"
+                classname="NavBar-userMenuDivider-167"
               />
               <mock-link
-                classname="NavBar-menuItemLink-166"
+                classname="NavBar-menuItemLink-170"
                 href="/dashboard"
               >
                 <mock-menuitem
-                  classname="NavBar-menuItem-165"
+                  classname="NavBar-menuItem-169"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -282,10 +282,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-menuitem>
               </mock-link>
               <mock-divider
-                classname="NavBar-userMenuDivider-163"
+                classname="NavBar-userMenuDivider-167"
               />
               <mock-menuitem
-                classname="NavBar-menuItem-165"
+                classname="NavBar-menuItem-169"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -322,10 +322,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             style="margin: 0px; padding-top: 0px;"
           >
             <div
-              class="Search-searchBar-172"
+              class="Search-searchBar-176"
             >
               <div
-                class="Search-searchBarIcon-173"
+                class="Search-searchBarIcon-177"
               >
                 <mock-iconbutton
                   size="small"
@@ -343,11 +343,11 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-iconbutton>
               </div>
               <div
-                class="Search-searchBarText-174"
+                class="Search-searchBarText-178"
               >
                 <div
                   aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-175 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  class="MuiAutocomplete-root Search-searchBarInput-179 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                   role="combobox"
                 >
                   <mock-textfield
@@ -374,7 +374,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-177"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-181"
       >
         <div
           class="MuiCardHeader-content"
@@ -400,7 +400,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-178"
+                    classname="RegisterDialog-dialogHeaderSecondPart-182"
                     variant="h4"
                   >
                     link
@@ -411,7 +411,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-176"
+                  classname="RegisterDialog-closeButton-180"
                   size="small"
                 >
                   <svg
@@ -435,7 +435,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-179 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-183 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -452,10 +452,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-180"
+              class="RegisterDialog-form-184"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-181 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-185 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -470,7 +470,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-181 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-185 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -485,7 +485,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-181 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-185 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -500,7 +500,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-181 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-185 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -515,7 +515,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-181 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-185 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -538,7 +538,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-185"
+                    classname="RegisterDialog-termsCheckbox-189"
                     color="primary"
                   />
                 </div>
@@ -547,14 +547,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-183"
+                      classname="RegisterDialog-formText-187"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-186"
+                        class="RegisterDialog-termsLink-190"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -564,7 +564,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-184 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-188 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -581,7 +581,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-183"
+                  classname="RegisterDialog-formText-187"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -608,7 +608,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-188"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-192"
       >
         <div
           class="MuiCardHeader-content"
@@ -634,7 +634,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-189"
+                    classname="SignInDialog-dialogHeaderSecondPart-193"
                     variant="h4"
                   >
                     link
@@ -645,7 +645,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-187"
+                  classname="SignInDialog-closeButton-191"
                   size="small"
                 >
                   <svg
@@ -726,7 +726,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-190 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-194 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -743,10 +743,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-191"
+              class="SignInDialog-form-195"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-192 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-196 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -761,7 +761,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-192 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-196 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -780,7 +780,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-196"
+                  classname="SignInDialog-forgotPasswordButton-200"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -791,7 +791,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-195 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-199 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -807,7 +807,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-194"
+                  classname="SignInDialog-formText-198"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -886,7 +886,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       </div>
     </div>
     <div
-      class="MuiGrid-root ReefNavBar-root-197 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+      class="MuiGrid-root ReefNavBar-root-201 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -1005,78 +1005,90 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       </div>
     </mock-box>
     <mock-box
-      mt="1rem"
+      mt="1.5rem"
     >
-      <mock-box
-        classname="CardTitle-root-204"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 1rem;"
-          >
-            <mock-typography
-              variant="subtitle2"
-            >
-              LAT: 0.000
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 0px;"
-          >
-            <mock-typography
-              variant="subtitle2"
-            >
-              LONG: 0.000
-            </mock-typography>
-          </div>
-        </div>
-      </mock-box>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <div
-            class="SiteDetails-container-202"
+            class="MuiGrid-root MuiGrid-item"
           >
-            <mock-map
-              polygon="[object Object]"
-              reefid="1"
-              surveypoints=""
-            />
+            <mock-box
+              classname="Title-root-212"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 1rem;"
+                >
+                  <mock-typography
+                    variant="subtitle2"
+                  >
+                    LAT: 0.000
+                  </mock-typography>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 0px;"
+                >
+                  <mock-typography
+                    variant="subtitle2"
+                  >
+                    LONG: 0.000
+                  </mock-typography>
+                </div>
+              </div>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="CardWithTitle-container-210"
+            >
+              <mock-map
+                polygon="[object Object]"
+                reefid="1"
+                surveypoints=""
+              />
+            </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <div
-            class="SiteDetails-container-202"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <mock-featuredmedia
-              featuredimage=""
-              reefid="1"
-              surveyid="46"
-            />
+            <div
+              class="CardWithTitle-container-210"
+            >
+              <mock-featuredmedia
+                featuredimage=""
+                reefid="1"
+                surveyid="46"
+              />
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-203 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root SiteDetails-metricsWrapper-208 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <mock-card
-            classname="Satellite-card-207"
+            classname="Satellite-card-215"
             style="background-color: rgb(117, 180, 114);"
           >
             <div
-              class="MuiCardHeader-root Satellite-header-209"
+              class="MuiCardHeader-root Satellite-header-217"
             >
               <div
                 class="MuiCardHeader-content"
@@ -1094,7 +1106,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item"
                     >
                       <mock-typography
-                        classname="Satellite-cardTitle-208"
+                        classname="Satellite-cardTitle-216"
                         variant="h6"
                       >
                         SATELLITE OBSERVATION
@@ -1105,7 +1117,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <mock-cardcontent
-              classname="Satellite-content-214"
+              classname="Satellite-content-222"
             >
               <mock-box
                 display="flex"
@@ -1119,7 +1131,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Satellite-contentTextTitles-210"
+                      classname="Satellite-contentTextTitles-218"
                       variant="subtitle2"
                     >
                       SURFACE TEMP
@@ -1128,7 +1140,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       title=""
                     >
                       <mock-typography
-                        classname="Satellite-contentTextValues-211"
+                        classname="Satellite-contentTextValues-219"
                         variant="h3"
                       >
                         29.0°C
@@ -1139,7 +1151,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Satellite-contentTextTitles-210"
+                      classname="Satellite-contentTextTitles-218"
                       variant="subtitle2"
                     >
                       HISTORICAL MAX
@@ -1148,7 +1160,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       title="Historical maximum monthly average over the past 20 years"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextValues-211"
+                        classname="Satellite-contentTextValues-219"
                         variant="h3"
                       >
                         0.0°C
@@ -1159,7 +1171,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Satellite-contentTextTitles-210"
+                      classname="Satellite-contentTextTitles-218"
                       variant="subtitle2"
                     >
                       DEGREE HEATING WEEKS
@@ -1168,7 +1180,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextValues-211"
+                        classname="Satellite-contentTextValues-219"
                         variant="h3"
                       >
                         4.9
@@ -1179,7 +1191,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Satellite-contentTextTitles-210"
+                      classname="Satellite-contentTextTitles-218"
                       variant="subtitle2"
                     >
                       SST ANOMALY
@@ -1188,7 +1200,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       title="Difference between current SST and longterm average"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextValues-211"
+                        classname="Satellite-contentTextValues-219"
                         variant="h3"
                       >
                         - -°C
@@ -1382,7 +1394,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root UpdateInfo-updateInfo-216 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                class="MuiGrid-root UpdateInfo-updateInfo-224 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item"
@@ -1395,7 +1407,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root UpdateInfo-updateIcon-218 MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root UpdateInfo-updateIcon-226 MuiSvgIcon-fontSizeSmall"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -1412,7 +1424,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         flexdirection="column"
                       >
                         <mock-typography
-                          classname="UpdateInfo-updateInfoText-219"
+                          classname="UpdateInfo-updateInfoText-227"
                           variant="caption"
                         >
                           Last data received
@@ -1420,7 +1432,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           5 min. ago
                         </mock-typography>
                         <mock-typography
-                          classname="UpdateInfo-updateInfoText-219"
+                          classname="UpdateInfo-updateInfoText-227"
                           variant="caption"
                         >
                           Updated 
@@ -1431,24 +1443,24 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root UpdateInfo-nooaChip-220 MuiGrid-item"
+                  class="MuiGrid-root UpdateInfo-nooaChip-228 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                   >
                     <a
-                      class="UpdateInfo-nooaLink-221"
+                      class="UpdateInfo-nooaLink-229"
                       href="https://coralreefwatch.noaa.gov/"
                       target="_blank"
                     >
                       <mock-typography
-                        classname="UpdateInfo-nooaChipText-222"
+                        classname="UpdateInfo-nooaChipText-230"
                       >
                         NOAA
                       </mock-typography>
                       <img
                         alt="sensor-type"
-                        class="UpdateInfo-sensorImage-223"
+                        class="UpdateInfo-sensorImage-231"
                         src="satellite.svg"
                       />
                     </a>
@@ -1462,10 +1474,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <mock-card
-            classname="Sensor-card-225"
+            classname="Sensor-card-233"
           >
             <div
-              class="MuiCardHeader-root Sensor-header-227"
+              class="MuiCardHeader-root Sensor-header-235"
             >
               <div
                 class="MuiCardHeader-content"
@@ -1483,7 +1495,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item"
                     >
                       <mock-typography
-                        classname="Sensor-cardTitle-226"
+                        classname="Sensor-cardTitle-234"
                         variant="h6"
                       >
                         BUOY OBSERVATION
@@ -1494,7 +1506,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <mock-cardcontent
-              classname="Sensor-content-233"
+              classname="Sensor-content-241"
             >
               <mock-box
                 display="flex"
@@ -1509,13 +1521,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
-                      classname="Sensor-contentTextTitles-228"
+                      classname="Sensor-contentTextTitles-236"
                       variant="subtitle2"
                     >
                       TEMP AT 1m
                     </mock-typography>
                     <mock-typography
-                      classname="Sensor-contentTextValues-229"
+                      classname="Sensor-contentTextValues-237"
                       variant="h3"
                     >
                       - -°C
@@ -1525,13 +1537,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
-                      classname="Sensor-contentTextTitles-228"
+                      classname="Sensor-contentTextTitles-236"
                       variant="subtitle2"
                     >
                       TEAMP AT DEPTH
                     </mock-typography>
                     <mock-typography
-                      classname="Sensor-contentTextValues-229"
+                      classname="Sensor-contentTextValues-237"
                       variant="h3"
                     >
                       39.0°C
@@ -1550,7 +1562,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 </mock-box>
               </mock-box>
               <div
-                class="MuiGrid-root UpdateInfo-updateInfo-216 UpdateInfo-withMargin-217 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                class="MuiGrid-root UpdateInfo-updateInfo-224 UpdateInfo-withMargin-225 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item"
@@ -1563,7 +1575,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <svg
                         aria-hidden="true"
-                        class="MuiSvgIcon-root UpdateInfo-updateIcon-218 MuiSvgIcon-fontSizeSmall"
+                        class="MuiSvgIcon-root UpdateInfo-updateIcon-226 MuiSvgIcon-fontSizeSmall"
                         focusable="false"
                         viewBox="0 0 24 24"
                       >
@@ -1580,7 +1592,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         flexdirection="column"
                       >
                         <mock-typography
-                          classname="UpdateInfo-updateInfoText-219"
+                          classname="UpdateInfo-updateInfoText-227"
                           variant="caption"
                         >
                           Last data received
@@ -1588,7 +1600,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           5 min. ago
                         </mock-typography>
                         <mock-typography
-                          classname="UpdateInfo-updateInfoText-219"
+                          classname="UpdateInfo-updateInfoText-227"
                           variant="caption"
                         >
                           Updated 
@@ -1599,16 +1611,16 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root UpdateInfo-nooaChip-220 MuiGrid-item"
+                  class="MuiGrid-root UpdateInfo-nooaChip-228 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                   >
                     <div
-                      class="UpdateInfo-circle-224"
+                      class="UpdateInfo-circle-232"
                     />
                     <mock-typography
-                      classname="UpdateInfo-nooaChipText-222"
+                      classname="UpdateInfo-nooaChipText-230"
                     >
                       LIVE
                     </mock-typography>
@@ -1622,10 +1634,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <mock-card
-            classname="Bleaching-card-237"
+            classname="Bleaching-card-245"
           >
             <div
-              class="MuiCardHeader-root Bleaching-header-239"
+              class="MuiCardHeader-root Bleaching-header-247"
             >
               <div
                 class="MuiCardHeader-content"
@@ -1643,7 +1655,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <mock-typography
-                        classname="Bleaching-cardTitle-238"
+                        classname="Bleaching-cardTitle-246"
                         color="textSecondary"
                         variant="h6"
                       >
@@ -1655,18 +1667,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               </div>
             </div>
             <mock-cardcontent
-              classname="Bleaching-contentWrapper-244"
+              classname="Bleaching-contentWrapper-252"
             >
               <div
-                class="MuiGrid-root Bleaching-content-245 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                class="MuiGrid-root Bleaching-content-253 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
               >
                 <img
                   alt="alert-level"
-                  class="Bleaching-alertImage-246"
+                  class="Bleaching-alertImage-254"
                   src="alert_nostress.svg"
                 />
                 <div
-                  class="MuiGrid-root UpdateInfo-updateInfo-216 UpdateInfo-withMargin-217 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root UpdateInfo-updateInfo-224 UpdateInfo-withMargin-225 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
@@ -1679,7 +1691,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root UpdateInfo-updateIcon-218 MuiSvgIcon-fontSizeSmall"
+                          class="MuiSvgIcon-root UpdateInfo-updateIcon-226 MuiSvgIcon-fontSizeSmall"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
@@ -1696,7 +1708,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           flexdirection="column"
                         >
                           <mock-typography
-                            classname="UpdateInfo-updateInfoText-219"
+                            classname="UpdateInfo-updateInfoText-227"
                             variant="caption"
                           >
                             Last data received
@@ -1704,7 +1716,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                             5 min. ago
                           </mock-typography>
                           <mock-typography
-                            classname="UpdateInfo-updateInfoText-219"
+                            classname="UpdateInfo-updateInfoText-227"
                             variant="caption"
                           >
                             Updated 
@@ -1715,18 +1727,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root UpdateInfo-nooaChip-220 MuiGrid-item"
+                    class="MuiGrid-root UpdateInfo-nooaChip-228 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <a
-                        class="UpdateInfo-nooaLink-221"
+                        class="UpdateInfo-nooaLink-229"
                         href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                         target="_blank"
                       >
                         <mock-typography
-                          classname="UpdateInfo-nooaChipText-222"
+                          classname="UpdateInfo-nooaChipText-230"
                         >
                           NOAA CRW
                         </mock-typography>
@@ -1742,37 +1754,37 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <mock-card
-            classname="Waves-card-247"
+            classname="Waves-card-255"
           >
             <mock-cardcontent
-              classname="Waves-contentWrapper-257"
+              classname="Waves-contentWrapper-265"
             >
               <div
-                class="MuiGrid-root Waves-content-258 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                class="MuiGrid-root Waves-content-266 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
               >
                 <div
-                  class="MuiGrid-root Waves-paddingContainer-256 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                  class="MuiGrid-root Waves-paddingContainer-264 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                 >
                   <mock-typography
-                    classname="Waves-cardTitle-248 Waves-coloredText-254"
+                    classname="Waves-cardTitle-256 Waves-coloredText-262"
                     variant="h6"
                   >
                     WIND
                   </mock-typography>
                   <img
                     alt="wind"
-                    class="Waves-titleImages-255"
+                    class="Waves-titleImages-263"
                     src="wind.svg"
                   />
                 </div>
                 <div
-                  class="MuiGrid-root Waves-paddingContainer-256 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                  class="MuiGrid-root Waves-paddingContainer-264 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Waves-contentTextTitles-250"
+                      classname="Waves-contentTextTitles-258"
                       color="textSecondary"
                       variant="subtitle2"
                     >
@@ -1782,14 +1794,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
                       <mock-typography
-                        classname="Waves-contentTextValues-251"
+                        classname="Waves-contentTextValues-259"
                         color="textSecondary"
                         variant="h3"
                       >
                         21.6
                       </mock-typography>
                       <mock-typography
-                        classname="Waves-contentUnits-252"
+                        classname="Waves-contentUnits-260"
                         color="textSecondary"
                         variant="h6"
                       >
@@ -1801,7 +1813,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                   >
                     <mock-typography
-                      classname="Waves-contentTextTitles-250"
+                      classname="Waves-contentTextTitles-258"
                       color="textSecondary"
                       variant="subtitle2"
                     >
@@ -1812,12 +1824,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <img
                         alt="arrow"
-                        class="Waves-arrow-259"
+                        class="Waves-arrow-267"
                         src="directioncircle.svg"
                         style="transform: rotate(360deg);"
                       />
                       <mock-typography
-                        classname="Waves-contentTextValues-251"
+                        classname="Waves-contentTextValues-259"
                         color="textSecondary"
                         variant="h3"
                       >
@@ -1827,28 +1839,28 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root Waves-paddingContainer-256 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                  class="MuiGrid-root Waves-paddingContainer-264 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                 >
                   <mock-typography
-                    classname="Waves-cardTitle-248 Waves-coloredText-254"
+                    classname="Waves-cardTitle-256 Waves-coloredText-262"
                     variant="h6"
                   >
                     WAVES
                   </mock-typography>
                   <img
                     alt="waves"
-                    class="Waves-titleImages-255"
+                    class="Waves-titleImages-263"
                     src="waves.svg"
                   />
                 </div>
                 <div
-                  class="MuiGrid-root Waves-paddingContainer-256 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                  class="MuiGrid-root Waves-paddingContainer-264 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
                   >
                     <mock-typography
-                      classname="Waves-contentTextTitles-250"
+                      classname="Waves-contentTextTitles-258"
                       color="textSecondary"
                       variant="subtitle2"
                     >
@@ -1858,14 +1870,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
                       <mock-typography
-                        classname="Waves-contentTextValues-251"
+                        classname="Waves-contentTextValues-259"
                         color="textSecondary"
                         variant="h3"
                       >
                         1.0
                       </mock-typography>
                       <mock-typography
-                        classname="Waves-contentUnits-252"
+                        classname="Waves-contentUnits-260"
                         color="textSecondary"
                         variant="h6"
                       >
@@ -1877,7 +1889,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
                   >
                     <mock-typography
-                      classname="Waves-contentTextTitles-250"
+                      classname="Waves-contentTextTitles-258"
                       color="textSecondary"
                       variant="subtitle2"
                     >
@@ -1887,14 +1899,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                     >
                       <mock-typography
-                        classname="Waves-contentTextValues-251"
+                        classname="Waves-contentTextValues-259"
                         color="textSecondary"
                         variant="h3"
                       >
                         3
                       </mock-typography>
                       <mock-typography
-                        classname="Waves-contentUnits-252"
+                        classname="Waves-contentUnits-260"
                         color="textSecondary"
                         variant="h6"
                       >
@@ -1906,7 +1918,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
                   >
                     <mock-typography
-                      classname="Waves-contentTextTitles-250"
+                      classname="Waves-contentTextTitles-258"
                       color="textSecondary"
                       variant="subtitle2"
                     >
@@ -1917,12 +1929,12 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <img
                         alt="arrow"
-                        class="Waves-arrow-259"
+                        class="Waves-arrow-267"
                         src="directioncircle.svg"
                         style="transform: rotate(270deg);"
                       />
                       <mock-typography
-                        classname="Waves-contentTextValues-251"
+                        classname="Waves-contentTextValues-259"
                         color="textSecondary"
                         variant="h3"
                       >
@@ -1933,7 +1945,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root UpdateInfo-updateInfo-216 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root UpdateInfo-updateInfo-224 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item"
@@ -1946,7 +1958,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root UpdateInfo-updateIcon-218 MuiSvgIcon-fontSizeSmall"
+                          class="MuiSvgIcon-root UpdateInfo-updateIcon-226 MuiSvgIcon-fontSizeSmall"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
@@ -1963,7 +1975,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           flexdirection="column"
                         >
                           <mock-typography
-                            classname="UpdateInfo-updateInfoText-219"
+                            classname="UpdateInfo-updateInfoText-227"
                             variant="caption"
                           >
                             Last data received
@@ -1971,7 +1983,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                             5 min. ago
                           </mock-typography>
                           <mock-typography
-                            classname="UpdateInfo-updateInfoText-219"
+                            classname="UpdateInfo-updateInfoText-227"
                             variant="caption"
                           >
                             Updated 
@@ -1982,16 +1994,16 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root UpdateInfo-nooaChip-220 MuiGrid-item"
+                    class="MuiGrid-root UpdateInfo-nooaChip-228 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <div
-                        class="UpdateInfo-circle-224"
+                        class="UpdateInfo-circle-232"
                       />
                       <mock-typography
-                        classname="UpdateInfo-nooaChipText-222"
+                        classname="UpdateInfo-nooaChipText-230"
                       >
                         LIVE
                       </mock-typography>
@@ -2008,17 +2020,17 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <mock-box
-            classname="CombinedCharts-graphtTitleWrapper-261"
+            classname="CombinedCharts-graphtTitleWrapper-269"
           >
             <mock-typography
-              classname="CombinedCharts-graphTitle-262"
+              classname="CombinedCharts-graphTitle-270"
               variant="h6"
             >
               HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
-            class="CombinedCharts-chart-260"
+            class="CombinedCharts-chart-268"
           >
             Mock-Line
           </div>
@@ -2034,7 +2046,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           open="false"
         >
           <mock-dialogtitle
-            classname="Dialog-dialogTitle-272"
+            classname="Dialog-dialogTitle-280"
           >
             <mock-typography>
               Are you sure you want to delete this survey point? It will be deleted across all surveys.
@@ -2059,7 +2071,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           </mock-dialogactions>
         </mock-dialog>
         <div
-          class="MuiGrid-root Surveys-root-263 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+          class="MuiGrid-root Surveys-root-271 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
         >
           <mock-box
             bgcolor="#f5f6f6"
@@ -2068,13 +2080,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             zindex="-1"
           />
           <div
-            class="MuiGrid-root Surveys-surveyWrapper-264 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+            class="MuiGrid-root Surveys-surveyWrapper-272 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
             >
               <mock-typography
-                classname="Surveys-title-265"
+                classname="Surveys-title-273"
               >
                 Survey History
               </mock-typography>
@@ -2086,14 +2098,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="PointSelector-subTitle-273"
+                  classname="PointSelector-subTitle-281"
                   variant="h6"
                 >
                   Survey Point:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root PointSelector-selectorWrapper-274 MuiGrid-item"
+                class="MuiGrid-root PointSelector-selectorWrapper-282 MuiGrid-item"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
@@ -2102,7 +2114,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-275"
+                      class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-283"
                     >
                       <div
                         aria-haspopup="listbox"
@@ -2145,7 +2157,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           selected="true"
                         >
                           <mock-typography
-                            classname="PointSelector-menuItem-277"
+                            classname="PointSelector-menuItem-285"
                             variant="h6"
                           >
                             All
@@ -2164,31 +2176,31 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="Surveys-subTitle-266"
+                  classname="Surveys-subTitle-274"
                   variant="h6"
                 >
                   Observation:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root Surveys-selectorWrapper-267 MuiGrid-item"
+                class="MuiGrid-root Surveys-selectorWrapper-275 MuiGrid-item"
               >
                 <div
-                  class="MuiFormControl-root Surveys-formControl-268"
+                  class="MuiFormControl-root Surveys-formControl-276"
                 >
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-269 MuiInputBase-formControl MuiInput-formControl"
+                    class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-277 MuiInputBase-formControl MuiInput-formControl"
                   >
                     <div
                       aria-haspopup="listbox"
                       aria-labelledby="survey-observation survey-observation"
-                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Surveys-textField-271"
+                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Surveys-textField-279"
                       id="survey-observation"
                       role="button"
                       tabindex="0"
                     >
                       <mock-typography
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         variant="h6"
                       >
                         Any
@@ -2225,14 +2237,14 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         selected="true"
                       >
                         <mock-typography
-                          classname="Surveys-menuItem-270"
+                          classname="Surveys-menuItem-278"
                           variant="h6"
                         >
                           Any
                         </mock-typography>
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="healthy"
                         role="option"
                         selected="false"
@@ -2241,7 +2253,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         Appears healthy
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="possible-disease"
                         role="option"
                         selected="false"
@@ -2250,7 +2262,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         Showing possible signs of disease
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="evident-disease"
                         role="option"
                         selected="false"
@@ -2259,7 +2271,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         Signs of disease are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="mortality"
                         role="option"
                         selected="false"
@@ -2268,7 +2280,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         Signs of mortality are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="environmental"
                         role="option"
                         selected="false"
@@ -2277,7 +2289,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         Signs of environmental disturbance are evident (e.g.,storm damage)
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="Surveys-menuItem-270"
+                        classname="Surveys-menuItem-278"
                         data-value="anthropogenic"
                         role="option"
                         selected="false"
@@ -2295,7 +2307,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
-              class="SurveyTimeline-root-290"
+              class="SurveyTimeline-root-298"
             >
               <mock-hidden
                 mddown="true"
@@ -2304,13 +2316,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiTimeline-root MuiTimeline-alignLeft"
                 >
                   <li
-                    class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-292"
+                    class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-300"
                   >
                     <div
-                      class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-293"
+                      class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-301"
                     >
                       <mock-typography
-                        classname="SurveyTimeline-dates-283"
+                        classname="SurveyTimeline-dates-291"
                         variant="h6"
                       >
                         09/10/2020
@@ -2320,73 +2332,73 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                       class="MuiTimelineSeparator-root"
                     >
                       <hr
-                        class="SurveyTimeline-connector-291"
+                        class="SurveyTimeline-connector-299"
                       />
                       <span
-                        class="MuiTimelineDot-root SurveyTimeline-dot-294 MuiTimelineDot-outlinedGrey"
+                        class="MuiTimelineDot-root SurveyTimeline-dot-302 MuiTimelineDot-outlinedGrey"
                       />
                       <hr
-                        class="SurveyTimeline-connector-291"
+                        class="SurveyTimeline-connector-299"
                       />
                     </div>
                     <div
                       class="MuiTimelineContent-root MuiTimelineItem-content"
                     >
                       <div
-                        class="MuiPaper-root SurveyCard-surveyCard-300 MuiPaper-elevation0 MuiPaper-rounded"
+                        class="MuiPaper-root SurveyCard-surveyCard-308 MuiPaper-elevation0 MuiPaper-rounded"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                           style="height: 100%;"
                         >
                           <div
-                            class="MuiGrid-root SurveyCard-cardImageWrapper-304 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                            class="MuiGrid-root SurveyCard-cardImageWrapper-312 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                           >
                             <a
                               href="/reefs/1/survey_details/46"
                             >
                               <div
-                                class="MuiCardMedia-root SurveyCard-cardImage-301"
+                                class="MuiCardMedia-root SurveyCard-cardImage-309"
                               />
                             </a>
                           </div>
                           <div
-                            class="MuiGrid-root SurveyCard-infoWrapper-305 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                            class="MuiGrid-root SurveyCard-infoWrapper-313 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                           >
                             <div
-                              class="MuiGrid-root SurveyCard-info-310 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                              class="MuiGrid-root SurveyCard-info-318 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                             >
                               <div
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="SurveyCard-cardFields-302"
+                                  classname="SurveyCard-cardFields-310"
                                   variant="h6"
                                 >
                                   User:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="SurveyCard-cardValues-303 SurveyCard-valuesWithMargin-308"
+                                  classname="SurveyCard-cardValues-311 SurveyCard-valuesWithMargin-316"
                                   variant="h6"
                                 >
                                   Joe Doe
                                 </mock-typography>
                               </div>
                               <div
-                                class="MuiGrid-root SurveyCard-commentsWrapper-306 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                                class="MuiGrid-root SurveyCard-commentsWrapper-314 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                               >
                                 <div
                                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                                   style="height: 80%;"
                                 >
                                   <mock-typography
-                                    classname="SurveyCard-cardFields-302"
+                                    classname="SurveyCard-cardFields-310"
                                     variant="h6"
                                   >
                                     Comments:
                                   </mock-typography>
                                   <mock-typography
-                                    classname="SurveyCard-cardValues-303 SurveyCard-comments-307"
+                                    classname="SurveyCard-cardValues-311 SurveyCard-comments-315"
                                     variant="h6"
                                   >
                                     No comments
@@ -2397,13 +2409,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="SurveyCard-cardFields-302"
+                                  classname="SurveyCard-cardFields-310"
                                   variant="h6"
                                 >
                                   Temp:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="SurveyCard-cardValues-303 SurveyCard-valuesWithMargin-308"
+                                  classname="SurveyCard-cardValues-311 SurveyCard-valuesWithMargin-316"
                                   variant="h6"
                                 >
                                   10.0 °C
@@ -2444,76 +2456,76 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                 >
                   <div
-                    class="MuiGrid-root SurveyTimeline-surveyWrapper-295 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                    class="MuiGrid-root SurveyTimeline-surveyWrapper-303 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
                   >
                     <div
-                      class="MuiGrid-root SurveyTimeline-dateWrapper-282 MuiGrid-item MuiGrid-grid-xs-11"
+                      class="MuiGrid-root SurveyTimeline-dateWrapper-290 MuiGrid-item MuiGrid-grid-xs-11"
                     >
                       <mock-typography
-                        classname="SurveyTimeline-dates-283"
+                        classname="SurveyTimeline-dates-291"
                         variant="h6"
                       >
                         09/10/2020
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root SurveyTimeline-surveyCardWrapper-285 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                      class="MuiGrid-root SurveyTimeline-surveyCardWrapper-293 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <div
-                        class="MuiPaper-root SurveyCard-surveyCard-300 MuiPaper-elevation0 MuiPaper-rounded"
+                        class="MuiPaper-root SurveyCard-surveyCard-308 MuiPaper-elevation0 MuiPaper-rounded"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                           style="height: 100%;"
                         >
                           <div
-                            class="MuiGrid-root SurveyCard-cardImageWrapper-304 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                            class="MuiGrid-root SurveyCard-cardImageWrapper-312 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                           >
                             <a
                               href="/reefs/1/survey_details/46"
                             >
                               <div
-                                class="MuiCardMedia-root SurveyCard-cardImage-301"
+                                class="MuiCardMedia-root SurveyCard-cardImage-309"
                               />
                             </a>
                           </div>
                           <div
-                            class="MuiGrid-root SurveyCard-infoWrapper-305 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                            class="MuiGrid-root SurveyCard-infoWrapper-313 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                           >
                             <div
-                              class="MuiGrid-root SurveyCard-info-310 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                              class="MuiGrid-root SurveyCard-info-318 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                             >
                               <div
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="SurveyCard-cardFields-302"
+                                  classname="SurveyCard-cardFields-310"
                                   variant="h6"
                                 >
                                   User:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="SurveyCard-cardValues-303 SurveyCard-valuesWithMargin-308"
+                                  classname="SurveyCard-cardValues-311 SurveyCard-valuesWithMargin-316"
                                   variant="h6"
                                 >
                                   Joe Doe
                                 </mock-typography>
                               </div>
                               <div
-                                class="MuiGrid-root SurveyCard-commentsWrapper-306 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                                class="MuiGrid-root SurveyCard-commentsWrapper-314 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                               >
                                 <div
                                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                                   style="height: 80%;"
                                 >
                                   <mock-typography
-                                    classname="SurveyCard-cardFields-302"
+                                    classname="SurveyCard-cardFields-310"
                                     variant="h6"
                                   >
                                     Comments:
                                   </mock-typography>
                                   <mock-typography
-                                    classname="SurveyCard-cardValues-303 SurveyCard-comments-307"
+                                    classname="SurveyCard-cardValues-311 SurveyCard-comments-315"
                                     variant="h6"
                                   >
                                     No comments
@@ -2524,13 +2536,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="SurveyCard-cardFields-302"
+                                  classname="SurveyCard-cardFields-310"
                                   variant="h6"
                                 >
                                   Temp:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="SurveyCard-cardValues-303 SurveyCard-valuesWithMargin-308"
+                                  classname="SurveyCard-cardValues-311 SurveyCard-valuesWithMargin-316"
                                   variant="h6"
                                 >
                                   10.0 °C
@@ -2571,7 +2583,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
     </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-205"
+    classname="Footer-appBar-213"
     position="static"
   >
     <mock-toolbar>
@@ -2582,7 +2594,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-206"
+            classname="Footer-navBarLink-214"
             href="/map"
           >
             <mock-typography
@@ -3601,68 +3613,80 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
       </div>
     </mock-box>
     <mock-box
-      mt="1rem"
+      mt="1.5rem"
     >
-      <mock-box
-        classname="CardTitle-root-49"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 1rem;"
-          >
-            <mock-typography
-              variant="subtitle2"
-            >
-              LAT: 0.000
-            </mock-typography>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item"
-            style="margin-right: 0px;"
-          >
-            <mock-typography
-              variant="subtitle2"
-            >
-              LONG: 0.000
-            </mock-typography>
-          </div>
-        </div>
-      </mock-box>
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <div
-            class="SiteDetails-container-47"
+            class="MuiGrid-root MuiGrid-item"
           >
-            <mock-map
-              polygon="[object Object]"
-              reefid="1"
-              surveypoints=""
-            />
+            <mock-box
+              classname="Title-root-53"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 1rem;"
+                >
+                  <mock-typography
+                    variant="subtitle2"
+                  >
+                    LAT: 0.000
+                  </mock-typography>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 0px;"
+                >
+                  <mock-typography
+                    variant="subtitle2"
+                  >
+                    LONG: 0.000
+                  </mock-typography>
+                </div>
+              </div>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="CardWithTitle-container-51"
+            >
+              <mock-map
+                polygon="[object Object]"
+                reefid="1"
+                surveypoints=""
+              />
+            </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
         >
           <div
-            class="SiteDetails-container-47"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
-            <mock-featuredmedia
-              reefid="1"
-            />
+            <div
+              class="CardWithTitle-container-51"
+            >
+              <mock-featuredmedia
+                reefid="1"
+              />
+            </div>
           </div>
         </div>
       </div>
     </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-50"
+    classname="Footer-appBar-54"
     position="static"
   >
     <mock-toolbar>
@@ -3673,7 +3697,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-51"
+            classname="Footer-navBarLink-55"
             href="/map"
           >
             <mock-typography
