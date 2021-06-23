@@ -46,11 +46,17 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 We have created an animated field guide that will describe the best practices for conducting a survey and using the Aqualink system.
                 <br />
                 <br />
-                <div
-                  style="width: 100%; height: 360px;"
+              </p>
+              <div
+                class="Faq-videoWrapper-6"
+              >
+                <iframe
+                  allow="fullscreen"
+                  class="MuiCardMedia-root Faq-video-7 MuiCardMedia-media"
+                  src="https://www.youtube.com/embed/E_nXCl612lg"
                   title="field_guide"
                 />
-              </p>
+              </div>
             </div>
           </div>
           <div

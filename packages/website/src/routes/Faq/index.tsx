@@ -1,10 +1,10 @@
 import React from "react";
-import ReactPlayer from "react-player";
 import {
   withStyles,
   WithStyles,
   createStyles,
   Typography,
+  CardMedia,
 } from "@material-ui/core";
 
 import NavBar from "../../common/NavBar";
@@ -38,12 +38,16 @@ const Faq = ({ classes }: FaqProps) => {
                     Aqualink system.
                     <br />
                     <br />
-                    <ReactPlayer
-                      url="https://www.youtube.com/embed/E_nXCl612lg"
-                      width="100%"
-                      title="field_guide"
-                    />
                   </p>
+                  <div className={classes.videoWrapper}>
+                    <CardMedia
+                      className={classes.video}
+                      src="https://www.youtube.com/embed/E_nXCl612lg"
+                      title="field_guide"
+                      component="iframe"
+                      allow="fullscreen"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="row faqq">
@@ -344,6 +348,17 @@ const styles = () =>
     reefTable: {
       height: "calc(100vh - 64px)",
       overflowY: "auto",
+    },
+    videoWrapper: {
+      position: "relative",
+      paddingTop: "calc(100% / 16 * 9)",
+    },
+    video: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
     },
   });
 
