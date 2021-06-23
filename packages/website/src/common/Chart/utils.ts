@@ -226,7 +226,7 @@ export const filterHistoricalMonthlyMeanData = (
 export function getSofarDataClosestToDate(
   spotterData: SofarValue[],
   date: Date,
-  maxHours: number
+  maxHours?: number
 ) {
   if (spotterData.length === 0) {
     return undefined;
@@ -238,7 +238,7 @@ export function getSofarDataClosestToDate(
       : prevClosest
   );
 
-  return timeDiff(closest.timestamp, date) < maxHours * 60 * 60 * 1000
+  return timeDiff(closest.timestamp, date) < (maxHours || 12) * 60 * 60 * 1000
     ? closest
     : undefined;
 }

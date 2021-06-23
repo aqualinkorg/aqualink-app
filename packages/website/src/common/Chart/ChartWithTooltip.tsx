@@ -18,12 +18,30 @@ import {
   filterDailyData,
   getHistoricalMonthlyMeanDataClosestToDate,
 } from "./utils";
+import { HistoricalMonthlyMeanData, SofarValue } from "../../store/Reefs/types";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
   className?: string;
   style?: CSSProperties;
 }
+
+const getClosestValue = <T,>(
+  extractor: (
+    data: T[],
+    date: Date,
+    maxHours?: number
+  ) => (T & { value: number }) | undefined,
+  date: Date,
+  data?: T[],
+  maxHours?: number
+): number | null => {
+  if (!data) {
+    return null;
+  }
+  const value = extractor(data, date, maxHours)?.value;
+  return isNumber(value) ? value : null;
+};
 
 function ChartWithTooltip({
   depth,
@@ -88,47 +106,43 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const closestHistorical =
-      historicalMonthlyMeanData &&
-      getHistoricalMonthlyMeanDataClosestToDate(
-        historicalMonthlyMeanData,
-        dateObject
-      )?.value;
-    const closestSpotterTop =
-      spotterData &&
-      getSofarDataClosestToDate(spotterData.topTemperature, dateObject, 6)
-        ?.value;
-    const closestSpotterBottom =
-      spotterData &&
-      getSofarDataClosestToDate(spotterData.bottomTemperature, dateObject, 6)
-        ?.value;
-    const closestHoboBottom =
-      hoboBottomTemperatureData &&
-      getSofarDataClosestToDate(hoboBottomTemperatureData, dateObject, 6)
-        ?.value;
-    const closestOceanSense =
-      oceanSenseData &&
-      getSofarDataClosestToDate(oceanSenseData, dateObject, 6)?.value;
+    const historicalMonthlyMeanTemp = getClosestValue<
+      HistoricalMonthlyMeanData
+    >(
+      getHistoricalMonthlyMeanDataClosestToDate,
+      dateObject,
+      historicalMonthlyMeanData
+    );
 
-    const historicalMonthlyMeanTemp = isNumber(closestHistorical)
-      ? closestHistorical
-      : null;
+    const spotterTopTemp = getClosestValue<SofarValue>(
+      getSofarDataClosestToDate,
+      dateObject,
+      spotterData?.topTemperature,
+      6
+    );
+
+    const spotterBottomTemp = getClosestValue<SofarValue>(
+      getSofarDataClosestToDate,
+      dateObject,
+      spotterData?.bottomTemperature,
+      6
+    );
+
+    const hoboBottomTemp = getClosestValue<SofarValue>(
+      getSofarDataClosestToDate,
+      dateObject,
+      hoboBottomTemperatureData,
+      6
+    );
+
+    const oceanSense = getClosestValue<SofarValue>(
+      getSofarDataClosestToDate,
+      dateObject,
+      oceanSenseData,
+      6
+    );
 
     const satelliteTemp = satelliteTemperature || null;
-
-    const spotterTopTemp = isNumber(closestSpotterTop)
-      ? closestSpotterTop
-      : null;
-
-    const spotterBottomTemp = isNumber(closestSpotterBottom)
-      ? closestSpotterBottom
-      : null;
-
-    const hoboBottomTemp = isNumber(closestHoboBottom)
-      ? closestHoboBottom
-      : null;
-
-    const oceanSense = isNumber(closestOceanSense) ? closestOceanSense : null;
 
     const nValues = [
       historicalMonthlyMeanTemp,
