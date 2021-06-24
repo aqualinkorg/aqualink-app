@@ -69,7 +69,7 @@ export class UsersService {
     const user: DeepPartial<User> = {
       ...priorAccount,
       ...createUserDto,
-      adminLevel: AdminLevel.Default,
+      adminLevel: priorAccount?.adminLevel || AdminLevel.Default,
       email: email.toLowerCase(),
       firebaseUid,
     };

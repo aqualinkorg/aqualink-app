@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
+import { sortBy } from 'lodash';
 import { TestService } from '../../test/test.service';
 import { createPoint } from '../utils/coordinates';
 import { CreateRegionDto } from './dto/create-region.dto';
@@ -52,7 +53,8 @@ export const regionTests = () => {
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(2);
-    expect(rsp.body[0]).toMatchObject(createParentRegionDto);
+    const sortedRegions = sortBy(rsp.body, 'name');
+    expect(sortedRegions[0]).toMatchObject(createParentRegionDto);
   });
 
   it('GET / fetch regions with filters', async () => {

@@ -117,6 +117,7 @@ export const userTests = () => {
         .send(reefManagerUserDto);
 
       expect(rsp.status).toBe(201);
+      expect(rsp.body.adminLevel).toBe(AdminLevel.ReefManager);
     });
 
     it('GET /current/administered-reefs Gets administered reefs of user.', async () => {

@@ -12,7 +12,9 @@ export const poiTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
   let createPoiDto: CreateReefPoiDto;
+  let createPoiWithoutLocationDto: CreateReefPoiDto;
   let poiId: number;
+  let poiWithoutLocationId: number;
 
   beforeAll(async () => {
     app = await testService.getApp();
@@ -22,6 +24,12 @@ export const poiTests = () => {
       imageUrl: 'http://some-sample-url.com',
       latitude: 37.95813968719644,
       longitude: 23.478834700473044,
+    };
+
+    createPoiWithoutLocationDto = {
+      name: 'Atlantis',
+      reefId: athensReef.id || 0,
+      imageUrl: 'http://some-sample-url.com',
     };
   });
 
@@ -40,11 +48,23 @@ export const poiTests = () => {
     poiId = rsp.body.id;
   });
 
+  it('POST / create a poi without a location', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .post('/pois')
+      .send(createPoiWithoutLocationDto);
+
+    expect(rsp.status).toBe(201);
+    expect(rsp.body).toMatchObject(createPoiWithoutLocationDto);
+    expect(rsp.body.id).toBeDefined();
+    poiWithoutLocationId = rsp.body.id;
+  });
+
   it('GET / fetch pois', async () => {
     const rsp = await request(app.getHttpServer()).get('/pois');
 
     expect(rsp.status).toBe(200);
-    expect(rsp.body.length).toBe(2);
+    expect(rsp.body.length).toBe(3);
   });
 
   it('GET / fetch pois with filters', async () => {
@@ -101,6 +121,15 @@ export const poiTests = () => {
   it('DELETE /:id delete a poi', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer()).delete(`/pois/${poiId}`);
+
+    expect(rsp.status).toBe(200);
+  });
+
+  it('DELETE /:id delete another poi', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer()).delete(
+      `/pois/${poiWithoutLocationId}`,
+    );
 
     expect(rsp.status).toBe(200);
   });

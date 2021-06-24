@@ -17,7 +17,6 @@ import { hashId } from '../utils/urls';
 @Entity()
 export class ReefApplication {
   @ApiProperty({ example: 1 })
-  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 

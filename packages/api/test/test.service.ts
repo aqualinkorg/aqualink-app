@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Connection, EntityMetadata } from 'typeorm';
+import { Connection } from 'typeorm';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Reef } from '../src/reefs/reefs.entity';
@@ -16,6 +16,7 @@ import { reefApplications } from './mock/reef-application.mock';
 import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
 import { collections } from './mock/collection.mock';
+import { Region } from '../src/regions/regions.entity';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -101,17 +102,14 @@ export class TestService {
     return this.app.close();
   }
 
-  public cleanAllEntities(connection: Connection) {
-    const entities: EntityMetadata[] = connection.entityMetadatas;
-
-    return Promise.all(
-      entities.map((entity) => {
-        if (entity.tableType === 'view') {
-          return null;
-        }
-
-        return connection.query(`DELETE FROM ${entity.tableName};`);
-      }),
-    );
+  public async cleanAllEntities(connection: Connection) {
+    await connection.getRepository(TimeSeries).delete({});
+    await connection.getRepository(Sources).delete({});
+    await connection.getRepository(Collection).delete({});
+    await connection.getRepository(Region).delete({});
+    await connection.getRepository(ReefApplication).delete({});
+    await connection.getRepository(ReefPointOfInterest).delete({});
+    await connection.getRepository(Reef).delete({});
+    await connection.getRepository(User).delete({});
   }
 }
