@@ -17,6 +17,7 @@ import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
 import { collections } from './mock/collection.mock';
 import { Region } from '../src/regions/regions.entity';
+import { GlobalValidationPipe } from '../src/validations/global-validation.pipe';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -31,7 +32,14 @@ export class TestService {
 
     this.app = moduleFixture.createNestApplication();
 
-    await this.app.init();
+    this.app = await this.app.init();
+
+    this.app.useGlobalPipes(
+      new GlobalValidationPipe({
+        transform: true,
+        skipTransformIds: ['hashId'],
+      }),
+    );
 
     const connection = this.app.get(Connection);
     try {

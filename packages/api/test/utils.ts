@@ -1,5 +1,7 @@
+import { INestApplication } from '@nestjs/common';
 import admin from 'firebase-admin';
 import * as firebaseAuthStrategy from '../src/auth/firebase-auth.utils';
+import { SurveysService } from '../src/surveys/surveys.service';
 
 export const mockExtractAndVerifyToken = (
   firebaseUser: admin.auth.DecodedIdToken | undefined,
@@ -26,3 +28,21 @@ export const createMockFirebaseUser = (
   sub: 'sub',
   uid,
 });
+
+export const mockDeleteFile = (app: INestApplication) => {
+  const surveysService = app.get(SurveysService);
+
+  jest
+    .spyOn(surveysService.googleCloudService, 'deleteFile')
+    .mockImplementation((props: string) => Promise.resolve());
+};
+
+export const mockDeleteFileFalling = (app: INestApplication) => {
+  const surveysService = app.get(SurveysService);
+
+  jest
+    .spyOn(surveysService.googleCloudService, 'deleteFile')
+    .mockImplementation((props: string) =>
+      Promise.reject(new Error('Delete file failed')),
+    );
+};

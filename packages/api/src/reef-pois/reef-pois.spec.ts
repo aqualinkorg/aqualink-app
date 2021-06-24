@@ -64,7 +64,7 @@ export const poiTests = () => {
     const rsp = await request(app.getHttpServer()).get('/pois');
 
     expect(rsp.status).toBe(200);
-    expect(rsp.body.length).toBe(3);
+    expect(rsp.body.length).toBe(5);
   });
 
   it('GET / fetch pois with filters', async () => {

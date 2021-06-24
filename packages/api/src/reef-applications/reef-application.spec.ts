@@ -69,6 +69,7 @@ export const reefApplicationTests = () => {
         'id',
       ),
     });
+    expect(rsp.body.appId).toBeDefined();
     appId = rsp.body.appId;
   });
 
