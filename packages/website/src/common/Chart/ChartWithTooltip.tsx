@@ -18,7 +18,6 @@ import {
   filterDailyData,
   getHistoricalMonthlyMeanDataClosestToDate,
 } from "./utils";
-import { HistoricalMonthlyMeanData, SofarValue } from "../../store/Reefs/types";
 
 export interface ChartWithTooltipProps extends ChartProps {
   depth: number | null;
@@ -106,36 +105,34 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const historicalMonthlyMeanTemp = getClosestValue<
-      HistoricalMonthlyMeanData
-    >(
+    const historicalMonthlyMeanTemp = getClosestValue(
       getHistoricalMonthlyMeanDataClosestToDate,
       dateObject,
       historicalMonthlyMeanData
     );
 
-    const spotterTopTemp = getClosestValue<SofarValue>(
+    const spotterTopTemp = getClosestValue(
       getSofarDataClosestToDate,
       dateObject,
       spotterData?.topTemperature,
       6
     );
 
-    const spotterBottomTemp = getClosestValue<SofarValue>(
+    const spotterBottomTemp = getClosestValue(
       getSofarDataClosestToDate,
       dateObject,
       spotterData?.bottomTemperature,
       6
     );
 
-    const hoboBottomTemp = getClosestValue<SofarValue>(
+    const hoboBottomTemp = getClosestValue(
       getSofarDataClosestToDate,
       dateObject,
       hoboBottomTemperatureData,
       6
     );
 
-    const oceanSense = getClosestValue<SofarValue>(
+    const oceanSense = getClosestValue(
       getSofarDataClosestToDate,
       dateObject,
       oceanSenseData,
