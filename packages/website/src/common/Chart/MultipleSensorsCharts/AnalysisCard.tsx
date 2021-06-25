@@ -140,6 +140,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       display="flex"
       justifyContent="space-between"
       flexDirection="column"
+      minWidth={220}
     >
       <Card className={classes.AnalysisCardCard}>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
