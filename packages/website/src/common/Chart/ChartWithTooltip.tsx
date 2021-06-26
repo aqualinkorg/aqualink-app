@@ -28,9 +28,7 @@ export interface ChartWithTooltipProps extends ChartProps {
 /**
  * Gets the number of a result or null if no number was found.
  */
-const numberOrNull = <T,>(
-  result: { value: number } | undefined
-): number | null => {
+const numberOrNull = (result: { value: number } | undefined): number | null => {
   const value = result?.value;
   return isNumber(value) ? value : null;
 };
