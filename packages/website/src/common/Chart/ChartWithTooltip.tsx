@@ -6,17 +6,17 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
-import { last, isNumber } from "lodash";
+import { isNumber, last } from "lodash";
 import moment from "moment";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
-  getDailyDataClosestToDate,
-  getSofarDataClosestToDate,
-  findSurveyFromDate,
-  sameDay,
   filterDailyData,
+  findSurveyFromDate,
+  getDailyDataClosestToDate,
   getHistoricalMonthlyMeanDataClosestToDate,
+  getSofarDataClosestToDate,
+  sameDay,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -25,20 +25,13 @@ export interface ChartWithTooltipProps extends ChartProps {
   style?: CSSProperties;
 }
 
-const getClosestValue = <T,>(
-  extractor: (
-    data: T[],
-    date: Date,
-    maxHours?: number
-  ) => (T & { value: number }) | undefined,
-  date: Date,
-  data?: T[],
-  maxHours?: number
+/**
+ * Gets the number of a result or null if no number was found.
+ */
+const numberOrNull = <T,>(
+  result: { value: number } | undefined
 ): number | null => {
-  if (!data) {
-    return null;
-  }
-  const value = extractor(data, date, maxHours)?.value;
+  const value = result?.value;
   return isNumber(value) ? value : null;
 };
 
@@ -105,38 +98,35 @@ function ChartWithTooltip({
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const historicalMonthlyMeanTemp = getClosestValue(
-      getHistoricalMonthlyMeanDataClosestToDate,
-      dateObject,
-      historicalMonthlyMeanData
+    const historicalMonthlyMeanTemp = numberOrNull(
+      getHistoricalMonthlyMeanDataClosestToDate(
+        historicalMonthlyMeanData || [],
+        dateObject
+      )
     );
 
-    const spotterTopTemp = getClosestValue(
-      getSofarDataClosestToDate,
-      dateObject,
-      spotterData?.topTemperature,
-      6
+    const spotterTopTemp = numberOrNull(
+      getSofarDataClosestToDate(
+        spotterData?.topTemperature || [],
+        dateObject,
+        6
+      )
     );
 
-    const spotterBottomTemp = getClosestValue(
-      getSofarDataClosestToDate,
-      dateObject,
-      spotterData?.bottomTemperature,
-      6
+    const spotterBottomTemp = numberOrNull(
+      getSofarDataClosestToDate(
+        spotterData?.bottomTemperature || [],
+        dateObject,
+        6
+      )
     );
 
-    const hoboBottomTemp = getClosestValue(
-      getSofarDataClosestToDate,
-      dateObject,
-      hoboBottomTemperatureData,
-      6
+    const hoboBottomTemp = numberOrNull(
+      getSofarDataClosestToDate(hoboBottomTemperatureData || [], dateObject, 6)
     );
 
-    const oceanSense = getClosestValue(
-      getSofarDataClosestToDate,
-      dateObject,
-      oceanSenseData,
-      6
+    const oceanSense = numberOrNull(
+      getSofarDataClosestToDate(oceanSenseData || [], dateObject, 6)
     );
 
     const satelliteTemp = satelliteTemperature || null;

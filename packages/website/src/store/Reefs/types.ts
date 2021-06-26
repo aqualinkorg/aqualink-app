@@ -19,11 +19,6 @@ export interface Pois {
   polygon: Polygon | Point | null;
 }
 
-export interface SofarValue {
-  timestamp: string;
-  value: number;
-}
-
 export type Range = "day" | "week" | "month" | "year";
 
 export interface SpotterPosition {
@@ -98,6 +93,11 @@ export interface DailyData {
 export interface HistoricalMonthlyMeanData {
   value: number;
   date: string;
+}
+
+export interface SofarValue {
+  timestamp: string;
+  value: number;
 }
 
 interface Region {
