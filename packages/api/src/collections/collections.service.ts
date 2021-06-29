@@ -126,6 +126,8 @@ export class CollectionsService {
   }
 
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
+    // No need to check if collectionId exists because the collection guard had made sure
+    // that a collection with this collectionId exists
     const collection = await this.collectionRepository.findOne(collectionId);
 
     const {
@@ -136,8 +138,6 @@ export class CollectionsService {
       removeReefIds,
     } = updateCollectionDto;
 
-    // No need to check if collectionId exists because the reef guard had made sure
-    // that a collection with this collectionId exists
     const filteredAddReefIds = addReefIds?.filter(
       (reefId) => !collection!.reefIds.includes(reefId),
     );
@@ -162,7 +162,7 @@ export class CollectionsService {
   }
 
   async delete(collectionId: number) {
-    // No need to check if collectionId exists because the reef guard had made sure
+    // No need to check if collectionId exists because the collection guard had made sure
     // that a collection with this collectionId exists
     await this.collectionRepository.delete(collectionId);
   }

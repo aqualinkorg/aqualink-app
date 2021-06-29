@@ -10,7 +10,10 @@ import {
   mockDeleteFileFalling,
   mockExtractAndVerifyToken,
 } from '../../test/utils';
-import { reefManagerFirebaseUserMock } from '../../test/mock/user.mock';
+import {
+  adminFirebaseUserMock,
+  reefManagerFirebaseUserMock,
+} from '../../test/mock/user.mock';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { Observations } from './survey-media.entity';
 import { floridaPoiOne } from '../../test/mock/poi.mock';
@@ -47,6 +50,15 @@ export const surveyTests = () => {
     createSurveyFeaturedMediaDto = createSurveyMediaDto(false, false);
     createSurveyOverrideMediaDto = createSurveyMediaDto(true, false);
     createSurveyHiddenMediaDto = createSurveyMediaDto(true, true);
+  });
+
+  it('POST / create a survey', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer())
+      .post('/reefs/0/surveys/')
+      .send(createSurveyDto);
+
+    expect(rsp.status).toBe(404);
   });
 
   it("GET /:id fetch a non-existing reef's survey", async () => {

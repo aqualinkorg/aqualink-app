@@ -46,6 +46,10 @@ export class SurveysService {
   ): Promise<Survey> {
     const reef = await this.reefRepository.findOne(reefId);
 
+    if (!reef) {
+      throw new NotFoundException(`Reef with id ${reefId} was not found`);
+    }
+
     const survey = await this.surveyRepository.save({
       user,
       reef,
