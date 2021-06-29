@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,9 +10,12 @@ import {
   Typography,
   IconButton,
   Theme,
+  Snackbar,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import YouTube, { Options } from "react-youtube";
 
 import reefImage from "../../../assets/reef-image.jpg";
 import uploadIcon from "../../../assets/icon_upload.svg";
@@ -28,18 +31,52 @@ const FeaturedMedia = ({
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reefId);
+  const [streamErrorAlertOpen, setStreamErrorAlertOpen] = useState(false);
+
+  const playerOpts: Options = {
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 0,
+      modestbranding: 1,
+    },
+  };
+
+  // const onVideoStateChange = (event: { target: any }) => {
+  //   console.log(event.target.getPlayerState());
+  // };
+
+  const onVideoError = () => setStreamErrorAlertOpen(true);
 
   if (url) {
     return (
-      <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <CardMedia
-            src={`${url}?autoplay=1&controls=0&mute=1`}
-            className={classes.card}
-            component="iframe"
-          />
-        </CardContent>
-      </Card>
+      <>
+        <Snackbar
+          className={classes.errorSnackbar}
+          open={streamErrorAlertOpen}
+          anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        >
+          <Alert
+            severity="error"
+            onClose={() => setStreamErrorAlertOpen(false)}
+            variant="filled"
+          >
+            Failed to play live stream.
+          </Alert>
+        </Snackbar>
+        <Card className={classes.card}>
+          <CardContent className={classes.content}>
+            <YouTube
+              containerClassName={classes.card}
+              // onStateChange={onVideoStateChange}
+              onError={onVideoError}
+              className={classes.card}
+              opts={playerOpts}
+              videoId={url}
+            />
+          </CardContent>
+        </Card>
+      </>
     );
   }
 
@@ -114,6 +151,13 @@ const styles = (theme: Theme) => {
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: "blur(2px)",
+    },
+    errorSnackbar: {
+      top: theme.spacing(9),
+      right: theme.spacing(1),
+      [theme.breakpoints.down("xs")]: {
+        top: theme.spacing(1),
+      },
     },
   });
 };
