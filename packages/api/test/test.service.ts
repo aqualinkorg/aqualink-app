@@ -14,6 +14,11 @@ import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
 import { DailyData } from '../src/reefs/daily-data.entity';
 import { Region } from '../src/regions/regions.entity';
+import { Survey } from '../src/surveys/surveys.entity';
+import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
+import { SurveyMedia } from '../src/surveys/survey-media.entity';
+import { ExclusionDates } from '../src/reefs/exclusion-dates.entity';
+import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { users } from './mock/user.mock';
 import { reefs } from './mock/reef.mock';
 import { pois } from './mock/poi.mock';
@@ -22,9 +27,8 @@ import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
 import { collections } from './mock/collection.mock';
 import { dailyData } from './mock/daily-data.mock';
-import { ExclusionDates } from '../src/reefs/exclusion-dates.entity';
-import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
-import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
+import { surveys } from './mock/surveys.mock';
+import { surveyMedia } from './mock/survey-media.mock';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -87,6 +91,8 @@ export class TestService {
     await connection.query('REFRESH MATERIALIZED VIEW latest_data');
     await connection.getRepository(Collection).save(collections);
     await connection.getRepository(DailyData).save(dailyData);
+    await connection.getRepository(Survey).save(surveys);
+    await connection.getRepository(SurveyMedia).save(surveyMedia);
 
     await Bluebird.map(reefs, async (reef) => {
       const [longitude, latitude] = (reef.polygon as Point).coordinates;
@@ -143,6 +149,9 @@ export class TestService {
     await connection.getRepository(ReefPointOfInterest).delete({});
     await connection.getRepository(DailyData).delete({});
     await connection.getRepository(ExclusionDates).delete({});
+    await connection.getRepository(Survey).delete({});
+    await connection.getRepository(SurveyMedia).delete({});
+    await connection.getRepository(HistoricalMonthlyMean).delete({});
     await connection.getRepository(Reef).delete({});
     await connection.getRepository(User).delete({});
   }

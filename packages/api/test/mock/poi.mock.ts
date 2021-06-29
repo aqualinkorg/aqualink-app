@@ -1,5 +1,5 @@
 import { DeepPartial } from 'typeorm';
-import { athensReef, floridaReef } from './reef.mock';
+import { athensReef, californiaReef, floridaReef } from './reef.mock';
 import { ReefPointOfInterest } from '../../src/reef-pois/reef-pois.entity';
 import { createPoint } from '../../src/utils/coordinates';
 
@@ -24,4 +24,16 @@ export const floridaPoiTwo: DeepPartial<ReefPointOfInterest> = {
   polygon: createPoint(-81.62632276694188, 24.966140159912975),
 };
 
-export const pois = [athensPoiPiraeus, floridaPoiOne, floridaPoiTwo];
+export const californiaPoi: DeepPartial<ReefPointOfInterest> = {
+  imageUrl: 'http://some-sample-url.com',
+  name: 'California Poi',
+  reef: californiaReef,
+  polygon: createPoint(-110.25009575059113, 24.647017162630366),
+};
+
+export const pois = [
+  athensPoiPiraeus,
+  floridaPoiOne,
+  floridaPoiTwo,
+  californiaPoi,
+];

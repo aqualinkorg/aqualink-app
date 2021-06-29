@@ -241,7 +241,8 @@ export const reefTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
 
-      expect(rsp.body[0]).toMatchObject(
+      const sortedReefs = sortBy(rsp.body, 'id');
+      expect(sortedReefs[0]).toMatchObject(
         omit(californiaReef, 'applied', 'createdAt', 'updatedAt'),
       );
     });
@@ -330,6 +331,17 @@ export const reefTests = () => {
       );
 
       expect(rsp.status).toBe(404);
+    });
+
+    it('GET /:id/spotter_data retrieve spotter data with invalid date', async () => {
+      const rsp = await request(app.getHttpServer())
+        .get(`/reefs/${athensReef.id}/spotter_data`)
+        .query({
+          startDate: 'invalid date',
+          endDate: '2020-10-10TInvalidDate',
+        });
+
+      expect(rsp.status).toBe(400);
     });
 
     it('POST /:id/deploy deploy the spotter of a non-existing reef', async () => {

@@ -32,7 +32,7 @@ export const athensReef: DeepPartial<Reef> = {
   name: 'Athens Site',
   polygon: createPoint(37.57941251343841, 23.65678288302115),
   depth: 15,
-  sensorId: 'SPOT-0930',
+  sensorId: 'SPOT-300434063450120',
   status: ReefStatus.Shipped,
   maxMonthlyMean: 25.54,
   timezone: 'America/Havana',

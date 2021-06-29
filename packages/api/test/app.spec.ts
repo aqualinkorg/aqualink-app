@@ -9,6 +9,7 @@ import { poiTests } from '../src/reef-pois/reef-pois.spec';
 import { reefApplicationTests } from '../src/reef-applications/reef-application.spec';
 import { surveyTests } from '../src/surveys/surveys.spec';
 import { reefTests } from '../src/reefs/reefs.spec';
+import { sensorTests } from '../src/sensors/sensors.spec';
 
 describe('AppController (e2e)', () => {
   const testService = TestService.getInstance();
@@ -40,6 +41,8 @@ describe('AppController (e2e)', () => {
   describe('Survey (e2e) /reefs/:id/surveys', surveyTests);
 
   describe('Reefs (e2e) /reefs', reefTests);
+
+  describe('Sensors (e2e) /sensors', sensorTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();
