@@ -1,7 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import admin from 'firebase-admin';
 import * as firebaseAuthStrategy from '../src/auth/firebase-auth.utils';
+import * as backfillReefData from '../src/workers/backfill-reef-data';
+import * as sofarUtils from '../src/utils/sofar';
+import * as liveData from '../src/utils/liveData';
+import * as temperatureUtils from '../src/utils/temperature';
 import { SurveysService } from '../src/surveys/surveys.service';
+import { getMockLiveData, getMockSpotterData } from './mock/daily-data.mock';
+import { Reef } from '../src/reefs/reefs.entity';
 
 export const mockExtractAndVerifyToken = (
   firebaseUser: admin.auth.DecodedIdToken | undefined,
@@ -44,5 +50,37 @@ export const mockDeleteFileFalling = (app: INestApplication) => {
     .spyOn(surveysService.googleCloudService, 'deleteFile')
     .mockImplementation((props: string) =>
       Promise.reject(new Error('Delete file failed')),
+    );
+};
+
+export const mockBackfillReefData = () => {
+  jest
+    .spyOn(backfillReefData, 'backfillReefData')
+    .mockImplementationOnce((props: number) => null);
+};
+
+export const mockGetSpotterData = () => {
+  jest
+    .spyOn(sofarUtils, 'getSpotterData')
+    .mockImplementationOnce(
+      (sensorId: string, endDate?: Date, startDate?: Date) =>
+        Promise.resolve(getMockSpotterData(startDate!, endDate!)),
+    );
+};
+
+export const mockGetLiveData = () => {
+  jest
+    .spyOn(liveData, 'getLiveData')
+    .mockImplementationOnce((reef: Reef, props: boolean) =>
+      Promise.resolve(getMockLiveData(reef.id)),
+    );
+};
+
+export const mockGetMMM = () => {
+  jest
+    .spyOn(temperatureUtils, 'getMMM')
+    // eslint-disable-next-line no-unused-vars
+    .mockImplementationOnce((long: number, lat: number) =>
+      Promise.resolve(undefined),
     );
 };

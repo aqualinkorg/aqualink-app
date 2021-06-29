@@ -1,7 +1,6 @@
 import {
   Injectable,
   NotFoundException,
-  InternalServerErrorException,
   Logger,
   BadRequestException,
 } from '@nestjs/common';
@@ -247,11 +246,7 @@ export class ReefsService {
       relations: ['admins'],
     });
 
-    if (!updated) {
-      throw new InternalServerErrorException('Something went wrong.');
-    }
-
-    return updated;
+    return updated!;
   }
 
   async delete(id: number): Promise<void> {

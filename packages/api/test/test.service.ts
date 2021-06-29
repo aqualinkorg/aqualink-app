@@ -1,14 +1,19 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Connection } from 'typeorm';
+import { Point } from 'geojson';
+import Bluebird from 'bluebird';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Reef } from '../src/reefs/reefs.entity';
 import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
+import { GlobalValidationPipe } from '../src/validations/global-validation.pipe';
 import { ReefApplication } from '../src/reef-applications/reef-applications.entity';
 import { Sources } from '../src/reefs/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
+import { DailyData } from '../src/reefs/daily-data.entity';
+import { Region } from '../src/regions/regions.entity';
 import { users } from './mock/user.mock';
 import { reefs } from './mock/reef.mock';
 import { pois } from './mock/poi.mock';
@@ -16,8 +21,10 @@ import { reefApplications } from './mock/reef-application.mock';
 import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
 import { collections } from './mock/collection.mock';
-import { Region } from '../src/regions/regions.entity';
-import { GlobalValidationPipe } from '../src/validations/global-validation.pipe';
+import { dailyData } from './mock/daily-data.mock';
+import { ExclusionDates } from '../src/reefs/exclusion-dates.entity';
+import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
+import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
 
 export class TestService {
   private static instance: TestService | null = null;
@@ -79,6 +86,23 @@ export class TestService {
     await connection.getRepository(TimeSeries).save(timeSeries);
     await connection.query('REFRESH MATERIALIZED VIEW latest_data');
     await connection.getRepository(Collection).save(collections);
+    await connection.getRepository(DailyData).save(dailyData);
+
+    await Bluebird.map(reefs, async (reef) => {
+      const [longitude, latitude] = (reef.polygon as Point).coordinates;
+      const historicalMonthlyMean = await getHistoricalMonthlyMeans(
+        longitude,
+        latitude,
+      );
+
+      return Bluebird.map(historicalMonthlyMean, (hmm) => {
+        return connection.getRepository(HistoricalMonthlyMean).save({
+          reef,
+          month: hmm.month,
+          temperature: hmm.temperature,
+        });
+      });
+    });
   }
 
   public static getInstance() {
@@ -117,6 +141,8 @@ export class TestService {
     await connection.getRepository(Region).delete({});
     await connection.getRepository(ReefApplication).delete({});
     await connection.getRepository(ReefPointOfInterest).delete({});
+    await connection.getRepository(DailyData).delete({});
+    await connection.getRepository(ExclusionDates).delete({});
     await connection.getRepository(Reef).delete({});
     await connection.getRepository(User).delete({});
   }

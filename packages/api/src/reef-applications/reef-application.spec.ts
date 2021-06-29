@@ -52,7 +52,6 @@ export const reefApplicationTests = () => {
   });
 
   it('GET /:id fetches a reef application with id', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .get(`/reef-applications/${floridaReefApplication.id}`)
       .query({ uid: floridaReefApplication.uid });
@@ -74,7 +73,6 @@ export const reefApplicationTests = () => {
   });
 
   it('GET /:id fetches a reef application with appId', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .get(`/reef-applications/${appId}`)
       .query({ uid: floridaReefApplication.uid });
@@ -118,7 +116,6 @@ export const reefApplicationTests = () => {
   });
 
   it('PUT /:hashId updates a reef application using hashId', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .put(`/reef-applications/${appId}`)
       .send({
@@ -143,7 +140,6 @@ export const reefApplicationTests = () => {
   });
 
   it('GET /:id fetches a non-existing reef application with id', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .get(`/reef-applications/0a0`)
       .query({ uid: floridaReefApplication.uid });
@@ -152,7 +148,6 @@ export const reefApplicationTests = () => {
   });
 
   it('GET /:id fetches a reef application with invalid uid', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .get(`/reef-applications/${floridaReefApplication.id}`)
       .query({ uid: 'wrong' });
@@ -161,7 +156,6 @@ export const reefApplicationTests = () => {
   });
 
   it('PUT /:hashId updates a reef application using an invalid hashId', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .put(`/reef-applications/0a0`)
       .send({
@@ -175,7 +169,6 @@ export const reefApplicationTests = () => {
   });
 
   it('PUT /:hashId updates a non-existing reef application using hashId', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .put(`/reef-applications/${hashId(0)}`)
       .send({

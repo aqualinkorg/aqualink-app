@@ -8,6 +8,7 @@ import { regionTests } from '../src/regions/regions.spec';
 import { poiTests } from '../src/reef-pois/reef-pois.spec';
 import { reefApplicationTests } from '../src/reef-applications/reef-application.spec';
 import { surveyTests } from '../src/surveys/surveys.spec';
+import { reefTests } from '../src/reefs/reefs.spec';
 
 describe('AppController (e2e)', () => {
   const testService = TestService.getInstance();
@@ -36,7 +37,9 @@ describe('AppController (e2e)', () => {
 
   describe('Reef Application {e2e) /reef-applications', reefApplicationTests);
 
-  describe('Survey (e2e) reefs/:id/surveys', surveyTests);
+  describe('Survey (e2e) /reefs/:id/surveys', surveyTests);
+
+  describe('Reefs (e2e) /reefs', reefTests);
 
   afterAll(async () => {
     await testService.cleanUpApp();

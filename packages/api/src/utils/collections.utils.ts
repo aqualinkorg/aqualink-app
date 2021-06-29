@@ -11,6 +11,10 @@ export const getCollectionData = async (
 ): Promise<Record<number, CollectionDataDto>> => {
   const reefIds = reefs.map((reef) => reef.id);
 
+  if (!reefIds.length) {
+    return {};
+  }
+
   // Get latest data
   const latestData: LatestData[] = await latestDataRepository
     .createQueryBuilder('latest_data')
