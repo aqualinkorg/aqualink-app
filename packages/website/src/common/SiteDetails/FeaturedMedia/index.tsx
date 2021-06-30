@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,9 +10,11 @@ import {
   Typography,
   IconButton,
   Theme,
-  Snackbar,
+  Box,
 } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Skeleton } from "@material-ui/lab";
+import grey from "@material-ui/core/colors/grey";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import YouTube, { Options } from "react-youtube";
@@ -21,99 +23,7 @@ import reefImage from "../../../assets/reef-image.jpg";
 import uploadIcon from "../../../assets/icon_upload.svg";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
-
-const FeaturedMedia = ({
-  reefId,
-  url,
-  featuredImage,
-  surveyId,
-  classes,
-}: FeaturedMediaProps) => {
-  const user = useSelector(userInfoSelector);
-  const isReefAdmin = isAdmin(user, reefId);
-  const [streamErrorAlertOpen, setStreamErrorAlertOpen] = useState(false);
-
-  const playerOpts: Options = {
-    playerVars: {
-      autoplay: 1,
-      mute: 1,
-      controls: 0,
-      modestbranding: 1,
-    },
-  };
-
-  // const onVideoStateChange = (event: { target: any }) => {
-  //   console.log(event.target.getPlayerState());
-  // };
-
-  const onVideoError = () => setStreamErrorAlertOpen(true);
-
-  if (url) {
-    return (
-      <>
-        <Snackbar
-          className={classes.errorSnackbar}
-          open={streamErrorAlertOpen}
-          anchorOrigin={{ horizontal: "right", vertical: "top" }}
-        >
-          <Alert
-            severity="error"
-            onClose={() => setStreamErrorAlertOpen(false)}
-            variant="filled"
-          >
-            Failed to play live stream.
-          </Alert>
-        </Snackbar>
-        <Card className={classes.card}>
-          <CardContent className={classes.content}>
-            <YouTube
-              containerClassName={classes.card}
-              // onStateChange={onVideoStateChange}
-              onError={onVideoError}
-              className={classes.card}
-              opts={playerOpts}
-              videoId={url}
-            />
-          </CardContent>
-        </Card>
-      </>
-    );
-  }
-
-  if (featuredImage && surveyId) {
-    return (
-      <Link to={`/reefs/${reefId}/survey_details/${surveyId}`}>
-        <CardMedia
-          className={classes.card}
-          style={{ height: "100%" }}
-          image={featuredImage}
-        />
-      </Link>
-    );
-  }
-
-  return (
-    <Card className={classes.card}>
-      <div className={classes.noVideoCardHeader}>
-        <Grid container direction="column" alignItems="center" spacing={2}>
-          <Grid item>
-            <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
-            </Typography>
-          </Grid>
-          {isReefAdmin && (
-            <Grid item>
-              <IconButton component={Link} to={`/reefs/${reefId}/new_survey`}>
-                <img src={uploadIcon} alt="upload" />
-              </IconButton>
-            </Grid>
-          )}
-        </Grid>
-      </div>
-      <div className={classes.noVideoCardContent} />
-    </Card>
-  );
-};
+import videoServices from "../../../services/videoServices";
 
 const styles = (theme: Theme) => {
   return createStyles({
@@ -159,7 +69,141 @@ const styles = (theme: Theme) => {
         top: theme.spacing(1),
       },
     },
+    loadingAnimation: {
+      backgroundColor: fade(grey[600], 0.5),
+    },
   });
+};
+
+const VideoCardComponent = withStyles(styles)(
+  ({
+    url,
+    loading,
+    errored,
+    playerOprions,
+    classes,
+  }: VideoCardComponentProps) => {
+    if (loading) {
+      return (
+        <Skeleton
+          className={classes.loadingAnimation}
+          height="100%"
+          variant="rect"
+        />
+      );
+    }
+
+    if (errored) {
+      return (
+        <Box
+          bgcolor={grey[200]}
+          height="100%"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography variant="h4" color="primary" align="center">
+            Video stream is not live
+          </Typography>
+        </Box>
+      );
+    }
+
+    return (
+      <YouTube
+        containerClassName={classes.card}
+        className={classes.card}
+        opts={playerOprions}
+        videoId={url}
+      />
+    );
+  }
+);
+
+const FeaturedMedia = ({
+  reefId,
+  url,
+  featuredImage,
+  surveyId,
+  classes,
+}: FeaturedMediaProps) => {
+  const user = useSelector(userInfoSelector);
+  const isReefAdmin = isAdmin(user, reefId);
+  const [liveStreamCheckErrored, setLiveStreamCheckErrored] = useState(false);
+  const [liveStreamCheckLoading, setLiveStreamCheckLoading] = useState(false);
+
+  const playerOpts: Options = {
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 0,
+      modestbranding: 1,
+    },
+  };
+
+  useEffect(() => {
+    if (url) {
+      setLiveStreamCheckLoading(true);
+      videoServices
+        .getVideoInfo(url)
+        .then((data) => {
+          const isLive =
+            data?.items?.[0]?.snippet?.liveBroadcastContent === "live";
+          setLiveStreamCheckErrored(!isLive);
+        })
+        .catch(() => setLiveStreamCheckErrored(true))
+        .finally(() => setLiveStreamCheckLoading(false));
+    }
+  }, [url]);
+
+  if (url) {
+    return (
+      <Card className={classes.card}>
+        <CardContent className={classes.content}>
+          <VideoCardComponent
+            errored={liveStreamCheckErrored}
+            loading={liveStreamCheckLoading}
+            playerOprions={playerOpts}
+            url={url}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (featuredImage && surveyId) {
+    return (
+      <Link to={`/reefs/${reefId}/survey_details/${surveyId}`}>
+        <CardMedia
+          className={classes.card}
+          style={{ height: "100%" }}
+          image={featuredImage}
+        />
+      </Link>
+    );
+  }
+
+  return (
+    <Card className={classes.card}>
+      <div className={classes.noVideoCardHeader}>
+        <Grid container direction="column" alignItems="center" spacing={2}>
+          <Grid item>
+            <Typography className={classes.noVideoCardHeaderText} variant="h5">
+              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
+            </Typography>
+          </Grid>
+          {isReefAdmin && (
+            <Grid item>
+              <IconButton component={Link} to={`/reefs/${reefId}/new_survey`}>
+                <img src={uploadIcon} alt="upload" />
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
+      </div>
+      <div className={classes.noVideoCardContent} />
+    </Card>
+  );
 };
 
 interface FeaturedMediaIncomingProps {
@@ -173,6 +217,13 @@ FeaturedMedia.defaultProps = {
   url: null,
   featuredImage: null,
   surveyId: null,
+};
+
+type VideoCardComponentProps = WithStyles<typeof styles> & {
+  url: string;
+  loading: boolean;
+  errored: boolean;
+  playerOprions: Options;
 };
 
 type FeaturedMediaProps = WithStyles<typeof styles> &
