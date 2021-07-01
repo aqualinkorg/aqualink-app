@@ -22,9 +22,10 @@ async function bootstrap() {
     customOptions,
   } = configService.getSwaggerConfig();
   const document = SwaggerModule.createDocument(app, config, documentOptions);
-  SwaggerModule.setup('api', app, document, customOptions);
+  SwaggerModule.setup('api/docs', app, document, customOptions);
 
   app.enableCors();
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(
     new GlobalValidationPipe({ transform: true, skipTransformIds: ['hashId'] }),
   );
