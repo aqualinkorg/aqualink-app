@@ -319,29 +319,26 @@ export class ReefsService {
       metric: Metric.SATELLITE_TEMPERATURE,
     });
 
-    const sstAnomaly = await this.latestDataRepository.findOne({
-      reef,
-      source: SourceType.NOAA,
-      metric: Metric.SST_ANOMALY,
-    });
-
-    const satelliteTemperatureEntry = sst
-      ? {
-          satelliteTemperature: {
-            value: sst.value,
-            timestamp: sst.timestamp.toISOString(),
-          },
-        }
-      : {};
+    const satelliteTemperatureEntry =
+      (liveData.satelliteTemperature && {
+        satelliteTemperature: liveData.satelliteTemperature,
+      }) ||
+      (sst
+        ? {
+            satelliteTemperature: {
+              value: sst.value,
+              timestamp: sst.timestamp.toISOString(),
+            },
+          }
+        : {});
 
     return {
-      ...satelliteTemperatureEntry,
       ...liveData,
-      sstAnomaly:
-        getSstAnomaly(
-          reef.historicalMonthlyMean,
-          liveData.satelliteTemperature,
-        ) || sstAnomaly?.value,
+      sstAnomaly: getSstAnomaly(
+        reef.historicalMonthlyMean,
+        satelliteTemperatureEntry.satelliteTemperature,
+      ),
+      ...satelliteTemperatureEntry,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
