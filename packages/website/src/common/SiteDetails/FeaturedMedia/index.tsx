@@ -89,19 +89,6 @@ const FeaturedMedia = ({
   );
 };
 
-interface FeaturedMediaIncomingProps {
-  reefId: number;
-  url?: string | null;
-  featuredImage?: string | null;
-  surveyId?: number | null;
-}
-
-FeaturedMedia.defaultProps = {
-  url: null,
-  featuredImage: null,
-  surveyId: null,
-};
-
 const styles = (theme: Theme) => {
   return createStyles({
     card: {
@@ -145,6 +132,19 @@ const styles = (theme: Theme) => {
       width: "100%",
     },
   });
+};
+
+interface FeaturedMediaIncomingProps {
+  reefId: number;
+  url?: string | null;
+  featuredImage?: string | null;
+  surveyId?: number | null;
+}
+
+FeaturedMedia.defaultProps = {
+  url: null,
+  featuredImage: null,
+  surveyId: null,
 };
 
 type FeaturedMediaProps = WithStyles<typeof styles> &
