@@ -36,7 +36,7 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
-import { useLiveStreamCheck } from "../../../helpers/useLiveStreamCheck";
+import { useLiveStreamCheck } from "../../../hooks/useLiveStreamCheck";
 
 const getAlertMessage = (
   user: User | null,
