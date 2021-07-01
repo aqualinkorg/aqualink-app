@@ -1,5 +1,4 @@
-/* eslint-disable no-nested-ternary */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   withStyles,
   WithStyles,
@@ -37,6 +36,7 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
+import videoServices from "../../../services/videoServices";
 
 const getAlertMessage = (
   user: User | null,
@@ -102,7 +102,9 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
+  const [isStreamLive, setIsStreamLive] = useState(false);
+  const { id, liveData, dailyData, surveyPoints, polygon, videoStream } =
+    reefDetails || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -143,6 +145,20 @@ const Reef = ({ match, classes }: ReefProps) => {
     }
   }, [closestSurveyPointId, dispatch, id, reefId]);
 
+  // Check if the video stream is live
+  useEffect(() => {
+    if (videoStream) {
+      videoServices
+        .getVideoInfo(videoStream)
+        .then((data) => {
+          const isLive =
+            data?.items?.[0]?.snippet?.liveBroadcastContent === "live";
+          setIsStreamLive(isLive);
+        })
+        .catch(console.error);
+    }
+  }, [videoStream]);
+
   if (loading || (!reefDetails && !error)) {
     return (
       <>
@@ -175,6 +191,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               reef={{
                 ...reefDetails,
                 featuredImage: url,
+                videoStream: isStreamLive ? reefDetails.videoStream : null,
               }}
               closestSurveyPointId={
                 closestSurveyPointId ? `${closestSurveyPointId}` : undefined

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   withStyles,
   WithStyles,
@@ -13,13 +13,12 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import YouTube, { Options } from "react-youtube";
 
 import reefImage from "../../../assets/reef-image.jpg";
 import uploadIcon from "../../../assets/icon_upload.svg";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
-import videoServices from "../../../services/videoServices";
-import VideoCard from "./VideoCard";
 
 const FeaturedMedia = ({
   reefId,
@@ -30,32 +29,25 @@ const FeaturedMedia = ({
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reefId);
-  const [liveStreamCheckErrored, setLiveStreamCheckErrored] = useState(false);
-  const [liveStreamCheckLoading, setLiveStreamCheckLoading] = useState(false);
 
-  useEffect(() => {
-    if (url) {
-      setLiveStreamCheckLoading(true);
-      videoServices
-        .getVideoInfo(url)
-        .then((data) => {
-          const isLive =
-            data?.items?.[0]?.snippet?.liveBroadcastContent === "live";
-          setLiveStreamCheckErrored(!isLive);
-        })
-        .catch(() => setLiveStreamCheckErrored(true))
-        .finally(() => setLiveStreamCheckLoading(false));
-    }
-  }, [url]);
+  const playerOpts: Options = {
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 0,
+      modestbranding: 1,
+    },
+  };
 
   if (url) {
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
-          <VideoCard
-            url={url}
-            loading={liveStreamCheckLoading}
-            errored={liveStreamCheckErrored}
+          <YouTube
+            containerClassName={classes.fullHeightAndWidth}
+            className={classes.fullHeightAndWidth}
+            opts={playerOpts}
+            videoId={url}
           />
         </CardContent>
       </Card>
@@ -146,6 +138,11 @@ const styles = (theme: Theme) => {
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: "blur(2px)",
+    },
+
+    fullHeightAndWidth: {
+      height: "100%",
+      width: "100%",
     },
   });
 };
