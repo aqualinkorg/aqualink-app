@@ -54,7 +54,6 @@
     "react-leaflet": "^2.7.0",
     "react-leaflet-markercluster": "^2.0.0",
     "react-material-ui-carousel": "^1.8.2",
-    "react-player": "^2.3.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",

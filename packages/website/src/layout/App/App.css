@@ -113,6 +113,10 @@ body {
   background-size: 65px 20px;
 }
 
+iframe {
+  border: none;
+}
+
 .current-position-marker {
   background-color: #4285F4;
   border-radius: 50%;
