@@ -36,6 +36,8 @@ const FeaturedMedia = ({
       mute: 1,
       controls: 0,
       modestbranding: 1,
+      fs: 0,
+      playsinline: 1,
     },
   };
 
