@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <mock-button
+    classname="AddButton-addSurveyButton-1"
+    component="[object Object]"
+    starticon="[object Object]"
+    to="/reefs/1/new_survey"
+  >
+    <mock-typography
+      color="inherit"
+      variant="h6"
+    >
+      ADD NEW SURVEY
+    </mock-typography>
+  </mock-button>
+</div>
+`;

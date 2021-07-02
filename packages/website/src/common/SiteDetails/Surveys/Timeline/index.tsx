@@ -6,11 +6,9 @@ import {
   createStyles,
   Typography,
   Theme,
-  IconButton,
   Hidden,
   Grid,
 } from "@material-ui/core";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import {
   Timeline,
   TimelineItem,
@@ -19,7 +17,6 @@ import {
   TimelineContent,
   TimelineOppositeContent,
 } from "@material-ui/lab";
-import { Link } from "react-router-dom";
 
 import SurveyCard from "../SurveyCard";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
@@ -27,6 +24,7 @@ import incomingStyles from "../styles";
 import { filterSurveys } from "../../../../helpers/surveys";
 import { SurveyMedia } from "../../../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
+import AddButton from "../AddButton";
 
 const SurveyTimeline = ({
   isAdmin,
@@ -53,20 +51,8 @@ const SurveyTimeline = ({
                   // Modify padding to center the Add survey symbol.
                   style={{ padding: "0 10px" }}
                 />
-                <TimelineSeparator>
-                  <Link
-                    style={{ color: "inherit", textDecoration: "none" }}
-                    to={`/reefs/${reefId}/new_survey`}
-                  >
-                    <IconButton>
-                      <AddCircleOutlineIcon className={classes.addNewButton} />
-                    </IconButton>
-                  </Link>
-                </TimelineSeparator>
-                <TimelineContent style={{ padding: "12px 16px" }}>
-                  <Typography className={classes.cardFields} variant="h6">
-                    ADD NEW SURVEY
-                  </Typography>
+                <TimelineContent className={classes.addNewButtonWrapper}>
+                  <AddButton reefId={reefId} />
                 </TimelineContent>
               </TimelineItem>
             )}
@@ -117,17 +103,7 @@ const SurveyTimeline = ({
                 item
                 xs={12}
               >
-                <Link
-                  style={{ color: "inherit", textDecoration: "none" }}
-                  to={`/reefs/${reefId}/new_survey`}
-                >
-                  <IconButton>
-                    <AddCircleOutlineIcon className={classes.addNewButton} />
-                  </IconButton>
-                </Link>
-                <Typography className={classes.cardFields} variant="h6">
-                  ADD NEW SURVEY
-                </Typography>
+                <AddButton reefId={reefId} />
               </Grid>
             )}
           {surveyList &&
@@ -201,6 +177,9 @@ const styles = (theme: Theme) =>
     },
     surveyWrapper: {
       marginTop: "2rem",
+    },
+    addNewButtonWrapper: {
+      marginRight: theme.spacing(10),
     },
   });
 
