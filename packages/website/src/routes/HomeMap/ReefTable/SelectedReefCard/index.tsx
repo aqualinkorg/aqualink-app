@@ -10,6 +10,8 @@ import {
   Grid,
   Typography,
   Hidden,
+  useTheme,
+  useMediaQuery,
 } from "@material-ui/core";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { Link } from "react-router-dom";
@@ -29,12 +31,14 @@ import { Reef } from "../../../../store/Reefs/types";
 import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
+import { useLiveStreamCheck } from "../../../../hooks/useLiveStreamCheck";
+import NooaChip from "../../../../common/NooaChip";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
-    height: "18rem",
+    minHeight: "18rem",
     [theme.breakpoints.down("md")]: {
-      height: "22rem",
+      minHeight: "22rem",
     },
   },
   mobileCardWrapperWithImage: {
@@ -88,8 +92,12 @@ const useStyles = makeStyles((theme) => ({
   reefRegionName: {
     marginBottom: "0.6rem",
   },
+  cardTitleWrapper: {
+    maxWidth: "calc(100% - 88px)",
+    marginRight: theme.spacing(1),
+  },
   cardTitle: {
-    width: "90%",
+    width: "100%",
     display: "block",
     overflow: "hidden",
     whiteSpace: "nowrap",
@@ -104,7 +112,9 @@ type SelectedReefContentProps = {
 
 const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   const classes = useStyles();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isStreamLive = useLiveStreamCheck(reef.videoStream);
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
@@ -185,15 +195,33 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
               </Box>
             </Hidden>
 
-            <Box position="absolute" bottom={16} right={16}>
-              <Link
-                style={{ color: "inherit", textDecoration: "none" }}
-                to={`/reefs/${reef.id}`}
+            <Box position="absolute" bottom={16} px={2} width="100%">
+              <Grid
+                container
+                alignItems="center"
+                justify={
+                  isStreamLive && isMobile ? "space-between" : "flex-end"
+                }
               >
-                <Button size="small" variant="contained" color="primary">
-                  EXPLORE
-                </Button>
-              </Link>
+                {isStreamLive && isMobile && (
+                  <NooaChip
+                    live
+                    liveText="LIVE VIDEO"
+                    to={`/reefs/${reef.id}`}
+                    width={80}
+                  />
+                )}
+                <Grid item>
+                  <Link
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    to={`/reefs/${reef.id}`}
+                  >
+                    <Button size="small" variant="contained" color="primary">
+                      EXPLORE
+                    </Button>
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>
@@ -208,13 +236,25 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden xsDown={Boolean(imageUrl)}>
-            <Typography
-              className={classes.cardTitle}
-              color="textSecondary"
-              variant="h5"
-            >
-              <span title={name || ""}>{name}</span>
-            </Typography>
+            <Grid container alignItems="center">
+              <Grid item className={classes.cardTitleWrapper}>
+                <Typography
+                  className={classes.cardTitle}
+                  color="textSecondary"
+                  variant="h5"
+                >
+                  <span title={name || ""}>{name}</span>
+                </Typography>
+              </Grid>
+              {isStreamLive && (
+                <NooaChip
+                  live
+                  liveText="LIVE VIDEO"
+                  to={`/reefs/${reef.id}`}
+                  width={80}
+                />
+              )}
+            </Grid>
             <Typography
               color="textSecondary"
               variant="h6"
