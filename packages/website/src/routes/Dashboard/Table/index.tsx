@@ -1,9 +1,12 @@
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Box, useTheme, useMediaQuery } from "@material-ui/core";
 import ReefTable from "../../HomeMap/ReefTable";
 import { Collection } from "../collection";
 
 const Table = ({ collection }: TableIncomingProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
   return (
     <Box width="100%" mt="55px" mb="20px">
       <ReefTable
@@ -11,7 +14,8 @@ const Table = ({ collection }: TableIncomingProps) => {
         showSpottersOnlySwitch={false}
         isExtended
         collection={collection}
-        scrollOnSelection={false}
+        scrollTableOnSelection={false}
+        scrollPageOnSelection={isMobile}
       />
     </Box>
   );

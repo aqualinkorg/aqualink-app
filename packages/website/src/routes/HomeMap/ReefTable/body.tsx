@@ -119,7 +119,8 @@ const ReefTableBody = ({
   orderBy,
   isExtended,
   collection,
-  scrollOnSelection,
+  scrollTableOnSelection,
+  scrollPageOnSelection,
   classes,
 }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
@@ -135,6 +136,9 @@ const ReefTableBody = ({
     setSelectedRow(reef.tableData.id);
     dispatch(setSearchResult());
     dispatch(setReefOnMap(reefsList[reef.tableData.id]));
+    if (scrollPageOnSelection) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -146,10 +150,10 @@ const ReefTableBody = ({
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
     // only scroll if not on mobile (info at the top is more useful than the reef row)
-    if (child && !isMobile && scrollOnSelection) {
+    if (child && !isMobile && scrollTableOnSelection) {
       child.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-  }, [isMobile, scrollOnSelection, selectedRow]);
+  }, [isMobile, scrollTableOnSelection, selectedRow]);
 
   return (
     <TableBody>
@@ -280,13 +284,15 @@ type ReefTableBodyIncomingProps = {
   orderBy: OrderKeys;
   isExtended?: boolean;
   collection?: Collection;
-  scrollOnSelection?: boolean;
+  scrollTableOnSelection?: boolean;
+  scrollPageOnSelection?: boolean;
 };
 
 ReefTableBody.defaultProps = {
   isExtended: false,
   collection: undefined,
-  scrollOnSelection: true,
+  scrollTableOnSelection: true,
+  scrollPageOnSelection: undefined,
 };
 
 type ReefTableBodyProps = WithStyles<typeof styles> &

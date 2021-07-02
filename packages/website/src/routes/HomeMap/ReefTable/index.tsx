@@ -67,7 +67,8 @@ const ReefTable = ({
   showSpottersOnlySwitch,
   isExtended,
   collection,
-  scrollOnSelection,
+  scrollTableOnSelection,
+  scrollPageOnSelection,
   classes,
 }: ReefTableProps) => {
   const loading = useSelector(reefsListLoadingSelector);
@@ -198,7 +199,8 @@ const ReefTable = ({
               orderBy={orderBy}
               isExtended={isExtended}
               collection={collection}
-              scrollOnSelection={scrollOnSelection}
+              scrollTableOnSelection={scrollTableOnSelection}
+              scrollPageOnSelection={scrollPageOnSelection}
             />
           </Table>
         </TableContainer>
@@ -282,7 +284,8 @@ interface ReefTableIncomingProps {
   showSpottersOnlySwitch?: boolean;
   isExtended?: boolean; // Determines whether an extended version of the table will be displayed or not
   collection?: Collection;
-  scrollOnSelection?: boolean;
+  scrollTableOnSelection?: boolean;
+  scrollPageOnSelection?: boolean;
 }
 
 ReefTable.defaultProps = {
@@ -291,7 +294,8 @@ ReefTable.defaultProps = {
   showSpottersOnlySwitch: true,
   isExtended: false,
   collection: undefined,
-  scrollOnSelection: true,
+  scrollTableOnSelection: true,
+  scrollPageOnSelection: undefined,
 };
 
 export default withStyles(styles)(ReefTable);
