@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import YouTube, { Options } from "react-youtube";
 
 import reefImage from "../../../assets/reef-image.jpg";
 import uploadIcon from "../../../assets/icon_upload.svg";
@@ -30,26 +29,14 @@ const FeaturedMedia = ({
   const user = useSelector(userInfoSelector);
   const isReefAdmin = isAdmin(user, reefId);
 
-  const playerOpts: Options = {
-    playerVars: {
-      autoplay: 1,
-      mute: 1,
-      controls: 0,
-      modestbranding: 1,
-      fs: 0,
-      playsinline: 1,
-    },
-  };
-
   if (url) {
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
-          <YouTube
-            containerClassName={classes.fullHeightAndWidth}
+          <CardMedia
             className={classes.fullHeightAndWidth}
-            opts={playerOpts}
-            videoId={url}
+            src={`${url}?autoplay=1&mute=1&controls=0&modestbranding=1&fs=0&playsinline=1`}
+            component="iframe"
           />
         </CardContent>
       </Card>

@@ -37,6 +37,7 @@ import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
 import { useLiveStreamCheck } from "../../../hooks/useLiveStreamCheck";
+import { getYouTubeVideoId } from "../../../helpers/video";
 
 const getAlertMessage = (
   user: User | null,
@@ -105,7 +106,7 @@ const Reef = ({ match, classes }: ReefProps) => {
   const { id, liveData, dailyData, surveyPoints, polygon, videoStream } =
     reefDetails || {};
 
-  const isStreamLive = useLiveStreamCheck(videoStream);
+  const isStreamLive = useLiveStreamCheck(getYouTubeVideoId(videoStream));
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>

@@ -33,6 +33,7 @@ import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import { useLiveStreamCheck } from "../../../../hooks/useLiveStreamCheck";
 import Chip from "../../../../common/Chip";
+import { getYouTubeVideoId } from "../../../../helpers/video";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -114,7 +115,7 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const isStreamLive = useLiveStreamCheck(reef.videoStream);
+  const isStreamLive = useLiveStreamCheck(getYouTubeVideoId(reef.videoStream));
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
