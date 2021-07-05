@@ -58,6 +58,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
         <CardHeader
           className={classes.popupHeader}
           classes={{
+            content: classes.popupHeaderContent,
             subheader: classes.subheader,
           }}
           title={getReefNameAndRegion(reef).name}
@@ -138,16 +139,17 @@ const styles = (theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
     },
 
+    popupHeaderContent: {
+      width: "100%",
+      overflowWrap: "break-word",
+    },
+
     subheader: {
       color: "white",
     },
 
     popup: {
-      width: "12vw",
-      minWidth: 200,
-      [theme.breakpoints.up("xl")]: {
-        width: "7vw",
-      },
+      width: 250,
     },
   });
 
