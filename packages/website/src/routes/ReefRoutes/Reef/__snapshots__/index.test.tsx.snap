@@ -1443,18 +1443,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root makeStyles-nooaChip-232 makeStyles-nooaChip-237 MuiGrid-item"
+                  class="MuiGrid-root makeStyles-chip-232 makeStyles-chip-237 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                   >
                     <a
-                      class="makeStyles-nooaLink-235"
+                      class="makeStyles-link-235"
                       href="https://coralreefwatch.noaa.gov/"
                       target="_blank"
                     >
                       <mock-typography
-                        classname="makeStyles-nooaChipText-233"
+                        classname="makeStyles-chipText-233"
                       >
                         NOAA
                       </mock-typography>
@@ -1611,20 +1611,20 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root makeStyles-nooaChip-232 makeStyles-nooaChip-250 MuiGrid-item"
+                  class="MuiGrid-root makeStyles-chip-232 makeStyles-chip-250 MuiGrid-item"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                   >
                     <a
-                      class="makeStyles-nooaLink-235"
+                      class="makeStyles-link-235"
                       href="/"
                     >
                       <div
                         class="makeStyles-circle-234"
                       />
                       <mock-typography
-                        classname="makeStyles-nooaChipText-233"
+                        classname="makeStyles-chipText-233"
                       >
                         LIVE
                       </mock-typography>
@@ -1732,18 +1732,18 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-nooaChip-232 makeStyles-nooaChip-261 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-chip-232 makeStyles-chip-261 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <a
-                        class="makeStyles-nooaLink-235"
+                        class="makeStyles-link-235"
                         href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                         target="_blank"
                       >
                         <mock-typography
-                          classname="makeStyles-nooaChipText-233"
+                          classname="makeStyles-chipText-233"
                         >
                           NOAA CRW
                         </mock-typography>
@@ -1999,13 +1999,13 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-nooaChip-232 makeStyles-nooaChip-275 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-chip-232 makeStyles-chip-275 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <a
-                        class="makeStyles-nooaLink-235"
+                        class="makeStyles-link-235"
                         href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
                         target="_blank"
                       >
@@ -2013,7 +2013,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                           class="makeStyles-circle-234"
                         />
                         <mock-typography
-                          classname="makeStyles-nooaChipText-233"
+                          classname="makeStyles-chipText-233"
                         >
                           LIVE
                         </mock-typography>

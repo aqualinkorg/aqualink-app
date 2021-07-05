@@ -32,7 +32,7 @@ import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import { useLiveStreamCheck } from "../../../../hooks/useLiveStreamCheck";
-import NooaChip from "../../../../common/NooaChip";
+import Chip from "../../../../common/Chip";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -204,7 +204,7 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
                 }
               >
                 {isStreamLive && isMobile && (
-                  <NooaChip
+                  <Chip
                     live
                     liveText="LIVE VIDEO"
                     to={`/reefs/${reef.id}`}
@@ -247,7 +247,7 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
                 </Typography>
               </Grid>
               {isStreamLive && (
-                <NooaChip
+                <Chip
                   live
                   liveText="LIVE VIDEO"
                   to={`/reefs/${reef.id}`}

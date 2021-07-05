@@ -9,7 +9,7 @@ export const useLiveStreamCheck = (videoId?: string | null): boolean => {
       videoServices
         .getVideoInfo(videoId)
         .then(({ items }) =>
-          setIsLive(items?.[0].snippet.liveBroadcastContent === "live")
+          setIsLive(items?.[0]?.snippet?.liveBroadcastContent === "live")
         );
     }
   }, [videoId]);

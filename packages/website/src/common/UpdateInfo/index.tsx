@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import UpdateIcon from "@material-ui/icons/Update";
-import NooaChip from "../NooaChip";
+import Chip from "../Chip";
 
 const UpdateInfo = ({
   relativeTime,
@@ -50,7 +50,7 @@ const UpdateInfo = ({
         </Grid>
       </Grid>
     </Grid>
-    <NooaChip live={live} href={href} image={image} imageText={imageText} />
+    <Chip live={live} href={href} image={image} imageText={imageText} />
   </Grid>
 );
 

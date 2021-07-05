@@ -243,13 +243,13 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-nooaChip-18 makeStyles-nooaChip-23 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-23 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <a
-                class="makeStyles-nooaLink-21"
+                class="makeStyles-link-21"
                 href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
                 target="_blank"
               >
@@ -257,7 +257,7 @@ exports[`renders as expected 1`] = `
                   class="makeStyles-circle-20"
                 />
                 <mock-typography
-                  classname="makeStyles-nooaChipText-19"
+                  classname="makeStyles-chipText-19"
                 >
                   LIVE
                 </mock-typography>

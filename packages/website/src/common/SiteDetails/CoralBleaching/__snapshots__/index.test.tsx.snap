@@ -96,18 +96,18 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-nooaChip-15 makeStyles-nooaChip-20 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-15 makeStyles-chip-20 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <a
-                class="makeStyles-nooaLink-18"
+                class="makeStyles-link-18"
                 href="https://coralreefwatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                 target="_blank"
               >
                 <mock-typography
-                  classname="makeStyles-nooaChipText-16"
+                  classname="makeStyles-chipText-16"
                 >
                   NOAA CRW
                 </mock-typography>
