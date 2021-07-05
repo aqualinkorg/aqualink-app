@@ -6,6 +6,7 @@ import {
   createStyles,
   WithStyles,
   withStyles,
+  Theme,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -124,10 +125,10 @@ const CollectionButton = ({
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     root: {
-      marginBottom: 6,
+      margin: theme.spacing(-2.5, -1.5, -2, 0.5),
     },
   });
 
