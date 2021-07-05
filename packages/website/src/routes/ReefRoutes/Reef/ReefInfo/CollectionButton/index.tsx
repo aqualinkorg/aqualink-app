@@ -127,8 +127,7 @@ const CollectionButton = ({
 const styles = () =>
   createStyles({
     root: {
-      padding: 8,
-      marginLeft: 4,
+      marginBottom: 6,
     },
   });
 
