@@ -7,17 +7,17 @@ import {
   createStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { grey } from "@material-ui/core/colors";
+import { grey, green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     chip: ({ width }: { width?: number }) => ({
-      backgroundColor: "#dddddd",
+      backgroundColor: grey[300],
       borderRadius: 8,
       height: 24,
       width: width || 60,
       display: "flex",
-      [theme.breakpoints.between("md", "md")]: {
+      [theme.breakpoints.only("md")]: {
         width: width || 48,
       },
     }),
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     circle: {
-      backgroundColor: "#51DD00",
+      backgroundColor: green[300],
       borderRadius: "50%",
       height: 8.4,
       width: 8.4,
@@ -73,9 +73,7 @@ const Chip = ({
           {live ? (
             <>
               <div className={classes.circle} />
-              <Typography className={classes.chipText}>
-                {liveText || "LIVE"}
-              </Typography>
+              <Typography className={classes.chipText}>{liveText}</Typography>
             </>
           ) : (
             <>
@@ -110,7 +108,7 @@ Chip.defaultProps = {
   to: undefined,
   imageText: undefined,
   image: undefined,
-  liveText: undefined,
+  liveText: "LIVE",
   width: undefined,
 };
 

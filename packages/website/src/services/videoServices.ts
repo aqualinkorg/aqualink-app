@@ -12,10 +12,10 @@ export interface VideoInfo {
 }
 
 export interface VideoQueryResponse {
-  items: VideoInfo[];
+  items?: VideoInfo[];
 }
 
-const getVideoInfo = (id: string) =>
-  youtubeApi.searchVideo(id).then((data) => data as VideoQueryResponse);
+const getVideoInfo = (id: string): Promise<VideoQueryResponse> =>
+  youtubeApi.searchVideo(id);
 
 export default { getVideoInfo };
