@@ -250,8 +250,7 @@ exports[`renders as expected 1`] = `
             >
               <a
                 class="makeStyles-link-21"
-                href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-                target="_blank"
+                href="/"
               >
                 <div
                   class="makeStyles-circle-20"

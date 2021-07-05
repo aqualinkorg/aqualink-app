@@ -50,7 +50,12 @@ const UpdateInfo = ({
         </Grid>
       </Grid>
     </Grid>
-    <Chip live={live} href={href} image={image} imageText={imageText} />
+    <Chip
+      live={live}
+      href={live ? undefined : href}
+      image={image}
+      imageText={imageText}
+    />
   </Grid>
 );
 

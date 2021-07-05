@@ -2006,8 +2006,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     >
                       <a
                         class="makeStyles-link-235"
-                        href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
-                        target="_blank"
+                        href="/"
                       >
                         <div
                           class="makeStyles-circle-234"
