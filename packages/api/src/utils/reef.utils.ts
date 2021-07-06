@@ -14,11 +14,13 @@ import { isNil } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../reefs/exclusion-dates.entity';
-import { SofarValue } from './sofar.types';
+import { SofarLiveData, SofarValue } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Reef } from '../reefs/reefs.entity';
 import { Sources } from '../reefs/sources.entity';
 import { SourceType } from '../reefs/schemas/source-type.enum';
+import { LatestData } from '../time-series/latest-data.entity';
+import { Metric } from '../time-series/metrics.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Reef Utils');
@@ -184,4 +186,27 @@ export const hasHoboDataSubQuery = async (
   });
 
   return hasHoboDataSet;
+};
+
+export const getSSTFromLiveOrLatestData = async (
+  liveData: SofarLiveData,
+  reef: Reef,
+  latestDataRepository: Repository<LatestData>,
+): Promise<SofarValue | undefined> => {
+  if (!liveData.satelliteTemperature) {
+    const sst = await latestDataRepository.findOne({
+      reef,
+      source: SourceType.NOAA,
+      metric: Metric.SATELLITE_TEMPERATURE,
+    });
+
+    return (
+      sst && {
+        value: sst.value,
+        timestamp: sst.timestamp.toISOString(),
+      }
+    );
+  }
+
+  return liveData.satelliteTemperature;
 };

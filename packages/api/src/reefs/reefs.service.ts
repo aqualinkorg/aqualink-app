@@ -27,6 +27,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
+  getSSTFromLiveOrLatestData,
 } from '../utils/reef.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -39,8 +40,6 @@ import { createPoint } from '../utils/coordinates';
 import { Sources } from './sources.entity';
 import { getCollectionData } from '../utils/collections.utils';
 import { LatestData } from '../time-series/latest-data.entity';
-import { SourceType } from './schemas/source-type.enum';
-import { Metric } from '../time-series/metrics.entity';
 
 @Injectable()
 export class ReefsService {
@@ -313,32 +312,16 @@ export class ReefsService {
 
     const liveData = await getLiveData(reef, isDeployed);
 
-    const sst = await this.latestDataRepository.findOne({
+    const sst = await getSSTFromLiveOrLatestData(
+      liveData,
       reef,
-      source: SourceType.NOAA,
-      metric: Metric.SATELLITE_TEMPERATURE,
-    });
-
-    const satelliteTemperatureEntry =
-      (liveData.satelliteTemperature && {
-        satelliteTemperature: liveData.satelliteTemperature,
-      }) ||
-      (sst
-        ? {
-            satelliteTemperature: {
-              value: sst.value,
-              timestamp: sst.timestamp.toISOString(),
-            },
-          }
-        : {});
+      this.latestDataRepository,
+    );
 
     return {
       ...liveData,
-      sstAnomaly: getSstAnomaly(
-        reef.historicalMonthlyMean,
-        satelliteTemperatureEntry.satelliteTemperature,
-      ),
-      ...satelliteTemperatureEntry,
+      sstAnomaly: getSstAnomaly(reef.historicalMonthlyMean, sst),
+      satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
