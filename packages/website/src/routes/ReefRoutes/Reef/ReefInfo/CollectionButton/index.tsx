@@ -128,7 +128,7 @@ const CollectionButton = ({
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(-2.5, -1.5, -2, 0.5),
+      margin: theme.spacing(-2.5, -1.5, -1, 0.5),
     },
   });
 
