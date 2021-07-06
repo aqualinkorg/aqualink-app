@@ -27,6 +27,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
+  getSSTFromLiveOrLatestData,
 } from '../utils/reef.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -311,12 +312,16 @@ export class ReefsService {
 
     const liveData = await getLiveData(reef, isDeployed);
 
+    const sst = await getSSTFromLiveOrLatestData(
+      liveData,
+      reef,
+      this.latestDataRepository,
+    );
+
     return {
       ...liveData,
-      sstAnomaly: getSstAnomaly(
-        reef.historicalMonthlyMean,
-        liveData.satelliteTemperature,
-      ),
+      sstAnomaly: getSstAnomaly(reef.historicalMonthlyMean, sst),
+      satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
   }
