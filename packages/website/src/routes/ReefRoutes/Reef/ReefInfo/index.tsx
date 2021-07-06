@@ -274,10 +274,10 @@ const styles = () =>
       width: 48,
     },
     headerWrapper: {
-      maxWidth: "calc(100% - 48px)",
+      maxWidth: "calc(100% - 48px)", // maximum width of 100% minus the width of the back button
     },
     reefNameWrapper: {
-      maxWidth: "calc(100% - 56px)",
+      maxWidth: "calc(100% - 56px)", // maximum width of 100% minus the width of the collection button and its padding
       overflowWrap: "break-word",
     },
   });

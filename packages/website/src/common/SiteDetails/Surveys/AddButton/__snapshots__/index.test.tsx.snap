@@ -3,6 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-button
+    classes="[object Object]"
     classname="AddButton-addSurveyButton-1"
     component="[object Object]"
     starticon="[object Object]"

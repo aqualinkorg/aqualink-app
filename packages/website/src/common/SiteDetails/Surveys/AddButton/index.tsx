@@ -14,11 +14,10 @@ const AddButton = ({ reefId, classes }: AddButtonProps) => {
   return (
     <Button
       className={classes.addSurveyButton}
-      startIcon={
-        <AddCircleOutlineIcon className={classes.addSurveyButtonIcon} />
-      }
+      startIcon={<AddCircleOutlineIcon />}
       component={Link}
       to={`/reefs/${reefId}/new_survey`}
+      classes={{ iconSizeMedium: classes.addSurveyButtonIcon }}
     >
       <Typography color="inherit" variant="h6">
         ADD NEW SURVEY
@@ -36,7 +35,9 @@ const styles = () =>
       },
     },
     addSurveyButtonIcon: {
-      fontSize: "32px !important",
+      "& > *:first-child": {
+        fontSize: 32,
+      },
     },
   });
 
