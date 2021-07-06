@@ -28,8 +28,8 @@ const Tracker = ({ classes }: TrackerProps) => {
         <CardMedia className={classes.image} image={hero} />
         <Container className={classes.titleWrapper}>
           <Typography
-            className={classes.title}
-            variant="h2"
+            className={classes.heroTitle}
+            variant="h1"
             color="textPrimary"
           >
             Tracking Heatwaves
@@ -178,6 +178,9 @@ const styles = (theme: Theme) =>
       paddingTop: "calc(100% / (144 / 41))",
       position: "relative",
     },
+    heroTitle: {
+      fontWeight: 700,
+    },
     header: {
       margin: theme.spacing(7, 0, 5),
       [theme.breakpoints.down("xs")]: {
@@ -190,7 +193,10 @@ const styles = (theme: Theme) =>
       right: 0,
       top: 48,
       [theme.breakpoints.down("xs")]: {
-        top: 8,
+        top: 0,
+        bottom: 0,
+        display: "flex",
+        alignItems: "center",
       },
     },
     title: {
