@@ -43,7 +43,7 @@ export const getLiveData = async (
       latitude,
       longitude,
       now,
-      72,
+      96,
     ),
     sofarForecast(
       SofarModels.NOAAOperationalWaveModel,
