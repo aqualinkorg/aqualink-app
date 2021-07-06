@@ -5,19 +5,73 @@ exports[`Tracker should render with given state from Redux store 1`] = `
   <mock-navbar
     searchlocation="false"
   />
-  <div
-    class="MuiContainer-root Tracker-root-1 MuiContainer-maxWidthLg"
+  <mock-box
+    classname="Tracker-hero-2"
   >
-    <mock-box
-      margin="48px 0"
+    <div
+      class="MuiCardMedia-root Tracker-image-8"
+      style="background-image: url(hero.png);"
+    />
+    <div
+      class="MuiContainer-root Tracker-titleWrapper-4 MuiContainer-maxWidthLg"
     >
       <mock-typography
-        classname="Tracker-title-2"
+        classname="Tracker-title-5"
+        color="textPrimary"
         variant="h2"
       >
         Tracking Heatwaves
       </mock-typography>
-    </mock-box>
+    </div>
+  </mock-box>
+  <div
+    class="MuiContainer-root Tracker-root-1 MuiContainer-maxWidthLg"
+  >
+    <div
+      class="MuiGrid-root Tracker-header-3 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-9"
+      >
+        <mock-typography
+          classname="Tracker-title-5"
+        >
+          Using Sensor Networks to Monitor Heat Waves in Real-time
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root Tracker-footPrintImageWrapper-10 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+        >
+          <div
+            class="MuiGrid-root makeStyles-footPrintImageText-11 MuiGrid-item"
+          >
+            <mock-typography
+              align="right"
+            >
+              Built with support from:
+            </mock-typography>
+          </div>
+          <div
+            class="MuiGrid-root makeStyles-footPrintImageLink-12 MuiGrid-item"
+          >
+            <a
+              href="https://www.footprintcoalition.com/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <img
+                alt="footprint"
+                class="makeStyles-footPrintImage-13 makeStyles-footPrintImage-14"
+                src="footprint.png"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
     >
@@ -29,7 +83,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         >
           The ability for sensors to be grouped for a particular event, such as a Heatwave, or a particular region, is important for users to get critical information at a glance. We have launched a new feature called Dashboards where anyone can create a customized collection of sensors to track this information. For example, the
           <a
-            class="Tracker-link-6"
+            class="Tracker-link-9"
             href="https://www.minderoo.org/"
             rel="noopener noreferrer"
             target="_blank"
@@ -41,7 +95,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           worked with us and the
            
           <a
-            class="Tracker-link-6"
+            class="Tracker-link-9"
             href="https://www.uwa.edu.au"
             rel="noopener noreferrer"
             target="_blank"
@@ -52,7 +106,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           to deploy Smart Buoys along the Western coast of Australia. This was done in a critical time for the region where an extreme heatwave, known as the
            
           <a
-            class="Tracker-link-6"
+            class="Tracker-link-9"
             href="https://en.wikipedia.org/wiki/La_Ni%C3%B1a"
             rel="noopener noreferrer"
             target="_blank"
@@ -62,7 +116,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           , was exptected to come through the area, potentially bringing devastating affects to the local ecosystems. They created a dashboard
            
           <a
-            class="Tracker-link-6"
+            class="Tracker-link-9"
             href="/collections/minderoo"
           >
             here
@@ -75,7 +129,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="Tracker-card1-3"
+          classname="Tracker-card1-6"
           variant="outlined"
         >
           <a
@@ -84,7 +138,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root Tracker-image-5"
+              class="MuiCardMedia-root Tracker-image-8"
               style="background-image: url(image1.png);"
             />
           </a>
@@ -95,7 +149,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="72px 0 48px 0"
     >
       <mock-typography
-        classname="Tracker-title-2"
+        classname="Tracker-title-5"
         variant="h2"
       >
         Create Your Dashboard
@@ -108,11 +162,11 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="Tracker-card2-4"
+          classname="Tracker-card2-7"
           variant="outlined"
         >
           <div
-            class="MuiCardMedia-root Tracker-image-5"
+            class="MuiCardMedia-root Tracker-image-8"
             style="background-image: url(image2.png);"
           />
         </mock-card>
@@ -141,20 +195,6 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           >
             We worked closely with the Minderoo Foundation to build this feature. The funding for the Heatwave Tracker development was provided by the FootPrint Coalition and we would like to thank them for their support.
           </mock-typography>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 MuiGrid-grid-lg-2"
-        >
-          <a
-            href="https://www.footprintcoalition.com/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt="footprint"
-              src="footprint.png"
-            />
-          </a>
         </div>
       </div>
     </mock-box>
