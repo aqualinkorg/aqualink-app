@@ -28,6 +28,8 @@ import { TimeSeries } from './time-series.entity';
     return connection
       .createQueryBuilder()
       .from(() => subQuery, 'time_series')
+      .addSelect('reef_id')
+      .addSelect('poi_id')
       .innerJoin('sources', 'source', 'source.id = time_series.source_id');
   },
   materialized: true,
