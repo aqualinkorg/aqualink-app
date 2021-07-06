@@ -15,6 +15,7 @@ import { HealthCheckModule } from './health-check/health-check.module';
 import { TimeSeriesModule } from './time-series/time-series.module';
 import { CollectionsModule } from './collections/collections.module';
 import { SensorsModule } from './sensors/sensors.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -34,5 +35,6 @@ import { SensorsModule } from './sensors/sensors.module';
     CollectionsModule,
     SensorsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

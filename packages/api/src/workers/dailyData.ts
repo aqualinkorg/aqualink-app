@@ -100,7 +100,7 @@ export async function getDailyData(
       latitude,
       longitude,
       endOfDate,
-      48,
+      96,
     ),
     getSofarHindcastData(
       SofarModels.NOAAOperationalWaveModel,

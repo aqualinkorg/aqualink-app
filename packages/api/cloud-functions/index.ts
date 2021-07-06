@@ -25,6 +25,10 @@ function extractEntityDefinition(fullImport: Record<string, any>) {
   return fullImport[exportKey];
 }
 
+function addTrailingSlashToUrl(url: string) {
+  return url.endsWith('/') ? url : `${url}/`;
+}
+
 // Remove all the connection info from the dbConfig object - we want to replace it with the dbUrl input from this
 // function argument.
 const {
@@ -87,9 +91,11 @@ exports.scheduledDailyUpdate = functions
 exports.pingService = functions.pubsub
   .schedule('*/5 * * * *')
   .onRun(async () => {
-    const backendBaseUrl = functions.config().api.base_url;
+    const backendBaseUrl: string = functions.config().api.base_url;
     console.log('Pinging server');
-    await Axios.get(new URL('health-check', backendBaseUrl).href);
+    await Axios.get(
+      new URL('health-check', addTrailingSlashToUrl(backendBaseUrl)).href,
+    );
   });
 
 exports.scheduledSpotterTimeSeriesUpdate = functions
