@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Sensor from ".";
 import { mockUser } from "../../../mocks/mockUser";
@@ -22,7 +23,9 @@ describe("Sensor Card", () => {
 
     element = render(
       <Provider store={store}>
-        <Sensor reef={mockReef} />
+        <Router>
+          <Sensor reef={mockReef} />
+        </Router>
       </Provider>
     ).container;
   });

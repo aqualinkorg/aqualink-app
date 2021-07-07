@@ -140,19 +140,24 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-nooaChip-17 MuiGrid-item"
+          class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-22 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
-            <div
-              class="UpdateInfo-circle-21"
-            />
-            <mock-typography
-              classname="UpdateInfo-nooaChipText-19"
+            <a
+              class="makeStyles-link-20"
+              href="/"
             >
-              LIVE
-            </mock-typography>
+              <div
+                class="makeStyles-circle-19"
+              />
+              <mock-typography
+                classname="makeStyles-chipText-18"
+              >
+                LIVE
+              </mock-typography>
+            </a>
           </div>
         </div>
       </div>

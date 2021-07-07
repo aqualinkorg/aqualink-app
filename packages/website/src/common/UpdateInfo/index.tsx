@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import UpdateIcon from "@material-ui/icons/Update";
-import { Link } from "react-router-dom";
+import Chip from "../Chip";
 
 const UpdateInfo = ({
   relativeTime,
@@ -50,33 +50,12 @@ const UpdateInfo = ({
         </Grid>
       </Grid>
     </Grid>
-    <Grid className={classes.nooaChip} item>
-      <Grid container alignItems="center" justify="center">
-        {live ? (
-          <>
-            <div className={classes.circle} />
-            <Typography className={classes.nooaChipText}>LIVE</Typography>
-          </>
-        ) : (
-          <Link
-            to={{ pathname: href }}
-            target="_blank"
-            className={classes.nooaLink}
-          >
-            <Typography className={classes.nooaChipText}>
-              {imageText}
-            </Typography>
-            {image && (
-              <img
-                className={classes.sensorImage}
-                alt="sensor-type"
-                src={image}
-              />
-            )}
-          </Link>
-        )}
-      </Grid>
-    </Grid>
+    <Chip
+      live={live}
+      href={live ? undefined : href}
+      image={image}
+      imageText={imageText}
+    />
   </Grid>
 );
 
@@ -100,43 +79,6 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.between("md", "md")]: {
         fontSize: 8.5,
       },
-    },
-    nooaChip: {
-      backgroundColor: "#dddddd",
-      borderRadius: 8,
-      height: 24,
-      width: 60,
-      display: "flex",
-      [theme.breakpoints.between("md", "md")]: {
-        width: 48,
-      },
-    },
-    nooaLink: {
-      display: "flex",
-      alignItems: "center",
-      textDecoration: "none",
-      color: "inherit",
-      "&:hover": {
-        textDecoration: "none",
-        color: "inherit",
-      },
-    },
-    nooaChipText: {
-      fontSize: 9,
-      [theme.breakpoints.between("md", "md")]: {
-        fontSize: 7,
-      },
-    },
-    sensorImage: {
-      height: 18,
-      width: 18,
-    },
-    circle: {
-      backgroundColor: "#51DD00",
-      borderRadius: "50%",
-      height: 8.4,
-      width: 8.4,
-      marginRight: 5,
     },
   });
 

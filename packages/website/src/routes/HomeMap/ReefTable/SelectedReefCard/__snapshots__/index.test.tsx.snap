@@ -46,19 +46,27 @@ exports[`renders as expected 1`] = `
             <mock-hidden
               xsdown="false"
             >
-              <mock-typography
-                classname="makeStyles-cardTitle-9"
-                color="textSecondary"
-                variant="h5"
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
-                <span
-                  title="Hawaii"
+                <div
+                  class="MuiGrid-root makeStyles-cardTitleWrapper-9 MuiGrid-item"
                 >
-                  Hawaii
-                </span>
-              </mock-typography>
+                  <mock-typography
+                    classname="makeStyles-cardTitle-10"
+                    color="textSecondary"
+                    variant="h5"
+                  >
+                    <span
+                      title="Hawaii"
+                    >
+                      Hawaii
+                    </span>
+                  </mock-typography>
+                </div>
+              </div>
               <mock-typography
-                classname="makeStyles-cardTitle-9 makeStyles-reefRegionName-8"
+                classname="makeStyles-cardTitle-10 makeStyles-reefRegionName-8"
                 color="textSecondary"
                 variant="h6"
               >
@@ -168,7 +176,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-13"
+    classname="makeStyles-card-14"
   >
     <mock-box
       mb="2"
@@ -183,7 +191,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-16"
+            class="MuiSvgIcon-root makeStyles-launchIcon-17"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -196,7 +204,7 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-10 makeStyles-mobileCardWrapperWithNoImage-12 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-11 makeStyles-mobileCardWrapperWithNoImage-13 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-lg-10"
@@ -211,19 +219,27 @@ exports[`renders loading as expected 1`] = `
             <mock-hidden
               xsdown="false"
             >
-              <mock-typography
-                classname="makeStyles-cardTitle-18"
-                color="textSecondary"
-                variant="h5"
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
-                <span
-                  title="Hawaii"
+                <div
+                  class="MuiGrid-root makeStyles-cardTitleWrapper-19 MuiGrid-item"
                 >
-                  Hawaii
-                </span>
-              </mock-typography>
+                  <mock-typography
+                    classname="makeStyles-cardTitle-20"
+                    color="textSecondary"
+                    variant="h5"
+                  >
+                    <span
+                      title="Hawaii"
+                    >
+                      Hawaii
+                    </span>
+                  </mock-typography>
+                </div>
+              </div>
               <mock-typography
-                classname="makeStyles-cardTitle-18 makeStyles-reefRegionName-17"
+                classname="makeStyles-cardTitle-20 makeStyles-reefRegionName-18"
                 color="textSecondary"
                 variant="h6"
               >
@@ -257,7 +273,7 @@ exports[`renders loading as expected 1`] = `
           style="display: flex;"
         >
           <div
-            class="makeStyles-metricsContainer-15"
+            class="makeStyles-metricsContainer-16"
           >
             <div>
               <mock-typography

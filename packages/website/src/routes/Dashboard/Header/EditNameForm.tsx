@@ -16,7 +16,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 import { useDispatch } from "react-redux";
 
 import TextField from "../../../common/Forms/TextField";
-import { useFormField } from "../../../common/Forms/useFormField";
+import { useFormField } from "../../../hooks/useFormField";
 import { User } from "../../../store/User/types";
 import collectionServices from "../../../services/collectionServices";
 import { setName } from "../../../store/Collection/collectionSlice";
