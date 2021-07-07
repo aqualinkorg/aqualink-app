@@ -132,12 +132,14 @@ const ReefTableBody = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
+  const mapElement = document.getElementById("sites-map");
+
   const handleClick = (event: unknown, reef: Row) => {
     setSelectedRow(reef.tableData.id);
     dispatch(setSearchResult());
     dispatch(setReefOnMap(reefsList[reef.tableData.id]));
-    if (scrollPageOnSelection) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (scrollPageOnSelection && mapElement) {
+      mapElement.scrollIntoView({ block: "center", behavior: "smooth" });
     }
   };
 
@@ -292,7 +294,7 @@ ReefTableBody.defaultProps = {
   isExtended: false,
   collection: undefined,
   scrollTableOnSelection: true,
-  scrollPageOnSelection: undefined,
+  scrollPageOnSelection: false,
 };
 
 type ReefTableBodyProps = WithStyles<typeof styles> &
