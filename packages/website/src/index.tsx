@@ -16,7 +16,7 @@ import { setToken } from "./store/User/userSlice";
 if (app) {
   app.auth().onAuthStateChanged((user) => {
     if (user) {
-      requestsConfig.agent.interceptors.response.use(
+      requestsConfig.agent().interceptors.response.use(
         (response: AxiosResponse) => Promise.resolve(response),
         async (error: AxiosError) => {
           const { config, status } = error?.response || {};
@@ -35,7 +35,7 @@ if (app) {
                   Authorization: `Bearer ${newToken}`,
                 },
               };
-              return requestsConfig.agent.request(newConfig);
+              return requestsConfig.agent().request(newConfig);
             }
             return Promise.reject(error);
           }
