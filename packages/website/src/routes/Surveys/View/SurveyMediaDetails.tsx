@@ -8,7 +8,6 @@ import {
   Grid,
   Typography,
   CardMedia,
-  Box,
   Tooltip,
   IconButton,
   CircularProgress,
@@ -85,71 +84,79 @@ const SurveyMediaDetails = ({
 
           return (
             <div key={point.name}>
-              <Grid className={classes.title} container item xs={12}>
-                <Grid
-                  container
-                  item
-                  alignItems="baseline"
-                  xs={12}
-                  md={6}
-                  lg={4}
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Typography variant="h6">Survey Point: </Typography>
-                  </Grid>
-                  {point.pointId ? (
-                    <Tooltip title="View survey point" arrow placement="top">
-                      <Grid item>
-                        <Link
-                          className={classes.link}
-                          to={`/reefs/${reefId}/points/${point.pointId}`}
-                        >
-                          <Typography
-                            className={`${classes.titleName} ${
-                              point.name === selectedPoi && classes.selectedPoi
-                            }`}
-                            variant="h6"
+              <Grid
+                className={classes.title}
+                container
+                spacing={3}
+                alignItems="center"
+              >
+                <Grid className={classes.surveyPointNameWrapper} item>
+                  <Grid container spacing={1} alignItems="baseline">
+                    <Grid item>
+                      <Typography variant="h6">Survey Point: </Typography>
+                    </Grid>
+                    {point.pointId ? (
+                      <Tooltip title="View survey point" arrow placement="top">
+                        <Grid className={classes.surveyPointName} item>
+                          <Link
+                            className={classes.link}
+                            to={`/reefs/${reefId}/points/${point.pointId}`}
                           >
-                            {point.name}
-                          </Typography>
-                        </Link>
-                      </Grid>
-                    </Tooltip>
-                  ) : (
-                    <Typography
-                      className={`${classes.titleName} ${
-                        point.name === selectedPoi && classes.selectedPoi
-                      }`}
-                      variant="h6"
-                    >
-                      {point.name}
-                    </Typography>
-                  )}
-                </Grid>
-                <Grid container item xs={12} md={6} lg={2} spacing={2}>
-                  <Grid item xs={6} className={classes.imageLabel}>
-                    <Typography variant="subtitle1">
-                      {`${images} image`}
-                      {images === 1 ? "" : "s"}
-                    </Typography>
-                    <Box pl={2}>
-                      <PermMediaIcon />
-                    </Box>
+                            <Typography
+                              className={`${classes.titleName} ${
+                                point.name === selectedPoi &&
+                                classes.selectedPoi
+                              }`}
+                              variant="h6"
+                            >
+                              {point.name}
+                            </Typography>
+                          </Link>
+                        </Grid>
+                      </Tooltip>
+                    ) : (
+                      <Typography
+                        className={`${classes.titleName} ${
+                          point.name === selectedPoi && classes.selectedPoi
+                        }`}
+                        variant="h6"
+                      >
+                        {point.name}
+                      </Typography>
+                    )}
                   </Grid>
-                  {videos > 0 && (
-                    <Grid container item xs={6} spacing={1}>
-                      <Grid item>
-                        <Typography variant="subtitle1">
-                          {`${videos} video`}
-                          {videos === 1 ? "" : "s"}
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <VideoLibraryIcon />
+                </Grid>
+                <Grid item>
+                  <Grid container alignItems="center" spacing={2}>
+                    <Grid item>
+                      <Grid container alignItems="center" spacing={1}>
+                        <Grid item>
+                          <Typography variant="subtitle1">
+                            {`${images} image`}
+                            {images === 1 ? "" : "s"}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                          <PermMediaIcon />
+                        </Grid>
                       </Grid>
                     </Grid>
-                  )}
+                    {videos > 0 && (
+                      <Grid item>
+                        <Grid container alignItems="center" spacing={1}>
+                          <Grid item>
+                            <Typography variant="subtitle1">
+                              {`${videos} video`}
+                              {videos === 1 ? "" : "s"}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <VideoLibraryIcon />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    )}
+                  </Grid>
                 </Grid>
               </Grid>
               <Slider className={classes.carousel} {...carouselSettings}>
@@ -197,18 +204,25 @@ const SurveyMediaDetails = ({
                               xs={10}
                               justify="space-around"
                               alignItems="flex-start"
+                              spacing={2}
                             >
                               <Grid item xs={12}>
-                                <Typography variant="h6">
-                                  Image Observation
+                                <Typography
+                                  className={classes.descriptionTitle}
+                                  variant="h6"
+                                >
+                                  IMAGE OBSERVATION
                                 </Typography>
                                 <Typography variant="subtitle1">
                                   {findOption(media.observations)}
                                 </Typography>
                               </Grid>
                               <Grid item xs={12}>
-                                <Typography variant="h6">
-                                  Image Comments
+                                <Typography
+                                  className={classes.descriptionTitle}
+                                  variant="h6"
+                                >
+                                  IMAGE COMMENTS
                                 </Typography>
                                 <Typography variant="subtitle1">
                                   {media.comments}
@@ -275,6 +289,19 @@ const styles = (theme: Theme) =>
       fontStyle: "normal",
       lineHeight: 1.56,
       letterSpacing: "normal",
+    },
+    surveyPointNameWrapper: {
+      maxWidth: "70%",
+      [theme.breakpoints.down("sm")]: {
+        maxWidth: "90%",
+      },
+    },
+    surveyPointName: {
+      maxWidth: "75%",
+      overflowWrap: "break-word",
+    },
+    descriptionTitle: {
+      fontSize: 18,
     },
     selectedPoi: {
       color: theme.palette.primary.main,
