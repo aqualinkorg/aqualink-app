@@ -180,14 +180,12 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                     direction="column"
                     item
                     spacing={3}
-                    alignItems={isOceanSense ? "flex-start" : "center"}
+                    alignItems="flex-start"
                   >
                     <Grid item>
                       <Tooltip title={item.tooltip || ""}>
                         <Typography
-                          className={classNames({
-                            [classes.extraPadding]: isOceanSense,
-                          })}
+                          className={classes.values}
                           style={{
                             color: item.color,
                           }}
@@ -200,7 +198,10 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                     {item.rows.map(({ key, value }) => (
                       <Grid key={key} item>
                         <Typography
-                          className={classes.values}
+                          className={classNames(
+                            classes.values,
+                            classes.lightFont
+                          )}
                           variant="h5"
                           color="textSecondary"
                         >
@@ -241,12 +242,15 @@ const styles = (theme: Theme) =>
     metricsTitle: {
       position: "relative",
       bottom: 7,
+      left: -12,
       width: "auto",
     },
-    values: {
+    lightFont: {
       fontWeight: 300,
+    },
+    values: {
       // ensures metric numbers aren't too close together on mobile
-      margin: "0 4px",
+      margin: theme.spacing(0, 0.5),
     },
 
     extraPadding: {
