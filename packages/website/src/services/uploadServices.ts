@@ -1,20 +1,17 @@
-import axios from "axios";
+import requests from "../helpers/requests";
 
 const uploadMedia = (
   formData: FormData,
   reefId: string,
   token?: string | null
 ) =>
-  axios({
+  requests.send<string>({
     method: "POST",
-    url: `${process.env.REACT_APP_API_BASE_URL}reefs/${reefId}/surveys/upload`,
+    url: `reefs/${reefId}/surveys/upload`,
     data: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((response) => {
-    return response;
+    token,
+    contentType: "multipart/form-data",
+    responseType: "text",
   });
 
 export default { uploadMedia };
