@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <div
+    class="MuiGrid-root makeStyles-chip-1 makeStyles-chip-6 MuiGrid-item"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+    >
+      <a
+        class="makeStyles-link-4"
+        href="/"
+      >
+        <div
+          class="makeStyles-circle-3"
+        />
+        <mock-typography
+          classname="makeStyles-chipText-2"
+        >
+          LIVE
+        </mock-typography>
+      </a>
+    </div>
+  </div>
+</div>
+`;

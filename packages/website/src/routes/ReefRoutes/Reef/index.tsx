@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
 import {
   withStyles,
@@ -37,6 +36,8 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
+import { useLiveStreamCheck } from "../../../hooks/useLiveStreamCheck";
+import { getYouTubeVideoId } from "../../../helpers/video";
 
 const getAlertMessage = (
   user: User | null,
@@ -102,7 +103,10 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon } = reefDetails || {};
+  const { id, liveData, dailyData, surveyPoints, polygon, videoStream } =
+    reefDetails || {};
+
+  const isStreamLive = useLiveStreamCheck(getYouTubeVideoId(videoStream));
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -175,6 +179,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               reef={{
                 ...reefDetails,
                 featuredImage: url,
+                videoStream: isStreamLive ? reefDetails.videoStream : null,
               }}
               closestSurveyPointId={
                 closestSurveyPointId ? `${closestSurveyPointId}` : undefined

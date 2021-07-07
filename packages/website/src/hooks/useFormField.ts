@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
 
-import validators from "../../helpers/validators";
+import validators from "../helpers/validators";
 
 export interface FormField {
   value: string;

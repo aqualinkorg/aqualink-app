@@ -27,7 +27,7 @@ import {
   reefsListLoadingSelector,
 } from "../../../store/Reefs/reefsListSlice";
 import EnhancedTableHead from "./tableHead";
-import { useWindowSize } from "../../../helpers/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 import {
   reefOnMapSelector,
   setWithSpotterOnly,
