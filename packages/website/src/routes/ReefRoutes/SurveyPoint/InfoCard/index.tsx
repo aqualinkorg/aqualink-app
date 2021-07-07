@@ -20,7 +20,7 @@ import EditForm from "./EditForm";
 import Info from "./Info";
 import Map from "./Map";
 import { Reef } from "../../../../store/Reefs/types";
-import { useFormField } from "../../../../common/Forms/useFormField";
+import { useFormField } from "../../../../hooks/useFormField";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import surveyServices from "../../../../services/surveyServices";
 import { setReefPois } from "../../../../store/Reefs/selectedReefSlice";

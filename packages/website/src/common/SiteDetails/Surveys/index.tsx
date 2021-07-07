@@ -30,7 +30,7 @@ import reefServices from "../../../services/reefServices";
 import { Reef } from "../../../store/Reefs/types";
 import { isAdmin } from "../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../Dialog";
-import { useBodyLength } from "../../../helpers/useBodyLength";
+import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
 
 const Surveys = ({ reef, classes }: SurveysProps) => {

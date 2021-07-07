@@ -64,7 +64,8 @@
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
     "typescript": "~3.8.2",
-    "validator": "^13.1.1"
+    "validator": "^13.1.1",
+    "youtube-v3-api": "^1.1.1"
   },
   "jest": {
     "snapshotSerializers": [
