@@ -17,11 +17,19 @@ const darkGreyBlue = "#2d3436";
 const black = "#2f2f2f";
 const white = "#ffffff";
 const lightGray = "#939393";
+const specialSensorColor = "#f78c21";
 
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
 
-export const colors = { skyBlue, lightBlue, lighterBlue, darkGreyBlue, black };
+export const colors = {
+  skyBlue,
+  lightBlue,
+  lighterBlue,
+  darkGreyBlue,
+  black,
+  specialSensorColor,
+};
 
 const breakpoints = createBreakpoints({});
 

@@ -1,5 +1,7 @@
 const { Chart } = require("react-chartjs-2");
-
+/**
+ * Adds the subtle alternating rectangles in the background of the chart
+ */
 const plugin = {
   id: "chartJsPluginBarchartBackground",
   beforeDraw(chart: any, _easingValue: any, options: any) {

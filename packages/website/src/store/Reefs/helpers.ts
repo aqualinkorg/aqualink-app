@@ -6,7 +6,11 @@ import type {
   CollectionDataResponse,
   Metrics,
   MetricsKeys,
+  OceanSenseData,
+  OceanSenseDataResponse,
+  OceanSenseKeys,
   Reef,
+  SofarValue,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
@@ -109,3 +113,24 @@ export const mapTimeSeriesDataRanges = (
   sofarNoaa: mapMetrics(ranges.noaa),
   sofarGfs: mapMetrics(ranges.gfs),
 });
+
+const mapOceanSenseMetric = (
+  response: OceanSenseDataResponse,
+  key: OceanSenseKeys
+): SofarValue[] =>
+  response.data[key].map((value, index) => ({
+    value,
+    timestamp: response.timestamps[index],
+  }));
+
+export const mapOceanSenseData = (
+  response: OceanSenseDataResponse
+): OceanSenseData => {
+  return {
+    DO: mapOceanSenseMetric(response, "DO"),
+    EC: mapOceanSenseMetric(response, "EC"),
+    ORP: mapOceanSenseMetric(response, "ORP"),
+    PH: mapOceanSenseMetric(response, "PH"),
+    PRESS: mapOceanSenseMetric(response, "PRESS"),
+  };
+};

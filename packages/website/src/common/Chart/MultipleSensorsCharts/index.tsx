@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   Container,
   createStyles,
   Grid,
@@ -14,9 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
 import Chart from "./Chart";
-import TempAnalysis from "./TempAnalysis";
+import AnalysisCard from "./AnalysisCard";
 import {
   reefGranularDailyDataSelector,
+  reefOceanSenseDataRequest,
+  reefOceanSenseDataSelector,
   reefTimeSeriesDataRangeSelector,
   reefTimeSeriesDataRequest,
   reefTimeSeriesDataSelector,
@@ -28,22 +31,29 @@ import {
   setTimeZone,
   subtractFromDate,
 } from "../../../helpers/dates";
-import { findCardDataset, findDataLimits, localizedEndOfDay } from "./helpers";
+import {
+  constructOceanSenseDatasets,
+  findCardDataset,
+  findDataLimits,
+  localizedEndOfDay,
+} from "./helpers";
 import { RangeValue } from "./types";
-import ViewRange from "./ViewRange";
+import Header from "./Header";
 import DownloadCSVButton from "./DownloadCSVButton";
+import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 
 const ChartWithCard = ({
   reef,
   pointId,
   surveysFiltered,
-  title,
   disableGutters,
+  displayOceanSenseCharts,
   classes,
 }: ChartWithCardProps) => {
   const dispatch = useDispatch();
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
   const timeSeriesData = useSelector(reefTimeSeriesDataSelector);
+  const oceanSenseData = useSelector(reefOceanSenseDataSelector);
   const { hobo: hoboData, spotter: spotterData } = timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const timeSeriesDataRanges = useSelector(reefTimeSeriesDataRangeSelector);
@@ -83,6 +93,8 @@ const ChartWithCard = ({
         .endOf("day")
     )
     .toISOString();
+
+  const hasOceanSenseId = Boolean(oceanSenseConfig?.[reef.id]);
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
@@ -136,9 +148,21 @@ const ChartWithCard = ({
             2,
         })
       );
+
+      if (hasOceanSenseId) {
+        dispatch(
+          reefOceanSenseDataRequest({
+            sensorID: oceanSenseConfig[reef.id],
+            startDate: reefLocalStartDate,
+            endDate: reefLocalEndDate,
+            latest: false,
+          })
+        );
+      }
     }
   }, [
     dispatch,
+    hasOceanSenseId,
     pickerEndDate,
     pickerStartDate,
     pointId,
@@ -261,11 +285,11 @@ const ChartWithCard = ({
       disableGutters={disableGutters}
       className={classes.chartWithRange}
     >
-      <ViewRange
+      <Header
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-        title={title}
+        title="TEMPERATURE ANALYSIS"
         timeSeriesDataRanges={timeSeriesDataRanges}
         timeZone={reef.timezone}
       />
@@ -295,7 +319,7 @@ const ChartWithCard = ({
         </Grid>
         {!pickerErrored && (
           <Grid className={classes.card} item>
-            <TempAnalysis
+            <AnalysisCard
               dataset={cardDataset}
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
@@ -321,10 +345,74 @@ const ChartWithCard = ({
                 pointId={pointId}
                 className={classes.button}
               />
-            </TempAnalysis>
+            </AnalysisCard>
           </Grid>
         )}
       </Grid>
+      {displayOceanSenseCharts &&
+        hasOceanSenseId &&
+        Object.values(constructOceanSenseDatasets(oceanSenseData)).map(
+          (item) => (
+            <Box mt={4} key={item.title}>
+              <Header
+                range={range}
+                onRangeChange={onRangeChange}
+                disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                title={item.title}
+                timeSeriesDataRanges={timeSeriesDataRanges}
+                timeZone={reef.timezone}
+                showRangeButtons={false}
+              />
+              <Grid
+                className={classes.chartWrapper}
+                container
+                justify="space-between"
+                item
+                spacing={1}
+              >
+                <Grid
+                  className={classnames(classes.chart, chartWidthClass)}
+                  item
+                >
+                  <Chart
+                    reef={reef}
+                    pickerStartDate={
+                      pickerStartDate || subtractFromDate(today, "week")
+                    }
+                    pickerEndDate={pickerEndDate || today}
+                    startDate={chartStartDate}
+                    endDate={chartEndDate}
+                    onStartDateChange={onPickerDateChange("start")}
+                    onEndDateChange={onPickerDateChange("end")}
+                    pickerErrored={pickerErrored}
+                    showDatePickers={false}
+                    oceanSenseData={item.data}
+                    oceanSenseDataUnit={item.unit}
+                    hideYAxisUnits
+                    displayHistoricalMonthlyMean={false}
+                  />
+                </Grid>
+                {!pickerErrored && (
+                  <Grid className={classes.card} item>
+                    <AnalysisCard
+                      dataset="oceanSense"
+                      pickerStartDate={
+                        pickerStartDate || subtractFromDate(today, "week")
+                      }
+                      pickerEndDate={pickerEndDate || today}
+                      chartStartDate={chartStartDate}
+                      chartEndDate={chartEndDate}
+                      depth={reef.depth}
+                      oceanSenseData={item.data}
+                      oceanSenseUnit={item.unit}
+                      columnJustification="flex-start"
+                    />
+                  </Grid>
+                )}
+              </Grid>
+            </Box>
+          )
+        )}
     </Container>
   );
 };
@@ -360,6 +448,7 @@ const styles = (theme: Theme) =>
     },
     card: {
       width: "fit-content",
+      minWidth: 219,
       [theme.breakpoints.down("sm")]: {
         width: "inherit",
         maxWidth: "fit-content",
@@ -373,11 +462,11 @@ interface ChartWithCardIncomingProps {
   pointId: string | undefined;
   surveysFiltered: boolean;
   disableGutters: boolean;
-  title?: string;
+  displayOceanSenseCharts?: boolean;
 }
 
 ChartWithCard.defaultProps = {
-  title: "",
+  displayOceanSenseCharts: true,
 };
 
 type ChartWithCardProps = ChartWithCardIncomingProps &

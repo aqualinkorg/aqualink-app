@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import moment from "moment";
 import {
   reefGranularDailyDataSelector,
+  reefOceanSenseDataSelector,
   reefTimeSeriesDataSelector,
 } from "../../../store/Reefs/selectedReefSlice";
 import { SofarValue } from "../../../store/Reefs/types";
@@ -13,6 +14,11 @@ type CSVDataColumn =
   | "spotterBottomTemp"
   | "spotterTopTemp"
   | "hoboTemp"
+  | "oceanSensePH"
+  | "oceanSenseEC"
+  | "oceanSensePRESS"
+  | "oceanSenseDO"
+  | "oceanSenseORP"
   | "dailySST";
 
 interface CSVRow extends Partial<Record<CSVDataColumn, number>> {
@@ -74,6 +80,7 @@ function DownloadCSVButton({
   pointId?: number | string;
 }) {
   const granularDailyData = useSelector(reefGranularDailyDataSelector);
+  const oceanSenseData = useSelector(reefOceanSenseDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
     useSelector(reefTimeSeriesDataSelector) || {};
   const [loading, setLoading] = useState(false);
@@ -89,6 +96,11 @@ function DownloadCSVButton({
           value: val.satelliteTemperature,
         }))
       )
+      .chained("oceanSensePH", oceanSenseData?.PH)
+      .chained("oceanSenseEC", oceanSenseData?.EC)
+      .chained("oceanSensePRESS", oceanSenseData?.PRESS)
+      .chained("oceanSenseDO", oceanSenseData?.DO)
+      .chained("oceanSenseORP", oceanSenseData?.ORP)
       .result();
   const fileName = `data_reef_${reefId}${
     pointId ? `_poi_${pointId}` : ""
