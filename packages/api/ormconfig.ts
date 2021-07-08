@@ -13,6 +13,8 @@ try {
 const env = process.env.NODE_ENV || 'development';
 
 // If we have a DATABASE_URL, use that
+// If the node_env is set to test then use the TEST_DATABASE_URL instead.
+// If no TEST_DATABASE_URL is defined then use the same connection as on development but use database TEST_POSTGRES_DATABASE
 const prefix = env === 'test' ? 'TEST_' : '';
 const connectionInfo = process.env[`${prefix}DATABASE_URL`]
   ? { url: process.env[`${prefix}DATABASE_URL`] }
