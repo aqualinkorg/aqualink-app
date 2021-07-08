@@ -9,7 +9,7 @@ import {
 
 import { Reef } from "../../../../store/Reefs/types";
 import Map from "../../../../common/SiteDetails/Map";
-import { FormField } from "../../../../common/Forms/useFormField";
+import { FormField } from "../../../../hooks/useFormField";
 
 const SurveyPointMap = ({
   reef,

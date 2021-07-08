@@ -18,7 +18,7 @@ import {
   reefDraftSelector,
   setReefDraft,
 } from "../../../../../store/Reefs/selectedReefSlice";
-import { useFormField } from "../../../../../common/Forms/useFormField";
+import { useFormField } from "../../../../../hooks/useFormField";
 
 const NUMERIC_FIELD_STEP = 1 / 10 ** 15;
 
