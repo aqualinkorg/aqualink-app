@@ -7,7 +7,7 @@ import {
   BaseTextFieldProps,
 } from "@material-ui/core";
 
-import { FormField } from "./useFormField";
+import { FormField } from "../../hooks/useFormField";
 
 const CustomTextfield = ({
   formField,

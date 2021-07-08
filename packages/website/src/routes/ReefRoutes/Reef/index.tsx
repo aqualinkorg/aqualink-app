@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React, { useEffect } from "react";
 import {
   withStyles,
@@ -41,6 +40,8 @@ import { findClosestSurveyPoint } from "../../../helpers/map";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 import { subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+import { useLiveStreamCheck } from "../../../hooks/useLiveStreamCheck";
+import { getYouTubeVideoId } from "../../../helpers/video";
 
 const getAlertMessage = (
   user: User | null,
@@ -106,8 +107,17 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
-    reefDetails || {};
+  const {
+    id,
+    liveData,
+    dailyData,
+    surveyPoints,
+    polygon,
+    timezone,
+    videoStream,
+  } = reefDetails || {};
+
+  const isStreamLive = useLiveStreamCheck(getYouTubeVideoId(videoStream));
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -195,6 +205,7 @@ const Reef = ({ match, classes }: ReefProps) => {
               reef={{
                 ...reefDetails,
                 featuredImage: url,
+                videoStream: isStreamLive ? reefDetails.videoStream : null,
               }}
               closestSurveyPointId={
                 closestSurveyPointId ? `${closestSurveyPointId}` : undefined

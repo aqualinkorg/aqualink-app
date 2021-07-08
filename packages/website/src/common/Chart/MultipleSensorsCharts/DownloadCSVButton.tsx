@@ -130,8 +130,8 @@ function DownloadCSVButton({
 }
 
 DownloadCSVButton.defaultProps = {
-  startDate: "unknown",
-  endDate: "unknown",
+  startDate: undefined,
+  endDate: undefined,
   pointId: undefined,
   reefId: undefined,
   className: undefined,

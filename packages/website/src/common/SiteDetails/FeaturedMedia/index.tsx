@@ -18,6 +18,16 @@ import reefImage from "../../../assets/reef-image.jpg";
 import uploadIcon from "../../../assets/icon_upload.svg";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import { convertOptionsToQueryParams } from "../../../helpers/video";
+
+const playerOptions = {
+  autoplay: 1,
+  mute: 1,
+  controls: 0,
+  modestbranding: 1,
+  fs: 0,
+  playsinline: 1,
+};
 
 const FeaturedMedia = ({
   reefId,
@@ -34,8 +44,8 @@ const FeaturedMedia = ({
       <Card className={classes.card}>
         <CardContent className={classes.content}>
           <CardMedia
-            src={`${url}?autoplay=1&controls=0&mute=1`}
-            className={classes.card}
+            className={classes.fullHeightAndWidth}
+            src={`${url}${convertOptionsToQueryParams(playerOptions)}`}
             component="iframe"
           />
         </CardContent>
@@ -114,6 +124,11 @@ const styles = (theme: Theme) => {
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: "blur(2px)",
+    },
+
+    fullHeightAndWidth: {
+      height: "100%",
+      width: "100%",
     },
   });
 };

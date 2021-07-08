@@ -6,6 +6,8 @@ import {
   WithStyles,
   Theme,
   Box,
+  useTheme,
+  useMediaQuery,
 } from "@material-ui/core";
 import classNames from "classnames";
 
@@ -38,6 +40,8 @@ const SiteDetails = ({
   featuredSurveyPoint,
   surveyDiveDate,
 }: SiteDetailsProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = getMiddlePoint(reef.polygon);
 
   const { dailyData, liveData, maxMonthlyMean, videoStream } = reef;
@@ -117,6 +121,7 @@ const SiteDetails = ({
   return (
     <Box mt="1.5rem">
       <Grid
+        direction={isMobile ? "column-reverse" : "row"}
         container
         justify="space-between"
         alignItems="flex-end"
@@ -126,6 +131,9 @@ const SiteDetails = ({
         })}
       >
         <CardWithTitle
+          className={classNames({
+            [classes.mobileMargin]: !!videoStream,
+          })}
           titleItems={mapTitleItems}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
@@ -139,7 +147,9 @@ const SiteDetails = ({
         </CardWithTitle>
 
         <CardWithTitle
-          className={classNames({ [classes.mediaWrapper]: !!videoStream })}
+          className={classNames({
+            [classes.mobileMargin]: !!videoStream,
+          })}
           titleItems={featuredMediaTitleItems()}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
@@ -193,9 +203,9 @@ const styles = (theme: Theme) =>
       width: `calc(100% + ${theme.spacing(2)}px)`,
       margin: -theme.spacing(1),
     },
-    mediaWrapper: {
+    mobileMargin: {
       [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(1),
+        margin: theme.spacing(1, 0),
       },
     },
     metricsWrapper: {
