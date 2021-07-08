@@ -3,7 +3,7 @@
   "rootDir": "../",
   "testEnvironment": "node",
   "testRegex": ["app.spec.ts$", "test.ts$"],
-  "testTimeout": 60000,
+  "testTimeout": 120000,
   "verbose": true,
   "collectCoverage": true,
   "coveragePathIgnorePatterns": [
