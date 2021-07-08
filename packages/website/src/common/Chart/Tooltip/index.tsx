@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
-import { isNull } from "lodash";
+import { isNull, isNumber } from "lodash";
 
 import { formatNumber } from "../../../helpers/numberUtils";
 import { displayTimeInLocalTimezone } from "../../../helpers/dates";
@@ -33,17 +33,19 @@ const TemperatureMetric = ({
   temperature,
   title,
   color,
+  unit,
   gridClassName,
 }: {
   temperature: number | null;
   title: string;
   color: string;
+  unit: string;
   gridClassName: string | undefined;
 }) => (
   <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
-      {title} {`${formatNumber(temperature, 1)} °C`}
+      {title} {`${formatNumber(temperature, 1)} ${unit}`}
     </Typography>
   </Grid>
 );
@@ -57,12 +59,15 @@ const Tooltip = ({
   spotterTopTemp,
   spotterBottomTemp,
   hoboBottomTemp,
+  oceanSense,
+  oceanSenseUnit,
   surveyId,
   reefTimeZone,
   userTimeZone,
   classes,
 }: TooltipProps) => {
-  const hasHourlyData = !isNull(spotterTopTemp) || !isNull(hoboBottomTemp);
+  const hasHourlyData =
+    !isNull(spotterTopTemp) || !isNull(hoboBottomTemp) || !isNull(oceanSense);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
     format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
@@ -75,23 +80,43 @@ const Tooltip = ({
     temperature: number | null;
     color: string;
     title: string;
+    unit: string;
   }[] = [
     {
       temperature: historicalMonthlyMeanTemp,
       color: "#d84424",
       title: "MONTHLY MEAN",
+      unit: "°C",
     },
-    { temperature: satelliteTemp, color: "#6bc1e1", title: "SURFACE" },
-    { temperature: spotterTopTemp, color: "#46a5cf", title: "BUOY 1m" },
+    {
+      temperature: satelliteTemp,
+      color: "#6bc1e1",
+      title: "SURFACE",
+      unit: "°C",
+    },
+    {
+      temperature: spotterTopTemp,
+      color: "#46a5cf",
+      title: "BUOY 1m",
+      unit: "°C",
+    },
     {
       temperature: spotterBottomTemp,
       color: "rgba(250, 141, 0)",
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
+      unit: "°C",
     },
     {
       temperature: hoboBottomTemp,
       color: "rgba(250, 141, 0)",
       title: "HOBO LOGGER",
+      unit: "°C",
+    },
+    {
+      temperature: oceanSense,
+      color: "rgba(250, 141, 0)",
+      title: "SENSOR",
+      unit: oceanSenseUnit || "",
     },
   ];
 
@@ -122,11 +147,12 @@ const Tooltip = ({
             >
               {tooltipLines.map(
                 (item) =>
-                  item.temperature && (
+                  isNumber(item.temperature) && (
                     <TemperatureMetric
                       key={item.color}
                       {...item}
                       gridClassName={classes.tooltipContentItem}
+                      unit={item.unit}
                     />
                   )
               )}
@@ -212,6 +238,8 @@ export interface TooltipData {
   spotterTopTemp: number | null;
   spotterBottomTemp: number | null;
   hoboBottomTemp: number | null;
+  oceanSense: number | null;
+  oceanSenseUnit: string | null;
   surveyId?: number | null;
   reefTimeZone?: string | null;
   userTimeZone?: string;

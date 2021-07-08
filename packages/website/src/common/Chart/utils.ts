@@ -12,6 +12,7 @@ import type {
   TimeSeries,
 } from "../../store/Reefs/types";
 import { SurveyListItem } from "../../store/Survey/types";
+import { colors } from "../../layout/App/theme";
 
 // TODO make bottom temp permanent once we work UI caveats
 export const CHART_BOTTOM_TEMP_ENABLED = false;
@@ -225,7 +226,7 @@ export const filterHistoricalMonthlyMeanData = (
 export function getSofarDataClosestToDate(
   spotterData: SofarValue[],
   date: Date,
-  maxHours: number
+  maxHours?: number
 ) {
   if (spotterData.length === 0) {
     return undefined;
@@ -237,7 +238,7 @@ export function getSofarDataClosestToDate(
       : prevClosest
   );
 
-  return timeDiff(closest.timestamp, date) < maxHours * 60 * 60 * 1000
+  return timeDiff(closest.timestamp, date) < (maxHours || 12) * 60 * 60 * 1000
     ? closest
     : undefined;
 }
@@ -247,6 +248,7 @@ export const createDatasets = (
   rawSpotterBottom: SofarValue[],
   rawSpotterTop: SofarValue[],
   rawHoboBottom: SofarValue[],
+  rawOceanSense: SofarValue[],
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   surveys: SurveyListItem[]
 ) => {
@@ -274,6 +276,11 @@ export const createDatasets = (
   }));
 
   const hoboBottom = rawHoboBottom.map((item) => ({
+    x: item.timestamp,
+    y: item.value,
+  }));
+
+  const oceanSense = rawOceanSense.map((item) => ({
     x: item.timestamp,
     y: item.value,
   }));
@@ -306,6 +313,7 @@ export const createDatasets = (
     spotterBottom,
     spotterTop,
     hoboBottom,
+    oceanSense,
     historicalMonthlyMeanTemp,
   };
 };
@@ -314,12 +322,12 @@ export const calculateAxisLimits = (
   dailyData: DailyData[],
   spotterBottomTemperature: SofarValue[],
   hoboTemperatureData: SofarValue[],
+  oceanSenseData: SofarValue[],
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   spotterTopTemperature: SofarValue[],
   surveys: SurveyListItem[],
   temperatureThreshold: number | null
 ) => {
-  const ySpacing = 1;
   const dates =
     dailyData.length > 0
       ? dailyData
@@ -345,30 +353,39 @@ export const calculateAxisLimits = (
     spotterBottom,
     spotterTop,
     hoboBottom,
+    oceanSense,
     historicalMonthlyMeanTemp,
   } = createDatasets(
     dailyData,
     spotterBottomTemperature,
     spotterTopTemperature,
     hoboTemperatureData,
+    oceanSenseData,
     historicalMonthlyMeanData,
     surveys
   );
 
-  const temperatureData = [
+  const accumulatedData = [
     ...surfaceTemperatureData,
     ...bottomTemperatureData,
     ...spotterBottom,
     ...spotterTop,
     ...hoboBottom,
+    ...oceanSense,
     ...historicalMonthlyMeanTemp,
   ]
     .filter((value) => value)
     .map((value) => value.y);
 
-  const yAxisMinTemp = Math.min(...temperatureData) - ySpacing;
+  const minValue = Math.min(...accumulatedData);
+  const maxValue = Math.max(...accumulatedData);
 
-  const yAxisMaxTemp = Math.max(...temperatureData) + ySpacing;
+  const spacingPercentage = 0.1;
+  const ySpacing = Math.ceil(spacingPercentage * (maxValue - minValue)); // Set ySpacing as a percentage of the data range
+
+  const yAxisMinTemp = minValue - ySpacing;
+
+  const yAxisMaxTemp = maxValue + ySpacing;
 
   const yAxisMin = Math.round(
     temperatureThreshold
@@ -394,6 +411,7 @@ export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
   spotterData: ChartProps["spotterData"],
   hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
+  oceanSenseData: ChartProps["oceanSenseData"],
   historicalMonthlyMeanData: ChartProps["historicalMonthlyMeanData"],
   surveys: SurveyListItem[],
   temperatureThreshold: ChartProps["temperatureThreshold"],
@@ -414,6 +432,7 @@ export function useProcessedChartData(
     bottomTemperature || [],
     topTemperature || [],
     hoboBottomTemperatureData || [],
+    oceanSenseData || [],
     historicalMonthlyMeanData || [],
     surveys
   );
@@ -422,6 +441,7 @@ export function useProcessedChartData(
     sortedFilteredDailyData,
     bottomTemperature || [],
     hoboBottomTemperatureData || [],
+    oceanSenseData || [],
     historicalMonthlyMeanData || [],
     topTemperature || [],
     surveys,
@@ -474,22 +494,23 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
   ) {
     const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
-    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "#ffffff";
+    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "white";
   }
-  return "#ffffff";
+  return "white";
 };
 
-const createGaps = (data: ChartPoint[], maxDaysGap: number): ChartPoint[] => {
+const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   const nPoints = data.length;
   if (nPoints > 0) {
     return data.reduce<ChartPoint[]>((acc, curr, currIndex) => {
-      // If current and next point differ more than maxDaysGap then
+      // If current and next point differ more than maxHoursGap then
       // insert a point in their middle with no value so that chartJS
       // will notice the gap.
       if (
         currIndex !== 0 &&
         currIndex !== nPoints - 1 &&
-        moment(data[currIndex + 1].x).diff(moment(curr.x), "days") > maxDaysGap
+        moment(data[currIndex + 1].x).diff(moment(curr.x), "hours") >
+          maxHoursGap
       ) {
         return [
           ...acc,
@@ -514,6 +535,7 @@ export const createChartData = (
   spotterBottom: ChartPoint[],
   spotterTop: ChartPoint[],
   hoboBottom: ChartPoint[],
+  oceanSense: ChartPoint[],
   tempWithSurvey: ChartPoint[],
   surfaceTemps: ChartPoint[],
   bottomTemps: ChartPoint[],
@@ -530,18 +552,18 @@ export const createChartData = (
         label: "SURVEYS",
         data: tempWithSurvey,
         pointRadius: 5,
-        backgroundColor: "#ffffff",
+        backgroundColor: "white",
         pointBackgroundColor: pointColor(surveyDate),
         borderWidth: 1.5,
         borderColor: "#128cc0",
       },
       {
         label: "SURFACE TEMP",
-        data: createGaps(surfaceTemps, 2),
+        data: createGaps(surfaceTemps, 48),
         fill,
         borderColor: "#6bc1e1",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -553,7 +575,7 @@ export const createChartData = (
         fill: false,
         borderColor: "#d84424",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
@@ -562,44 +584,55 @@ export const createChartData = (
         label: "TEMP AT DEPTH",
         data:
           CHART_BOTTOM_TEMP_ENABLED && !displaySpotterData
-            ? createGaps(bottomTemps, 2)
+            ? createGaps(bottomTemps, 48)
             : undefined,
         borderColor: "#46a5cf",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
       },
       {
         label: "HOBO BOTTOM",
-        data: createGaps(hoboBottom, 1),
+        data: createGaps(hoboBottom, 24),
         fill: false,
-        borderColor: "#f78c21",
+        borderColor: colors.specialSensorColor,
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
+        pointBorderWidth: 1.5,
+        pointRadius: 0,
+        cubicInterpolationMode: "monotone",
+      },
+      {
+        label: "OCEAN SENSE",
+        data: createGaps(oceanSense, 6),
+        fill: false,
+        borderColor: colors.specialSensorColor,
+        borderWidth: 2,
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
       },
       {
         label: "SPOTTER BOTTOM",
-        data: createGaps(spotterBottom, 1),
+        data: createGaps(spotterBottom, 24),
         fill: false,
         borderColor: "rgba(250, 141, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",
       },
       {
         label: "SPOTTER SURFACE",
-        data: createGaps(spotterTop, 1),
+        data: createGaps(spotterTop, 24),
         fill: false,
         borderColor: "#46a5cf",
         borderWidth: 2,
-        pointBackgroundColor: "#ffffff",
+        pointBackgroundColor: "white",
         pointBorderWidth: 1.5,
         pointRadius: 0,
         cubicInterpolationMode: "monotone",

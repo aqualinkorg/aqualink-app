@@ -1,3 +1,5 @@
+import { SofarValue } from "../../../store/Reefs/types";
+
 export type RangeValue = "three_months" | "one_year" | "max" | "custom";
 
 export interface RangeButton {
@@ -16,4 +18,10 @@ export interface CardColumn {
   display: boolean;
 }
 
-export type Dataset = "spotter" | "hobo" | "sst";
+export type Dataset = "spotter" | "hobo" | "sst" | "oceanSense";
+
+export interface OceanSenseDataset {
+  unit: string;
+  data: SofarValue[];
+  title: string;
+}

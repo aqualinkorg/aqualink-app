@@ -19,11 +19,6 @@ export interface Pois {
   polygon: Polygon | Point | null;
 }
 
-export interface SofarValue {
-  timestamp: string;
-  value: number;
-}
-
 export type Range = "day" | "week" | "month" | "year";
 
 export interface SpotterPosition {
@@ -100,6 +95,11 @@ export interface HistoricalMonthlyMeanData {
   date: string;
 }
 
+export interface SofarValue {
+  timestamp: string;
+  value: number;
+}
+
 interface Region {
   name: string | null;
 }
@@ -164,6 +164,21 @@ export type TimeSeriesDataRangeResponse = Record<
 >;
 
 export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
+
+export type OceanSenseKeys = "DO" | "EC" | "ORP" | "PH" | "PRESS";
+
+export interface OceanSenseDataRequestParams {
+  sensorID: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface OceanSenseDataResponse {
+  data: Record<OceanSenseKeys, number[]>;
+  timestamps: string[];
+}
+
+export type OceanSenseData = Record<OceanSenseKeys, SofarValue[]>;
 
 export interface HistoricalMonthlyMean {
   id: number;
@@ -276,6 +291,12 @@ export interface ReefsListState {
 export interface SelectedReefState {
   draft: ReefUpdateParams | null;
   details?: Reef | null;
+  latestOceanSenseData?: OceanSenseData;
+  latestOceanSenseDataLoading: boolean;
+  latestOceanSenseDataError?: string | null;
+  oceanSenseData?: OceanSenseData;
+  oceanSenseDataLoading: boolean;
+  oceanSenseDataError?: string | null;
   granularDailyData?: DailyData[];
   timeSeriesData?: TimeSeriesData;
   timeSeriesDataLoading: boolean;
