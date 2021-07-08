@@ -119,6 +119,7 @@ const HomepageMap = ({
     </div>
   ) : (
     <Map
+      id="sites-map"
       ref={ref}
       preferCanvas
       maxBoundsViscosity={1.0}

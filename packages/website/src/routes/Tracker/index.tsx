@@ -14,20 +14,50 @@ import {
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
+import FootPrintImage from "./FootPrintImage";
+
+import hero from "../../assets/img/tracker-page/hero.png";
 import image1 from "../../assets/img/tracker-page/image1.png";
 import image2 from "../../assets/img/tracker-page/image2.png";
-import footprint from "../../assets/img/tracker-page/footprint.png";
 
 const Tracker = ({ classes }: TrackerProps) => {
   return (
     <>
       <NavBar searchLocation={false} />
-      <Container className={classes.root}>
-        <Box margin="48px 0">
-          <Typography className={classes.title} variant="h2">
+      <Box className={classes.hero}>
+        <CardMedia className={classes.image} image={hero} />
+        <Container className={classes.titleWrapper}>
+          <Typography
+            className={classes.heroTitle}
+            variant="h1"
+            color="textPrimary"
+          >
             Tracking Heatwaves
           </Typography>
-        </Box>
+        </Container>
+      </Box>
+      <Container className={classes.root}>
+        <Grid
+          container
+          className={classes.header}
+          justify="space-between"
+          alignItems="flex-end"
+        >
+          <Grid item xs={12} sm={7} md={9}>
+            <Typography className={classes.title}>
+              Using Sensor Networks to Monitor Heat Waves in Real-time
+            </Typography>
+          </Grid>
+          <Grid
+            className={classes.footPrintImageWrapper}
+            item
+            xs={12}
+            sm={5}
+            md={3}
+          >
+            <FootPrintImage imageHeight={128} />
+          </Grid>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} md={5} lg={4}>
             <Typography variant="h6">
@@ -129,15 +159,6 @@ const Tracker = ({ classes }: TrackerProps) => {
                 them for their support.
               </Typography>
             </Grid>
-            <Grid item xs={12} md={3} lg={2}>
-              <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://www.footprintcoalition.com/"
-              >
-                <img src={footprint} alt="footprint" />
-              </a>
-            </Grid>
           </Grid>
         </Box>
       </Container>
@@ -150,10 +171,40 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      marginTop: theme.spacing(),
+    },
+    hero: {
+      width: "100%",
+      paddingTop: "calc(100% / (144 / 41))",
+      position: "relative",
+    },
+    heroTitle: {
+      fontWeight: 700,
+    },
+    header: {
+      margin: theme.spacing(7, 0, 5),
+      [theme.breakpoints.down("xs")]: {
+        margin: theme.spacing(4, 0, 2),
+      },
+    },
+    titleWrapper: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 48,
+      [theme.breakpoints.down("xs")]: {
+        top: 0,
+        bottom: 0,
+        display: "flex",
+        alignItems: "center",
+      },
     },
     title: {
-      fontWeight: 400,
-      fontSize: 36,
+      fontWeight: 700,
+      fontSize: 24,
+      [theme.breakpoints.up("md")]: {
+        fontSize: 32,
+      },
     },
     card1: {
       width: "100%",
@@ -179,6 +230,11 @@ const styles = (theme: Theme) =>
       "&:hover": {
         color: theme.palette.primary.main,
         textDecoration: "none",
+      },
+    },
+    footPrintImageWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        marginTop: theme.spacing(2),
       },
     },
   });
