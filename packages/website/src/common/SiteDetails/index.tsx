@@ -17,6 +17,7 @@ import Satellite from "./Satellite";
 import Sensor from "./Sensor";
 import CoralBleaching from "./CoralBleaching";
 import Waves from "./Waves";
+import OceanSenseMetrics from "./OceanSenseMetrics";
 import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
@@ -27,6 +28,7 @@ import { formatNumber } from "../../helpers/numberUtils";
 import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
+import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 
 const SiteDetails = ({
   classes,
@@ -175,6 +177,8 @@ const SiteDetails = ({
               </Grid>
             ))}
           </Grid>
+
+          {oceanSenseConfig?.[reef.id] && <OceanSenseMetrics />}
 
           <Box mt="2rem">
             <CombinedCharts

@@ -19,7 +19,10 @@ jest.mock(
   () => "Mock-FeaturedMedia"
 );
 
-jest.mock("../../../common/Chart/ChartWithCard", () => "Mock-ChartWithCard");
+jest.mock(
+  "../../../common/Chart/MultipleSensorsCharts",
+  () => "Mock-MultipleSensorsCharts"
+);
 
 jest.mock("react-chartjs-2", () => ({
   Line: () => "Mock-Line",

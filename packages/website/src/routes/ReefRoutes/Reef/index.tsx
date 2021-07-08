@@ -25,6 +25,7 @@ import {
   reefTimeSeriesDataRangeRequest,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
+  reefOceanSenseDataRequest,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -36,6 +37,9 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
 import { User } from "../../../store/User/types";
 import { findClosestSurveyPoint } from "../../../helpers/map";
+import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
+import { subtractFromDate } from "../../../helpers/dates";
+import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useLiveStreamCheck } from "../../../hooks/useLiveStreamCheck";
 import { getYouTubeVideoId } from "../../../helpers/video";
 
@@ -103,8 +107,15 @@ const Reef = ({ match, classes }: ReefProps) => {
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const reefId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon, videoStream } =
-    reefDetails || {};
+  const {
+    id,
+    liveData,
+    dailyData,
+    surveyPoints,
+    polygon,
+    timezone,
+    videoStream,
+  } = reefDetails || {};
 
   const isStreamLive = useLiveStreamCheck(getYouTubeVideoId(videoStream));
 
@@ -122,6 +133,8 @@ const Reef = ({ match, classes }: ReefProps) => {
   const hasSpotterData = Boolean(liveData?.topTemperature);
 
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
+
+  const today = localizedEndOfDay(undefined, timezone);
 
   // Fetch reef and surveys
   useEffect(() => {
@@ -146,6 +159,19 @@ const Reef = ({ match, classes }: ReefProps) => {
       );
     }
   }, [closestSurveyPointId, dispatch, id, reefId]);
+
+  useEffect(() => {
+    if (id && oceanSenseConfig?.[id] && reefId === id.toString()) {
+      dispatch(
+        reefOceanSenseDataRequest({
+          sensorID: "oceansense-2",
+          startDate: subtractFromDate(today, "month", 6),
+          endDate: today,
+          latest: true,
+        })
+      );
+    }
+  }, [dispatch, id, reefId, today]);
 
   if (loading || (!reefDetails && !error)) {
     return (
