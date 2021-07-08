@@ -174,7 +174,7 @@ export class CollectionsService {
     );
 
     const heatStressReefs = await this.reefRepository.find({
-      where: { id: In(heatStressReefIds) },
+      where: { id: In(heatStressReefIds), approved: true },
     });
 
     return this.processCollection(heatStressTracker, heatStressReefs);
