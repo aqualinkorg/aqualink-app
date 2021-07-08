@@ -48,8 +48,14 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
   // zoom in and center on reef marker when it's clicked
   useEffect(() => {
     if (map && reefOnMap?.polygon.type === "Point") {
+      const { clientHeight: mapContainerHeight } = map.getContainer();
       const [lng, lat] = reefOnMap.polygon.coordinates;
-      setCenter(map, [lat, lng], 6);
+      // Set map center a little above the reef center, by converting
+      // the desired pixels to latitude degrees, so that it fits the popup.
+      const deltaPixels = 5;
+      const maxDeltaLat = 180;
+      const deltaLat = (deltaPixels * maxDeltaLat) / mapContainerHeight;
+      setCenter(map, [lat + deltaLat, lng], 6);
     }
   }, [map, reefOnMap, setCenter]);
 
