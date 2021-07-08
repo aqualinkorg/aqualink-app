@@ -306,60 +306,60 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 class="MuiTimelineContent-root MuiTimelineItem-content"
               >
                 <div
-                  class="MuiPaper-root SurveyCard-surveyCard-38 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root SurveyCard-surveyCard-39 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root SurveyCard-cardImageWrapper-42 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root SurveyCard-cardImageWrapper-43 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                     >
                       <a
                         href="/reefs/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root SurveyCard-cardImage-39"
+                          class="MuiCardMedia-root SurveyCard-cardImage-40"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root SurveyCard-infoWrapper-43 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root SurveyCard-infoWrapper-44 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                     >
                       <div
-                        class="MuiGrid-root SurveyCard-info-48 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root SurveyCard-info-49 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-40"
+                            classname="SurveyCard-cardFields-41"
                             variant="h6"
                           >
                             User:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-41 SurveyCard-valuesWithMargin-46"
+                            classname="SurveyCard-cardValues-42 SurveyCard-valuesWithMargin-47"
                             variant="h6"
                           >
                             Joe Doe
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root SurveyCard-commentsWrapper-44 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root SurveyCard-commentsWrapper-45 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                             style="height: 80%;"
                           >
                             <mock-typography
-                              classname="SurveyCard-cardFields-40"
+                              classname="SurveyCard-cardFields-41"
                               variant="h6"
                             >
                               Comments:
                             </mock-typography>
                             <mock-typography
-                              classname="SurveyCard-cardValues-41 SurveyCard-comments-45"
+                              classname="SurveyCard-cardValues-42 SurveyCard-comments-46"
                               variant="h6"
                             >
                               No comments
@@ -370,13 +370,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-40"
+                            classname="SurveyCard-cardFields-41"
                             variant="h6"
                           >
                             Temp:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-41 SurveyCard-valuesWithMargin-46"
+                            classname="SurveyCard-cardValues-42 SurveyCard-valuesWithMargin-47"
                             variant="h6"
                           >
                             10.0 °C
@@ -433,60 +433,60 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 class="MuiGrid-root SurveyTimeline-surveyCardWrapper-23 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <div
-                  class="MuiPaper-root SurveyCard-surveyCard-38 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root SurveyCard-surveyCard-39 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root SurveyCard-cardImageWrapper-42 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root SurveyCard-cardImageWrapper-43 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                     >
                       <a
                         href="/reefs/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root SurveyCard-cardImage-39"
+                          class="MuiCardMedia-root SurveyCard-cardImage-40"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root SurveyCard-infoWrapper-43 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root SurveyCard-infoWrapper-44 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                     >
                       <div
-                        class="MuiGrid-root SurveyCard-info-48 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root SurveyCard-info-49 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-40"
+                            classname="SurveyCard-cardFields-41"
                             variant="h6"
                           >
                             User:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-41 SurveyCard-valuesWithMargin-46"
+                            classname="SurveyCard-cardValues-42 SurveyCard-valuesWithMargin-47"
                             variant="h6"
                           >
                             Joe Doe
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root SurveyCard-commentsWrapper-44 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root SurveyCard-commentsWrapper-45 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                             style="height: 80%;"
                           >
                             <mock-typography
-                              classname="SurveyCard-cardFields-40"
+                              classname="SurveyCard-cardFields-41"
                               variant="h6"
                             >
                               Comments:
                             </mock-typography>
                             <mock-typography
-                              classname="SurveyCard-cardValues-41 SurveyCard-comments-45"
+                              classname="SurveyCard-cardValues-42 SurveyCard-comments-46"
                               variant="h6"
                             >
                               No comments
@@ -497,13 +497,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-40"
+                            classname="SurveyCard-cardFields-41"
                             variant="h6"
                           >
                             Temp:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-41 SurveyCard-valuesWithMargin-46"
+                            classname="SurveyCard-cardValues-42 SurveyCard-valuesWithMargin-47"
                             variant="h6"
                           >
                             10.0 °C

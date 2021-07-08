@@ -4,7 +4,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
 <div>
   <mock-leafletpopup
     autopan="false"
-    classname="Popup-popup-3"
+    classname="Popup-popup-4"
     closebutton="false"
   >
     <mock-card>
@@ -12,7 +12,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
         class="MuiCardHeader-root Popup-popupHeader-1"
       >
         <div
-          class="MuiCardHeader-content"
+          class="MuiCardHeader-content Popup-popupHeaderContent-2"
         >
           <mock-typography
             classname="MuiCardHeader-title"

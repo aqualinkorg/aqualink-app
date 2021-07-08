@@ -140,25 +140,22 @@ const ReefNavBar = ({
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
             {!editEnabled ? (
-              <Grid item>
-                <Link
-                  style={{ color: "inherit", textDecoration: "none" }}
+              <Grid item className={classes.headerButtonWrapper}>
+                <IconButton
+                  onClick={clearReefInfo}
+                  edge="start"
+                  color="primary"
+                  aria-label="menu"
+                  component={Link}
                   to="/map"
                 >
-                  <IconButton
-                    onClick={clearReefInfo}
-                    edge="start"
-                    color="primary"
-                    aria-label="menu"
-                  >
-                    <ArrowBack />
-                  </IconButton>
-                </Link>
+                  <ArrowBack />
+                </IconButton>
               </Grid>
             ) : null}
 
             {editEnabled ? (
-              <Grid item xs={10}>
+              <Grid item xs={12}>
                 <EditForm
                   reef={reef}
                   loading={formSubmitLoading}
@@ -167,55 +164,50 @@ const ReefNavBar = ({
                 />
               </Grid>
             ) : (
-              <Grid container alignItems="center" item xs={10} spacing={1}>
-                <Grid
-                  item
-                  xs={12}
-                  md={8}
-                  container
-                  alignItems="center"
-                  spacing={3}
-                >
-                  <Grid item>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Grid container alignItems="center">
-                          <Grid item xs={10}>
-                            <Typography variant="h4">
-                              {reefName}
-                              {reefRegion && `, ${reefRegion}`}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={2}>
-                            <CollectionButton
-                              reefId={reef.id}
-                              errorCallback={() => {
-                                setAlertOpen(true);
-                                setAlertSeverity("error");
-                              }}
-                            />
-                          </Grid>
-                        </Grid>
+              <Grid
+                className={classes.headerWrapper}
+                container
+                alignItems="center"
+                item
+                spacing={1}
+              >
+                <Grid item xs={12} md={8} container alignItems="center">
+                  <Grid item xs={12}>
+                    <Grid container alignItems="baseline">
+                      <Grid className={classes.reefNameWrapper} item>
+                        <Typography variant="h4">
+                          {reefName}
+                          {reefRegion && `, ${reefRegion}`}
+                        </Typography>
                       </Grid>
-                      {organizationName && (
-                        <Grid item>
-                          <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
-                        </Grid>
-                      )}
-                      {lastSurvey && (
-                        <Grid item>
-                          <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
-                            {
-                              isoDate: lastSurvey,
-                              format: "MMM DD[,] YYYY",
-                              displayTimezone: false,
-                              timeZone: reef.timezone,
-                            }
-                          )}`}</Typography>
-                        </Grid>
-                      )}
+                      <Grid className={classes.headerButtonWrapper} item>
+                        <CollectionButton
+                          reefId={reef.id}
+                          errorCallback={() => {
+                            setAlertOpen(true);
+                            setAlertSeverity("error");
+                          }}
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
+                  {organizationName && (
+                    <Grid item xs={12}>
+                      <Typography variant="h6">{`Managed by ${organizationName}`}</Typography>
+                    </Grid>
+                  )}
+                  {lastSurvey && (
+                    <Grid item xs={12}>
+                      <Typography variant="subtitle1">{`Last surveyed: ${displayTimeInLocalTimezone(
+                        {
+                          isoDate: lastSurvey,
+                          format: "MMM DD[,] YYYY",
+                          displayTimezone: false,
+                          timeZone: reef.timezone,
+                        }
+                      )}`}</Typography>
+                    </Grid>
+                  )}
                 </Grid>
                 {isAdmin && (
                   <Grid
@@ -277,6 +269,16 @@ const styles = () =>
     },
     button: {
       minWidth: 180,
+    },
+    headerButtonWrapper: {
+      width: 48,
+    },
+    headerWrapper: {
+      maxWidth: "calc(100% - 48px)", // maximum width of 100% minus the width of the back button
+    },
+    reefNameWrapper: {
+      maxWidth: "calc(100% - 56px)", // maximum width of 100% minus the width of the collection button and its padding
+      overflowWrap: "break-word",
     },
   });
 
