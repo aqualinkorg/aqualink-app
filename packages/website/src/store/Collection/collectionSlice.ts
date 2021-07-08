@@ -11,30 +11,40 @@ const collectionInitialState: CollectionState = {
   error: null,
 };
 
+const dataGetter = ({
+  id,
+  isPublic,
+  isHeatStress,
+  token,
+}: CollectionRequestParams) => {
+  if (isHeatStress) {
+    return collectionServices.getHeatStressCollection();
+  }
+
+  return isPublic
+    ? collectionServices.getPublicCollection(id!)
+    : collectionServices.getCollection(id!, token);
+};
+
 export const collectionRequest = createAsyncThunk<
   CollectionState["details"],
   CollectionRequestParams,
   CreateAsyncThunkTypes
->(
-  "collection/request",
-  async ({ id, isPublic, token }, { rejectWithValue }) => {
-    try {
-      const { data } = isPublic
-        ? await collectionServices.getPublicCollection(id)
-        : await collectionServices.getCollection(id, token);
-      return {
-        ...data,
-        reefs: data.reefs.map((item) => ({
-          ...item,
-          collectionData: mapCollectionData(item.collectionData || {}),
-        })),
-      };
-    } catch (err) {
-      const error: AxiosError<CollectionState["error"]> = err;
-      return rejectWithValue(error.message);
-    }
+>("collection/request", async (params, { rejectWithValue }) => {
+  try {
+    const { data } = await dataGetter(params);
+    return {
+      ...data,
+      reefs: data.reefs.map((item) => ({
+        ...item,
+        collectionData: mapCollectionData(item.collectionData || {}),
+      })),
+    };
+  } catch (err) {
+    const error: AxiosError<CollectionState["error"]> = err;
+    return rejectWithValue(error.message);
   }
-);
+});
 
 const collectionSlice = createSlice({
   name: "collection",
