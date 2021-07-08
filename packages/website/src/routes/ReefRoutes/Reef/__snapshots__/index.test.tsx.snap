@@ -2033,11 +2033,10 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
           >
             Mock-Line
           </div>
-          <mock-chartwithcard
+          <mock-multiplesensorscharts
             disablegutters="true"
             reef="[object Object]"
             surveysfiltered="false"
-            title="TEMPERATURE ANALYSIS"
           />
         </div>
         <mock-dialog

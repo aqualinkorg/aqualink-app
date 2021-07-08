@@ -30,6 +30,7 @@ import {
   TimeSeries,
 } from "../../../store/Reefs/types";
 import {
+  reefOceanSenseDataLoadingSelector,
   reefTimeSeriesDataLoadingSelector,
   reefTimeSeriesDataRangeLoadingSelector,
   reefTimeSeriesDataRangeSelector,
@@ -42,19 +43,25 @@ const Chart = ({
   reef,
   dailyData,
   pointId,
+  displayHistoricalMonthlyMean,
   spotterData,
   hoboBottomTemperature,
+  oceanSenseData,
+  oceanSenseDataUnit,
+  hideYAxisUnits,
   pickerStartDate,
   pickerEndDate,
   startDate,
   endDate,
   surveysFiltered,
   pickerErrored,
+  showDatePickers,
   onStartDateChange,
   onEndDateChange,
   classes,
 }: ChartProps) => {
   const theme = useTheme();
+  const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
     useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
   const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
@@ -70,7 +77,7 @@ const Chart = ({
     surveysFiltered ? pointId || -1 : -1
   );
 
-  const dailyDataSst = dailyData.map((item) => ({
+  const dailyDataSst = dailyData?.map((item) => ({
     timestamp: item.date,
     value: item.satelliteTemperature,
   }));
@@ -81,20 +88,26 @@ const Chart = ({
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
 
+  const hasOceanSenseData = !!oceanSenseData?.[1];
+
   const hasDailyData = !!dailyDataSst?.[1];
 
-  const loading = isTimeSeriesDataLoading || isTimeSeriesDataRangeLoading;
+  const loading =
+    isTimeSeriesDataLoading ||
+    isTimeSeriesDataRangeLoading ||
+    (oceanSenseData && oceanSenseDataLoading);
 
   const success =
     !pickerErrored &&
     !loading &&
-    (hasHoboData || hasSpotterData || hasDailyData);
+    (hasHoboData || hasSpotterData || hasDailyData || hasOceanSenseData);
   const warning =
     !pickerErrored &&
     !loading &&
     !hasHoboData &&
     !hasSpotterData &&
-    !hasDailyData;
+    !hasDailyData &&
+    !hasOceanSenseData;
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
@@ -154,7 +167,9 @@ const Chart = ({
               <Typography>
                 {minDateLocal && maxDateLocal
                   ? `No HOBO data available - data available from ${minDateLocal} to ${maxDateLocal}.`
-                  : "No Smart Buoy or HOBO data available in this time range."}
+                  : `No ${
+                      oceanSenseData ? "Ocean Sense" : "Smart Buoy or HOBO"
+                    } data available in this time range.`}
               </Typography>
             </Alert>
           </Box>
@@ -166,18 +181,28 @@ const Chart = ({
           className={classes.chart}
           reefId={reef.id}
           depth={reef.depth}
-          dailyData={convertDailyDataToLocalTime(dailyData, reef.timezone)}
+          dailyData={convertDailyDataToLocalTime(
+            dailyData || [],
+            reef.timezone
+          )}
           spotterData={convertTimeSeriesToLocalTime(spotterData, reef.timezone)}
           hoboBottomTemperatureData={convertSofarDataToLocalTime(
             hoboBottomTemperature || [],
             reef.timezone
           )}
-          historicalMonthlyMeanData={generateHistoricalMonthlyMeanTimestamps(
-            reef.historicalMonthlyMean,
-            startDate,
-            endDate,
-            reef.timezone
-          )}
+          historicalMonthlyMeanData={
+            displayHistoricalMonthlyMean
+              ? generateHistoricalMonthlyMeanTimestamps(
+                  reef.historicalMonthlyMean,
+                  startDate,
+                  endDate,
+                  reef.timezone
+                )
+              : undefined
+          }
+          oceanSenseData={oceanSenseData}
+          oceanSenseDataUnit={oceanSenseDataUnit}
+          hideYAxisUnits={hideYAxisUnits}
           surveys={surveys}
           temperatureThreshold={null}
           maxMonthlyMean={null}
@@ -190,7 +215,7 @@ const Chart = ({
           fill={false}
         />
       )}
-      {!isTimeSeriesDataRangeLoading && (
+      {!isTimeSeriesDataRangeLoading && showDatePickers && (
         <Grid container justify="center">
           <Grid
             className={classes.datePickersWrapper}
@@ -243,19 +268,37 @@ const styles = (theme: Theme) =>
 
 interface ChartIncomingProps {
   reef: Reef;
-  pointId: number | undefined;
-  dailyData: DailyData[];
-  spotterData: TimeSeries | undefined;
-  hoboBottomTemperature: SofarValue[] | undefined;
+  pointId?: number;
+  dailyData?: DailyData[];
+  spotterData?: TimeSeries;
+  hoboBottomTemperature?: SofarValue[];
+  oceanSenseData?: SofarValue[];
+  oceanSenseDataUnit?: string;
+  hideYAxisUnits?: boolean;
+  displayHistoricalMonthlyMean?: boolean;
   pickerStartDate: string;
   pickerEndDate: string;
   startDate: string;
   endDate: string;
   pickerErrored: boolean;
-  surveysFiltered: boolean;
+  surveysFiltered?: boolean;
+  showDatePickers?: boolean;
   onStartDateChange: (date: Date | null) => void;
   onEndDateChange: (date: Date | null) => void;
 }
+
+Chart.defaultProps = {
+  pointId: undefined,
+  dailyData: [],
+  spotterData: undefined,
+  hoboBottomTemperature: undefined,
+  oceanSenseData: undefined,
+  oceanSenseDataUnit: undefined,
+  hideYAxisUnits: false,
+  displayHistoricalMonthlyMean: true,
+  surveysFiltered: undefined,
+  showDatePickers: true,
+};
 
 type ChartProps = ChartIncomingProps & WithStyles<typeof styles>;
 

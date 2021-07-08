@@ -4,6 +4,7 @@ import {
   Card,
   createStyles,
   Grid,
+  GridProps,
   Theme,
   Tooltip,
   Typography,
@@ -12,7 +13,13 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { reefTimeSeriesDataLoadingSelector } from "../../../store/Reefs/selectedReefSlice";
+import { isNumber } from "lodash";
+import classNames from "classnames";
+
+import {
+  reefOceanSenseDataLoadingSelector,
+  reefTimeSeriesDataLoadingSelector,
+} from "../../../store/Reefs/selectedReefSlice";
 import {
   HistoricalMonthlyMeanData,
   SofarValue,
@@ -22,11 +29,12 @@ import { calculateCardMetrics } from "./helpers";
 import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn, Dataset } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
+import { colors } from "../../../layout/App/theme";
 
 const rows = ["MAX", "MEAN", "MIN"];
 
 /* eslint-disable react/prop-types */
-const TempAnalysis: FC<TempAnalysisProps> = ({
+const AnalysisCard: FC<AnalysisCardProps> = ({
   classes,
   dataset,
   pickerStartDate,
@@ -37,25 +45,35 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
   dailyDataSst,
   spotterData,
   hoboBottomTemperature,
+  oceanSenseData,
+  oceanSenseUnit,
+  columnJustification,
   historicalMonthlyMean,
   children,
 }) => {
   const loading = useSelector(reefTimeSeriesDataLoadingSelector);
+  const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
+
+  const isOceanSense = dataset === "oceanSense";
 
   const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
-    historicalMonthlyMean,
+    historicalMonthlyMean || [],
     chartStartDate,
     chartEndDate
   );
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
+  const hasOceanSenseData = !!oceanSenseData?.[1];
 
   const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
   const hasSpotterTop = !!spotterData?.topTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
   const hasDailyData = !!dailyDataSst?.[1];
 
-  const showCard = !loading && (hasHoboData || hasSpotterData || hasDailyData);
+  const showCard =
+    !loading &&
+    (!oceanSenseData || !oceanSenseDataLoading) &&
+    (hasHoboData || hasOceanSenseData || hasSpotterData || hasDailyData);
 
   if (!showCard) {
     return null;
@@ -76,9 +94,16 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     {
       title: "HOBO",
       key: "hobo",
-      color: "#f78c21",
+      color: colors.specialSensorColor,
       rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
       display: dataset === "hobo",
+    },
+    {
+      title: "SENSOR",
+      key: "oceanSense",
+      color: colors.specialSensorColor,
+      rows: calculateCardMetrics(2, oceanSenseData, "oceanSense"),
+      display: isOceanSense,
     },
     {
       title: "BUOY 1m",
@@ -90,7 +115,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
     {
       title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
       key: "spotterBottom",
-      color: "#f78c21",
+      color: colors.specialSensorColor,
       rows: calculateCardMetrics(
         2,
         spotterData?.bottomTemperature,
@@ -105,7 +130,7 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       rows: calculateCardMetrics(2, dailyDataSst, "sst"),
       display: dataset === "sst",
     },
-  ].filter((val) => val.rows[0].value);
+  ].filter((val) => isNumber(val.rows[0].value));
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
@@ -115,19 +140,20 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
       display="flex"
       justifyContent="space-between"
       flexDirection="column"
+      minWidth={220}
     >
-      <Card className={classes.tempAnalysisCard}>
+      <Card className={classes.AnalysisCardCard}>
         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
           {formattedpickerStartDate} - {formattedpickerEndDate}
         </Typography>
         <Grid
           className={classes.metricsWrapper}
           container
-          justify="space-between"
+          justify={columnJustification || "space-between"}
           alignItems="flex-end"
-          spacing={1}
+          spacing={isOceanSense ? 2 : 1}
         >
-          <Grid item>
+          <Grid item xs={isOceanSense ? 2 : undefined}>
             <Grid
               className={classes.metricsTitle}
               container
@@ -147,18 +173,19 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
           {cardColumns.map(
             (item) =>
               item.display && (
-                <Grid key={item.key} item>
+                <Grid key={item.key} item xs={isOceanSense ? 10 : undefined}>
                   <Grid
                     className={classes.autoWidth}
                     container
                     direction="column"
                     item
                     spacing={3}
-                    alignItems="center"
+                    alignItems="flex-start"
                   >
                     <Grid item>
                       <Tooltip title={item.tooltip || ""}>
                         <Typography
+                          className={classes.values}
                           style={{
                             color: item.color,
                           }}
@@ -171,11 +198,14 @@ const TempAnalysis: FC<TempAnalysisProps> = ({
                     {item.rows.map(({ key, value }) => (
                       <Grid key={key} item>
                         <Typography
-                          className={classes.values}
+                          className={classNames(
+                            classes.values,
+                            classes.lightFont
+                          )}
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} °C
+                          {formatNumber(value, 1)} {oceanSenseUnit || "°C"}
                         </Typography>
                       </Grid>
                     ))}
@@ -195,7 +225,7 @@ const styles = (theme: Theme) =>
     autoWidth: {
       width: "auto",
     },
-    tempAnalysisCard: {
+    AnalysisCardCard: {
       padding: theme.spacing(2),
       minHeight: 240,
       borderRadius: "0 4px 4px 0",
@@ -212,30 +242,40 @@ const styles = (theme: Theme) =>
     metricsTitle: {
       position: "relative",
       bottom: 7,
+      left: -12,
       width: "auto",
     },
-    values: {
+    lightFont: {
       fontWeight: 300,
+    },
+    values: {
       // ensures metric numbers aren't too close together on mobile
-      margin: "0 4px",
+      margin: theme.spacing(0, 0.5),
+    },
+
+    extraPadding: {
+      paddingLeft: theme.spacing(1),
     },
   });
 
-interface TempAnalysisProps
-  extends TempAnalysisIncomingProps,
+interface AnalysisCardProps
+  extends AnalysisCardIncomingProps,
     WithStyles<typeof styles> {}
 
-interface TempAnalysisIncomingProps {
+interface AnalysisCardIncomingProps {
   dataset: Dataset;
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
   depth: number | null;
-  dailyDataSst: SofarValue[];
-  spotterData: TimeSeries | undefined;
-  hoboBottomTemperature: SofarValue[];
-  historicalMonthlyMean: HistoricalMonthlyMeanData[];
+  dailyDataSst?: SofarValue[];
+  spotterData?: TimeSeries;
+  hoboBottomTemperature?: SofarValue[];
+  oceanSenseData?: SofarValue[];
+  oceanSenseUnit?: string;
+  columnJustification?: GridProps["justify"];
+  historicalMonthlyMean?: HistoricalMonthlyMeanData[];
 }
 
-export default withStyles(styles)(TempAnalysis);
+export default withStyles(styles)(AnalysisCard);

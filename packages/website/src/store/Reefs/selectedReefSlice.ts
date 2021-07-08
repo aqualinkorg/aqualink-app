@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
 import type {
+  OceanSenseData,
+  OceanSenseDataRequestParams,
   Pois,
   ReefUpdateParams,
   SelectedReefState,
@@ -10,13 +12,21 @@ import type {
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
-import { mapTimeSeriesData, mapTimeSeriesDataRanges } from "./helpers";
+import {
+  mapOceanSenseData,
+  mapTimeSeriesData,
+  mapTimeSeriesDataRanges,
+} from "./helpers";
 
 const selectedReefInitialState: SelectedReefState = {
   draft: null,
   loading: true,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
+  latestOceanSenseDataLoading: false,
+  latestOceanSenseDataError: null,
+  oceanSenseDataLoading: false,
+  oceanSenseDataError: null,
   error: null,
 };
 
@@ -54,6 +64,23 @@ export const reefRequest = createAsyncThunk<
     return rejectWithValue(error.message);
   }
 });
+
+export const reefOceanSenseDataRequest = createAsyncThunk<
+  { data: OceanSenseData; latest?: boolean },
+  OceanSenseDataRequestParams & { latest?: boolean },
+  CreateAsyncThunkTypes
+>(
+  "selectedReef/oceanSenseDataRequest",
+  async ({ latest, ...params }, { rejectWithValue }) => {
+    try {
+      const { data } = await reefServices.getOceanSenseData(params);
+      return { data: mapOceanSenseData(data), latest };
+    } catch (err) {
+      const error: AxiosError<SelectedReefState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const reefTimeSeriesDataRequest = createAsyncThunk<
   {
@@ -199,6 +226,64 @@ const selectedReefSlice = createSlice({
     });
 
     builder.addCase(
+      reefOceanSenseDataRequest.fulfilled,
+      (
+        state,
+        action: PayloadAction<{ data: OceanSenseData; latest?: boolean }>
+      ) => ({
+        ...state,
+        latestOceanSenseData: action.payload.latest
+          ? action.payload.data
+          : state.latestOceanSenseData,
+        latestOceanSenseDataLoading: action.payload.latest
+          ? false
+          : state.latestOceanSenseDataLoading,
+        oceanSenseData: !action.payload.latest
+          ? action.payload.data
+          : state.oceanSenseData,
+        oceanSenseDataLoading: !action.payload.latest
+          ? false
+          : state.oceanSenseDataLoading,
+      })
+    );
+
+    builder.addCase(reefOceanSenseDataRequest.rejected, (state, action) => {
+      return {
+        ...state,
+        latestOceanSenseDataError: action.meta.arg.latest
+          ? action.error.message
+          : state.latestOceanSenseDataError,
+        latestOceanSenseDataLoading: action.meta.arg.latest
+          ? false
+          : state.latestOceanSenseDataLoading,
+        oceanSenseDataError: !action.meta.arg.latest
+          ? action.error.message
+          : state.oceanSenseDataError,
+        oceanSenseDataLoading: !action.meta.arg.latest
+          ? false
+          : state.oceanSenseDataLoading,
+      };
+    });
+
+    builder.addCase(reefOceanSenseDataRequest.pending, (state, action) => {
+      return {
+        ...state,
+        latestOceanSenseDataLoading: action.meta.arg.latest
+          ? true
+          : state.latestOceanSenseDataLoading,
+        latestOceanSenseDataError: action.meta.arg.latest
+          ? null
+          : state.latestOceanSenseDataError,
+        oceanSenseDataLoading: !action.meta.arg.latest
+          ? true
+          : state.oceanSenseDataLoading,
+        oceanSenseDataError: !action.meta.arg.latest
+          ? null
+          : state.oceanSenseDataError,
+      };
+    });
+
+    builder.addCase(
       reefTimeSeriesDataRequest.fulfilled,
       (
         state,
@@ -301,6 +386,35 @@ export const reefLoadingSelector = (
 export const reefErrorSelector = (
   state: RootState
 ): SelectedReefState["error"] => state.selectedReef.error;
+
+export const reefLatestOceanSenseDataSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseData"] =>
+  state.selectedReef.latestOceanSenseData;
+
+export const reefLatestOceanSenseDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseDataLoading"] =>
+  state.selectedReef.latestOceanSenseDataLoading;
+
+export const reefLatestOceanSenseDataErrorSelector = (
+  state: RootState
+): SelectedReefState["latestOceanSenseDataError"] =>
+  state.selectedReef.latestOceanSenseDataError;
+
+export const reefOceanSenseDataSelector = (
+  state: RootState
+): SelectedReefState["oceanSenseData"] => state.selectedReef.oceanSenseData;
+
+export const reefOceanSenseDataLoadingSelector = (
+  state: RootState
+): SelectedReefState["oceanSenseDataLoading"] =>
+  state.selectedReef.oceanSenseDataLoading;
+
+export const reefOceanSenseDataErrorSelector = (
+  state: RootState
+): SelectedReefState["oceanSenseDataError"] =>
+  state.selectedReef.oceanSenseDataError;
 
 export const {
   setReefDraft,
