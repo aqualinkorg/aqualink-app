@@ -4,6 +4,7 @@ import { createConnection } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
 import { runSpotterTimeSeriesUpdate } from '../src/workers/spotterTimeSeries';
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
+import { checkVideoStreams } from '../src/workers/check-video-streams';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -143,6 +144,35 @@ exports.scheduledSSTTimeSeriesUpdate = functions
     try {
       await runSSTTimeSeriesUpdate(conn);
       console.log(`SST data hourly update on ${new Date()}`);
+    } finally {
+      conn.close();
+    }
+  });
+
+exports.scheduledVideoStreamsCheck = functions
+  .runWith({ timeoutSeconds: 540 })
+  .pubsub.schedule('0 0 * * *')
+  .timeZone('America/Los_Angeles')
+  .onRun(async () => {
+    const dbUrl = functions.config().database.url;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.FIREBASE_KEY = functions.config().google.api_key;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
+    // eslint-disable-next-line fp/no-mutation
+    process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
+    const projectId: string = functions.config().google.project_id;
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+
+    try {
+      await checkVideoStreams(conn, projectId);
+      console.log(`Video stream daily check on ${new Date()}`);
     } finally {
       conn.close();
     }
