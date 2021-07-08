@@ -1087,7 +1087,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-63"
+    classname="Footer-appBar-64"
     position="static"
   >
     <mock-toolbar>
@@ -1098,7 +1098,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-64"
+            classname="Footer-navBarLink-65"
             href="/map"
           >
             <mock-typography
