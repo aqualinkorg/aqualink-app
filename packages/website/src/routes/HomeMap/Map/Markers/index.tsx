@@ -52,7 +52,7 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
       const [lng, lat] = reefOnMap.polygon.coordinates;
       // Set map center a little above the reef center, by converting
       // the desired pixels to latitude degrees, so that it fits the popup.
-      const deltaPixels = 3;
+      const deltaPixels = 5;
       const maxDeltaLat = 180;
       const deltaLat = (deltaPixels * maxDeltaLat) / mapContainerHeight;
       setCenter(map, [lat + deltaLat, lng], 6);

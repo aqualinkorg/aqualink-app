@@ -149,7 +149,11 @@ const styles = (theme: Theme) =>
     },
 
     popup: {
-      width: 250,
+      width: "12vw",
+      minWidth: 200,
+      [theme.breakpoints.up("xl")]: {
+        width: "7vw",
+      },
     },
   });
 
