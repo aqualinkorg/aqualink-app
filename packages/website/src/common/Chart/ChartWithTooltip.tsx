@@ -6,17 +6,17 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
-import { last } from "lodash";
+import { isNumber, last } from "lodash";
 import moment from "moment";
 import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData } from "./Tooltip";
 import {
-  getDailyDataClosestToDate,
-  getSofarDataClosestToDate,
-  findSurveyFromDate,
-  sameDay,
   filterDailyData,
+  findSurveyFromDate,
+  getDailyDataClosestToDate,
   getHistoricalMonthlyMeanDataClosestToDate,
+  getSofarDataClosestToDate,
+  sameDay,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -24,6 +24,14 @@ export interface ChartWithTooltipProps extends ChartProps {
   className?: string;
   style?: CSSProperties;
 }
+
+/**
+ * Gets the number of a result or null if no number was found.
+ */
+const numberOrNull = (result: { value: number } | undefined): number | null => {
+  const value = result?.value;
+  return isNumber(value) ? value : null;
+};
 
 function ChartWithTooltip({
   depth,
@@ -37,6 +45,8 @@ function ChartWithTooltip({
     dailyData,
     spotterData,
     hoboBottomTemperatureData,
+    oceanSenseData,
+    oceanSenseDataUnit,
     historicalMonthlyMeanData,
     reefId,
     surveys,
@@ -56,6 +66,8 @@ function ChartWithTooltip({
     spotterTopTemp: null,
     spotterBottomTemp: null,
     hoboBottomTemp: null,
+    oceanSense: null,
+    oceanSenseUnit: null,
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -71,6 +83,8 @@ function ChartWithTooltip({
     const date = tooltipModel.dataPoints?.[0]?.xLabel;
     if (typeof date !== "string") return;
 
+    const dateObject = new Date(date);
+
     const surveyId = findSurveyFromDate(date, surveys);
 
     const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
@@ -78,41 +92,42 @@ function ChartWithTooltip({
     const dailyDataForDate =
       // Try to find data on same day, else closest, else nothing.
       filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-      getDailyDataClosestToDate(filteredDailyData, new Date(date), 24) ||
+      getDailyDataClosestToDate(filteredDailyData, dateObject, 24) ||
       {};
     const { satelliteTemperature } = dailyDataForDate;
 
-    const historicalMonthlyMeanTemp =
-      (
-        historicalMonthlyMeanData &&
-        getHistoricalMonthlyMeanDataClosestToDate(
-          historicalMonthlyMeanData,
-          new Date(date)
-        )
-      )?.value || null;
+    const historicalMonthlyMeanTemp = numberOrNull(
+      getHistoricalMonthlyMeanDataClosestToDate(
+        historicalMonthlyMeanData || [],
+        dateObject
+      )
+    );
+
+    const spotterTopTemp = numberOrNull(
+      getSofarDataClosestToDate(
+        spotterData?.topTemperature || [],
+        dateObject,
+        6
+      )
+    );
+
+    const spotterBottomTemp = numberOrNull(
+      getSofarDataClosestToDate(
+        spotterData?.bottomTemperature || [],
+        dateObject,
+        6
+      )
+    );
+
+    const hoboBottomTemp = numberOrNull(
+      getSofarDataClosestToDate(hoboBottomTemperatureData || [], dateObject, 6)
+    );
+
+    const oceanSense = numberOrNull(
+      getSofarDataClosestToDate(oceanSenseData || [], dateObject, 6)
+    );
 
     const satelliteTemp = satelliteTemperature || null;
-
-    const spotterTopTemp =
-      (spotterData &&
-        getSofarDataClosestToDate(spotterData.topTemperature, new Date(date), 6)
-          ?.value) ||
-      null;
-
-    const spotterBottomTemp =
-      (spotterData &&
-        getSofarDataClosestToDate(
-          spotterData.bottomTemperature,
-          new Date(date),
-          6
-        )?.value) ||
-      null;
-
-    const hoboBottomTemp =
-      (hoboBottomTemperatureData &&
-        getSofarDataClosestToDate(hoboBottomTemperatureData, new Date(date), 6)
-          ?.value) ||
-      null;
 
     const nValues = [
       historicalMonthlyMeanTemp,
@@ -120,7 +135,8 @@ function ChartWithTooltip({
       spotterTopTemp,
       spotterBottomTemp,
       hoboBottomTemp,
-    ].filter(Boolean).length;
+      oceanSense,
+    ].filter(isNumber).length;
 
     const position = chart.chartInstance.canvas.getBoundingClientRect();
     const left = position.left + tooltipModel.caretX - 95;
@@ -148,6 +164,8 @@ function ChartWithTooltip({
         spotterTopTemp,
         spotterBottomTemp,
         hoboBottomTemp,
+        oceanSense,
+        oceanSenseUnit: oceanSenseDataUnit || null,
         surveyId,
       });
       setShowTooltip(true);

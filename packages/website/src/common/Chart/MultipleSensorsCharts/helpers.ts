@@ -11,11 +11,13 @@ import {
   DataRange,
   HistoricalMonthlyMean,
   HistoricalMonthlyMeanData,
+  OceanSenseData,
+  OceanSenseKeys,
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Reefs/types";
 import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn, Dataset } from "./types";
+import { CardColumn, Dataset, OceanSenseDataset } from "./types";
 
 export const calculateCardMetrics = (
   minNumberOfPoints: number,
@@ -162,3 +164,33 @@ export const localizedEndOfDay = (
     .tz(timeZone || "UTC")
     .endOf("day")
     .toISOString();
+
+export const constructOceanSenseDatasets = (
+  data?: OceanSenseData
+): Record<OceanSenseKeys, OceanSenseDataset> => ({
+  PH: {
+    data: data?.PH || [],
+    unit: "pH",
+    title: "ACIDITY (pH)",
+  },
+  EC: {
+    data: data?.EC || [],
+    unit: "μS",
+    title: "CONDUCTIVITY (μS)",
+  },
+  PRESS: {
+    data: data?.PRESS || [],
+    unit: "dbar",
+    title: "PRESSURE (dbar)",
+  },
+  DO: {
+    data: data?.DO || [],
+    unit: "mg/L",
+    title: "DISSOLVED OXYGEN (mg/L)",
+  },
+  ORP: {
+    data: data?.ORP || [],
+    unit: "mV",
+    title: "OXIDATION REDUCTION POTENTIAL (mV)",
+  },
+});
