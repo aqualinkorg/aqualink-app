@@ -42,7 +42,7 @@ interface SlackMessage {
 }
 
 const getReefFrontEndURL = (reefId: number) =>
-  `${process.env.FRONT_END_BASE_URL}/reefs/${reefId}`;
+  new URL(`reefs/${reefId}`, process.env.FRONT_END_BASE_URL).href;
 
 const fetchVideoDetails = (
   youTubeIds: string[],

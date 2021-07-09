@@ -32,6 +32,10 @@ function addTrailingSlashToUrl(url: string) {
   return url.endsWith('/') ? url : `${url}/`;
 }
 
+function hasProjectId(config): config is { projectId: string } {
+  return config && 'projectId' in config;
+}
+
 // Remove all the connection info from the dbConfig object - we want to replace it with the dbUrl input from this
 // function argument.
 const {
@@ -158,7 +162,21 @@ exports.scheduledVideoStreamsCheck = functions
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
     process.env.FRONT_END_BASE_URL = functions.config().front.base_url;
-    const projectId: string = functions.config().google.project_id;
+
+    if (!process.env.FIREBASE_CONFIG) {
+      console.error('Firebase config env variable has not be set');
+      return;
+    }
+
+    const FIREBASE_CONFIG = JSON.parse(process.env.FIREBASE_CONFIG);
+    if (!hasProjectId(FIREBASE_CONFIG)) {
+      console.error(
+        `Firebase config has not be set properly, ${process.env.FIREBASE_CONFIG}`,
+      );
+      return;
+    }
+
+    const { projectId } = FIREBASE_CONFIG;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);
     const conn = await createConnection({
