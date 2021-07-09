@@ -1,3 +1,5 @@
+/* eslint-disable fp/no-mutation */
+// We need to assign cloud env variable to node env variables
 import Axios from 'axios';
 import * as functions from 'firebase-functions';
 import { createConnection } from 'typeorm';
@@ -48,7 +50,6 @@ exports.dailyUpdate = functions
   .runWith({ timeoutSeconds: 540 })
   .https.onRequest(async (req, res) => {
     const dbUrl = functions.config().database.url;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);
@@ -72,7 +73,6 @@ exports.scheduledDailyUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);
@@ -107,7 +107,6 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);
@@ -132,7 +131,6 @@ exports.scheduledSSTTimeSeriesUpdate = functions
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);
@@ -151,16 +149,15 @@ exports.scheduledSSTTimeSeriesUpdate = functions
 
 exports.scheduledVideoStreamsCheck = functions
   .runWith({ timeoutSeconds: 540 })
+  // VideoStreamCheck will run daily at 12:00 AM
   .pubsub.schedule('0 0 * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
-    // eslint-disable-next-line fp/no-mutation
     process.env.FIREBASE_KEY = functions.config().google.api_key;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
-    // eslint-disable-next-line fp/no-mutation
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
+    process.env.FRONT_END_BASE_URL = functions.config().front.base_url;
     const projectId: string = functions.config().google.project_id;
     // eslint-disable-next-line no-undef
     const entities = dbEntities.map(extractEntityDefinition);

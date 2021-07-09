@@ -7,7 +7,10 @@ import { getYouTubeVideoId } from '../utils/urls';
 
 const logger = new Logger('CheckVideoStreams');
 
-type reefIdToYouTubeIdMap = Dictionary<{ reefId: number; url: string }>;
+type reefIdToVideoStreamDetails = Record<
+  number,
+  { id?: string; name?: string; reefId: number; url: string; error: string }
+>;
 
 // Create a basic structure for youTube response items
 interface YouTubeVideoItem {
@@ -37,6 +40,9 @@ interface SlackMessage {
     };
   }[];
 }
+
+const getReefFrontEndURL = (reefId: number) =>
+  `${process.env.FRONT_END_BASE_URL}/reefs/${reefId}`;
 
 const fetchVideoDetails = (
   youTubeIds: string[],
@@ -132,28 +138,27 @@ export const checkVideoStreams = async (
   });
 
   // Extract the youTube id from the URLs
-  const youTubeIdToVideoStreamDetails = reefsWithStream.reduce<
-    reefIdToYouTubeIdMap
+  const reefIdToVideoStreamDetails = reefsWithStream.reduce<
+    reefIdToVideoStreamDetails
   >((mapping, reef) => {
     const id = getYouTubeVideoId(reef.videoStream!);
 
-    if (!id) {
-      logger.error(
-        `No valid YouTube id could be extracted for reef with id ${reef.id} and video stream ${reef.videoStream}`,
-      );
-      return mapping;
-    }
-
     return {
       ...mapping,
-      [id]: {
+      [reef.id]: {
+        id,
+        name: reef.name,
         reefId: reef.id,
         url: reef.videoStream!,
+        // If no id exists, then url is invalid
+        error: id ? '' : 'Video stream URL is invalid',
       },
     };
   }, {});
 
-  const youTubeIds = Object.keys(youTubeIdToVideoStreamDetails);
+  const youTubeIds = Object.values(reefIdToVideoStreamDetails)
+    .map((videoStreamDetails) => videoStreamDetails.id)
+    .filter((id) => id) as string[];
 
   // Fetch the youTube video information for each id
   const axiosResponse = await fetchVideoDetails(youTubeIds, apiKey);
@@ -178,11 +183,14 @@ export const checkVideoStreams = async (
       {
         type: 'divider',
       },
-      ...youTubeIds
-        .map((id) => {
-          const { reefId, url } = youTubeIdToVideoStreamDetails[id];
+      ...Object.values(reefIdToVideoStreamDetails)
+        .map(({ id, reefId, url, name, error }) => {
+          const reportedError =
+            error ||
+            (!(id! in youTubeIdToError) && 'Video does not exist') ||
+            youTubeIdToError[id!];
 
-          if (id in youTubeIdToError && !youTubeIdToError[id]) {
+          if (!reportedError) {
             return undefined;
           }
 
@@ -190,14 +198,12 @@ export const checkVideoStreams = async (
             type: 'section',
             text: {
               type: 'mrkdwn',
-              text: !(id in youTubeIdToError)
-                ? `*ReefId*: ${reefId}\n` +
-                  `*Video Stream URL*: ${url}\n` +
-                  `*Error*: Video does not exist
-                  `
-                : `*ReefId*: ${reefId}\n` +
-                  `*Video Stream URL*: ${url}\n` +
-                  `*Error*: ${youTubeIdToError[id]}`,
+              text:
+                `*ReefId*: ${reefId}\n` +
+                `*Reef URL* ${getReefFrontEndURL(reefId)}\n` +
+                `*Reef Name*: ${name}\n` +
+                `*Video Stream URL*: ${url}\n` +
+                `*Error*: ${reportedError}`,
             },
           };
 
