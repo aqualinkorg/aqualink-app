@@ -1,50 +1,41 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 
-import collectionServices from "../../services/collectionServices";
 import { CollectionState, CollectionRequestParams } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
-import { mapCollectionData } from "../Reefs/helpers";
+import collectionServices from "../../services/collectionServices";
+import { constructCollection } from "./utils";
 
 const collectionInitialState: CollectionState = {
   loading: false,
   error: null,
 };
 
-const dataGetter = ({
-  id,
-  isPublic,
-  isHeatStress,
-  token,
-}: CollectionRequestParams) => {
-  if (isHeatStress) {
-    return collectionServices.getHeatStressCollection();
-  }
-
-  return isPublic
-    ? collectionServices.getPublicCollection(id!)
-    : collectionServices.getCollection(id!, token);
-};
-
 export const collectionRequest = createAsyncThunk<
   CollectionState["details"],
   CollectionRequestParams,
   CreateAsyncThunkTypes
->("collection/request", async (params, { rejectWithValue }) => {
-  try {
-    const { data } = await dataGetter(params);
-    return {
-      ...data,
-      reefs: data.reefs.map((item) => ({
-        ...item,
-        collectionData: mapCollectionData(item.collectionData || {}),
-      })),
-    };
-  } catch (err) {
-    const error: AxiosError<CollectionState["error"]> = err;
-    return rejectWithValue(error.message);
+>(
+  "collection/request",
+  async ({ id, isHeatStress, isPublic, token }, { rejectWithValue }) => {
+    try {
+      if (isHeatStress && !id) {
+        const { data } = await collectionServices.getHeatStressCollection();
+        return constructCollection(data);
+      }
+      if (id) {
+        const { data } = isPublic
+          ? await collectionServices.getPublicCollection(id)
+          : await collectionServices.getCollection(id, token);
+        return constructCollection(data);
+      }
+      return undefined;
+    } catch (err) {
+      const error: AxiosError<CollectionState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const collectionSlice = createSlice({
   name: "collection",
