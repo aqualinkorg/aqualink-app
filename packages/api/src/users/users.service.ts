@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeepPartial, Repository } from 'typeorm';
+import { Request } from 'express';
 import { AuthRequest } from '../auth/auth.types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
@@ -27,7 +28,7 @@ export class UsersService {
     private collectionRepository: Repository<Collection>,
   ) {}
 
-  async create(req: any, createUserDto: CreateUserDto): Promise<User> {
+  async create(req: Request, createUserDto: CreateUserDto): Promise<User> {
     const firebaseUser = await extractAndVerifyToken(req);
     if (!firebaseUser) {
       throw new BadRequestException('Invalid Firebase token.');

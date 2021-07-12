@@ -15,6 +15,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+import { Request } from 'express';
 import { UsersService } from './users.service';
 import { AdminLevel, User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,7 +36,10 @@ export class UsersController {
   @ApiOperation({ summary: 'Creates a new user' })
   @Public()
   @Post()
-  create(@Req() req: any, @Body() createUserDto: CreateUserDto): Promise<User> {
+  create(
+    @Req() req: Request,
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User> {
     return this.usersService.create(req, createUserDto);
   }
 

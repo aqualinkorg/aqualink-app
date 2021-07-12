@@ -1,13 +1,16 @@
+import { Request } from 'express';
 import admin from 'firebase-admin';
 
-const extractAuthHeaderAsBearerToken = (req: any): string | undefined => {
+const extractAuthHeaderAsBearerToken = (
+  req: Request,
+): string | null | undefined => {
   const authHeader = req.headers.authorization;
   const match = authHeader && authHeader.match(/bearer (.*)/i);
   return match && match[1];
 };
 
 export const extractAndVerifyToken = async (
-  req: any,
+  req: Request,
 ): Promise<admin.auth.DecodedIdToken | undefined> => {
   const token = extractAuthHeaderAsBearerToken(req);
   if (!token) {
