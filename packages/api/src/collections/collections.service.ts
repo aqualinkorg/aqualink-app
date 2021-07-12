@@ -126,9 +126,13 @@ export class CollectionsService {
   }
 
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
-    // No need to check if collectionId exists because the collection guard ensures
-    // that a collection with this collectionId exists
     const collection = await this.collectionRepository.findOne(collectionId);
+
+    if (!collection) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
 
     const {
       name,
@@ -139,7 +143,7 @@ export class CollectionsService {
     } = updateCollectionDto;
 
     const filteredAddReefIds = addReefIds?.filter(
-      (reefId) => !collection!.reefIds.includes(reefId),
+      (reefId) => !collection.reefIds.includes(reefId),
     );
 
     await this.collectionRepository
@@ -162,8 +166,12 @@ export class CollectionsService {
   }
 
   async delete(collectionId: number) {
-    // No need to check if collectionId exists because the collection guard ensures
-    // that a collection with this collectionId exists
-    await this.collectionRepository.delete(collectionId);
+    const result = await this.collectionRepository.delete(collectionId);
+
+    if (!result.affected) {
+      throw new NotFoundException(
+        `Collection with ID ${collectionId} not found.`,
+      );
+    }
   }
 }

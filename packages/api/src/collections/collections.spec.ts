@@ -66,7 +66,7 @@ export const collectionTests = () => {
     };
   });
 
-  describe('Create a test collection', () => {
+  describe('Test main collection flow', () => {
     it('POST / creates a new collection', async () => {
       mockExtractAndVerifyToken(adminFirebaseUserMock);
 

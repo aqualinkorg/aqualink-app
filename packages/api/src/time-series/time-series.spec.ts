@@ -12,14 +12,16 @@ import {
   spotterMetrics,
 } from '../../test/mock/time-series.mock';
 
+type StringDateRange = [string, string];
+
 export const timeSeriesTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
-  let poiDataRange: [string, string] = [
+  let poiDataRange: StringDateRange = [
     new Date().toISOString(),
     new Date(0).toISOString(),
   ];
-  let reefDataRange: [string, string] = [
+  let reefDataRange: StringDateRange = [
     new Date().toISOString(),
     new Date(0).toISOString(),
   ];

@@ -18,14 +18,16 @@ import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { Observations } from './survey-media.entity';
 import { floridaPoiOne } from '../../test/mock/poi.mock';
 
+const createSurveyDto: CreateSurveyDto = {
+  diveDate: new Date(),
+  weatherConditions: WeatherConditions.Stormy,
+  comments: 'No comments',
+};
+
 export const surveyTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
-  const createSurveyDto: CreateSurveyDto = {
-    diveDate: new Date(),
-    weatherConditions: WeatherConditions.Stormy,
-    comments: 'No comments',
-  };
+
   let createSurveyFeaturedMediaDto: CreateSurveyMediaDto;
   let createSurveyOverrideMediaDto: CreateSurveyMediaDto;
   let createSurveyHiddenMediaDto: CreateSurveyMediaDto;

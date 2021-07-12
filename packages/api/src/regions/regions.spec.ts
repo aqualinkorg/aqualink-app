@@ -7,20 +7,20 @@ import { CreateRegionDto } from './dto/create-region.dto';
 import { mockExtractAndVerifyToken } from '../../test/utils';
 import { adminFirebaseUserMock } from '../../test/mock/user.mock';
 
+const createParentRegionDto: CreateRegionDto = {
+  name: 'Europe',
+  polygon: createPoint(23.666694170726828, 37.92090950501416),
+};
+
+const createRegionDto: CreateRegionDto = {
+  name: 'Greece',
+  polygon: createPoint(24.666694170726828, 38.92090950501416),
+};
+
 export const regionTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
   let regionId: number;
-
-  const createParentRegionDto: CreateRegionDto = {
-    name: 'Europe',
-    polygon: createPoint(23.666694170726828, 37.92090950501416),
-  };
-
-  const createRegionDto: CreateRegionDto = {
-    name: 'Greece',
-    polygon: createPoint(24.666694170726828, 38.92090950501416),
-  };
 
   beforeAll(async () => {
     app = await testService.getApp();
