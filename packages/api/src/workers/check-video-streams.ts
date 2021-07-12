@@ -44,7 +44,7 @@ interface SlackMessage {
 const getReefFrontEndURL = (reefId: number, frontUrl: string) =>
   new URL(`reefs/${reefId}`, frontUrl).href;
 
-const fetchVideoDetails = (
+export const fetchVideoDetails = (
   youTubeIds: string[],
   apiKey: string,
 ): AxiosPromise<YouTubeApiResponse> => {
@@ -59,7 +59,7 @@ const fetchVideoDetails = (
   });
 };
 
-const getErrorMessage = (item: YouTubeVideoItem) => {
+export const getErrorMessage = (item: YouTubeVideoItem) => {
   const { uploadStatus, privacyStatus, embeddable } = item.status;
 
   if (privacyStatus === 'private') {
