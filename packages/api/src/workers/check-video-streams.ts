@@ -41,8 +41,8 @@ interface SlackMessage {
   }[];
 }
 
-const getReefFrontEndURL = (reefId: number) =>
-  new URL(`reefs/${reefId}`, process.env.FRONT_END_BASE_URL).href;
+const getReefFrontEndURL = (reefId: number, frontUrl: string) =>
+  new URL(`reefs/${reefId}`, frontUrl).href;
 
 const fetchVideoDetails = (
   youTubeIds: string[],
@@ -59,7 +59,7 @@ const fetchVideoDetails = (
   });
 };
 
-const getError = (item: YouTubeVideoItem) => {
+const getErrorMessage = (item: YouTubeVideoItem) => {
   const { uploadStatus, privacyStatus, embeddable } = item.status;
 
   if (privacyStatus === 'private') {
@@ -93,7 +93,7 @@ const checkVideoOptions = (youTubeVideoItems: YouTubeVideoItem[]) =>
   youTubeVideoItems.reduce<Dictionary<string>>((mapping, item) => {
     return {
       ...mapping,
-      [item.id]: getError(item),
+      [item.id]: getErrorMessage(item),
     };
   }, {});
 
@@ -115,6 +115,7 @@ export const checkVideoStreams = async (
   const apiKey = process.env.FIREBASE_KEY;
   const slackToken = process.env.SLACK_BOT_TOKEN;
   const slackChannel = process.env.SLACK_BOT_CHANNEL;
+  const frontUrl = process.env.FRONT_END_BASE_URL;
 
   // Check that the all necessary environment variables are set
   if (!apiKey) {
@@ -129,6 +130,11 @@ export const checkVideoStreams = async (
 
   if (!slackChannel) {
     logger.error('No slack target channel was defined');
+    return;
+  }
+
+  if (!frontUrl) {
+    logger.error('No front url was defined');
     return;
   }
 
@@ -167,6 +173,38 @@ export const checkVideoStreams = async (
   // For ids with no errors an empty string is returned
   const youTubeIdToError = checkVideoOptions(axiosResponse.data.items);
 
+  const blocks = Object.values(reefIdToVideoStreamDetails).reduce<
+    SlackMessage['blocks']
+  >((msgs, { id, reefId, url, name, error }) => {
+    const reportedError =
+      error ||
+      (!(id! in youTubeIdToError) && 'Video does not exist') ||
+      youTubeIdToError[id!];
+
+    if (!reportedError) {
+      return msgs;
+    }
+
+    const template = {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text:
+          `*Reef*: ${name} - ${getReefFrontEndURL(reefId, frontUrl)}\n` +
+          `*Video*: ${url}\n` +
+          `*Error*: ${reportedError}`,
+      },
+    };
+
+    return [...msgs, template];
+  }, []);
+
+  // No irregular video streams were found
+  // So skip sending an alert on slack
+  if (!blocks.length) {
+    return;
+  }
+
   // Create a simple alert template for slack
   const messageTemplate = {
     // The channel id is fetched by requesting the list on GET https://slack.com/api/conversations.list
@@ -183,41 +221,9 @@ export const checkVideoStreams = async (
       {
         type: 'divider',
       },
-      ...Object.values(reefIdToVideoStreamDetails)
-        .map(({ id, reefId, url, name, error }) => {
-          const reportedError =
-            error ||
-            (!(id! in youTubeIdToError) && 'Video does not exist') ||
-            youTubeIdToError[id!];
-
-          if (!reportedError) {
-            return undefined;
-          }
-
-          const template = {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text:
-                `*ReefId*: ${reefId}\n` +
-                `*Reef URL* ${getReefFrontEndURL(reefId)}\n` +
-                `*Reef Name*: ${name}\n` +
-                `*Video Stream URL*: ${url}\n` +
-                `*Error*: ${reportedError}`,
-            },
-          };
-
-          return template;
-        })
-        .filter((messages) => messages),
+      ...blocks,
     ],
   } as SlackMessage;
-
-  // No irregular video streams were found
-  // So skip sending an alert on slack
-  if (messageTemplate.blocks.length === 2) {
-    return;
-  }
 
   // Send an alert containing all irregular video stream along with the reason
   await sendSlackMessage(messageTemplate, slackToken);

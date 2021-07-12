@@ -5,11 +5,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { getConnection } from 'typeorm';
 import { Auth } from '../auth/auth.decorator';
-import { Public } from '../auth/public.decorator';
 import { AdminLevel } from '../users/users.entity';
-import { checkVideoStreams } from '../workers/check-video-streams';
 import { GoogleCloudService } from './google-cloud.service';
 
 @ApiTags('Google Cloud Storage')
@@ -41,11 +38,5 @@ export class GoogleCloudController {
   @Delete('dangling')
   DeleteDanglingFiles(): Promise<void[]> {
     return this.googleCloudService.deleteDanglingFiles();
-  }
-
-  @Public()
-  @Get()
-  checkVideo() {
-    checkVideoStreams(getConnection(), process.env.PROJECT_ID!);
   }
 }

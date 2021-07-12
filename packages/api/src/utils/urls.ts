@@ -10,21 +10,18 @@ export const idFromHash = (hash: string) => hasher.decode(hash)[0];
 export const isValidId = (id: string) => id.match(/^[0-9]+$/);
 
 // Get YouTube ID from various YouTube URL
-// Source: https://gist.github.com/takien/4077195
-// Works for the following url formats:
-// - https://youtu.be/videoID
-// - https://www.youtube.com/embed/videoID
-// - https://www.youtube.com/watch/?v=videoID
-
+// Same as function `getYouTubeVideoId` in `packages/website/src/helpers/video.ts`
+// Works for the following url format:
+// - https://www.youtube.com/embed/videoID/?someArgs
 export const getYouTubeVideoId = (url: string) => {
-  const parsedUrl = url
-    .replace(/(>|<)/gi, '')
-    .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  const urlParts = url?.split('?')[0]?.split('/embed/');
 
-  if (parsedUrl[2] !== undefined) {
-    const id = parsedUrl[2].split(/[^0-9a-z_-]/i);
-    return id[0];
+  // For an expected video url format we expect the url to be split in 2 parts
+  // E.g. ["https://www.youtube.com", "videoID/"]
+  if (urlParts.length !== 2) {
+    return undefined;
   }
 
-  return undefined;
+  // Remove any trailing forward slash '/'
+  return urlParts[1].replace('/', '');
 };
