@@ -168,10 +168,7 @@ export class CollectionsService {
       value: MoreThan(0),
     });
 
-    const heatStressReefIds = heatStressData.reduce<number[]>(
-      (reefIds, data) => [...reefIds, data.reefId],
-      [],
-    );
+    const heatStressReefIds = heatStressData.map((data) => data.reefId);
 
     const heatStressReefs = await this.reefRepository.find({
       where: { id: In(heatStressReefIds), approved: true },
