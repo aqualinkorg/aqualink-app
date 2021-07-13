@@ -11,73 +11,66 @@ import {
 import EmailIcon from "@material-ui/icons/Email";
 import classNames from "classnames";
 
-import { CollectionDetails } from "../../../store/Collection/types";
+import { User } from "../../../store/User/types";
 
-const Header = ({ collection, classes }: HeaderProps) => {
-  const nSites = collection.reefs.length;
-
-  return collection.user ? (
-    <>
-      <Grid container justify="space-between">
-        <Grid item>
-          <Grid container direction="column">
-            <Grid item>
-              <Typography variant="subtitle2" color="textSecondary">
-                Managed by
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5" color="textSecondary">
-                {collection.user.organization}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Grid container alignItems="center" spacing={1}>
-                <Grid item>
-                  <Typography
-                    className={classNames(
-                      classes.organization,
-                      classes.blueText
-                    )}
-                  >
-                    {nSites}
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="h6" className={classes.grayText}>
-                    Sites
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
+const Header = ({ user, nSites, classes }: HeaderProps) => (
+  <>
+    <Grid container justify="space-between">
+      <Grid item>
+        <Grid container direction="column">
+          <Grid item>
+            <Typography variant="subtitle2" color="textSecondary">
+              Managed by
+            </Typography>
           </Grid>
-        </Grid>
-        <Grid item>
-          <Grid container direction="column">
-            <Grid item>
-              <Typography variant="subtitle1" color="textSecondary">
-                {collection.user.fullName}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Grid container alignItems="center">
-                <Grid item>
-                  <EmailIcon className={classes.emailIcon} />
-                </Grid>
-                <Grid item>
-                  <Typography variant="caption" color="textSecondary">
-                    {collection.user.email}
-                  </Typography>
-                </Grid>
+          <Grid item>
+            <Typography variant="h5" color="textSecondary">
+              {user.organization}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid item>
+                <Typography
+                  className={classNames(classes.organization, classes.blueText)}
+                >
+                  {nSites}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6" className={classes.grayText}>
+                  Sites
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <Divider className={classes.divider} />
-    </>
-  ) : null;
-};
+      <Grid item>
+        <Grid container direction="column">
+          <Grid item>
+            <Typography variant="subtitle1" color="textSecondary">
+              {user.fullName}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Grid container alignItems="center">
+              <Grid item>
+                <EmailIcon className={classes.emailIcon} />
+              </Grid>
+              <Grid item>
+                <Typography variant="caption" color="textSecondary">
+                  {user.email}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Divider className={classes.divider} />
+  </>
+);
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -106,7 +99,8 @@ const styles = (theme: Theme) =>
   });
 
 interface HeaderIncomingProps {
-  collection: CollectionDetails;
+  user: User;
+  nSites: number;
 }
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

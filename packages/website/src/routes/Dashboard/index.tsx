@@ -58,12 +58,15 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
         ? collections[urlCollectionName]
         : undefined;
 
-      if (urlCollectionId) {
+      if (urlCollectionId || isHeatStress) {
         setPublicNotFound(false);
-        dispatch(collectionRequest({ id: urlCollectionId, isPublic: true }));
-      } else if (isHeatStress) {
-        setPublicNotFound(false);
-        dispatch(collectionRequest({ isHeatStress: true }));
+        dispatch(
+          collectionRequest({
+            id: urlCollectionId,
+            isPublic: true,
+            isHeatStress,
+          })
+        );
       } else {
         setPublicNotFound(true);
       }

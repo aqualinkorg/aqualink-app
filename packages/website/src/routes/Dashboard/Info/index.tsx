@@ -14,7 +14,9 @@ import BarChart from "./BarChart";
 const Info = ({ collection, classes }: InfoProps) => {
   return (
     <Box className={classes.root}>
-      <Header collection={collection} />
+      {collection.user && (
+        <Header user={collection.user} nSites={collection.reefs.length} />
+      )}
       <BarChart collection={collection} />
     </Box>
   );
