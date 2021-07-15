@@ -61,11 +61,7 @@ const styles = () =>
       maxWidth: "80%",
     },
     name: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      width: "100%",
-      whiteSpace: "nowrap",
-      display: "block",
+      overflowWrap: "break-word",
     },
   });
 
