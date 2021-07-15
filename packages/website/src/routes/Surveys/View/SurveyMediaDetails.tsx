@@ -87,7 +87,7 @@ const SurveyMediaDetails = ({
               <Grid
                 className={classes.title}
                 container
-                spacing={3}
+                spacing={1}
                 alignItems="center"
               >
                 <Grid className={classes.surveyPointNameWrapper} item>
@@ -207,10 +207,7 @@ const SurveyMediaDetails = ({
                               spacing={2}
                             >
                               <Grid item xs={12}>
-                                <Typography
-                                  className={classes.descriptionTitle}
-                                  variant="h6"
-                                >
+                                <Typography variant="h6">
                                   IMAGE OBSERVATION
                                 </Typography>
                                 <Typography variant="subtitle1">
@@ -218,10 +215,7 @@ const SurveyMediaDetails = ({
                                 </Typography>
                               </Grid>
                               <Grid item xs={12}>
-                                <Typography
-                                  className={classes.descriptionTitle}
-                                  variant="h6"
-                                >
+                                <Typography variant="h6">
                                   IMAGE COMMENTS
                                 </Typography>
                                 <Typography variant="subtitle1">
@@ -279,29 +273,25 @@ const styles = (theme: Theme) =>
       },
     },
     title: {
-      marginBottom: "0.5rem",
-      marginLeft: "1rem",
+      margin: theme.spacing(0, 1),
     },
     titleName: {
       fontSize: 18,
-      fontWeight: "normal",
-      fontStretch: "normal",
-      fontStyle: "normal",
       lineHeight: 1.56,
-      letterSpacing: "normal",
+      width: "100%",
+      display: "block",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
     surveyPointNameWrapper: {
-      maxWidth: "70%",
+      width: "70%",
       [theme.breakpoints.down("sm")]: {
-        maxWidth: "90%",
+        width: "90%",
       },
     },
     surveyPointName: {
-      maxWidth: "75%",
-      overflowWrap: "break-word",
-    },
-    descriptionTitle: {
-      fontSize: 18,
+      maxWidth: "calc(100% - 120px)", // width of 100% minus the "Survey Point:" label
     },
     selectedPoi: {
       color: theme.palette.primary.main,
