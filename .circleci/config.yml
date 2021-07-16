@@ -29,9 +29,6 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v2-dependencies-
 
-      - run: apt update
-      - run: apt install -y sudo
-      - run: sudo apt install -y libnetcdf-dev
       - run: yarn install --ignore-engines
       - run:
           name: Check yarn.lock

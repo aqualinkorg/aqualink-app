@@ -2,7 +2,14 @@ import { times } from 'lodash';
 import moment from 'moment';
 import { Extent, pointToIndex } from '../../src/utils/coordinates';
 
-const netcdf4 = require('netcdf4');
+let netcdf4;
+try {
+  // eslint-disable-next-line global-require, fp/no-mutation
+  netcdf4 = require('netcdf4');
+} catch {
+  console.error('Netcdf is not downloaded');
+  process.exit();
+}
 /**
  * Generate NOAA SST data for a year at a speciic location.
  * This script assumes that the necessary NETCDF data files are
