@@ -7,7 +7,9 @@ try {
   // eslint-disable-next-line global-require, fp/no-mutation
   netcdf4 = require('netcdf4');
 } catch {
-  console.error('Netcdf is not downloaded');
+  console.error(
+    'NetCDF is not installed. Please install NetCDF before continuing',
+  );
   process.exit();
 }
 /**
