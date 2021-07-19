@@ -9,8 +9,7 @@ import {
 const obligations = [
   "Pay for shipping and any applicable duties",
   "Obtain any necessary permits (if applicable)",
-  "Provide and attach a ballast (e.g. 60lb kettlebell)",
-  "Deploy buoy with mooring weight (can be done from a kayak)",
+  "Deploy the buoy with an appropriate mooring or anchor weight",
   "Maintain buoy (inspect and clean every 6 months)",
   "Conduct initial and periodic photographic surveys and upload imagery to our website",
 ];
