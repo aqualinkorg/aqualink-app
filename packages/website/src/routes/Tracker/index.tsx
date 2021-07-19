@@ -11,6 +11,7 @@ import {
   createStyles,
   Theme,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
@@ -19,6 +20,7 @@ import FootPrintImage from "./FootPrintImage";
 import hero from "../../assets/img/tracker-page/hero.png";
 import image1 from "../../assets/img/tracker-page/image1.png";
 import image2 from "../../assets/img/tracker-page/image2.png";
+import image3 from "../../assets/img/tracker-page/image3.png";
 
 const Tracker = ({ classes }: TrackerProps) => {
   return (
@@ -161,6 +163,30 @@ const Tracker = ({ classes }: TrackerProps) => {
             </Grid>
           </Grid>
         </Box>
+        <Box margin="72px 0 48px 0">
+          <Typography className={classes.title} variant="h2">
+            Track global heat stress at a glance
+          </Typography>
+        </Box>
+        <Grid className={classes.globalStressWrapper} container spacing={3}>
+          <Grid item xs={12} md={5} lg={4}>
+            <Typography variant="h6">
+              Aqualink has developed a tracker that highlights all the sites
+              under the most stress, at a glance. Use{" "}
+              <Link className={classes.link} to="/collections/heat-stress">
+                this page
+              </Link>{" "}
+              to see where the ocean is getting warmer and spot new heat waves.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={7} lg={8}>
+            <Card className={classes.card3} variant="outlined">
+              <Link to="/collections/heat-stress">
+                <CardMedia className={classes.image} image={image3} />
+              </Link>
+            </Card>
+          </Grid>
+        </Grid>
       </Container>
       <Footer />
     </>
@@ -218,6 +244,12 @@ const styles = (theme: Theme) =>
       position: "relative",
       borderRadius: 10,
     },
+    card3: {
+      width: "100%",
+      paddingTop: "calc(100% / 1.395)",
+      position: "relative",
+      borderRadius: 10,
+    },
     image: {
       height: "100%",
       width: "100%",
@@ -236,6 +268,9 @@ const styles = (theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         marginTop: theme.spacing(2),
       },
+    },
+    globalStressWrapper: {
+      marginBottom: theme.spacing(2),
     },
   });
 

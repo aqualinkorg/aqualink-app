@@ -9,7 +9,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     classname="Tracker-hero-2"
   >
     <div
-      class="MuiCardMedia-root Tracker-image-9"
+      class="MuiCardMedia-root Tracker-image-10"
       style="background-image: url(hero.png);"
     />
     <div
@@ -40,13 +40,13 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root Tracker-footPrintImageWrapper-11 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
+        class="MuiGrid-root Tracker-footPrintImageWrapper-12 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
         >
           <div
-            class="MuiGrid-root makeStyles-footPrintImageText-12 MuiGrid-item"
+            class="MuiGrid-root makeStyles-footPrintImageText-14 MuiGrid-item"
           >
             <mock-typography
               align="right"
@@ -55,7 +55,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root makeStyles-footPrintImageLink-13 MuiGrid-item"
+            class="MuiGrid-root makeStyles-footPrintImageLink-15 MuiGrid-item"
           >
             <a
               href="https://www.footprintcoalition.com/"
@@ -64,7 +64,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             >
               <img
                 alt="footprint"
-                class="makeStyles-footPrintImage-14 makeStyles-footPrintImage-15"
+                class="makeStyles-footPrintImage-16 makeStyles-footPrintImage-17"
                 src="footprint.png"
               />
             </a>
@@ -83,7 +83,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         >
           The ability for sensors to be grouped for a particular event, such as a Heatwave, or a particular region, is important for users to get critical information at a glance. We have launched a new feature called Dashboards where anyone can create a customized collection of sensors to track this information. For example, the
           <a
-            class="Tracker-link-10"
+            class="Tracker-link-11"
             href="https://www.minderoo.org/"
             rel="noopener noreferrer"
             target="_blank"
@@ -95,7 +95,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           worked with us and the
            
           <a
-            class="Tracker-link-10"
+            class="Tracker-link-11"
             href="https://www.uwa.edu.au"
             rel="noopener noreferrer"
             target="_blank"
@@ -106,7 +106,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           to deploy Smart Buoys along the Western coast of Australia. This was done in a critical time for the region where an extreme heatwave, known as the
            
           <a
-            class="Tracker-link-10"
+            class="Tracker-link-11"
             href="https://en.wikipedia.org/wiki/La_Ni%C3%B1a"
             rel="noopener noreferrer"
             target="_blank"
@@ -116,7 +116,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           , was exptected to come through the area, potentially bringing devastating affects to the local ecosystems. They created a dashboard
            
           <a
-            class="Tracker-link-10"
+            class="Tracker-link-11"
             href="/collections/minderoo"
           >
             here
@@ -138,7 +138,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root Tracker-image-9"
+              class="MuiCardMedia-root Tracker-image-10"
               style="background-image: url(image1.png);"
             />
           </a>
@@ -166,7 +166,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           variant="outlined"
         >
           <div
-            class="MuiCardMedia-root Tracker-image-9"
+            class="MuiCardMedia-root Tracker-image-10"
             style="background-image: url(image2.png);"
           />
         </mock-card>
@@ -198,6 +198,55 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         </div>
       </div>
     </mock-box>
+    <mock-box
+      margin="72px 0 48px 0"
+    >
+      <mock-typography
+        classname="Tracker-title-6"
+        variant="h2"
+      >
+        Track global heat stress at a glance
+      </mock-typography>
+    </mock-box>
+    <div
+      class="MuiGrid-root Tracker-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
+      >
+        <mock-typography
+          variant="h6"
+        >
+          Aqualink has developed a tracker that highlights all the sites under the most stress, at a glance. Use
+           
+          <a
+            class="Tracker-link-11"
+            href="/collections/heat-stress"
+          >
+            this page
+          </a>
+           
+          to see where the ocean is getting warmer and spot new heat waves.
+        </mock-typography>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
+      >
+        <mock-card
+          classname="Tracker-card3-9"
+          variant="outlined"
+        >
+          <a
+            href="/collections/heat-stress"
+          >
+            <div
+              class="MuiCardMedia-root Tracker-image-10"
+              style="background-image: url(image3.png);"
+            />
+          </a>
+        </mock-card>
+      </div>
+    </div>
   </div>
   <mock-footer />
 </div>
