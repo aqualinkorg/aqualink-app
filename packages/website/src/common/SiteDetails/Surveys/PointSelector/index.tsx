@@ -53,6 +53,17 @@ const PointSelector = ({
     }
   };
 
+  const getHelperText = () => {
+    switch (true) {
+      case !editPoiNameDraft:
+        return "Cannot be empty";
+      case editPoiNameDraft && editPoiNameDraft.length > 100:
+        return "Must not exceed 100 characters";
+      default:
+        return "";
+    }
+  };
+
   useEffect(() => {
     if (!editPoiNameLoading) {
       setEditPoi(undefined);
@@ -95,14 +106,7 @@ const PointSelector = ({
               value={editPoiNameDraft}
               onChange={onChangePoiName}
               error={errored}
-              helperText={
-                // eslint-disable-next-line no-nested-ternary
-                !editPoiNameDraft
-                  ? "Cannot be empty"
-                  : editPoiNameDraft.length > 100
-                  ? "Must not exceed 100 characters"
-                  : ""
-              }
+              helperText={getHelperText()}
             />
           }
         />
