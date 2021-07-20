@@ -15,6 +15,8 @@ import {
 import { Clear, GitHub } from "@material-ui/icons";
 import ovioLogo from "../../assets/img/ovio_logo.png";
 
+const darkBlue = "#095877";
+
 const menuRoutes = [
   {
     text: "HOME",
@@ -112,8 +114,7 @@ const styles = (theme: Theme) =>
     paper: {
       width: "16rem",
       alignItems: "center",
-      // paddingTop: "2rem",
-      backgroundColor: "#095877",
+      backgroundColor: darkBlue,
     },
     contributeButton: {
       width: "50%",
@@ -122,7 +123,7 @@ const styles = (theme: Theme) =>
         maxWidth: "100%",
       },
       "&:hover": {
-        color: "#000000",
+        color: "black",
       },
     },
     menuDrawerButton: {

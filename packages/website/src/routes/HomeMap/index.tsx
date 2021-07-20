@@ -87,9 +87,13 @@ const Homepage = ({ classes }: HomepageProps) => {
 
   useEffect(() => {
     if (!reefOnMap && initialReefId && `${reefOnCardId}` !== initialReefId) {
+      // Make the request for the reef with id equal to `initialReefId` only
+      // if there is no reef on the map and it's not previously selected.
       dispatch(reefRequest(initialReefId));
       dispatch(surveysRequest(initialReefId));
     } else if (reefOnMap && reefOnCardId !== reefOnMap.id) {
+      // Make the request for the reef with id equal to `reefOnMap.id` only
+      // if it's not previously selected.
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
