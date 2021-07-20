@@ -28,8 +28,8 @@ export class User {
 
   @ApiHideProperty()
   @Exclude()
-  @Column({ nullable: true, type: 'character varying' })
-  firebaseUid: string | null;
+  @Column({ nullable: true, type: 'character varying', select: false })
+  firebaseUid?: string | null;
 
   @ApiProperty({ example: 'Full Name' })
   @Column({ nullable: true, type: 'character varying' })
