@@ -9,7 +9,13 @@ const logger = new Logger('CheckVideoStreams');
 
 type reefIdToVideoStreamDetails = Record<
   number,
-  { id?: string; name?: string; reefId: number; url: string; error: string }
+  {
+    id?: string;
+    name: string | null;
+    reefId: number;
+    url: string;
+    error: string;
+  }
 >;
 
 // Create a basic structure for youTube response items
