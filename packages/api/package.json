@@ -89,7 +89,6 @@
     "moment-timezone": "^0.5.31",
     "multer": "^1.4.2",
     "multer-google-storage": "^1.3.0",
-    "netcdf4": "https://github.com/parro-it/netcdf4",
     "objects-to-csv": "^1.3.6",
     "passport": "^0.4.1",
     "passport-custom": "^1.1.1",
@@ -151,5 +150,8 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "optionalDependencies": {
+    "netcdf4": "https://github.com/parro-it/netcdf4"
   }
 }
