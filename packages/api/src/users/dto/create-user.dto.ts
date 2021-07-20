@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly fullName?: string;
+  readonly fullName?: string | null;
 
   @ApiProperty({ example: 'fullname@example.com' })
   @IsEmail()
@@ -24,27 +24,27 @@ export class CreateUserDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly organization?: string;
+  readonly organization?: string | null;
 
   @ApiPointProperty()
   @IsOptional()
   @IsNotEmpty()
-  readonly location?: GeoJSON;
+  readonly location?: GeoJSON | null;
 
   @ApiProperty({ example: 'United States' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly country?: string;
+  readonly country?: string | null;
 
   @ApiProperty({ example: 'Some description' })
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  readonly description?: string;
+  readonly description?: string | null;
 
   @ApiProperty({ example: 'http://some-sample-url.com' })
   @IsOptional()
   @IsUrl()
-  readonly imageUrl?: string;
+  readonly imageUrl?: string | null;
 }
