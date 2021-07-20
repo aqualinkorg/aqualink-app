@@ -24,7 +24,7 @@ test('Not enough SST.', () => {
 test('Undefined maximumMonthlyMean', () => {
   const seaSurfaceTemperatures = getSeaSurfaceTemperatures(84);
   return expect(() => {
-    calculateDegreeHeatingDays(seaSurfaceTemperatures, undefined);
+    calculateDegreeHeatingDays(seaSurfaceTemperatures, null);
   }).toThrow(Error);
 });
 
