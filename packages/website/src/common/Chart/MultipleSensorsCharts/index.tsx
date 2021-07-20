@@ -438,17 +438,17 @@ const styles = (theme: Theme) =>
     },
     largeChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 230px)",
+        width: "calc(100% - 230px)", // width of 100% minus the card with one column
       },
     },
     mediumChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 240px)",
+        width: "calc(100% - 240px)", // width of 100% minus the card with two columns
       },
     },
     smallChart: {
       [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 320px)",
+        width: "calc(100% - 320px)", // width of 100% minus the card with three columns
       },
     },
     card: {

@@ -24,6 +24,7 @@ import classNames from "classnames";
 import observationOptions from "../../../constants/uploadDropdowns";
 import { Pois } from "../../../store/Reefs/types";
 import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
+import { maxLengths } from "../../../constants/names";
 
 const MediaCard = ({
   preview,
@@ -46,7 +47,7 @@ const MediaCard = ({
   const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
   const [newPoiName, setNewPoiName] = useState<string>("");
 
-  const errored = newPoiName.length > 100;
+  const errored = newPoiName.length > maxLengths.POI_NAME;
 
   const handleNewPoiNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -77,7 +78,9 @@ const MediaCard = ({
                   onChange={handleNewPoiNameChange}
                   error={errored}
                   helperText={
-                    errored ? "Must not exceed 100 characters" : undefined
+                    errored
+                      ? `Must not exceed ${maxLengths.POI_NAME} characters`
+                      : undefined
                   }
                 />
               </Grid>

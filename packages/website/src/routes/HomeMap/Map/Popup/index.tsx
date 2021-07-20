@@ -23,13 +23,14 @@ import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
+import { maxLengths } from "../../../../constants/names";
 
 const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
   const reefOnMap = useSelector(reefOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
   const { name, region } = getReefNameAndRegion(reef);
-  const isNameLong = name && name.length > 50;
+  const isNameLong = name?.length && name.length > maxLengths.REEF_NAME_POPUP;
 
   const { dhw, satelliteTemperature } = reef.collectionData || {};
 
@@ -65,7 +66,9 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
           }}
           title={
             <span title={isNameLong && name ? name : undefined}>
-              {isNameLong ? `${name?.substring(0, 50)}...` : name}
+              {isNameLong
+                ? `${name?.substring(0, maxLengths.REEF_NAME_POPUP)}...`
+                : name}
             </span>
           }
           subheader={region}

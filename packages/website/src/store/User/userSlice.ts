@@ -19,6 +19,8 @@ import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
 import collectionServices from "../../services/collectionServices";
 import { constructUserObject } from "./helpers";
+import { setReefNameFromList } from "../../helpers/reefUtils";
+import { UpdateReefNameFromListArgs } from "../Reefs/types";
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -209,13 +211,16 @@ const userSlice = createSlice({
           }
         : state.userInfo,
     }),
-    setAdministeredReefs: (
+    setAdministeredReefName: (
       state,
-      action: PayloadAction<User["administeredReefs"]>
+      action: PayloadAction<UpdateReefNameFromListArgs>
     ) => ({
       ...state,
       userInfo: state.userInfo
-        ? { ...state.userInfo, administeredReefs: action.payload }
+        ? {
+            ...state.userInfo,
+            administeredReefs: setReefNameFromList(action.payload),
+          }
         : state.userInfo,
     }),
   },
@@ -250,7 +255,7 @@ export const {
   setToken,
   clearError,
   setCollectionReefs,
-  setAdministeredReefs,
+  setAdministeredReefName,
 } = userSlice.actions;
 
 export default userSlice.reducer;

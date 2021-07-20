@@ -2,8 +2,15 @@ import { sortBy } from "lodash";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 import reefServices from "../../services/reefServices";
-import { hasDeployedSpotter } from "../../helpers/reefUtils";
-import type { ReefsListState, ReefsRequestData } from "./types";
+import {
+  hasDeployedSpotter,
+  setReefNameFromList,
+} from "../../helpers/reefUtils";
+import type {
+  ReefsListState,
+  ReefsRequestData,
+  UpdateReefNameFromListArgs,
+} from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import { mapCollectionData } from "./helpers";
 
@@ -49,9 +56,12 @@ const reefsListSlice = createSlice({
         ? state.list?.filter(hasDeployedSpotter)
         : state.list,
     }),
-    setReefs: (state, action: PayloadAction<ReefsListState["list"]>) => ({
+    setReefName: (
+      state,
+      action: PayloadAction<UpdateReefNameFromListArgs>
+    ) => ({
       ...state,
-      list: action.payload,
+      list: setReefNameFromList(action.payload),
     }),
   },
   extraReducers: (builder) => {
@@ -102,6 +112,6 @@ export const reefsListErrorSelector = (
   state: RootState
 ): ReefsListState["error"] => state.reefsList.error;
 
-export const { filterReefsWithSpotter, setReefs } = reefsListSlice.actions;
+export const { filterReefsWithSpotter, setReefName } = reefsListSlice.actions;
 
 export default reefsListSlice.reducer;

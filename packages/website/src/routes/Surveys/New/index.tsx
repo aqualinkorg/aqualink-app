@@ -96,7 +96,6 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {
       marginTop: "2rem",
-      // overflow: "hidden",
     },
     title: {
       overflowWrap: "break-word",

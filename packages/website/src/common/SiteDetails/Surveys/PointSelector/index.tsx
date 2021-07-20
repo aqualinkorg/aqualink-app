@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { Pois } from "../../../../store/Reefs/types";
 import EditDialog, { Action } from "../../../Dialog";
 import CustomLink from "../../../Link";
+import { maxLengths } from "../../../../constants/names";
 
 const PointSelector = ({
   reefId,
@@ -39,7 +40,8 @@ const PointSelector = ({
 }: PointSelectorProps) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPoi, setEditPoi] = useState<Pois>();
-  const errored = !editPoiNameDraft || editPoiNameDraft.length > 100;
+  const errored =
+    !editPoiNameDraft || editPoiNameDraft.length > maxLengths.POI_NAME;
 
   const onEditDialogClose = () => {
     disableEditPoiName();
@@ -57,8 +59,8 @@ const PointSelector = ({
     switch (true) {
       case !editPoiNameDraft:
         return "Cannot be empty";
-      case editPoiNameDraft && editPoiNameDraft.length > 100:
-        return "Must not exceed 100 characters";
+      case editPoiNameDraft && editPoiNameDraft.length > maxLengths.POI_NAME:
+        return `Must not exceed ${maxLengths.POI_NAME} characters`;
       default:
         return "";
     }
