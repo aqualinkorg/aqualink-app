@@ -112,7 +112,7 @@ export class CollectionsService {
       ...collection,
       user: {
         ...collection.user,
-        firebaseUid: undefined,
+        firebaseUid: null,
       },
       reefs: collection.reefs.map((reef) => {
         return {
@@ -162,7 +162,7 @@ export class CollectionsService {
       },
     );
 
-    return this.collectionRepository.findOne(collection.id);
+    return this.collectionRepository.findOne(collection!.id);
   }
 
   async delete(collectionId: number) {
