@@ -12,6 +12,10 @@ export const getCollectionData = async (
 ): Promise<Record<number, CollectionDataDto>> => {
   const reefIds = reefs.map((reef) => reef.id);
 
+  if (!reefIds.length) {
+    return {};
+  }
+
   // Get latest data
   const latestData: LatestData[] = await latestDataRepository
     .createQueryBuilder('latest_data')
@@ -46,3 +50,15 @@ export const heatStressTracker: DynamicCollection = {
   reefIds: [],
   isPublic: true,
 };
+
+export const DEFAULT_COLLECTION_NAME = 'My Dashboard';
+
+export const defaultUserCollection = (
+  userId: number,
+  reefIds: number[] = [],
+  name = DEFAULT_COLLECTION_NAME,
+) => ({
+  user: { id: userId },
+  name,
+  reefs: reefIds.map((reefId) => ({ id: reefId })),
+});

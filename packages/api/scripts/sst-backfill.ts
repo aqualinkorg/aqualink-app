@@ -17,7 +17,7 @@ const dbConfig = require('../ormconfig');
 
 // Reefs and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020];
-const reefsToProcess: number[] = [497];
+const reefsToProcess: number[] = [];
 
 async function main() {
   const connection = await createConnection(dbConfig);
