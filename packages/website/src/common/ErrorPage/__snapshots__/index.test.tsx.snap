@@ -196,8 +196,8 @@ exports[`Error Page should render with given state from Redux store 1`] = `
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-9"
+              <a
+                class="NavBar-menuItemLink-9"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -231,7 +231,7 @@ exports[`Error Page should render with given state from Redux store 1`] = `
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
