@@ -14,7 +14,10 @@ import {
   userInfoSelector,
   userLoadingSelector,
 } from "../../store/User/userSlice";
-import { collectionRequest } from "../../store/Collection/collectionSlice";
+import {
+  collectionDetailsSelector,
+  collectionRequest,
+} from "../../store/Collection/collectionSlice";
 import Delayed from "../../common/Delayed";
 import DashboardContent from "./Content";
 import FullScreenMessage from "../../common/FullScreenMessage";
@@ -29,6 +32,8 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
   const userLoading = useSelector(userLoadingSelector);
+  const { id: storedCollectionId } =
+    useSelector(collectionDetailsSelector) || {};
   const [publicNotFound, setPublicNotFound] = useState(false);
   const { pathname } = useLocation();
   const atDashboard = pathname.endsWith("/dashboard");
@@ -36,7 +41,12 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   // If we are at `/dashboard`, make a request for
   // user's personal collection.
   useEffect(() => {
-    if (atDashboard && user?.token && user.collection?.id) {
+    if (
+      atDashboard &&
+      user?.token &&
+      user.collection?.id &&
+      user.collection.id !== storedCollectionId
+    ) {
       dispatch(
         collectionRequest({
           id: user.collection.id,
@@ -44,7 +54,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
         })
       );
     }
-  }, [atDashboard, dispatch, user]);
+  }, [atDashboard, dispatch, storedCollectionId, user]);
 
   // If we are at `/collections/:collectionName`, look for this
   // collection in the static public collections object. If it exists,
@@ -53,18 +63,28 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
   useEffect(() => {
     if (!atDashboard) {
       const { collectionName: urlCollectionName } = match.params;
+      const isHeatStress = urlCollectionName === "heat-stress";
       const urlCollectionId = urlCollectionName
         ? collections[urlCollectionName]
         : undefined;
 
-      if (urlCollectionId) {
+      if (
+        (urlCollectionId && storedCollectionId !== urlCollectionId) ||
+        isHeatStress
+      ) {
         setPublicNotFound(false);
-        dispatch(collectionRequest({ id: urlCollectionId, isPublic: true }));
+        dispatch(
+          collectionRequest({
+            id: urlCollectionId,
+            isPublic: true,
+            isHeatStress,
+          })
+        );
       } else {
         setPublicNotFound(true);
       }
     }
-  }, [atDashboard, dispatch, match.params]);
+  }, [atDashboard, dispatch, match.params, storedCollectionId]);
 
   const DashboardComponent = () => {
     switch (true) {

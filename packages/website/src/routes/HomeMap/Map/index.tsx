@@ -21,6 +21,7 @@ import AlertLevelLegend from "./alertLevelLegend";
 import { searchResultSelector } from "../../../store/Homepage/homepageSlice";
 import { CollectionDetails } from "../../../store/Collection/types";
 import { MapLayerName } from "../../../store/Homepage/types";
+import { mapConstants } from "../../../constants/maps";
 
 const accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -130,6 +131,7 @@ const HomepageMap = ({
       worldCopyJump
       onbaselayerchange={onBaseLayerChange}
       bounds={initialBounds}
+      maxBounds={mapConstants.MAX_BOUNDS}
     >
       <Snackbar
         open={Boolean(currentLocationErrorMessage)}

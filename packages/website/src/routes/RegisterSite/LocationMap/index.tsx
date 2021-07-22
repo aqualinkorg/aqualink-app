@@ -4,6 +4,7 @@ import L, { LeafletEvent } from "leaflet";
 import { withStyles, WithStyles, createStyles, Theme } from "@material-ui/core";
 
 import marker from "../../../assets/marker.png";
+import { mapConstants } from "../../../constants/maps";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -50,6 +51,9 @@ const LocationMap = ({
       className={classes.map}
       onclick={updateLatLng}
       onzoomend={onZoomEnd}
+      maxBounds={mapConstants.MAX_BOUNDS}
+      maxBoundsViscosity={1.0}
+      minZoom={1}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {markerPosition && <Marker icon={pinIcon} position={markerPosition} />}

@@ -158,7 +158,7 @@ exports.scheduledVideoStreamsCheck = functions
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
-    process.env.FIREBASE_KEY = functions.config().google.api_key;
+    process.env.FIREBASE_API_KEY = functions.config().google.api_key;
     process.env.SLACK_BOT_TOKEN = functions.config().slack.token;
     process.env.SLACK_BOT_CHANNEL = functions.config().slack.channel;
     process.env.FRONT_END_BASE_URL = functions.config().front.base_url;

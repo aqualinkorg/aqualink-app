@@ -459,7 +459,7 @@ export class ReefsService {
       return null;
     }
 
-    const apiKey = process.env.FIREBASE_KEY;
+    const apiKey = process.env.FIREBASE_API_KEY;
 
     // Api key must be specified for the process to continue
     if (!apiKey) {
