@@ -12,7 +12,7 @@ import type {
   UpdateReefNameFromListArgs,
 } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
-import { mapCollectionData } from "./helpers";
+import { mapCollectionData } from "../Collection/utils";
 
 const reefsListInitialState: ReefsListState = {
   loading: false,

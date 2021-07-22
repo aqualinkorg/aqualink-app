@@ -91,8 +91,8 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-9"
+              <a
+                class="NavBar-menuItemLink-9"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -126,7 +126,7 @@ exports[`NavBar with routeButtons should render with given state from Redux stor
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
@@ -263,8 +263,8 @@ exports[`NavBar without routeButtons should render with given state from Redux s
               <mock-divider
                 classname="NavBar-userMenuDivider-17"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-20"
+              <a
+                class="NavBar-menuItemLink-20"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -298,7 +298,7 @@ exports[`NavBar without routeButtons should render with given state from Redux s
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-17"
               />

@@ -8,7 +8,7 @@ import {
   Button,
   Menu,
   MenuItem,
-  Link,
+  Link as MuiLink,
   Box,
   Hidden,
   withStyles,
@@ -19,6 +19,7 @@ import {
   useMediaQuery,
   Divider,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
 import MenuIcon from "@material-ui/icons/Menu";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -110,14 +111,14 @@ const NavBar = ({
                   <MenuIcon />
                 </IconButton>
 
-                <Link className={classes.navBarLink} href="/map">
+                <MuiLink className={classes.navBarLink} href="/map">
                   <Typography color="textPrimary" variant="h4">
                     Aqua
                   </Typography>
                   <Typography style={{ color: "#8AC6DE" }} variant="h4">
                     link
                   </Typography>
-                </Link>
+                </MuiLink>
               </Box>
             </Grid>
 
@@ -164,8 +165,7 @@ const NavBar = ({
                           const reefIdentifier = name || region;
                           return (
                             <Link
-                              underline="none"
-                              href={`/reefs/${id}`}
+                              to={`/reefs/${id}`}
                               key={`reef-link-${id}`}
                               className={classes.menuItemLink}
                             >
@@ -177,7 +177,7 @@ const NavBar = ({
                         }
                       )}
                       <Divider className={classes.userMenuDivider} />
-                      <Link href="/dashboard" className={classes.menuItemLink}>
+                      <Link to="/dashboard" className={classes.menuItemLink}>
                         <MenuItem
                           key="user-menu-dashboard"
                           className={classes.menuItem}

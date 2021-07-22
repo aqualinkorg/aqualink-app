@@ -26,6 +26,7 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isManager } from "../../../helpers/user";
 import pointIcon from "../../../assets/alerts/pin_nostress@2x.png";
 import selectedPointIcon from "../../../assets/alerts/pin_warning@2x.png";
+import { mapConstants } from "../../../constants/maps";
 
 const pinIcon = L.icon({
   iconUrl: marker,
@@ -170,12 +171,15 @@ const ReefMap = ({
   return (
     <Map
       ref={mapRef}
+      minZoom={1}
       maxZoom={17}
       zoom={13}
       dragging
       scrollWheelZoom={false}
       className={classes.map}
       tap={false}
+      maxBoundsViscosity={1.0}
+      maxBounds={mapConstants.MAX_BOUNDS}
     >
       <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
       {polygon.type === "Polygon" ? (

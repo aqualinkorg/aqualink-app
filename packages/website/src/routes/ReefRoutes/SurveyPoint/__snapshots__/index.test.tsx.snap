@@ -285,8 +285,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-9"
+              <a
+                class="NavBar-menuItemLink-9"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -320,7 +320,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-6"
               />
