@@ -118,7 +118,7 @@ export const checkVideoStreams = async (
   connection: Connection,
   projectId: string,
 ) => {
-  const apiKey = process.env.FIREBASE_KEY;
+  const apiKey = process.env.FIREBASE_API_KEY;
   const slackToken = process.env.SLACK_BOT_TOKEN;
   const slackChannel = process.env.SLACK_BOT_CHANNEL;
   const frontUrl = process.env.FRONT_END_BASE_URL;
