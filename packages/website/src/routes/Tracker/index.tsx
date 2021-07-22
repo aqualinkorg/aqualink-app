@@ -21,11 +21,7 @@ import hero from "../../assets/img/tracker-page/hero.png";
 import image1 from "../../assets/img/tracker-page/image1.png";
 import image2 from "../../assets/img/tracker-page/image2.png";
 import image3 from "../../assets/img/tracker-page/image3.png";
-
-const heroAspectRatio = 1054 / 300;
-const aspectRatio1 = 800 / 621;
-const aspectRatio2 = 800 / 393;
-const aspectRatio3 = 1039 / 800;
+import { getImageAspectRatio } from "../../helpers/images";
 
 const Tracker = ({ classes }: TrackerProps) => {
   return (
@@ -206,7 +202,7 @@ const styles = (theme: Theme) =>
     },
     hero: {
       width: "100%",
-      paddingTop: `calc(100% / ${heroAspectRatio})`,
+      paddingTop: `calc(100% / ${getImageAspectRatio(hero)})`,
       position: "relative",
     },
     heroTitle: {
@@ -239,19 +235,19 @@ const styles = (theme: Theme) =>
     },
     card1: {
       width: "100%",
-      paddingTop: `calc(100% / ${aspectRatio1})`,
+      paddingTop: `calc(100% / ${getImageAspectRatio(image1)})`,
       position: "relative",
       borderRadius: 10,
     },
     card2: {
       width: "100%",
-      paddingTop: `calc(100% / ${aspectRatio2})`,
+      paddingTop: `calc(100% / ${getImageAspectRatio(image2)})`,
       position: "relative",
       borderRadius: 10,
     },
     card3: {
       width: "100%",
-      paddingTop: `calc(100% / ${aspectRatio3})`,
+      paddingTop: `calc(100% / ${getImageAspectRatio(image3)})`,
       position: "relative",
       borderRadius: 10,
     },
