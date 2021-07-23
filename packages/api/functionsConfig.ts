@@ -20,7 +20,7 @@ export const functionsConfig = {
     base_url: process.env.BACKEND_BASE_URL,
   },
   google: {
-    api_key: process.env.FIREBASE_KEY,
+    api_key: process.env.FIREBASE_API_KEY,
   },
   database: {
     url: process.env.DATABASE_URL,

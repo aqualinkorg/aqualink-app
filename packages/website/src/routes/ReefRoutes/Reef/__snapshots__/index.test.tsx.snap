@@ -245,8 +245,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               <mock-divider
                 classname="NavBar-userMenuDivider-175"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-178"
+              <a
+                class="NavBar-menuItemLink-178"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -280,7 +280,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-175"
               />
@@ -2860,8 +2860,8 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
               <mock-divider
                 classname="NavBar-userMenuDivider-8"
               />
-              <mock-link
-                classname="NavBar-menuItemLink-11"
+              <a
+                class="NavBar-menuItemLink-11"
                 href="/dashboard"
               >
                 <mock-menuitem
@@ -2895,7 +2895,7 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                 </mock-menuitem>
-              </mock-link>
+              </a>
               <mock-divider
                 classname="NavBar-userMenuDivider-8"
               />
