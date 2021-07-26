@@ -17,10 +17,7 @@ import {
   reefsRequest,
   reefsListSelector,
 } from "../../store/Reefs/reefsListSlice";
-import {
-  reefDetailsSelector,
-  reefRequest,
-} from "../../store/Reefs/selectedReefSlice";
+import { reefRequest } from "../../store/Reefs/selectedReefSlice";
 import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
@@ -70,8 +67,6 @@ function useQuery() {
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const reefOnMap = useSelector(reefOnMapSelector);
-  const { id: reefOnCardId } = useSelector(reefDetailsSelector) || {};
-  const reefs = useSelector(reefsListSelector);
 
   const {
     initialZoom,
@@ -80,24 +75,18 @@ const Homepage = ({ classes }: HomepageProps) => {
   }: MapQueryParams = useQuery();
 
   useEffect(() => {
-    if (!reefs) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefs]);
+    dispatch(reefsRequest());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!reefOnMap && initialReefId && `${reefOnCardId}` !== initialReefId) {
-      // Make the request for the reef with id equal to `initialReefId` only
-      // if there is no reef on the map and it's not previously selected.
+    if (!reefOnMap && initialReefId) {
       dispatch(reefRequest(initialReefId));
       dispatch(surveysRequest(initialReefId));
-    } else if (reefOnMap && reefOnCardId !== reefOnMap.id) {
-      // Make the request for the reef with id equal to `reefOnMap.id` only
-      // if it's not previously selected.
+    } else if (reefOnMap) {
       dispatch(reefRequest(`${reefOnMap.id}`));
       dispatch(surveysRequest(`${reefOnMap.id}`));
     }
-  }, [dispatch, initialReefId, reefOnCardId, reefOnMap]);
+  }, [dispatch, initialReefId, reefOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
