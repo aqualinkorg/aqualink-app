@@ -26,6 +26,7 @@ import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   reefOceanSenseDataRequest,
+  clearOceanSenseData,
 } from "../../../store/Reefs/selectedReefSlice";
 import {
   surveysRequest,
@@ -133,6 +134,7 @@ const Reef = ({ match, classes }: ReefProps) => {
     return () => {
       dispatch(clearTimeSeriesDataRange());
       dispatch(clearTimeSeriesData());
+      dispatch(clearOceanSenseData());
     };
   }, [dispatch, reefId]);
 

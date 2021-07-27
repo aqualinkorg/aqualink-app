@@ -49,10 +49,8 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
 
   // Fetch reefs for the search bar
   useEffect(() => {
-    if (!reefs) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefs]);
+    dispatch(reefsRequest());
+  }, [dispatch]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>

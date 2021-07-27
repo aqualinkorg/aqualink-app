@@ -29,6 +29,8 @@ import { getComparator, Order, OrderKeys, stableSort } from "./utils";
 import { alertColorFinder } from "../../../helpers/bleachingAlertIntervals";
 import { Collection } from "../../Dashboard/collection";
 
+const SCROLLT_TIMEOUT = 500;
+
 const RowNameCell = ({
   reef: { locationName, region },
   classes,
@@ -153,7 +155,10 @@ const ReefTableBody = ({
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
     // only scroll if not on mobile (info at the top is more useful than the reef row)
     if (child && !isMobile && scrollTableOnSelection) {
-      child.scrollIntoView({ block: "center", behavior: "smooth" });
+      setTimeout(
+        () => child.scrollIntoView({ block: "center", behavior: "smooth" }),
+        SCROLLT_TIMEOUT
+      );
     }
   }, [isMobile, scrollTableOnSelection, selectedRow]);
 

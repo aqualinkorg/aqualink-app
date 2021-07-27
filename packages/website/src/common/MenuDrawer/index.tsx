@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Box,
   Button,
@@ -6,7 +7,7 @@ import {
   createStyles,
   Drawer,
   IconButton,
-  Link,
+  Theme,
   Typography,
   withStyles,
   WithStyles,
@@ -14,38 +15,40 @@ import {
 import { Clear, GitHub } from "@material-ui/icons";
 import ovioLogo from "../../assets/img/ovio_logo.png";
 
+const darkBlue = "#095877";
+
 const menuRoutes = [
   {
     text: "HOME",
-    href: "/",
+    to: "/",
   },
   {
     text: "MAP",
-    href: "/map",
+    to: "/map",
   },
   {
     text: "BUOY",
-    href: "/buoy",
+    to: "/buoy",
   },
   {
     text: "DRONE",
-    href: "/drones",
+    to: "/drones",
   },
   {
     text: "ABOUT",
-    href: "/about",
+    to: "/about",
   },
   {
     text: "FAQ",
-    href: "/faq",
+    to: "/faq",
   },
   {
     text: "TRACK A HEATWAVE",
-    href: "/tracker",
+    to: "/tracker",
   },
   {
     text: "REGISTER A SITE",
-    href: "/register",
+    to: "/register",
   },
 ];
 
@@ -68,18 +71,15 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, href }) => (
-        <Link
+      {menuRoutes.map(({ text, to }) => (
+        <Button
+          className={classes.menuDrawerButton}
           key={text}
-          href={href}
-          style={{
-            margin: "1rem 2rem 2rem",
-            fontSize: "1rem",
-            color: "white",
-          }}
+          component={Link}
+          to={to}
         >
-          {text}
-        </Link>
+          <Typography variant="h6">{text}</Typography>
+        </Button>
       ))}
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
@@ -109,13 +109,12 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
   );
 };
 
-const styles = () =>
+const styles = (theme: Theme) =>
   createStyles({
     paper: {
       width: "16rem",
       alignItems: "center",
-      // paddingTop: "2rem",
-      backgroundColor: "#095877",
+      backgroundColor: darkBlue,
     },
     contributeButton: {
       width: "50%",
@@ -124,7 +123,13 @@ const styles = () =>
         maxWidth: "100%",
       },
       "&:hover": {
-        color: "#000000",
+        color: "black",
+      },
+    },
+    menuDrawerButton: {
+      margin: theme.spacing(2, 4, 4),
+      "&:hover": {
+        color: "white",
       },
     },
   });
