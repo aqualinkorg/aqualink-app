@@ -23,28 +23,39 @@ export const reefsRequest = createAsyncThunk<
   ReefsRequestData,
   undefined,
   CreateAsyncThunkTypes
->("reefsList/request", async (arg, { rejectWithValue, getState }) => {
-  try {
-    const { data } = await reefServices.getReefs();
-    const {
-      homepage: { withSpotterOnly },
-    } = getState();
-    const sortedData = sortBy(data, "name");
-    const transformedData = sortedData.map((item) => ({
-      ...item,
-      collectionData: mapCollectionData(item.collectionData || {}),
-    }));
-    return {
-      list: transformedData,
-      reefsToDisplay: withSpotterOnly
-        ? transformedData.filter(hasDeployedSpotter)
-        : transformedData,
-    };
-  } catch (err) {
-    const error: AxiosError<ReefsListState["error"]> = err;
-    return rejectWithValue(error.message);
+>(
+  "reefsList/request",
+  async (arg, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await reefServices.getReefs();
+      const {
+        homepage: { withSpotterOnly },
+      } = getState();
+      const sortedData = sortBy(data, "name");
+      const transformedData = sortedData.map((item) => ({
+        ...item,
+        collectionData: mapCollectionData(item.collectionData || {}),
+      }));
+      return {
+        list: transformedData,
+        reefsToDisplay: withSpotterOnly
+          ? transformedData.filter(hasDeployedSpotter)
+          : transformedData,
+      };
+    } catch (err) {
+      const error: AxiosError<ReefsListState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
+  },
+  {
+    condition(arg: undefined, { getState }) {
+      const {
+        reefsList: { list },
+      } = getState();
+      return !list;
+    },
   }
-});
+);
 
 const reefsListSlice = createSlice({
   name: "reefsList",

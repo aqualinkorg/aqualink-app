@@ -21,10 +21,8 @@ const ReefsList = ({ classes }: ReefsListProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!reefsList) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefsList]);
+    dispatch(reefsRequest());
+  }, [dispatch]);
 
   return (
     <>

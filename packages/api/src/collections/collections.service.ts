@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isUndefined, omitBy } from 'lodash';
-import { Repository, MoreThan, In } from 'typeorm';
+import { Repository, MoreThanOrEqual, In } from 'typeorm';
 import { Collection, DynamicCollection } from './collections.entity';
 import { Sources } from '../reefs/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
@@ -165,7 +165,7 @@ export class CollectionsService {
   async getHeatStressTracker() {
     const heatStressData = await this.latestDataRepository.find({
       metric: Metric.DHW,
-      value: MoreThan(0),
+      value: MoreThanOrEqual(1),
     });
 
     const heatStressReefIds = heatStressData.map((data) => data.reefId);

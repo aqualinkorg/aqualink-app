@@ -27,7 +27,14 @@ export const surveysRequest = createAsyncThunk<
   SurveyListState["list"],
   string,
   CreateAsyncThunkTypes
->("surveysList/request", (reefId: string) => getSurveys(reefId));
+>("surveysList/request", (reefId: string) => getSurveys(reefId), {
+  condition(reefId: string, { getState }) {
+    const {
+      selectedReef: { details },
+    } = getState();
+    return `${details?.id}` !== reefId;
+  },
+});
 
 const surveyListSlice = createSlice({
   name: "surveyList",
