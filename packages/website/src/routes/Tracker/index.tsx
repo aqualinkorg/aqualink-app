@@ -6,24 +6,133 @@ import {
   Container,
   Grid,
   Typography,
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
+  makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import FootPrintImage from "./FootPrintImage";
+import { useImageAspectRatio } from "../../hooks/useImageAspectRatio";
+import { isPositiveNumber } from "../../helpers/numberUtils";
 
 import hero from "../../assets/img/tracker-page/hero.png";
 import image1 from "../../assets/img/tracker-page/image1.png";
 import image2 from "../../assets/img/tracker-page/image2.png";
 import image3 from "../../assets/img/tracker-page/image3.png";
-import { getImageAspectRatio } from "../../helpers/images";
 
-const Tracker = ({ classes }: TrackerProps) => {
+interface StyleProps {
+  heroAspectRatio?: number;
+  image1AspectRatio?: number;
+  image2AspectRatio?: number;
+  image3AspectRatio?: number;
+}
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      marginTop: theme.spacing(),
+    },
+    hero: ({ heroAspectRatio }: StyleProps) => ({
+      width: "100%",
+      paddingTop: isPositiveNumber(heroAspectRatio)
+        ? `calc(100% / ${heroAspectRatio})`
+        : 0,
+      position: "relative",
+    }),
+    heroTitle: {
+      fontWeight: 700,
+    },
+    header: {
+      margin: theme.spacing(7, 0, 5),
+      [theme.breakpoints.down("xs")]: {
+        margin: theme.spacing(4, 0, 2),
+      },
+    },
+    titleWrapper: {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: 48,
+      [theme.breakpoints.down("xs")]: {
+        top: 0,
+        bottom: 0,
+        display: "flex",
+        alignItems: "center",
+      },
+    },
+    title: {
+      fontWeight: 700,
+      fontSize: 24,
+      [theme.breakpoints.up("md")]: {
+        fontSize: 32,
+      },
+    },
+    card1: ({ image1AspectRatio }: StyleProps) => ({
+      width: "100%",
+      paddingTop: isPositiveNumber(image1AspectRatio)
+        ? `calc(100% / ${image1AspectRatio})`
+        : 0,
+      position: "relative",
+      borderRadius: 10,
+    }),
+    card2: ({ image2AspectRatio }: StyleProps) => ({
+      width: "100%",
+      paddingTop: isPositiveNumber(image2AspectRatio)
+        ? `calc(100% / ${image2AspectRatio})`
+        : 0,
+      position: "relative",
+      borderRadius: 10,
+    }),
+    card3: ({ image3AspectRatio }: StyleProps) => ({
+      width: "100%",
+      paddingTop: isPositiveNumber(image3AspectRatio)
+        ? `calc(100% / ${image3AspectRatio})`
+        : 0,
+      position: "relative",
+      borderRadius: 10,
+    }),
+    image: {
+      height: "100%",
+      width: "100%",
+      position: "absolute",
+      top: 0,
+      left: 0,
+    },
+    link: {
+      color: theme.palette.primary.main,
+      "&:hover": {
+        color: theme.palette.primary.main,
+        textDecoration: "none",
+      },
+    },
+    footPrintImageWrapper: {
+      [theme.breakpoints.down("xs")]: {
+        marginTop: theme.spacing(2),
+      },
+    },
+    globalStressWrapper: {
+      marginBottom: theme.spacing(2),
+    },
+  })
+);
+
+const Tracker = () => {
+  const heroAspectRatio = useImageAspectRatio(hero);
+  const image1AspectRatio = useImageAspectRatio(image1);
+  const image2AspectRatio = useImageAspectRatio(image2);
+  const image3AspectRatio = useImageAspectRatio(image3);
+
+  const classes = useStyles({
+    heroAspectRatio,
+    image1AspectRatio,
+    image2AspectRatio,
+    image3AspectRatio,
+  });
+
   return (
     <>
       <NavBar searchLocation={false} />
@@ -194,87 +303,4 @@ const Tracker = ({ classes }: TrackerProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      marginTop: theme.spacing(),
-    },
-    hero: {
-      width: "100%",
-      paddingTop: `calc(100% / ${getImageAspectRatio(hero)})`,
-      position: "relative",
-    },
-    heroTitle: {
-      fontWeight: 700,
-    },
-    header: {
-      margin: theme.spacing(7, 0, 5),
-      [theme.breakpoints.down("xs")]: {
-        margin: theme.spacing(4, 0, 2),
-      },
-    },
-    titleWrapper: {
-      position: "absolute",
-      left: 0,
-      right: 0,
-      top: 48,
-      [theme.breakpoints.down("xs")]: {
-        top: 0,
-        bottom: 0,
-        display: "flex",
-        alignItems: "center",
-      },
-    },
-    title: {
-      fontWeight: 700,
-      fontSize: 24,
-      [theme.breakpoints.up("md")]: {
-        fontSize: 32,
-      },
-    },
-    card1: {
-      width: "100%",
-      paddingTop: `calc(100% / ${getImageAspectRatio(image1)})`,
-      position: "relative",
-      borderRadius: 10,
-    },
-    card2: {
-      width: "100%",
-      paddingTop: `calc(100% / ${getImageAspectRatio(image2)})`,
-      position: "relative",
-      borderRadius: 10,
-    },
-    card3: {
-      width: "100%",
-      paddingTop: `calc(100% / ${getImageAspectRatio(image3)})`,
-      position: "relative",
-      borderRadius: 10,
-    },
-    image: {
-      height: "100%",
-      width: "100%",
-      position: "absolute",
-      top: 0,
-      left: 0,
-    },
-    link: {
-      color: theme.palette.primary.main,
-      "&:hover": {
-        color: theme.palette.primary.main,
-        textDecoration: "none",
-      },
-    },
-    footPrintImageWrapper: {
-      [theme.breakpoints.down("xs")]: {
-        marginTop: theme.spacing(2),
-      },
-    },
-    globalStressWrapper: {
-      marginBottom: theme.spacing(2),
-    },
-  });
-
-type TrackerProps = WithStyles<typeof styles>;
-
-export default withStyles(styles)(Tracker);
+export default Tracker;
