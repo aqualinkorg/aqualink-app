@@ -124,7 +124,7 @@ const styles = (theme: Theme) =>
     mediaInfoWrapper: {
       height: "100%",
       overflowY: "auto",
-      padding: "1rem 1rem 1rem 1.5rem",
+      padding: theme.spacing(2, 2, 2, 3),
       [theme.breakpoints.down("sm")]: {
         height: "50%",
       },
