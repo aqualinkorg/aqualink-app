@@ -2,7 +2,7 @@ import { LatLng } from "leaflet";
 import { maxBy, meanBy } from "lodash";
 
 import { longDHW } from "../store/Reefs/helpers";
-import { Reef } from "../store/Reefs/types";
+import { Reef, UpdateReefNameFromListArgs } from "../store/Reefs/types";
 
 export const findReefById = (reefs: Reef[], reefId: string): Reef | null => {
   return (
@@ -64,3 +64,10 @@ export const hasDeployedSpotter = (reef?: Reef | null) =>
 
 export const belongsToCollection = (reefId: number, reefIds?: number[]) =>
   reefIds?.includes(reefId);
+
+export const setReefNameFromList = ({
+  id,
+  list,
+  name,
+}: UpdateReefNameFromListArgs): Reef[] | undefined =>
+  list?.map((item) => (item.id === id && name ? { ...item, name } : item));

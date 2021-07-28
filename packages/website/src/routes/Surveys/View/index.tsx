@@ -24,7 +24,7 @@ import {
   surveyLoadingSelector,
 } from "../../../store/Survey/surveySlice";
 import SurveyDetails from "./SurveyDetails";
-import SurveyMediaDetails from "./SurveyMediaDetails";
+import SurveyMediaDetails from "./MediaDetails";
 import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
 import type { Reef } from "../../../store/Reefs/types";
 import {

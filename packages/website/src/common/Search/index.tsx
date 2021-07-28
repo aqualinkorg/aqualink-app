@@ -108,6 +108,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
 
       <div className={classes.searchBarText}>
         <Autocomplete
+          classes={{ listbox: classes.listbox, option: classes.option }}
           id="location"
           autoHighlight
           onKeyPress={onKeyPress}
@@ -172,6 +173,13 @@ const styles = () =>
       },
       height: "100%",
       width: "100%",
+    },
+    listbox: {
+      overflowX: "hidden",
+    },
+    option: {
+      display: "block",
+      overflowWrap: "break-word",
     },
   });
 
