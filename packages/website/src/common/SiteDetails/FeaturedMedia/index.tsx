@@ -23,9 +23,9 @@ import { convertOptionsToQueryParams } from "../../../helpers/video";
 const playerOptions = {
   autoplay: 1,
   mute: 1,
-  controls: 0,
+  controls: 1,
   modestbranding: 1,
-  fs: 0,
+  fs: 1,
   playsinline: 1,
 };
 
