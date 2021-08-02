@@ -13,7 +13,10 @@ import { SourceType } from './schemas/source-type.enum';
 
 @Entity()
 @Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
-@Index(['reef', 'type'], { unique: true, where: '"poi_id" IS NULL' })
+@Index(['reef', 'type', 'sensorId'], {
+  unique: true,
+  where: '"poi_id" IS NULL',
+})
 export class Sources {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
