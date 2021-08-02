@@ -7,26 +7,35 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Reef, ReefStatus } from '../reefs/reefs.entity';
+import { Reef } from '../reefs/reefs.entity';
+
+enum ReefColumn {
+  NAME = 'name',
+  SENSOR_ID = 'sensor_id',
+  STATUS = 'status',
+  VIDEO_STREAM = 'video_stream',
+  MAX_MONTHLY_MEAN = 'max_monthly_mean',
+  APPROVED = 'approved',
+}
 
 @Entity()
-export class AuditReefStatus {
+export class AuditReef {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Index()
   @Column()
-  oldStatus: ReefStatus;
+  oldValue: string;
 
   @Index()
   @Column()
-  newStatus: ReefStatus;
+  newValue: string;
+
+  @Column({ type: 'enum', enum: ReefColumn })
+  columnName: ReefColumn;
 
   @ManyToOne(() => Reef, { nullable: false, onDelete: 'CASCADE' })
   reef: Reef;
-
-  @Column({ nullable: true })
-  sensorId?: string;
 
   @Index()
   @CreateDateColumn()

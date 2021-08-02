@@ -6,56 +6,86 @@ export class CreateSpotterStatusTrigger1625665541080
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "audit_reef_status" (
+      `CREATE TYPE "audit_reef_column_name_enum" AS ENUM('name', 'sensor_id', 'status', 'video_stream', 'max_monthly_mean', 'approved')`,
+    );
+
+    await queryRunner.query(
+      `CREATE TABLE "audit_reef" (
         "id" SERIAL NOT NULL,
-        "old_status" character varying NOT NULL,
-        "new_status" character varying NOT NULL,
-        "sensor_id" character varying,
+        "old_value" character varying NOT NULL,
+        "new_value" character varying NOT NULL,
+        "column_name" "audit_reef_column_name_enum" NOT NULL,
         "created_at" TIMESTAMP NOT NULL DEFAULT now(),
         "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
         "reef_id" integer NOT NULL,
-        CONSTRAINT "PK_77f6aa781b31d8e3f7c64072121" PRIMARY KEY ("id")
+        CONSTRAINT "PK_7f6af35314375cb41f9bebb1baf" PRIMARY KEY ("id")
       )`,
     );
+
     await queryRunner.query(
-      `CREATE INDEX "IDX_39195166bb789a9236f1141c1b" ON "audit_reef_status" ("old_status") `,
+      `CREATE INDEX "IDX_abbd8ec473bccd8696f74d654c" ON "audit_reef" ("old_value") `,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_1342f2628ae11aa87e66774fbe" ON "audit_reef_status" ("new_status") `,
+      `CREATE INDEX "IDX_8517aece6ef181f640a5915d31" ON "audit_reef" ("new_value") `,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_95246cb04db215a339f93f502d" ON "audit_reef_status" ("created_at") `,
+      `CREATE INDEX "IDX_e3f8d897db207896108636769a" ON "audit_reef" ("created_at") `,
     );
     await queryRunner.query(
-      `ALTER TABLE "audit_reef_status" ADD CONSTRAINT "FK_a5c1283f4754f328929a0390e27" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+      `ALTER TABLE "audit_reef" ADD CONSTRAINT "FK_8fadafdfdbb6c163a0120ca1e3b" FOREIGN KEY ("reef_id") REFERENCES "reef"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
 
     await queryRunner.query(`
-      CREATE FUNCTION log_spotter_status_change() RETURNS trigger AS $log_spotter_status_change$
+      CREATE FUNCTION log_reef_change() RETURNS trigger AS $log_reef_change$
         BEGIN
-          IF NEW.status = OLD.status THEN
-            RETURN NEW;
+
+          IF NEW.name != OLD.name THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.name, NEW.name, NEW.id, 'name');  
           END IF;
 
-          INSERT INTO "audit_reef_status" (old_status, new_status, reef_id, sensor_id)
-          VALUES (OLD.status, NEW.status, NEW.id, NEW.sensor_id);
+          IF NEW.sensor_id != OLD.sensor_id THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.sensor_id, NEW.sensor_id, NEW.id, 'sensor_id');  
+          END IF;
+
+          IF NEW.status != OLD.status THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.status, NEW.status, NEW.id, 'status');  
+          END IF;
+
+          IF NEW.video_stream != OLD.video_stream THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.video_stream, NEW.video_stream, NEW.id, 'video_stream');  
+          END IF;
+
+          IF NEW.max_monthly_mean != OLD.max_monthly_mean THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.max_monthly_mean, NEW.max_monthly_mean, NEW.id, 'max_monthly_mean');  
+          END IF;
+
+          IF NEW.approved != OLD.approved THEN
+            INSERT INTO "audit_reef" (old_value, new_value, reef_id, column_name)
+            VALUES (OLD.approved, NEW.approved, NEW.id, 'approved');  
+          END IF;
 
           RETURN NEW;
         END;
-      $log_spotter_status_change$ LANGUAGE plpgsql;
+      $log_reef_change$ LANGUAGE plpgsql;
     `);
 
     await queryRunner.query(`
-      CREATE TRIGGER spotter_status_trigger AFTER UPDATE ON reef
+      CREATE TRIGGER reef_trigger AFTER UPDATE ON reef
       FOR EACH ROW
-      EXECUTE PROCEDURE log_spotter_status_change()
+      EXECUTE PROCEDURE log_reef_change()
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE "audit_reef_status"`);
+    await queryRunner.query(`DROP TABLE "audit_reef"`);
+    await queryRunner.query(`DROP TYPE "audit_reef_column_name_enum"`);
 
-    await queryRunner.query('DROP TRIGGER "spotter_status_trigger" ON "reef"');
-    await queryRunner.query('DROP FUNCTION log_spotter_status_change()');
+    await queryRunner.query('DROP TRIGGER "reef_trigger" ON "reef"');
+    await queryRunner.query('DROP FUNCTION log_reef_change()');
   }
 }
