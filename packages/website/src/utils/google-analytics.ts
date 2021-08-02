@@ -13,3 +13,15 @@ export const initGA = () => {
   ReactGA.initialize(GA_TRACKING_ID);
   ReactGA.pageview(window.location.pathname + window.location.search);
 };
+
+export const trackButtonClick = (
+  category: string,
+  action: string,
+  label?: string
+) => {
+  ReactGA.event({
+    category,
+    action,
+    label,
+  });
+};

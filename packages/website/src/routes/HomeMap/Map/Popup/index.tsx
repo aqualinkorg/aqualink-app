@@ -24,6 +24,7 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 import { maxLengths } from "../../../../constants/names";
+import { trackButtonClick } from "../../../../utils/google-analytics";
 
 const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
@@ -33,6 +34,10 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const isNameLong = name?.length && name.length > maxLengths.REEF_NAME_POPUP;
 
   const { dhw, satelliteTemperature } = reef.collectionData || {};
+
+  const onExploreButtonClick = () => {
+    trackButtonClick("MAP_PAGE_BUTTON_CLICK", "EXPLORE", "FROM_POPUP");
+  };
 
   useEffect(() => {
     if (
@@ -130,7 +135,12 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
                 style={{ color: "inherit", textDecoration: "none" }}
                 to={`/reefs/${reef.id}`}
               >
-                <Button size="small" variant="outlined" color="primary">
+                <Button
+                  onClick={onExploreButtonClick}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                >
                   EXPLORE
                 </Button>
               </Link>

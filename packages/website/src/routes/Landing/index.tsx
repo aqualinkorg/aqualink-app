@@ -12,15 +12,49 @@ import {
   Button,
   Theme,
   Fab,
+  ButtonProps,
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Link } from "react-router-dom";
 
+import classNames from "classnames";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
+import { trackButtonClick } from "../../utils/google-analytics";
+
+interface LandingPageButton {
+  label: string;
+  to: string;
+  variant: ButtonProps["variant"];
+  gaActionLabel: string;
+  hasWhiteColor?: boolean;
+}
+
+const landingPageButtons: LandingPageButton[] = [
+  {
+    label: "View The Map",
+    to: "/map",
+    variant: "contained",
+    gaActionLabel: "VIEW_MAP",
+  },
+  {
+    label: "Register Your Site",
+    to: "/register",
+    variant: "outlined",
+    gaActionLabel: "REGISTER_SITE",
+    hasWhiteColor: true,
+  },
+  {
+    label: "Track a Heatwave",
+    to: "/tracker",
+    variant: "outlined",
+    gaActionLabel: "TRACK_HEATWAVE",
+    hasWhiteColor: true,
+  },
+];
 
 const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -98,39 +132,29 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid item xs={12}>
               <Box mt="2rem">
                 <Grid container spacing={2}>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/map"
-                      className={classes.buttons}
-                      variant="contained"
-                      color="primary"
-                    >
-                      <Typography variant="h5">View The Map</Typography>
-                    </Button>
-                  </Grid>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/register"
-                      className={`${classes.buttons} ${classes.registerButton}`}
-                      variant="outlined"
-                      color="primary"
-                    >
-                      <Typography variant="h5">Register Your Site</Typography>
-                    </Button>
-                  </Grid>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/tracker"
-                      className={`${classes.buttons} ${classes.registerButton}`}
-                      variant="outlined"
-                      color="primary"
-                    >
-                      <Typography variant="h5">Track a Heatwave</Typography>
-                    </Button>
-                  </Grid>
+                  {landingPageButtons.map(
+                    ({ label, to, hasWhiteColor, variant, gaActionLabel }) => (
+                      <Grid key={label} item xs={isTablet ? 12 : undefined}>
+                        <Button
+                          component={Link}
+                          to={to}
+                          className={classNames(classes.buttons, {
+                            [classes.whiteColorButton]: hasWhiteColor,
+                          })}
+                          variant={variant}
+                          color="primary"
+                          onClick={() =>
+                            trackButtonClick(
+                              "LANDING_PAGE_BUTTON_CLICK",
+                              gaActionLabel
+                            )
+                          }
+                        >
+                          <Typography variant="h5">{label}</Typography>
+                        </Button>
+                      </Grid>
+                    )
+                  )}
                 </Grid>
               </Box>
             </Grid>
@@ -188,7 +212,7 @@ const styles = (theme: Theme) =>
         height: 40,
       },
     },
-    registerButton: {
+    whiteColorButton: {
       color: "#ffffff",
       border: "2px solid #ffffff",
       "&:hover": {

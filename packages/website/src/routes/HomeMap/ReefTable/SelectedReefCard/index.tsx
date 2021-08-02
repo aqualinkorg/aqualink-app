@@ -32,6 +32,7 @@ import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import Chip from "../../../../common/Chip";
+import { trackButtonClick } from "../../../../utils/google-analytics";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -161,6 +162,10 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
     />
   );
 
+  const onExploreButtonClick = () => {
+    trackButtonClick("MAP_PAGE_BUTTON_CLICK", "EXPLORE", "FROM_CARD");
+  };
+
   return (
     <Grid
       className={
@@ -221,7 +226,12 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
                     style={{ color: "inherit", textDecoration: "none" }}
                     to={`/reefs/${reef.id}`}
                   >
-                    <Button size="small" variant="contained" color="primary">
+                    <Button
+                      onClick={onExploreButtonClick}
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                    >
                       EXPLORE
                     </Button>
                   </Link>
