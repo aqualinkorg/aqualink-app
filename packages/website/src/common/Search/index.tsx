@@ -49,10 +49,8 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
 
   // Fetch reefs for the search bar
   useEffect(() => {
-    if (!reefs) {
-      dispatch(reefsRequest());
-    }
-  }, [dispatch, reefs]);
+    dispatch(reefsRequest());
+  }, [dispatch]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -110,6 +108,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
 
       <div className={classes.searchBarText}>
         <Autocomplete
+          classes={{ listbox: classes.listbox, option: classes.option }}
           id="location"
           autoHighlight
           onKeyPress={onKeyPress}
@@ -174,6 +173,13 @@ const styles = () =>
       },
       height: "100%",
       width: "100%",
+    },
+    listbox: {
+      overflowX: "hidden",
+    },
+    option: {
+      display: "block",
+      overflowWrap: "break-word",
     },
   });
 

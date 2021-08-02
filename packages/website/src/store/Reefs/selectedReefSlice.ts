@@ -34,36 +34,47 @@ export const reefRequest = createAsyncThunk<
   SelectedReefState["details"],
   string,
   CreateAsyncThunkTypes
->("selectedReef/request", async (id: string, { rejectWithValue }) => {
-  try {
-    const { data } = await reefServices.getReef(id);
-    const { data: dailyData } = await reefServices.getReefDailyData(id);
-    const { data: liveData } = await reefServices.getReefLiveData(id);
-    const { data: surveyPoints } = await reefServices.getReefPois(id);
+>(
+  "selectedReef/request",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await reefServices.getReef(id);
+      const { data: dailyData } = await reefServices.getReefDailyData(id);
+      const { data: liveData } = await reefServices.getReefLiveData(id);
+      const { data: surveyPoints } = await reefServices.getReefPois(id);
 
-    return {
-      ...data,
-      dailyData,
-      liveData,
-      historicalMonthlyMean: sortBy(
-        data.historicalMonthlyMean,
-        (item) => item.month
-      ).map((item) => ({
-        id: item.id,
-        month: item.month,
-        temperature: item.temperature,
-      })),
-      surveyPoints: surveyPoints.map((point) => ({
-        id: point.id,
-        name: point.name,
-        polygon: point.polygon,
-      })),
-    };
-  } catch (err) {
-    const error: AxiosError<SelectedReefState["error"]> = err;
-    return rejectWithValue(error.message);
+      return {
+        ...data,
+        dailyData,
+        liveData,
+        historicalMonthlyMean: sortBy(
+          data.historicalMonthlyMean,
+          (item) => item.month
+        ).map((item) => ({
+          id: item.id,
+          month: item.month,
+          temperature: item.temperature,
+        })),
+        surveyPoints: surveyPoints.map((point) => ({
+          id: point.id,
+          name: point.name,
+          polygon: point.polygon,
+        })),
+      };
+    } catch (err) {
+      const error: AxiosError<SelectedReefState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
+  },
+  {
+    condition(id: string, { getState }) {
+      const {
+        selectedReef: { details },
+      } = getState();
+      return `${details?.id}` !== id;
+    },
   }
-});
+);
 
 export const reefOceanSenseDataRequest = createAsyncThunk<
   { data: OceanSenseData; latest?: boolean },
@@ -192,6 +203,11 @@ const selectedReefSlice = createSlice({
     clearGranularDailyData: (state) => ({
       ...state,
       granularDailyData: undefined,
+    }),
+    clearOceanSenseData: (state) => ({
+      ...state,
+      oceanSenseData: undefined,
+      latestOceanSenseData: undefined,
     }),
   },
   extraReducers: (builder) => {
@@ -423,6 +439,7 @@ export const {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,
+  clearOceanSenseData,
   setReefPois,
 } = selectedReefSlice.actions;
 

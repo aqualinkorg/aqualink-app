@@ -6,17 +6,17 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     searchlocation="false"
   />
   <mock-box
-    classname="Tracker-hero-2"
+    classname="makeStyles-hero-2 makeStyles-hero-14"
   >
     <div
-      class="MuiCardMedia-root Tracker-image-10"
+      class="MuiCardMedia-root makeStyles-image-10"
       style="background-image: url(hero.png);"
     />
     <div
-      class="MuiContainer-root Tracker-titleWrapper-5 MuiContainer-maxWidthLg"
+      class="MuiContainer-root makeStyles-titleWrapper-5 MuiContainer-maxWidthLg"
     >
       <mock-typography
-        classname="Tracker-heroTitle-3"
+        classname="makeStyles-heroTitle-3"
         color="textPrimary"
         variant="h1"
       >
@@ -25,28 +25,28 @@ exports[`Tracker should render with given state from Redux store 1`] = `
     </div>
   </mock-box>
   <div
-    class="MuiContainer-root Tracker-root-1 MuiContainer-maxWidthLg"
+    class="MuiContainer-root makeStyles-root-1 MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiGrid-root Tracker-header-4 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+      class="MuiGrid-root makeStyles-header-4 MuiGrid-container MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-md-9"
       >
         <mock-typography
-          classname="Tracker-title-6"
+          classname="makeStyles-title-6"
         >
           Using Sensor Networks to Monitor Heat Waves in Real-time
         </mock-typography>
       </div>
       <div
-        class="MuiGrid-root Tracker-footPrintImageWrapper-12 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
+        class="MuiGrid-root makeStyles-footPrintImageWrapper-12 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-3"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
         >
           <div
-            class="MuiGrid-root makeStyles-footPrintImageText-14 MuiGrid-item"
+            class="MuiGrid-root makeStyles-footPrintImageText-18 MuiGrid-item"
           >
             <mock-typography
               align="right"
@@ -55,7 +55,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root makeStyles-footPrintImageLink-15 MuiGrid-item"
+            class="MuiGrid-root makeStyles-footPrintImageLink-19 MuiGrid-item"
           >
             <a
               href="https://www.footprintcoalition.com/"
@@ -64,7 +64,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             >
               <img
                 alt="footprint"
-                class="makeStyles-footPrintImage-16 makeStyles-footPrintImage-17"
+                class="makeStyles-footPrintImage-20 makeStyles-footPrintImage-21"
                 src="footprint.png"
               />
             </a>
@@ -83,7 +83,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         >
           The ability for sensors to be grouped for a particular event, such as a Heatwave, or a particular region, is important for users to get critical information at a glance. We have launched a new feature called Dashboards where anyone can create a customized collection of sensors to track this information. For example, the
           <a
-            class="Tracker-link-11"
+            class="makeStyles-link-11"
             href="https://www.minderoo.org/"
             rel="noopener noreferrer"
             target="_blank"
@@ -95,7 +95,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           worked with us and the
            
           <a
-            class="Tracker-link-11"
+            class="makeStyles-link-11"
             href="https://www.uwa.edu.au"
             rel="noopener noreferrer"
             target="_blank"
@@ -106,7 +106,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           to deploy Smart Buoys along the Western coast of Australia. This was done in a critical time for the region where an extreme heatwave, known as the
            
           <a
-            class="Tracker-link-11"
+            class="makeStyles-link-11"
             href="https://en.wikipedia.org/wiki/La_Ni%C3%B1a"
             rel="noopener noreferrer"
             target="_blank"
@@ -116,7 +116,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           , was exptected to come through the area, potentially bringing devastating affects to the local ecosystems. They created a dashboard
            
           <a
-            class="Tracker-link-11"
+            class="makeStyles-link-11"
             href="/collections/minderoo"
           >
             here
@@ -129,7 +129,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="Tracker-card1-7"
+          classname="makeStyles-card1-7 makeStyles-card1-15"
           variant="outlined"
         >
           <a
@@ -138,7 +138,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
             target="_blank"
           >
             <div
-              class="MuiCardMedia-root Tracker-image-10"
+              class="MuiCardMedia-root makeStyles-image-10"
               style="background-image: url(image1.png);"
             />
           </a>
@@ -149,7 +149,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="72px 0 48px 0"
     >
       <mock-typography
-        classname="Tracker-title-6"
+        classname="makeStyles-title-6"
         variant="h2"
       >
         Create Your Dashboard
@@ -162,11 +162,11 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="Tracker-card2-8"
+          classname="makeStyles-card2-8 makeStyles-card2-16"
           variant="outlined"
         >
           <div
-            class="MuiCardMedia-root Tracker-image-10"
+            class="MuiCardMedia-root makeStyles-image-10"
             style="background-image: url(image2.png);"
           />
         </mock-card>
@@ -202,14 +202,14 @@ exports[`Tracker should render with given state from Redux store 1`] = `
       margin="72px 0 48px 0"
     >
       <mock-typography
-        classname="Tracker-title-6"
+        classname="makeStyles-title-6"
         variant="h2"
       >
         Track global heat stress at a glance
       </mock-typography>
     </mock-box>
     <div
-      class="MuiGrid-root Tracker-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
+      class="MuiGrid-root makeStyles-globalStressWrapper-13 MuiGrid-container MuiGrid-spacing-xs-3"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 MuiGrid-grid-lg-4"
@@ -220,7 +220,7 @@ exports[`Tracker should render with given state from Redux store 1`] = `
           Aqualink has developed a tracker that highlights all the sites under the most stress, at a glance. Use
            
           <a
-            class="Tracker-link-11"
+            class="makeStyles-link-11"
             href="/collections/heat-stress"
           >
             this page
@@ -233,14 +233,14 @@ exports[`Tracker should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 MuiGrid-grid-lg-8"
       >
         <mock-card
-          classname="Tracker-card3-9"
+          classname="makeStyles-card3-9 makeStyles-card3-17"
           variant="outlined"
         >
           <a
             href="/collections/heat-stress"
           >
             <div
-              class="MuiCardMedia-root Tracker-image-10"
+              class="MuiCardMedia-root makeStyles-image-10"
               style="background-image: url(image3.png);"
             />
           </a>

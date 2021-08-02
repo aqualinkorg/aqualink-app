@@ -32,6 +32,12 @@ export interface SpotterPosition {
   };
 }
 
+export interface UpdateReefNameFromListArgs {
+  id: number;
+  list?: Reef[];
+  name?: string;
+}
+
 export interface DeploySpotterParams {
   endDate: string;
 }

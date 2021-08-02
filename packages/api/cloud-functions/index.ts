@@ -171,7 +171,7 @@ exports.scheduledVideoStreamsCheck = functions
     const FIREBASE_CONFIG = JSON.parse(process.env.FIREBASE_CONFIG);
     if (!hasProjectId(FIREBASE_CONFIG)) {
       console.error(
-        `Firebase config has not be set properly, ${process.env.FIREBASE_CONFIG}`,
+        `Firebase config has not been set properly, ${process.env.FIREBASE_CONFIG}`,
       );
       return;
     }
@@ -187,7 +187,7 @@ exports.scheduledVideoStreamsCheck = functions
 
     try {
       await checkVideoStreams(conn, projectId);
-      console.log(`Video stream daily check on ${new Date()}`);
+      console.log(`Video stream daily check on ${new Date()} is complete.`);
     } finally {
       conn.close();
     }

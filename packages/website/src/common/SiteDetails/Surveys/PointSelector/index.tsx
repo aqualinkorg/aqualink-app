@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { Pois } from "../../../../store/Reefs/types";
 import EditDialog, { Action } from "../../../Dialog";
 import CustomLink from "../../../Link";
+import { maxLengths } from "../../../../constants/names";
 
 const PointSelector = ({
   reefId,
@@ -39,6 +40,8 @@ const PointSelector = ({
 }: PointSelectorProps) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editPoi, setEditPoi] = useState<Pois>();
+  const errored =
+    !editPoiNameDraft || editPoiNameDraft.length > maxLengths.POI_NAME;
 
   const onEditDialogClose = () => {
     disableEditPoiName();
@@ -49,6 +52,17 @@ const PointSelector = ({
   const onEditPoiSubmit = () => {
     if (editPoi) {
       submitPoiNameUpdate(editPoi.id);
+    }
+  };
+
+  const getHelperText = () => {
+    switch (true) {
+      case !editPoiNameDraft:
+        return "Cannot be empty";
+      case editPoiNameDraft && editPoiNameDraft.length > maxLengths.POI_NAME:
+        return `Must not exceed ${maxLengths.POI_NAME} characters`;
+      default:
+        return "";
     }
   };
 
@@ -73,7 +87,7 @@ const PointSelector = ({
       color: "primary",
       text: editPoiNameLoading ? "Updating..." : "Save",
       action: onEditPoiSubmit,
-      disabled: editPoiNameLoading || (editPoi && !editPoiNameDraft),
+      disabled: editPoiNameLoading || (editPoi && errored),
     },
   ];
 
@@ -93,8 +107,8 @@ const PointSelector = ({
               fullWidth
               value={editPoiNameDraft}
               onChange={onChangePoiName}
-              error={!editPoiNameDraft}
-              helperText={!editPoiNameDraft ? "Cannot be empty" : ""}
+              error={errored}
+              helperText={getHelperText()}
             />
           }
         />

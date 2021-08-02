@@ -17,7 +17,7 @@ import {
 } from "../../../store/Reefs/reefsListSlice";
 
 const ReefsList = ({ classes }: ReefsListProps) => {
-  const reefsList = useSelector(reefsListSelector) || [];
+  const reefsList = useSelector(reefsListSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const ReefsList = ({ classes }: ReefsListProps) => {
     <>
       <div className={classes.root}>
         <List component="nav">
-          {reefsList.map((reef) => (
+          {reefsList?.map((reef) => (
             <Link
               key={`reef-list-item-${reef.id}`}
               style={{ color: "inherit", textDecoration: "none" }}

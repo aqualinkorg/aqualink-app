@@ -2,8 +2,15 @@ import { sortBy } from "lodash";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 import reefServices from "../../services/reefServices";
-import { hasDeployedSpotter } from "../../helpers/reefUtils";
-import type { ReefsListState, ReefsRequestData } from "./types";
+import {
+  hasDeployedSpotter,
+  setReefNameFromList,
+} from "../../helpers/reefUtils";
+import type {
+  ReefsListState,
+  ReefsRequestData,
+  UpdateReefNameFromListArgs,
+} from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import { mapCollectionData } from "../Collection/utils";
 
@@ -16,28 +23,39 @@ export const reefsRequest = createAsyncThunk<
   ReefsRequestData,
   undefined,
   CreateAsyncThunkTypes
->("reefsList/request", async (arg, { rejectWithValue, getState }) => {
-  try {
-    const { data } = await reefServices.getReefs();
-    const {
-      homepage: { withSpotterOnly },
-    } = getState();
-    const sortedData = sortBy(data, "name");
-    const transformedData = sortedData.map((item) => ({
-      ...item,
-      collectionData: mapCollectionData(item.collectionData || {}),
-    }));
-    return {
-      list: transformedData,
-      reefsToDisplay: withSpotterOnly
-        ? transformedData.filter(hasDeployedSpotter)
-        : transformedData,
-    };
-  } catch (err) {
-    const error: AxiosError<ReefsListState["error"]> = err;
-    return rejectWithValue(error.message);
+>(
+  "reefsList/request",
+  async (arg, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await reefServices.getReefs();
+      const {
+        homepage: { withSpotterOnly },
+      } = getState();
+      const sortedData = sortBy(data, "name");
+      const transformedData = sortedData.map((item) => ({
+        ...item,
+        collectionData: mapCollectionData(item.collectionData || {}),
+      }));
+      return {
+        list: transformedData,
+        reefsToDisplay: withSpotterOnly
+          ? transformedData.filter(hasDeployedSpotter)
+          : transformedData,
+      };
+    } catch (err) {
+      const error: AxiosError<ReefsListState["error"]> = err;
+      return rejectWithValue(error.message);
+    }
+  },
+  {
+    condition(arg: undefined, { getState }) {
+      const {
+        reefsList: { list },
+      } = getState();
+      return !list;
+    },
   }
-});
+);
 
 const reefsListSlice = createSlice({
   name: "reefsList",
@@ -48,6 +66,13 @@ const reefsListSlice = createSlice({
       reefsToDisplay: action.payload
         ? state.list?.filter(hasDeployedSpotter)
         : state.list,
+    }),
+    setReefName: (
+      state,
+      action: PayloadAction<UpdateReefNameFromListArgs>
+    ) => ({
+      ...state,
+      list: setReefNameFromList(action.payload),
     }),
   },
   extraReducers: (builder) => {
@@ -98,6 +123,6 @@ export const reefsListErrorSelector = (
   state: RootState
 ): ReefsListState["error"] => state.reefsList.error;
 
-export const { filterReefsWithSpotter } = reefsListSlice.actions;
+export const { filterReefsWithSpotter, setReefName } = reefsListSlice.actions;
 
 export default reefsListSlice.reducer;

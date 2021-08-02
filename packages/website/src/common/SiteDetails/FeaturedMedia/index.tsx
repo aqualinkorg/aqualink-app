@@ -23,9 +23,7 @@ import { convertOptionsToQueryParams } from "../../../helpers/video";
 const playerOptions = {
   autoplay: 1,
   mute: 1,
-  controls: 0,
   modestbranding: 1,
-  fs: 0,
   playsinline: 1,
 };
 
@@ -43,10 +41,11 @@ const FeaturedMedia = ({
     return (
       <Card className={classes.card}>
         <CardContent className={classes.content}>
-          <CardMedia
+          <iframe
             className={classes.fullHeightAndWidth}
+            title="live-video-stream"
             src={`${url}${convertOptionsToQueryParams(playerOptions)}`}
-            component="iframe"
+            allowFullScreen
           />
         </CardContent>
       </Card>
