@@ -210,6 +210,9 @@ export const checkVideoStreams = async (
     ],
   } as SlackMessage;
 
+  // Log message in stdout
+  logger.log(messageTemplate);
+
   // Send an alert containing all irregular video stream along with the reason
   await sendSlackMessage(messageTemplate, slackToken);
 };
