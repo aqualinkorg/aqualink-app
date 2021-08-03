@@ -362,6 +362,7 @@ const ChartWithCard = ({
                 timeSeriesDataRanges={timeSeriesDataRanges}
                 timeZone={reef.timezone}
                 showRangeButtons={false}
+                showAvailableRanges={false}
               />
               <Grid
                 className={classes.chartWrapper}
