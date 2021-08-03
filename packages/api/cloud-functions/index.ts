@@ -36,6 +36,32 @@ function hasProjectId(config): config is { projectId: string } {
   return config && 'projectId' in config;
 }
 
+function sendErrorToSlack(method: string, err: any) {
+  const { token, channel } = functions.config().slack;
+
+  if (!token || !channel) {
+    console.error(
+      'Missing slack token or channel. Cannot log error to slack...',
+    );
+    return;
+  }
+
+  const payload = {
+    channel,
+    text: `A firebase error has occurred on firebase function ${method}:\n${err}`,
+    mrkdwn: true,
+  };
+
+  Axios({
+    url: 'https://slack.com/api/chat.postMessage',
+    method: 'post',
+    data: payload,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 // Remove all the connection info from the dbConfig object - we want to replace it with the dbUrl input from this
 // function argument.
 const {
@@ -65,6 +91,9 @@ exports.dailyUpdate = functions
     try {
       await runDailyUpdate(conn);
       res.json({ result: `Daily update on ${new Date()}` });
+    } catch (err) {
+      sendErrorToSlack('dailyUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -88,6 +117,9 @@ exports.scheduledDailyUpdate = functions
     try {
       await runDailyUpdate(conn);
       console.log(`Daily update on ${new Date()}`);
+    } catch (err) {
+      sendErrorToSlack('scheduledDailyUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -98,9 +130,14 @@ exports.pingService = functions.pubsub
   .onRun(async () => {
     const backendBaseUrl: string = functions.config().api.base_url;
     console.log('Pinging server');
-    await Axios.get(
-      new URL('health-check', addTrailingSlashToUrl(backendBaseUrl)).href,
-    );
+    try {
+      await Axios.get(
+        new URL('health-check', addTrailingSlashToUrl(backendBaseUrl)).href,
+      );
+    } catch (err) {
+      sendErrorToSlack('pingService', err);
+      throw err;
+    }
   });
 
 exports.scheduledSpotterTimeSeriesUpdate = functions
@@ -122,6 +159,9 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     try {
       await runSpotterTimeSeriesUpdate(conn);
       console.log(`Spotter data hourly update on ${new Date()}`);
+    } catch (err) {
+      sendErrorToSlack('scheduledSpotterTimeSeriesUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -146,6 +186,9 @@ exports.scheduledSSTTimeSeriesUpdate = functions
     try {
       await runSSTTimeSeriesUpdate(conn);
       console.log(`SST data hourly update on ${new Date()}`);
+    } catch (err) {
+      sendErrorToSlack('scheduledSSTTimeSeriesUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -188,6 +231,9 @@ exports.scheduledVideoStreamsCheck = functions
     try {
       await checkVideoStreams(conn, projectId);
       console.log(`Video stream daily check on ${new Date()} is complete.`);
+    } catch (err) {
+      sendErrorToSlack('scheduledVideoStreamsCheck', err);
+      throw err;
     } finally {
       conn.close();
     }
