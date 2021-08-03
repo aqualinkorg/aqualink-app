@@ -7,6 +7,7 @@ import { runDailyUpdate } from '../src/workers/dailyData';
 import { runSpotterTimeSeriesUpdate } from '../src/workers/spotterTimeSeries';
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
+import { sendSlackMessage } from '../src/utils/slack.utils';
 
 // We have to manually import all required entities here, unfortunately - the globbing that is used in ormconfig.ts
 // doesn't work with Webpack. This declaration gets processed by a custom loader (`add-entities.js`) to add import
@@ -34,6 +35,25 @@ function addTrailingSlashToUrl(url: string) {
 
 function hasProjectId(config): config is { projectId: string } {
   return config && 'projectId' in config;
+}
+
+async function sendErrorToSlack(method: string, err: any) {
+  const { token, channel } = functions.config().slack;
+
+  if (!token || !channel) {
+    console.error(
+      'Missing slack token or channel. Cannot log error to slack...',
+    );
+    return;
+  }
+
+  const payload = {
+    channel,
+    text: `A firebase error has occurred on firebase function ${method}:\n${err}`,
+    mrkdwn: true,
+  };
+
+  await sendSlackMessage(payload, token);
 }
 
 // Remove all the connection info from the dbConfig object - we want to replace it with the dbUrl input from this
@@ -65,6 +85,9 @@ exports.dailyUpdate = functions
     try {
       await runDailyUpdate(conn);
       res.json({ result: `Daily update on ${new Date()}` });
+    } catch (err) {
+      await sendErrorToSlack('dailyUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -88,6 +111,9 @@ exports.scheduledDailyUpdate = functions
     try {
       await runDailyUpdate(conn);
       console.log(`Daily update on ${new Date()}`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledDailyUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -98,9 +124,14 @@ exports.pingService = functions.pubsub
   .onRun(async () => {
     const backendBaseUrl: string = functions.config().api.base_url;
     console.log('Pinging server');
-    await Axios.get(
-      new URL('health-check', addTrailingSlashToUrl(backendBaseUrl)).href,
-    );
+    try {
+      await Axios.get(
+        new URL('health-check', addTrailingSlashToUrl(backendBaseUrl)).href,
+      );
+    } catch (err) {
+      await sendErrorToSlack('pingService', err);
+      throw err;
+    }
   });
 
 exports.scheduledSpotterTimeSeriesUpdate = functions
@@ -122,6 +153,9 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
     try {
       await runSpotterTimeSeriesUpdate(conn);
       console.log(`Spotter data hourly update on ${new Date()}`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledSpotterTimeSeriesUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -146,6 +180,9 @@ exports.scheduledSSTTimeSeriesUpdate = functions
     try {
       await runSSTTimeSeriesUpdate(conn);
       console.log(`SST data hourly update on ${new Date()}`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledSSTTimeSeriesUpdate', err);
+      throw err;
     } finally {
       conn.close();
     }
@@ -188,6 +225,9 @@ exports.scheduledVideoStreamsCheck = functions
     try {
       await checkVideoStreams(conn, projectId);
       console.log(`Video stream daily check on ${new Date()} is complete.`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledVideoStreamsCheck', err);
+      throw err;
     } finally {
       conn.close();
     }
