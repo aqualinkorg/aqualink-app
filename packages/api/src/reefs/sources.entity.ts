@@ -5,17 +5,23 @@ import {
   Index,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Unique,
 } from 'typeorm';
 import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
 import { Reef } from './reefs.entity';
 import { SourceType } from './schemas/source-type.enum';
 
 @Entity()
-@Unique('no_duplicate_sources', ['reef', 'poi', 'type'])
+@Index('no_duplicate_sources', ['reef', 'poi', 'type'], {
+  unique: true,
+  where: '"poi_id" IS NOT NULL',
+})
+@Index(['reef', 'type'], {
+  unique: true,
+  where: '"poi_id" IS NULL AND sensor_id IS NULL',
+})
 @Index(['reef', 'type', 'sensorId'], {
   unique: true,
-  where: '"poi_id" IS NULL',
+  where: '"poi_id" IS NULL AND sensor_id IS NOT NULL',
 })
 export class Sources {
   @ApiProperty({ example: 1 })
