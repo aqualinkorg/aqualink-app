@@ -11,17 +11,11 @@ import { Reef } from './reefs.entity';
 import { SourceType } from './schemas/source-type.enum';
 
 @Entity()
-@Index('no_duplicate_sources', ['reef', 'poi', 'type'], {
+// Typeorm does not allow to add raw SQL on column declaration
+// So we will edit the query on the migration
+// CREATE UNIQUE INDEX "no_duplicate_sources" ON "sources" ("reef_id", COALESCE("poi_id", 0), "type", COALESCE("sensor_id", 'SPOT-IMPOSSIBLE'))
+@Index('no_duplicate_sources', ['reef', 'poi', 'type', 'sensorId'], {
   unique: true,
-  where: '"poi_id" IS NOT NULL',
-})
-@Index(['reef', 'type'], {
-  unique: true,
-  where: '"poi_id" IS NULL AND sensor_id IS NULL',
-})
-@Index(['reef', 'type', 'sensorId'], {
-  unique: true,
-  where: '"poi_id" IS NULL AND sensor_id IS NOT NULL',
 })
 export class Sources {
   @ApiProperty({ example: 1 })
