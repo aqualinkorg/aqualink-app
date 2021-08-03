@@ -248,7 +248,7 @@ export const checkVideoStreams = async (
   // Slack returns { ok: false } if an error occurs
   if (!data.ok) {
     logger.error(
-      `Slack responded with an non-ok response with error '${data.error}' and warning '${data.warning}'`,
+      `Slack responded with a non-ok status. Error: '${data.error}'. Warning: '${data.warning}'.`,
     );
   }
 };
