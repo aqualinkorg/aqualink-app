@@ -3,6 +3,7 @@ import axios, { AxiosPromise } from 'axios';
 import { Dictionary } from 'lodash';
 import { Connection, IsNull, Not } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
+import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { getYouTubeVideoId } from '../utils/urls';
 
 const logger = new Logger('CheckVideoStreams');
@@ -34,23 +35,6 @@ interface YouTubeVideoItem {
 
 interface YouTubeApiResponse {
   items: YouTubeVideoItem[];
-}
-
-interface SlackMessage {
-  channel: string;
-  blocks: {
-    type: string;
-    text?: {
-      type: string;
-      text: string;
-    };
-  }[];
-}
-
-interface SlackResponse {
-  ok: boolean;
-  error?: string;
-  warning?: string;
 }
 
 const getReefFrontEndURL = (reefId: number, frontUrl: string) =>
@@ -108,18 +92,6 @@ const checkVideoOptions = (youTubeVideoItems: YouTubeVideoItem[]) =>
       [item.id]: getErrorMessage(item),
     };
   }, {});
-
-const sendSlackMessage = (payload: SlackMessage, token: string) => {
-  return axios.post<SlackResponse>(
-    'https://slack.com/api/chat.postMessage',
-    payload,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
-};
 
 export const checkVideoStreams = async (
   connection: Connection,
@@ -187,7 +159,7 @@ export const checkVideoStreams = async (
   const youTubeIdToError = checkVideoOptions(axiosResponse.data.items);
 
   const blocks = Object.values(reefIdToVideoStreamDetails).reduce<
-    SlackMessage['blocks']
+    Exclude<SlackMessage['blocks'], undefined>
   >((msgs, { id, reefId, url, name, error }) => {
     const reportedError =
       error ||
@@ -242,13 +214,5 @@ export const checkVideoStreams = async (
   logger.log(messageTemplate);
 
   // Send an alert containing all irregular video stream along with the reason
-  const resp = await sendSlackMessage(messageTemplate, slackToken);
-
-  const { data } = resp;
-  // Slack returns { ok: false } if an error occurs
-  if (!data.ok) {
-    logger.error(
-      `Slack responded with a non-ok status. Error: '${data.error}'. Warning: '${data.warning}'.`,
-    );
-  }
+  await sendSlackMessage(messageTemplate, slackToken);
 };
