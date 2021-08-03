@@ -5,7 +5,6 @@ import {
   Index,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 
@@ -19,7 +18,7 @@ enum ReefColumn {
 }
 
 @Entity()
-export class AuditReef {
+export class ReefAudit {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -40,7 +39,4 @@ export class AuditReef {
   @Index()
   @CreateDateColumn()
   createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }
