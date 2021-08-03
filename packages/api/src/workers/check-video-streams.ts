@@ -47,6 +47,12 @@ interface SlackMessage {
   }[];
 }
 
+interface SlackResponse {
+  ok: boolean;
+  error?: string;
+  warning?: string;
+}
+
 const getReefFrontEndURL = (reefId: number, frontUrl: string) =>
   new URL(`reefs/${reefId}`, frontUrl).href;
 
@@ -104,14 +110,15 @@ const checkVideoOptions = (youTubeVideoItems: YouTubeVideoItem[]) =>
   }, {});
 
 const sendSlackMessage = (payload: SlackMessage, token: string) => {
-  return axios({
-    url: 'https://slack.com/api/chat.postMessage',
-    method: 'post',
-    data: payload,
-    headers: {
-      Authorization: `Bearer ${token}`,
+  return axios.post<SlackResponse>(
+    'https://slack.com/api/chat.postMessage',
+    payload,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 };
 
 export const checkVideoStreams = async (
@@ -231,6 +238,17 @@ export const checkVideoStreams = async (
     ],
   } as SlackMessage;
 
+  // Log message in stdout
+  logger.log(messageTemplate);
+
   // Send an alert containing all irregular video stream along with the reason
-  await sendSlackMessage(messageTemplate, slackToken);
+  const resp = await sendSlackMessage(messageTemplate, slackToken);
+
+  const { data } = resp;
+  // Slack returns { ok: false } if an error occurs
+  if (!data.ok) {
+    logger.error(
+      `Slack responded with an non-ok response with error '${data.error}' and warning '${data.warning}'`,
+    );
+  }
 };
