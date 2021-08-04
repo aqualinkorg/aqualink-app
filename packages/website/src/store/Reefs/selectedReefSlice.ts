@@ -14,8 +14,8 @@ import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import reefServices from "../../services/reefServices";
 import {
   mapOceanSenseData,
-  mapTimeSeriesData,
   mapTimeSeriesDataRanges,
+  timeSeriesRequest,
 } from "./helpers";
 
 const selectedReefInitialState: SelectedReefState = {
@@ -97,24 +97,42 @@ export const reefTimeSeriesDataRequest = createAsyncThunk<
   {
     granularDailyData: SelectedReefState["granularDailyData"];
     timeSeriesData: SelectedReefState["timeSeriesData"];
+    timeSeriesMinRequestDate: SelectedReefState["timeSeriesMinRequestDate"];
+    timeSeriesMaxRequestDate: SelectedReefState["timeSeriesMaxRequestDate"];
   },
   TimeSeriesDataRequestParams,
   CreateAsyncThunkTypes
 >(
   "selectedReef/timeSeriesDataRequest",
-  async (params: TimeSeriesDataRequestParams, { rejectWithValue }) => {
+  async (
+    params: TimeSeriesDataRequestParams,
+    { rejectWithValue, getState }
+  ) => {
     try {
       const {
-        data: timeSeriesDataResponse,
-      } = await reefServices.getReefTimeSeriesData(params);
-      const { data: granularDailyData } = await reefServices.getReefDailyData(
-        params.reefId,
-        params.start,
-        params.end
-      );
-      return {
+        timeSeriesMinRequestDate: storedStart,
+        timeSeriesMaxRequestDate: storedEnd,
+        timeSeriesData: storedTimeSeries,
+        granularDailyData: storedDailyData,
+      } = getState().selectedReef;
+      const [
+        timeSeriesData,
         granularDailyData,
-        timeSeriesData: mapTimeSeriesData(timeSeriesDataResponse),
+        timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate,
+      ] = await timeSeriesRequest(
+        params,
+        storedTimeSeries,
+        storedDailyData,
+        storedStart,
+        storedEnd
+      );
+
+      return {
+        timeSeriesData,
+        granularDailyData,
+        timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate,
       };
     } catch (err) {
       const error: AxiosError<SelectedReefState["error"]> = err;
@@ -195,7 +213,12 @@ const selectedReefSlice = createSlice({
       }
       return state;
     },
-    clearTimeSeriesData: (state) => ({ ...state, timeSeriesData: undefined }),
+    clearTimeSeriesData: (state) => ({
+      ...state,
+      timeSeriesData: undefined,
+      timeSeriesMaxRequestDate: undefined,
+      timeSeriesMinRequestDate: undefined,
+    }),
     clearTimeSeriesDataRange: (state) => ({
       ...state,
       timeSeriesDataRange: undefined,
@@ -306,11 +329,15 @@ const selectedReefSlice = createSlice({
         action: PayloadAction<{
           granularDailyData: SelectedReefState["granularDailyData"];
           timeSeriesData: SelectedReefState["timeSeriesData"];
+          timeSeriesMinRequestDate: SelectedReefState["timeSeriesMinRequestDate"];
+          timeSeriesMaxRequestDate: SelectedReefState["timeSeriesMaxRequestDate"];
         }>
       ) => ({
         ...state,
         granularDailyData: action.payload.granularDailyData,
         timeSeriesData: action.payload.timeSeriesData,
+        timeSeriesMinRequestDate: action.payload.timeSeriesMinRequestDate,
+        timeSeriesMaxRequestDate: action.payload.timeSeriesMaxRequestDate,
         timeSeriesDataLoading: false,
       })
     );

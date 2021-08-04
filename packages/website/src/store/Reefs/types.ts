@@ -308,6 +308,8 @@ export interface SelectedReefState {
   timeSeriesDataLoading: boolean;
   timeSeriesDataRange?: TimeSeriesDataRange;
   timeSeriesDataRangeLoading: boolean;
+  timeSeriesMinRequestDate?: string;
+  timeSeriesMaxRequestDate?: string;
   loading: boolean;
   error?: string | null;
 }

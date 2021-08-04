@@ -1,7 +1,10 @@
 import { isNil } from "lodash";
+import { isBefore } from "../../helpers/dates";
+import reefServices from "../../services/reefServices";
 
 import type { TableRow } from "../Homepage/types";
 import type {
+  DailyData,
   Metrics,
   MetricsKeys,
   OceanSenseData,
@@ -9,9 +12,11 @@ import type {
   OceanSenseKeys,
   Reef,
   SofarValue,
+  TimeSeries,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
+  TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
 } from "./types";
 
@@ -114,4 +119,146 @@ export const mapOceanSenseData = (
     PH: mapOceanSenseMetric(response, "PH"),
     PRESS: mapOceanSenseMetric(response, "PRESS"),
   };
+};
+
+const attachSensorData = (
+  direction: "left" | "right",
+  newData: TimeSeries,
+  previousData: TimeSeries
+): TimeSeries =>
+  (Object.keys(previousData) as (keyof TimeSeries)[]).reduce<TimeSeries>(
+    (acum, key) => ({
+      ...acum,
+      [key]:
+        direction === "left"
+          ? [...newData[key], ...acum[key]]
+          : [...acum[key], ...newData[key]],
+    }),
+    previousData
+  );
+
+const attachTimeSeries = (
+  direction: "left" | "right",
+  newData: TimeSeriesData,
+  previousData: TimeSeriesData
+): TimeSeriesData =>
+  (Object.keys(previousData) as (keyof TimeSeriesData)[]).reduce<
+    TimeSeriesData
+  >(
+    (accum, key) => ({
+      ...accum,
+      [key]: attachSensorData(direction, newData[key], accum[key]),
+    }),
+    previousData
+  );
+
+const attachDailyData = (
+  direction: "left" | "right",
+  newData: DailyData[],
+  previousData: DailyData[]
+) =>
+  direction === "left"
+    ? [...newData, ...previousData]
+    : [...previousData, ...newData];
+
+/**
+  Util function that is responsible for fetching the time series and daily data.
+  This function takes into consideration that only one from `params.start` and `params.end`
+  can change at a time, so there is always going to be an overlap between the intervals
+  `[params.start, params.end]` and `[storedStart, storedEnd]`.
+
+  @param params - The time series request params
+  @param storedTimeSeries - The already existing time series data
+  @param storedDailyData - The already existing daily data
+  @param storedStart - The earliest date the user has requested data for
+  @param storedEnd - The most recent date the user has requested data for
+*/
+export const timeSeriesRequest = async (
+  params: TimeSeriesDataRequestParams,
+  storedTimeSeries?: TimeSeriesData,
+  storedDailyData?: DailyData[],
+  storedStart?: string,
+  storedEnd?: string
+): Promise<[TimeSeriesData, DailyData[], string, string]> => {
+  const { start, end } = params;
+  const minDate =
+    storedStart && !isBefore(start, storedStart, true) ? storedStart : start;
+  const maxDate = storedEnd && isBefore(end, storedEnd, true) ? storedEnd : end;
+
+  // If the user requests data for < storedStart, then make a request for the interval
+  // [start, storedStart] and attach the resulting data to the already existing data.
+  if (
+    storedDailyData &&
+    storedTimeSeries &&
+    storedStart &&
+    isBefore(start, storedStart, true)
+  ) {
+    const { data } = await reefServices.getReefTimeSeriesData({
+      ...params,
+      start,
+      end: storedStart,
+    });
+    const { data: granularDailyData } = await reefServices.getReefDailyData(
+      params.reefId,
+      start,
+      storedStart
+    );
+
+    return [
+      attachTimeSeries("left", mapTimeSeriesData(data), storedTimeSeries),
+      attachDailyData("left", granularDailyData, storedDailyData),
+      minDate,
+      maxDate,
+    ];
+  }
+
+  // If the user requests data for > storedEnd, then make a request for the interval
+  // [storedEnd, end] and attach the resulting data to the already existing data.
+  if (
+    storedDailyData &&
+    storedTimeSeries &&
+    storedEnd &&
+    isBefore(storedEnd, end, true)
+  ) {
+    const { data } = await reefServices.getReefTimeSeriesData({
+      ...params,
+      start: storedEnd,
+      end,
+    });
+    const { data: granularDailyData } = await reefServices.getReefDailyData(
+      params.reefId,
+      storedEnd,
+      end
+    );
+
+    return [
+      attachTimeSeries("right", mapTimeSeriesData(data), storedTimeSeries),
+      attachDailyData("right", granularDailyData, storedDailyData),
+      minDate,
+      maxDate,
+    ];
+  }
+
+  // If the interval [start, end] belongs to the interval [storedStart, storedEnd],
+  // return the already existing data.
+  if (
+    storedDailyData &&
+    storedTimeSeries &&
+    storedStart &&
+    storedEnd &&
+    isBefore(storedStart, start) &&
+    isBefore(end, storedEnd)
+  ) {
+    return [storedTimeSeries, storedDailyData, minDate, maxDate];
+  }
+
+  // In any other case, make a request for the interval [start, end].
+  const { data } = await reefServices.getReefTimeSeriesData(params);
+  const { data: granularDailyData } = await reefServices.getReefDailyData(
+    params.reefId,
+    params.start,
+    params.end
+  );
+
+  return [mapTimeSeriesData(data), granularDailyData, minDate, maxDate];
 };
