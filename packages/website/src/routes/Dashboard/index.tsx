@@ -80,7 +80,7 @@ const Dashboard = ({ match, classes }: DashboardProps) => {
             isHeatStress,
           })
         );
-      } else {
+      } else if (!urlCollectionId) {
         setPublicNotFound(true);
       }
     }
