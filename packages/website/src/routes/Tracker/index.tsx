@@ -210,9 +210,9 @@ const Tracker = () => {
               , was exptected to come through the area, potentially bringing
               devastating affects to the local ecosystems. They created a
               dashboard{" "}
-              <a className={classes.link} href="/collections/minderoo">
+              <Link className={classes.link} to="/collections/minderoo">
                 here
-              </a>{" "}
+              </Link>{" "}
               that aggregrates all the sensors involved in tracking this event
               to get a real-time view of the severity. Scientists, media, and
               the general public can use this feature to get a holistic view of
