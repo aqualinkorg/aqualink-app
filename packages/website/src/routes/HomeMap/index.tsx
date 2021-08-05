@@ -115,18 +115,18 @@ const Homepage = ({ classes }: HomepageProps) => {
       </div>
       <div className={classes.root}>
         <Grid container>
-          <Grid className={classes.map} item xs={12} sm={6}>
+          <Grid className={classes.map} item xs={12} md={6}>
             <HomepageMap
               initialZoom={initialZoom}
               initialCenter={initialCenter}
             />
           </Grid>
-          <Hidden xsDown>
-            <Grid className={classes.reefTable} item sm={6}>
+          <Hidden smDown>
+            <Grid className={classes.reefTable} item md={6}>
               <ReefTable />
             </Grid>
           </Hidden>
-          <Hidden smUp>
+          <Hidden mdUp>
             <SwipeableBottomSheet
               overflowHeight={60}
               bodyStyle={{
