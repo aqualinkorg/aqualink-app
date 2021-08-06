@@ -43,7 +43,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
     trackButtonClick(
       GaCategory.BUTTON_CLICK,
       GaAction.MAP_PAGE_BUTTON_CLICK,
-      "EXPLORE"
+      "Explore"
     );
   };
 

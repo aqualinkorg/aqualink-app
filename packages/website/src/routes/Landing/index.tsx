@@ -33,7 +33,6 @@ interface LandingPageButton {
   label: string;
   to: string;
   variant: ButtonProps["variant"];
-  gaActionLabel: string;
   hasWhiteColor?: boolean;
 }
 
@@ -42,20 +41,17 @@ const landingPageButtons: LandingPageButton[] = [
     label: "View The Map",
     to: "/map",
     variant: "contained",
-    gaActionLabel: "VIEW_MAP",
   },
   {
     label: "Register Your Site",
     to: "/register",
     variant: "outlined",
-    gaActionLabel: "REGISTER_SITE",
     hasWhiteColor: true,
   },
   {
     label: "Track a Heatwave",
     to: "/tracker",
     variant: "outlined",
-    gaActionLabel: "TRACK_HEATWAVE",
     hasWhiteColor: true,
   },
 ];
@@ -137,7 +133,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
               <Box mt="2rem">
                 <Grid container spacing={2}>
                   {landingPageButtons.map(
-                    ({ label, to, hasWhiteColor, variant, gaActionLabel }) => (
+                    ({ label, to, hasWhiteColor, variant }) => (
                       <Grid key={label} item xs={isTablet ? 12 : undefined}>
                         <Button
                           component={Link}
@@ -151,7 +147,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                             trackButtonClick(
                               GaCategory.BUTTON_CLICK,
                               GaAction.LANDING_PAGE_BUTTON_CLICK,
-                              gaActionLabel
+                              label
                             )
                           }
                         >

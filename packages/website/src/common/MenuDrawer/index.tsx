@@ -26,34 +26,42 @@ const menuRoutes = [
   {
     text: "HOME",
     to: "/",
+    gaActionLabel: "Home",
   },
   {
     text: "MAP",
     to: "/map",
+    gaActionLabel: "Map",
   },
   {
     text: "BUOY",
     to: "/buoy",
+    gaActionLabel: "Buoy",
   },
   {
     text: "DRONE",
     to: "/drones",
+    gaActionLabel: "Drone",
   },
   {
     text: "ABOUT",
     to: "/about",
+    gaActionLabel: "About",
   },
   {
     text: "FAQ",
     to: "/faq",
+    gaActionLabel: "Faq",
   },
   {
     text: "TRACK A HEATWAVE",
     to: "/tracker",
+    gaActionLabel: "Track a heatwave",
   },
   {
     text: "REGISTER A SITE",
     to: "/register",
+    gaActionLabel: "Register a site",
   },
 ];
 
@@ -76,7 +84,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, to }) => (
+      {menuRoutes.map(({ text, to, gaActionLabel }) => (
         <Button
           className={classes.menuDrawerButton}
           key={text}
@@ -86,7 +94,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
               GaAction.SIDE_MENU_BUTTON_CLICK,
-              text
+              gaActionLabel
             )
           }
         >
