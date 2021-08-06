@@ -132,7 +132,7 @@ const ReefTableBody = ({
   const [selectedRow, setSelectedRow] = useState<number>();
 
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.only("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
 
   const mapElement = document.getElementById("sites-map");
 
