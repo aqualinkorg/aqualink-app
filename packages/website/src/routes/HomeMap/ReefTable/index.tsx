@@ -38,7 +38,12 @@ import { Collection } from "../../Dashboard/collection";
 
 const SMALL_HEIGHT = 720;
 
-const DEFAULT_ITEMS = ["alert", "dhw", "locationName", "sst"];
+const DEFAULT_ITEMS: OrderKeys[] = [
+  OrderKeys.ALERT,
+  OrderKeys.DHW,
+  OrderKeys.LOCATION_NAME,
+  OrderKeys.SST,
+];
 
 const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
   .filter((key) => DEFAULT_ITEMS.includes(key))
