@@ -3,7 +3,7 @@
 exports[`ReefTable should render with given state from Redux store 1`] = `
 <div>
   <mock-hidden
-    smup="true"
+    mdup="true"
   >
     <mock-box
       display="flex"
@@ -39,7 +39,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
     </mock-typography>
   </mock-box>
   <mock-hidden
-    smup="true"
+    mdup="true"
   >
     <mock-box
       alignitems="center"
@@ -122,38 +122,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               variant="h4"
             >
               Alert
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="depth-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Depth
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="depth-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Depth
                 
               <arrowupward
                 font-size="small"
@@ -256,134 +224,6 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
               />
             </mock-typography>
           </mock-menuitem>
-          <mock-menuitem
-            data-value="historicMax-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Historic Max
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="historicMax-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Historic Max
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="sstAnomaly-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Sst Anomaly
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="sstAnomaly-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Sst Anomaly
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="buoyTop-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Buoy Top
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="buoyTop-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Buoy Top
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="buoyBottom-asc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Buoy Bottom
-                
-              <arrowdownward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
-          <mock-menuitem
-            data-value="buoyBottom-desc"
-            role="option"
-            selected="false"
-          >
-            <mock-typography
-              color="primary"
-              variant="h4"
-            >
-              Buoy Bottom
-                
-              <arrowupward
-                font-size="small"
-              />
-            </mock-typography>
-          </mock-menuitem>
         </mock-menu>
       </div>
     </mock-box>
@@ -400,7 +240,7 @@ exports[`ReefTable should render with given state from Redux store 1`] = `
         stickyheader="true"
       >
         <mock-hidden
-          xsdown="true"
+          smdown="true"
         >
           <mock-tablehead
             style="background-color: rgb(244, 244, 244);"
