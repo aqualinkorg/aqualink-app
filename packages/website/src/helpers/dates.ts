@@ -23,8 +23,12 @@ interface DisplayDateParams {
   timeZoneToDisplay?: string | null;
 }
 
-export const isBefore = (start: string, end: string, strict?: boolean) =>
-  strict
+export const isBefore = (
+  start: string,
+  end: string,
+  excludeEndDate?: boolean
+) =>
+  excludeEndDate
     ? new Date(start).getTime() < new Date(end).getTime()
     : new Date(start).getTime() <= new Date(end).getTime();
 
