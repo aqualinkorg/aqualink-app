@@ -24,7 +24,11 @@ import { formatNumber } from "../../../../helpers/numberUtils";
 import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
 import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 import { maxLengths } from "../../../../constants/names";
-import { trackButtonClick } from "../../../../utils/google-analytics";
+import {
+  GaCategory,
+  GaAction,
+  trackButtonClick,
+} from "../../../../utils/google-analytics";
 
 const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
@@ -36,7 +40,11 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
   const { dhw, satelliteTemperature } = reef.collectionData || {};
 
   const onExploreButtonClick = () => {
-    trackButtonClick("MAP_PAGE_BUTTON_CLICK", "EXPLORE", "FROM_POPUP");
+    trackButtonClick(
+      GaCategory.BUTTON_CLICK,
+      GaAction.MAP_PAGE_BUTTON_CLICK,
+      "EXPLORE"
+    );
   };
 
   useEffect(() => {

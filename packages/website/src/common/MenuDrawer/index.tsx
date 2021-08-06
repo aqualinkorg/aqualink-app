@@ -14,7 +14,11 @@ import {
 } from "@material-ui/core";
 import { Clear, GitHub } from "@material-ui/icons";
 import ovioLogo from "../../assets/img/ovio_logo.png";
-import { trackButtonClick } from "../../utils/google-analytics";
+import {
+  GaAction,
+  GaCategory,
+  trackButtonClick,
+} from "../../utils/google-analytics";
 
 const darkBlue = "#095877";
 
@@ -78,7 +82,13 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
           key={text}
           component={Link}
           to={to}
-          onClick={() => trackButtonClick("SIDE_MENU_BUTTON_CLICK", text)}
+          onClick={() =>
+            trackButtonClick(
+              GaCategory.BUTTON_CLICK,
+              GaAction.SIDE_MENU_BUTTON_CLICK,
+              text
+            )
+          }
         >
           <Typography variant="h6">{text}</Typography>
         </Button>

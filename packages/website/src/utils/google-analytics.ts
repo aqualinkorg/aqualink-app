@@ -14,9 +14,20 @@ export const initGA = () => {
   ReactGA.pageview(window.location.pathname + window.location.search);
 };
 
+export enum GaCategory {
+  BUTTON_CLICK = "Button Click",
+}
+
+export enum GaAction {
+  // Button clicks
+  LANDING_PAGE_BUTTON_CLICK = "Landing page button click",
+  SIDE_MENU_BUTTON_CLICK = "Side menu button click",
+  MAP_PAGE_BUTTON_CLICK = "Map page button click",
+}
+
 export const trackButtonClick = (
-  category: string,
-  action: string,
+  category: GaCategory,
+  action: GaAction,
   label?: string
 ) => {
   ReactGA.event({

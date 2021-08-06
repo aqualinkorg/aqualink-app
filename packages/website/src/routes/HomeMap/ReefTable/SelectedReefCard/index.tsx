@@ -32,7 +32,11 @@ import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import Chip from "../../../../common/Chip";
-import { trackButtonClick } from "../../../../utils/google-analytics";
+import {
+  GaAction,
+  GaCategory,
+  trackButtonClick,
+} from "../../../../utils/google-analytics";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -163,7 +167,11 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   );
 
   const onExploreButtonClick = () => {
-    trackButtonClick("MAP_PAGE_BUTTON_CLICK", "EXPLORE", "FROM_CARD");
+    trackButtonClick(
+      GaCategory.BUTTON_CLICK,
+      GaAction.MAP_PAGE_BUTTON_CLICK,
+      "EXPLORE"
+    );
   };
 
   return (

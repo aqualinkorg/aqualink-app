@@ -23,7 +23,11 @@ import Footer from "../../common/Footer";
 import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
-import { trackButtonClick } from "../../utils/google-analytics";
+import {
+  GaAction,
+  GaCategory,
+  trackButtonClick,
+} from "../../utils/google-analytics";
 
 interface LandingPageButton {
   label: string;
@@ -145,7 +149,8 @@ const LandingPage = ({ classes }: LandingPageProps) => {
                           color="primary"
                           onClick={() =>
                             trackButtonClick(
-                              "LANDING_PAGE_BUTTON_CLICK",
+                              GaCategory.BUTTON_CLICK,
+                              GaAction.LANDING_PAGE_BUTTON_CLICK,
                               gaActionLabel
                             )
                           }
@@ -206,18 +211,18 @@ const styles = (theme: Theme) =>
       width: 208,
       textTransform: "none",
       "&:hover": {
-        color: "#ffffff",
+        color: "white",
       },
       [theme.breakpoints.down("xs")]: {
         height: 40,
       },
     },
     whiteColorButton: {
-      color: "#ffffff",
-      border: "2px solid #ffffff",
+      color: "white",
+      border: "2px solid white",
       "&:hover": {
-        color: "#ffffff",
-        border: "2px solid #ffffff",
+        color: "white",
+        border: "2px solid white",
       },
     },
   });
