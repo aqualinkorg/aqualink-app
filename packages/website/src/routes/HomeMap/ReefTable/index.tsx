@@ -38,28 +38,37 @@ import { Collection } from "../../Dashboard/collection";
 
 const SMALL_HEIGHT = 720;
 
-const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys).reduce<ReactNode[]>(
-  (elements, val) => [
-    ...elements,
-    ...times(2, (i) => {
-      const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
-      return (
-        <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
-          <Typography color="primary" variant="h4">
-            {getOrderKeysFriendlyString(val)}
-            {"  "}
-            {itemOrder === "asc" ? (
-              <ArrowDownward fontSize="small" />
-            ) : (
-              <ArrowUpward fontSize="small" />
-            )}
-          </Typography>
-        </MenuItem>
-      );
-    }),
-  ],
-  []
-);
+const DEFAULT_ITEMS: OrderKeys[] = [
+  OrderKeys.ALERT,
+  OrderKeys.DHW,
+  OrderKeys.LOCATION_NAME,
+  OrderKeys.SST,
+];
+
+const MOBILE_SELECT_MENU_ITEMS = Object.values(OrderKeys)
+  .filter((key) => DEFAULT_ITEMS.includes(key))
+  .reduce<ReactNode[]>(
+    (elements, val) => [
+      ...elements,
+      ...times(2, (i) => {
+        const itemOrder: Order = i % 2 === 0 ? "asc" : "desc";
+        return (
+          <MenuItem value={`${val}-${itemOrder}`} key={val + i}>
+            <Typography color="primary" variant="h4">
+              {getOrderKeysFriendlyString(val)}
+              {"  "}
+              {itemOrder === "asc" ? (
+                <ArrowDownward fontSize="small" />
+              ) : (
+                <ArrowUpward fontSize="small" />
+              )}
+            </Typography>
+          </MenuItem>
+        );
+      }),
+    ],
+    []
+  );
 
 const ReefTable = ({
   isDrawerOpen,
@@ -111,7 +120,7 @@ const ReefTable = ({
     <>
       {/* Holds drawer handle and reef name text on mobile */}
       {showCard && (
-        <Hidden smUp>
+        <Hidden mdUp>
           <Box
             width="100vw"
             display="flex"
@@ -152,7 +161,7 @@ const ReefTable = ({
       )}
       {/* Holds sort selector on mobile. Sorting on desktop uses table headers. */}
       {!isExtended && (
-        <Hidden smUp>
+        <Hidden mdUp>
           <Box
             paddingX={2}
             paddingY={3}
@@ -186,7 +195,7 @@ const ReefTable = ({
             stickyHeader
             className={isExtended ? classes.extendedTable : classes.table}
           >
-            <Hidden xsDown={!isExtended}>
+            <Hidden smDown={!isExtended}>
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}

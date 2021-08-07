@@ -132,7 +132,7 @@ const ReefTableBody = ({
   const [selectedRow, setSelectedRow] = useState<number>();
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
 
   const mapElement = document.getElementById("sites-map");
 
@@ -154,13 +154,13 @@ const ReefTableBody = ({
   useEffect(() => {
     const child = document.getElementById(`homepage-table-row-${selectedRow}`);
     // only scroll if not on mobile (info at the top is more useful than the reef row)
-    if (child && !isMobile && scrollTableOnSelection) {
+    if (child && !isTablet && scrollTableOnSelection) {
       setTimeout(
         () => child.scrollIntoView({ block: "center", behavior: "smooth" }),
         SCROLLT_TIMEOUT
       );
     }
-  }, [isMobile, scrollTableOnSelection, selectedRow]);
+  }, [isTablet, scrollTableOnSelection, selectedRow]);
 
   return (
     <TableBody>

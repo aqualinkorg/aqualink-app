@@ -46,17 +46,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mobileCardWrapperWithImage: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       height: "42rem",
     },
   },
   mobileCardWrapperWithNoImage: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       height: "27rem",
     },
   },
   card: {
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       padding: 10,
     },
     padding: 20,
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "4px 0 0 4px",
     height: "100%",
 
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       height: 300,
     },
   },
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "row",
     width: "100%",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
     },
@@ -124,7 +124,7 @@ type SelectedReefContentProps = {
 const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const sortedDailyData = sortByDate(reef.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
@@ -186,13 +186,13 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
       spacing={1}
     >
       {imageUrl && (
-        <Grid item xs={12} sm={6} lg={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Box position="relative" height="100%">
             <Link to={`/reefs/${reef.id}`}>
               <CardMedia className={classes.cardImage} image={imageUrl} />
             </Link>
 
-            <Hidden smUp>
+            <Hidden mdUp>
               <Box
                 bgcolor="rgba(3, 48, 66, 0.75)"
                 height="55%"
@@ -218,10 +218,10 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
                 container
                 alignItems="center"
                 justify={
-                  reef.videoStream && isMobile ? "space-between" : "flex-end"
+                  reef.videoStream && isTablet ? "space-between" : "flex-end"
                 }
               >
-                {reef.videoStream && isMobile && (
+                {reef.videoStream && isTablet && (
                   <Chip
                     live
                     liveText="LIVE VIDEO"
@@ -253,12 +253,12 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
       <Grid
         item
         xs={12}
-        sm={imageUrl ? 6 : 12}
+        md={imageUrl ? 6 : 12}
         lg={imageUrl ? 6 : 10}
         style={{ marginBottom: "2rem", maxHeight: "14rem" }}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
-          <Hidden xsDown={Boolean(imageUrl)}>
+          <Hidden smDown={Boolean(imageUrl)}>
             <Grid container alignItems="center">
               <Grid item className={classes.cardTitleWrapper}>
                 <Typography
@@ -290,10 +290,10 @@ const SelectedReefContent = ({ reef, imageUrl }: SelectedReefContentProps) => {
             DAILY SURFACE TEMP. (°C)
           </Typography>
         </Box>
-        <Hidden xsDown>
+        <Hidden smDown>
           <div>{ChartComponent}</div>
         </Hidden>
-        <Hidden smUp>{ChartComponent}</Hidden>
+        <Hidden mdUp>{ChartComponent}</Hidden>
       </Grid>
 
       <Grid
