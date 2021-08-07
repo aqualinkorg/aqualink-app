@@ -58,9 +58,12 @@
     "redux": "^4.0.5",
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
+    "@testing-library/dom": "^7.8.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "validator": "^13.1.1",
-    "youtube-v3-api": "^1.1.1",
-    "canvas": "^2.6.1"
+    "youtube-v3-api": "^1.1.1"
   },
   "jest": {
     "snapshotSerializers": [
@@ -99,10 +102,7 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/redux-mock-store": "^1.0.2",
     "@types/validator": "^13.1.0",
-    "@testing-library/dom": "^7.8.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "canvas": "^2.6.1",
     "cross-env": "^7.0.2",
     "dotenv-cli": "^4.0.0"
   }

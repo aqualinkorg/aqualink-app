@@ -12,7 +12,7 @@ import {
   withStyles,
 } from "@material-ui/core";
 import ErrorIcon from "@material-ui/icons/Error";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { TableRow as Row } from "../../../store/Homepage/types";
 import { constructTableData } from "../../../store/Reefs/helpers";
@@ -127,7 +127,10 @@ const ReefTableBody = ({
 }: ReefTableBodyProps) => {
   const dispatch = useDispatch();
   const storedReefs = useSelector(reefsToDisplayListSelector);
-  const reefsList = collection?.reefs || storedReefs || [];
+  const reefsList = useMemo(() => collection?.reefs || storedReefs || [], [
+    collection,
+    storedReefs,
+  ]);
   const reefOnMap = useSelector(reefOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 
