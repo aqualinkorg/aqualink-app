@@ -17,7 +17,7 @@ exports[`Homepage should render with given state from Redux store 1`] = `
       class="MuiGrid-root MuiGrid-container"
     >
       <div
-        class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6"
+        class="MuiGrid-root Homepage-map-2 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
       >
         <mock-map
           initialcenter="LatLng(0, 0)"
@@ -25,16 +25,16 @@ exports[`Homepage should render with given state from Redux store 1`] = `
         />
       </div>
       <mock-hidden
-        xsdown="true"
+        smdown="true"
       >
         <div
-          class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-sm-6"
+          class="MuiGrid-root Homepage-reefTable-3 MuiGrid-item MuiGrid-grid-md-6"
         >
           <mock-reeftable />
         </div>
       </mock-hidden>
       <mock-hidden
-        smup="true"
+        mdup="true"
       >
         <div
           style="height: 60px; position: fixed; bottom: 0px; right: 0px; left: 0px;"
