@@ -1,5 +1,5 @@
 {
-  "name": "aqualink-app",
+  "name": "api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -129,7 +129,6 @@
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm-seeding": "^1.6.1",
-    "typescript": "~3.8.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "yargs": "^15.4.1"
