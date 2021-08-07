@@ -1,4 +1,4 @@
-import { isNil } from "lodash";
+import { isNil, mapValues } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import reefServices from "../../services/reefServices";
 
@@ -121,45 +121,29 @@ export const mapOceanSenseData = (
   };
 };
 
-const attachSensorData = (
+const attachData = <T>(
   direction: "left" | "right",
-  newData: TimeSeries,
-  previousData: TimeSeries
-): TimeSeries =>
-  (Object.keys(previousData) as (keyof TimeSeries)[]).reduce<TimeSeries>(
-    (acum, key) => ({
-      ...acum,
-      [key]:
-        direction === "left"
-          ? [...newData[key], ...acum[key]]
-          : [...acum[key], ...newData[key]],
-    }),
-    previousData
-  );
+  newData: T[],
+  previousData: T[]
+) =>
+  direction === "left"
+    ? [...newData, ...previousData]
+    : [...previousData, ...newData];
 
 const attachTimeSeries = (
   direction: "left" | "right",
   newData: TimeSeriesData,
   previousData: TimeSeriesData
 ): TimeSeriesData =>
-  (Object.keys(previousData) as (keyof TimeSeriesData)[]).reduce<
-    TimeSeriesData
-  >(
-    (accum, key) => ({
-      ...accum,
-      [key]: attachSensorData(direction, newData[key], accum[key]),
-    }),
-    previousData
+  mapValues(previousData, (previousSensorData, sensor) =>
+    mapValues(previousSensorData, (previousMetricData, metric) =>
+      attachData(
+        direction,
+        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries],
+        previousMetricData
+      )
+    )
   );
-
-const attachDailyData = (
-  direction: "left" | "right",
-  newData: DailyData[],
-  previousData: DailyData[]
-) =>
-  direction === "left"
-    ? [...newData, ...previousData]
-    : [...previousData, ...newData];
 
 /**
   Util function that is responsible for fetching the time series and daily data.
@@ -207,7 +191,7 @@ export const timeSeriesRequest = async (
 
     return [
       attachTimeSeries("left", mapTimeSeriesData(data), storedTimeSeries),
-      attachDailyData("left", granularDailyData, storedDailyData),
+      attachData("left", granularDailyData, storedDailyData),
       minDate,
       maxDate,
     ];
@@ -234,7 +218,7 @@ export const timeSeriesRequest = async (
 
     return [
       attachTimeSeries("right", mapTimeSeriesData(data), storedTimeSeries),
-      attachDailyData("right", granularDailyData, storedDailyData),
+      attachData("right", granularDailyData, storedDailyData),
       minDate,
       maxDate,
     ];
