@@ -79,7 +79,7 @@ export const mockGetLiveData = () => {
 export const mockGetMMM = () => {
   jest
     .spyOn(temperatureUtils, 'getMMM')
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .mockImplementationOnce((long: number, lat: number) =>
       Promise.resolve(undefined),
     );
