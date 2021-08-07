@@ -120,7 +120,7 @@
     "firebase-admin": "^9.0.0",
     "firebase-functions": "^3.8.0",
     "glob": "^7.1.6",
-    "jest": "24.9.0",
+    "jest": "26.6.0",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
