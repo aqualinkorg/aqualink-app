@@ -163,8 +163,14 @@ export const timeSeriesRequest = async (
   storedDailyData?: DailyData[],
   storedStart?: string,
   storedEnd?: string
-  // TODO TEMPORARY LABELS HERE (UPDATE NEEDED)
-): Promise<[w: TimeSeriesData, x: DailyData[], y: string, z: string]> => {
+): Promise<
+  [
+    updatedTimeSeriesData: TimeSeriesData,
+    updatedDailyData: DailyData[],
+    updatedStoredStart: string,
+    updatedStoredEnd: string
+  ]
+> => {
   const { start, end } = params;
   const minDate =
     storedStart && !isBefore(start, storedStart, true) ? storedStart : start;
