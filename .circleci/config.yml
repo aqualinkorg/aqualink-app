@@ -113,7 +113,7 @@ jobs:
 
 workflows:
   version: 2.1
-  test_and_build:
+  build:
     jobs:
       - build_dependencies
       - test_api:
