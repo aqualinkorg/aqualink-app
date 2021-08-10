@@ -27,3 +27,6 @@ gcloud.json*
 
 # Max Sea Surface Temperature Files
 sst_clim_*.tiff
+
+# Jest
+.jest-cache

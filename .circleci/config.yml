@@ -70,8 +70,17 @@ jobs:
       # Ensure that all migrations succeed
       - run: cd packages/api && yarn migration:run
 
+      - restore_cache:
+          keys:
+            - v1-test
+
       # Run tests
       - run: cd packages/api && yarn test
+
+      # Save test cache
+      - save_cache:
+          paths: packages/api/.jest-cache
+          key: v1-test
 
       # Run lint
       - run: cd packages/api && yarn lint
@@ -97,7 +106,6 @@ jobs:
     steps:
       - checkout
       - restore_dependencies
-      - install_psql
           
       # Ensure that a normal build succeeds
       - run: yarn build
