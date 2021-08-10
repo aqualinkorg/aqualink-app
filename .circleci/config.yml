@@ -2,12 +2,12 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  default:
     docker:
       - image: node:12
-        environment:
+        environment: 
           DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
           TEST_DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
 
@@ -18,17 +18,32 @@ jobs:
           POSTGRES_PASSWORD: "CHANGE-ME"
         name: postgres
 
-    working_directory: ~/repo
-
+commands:
+  install_psql:
+    description: Install psql
     steps:
-      - checkout
+      - run:
+          name: Install psql
+          command: apt-get update && apt-get install -y postgresql-client
 
+  restore_dependencies:
+    description: Restore project dependencies from cache
+    steps:
       # Download and cache dependencies
       - restore_cache:
           keys:
             - v3-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v3-dependencies-
+
+jobs:
+  build_dependencies:
+    working_directory: ~/repo
+    executor: default
+
+    steps:
+      - checkout  
+      - restore_dependencies
 
       - run: yarn install --ignore-engines
       - run:
@@ -43,22 +58,65 @@ jobs:
             - /usr/local/share/.cache/yarn/v4/
           key: v3-dependencies-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Install psql
-          command: apt-get update && apt-get install -y postgresql-client
+  test_api:
+    working_directory: ~/repo
+    executor: default
+
+    steps:
+      - checkout
+      - restore_dependencies
+      - install_psql
 
       # Ensure that all migrations succeed
       - run: cd packages/api && yarn migration:run
 
       # Run tests
-      # This could also be run using lerna: `yarn test` in the main repo, but doing it
-      # explicitly like this separates out the tasks nicely in the UI.
       - run: cd packages/api && yarn test
+
+      # Run lint
+      - run: cd packages/api && yarn lint
+  
+  test_web:
+    working_directory: ~/repo
+    executor: default
+
+    steps:
+      - checkout
+      - restore_dependencies
+      
+      # Run tests
       - run: cd packages/website && yarn test
 
-      - run: yarn lint:all
+      # Run lint
+      - run: cd packages/website && yarn lint
 
+  build_app:
+    working_directory: ~/repo
+    executor: default
+
+    steps:
+      - checkout
+      - restore_dependencies
+      - install_psql
+          
       # Ensure that a normal build succeeds
       - run: yarn build
       - run: cd packages/api && yarn build:cloud-functions
 
+workflows:
+  version: 2.1
+  test_and_build:
+    jobs:
+      - build_dependencies
+      - test_api:
+          requires:
+            - build_dependencies
+
+      - test_web:
+          requires:
+            - build_dependencies
+
+      - build_app:
+          requires:
+            - test_api
+            - test_web
