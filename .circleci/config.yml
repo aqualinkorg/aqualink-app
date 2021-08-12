@@ -5,8 +5,6 @@
 version: 2.1
 references:
   working_directory: &working_directory ~/repo
-orbs:
-  jest: blimmer/jest@0.2.1
 executors:
   default:
     docker:
@@ -40,6 +38,13 @@ commands:
             - v3-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v3-dependencies-
+    
+  update_test_cache_file:
+    description: Concatenate all spec files into one file to be able to get their checksum
+    steps:
+      - run:
+          name: Find and concat spec files
+          command: find -wholename "./**/*.spec.ts" -exec cat "{}" + > /tmp/all-tests.spec.txt
 
 jobs:
   build_dependencies:
@@ -69,20 +74,26 @@ jobs:
     steps:
       - checkout_and_restore_dependencies
       - install_psql
+      - update_test_cache_file
 
       # Ensure that all migrations succeed
       - run: cd packages/api && yarn migration:run
 
       # Restore api jest cache
-      - jest/restore-cache:
-          jest-cache-location: packages/api/.jest-cache
+      - restore_cache:
+          keys:
+            - v1-test-{{ checksum "/tmp/all-tests.spec.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-test-
 
       # Run tests
       - run: yarn test
 
       # Save test cache
-      - jest/save_cache:
-          jest-cache-location: packages/api/.jest-cache
+      - save_cache:
+          paths:
+            - packages/api/.jest-cache
+          key: v1-test-{{ checksum "/tmp/all-tests.spec.txt" }}
 
       # Run lint
       - run: yarn lint:all
