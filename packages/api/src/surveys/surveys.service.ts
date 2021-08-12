@@ -18,6 +18,12 @@ import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Reef } from '../reefs/reefs.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
+import { TimeSeries } from '../time-series/time-series.entity';
+import { getClosestTimeSeriesData } from '../utils/time-series.utils';
+import { Metric } from '../time-series/metrics.entity';
+import { SourceType } from '../reefs/schemas/source-type.enum';
+import { Sources } from '../reefs/sources.entity';
+import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 
 @Injectable()
 export class SurveysService {
@@ -32,6 +38,12 @@ export class SurveysService {
 
     @InjectRepository(Reef)
     private reefRepository: Repository<Reef>,
+
+    @InjectRepository(TimeSeries)
+    private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(Sources)
+    private sourcesRepository: Repository<Sources>,
 
     public googleCloudService: GoogleCloudService,
 
@@ -103,12 +115,6 @@ export class SurveysService {
   async find(reefId: number): Promise<Survey[]> {
     const surveyHistoryQuery = await this.surveyRepository
       .createQueryBuilder('survey')
-      .leftJoinAndMapOne(
-        'survey.latestDailyData',
-        'daily_data',
-        'data',
-        'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
-      )
       .innerJoin('survey.user', 'users')
       .leftJoinAndSelect(
         'survey.featuredSurveyMedia',
@@ -148,6 +154,24 @@ export class SurveysService {
       ])
       .getRawMany();
 
+    // Fetch the closest temperature data (bottom_temperature and sst) for each survey
+    const surveyIdToTemperatureData: {
+      [k: number]: SensorDataDto;
+    } = Object.fromEntries(
+      await Promise.all(
+        surveyHistoryQuery.map((survey) =>
+          getClosestTimeSeriesData(
+            survey.diveDate,
+            survey.reefId,
+            [Metric.SATELLITE_TEMPERATURE, Metric.BOTTOM_TEMPERATURE],
+            [SourceType.NOAA, SourceType.SPOTTER],
+            this.timeSeriesRepository,
+            this.sourcesRepository,
+          ).then((data): [number, SensorDataDto] => [survey.id, data]),
+        ),
+      ),
+    );
+
     const observationsGroupedBySurveyId = this.groupBySurveyId(
       surveyObservationsQuery,
       'surveyMedia_observations',
@@ -164,7 +188,8 @@ export class SurveysService {
     );
 
     return surveyHistoryQuery.map((survey) => {
-      const surveyDailyData = survey.latestDailyData;
+      const spotterData = surveyIdToTemperatureData[survey.id].spotter;
+      const noaaData = surveyIdToTemperatureData[survey.id].noaa;
       return {
         id: survey.id,
         diveDate: survey.diveDate,
@@ -176,9 +201,8 @@ export class SurveysService {
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
-          (surveyDailyData &&
-            (surveyDailyData.avgBottomTemperature ||
-              surveyDailyData.satelliteTemperature)),
+          spotterData?.[Metric.BOTTOM_TEMPERATURE]?.value ||
+          noaaData?.[Metric.SATELLITE_TEMPERATURE]?.value,
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],
