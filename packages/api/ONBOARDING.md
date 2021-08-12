@@ -177,6 +177,10 @@ CREATE MATERIALIZED VIEW "latest_data" AS
 Query is broken into two parts the inner query uses `distinct on` and `order by` to fetch the latest row based on `timestamp` for each `metric` and `source_id`. The outer query joins the results from the inner query with the source table to have easy access to other tables and also have more source details about the data.\
 By breaking the query we can help the optimizer select the correct indices to optimize it.
 
-Since this is a materialized view, we need to reload any time we make any update to the source or time_series table. So at the end of all update scripts a refreshing query is run.
+Since this is a materialized view, we need to reload any time we make any update to the source or time_series table. So at the end of all update scripts a refreshing query is run.\
+For example at the end of `utils/spotter-time-series.ts` script we run the following:
+```ts
+await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+```
 
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on the timestamp.
