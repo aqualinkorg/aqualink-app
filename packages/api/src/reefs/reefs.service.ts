@@ -14,7 +14,7 @@ import { FilterReefDto } from './dto/filter-reef.dto';
 import { UpdateReefDto } from './dto/update-reef.dto';
 import { getSstAnomaly, getLiveData } from '../utils/liveData';
 import { SofarLiveData } from '../utils/sofar.types';
-import { getWeeklyAlertLevel, getMaxAlert } from '../workers/dailyData';
+import { getMaxAlert } from '../workers/dailyData';
 import { AdminLevel, User } from '../users/users.entity';
 import { CreateReefDto, CreateReefApplicationDto } from './dto/create-reef.dto';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
@@ -44,6 +44,8 @@ import {
   fetchVideoDetails,
   getErrorMessage,
 } from '../workers/check-video-streams';
+import { SourceType } from './schemas/source-type.enum';
+import { Metric } from '../time-series/metrics.entity';
 
 @Injectable()
 export class ReefsService {
@@ -302,13 +304,11 @@ export class ReefsService {
       throw new NotFoundException(`Reef with ID ${id} not found.`);
     }
 
-    const now = new Date();
-
-    const weeklyAlertLevel = await getWeeklyAlertLevel(
-      this.dailyDataRepository,
-      now,
+    const weeklyAlertLevel = await this.latestDataRepository.findOne({
       reef,
-    );
+      source: SourceType.NOAA,
+      metric: Metric.WEEKLY_ALERT,
+    });
 
     const isDeployed = reef.status === ReefStatus.Deployed;
 
@@ -324,7 +324,10 @@ export class ReefsService {
       ...liveData,
       sstAnomaly: getSstAnomaly(reef.historicalMonthlyMean, sst),
       satelliteTemperature: sst,
-      weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
+      weeklyAlertLevel: getMaxAlert(
+        liveData.dailyAlertLevel,
+        weeklyAlertLevel?.value,
+      ),
     };
   }
 
