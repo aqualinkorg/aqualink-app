@@ -2,9 +2,11 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 
-version: 2
-jobs:
-  build:
+version: 2.1
+references:
+  working_directory: &working_directory ~/repo
+executors:
+  default:
     docker:
       - image: node:12
         environment:
@@ -18,22 +20,41 @@ jobs:
           POSTGRES_PASSWORD: "CHANGE-ME"
         name: postgres
 
-    working_directory: ~/repo
+commands:
+  install_psql:
+    description: Install psql
+    steps:
+      - run:
+          name: Install psql
+          command: apt-get update && apt-get install -y postgresql-client
 
+  checkout_and_restore_dependencies:
+    description: Fetch code from github and restore project dependencies from cache
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
             - v3-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v3-dependencies-
-
-      - run: yarn install --ignore-engines
+    
+  update_test_cache_file:
+    description: Concatenate all spec files into one file to be able to get their checksum
+    steps:
       - run:
-          name: Check yarn.lock
-          command: git diff --exit-code yarn.lock
+          name: Find and concat spec files
+          command: find -wholename "./**/*.spec.ts" -exec cat "{}" + > /tmp/all-tests.spec.txt
+
+jobs:
+  build_dependencies:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
+
+      - run: yarn install --ignore-engines --frozen-lockfile
 
       - save_cache:
           paths:
@@ -43,12 +64,24 @@ jobs:
             - /usr/local/share/.cache/yarn/v4/
           key: v3-dependencies-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Install psql
-          command: apt-get update && apt-get install -y postgresql-client
+  test_and_lint:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
+      - install_psql
+      - update_test_cache_file
 
       # Ensure that all migrations succeed
       - run: cd packages/api && yarn migration:run
+
+      # Restore api jest cache
+      - restore_cache:
+          keys:
+            - v1-test-{{ checksum "/tmp/all-tests.spec.txt" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-test-
 
       # Run tests
       # This could also be run using lerna: `yarn test` in the main repo, but doing it
@@ -56,9 +89,35 @@ jobs:
       - run: cd packages/api && yarn test
       - run: cd packages/website && yarn test
 
+      # Save test cache
+      - save_cache:
+          paths:
+            - packages/api/.jest-cache
+          key: v1-test-{{ checksum "/tmp/all-tests.spec.txt" }}
+
+      # Run lint
       - run: yarn lint:all
+
+  build_app:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
 
       # Ensure that a normal build succeeds
       - run: yarn build
       - run: cd packages/api && yarn build:cloud-functions
 
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - build_dependencies
+      - test_and_lint:
+          requires:
+            - build_dependencies
+
+      - build_app:
+          requires:
+            - build_dependencies

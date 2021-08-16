@@ -6,6 +6,7 @@
   "testTimeout": 120000,
   "verbose": true,
   "collectCoverage": true,
+  "cacheDirectory": ".jest-cache",
   "coveragePathIgnorePatterns": [
     "node_modules",
     "migration",
