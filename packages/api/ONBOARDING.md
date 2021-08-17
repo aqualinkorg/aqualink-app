@@ -175,27 +175,7 @@ This approach however results in many performance issues since the size of the t
   - INDEX (metric, source, timestamp DESC): To help with the materialized view `latest_data` **\***
 - Create materialized view (`latest_data`) to speed up fetching the latest data for every metric.
 
-```sql
-CREATE MATERIALIZED VIEW "latest_data" AS
-    SELECT
-        "time_series"."id",
-        "time_series"."metric",
-        "time_series"."timestamp",
-        "time_series"."value",
-        "source"."type" AS "source",
-        "source"."reef_id" AS "reef_id",
-        "source"."poi_id" AS "poi_id"
-    FROM
-        (SELECT
-            DISTINCT ON ("metric", "source_id") metric AS "metric",
-            "id",
-            "timestamp",
-            "value",
-            "source_id"
-        FROM "time_series" "time_series"
-        ORDER BY "metric", "source_id", "timestamp" DESC) "time_series"
-    INNER JOIN "sources" "source" ON "source"."id" = "time_series"."source_id"
-```
+For the latest structure of the materialized view `latest_data` please see migration `1623058289647-AddWeeklyAlertMetric.ts`
 
 Query is broken into two parts the inner query uses `distinct on` and `order by` to fetch the latest row based on `timestamp` for each `metric` and `source_id`. The outer query joins the results from the inner query with the source table to have easy access to other tables and also have more source details about the data.\
 By breaking the query we can help the optimizer select the correct indices to optimize it.
@@ -208,3 +188,24 @@ await connection.query('REFRESH MATERIALIZED VIEW latest_data');
 ```
 
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on timestamps.
+
+### Jest
+In order to test our application we have created both `functional` and `e2e` tests. After all tests have run we also calculate our coverage. We aim for green coverage on all api endpoints and and all util functions that are tested. There is no need to try and fully cover all functions in the codebase as many of those rely on third party libraries, which makes it complicated and unnecessary to test.
+
+#### Functional
+Functional tests have suffix `.test.ts` and are used to test the util functions, such as `getMMM` or `calculateDegreeHeatingDays`.
+
+#### E2E tests
+E2E tests have suffix `.spec.ts` and are used to test the entirety of the api endpoints making sure that all cases are covered.
+
+##### Requirements
+- A new database (recommended name `test_ovio`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
+- Make sure that either the `TEST_POSTGRES_DATABASE` or the `TEST_DATABASE_URL` variable is set (no need to set both).
+
+##### Implementation
+- At first we needed a central entry point for all our tests, because we needed a unique, shared instance of our app . If we have left jest to invoke every script separately, without any ability to share the active instance, it could have resulted in many race conditions on the database data. Also having all tests run linearly allows us to create much more complex cases.
+- However in order to achieve the above we also needed a way to share the active instance of the app along all tests. Passing it as an argument in each test invocation was not a option, because those evaluate without waiting for the promises to resolve. So we would have ended up with either an unresolved promise or even worse an undefined object. So we created a static object for our instance and also a wrapper class (`TestService`) that could provide us at any moment with the active app and database connection.
+- Moreover, because we didn't want to bother testing third party libraries in detail (e.g. `firebase-admin`) we have created mock functions to mock their behavior and allow us to skip them. The mock functions are located on `test/utils.ts`
+- Finally, we also need to seed the database if we want to create more complex scenarios to test. All data used for seeding are located on the `mock` folder. Here we face yet another challenge. Many of our models require some foreign keys to exist. For example, creating a `survey` requires a `reef` entity. So we need to first create the reef entity, grab the `id` of the reef and add it to the `survey.reef_id` entry. Following this process step by step would have been a messy solution, as it would have required us to perform another initialization to our seeds to amend their foreign keys. Instead we reference the ids of all relations in the respective columns. After that we make sure that we add the entities in the correct order (dependencies first). As a result once the ids have been populated by TypeORM they will be populated in the foreign key columns as well.
+
+**Note**: We could have added the ids manually on all entities and reference their existing value. However TypeORM does not overwrite the value of an auto generated column, i.e. the `id` column . So this approach is not possible
