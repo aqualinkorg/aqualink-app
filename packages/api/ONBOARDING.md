@@ -117,20 +117,6 @@ Spotter data are discarded if the date-sensorId exists in ExclusionDates
 - **Period**: Runs every day at midnight PST
 - **Implementation**: Video Streams are currently YouTube streams so a Google API key (Firebase key is used) is needed in order to fetch the details of each video.
 
-  Video Checks based on YouTube API response:
-
-  - Video is not public.
-  - Video hasn't been uploaded or processed yet (not available).
-  - Video is not embeddable.
-  - Video is not a live stream.
-  - Video is live stream but it hasn't started yet.
-  - Video is live stream but it ended.
-
-  Other checks:
-
-  - Video URL is not in the correct embeddable format
-  - Video does not exists
-
 All errors are reported on the stdout and on the slack bot `Video Stream Alerter`. To report the error on slack a bot api key and a target channel are needed. For more details about message formating in Slack visit https://api.slack.com/reference/surfaces/formatting
 
 Also all functions are reporting any runtime exceptions on Slack using the same bot.
@@ -202,10 +188,40 @@ E2E tests have suffix `.spec.ts` and are used to test the entirety of the api en
 - A new database (recommended name `test_ovio`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
 - Make sure that either the `TEST_POSTGRES_DATABASE` or the `TEST_DATABASE_URL` variable is set (no need to set both).
 
-##### Implementation
-- At first we needed a central entry point for all our tests, because we needed a unique, shared instance of our app . If we have left jest to invoke every script separately, without any ability to share the active instance, it could have resulted in many race conditions on the database data. Also having all tests run linearly allows us to create much more complex cases.
-- However in order to achieve the above we also needed a way to share the active instance of the app along all tests. Passing it as an argument in each test invocation was not a option, because those evaluate without waiting for the promises to resolve. So we would have ended up with either an unresolved promise or even worse an undefined object. So we created a static object for our instance and also a wrapper class (`TestService`) that could provide us at any moment with the active app and database connection.
-- Moreover, because we didn't want to bother testing third party libraries in detail (e.g. `firebase-admin`) we have created mock functions to mock their behavior and allow us to skip them. The mock functions are located on `test/utils.ts`
-- Finally, we also need to seed the database if we want to create more complex scenarios to test. All data used for seeding are located on the `mock` folder. Here we face yet another challenge. Many of our models require some foreign keys to exist. For example, creating a `survey` requires a `reef` entity. So we need to first create the reef entity, grab the `id` of the reef and add it to the `survey.reef_id` entry. Following this process step by step would have been a messy solution, as it would have required us to perform another initialization to our seeds to amend their foreign keys. Instead we reference the ids of all relations in the respective columns. After that we make sure that we add the entities in the correct order (dependencies first). As a result once the ids have been populated by TypeORM they will be populated in the foreign key columns as well.
+##### Developing
+The `test` folder contains the main components of the e2e tests:
+- **app.spec.ts**: It is the starting point of all e2e tests.\
+  If a new test is needed add it to the respected `spec.ts` file.\
+  If no matching `spec.ts` exists (for example create tests for a new controller), you need to create a new **test suite** following the steps below:
+  - First create the new file <controller's name>.spec.ts. Wrap and export all your tests in a functions. It will be used by `app.spec.ts` later
+  - Like all other spec files you will need get the active instance of the TestService in the global scope of the tests
+  - Using the testService object you can get the active app instance (and active database connection if needed) in the beforeAll function
+  - Having an active app instance you can add your e2e tests
+  - To run them, add the wrapping function to the `app.spec.ts` file in a `describe` block.
+- **jest.json**: Contains the configuration for the execution of the jest command
+- **utils.ts**: Contains the mock functions used throughout the tests\
+  Creating a mock function in a `es6` environment is a bit tricky. To mock a function declared in a file named `some-utils.ts`, in the `test/utils.ts` do the following:
+  - Import the entire module, where the function exists:
+  ```ts
+  import * as someUtils from '/path/to/some-utils.ts'
+  ```
+  - Declare a new wrapping function, which will contain the code needed to mock the selected function
+  - Use the jest `spyOn` method to select from the imported module the function you will mock
+  - Use the `mockImplementation` to override the behavior of the function for the rest of the tests runtime or the `mockImplementationOnce` to override it only once. Make sure that the anonymous function's parameters match the original one's.
+  - Execute the wrapping function you created in the 2nd step at the beginning of your test.
 
-**Note**: We could have added the ids manually on all entities and reference their existing value. However TypeORM does not overwrite the value of an auto generated column, i.e. the `id` column . So this approach is not possible
+  If all the above seemed a bit confusing you can always refer to the code. There are many examples using mocked functions. For example the `mockExtractAndVerifyToken` is used regularly to mock the authorization of the user.
+- **mock**: The folder contains mock data to be used to test more thoroughly the app.\
+  To add a new mock entry to an existing mock file, create a new object containing the data you want to add. If your entry must contain some other entity (foreign key), add the entity you want to reference to the corresponding relation column.\
+  If there is no matching file for the new mock entry follow the steps below:
+  - Create a new file in the `mock` in the format <model's name>.mock.ts.
+  - Add you new mock data.
+  - If you need to reference another entity, add it to the relation column (see other mock entries).
+  - Make sure to export all mock data as an array of objects (see other mock files)
+  - Import the exported array of the new mock data in the **test.service.ts**. Add a new bulk save command for the corresponding model in the `loadMocks` function. Make sure to respect the relationships and save your data after all its dependencies have been saved first.
+
+**Notes**:
+- The above procedure will **not** work for a table that contains a self-reference (parent-child). In order to make this work you will need to save those mock entries separately and respect the relationships in an per-entry level.
+- TypeORM will not allow you to add a manual `id` value because the the `id` column is declare as auto-generated. TypeORM will feel the `id` for you after the `save` method has finished. For that reason when you want to use the mock data on your tests make sure to reference them **after** the `app` promise has been resolved.
+
+For more information about jest please refer to the jest documentation: https://jestjs.io/docs/getting-started
