@@ -7,8 +7,6 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   SerializeOptions,
-  Query,
-  NotFoundException,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -16,15 +14,11 @@ import {
   ApiTags,
   ApiOperation,
   ApiParam,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { ReefApplicationsService } from './reef-applications.service';
 import { ReefApplication } from './reef-applications.entity';
 import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
-import { UpdateReefWithApplicationDto } from './dto/update-reef-with-application.dto';
-import { idFromHash, isValidId } from '../utils/urls';
 import { Auth } from '../auth/auth.decorator';
-import { Public } from '../auth/public.decorator';
 import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
 import { ParseHashedIdPipe } from '../pipes/parse-hashed-id.pipe';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
@@ -55,39 +49,6 @@ export class ReefApplicationsController {
     return this.reefApplicationsService.findOneFromReef(reefId);
   }
 
-  @ApiNestNotFoundResponse('No reef application was found')
-  @ApiOperation({ summary: 'Returns reef application by its id and uid' })
-  @ApiParam({ name: 'id', example: '1' })
-  @ApiQuery({ name: 'uid', example: 'deadbeef42' })
-  @Public()
-  @Get(':id')
-  async findOne(
-    @Param('id') idParam: string,
-    @Query('uid') uid: string,
-  ): Promise<ReefApplication> {
-    // To maintain backward compatibility, the ID can either be a numeric key or a unique encoded value.
-    const isIntId = isValidId(idParam);
-    const id = isIntId ? parseInt(idParam, 10) : idFromHash(idParam);
-    const app = await this.reefApplicationsService.findOne(id);
-    if (isIntId && app.uid !== uid) {
-      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
-    }
-    return app;
-  }
-
-  @ApiNestNotFoundResponse('No reef application was found')
-  @ApiOperation({ summary: 'Updates reef application by providing its hashId' })
-  @ApiParam({ name: 'hashId', example: 1 })
-  @Public()
-  @Put(':hashId')
-  updateWithHash(
-    @Param('hashId', new ParseHashedIdPipe()) id: number,
-    @Body('reefApplication') reefApplication: UpdateReefApplicationDto,
-    @Body('reef') reef: UpdateReefWithApplicationDto,
-  ) {
-    return this.reefApplicationsService.update(id, reefApplication, reef);
-  }
-
   @ApiBearerAuth()
   @ApiUpdateReefApplicationBody()
   @ApiOperation({
@@ -101,6 +62,6 @@ export class ReefApplicationsController {
     @Param('hashId', new ParseHashedIdPipe()) id: number,
     @Body() reefApplication: UpdateReefApplicationDto,
   ) {
-    return this.reefApplicationsService.update(id, reefApplication, {});
+    return this.reefApplicationsService.update(id, reefApplication);
   }
 }
