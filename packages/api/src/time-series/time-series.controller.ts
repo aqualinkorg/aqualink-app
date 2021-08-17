@@ -1,11 +1,4 @@
-import {
-  Controller,
-  ParseArrayPipe,
-  Get,
-  Param,
-  Query,
-  ParseBoolPipe,
-} from '@nestjs/common';
+import { Controller, ParseArrayPipe, Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { ReefDataDto } from './dto/reef-data.dto';
@@ -18,6 +11,7 @@ import {
   ApiTimeSeriesRangeResponse,
   ApiTimeSeriesResponse,
 } from '../docs/api-time-series-response';
+import { TimeSeriesGrouping } from '../utils/time-series.utils';
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -35,21 +29,21 @@ export class TimeSeriesController {
     name: 'metrics',
     example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
   })
-  @ApiQuery({ name: 'hourly', example: false })
+  @ApiQuery({ name: 'grouping', example: false, required: false })
   @Get('reefs/:reefId/pois/:poiId')
   findPoiData(
+    @Param() poiDataDto: PoiDataDto,
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: Metric[],
-    @Query('hourly', ParseBoolPipe) hourly: boolean,
-    @Param() poiDataDto: PoiDataDto,
+    @Query('grouping') grouping?: TimeSeriesGrouping,
   ) {
     return this.timeSeriesService.findPoiData(
       startDate,
       endDate,
       metrics,
-      hourly,
       poiDataDto,
+      grouping,
     );
   }
 
@@ -63,21 +57,21 @@ export class TimeSeriesController {
     name: 'metrics',
     example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
   })
-  @ApiQuery({ name: 'hourly', example: false })
+  @ApiQuery({ name: 'grouping', example: false, required: false })
   @Get('reefs/:reefId')
   findReefData(
+    @Param() reefDataDto: ReefDataDto,
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: Metric[],
-    @Query('hourly', ParseBoolPipe) hourly: boolean,
-    @Param() reefDataDto: ReefDataDto,
+    @Query('grouping') grouping?: TimeSeriesGrouping,
   ) {
     return this.timeSeriesService.findReefData(
       startDate,
       endDate,
       metrics,
-      hourly,
       reefDataDto,
+      grouping,
     );
   }
 

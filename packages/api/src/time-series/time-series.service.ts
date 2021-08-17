@@ -12,6 +12,7 @@ import {
   getDataQuery,
   getDataRangeQuery,
   groupByMetricAndSource,
+  TimeSeriesGrouping,
 } from '../utils/time-series.utils';
 
 @Injectable()
@@ -27,8 +28,8 @@ export class TimeSeriesService {
     startDate: Date,
     endDate: Date,
     metrics: Metric[],
-    hourly: boolean,
     poiDataDto: PoiDataDto,
+    grouping?: TimeSeriesGrouping,
   ) {
     const { reefId, poiId } = poiDataDto;
 
@@ -37,8 +38,8 @@ export class TimeSeriesService {
       startDate,
       endDate,
       metrics,
-      hourly,
       reefId,
+      grouping,
       poiId,
     );
 
@@ -49,8 +50,8 @@ export class TimeSeriesService {
     startDate: Date,
     endDate: Date,
     metrics: Metric[],
-    hourly: boolean,
     reefDataDto: ReefDataDto,
+    grouping?: TimeSeriesGrouping,
   ) {
     const { reefId } = reefDataDto;
 
@@ -59,8 +60,8 @@ export class TimeSeriesService {
       startDate,
       endDate,
       metrics,
-      hourly,
       reefId,
+      grouping,
     );
 
     return groupByMetricAndSource(data);

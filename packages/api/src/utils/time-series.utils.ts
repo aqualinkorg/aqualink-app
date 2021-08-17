@@ -1,4 +1,5 @@
 import _, { groupBy, keyBy, mapValues, omit } from 'lodash';
+import { BadRequestException } from '@nestjs/common';
 import { IsNull, Repository } from 'typeorm';
 import { Reef } from '../reefs/reefs.entity';
 import { SourceType } from '../reefs/schemas/source-type.enum';
@@ -7,6 +8,11 @@ import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
+
+export enum TimeSeriesGrouping {
+  HOURLY = 'hourly',
+  DAILY = 'daily',
+}
 
 export interface TimeSeriesData {
   value: number;
@@ -58,26 +64,49 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .toJSON();
 };
 
+export const getDateTruncKeyword = (grouping: TimeSeriesGrouping) => {
+  switch (grouping) {
+    case TimeSeriesGrouping.DAILY:
+      return 'day';
+    case TimeSeriesGrouping.HOURLY:
+      return 'hour';
+    default:
+      throw new BadRequestException(
+        `Incorrect grouping value, must be one of [${Object.values(
+          TimeSeriesGrouping,
+        ).join(', ')}]`,
+      );
+  }
+};
+
 export const getDataQuery = (
   timeSeriesRepository: Repository<TimeSeries>,
   startDate: Date,
   endDate: Date,
   metrics: Metric[],
-  hourly: boolean,
   reefId: number,
+  grouping?: TimeSeriesGrouping,
   poiId?: number,
 ): Promise<TimeSeriesData[]> => {
   const poiCondition = poiId
     ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
     : 'source.poi_id is NULL';
 
-  return hourly
+  return grouping
     ? timeSeriesRepository
         .createQueryBuilder('time_series')
         .select('avg(value)', 'value')
         .addSelect('metric')
         .addSelect('source.type', 'source')
-        .addSelect("date_trunc('hour', timestamp)", 'timestamp')
+        // We need to mark the data as the end of the day in the daily grouping
+        .addSelect(
+          `date_trunc('${getDateTruncKeyword(grouping)}', timestamp) ${
+            grouping === TimeSeriesGrouping.DAILY
+              ? "+ interval '1 day - 1 microsecond'"
+              : ''
+          }`,
+          'timestamp',
+        )
         .innerJoin(
           'time_series.source',
           'source',
@@ -87,8 +116,14 @@ export const getDataQuery = (
         .andWhere('metric IN (:...metrics)', { metrics })
         .andWhere('timestamp >= :startDate', { startDate })
         .andWhere('timestamp <= :endDate', { endDate })
-        .groupBy("date_trunc('hour', timestamp), metric, source.type")
-        .orderBy("date_trunc('hour', timestamp)", 'ASC')
+        .groupBy(
+          `date_trunc('${getDateTruncKeyword(grouping)}', timestamp), ` +
+            'metric, source.type',
+        )
+        .orderBy(
+          `date_trunc('${getDateTruncKeyword(grouping)}', timestamp)`,
+          'ASC',
+        )
         .getRawMany()
     : timeSeriesRepository
         .createQueryBuilder('time_series')

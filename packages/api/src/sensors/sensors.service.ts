@@ -106,7 +106,6 @@ export class SensorsService {
       startDate,
       endDate,
       metrics as Metric[],
-      false,
       reef.id,
     );
 
