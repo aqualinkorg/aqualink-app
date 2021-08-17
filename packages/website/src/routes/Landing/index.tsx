@@ -12,15 +12,49 @@ import {
   Button,
   Theme,
   Fab,
+  ButtonProps,
 } from "@material-ui/core";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Link } from "react-router-dom";
 
+import classNames from "classnames";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import Card from "./Card";
 import landingPageImage from "../../assets/img/landing-page/header.jpg";
 import { cardTitles } from "./titles";
+import {
+  GaAction,
+  GaCategory,
+  trackButtonClick,
+} from "../../utils/google-analytics";
+
+interface LandingPageButton {
+  label: string;
+  to: string;
+  variant: ButtonProps["variant"];
+  hasWhiteColor?: boolean;
+}
+
+const landingPageButtons: LandingPageButton[] = [
+  {
+    label: "View The Map",
+    to: "/map",
+    variant: "contained",
+  },
+  {
+    label: "Register Your Site",
+    to: "/register",
+    variant: "outlined",
+    hasWhiteColor: true,
+  },
+  {
+    label: "Track a Heatwave",
+    to: "/tracker",
+    variant: "outlined",
+    hasWhiteColor: true,
+  },
+];
 
 const LandingPage = ({ classes }: LandingPageProps) => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -98,39 +132,30 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid item xs={12}>
               <Box mt="2rem">
                 <Grid container spacing={2}>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/map"
-                      className={classes.buttons}
-                      variant="contained"
-                      color="primary"
-                    >
-                      <Typography variant="h5">View The Map</Typography>
-                    </Button>
-                  </Grid>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/register"
-                      className={`${classes.buttons} ${classes.registerButton}`}
-                      variant="outlined"
-                      color="primary"
-                    >
-                      <Typography variant="h5">Register Your Site</Typography>
-                    </Button>
-                  </Grid>
-                  <Grid item xs={isTablet ? 12 : undefined}>
-                    <Button
-                      component={Link}
-                      to="/tracker"
-                      className={`${classes.buttons} ${classes.registerButton}`}
-                      variant="outlined"
-                      color="primary"
-                    >
-                      <Typography variant="h5">Track a Heatwave</Typography>
-                    </Button>
-                  </Grid>
+                  {landingPageButtons.map(
+                    ({ label, to, hasWhiteColor, variant }) => (
+                      <Grid key={label} item xs={isTablet ? 12 : undefined}>
+                        <Button
+                          component={Link}
+                          to={to}
+                          className={classNames(classes.buttons, {
+                            [classes.whiteColorButton]: hasWhiteColor,
+                          })}
+                          variant={variant}
+                          color="primary"
+                          onClick={() =>
+                            trackButtonClick(
+                              GaCategory.BUTTON_CLICK,
+                              GaAction.LANDING_PAGE_BUTTON_CLICK,
+                              label
+                            )
+                          }
+                        >
+                          <Typography variant="h5">{label}</Typography>
+                        </Button>
+                      </Grid>
+                    )
+                  )}
                 </Grid>
               </Box>
             </Grid>
@@ -182,18 +207,18 @@ const styles = (theme: Theme) =>
       width: 208,
       textTransform: "none",
       "&:hover": {
-        color: "#ffffff",
+        color: "white",
       },
       [theme.breakpoints.down("xs")]: {
         height: 40,
       },
     },
-    registerButton: {
-      color: "#ffffff",
-      border: "2px solid #ffffff",
+    whiteColorButton: {
+      color: "white",
+      border: "2px solid white",
       "&:hover": {
-        color: "#ffffff",
-        border: "2px solid #ffffff",
+        color: "white",
+        border: "2px solid white",
       },
     },
   });
