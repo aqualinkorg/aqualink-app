@@ -149,7 +149,7 @@ All previously mentioned functions (except scheduledVideoStreamsCheck and pingSe
 
 The rest of the scripts are used to either augment the models with missing data or perform backfills further back in the past than what Sofar is capable of:
 
-- AugmentReef: Augment reef with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeanimums)
+- AugmentReef: Augment reef with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeans)
   - `yarn augment-reefs `
 - UploadHoboData: Upload historical data from hobo onsite sensors, through csv files. (process includes creating new reefs, POIs, TimeSeries data, sources, surveys and survey media)
   - `yarn upload-hobo-data -p path/to/data-folder -u reefOwnerUser@example.com`
