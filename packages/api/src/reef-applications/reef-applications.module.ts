@@ -5,9 +5,10 @@ import { ReefApplicationsService } from './reef-applications.service';
 import { EntityExists } from '../validations/entity-exists.constraint';
 import { ReefApplication } from './reef-applications.entity';
 import { AuthModule } from '../auth/auth.module';
+import { Reef } from '../reefs/reefs.entity';
 
 @Module({
-  imports: [AuthModule, TypeOrmModule.forFeature([ReefApplication])],
+  imports: [AuthModule, TypeOrmModule.forFeature([Reef, ReefApplication])],
   controllers: [ReefApplicationsController],
   providers: [ReefApplicationsService, EntityExists],
 })
