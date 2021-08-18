@@ -857,7 +857,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-button
-                  classname="LandingPage-buttons-4 LandingPage-registerButton-5"
+                  classname="LandingPage-buttons-4 LandingPage-whiteColorButton-5"
                   color="primary"
                   component="[object Object]"
                   to="/register"
@@ -874,7 +874,7 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-button
-                  classname="LandingPage-buttons-4 LandingPage-registerButton-5"
+                  classname="LandingPage-buttons-4 LandingPage-whiteColorButton-5"
                   color="primary"
                   component="[object Object]"
                   to="/tracker"
