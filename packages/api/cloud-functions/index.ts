@@ -191,7 +191,7 @@ exports.scheduledSSTTimeSeriesUpdate = functions
 exports.scheduledVideoStreamsCheck = functions
   .runWith({ timeoutSeconds: 540 })
   // VideoStreamCheck will run daily at 12:00 AM
-  .pubsub.schedule('0 0 * * *')
+  .pubsub.schedule('0 * * * *')
   .timeZone('America/Los_Angeles')
   .onRun(async () => {
     const dbUrl = functions.config().database.url;
