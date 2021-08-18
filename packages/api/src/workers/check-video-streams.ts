@@ -102,8 +102,6 @@ export const checkVideoStreams = async (
   const slackChannel = process.env.SLACK_BOT_CHANNEL;
   const frontUrl = process.env.FRONT_END_BASE_URL;
 
-  console.log(SLACK_BOT_TOKEN);
-
   // Check that the all necessary environment variables are set
   if (!apiKey) {
     logger.error('No google api key was defined');
