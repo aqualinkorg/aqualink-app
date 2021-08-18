@@ -39,6 +39,7 @@ export const sendSlackMessage = async (
   const { data } = rsp;
   // Slack returns { ok: false } if an error occurs
   if (!data.ok) {
+    logger.error(data);
     logger.error(
       `Slack responded with a non-ok status. Error: '${data.error}'. Warning: '${data.warning}'.`,
     );
