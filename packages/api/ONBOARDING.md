@@ -7,7 +7,7 @@
 - **HOBO**: A sensor used for tracking data for an extended period of time (for now only temperature). It has no functionality to remotely send those data. Its data can be downloaded after the end of its mission and ingested by the app as historical data.
 - **Sofar**: An online api which provides data for oceans (https://docs.sofarocean.com/)
 - **Reef-Application**: An form application filled out by any user that wants to register a new reef/site in the system. It contains the basic details about the reef along with some other form fields used to determine the eligibility for a buoy/spotter.
-- **Survey** A survey event on the reef/site. The survey can contain comments, images, videos each of which is related to a specific POI or the reef/site.
+- **Survey**: A survey event on the reef/site, logged by a reef admin (i.e. a user of the app). The survey can contain comments, images, videos each of which is related to a specific POI or the reef/site.
 
 ## Technologies Used
 
@@ -185,7 +185,7 @@ Functional tests have suffix `.test.ts` and are used to test the util functions,
 E2E tests have suffix `.spec.ts` and are used to test the entirety of the api endpoints making sure that all cases are covered.
 
 ##### Requirements
-- A new database (recommended name `test_ovio`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
+- A new database (recommended name `testing`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
 - Make sure that either the `TEST_POSTGRES_DATABASE` or the `TEST_DATABASE_URL` variable is set (no need to set both).
 
 ##### Developing
