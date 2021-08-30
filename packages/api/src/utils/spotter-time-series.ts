@@ -23,6 +23,13 @@ interface Repositories {
 
 const logger = new Logger('SpotterTimeSeries');
 
+/**
+ * Fetches all reefs with where id is included in the reefIds array and has sensorId
+ * If an empty array of reefIds is given then all reefs with sensors are returned
+ * @param reefIds The requested reefIds
+ * @param reefRepository The required repository to make the query
+ * @returns An array of reef entities
+ */
 const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   return reefRepository.find({
     where: {
@@ -32,6 +39,13 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   });
 };
 
+/**
+ * Fetches the spotter sources based on the reef.
+ * If no such source exists, it creates it
+ * @param reefs The selected reef
+ * @param sourceRepository The necessary repository to perform the query
+ * @returns The requested source entity
+ */
 const getSpotterSources = (
   reefs: Reef[],
   sourceRepository: Repository<Sources>,
@@ -48,10 +62,12 @@ const getSpotterSources = (
         },
       })
       .then((source) => {
+        // If the source exists return it
         if (source) {
           return source;
         }
 
+        // Else create it and return the created entity
         return sourceRepository.save({
           reef,
           type: SourceType.SPOTTER,
@@ -61,6 +77,14 @@ const getSpotterSources = (
   );
 };
 
+/**
+ * Save data on time_series table
+ * @param batch The batch of data to save
+ * @param source The source of the data
+ * @param metric The metric of data
+ * @param timeSeriesRepository The needed repository to perform the query
+ * @returns An InsertResult
+ */
 const saveDataBatch = (
   batch: SofarValue[],
   source: Sources,
@@ -82,6 +106,13 @@ const saveDataBatch = (
     .execute();
 };
 
+/**
+ * Fetch spotter and wave data from sofar and save them on time_series table
+ * @param reefIds The reefIds for which to perform the update
+ * @param days How many days will this script need to backfill (1 = daily update)
+ * @param connection An active typeorm connection object
+ * @param repositories The needed repositories, as defined by the interface
+ */
 export const addSpotterData = async (
   reefIds: number[],
   days: number,
@@ -89,13 +120,16 @@ export const addSpotterData = async (
   repositories: Repositories,
 ) => {
   logger.log('Fetching reefs');
+  // Fetch all reefs
   const reefs = await getReefs(reefIds, repositories.reefRepository);
 
   logger.log('Fetching sources');
+  // Fetch sources
   const spotterSources = await Promise.all(
     getSpotterSources(reefs, repositories.sourceRepository),
   );
 
+  // Create a map from the reefIds to the source entities
   const reefToSource: Record<number, Sources> = Object.fromEntries(
     spotterSources.map((source) => [source.reef.id, source]),
   );
@@ -114,6 +148,7 @@ export const addSpotterData = async (
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
+          // Fetch spotter and wave data from sofar
           return getSpotterData(reef.sensorId, endDate, startDate);
         },
         { concurrency: 100 },
@@ -129,6 +164,7 @@ export const addSpotterData = async (
             ['windSpeed', Metric.WIND_SPEED],
           ];
 
+          // Save data to time_series
           return Promise.all(
             spotterData
               .map((dailySpotterData) =>
@@ -145,6 +181,7 @@ export const addSpotterData = async (
           );
         })
         .then(() => {
+          // After each successful execution, log the event
           const startDate = moment()
             .subtract(days - 1, 'd')
             .startOf('day');

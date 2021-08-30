@@ -300,11 +300,13 @@ export async function getReefsDailyData(
 
       const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
 
+      // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
         console.log('No data has been fetched. Skipping...');
         return;
       }
 
+      // Calculate weekly alert level
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         endOfDate,
@@ -319,6 +321,7 @@ export async function getReefsDailyData(
         ),
       });
       try {
+        // Try to save daily data entity
         await dailyDataRepository.save(entity);
       } catch (err) {
         // Update instead of insert

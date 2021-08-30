@@ -22,8 +22,16 @@ interface Repositories {
   timeSeriesRepository: Repository<TimeSeries>;
 }
 
+// Initialize Nest logger
 const logger = new Logger('SSTTimeSeries');
 
+/**
+ * Get reefs entities based on the given reefIds array.
+ * If an empty array was given then this function returns all reefs
+ * @param reefIds The reefIds to return
+ * @param reefRepository The repository needed to perform the query
+ * @returns A reef array with all the requested reefs. If no reefIds request then returns all reefs available.
+ */
 const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   return reefRepository.find({
     where: reefIds.length > 0 ? { id: In(reefIds) } : {},
@@ -31,6 +39,15 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
   });
 };
 
+/**
+ * A function to fetch satellite temperature data and degree heating weeks from sofar,
+ * calculate the sstAnomaly, dailyAlert and weeklyAlert
+ * and save all above metrics to time_series table
+ * @param reefIds The reefIds for which to perform the update
+ * @param days How many days will this script need to backfill (1 = daily update)
+ * @param connection An active typeorm connection object
+ * @param repositories The needed repositories, as defined by the interface
+ */
 export const updateSST = async (
   reefIds: number[],
   days: number,
@@ -44,8 +61,10 @@ export const updateSST = async (
   } = repositories;
 
   logger.log('Fetching reefs');
+  // Fetch reefs entities
   const reefs = await getReefs(reefIds, reefRepository);
 
+  // Fetch sources
   const sources = await Promise.all(
     reefs.map((reef) => {
       return getNOAASource(reef, sourceRepository);
@@ -57,12 +76,16 @@ export const updateSST = async (
     async (source) => {
       const { reef } = source;
       const point = reef.polygon as Point;
+      // Extract reef coordinates
       const [longitude, latitude] = point.coordinates;
 
       logger.log(`Back-filling reef with id ${reef.id}.`);
 
       const data = await Bluebird.map(
         times(days),
+        // A non-async function is used on purpose.
+        // We need for as many http request to be performed simultaneously without one blocking the other
+        // This way we get a much greater speed up due to the concurrency.
         (i) => {
           const endDate =
             i === 0
@@ -72,6 +95,7 @@ export const updateSST = async (
 
           // use Promise/then to increase concurrency since await halts the event loop
           return Promise.all([
+            // Fetch satellite surface temperature data
             sofarHindcast(
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -81,6 +105,7 @@ export const updateSST = async (
               startDate,
               endDate,
             ),
+            // Fetch degree heating weeks data
             sofarHindcast(
               SofarModels.NOAACoralReefWatch,
               sofarVariableIDs[SofarModels.NOAACoralReefWatch]
@@ -104,11 +129,13 @@ export const updateSST = async (
               latestDhw && latestDhw.value * 7,
             );
 
+            // Calculate the sstAnomaly
             const sstAnomaly = sstFiltered
               .map((sst) => ({
                 value: getSstAnomaly(reef.historicalMonthlyMean, sst),
                 timestamp: sst.timestamp,
               }))
+              // Filter out null values
               .filter((sstAnomalyValue) => {
                 return !isNil(sstAnomalyValue.value);
               }) as SofarValue[];
@@ -135,6 +162,7 @@ export const updateSST = async (
 
       return Bluebird.map(
         data,
+        // Save data on time_series table
         ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
             insertReefDataToTimeSeries(
@@ -166,10 +194,12 @@ export const updateSST = async (
       );
     },
     // Speed up if this is just a daily update
+    // Concurrency should remain low, otherwise it will overwhelm the sofar api server
     { concurrency: days <= 5 ? 10 : 1 },
   );
 
   logger.log('Back-filling weekly alert level');
+  // We calculate weekly alert separately because it depends on values of alert levels across 7 days
   await Bluebird.map(
     times(days),
     async (i) => {
@@ -179,6 +209,8 @@ export const updateSST = async (
           : moment().subtract(i, 'd').endOf('day').format();
 
       logger.log(`Back-filling weekly alert for ${endDate}`);
+      // Calculate max alert by fetching the max alert in the last 7 days
+      // As timestamp it is selected the latest available timestamp
       const maxAlert = await repositories.timeSeriesRepository
         .createQueryBuilder('time_series')
         .select('MAX(value)', 'value')
