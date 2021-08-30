@@ -176,20 +176,26 @@ await connection.query('REFRESH MATERIALIZED VIEW latest_data');
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on timestamps.
 
 ### Jest
+
 In order to test our application we have created both `functional` and `e2e` tests. After all tests have run we also calculate our coverage. We aim for green coverage on all api endpoints and and all util functions that are tested. There is no need to try and fully cover all functions in the codebase as many of those rely on third party libraries, which makes it complicated and unnecessary to test.
 
 #### Functional
+
 Functional tests have suffix `.test.ts` and are used to test the util functions, such as `getMMM` or `calculateDegreeHeatingDays`.
 
 #### E2E tests
+
 E2E tests have suffix `.spec.ts` and are used to test the entirety of the api endpoints making sure that all cases are covered.
 
 ##### Requirements
-- A new database (recommended name `testing`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
+
+- A new database (recommended name `test_aqualink`). No need to run any migrations, the initialization procedure on the test script will cover that for you.
 - Make sure that either the `TEST_POSTGRES_DATABASE` or the `TEST_DATABASE_URL` variable is set (no need to set both).
 
 ##### Developing
+
 The `test` folder contains the main components of the e2e tests:
+
 - **app.spec.ts**: It is the starting point of all e2e tests.\
   If a new test is needed add it to the respected `spec.ts` file.\
   If no matching `spec.ts` exists (for example create tests for a new controller), you need to create a new **test suite** following the steps below:
@@ -201,16 +207,20 @@ The `test` folder contains the main components of the e2e tests:
 - **jest.json**: Contains the configuration for the execution of the jest command
 - **utils.ts**: Contains the mock functions used throughout the tests\
   Creating a mock function in a `es6` environment is a bit tricky. To mock a function declared in a file named `some-utils.ts`, in the `test/utils.ts` do the following:
+
   - Import the entire module, where the function exists:
+
   ```ts
-  import * as someUtils from '/path/to/some-utils.ts'
+  import * as someUtils from '/path/to/some-utils.ts';
   ```
+
   - Declare a new wrapping function, which will contain the code needed to mock the selected function
   - Use the jest `spyOn` method to select from the imported module the function you will mock
   - Use the `mockImplementation` to override the behavior of the function for the rest of the tests runtime or the `mockImplementationOnce` to override it only once. Make sure that the anonymous function's parameters match the original one's.
   - Execute the wrapping function you created in the 2nd step at the beginning of your test.
 
   If all the above seemed a bit confusing you can always refer to the code. There are many examples using mocked functions. For example the `mockExtractAndVerifyToken` is used regularly to mock the authorization of the user.
+
 - **mock**: The folder contains mock data to be used to test more thoroughly the app.\
   To add a new mock entry to an existing mock file, create a new object containing the data you want to add. If your entry must contain some other entity (foreign key), add the entity you want to reference to the corresponding relation column.\
   If there is no matching file for the new mock entry follow the steps below:
@@ -221,6 +231,7 @@ The `test` folder contains the main components of the e2e tests:
   - Import the exported array of the new mock data in the **test.service.ts**. Add a new bulk save command for the corresponding model in the `loadMocks` function. Make sure to respect the relationships and save your data after all its dependencies have been saved first.
 
 **Notes**:
+
 - The above procedure will **not** work for a table that contains a self-reference (parent-child). In order to make this work you will need to save those mock entries separately and respect the relationships in an per-entry level.
 - TypeORM will not allow you to add a manual `id` value because the the `id` column is declare as auto-generated. TypeORM will feel the `id` for you after the `save` method has finished. For that reason when you want to use the mock data on your tests make sure to reference them **after** the `app` promise has been resolved.
 
