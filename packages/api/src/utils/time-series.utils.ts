@@ -133,6 +133,13 @@ export const getDataRangeQuery = (
     .getRawMany();
 };
 
+/**
+ * Fetch existing NOAA sources based on the reefs.
+ * If the source does not exists create it.
+ * @param reef The reef entity
+ * @param sourcesRepository The repository needed to make the query
+ * @returns The source found or created
+ */
 export const getNOAASource = async (
   reef: Reef,
   sourcesRepository: Repository<Sources>,
@@ -147,10 +154,12 @@ export const getNOAASource = async (
       relations: ['reef', 'reef.historicalMonthlyMean'],
     })
     .then((source) => {
+      // If source exists return it
       if (source) {
         return source;
       }
 
+      // Else create it and return the created entity
       return sourcesRepository.save({
         reef,
         type: SourceType.NOAA,
