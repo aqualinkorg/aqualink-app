@@ -76,14 +76,14 @@ async function augmentReefs(connection: Connection) {
     async (reef) => {
       const augmentedData = await getAugmentedData(reef, regionRepository);
       await reefRepository.update(reef.id, augmentedData);
-      // Add HistoricalMonthlyMeanimums
+      // Add HistoricalMonthlyMeans
       const [longitude, latitude] = (reef.polygon as Point).coordinates;
-      const HistoricalMonthlyMeanimums = await getHistoricalMonthlyMeans(
+      const HistoricalMonthlyMeans = await getHistoricalMonthlyMeans(
         longitude,
         latitude,
       );
       await Promise.all(
-        HistoricalMonthlyMeanimums.map(async ({ month, temperature }) => {
+        HistoricalMonthlyMeans.map(async ({ month, temperature }) => {
           try {
             await (temperature &&
               HistoricalMonthlyMeanRepository.insert({
