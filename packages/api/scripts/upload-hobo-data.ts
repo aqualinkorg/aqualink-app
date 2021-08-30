@@ -14,6 +14,7 @@ import { uploadHoboData } from '../src/utils/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
 
+// Initialize command definition
 const { argv } = yargs
   .scriptName('upload-hobo-data')
   .usage('$0 <cmd> [args]')
@@ -33,15 +34,22 @@ const { argv } = yargs
     type: 'string',
     demandOption: true,
   })
+  // Extend definition to use the full-width of the terminal
   .wrap(yargs.terminalWidth());
 
 async function run() {
+  // Initialize Nest logger
   const logger = new Logger('ParseHoboData');
+  // Extract command line arguments
   const { p: rootPath, u: userEmail } = argv;
 
   logger.log(`Script params: rootPath: ${rootPath}, userEmail: ${userEmail}`);
+
+  // Initialize typeorm connection
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
   const connection = await createConnection(config);
+
+  // Initialize google cloud service, to be used for media upload
   const googleCloudService = new GoogleCloudService(
     connection.getRepository(SurveyMedia),
   );
@@ -52,6 +60,7 @@ async function run() {
     userEmail,
     googleCloudService,
     connection,
+    // Fetch all needed repositories
     {
       reefRepository: connection.getRepository(Reef),
       poiRepository: connection.getRepository(ReefPointOfInterest),
