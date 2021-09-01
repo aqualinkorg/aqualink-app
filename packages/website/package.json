@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env EXTEND_ESLINT=true react-scripts start",
     "build": "cross-env EXTEND_ESLINT=true react-scripts build",
-    "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=2 --silent",
+    "test": "react-scripts --expose-gc test --logHeapUsage --maxWorkers=2",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src --ignore-path .gitignore --max-warnings 0",
     "precommit": "lint-staged",
