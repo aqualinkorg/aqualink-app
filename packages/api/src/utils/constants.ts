@@ -15,14 +15,14 @@ export const SOFAR_SENSOR_DATA_URL =
   'https://api.sofarocean.com/api/sensor-data';
 
 export enum SofarModels {
-  NOAAOperationalWaveModel = 'NOAAOperationalWaveModel',
+  SofarOperationalWaveModel = 'SofarOperationalWaveModel',
   NOAACoralReefWatch = 'NOAACoralReefWatch',
   GFS = 'GFS',
 }
 
 // Sofar variables
 export const sofarVariableIDs = {
-  [SofarModels.NOAAOperationalWaveModel]: {
+  [SofarModels.SofarOperationalWaveModel]: {
     significantWaveHeight: 'significantWaveHeight',
     meanDirectionWindWaves: 'meanDirectionWindWaves',
     peakPeriod: 'peakPeriod',

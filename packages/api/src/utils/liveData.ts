@@ -46,22 +46,22 @@ export const getLiveData = async (
       96,
     ),
     sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
         .significantWaveHeight,
       latitude,
       longitude,
     ),
     sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
         .meanDirectionWindWaves,
       latitude,
       longitude,
     ),
     sofarForecast(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].peakPeriod,
       latitude,
       longitude,
     ),

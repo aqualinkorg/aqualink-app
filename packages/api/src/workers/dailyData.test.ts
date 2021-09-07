@@ -4,7 +4,7 @@ import { Reef } from '../reefs/reefs.entity';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
-  const date = new Date('2021-04-01');
+  const date = new Date('2021-08-01');
   date.setUTCHours(23, 59, 59, 999);
   const reef = {
     id: 1,
@@ -32,17 +32,17 @@ test('It processes Sofar API for daily data.', async () => {
     minBottomTemperature: undefined,
     maxBottomTemperature: undefined,
     avgBottomTemperature: undefined,
-    surfaceTemperature: undefined,
-    satelliteTemperature: 11.7799997329712,
-    degreeHeatingDays: 0,
-    minWaveHeight: undefined,
-    maxWaveHeight: undefined,
-    avgWaveHeight: undefined,
-    waveDirection: undefined,
+    topTemperature: undefined,
+    satelliteTemperature: 16.0400009155273,
+    degreeHeatingDays: 14.13999986648557,
+    minWaveHeight: 0.826433181762695,
+    maxWaveHeight: 0.902798652648926,
+    avgWaveHeight: 0.8645887772242228,
+    waveDirection: 1,
     wavePeriod: undefined,
-    minWindSpeed: 0.198823437094688,
-    maxWindSpeed: 4.18035554885864,
-    avgWindSpeed: 1.6646625492721796,
-    windDirection: 165,
+    minWindSpeed: 1.60820293426514,
+    maxWindSpeed: 4.004723072052,
+    avgWindSpeed: 2.6666289617617926,
+    windDirection: 39,
   });
 });

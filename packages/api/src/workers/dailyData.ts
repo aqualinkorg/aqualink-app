@@ -103,24 +103,24 @@ export async function getDailyData(
       96,
     ),
     getSofarHindcastData(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
         .significantWaveHeight,
       latitude,
       longitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel]
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
         .significantWaveHeight,
       latitude,
       longitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
-      SofarModels.NOAAOperationalWaveModel,
-      sofarVariableIDs[SofarModels.NOAAOperationalWaveModel].peakPeriod,
+      SofarModels.SofarOperationalWaveModel,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].peakPeriod,
       latitude,
       longitude,
       endOfDate,
