@@ -100,7 +100,7 @@
     "ts-exif-parser": "^0.2.1",
     "typeorm": "^0.2.25",
     "typeorm-naming-strategies": "^1.1.0",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.17.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
