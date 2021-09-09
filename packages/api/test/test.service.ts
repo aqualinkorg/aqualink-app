@@ -48,7 +48,7 @@ export class TestService {
     this.app.useGlobalPipes(
       new GlobalValidationPipe({
         transform: true,
-        skipTransformIds: ['hashId'],
+        skipTransformIds: ['appId'],
       }),
     );
 
