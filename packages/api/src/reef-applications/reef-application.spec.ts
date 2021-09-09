@@ -51,7 +51,7 @@ export const reefApplicationTests = () => {
     expect(rsp.status).toBe(404);
   });
 
-  it('PUT /:hashId/reefs/:id updates a reef application using reefId', async () => {
+  it('PUT /:appId/reefs/:id updates a reef application using reefId', async () => {
     const updatedReefApplicationFoundingSource = 'New found source';
     mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer())

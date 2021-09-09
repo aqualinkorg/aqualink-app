@@ -53,13 +53,13 @@ export class ReefApplicationsController {
   @ApiUpdateReefApplicationBody()
   @ApiOperation({
     summary:
-      'Updates reef application by providing its hashId. Needs authentication.',
+      'Updates reef application by providing its appId. Needs authentication.',
   })
-  @ApiParam({ name: 'hashId', example: 1 })
+  @ApiParam({ name: 'appId', example: 1 })
   @UseGuards(IsReefAdminGuard)
-  @Put(':hashId/reefs/:reef_id')
+  @Put(':appId/reefs/:reef_id')
   update(
-    @Param('hashId', new ParseHashedIdPipe()) id: number,
+    @Param('appId', new ParseHashedIdPipe()) id: number,
     @Body() reefApplication: UpdateReefApplicationDto,
   ) {
     return this.reefApplicationsService.update(id, reefApplication);
