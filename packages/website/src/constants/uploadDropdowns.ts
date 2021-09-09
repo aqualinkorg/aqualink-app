@@ -17,7 +17,7 @@ const observationOptions = [
   },
   {
     key: "environmental",
-    value: "Signs of environmental disturbance are evident (e.g.,storm damage)",
+    value: "Signs of environmental disturbance are evident (e.g. storm damage)",
   },
   {
     key: "anthropogenic",

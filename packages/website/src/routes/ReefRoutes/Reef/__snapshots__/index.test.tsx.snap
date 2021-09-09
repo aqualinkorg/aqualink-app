@@ -2324,9 +2324,9 @@ exports[`Reef Detail Page should render with given state from Redux store: snaps
                         data-value="environmental"
                         role="option"
                         selected="false"
-                        title="Signs of environmental disturbance are evident (e.g.,storm damage)"
+                        title="Signs of environmental disturbance are evident (e.g. storm damage)"
                       >
-                        Signs of environmental disturbance are evident (e.g.,storm damage)
+                        Signs of environmental disturbance are evident (e.g. storm damage)
                       </mock-menuitem>
                       <mock-menuitem
                         classname="Surveys-menuItem-301"

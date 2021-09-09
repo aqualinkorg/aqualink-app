@@ -11,11 +11,6 @@ import {
 } from './constants';
 import { SofarValue, SpotterData } from './sofar.types';
 
-type SensorData = {
-  sensorPosition: number;
-  degrees: number;
-};
-
 export const getLatestData = (
   sofarValues: SofarValue[] | undefined,
 ): SofarValue | undefined => {

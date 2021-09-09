@@ -15,6 +15,21 @@
     "import"
   ],
   "rules": {
+    // Disable default rule for TS rule
+    "no-use-before-define": "off",
+    "no-unused-vars": "off",
+    "no-shadow": "off",
+    "no-redeclare": "off",
+    "@typescript-eslint/no-use-before-define": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^props$",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-redeclare": "error",
     // Allow JSX within .js files
     "react/jsx-filename-extension": [
       1,
@@ -91,13 +106,6 @@
         ]
       }
     ],
-    "no-unused-vars": [
-      "warn",
-      {
-        "argsIgnorePattern": "^props$",
-        "ignoreRestSiblings": true
-      }
-    ],
     "lines-between-class-members": "off",
     "max-classes-per-file": "off",
     "import/no-extraneous-dependencies": [
@@ -145,6 +153,13 @@
       "files": "**/*.{spec,test}.{ts,tsx}",
       "rules": {
         "fp/no-mutation": "off"
+      }
+    },
+    // no-undef rule is useless in ts: https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md
+    {
+      "files": ["*.{ts,tsx}"],
+      "rules": {
+        "no-undef": "off"
       }
     }
   ]

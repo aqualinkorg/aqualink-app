@@ -27,6 +27,7 @@ const Header = ({
   timeSeriesDataRanges,
   timeZone,
   showRangeButtons,
+  showAvailableRanges,
 }: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -70,11 +71,15 @@ const Header = ({
         spacing={2}
       >
         <Grid item>
-          <Box ml="42px">
-            <Typography variant="h6" color="textSecondary">
+          <Box ml={isMobile ? 0 : 4}>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="textSecondary"
+            >
               {title || "TEMPERATURE"}
             </Typography>
-            {timeSeriesDataRanges && (
+            {timeSeriesDataRanges && showAvailableRanges && (
               <Grid
                 className={classes.rangesWrapper}
                 container
@@ -114,7 +119,7 @@ const Header = ({
         </Grid>
         {showRangeButtons && (
           <Grid item xs={isMobile ? 12 : undefined}>
-            <Box ml="32px">
+            <Box ml={isMobile ? 0 : 4}>
               <Grid
                 className={classes.autoWidth}
                 container
@@ -123,7 +128,11 @@ const Header = ({
                 spacing={2}
               >
                 <Grid item xs={isMobile ? 12 : undefined}>
-                  <Typography variant="subtitle1" color="textSecondary">
+                  <Typography
+                    className={classes.rangeTitle}
+                    variant="subtitle1"
+                    color="textSecondary"
+                  >
                     View Range:
                   </Typography>
                 </Grid>
@@ -175,6 +184,14 @@ const styles = (theme: Theme) =>
       borderRadius: 5,
       padding: "2px 5px",
     },
+    title: {
+      marginLeft: theme.spacing(1.5),
+    },
+    rangeTitle: {
+      [theme.breakpoints.down("xs")]: {
+        marginLeft: theme.spacing(1.5),
+      },
+    },
     rangeIcon: {
       color: "inherit !important",
       fontSize: theme.spacing(2),
@@ -190,12 +207,14 @@ interface HeaderIncomingProps {
   timeSeriesDataRanges: TimeSeriesDataRange | undefined;
   timeZone?: string | null;
   showRangeButtons?: boolean;
+  showAvailableRanges?: boolean;
 }
 
 Header.defaultProps = {
   title: "",
   timeZone: null,
   showRangeButtons: true,
+  showAvailableRanges: true,
 };
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

@@ -5,5 +5,8 @@
   ],
   "files": [
     "src/custom.d.ts"
-  ]
+  ],
+  "compilerOptions": {
+    "noFallthroughCasesInSwitch": true
+  }
 }

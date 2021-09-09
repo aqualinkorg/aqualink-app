@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, ReactNode, useState } from "react";
+import React, { ChangeEvent, ReactNode, useState } from "react";
 import { times } from "lodash";
 import {
   Box,
@@ -105,7 +105,7 @@ const ReefTable = ({
 
   // This function is used to prevent the drawer onClick close effect on mobile
   const onInteractiveClick = (
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
   };

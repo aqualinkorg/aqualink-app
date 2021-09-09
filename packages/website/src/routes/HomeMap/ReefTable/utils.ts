@@ -16,6 +16,7 @@ export enum OrderKeys {
 }
 
 // This type isn't used anywhere, it just forces the above enum to only hold valid keys to TableRow.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type __CheckOrderKeys = TableRow[OrderKeys];
 
 /**
