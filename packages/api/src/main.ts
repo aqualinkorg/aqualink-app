@@ -27,7 +27,7 @@ async function bootstrap() {
   app.enableCors();
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
-    new GlobalValidationPipe({ transform: true, skipTransformIds: ['hashId'] }),
+    new GlobalValidationPipe({ transform: true, skipTransformIds: ['appId'] }),
   );
   app.useGlobalFilters(
     new HttpExceptionFilter(),

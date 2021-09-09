@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReefApplication } from './reef-applications.entity';
 import { UpdateReefApplicationDto } from './dto/update-reef-application.dto';
-import { Reef } from '../reefs/reefs.entity';
-import { UpdateReefWithApplicationDto } from './dto/update-reef-with-application.dto';
 
 @Injectable()
 export class ReefApplicationsService {
@@ -12,8 +10,6 @@ export class ReefApplicationsService {
   constructor(
     @InjectRepository(ReefApplication)
     private reefApplicationRepository: Repository<ReefApplication>,
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
   ) {}
 
   async findOneFromReef(reefId: number): Promise<ReefApplication> {
@@ -33,23 +29,9 @@ export class ReefApplicationsService {
     return application;
   }
 
-  async findOne(id: number): Promise<ReefApplication> {
-    const reefApplication = await this.reefApplicationRepository.findOne({
-      where: { id },
-      relations: ['reef', 'user'],
-    });
-
-    if (!reefApplication) {
-      throw new NotFoundException(`Reef Application with ID ${id} not found.`);
-    }
-
-    return reefApplication;
-  }
-
   async update(
     id: number,
     appParams: UpdateReefApplicationDto,
-    reefParams: UpdateReefWithApplicationDto,
   ): Promise<ReefApplication> {
     const app = await this.reefApplicationRepository.findOne({
       where: { id },
@@ -60,7 +42,6 @@ export class ReefApplicationsService {
     }
 
     await this.reefApplicationRepository.update(app.id, appParams);
-    await this.reefRepository.update(app.reef.id, reefParams);
 
     const updatedApp = await this.reefApplicationRepository.findOne({
       where: { id },
