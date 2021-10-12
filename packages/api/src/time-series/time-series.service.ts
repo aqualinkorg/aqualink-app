@@ -1,12 +1,12 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
-import { ReefDataDto } from './dto/reef-data.dto';
+import { SiteDataDto } from './dto/site-data.dto';
 import { PoiDataDto } from './dto/poi-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 import { PoiDataRangeDto } from './dto/poi-data-range.dto';
-import { ReefDataRangeDto } from './dto/reef-data-range.dto';
+import { SiteDataRangeDto } from './dto/site-data-range.dto';
 import {
   TimeSeriesData,
   getDataQuery,
@@ -30,7 +30,7 @@ export class TimeSeriesService {
     hourly: boolean,
     poiDataDto: PoiDataDto,
   ) {
-    const { reefId, poiId } = poiDataDto;
+    const { siteId, poiId } = poiDataDto;
 
     const data: TimeSeriesData[] = await getDataQuery(
       this.timeSeriesRepository,
@@ -38,21 +38,21 @@ export class TimeSeriesService {
       endDate,
       metrics,
       hourly,
-      reefId,
+      siteId,
       poiId,
     );
 
     return groupByMetricAndSource(data);
   }
 
-  async findReefData(
+  async findSiteData(
     startDate: Date,
     endDate: Date,
     metrics: Metric[],
     hourly: boolean,
-    reefDataDto: ReefDataDto,
+    siteDataDto: SiteDataDto,
   ) {
-    const { reefId } = reefDataDto;
+    const { siteId } = siteDataDto;
 
     const data: TimeSeriesData[] = await getDataQuery(
       this.timeSeriesRepository,
@@ -60,28 +60,28 @@ export class TimeSeriesService {
       endDate,
       metrics,
       hourly,
-      reefId,
+      siteId,
     );
 
     return groupByMetricAndSource(data);
   }
 
   async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
-    const { reefId, poiId } = poiDataRangeDto;
+    const { siteId, poiId } = poiDataRangeDto;
 
     const data = await getDataRangeQuery(
       this.timeSeriesRepository,
-      reefId,
+      siteId,
       poiId,
     );
 
     return groupByMetricAndSource(data);
   }
 
-  async findReefDataRange(reefDataRangeDto: ReefDataRangeDto) {
-    const { reefId } = reefDataRangeDto;
+  async findSiteDataRange(siteDataRangeDto: SiteDataRangeDto) {
+    const { siteId } = siteDataRangeDto;
 
-    const data = await getDataRangeQuery(this.timeSeriesRepository, reefId);
+    const data = await getDataRangeQuery(this.timeSeriesRepository, siteId);
 
     return groupByMetricAndSource(data);
   }

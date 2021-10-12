@@ -1,4 +1,4 @@
-/** Worker to process daily data for all reefs. */
+/** Worker to process daily data for all sites. */
 import {
   isEmpty,
   isNil,
@@ -12,8 +12,8 @@ import { Connection, In, Repository } from 'typeorm';
 import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import moment from 'moment';
-import { Reef } from '../reefs/reefs.entity';
-import { DailyData } from '../reefs/daily-data.entity';
+import { Site } from '../sites/sites.entity';
+import { DailyData } from '../sites/daily-data.entity';
 import { getMin, getMax, getAverage } from '../utils/math';
 import {
   extractSofarValues,
@@ -29,11 +29,11 @@ import {
 } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
-import { ExclusionDates } from '../reefs/exclusion-dates.entity';
+import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import {
   filterSpotterDataByDate,
   getExclusionDates,
-} from '../utils/reef.utils';
+} from '../utils/site.utils';
 
 export async function getDegreeHeatingDays(
   latitude: number,
@@ -50,8 +50,8 @@ export async function getDegreeHeatingDays(
     };
   } catch {
     const degreeHeatingWeek = await getSofarHindcastData(
-      SofarModels.NOAACoralReefWatch,
-      sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
+      SofarModels.NOAACoralSiteWatch,
+      sofarVariableIDs[SofarModels.NOAACoralSiteWatch].degreeHeatingWeek,
       latitude,
       longitude,
       endOfDate,
@@ -71,11 +71,11 @@ export async function getDegreeHeatingDays(
 }
 
 export async function getDailyData(
-  reef: Reef,
+  site: Site,
   endOfDate: Date,
   excludedDates: ExclusionDates[],
 ): Promise<SofarDailyData> {
-  const { polygon, sensorId, maxMonthlyMean } = reef;
+  const { polygon, sensorId, maxMonthlyMean } = site;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -94,8 +94,8 @@ export async function getDailyData(
     // Calculating Degree Heating Days requires exactly 84 days of data.
     getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
     getSofarHindcastData(
-      SofarModels.NOAACoralReefWatch,
-      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+      SofarModels.NOAACoralSiteWatch,
+      sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
         .analysedSeaSurfaceTemperature,
       latitude,
       longitude,
@@ -218,7 +218,7 @@ export async function getDailyData(
   );
 
   return {
-    reef: { id: reef.id },
+    site: { id: site.id },
     date: endOfDate,
     dailyAlertLevel,
     minBottomTemperature,
@@ -240,13 +240,13 @@ export async function getDailyData(
 }
 
 function hasNoData(data: SofarDailyData) {
-  return Object.values(omit(data, 'reef', 'date')).every(isUndefined);
+  return Object.values(omit(data, 'site', 'date')).every(isUndefined);
 }
 
 export async function getWeeklyAlertLevel(
   dailyDataRepository: Repository<DailyData>,
   date: Date,
-  reef: Reef,
+  site: Site,
 ): Promise<number | undefined> {
   const pastWeek = new Date(date);
   pastWeek.setDate(pastWeek.getDate() - 6);
@@ -255,7 +255,7 @@ export async function getWeeklyAlertLevel(
     .select('MAX(dailyData.dailyAlertLevel)', 'weeklyAlertLevel')
     .andWhere('dailyData.date >= :pastWeek', { pastWeek })
     .andWhere('dailyData.date <= :date', { date })
-    .andWhere('dailyData.reef = :reef', { reef: reef.id })
+    .andWhere('dailyData.site = :site', { site: site.id })
     .getRawOne();
 
   return isNumber(query.weeklyAlertLevel) ? query.weeklyAlertLevel : undefined;
@@ -269,36 +269,36 @@ export function getMaxAlert(
 }
 
 /* eslint-disable no-console */
-export async function getReefsDailyData(
+export async function getSitesDailyData(
   connection: Connection,
   endOfDate: Date,
-  reefIds?: number[],
+  siteIds?: number[],
 ) {
-  const reefRepository = connection.getRepository(Reef);
+  const siteRepository = connection.getRepository(Site);
   const dailyDataRepository = connection.getRepository(DailyData);
   const exclusionDatesRepository = connection.getRepository(ExclusionDates);
-  const allReefs = await reefRepository.find(
-    reefIds && reefIds.length > 0
+  const allSites = await siteRepository.find(
+    siteIds && siteIds.length > 0
       ? {
           where: {
-            id: In(reefIds),
+            id: In(siteIds),
           },
         }
       : {},
   );
   const start = new Date();
   console.log(
-    `Updating ${allReefs.length} reefs for ${endOfDate.toDateString()}.`,
+    `Updating ${allSites.length} sites for ${endOfDate.toDateString()}.`,
   );
   await Bluebird.map(
-    allReefs,
-    async (reef) => {
+    allSites,
+    async (site) => {
       const excludedDates = await getExclusionDates(
         exclusionDatesRepository,
-        reef.sensorId,
+        site.sensorId,
       );
 
-      const dailyDataInput = await getDailyData(reef, endOfDate, excludedDates);
+      const dailyDataInput = await getDailyData(site, endOfDate, excludedDates);
 
       // If no data returned from the update function, skip
       if (hasNoData(dailyDataInput)) {
@@ -310,7 +310,7 @@ export async function getReefsDailyData(
       const weeklyAlertLevel = await getWeeklyAlertLevel(
         dailyDataRepository,
         endOfDate,
-        reef,
+        site,
       );
 
       const entity = dailyDataRepository.create({
@@ -330,14 +330,14 @@ export async function getReefsDailyData(
           await dailyDataRepository
             .createQueryBuilder('dailyData')
             .update()
-            .where('reef_id = :reef_id', { reef_id: reef.id })
+            .where('site_id = :site_id', { site_id: site.id })
             .andWhere('Date(date) = Date(:date)', { date: entity.date })
             .set(filteredData)
             .execute();
         } else {
           console.error(
-            `Error updating data for Reef ${
-              reef.id
+            `Error updating data for Site ${
+              site.id
             } & ${endOfDate.toDateString()}: ${err}.`,
           );
         }
@@ -346,7 +346,7 @@ export async function getReefsDailyData(
     { concurrency: 8 },
   );
   console.log(
-    `Updated ${allReefs.length} reefs in ${
+    `Updated ${allSites.length} sites in ${
       (new Date().valueOf() - start.valueOf()) / 1000
     } seconds`,
   );
@@ -364,7 +364,7 @@ export async function runDailyUpdate(conn: Connection) {
   yesterday.day(today.day() - 1);
   console.log(`Daily Update for data ending on ${yesterday.date()}`);
   try {
-    await getReefsDailyData(conn, yesterday.toDate());
+    await getSitesDailyData(conn, yesterday.toDate());
     console.log('Completed daily update.');
   } catch (error) {
     console.error(error);

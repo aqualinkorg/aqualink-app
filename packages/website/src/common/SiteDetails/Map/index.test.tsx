@@ -11,14 +11,14 @@ jest.mock("react-leaflet");
 
 const mockStore = configureStore([]);
 
-describe("Reef Map", () => {
+describe("Site Map", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
       user: {
         userInfo: mockUser,
       },
-      selectedReef: {
+      selectedSite: {
         draft: null,
       },
     });
@@ -32,7 +32,7 @@ describe("Reef Map", () => {
             type: "Polygon",
             coordinates: [[[0, 0]]],
           }}
-          reefId={1}
+          siteId={1}
           surveyPoints={[]}
         />
       </Provider>

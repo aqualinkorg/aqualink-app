@@ -1,4 +1,4 @@
-import { Reef, ReefResponse } from "../Reefs/types";
+import { Site, SiteResponse } from "../Sites/types";
 import { User } from "../User/types";
 
 export interface CollectionSummary {
@@ -6,20 +6,20 @@ export interface CollectionSummary {
   name: string;
   isPublic: boolean;
   userId: number;
-  reefIds: number[];
+  siteIds: number[];
 }
 
 export interface CollectionDetails {
   id?: number;
   name: string;
   isPublic: boolean;
-  reefs: Reef[];
+  sites: Site[];
   user?: User;
-  reefIds: number[];
+  siteIds: number[];
 }
 
 export interface CollectionDetailsResponse extends CollectionDetails {
-  reefs: ReefResponse[];
+  sites: SiteResponse[];
 }
 
 export interface CollectionRequestParams {
@@ -32,8 +32,8 @@ export interface CollectionRequestParams {
 export interface CollectionUpdateParams {
   id: number;
   name?: string;
-  addReefIds?: number[];
-  removeReefIds?: number[];
+  addSiteIds?: number[];
+  removeSiteIds?: number[];
 }
 
 export interface CollectionState {

@@ -7,7 +7,7 @@ import NotFound from "../../routes/NotFound";
 import ErrorBoundary from "./ErrorBoundary";
 import LandingPage from "../../routes/Landing";
 import HomeMap from "../../routes/HomeMap";
-import ReefRoutes from "../../routes/ReefRoutes";
+import SiteRoutes from "../../routes/SiteRoutes";
 import About from "../../routes/About";
 import RegisterSite from "../../routes/RegisterSite";
 import Buoy from "../../routes/Buoy";
@@ -58,7 +58,7 @@ function App() {
                 <Route exact path="/drones" component={Drones} />
                 <Route exact path="/faq" component={Faq} />
                 <Route exact path="/terms" component={Terms} />
-                <Route path="/reefs" component={ReefRoutes} />
+                <Route path="/sites" component={SiteRoutes} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/tracker" component={Tracker} />
                 <Route

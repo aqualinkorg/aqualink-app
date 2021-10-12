@@ -1,13 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import admin from 'firebase-admin';
 import * as firebaseAuthStrategy from '../src/auth/firebase-auth.utils';
-import * as backfillReefData from '../src/workers/backfill-reef-data';
+import * as backfillSiteData from '../src/workers/backfill-site-data';
 import * as sofarUtils from '../src/utils/sofar';
 import * as liveData from '../src/utils/liveData';
 import * as temperatureUtils from '../src/utils/temperature';
 import { SurveysService } from '../src/surveys/surveys.service';
 import { getMockLiveData, getMockSpotterData } from './mock/daily-data.mock';
-import { Reef } from '../src/reefs/reefs.entity';
+import { Site } from '../src/sites/sites.entity';
 
 export const mockExtractAndVerifyToken = (
   firebaseUser: admin.auth.DecodedIdToken | undefined,
@@ -53,9 +53,9 @@ export const mockDeleteFileFalling = (app: INestApplication) => {
     );
 };
 
-export const mockBackfillReefData = () => {
+export const mockBackfillSiteData = () => {
   jest
-    .spyOn(backfillReefData, 'backfillReefData')
+    .spyOn(backfillSiteData, 'backfillSiteData')
     .mockImplementationOnce((props: number) => null);
 };
 
@@ -71,8 +71,8 @@ export const mockGetSpotterData = () => {
 export const mockGetLiveData = () => {
   jest
     .spyOn(liveData, 'getLiveData')
-    .mockImplementationOnce((reef: Reef, props: boolean) =>
-      Promise.resolve(getMockLiveData(reef.id)),
+    .mockImplementationOnce((site: Site, props: boolean) =>
+      Promise.resolve(getMockLiveData(site.id)),
     );
 };
 

@@ -3,9 +3,9 @@ import { LayerGroup, useLeaflet } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import React, { useCallback, useEffect } from "react";
 import L from "leaflet";
-import { reefsToDisplayListSelector } from "../../../../store/Reefs/reefsListSlice";
-import { Reef } from "../../../../store/Reefs/types";
-import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
+import { sitesToDisplayListSelector } from "../../../../store/Sites/sitesListSlice";
+import { Site } from "../../../../store/Sites/types";
+import { siteOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import {
@@ -15,12 +15,12 @@ import {
   Interval,
 } from "../../../../helpers/bleachingAlertIntervals";
 import { CollectionDetails } from "../../../../store/Collection/types";
-import ReefMarker from "./ReefMarker";
+import SiteMarker from "./SiteMarker";
 
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
-    const { reef } = marker?.options?.children?.[0]?.props || {};
-    const { weeklyAlert } = reef?.collectionData || {};
+    const { site } = marker?.options?.children?.[0]?.props || {};
+    const { weeklyAlert } = site?.collectionData || {};
     return findIntervalByLevel(weeklyAlert);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
@@ -32,10 +32,10 @@ const clusterIcon = (cluster: any) => {
   });
 };
 
-export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
-  const storedReefs = useSelector(reefsToDisplayListSelector);
-  const reefsList = collection?.reefs || storedReefs || [];
-  const reefOnMap = useSelector(reefOnMapSelector);
+export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
+  const storedSites = useSelector(sitesToDisplayListSelector);
+  const sitesList = collection?.sites || storedSites || [];
+  const siteOnMap = useSelector(siteOnMapSelector);
   const { map } = useLeaflet();
 
   const setCenter = useCallback(
@@ -50,13 +50,13 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
     },
     []
   );
-  // zoom in and center on reef marker when it's clicked
+  // zoom in and center on site marker when it's clicked
   useEffect(() => {
-    if (map && reefOnMap?.polygon.type === "Point") {
-      const [lng, lat] = reefOnMap.polygon.coordinates;
+    if (map && siteOnMap?.polygon.type === "Point") {
+      const [lng, lat] = siteOnMap.polygon.coordinates;
       setCenter(map, [lat, lng], 6);
     }
-  }, [map, reefOnMap, setCenter]);
+  }, [map, siteOnMap, setCenter]);
 
   return (
     <LayerGroup>
@@ -64,20 +64,20 @@ export const ReefMarkers = ({ collection }: ReefMarkersProps) => {
         iconCreateFunction={clusterIcon}
         disableClusteringAtZoom={1}
       >
-        {reefsList.map((reef: Reef) => (
-          <ReefMarker key={reef.id} reef={reef} />
+        {sitesList.map((site: Site) => (
+          <SiteMarker key={site.id} site={site} />
         ))}
       </MarkerClusterGroup>
     </LayerGroup>
   );
 };
 
-interface ReefMarkersProps {
+interface SiteMarkersProps {
   collection?: CollectionDetails;
 }
 
-ReefMarkers.defaultProps = {
+SiteMarkers.defaultProps = {
   collection: undefined,
 };
 
-export default ReefMarkers;
+export default SiteMarkers;

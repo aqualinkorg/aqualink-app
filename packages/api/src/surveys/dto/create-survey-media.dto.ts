@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Observations } from '../survey-media.entity';
-import { ReefPointOfInterest } from '../../reef-pois/reef-pois.entity';
+import { SitePointOfInterest } from '../../site-pois/site-pois.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class CreateSurveyMediaDto {
@@ -47,6 +47,6 @@ export class CreateSurveyMediaDto {
 
   @IsInt()
   @IsOptional()
-  @Validate(EntityExists, [ReefPointOfInterest])
+  @Validate(EntityExists, [SitePointOfInterest])
   readonly poiId: number;
 }

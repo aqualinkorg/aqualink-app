@@ -1,5 +1,5 @@
 import { CollectionDetails } from "../store/Collection/types";
-import { mockReef } from "./mockReef";
+import { mockSite } from "./mockSite";
 import { mockUser } from "./mockUser";
 
 export const mockCollection: CollectionDetails = {
@@ -7,6 +7,6 @@ export const mockCollection: CollectionDetails = {
   isPublic: false,
   name: "Mock Collection",
   user: mockUser,
-  reefs: [mockReef],
-  reefIds: [1],
+  sites: [mockSite],
+  siteIds: [1],
 };

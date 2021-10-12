@@ -69,7 +69,7 @@ const {
   ...dbConfig
 } = require('../ormconfig');
 
-// Start a daily update for each reefs.
+// Start a daily update for each sites.
 exports.dailyUpdate = functions
   .runWith({ timeoutSeconds: 540 })
   .https.onRequest(async (req, res) => {

@@ -56,7 +56,7 @@
     "seed:run": "yarn typeorm-seeding seed",
     "daily-worker": "ts-node -r dotenv/config scripts/daily-update.ts",
     "backfill-daily-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
-    "augment-reefs": "ts-node -r dotenv/config scripts/augment-reef-data.ts",
+    "augment-sites": "ts-node -r dotenv/config scripts/augment-site-data.ts",
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
     "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts"
   },

@@ -9,7 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
-import { Sources } from '../reefs/sources.entity';
+import { Sources } from '../sites/sources.entity';
 import { Metric } from './metrics.entity';
 
 @Entity()

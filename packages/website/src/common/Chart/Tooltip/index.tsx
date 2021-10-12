@@ -51,7 +51,7 @@ const TemperatureMetric = ({
 );
 
 const Tooltip = ({
-  reefId,
+  siteId,
   date,
   depth,
   historicalMonthlyMeanTemp,
@@ -62,7 +62,7 @@ const Tooltip = ({
   oceanSense,
   oceanSenseUnit,
   surveyId,
-  reefTimeZone,
+  siteTimeZone,
   userTimeZone,
   classes,
 }: TooltipProps) => {
@@ -73,7 +73,7 @@ const Tooltip = ({
     format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
     displayTimezone: hasHourlyData,
     timeZone: userTimeZone,
-    timeZoneToDisplay: reefTimeZone,
+    timeZoneToDisplay: siteTimeZone,
   });
 
   const tooltipLines: {
@@ -161,7 +161,7 @@ const Tooltip = ({
               <Grid item>
                 <Link
                   className={classes.surveyLink}
-                  to={`/reefs/${reefId}/survey_details/${surveyId}`}
+                  to={`/sites/${siteId}/survey_details/${surveyId}`}
                 >
                   <Button variant="contained" color="primary" size="small">
                     VIEW SURVEY
@@ -230,7 +230,7 @@ const styles = () =>
   });
 
 export interface TooltipData {
-  reefId: number;
+  siteId: number;
   date: string;
   depth: number | null;
   historicalMonthlyMeanTemp: number | null;
@@ -241,7 +241,7 @@ export interface TooltipData {
   oceanSense: number | null;
   oceanSenseUnit: string | null;
   surveyId?: number | null;
-  reefTimeZone?: string | null;
+  siteTimeZone?: string | null;
   userTimeZone?: string;
 }
 

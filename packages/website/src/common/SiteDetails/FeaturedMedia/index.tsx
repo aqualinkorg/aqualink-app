@@ -28,14 +28,14 @@ const playerOptions = {
 };
 
 const FeaturedMedia = ({
-  reefId,
+  siteId,
   url,
   featuredImage,
   surveyId,
   classes,
 }: FeaturedMediaProps) => {
   const user = useSelector(userInfoSelector);
-  const isReefAdmin = isAdmin(user, reefId);
+  const isSiteAdmin = isAdmin(user, siteId);
 
   if (url) {
     return (
@@ -54,7 +54,7 @@ const FeaturedMedia = ({
 
   if (featuredImage && surveyId) {
     return (
-      <Link to={`/reefs/${reefId}/survey_details/${surveyId}`}>
+      <Link to={`/sites/${siteId}/survey_details/${surveyId}`}>
         <CardMedia
           className={classes.card}
           style={{ height: "100%" }}
@@ -70,12 +70,12 @@ const FeaturedMedia = ({
         <Grid container direction="column" alignItems="center" spacing={2}>
           <Grid item>
             <Typography className={classes.noVideoCardHeaderText} variant="h5">
-              {isReefAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
+              {isSiteAdmin ? "ADD YOUR FIRST SURVEY" : "SURVEY TO BE UPLOADED"}
             </Typography>
           </Grid>
-          {isReefAdmin && (
+          {isSiteAdmin && (
             <Grid item>
-              <IconButton component={Link} to={`/reefs/${reefId}/new_survey`}>
+              <IconButton component={Link} to={`/sites/${siteId}/new_survey`}>
                 <img src={uploadIcon} alt="upload" />
               </IconButton>
             </Grid>
@@ -133,7 +133,7 @@ const styles = (theme: Theme) => {
 };
 
 interface FeaturedMediaIncomingProps {
-  reefId: number;
+  siteId: number;
   url?: string | null;
   featuredImage?: string | null;
   surveyId?: number | null;

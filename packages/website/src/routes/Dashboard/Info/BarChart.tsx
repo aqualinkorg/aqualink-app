@@ -25,8 +25,8 @@ const BarChart = ({ collection, classes }: BarChartProps) => {
   const theme = useTheme();
   const nLevels = 5;
   const groupedByAlert = groupBy(
-    collection.reefs,
-    (reef) => reef.collectionData?.weeklyAlert
+    collection.sites,
+    (site) => site.collectionData?.weeklyAlert
   );
 
   const mostFrequentAlert = maxBy(Object.values(groupedByAlert), "length");

@@ -1,7 +1,7 @@
 import app from "../firebase";
 import requests from "../helpers/requests";
 import { User } from "../store/User/types";
-import type { Reef } from "../store/Reefs/types";
+import type { Site } from "../store/Sites/types";
 
 const createUser = (email: string, password: string) =>
   app && app.auth().createUserWithEmailAndPassword(email, password);
@@ -36,10 +36,10 @@ const getSelf = (token?: string) =>
     token,
   });
 
-const getAdministeredReefs = (token?: string) =>
-  requests.send<Reef[]>({
+const getAdministeredSites = (token?: string) =>
+  requests.send<Site[]>({
     method: "GET",
-    url: "users/current/administered-reefs",
+    url: "users/current/administered-sites",
     token,
   });
 
@@ -51,7 +51,7 @@ const signOutUser = () => app && app.auth().signOut();
 export default {
   createUser,
   storeUser,
-  getAdministeredReefs,
+  getAdministeredSites,
   getSelf,
   resetPassword,
   signInUser,

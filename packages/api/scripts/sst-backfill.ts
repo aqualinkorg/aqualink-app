@@ -2,55 +2,55 @@ import { createConnection, In } from 'typeorm';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
 import { keyBy } from 'lodash';
-import { Reef } from '../src/reefs/reefs.entity';
+import { Site } from '../src/sites/sites.entity';
 import { getNOAAData } from './utils/netcdf';
-import { DailyData } from '../src/reefs/daily-data.entity';
-import { Sources } from '../src/reefs/sources.entity';
+import { DailyData } from '../src/sites/daily-data.entity';
+import { Sources } from '../src/sites/sources.entity';
 import {
   getNOAASource,
-  insertReefDataToTimeSeries,
+  insertSiteDataToTimeSeries,
 } from '../src/utils/time-series.utils';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Metric } from '../src/time-series/metrics.entity';
 
 const dbConfig = require('../ormconfig');
 
-// Reefs and years to backfill SST for
+// Sites and years to backfill SST for
 const yearsArray = [2017, 2018, 2019, 2020];
-const reefsToProcess: number[] = [];
+const sitesToProcess: number[] = [];
 
 async function main() {
   const connection = await createConnection(dbConfig);
-  const reefRepository = connection.getRepository(Reef);
+  const siteRepository = connection.getRepository(Site);
   const dailyDataRepository = connection.getRepository(DailyData);
   const sourcesRepository = connection.getRepository(Sources);
   const timeSeriesRepository = connection.getRepository(TimeSeries);
-  const selectedReefs = await reefRepository.find({
+  const selectedSites = await siteRepository.find({
     where:
-      reefsToProcess.length > 0
+      sitesToProcess.length > 0
         ? {
-            id: In(reefsToProcess),
+            id: In(sitesToProcess),
           }
         : {},
   });
 
-  const dailyDataEntities = selectedReefs.reduce(
-    (entities: DailyData[], reef) => {
-      console.log(`Processing reef ${reef.name || reef.id}...`);
+  const dailyDataEntities = selectedSites.reduce(
+    (entities: DailyData[], site) => {
+      console.log(`Processing site ${site.name || site.id}...`);
       const allYearEntities = yearsArray.reduce(
         (yearEntities: DailyData[], year) => {
           console.log(`Processing year ${year}...`);
-          const [longitude, latitude] = (reef.polygon as Point).coordinates;
+          const [longitude, latitude] = (site.polygon as Point).coordinates;
           const data = getNOAAData(year, longitude, latitude);
-          const yearEntitiesForReef = data.map(
+          const yearEntitiesForSite = data.map(
             ({ date, satelliteTemperature }) =>
               ({
-                reef: { id: reef.id },
+                site: { id: site.id },
                 date,
                 satelliteTemperature,
               } as DailyData),
           );
-          return yearEntities.concat(yearEntitiesForReef);
+          return yearEntities.concat(yearEntitiesForSite);
         },
         [],
       );
@@ -60,14 +60,14 @@ async function main() {
   );
 
   const sources = await Promise.all(
-    selectedReefs.map((reef) => {
-      return getNOAASource(reef, sourcesRepository);
+    selectedSites.map((site) => {
+      return getNOAASource(site, sourcesRepository);
     }),
   );
 
-  const reefToSource: Record<number, Sources> = keyBy(
+  const siteToSource: Record<number, Sources> = keyBy(
     sources,
-    (source) => source.reef.id,
+    (source) => source.site.id,
   );
 
   await Bluebird.map(dailyDataEntities, async (entity) => {
@@ -87,7 +87,7 @@ async function main() {
       return;
     }
 
-    await insertReefDataToTimeSeries(
+    await insertSiteDataToTimeSeries(
       [
         {
           value: entity.satelliteTemperature,
@@ -95,7 +95,7 @@ async function main() {
         },
       ],
       Metric.SATELLITE_TEMPERATURE,
-      reefToSource[entity.reef.id],
+      siteToSource[entity.site.id],
       timeSeriesRepository,
     );
   });

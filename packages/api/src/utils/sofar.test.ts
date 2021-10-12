@@ -4,7 +4,7 @@ import { getSofarHindcastData, getSpotterData, sofarForecast } from './sofar';
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
   const values = await getSofarHindcastData(
-    'NOAACoralReefWatch',
+    'NOAACoralSiteWatch',
     'analysedSeaSurfaceTemperature',
     -3.5976336810301888,
     -178.0000002552476,

@@ -11,12 +11,12 @@ import {
 import { useSelector } from "react-redux";
 import { some } from "lodash";
 
-import { DailyData } from "../../../store/Reefs/types";
+import { DailyData } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import {
-  reefTimeSeriesDataLoadingSelector,
-  reefTimeSeriesDataSelector,
-} from "../../../store/Reefs/selectedReefSlice";
+  siteTimeSeriesDataLoadingSelector,
+  siteTimeSeriesDataSelector,
+} from "../../../store/Sites/selectedSiteSlice";
 import { getCardTemperatureValues } from "./utils";
 
 const ObservationBox = ({
@@ -26,8 +26,8 @@ const ObservationBox = ({
   classes,
 }: ObservationBoxProps) => {
   const { hobo: hoboData, spotter: spotterData } =
-    useSelector(reefTimeSeriesDataSelector) || {};
-  const loading = useSelector(reefTimeSeriesDataLoadingSelector);
+    useSelector(siteTimeSeriesDataSelector) || {};
+  const loading = useSelector(siteTimeSeriesDataLoadingSelector);
 
   const {
     satelliteTemperature,

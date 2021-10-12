@@ -1,0 +1,56 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index,
+  RelationId,
+} from 'typeorm';
+import { GeoJSON } from 'geojson';
+import { ApiProperty } from '@nestjs/swagger';
+import { Site } from '../sites/sites.entity';
+import { ApiPointProperty } from '../docs/api-properties';
+
+@Entity()
+export class SitePointOfInterest {
+  @ApiProperty({ example: 1 })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ApiProperty({ example: 1 })
+  @Column({ nullable: true, type: 'integer' })
+  poiLabelId: number | null;
+
+  @ApiProperty({ example: 'http://some-sample-url.com' })
+  @Column({ nullable: true, type: 'character varying' })
+  imageUrl: string | null;
+
+  @ApiProperty({ example: 'Outer tide pool' })
+  @Column({ nullable: false })
+  name: string;
+
+  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  site: Site;
+
+  @ApiProperty({ example: 1 })
+  @RelationId((poi: SitePointOfInterest) => poi.site)
+  siteId: number;
+
+  @ApiPointProperty()
+  @Column({
+    type: 'geometry',
+    unique: true,
+    srid: 4326,
+    nullable: true,
+  })
+  @Index({ spatial: true })
+  polygon: GeoJSON | null;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}

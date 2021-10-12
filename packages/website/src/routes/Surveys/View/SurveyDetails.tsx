@@ -13,17 +13,17 @@ import {
   getNumberOfSurveyPoints,
 } from "../../../helpers/surveyMedia";
 import { displayTimeInLocalTimezone } from "../../../helpers/dates";
-import type { Reef } from "../../../store/Reefs/types";
+import type { Site } from "../../../store/Sites/types";
 import type { SurveyState } from "../../../store/Survey/types";
-import { getReefNameAndRegion } from "../../../store/Reefs/helpers";
+import { getSiteNameAndRegion } from "../../../store/Sites/helpers";
 import ObservationBox from "./ObservationBox";
-import { reefGranularDailyDataSelector } from "../../../store/Reefs/selectedReefSlice";
+import { siteGranularDailyDataSelector } from "../../../store/Sites/selectedSiteSlice";
 
-const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
-  const dailyData = useSelector(reefGranularDailyDataSelector);
+const SurveyDetails = ({ site, survey, classes }: SurveyDetailsProps) => {
+  const dailyData = useSelector(siteGranularDailyDataSelector);
   const nSurveyPoints = getNumberOfSurveyPoints(survey?.surveyMedia || []);
   const nImages = getNumberOfImages(survey?.surveyMedia || []);
-  const { region: regionName } = getReefNameAndRegion(reef);
+  const { region: regionName } = getSiteNameAndRegion(site);
   return (
     <Grid container item xs={12} justify="space-between" spacing={2}>
       {survey && (
@@ -34,7 +34,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
                 isoDate: survey.diveDate,
                 format: "MM/DD/YYYY [at] h:mm A",
                 displayTimezone: false,
-                timeZone: reef.timezone,
+                timeZone: site.timezone,
               })}
             </Typography>
           </Grid>
@@ -43,8 +43,8 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
               <Typography className={classes.regionName}>
                 {regionName}
               </Typography>
-              <Typography className={classes.reefName} variant="subtitle1">
-                {reef.name}
+              <Typography className={classes.siteName} variant="subtitle1">
+                {site.name}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
@@ -91,7 +91,7 @@ const SurveyDetails = ({ reef, survey, classes }: SurveyDetailsProps) => {
 
       <Grid item xs={12} md={6} lg={3}>
         <ObservationBox
-          depth={reef.depth}
+          depth={site.depth}
           date={survey?.diveDate}
           dailyData={dailyData || []}
         />
@@ -105,7 +105,7 @@ const styles = () =>
     regionName: {
       fontSize: 18,
     },
-    reefName: {
+    siteName: {
       maxWidth: "95%",
       overflowWrap: "break-word",
     },
@@ -117,7 +117,7 @@ const styles = () =>
   });
 
 interface SurveyDetailsIncomingProps {
-  reef: Reef;
+  site: Site;
   survey?: SurveyState | null;
 }
 

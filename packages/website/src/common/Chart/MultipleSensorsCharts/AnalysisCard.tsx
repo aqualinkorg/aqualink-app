@@ -17,14 +17,14 @@ import { isNumber } from "lodash";
 import classNames from "classnames";
 
 import {
-  reefOceanSenseDataLoadingSelector,
-  reefTimeSeriesDataLoadingSelector,
-} from "../../../store/Reefs/selectedReefSlice";
+  siteOceanSenseDataLoadingSelector,
+  siteTimeSeriesDataLoadingSelector,
+} from "../../../store/Sites/selectedSiteSlice";
 import {
   HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
-} from "../../../store/Reefs/types";
+} from "../../../store/Sites/types";
 import { calculateCardMetrics } from "./helpers";
 import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn, Dataset } from "./types";
@@ -51,8 +51,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
   historicalMonthlyMean,
   children,
 }) => {
-  const loading = useSelector(reefTimeSeriesDataLoadingSelector);
-  const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
+  const loading = useSelector(siteTimeSeriesDataLoadingSelector);
+  const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
 
   const isOceanSense = dataset === "oceanSense";
 

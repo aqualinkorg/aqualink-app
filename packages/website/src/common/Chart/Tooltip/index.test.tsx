@@ -6,7 +6,7 @@ import Tooltip from ".";
 test("renders as expected", () => {
   const { container } = render(
     <Tooltip
-      reefId={0}
+      siteId={0}
       date="12/20/20, 02:19 AM GMT-5"
       depth={10}
       historicalMonthlyMeanTemp={20}
@@ -15,7 +15,7 @@ test("renders as expected", () => {
       spotterBottomTemp={15}
       hoboBottomTemp={20}
       userTimeZone="UTC"
-      reefTimeZone="UTC"
+      siteTimeZone="UTC"
     />
   );
   expect(container).toMatchSnapshot();

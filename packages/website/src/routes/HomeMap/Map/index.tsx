@@ -13,8 +13,8 @@ import {
 import { Alert } from "@material-ui/lab";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 
-import { reefsListLoadingSelector } from "../../../store/Reefs/reefsListSlice";
-import { ReefMarkers } from "./Markers";
+import { sitesListLoadingSelector } from "../../../store/Sites/sitesListSlice";
+import { SiteMarkers } from "./Markers";
 import { SofarLayers } from "./sofarLayers";
 import Legend from "./Legend";
 import AlertLevelLegend from "./alertLevelLegend";
@@ -60,7 +60,7 @@ const HomepageMap = ({
     currentLocationErrorMessage,
     setCurrentLocationErrorMessage,
   ] = useState<string>();
-  const loading = useSelector(reefsListLoadingSelector);
+  const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);
 
@@ -145,7 +145,7 @@ const HomepageMap = ({
       </Snackbar>
       <TileLayer attribution={attribution} url={tileURL} />
       <SofarLayers defaultLayerName={defaultLayerName} />
-      <ReefMarkers collection={collection} />
+      <SiteMarkers collection={collection} />
       {currentLocation && (
         <Marker icon={currentLocationMarker} position={currentLocation} />
       )}

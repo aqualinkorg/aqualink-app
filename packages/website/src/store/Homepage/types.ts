@@ -1,4 +1,4 @@
-import { Reef } from "../Reefs/types";
+import { Site } from "../Sites/types";
 
 export interface MapboxGeolocationData {
   bbox: {
@@ -11,7 +11,7 @@ export interface MapboxGeolocationData {
 export type MapLayerName = "Heat Stress" | "Sea Surface Temperature";
 
 export interface HomePageState {
-  reefOnMap: Reef | null;
+  siteOnMap: Site | null;
   searchResult?: MapboxGeolocationData;
   withSpotterOnly: boolean;
 }

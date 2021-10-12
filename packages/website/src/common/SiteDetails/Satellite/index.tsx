@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 
 import { dhwColorCode } from "../../../assets/colorCode";
-import type { LiveData } from "../../../store/Reefs/types";
+import type { LiveData } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import satellite from "../../../assets/satellite.svg";
 import {
@@ -127,7 +127,7 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
           imageText="NOAA"
           live={false}
           frequency="daily"
-          href="https://coralreefwatch.noaa.gov/"
+          href="https://coralsitewatch.noaa.gov/"
         />
       </CardContent>
     </Card>

@@ -11,12 +11,12 @@ import {
 } from 'typeorm';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { ApiPointProperty } from '../docs/api-properties';
 
 export enum AdminLevel {
   Default = 'default',
-  ReefManager = 'reef_manager',
+  SiteManager = 'site_manager',
   SuperAdmin = 'super_admin',
 }
 
@@ -74,9 +74,9 @@ export class User {
   @Column({ nullable: true, type: 'character varying' })
   imageUrl: string | null;
 
-  @ManyToMany(() => Reef, (reef) => reef.admins, { cascade: true })
+  @ManyToMany(() => Site, (site) => site.admins, { cascade: true })
   @JoinTable()
-  administeredReefs: Reef[];
+  administeredSites: Site[];
 
   @CreateDateColumn()
   createdAt: Date;

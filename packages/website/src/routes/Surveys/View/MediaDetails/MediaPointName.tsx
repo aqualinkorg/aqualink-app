@@ -15,7 +15,7 @@ import classNames from "classnames";
 const MediaPointName = ({
   pointName,
   pointId,
-  reefId,
+  siteId,
   selectedPoint,
   classes,
 }: MediaPointNameProps) => {
@@ -29,7 +29,7 @@ const MediaPointName = ({
           <Grid className={classes.surveyPointName} item>
             <Link
               className={classes.link}
-              to={`/reefs/${reefId}/points/${pointId}`}
+              to={`/sites/${siteId}/points/${pointId}`}
             >
               <Typography
                 className={classNames(classes.titleName, {
@@ -84,7 +84,7 @@ const styles = (theme: Theme) =>
   });
 
 interface MediaPointNameIncomingProps {
-  reefId: number;
+  siteId: number;
   pointName: string;
   pointId?: number;
   selectedPoint?: string;

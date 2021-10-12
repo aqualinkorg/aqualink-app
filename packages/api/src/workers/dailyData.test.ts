@@ -1,12 +1,12 @@
 import { getDailyData } from './dailyData';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
   const date = new Date('2021-08-01');
   date.setUTCHours(23, 59, 59, 999);
-  const reef = {
+  const site = {
     id: 1,
     name: null,
     polygon: {
@@ -23,10 +23,10 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData((reef as unknown) as Reef, date, []);
+  const values = await getDailyData((site as unknown) as Site, date, []);
 
   expect(values).toEqual({
-    reef: { id: 1 },
+    site: { id: 1 },
     date,
     dailyAlertLevel: 0,
     minBottomTemperature: undefined,

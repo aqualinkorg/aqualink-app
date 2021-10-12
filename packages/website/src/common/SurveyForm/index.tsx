@@ -27,7 +27,7 @@ import { SurveyData, SurveyState } from "../../store/Survey/types";
 import { setTimeZone } from "../../helpers/dates";
 
 const SurveyForm = ({
-  reefId,
+  siteId,
   timeZone,
   onSubmit,
   classes,
@@ -253,7 +253,7 @@ const SurveyForm = ({
         xs={12}
       >
         <Grid style={{ marginRight: "3rem" }} item xs={2}>
-          <Link to={`/reefs/${reefId}`} style={{ textDecoration: "none" }}>
+          <Link to={`/sites/${siteId}`} style={{ textDecoration: "none" }}>
             <Button onClick={resetForm} color="primary" variant="outlined">
               Cancel
             </Button>
@@ -288,7 +288,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyFormIncomingProps {
-  reefId: number;
+  siteId: number;
   timeZone?: string | null;
   onSubmit: (
     diveDateTime: string,

@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import UpdateInfo from "../../UpdateInfo";
-import type { LiveData } from "../../../store/Reefs/types";
+import type { LiveData } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";

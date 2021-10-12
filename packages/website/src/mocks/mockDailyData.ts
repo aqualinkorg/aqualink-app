@@ -1,4 +1,4 @@
-import { DailyData } from "../store/Reefs/types";
+import { DailyData } from "../store/Sites/types";
 
 const now = new Date();
 const minutesAgo = 5;

@@ -5,7 +5,7 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
 import Search from ".";
-import { mockReef } from "../../mocks/mockReef";
+import { mockSite } from "../../mocks/mockSite";
 
 const mockStore = configureStore([]);
 
@@ -13,8 +13,8 @@ describe("Search", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
-      reefsList: {
-        list: [mockReef],
+      sitesList: {
+        list: [mockSite],
         loading: false,
         error: null,
       },

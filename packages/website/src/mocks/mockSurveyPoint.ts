@@ -1,4 +1,4 @@
-import { Pois } from "../store/Reefs/types";
+import { Pois } from "../store/Sites/types";
 
 export const mockSurveyPoint: Pois = {
   id: 1,

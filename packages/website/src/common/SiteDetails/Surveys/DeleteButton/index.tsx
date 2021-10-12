@@ -19,7 +19,7 @@ import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
 import DeleteDialog, { Action } from "../../../Dialog";
 
 const DeleteButton = ({
-  reefId,
+  siteId,
   surveyId,
   diveDate,
   classes,
@@ -45,9 +45,9 @@ const DeleteButton = ({
     if (surveyId && user && user.token) {
       setLoading(true);
       surveyServices
-        .deleteSurvey(reefId, surveyId, user.token)
+        .deleteSurvey(siteId, surveyId, user.token)
         .then(() => {
-          dispatch(surveysRequest(`${reefId}`));
+          dispatch(surveysRequest(`${siteId}`));
         })
         .catch((error) => {
           setAlertOpen(true);
@@ -126,7 +126,7 @@ const styles = () =>
 interface DeleteButtonIncomingProps {
   surveyId?: number | null;
   diveDate?: string | null;
-  reefId: number;
+  siteId: number;
 }
 
 DeleteButton.defaultProps = {

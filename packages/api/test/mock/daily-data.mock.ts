@@ -1,15 +1,15 @@
 import { random, times } from 'lodash';
 import moment from 'moment';
 import { DeepPartial } from 'typeorm';
-import { DailyData } from '../../src/reefs/daily-data.entity';
-import { SofarLiveDataDto } from '../../src/reefs/dto/live-data.dto';
-import { Reef } from '../../src/reefs/reefs.entity';
+import { DailyData } from '../../src/sites/daily-data.entity';
+import { SofarLiveDataDto } from '../../src/sites/dto/live-data.dto';
+import { Site } from '../../src/sites/sites.entity';
 import { SpotterData } from '../../src/utils/sofar.types';
-import { athensReef, californiaReef } from './reef.mock';
+import { athensSite, californiaSite } from './site.mock';
 
 const getMockDailyData = (
   date: string,
-  reef: DeepPartial<Reef>,
+  site: DeepPartial<Site>,
 ): DeepPartial<DailyData> => ({
   avgBottomTemperature: random(15, 35, true),
   avgWaveHeight: random(10, true),
@@ -17,7 +17,7 @@ const getMockDailyData = (
   dailyAlertLevel: random(4),
   degreeHeatingDays: random(70, true),
   date,
-  reef,
+  site,
   maxBottomTemperature: random(15, 35, true),
   minBottomTemperature: random(15, 35, true),
   maxWaveHeight: random(10, true),
@@ -32,8 +32,8 @@ const getMockDailyData = (
   windDirection: random(359),
 });
 
-export const getMockLiveData = (reefId: number): SofarLiveDataDto => ({
-  reef: { id: reefId },
+export const getMockLiveData = (siteId: number): SofarLiveDataDto => ({
+  site: { id: siteId },
   dailyAlertLevel: random(4),
   weeklyAlertLevel: random(4),
   bottomTemperature: {
@@ -135,12 +135,12 @@ export const getMockSpotterData = (
 
 export const californiaDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
   const dataDate = moment().subtract(i, 'd').endOf('day').toISOString();
-  return getMockDailyData(dataDate, californiaReef);
+  return getMockDailyData(dataDate, californiaSite);
 });
 
 export const athensDailyData: DeepPartial<DailyData>[] = times(10, (i) => {
   const dataDate = moment().subtract(i, 'd').endOf('day').toISOString();
-  return getMockDailyData(dataDate, athensReef);
+  return getMockDailyData(dataDate, athensSite);
 });
 
 export const dailyData = [...californiaDailyData, ...athensDailyData];

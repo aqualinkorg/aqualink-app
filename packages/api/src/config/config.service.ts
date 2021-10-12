@@ -4,13 +4,13 @@ import {
   SwaggerDocumentOptions,
 } from '@nestjs/swagger';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
-import { UpdateReefWithApplicationDto } from '../reef-applications/dto/update-reef-with-application.dto';
+import { UpdateSiteApplicationDto } from '../site-applications/dto/update-site-application.dto';
+import { UpdateSiteWithApplicationDto } from '../site-applications/dto/update-site-with-application.dto';
 import {
-  CreateReefApplicationDto,
-  CreateReefDto,
-} from '../reefs/dto/create-reef.dto';
-import { Reef } from '../reefs/reefs.entity';
+  CreateSiteApplicationDto,
+  CreateSiteDto,
+} from '../sites/dto/create-site.dto';
+import { Site } from '../sites/sites.entity';
 import { TimeSeriesPoint } from '../time-series/dto/time-series-point.dto';
 
 // dotenv is a dev dependency, so conditionally import it (don't need it in Prod).
@@ -70,11 +70,11 @@ class ConfigService {
 
     const documentOptions: SwaggerDocumentOptions = {
       extraModels: [
-        UpdateReefWithApplicationDto,
-        UpdateReefApplicationDto,
-        CreateReefDto,
-        CreateReefApplicationDto,
-        Reef,
+        UpdateSiteWithApplicationDto,
+        UpdateSiteApplicationDto,
+        CreateSiteDto,
+        CreateSiteApplicationDto,
+        Site,
         TimeSeriesPoint,
       ],
     };

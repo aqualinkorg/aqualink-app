@@ -21,7 +21,7 @@ import { AdminLevel, User } from './users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Auth } from '../auth/auth.decorator';
 import { AuthRequest } from '../auth/auth.types';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { OverrideLevelAccess } from '../auth/override-level-access.decorator';
 import { Public } from '../auth/public.decorator';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
@@ -75,10 +75,10 @@ export class UsersController {
 
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Returns the administered reefs of the signed in user',
+    summary: 'Returns the administered sites of the signed in user',
   })
-  @Get('current/administered-reefs')
-  getAdministeredReefs(@Req() req: AuthRequest): Promise<Reef[]> {
-    return this.usersService.getAdministeredReefs(req);
+  @Get('current/administered-sites')
+  getAdministeredSites(@Req() req: AuthRequest): Promise<Site[]> {
+    return this.usersService.getAdministeredSites(req);
   }
 }

@@ -1,4 +1,4 @@
-import { SourceType } from '../../reefs/schemas/source-type.enum';
+import { SourceType } from '../../sites/schemas/source-type.enum';
 import { TimeSeriesPoint } from '../../time-series/dto/time-series-point.dto';
 import { Metric } from '../../time-series/metrics.entity';
 

@@ -1,13 +1,13 @@
 ## Glossary
 
-- **Reef/Site**: An observation site, usually a reef or a group of reefs. It is the fundamental unit for the app. All data and other entities are related to one or more reefs.
-- **POI**: Point of interest. It represents a point of interest in the observation site (reef/site). It is used for the surveys and the data to provide a more specific location in the observation site
-- **Buoy/Spotter**: A buoy-like device deployed on reefs to measure metrics such as temperature (and others in the future)
+- **Reef/Site**: An observation site, usually a site or a group of sites. It is the fundamental unit for the app. All data and other entities are related to one or more sites.
+- **POI**: Point of interest. It represents a point of interest in the observation site (site/site). It is used for the surveys and the data to provide a more specific location in the observation site
+- **Buoy/Spotter**: A buoy-like device deployed on sites to measure metrics such as temperature (and others in the future)
 - **Sensor**: A sensor can be either a spotter or some other sensor-like device used to track metrics.
 - **HOBO**: A sensor used for tracking data for an extended period of time (for now only temperature). It has no functionality to remotely send those data. Its data can be downloaded after the end of its mission and ingested by the app as historical data.
 - **Sofar**: An online api which provides data for oceans (https://docs.sofarocean.com/)
-- **Reef-Application**: An form application filled out by any user that wants to register a new reef/site in the system. It contains the basic details about the reef along with some other form fields used to determine the eligibility for a buoy/spotter.
-- **Survey**: A survey event on the reef/site, logged by a reef admin (i.e. a user of the app). The survey can contain comments, images, videos each of which is related to a specific POI or the reef/site.
+- **Reef-Application**: An form application filled out by any user that wants to register a new site/site in the system. It contains the basic details about the site along with some other form fields used to determine the eligibility for a buoy/spotter.
+- **Survey**: A survey event on the site/site, logged by a site admin (i.e. a user of the app). The survey can contain comments, images, videos each of which is related to a specific POI or the site/site.
 
 ## Technologies Used
 
@@ -88,7 +88,7 @@ You can access those either through `firebase -> functions` or through `google c
     - wavePeriod **\***
     - {max, min, avg}WindSpeed **\***
     - windDirection **\***
-    - dailyAlert (derived from degreeHeatingDays, satelliteTemperature and reef's maxMonthlyMean
+    - dailyAlert (derived from degreeHeatingDays, satelliteTemperature and site's maxMonthlyMean
     - weeklyAlert (calculated as the maximum dailyAlert of the last 7 days)
 
 **\*** If any wave data is missing it fallbacks to hindcast data
@@ -113,7 +113,7 @@ Spotter data are discarded if the date-sensorId exists in ExclusionDates
 
 #### scheduledVideoStreamsCheck
 
-- **Description**: A function that checks all reefs' video stream and reports any irregularities (stream is not live, stream does not exist etc)
+- **Description**: A function that checks all sites' video stream and reports any irregularities (stream is not live, stream does not exist etc)
 - **Period**: Runs every day at midnight PST
 - **Implementation**: Video Streams are currently YouTube streams so a Google API key (Firebase key is used) is needed in order to fetch the details of each video.
 
@@ -127,22 +127,22 @@ All previously mentioned functions (except scheduledVideoStreamsCheck and pingSe
 
 - scheduledDailyUpdate: (2 options)
   - `yarn daily-worker` (no backfill functionality)
-  - `yarn backfill-daily-data -d days-to-backfill [-r reefId1 reefId2 ...]`
+  - `yarn backfill-daily-data -d days-to-backfill [-r siteId1 siteId2 ...]`
 - scheduledSSTTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-r reefId1 reefId2 ...]`
+  - `yarn backfill-sofar-time-series -t sst_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
 - scheduledSpotterTimeSeriesUpdate
-  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-r reefId1 reefId2 ...]`
+  - `yarn backfill-sofar-time-series -t spotter_backfill -d days-to-backfill [-r siteId1 siteId2 ...]`
 
 The rest of the scripts are used to either augment the models with missing data or perform backfills further back in the past than what Sofar is capable of:
 
-- AugmentReef: Augment reef with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeans)
-  - `yarn augment-reefs `
-- UploadHoboData: Upload historical data from hobo onsite sensors, through csv files. (process includes creating new reefs, POIs, TimeSeries data, sources, surveys and survey media)
-  - `yarn upload-hobo-data -p path/to/data-folder -u reefOwnerUser@example.com`
+- AugmentReef: Augment site with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeans)
+  - `yarn augment-sites `
+- UploadHoboData: Upload historical data from hobo onsite sensors, through csv files. (process includes creating new sites, POIs, TimeSeries data, sources, surveys and survey media)
+  - `yarn upload-hobo-data -p path/to/data-folder -u siteOwnerUser@example.com`
   - Data can be acquired from https://drive.google.com/drive/folders/1IugoTOITkC2ZSmFpXovg8sDO2X2PQnTQ. If you don't have the rights to view the above folder please request it from the client.
 - SST backfill: Backfill historical sst values from NOAA repositories
   - (no standard command) `yarn ts-node -r dotenv/config scripts/sst-backfill.ts`
-  - Make sure that the `reefsToProcess` array is populated with the desired reefIds to process, before running the script
+  - Make sure that the `sitesToProcess` array is populated with the desired siteIds to process, before running the script
 
 ### Swagger API docs
 
@@ -153,7 +153,7 @@ For more details about the NestJS-swagger integration see https://docs.nestjs.co
 ### TimeSeries table
 
 THe time series table contains all data used by the app and is the successor of the daily data table. On each row only one value is stored, the type of which is specified by the metric column. This way we can avoid NULL values and backfill each metric separately allowing smaller and cleaner scripts.\
-This approach however results in many performance issues since the size of the table is multiplied not only by the time range of data and different targets (reefs) but also by the number of different types of data stored. So the following have been done to optimize the performance of the table:
+This approach however results in many performance issues since the size of the table is multiplied not only by the time range of data and different targets (sites) but also by the number of different types of data stored. So the following have been done to optimize the performance of the table:
 
 - Create an intermediate table (Source) to reduce FKs and repetition on TimeSeries table. So source_id is the only FK stored.
 - Create indices:

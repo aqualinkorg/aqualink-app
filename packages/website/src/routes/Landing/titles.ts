@@ -7,7 +7,7 @@ export const cardTitles: CardIncomingProps[] = [
   {
     title: "Underwater temperature monitoring with a smart buoy",
     text:
-      "There is some incredible existing technology that uses satellites to measure the ocean’s surface temperature from space. However, coral reefs and other important marine ecosystems are not always near the surface, and complex ocean dynamics can create a large temperature difference just a few meters down. To augment the satellite temperature, we partnered with Sofar Ocean to design a buoy that measures the temperature at the ocean floor. By building as many of these buoys as we can, and deploying them around the world, we can begin to build a dataset that helps in understanding where and when heat stress in the ocean will occur. By measuring, we can understand. And by understanding, we can begin to help.",
+      "There is some incredible existing technology that uses satellites to measure the ocean’s surface temperature from space. However, coral sites and other important marine ecosystems are not always near the surface, and complex ocean dynamics can create a large temperature difference just a few meters down. To augment the satellite temperature, we partnered with Sofar Ocean to design a buoy that measures the temperature at the ocean floor. By building as many of these buoys as we can, and deploying them around the world, we can begin to build a dataset that helps in understanding where and when heat stress in the ocean will occur. By measuring, we can understand. And by understanding, we can begin to help.",
     backgroundColor: "rgba(69, 76, 79, 0.05)",
     direction: "row",
     image: buoy,

@@ -76,7 +76,7 @@ export interface SurveyListItem {
 }
 
 export interface SurveyData {
-  reef: number;
+  site: number;
   diveDate: string;
   diveLocation?: DiveLocation | null;
   weatherConditions: WeatherConditions;

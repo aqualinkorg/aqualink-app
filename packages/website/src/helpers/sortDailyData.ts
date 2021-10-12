@@ -1,4 +1,4 @@
-import type { DailyData } from "../store/Reefs/types";
+import type { DailyData } from "../store/Sites/types";
 
 /** Utility function to get the closest available data given a date in UTC. */
 export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {

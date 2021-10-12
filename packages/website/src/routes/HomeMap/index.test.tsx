@@ -6,27 +6,27 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { mockUser } from "../../mocks/mockUser";
 
 import Homepage from ".";
-import { mockReef } from "../../mocks/mockReef";
+import { mockSite } from "../../mocks/mockSite";
 
 jest.mock("../../common/NavBar", () => "Mock-NavBar");
 jest.mock("./Map", () => "Mock-Map");
-jest.mock("./ReefTable", () => "Mock-ReefTable");
+jest.mock("./SiteTable", () => "Mock-SiteTable");
 
 const mockStore = configureStore([]);
 describe("Homepage", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
-      reefsList: {
-        list: [mockReef],
+      sitesList: {
+        list: [mockSite],
         loading: false,
         error: null,
       },
-      selectedReef: {
-        details: mockReef,
+      selectedSite: {
+        details: mockSite,
       },
       homepage: {
-        reefOnMap: null,
+        siteOnMap: null,
       },
       user: {
         userInfo: mockUser,

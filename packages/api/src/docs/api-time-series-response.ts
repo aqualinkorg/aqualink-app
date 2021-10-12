@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.entity';
 
 const reduceArrayToObject = <T>(previousValue: T, currentValue: T) => {

@@ -32,13 +32,13 @@ const getCollection = (id: number, token?: string) =>
   });
 
 const updateCollection = (
-  { id, name, addReefIds, removeReefIds }: CollectionUpdateParams,
+  { id, name, addSiteIds, removeSiteIds }: CollectionUpdateParams,
   token?: string
 ) =>
   requests.send({
     method: "PUT",
     url: `collections/${id}`,
-    data: { name, addReefIds, removeReefIds },
+    data: { name, addSiteIds, removeSiteIds },
     token,
   });
 

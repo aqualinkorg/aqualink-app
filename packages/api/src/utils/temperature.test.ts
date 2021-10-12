@@ -5,12 +5,12 @@ import {
 } from './temperature';
 
 // Mock functions
-function getSeaSurfaceTemperatures(reefID: number) {
-  return Array.from(Array(reefID), (_, index) => index);
+function getSeaSurfaceTemperatures(siteID: number) {
+  return Array.from(Array(siteID), (_, index) => index);
 }
 
-function getMaximumMonthlyMean(reefID: number) {
-  return 27.5 + reefID;
+function getMaximumMonthlyMean(siteID: number) {
+  return 27.5 + siteID;
 }
 
 test('Not enough SST.', () => {

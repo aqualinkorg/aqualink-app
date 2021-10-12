@@ -9,8 +9,8 @@ import { Request } from 'express';
 import { AuthRequest } from '../auth/auth.types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AdminLevel, User } from './users.entity';
-import { ReefApplication } from '../reef-applications/reef-applications.entity';
-import { Reef } from '../reefs/reefs.entity';
+import { SiteApplication } from '../site-applications/site-applications.entity';
+import { Site } from '../sites/sites.entity';
 import { Collection } from '../collections/collections.entity';
 import { extractAndVerifyToken } from '../auth/firebase-auth.utils';
 import { defaultUserCollection } from '../utils/collections.utils';
@@ -21,8 +21,8 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
 
-    @InjectRepository(ReefApplication)
-    private reefApplicationRepository: Repository<ReefApplication>,
+    @InjectRepository(SiteApplication)
+    private siteApplicationRepository: Repository<SiteApplication>,
 
     @InjectRepository(Collection)
     private collectionRepository: Repository<Collection>,
@@ -55,15 +55,15 @@ export class UsersService {
 
     if (priorAccount) {
       const newUser = await this.migrateUserAssociations(priorAccount);
-      // User has associations so we have to explicitly change their admin level to reef manager
+      // User has associations so we have to explicitly change their admin level to site manager
       if (
-        newUser.administeredReefs.length &&
+        newUser.administeredSites.length &&
         priorAccount.adminLevel !== AdminLevel.SuperAdmin
       ) {
         // eslint-disable-next-line fp/no-mutation
-        priorAccount.adminLevel = AdminLevel.ReefManager;
+        priorAccount.adminLevel = AdminLevel.SiteManager;
         // eslint-disable-next-line fp/no-mutation
-        priorAccount.administeredReefs = newUser.administeredReefs;
+        priorAccount.administeredSites = newUser.administeredSites;
       }
     }
 
@@ -84,7 +84,7 @@ export class UsersService {
       await this.collectionRepository.save(
         defaultUserCollection(
           createdUser.id,
-          priorAccount?.administeredReefs.map((reef) => reef.id),
+          priorAccount?.administeredSites.map((site) => site.id),
         ),
       );
     }
@@ -96,19 +96,19 @@ export class UsersService {
     return req.user;
   }
 
-  async getAdministeredReefs(req: AuthRequest): Promise<Reef[]> {
+  async getAdministeredSites(req: AuthRequest): Promise<Site[]> {
     const user = await this.usersRepository
       .createQueryBuilder('users')
-      .leftJoinAndSelect('users.administeredReefs', 'reefs')
-      .leftJoinAndSelect('reefs.reefApplication', 'reefApplication')
+      .leftJoinAndSelect('users.administeredSites', 'sites')
+      .leftJoinAndSelect('sites.siteApplication', 'siteApplication')
       .where('users.id = :id', { id: req.user.id })
       .getOne();
 
-    return user!.administeredReefs.map((reef) => {
+    return user!.administeredSites.map((site) => {
       return {
-        ...reef,
-        reefApplication: undefined,
-        applied: reef.applied,
+        ...site,
+        siteApplication: undefined,
+        applied: site.applied,
       };
     });
   }
@@ -141,31 +141,31 @@ export class UsersService {
   }
 
   /**
-   * Transfer the associations between the user and the reefs from the reef-application table
+   * Transfer the associations between the user and the sites from the site-application table
    */
   private async migrateUserAssociations(user: User) {
-    const reefAssociations = await this.reefApplicationRepository.find({
+    const siteAssociations = await this.siteApplicationRepository.find({
       where: { user },
-      relations: ['reef'],
+      relations: ['site'],
     });
 
-    const { administeredReefs: existingReefs = [] } =
+    const { administeredSites: existingSites = [] } =
       (await this.usersRepository.findOne(user.id, {
-        relations: ['administeredReefs'],
+        relations: ['administeredSites'],
       })) || {};
 
-    const administeredReefs = reefAssociations.reduce(
-      (reefs, reefAssociation) => {
-        const { reef } = reefAssociation;
-        const alreadyExists = reefs.some(({ id }) => reef.id === id);
-        return alreadyExists ? reefs : reefs.concat(reef);
+    const administeredSites = siteAssociations.reduce(
+      (sites, siteAssociation) => {
+        const { site } = siteAssociation;
+        const alreadyExists = sites.some(({ id }) => site.id === id);
+        return alreadyExists ? sites : sites.concat(site);
       },
-      existingReefs,
+      existingSites,
     );
 
     const newUser = {
       id: user.id,
-      administeredReefs,
+      administeredSites,
     };
     return this.usersRepository.save(newUser);
   }

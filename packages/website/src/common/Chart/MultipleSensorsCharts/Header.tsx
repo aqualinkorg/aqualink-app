@@ -15,7 +15,7 @@ import {
 import grey from "@material-ui/core/colors/grey";
 import { Alert } from "@material-ui/lab";
 import { RangeButton, RangeValue } from "./types";
-import { Sources, TimeSeriesDataRange } from "../../../store/Reefs/types";
+import { Sources, TimeSeriesDataRange } from "../../../store/Sites/types";
 import { availableRangeString } from "./helpers";
 
 const Header = ({

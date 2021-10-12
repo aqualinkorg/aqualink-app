@@ -12,26 +12,26 @@ import {
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import HomepageNavBar from "../../common/NavBar";
 import HomepageMap from "./Map";
-import ReefTable from "./ReefTable";
+import SiteTable from "./SiteTable";
 import {
-  reefsRequest,
-  reefsListSelector,
-} from "../../store/Reefs/reefsListSlice";
-import { reefRequest } from "../../store/Reefs/selectedReefSlice";
-import { reefOnMapSelector } from "../../store/Homepage/homepageSlice";
+  sitesRequest,
+  sitesListSelector,
+} from "../../store/Sites/sitesListSlice";
+import { siteRequest } from "../../store/Sites/selectedSiteSlice";
+import { siteOnMapSelector } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
-import { findReefById, findInitialReefPosition } from "../../helpers/reefUtils";
+import { findSiteById, findInitialSitePosition } from "../../helpers/siteUtils";
 
 enum QueryParamKeys {
-  REEF_ID = "reef_id",
+  SITE_ID = "site_id",
   ZOOM_LEVEL = "zoom",
 }
 
 interface MapQueryParams {
   initialCenter: LatLng;
   initialZoom: number;
-  initialReefId: string | undefined;
+  initialSiteId: string | undefined;
 }
 
 const INITIAL_CENTER = new LatLng(0, 121.3);
@@ -41,52 +41,52 @@ function useQuery() {
   const urlParams: URLSearchParams = new URLSearchParams(useLocation().search);
   const zoomLevelParam = urlParams.get(QueryParamKeys.ZOOM_LEVEL);
   const initialZoom: number = zoomLevelParam ? +zoomLevelParam : INITIAL_ZOOM;
-  const queryParamReefId = urlParams.get(QueryParamKeys.REEF_ID) || "";
-  const reefsList = useSelector(reefsListSelector) || [];
-  const featuredReefId = process.env.REACT_APP_FEATURED_REEF_ID || "";
-  const initialReefId = queryParamReefId
-    ? findReefById(reefsList, queryParamReefId)?.id.toString() ||
-      findReefById(reefsList, featuredReefId)?.id.toString() ||
+  const queryParamSiteId = urlParams.get(QueryParamKeys.SITE_ID) || "";
+  const sitesList = useSelector(sitesListSelector) || [];
+  const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || "";
+  const initialSiteId = queryParamSiteId
+    ? findSiteById(sitesList, queryParamSiteId)?.id.toString() ||
+      findSiteById(sitesList, featuredSiteId)?.id.toString() ||
       ""
-    : featuredReefId;
+    : featuredSiteId;
 
-  // Focus on the reef provided in the queryParamReefId or the reef with highest alert level.
+  // Focus on the site provided in the queryParamSiteId or the site with highest alert level.
   const initialCenter =
-    findInitialReefPosition(
-      reefsList,
-      queryParamReefId === initialReefId ? initialReefId : undefined
+    findInitialSitePosition(
+      sitesList,
+      queryParamSiteId === initialSiteId ? initialSiteId : undefined
     ) || INITIAL_CENTER;
 
   return {
     initialCenter,
-    initialReefId,
+    initialSiteId,
     initialZoom,
   };
 }
 
 const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
-  const reefOnMap = useSelector(reefOnMapSelector);
+  const siteOnMap = useSelector(siteOnMapSelector);
 
   const {
     initialZoom,
-    initialReefId,
+    initialSiteId,
     initialCenter,
   }: MapQueryParams = useQuery();
 
   useEffect(() => {
-    dispatch(reefsRequest());
+    dispatch(sitesRequest());
   }, [dispatch]);
 
   useEffect(() => {
-    if (!reefOnMap && initialReefId) {
-      dispatch(reefRequest(initialReefId));
-      dispatch(surveysRequest(initialReefId));
-    } else if (reefOnMap) {
-      dispatch(reefRequest(`${reefOnMap.id}`));
-      dispatch(surveysRequest(`${reefOnMap.id}`));
+    if (!siteOnMap && initialSiteId) {
+      dispatch(siteRequest(initialSiteId));
+      dispatch(surveysRequest(initialSiteId));
+    } else if (siteOnMap) {
+      dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(surveysRequest(`${siteOnMap.id}`));
     }
-  }, [dispatch, initialReefId, reefOnMap]);
+  }, [dispatch, initialSiteId, siteOnMap]);
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
@@ -122,8 +122,8 @@ const Homepage = ({ classes }: HomepageProps) => {
             />
           </Grid>
           <Hidden smDown>
-            <Grid className={classes.reefTable} item md={6}>
-              <ReefTable />
+            <Grid className={classes.siteTable} item md={6}>
+              <SiteTable />
             </Grid>
           </Hidden>
           <Hidden mdUp>
@@ -138,7 +138,7 @@ const Homepage = ({ classes }: HomepageProps) => {
               open={isDrawerOpen}
             >
               <div role="presentation" onClick={toggleDrawer}>
-                <ReefTable isDrawerOpen={isDrawerOpen} />
+                <SiteTable isDrawerOpen={isDrawerOpen} />
               </div>
             </SwipeableBottomSheet>
           </Hidden>
@@ -158,7 +158,7 @@ const styles = () =>
       display: "flex",
       zIndex: 0,
     },
-    reefTable: {
+    siteTable: {
       display: "flex",
       flexDirection: "column",
       height: "calc(100vh - 64px);", // subtract height of the navbar

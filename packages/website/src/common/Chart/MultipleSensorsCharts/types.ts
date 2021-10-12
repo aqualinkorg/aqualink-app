@@ -1,4 +1,4 @@
-import { SofarValue } from "../../../store/Reefs/types";
+import { SofarValue } from "../../../store/Sites/types";
 
 export type RangeValue = "three_months" | "one_year" | "max" | "custom";
 

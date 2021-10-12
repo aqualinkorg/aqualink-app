@@ -1,20 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber, Validate } from 'class-validator';
-import { ReefPointOfInterest } from '../../reef-pois/reef-pois.entity';
-import { Reef } from '../../reefs/reefs.entity';
+import { SitePointOfInterest } from '../../site-pois/site-pois.entity';
+import { Site } from '../../sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class PoiDataRangeDto {
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()
-  @Validate(EntityExists, [Reef])
-  reefId: number;
+  @Validate(EntityExists, [Site])
+  siteId: number;
 
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()
-  @Validate(EntityExists, [ReefPointOfInterest])
+  @Validate(EntityExists, [SitePointOfInterest])
   poiId: number;
 }

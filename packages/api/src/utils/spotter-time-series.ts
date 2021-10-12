@@ -3,8 +3,8 @@ import { times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
-import { Reef } from '../reefs/reefs.entity';
-import { Sources } from '../reefs/sources.entity';
+import { Site } from '../sites/sites.entity';
+import { Sources } from '../sites/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData } from './sofar';
@@ -13,10 +13,10 @@ import {
   SofarValue,
   SpotterData,
 } from './sofar.types';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SourceType } from '../sites/schemas/source-type.enum';
 
 interface Repositories {
-  reefRepository: Repository<Reef>;
+  siteRepository: Repository<Site>;
   sourceRepository: Repository<Sources>;
   timeSeriesRepository: Repository<TimeSeries>;
 }
@@ -24,41 +24,41 @@ interface Repositories {
 const logger = new Logger('SpotterTimeSeries');
 
 /**
- * Fetches all reefs with where id is included in the reefIds array and has sensorId
- * If an empty array of reefIds is given then all reefs with sensors are returned
- * @param reefIds The requested reefIds
- * @param reefRepository The required repository to make the query
- * @returns An array of reef entities
+ * Fetches all sites with where id is included in the siteIds array and has sensorId
+ * If an empty array of siteIds is given then all sites with sensors are returned
+ * @param siteIds The requested siteIds
+ * @param siteRepository The required repository to make the query
+ * @returns An array of site entities
  */
-const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
-  return reefRepository.find({
+const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
+  return siteRepository.find({
     where: {
-      ...(reefIds.length > 0 ? { id: In(reefIds) } : {}),
+      ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
       sensorId: Not(IsNull()),
     },
   });
 };
 
 /**
- * Fetches the spotter sources based on the reef.
+ * Fetches the spotter sources based on the site.
  * If no such source exists, it creates it
- * @param reefs The selected reef
+ * @param sites The selected site
  * @param sourceRepository The necessary repository to perform the query
  * @returns The requested source entity
  */
 const getSpotterSources = (
-  reefs: Reef[],
+  sites: Site[],
   sourceRepository: Repository<Sources>,
 ) => {
-  return reefs.map((reef) =>
+  return sites.map((site) =>
     sourceRepository
       .findOne({
-        relations: ['reef'],
+        relations: ['site'],
         where: {
-          reef,
+          site,
           poi: IsNull(),
           type: SourceType.SPOTTER,
-          sensorId: reef.sensorId,
+          sensorId: site.sensorId,
         },
       })
       .then((source) => {
@@ -69,9 +69,9 @@ const getSpotterSources = (
 
         // Else create it and return the created entity
         return sourceRepository.save({
-          reef,
+          site,
           type: SourceType.SPOTTER,
-          sensorId: reef.sensorId,
+          sensorId: site.sensorId,
         });
       }),
   );
@@ -108,48 +108,48 @@ const saveDataBatch = (
 
 /**
  * Fetch spotter and wave data from sofar and save them on time_series table
- * @param reefIds The reefIds for which to perform the update
+ * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
  * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const addSpotterData = async (
-  reefIds: number[],
+  siteIds: number[],
   days: number,
   connection: Connection,
   repositories: Repositories,
 ) => {
-  logger.log('Fetching reefs');
-  // Fetch all reefs
-  const reefs = await getReefs(reefIds, repositories.reefRepository);
+  logger.log('Fetching sites');
+  // Fetch all sites
+  const sites = await getSites(siteIds, repositories.siteRepository);
 
   logger.log('Fetching sources');
   // Fetch sources
   const spotterSources = await Promise.all(
-    getSpotterSources(reefs, repositories.sourceRepository),
+    getSpotterSources(sites, repositories.sourceRepository),
   );
 
-  // Create a map from the reefIds to the source entities
-  const reefToSource: Record<number, Sources> = Object.fromEntries(
-    spotterSources.map((source) => [source.reef.id, source]),
+  // Create a map from the siteIds to the source entities
+  const siteToSource: Record<number, Sources> = Object.fromEntries(
+    spotterSources.map((source) => [source.site.id, source]),
   );
 
   logger.log('Saving spotter data');
   await Bluebird.map(
-    reefs,
-    (reef) =>
+    sites,
+    (site) =>
       Bluebird.map(
         times(days),
         (i) => {
           const startDate = moment().subtract(i, 'd').startOf('day').toDate();
           const endDate = moment().subtract(i, 'd').endOf('day').toDate();
 
-          if (!reef.sensorId) {
+          if (!site.sensorId) {
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
           // Fetch spotter and wave data from sofar
-          return getSpotterData(reef.sensorId, endDate, startDate);
+          return getSpotterData(site.sensorId, endDate, startDate);
         },
         { concurrency: 100 },
       )
@@ -171,7 +171,7 @@ export const addSpotterData = async (
                 dataLabels.map(([spotterDataLabel, metric]) =>
                   saveDataBatch(
                     dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
-                    reefToSource[reef.id],
+                    siteToSource[site.id],
                     metric,
                     repositories.timeSeriesRepository,
                   ),
@@ -187,7 +187,7 @@ export const addSpotterData = async (
             .startOf('day');
           const endDate = moment().endOf('day');
           logger.debug(
-            `Spotter data updated for ${reef.sensorId} between ${startDate} and ${endDate}`,
+            `Spotter data updated for ${site.sensorId} between ${startDate} and ${endDate}`,
           );
         }),
     { concurrency: 1 },

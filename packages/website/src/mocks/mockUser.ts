@@ -3,7 +3,7 @@ import { User } from "../store/User/types";
 export const mockUser: User = {
   id: 1,
   adminLevel: "default",
-  administeredReefs: [],
+  administeredSites: [],
   email: "mail@mail.com",
   firebaseUid: "RaNdOm StRiNg",
   fullName: "Mock User",

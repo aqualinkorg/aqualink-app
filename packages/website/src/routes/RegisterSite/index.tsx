@@ -27,7 +27,7 @@ import RegisterDialog from "../../common/RegisterDialog";
 import SignInDialog from "../../common/SignInDialog";
 import LocationMap from "./LocationMap";
 import { userInfoSelector, getSelf } from "../../store/User/userSlice";
-import reefServices from "../../services/reefServices";
+import siteServices from "../../services/siteServices";
 import validators from "../../helpers/validators";
 
 interface FormElement {
@@ -49,7 +49,7 @@ const Apply = ({ classes }: ApplyProps) => {
   const [snackbarOpenFromCarto, setSnackbarOpenFromCarto] = useState(false);
   const [databaseSubmissionOk, setDatabaseSubmissionOk] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [newReefId, setNewReefId] = useState<number>();
+  const [newSiteId, setNewSiteId] = useState<number>();
 
   const handleRegisterDialog = (open: boolean) => setRegisterDialogOpen(open);
   const handleSignInDialog = (open: boolean) => setSignInDialogOpen(open);
@@ -138,8 +138,8 @@ const Apply = ({ classes }: ApplyProps) => {
       // Add to database
       if (user && user.token) {
         setSubmitLoading(true);
-        reefServices
-          .registerReef(
+        siteServices
+          .registerSite(
             siteName,
             parseFloat(lat),
             parseFloat(lng),
@@ -147,7 +147,7 @@ const Apply = ({ classes }: ApplyProps) => {
             user.token
           )
           .then(({ data }) => {
-            setNewReefId(data.reef.id);
+            setNewSiteId(data.site.id);
             setDatabaseSubmissionOk(true);
             setSnackbarOpenFromDatabase(true);
             if (user?.token) {
@@ -173,7 +173,7 @@ const Apply = ({ classes }: ApplyProps) => {
 
   return (
     <>
-      {newReefId && <Redirect to={`/reefs/${newReefId}`} />}
+      {newSiteId && <Redirect to={`/sites/${newSiteId}`} />}
       <NavBar searchLocation={false} />
       <Box className={classes.boxBar} height="100%" pt={4}>
         <Container>

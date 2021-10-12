@@ -4,11 +4,11 @@ import Bluebird from 'bluebird';
 import { groupBy, keyBy, mapValues } from 'lodash';
 import { GeoJSON, Point } from 'geojson';
 import { IsNull, Not, Repository } from 'typeorm';
-import { Reef, SensorType } from '../reefs/reefs.entity';
+import { Site, SensorType } from '../sites/sites.entity';
 import { Survey } from '../surveys/surveys.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { getReefFromSensorId } from '../utils/reef.utils';
+import { getSiteFromSensorId } from '../utils/site.utils';
 import { getSpotterData, getLatestData } from '../utils/sofar';
 import { createPoint } from '../utils/coordinates';
 import { SpotterData } from '../utils/sofar.types';
@@ -17,10 +17,10 @@ import {
   getDataQuery,
   groupByMetricAndSource,
 } from '../utils/time-series.utils';
-import { DailyData } from '../reefs/daily-data.entity';
-import { Sources } from '../reefs/sources.entity';
+import { DailyData } from '../sites/daily-data.entity';
+import { Sources } from '../sites/sources.entity';
 import { SensorDataDto } from './dto/sensor-data.dto';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SourceType } from '../sites/schemas/source-type.enum';
 
 @Injectable()
 export class SensorsService {
@@ -28,8 +28,8 @@ export class SensorsService {
     @InjectRepository(DailyData)
     private dailyDataRepository: Repository<DailyData>,
 
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
+    @InjectRepository(Site)
+    private siteRepository: Repository<Site>,
 
     @InjectRepository(Sources)
     private sourcesRepository: Repository<Sources>,
@@ -42,19 +42,19 @@ export class SensorsService {
   ) {}
 
   async findSensors(): Promise<
-    (Reef & { sensorPosition: GeoJSON; sensorType: SensorType })[]
+    (Site & { sensorPosition: GeoJSON; sensorType: SensorType })[]
   > {
-    const reefs = await this.reefRepository.find({
+    const sites = await this.siteRepository.find({
       where: { sensorId: Not(IsNull()) },
     });
 
-    // Get spotter data and add reef id to distinguish them
+    // Get spotter data and add site id to distinguish them
     const spotterData = await Bluebird.map(
-      reefs,
-      (reef) => {
-        return getSpotterData(reef.sensorId!).then((data) => {
+      sites,
+      (site) => {
+        return getSpotterData(site.sensorId!).then((data) => {
           return {
-            id: reef.id,
+            id: site.id,
             ...data,
           };
         });
@@ -62,26 +62,26 @@ export class SensorsService {
       { concurrency: 10 },
     );
 
-    // Group spotter data by reef id for easier search
-    const reefIdToSpotterData: Record<
+    // Group spotter data by site id for easier search
+    const siteIdToSpotterData: Record<
       number,
       SpotterData & { id: number }
     > = keyBy(spotterData, (o) => o.id);
 
     // Construct final response
-    return reefs.map((reef) => {
-      const data = reefIdToSpotterData[reef.id];
+    return sites.map((site) => {
+      const data = siteIdToSpotterData[site.id];
       const longitude = getLatestData(data.longitude)?.value;
       const latitude = getLatestData(data.latitude)?.value;
-      const reefPosition = reef.polygon as Point;
+      const sitePosition = site.polygon as Point;
 
       // If no longitude or latitude is provided by the spotter fallback to the site coordinates
       return {
-        ...reef,
-        applied: reef.applied,
+        ...site,
+        applied: site.applied,
         sensorPosition: createPoint(
-          longitude || reefPosition.coordinates[0],
-          latitude || reefPosition.coordinates[1],
+          longitude || sitePosition.coordinates[0],
+          latitude || sitePosition.coordinates[1],
         ),
         sensorType: SensorType.SofarSpotter,
       };
@@ -104,7 +104,7 @@ export class SensorsService {
       }
     });
 
-    const reef = await getReefFromSensorId(sensorId, this.reefRepository);
+    const site = await getSiteFromSensorId(sensorId, this.siteRepository);
 
     const data = await getDataQuery(
       this.timeSeriesRepository,
@@ -112,35 +112,35 @@ export class SensorsService {
       endDate,
       metrics as Metric[],
       false,
-      reef.id,
+      site.id,
     );
 
     return groupByMetricAndSource(data);
   }
 
   async findSensorSurveys(sensorId: string) {
-    const reef = await getReefFromSensorId(sensorId, this.reefRepository);
+    const site = await getSiteFromSensorId(sensorId, this.siteRepository);
 
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
       .leftJoinAndSelect('surveyMedia.poi', 'pois')
-      .where('survey.reef_id = :reefId', { reefId: reef.id })
+      .where('survey.site_id = :siteId', { siteId: site.id })
       .andWhere('surveyMedia.hidden = False')
       .getMany();
 
     return Promise.all(
       surveyDetails.map(async (survey) => {
-        const reefTimeSeries = await this.getClosestTimeSeriesData(
+        const siteTimeSeries = await this.getClosestTimeSeriesData(
           survey.diveDate,
-          survey.reefId,
+          survey.siteId,
           [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
           [SourceType.SPOTTER],
         );
 
         const dailyData = await this.getClosestDailyData(
           survey.diveDate,
-          survey.reefId,
+          survey.siteId,
         );
 
         const surveyMedia = await Promise.all(
@@ -151,7 +151,7 @@ export class SensorsService {
 
             const poiTimeSeries = await this.getClosestTimeSeriesData(
               survey.diveDate,
-              survey.reefId,
+              survey.siteId,
               [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
               [SourceType.HOBO],
               media.poiId,
@@ -168,7 +168,7 @@ export class SensorsService {
           ...survey,
           surveyMedia,
           sensorData: {
-            ...reefTimeSeries,
+            ...siteTimeSeries,
             ...dailyData,
           },
         };
@@ -178,7 +178,7 @@ export class SensorsService {
 
   private async getClosestDailyData(
     diveDate: Date,
-    reefId: number,
+    siteId: number,
   ): Promise<SensorDataDto | {}> {
     // We will use this many times in our query, so we declare it as constant
     const diff = `(daily_data.date::timestamp - '${diveDate.toISOString()}'::timestamp)`;
@@ -187,7 +187,7 @@ export class SensorsService {
     // and we grab the first one, which will be the closest one
     const dailyData = await this.dailyDataRepository
       .createQueryBuilder('daily_data')
-      .where('daily_data.reef_id = :reefId', { reefId })
+      .where('daily_data.site_id = :siteId', { siteId })
       .andWhere(`${diff} < INTERVAL '1 d'`)
       .andWhere(`${diff} > INTERVAL '-1 d'`)
       .orderBy(
@@ -213,7 +213,7 @@ export class SensorsService {
 
   private async getClosestTimeSeriesData(
     diveDate: Date,
-    reefId: number,
+    siteId: number,
     metrics: Metric[],
     sourceTypes: SourceType[],
     poiId?: number,
@@ -228,7 +228,7 @@ export class SensorsService {
     const sources = await this.sourcesRepository
       .createQueryBuilder('source')
       .where('source.type IN (:...sourceTypes)', { sourceTypes })
-      .andWhere('source.reef_id = :reefId', { reefId })
+      .andWhere('source.site_id = :siteId', { siteId })
       .andWhere(poiCondition)
       .getMany();
 

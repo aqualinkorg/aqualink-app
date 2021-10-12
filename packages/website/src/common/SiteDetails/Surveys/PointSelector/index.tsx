@@ -17,18 +17,18 @@ import {
 import { Create, DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-import { Pois } from "../../../../store/Reefs/types";
+import { Pois } from "../../../../store/Sites/types";
 import EditDialog, { Action } from "../../../Dialog";
 import CustomLink from "../../../Link";
 import { maxLengths } from "../../../../constants/names";
 
 const PointSelector = ({
-  reefId,
+  siteId,
   pointOptions,
   point,
   pointId,
   editPoiNameDraft,
-  isReefAdmin,
+  isSiteAdmin,
   editPoiNameLoading,
   onChangePoiName,
   handlePointChange,
@@ -162,12 +162,12 @@ const PointSelector = ({
                             <Grid container item spacing={1}>
                               <Grid item>
                                 <CustomLink
-                                  to={`/reefs/${reefId}/points/${item.id}`}
+                                  to={`/sites/${siteId}/points/${item.id}`}
                                   isIcon
                                   tooltipTitle="View survey point"
                                 />
                               </Grid>
-                              {isReefAdmin && (
+                              {isSiteAdmin && (
                                 <>
                                   <Grid item>
                                     <Tooltip
@@ -219,7 +219,7 @@ const PointSelector = ({
               <Grid item>
                 <Hidden smUp>
                   <CustomLink
-                    to={`/reefs/${reefId}/points/${pointId}`}
+                    to={`/sites/${siteId}/points/${pointId}`}
                     isIcon
                     tooltipTitle="View survey point"
                   />
@@ -230,7 +230,7 @@ const PointSelector = ({
                     color="primary"
                     size="small"
                     component={Link}
-                    to={`/reefs/${reefId}/points/${pointId}`}
+                    to={`/sites/${siteId}/points/${pointId}`}
                   >
                     View Survey Point
                   </Button>
@@ -291,12 +291,12 @@ const styles = (theme: Theme) =>
   });
 
 interface PointSelectorIncomingProps {
-  reefId: number;
+  siteId: number;
   pointOptions: Pois[];
   point: string;
   pointId: number;
   editPoiNameDraft: string | null | undefined;
-  isReefAdmin: boolean;
+  isSiteAdmin: boolean;
   editPoiNameLoading: boolean;
   onChangePoiName: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

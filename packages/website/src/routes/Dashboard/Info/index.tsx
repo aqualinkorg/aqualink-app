@@ -15,7 +15,7 @@ const Info = ({ collection, classes }: InfoProps) => {
   return (
     <Box className={classes.root}>
       {collection.user && (
-        <Header user={collection.user} nSites={collection.reefs.length} />
+        <Header user={collection.user} nSites={collection.sites.length} />
       )}
       <BarChart collection={collection} />
     </Box>

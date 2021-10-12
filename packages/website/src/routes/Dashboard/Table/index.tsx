@@ -1,11 +1,11 @@
 import React from "react";
 import { Box } from "@material-ui/core";
-import ReefTable from "../../HomeMap/ReefTable";
+import SiteTable from "../../HomeMap/SiteTable";
 import { Collection } from "../collection";
 
 const Table = ({ collection }: TableIncomingProps) => (
   <Box width="100%" mt="55px" mb="20px">
-    <ReefTable
+    <SiteTable
       showCard={false}
       showSpottersOnlySwitch={false}
       isExtended

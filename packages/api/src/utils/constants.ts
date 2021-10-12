@@ -16,7 +16,7 @@ export const SOFAR_SENSOR_DATA_URL =
 
 export enum SofarModels {
   SofarOperationalWaveModel = 'SofarOperationalWaveModel',
-  NOAACoralReefWatch = 'NOAACoralReefWatch',
+  NOAACoralSiteWatch = 'NOAACoralSiteWatch',
   GFS = 'GFS',
 }
 
@@ -27,7 +27,7 @@ export const sofarVariableIDs = {
     meanDirectionWindWaves: 'meanDirectionWindWaves',
     peakPeriod: 'peakPeriod',
   },
-  [SofarModels.NOAACoralReefWatch]: {
+  [SofarModels.NOAACoralSiteWatch]: {
     degreeHeatingWeek: 'degreeHeatingWeek',
     analysedSeaSurfaceTemperature: 'analysedSeaSurfaceTemperature',
   },

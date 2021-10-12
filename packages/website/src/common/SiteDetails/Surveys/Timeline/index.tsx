@@ -28,7 +28,7 @@ import AddButton from "../AddButton";
 
 const SurveyTimeline = ({
   isAdmin,
-  reefId,
+  siteId,
   addNewButton,
   timeZone,
   observation,
@@ -52,7 +52,7 @@ const SurveyTimeline = ({
                   style={{ padding: "0 10px" }}
                 />
                 <TimelineContent className={classes.addNewButtonWrapper}>
-                  <AddButton reefId={reefId} />
+                  <AddButton siteId={siteId} />
                 </TimelineContent>
               </TimelineItem>
             )}
@@ -83,7 +83,7 @@ const SurveyTimeline = ({
                     pointId={pointId}
                     pointName={pointName}
                     isAdmin={isAdmin}
-                    reefId={reefId}
+                    siteId={siteId}
                     survey={survey}
                   />
                 </TimelineContent>
@@ -103,7 +103,7 @@ const SurveyTimeline = ({
                 item
                 xs={12}
               >
-                <AddButton reefId={reefId} />
+                <AddButton siteId={siteId} />
               </Grid>
             )}
           {surveyList &&
@@ -136,7 +136,7 @@ const SurveyTimeline = ({
                     pointId={pointId}
                     pointName={pointName}
                     isAdmin={isAdmin}
-                    reefId={reefId}
+                    siteId={siteId}
                     survey={survey}
                   />
                 </Grid>
@@ -184,7 +184,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyTimelineIncomingProps {
-  reefId: number;
+  siteId: number;
   addNewButton: boolean;
   timeZone?: string | null;
   isAdmin: boolean;

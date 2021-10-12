@@ -1,8 +1,8 @@
 import { ConnectionOptions, createConnection } from 'typeorm';
 import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
-import { Reef } from '../src/reefs/reefs.entity';
-import { Sources } from '../src/reefs/sources.entity';
+import { Site } from '../src/sites/sites.entity';
+import { Sources } from '../src/sites/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { addSpotterData } from '../src/utils/spotter-time-series';
 import { updateSST } from '../src/utils/sst-time-series';
@@ -33,8 +33,8 @@ const { argv } = yargs
     type: 'number',
   })
   .option('r', {
-    alias: 'reefs',
-    describe: 'The reefs that should be backfilled with spotter data',
+    alias: 'sites',
+    describe: 'The sites that should be backfilled with spotter data',
     type: 'array',
   })
   .check((args) => {
@@ -67,10 +67,10 @@ function getTaskFn(task: string) {
 
 async function run() {
   // Extract command line arguments
-  const { d: days, r: reefIds, t: task } = argv;
+  const { d: days, r: siteIds, t: task } = argv;
 
-  // Cast reefIds into a number array. If none are given return empty array
-  const parsedReefIds = reefIds ? reefIds.map(Number) : [];
+  // Cast siteIds into a number array. If none are given return empty array
+  const parsedSiteIds = siteIds ? siteIds.map(Number) : [];
 
   // Initialize typeorm connection
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
@@ -81,12 +81,12 @@ async function run() {
 
   // Run selected task
   return fn(
-    parsedReefIds,
+    parsedSiteIds,
     days,
     connection,
     // Fetch all needed repositories
     {
-      reefRepository: connection.getRepository(Reef),
+      siteRepository: connection.getRepository(Site),
       sourceRepository: connection.getRepository(Sources),
       timeSeriesRepository: connection.getRepository(TimeSeries),
     },

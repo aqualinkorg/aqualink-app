@@ -13,19 +13,19 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
 
 import {
-  setReefOnMap,
+  setSiteOnMap,
   setSearchResult,
 } from "../../store/Homepage/homepageSlice";
-import type { Reef } from "../../store/Reefs/types";
+import type { Site } from "../../store/Sites/types";
 import {
-  reefsListSelector,
-  reefsRequest,
-} from "../../store/Reefs/reefsListSlice";
-import { getReefNameAndRegion } from "../../store/Reefs/helpers";
+  sitesListSelector,
+  sitesRequest,
+} from "../../store/Sites/sitesListSlice";
+import { getSiteNameAndRegion } from "../../store/Sites/helpers";
 import mapServices from "../../services/mapServices";
 
-const reefAugmentedName = (reef: Reef) => {
-  const { name, region } = getReefNameAndRegion(reef);
+const siteAugmentedName = (site: Site) => {
+  const { name, region } = getSiteNameAndRegion(site);
   if (name && region) {
     return `${name}, ${region}`;
   }
@@ -34,56 +34,56 @@ const reefAugmentedName = (reef: Reef) => {
 
 const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const browserHistory = useHistory();
-  const [searchedReef, setSearchedReef] = useState<Reef | null>(null);
+  const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
-  const reefs = useSelector(reefsListSelector);
-  const filteredReefs = (reefs || [])
-    .filter((reef) => reefAugmentedName(reef))
+  const sites = useSelector(sitesListSelector);
+  const filteredSites = (sites || [])
+    .filter((site) => siteAugmentedName(site))
     // Sort by formatted name
     .sort((a, b) => {
-      const nameA = reefAugmentedName(a);
-      const nameB = reefAugmentedName(b);
+      const nameA = siteAugmentedName(a);
+      const nameB = siteAugmentedName(b);
       return nameA.localeCompare(nameB);
     });
 
-  // Fetch reefs for the search bar
+  // Fetch sites for the search bar
   useEffect(() => {
-    dispatch(reefsRequest());
+    dispatch(sitesRequest());
   }, [dispatch]);
 
   const onChangeSearchText = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const searchInput = event.target.value;
-    const index = filteredReefs.findIndex(
-      (reef) =>
-        reefAugmentedName(reef).toLowerCase() === searchInput.toLowerCase()
+    const index = filteredSites.findIndex(
+      (site) =>
+        siteAugmentedName(site).toLowerCase() === searchInput.toLowerCase()
     );
     if (index > -1) {
-      setSearchedReef(filteredReefs[index]);
+      setSearchedSite(filteredSites[index]);
     } else {
       setSearchValue(searchInput);
     }
   };
 
-  const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Reef | null) => {
+  const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Site | null) => {
     if (value) {
-      setSearchedReef(null);
-      dispatch(setReefOnMap(value));
+      setSearchedSite(null);
+      dispatch(setSiteOnMap(value));
       if (!geocodingEnabled) {
-        browserHistory.push(`/reefs/${value.id}`);
+        browserHistory.push(`/sites/${value.id}`);
       }
     }
   };
 
   const onSearchSubmit = () => {
-    if (searchedReef) {
+    if (searchedSite) {
       if (!geocodingEnabled) {
-        browserHistory.push(`/reefs/${searchedReef.id}`);
+        browserHistory.push(`/sites/${searchedSite.id}`);
       }
-      dispatch(setReefOnMap(searchedReef));
-      setSearchedReef(null);
+      dispatch(setSiteOnMap(searchedSite));
+      setSearchedSite(null);
     } else if (searchValue && geocodingEnabled) {
       mapServices
         .getLocation(searchValue)
@@ -113,17 +113,17 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
           autoHighlight
           onKeyPress={onKeyPress}
           className={classes.searchBarInput}
-          options={filteredReefs}
+          options={filteredSites}
           noOptionsText={
             geocodingEnabled
               ? `No sites found. Press enter to zoom to "${searchValue}"`
               : undefined
           }
-          getOptionLabel={reefAugmentedName}
-          value={searchedReef}
+          getOptionLabel={siteAugmentedName}
+          value={searchedSite}
           onChange={onDropdownItemSelect}
           onInputChange={(_event, _value, reason) =>
-            reason === "clear" && setSearchedReef(null)
+            reason === "clear" && setSearchedSite(null)
           }
           renderInput={(params) => (
             <TextField

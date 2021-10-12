@@ -10,7 +10,7 @@ import type {
   HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
-} from "../../store/Reefs/types";
+} from "../../store/Sites/types";
 import { SurveyListItem } from "../../store/Survey/types";
 import { colors } from "../../layout/App/theme";
 

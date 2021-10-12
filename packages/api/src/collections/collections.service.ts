@@ -8,10 +8,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { isUndefined, omitBy } from 'lodash';
 import { Repository, MoreThanOrEqual, In } from 'typeorm';
 import { Collection, DynamicCollection } from './collections.entity';
-import { Sources } from '../reefs/sources.entity';
+import { Sources } from '../sites/sources.entity';
 import { LatestData } from '../time-series/latest-data.entity';
 import { User } from '../users/users.entity';
-import { hasHoboDataSubQuery } from '../utils/reef.utils';
+import { hasHoboDataSubQuery } from '../utils/site.utils';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { FilterCollectionDto } from './dto/filter-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
@@ -20,7 +20,7 @@ import {
   heatStressTracker,
 } from '../utils/collections.utils';
 import { Metric } from '../time-series/metrics.entity';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 
 @Injectable()
 export class CollectionsService {
@@ -33,21 +33,21 @@ export class CollectionsService {
     @InjectRepository(LatestData)
     private latestDataRepository: Repository<LatestData>,
 
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
+    @InjectRepository(Site)
+    private siteRepository: Repository<Site>,
 
     @InjectRepository(Sources)
     private sourcesRepository: Repository<Sources>,
   ) {}
 
   create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
-    const { name, isPublic, reefIds, userId } = createCollectionDto;
+    const { name, isPublic, siteIds, userId } = createCollectionDto;
 
-    const reefs = reefIds.map((reefId) => ({ id: reefId }));
+    const sites = siteIds.map((siteId) => ({ id: siteId }));
     return this.collectionRepository.save({
       name,
       isPublic,
-      reefs,
+      sites,
       user: { id: userId },
     });
   }
@@ -56,7 +56,7 @@ export class CollectionsService {
     filterCollectionDto: FilterCollectionDto,
     user?: User,
   ): Promise<Collection[]> {
-    const { name, reefId } = filterCollectionDto;
+    const { name, siteId } = filterCollectionDto;
 
     const query = this.collectionRepository.createQueryBuilder('collection');
 
@@ -70,10 +70,10 @@ export class CollectionsService {
       query.andWhere('collection.name = :name', { name });
     }
 
-    if (reefId) {
+    if (siteId) {
       query
-        .innerJoin('collection.reefs', 'reef')
-        .andWhere('reef.id = :reefId', { reefId });
+        .innerJoin('collection.sites', 'site')
+        .andWhere('site.id = :siteId', { siteId });
     }
 
     return query.getMany();
@@ -86,9 +86,9 @@ export class CollectionsService {
     const collection = await this.collectionRepository.findOne({
       where: { id: collectionId },
       relations: [
-        'reefs',
-        'reefs.historicalMonthlyMean',
-        'reefs.region',
+        'sites',
+        'sites.historicalMonthlyMean',
+        'sites.region',
         'user',
       ],
     });
@@ -105,11 +105,11 @@ export class CollectionsService {
       );
     }
 
-    if (collection.reefs.length === 0) {
+    if (collection.sites.length === 0) {
       return collection;
     }
 
-    return this.processCollection(collection, collection.reefs);
+    return this.processCollection(collection, collection.sites);
   }
 
   async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
@@ -125,19 +125,19 @@ export class CollectionsService {
       name,
       isPublic,
       userId,
-      addReefIds,
-      removeReefIds,
+      addSiteIds,
+      removeSiteIds,
     } = updateCollectionDto;
 
-    const filteredAddReefIds = addReefIds?.filter(
-      (reefId) => !collection.reefIds.includes(reefId),
+    const filteredAddSiteIds = addSiteIds?.filter(
+      (siteId) => !collection.siteIds.includes(siteId),
     );
 
     await this.collectionRepository
       .createQueryBuilder('collection')
-      .relation('reefs')
+      .relation('sites')
       .of(collection)
-      .addAndRemove(filteredAddReefIds || [], removeReefIds || []);
+      .addAndRemove(filteredAddSiteIds || [], removeSiteIds || []);
 
     await this.collectionRepository.update(
       {
@@ -168,21 +168,21 @@ export class CollectionsService {
       value: MoreThanOrEqual(1),
     });
 
-    const heatStressReefIds = heatStressData.map((data) => data.reefId);
+    const heatStressSiteIds = heatStressData.map((data) => data.siteId);
 
-    const heatStressReefs = await this.reefRepository.find({
-      where: { id: In(heatStressReefIds), approved: true },
+    const heatStressSites = await this.siteRepository.find({
+      where: { id: In(heatStressSiteIds), approved: true },
     });
 
-    return this.processCollection(heatStressTracker, heatStressReefs);
+    return this.processCollection(heatStressTracker, heatStressSites);
   }
 
   private async processCollection<T extends DynamicCollection | Collection>(
     collection: T,
-    reefs: Reef[],
+    sites: Site[],
   ): Promise<T> {
-    const mappedReefData = await getCollectionData(
-      reefs,
+    const mappedSiteData = await getCollectionData(
+      sites,
       this.latestDataRepository,
     );
 
@@ -197,12 +197,12 @@ export class CollectionsService {
               firebaseUid: undefined,
             }
           : undefined,
-      reefIds: reefs.map((reef) => reef.id),
-      reefs: reefs.map((reef) => ({
-        ...reef,
-        hasHobo: hasHoboData.has(reef.id),
-        applied: reef.applied,
-        collectionData: mappedReefData[reef.id],
+      siteIds: sites.map((site) => site.id),
+      sites: sites.map((site) => ({
+        ...site,
+        hasHobo: hasHoboData.has(site.id),
+        applied: site.applied,
+        collectionData: mappedSiteData[site.id],
       })),
     };
   }

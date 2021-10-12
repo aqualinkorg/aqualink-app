@@ -6,7 +6,7 @@ import AddButton from ".";
 test("renders as expected", () => {
   const { container } = render(
     <Router>
-      <AddButton reefId={1} />
+      <AddButton siteId={1} />
     </Router>
   );
   expect(container).toMatchSnapshot();

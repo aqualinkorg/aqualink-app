@@ -21,7 +21,7 @@ import { SurveyMedia } from "../../../../store/Survey/types";
 const SliderCard = ({
   loading,
   media,
-  isReefAdmin,
+  isSiteAdmin,
   onSurveyMediaUpdate,
   classes,
 }: SliderCardProps) => {
@@ -70,7 +70,7 @@ const SliderCard = ({
                 <Typography variant="subtitle1">{comments}</Typography>
               </Grid>
             </Grid>
-            {isReefAdmin && (
+            {isSiteAdmin && (
               <Grid container justify="flex-end" item xs={2}>
                 {featured ? (
                   <Tooltip title="Featured image">
@@ -138,7 +138,7 @@ const styles = (theme: Theme) =>
 interface SliderCardIncomingProps {
   media: SurveyMedia;
   loading: boolean;
-  isReefAdmin: boolean;
+  isSiteAdmin: boolean;
   onSurveyMediaUpdate: (mediaId: number) => void;
 }
 

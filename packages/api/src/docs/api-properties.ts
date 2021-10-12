@@ -5,12 +5,12 @@ import {
   ApiProperty,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { UpdateReefApplicationDto } from '../reef-applications/dto/update-reef-application.dto';
-import { UpdateReefWithApplicationDto } from '../reef-applications/dto/update-reef-with-application.dto';
+import { UpdateSiteApplicationDto } from '../site-applications/dto/update-site-application.dto';
+import { UpdateSiteWithApplicationDto } from '../site-applications/dto/update-site-with-application.dto';
 import {
-  CreateReefApplicationDto,
-  CreateReefDto,
-} from '../reefs/dto/create-reef.dto';
+  CreateSiteApplicationDto,
+  CreateSiteDto,
+} from '../sites/dto/create-site.dto';
 import { PointSchema } from './api-schemas';
 
 export const ApiPointProperty = () => {
@@ -39,17 +39,17 @@ export const ApiFileUpload = () => {
   );
 };
 
-export const ApiUpdateReefApplicationBody = () => {
+export const ApiUpdateSiteApplicationBody = () => {
   return applyDecorators(
     ApiBody({
       schema: {
         type: 'object',
         properties: {
-          reef: {
-            $ref: getSchemaPath(UpdateReefWithApplicationDto),
+          site: {
+            $ref: getSchemaPath(UpdateSiteWithApplicationDto),
           },
-          reefApplication: {
-            $ref: getSchemaPath(UpdateReefApplicationDto),
+          siteApplication: {
+            $ref: getSchemaPath(UpdateSiteApplicationDto),
           },
         },
       },
@@ -57,17 +57,17 @@ export const ApiUpdateReefApplicationBody = () => {
   );
 };
 
-export const ApiCreateReefBody = () => {
+export const ApiCreateSiteBody = () => {
   return applyDecorators(
     ApiBody({
       schema: {
         type: 'object',
         properties: {
-          reef: {
-            $ref: getSchemaPath(CreateReefDto),
+          site: {
+            $ref: getSchemaPath(CreateSiteDto),
           },
-          reefApplication: {
-            $ref: getSchemaPath(CreateReefApplicationDto),
+          siteApplication: {
+            $ref: getSchemaPath(CreateSiteApplicationDto),
           },
         },
       },

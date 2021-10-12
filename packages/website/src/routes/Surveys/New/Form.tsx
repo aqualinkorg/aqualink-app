@@ -10,7 +10,7 @@ import {
 import { userInfoSelector } from "../../../store/User/userSlice";
 import Form from "../../../common/SurveyForm";
 
-const SurveyForm = ({ reefId, timeZone, changeTab }: SurveyFormProps) => {
+const SurveyForm = ({ siteId, timeZone, changeTab }: SurveyFormProps) => {
   const user = useSelector(userInfoSelector);
   const surveyError = useSelector(surveyErrorSelector);
 
@@ -24,7 +24,7 @@ const SurveyForm = ({ reefId, timeZone, changeTab }: SurveyFormProps) => {
       comments: string
     ) => {
       const surveyData: SurveyData = {
-        reef: reefId,
+        site: siteId,
         diveDate: diveDateTime,
         diveLocation,
         weatherConditions,
@@ -33,13 +33,13 @@ const SurveyForm = ({ reefId, timeZone, changeTab }: SurveyFormProps) => {
       };
       dispatch(
         surveyAddRequest({
-          reefId: `${reefId}`,
+          siteId: `${siteId}`,
           surveyData,
           changeTab,
         })
       );
     },
-    [dispatch, changeTab, reefId, user]
+    [dispatch, changeTab, siteId, user]
   );
 
   return (
@@ -56,14 +56,14 @@ const SurveyForm = ({ reefId, timeZone, changeTab }: SurveyFormProps) => {
           </Alert>
         </Collapse>
       </Grid>
-      <Form reefId={reefId} timeZone={timeZone} onSubmit={onSubmit} />
+      <Form siteId={siteId} timeZone={timeZone} onSubmit={onSubmit} />
     </>
   );
 };
 
 interface SurveyFormProps {
   changeTab: (index: number) => void;
-  reefId: number;
+  siteId: number;
   timeZone?: string | null;
 }
 

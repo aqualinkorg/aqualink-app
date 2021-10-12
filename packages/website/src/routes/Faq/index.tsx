@@ -80,7 +80,7 @@ const Faq = ({ classes }: FaqProps) => {
                     Heat stress is a measure of the amount of time above the 20
                     year historical maximum temperature. The unit of measure for
                     heat stress is degree heating weeks. Many marine
-                    environments, like coral reefs, degrade after prolonged heat
+                    environments, like coral sites, degrade after prolonged heat
                     exposure which is why this is an important metric.
                   </p>
                 </div>
@@ -92,7 +92,7 @@ const Faq = ({ classes }: FaqProps) => {
                     Smart Buoy, can I get multiple?
                   </Typography>
                   <p>
-                    Please submit an application for each reef or location you
+                    Please submit an application for each site or location you
                     would like a spotter for and we’ll be in touch to figure out
                     a staged roll out with you.
                   </p>
@@ -345,7 +345,7 @@ const styles = () =>
     map: {
       height: "100%",
     },
-    reefTable: {
+    siteTable: {
       height: "calc(100vh - 64px)",
       overflowY: "auto",
     },

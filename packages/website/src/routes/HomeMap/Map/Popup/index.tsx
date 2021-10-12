@@ -17,12 +17,12 @@ import { Popup as LeafletPopup, useLeaflet } from "react-leaflet";
 import { useSelector } from "react-redux";
 
 import type { LatLngTuple } from "leaflet";
-import type { Reef } from "../../../../store/Reefs/types";
-import { getReefNameAndRegion } from "../../../../store/Reefs/helpers";
+import type { Site } from "../../../../store/Sites/types";
+import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
 import { colors } from "../../../../layout/App/theme";
 import { formatNumber } from "../../../../helpers/numberUtils";
 import { dhwColorFinder } from "../../../../helpers/degreeHeatingWeeks";
-import { reefOnMapSelector } from "../../../../store/Homepage/homepageSlice";
+import { siteOnMapSelector } from "../../../../store/Homepage/homepageSlice";
 import { maxLengths } from "../../../../constants/names";
 import {
   GaCategory,
@@ -30,14 +30,14 @@ import {
   trackButtonClick,
 } from "../../../../utils/google-analytics";
 
-const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
+const Popup = ({ site, classes, autoOpen }: PopupProps) => {
   const { map } = useLeaflet();
-  const reefOnMap = useSelector(reefOnMapSelector);
+  const siteOnMap = useSelector(siteOnMapSelector);
   const popupRef = useRef<LeafletPopup>(null);
-  const { name, region } = getReefNameAndRegion(reef);
-  const isNameLong = name?.length && name.length > maxLengths.REEF_NAME_POPUP;
+  const { name, region } = getSiteNameAndRegion(site);
+  const isNameLong = name?.length && name.length > maxLengths.SITE_NAME_POPUP;
 
-  const { dhw, satelliteTemperature } = reef.collectionData || {};
+  const { dhw, satelliteTemperature } = site.collectionData || {};
 
   const onExploreButtonClick = () => {
     trackButtonClick(
@@ -51,21 +51,21 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
     if (
       map &&
       popupRef?.current &&
-      reefOnMap?.id === reef.id &&
-      reefOnMap?.polygon.type === "Point" &&
+      siteOnMap?.id === site.id &&
+      siteOnMap?.polygon.type === "Point" &&
       autoOpen
     ) {
       const { leafletElement: popup } = popupRef.current;
-      const [lng, lat] = reefOnMap.polygon.coordinates;
+      const [lng, lat] = siteOnMap.polygon.coordinates;
 
       const point: LatLngTuple = [lat, lng];
       popup.setLatLng(point).openOn(map);
     }
-  }, [autoOpen, map, reef.id, reefOnMap]);
+  }, [autoOpen, map, site.id, siteOnMap]);
 
   return (
     <LeafletPopup
-      ref={reefOnMap?.id === reef.id ? popupRef : null}
+      ref={siteOnMap?.id === site.id ? popupRef : null}
       closeButton={false}
       className={classes.popup}
       autoPan={false}
@@ -80,7 +80,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
           title={
             <span title={isNameLong && name ? name : undefined}>
               {isNameLong
-                ? `${name?.substring(0, maxLengths.REEF_NAME_POPUP)}...`
+                ? `${name?.substring(0, maxLengths.SITE_NAME_POPUP)}...`
                 : name}
             </span>
           }
@@ -141,7 +141,7 @@ const Popup = ({ reef, classes, autoOpen }: PopupProps) => {
             <Grid item>
               <Link
                 style={{ color: "inherit", textDecoration: "none" }}
-                to={`/reefs/${reef.id}`}
+                to={`/sites/${site.id}`}
               >
                 <Button
                   onClick={onExploreButtonClick}
@@ -181,8 +181,8 @@ const styles = (theme: Theme) =>
   });
 
 interface PopupIncomingProps {
-  reef: Reef;
-  // Dictates whether the popup automatically opens when the reef is selected (reef on map is set)
+  site: Site;
+  // Dictates whether the popup automatically opens when the site is selected (site on map is set)
   autoOpen?: boolean;
 }
 

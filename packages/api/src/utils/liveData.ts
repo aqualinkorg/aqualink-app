@@ -1,7 +1,7 @@
 import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
   getLatestData,
@@ -12,13 +12,13 @@ import {
 import { SofarLiveData, SofarValue } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
-import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 
 export const getLiveData = async (
-  reef: Reef,
+  site: Site,
   isDeployed: boolean,
 ): Promise<SofarLiveData> => {
-  const { polygon, sensorId, maxMonthlyMean } = reef;
+  const { polygon, sensorId, maxMonthlyMean } = site;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -37,8 +37,8 @@ export const getLiveData = async (
     sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
     getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
     getSofarHindcastData(
-      SofarModels.NOAACoralReefWatch,
-      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+      SofarModels.NOAACoralSiteWatch,
+      sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
         .analysedSeaSurfaceTemperature,
       latitude,
       longitude,
@@ -118,7 +118,7 @@ export const getLiveData = async (
   );
 
   return {
-    reef: { id: reef.id },
+    site: { id: site.id },
     ...filteredValues,
     ...(spotterData.longitude &&
       spotterData.latitude && {

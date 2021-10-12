@@ -10,7 +10,7 @@ export const coloredBuoy = (color: string) =>
           </filter>
       </defs>
       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="Reef-Detail-full---no-live-feed-Copy-2" transform="translate(-748.000000, -491.000000)">
+          <g id="Site-Detail-full---no-live-feed-Copy-2" transform="translate(-748.000000, -491.000000)">
               <g id="icon_sat" transform="translate(752.500000, 493.500000)">
                   <g id="Fill-1">
                       <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>

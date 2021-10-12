@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber, IsOptional, IsString, Validate } from 'class-validator';
-import { Reef } from '../../reefs/reefs.entity';
+import { Site } from '../../sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
 export class FilterCollectionDto {
@@ -14,6 +14,6 @@ export class FilterCollectionDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Validate(EntityExists, [Reef])
-  reefId?: number;
+  @Validate(EntityExists, [Site])
+  siteId?: number;
 }

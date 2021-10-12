@@ -28,10 +28,10 @@ const Buoy = ({ classes }: BuoyProps) => {
                 Current global ocean temperature monitoring systems are
                 restricted to satellite-derived surface temperatures, which only
                 capture the skin temperature of the water. The temperatures at
-                greater depths, where coral reefs can be found, are mostly
+                greater depths, where coral sites can be found, are mostly
                 unknown. Scientists will study those temperatures by installing
                 local data loggers, which have to be physically retrieved from
-                the reef to have their data accessed. Once the loggers have been
+                the site to have their data accessed. Once the loggers have been
                 retrieved the findings will be published in a paper, but it’s
                 rare to get continuous real-time readings of those temperatures.
                 The monitoring system we are deploying includes a solar-powered
@@ -58,7 +58,7 @@ const Buoy = ({ classes }: BuoyProps) => {
                 imagery to help understand the cause-and-effect of increasing
                 temperatures on the local marine ecosystem. We are working with
                 coral scientists to create easy-to-use instruction manuals for
-                conducting reef surveys and implementing response plans, all of
+                conducting site surveys and implementing response plans, all of
                 which will be facilitated through our monitoring system.
                 <br />
               </p>

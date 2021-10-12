@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign, fp/no-mutation */
 import Faker from 'faker';
 import { define } from 'typeorm-seeding';
-import { DailyData } from '../reefs/daily-data.entity';
+import { DailyData } from '../sites/daily-data.entity';
 
 define(DailyData, (faker: typeof Faker) => {
   const dailyData = new DailyData();

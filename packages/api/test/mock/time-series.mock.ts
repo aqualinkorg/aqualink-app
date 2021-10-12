@@ -1,8 +1,8 @@
 import { random, times } from 'lodash';
 import moment from 'moment';
 import { DeepPartial } from 'typeorm';
-import { SourceType } from '../../src/reefs/schemas/source-type.enum';
-import { Sources } from '../../src/reefs/sources.entity';
+import { SourceType } from '../../src/sites/schemas/source-type.enum';
+import { Sources } from '../../src/sites/sources.entity';
 import { Metric } from '../../src/time-series/metrics.entity';
 import { TimeSeries } from '../../src/time-series/time-series.entity';
 import {

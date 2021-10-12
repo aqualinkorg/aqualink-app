@@ -26,7 +26,7 @@ const Content = () => {
     return <FullScreenMessage message="Collection not found" />;
   }
 
-  if (collection?.reefs.length === 0) {
+  if (collection?.sites.length === 0) {
     return (
       <FullScreenMessage message="There are no sites in your dashboard. Add sites to your dashboard to monitor multiple locations in a single view." />
     );

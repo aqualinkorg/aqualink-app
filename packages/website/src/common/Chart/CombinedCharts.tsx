@@ -9,7 +9,7 @@ import {
 
 import ChartWithTooltip from "./ChartWithTooltip";
 import MultipleSensorsCharts from "./MultipleSensorsCharts";
-import { Reef } from "../../store/Reefs/types";
+import { Site } from "../../store/Sites/types";
 import {
   convertDailyDataToLocalTime,
   convertSurveyDataToLocalTime,
@@ -17,12 +17,12 @@ import {
 import { SurveyListItem } from "../../store/Survey/types";
 
 const CombinedCharts = ({
-  reef,
+  site,
   closestSurveyPointId,
   surveys,
   classes,
 }: CombinedChartsProps) => {
-  const { id, timezone, dailyData, depth, maxMonthlyMean } = reef;
+  const { id, timezone, dailyData, depth, maxMonthlyMean } = site;
   return (
     <div>
       <Box className={classes.graphtTitleWrapper}>
@@ -31,7 +31,7 @@ const CombinedCharts = ({
         </Typography>
       </Box>
       <ChartWithTooltip
-        reefId={id}
+        siteId={id}
         depth={depth}
         dailyData={convertDailyDataToLocalTime(dailyData, timezone)}
         surveys={convertSurveyDataToLocalTime(surveys, timezone)}
@@ -42,7 +42,7 @@ const CombinedCharts = ({
         timeZone={timezone}
       />
       <MultipleSensorsCharts
-        reef={reef}
+        site={site}
         pointId={closestSurveyPointId}
         surveysFiltered={false}
         disableGutters
@@ -67,7 +67,7 @@ const styles = () =>
   });
 
 interface CombinedChartsIncomingProps {
-  reef: Reef;
+  site: Site;
   closestSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
 }

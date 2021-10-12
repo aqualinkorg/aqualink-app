@@ -6,16 +6,16 @@ import { EntityExists } from '../validations/entity-exists.constraint';
 import { AuthModule } from '../auth/auth.module';
 import { SurveysService } from './surveys.service';
 import { SurveyMedia } from './survey-media.entity';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { SitePointOfInterest } from '../site-pois/site-pois.entity';
 import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 
 @Module({
   imports: [
     AuthModule,
     GoogleCloudModule,
-    TypeOrmModule.forFeature([Survey, SurveyMedia, ReefPointOfInterest, Reef]),
+    TypeOrmModule.forFeature([Survey, SurveyMedia, SitePointOfInterest, Site]),
   ],
   controllers: [SurveysController],
   providers: [EntityExists, SurveysService, GoogleCloudService],

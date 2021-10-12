@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Timeline from "./Timeline";
 import PointSelector from "./PointSelector";
-import { setReefPois } from "../../../store/Reefs/selectedReefSlice";
+import { setSitePois } from "../../../store/Sites/selectedSiteSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import {
   surveysRequest,
@@ -26,18 +26,18 @@ import {
 import { setSelectedPoi } from "../../../store/Survey/surveySlice";
 import observationOptions from "../../../constants/uploadDropdowns";
 import { SurveyMedia } from "../../../store/Survey/types";
-import reefServices from "../../../services/reefServices";
-import { Reef } from "../../../store/Reefs/types";
+import siteServices from "../../../services/siteServices";
+import { Site } from "../../../store/Sites/types";
 import { isAdmin } from "../../../helpers/user";
 import DeletePoiDialog, { Action } from "../../Dialog";
 import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
 
-const Surveys = ({ reef, classes }: SurveysProps) => {
+const Surveys = ({ site, classes }: SurveysProps) => {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
-  const pointOptions = reef.surveyPoints;
+  const pointOptions = site.surveyPoints;
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
@@ -48,7 +48,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
     SurveyMedia["observations"] | "any"
   >("any");
   const user = useSelector(userInfoSelector);
-  const isReefAdmin = isAdmin(user, reef.id);
+  const isSiteAdmin = isAdmin(user, site.id);
   const dispatch = useDispatch();
 
   const bodyLength = useBodyLength();
@@ -83,17 +83,17 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
 
   const handleSurveyPointDelete = () => {
     if (user && user.token && poiToDelete) {
-      reefServices
-        .deleteReefPoi(poiToDelete, user.token)
+      siteServices
+        .deleteSitePoi(poiToDelete, user.token)
         .then(() =>
           dispatch(
-            setReefPois(
+            setSitePois(
               pointOptions.filter((option) => option.id !== poiToDelete)
             )
           )
         )
         .then(() => {
-          dispatch(surveysRequest(`${reef.id}`));
+          dispatch(surveysRequest(`${site.id}`));
         })
         .then(() => {
           setDeletePoiDialogOpen(false);
@@ -131,7 +131,7 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
 
           // Update point options
           dispatch(
-            setReefPois(
+            setSitePois(
               pointOptions.map((item) => {
                 if (item.id === key) {
                   return {
@@ -202,12 +202,12 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
             <Typography className={classes.title}>Survey History</Typography>
           </Grid>
           <PointSelector
-            reefId={reef.id}
+            siteId={site.id}
             pointOptions={pointOptions}
             point={point}
             pointId={pointIdFinder(point)}
             editPoiNameDraft={editPoiNameDraft}
-            isReefAdmin={isReefAdmin}
+            isSiteAdmin={isSiteAdmin}
             editPoiNameLoading={editPoiNameLoading}
             onChangePoiName={onChangePoiName}
             handlePointChange={handlePointChange}
@@ -264,10 +264,10 @@ const Surveys = ({ reef, classes }: SurveysProps) => {
         </Grid>
         <Grid container justify="center" item xs={11} lg={12}>
           <Timeline
-            isAdmin={isReefAdmin}
+            isAdmin={isSiteAdmin}
             addNewButton
-            reefId={reef.id}
-            timeZone={reef.timezone}
+            siteId={site.id}
+            timeZone={site.timezone}
             observation={observation}
             pointName={point}
             pointId={pointIdFinder(point)}
@@ -326,7 +326,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyIncomingProps {
-  reef: Reef;
+  site: Site;
 }
 
 type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;

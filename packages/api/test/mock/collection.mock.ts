@@ -1,12 +1,12 @@
 import { DeepPartial } from 'typeorm';
 import { Collection } from '../../src/collections/collections.entity';
-import { athensReef, californiaReef, floridaReef } from './reef.mock';
+import { athensSite, californiaSite, floridaSite } from './site.mock';
 import { adminUserMock, defaultUserMock } from './user.mock';
 
 export const adminCollectionMock: DeepPartial<Collection> = {
   isPublic: true,
   name: 'Admin Dashboard',
-  reefs: [floridaReef, californiaReef, athensReef],
+  sites: [floridaSite, californiaSite, athensSite],
   user: adminUserMock,
 };
 

@@ -22,7 +22,7 @@ import { DeleteOutlineOutlined } from "@material-ui/icons";
 
 import classNames from "classnames";
 import observationOptions from "../../../constants/uploadDropdowns";
-import { Pois } from "../../../store/Reefs/types";
+import { Pois } from "../../../store/Sites/types";
 import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
 import { maxLengths } from "../../../constants/names";
 

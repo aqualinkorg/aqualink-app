@@ -20,7 +20,7 @@ describe("Surveys Delete Button", () => {
 
     element = render(
       <Provider store={store}>
-        <DeleteButton reefId={0} surveyId={0} diveDate="10/2/2020" />
+        <DeleteButton siteId={0} surveyId={0} diveDate="10/2/2020" />
       </Provider>
     ).container;
   });

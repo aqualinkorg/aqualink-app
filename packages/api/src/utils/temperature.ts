@@ -2,7 +2,7 @@ import * as GeoTIFF from 'geotiff';
 import { pointToPixel } from './coordinates';
 
 const HistoricalMonthlyMeanRoot =
-  'https://storage.googleapis.com/reef_climatology/';
+  'https://storage.googleapis.com/site_climatology/';
 
 async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();
@@ -88,7 +88,7 @@ export async function getHistoricalMonthlyMeans(long: number, lat: number) {
 }
 
 /**
- * Calculates the Degree Heating Days of a reef location using 12 weeks of data.
+ * Calculates the Degree Heating Days of a site location using 12 weeks of data.
  *
  * HS = SST(daily) - MMM if SST(daily) > MMM
  * HS = 0                if SST(daily) <= MMM

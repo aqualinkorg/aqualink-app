@@ -5,10 +5,10 @@ import { userTests } from '../src/users/users.spec';
 import { collectionTests } from '../src/collections/collections.spec';
 import { timeSeriesTests } from '../src/time-series/time-series.spec';
 import { regionTests } from '../src/regions/regions.spec';
-import { poiTests } from '../src/reef-pois/reef-pois.spec';
-import { reefApplicationTests } from '../src/reef-applications/reef-application.spec';
+import { poiTests } from '../src/site-pois/site-pois.spec';
+import { siteApplicationTests } from '../src/site-applications/site-application.spec';
 import { surveyTests } from '../src/surveys/surveys.spec';
-import { reefTests } from '../src/reefs/reefs.spec';
+import { siteTests } from '../src/sites/sites.spec';
 import { sensorTests } from '../src/sensors/sensors.spec';
 
 describe('AppController (e2e)', () => {
@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
 
   describe('User (e2e) /users', userTests);
 
-  describe('Reef Pois (e2e) /pois', poiTests);
+  describe('Site Pois (e2e) /pois', poiTests);
 
   describe('Collection (e2e) /collections', collectionTests);
 
@@ -36,11 +36,11 @@ describe('AppController (e2e)', () => {
 
   describe('Region (e2e) /regions', regionTests);
 
-  describe('Reef Application {e2e) /reef-applications', reefApplicationTests);
+  describe('Site Application {e2e) /site-applications', siteApplicationTests);
 
-  describe('Survey (e2e) /reefs/:id/surveys', surveyTests);
+  describe('Survey (e2e) /sites/:id/surveys', surveyTests);
 
-  describe('Reefs (e2e) /reefs', reefTests);
+  describe('Sites (e2e) /sites', siteTests);
 
   describe('Sensors (e2e) /sensors', sensorTests);
 

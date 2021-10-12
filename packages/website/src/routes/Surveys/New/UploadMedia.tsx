@@ -25,18 +25,18 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
-import reefServices from "../../../services/reefServices";
+import siteServices from "../../../services/siteServices";
 import {
-  reefDetailsSelector,
-  setReefPois,
-} from "../../../store/Reefs/selectedReefSlice";
-import { Pois } from "../../../store/Reefs/types";
+  siteDetailsSelector,
+  setSitePois,
+} from "../../../store/Sites/selectedSiteSlice";
+import { Pois } from "../../../store/Sites/types";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
 const UploadMedia = ({
-  reefId,
-  reefName,
+  siteId,
+  siteName,
   changeTab,
   classes,
 }: UploadMediaProps) => {
@@ -48,7 +48,7 @@ const UploadMedia = ({
   const user = useSelector(userInfoSelector);
   const survey = useSelector(surveyDetailsSelector);
   const surveyPointOptions =
-    useSelector(reefDetailsSelector)?.surveyPoints || [];
+    useSelector(siteDetailsSelector)?.surveyPoints || [];
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,9 +82,9 @@ const UploadMedia = ({
 
   const handlePoiOptionAdd = (index: number, name: string) => {
     surveyServices
-      .addNewPoi(reefId, name, user?.token)
+      .addNewPoi(siteId, name, user?.token)
       .then(() => {
-        return reefServices.getReefPois(`${reefId}`);
+        return siteServices.getSitePois(`${siteId}`);
       })
       .then((response) => {
         const points: Pois[] = response.data.map((item) => ({
@@ -92,7 +92,7 @@ const UploadMedia = ({
           name: item.name,
           polygon: null,
         }));
-        dispatch(setReefPois(points));
+        dispatch(setSitePois(points));
 
         return points.find((point) => point.name === name)?.id;
       })
@@ -134,7 +134,7 @@ const UploadMedia = ({
       const formData = new FormData();
       formData.append("file", file);
       return uploadServices
-        .uploadMedia(formData, `${reefId}`, user?.token)
+        .uploadMedia(formData, `${siteId}`, user?.token)
         .then((response) => {
           const url = response.data;
           const surveyId = survey?.id;
@@ -151,7 +151,7 @@ const UploadMedia = ({
             hidden: false,
           };
           return surveyServices.addSurveyMedia(
-            `${reefId}`,
+            `${siteId}`,
             `${surveyId}`,
             surveyMediaData
           );
@@ -165,7 +165,7 @@ const UploadMedia = ({
         setPreviews([]);
         setFeaturedFile(0);
         // eslint-disable-next-line fp/no-mutating-methods
-        history.push(`/reefs/${reefId}/survey_details/${survey?.id}`);
+        history.push(`/sites/${siteId}/survey_details/${survey?.id}`);
       })
       .catch((err) => {
         setAlertMessage(err.message);
@@ -286,9 +286,9 @@ const UploadMedia = ({
               <ArrowBack />
             </IconButton>
           </Grid>
-          <Grid item className={classes.reefName}>
-            {reefName && (
-              <Typography variant="h5">{`${reefName.toUpperCase()} MEDIA UPLOAD`}</Typography>
+          <Grid item className={classes.siteName}>
+            {siteName && (
+              <Typography variant="h5">{`${siteName.toUpperCase()} MEDIA UPLOAD`}</Typography>
             )}
           </Grid>
         </Grid>
@@ -381,7 +381,7 @@ const styles = (theme: Theme) =>
       },
       marginTop: theme.spacing(2),
     },
-    reefName: {
+    siteName: {
       maxWidth: "calc(100% - 56px)", // 100% minus the back button
       overflowWrap: "break-word",
     },
@@ -399,8 +399,8 @@ const styles = (theme: Theme) =>
 
 interface UploadMediaIncomingProps {
   changeTab: (index: number) => void;
-  reefName: string | null;
-  reefId: number;
+  siteName: string | null;
+  siteId: number;
 }
 
 interface Metadata {

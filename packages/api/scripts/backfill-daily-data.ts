@@ -2,7 +2,7 @@ import Bluebird from 'bluebird';
 import { createConnection } from 'typeorm';
 import yargs from 'yargs';
 import moment from 'moment';
-import { getReefsDailyData } from '../src/workers/dailyData';
+import { getSitesDailyData } from '../src/workers/dailyData';
 
 const dbConfig = require('../ormconfig');
 
@@ -16,16 +16,16 @@ const { argv } = yargs
     demandOption: true,
   })
   .option('r', {
-    alias: 'reefs',
-    describe: 'Specify the reefs which will be backfilled with data',
+    alias: 'sites',
+    describe: 'Specify the sites which will be backfilled with data',
     type: 'array',
   })
   .help();
 
 async function run() {
-  const { d: days, r: reefs } = argv;
+  const { d: days, r: sites } = argv;
   const backlogArray = Array.from(Array(days).keys());
-  const reefIds = reefs && reefs.map((reef) => parseInt(`${reef}`, 10));
+  const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
   const today = moment()
     .utc()
     .hours(23)
@@ -38,7 +38,7 @@ async function run() {
       const date = moment(today);
       date.day(today.day() - past - 1);
       try {
-        await getReefsDailyData(connection, date.toDate(), reefIds);
+        await getSitesDailyData(connection, date.toDate(), siteIds);
       } catch (error) {
         console.error(error);
       }

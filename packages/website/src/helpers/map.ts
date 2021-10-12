@@ -2,7 +2,7 @@ import { isEqual, mean, meanBy, minBy } from "lodash";
 import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from "leaflet";
 import { makeStyles } from "@material-ui/core";
 
-import type { Point, Pois, Polygon, Position } from "../store/Reefs/types";
+import type { Point, Pois, Polygon, Position } from "../store/Sites/types";
 import { spotter } from "../assets/spotter";
 import { spotterSelected } from "../assets/spotterSelected";
 import { spotterAnimation } from "../assets/spotterAnimation";
@@ -51,7 +51,7 @@ export const getCollectionCenterAndBounds = (
     return [undefined, undefined];
   }
 
-  const coordinates = collection.reefs.map((item) =>
+  const coordinates = collection.sites.map((item) =>
     getMiddlePoint(item.polygon)
   );
 
@@ -91,17 +91,17 @@ export const radDistanceCalculator = (point1: Position, point2: Position) => {
 };
 
 export const findClosestSurveyPoint = (
-  reefPolygon?: Polygon | Point,
+  sitePolygon?: Polygon | Point,
   points?: Pois[]
 ) => {
-  if (!reefPolygon || !points) {
+  if (!sitePolygon || !points) {
     return undefined;
   }
 
-  const [reefLng, reefLat] =
-    reefPolygon.type === "Polygon"
-      ? getMiddlePoint(reefPolygon)
-      : reefPolygon.coordinates;
+  const [siteLng, siteLat] =
+    sitePolygon.type === "Polygon"
+      ? getMiddlePoint(sitePolygon)
+      : sitePolygon.coordinates;
   const distances = points
     .filter((item) => item.polygon)
     .map((point) => {
@@ -110,7 +110,7 @@ export const findClosestSurveyPoint = (
         return {
           pointId: point.id,
           distance: radDistanceCalculator(
-            [reefLng, reefLat],
+            [siteLng, siteLat],
             polygon.coordinates
           ),
         };
@@ -119,7 +119,7 @@ export const findClosestSurveyPoint = (
       return {
         pointId: point.id,
         distance: radDistanceCalculator(
-          [reefLng, reefLat],
+          [siteLng, siteLat],
           getMiddlePoint(polygon)
         ),
       };

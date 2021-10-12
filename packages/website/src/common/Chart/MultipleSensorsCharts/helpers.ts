@@ -15,7 +15,7 @@ import {
   OceanSenseKeys,
   SofarValue,
   TimeSeriesData,
-} from "../../../store/Reefs/types";
+} from "../../../store/Sites/types";
 import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn, Dataset, OceanSenseDataset } from "./types";
 

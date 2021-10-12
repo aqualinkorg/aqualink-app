@@ -17,14 +17,14 @@ export const adminUserMock: DeepPartial<User> = {
   imageUrl: 'http://some-sample-url.com',
 };
 
-export const reefManagerUserMock: DeepPartial<User> = {
+export const siteManagerUserMock: DeepPartial<User> = {
   fullName: 'John Manager',
   email: 'johnmanager@example.com',
   organization: 'John M Foundations',
   location: createPoint(-80.92402664087751, 27.605670826465445),
   country: 'USA',
-  adminLevel: AdminLevel.ReefManager,
-  description: 'A test reef manager user',
+  adminLevel: AdminLevel.SiteManager,
+  description: 'A test site manager user',
   imageUrl: 'http://some-sample-url.com',
 };
 
@@ -52,7 +52,7 @@ export const testUserMock: DeepPartial<User> = {
   imageUrl: 'http://some-sample-url.com',
 };
 
-export const users = [adminUserMock, reefManagerUserMock, defaultUserMock];
+export const users = [adminUserMock, siteManagerUserMock, defaultUserMock];
 
 export const testFirebaseUserMock = createMockFirebaseUser(
   testUserMock.firebaseUid as string,
@@ -64,9 +64,9 @@ export const adminFirebaseUserMock = createMockFirebaseUser(
   adminUserMock.email as string,
 );
 
-export const reefManagerFirebaseUserMock = createMockFirebaseUser(
+export const siteManagerFirebaseUserMock = createMockFirebaseUser(
   'abc1234manager',
-  reefManagerUserMock.email as string,
+  siteManagerUserMock.email as string,
 );
 
 export const defaultFirebaseUserMock = createMockFirebaseUser(

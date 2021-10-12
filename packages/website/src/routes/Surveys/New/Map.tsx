@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import L from "leaflet";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
-import { Reef } from "../../../store/Reefs/types";
+import { Site } from "../../../store/Sites/types";
 
 import marker from "../../../assets/marker.png";
 import {
@@ -19,7 +19,7 @@ const pinIcon = L.icon({
   popupAnchor: [0, -41],
 });
 
-const ReefMap = ({ polygon, classes }: ReefMapProps) => {
+const SiteMap = ({ polygon, classes }: SiteMapProps) => {
   const mapRef = useRef<Map>(null);
   const diveLocation = useSelector(diveLocationSelector);
   const [markerLat, setMarkerLat] = useState<number | null>(null);
@@ -104,10 +104,10 @@ const styles = () => {
   });
 };
 
-interface ReefMapIncomingProps {
-  polygon: Reef["polygon"];
+interface SiteMapIncomingProps {
+  polygon: Site["polygon"];
 }
 
-type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
+type SiteMapProps = WithStyles<typeof styles> & SiteMapIncomingProps;
 
-export default withStyles(styles)(ReefMap);
+export default withStyles(styles)(SiteMap);

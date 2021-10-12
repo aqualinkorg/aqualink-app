@@ -28,16 +28,16 @@ import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { SurveyMedia } from './survey-media.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
-import { IsReefAdminGuard } from '../auth/is-reef-admin.guard';
+import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { AuthRequest } from '../auth/auth.types';
 import { Public } from '../auth/public.decorator';
 import { ApiFileUpload } from '../docs/api-properties';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Surveys')
-@UseGuards(IsReefAdminGuard)
-@Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
-@Controller('reefs/:reef_id/surveys')
+@UseGuards(IsSiteAdminGuard)
+@Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
+@Controller('sites/:site_id/surveys')
 export class SurveysController {
   constructor(private surveyService: SurveysService) {}
 
@@ -52,11 +52,11 @@ export class SurveysController {
     },
   })
   @ApiOperation({ summary: 'Uploads a new survey media' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @Post('upload')
-  @AcceptFile('file', ['image', 'video'], 'surveys', 'reef')
+  @AcceptFile('file', ['image', 'video'], 'surveys', 'site')
   upload(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @UploadedFile('file') file: any,
   ): string {
     // Override file path because file.path provided an invalid google cloud format and HTTPS is not working correctly
@@ -66,60 +66,60 @@ export class SurveysController {
   }
 
   @ApiBearerAuth()
-  @ApiNestNotFoundResponse('No reef was found with the specified id')
+  @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Creates a new survey' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @Post()
   create(
     @Body() createSurveyDto: CreateSurveyDto,
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Req() req: AuthRequest,
   ): Promise<Survey> {
-    return this.surveyService.create(createSurveyDto, req.user, reefId);
+    return this.surveyService.create(createSurveyDto, req.user, siteId);
   }
 
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Creates a new survey media' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Post(':id/media')
   createMedia(
     @Body() createSurveyMediaDto: CreateSurveyMediaDto,
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) surveyId: number,
   ): Promise<SurveyMedia> {
     return this.surveyService.createMedia(createSurveyMediaDto, surveyId);
   }
 
-  @ApiOperation({ summary: "Returns all reef's survey" })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiOperation({ summary: "Returns all site's survey" })
+  @ApiParam({ name: 'site_id', example: 1 })
   @Public()
   @Get()
-  find(@Param('reef_id', ParseIntPipe) reefId: number): Promise<Survey[]> {
-    return this.surveyService.find(reefId);
+  find(@Param('site_id', ParseIntPipe) siteId: number): Promise<Survey[]> {
+    return this.surveyService.find(siteId);
   }
 
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Returns specified survey' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id')
   findOne(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) surveyId: number,
   ): Promise<Survey> {
     return this.surveyService.findOne(surveyId);
   }
 
   @ApiOperation({ summary: 'Returns all media of a specified survey' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/media')
   findMedia(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) surveyId: number,
   ): Promise<SurveyMedia[]> {
     return this.surveyService.findMedia(surveyId);
@@ -128,11 +128,11 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey media was found with the specified id')
   @ApiOperation({ summary: 'Updates a specified survey media' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Put('media/:id')
   updateMedia(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) mediaId: number,
     @Body() editSurveyMediaDto: EditSurveyMediaDto,
   ): Promise<SurveyMedia> {
@@ -142,11 +142,11 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Updates a specified survey' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Put(':id')
   update(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) surveyId: number,
     @Body() editSurveyDto: EditSurveyDto,
   ): Promise<Survey> {
@@ -156,11 +156,11 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey was found with the specified id')
   @ApiOperation({ summary: 'Deletes a specified survey' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Delete(':id')
   delete(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) surveyId: number,
   ): Promise<void> {
     return this.surveyService.delete(surveyId);
@@ -169,11 +169,11 @@ export class SurveysController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No survey media was found with the specified id')
   @ApiOperation({ summary: 'Deletes a specified survey media' })
-  @ApiParam({ name: 'reef_id', example: 1 })
+  @ApiParam({ name: 'site_id', example: 1 })
   @ApiParam({ name: 'id', example: 1 })
   @Delete('media/:id')
   deleteMedia(
-    @Param('reef_id', ParseIntPipe) reefId: number,
+    @Param('site_id', ParseIntPipe) siteId: number,
     @Param('id', ParseIntPipe) mediaId: number,
   ): Promise<void> {
     return this.surveyService.deleteMedia(mediaId);

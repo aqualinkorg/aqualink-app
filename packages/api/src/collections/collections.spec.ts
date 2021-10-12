@@ -7,10 +7,10 @@ import {
   defaultCollectionMock,
 } from '../../test/mock/collection.mock';
 import {
-  athensReef,
-  californiaReef,
-  floridaReef,
-} from '../../test/mock/reef.mock';
+  athensSite,
+  californiaSite,
+  floridaSite,
+} from '../../test/mock/site.mock';
 import {
   athensTimeSeries,
   californiaTimeSeries,
@@ -20,8 +20,8 @@ import {
   adminFirebaseUserMock,
   adminUserMock,
   defaultFirebaseUserMock,
-  reefManagerFirebaseUserMock,
-  reefManagerUserMock,
+  siteManagerFirebaseUserMock,
+  siteManagerUserMock,
 } from '../../test/mock/user.mock';
 import { TestService } from '../../test/test.service';
 import { mockExtractAndVerifyToken } from '../../test/utils';
@@ -35,7 +35,7 @@ const collectionDtoToEntity = (dto: CreateCollectionDto) => ({
   name: dto.name,
   isPublic: dto.isPublic,
   user: { id: dto.userId },
-  reefs: dto.reefIds.map((reefId) => ({ id: reefId })),
+  sites: dto.siteIds.map((siteId) => ({ id: siteId })),
 });
 
 const getLatestData = (data: DeepPartial<TimeSeries>[]) =>
@@ -56,13 +56,13 @@ export const collectionTests = () => {
     createCollectionDto = {
       name: 'Test Dashboard',
       isPublic: true,
-      userId: reefManagerUserMock.id || 0,
-      reefIds: [floridaReef.id || 0, californiaReef.id || 0],
+      userId: siteManagerUserMock.id || 0,
+      siteIds: [floridaSite.id || 0, californiaSite.id || 0],
     };
     updateCollectionDto = {
       name: 'Updated Collection',
       isPublic: false,
-      removeReefIds: [floridaReef.id || 0],
+      removeSiteIds: [floridaSite.id || 0],
     };
   });
 
@@ -82,7 +82,7 @@ export const collectionTests = () => {
     });
 
     it("GET / fetch all admin user's collections (no filters)", async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
 
       const rsp = await request(app.getHttpServer()).get('/collections/');
 
@@ -100,7 +100,7 @@ export const collectionTests = () => {
     });
 
     it('GET / filter collections by name', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
         .get('/collections/')
         .query({ name: createCollectionDto.name });
@@ -113,18 +113,18 @@ export const collectionTests = () => {
       });
     });
 
-    it('GET / filter collections by reefId', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+    it('GET / filter collections by siteId', async () => {
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
         .get('/collections/')
-        .query({ reefId: floridaReef.id });
+        .query({ siteId: floridaSite.id });
 
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
     });
 
     it('PUT /:id update the test collection', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
         .put(`/collections/${createdCollectionId}`)
         .send(updateCollectionDto);
@@ -132,18 +132,18 @@ export const collectionTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.name).toBe(updateCollectionDto.name);
       expect(rsp.body.isPublic).toBe(updateCollectionDto.isPublic);
-      expect(rsp.body.reefIds.length).toBe(1);
-      expect(rsp.body.reefIds[0]).toBe(californiaReef.id);
+      expect(rsp.body.siteIds.length).toBe(1);
+      expect(rsp.body.siteIds[0]).toBe(californiaSite.id);
 
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp2 = await request(app.getHttpServer())
         .put(`/collections/${createdCollectionId}`)
         .send({
-          addReefIds: [floridaReef || 0],
+          addSiteIds: [floridaSite || 0],
         });
 
       expect(rsp2.status).toBe(200);
-      expect(rsp2.body.reefIds.length).toBe(2);
+      expect(rsp2.body.siteIds.length).toBe(2);
     });
 
     it('GET /public filter public collections', async () => {
@@ -155,7 +155,7 @@ export const collectionTests = () => {
     });
 
     it('GET /:id fetch collection details', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer()).get(
         `/collections/${createdCollectionId}`,
       );
@@ -163,34 +163,34 @@ export const collectionTests = () => {
       expect(rsp.status).toBe(200);
       expect(rsp.body.user).toMatchObject(
         omit(
-          reefManagerUserMock,
+          siteManagerUserMock,
           'adminLevel',
           'firebaseUid',
           'createdAt',
           'updatedAt',
         ),
       );
-      expect(rsp.body.userId).toBe(reefManagerUserMock.id);
+      expect(rsp.body.userId).toBe(siteManagerUserMock.id);
       expect(rsp.body.name).toBe(updateCollectionDto.name);
       expect(rsp.body.isPublic).toBe(updateCollectionDto.isPublic);
-      expect(rsp.body.reefs.length).toBe(2);
-      const sortedReefs = sortBy(rsp.body.reefs, (o) => o.name);
-      expect(sortedReefs[0]).toMatchObject(
-        omit(californiaReef, 'applied', 'createdAt', 'updatedAt'),
+      expect(rsp.body.sites.length).toBe(2);
+      const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
+      expect(sortedSites[0]).toMatchObject(
+        omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
       );
-      expect(sortedReefs[1]).toMatchObject(
-        omit(floridaReef, 'applied', 'createdAt', 'updatedAt'),
+      expect(sortedSites[1]).toMatchObject(
+        omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
       );
 
       const floridaLatestData = getLatestData(floridaTimeSeries);
       const californiaLatestData = getLatestData(californiaTimeSeries);
 
-      expect(sortedReefs[0].collectionData).toStrictEqual(californiaLatestData);
-      expect(sortedReefs[1].collectionData).toStrictEqual(floridaLatestData);
+      expect(sortedSites[0].collectionData).toStrictEqual(californiaLatestData);
+      expect(sortedSites[1].collectionData).toStrictEqual(floridaLatestData);
     });
 
     it('PUT /:id change the owner of the collection', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
       const rsp = await request(app.getHttpServer())
         .put(`/collections/${createdCollectionId}`)
         .send({ userId: adminUserMock.id });
@@ -220,33 +220,33 @@ export const collectionTests = () => {
     expect(rsp.body.userId).toBe(adminUserMock.id);
     expect(rsp.body.name).toBe(adminCollectionMock.name);
     expect(rsp.body.isPublic).toBe(adminCollectionMock.isPublic);
-    expect(rsp.body.reefs.length).toBe(adminCollectionMock.reefs?.length);
+    expect(rsp.body.sites.length).toBe(adminCollectionMock.sites?.length);
 
-    const sortedReefs = sortBy(rsp.body.reefs, (o) => o.name);
-    expect(sortedReefs[0]).toMatchObject(
-      omit(athensReef, 'applied', 'createdAt', 'updatedAt'),
+    const sortedSites = sortBy(rsp.body.sites, (o) => o.name);
+    expect(sortedSites[0]).toMatchObject(
+      omit(athensSite, 'applied', 'createdAt', 'updatedAt'),
     );
-    expect(sortedReefs[1]).toMatchObject(
-      omit(californiaReef, 'applied', 'createdAt', 'updatedAt'),
+    expect(sortedSites[1]).toMatchObject(
+      omit(californiaSite, 'applied', 'createdAt', 'updatedAt'),
     );
-    expect(sortedReefs[2]).toMatchObject(
-      omit(floridaReef, 'applied', 'createdAt', 'updatedAt'),
+    expect(sortedSites[2]).toMatchObject(
+      omit(floridaSite, 'applied', 'createdAt', 'updatedAt'),
     );
 
     const athensLatestData = getLatestData(athensTimeSeries);
     const californiaLatestData = getLatestData(californiaTimeSeries);
     const floridaLatestData = getLatestData(floridaTimeSeries);
 
-    expect(sortedReefs[0].collectionData).toStrictEqual(
+    expect(sortedSites[0].collectionData).toStrictEqual(
       // Omit top and bottom temperature since hobo data are not included in collection data
       omit(athensLatestData, Metric.TOP_TEMPERATURE, Metric.BOTTOM_TEMPERATURE),
     );
-    expect(sortedReefs[1].collectionData).toStrictEqual(californiaLatestData);
-    expect(sortedReefs[2].collectionData).toStrictEqual(floridaLatestData);
+    expect(sortedSites[1].collectionData).toStrictEqual(californiaLatestData);
+    expect(sortedSites[2].collectionData).toStrictEqual(floridaLatestData);
   });
 
   it('GET /:id access a collection that does not belong to you', async () => {
-    mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+    mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
     const rsp = await request(app.getHttpServer()).get(
       `/collections/${adminCollectionMock.id}`,
     );
@@ -254,14 +254,14 @@ export const collectionTests = () => {
     expect(rsp.status).toBe(403);
   });
 
-  it('GET /:id access a collection with no reefs', async () => {
+  it('GET /:id access a collection with no sites', async () => {
     mockExtractAndVerifyToken(defaultFirebaseUserMock);
     const rsp = await request(app.getHttpServer()).get(
       `/collections/${defaultCollectionMock.id}`,
     );
 
     expect(rsp.status).toBe(200);
-    expect(rsp.body.reefs.length).toBe(0);
+    expect(rsp.body.sites.length).toBe(0);
   });
 
   it('GET /public/:id access a non-public collection', async () => {

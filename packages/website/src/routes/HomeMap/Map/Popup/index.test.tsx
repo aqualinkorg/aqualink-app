@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store";
 
 import { BrowserRouter as Router } from "react-router-dom";
 import Popup from ".";
-import { mockReef } from "../../../../mocks/mockReef";
+import { mockSite } from "../../../../mocks/mockSite";
 
 jest.mock("react-leaflet", () => ({
   __esModule: true,
@@ -24,7 +24,7 @@ describe("Popup", () => {
   beforeEach(() => {
     const store = mockStore({
       homepage: {
-        reefOnMap: mockReef,
+        siteOnMap: mockSite,
       },
     });
 
@@ -33,7 +33,7 @@ describe("Popup", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Popup reef={mockReef} />
+          <Popup site={mockSite} />
         </Router>
       </Provider>
     ).container;
