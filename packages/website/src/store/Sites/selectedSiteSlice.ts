@@ -4,7 +4,7 @@ import type { AxiosError } from "axios";
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
-  Pois,
+  SurveyPoints,
   SiteUpdateParams,
   SelectedSiteState,
   TimeSeriesDataRangeRequestParams,
@@ -41,7 +41,7 @@ export const siteRequest = createAsyncThunk<
       const { data } = await siteServices.getSite(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: liveData } = await siteServices.getSiteLiveData(id);
-      const { data: surveyPoints } = await siteServices.getSitePois(id);
+      const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
         ...data,
@@ -201,7 +201,7 @@ const selectedSiteSlice = createSlice({
       }
       return state;
     },
-    setSitePois: (state, action: PayloadAction<Pois[]>) => {
+    setSiteSurveyPoints: (state, action: PayloadAction<SurveyPoints[]>) => {
       if (state.details) {
         return {
           ...state,
@@ -467,7 +467,7 @@ export const {
   clearTimeSeriesDataRange,
   clearGranularDailyData,
   clearOceanSenseData,
-  setSitePois,
+  setSiteSurveyPoints,
 } = selectedSiteSlice.actions;
 
 export default selectedSiteSlice.reducer;

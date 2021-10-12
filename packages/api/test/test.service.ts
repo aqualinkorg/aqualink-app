@@ -6,7 +6,7 @@ import Bluebird from 'bluebird';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
 import { Site } from '../src/sites/sites.entity';
-import { SitePointOfInterest } from '../src/site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { GlobalValidationPipe } from '../src/validations/global-validation.pipe';
 import { SiteApplication } from '../src/site-applications/site-applications.entity';
 import { Sources } from '../src/sites/sources.entity';
@@ -21,7 +21,7 @@ import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { users } from './mock/user.mock';
 import { sites } from './mock/site.mock';
-import { pois } from './mock/poi.mock';
+import { surveyPoints } from './mock/survey-point.mock';
 import { siteApplications } from './mock/site-application.mock';
 import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
@@ -84,7 +84,7 @@ export class TestService {
   private async loadMocks(connection: Connection) {
     await connection.getRepository(User).save(users);
     await connection.getRepository(Site).save(sites);
-    await connection.getRepository(SitePointOfInterest).save(pois);
+    await connection.getRepository(SiteSurveyPoint).save(surveyPoints);
     await connection.getRepository(SiteApplication).save(siteApplications);
     await connection.getRepository(Sources).save(sources);
     await connection.getRepository(TimeSeries).save(timeSeries);
@@ -146,7 +146,7 @@ export class TestService {
     await connection.getRepository(Collection).delete({});
     await connection.getRepository(Region).delete({});
     await connection.getRepository(SiteApplication).delete({});
-    await connection.getRepository(SitePointOfInterest).delete({});
+    await connection.getRepository(SiteSurveyPoint).delete({});
     await connection.getRepository(DailyData).delete({});
     await connection.getRepository(ExclusionDates).delete({});
     await connection.getRepository(Survey).delete({});

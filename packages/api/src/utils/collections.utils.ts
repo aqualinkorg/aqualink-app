@@ -23,7 +23,7 @@ export const getCollectionData = async (
     .addSelect('timestamp')
     .addSelect('value')
     .addSelect('site_id', 'siteId')
-    .addSelect('poi_id', 'poiId')
+    .addSelect('survey_point_id', 'surveyPointId')
     .addSelect('metric')
     .addSelect('source')
     .where('site_id IN (:...siteIds)', { siteIds })

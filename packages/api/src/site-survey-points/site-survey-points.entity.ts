@@ -14,7 +14,7 @@ import { Site } from '../sites/sites.entity';
 import { ApiPointProperty } from '../docs/api-properties';
 
 @Entity()
-export class SitePointOfInterest {
+export class SiteSurveyPoint {
   @ApiProperty({ example: 1 })
   @PrimaryGeneratedColumn()
   id: number;
@@ -35,7 +35,7 @@ export class SitePointOfInterest {
   site: Site;
 
   @ApiProperty({ example: 1 })
-  @RelationId((poi: SitePointOfInterest) => poi.site)
+  @RelationId((surveyPoint: SiteSurveyPoint) => surveyPoint.site)
   siteId: number;
 
   @ApiPointProperty()

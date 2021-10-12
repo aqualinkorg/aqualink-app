@@ -2,7 +2,12 @@ import { isEqual, mean, meanBy, minBy } from "lodash";
 import L, { LatLng, LatLngBounds, Polygon as LeafletPolygon } from "leaflet";
 import { makeStyles } from "@material-ui/core";
 
-import type { Point, Pois, Polygon, Position } from "../store/Sites/types";
+import type {
+  Point,
+  SurveyPoints,
+  Polygon,
+  Position,
+} from "../store/Sites/types";
 import { spotter } from "../assets/spotter";
 import { spotterSelected } from "../assets/spotterSelected";
 import { spotterAnimation } from "../assets/spotterAnimation";
@@ -92,7 +97,7 @@ export const radDistanceCalculator = (point1: Position, point2: Position) => {
 
 export const findClosestSurveyPoint = (
   sitePolygon?: Polygon | Point,
-  points?: Pois[]
+  points?: SurveyPoints[]
 ) => {
   if (!sitePolygon || !points) {
     return undefined;

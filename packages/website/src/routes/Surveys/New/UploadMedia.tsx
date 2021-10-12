@@ -28,9 +28,9 @@ import { SurveyMediaData } from "../../../store/Survey/types";
 import siteServices from "../../../services/siteServices";
 import {
   siteDetailsSelector,
-  setSitePois,
+  setSiteSurveyPoints,
 } from "../../../store/Sites/selectedSiteSlice";
-import { Pois } from "../../../store/Sites/types";
+import { SurveyPoints } from "../../../store/Sites/types";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
 
@@ -84,15 +84,15 @@ const UploadMedia = ({
     surveyServices
       .addNewPoi(siteId, name, user?.token)
       .then(() => {
-        return siteServices.getSitePois(`${siteId}`);
+        return siteServices.getSiteSurveyPoints(`${siteId}`);
       })
       .then((response) => {
-        const points: Pois[] = response.data.map((item) => ({
+        const points: SurveyPoints[] = response.data.map((item) => ({
           id: item.id,
           name: item.name,
           polygon: null,
         }));
-        dispatch(setSitePois(points));
+        dispatch(setSiteSurveyPoints(points));
 
         return points.find((point) => point.name === name)?.id;
       })
@@ -140,7 +140,7 @@ const UploadMedia = ({
           const surveyId = survey?.id;
           const surveyMediaData: SurveyMediaData = {
             url,
-            poiId: metadata[index].surveyPoint
+            surveyPointId: metadata[index].surveyPoint
               ? parseInt(metadata[index].surveyPoint, 10)
               : ((undefined as unknown) as number),
             observations: metadata[index].observation,

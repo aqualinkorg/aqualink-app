@@ -6,7 +6,7 @@ import { EntityExists } from '../validations/entity-exists.constraint';
 import { AuthModule } from '../auth/auth.module';
 import { SurveysService } from './surveys.service';
 import { SurveyMedia } from './survey-media.entity';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
@@ -15,7 +15,7 @@ import { Site } from '../sites/sites.entity';
   imports: [
     AuthModule,
     GoogleCloudModule,
-    TypeOrmModule.forFeature([Survey, SurveyMedia, SitePointOfInterest, Site]),
+    TypeOrmModule.forFeature([Survey, SurveyMedia, SiteSurveyPoint, Site]),
   ],
   controllers: [SurveysController],
   providers: [EntityExists, SurveysService, GoogleCloudService],

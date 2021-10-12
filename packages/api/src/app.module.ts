@@ -4,7 +4,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { configService } from './config/config.service';
 import { SiteApplicationsModule } from './site-applications/site-applications.module';
 import { SitesModule } from './sites/sites.module';
-import { SitePoisModule } from './site-pois/site-pois.module';
+import { SiteSurveyPointsModule } from './site-survey-points/site-survey-points.module';
 import { RegionsModule } from './regions/regions.module';
 import { SurveysModule } from './surveys/surveys.module';
 import { UsersModule } from './users/users.module';
@@ -22,7 +22,7 @@ import { AuditModule } from './audit/audit.module';
   imports: [
     SiteApplicationsModule,
     SitesModule,
-    SitePoisModule,
+    SiteSurveyPointsModule,
     RegionsModule,
     SurveysModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),

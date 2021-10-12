@@ -56,7 +56,7 @@ const getSpotterSources = (
         relations: ['site'],
         where: {
           site,
-          poi: IsNull(),
+          surveyPoint: IsNull(),
           type: SourceType.SPOTTER,
           sensorId: site.sensorId,
         },

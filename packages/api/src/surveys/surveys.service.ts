@@ -91,7 +91,7 @@ export class SurveysService {
 
     return this.surveyMediaRepository.save({
       ...createSurveyMediaDto,
-      poi: { id: createSurveyMediaDto.poiId },
+      surveyPoint: { id: createSurveyMediaDto.surveyPointId },
       featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
       type: MediaType.Image,
       surveyId: survey,
@@ -115,7 +115,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
-      .leftJoinAndSelect('featuredSurveyMedia.poi', 'poi')
+      .leftJoinAndSelect('featuredSurveyMedia.survey_point', 'survey_point')
       .addSelect(['users.fullName', 'users.id'])
       .where('survey.site_id = :siteId', { siteId })
       .getMany();
@@ -140,11 +140,11 @@ export class SurveysService {
         'surveys.site_id = :siteId',
         { siteId },
       )
-      .groupBy('surveyMedia.surveyId, surveyMedia.poi')
+      .groupBy('surveyMedia.surveyId, surveyMedia.survey_point')
       .select([
         'surveyMedia.surveyId',
-        'surveyMedia.poi',
-        'array_agg(surveyMedia.url) poi_images',
+        'surveyMedia.survey_point',
+        'array_agg(surveyMedia.url) survey_point_images',
       ])
       .getRawMany();
 
@@ -152,15 +152,15 @@ export class SurveysService {
       surveyObservationsQuery,
       'surveyMedia_observations',
     );
-    const poiIdGroupedBySurveyId = this.groupBySurveyId(
+    const surveyPointIdGroupedBySurveyId = this.groupBySurveyId(
       surveyPointsQuery,
-      'poi_id',
+      'survey_point_id',
     );
 
     const surveyImageGroupedByPoiId = this.groupBySurveyId(
       surveyPointsQuery,
-      'poi_images',
-      'poi_id',
+      'survey_point_images',
+      'survey_point_id',
     );
 
     return surveyHistoryQuery.map((survey) => {
@@ -181,7 +181,7 @@ export class SurveysService {
               surveyDailyData.satelliteTemperature)),
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
-        surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],
+        surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
         surveyPointImage: surveyImageGroupedByPoiId[survey.id] || [],
         createdAt: survey.createdAt,
         updatedAt: survey.updatedAt,
@@ -190,12 +190,12 @@ export class SurveysService {
   }
 
   // Find one survey provided its id
-  // Include its surveyMedia grouped by sitePointOfInterest
+  // Include its surveyMedia grouped by siteSurveyPoint
   async findOne(surveyId: number): Promise<Survey> {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'pois')
+      .leftJoinAndSelect('surveyMedia.poi', 'surveyPoints')
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -278,9 +278,9 @@ export class SurveysService {
 
     const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
     await this.surveyMediaRepository.update(mediaId, {
-      ...omit(editSurveyMediaDto, 'poiId'),
-      ...(editSurveyMediaDto.poiId
-        ? { poi: { id: editSurveyMediaDto.poiId } }
+      ...omit(editSurveyMediaDto, 'surveyPointId'),
+      ...(editSurveyMediaDto.surveyPointId
+        ? { surveyPoint: { id: editSurveyMediaDto.surveyPointId } }
         : {}),
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
       ...(trimmedComments ? { comments: trimmedComments } : {}),

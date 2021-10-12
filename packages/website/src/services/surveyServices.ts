@@ -7,7 +7,7 @@ import type {
   SurveyPointUpdateParams,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
-import { Pois } from "../store/Sites/types";
+import { SurveyPoints } from "../store/Sites/types";
 
 const getSurvey = (siteId: string, surveyId: string) =>
   requests.send<SurveyState>({
@@ -53,7 +53,7 @@ const addSurveyMedia = (
 
 const addNewPoi = (siteId: number, name: string, token?: string | null) => {
   return requests.send({
-    url: "pois",
+    url: "surveyPoints",
     method: "POST",
     data: {
       siteId,
@@ -64,12 +64,12 @@ const addNewPoi = (siteId: number, name: string, token?: string | null) => {
 };
 
 const updatePoi = (
-  poiId: number,
+  surveyPointId: number,
   updateParams: SurveyPointUpdateParams,
   token: string
 ) =>
-  requests.send<Pois>({
-    url: `pois/${poiId}`,
+  requests.send<SurveyPoints>({
+    url: `surveyPoints/${surveyPointId}`,
     method: "PUT",
     data: updateParams,
     token,

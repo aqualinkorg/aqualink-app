@@ -22,7 +22,7 @@ import { DeleteOutlineOutlined } from "@material-ui/icons";
 
 import classNames from "classnames";
 import observationOptions from "../../../constants/uploadDropdowns";
-import { Pois } from "../../../store/Sites/types";
+import { SurveyPoints } from "../../../store/Sites/types";
 import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
 import { maxLengths } from "../../../constants/names";
 
@@ -337,7 +337,7 @@ interface MediaCardIncomingProps {
   surveyPoint: string;
   observation: string;
   comments: string;
-  surveyPointOptions: Pois[];
+  surveyPointOptions: SurveyPoints[];
   file?: File | null;
   featuredFile: number | null;
   handlePoiOptionAdd: (index: number, name: string) => void;

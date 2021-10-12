@@ -124,7 +124,7 @@ export class SensorsService {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'pois')
+      .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
       .where('survey.site_id = :siteId', { siteId: site.id })
       .andWhere('surveyMedia.hidden = False')
       .getMany();
@@ -145,21 +145,21 @@ export class SensorsService {
 
         const surveyMedia = await Promise.all(
           survey.surveyMedia!.map(async (media) => {
-            if (!media.poiId) {
+            if (!media.surveyPointId) {
               return media;
             }
 
-            const poiTimeSeries = await this.getClosestTimeSeriesData(
+            const surveyPointTimeSeries = await this.getClosestTimeSeriesData(
               survey.diveDate,
               survey.siteId,
               [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
               [SourceType.HOBO],
-              media.poiId,
+              media.surveyPointId,
             );
 
             return {
               ...media,
-              sensorData: poiTimeSeries,
+              sensorData: surveyPointTimeSeries,
             };
           }),
         );
@@ -216,11 +216,11 @@ export class SensorsService {
     siteId: number,
     metrics: Metric[],
     sourceTypes: SourceType[],
-    poiId?: number,
+    surveyPointId?: number,
   ) {
-    const poiCondition = poiId
-      ? `source.poi_id = ${poiId}`
-      : 'source.poi_id IS NULL';
+    const surveyPointCondition = surveyPointId
+      ? `source.survey_point_id = ${surveyPointId}`
+      : 'source.survey_point_id IS NULL';
     // We will use this many times in our query, so we declare it as constant
     const diff = `(time_series.timestamp::timestamp - '${diveDate.toISOString()}'::timestamp)`;
 
@@ -229,7 +229,7 @@ export class SensorsService {
       .createQueryBuilder('source')
       .where('source.type IN (:...sourceTypes)', { sourceTypes })
       .andWhere('source.site_id = :siteId', { siteId })
-      .andWhere(poiCondition)
+      .andWhere(surveyPointCondition)
       .getMany();
 
     if (!sources.length) {

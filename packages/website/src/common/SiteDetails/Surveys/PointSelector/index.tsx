@@ -17,7 +17,7 @@ import {
 import { Create, DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
-import { Pois } from "../../../../store/Sites/types";
+import { SurveyPoints } from "../../../../store/Sites/types";
 import EditDialog, { Action } from "../../../Dialog";
 import CustomLink from "../../../Link";
 import { maxLengths } from "../../../../constants/names";
@@ -39,7 +39,7 @@ const PointSelector = ({
   classes,
 }: PointSelectorProps) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editPoi, setEditPoi] = useState<Pois>();
+  const [editPoi, setEditPoi] = useState<SurveyPoints>();
   const errored =
     !editPoiNameDraft || editPoiNameDraft.length > maxLengths.POI_NAME;
 
@@ -292,7 +292,7 @@ const styles = (theme: Theme) =>
 
 interface PointSelectorIncomingProps {
   siteId: number;
-  pointOptions: Pois[];
+  pointOptions: SurveyPoints[];
   point: string;
   pointId: number;
   editPoiNameDraft: string | null | undefined;

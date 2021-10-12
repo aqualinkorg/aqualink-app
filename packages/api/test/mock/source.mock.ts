@@ -2,7 +2,7 @@ import { DeepPartial } from 'typeorm';
 import { SourceType } from '../../src/sites/schemas/source-type.enum';
 import { Sources } from '../../src/sites/sources.entity';
 import { athensSite, californiaSite, floridaSite } from './site.mock';
-import { athensPoiPiraeus } from './poi.mock';
+import { athensPoiPiraeus } from './survey-point.mock';
 
 export const californiaSpotterSource: DeepPartial<Sources> = {
   site: californiaSite,
@@ -27,7 +27,7 @@ export const athensNOAASource: DeepPartial<Sources> = {
 
 export const athensPiraeusHoboSource: DeepPartial<Sources> = {
   site: athensSite,
-  poi: athensPoiPiraeus,
+  surveyPoint: athensPoiPiraeus,
   type: SourceType.HOBO,
 };
 

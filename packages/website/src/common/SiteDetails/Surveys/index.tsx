@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Timeline from "./Timeline";
 import PointSelector from "./PointSelector";
-import { setSitePois } from "../../../store/Sites/selectedSiteSlice";
+import { setSiteSurveyPoints } from "../../../store/Sites/selectedSiteSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import {
   surveysRequest,
@@ -87,7 +87,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
         .deleteSitePoi(poiToDelete, user.token)
         .then(() =>
           dispatch(
-            setSitePois(
+            setSiteSurveyPoints(
               pointOptions.filter((option) => option.id !== poiToDelete)
             )
           )
@@ -131,7 +131,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
 
           // Update point options
           dispatch(
-            setSitePois(
+            setSiteSurveyPoints(
               pointOptions.map((item) => {
                 if (item.id === key) {
                   return {

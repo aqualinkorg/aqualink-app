@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { Popup } from "react-leaflet";
 
-import { Pois } from "../../../../store/Sites/types";
+import { SurveyPoints } from "../../../../store/Sites/types";
 import Link from "../../../Link";
 
 const SurveyPointPopup = ({
@@ -67,7 +67,7 @@ const styles = () =>
 
 interface SurveyPointPopupIncomingProps {
   siteId: number;
-  point: Pois;
+  point: SurveyPoints;
 }
 
 type SurveyPointPopupProps = SurveyPointPopupIncomingProps &

@@ -14,7 +14,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Site } from '../sites/sites.entity';
 import { User } from '../users/users.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Observations, SurveyMedia } from './survey-media.entity';
 import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 import { sensorDataSchema } from '../docs/api-sensor-data';
@@ -77,7 +77,7 @@ export class Survey {
 
   latestDailyData?: DailyData;
 
-  surveyPoints?: SitePointOfInterest[];
+  surveyPoints?: SiteSurveyPoint[];
 
   observations?: Observations[];
 

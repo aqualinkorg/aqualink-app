@@ -2,19 +2,19 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit } from 'lodash';
 import { TestService } from '../../test/test.service';
-import { CreateSitePoiDto } from './dto/create-site-poi.dto';
+import { CreateSitePoiDto } from './dto/create-survey-point.dto';
 import { athensSite } from '../../test/mock/site.mock';
 import { createPoint } from '../utils/coordinates';
 import { mockExtractAndVerifyToken } from '../../test/utils';
 import { adminFirebaseUserMock } from '../../test/mock/user.mock';
 
-export const poiTests = () => {
+export const surveyPointTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
   let createPoiDto: CreateSitePoiDto;
   let createPoiWithoutLocationDto: CreateSitePoiDto;
-  let poiId: number;
-  let poiWithoutLocationId: number;
+  let surveyPointId: number;
+  let surveyPointWithoutLocationId: number;
 
   beforeAll(async () => {
     app = await testService.getApp();
@@ -33,10 +33,10 @@ export const poiTests = () => {
     };
   });
 
-  it('POST / create a poi', async () => {
+  it('POST / create a survey_point', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
-      .post('/pois')
+      .post('/site-survey-points')
       .send(createPoiDto);
 
     expect(rsp.status).toBe(201);
@@ -45,33 +45,35 @@ export const poiTests = () => {
       polygon: createPoint(createPoiDto.longitude!, createPoiDto.latitude!),
     });
     expect(rsp.body.id).toBeDefined();
-    poiId = rsp.body.id;
+    surveyPointId = rsp.body.id;
   });
 
-  it('POST / create a poi without a location', async () => {
+  it('POST / create a survey_point without a location', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
-      .post('/pois')
+      .post('/site-survey-points')
       .send(createPoiWithoutLocationDto);
 
     expect(rsp.status).toBe(201);
     expect(rsp.body).toMatchObject(createPoiWithoutLocationDto);
     expect(rsp.body.id).toBeDefined();
-    poiWithoutLocationId = rsp.body.id;
+    surveyPointWithoutLocationId = rsp.body.id;
   });
 
-  it('GET / fetch pois', async () => {
-    const rsp = await request(app.getHttpServer()).get('/pois');
+  it('GET / fetch surveyPoints', async () => {
+    const rsp = await request(app.getHttpServer()).get('/site-survey-points');
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(6);
   });
 
-  it('GET / fetch pois with filters', async () => {
-    const rsp = await request(app.getHttpServer()).get('/pois').query({
-      name: createPoiDto.name,
-      siteId: createPoiDto.siteId,
-    });
+  it('GET / fetch surveyPoints with filters', async () => {
+    const rsp = await request(app.getHttpServer())
+      .get('/site-survey-points')
+      .query({
+        name: createPoiDto.name,
+        siteId: createPoiDto.siteId,
+      });
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(1);
@@ -81,8 +83,10 @@ export const poiTests = () => {
     });
   });
 
-  it('GET /:id fetch a poi', async () => {
-    const rsp = await request(app.getHttpServer()).get(`/pois/${poiId}`);
+  it('GET /:id fetch a survey_point', async () => {
+    const rsp = await request(app.getHttpServer()).get(
+      `/site-survey-points/${surveyPointId}`,
+    );
 
     expect(rsp.status).toBe(200);
     expect(rsp.body).toMatchObject({
@@ -91,11 +95,11 @@ export const poiTests = () => {
     });
   });
 
-  it('PUT /:id update a poi', async () => {
+  it('PUT /:id update a survey_point', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
-    const updatedName = 'Updated poi name';
+    const updatedName = 'Updated survey_point name';
     const nameRsp = await request(app.getHttpServer())
-      .put(`/pois/${poiId}`)
+      .put(`/site-survey-points/${surveyPointId}`)
       .send({
         name: updatedName,
       });
@@ -106,7 +110,7 @@ export const poiTests = () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const coordinates = [37.94717566570979, 23.478505804426504];
     const polygonRsp = await request(app.getHttpServer())
-      .put(`/pois/${poiId}`)
+      .put(`/site-survey-points/${surveyPointId}`)
       .send({
         latitude: coordinates[0],
         longitude: coordinates[1],
@@ -118,41 +122,47 @@ export const poiTests = () => {
     );
   });
 
-  it('DELETE /:id delete a poi', async () => {
-    mockExtractAndVerifyToken(adminFirebaseUserMock);
-    const rsp = await request(app.getHttpServer()).delete(`/pois/${poiId}`);
-
-    expect(rsp.status).toBe(200);
-  });
-
-  it('DELETE /:id delete another poi', async () => {
+  it('DELETE /:id delete a survey_point', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer()).delete(
-      `/pois/${poiWithoutLocationId}`,
+      `/site-survey-points/${surveyPointId}`,
     );
 
     expect(rsp.status).toBe(200);
   });
 
-  it('GET /:id fetch non-existing poi', async () => {
-    const rsp = await request(app.getHttpServer()).get('/pois/0');
+  it('DELETE /:id delete another survey_point', async () => {
+    mockExtractAndVerifyToken(adminFirebaseUserMock);
+    const rsp = await request(app.getHttpServer()).delete(
+      `/site-survey-points/${surveyPointWithoutLocationId}`,
+    );
+
+    expect(rsp.status).toBe(200);
+  });
+
+  it('GET /:id fetch non-existing survey_point', async () => {
+    const rsp = await request(app.getHttpServer()).get('/site-survey-points/0');
 
     expect(rsp.status).toBe(404);
   });
 
-  it('PUT /:id update non-existing poi', async () => {
+  it('PUT /:id update non-existing survey_point', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const update = 'Updated Poi';
-    const rsp = await request(app.getHttpServer()).put('/pois/0').send({
-      name: update,
-    });
+    const rsp = await request(app.getHttpServer())
+      .put('/site-survey-points/0')
+      .send({
+        name: update,
+      });
 
     expect(rsp.status).toBe(404);
   });
 
-  it('DELETE /:id delete non-existing poi', async () => {
+  it('DELETE /:id delete non-existing survey_point', async () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
-    const rsp = await request(app.getHttpServer()).delete('/pois/0');
+    const rsp = await request(app.getHttpServer()).delete(
+      '/site-survey-points/0',
+    );
 
     expect(rsp.status).toBe(404);
   });

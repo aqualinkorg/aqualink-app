@@ -3,22 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GeoJSON } from 'geojson';
 import { omit } from 'lodash';
-import { SitePointOfInterest } from './site-pois.entity';
-import { CreateSitePoiDto } from './dto/create-site-poi.dto';
-import { FilterSitePoiDto } from './dto/filter-site-poi.dto';
-import { UpdateSitePoiDto } from './dto/update-site-poi.dto';
+import { SiteSurveyPoint } from './site-survey-points.entity';
+import { CreateSitePoiDto } from './dto/create-survey-point.dto';
+import { FilterSitePoiDto } from './dto/filter-survey-point.dto';
+import { UpdateSitePoiDto } from './dto/update-survey-point.dto';
 import { createPoint } from '../utils/coordinates';
 
 @Injectable()
-export class SitePoisService {
+export class SiteSurveyPointsService {
   constructor(
-    @InjectRepository(SitePointOfInterest)
-    private poisRepository: Repository<SitePointOfInterest>,
+    @InjectRepository(SiteSurveyPoint)
+    private surveyPointsRepository: Repository<SiteSurveyPoint>,
   ) {}
 
-  async create(
-    createSitePoiDto: CreateSitePoiDto,
-  ): Promise<SitePointOfInterest> {
+  async create(createSitePoiDto: CreateSitePoiDto): Promise<SiteSurveyPoint> {
     const { latitude, longitude, siteId } = createSitePoiDto;
 
     const polygon: GeoJSON | undefined =
@@ -26,31 +24,33 @@ export class SitePoisService {
         ? createPoint(longitude, latitude)
         : undefined;
 
-    return this.poisRepository.save({
+    return this.surveyPointsRepository.save({
       ...createSitePoiDto,
       site: { id: siteId },
       polygon,
     });
   }
 
-  async find(filter: FilterSitePoiDto): Promise<SitePointOfInterest[]> {
-    const query = this.poisRepository.createQueryBuilder('poi');
+  async find(filter: FilterSitePoiDto): Promise<SiteSurveyPoint[]> {
+    const query = this.surveyPointsRepository.createQueryBuilder(
+      'survey_point',
+    );
     if (filter.name) {
       query.andWhere('(lower(poi.name) LIKE :name)', {
         name: `%${filter.name.toLowerCase()}%`,
       });
     }
     if (filter.siteId) {
-      query.andWhere('poi.site_id = :site', {
+      query.andWhere('survey_point.site_id = :site', {
         site: filter.siteId,
       });
     }
-    query.leftJoinAndSelect('poi.site', 'site');
+    query.leftJoinAndSelect('survey_point.site', 'site');
     return query.getMany();
   }
 
-  async findOne(id: number): Promise<SitePointOfInterest> {
-    const found = await this.poisRepository.findOne(id, {
+  async findOne(id: number): Promise<SiteSurveyPoint> {
+    const found = await this.surveyPointsRepository.findOne(id, {
       relations: ['site'],
     });
     if (!found) {
@@ -64,7 +64,7 @@ export class SitePoisService {
   async update(
     id: number,
     updateSitePoiDto: UpdateSitePoiDto,
-  ): Promise<SitePointOfInterest> {
+  ): Promise<SiteSurveyPoint> {
     const { latitude, longitude, siteId } = updateSitePoiDto;
     const polygon: { polygon: GeoJSON } | {} =
       longitude !== undefined && latitude !== undefined
@@ -74,7 +74,7 @@ export class SitePoisService {
         : {};
     const updateSite = siteId !== undefined ? { site: { id: siteId } } : {};
 
-    const result = await this.poisRepository.update(id, {
+    const result = await this.surveyPointsRepository.update(id, {
       ...omit(updateSitePoiDto, 'longitude', 'latitude', 'siteId'),
       ...updateSite,
       ...polygon,
@@ -86,13 +86,13 @@ export class SitePoisService {
       );
     }
 
-    const updated = await this.poisRepository.findOne(id);
+    const updated = await this.surveyPointsRepository.findOne(id);
 
     return updated!;
   }
 
   async delete(id: number): Promise<void> {
-    const result = await this.poisRepository.delete(id);
+    const result = await this.surveyPointsRepository.delete(id);
     if (!result.affected) {
       throw new NotFoundException(
         `Site Point of Interest with ID ${id} not found.`,

@@ -4,7 +4,7 @@ import {
   DailyData,
   LiveData,
   Site,
-  Pois,
+  SurveyPoints,
   SiteRegisterResponseData,
   SiteApplyParams,
   SiteApplication,
@@ -51,7 +51,7 @@ const getSiteTimeSeriesData = ({
 }: TimeSeriesDataRequestParams) =>
   requests.send<TimeSeriesDataResponse>({
     url: `time-series/sites/${siteId}${
-      pointId ? `/pois/${pointId}` : ""
+      pointId ? `/site-survey-points/${pointId}` : ""
     }?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
     method: "GET",
   });
@@ -62,7 +62,7 @@ const getSiteTimeSeriesDataRange = ({
 }: TimeSeriesDataRangeRequestParams) =>
   requests.send<TimeSeriesDataRangeResponse>({
     url: `time-series/sites/${siteId}${
-      pointId ? `/pois/${pointId}` : ""
+      pointId ? `/site-survey-points/${pointId}` : ""
     }/range`,
     method: "GET",
   });
@@ -73,19 +73,19 @@ const getSites = () =>
     method: "GET",
   });
 
-const getSitePois = (
+const getSiteSurveyPoints = (
   id: string,
   cancelToken?: AxiosRequestConfig["cancelToken"]
 ) =>
-  requests.send<Pois[]>({
-    url: `pois?siteId=${id}`,
+  requests.send<SurveyPoints[]>({
+    url: `surveyPoints?siteId=${id}`,
     method: "GET",
     cancelToken,
   });
 
 const deleteSitePoi = (id: number, token: string) =>
   requests.send({
-    url: `pois/${id}`,
+    url: `surveyPoints/${id}`,
     method: "DELETE",
     token,
   });
@@ -191,7 +191,7 @@ export default {
   getSiteLiveData,
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,
-  getSitePois,
+  getSiteSurveyPoints,
   deleteSitePoi,
   registerSite,
   applySite,

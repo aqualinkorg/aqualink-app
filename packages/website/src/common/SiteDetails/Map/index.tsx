@@ -11,7 +11,7 @@ import {
   Site,
   Position,
   SpotterPosition,
-  Pois,
+  SurveyPoints,
   Point,
 } from "../../../store/Sites/types";
 import { samePosition } from "../../../helpers/map";
@@ -68,7 +68,7 @@ const SiteMap = ({
   const editPointMarkerRer = useRef<Marker>(null);
   const draftSite = useSelector(siteDraftSelector);
   const user = useSelector(userInfoSelector);
-  const [focusedPoint, setFocusedPoint] = useState<Pois>();
+  const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -263,7 +263,7 @@ interface SiteMapIncomingProps {
   siteId: number;
   polygon: Site["polygon"];
   spotterPosition?: SpotterPosition | null;
-  surveyPoints: Pois[];
+  surveyPoints: SurveyPoints[];
   selectedPointId?: number;
   surveyPointEditModeEnabled?: boolean;
   editPointLatitude?: number | null;

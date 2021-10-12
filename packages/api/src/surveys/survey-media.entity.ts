@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Survey } from './surveys.entity';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 import { sensorDataSchema } from '../docs/api-sensor-data';
 
@@ -76,15 +76,15 @@ export class SurveyMedia {
   })
   type: MediaType;
 
-  @RelationId((surveyMedia: SurveyMedia) => surveyMedia.poi)
-  poiId: number;
+  @RelationId((surveyMedia: SurveyMedia) => surveyMedia.surveyPoint)
+  surveyPointId: number;
 
-  @ManyToOne(() => SitePointOfInterest, {
+  @ManyToOne(() => SiteSurveyPoint, {
     onDelete: 'SET NULL',
     nullable: true,
   })
-  @JoinColumn({ name: 'poi_id' })
-  poi: SitePointOfInterest | null;
+  @JoinColumn({ name: 'survey_point_id' })
+  surveyPoint: SiteSurveyPoint | null;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -23,7 +23,7 @@ import { Site } from "../../../../store/Sites/types";
 import { useFormField } from "../../../../hooks/useFormField";
 import { userInfoSelector } from "../../../../store/User/userSlice";
 import surveyServices from "../../../../services/surveyServices";
-import { setSitePois } from "../../../../store/Sites/selectedSiteSlice";
+import { setSiteSurveyPoints } from "../../../../store/Sites/selectedSiteSlice";
 
 const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
   const user = useSelector(userInfoSelector);
@@ -98,7 +98,7 @@ const InfoCard = ({ site, pointId, bgColor, classes }: InfoCardProps) => {
         )
         .then(({ data: newPoint }) => {
           dispatch(
-            setSitePois(
+            setSiteSurveyPoints(
               site.surveyPoints.map((point) => ({
                 id: point.id,
                 name: point.id === pointId ? newPoint.name : point.name,

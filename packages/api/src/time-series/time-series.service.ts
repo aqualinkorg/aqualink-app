@@ -2,10 +2,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { SiteDataDto } from './dto/site-data.dto';
-import { PoiDataDto } from './dto/poi-data.dto';
+import { PoiDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
-import { PoiDataRangeDto } from './dto/poi-data-range.dto';
+import { PoiDataRangeDto } from './dto/survey-point-data-range.dto';
 import { SiteDataRangeDto } from './dto/site-data-range.dto';
 import {
   TimeSeriesData,
@@ -30,7 +30,7 @@ export class TimeSeriesService {
     hourly: boolean,
     poiDataDto: PoiDataDto,
   ) {
-    const { siteId, poiId } = poiDataDto;
+    const { siteId, surveyPointId } = poiDataDto;
 
     const data: TimeSeriesData[] = await getDataQuery(
       this.timeSeriesRepository,
@@ -39,7 +39,7 @@ export class TimeSeriesService {
       metrics,
       hourly,
       siteId,
-      poiId,
+      surveyPointId,
     );
 
     return groupByMetricAndSource(data);
@@ -67,12 +67,12 @@ export class TimeSeriesService {
   }
 
   async findPoiDataRange(poiDataRangeDto: PoiDataRangeDto) {
-    const { siteId, poiId } = poiDataRangeDto;
+    const { siteId, surveyPointId } = poiDataRangeDto;
 
     const data = await getDataRangeQuery(
       this.timeSeriesRepository,
       siteId,
-      poiId,
+      surveyPointId,
     );
 
     return groupByMetricAndSource(data);

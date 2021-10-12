@@ -13,7 +13,7 @@ export interface Point {
   type: "Point";
 }
 
-export interface Pois {
+export interface SurveyPoints {
   id: number;
   name: string | null;
   polygon: Polygon | Point | null;
@@ -222,7 +222,7 @@ export interface Site {
   applied?: boolean;
   sensorId: string | null;
   timezone?: string | null;
-  surveyPoints: Pois[];
+  surveyPoints: SurveyPoints[];
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
   collectionData?: CollectionData;

@@ -3,7 +3,7 @@ import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
 import { Site } from '../src/sites/sites.entity';
-import { SitePointOfInterest } from '../src/site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { User } from '../src/users/users.entity';
 import { Survey } from '../src/surveys/surveys.entity';
@@ -63,7 +63,7 @@ async function run() {
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),
-      poiRepository: connection.getRepository(SitePointOfInterest),
+      surveyPointRepository: connection.getRepository(SiteSurveyPoint),
       timeSeriesRepository: connection.getRepository(TimeSeries),
       userRepository: connection.getRepository(User),
       surveyRepository: connection.getRepository(Survey),

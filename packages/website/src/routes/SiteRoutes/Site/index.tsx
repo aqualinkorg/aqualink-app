@@ -116,7 +116,7 @@ const Site = ({ match, classes }: SiteProps) => {
 
   const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
     featuredMedia || {};
-  const { poi: featuredSurveyPoint, url } = featuredSurveyMedia || {};
+  const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
   const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
 

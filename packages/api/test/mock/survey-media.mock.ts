@@ -4,7 +4,7 @@ import {
   Observations,
   SurveyMedia,
 } from '../../src/surveys/survey-media.entity';
-import { californiaPoi } from './poi.mock';
+import { californiaSurveyPoint } from './survey-point.mock';
 import { californiaSurveyOne, californiaSurveyTwo } from './surveys.mock';
 
 export const californiaSurveyOneMedia: DeepPartial<SurveyMedia> = {
@@ -15,7 +15,7 @@ export const californiaSurveyOneMedia: DeepPartial<SurveyMedia> = {
   metadata: '{}',
   observations: Observations.Healthy,
   comments: 'No comments',
-  poi: californiaPoi,
+  surveyPoint: californiaSurveyPoint,
   surveyId: californiaSurveyOne,
   type: MediaType.Image,
 };
@@ -28,7 +28,7 @@ export const californiaSurveyTwoMedia: DeepPartial<SurveyMedia> = {
   metadata: '{}',
   observations: Observations.Healthy,
   comments: 'No comments',
-  poi: californiaPoi,
+  surveyPoint: californiaSurveyPoint,
   surveyId: californiaSurveyTwo,
   type: MediaType.Image,
 };

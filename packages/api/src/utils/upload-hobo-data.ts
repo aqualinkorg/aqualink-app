@@ -14,7 +14,7 @@ import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
 import { Site, SiteStatus } from '../sites/sites.entity';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { User } from '../users/users.entity';
@@ -49,7 +49,7 @@ interface Data {
 
 interface Repositories {
   siteRepository: Repository<Site>;
-  poiRepository: Repository<SitePointOfInterest>;
+  surveyPointRepository: Repository<SiteSurveyPoint>;
   timeSeriesRepository: Repository<TimeSeries>;
   userRepository: Repository<User>;
   surveyRepository: Repository<Survey>;
@@ -105,14 +105,14 @@ const siteQuery = (
 };
 
 const poiQuery = (
-  poiRepository: Repository<SitePointOfInterest>,
+  poiRepository: Repository<SiteSurveyPoint>,
   polygon?: GeoJSON | null,
 ) => {
   return poiRepository
-    .createQueryBuilder(`pois`)
-    .innerJoinAndSelect('pois.site', 'site')
+    .createQueryBuilder(`surveyPoints`)
+    .innerJoinAndSelect('surveyPoints.site', 'site')
     .where(
-      `pois.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
+      `surveyPoints.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
       { polygon },
     )
     .getOne();
@@ -192,7 +192,7 @@ const readCoordsFile = (rootPath: string, siteIds: number[]) => {
 
 /**
  * Create site records
- * Calculate their position by finding the average of the coordinates of all pois in csv file
+ * Calculate their position by finding the average of the coordinates of all surveyPoints in csv file
  * @param dataAsJson The json data from the csv file
  * @param siteIds The sites to be imported
  * @param regionRepository The region repository
@@ -205,7 +205,7 @@ const getSiteRecords = async (
   // Group by site
   const recordsGroupedBySite = groupBy(dataAsJson, 'site');
 
-  // Extract site entities and calculate position of site by averaging all each pois positions
+  // Extract site entities and calculate position of site by averaging all each surveyPoints positions
   const sites = await Promise.all(
     siteIds.map((siteId) => {
       // Filter out NaN values
@@ -332,16 +332,16 @@ const createSites = async (
  * @param rootPath The path to the root of the data folder
  * @param poiRepository The poi repository
  */
-const createPois = async (
+const createSurveyPoints = async (
   siteEntities: Site[],
   dbIdToCSVId: Record<number, number>,
   recordsGroupedBySite: Dictionary<Coords[]>,
   rootPath: string,
-  poiRepository: Repository<SitePointOfInterest>,
+  poiRepository: Repository<SiteSurveyPoint>,
 ) => {
   // Create site points of interest entities for each imported site
   // Final result needs to be flattened since the resulting array is grouped by site
-  const pois = siteEntities
+  const surveyPoints = siteEntities
     .map((site) => {
       const currentSiteId = dbIdToCSVId[site.id];
       const siteFolder = FOLDER_PREFIX + currentSiteId;
@@ -374,7 +374,7 @@ const createPois = async (
 
   logger.log('Saving site points of interest');
   const poiEntities = await Promise.all(
-    pois.map((poi) =>
+    surveyPoints.map((poi) =>
       poiRepository
         .save(poi)
         .catch(handleEntityDuplicate(poiRepository, poiQuery, poi.polygon)),
@@ -390,7 +390,7 @@ const createPois = async (
  * @param sourcesRepository The sources repository
  */
 const createSources = async (
-  poiEntities: SitePointOfInterest[],
+  poiEntities: SiteSurveyPoint[],
   sourcesRepository: Repository<Sources>,
 ) => {
   // Create sources for each new poi
@@ -408,7 +408,11 @@ const createSources = async (
       sourcesRepository
         .findOne({
           relations: ['poi', 'site'],
-          where: { site: source.site, poi: source.poi, type: source.type },
+          where: {
+            site: source.site,
+            surveyPoint: source.poi,
+            type: source.type,
+          },
         })
         .then((foundSource) => {
           if (foundSource) {
@@ -420,8 +424,8 @@ const createSources = async (
     ),
   );
 
-  // Map pois to created sources. Hobo sources have a specified poi.
-  return keyBy(sourceEntities, (o) => o.poi!.id);
+  // Map surveyPoints to created sources. Hobo sources have a specified poi.
+  return keyBy(sourceEntities, (o) => o.surveyPoint!.id);
 };
 
 /**
@@ -429,11 +433,11 @@ const createSources = async (
  * @param poiEntities The created poi entities
  * @param dbIdToCSVId The reverse map (db.site.id => csv.site_id)
  * @param rootPath The path to the root of the data folder
- * @param poiToSourceMap A object to map pois to source entities
+ * @param poiToSourceMap A object to map surveyPoints to source entities
  * @param timeSeriesRepository The time series repository
  */
 const parseHoboData = async (
-  poiEntities: SitePointOfInterest[],
+  poiEntities: SiteSurveyPoint[],
   dbIdToCSVId: Record<number, number>,
   rootPath: string,
   poiToSourceMap: Dictionary<Sources>,
@@ -525,7 +529,7 @@ const parseHoboData = async (
  * @param surveyMediaRepository The survey media repository
  */
 const uploadSitePhotos = async (
-  poiEntities: SitePointOfInterest[],
+  poiEntities: SiteSurveyPoint[],
   dbIdToCSVId: Record<number, number>,
   rootPath: string,
   googleCloudService: GoogleCloudService,
@@ -582,7 +586,7 @@ const uploadSitePhotos = async (
             featured: true,
             hidden: false,
             type: MediaType.Image,
-            poi: image.poi,
+            surveyPoint: image.poi,
             surveyId: surveyEntity,
             metadata: JSON.stringify({}),
             observations: Observations.NoData,
@@ -656,12 +660,12 @@ export const uploadHoboData = async (
     repositories.historicalMonthlyMeanRepository,
   );
 
-  const poiEntities = await createPois(
+  const poiEntities = await createSurveyPoints(
     siteEntities,
     dbIdToCSVId,
     recordsGroupedBySite,
     rootPath,
-    repositories.poiRepository,
+    repositories.surveyPointRepository,
   );
 
   const poiToSourceMap = await createSources(
@@ -669,13 +673,13 @@ export const uploadHoboData = async (
     repositories.sourcesRepository,
   );
 
-  const poisGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
+  const surveyPointsGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
 
   const siteDiffArray = await Bluebird.map(
-    Object.values(poisGroupedBySite),
-    (pois) =>
+    Object.values(surveyPointsGroupedBySite),
+    (surveyPoints) =>
       parseHoboData(
-        pois,
+        surveyPoints,
         dbIdToCSVId,
         rootPath,
         poiToSourceMap,
@@ -685,10 +689,10 @@ export const uploadHoboData = async (
   );
 
   await Bluebird.map(
-    Object.values(poisGroupedBySite),
-    (pois) =>
+    Object.values(surveyPointsGroupedBySite),
+    (surveyPoints) =>
       uploadSitePhotos(
-        pois,
+        surveyPoints,
         dbIdToCSVId,
         rootPath,
         googleCloudService,

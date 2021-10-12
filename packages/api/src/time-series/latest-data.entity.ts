@@ -7,7 +7,7 @@ import {
   RelationId,
   ViewEntity,
 } from 'typeorm';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from './metrics.entity';
@@ -29,7 +29,7 @@ import { TimeSeries } from './time-series.entity';
       .createQueryBuilder()
       .from(() => subQuery, 'time_series')
       .addSelect('site_id')
-      .addSelect('poi_id')
+      .addSelect('survey_point_id')
       .innerJoin('sources', 'source', 'source.id = time_series.source_id');
   },
   materialized: true,
@@ -53,8 +53,8 @@ export class LatestData {
   @RelationId((latestData: LatestData) => latestData.site)
   siteId: number;
 
-  @ManyToOne(() => SitePointOfInterest, { onDelete: 'CASCADE', nullable: true })
-  poi: SitePointOfInterest | null;
+  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: true })
+  surveyPoint: SiteSurveyPoint | null;
 
   @Column({ type: 'enum', enum: SourceType })
   source: SourceType;

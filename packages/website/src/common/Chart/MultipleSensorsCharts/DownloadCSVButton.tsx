@@ -103,7 +103,7 @@ function DownloadCSVButton({
       .chained("oceanSenseORP", oceanSenseData?.ORP)
       .result();
   const fileName = `data_site_${siteId}${
-    pointId ? `_poi_${pointId}` : ""
+    pointId ? `_survey_point_${pointId}` : ""
   }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
     DATE_FORMAT
   )}.csv`;

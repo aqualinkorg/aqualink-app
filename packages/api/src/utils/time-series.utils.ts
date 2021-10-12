@@ -64,11 +64,11 @@ export const getDataQuery = (
   metrics: Metric[],
   hourly: boolean,
   siteId: number,
-  poiId?: number,
+  surveyPointId?: number,
 ): Promise<TimeSeriesData[]> => {
-  const poiCondition = poiId
-    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
-    : 'source.poi_id is NULL';
+  const poiCondition = surveyPointId
+    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
+    : 'source.survey_point_id is NULL';
 
   return hourly
     ? timeSeriesRepository
@@ -111,11 +111,11 @@ export const getDataQuery = (
 export const getDataRangeQuery = (
   timeSeriesRepository: Repository<TimeSeries>,
   siteId: number,
-  poiId?: number,
+  surveyPointId?: number,
 ): Promise<TimeSeriesRange[]> => {
-  const poiCondition = poiId
-    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
-    : 'source.poi_id is NULL';
+  const poiCondition = surveyPointId
+    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
+    : 'source.survey_point_id is NULL';
 
   return timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -149,7 +149,7 @@ export const getNOAASource = async (
       where: {
         site,
         type: SourceType.NOAA,
-        poi: IsNull(),
+        surveyPoint: IsNull(),
       },
       relations: ['site', 'site.historicalMonthlyMean'],
     })

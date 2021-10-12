@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNumber, Validate } from 'class-validator';
-import { SitePointOfInterest } from '../../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Site } from '../../sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
-export class PoiDataDto {
+export class PoiDataRangeDto {
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()
@@ -15,6 +15,6 @@ export class PoiDataDto {
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()
-  @Validate(EntityExists, [SitePointOfInterest])
-  poiId: number;
+  @Validate(EntityExists, [SiteSurveyPoint])
+  surveyPointId: number;
 }

@@ -59,7 +59,7 @@ const SurveyCard = ({
                 </Typography>
               </Grid>
             )}
-            {survey.featuredSurveyMedia?.poi?.name && (
+            {survey.featuredSurveyMedia?.surveyPoint?.name && (
               <Grid container alignItems="center" item xs={12}>
                 <Typography className={classes.cardFields} variant="h6">
                   Survey Point:

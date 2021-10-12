@@ -1,8 +1,9 @@
+/* eslint-disable class-methods-use-this */
 import { Factory, Seeder } from 'typeorm-seeding';
 import { times } from 'lodash';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import { SitePointOfInterest } from '../site-pois/site-pois.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { Sources } from '../sites/sources.entity';
@@ -31,12 +32,12 @@ export class CreateSite implements Seeder {
       }),
     );
 
-    const pois = await Promise.all(
+    const surveyPoints = await Promise.all(
       times(4, () => {
-        return factory(SitePointOfInterest)()
-          .map(async (poi) => {
-            poi.site = site;
-            return poi;
+        return factory(SiteSurveyPoint)()
+          .map(async (surveyPoint) => {
+            surveyPoint.site = site;
+            return surveyPoint;
           })
           .create();
       }),
@@ -52,11 +53,11 @@ export class CreateSite implements Seeder {
     ];
 
     const sources = await Promise.all(
-      pois.map((poi) => {
+      surveyPoints.map((surveyPoint) => {
         return factory(Sources)()
           .map(async (data) => {
             data.site = site;
-            data.poi = poi;
+            data.surveyPoint = surveyPoint;
             data.type = SourceType.HOBO;
             return data;
           })
@@ -65,7 +66,7 @@ export class CreateSite implements Seeder {
     );
 
     const sourcesMap: { [k: number]: Sources } = Object.fromEntries(
-      sources.map((source) => [source.poi!.id, source]),
+      sources.map((source) => [source.surveyPoint!.id, source]),
     );
 
     await Promise.all(
@@ -73,8 +74,8 @@ export class CreateSite implements Seeder {
         return factory(TimeSeries)()
           .map(async (data) => {
             const metricId = Math.floor(Math.random() * 5);
-            const poiId = Math.floor(Math.random() * 4);
-            data.source = sourcesMap[pois[poiId].id];
+            const surveyPointId = Math.floor(Math.random() * 4);
+            data.source = sourcesMap[surveyPoints[surveyPointId].id];
             data.metric = metrics[metricId];
             return data;
           })
