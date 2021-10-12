@@ -21,7 +21,7 @@ export class SiteSurveyPoint {
 
   @ApiProperty({ example: 1 })
   @Column({ nullable: true, type: 'integer' })
-  poiLabelId: number | null;
+  surveyPointLabelId: number | null;
 
   @ApiProperty({ example: 'http://some-sample-url.com' })
   @Column({ nullable: true, type: 'character varying' })

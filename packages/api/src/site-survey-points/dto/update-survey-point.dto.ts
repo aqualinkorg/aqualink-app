@@ -32,7 +32,7 @@ export class UpdateSitePoiDto {
   @ApiProperty({ example: 1 })
   @IsOptional()
   @IsInt()
-  readonly poiLabelId?: number;
+  readonly surveyPointLabelId?: number;
 
   @ApiProperty({ example: 'http://some-sample-url.com' })
   @IsOptional()
