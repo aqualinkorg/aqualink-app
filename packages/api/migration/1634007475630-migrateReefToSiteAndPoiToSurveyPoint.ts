@@ -22,6 +22,7 @@ export class migrateReefToSiteAndPoiToSurveyPoint1634007475630 implements Migrat
         await queryRunner.query(`ALTER TABLE "site_survey_point" RENAME COLUMN "reef_id" TO "site_id"`);
         await queryRunner.query(`ALTER TABLE "sources" RENAME COLUMN "reef_id" TO "site_id"`);
         await queryRunner.query(`ALTER TABLE "survey" RENAME COLUMN "reef_id" TO "site_id"`);
+        await queryRunner.query(`ALTER TABLE "users_administered_sites_site" RENAME COLUMN "reef_id" TO "site_id"`);
         // rename enums - site
         await queryRunner.query(`ALTER TYPE "reef_status_enum" RENAME TO "site_status_enum"`);
         await queryRunner.query(`ALTER TYPE "reef_audit_column_name_enum" RENAME TO "site_audit_column_name_enum"`);
@@ -130,6 +131,7 @@ export class migrateReefToSiteAndPoiToSurveyPoint1634007475630 implements Migrat
         await queryRunner.query(`ALTER TABLE "site_survey_point" RENAME COLUMN "site_id" TO "reef_id"`);
         await queryRunner.query(`ALTER TABLE "sources" RENAME COLUMN "site_id" TO "reef_id"`);
         await queryRunner.query(`ALTER TABLE "survey" RENAME COLUMN "site_id" TO "reef_id"`);
+        await queryRunner.query(`ALTER TABLE "users_administered_reefs_reef" RENAME COLUMN "site_id" TO "reef_id"`);
         // rename enums - site
         await queryRunner.query(`ALTER TYPE "site_status_enum" RENAME TO "reef_status_enum"`);
         await queryRunner.query(`ALTER TYPE "site_audit_column_name_enum" RENAME TO "reef_audit_column_name_enum"`);
