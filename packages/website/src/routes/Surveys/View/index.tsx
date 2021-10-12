@@ -48,8 +48,8 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const surveyListLoading = useSelector(surveyListLoadingSelector);
   const loading = surveyLoading || surveyListLoading;
 
-  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)?.poi
-    ?.id;
+  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
+    ?.surveyPoint?.id;
 
   const dailyDataLen = site.dailyData.length;
   const showChart =

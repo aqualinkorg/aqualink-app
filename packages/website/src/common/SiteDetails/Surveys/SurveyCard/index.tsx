@@ -67,19 +67,19 @@ const SurveyCard = ({
                 <Typography
                   className={`${classes.cardValues} ${classes.valuesWithMargin} ${classes.blueText}`}
                   variant="h6"
-                  title={survey.featuredSurveyMedia.poi.name}
+                  title={survey.featuredSurveyMedia.surveyPoint.name}
                 >
                   <CustomLink
                     to={`/sites/${siteId}/points/${
                       isShowingFeatured
-                        ? survey.featuredSurveyMedia.poi.id
+                        ? survey.featuredSurveyMedia.surveyPoint.id
                         : pointId
                     }`}
                     isIcon={false}
                     tooltipTitle=""
                     content={
                       pointName === "All"
-                        ? survey.featuredSurveyMedia.poi.name
+                        ? survey.featuredSurveyMedia.surveyPoint.name
                         : pointName
                     }
                   />
