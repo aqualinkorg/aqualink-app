@@ -17,9 +17,9 @@ import {
 } from '@nestjs/swagger';
 import { SiteSurveyPointsService } from './site-survey-points.service';
 import { SiteSurveyPoint } from './site-survey-points.entity';
-import { CreateSitePoiDto } from './dto/create-site-survey-point.dto';
-import { FilterSitePoiDto } from './dto/filter-site-survey-point.dto';
-import { UpdateSitePoiDto } from './dto/update-site-survey-point.dto';
+import { CreateSitePoiDto } from './dto/create-survey-point.dto';
+import { FilterSitePoiDto } from './dto/filter-survey-point.dto';
+import { UpdateSitePoiDto } from './dto/update-survey-point.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';

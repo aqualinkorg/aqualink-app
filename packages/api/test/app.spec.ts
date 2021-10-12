@@ -5,7 +5,7 @@ import { userTests } from '../src/users/users.spec';
 import { collectionTests } from '../src/collections/collections.spec';
 import { timeSeriesTests } from '../src/time-series/time-series.spec';
 import { regionTests } from '../src/regions/regions.spec';
-import { poiTests } from '../src/site-surveyPoints/site-surveyPoints.spec';
+import { surveyPointTests } from '../src/site-survey-points/site-survey-points.spec';
 import { siteApplicationTests } from '../src/site-applications/site-application.spec';
 import { surveyTests } from '../src/surveys/surveys.spec';
 import { siteTests } from '../src/sites/sites.spec';
@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
 
   describe('User (e2e) /users', userTests);
 
-  describe('Site SurveyPoints (e2e) /site-survey-points', poiTests);
+  describe('Site SurveyPoints (e2e) /site-survey-points', surveyPointTests);
 
   describe('Collection (e2e) /collections', collectionTests);
 

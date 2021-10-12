@@ -25,6 +25,18 @@ export class migrateReefToSiteAndPoiToSurveyPoint1634007475630 implements Migrat
         // rename enums - site
         await queryRunner.query(`ALTER TYPE "reef_status_enum" RENAME TO "site_status_enum"`);
         await queryRunner.query(`ALTER TYPE "reef_audit_column_name_enum" RENAME TO "site_audit_column_name_enum"`);
+        await queryRunner.query(`ALTER TYPE "users_admin_level_enum" ADD VALUE 'site_manager'`);
+        await queryRunner.query(`
+          UPDATE users
+          SET admin_level = 'site_manager'
+          WHERE admin_level = 'reef_manager';`
+        );
+        await queryRunner.query(`ALTER TYPE "public"."user_admin_level_enum" RENAME TO "users_admin_level_enum_old"`);
+        await queryRunner.query(`CREATE TYPE "users_admin_level_enum" AS ENUM('default', 'site_manager', 'super_admin')`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" DROP DEFAULT`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" TYPE "users_admin_level_enum" USING "admin_level"::"text"::"users_admin_level_enum"`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" SET DEFAULT 'default'`);
+        await queryRunner.query(`DROP TYPE "users_admin_level_enum_old"`);
         // rename fields - survey point
         await queryRunner.query(`ALTER TABLE "site_survey_point" RENAME COLUMN "poi_label_id" TO "survey_point_label_id"`);
         await queryRunner.query(`ALTER TABLE "sources" RENAME COLUMN "poi_id" TO "survey_point_id"`);
@@ -120,6 +132,18 @@ export class migrateReefToSiteAndPoiToSurveyPoint1634007475630 implements Migrat
         // rename enums - site
         await queryRunner.query(`ALTER TYPE "site_status_enum" RENAME TO "reef_status_enum"`);
         await queryRunner.query(`ALTER TYPE "site_audit_column_name_enum" RENAME TO "reef_audit_column_name_enum"`);
+        await queryRunner.query(`ALTER TYPE "users_admin_level_enum" ADD VALUE 'reef_manager'`);
+        await queryRunner.query(`
+          UPDATE users
+          SET admin_level = 'reef_manager'
+          WHERE admin_level = 'site_manager';`
+        );
+        await queryRunner.query(`ALTER TYPE "public"."user_admin_level_enum" RENAME TO "users_admin_level_enum_old"`);
+        await queryRunner.query(`CREATE TYPE "users_admin_level_enum" AS ENUM('default', 'reef_manager', 'super_admin')`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" DROP DEFAULT`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" TYPE "users_admin_level_enum" USING "admin_level"::"text"::"users_admin_level_enum"`);
+        await queryRunner.query(`ALTER TABLE "users" ALTER COLUMN "admin_level" SET DEFAULT 'default'`);
+        await queryRunner.query(`DROP TYPE "users_admin_level_enum_old"`);
         // rename fields - survey point
         await queryRunner.query(`ALTER TABLE "site_survey_point" RENAME COLUMN "survey_point_label_id" TO "poi_label_id"`);
         await queryRunner.query(`ALTER TABLE "sources" RENAME COLUMN "survey_point_id" TO "poi_id"`);
