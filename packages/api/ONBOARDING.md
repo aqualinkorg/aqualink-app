@@ -1,12 +1,12 @@
 ## Glossary
 
-- **Reef/Site**: An observation site, usually a site or a group of sites. It is the fundamental unit for the app. All data and other entities are related to one or more sites.
+- **Site**: An observation site, usually a site or a group of sites. It is the fundamental unit for the app. All data and other entities are related to one or more sites.
 - **POI**: Point of interest. It represents a point of interest in the observation site (site/site). It is used for the surveys and the data to provide a more specific location in the observation site
 - **Buoy/Spotter**: A buoy-like device deployed on sites to measure metrics such as temperature (and others in the future)
 - **Sensor**: A sensor can be either a spotter or some other sensor-like device used to track metrics.
 - **HOBO**: A sensor used for tracking data for an extended period of time (for now only temperature). It has no functionality to remotely send those data. Its data can be downloaded after the end of its mission and ingested by the app as historical data.
 - **Sofar**: An online api which provides data for oceans (https://docs.sofarocean.com/)
-- **Reef-Application**: An form application filled out by any user that wants to register a new site/site in the system. It contains the basic details about the site along with some other form fields used to determine the eligibility for a buoy/spotter.
+- **Site-Application**: An form application filled out by any user that wants to register a new site/site in the system. It contains the basic details about the site along with some other form fields used to determine the eligibility for a buoy/spotter.
 - **Survey**: A survey event on the site/site, logged by a site admin (i.e. a user of the app). The survey can contain comments, images, videos each of which is related to a specific POI or the site/site.
 
 ## Technologies Used
@@ -135,7 +135,7 @@ All previously mentioned functions (except scheduledVideoStreamsCheck and pingSe
 
 The rest of the scripts are used to either augment the models with missing data or perform backfills further back in the past than what Sofar is capable of:
 
-- AugmentReef: Augment site with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeans)
+- AugmentSite: Augment site with values based on its geographical position (region, MaxMonthlyMean, timezone, HistoricalMonthlyMeans)
   - `yarn augment-sites `
 - UploadHoboData: Upload historical data from hobo onsite sensors, through csv files. (process includes creating new sites, POIs, TimeSeries data, sources, surveys and survey media)
   - `yarn upload-hobo-data -p path/to/data-folder -u siteOwnerUser@example.com`
