@@ -157,7 +157,7 @@ export class SurveysService {
       'survey_point_id',
     );
 
-    const surveyImageGroupedByPoiId = this.groupBySurveyId(
+    const surveyImageGroupedBySurveyPointId = this.groupBySurveyId(
       surveyPointsQuery,
       'survey_point_images',
       'survey_point_id',
@@ -182,7 +182,7 @@ export class SurveysService {
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
         surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
-        surveyPointImage: surveyImageGroupedByPoiId[survey.id] || [],
+        surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
         createdAt: survey.createdAt,
         updatedAt: survey.updatedAt,
       };

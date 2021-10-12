@@ -47,7 +47,7 @@ const MediaCard = ({
   const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
   const [newPoiName, setNewPoiName] = useState<string>("");
 
-  const errored = newPoiName.length > maxLengths.POI_NAME;
+  const errored = newPoiName.length > maxLengths.SURVEY_POINT_NAME;
 
   const handleNewPoiNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -79,7 +79,7 @@ const MediaCard = ({
                   error={errored}
                   helperText={
                     errored
-                      ? `Must not exceed ${maxLengths.POI_NAME} characters`
+                      ? `Must not exceed ${maxLengths.SURVEY_POINT_NAME} characters`
                       : undefined
                   }
                 />

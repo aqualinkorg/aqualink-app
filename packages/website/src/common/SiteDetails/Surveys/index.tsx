@@ -41,8 +41,12 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
     false
   );
-  const [editPoiNameDraft, setEditPoiNameDraft] = useState<string | null>();
-  const [editPoiNameLoading, setEditPoiNameLoading] = useState<boolean>(false);
+  const [editSurveyPointNameDraft, seteditSurveyPointNameDraft] = useState<
+    string | null
+  >();
+  const [editSurveyPointNameLoading, seteditSurveyPointNameLoading] = useState<
+    boolean
+  >(false);
   const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
@@ -102,21 +106,22 @@ const Surveys = ({ site, classes }: SurveysProps) => {
     }
   };
 
-  const enableEditPoiName = (id: number) => {
+  const enableeditSurveyPointName = (id: number) => {
     const initialName = pointOptions.find((item) => item.id === id)?.name;
-    setEditPoiNameDraft(initialName);
+    seteditSurveyPointNameDraft(initialName);
   };
 
-  const disableEditPoiName = () => setEditPoiNameDraft(undefined);
+  const disableeditSurveyPointName = () =>
+    seteditSurveyPointNameDraft(undefined);
 
   const onChangePoiName = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setEditPoiNameDraft(event.target.value);
+  ) => seteditSurveyPointNameDraft(event.target.value);
 
   const submitPoiNameUpdate = (key: number) => {
-    const newName = editPoiNameDraft;
+    const newName = editSurveyPointNameDraft;
     if (newName && user?.token) {
-      setEditPoiNameLoading(true);
+      seteditSurveyPointNameLoading(true);
       surveyServices
         .updatePoi(key, { name: newName }, user.token)
         .then(() => {
@@ -143,9 +148,9 @@ const Surveys = ({ site, classes }: SurveysProps) => {
               })
             )
           );
-          setEditPoiNameDraft(undefined);
+          seteditSurveyPointNameDraft(undefined);
         })
-        .finally(() => setEditPoiNameLoading(false));
+        .finally(() => seteditSurveyPointNameLoading(false));
     }
   };
 
@@ -206,13 +211,13 @@ const Surveys = ({ site, classes }: SurveysProps) => {
             pointOptions={pointOptions}
             point={point}
             pointId={pointIdFinder(point)}
-            editPoiNameDraft={editPoiNameDraft}
+            editSurveyPointNameDraft={editSurveyPointNameDraft}
             isSiteAdmin={isSiteAdmin}
-            editPoiNameLoading={editPoiNameLoading}
+            editSurveyPointNameLoading={editSurveyPointNameLoading}
             onChangePoiName={onChangePoiName}
             handlePointChange={handlePointChange}
-            enableEditPoiName={enableEditPoiName}
-            disableEditPoiName={disableEditPoiName}
+            enableeditSurveyPointName={enableeditSurveyPointName}
+            disableeditSurveyPointName={disableeditSurveyPointName}
             submitPoiNameUpdate={submitPoiNameUpdate}
             onDeleteButtonClick={onDeletePoiButtonClick}
           />

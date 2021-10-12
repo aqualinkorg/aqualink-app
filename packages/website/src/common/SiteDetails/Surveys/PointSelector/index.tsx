@@ -27,51 +27,53 @@ const PointSelector = ({
   pointOptions,
   point,
   pointId,
-  editPoiNameDraft,
+  editSurveyPointNameDraft,
   isSiteAdmin,
-  editPoiNameLoading,
+  editSurveyPointNameLoading,
   onChangePoiName,
   handlePointChange,
-  enableEditPoiName,
-  disableEditPoiName,
+  enableeditSurveyPointName,
+  disableeditSurveyPointName,
   submitPoiNameUpdate,
   onDeleteButtonClick,
   classes,
 }: PointSelectorProps) => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editPoi, setEditPoi] = useState<SurveyPoints>();
+  const [editSurveyPoint, seteditSurveyPoint] = useState<SurveyPoints>();
   const errored =
-    !editPoiNameDraft || editPoiNameDraft.length > maxLengths.POI_NAME;
+    !editSurveyPointNameDraft ||
+    editSurveyPointNameDraft.length > maxLengths.SURVEY_POINT_NAME;
 
   const onEditDialogClose = () => {
-    disableEditPoiName();
-    setEditPoi(undefined);
+    disableeditSurveyPointName();
+    seteditSurveyPoint(undefined);
     setEditDialogOpen(false);
   };
 
-  const onEditPoiSubmit = () => {
-    if (editPoi) {
-      submitPoiNameUpdate(editPoi.id);
+  const onEditSurveyPointSubmit = () => {
+    if (editSurveyPoint) {
+      submitPoiNameUpdate(editSurveyPoint.id);
     }
   };
 
   const getHelperText = () => {
     switch (true) {
-      case !editPoiNameDraft:
+      case !editSurveyPointNameDraft:
         return "Cannot be empty";
-      case editPoiNameDraft && editPoiNameDraft.length > maxLengths.POI_NAME:
-        return `Must not exceed ${maxLengths.POI_NAME} characters`;
+      case editSurveyPointNameDraft &&
+        editSurveyPointNameDraft.length > maxLengths.SURVEY_POINT_NAME:
+        return `Must not exceed ${maxLengths.SURVEY_POINT_NAME} characters`;
       default:
         return "";
     }
   };
 
   useEffect(() => {
-    if (!editPoiNameLoading) {
-      setEditPoi(undefined);
+    if (!editSurveyPointNameLoading) {
+      seteditSurveyPoint(undefined);
       setEditDialogOpen(false);
     }
-  }, [editPoiNameLoading]);
+  }, [editSurveyPointNameLoading]);
 
   const editDialogActions: Action[] = [
     {
@@ -85,27 +87,27 @@ const PointSelector = ({
       size: "small",
       variant: "contained",
       color: "primary",
-      text: editPoiNameLoading ? "Updating..." : "Save",
-      action: onEditPoiSubmit,
-      disabled: editPoiNameLoading || (editPoi && errored),
+      text: editSurveyPointNameLoading ? "Updating..." : "Save",
+      action: onEditSurveyPointSubmit,
+      disabled: editSurveyPointNameLoading || (editSurveyPoint && errored),
     },
   ];
 
   return (
     <>
-      {editPoi && (
+      {editSurveyPoint && (
         <EditDialog
           actions={editDialogActions}
           open={editDialogOpen}
-          header={editPoi.name || ""}
+          header={editSurveyPoint.name || ""}
           onClose={onEditDialogClose}
           content={
             <TextField
               variant="outlined"
               autoFocus
-              className={classes.editPoiTextField}
+              className={classes.editSurveyPointTextField}
               fullWidth
-              value={editPoiNameDraft}
+              value={editSurveyPointNameDraft}
               onChange={onChangePoiName}
               error={errored}
               helperText={getHelperText()}
@@ -133,7 +135,7 @@ const PointSelector = ({
                     : "All"
                 }
                 onChange={handlePointChange}
-                onClose={() => disableEditPoiName()}
+                onClose={() => disableeditSurveyPointName()}
                 renderValue={(selected) => selected as string}
               >
                 <MenuItem value="All">
@@ -178,9 +180,9 @@ const PointSelector = ({
                                       <IconButton
                                         className={classes.menuButton}
                                         onClick={(event) => {
-                                          enableEditPoiName(item.id);
+                                          enableeditSurveyPointName(item.id);
                                           setEditDialogOpen(true);
-                                          setEditPoi(item);
+                                          seteditSurveyPoint(item);
                                           event.stopPropagation();
                                         }}
                                       >
@@ -274,7 +276,7 @@ const styles = (theme: Theme) =>
       minWidth: 240,
       color: theme.palette.primary.main,
     },
-    editPoiTextField: {
+    editSurveyPointTextField: {
       color: "black",
       alignItems: "center",
       padding: 8,
@@ -295,15 +297,15 @@ interface PointSelectorIncomingProps {
   pointOptions: SurveyPoints[];
   point: string;
   pointId: number;
-  editPoiNameDraft: string | null | undefined;
+  editSurveyPointNameDraft: string | null | undefined;
   isSiteAdmin: boolean;
-  editPoiNameLoading: boolean;
+  editSurveyPointNameLoading: boolean;
   onChangePoiName: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
-  enableEditPoiName: (id: number) => void;
-  disableEditPoiName: () => void;
+  enableeditSurveyPointName: (id: number) => void;
+  disableeditSurveyPointName: () => void;
   submitPoiNameUpdate: (key: number) => void;
   onDeleteButtonClick: (id: number) => void;
 }

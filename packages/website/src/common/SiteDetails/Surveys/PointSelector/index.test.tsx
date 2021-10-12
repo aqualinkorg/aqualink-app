@@ -11,13 +11,13 @@ test("renders as expected", () => {
         pointOptions={[]}
         point="All"
         pointId={-1}
-        editPoiNameDraft={null}
+        editSurveyPointNameDraft={null}
         isSiteAdmin={false}
-        editPoiNameLoading={false}
+        editSurveyPointNameLoading={false}
         onChangePoiName={() => {}}
         handlePointChange={() => {}}
-        disableEditPoiName={() => {}}
-        enableEditPoiName={() => {}}
+        disableeditSurveyPointName={() => {}}
+        enableeditSurveyPointName={() => {}}
         submitPoiNameUpdate={() => {}}
         onDeleteButtonClick={() => {}}
       />
