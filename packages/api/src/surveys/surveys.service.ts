@@ -115,7 +115,7 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
-      .leftJoinAndSelect('featuredSurveyMedia.survey_point', 'survey_point')
+      .leftJoinAndSelect('featuredSurveyMedia.surveyPoint', 'surveyPoint')
       .addSelect(['users.fullName', 'users.id'])
       .where('survey.site_id = :siteId', { siteId })
       .getMany();
@@ -140,11 +140,11 @@ export class SurveysService {
         'surveys.site_id = :siteId',
         { siteId },
       )
-      .groupBy('surveyMedia.surveyId, surveyMedia.survey_point')
+      .groupBy('surveyMedia.surveyId, surveyMedia.surveyPoint')
       .select([
         'surveyMedia.surveyId',
-        'surveyMedia.survey_point',
-        'array_agg(surveyMedia.url) survey_point_images',
+        'surveyMedia.surveyPoint',
+        'array_agg(surveyMedia.url) surveyPoint_images',
       ])
       .getRawMany();
 
@@ -154,13 +154,13 @@ export class SurveysService {
     );
     const surveyPointIdGroupedBySurveyId = this.groupBySurveyId(
       surveyPointsQuery,
-      'survey_point_id',
+      'surveyPoint_id',
     );
 
     const surveyImageGroupedBySurveyPointId = this.groupBySurveyId(
       surveyPointsQuery,
-      'survey_point_images',
-      'survey_point_id',
+      'surveyPoint_images',
+      'surveyPoint_id',
     );
 
     return surveyHistoryQuery.map((survey) => {
@@ -195,7 +195,7 @@ export class SurveysService {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'surveyPoints')
+      .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -210,7 +210,7 @@ export class SurveysService {
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
     return this.surveyMediaRepository
       .createQueryBuilder('surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'poi')
+      .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoint')
       .where('surveyMedia.surveyId = :surveyId', { surveyId })
       .getMany();
   }
