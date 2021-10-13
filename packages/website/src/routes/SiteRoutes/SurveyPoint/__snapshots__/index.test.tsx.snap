@@ -1078,8 +1078,8 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
                 editmodeenabled="false"
                 editpointlatitude="[object Object]"
                 editpointlongitude="[object Object]"
-                site="[object Object]"
                 selectedpointid="1"
+                site="[object Object]"
               />
             </div>
           </mock-card>
