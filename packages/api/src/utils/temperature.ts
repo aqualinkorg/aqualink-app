@@ -2,7 +2,7 @@ import * as GeoTIFF from 'geotiff';
 import { pointToPixel } from './coordinates';
 
 const HistoricalMonthlyMeanRoot =
-  'https://storage.googleapis.com/site_climatology/';
+  'https://storage.googleapis.com/reef_climatology/';
 
 async function getValueFromTiff(tiff: any, long: number, lat: number) {
   const image = await tiff.getImage();

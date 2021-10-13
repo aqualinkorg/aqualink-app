@@ -97,8 +97,8 @@ export const updateSST = async (
           return Promise.all([
             // Fetch satellite surface temperature data
             sofarHindcast(
-              SofarModels.NOAACoralSiteWatch,
-              sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
+              SofarModels.NOAACoralReefWatch,
+              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .analysedSeaSurfaceTemperature,
               latitude,
               longitude,
@@ -107,8 +107,8 @@ export const updateSST = async (
             ),
             // Fetch degree heating weeks data
             sofarHindcast(
-              SofarModels.NOAACoralSiteWatch,
-              sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
+              SofarModels.NOAACoralReefWatch,
+              sofarVariableIDs[SofarModels.NOAACoralReefWatch]
                 .degreeHeatingWeek,
               latitude,
               longitude,

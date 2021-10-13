@@ -37,8 +37,8 @@ export const getLiveData = async (
     sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
     getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
     getSofarHindcastData(
-      SofarModels.NOAACoralSiteWatch,
-      sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
+      SofarModels.NOAACoralReefWatch,
+      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,
       latitude,
       longitude,

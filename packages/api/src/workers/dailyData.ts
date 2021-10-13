@@ -50,8 +50,8 @@ export async function getDegreeHeatingDays(
     };
   } catch {
     const degreeHeatingWeek = await getSofarHindcastData(
-      SofarModels.NOAACoralSiteWatch,
-      sofarVariableIDs[SofarModels.NOAACoralSiteWatch].degreeHeatingWeek,
+      SofarModels.NOAACoralReefWatch,
+      sofarVariableIDs[SofarModels.NOAACoralReefWatch].degreeHeatingWeek,
       latitude,
       longitude,
       endOfDate,
@@ -94,8 +94,8 @@ export async function getDailyData(
     // Calculating Degree Heating Days requires exactly 84 days of data.
     getDegreeHeatingDays(latitude, longitude, endOfDate, maxMonthlyMean),
     getSofarHindcastData(
-      SofarModels.NOAACoralSiteWatch,
-      sofarVariableIDs[SofarModels.NOAACoralSiteWatch]
+      SofarModels.NOAACoralReefWatch,
+      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
         .analysedSeaSurfaceTemperature,
       latitude,
       longitude,
