@@ -5,7 +5,7 @@ import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.ent
 import { Site } from '../../sites/sites.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
-export class PoiDataRangeDto {
+export class SurveyPointDataRangeDto {
   @ApiProperty({ example: 1 })
   @Type(() => Number)
   @IsNumber()

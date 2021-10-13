@@ -80,7 +80,7 @@ const UploadMedia = ({
     [files, previews, metadata]
   );
 
-  const handlePoiOptionAdd = (index: number, name: string) => {
+  const handleSurveyPointOptionAdd = (index: number, name: string) => {
     surveyServices
       .addNewPoi(siteId, name, user?.token)
       .then(() => {
@@ -230,7 +230,7 @@ const UploadMedia = ({
         preview={preview}
         file={files[index]}
         surveyPointOptions={surveyPointOptions}
-        handlePoiOptionAdd={handlePoiOptionAdd}
+        handleSurveyPointOptionAdd={handleSurveyPointOptionAdd}
         surveyPoint={
           (metadata && metadata[index] && metadata[index].surveyPoint) || ""
         }

@@ -19,7 +19,7 @@ import {
 } from "../../../../helpers/surveyMedia";
 import {
   surveyLoadingSelector,
-  selectedPoiSelector,
+  selectedSurveyPointSelector,
   setFeaturedImage,
 } from "../../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../../store/User/userSlice";
@@ -48,7 +48,7 @@ const carouselSettings = {
 const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
   const user = useSelector(userInfoSelector);
   const loading = useSelector(surveyLoadingSelector);
-  const selectedPoi = useSelector(selectedPoiSelector);
+  const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
   const onSurveyMediaUpdate = (mediaId: number) => {

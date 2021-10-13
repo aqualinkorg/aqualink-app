@@ -16,7 +16,7 @@ import {
 } from '../../test/mock/user.mock';
 import { CreateSurveyMediaDto } from './dto/create-survey-media.dto';
 import { Observations } from './survey-media.entity';
-import { floridaPoiOne } from '../../test/mock/survey-point.mock';
+import { floridaSurveyPointOne } from '../../test/mock/survey-point.mock';
 
 const createSurveyDto: CreateSurveyDto = {
   diveDate: new Date(),
@@ -44,7 +44,7 @@ export const surveyTests = () => {
     metadata: {},
     observations: Observations.Healthy,
     comments: 'No comments',
-    surveyPointId: floridaPoiOne.id!,
+    surveyPointId: floridaSurveyPointOne.id!,
   });
 
   beforeAll(async () => {

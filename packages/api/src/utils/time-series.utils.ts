@@ -66,7 +66,7 @@ export const getDataQuery = (
   siteId: number,
   surveyPointId?: number,
 ): Promise<TimeSeriesData[]> => {
-  const poiCondition = surveyPointId
+  const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
     : 'source.survey_point_id is NULL';
 
@@ -80,7 +80,7 @@ export const getDataQuery = (
         .innerJoin(
           'time_series.source',
           'source',
-          `source.site_id = :siteId AND ${poiCondition}`,
+          `source.site_id = :siteId AND ${surveyPointCondition}`,
           { siteId },
         )
         .andWhere('metric IN (:...metrics)', { metrics })
@@ -98,7 +98,7 @@ export const getDataQuery = (
         .innerJoin(
           'time_series.source',
           'source',
-          `source.site_id = :siteId AND ${poiCondition}`,
+          `source.site_id = :siteId AND ${surveyPointCondition}`,
           { siteId },
         )
         .andWhere('metric IN (:...metrics)', { metrics })
@@ -113,7 +113,7 @@ export const getDataRangeQuery = (
   siteId: number,
   surveyPointId?: number,
 ): Promise<TimeSeriesRange[]> => {
-  const poiCondition = surveyPointId
+  const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
     : 'source.survey_point_id is NULL';
 
@@ -126,7 +126,7 @@ export const getDataRangeQuery = (
     .innerJoin(
       'time_series.source',
       'source',
-      `source.site_id = :siteId AND ${poiCondition}`,
+      `source.site_id = :siteId AND ${surveyPointCondition}`,
       { siteId },
     )
     .groupBy('metric, source.type')

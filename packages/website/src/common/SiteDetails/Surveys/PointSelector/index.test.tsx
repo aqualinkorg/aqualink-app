@@ -14,11 +14,11 @@ test("renders as expected", () => {
         editSurveyPointNameDraft={null}
         isSiteAdmin={false}
         editSurveyPointNameLoading={false}
-        onChangePoiName={() => {}}
+        onChangeSurveyPointName={() => {}}
         handlePointChange={() => {}}
         disableeditSurveyPointName={() => {}}
         enableeditSurveyPointName={() => {}}
-        submitPoiNameUpdate={() => {}}
+        submitSurveyPointNameUpdate={() => {}}
         onDeleteButtonClick={() => {}}
       />
     </Router>

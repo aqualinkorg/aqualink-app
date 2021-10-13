@@ -30,11 +30,11 @@ const PointSelector = ({
   editSurveyPointNameDraft,
   isSiteAdmin,
   editSurveyPointNameLoading,
-  onChangePoiName,
+  onChangeSurveyPointName,
   handlePointChange,
   enableeditSurveyPointName,
   disableeditSurveyPointName,
-  submitPoiNameUpdate,
+  submitSurveyPointNameUpdate,
   onDeleteButtonClick,
   classes,
 }: PointSelectorProps) => {
@@ -52,7 +52,7 @@ const PointSelector = ({
 
   const onEditSurveyPointSubmit = () => {
     if (editSurveyPoint) {
-      submitPoiNameUpdate(editSurveyPoint.id);
+      submitSurveyPointNameUpdate(editSurveyPoint.id);
     }
   };
 
@@ -108,7 +108,7 @@ const PointSelector = ({
               className={classes.editSurveyPointTextField}
               fullWidth
               value={editSurveyPointNameDraft}
-              onChange={onChangePoiName}
+              onChange={onChangeSurveyPointName}
               error={errored}
               helperText={getHelperText()}
             />
@@ -300,13 +300,13 @@ interface PointSelectorIncomingProps {
   editSurveyPointNameDraft: string | null | undefined;
   isSiteAdmin: boolean;
   editSurveyPointNameLoading: boolean;
-  onChangePoiName: (
+  onChangeSurveyPointName: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handlePointChange: (event: ChangeEvent<{ value: unknown }>) => void;
   enableeditSurveyPointName: (id: number) => void;
   disableeditSurveyPointName: () => void;
-  submitPoiNameUpdate: (key: number) => void;
+  submitSurveyPointNameUpdate: (key: number) => void;
   onDeleteButtonClick: (id: number) => void;
 }
 

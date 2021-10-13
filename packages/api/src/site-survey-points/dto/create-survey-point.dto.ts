@@ -12,7 +12,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 import { Site } from '../../sites/sites.entity';
 
-export class CreateSitePoiDto {
+export class CreateSiteSurveyPointDto {
   @ApiProperty({ example: 'Outer tide pool' })
   @IsString()
   @IsNotEmpty()

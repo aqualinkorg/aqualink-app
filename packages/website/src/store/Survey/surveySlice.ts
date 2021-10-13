@@ -185,7 +185,7 @@ export const surveyDetailsSelector = (
   state: RootState
 ): SelectedSurveyState["details"] => state.survey.selectedSurvey.details;
 
-export const selectedPoiSelector = (
+export const selectedSurveyPointSelector = (
   state: RootState
 ): SelectedSurveyState["selectedPoi"] =>
   state.survey.selectedSurvey.selectedPoi;

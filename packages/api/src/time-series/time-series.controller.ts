@@ -9,10 +9,10 @@ import {
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { SiteDataDto } from './dto/site-data.dto';
-import { PoiDataDto } from './dto/survey-point-data.dto';
+import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
 import { TimeSeriesService } from './time-series.service';
-import { PoiDataRangeDto } from './dto/survey-point-data-range.dto';
+import { SurveyPointDataRangeDto } from './dto/survey-point-data-range.dto';
 import { SiteDataRangeDto } from './dto/site-data-range.dto';
 import {
   ApiTimeSeriesRangeResponse,
@@ -37,19 +37,19 @@ export class TimeSeriesController {
   })
   @ApiQuery({ name: 'hourly', example: false })
   @Get('sites/:siteId/site-survey-points/:surveyPointId')
-  findPoiData(
+  findSurveyPointData(
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: Metric[],
     @Query('hourly', ParseBoolPipe) hourly: boolean,
-    @Param() poiDataDto: PoiDataDto,
+    @Param() surveyPointDataDto: SurveyPointDataDto,
   ) {
-    return this.timeSeriesService.findPoiData(
+    return this.timeSeriesService.findSurveyPointData(
       startDate,
       endDate,
       metrics,
       hourly,
-      poiDataDto,
+      surveyPointDataDto,
     );
   }
 
@@ -87,8 +87,12 @@ export class TimeSeriesController {
       'Returns the range of the available time series data for a specified site point of interest',
   })
   @Get('sites/:siteId/site-survey-points/:surveyPointId/range')
-  findPoiDataRange(@Param() poiDataRangeDto: PoiDataRangeDto) {
-    return this.timeSeriesService.findPoiDataRange(poiDataRangeDto);
+  findSurveyPointDataRange(
+    @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
+  ) {
+    return this.timeSeriesService.findSurveyPointDataRange(
+      surveyPointDataRangeDto,
+    );
   }
 
   @ApiTimeSeriesRangeResponse()

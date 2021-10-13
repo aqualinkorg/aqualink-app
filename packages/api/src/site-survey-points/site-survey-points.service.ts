@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 import { GeoJSON } from 'geojson';
 import { omit } from 'lodash';
 import { SiteSurveyPoint } from './site-survey-points.entity';
-import { CreateSitePoiDto } from './dto/create-survey-point.dto';
-import { FilterSitePoiDto } from './dto/filter-survey-point.dto';
-import { UpdateSitePoiDto } from './dto/update-survey-point.dto';
+import { CreateSiteSurveyPointDto } from './dto/create-survey-point.dto';
+import { FilterSiteSurveyPointDto } from './dto/filter-survey-point.dto';
+import { UpdateSiteSurveyPointDto } from './dto/update-survey-point.dto';
 import { createPoint } from '../utils/coordinates';
 
 @Injectable()
@@ -16,8 +16,10 @@ export class SiteSurveyPointsService {
     private surveyPointsRepository: Repository<SiteSurveyPoint>,
   ) {}
 
-  async create(createSitePoiDto: CreateSitePoiDto): Promise<SiteSurveyPoint> {
-    const { latitude, longitude, siteId } = createSitePoiDto;
+  async create(
+    createSiteSurveyPointDto: CreateSiteSurveyPointDto,
+  ): Promise<SiteSurveyPoint> {
+    const { latitude, longitude, siteId } = createSiteSurveyPointDto;
 
     const polygon: GeoJSON | undefined =
       longitude !== undefined && latitude !== undefined
@@ -25,13 +27,13 @@ export class SiteSurveyPointsService {
         : undefined;
 
     return this.surveyPointsRepository.save({
-      ...createSitePoiDto,
+      ...createSiteSurveyPointDto,
       site: { id: siteId },
       polygon,
     });
   }
 
-  async find(filter: FilterSitePoiDto): Promise<SiteSurveyPoint[]> {
+  async find(filter: FilterSiteSurveyPointDto): Promise<SiteSurveyPoint[]> {
     const query = this.surveyPointsRepository.createQueryBuilder(
       'survey_point',
     );
@@ -63,9 +65,9 @@ export class SiteSurveyPointsService {
 
   async update(
     id: number,
-    updateSitePoiDto: UpdateSitePoiDto,
+    updateSiteSurveyPointDto: UpdateSiteSurveyPointDto,
   ): Promise<SiteSurveyPoint> {
-    const { latitude, longitude, siteId } = updateSitePoiDto;
+    const { latitude, longitude, siteId } = updateSiteSurveyPointDto;
     const polygon: { polygon: GeoJSON } | {} =
       longitude !== undefined && latitude !== undefined
         ? {
@@ -75,7 +77,7 @@ export class SiteSurveyPointsService {
     const updateSite = siteId !== undefined ? { site: { id: siteId } } : {};
 
     const result = await this.surveyPointsRepository.update(id, {
-      ...omit(updateSitePoiDto, 'longitude', 'latitude', 'siteId'),
+      ...omit(updateSiteSurveyPointDto, 'longitude', 'latitude', 'siteId'),
       ...updateSite,
       ...polygon,
     });

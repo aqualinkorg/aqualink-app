@@ -17,9 +17,9 @@ import {
 } from '@nestjs/swagger';
 import { SiteSurveyPointsService } from './site-survey-points.service';
 import { SiteSurveyPoint } from './site-survey-points.entity';
-import { CreateSitePoiDto } from './dto/create-survey-point.dto';
-import { FilterSitePoiDto } from './dto/filter-survey-point.dto';
-import { UpdateSitePoiDto } from './dto/update-survey-point.dto';
+import { CreateSiteSurveyPointDto } from './dto/create-survey-point.dto';
+import { FilterSiteSurveyPointDto } from './dto/filter-survey-point.dto';
+import { UpdateSiteSurveyPointDto } from './dto/update-survey-point.dto';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { Public } from '../auth/public.decorator';
@@ -34,8 +34,10 @@ export class SiteSurveyPointsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Creates a new site point of interest' })
   @Post()
-  create(@Body() createSitePoiDto: CreateSitePoiDto): Promise<SiteSurveyPoint> {
-    return this.surveyPointsService.create(createSitePoiDto);
+  create(
+    @Body() createSiteSurveyPointDto: CreateSiteSurveyPointDto,
+  ): Promise<SiteSurveyPoint> {
+    return this.surveyPointsService.create(createSiteSurveyPointDto);
   }
 
   @ApiOperation({
@@ -44,9 +46,9 @@ export class SiteSurveyPointsController {
   @Public()
   @Get()
   find(
-    @Query() filterSitePoiDto: FilterSitePoiDto,
+    @Query() filterSiteSurveyPointDto: FilterSiteSurveyPointDto,
   ): Promise<SiteSurveyPoint[]> {
-    return this.surveyPointsService.find(filterSitePoiDto);
+    return this.surveyPointsService.find(filterSiteSurveyPointDto);
   }
 
   @ApiNestNotFoundResponse(
@@ -71,9 +73,9 @@ export class SiteSurveyPointsController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateSitePoiDto: UpdateSitePoiDto,
+    @Body() updateSiteSurveyPointDto: UpdateSiteSurveyPointDto,
   ): Promise<SiteSurveyPoint> {
-    return this.surveyPointsService.update(id, updateSitePoiDto);
+    return this.surveyPointsService.update(id, updateSiteSurveyPointDto);
   }
 
   @ApiBearerAuth()

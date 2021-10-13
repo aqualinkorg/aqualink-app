@@ -40,7 +40,7 @@ const surveyListSlice = createSlice({
   name: "surveyList",
   initialState: surveyListInitialState,
   reducers: {
-    updatePoiName: (
+    updateSurveyPointName: (
       state,
       action: PayloadAction<{ id: number; name: string }>
     ) => {
@@ -107,6 +107,6 @@ export const surveyListErrorSelector = (
   state: RootState
 ): SurveyListState["error"] => state.surveyList.error;
 
-export const { updatePoiName } = surveyListSlice.actions;
+export const { updateSurveyPointName } = surveyListSlice.actions;
 
 export default surveyListSlice.reducer;

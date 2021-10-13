@@ -2,7 +2,7 @@ import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
 import { omit } from 'lodash';
 import { TestService } from '../../test/test.service';
-import { CreateSitePoiDto } from './dto/create-survey-point.dto';
+import { CreateSiteSurveyPointDto } from './dto/create-survey-point.dto';
 import { athensSite } from '../../test/mock/site.mock';
 import { createPoint } from '../utils/coordinates';
 import { mockExtractAndVerifyToken } from '../../test/utils';
@@ -11,14 +11,14 @@ import { adminFirebaseUserMock } from '../../test/mock/user.mock';
 export const surveyPointTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
-  let createPoiDto: CreateSitePoiDto;
-  let createPoiWithoutLocationDto: CreateSitePoiDto;
+  let createSurveyPointDto: CreateSiteSurveyPointDto;
+  let createSurveyPointWithoutLocationDto: CreateSiteSurveyPointDto;
   let surveyPointId: number;
   let surveyPointWithoutLocationId: number;
 
   beforeAll(async () => {
     app = await testService.getApp();
-    createPoiDto = {
+    createSurveyPointDto = {
       name: 'Salamina',
       siteId: athensSite.id || 0,
       imageUrl: 'http://some-sample-url.com',
@@ -26,7 +26,7 @@ export const surveyPointTests = () => {
       longitude: 23.478834700473044,
     };
 
-    createPoiWithoutLocationDto = {
+    createSurveyPointWithoutLocationDto = {
       name: 'Atlantis',
       siteId: athensSite.id || 0,
       imageUrl: 'http://some-sample-url.com',
@@ -37,12 +37,15 @@ export const surveyPointTests = () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .post('/site-survey-points')
-      .send(createPoiDto);
+      .send(createSurveyPointDto);
 
     expect(rsp.status).toBe(201);
     expect(rsp.body).toMatchObject({
-      ...omit(createPoiDto, 'latitude', 'longitude'),
-      polygon: createPoint(createPoiDto.longitude!, createPoiDto.latitude!),
+      ...omit(createSurveyPointDto, 'latitude', 'longitude'),
+      polygon: createPoint(
+        createSurveyPointDto.longitude!,
+        createSurveyPointDto.latitude!,
+      ),
     });
     expect(rsp.body.id).toBeDefined();
     surveyPointId = rsp.body.id;
@@ -52,10 +55,10 @@ export const surveyPointTests = () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
     const rsp = await request(app.getHttpServer())
       .post('/site-survey-points')
-      .send(createPoiWithoutLocationDto);
+      .send(createSurveyPointWithoutLocationDto);
 
     expect(rsp.status).toBe(201);
-    expect(rsp.body).toMatchObject(createPoiWithoutLocationDto);
+    expect(rsp.body).toMatchObject(createSurveyPointWithoutLocationDto);
     expect(rsp.body.id).toBeDefined();
     surveyPointWithoutLocationId = rsp.body.id;
   });
@@ -71,15 +74,18 @@ export const surveyPointTests = () => {
     const rsp = await request(app.getHttpServer())
       .get('/site-survey-points')
       .query({
-        name: createPoiDto.name,
-        siteId: createPoiDto.siteId,
+        name: createSurveyPointDto.name,
+        siteId: createSurveyPointDto.siteId,
       });
 
     expect(rsp.status).toBe(200);
     expect(rsp.body.length).toBe(1);
     expect(rsp.body[0]).toMatchObject({
-      ...omit(createPoiDto, 'latitude', 'longitude'),
-      polygon: createPoint(createPoiDto.longitude!, createPoiDto.latitude!),
+      ...omit(createSurveyPointDto, 'latitude', 'longitude'),
+      polygon: createPoint(
+        createSurveyPointDto.longitude!,
+        createSurveyPointDto.latitude!,
+      ),
     });
   });
 
@@ -90,8 +96,11 @@ export const surveyPointTests = () => {
 
     expect(rsp.status).toBe(200);
     expect(rsp.body).toMatchObject({
-      ...omit(createPoiDto, 'latitude', 'longitude'),
-      polygon: createPoint(createPoiDto.longitude!, createPoiDto.latitude!),
+      ...omit(createSurveyPointDto, 'latitude', 'longitude'),
+      polygon: createPoint(
+        createSurveyPointDto.longitude!,
+        createSurveyPointDto.latitude!,
+      ),
     });
   });
 

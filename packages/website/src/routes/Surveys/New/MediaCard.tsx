@@ -35,7 +35,7 @@ const MediaCard = ({
   index,
   file,
   featuredFile,
-  handlePoiOptionAdd,
+  handleSurveyPointOptionAdd,
   deleteCard,
   setFeatured,
   handleCommentsChange,
@@ -44,15 +44,17 @@ const MediaCard = ({
   classes,
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
-  const [addPoiDialogOpen, setAddPoiDialogOpen] = useState<boolean>(false);
-  const [newPoiName, setNewPoiName] = useState<string>("");
+  const [addSurveyPointDialogOpen, setAddSurveyPointDialogOpen] = useState<
+    boolean
+  >(false);
+  const [newSurveyPointName, setNewSurveyPointName] = useState<string>("");
 
-  const errored = newPoiName.length > maxLengths.SURVEY_POINT_NAME;
+  const errored = newSurveyPointName.length > maxLengths.SURVEY_POINT_NAME;
 
-  const handleNewPoiNameChange = (
+  const handleNewSurveyPointNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNewPoiName(event.target.value);
+    setNewSurveyPointName(event.target.value);
   };
 
   const onImageClick = useCallback(() => {
@@ -62,10 +64,10 @@ const MediaCard = ({
   return (
     <>
       <Dialog
-        onClose={() => setAddPoiDialogOpen(false)}
-        open={addPoiDialogOpen}
+        onClose={() => setAddSurveyPointDialogOpen(false)}
+        open={addSurveyPointDialogOpen}
       >
-        <Card className={classes.newPoiDialog}>
+        <Card className={classes.newSurveyPointDialog}>
           <CardContent>
             <Grid container justify="center" item xs={12}>
               <Grid item xs={12}>
@@ -74,8 +76,8 @@ const MediaCard = ({
                   inputProps={{ className: classes.textField }}
                   fullWidth
                   placeholder="Survey Point"
-                  value={newPoiName}
-                  onChange={handleNewPoiNameChange}
+                  value={newSurveyPointName}
+                  onChange={handleNewSurveyPointNameChange}
                   error={errored}
                   helperText={
                     errored
@@ -92,12 +94,12 @@ const MediaCard = ({
                 xs={12}
               >
                 <Button
-                  disabled={newPoiName === "" || errored}
+                  disabled={newSurveyPointName === "" || errored}
                   variant="outlined"
                   color="primary"
                   onClick={() => {
-                    handlePoiOptionAdd(index, newPoiName);
-                    setAddPoiDialogOpen(false);
+                    handleSurveyPointOptionAdd(index, newSurveyPointName);
+                    setAddSurveyPointDialogOpen(false);
                   }}
                 >
                   Add
@@ -178,7 +180,7 @@ const MediaCard = ({
                     <AddIcon />
                     <Button
                       style={{ color: "black" }}
-                      onClick={() => setAddPoiDialogOpen(true)}
+                      onClick={() => setAddSurveyPointDialogOpen(true)}
                     >
                       Add new survey point
                     </Button>
@@ -314,7 +316,7 @@ const styles = (theme: Theme) =>
       height: "2rem",
       borderRadius: "2px 0 0 2px",
     },
-    newPoiDialog: {
+    newSurveyPointDialog: {
       width: "20rem",
       "& > *:last-child": {
         padding: theme.spacing(2),
@@ -340,7 +342,7 @@ interface MediaCardIncomingProps {
   surveyPointOptions: SurveyPoints[];
   file?: File | null;
   featuredFile: number | null;
-  handlePoiOptionAdd: (index: number, name: string) => void;
+  handleSurveyPointOptionAdd: (index: number, name: string) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;

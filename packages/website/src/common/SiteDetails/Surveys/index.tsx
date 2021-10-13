@@ -21,7 +21,7 @@ import { setSiteSurveyPoints } from "../../../store/Sites/selectedSiteSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import {
   surveysRequest,
-  updatePoiName,
+  updateSurveyPointName,
 } from "../../../store/Survey/surveyListSlice";
 import { setSelectedPoi } from "../../../store/Survey/surveySlice";
 import observationOptions from "../../../constants/uploadDropdowns";
@@ -29,7 +29,7 @@ import { SurveyMedia } from "../../../store/Survey/types";
 import siteServices from "../../../services/siteServices";
 import { Site } from "../../../store/Sites/types";
 import { isAdmin } from "../../../helpers/user";
-import DeletePoiDialog, { Action } from "../../Dialog";
+import DeleteSurveyPointDialog, { Action } from "../../Dialog";
 import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
 
@@ -38,16 +38,19 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
   const pointOptions = site.surveyPoints;
-  const [deletePoiDialogOpen, setDeletePoiDialogOpen] = useState<boolean>(
-    false
-  );
+  const [
+    deleteSurveyPointDialogOpen,
+    setDeleteSurveyPointDialogOpen,
+  ] = useState<boolean>(false);
   const [editSurveyPointNameDraft, seteditSurveyPointNameDraft] = useState<
     string | null
   >();
   const [editSurveyPointNameLoading, seteditSurveyPointNameLoading] = useState<
     boolean
   >(false);
-  const [poiToDelete, setPoiToDelete] = useState<number | null>(null);
+  const [surveyPointToDelete, setSurveyPointToDelete] = useState<number | null>(
+    null
+  );
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
@@ -61,9 +64,9 @@ const Surveys = ({ site, classes }: SurveysProps) => {
     dispatch(setSelectedPoi(point));
   }, [dispatch, point]);
 
-  const onDeletePoiButtonClick = (id: number) => {
-    setDeletePoiDialogOpen(true);
-    setPoiToDelete(id);
+  const onDeleteSurveyPointButtonClick = (id: number) => {
+    setDeleteSurveyPointDialogOpen(true);
+    setSurveyPointToDelete(id);
   };
 
   const handlePointChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -80,19 +83,19 @@ const Surveys = ({ site, classes }: SurveysProps) => {
     return pointOptions.find((option) => option.name === name)?.id || -1;
   };
 
-  const handleDeletePoiDialogClose = () => {
-    setDeletePoiDialogOpen(false);
-    setPoiToDelete(null);
+  const handleDeleteSurveyPointDialogClose = () => {
+    setDeleteSurveyPointDialogOpen(false);
+    setSurveyPointToDelete(null);
   };
 
   const handleSurveyPointDelete = () => {
-    if (user && user.token && poiToDelete) {
+    if (user && user.token && surveyPointToDelete) {
       siteServices
-        .deleteSitePoi(poiToDelete, user.token)
+        .deleteSiteSurveyPoint(surveyPointToDelete, user.token)
         .then(() =>
           dispatch(
             setSiteSurveyPoints(
-              pointOptions.filter((option) => option.id !== poiToDelete)
+              pointOptions.filter((option) => option.id !== surveyPointToDelete)
             )
           )
         )
@@ -100,8 +103,8 @@ const Surveys = ({ site, classes }: SurveysProps) => {
           dispatch(surveysRequest(`${site.id}`));
         })
         .then(() => {
-          setDeletePoiDialogOpen(false);
-          setPoiToDelete(null);
+          setDeleteSurveyPointDialogOpen(false);
+          setSurveyPointToDelete(null);
         });
     }
   };
@@ -114,11 +117,11 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const disableeditSurveyPointName = () =>
     seteditSurveyPointNameDraft(undefined);
 
-  const onChangePoiName = (
+  const onChangeSurveyPointName = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => seteditSurveyPointNameDraft(event.target.value);
 
-  const submitPoiNameUpdate = (key: number) => {
+  const submitSurveyPointNameUpdate = (key: number) => {
     const newName = editSurveyPointNameDraft;
     if (newName && user?.token) {
       seteditSurveyPointNameLoading(true);
@@ -126,7 +129,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
         .updatePoi(key, { name: newName }, user.token)
         .then(() => {
           // Update point name for featured image card
-          dispatch(updatePoiName({ id: key, name: newName }));
+          dispatch(updateSurveyPointName({ id: key, name: newName }));
 
           // If the updated point was previously selected, update its value
           const prevName = pointOptions.find((item) => item.id === key)?.name;
@@ -154,13 +157,13 @@ const Surveys = ({ site, classes }: SurveysProps) => {
     }
   };
 
-  const deletePoiDialogActions: Action[] = [
+  const deleteSurveyPointDialogActions: Action[] = [
     {
       size: "small",
       variant: "contained",
       color: "secondary",
       text: "No",
-      action: handleDeletePoiDialogClose,
+      action: handleDeleteSurveyPointDialogClose,
     },
     {
       size: "small",
@@ -173,11 +176,11 @@ const Surveys = ({ site, classes }: SurveysProps) => {
 
   return (
     <>
-      <DeletePoiDialog
-        open={deletePoiDialogOpen}
-        onClose={handleDeletePoiDialogClose}
+      <DeleteSurveyPointDialog
+        open={deleteSurveyPointDialogOpen}
+        onClose={handleDeleteSurveyPointDialogClose}
         header="Are you sure you want to delete this survey point? It will be deleted across all surveys."
-        actions={deletePoiDialogActions}
+        actions={deleteSurveyPointDialogActions}
       />
       <Grid className={classes.root} container justify="center" spacing={2}>
         <Box
@@ -214,12 +217,12 @@ const Surveys = ({ site, classes }: SurveysProps) => {
             editSurveyPointNameDraft={editSurveyPointNameDraft}
             isSiteAdmin={isSiteAdmin}
             editSurveyPointNameLoading={editSurveyPointNameLoading}
-            onChangePoiName={onChangePoiName}
+            onChangeSurveyPointName={onChangeSurveyPointName}
             handlePointChange={handlePointChange}
             enableeditSurveyPointName={enableeditSurveyPointName}
             disableeditSurveyPointName={disableeditSurveyPointName}
-            submitPoiNameUpdate={submitPoiNameUpdate}
-            onDeleteButtonClick={onDeletePoiButtonClick}
+            submitSurveyPointNameUpdate={submitSurveyPointNameUpdate}
+            onDeleteButtonClick={onDeleteSurveyPointButtonClick}
           />
           <Grid
             container

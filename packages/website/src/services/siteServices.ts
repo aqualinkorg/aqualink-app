@@ -83,7 +83,7 @@ const getSiteSurveyPoints = (
     cancelToken,
   });
 
-const deleteSitePoi = (id: number, token: string) =>
+const deleteSiteSurveyPoint = (id: number, token: string) =>
   requests.send({
     url: `surveyPoints/${id}`,
     method: "DELETE",
@@ -192,7 +192,7 @@ export default {
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,
   getSiteSurveyPoints,
-  deleteSitePoi,
+  deleteSiteSurveyPoint,
   registerSite,
   applySite,
   getSiteApplication,

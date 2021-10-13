@@ -3,21 +3,21 @@ import { athensSite, californiaSite, floridaSite } from './site.mock';
 import { SiteSurveyPoint } from '../../src/site-survey-points/site-survey-points.entity';
 import { createPoint } from '../../src/utils/coordinates';
 
-export const athensPoiPiraeus: DeepPartial<SiteSurveyPoint> = {
+export const athensSurveyPointPiraeus: DeepPartial<SiteSurveyPoint> = {
   imageUrl: 'http://some-sample-url.com',
   name: 'Piraeus',
   site: athensSite,
   polygon: createPoint(23.666694170726828, 37.92090950501416),
 };
 
-export const floridaPoiOne: DeepPartial<SiteSurveyPoint> = {
+export const floridaSurveyPointOne: DeepPartial<SiteSurveyPoint> = {
   imageUrl: 'http://some-sample-url.com',
   name: 'Spot One',
   site: floridaSite,
   polygon: createPoint(-81.27384406004956, 24.617057340809524),
 };
 
-export const floridaPoiTwo: DeepPartial<SiteSurveyPoint> = {
+export const floridaSurveyPointTwo: DeepPartial<SiteSurveyPoint> = {
   imageUrl: 'http://some-sample-url.com',
   name: 'Spot Two',
   site: floridaSite,
@@ -32,8 +32,8 @@ export const californiaSurveyPoint: DeepPartial<SiteSurveyPoint> = {
 };
 
 export const surveyPoints = [
-  athensPoiPiraeus,
-  floridaPoiOne,
-  floridaPoiTwo,
+  athensSurveyPointPiraeus,
+  floridaSurveyPointOne,
+  floridaSurveyPointTwo,
   californiaSurveyPoint,
 ];
