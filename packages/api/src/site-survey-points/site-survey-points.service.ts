@@ -38,7 +38,7 @@ export class SiteSurveyPointsService {
       'survey_point',
     );
     if (filter.name) {
-      query.andWhere('(lower(poi.name) LIKE :name)', {
+      query.andWhere('(lower(survey_point.name) LIKE :name)', {
         name: `%${filter.name.toLowerCase()}%`,
       });
     }

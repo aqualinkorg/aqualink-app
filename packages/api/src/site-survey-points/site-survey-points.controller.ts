@@ -27,7 +27,7 @@ import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Site Points of Interest')
 @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
-@Controller('surveyPoints')
+@Controller('site-survey-points')
 export class SiteSurveyPointsController {
   constructor(private surveyPointsService: SiteSurveyPointsService) {}
 
