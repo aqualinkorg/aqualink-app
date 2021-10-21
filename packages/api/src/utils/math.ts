@@ -1,4 +1,4 @@
-import { isNil, sum } from 'lodash';
+import { sum } from 'lodash';
 
 export const getAverage = (numbers: number[], round = false) => {
   if (numbers.length === 0) {
@@ -20,24 +20,28 @@ export const getWindSpeed = (
   windEastwardVelocity: number,
   windNorhwardVelocity: number,
 ) => {
-  return (
-    windNorhwardVelocity &&
-    windEastwardVelocity &&
-    Math.sqrt(windNorhwardVelocity ** 2 + windEastwardVelocity ** 2)
-  );
+  if (
+    windEastwardVelocity === undefined ||
+    windNorhwardVelocity === undefined
+  ) {
+    return undefined;
+  }
+  return Math.sqrt(windNorhwardVelocity ** 2 + windEastwardVelocity ** 2);
 };
 
 export const getWindDirection = (
-  windEastwardVelocity: number,
-  windNorhwardVelocity: number,
+  windEastwardVelocity: number | undefined,
+  windNorhwardVelocity: number | undefined,
 ) => {
-  const degree =
-    windNorhwardVelocity &&
-    windEastwardVelocity &&
-    -(Math.atan2(windEastwardVelocity, windNorhwardVelocity) * 180) / Math.PI;
-
-  if (isNil(degree)) {
-    return null
+  if (
+    windEastwardVelocity === undefined ||
+    windNorhwardVelocity === undefined
+  ) {
+    return undefined;
   }
+  const degree =
+    -(Math.atan2(windNorhwardVelocity, windEastwardVelocity) * 180) / Math.PI +
+    90;
+
   return degree >= 0 ? degree : degree + 360;
 };
