@@ -1,4 +1,4 @@
-import { sum } from 'lodash';
+import { isNil, sum } from 'lodash';
 
 export const getAverage = (numbers: number[], round = false) => {
   if (numbers.length === 0) {
