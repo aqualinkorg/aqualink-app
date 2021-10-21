@@ -87,7 +87,7 @@ export const filterTimeSeriesData = (
       from,
       to
     ),
-    wavePeakPeriod: filterSofarData(timeSeries.wavePeakPeriod, from, to),
+    waveMeanPeriod: filterSofarData(timeSeries.waveMeanPeriod, from, to),
     waveMeanDirection: filterSofarData(timeSeries.waveMeanDirection, from, to),
     windSpeed: filterSofarData(timeSeries.windSpeed, from, to),
     windDirection: filterSofarData(timeSeries.windDirection, from, to),

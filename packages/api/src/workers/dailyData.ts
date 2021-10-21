@@ -91,7 +91,7 @@ export async function getDailyData(
     satelliteTemperatureData,
     significantWaveHeightsRaw,
     meanDirectionWindWavesRaw,
-    peakPeriodWindWavesRaw,
+    meanPeriodWindWavesRaw,
     windVelocity10MeterEastward,
     windVelocity10MeterNorthward,
   ] = await Promise.all([
@@ -156,7 +156,7 @@ export async function getDailyData(
         topTemperature: [],
         bottomTemperature: [],
         significantWaveHeight: [],
-        wavePeakPeriod: [],
+        waveMeanPeriod: [],
         waveMeanDirection: [],
         windSpeed: [],
         windDirection: [],
@@ -195,13 +195,13 @@ export async function getDailyData(
   const waveDirection =
     meanDirectionWindWaves && getAverage(meanDirectionWindWaves, true);
 
-  const peakPeriodWindWaves =
-    spotterData.wavePeakPeriod.length > 0
-      ? spotterData.wavePeakPeriod
-      : peakPeriodWindWavesRaw;
+  const meanPeriodWindWaves =
+    spotterData.waveMeanPeriod.length > 0
+      ? spotterData.waveMeanPeriod
+      : meanPeriodWindWavesRaw;
 
   const wavePeriod =
-    peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
+    meanPeriodWindWaves && getAverage(meanPeriodWindWaves, true);
 
   // Make sure that windVelocity10MeterEastward and windVelocity10MeterNorthward have the same length.
   const modelWindCheck =

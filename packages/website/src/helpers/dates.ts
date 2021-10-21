@@ -256,8 +256,8 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.significantWaveHeight,
       timeZone
     ),
-    wavePeakPeriod: convertSofarDataToLocalTime(
-      timeSeries.wavePeakPeriod,
+    waveMeanPeriod: convertSofarDataToLocalTime(
+      timeSeries.waveMeanPeriod,
       timeZone
     ),
     waveMeanDirection: convertSofarDataToLocalTime(

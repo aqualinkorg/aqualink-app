@@ -85,7 +85,7 @@ export const getLiveData = async (
         topTemperature: getLatestData(spotterRawData.topTemperature),
         bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
         waveHeight: getLatestData(spotterRawData.significantWaveHeight),
-        wavePeriod: getLatestData(spotterRawData.wavePeakPeriod),
+        wavePeriod: getLatestData(spotterRawData.waveMeanPeriod),
         waveDirection: getLatestData(spotterRawData.waveMeanDirection),
         windSpeed: getLatestData(spotterRawData.windSpeed),
         windDirection: getLatestData(spotterRawData.windDirection),

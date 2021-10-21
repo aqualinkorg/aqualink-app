@@ -49,7 +49,7 @@ export interface SpotterData {
   topTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
   significantWaveHeight: SofarValue[];
-  wavePeakPeriod: SofarValue[];
+  waveMeanPeriod: SofarValue[];
   waveMeanDirection: SofarValue[];
   windSpeed: SofarValue[];
   windDirection: SofarValue[];
@@ -61,7 +61,7 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   topTemperature: [],
   bottomTemperature: [],
   significantWaveHeight: [],
-  wavePeakPeriod: [],
+  waveMeanPeriod: [],
   waveMeanDirection: [],
   windSpeed: [],
   windDirection: [],

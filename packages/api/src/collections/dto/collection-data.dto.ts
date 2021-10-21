@@ -31,6 +31,9 @@ export class CollectionDataDto {
   [Metric.WAVE_MEAN_DIRECTION]?: number;
 
   @ApiProperty({ example: 12 })
+  [Metric.WAVE_MEAN_PERIOD]?: number;
+
+  @ApiProperty({ example: 12 })
   [Metric.WAVE_PEAK_PERIOD]?: number;
 
   @ApiProperty({ example: 153 })

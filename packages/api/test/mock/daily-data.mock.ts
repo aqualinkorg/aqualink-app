@@ -106,7 +106,7 @@ export const getMockSpotterData = (
       timestamp: start.clone().add(i, 'days').toISOString(),
       value: random(15, 35, true),
     })),
-    wavePeakPeriod: times(diffDays, (i) => ({
+    waveMeanPeriod: times(diffDays, (i) => ({
       timestamp: start.clone().add(i, 'days').toISOString(),
       value: random(15, 35, true),
     })),

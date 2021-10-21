@@ -199,7 +199,7 @@ export async function getSpotterData(
 
   const [
     sofarSignificantWaveHeight,
-    sofarPeakPeriod,
+    sofarMeanPeriod,
     sofarMeanDirection,
     spotterLatitude,
     spotterLongitude,
@@ -213,7 +213,7 @@ export async function getSpotterData(
     (
       [
         significantWaveHeights,
-        peakPeriods,
+        meanPeriods,
         meanDirections,
         latitude,
         longitude,
@@ -225,9 +225,9 @@ export async function getSpotterData(
           timestamp: data.timestamp,
           value: data.significantWaveHeight,
         }),
-        peakPeriods.concat({
+        meanPeriods.concat({
           timestamp: data.timestamp,
-          value: data.peakPeriod,
+          value: data.meanPeriod,
         }),
         meanDirections.concat({
           timestamp: data.timestamp,
@@ -304,7 +304,7 @@ export async function getSpotterData(
       (data) => !isNil(data.value),
     ),
     significantWaveHeight: sofarSignificantWaveHeight,
-    wavePeakPeriod: sofarPeakPeriod,
+    waveMeanPeriod: sofarMeanPeriod,
     waveMeanDirection: sofarMeanDirection,
     windSpeed: sofarWindSpeed,
     windDirection: sofarWindDirection,
