@@ -39,10 +39,10 @@ test('It processes Sofar API for daily data.', async () => {
     maxWaveHeight: 0.902798652648926,
     avgWaveHeight: 0.8645887772242228,
     waveDirection: 1,
-    wavePeriod: undefined,
-    minWindSpeed: 1.60820293426514,
-    maxWindSpeed: 4.004723072052,
-    avgWindSpeed: 2.6666289617617926,
+    wavePeriod: 6,
+    minWindSpeed: 1.3851696423913313,
+    maxWindSpeed: 3.1935656540742148,
+    avgWindSpeed: 2.093633046123507,
     windDirection: 39,
   });
 });

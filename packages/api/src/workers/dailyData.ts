@@ -14,7 +14,13 @@ import Bluebird from 'bluebird';
 import moment from 'moment';
 import { Site } from '../sites/sites.entity';
 import { DailyData } from '../sites/daily-data.entity';
-import { getMin, getMax, getAverage } from '../utils/math';
+import {
+  getMin,
+  getMax,
+  getAverage,
+  getWindSpeed,
+  getWindDirection,
+} from '../utils/math';
 import {
   extractSofarValues,
   getLatestData,
@@ -86,8 +92,8 @@ export async function getDailyData(
     significantWaveHeightsRaw,
     meanDirectionWindWavesRaw,
     peakPeriodWindWavesRaw,
-    windSpeedsRaw,
-    windDirectionsRaw,
+    windVelocity10MeterEastward,
+    windVelocity10MeterNorthward,
   ] = await Promise.all([
     sensorId ? getSpotterData(sensorId, endOfDate) : DEFAULT_SPOTTER_DATA_VALUE,
     // Calculate Degree Heating Days
@@ -120,7 +126,7 @@ export async function getDailyData(
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].peakPeriod,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
       latitude,
       longitude,
       endOfDate,
@@ -128,14 +134,14 @@ export async function getDailyData(
     // Get NOAA GFS wind data
     getSofarHindcastData(
       SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
+      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
       latitude,
       longitude,
       endOfDate,
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
+      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
       latitude,
       longitude,
       endOfDate,
@@ -196,6 +202,21 @@ export async function getDailyData(
 
   const wavePeriod =
     peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
+
+  // Make sure that windVelocity10MeterEastward and windVelocity10MeterNorthward have the same length.
+  const modelWindCheck =
+    windVelocity10MeterEastward.length === windVelocity10MeterNorthward.length;
+
+  const windSpeedsRaw = modelWindCheck
+    ? windVelocity10MeterEastward.map((eastValue, index) =>
+        getWindSpeed(eastValue, windVelocity10MeterNorthward[index]),
+      )
+    : [];
+  const windDirectionsRaw = modelWindCheck
+    ? windVelocity10MeterEastward.map((eastValue, index) =>
+        getWindDirection(eastValue, windVelocity10MeterNorthward[index]),
+      )
+    : [];
 
   // Get wind data if unavailable through a spotter
   const windSpeeds = isEmpty(spotterData.windSpeed)
