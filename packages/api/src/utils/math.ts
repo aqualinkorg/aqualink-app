@@ -20,25 +20,13 @@ export const getWindSpeed = (
   windEastwardVelocity: number,
   windNorhwardVelocity: number,
 ) => {
-  if (
-    windEastwardVelocity === undefined ||
-    windNorhwardVelocity === undefined
-  ) {
-    return undefined;
-  }
   return Math.sqrt(windNorhwardVelocity ** 2 + windEastwardVelocity ** 2);
 };
 
 export const getWindDirection = (
-  windEastwardVelocity: number | undefined,
-  windNorhwardVelocity: number | undefined,
+  windEastwardVelocity: number,
+  windNorhwardVelocity: number,
 ) => {
-  if (
-    windEastwardVelocity === undefined ||
-    windNorhwardVelocity === undefined
-  ) {
-    return undefined;
-  }
   const degree =
     -(Math.atan2(windNorhwardVelocity, windEastwardVelocity) * 180) / Math.PI +
     90;
