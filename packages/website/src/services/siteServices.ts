@@ -78,14 +78,14 @@ const getSiteSurveyPoints = (
   cancelToken?: AxiosRequestConfig["cancelToken"]
 ) =>
   requests.send<SurveyPoints[]>({
-    url: `surveyPoints?siteId=${id}`,
+    url: `site-survey-points?siteId=${id}`,
     method: "GET",
     cancelToken,
   });
 
 const deleteSiteSurveyPoint = (id: number, token: string) =>
   requests.send({
-    url: `surveyPoints/${id}`,
+    url: `site-survey-points/${id}`,
     method: "DELETE",
     token,
   });

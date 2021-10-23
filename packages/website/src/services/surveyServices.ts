@@ -53,7 +53,7 @@ const addSurveyMedia = (
 
 const addNewPoi = (siteId: number, name: string, token?: string | null) => {
   return requests.send({
-    url: "surveyPoints",
+    url: "site-survey-points",
     method: "POST",
     data: {
       siteId,
@@ -69,7 +69,7 @@ const updatePoi = (
   token: string
 ) =>
   requests.send<SurveyPoints>({
-    url: `surveyPoints/${surveyPointId}`,
+    url: `site-survey-points/${surveyPointId}`,
     method: "PUT",
     data: updateParams,
     token,
