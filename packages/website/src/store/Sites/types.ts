@@ -61,8 +61,8 @@ export interface LiveData {
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
   waveHeight?: SofarValue;
-  waveDirection?: SofarValue;
-  wavePeriod?: SofarValue;
+  waveMeanDirection?: SofarValue;
+  waveMeanPeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
   weeklyAlertLevel?: number;
@@ -90,8 +90,8 @@ export interface DailyData {
   minWaveHeight: number;
   maxWaveHeight: number;
   avgWaveHeight: number;
-  waveDirection: number;
-  wavePeriod: number;
+  waveMeanDirection: number;
+  waveMeanPeriod: number;
 
   weeklyAlertLevel?: number;
 }

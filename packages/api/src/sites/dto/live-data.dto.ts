@@ -10,8 +10,8 @@ export class SofarLiveDataDto implements SofarLiveData {
   satelliteTemperature?: TimeSeriesValueDto;
   degreeHeatingDays?: TimeSeriesValueDto;
   waveHeight?: TimeSeriesValueDto;
-  waveDirection?: TimeSeriesValueDto;
-  wavePeriod?: TimeSeriesValueDto;
+  waveMeanDirection?: TimeSeriesValueDto;
+  waveMeanPeriod?: TimeSeriesValueDto;
   windSpeed?: TimeSeriesValueDto;
   windDirection?: TimeSeriesValueDto;
   sstAnomaly?: number;

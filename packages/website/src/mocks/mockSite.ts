@@ -41,11 +41,11 @@ export const mockSite: Site = {
       value: 1,
       timestamp: liveDataDate,
     },
-    waveDirection: {
+    waveMeanDirection: {
       value: 90,
       timestamp: liveDataDate,
     },
-    wavePeriod: {
+    waveMeanPeriod: {
       value: 3,
       timestamp: liveDataDate,
     },
@@ -71,8 +71,8 @@ export const mockSite: Site = {
       minWaveHeight: 2,
       maxWaveHeight: 4,
       avgWaveHeight: 3,
-      waveDirection: 205,
-      wavePeriod: 28,
+      waveMeanDirection: 205,
+      waveMeanPeriod: 28,
       minWindSpeed: 3,
       maxWindSpeed: 5,
       avgWindSpeed: 4,

@@ -22,11 +22,11 @@ export const mockLiveData: LiveData = {
     value: 3,
     timestamp: liveDataDate,
   },
-  waveDirection: {
+  waveMeanDirection: {
     value: 136,
     timestamp: liveDataDate,
   },
-  wavePeriod: {
+  waveMeanPeriod: {
     value: 15,
     timestamp: liveDataDate,
   },

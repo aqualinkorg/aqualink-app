@@ -24,8 +24,8 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     topTemperature,
     bottomTemperature,
     waveHeight,
-    waveDirection,
-    wavePeriod,
+    waveMeanDirection,
+    waveMeanPeriod,
     windSpeed,
     windDirection,
   } = liveData;
@@ -172,9 +172,9 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(wavePeriod?.value)}
+                  {formatNumber(waveMeanPeriod?.value)}
                 </Typography>
-                {wavePeriod?.value && (
+                {waveMeanPeriod?.value && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -194,10 +194,10 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {waveDirection?.value && (
+                {waveMeanDirection?.value && (
                   <img
                     style={{
-                      transform: `rotate(${waveDirection?.value + 180}deg)`,
+                      transform: `rotate(${waveMeanDirection?.value + 180}deg)`,
                     }}
                     className={classes.arrow}
                     alt="arrow"
@@ -209,8 +209,8 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(waveDirection?.value)}
-                  {waveDirection?.value ? "\u00B0" : ""}
+                  {formatNumber(waveMeanDirection?.value)}
+                  {waveMeanDirection?.value ? "\u00B0" : ""}
                 </Typography>
               </Grid>
             </Grid>
