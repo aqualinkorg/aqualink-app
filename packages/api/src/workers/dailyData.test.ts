@@ -38,7 +38,7 @@ test('It processes Sofar API for daily data.', async () => {
     minWaveHeight: 0.826433181762695,
     maxWaveHeight: 0.902798652648926,
     avgWaveHeight: 0.8645887772242228,
-    waveMeanDirection: 1,
+    waveMeanDirection: 275,
     waveMeanPeriod: 6,
     minWindSpeed: 1.3851696423913313,
     maxWindSpeed: 3.1935656540742148,
