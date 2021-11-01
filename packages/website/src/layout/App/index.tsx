@@ -63,7 +63,7 @@ function App() {
                 <Route exact path="/drones" component={Drones} />
                 <Route exact path="/faq" component={Faq} />
                 <Route exact path="/terms" component={Terms} />
-                <Redirect from="/reefs" to="/sites" />
+                <Redirect from="/reefs/:id" to="/sites/:id" />
                 <Route path="/sites" component={SiteRoutes} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/tracker" component={Tracker} />
