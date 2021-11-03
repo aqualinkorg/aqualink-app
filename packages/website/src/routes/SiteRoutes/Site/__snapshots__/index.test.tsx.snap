@@ -1868,7 +1868,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        180°
+                        0°
                       </mock-typography>
                     </div>
                   </div>
@@ -1972,7 +1972,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        90°
+                        -90°
                       </mock-typography>
                     </div>
                   </div>
