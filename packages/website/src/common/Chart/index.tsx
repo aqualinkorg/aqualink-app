@@ -14,7 +14,7 @@ import type {
   HistoricalMonthlyMeanData,
   SofarValue,
   TimeSeries,
-} from "../../store/Reefs/types";
+} from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
 import {
@@ -24,11 +24,11 @@ import {
 } from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
-import { Range } from "../../store/Reefs/types";
+import { Range } from "../../store/Sites/types";
 import { convertToLocalTime } from "../../helpers/dates";
 
 export interface ChartProps {
-  reefId: number;
+  siteId: number;
   dailyData: DailyData[];
   spotterData?: TimeSeries;
   hoboBottomTemperatureData?: SofarValue[];

@@ -21,7 +21,7 @@ const surveyFormDraftInitialState: SurveyState = {
 
 interface GetSurveyParams {
   surveyId: string;
-  reefId: string;
+  siteId: string;
 }
 
 export const surveyGetRequest = createAsyncThunk<
@@ -30,9 +30,9 @@ export const surveyGetRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   "selectedSurvey/getRequest",
-  async ({ surveyId, reefId }, { rejectWithValue }) => {
+  async ({ surveyId, siteId }, { rejectWithValue }) => {
     try {
-      const { data } = await surveyServices.getSurvey(reefId, surveyId);
+      const { data } = await surveyServices.getSurvey(siteId, surveyId);
       return data;
     } catch (err) {
       const error: AxiosError<SelectedSurveyState["error"]> = err;
@@ -42,7 +42,7 @@ export const surveyGetRequest = createAsyncThunk<
 );
 
 interface UserAttributes {
-  reefId: string;
+  siteId: string;
   surveyData: SurveyData;
   changeTab: (index: number) => void;
 }
@@ -53,10 +53,10 @@ export const surveyAddRequest = createAsyncThunk<
   CreateAsyncThunkTypes
 >(
   "selectedSurvey/addRequest",
-  async ({ surveyData, reefId, changeTab }, { rejectWithValue }) => {
+  async ({ surveyData, siteId, changeTab }, { rejectWithValue }) => {
     try {
       const { data } = await surveyServices
-        .addSurvey(reefId, surveyData)
+        .addSurvey(siteId, surveyData)
         .then((res) => {
           changeTab(1);
           return res;
@@ -185,7 +185,7 @@ export const surveyDetailsSelector = (
   state: RootState
 ): SelectedSurveyState["details"] => state.survey.selectedSurvey.details;
 
-export const selectedPoiSelector = (
+export const selectedSurveyPointSelector = (
   state: RootState
 ): SelectedSurveyState["selectedPoi"] =>
   state.survey.selectedSurvey.selectedPoi;

@@ -21,7 +21,7 @@ describe("Featured Media Card", () => {
 
     element = render(
       <Provider store={store}>
-        <FeaturedMedia reefId={1} url={null} />
+        <FeaturedMedia siteId={1} url={null} />
       </Provider>
     ).container;
   });

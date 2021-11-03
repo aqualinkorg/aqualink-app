@@ -2,17 +2,17 @@ import _ from 'lodash';
 import { Repository } from 'typeorm';
 import { DynamicCollection } from '../collections/collections.entity';
 import { CollectionDataDto } from '../collections/dto/collection-data.dto';
-import { Reef } from '../reefs/reefs.entity';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { Site } from '../sites/sites.entity';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
 
 export const getCollectionData = async (
-  reefs: Reef[],
+  sites: Site[],
   latestDataRepository: Repository<LatestData>,
 ): Promise<Record<number, CollectionDataDto>> => {
-  const reefIds = reefs.map((reef) => reef.id);
+  const siteIds = sites.map((site) => site.id);
 
-  if (!reefIds.length) {
+  if (!siteIds.length) {
     return {};
   }
 
@@ -22,22 +22,22 @@ export const getCollectionData = async (
     .select('id')
     .addSelect('timestamp')
     .addSelect('value')
-    .addSelect('reef_id', 'reefId')
-    .addSelect('poi_id', 'poiId')
+    .addSelect('site_id', 'siteId')
+    .addSelect('survey_point_id', 'surveyPointId')
     .addSelect('metric')
     .addSelect('source')
-    .where('reef_id IN (:...reefIds)', { reefIds })
+    .where('site_id IN (:...siteIds)', { siteIds })
     .andWhere('source != :hoboSource', { hoboSource: SourceType.HOBO })
     .getRawMany();
 
-  // Map data to each reef and map each reef's data to the CollectionDataDto
+  // Map data to each site and map each site's data to the CollectionDataDto
   return _(latestData)
-    .groupBy((o) => o.reefId)
+    .groupBy((o) => o.siteId)
     .mapValues<CollectionDataDto>((data) =>
-      data.reduce<CollectionDataDto>((acc, reefData): CollectionDataDto => {
+      data.reduce<CollectionDataDto>((acc, siteData): CollectionDataDto => {
         return {
           ...acc,
-          [reefData.metric]: reefData.value,
+          [siteData.metric]: siteData.value,
         };
       }, {}),
     )
@@ -46,8 +46,8 @@ export const getCollectionData = async (
 
 export const heatStressTracker: DynamicCollection = {
   name: 'Heat Stress Tracker',
-  reefs: [],
-  reefIds: [],
+  sites: [],
+  siteIds: [],
   isPublic: true,
 };
 
@@ -55,10 +55,10 @@ export const DEFAULT_COLLECTION_NAME = 'My Dashboard';
 
 export const defaultUserCollection = (
   userId: number,
-  reefIds: number[] = [],
+  siteIds: number[] = [],
   name = DEFAULT_COLLECTION_NAME,
 ) => ({
   user: { id: userId },
   name,
-  reefs: reefIds.map((reefId) => ({ id: reefId })),
+  sites: siteIds.map((siteId) => ({ id: siteId })),
 });

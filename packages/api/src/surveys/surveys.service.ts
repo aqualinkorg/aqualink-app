@@ -16,7 +16,7 @@ import { SurveyMedia, MediaType } from './survey-media.entity';
 import { EditSurveyDto } from './dto/edit-survey.dto';
 import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
 
 @Injectable()
@@ -30,8 +30,8 @@ export class SurveysService {
     @InjectRepository(SurveyMedia)
     private surveyMediaRepository: Repository<SurveyMedia>,
 
-    @InjectRepository(Reef)
-    private reefRepository: Repository<Reef>,
+    @InjectRepository(Site)
+    private siteRepository: Repository<Site>,
 
     public googleCloudService: GoogleCloudService,
 
@@ -42,17 +42,17 @@ export class SurveysService {
   async create(
     createSurveyDto: CreateSurveyDto,
     user: User,
-    reefId: number,
+    siteId: number,
   ): Promise<Survey> {
-    const reef = await this.reefRepository.findOne(reefId);
+    const site = await this.siteRepository.findOne(siteId);
 
-    if (!reef) {
-      throw new NotFoundException(`Reef with id ${reefId} was not found`);
+    if (!site) {
+      throw new NotFoundException(`Site with id ${siteId} was not found`);
     }
 
     const survey = await this.surveyRepository.save({
       user,
-      reef,
+      site,
       ...createSurveyDto,
       comments: this.transformComments(createSurveyDto.comments),
     });
@@ -91,7 +91,7 @@ export class SurveysService {
 
     return this.surveyMediaRepository.save({
       ...createSurveyMediaDto,
-      poi: { id: createSurveyMediaDto.poiId },
+      surveyPoint: { id: createSurveyMediaDto.surveyPointId },
       featured: newFeatured || (!featuredMedia && !createSurveyMediaDto.hidden),
       type: MediaType.Image,
       surveyId: survey,
@@ -99,15 +99,15 @@ export class SurveysService {
     });
   }
 
-  // Find all surveys related to a specific reef.
-  async find(reefId: number): Promise<Survey[]> {
+  // Find all surveys related to a specific site.
+  async find(siteId: number): Promise<Survey[]> {
     const surveyHistoryQuery = await this.surveyRepository
       .createQueryBuilder('survey')
       .leftJoinAndMapOne(
         'survey.latestDailyData',
         'daily_data',
         'data',
-        'data.reef_id = survey.reef_id AND DATE(data.date) = DATE(survey.diveDate)',
+        'data.site_id = survey.site_id AND DATE(data.date) = DATE(survey.diveDate)',
       )
       .innerJoin('survey.user', 'users')
       .leftJoinAndSelect(
@@ -115,9 +115,9 @@ export class SurveysService {
         'featuredSurveyMedia',
         'featuredSurveyMedia.featured = True',
       )
-      .leftJoinAndSelect('featuredSurveyMedia.poi', 'poi')
+      .leftJoinAndSelect('featuredSurveyMedia.surveyPoint', 'surveyPoint')
       .addSelect(['users.fullName', 'users.id'])
-      .where('survey.reef_id = :reefId', { reefId })
+      .where('survey.site_id = :siteId', { siteId })
       .getMany();
 
     const surveyObservationsQuery = await this.surveyMediaRepository
@@ -125,8 +125,8 @@ export class SurveysService {
       .innerJoin(
         'surveyMedia.surveyId',
         'surveys',
-        'surveys.reef_id = :reefId',
-        { reefId },
+        'surveys.site_id = :siteId',
+        { siteId },
       )
       .groupBy('surveyMedia.surveyId, surveyMedia.observations')
       .select(['surveyMedia.surveyId', 'surveyMedia.observations'])
@@ -137,14 +137,14 @@ export class SurveysService {
       .innerJoin(
         'surveyMedia.surveyId',
         'surveys',
-        'surveys.reef_id = :reefId',
-        { reefId },
+        'surveys.site_id = :siteId',
+        { siteId },
       )
-      .groupBy('surveyMedia.surveyId, surveyMedia.poi')
+      .groupBy('surveyMedia.surveyId, surveyMedia.surveyPoint')
       .select([
         'surveyMedia.surveyId',
-        'surveyMedia.poi',
-        'array_agg(surveyMedia.url) poi_images',
+        'surveyMedia.surveyPoint',
+        'array_agg(surveyMedia.url) surveyPoint_images',
       ])
       .getRawMany();
 
@@ -152,15 +152,15 @@ export class SurveysService {
       surveyObservationsQuery,
       'surveyMedia_observations',
     );
-    const poiIdGroupedBySurveyId = this.groupBySurveyId(
+    const surveyPointIdGroupedBySurveyId = this.groupBySurveyId(
       surveyPointsQuery,
-      'poi_id',
+      'surveyPoint_id',
     );
 
-    const surveyImageGroupedByPoiId = this.groupBySurveyId(
+    const surveyImageGroupedBySurveyPointId = this.groupBySurveyId(
       surveyPointsQuery,
-      'poi_images',
-      'poi_id',
+      'surveyPoint_images',
+      'surveyPoint_id',
     );
 
     return surveyHistoryQuery.map((survey) => {
@@ -171,8 +171,8 @@ export class SurveysService {
         comments: survey.comments,
         weatherConditions: survey.weatherConditions,
         user: survey.user,
-        reef: survey.reef,
-        reefId: survey.reefId,
+        site: survey.site,
+        siteId: survey.siteId,
         // If no logged temperature exists grab the latest daily temperature of the survey's date
         temperature:
           survey.temperature ||
@@ -181,8 +181,8 @@ export class SurveysService {
               surveyDailyData.satelliteTemperature)),
         featuredSurveyMedia: survey.featuredSurveyMedia,
         observations: observationsGroupedBySurveyId[survey.id] || [],
-        surveyPoints: poiIdGroupedBySurveyId[survey.id] || [],
-        surveyPointImage: surveyImageGroupedByPoiId[survey.id] || [],
+        surveyPoints: surveyPointIdGroupedBySurveyId[survey.id] || [],
+        surveyPointImage: surveyImageGroupedBySurveyPointId[survey.id] || [],
         createdAt: survey.createdAt,
         updatedAt: survey.updatedAt,
       };
@@ -190,12 +190,12 @@ export class SurveysService {
   }
 
   // Find one survey provided its id
-  // Include its surveyMedia grouped by reefPointOfInterest
+  // Include its surveyMedia grouped by siteSurveyPoint
   async findOne(surveyId: number): Promise<Survey> {
     const surveyDetails = await this.surveyRepository
       .createQueryBuilder('survey')
       .innerJoinAndSelect('survey.surveyMedia', 'surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'pois')
+      .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoints')
       .where('survey.id = :surveyId', { surveyId })
       .andWhere('surveyMedia.hidden = False')
       .getOne();
@@ -210,7 +210,7 @@ export class SurveysService {
   async findMedia(surveyId: number): Promise<SurveyMedia[]> {
     return this.surveyMediaRepository
       .createQueryBuilder('surveyMedia')
-      .leftJoinAndSelect('surveyMedia.poi', 'poi')
+      .leftJoinAndSelect('surveyMedia.surveyPoint', 'surveyPoint')
       .where('surveyMedia.surveyId = :surveyId', { surveyId })
       .getMany();
   }
@@ -278,9 +278,9 @@ export class SurveysService {
 
     const trimmedComments = this.transformComments(editSurveyMediaDto.comments);
     await this.surveyMediaRepository.update(mediaId, {
-      ...omit(editSurveyMediaDto, 'poiId'),
-      ...(editSurveyMediaDto.poiId
-        ? { poi: { id: editSurveyMediaDto.poiId } }
+      ...omit(editSurveyMediaDto, 'surveyPointId'),
+      ...(editSurveyMediaDto.surveyPointId
+        ? { surveyPoint: { id: editSurveyMediaDto.surveyPointId } }
         : {}),
       featured: !editSurveyMediaDto.hidden && editSurveyMediaDto.featured,
       ...(trimmedComments ? { comments: trimmedComments } : {}),

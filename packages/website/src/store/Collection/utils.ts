@@ -1,4 +1,4 @@
-import { CollectionData, CollectionDataResponse } from "../Reefs/types";
+import { CollectionData, CollectionDataResponse } from "../Sites/types";
 import { CollectionDetails, CollectionDetailsResponse } from "./types";
 
 export const mapCollectionData = (
@@ -22,7 +22,7 @@ export const constructCollection = (
   data: CollectionDetailsResponse
 ): CollectionDetails => ({
   ...data,
-  reefs: data.reefs.map((item) => ({
+  sites: data.sites.map((item) => ({
     ...item,
     collectionData: mapCollectionData(item.collectionData || {}),
   })),

@@ -8,15 +8,15 @@ export const constructUserObject = async (
   collections: CollectionSummary[],
   token?: string
 ): Promise<User> => {
-  const { data: administeredReefs } = await userServices.getAdministeredReefs(
+  const { data: administeredSites } = await userServices.getAdministeredSites(
     token
   );
 
   return {
     ...user,
-    administeredReefs: isManager(user) ? administeredReefs : [],
+    administeredSites: isManager(user) ? administeredSites : [],
     collection: collections?.[0]?.id
-      ? { id: collections[0].id, reefIds: collections[0].reefIds }
+      ? { id: collections[0].id, siteIds: collections[0].siteIds }
       : undefined,
     token,
   };

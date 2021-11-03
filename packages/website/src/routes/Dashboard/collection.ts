@@ -1,17 +1,17 @@
 import { sampleSize } from "lodash";
 
-import { Reef } from "../../store/Reefs/types";
+import { Site } from "../../store/Sites/types";
 
-export const createCollection = (reefs: Reef[], nReefs: number): Collection => {
-  const sample = sampleSize(reefs, nReefs);
+export const createCollection = (sites: Site[], nSites: number): Collection => {
+  const sample = sampleSize(sites, nSites);
 
   return {
     name: "My dashboard",
-    reefs: sample,
+    sites: sample,
   };
 };
 
 export interface Collection {
   name: string;
-  reefs: Reef[];
+  sites: Site[];
 }

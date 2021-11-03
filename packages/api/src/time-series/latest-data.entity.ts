@@ -7,9 +7,9 @@ import {
   RelationId,
   ViewEntity,
 } from 'typeorm';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
-import { Reef } from '../reefs/reefs.entity';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
+import { Site } from '../sites/sites.entity';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from './metrics.entity';
 import { TimeSeries } from './time-series.entity';
 
@@ -28,8 +28,8 @@ import { TimeSeries } from './time-series.entity';
     return connection
       .createQueryBuilder()
       .from(() => subQuery, 'time_series')
-      .addSelect('reef_id')
-      .addSelect('poi_id')
+      .addSelect('site_id')
+      .addSelect('survey_point_id')
       .innerJoin('sources', 'source', 'source.id = time_series.source_id');
   },
   materialized: true,
@@ -46,15 +46,15 @@ export class LatestData {
   @Column({ type: 'float', nullable: false })
   value: number;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
-  reef: Reef;
+  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  site: Site;
 
   @ApiProperty({ example: 15 })
-  @RelationId((latestData: LatestData) => latestData.reef)
-  reefId: number;
+  @RelationId((latestData: LatestData) => latestData.site)
+  siteId: number;
 
-  @ManyToOne(() => ReefPointOfInterest, { onDelete: 'CASCADE', nullable: true })
-  poi: ReefPointOfInterest | null;
+  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: true })
+  surveyPoint: SiteSurveyPoint | null;
 
   @Column({ type: 'enum', enum: SourceType })
   source: SourceType;

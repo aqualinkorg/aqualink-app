@@ -14,10 +14,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import UpdateInfo from "../../UpdateInfo";
-import { findAdministeredReef } from "../../../helpers/findAdministeredReef";
+import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
-import type { Reef } from "../../../store/Reefs/types";
+import type { Site } from "../../../store/Sites/types";
 import { User } from "../../../store/User/types";
 import sensor from "../../../assets/sensor.svg";
 import { styles as incomingStyles } from "../styles";
@@ -25,18 +25,18 @@ import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
 
 /**
- * Get the sensor application tag message and clickability for a user/reef conbination.
+ * Get the sensor application tag message and clickability for a user/site conbination.
  *
  * @param user
- * @param reefId
+ * @param siteId
  */
 const getApplicationTag = (
   user: User | null,
-  reefId: number
+  siteId: number
 ): [string, boolean] => {
-  const userReef = findAdministeredReef(user, reefId);
-  const { applied, status } = userReef || {};
-  const isSiteAdmin = isAdmin(user, reefId);
+  const userSite = findAdministeredSite(user, siteId);
+  const { applied, status } = userSite || {};
+  const isSiteAdmin = isAdmin(user, siteId);
 
   switch (true) {
     case !isSiteAdmin:
@@ -62,8 +62,8 @@ const getApplicationTag = (
   }
 };
 
-const Sensor = ({ reef, classes }: SensorProps) => {
-  const { topTemperature, bottomTemperature } = reef.liveData;
+const Sensor = ({ site, classes }: SensorProps) => {
+  const { topTemperature, bottomTemperature } = site.liveData;
 
   const relativeTime =
     (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
@@ -80,12 +80,12 @@ const Sensor = ({ reef, classes }: SensorProps) => {
       value: `${formatNumber(topTemperature?.value, 1)}°C`,
     },
     {
-      label: `TEMP AT ${reef.depth ? `${reef.depth}m` : "DEPTH"}`,
+      label: `TEMP AT ${site.depth ? `${site.depth}m` : "DEPTH"}`,
       value: `${formatNumber(bottomTemperature?.value, 1)}°C`,
     },
   ];
 
-  const [alertText, clickable] = getApplicationTag(user, reef.id);
+  const [alertText, clickable] = getApplicationTag(user, site.id);
 
   return (
     <Card className={classes.card}>
@@ -149,7 +149,7 @@ const Sensor = ({ reef, classes }: SensorProps) => {
             {clickable ? (
               <Link
                 className={classes.newSpotterLink}
-                to={`/reefs/${reef.id}/apply`}
+                to={`/sites/${site.id}/apply`}
               >
                 <Typography variant="h6">{alertText}</Typography>
               </Link>
@@ -211,7 +211,7 @@ const styles = () =>
   });
 
 interface SensorIncomingProps {
-  reef: Reef;
+  site: Site;
 }
 
 type SensorProps = WithStyles<typeof styles> & SensorIncomingProps;

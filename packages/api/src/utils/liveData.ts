@@ -1,7 +1,7 @@
 import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import {
   getLatestData,
@@ -12,13 +12,14 @@ import {
 import { SofarLiveData, SofarValue } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
-import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
+import { getWindDirection, getWindSpeed } from './math';
 
 export const getLiveData = async (
-  reef: Reef,
+  site: Site,
   isDeployed: boolean,
 ): Promise<SofarLiveData> => {
-  const { polygon, sensorId, maxMonthlyMean } = reef;
+  const { polygon, sensorId, maxMonthlyMean } = site;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
 
@@ -31,8 +32,8 @@ export const getLiveData = async (
     waveHeight,
     waveDirection,
     wavePeriod,
-    windSpeed,
-    windDirection,
+    windVelocity10MeterEastward,
+    windVelocity10MeterNorthward,
   ] = await Promise.all([
     sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
     getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
@@ -61,19 +62,19 @@ export const getLiveData = async (
     ),
     sofarForecast(
       SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].peakPeriod,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
       latitude,
       longitude,
     ),
     sofarForecast(
       SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
+      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
       latitude,
       longitude,
     ),
     sofarForecast(
       SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].direction10MeterWind,
+      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
       latitude,
       longitude,
     ),
@@ -94,6 +95,18 @@ export const getLiveData = async (
           spotterRawData.latitude && getLatestData(spotterRawData.latitude),
       }
     : {};
+
+  // Calculate wind speed and direction from velocity
+  const windNorhwardVelocity = windVelocity10MeterNorthward.value;
+  const windEastwardVelocity = windVelocity10MeterEastward.value;
+  const windSpeed = {
+    timestamp: windVelocity10MeterNorthward.timestamp,
+    value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
+  };
+  const windDirection = {
+    timestamp: windVelocity10MeterNorthward.timestamp,
+    value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
+  };
 
   const filteredValues = omitBy(
     {
@@ -118,7 +131,7 @@ export const getLiveData = async (
   );
 
   return {
-    reef: { id: reef.id },
+    site: { id: site.id },
     ...filteredValues,
     ...(spotterData.longitude &&
       spotterData.latitude && {

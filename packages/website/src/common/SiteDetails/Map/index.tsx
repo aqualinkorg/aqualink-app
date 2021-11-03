@@ -8,20 +8,20 @@ import { some } from "lodash";
 
 import SurveyPointPopup from "./SurveyPointPopup";
 import {
-  Reef,
+  Site,
   Position,
   SpotterPosition,
-  Pois,
+  SurveyPoints,
   Point,
-} from "../../../store/Reefs/types";
+} from "../../../store/Sites/types";
 import { samePosition } from "../../../helpers/map";
 
 import marker from "../../../assets/marker.png";
 import buoy from "../../../assets/buoy-marker.svg";
 import {
-  reefDraftSelector,
-  setReefDraft,
-} from "../../../store/Reefs/selectedReefSlice";
+  siteDraftSelector,
+  setSiteDraft,
+} from "../../../store/Sites/selectedSiteSlice";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isManager } from "../../../helpers/user";
 import pointIcon from "../../../assets/alerts/pin_nostress@2x.png";
@@ -50,8 +50,8 @@ const surveyPointIcon = (selected: boolean) =>
     popupAnchor: [0, -27],
   });
 
-const ReefMap = ({
-  reefId,
+const SiteMap = ({
+  siteId,
   spotterPosition,
   polygon,
   surveyPoints,
@@ -61,14 +61,14 @@ const ReefMap = ({
   editPointLongitude,
   onEditPointCoordinatesChange,
   classes,
-}: ReefMapProps) => {
+}: SiteMapProps) => {
   const dispatch = useDispatch();
   const mapRef = useRef<Map>(null);
   const markerRef = useRef<Marker>(null);
   const editPointMarkerRer = useRef<Marker>(null);
-  const draftReef = useSelector(reefDraftSelector);
+  const draftSite = useSelector(siteDraftSelector);
   const user = useSelector(userInfoSelector);
-  const [focusedPoint, setFocusedPoint] = useState<Pois>();
+  const [focusedPoint, setFocusedPoint] = useState<SurveyPoints>();
 
   const reverseCoords = (coordArray: Position[]): [Position[]] => {
     return [coordArray.map((coords) => [coords[1], coords[0]])];
@@ -92,12 +92,12 @@ const ReefMap = ({
     });
   };
 
-  // Fit the polygon constructed by the reef's center and its survey points
+  // Fit the polygon constructed by the site's center and its survey points
   const fitSurveyPointsPolygon = useCallback(
-    (inputMap: L.Map, reefCenter: Point) => {
+    (inputMap: L.Map, siteCenter: Point) => {
       inputMap.fitBounds(
         L.polygon([
-          [reefCenter.coordinates[1], reefCenter.coordinates[0]],
+          [siteCenter.coordinates[1], siteCenter.coordinates[0]],
           ...surveyPoints
             .filter((item) => item.polygon?.type === "Point")
             .map((item) => {
@@ -128,11 +128,11 @@ const ReefMap = ({
       // Initialize map's position to fit the given polygon
       if (polygon.type === "Polygon") {
         map.fitBounds(L.polygon(polygon.coordinates).getBounds());
-      } else if (draftReef?.coordinates) {
+      } else if (draftSite?.coordinates) {
         map.panTo(
           new L.LatLng(
-            draftReef.coordinates.latitude || polygon.coordinates[1],
-            draftReef.coordinates.longitude || polygon.coordinates[0]
+            draftSite.coordinates.latitude || polygon.coordinates[1],
+            draftSite.coordinates.longitude || polygon.coordinates[0]
           )
         );
       } else if (some(surveyPoints, (item) => item.polygon?.type === "Point")) {
@@ -141,7 +141,7 @@ const ReefMap = ({
         map.panTo(new L.LatLng(polygon.coordinates[1], polygon.coordinates[0]));
       }
     }
-  }, [draftReef, fitSurveyPointsPolygon, polygon, surveyPoints]);
+  }, [draftSite, fitSurveyPointsPolygon, polygon, surveyPoints]);
 
   const handleDragChange = () => {
     const { current } = markerRef;
@@ -149,7 +149,7 @@ const ReefMap = ({
       const mapMarker = current.leafletElement;
       const { lat, lng } = mapMarker.getLatLng().wrap();
       dispatch(
-        setReefDraft({
+        setSiteDraft({
           coordinates: {
             latitude: lat,
             longitude: lng,
@@ -208,12 +208,12 @@ const ReefMap = ({
           )}
           <Marker
             ref={markerRef}
-            draggable={Boolean(draftReef)}
+            draggable={Boolean(draftSite)}
             ondragend={handleDragChange}
             icon={pinIcon}
             position={[
-              draftReef?.coordinates?.latitude || polygon.coordinates[1],
-              draftReef?.coordinates?.longitude || polygon.coordinates[0],
+              draftSite?.coordinates?.latitude || polygon.coordinates[1],
+              draftSite?.coordinates?.longitude || polygon.coordinates[0],
             ]}
           />
           {surveyPoints.map(
@@ -230,13 +230,13 @@ const ReefMap = ({
                   ]}
                   onclick={() => setFocusedPoint(point)}
                 >
-                  <SurveyPointPopup reefId={reefId} point={point} />
+                  <SurveyPointPopup siteId={siteId} point={point} />
                 </Marker>
               )
           )}
         </>
       )}
-      {!draftReef && spotterPosition && isManager(user) && (
+      {!draftSite && spotterPosition && isManager(user) && (
         <Marker
           icon={buoyIcon}
           position={[
@@ -259,11 +259,11 @@ const styles = () => {
   });
 };
 
-interface ReefMapIncomingProps {
-  reefId: number;
-  polygon: Reef["polygon"];
+interface SiteMapIncomingProps {
+  siteId: number;
+  polygon: Site["polygon"];
   spotterPosition?: SpotterPosition | null;
-  surveyPoints: Pois[];
+  surveyPoints: SurveyPoints[];
   selectedPointId?: number;
   surveyPointEditModeEnabled?: boolean;
   editPointLatitude?: number | null;
@@ -271,7 +271,7 @@ interface ReefMapIncomingProps {
   onEditPointCoordinatesChange?: (lat: string, lng: string) => void;
 }
 
-ReefMap.defaultProps = {
+SiteMap.defaultProps = {
   spotterPosition: null,
   selectedPointId: 0,
   surveyPointEditModeEnabled: false,
@@ -280,6 +280,6 @@ ReefMap.defaultProps = {
   onEditPointCoordinatesChange: () => {},
 };
 
-type ReefMapProps = WithStyles<typeof styles> & ReefMapIncomingProps;
+type SiteMapProps = WithStyles<typeof styles> & SiteMapIncomingProps;
 
-export default withStyles(styles)(ReefMap);
+export default withStyles(styles)(SiteMap);

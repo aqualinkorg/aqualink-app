@@ -4,11 +4,11 @@ import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
 import {
-  reefGranularDailyDataSelector,
-  reefOceanSenseDataSelector,
-  reefTimeSeriesDataSelector,
-} from "../../../store/Reefs/selectedReefSlice";
-import { SofarValue } from "../../../store/Reefs/types";
+  siteGranularDailyDataSelector,
+  siteOceanSenseDataSelector,
+  siteTimeSeriesDataSelector,
+} from "../../../store/Sites/selectedSiteSlice";
+import { SofarValue } from "../../../store/Sites/types";
 
 type CSVDataColumn =
   | "spotterBottomTemp"
@@ -71,18 +71,18 @@ function DownloadCSVButton({
   endDate,
   className,
   pointId,
-  reefId,
+  siteId,
 }: {
   startDate?: string;
   endDate?: string;
   className?: string;
-  reefId?: number | string;
+  siteId?: number | string;
   pointId?: number | string;
 }) {
-  const granularDailyData = useSelector(reefGranularDailyDataSelector);
-  const oceanSenseData = useSelector(reefOceanSenseDataSelector);
+  const granularDailyData = useSelector(siteGranularDailyDataSelector);
+  const oceanSenseData = useSelector(siteOceanSenseDataSelector);
   const { hobo: hoboData, spotter: spotterData } =
-    useSelector(reefTimeSeriesDataSelector) || {};
+    useSelector(siteTimeSeriesDataSelector) || {};
   const [loading, setLoading] = useState(false);
 
   const getCSVData = () =>
@@ -102,8 +102,8 @@ function DownloadCSVButton({
       .chained("oceanSenseDO", oceanSenseData?.DO)
       .chained("oceanSenseORP", oceanSenseData?.ORP)
       .result();
-  const fileName = `data_reef_${reefId}${
-    pointId ? `_poi_${pointId}` : ""
+  const fileName = `data_site_${siteId}${
+    pointId ? `_survey_point_${pointId}` : ""
   }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
     DATE_FORMAT
   )}.csv`;
@@ -133,7 +133,7 @@ DownloadCSVButton.defaultProps = {
   startDate: undefined,
   endDate: undefined,
   pointId: undefined,
-  reefId: undefined,
+  siteId: undefined,
   className: undefined,
 };
 

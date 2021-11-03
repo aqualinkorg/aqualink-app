@@ -1,15 +1,15 @@
-import type { Reef } from "../Reefs/types";
+import type { Site } from "../Sites/types";
 
 export interface User {
   email?: string | null;
   fullName?: string | null;
-  adminLevel?: "default" | "reef_manager" | "super_admin";
+  adminLevel?: "default" | "site_manager" | "super_admin";
   firebaseUid?: string | null;
   organization?: string | null;
-  administeredReefs?: Reef[];
+  administeredSites?: Site[];
   collection?: {
     id: number;
-    reefIds: number[];
+    siteIds: number[];
   };
   token?: string | null;
   id: number;

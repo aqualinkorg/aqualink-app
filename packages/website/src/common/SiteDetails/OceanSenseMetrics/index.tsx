@@ -23,10 +23,10 @@ import { ReactComponent as PressureIcon } from "../../../assets/pressure.svg";
 import { ReactComponent as DissolvedOxygenIcon } from "../../../assets/dissolved_oxygen.svg";
 import { ReactComponent as OrpIcon } from "../../../assets/orp.svg";
 import {
-  reefLatestOceanSenseDataLoadingSelector,
-  reefLatestOceanSenseDataSelector,
-} from "../../../store/Reefs/selectedReefSlice";
-import { OceanSenseData, OceanSenseKeys } from "../../../store/Reefs/types";
+  siteLatestOceanSenseDataLoadingSelector,
+  siteLatestOceanSenseDataSelector,
+} from "../../../store/Sites/selectedSiteSlice";
+import { OceanSenseData, OceanSenseKeys } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 
@@ -74,8 +74,8 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const isTablet = useMediaQuery(theme.breakpoints.up("md"));
-  const data = useSelector(reefLatestOceanSenseDataSelector);
-  const loading = useSelector(reefLatestOceanSenseDataLoadingSelector);
+  const data = useSelector(siteLatestOceanSenseDataSelector);
+  const loading = useSelector(siteLatestOceanSenseDataLoadingSelector);
 
   const lastTimestamp = last(data?.PH)?.timestamp;
   const relativeTime = lastTimestamp

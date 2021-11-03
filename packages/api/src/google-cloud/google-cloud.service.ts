@@ -41,7 +41,7 @@ export class GoogleCloudService {
       throw new InternalServerErrorException();
     }
     const folder = `${this.STORAGE_FOLDER}/surveys/`;
-    const prefix = 'reef_hobo_image';
+    const prefix = 'site_hobo_image';
     const basename = path.basename(filePath);
     const destination = getRandomName(folder, prefix, basename, type);
 

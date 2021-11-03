@@ -9,6 +9,13 @@
           "source": "**",
           "destination": "/index.html"
         }
+      ],
+      "redirects": [
+        {
+          "source": "/reefs/:site_id",
+          "destination": "/sites/:site_id",
+          "type": 301
+        }
       ]
     },
     {
@@ -20,6 +27,13 @@
           "source": "**",
           "destination": "/index.html"
         }
+      ],
+      "redirects": [
+        {
+          "source": "/reefs/:site_id",
+          "destination": "/sites/:site_id",
+          "type": 301
+        }
       ]
     },
     {
@@ -30,6 +44,13 @@
         {
           "source": "**",
           "destination": "/index.html"
+        }
+      ],
+      "redirects": [
+        {
+          "source": "/reefs/:site_id",
+          "destination": "/sites/:site_id",
+          "type": 301
         }
       ]
     }

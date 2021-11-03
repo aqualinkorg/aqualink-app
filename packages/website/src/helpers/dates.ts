@@ -9,7 +9,7 @@ import {
   Range,
   SofarValue,
   TimeSeries,
-} from "../store/Reefs/types";
+} from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
 

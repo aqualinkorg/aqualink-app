@@ -1,8 +1,8 @@
 import _, { omit } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
-import { Reef } from '../reefs/reefs.entity';
-import { SourceType } from '../reefs/schemas/source-type.enum';
-import { Sources } from '../reefs/sources.entity';
+import { Site } from '../sites/sites.entity';
+import { SourceType } from '../sites/schemas/source-type.enum';
+import { Sources } from '../sites/sources.entity';
 import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -63,12 +63,12 @@ export const getDataQuery = (
   endDate: Date,
   metrics: Metric[],
   hourly: boolean,
-  reefId: number,
-  poiId?: number,
+  siteId: number,
+  surveyPointId?: number,
 ): Promise<TimeSeriesData[]> => {
-  const poiCondition = poiId
-    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
-    : 'source.poi_id is NULL';
+  const surveyPointCondition = surveyPointId
+    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
+    : 'source.survey_point_id is NULL';
 
   return hourly
     ? timeSeriesRepository
@@ -80,8 +80,8 @@ export const getDataQuery = (
         .innerJoin(
           'time_series.source',
           'source',
-          `source.reef_id = :reefId AND ${poiCondition}`,
-          { reefId },
+          `source.site_id = :siteId AND ${surveyPointCondition}`,
+          { siteId },
         )
         .andWhere('metric IN (:...metrics)', { metrics })
         .andWhere('timestamp >= :startDate', { startDate })
@@ -98,8 +98,8 @@ export const getDataQuery = (
         .innerJoin(
           'time_series.source',
           'source',
-          `source.reef_id = :reefId AND ${poiCondition}`,
-          { reefId },
+          `source.site_id = :siteId AND ${surveyPointCondition}`,
+          { siteId },
         )
         .andWhere('metric IN (:...metrics)', { metrics })
         .andWhere('timestamp >= :startDate', { startDate })
@@ -110,12 +110,12 @@ export const getDataQuery = (
 
 export const getDataRangeQuery = (
   timeSeriesRepository: Repository<TimeSeries>,
-  reefId: number,
-  poiId?: number,
+  siteId: number,
+  surveyPointId?: number,
 ): Promise<TimeSeriesRange[]> => {
-  const poiCondition = poiId
-    ? `(source.poi_id = ${poiId} OR source.poi_id is NULL)`
-    : 'source.poi_id is NULL';
+  const surveyPointCondition = surveyPointId
+    ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
+    : 'source.survey_point_id is NULL';
 
   return timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -126,32 +126,32 @@ export const getDataRangeQuery = (
     .innerJoin(
       'time_series.source',
       'source',
-      `source.reef_id = :reefId AND ${poiCondition}`,
-      { reefId },
+      `source.site_id = :siteId AND ${surveyPointCondition}`,
+      { siteId },
     )
     .groupBy('metric, source.type')
     .getRawMany();
 };
 
 /**
- * Fetch existing NOAA sources based on the reefs.
+ * Fetch existing NOAA sources based on the sites.
  * If the source does not exists create it.
- * @param reef The reef entity
+ * @param site The site entity
  * @param sourcesRepository The repository needed to make the query
  * @returns The source found or created
  */
 export const getNOAASource = async (
-  reef: Reef,
+  site: Site,
   sourcesRepository: Repository<Sources>,
 ) => {
   return sourcesRepository
     .findOne({
       where: {
-        reef,
+        site,
         type: SourceType.NOAA,
-        poi: IsNull(),
+        surveyPoint: IsNull(),
       },
-      relations: ['reef', 'reef.historicalMonthlyMean'],
+      relations: ['site', 'site.historicalMonthlyMean'],
     })
     .then((source) => {
       // If source exists return it
@@ -161,13 +161,13 @@ export const getNOAASource = async (
 
       // Else create it and return the created entity
       return sourcesRepository.save({
-        reef,
+        site,
         type: SourceType.NOAA,
       });
     });
 };
 
-export const insertReefDataToTimeSeries = (
+export const insertSiteDataToTimeSeries = (
   data: TimeSeriesValueDto[],
   metric: Metric,
   NOAASource: Sources,

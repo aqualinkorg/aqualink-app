@@ -9,7 +9,7 @@ import { mockSurvey } from "../../../../mocks/mockSurvey";
 
 const mockStore = configureStore([]);
 
-describe("ReefRoutes Surveys", () => {
+describe("SiteRoutes Surveys", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -27,7 +27,7 @@ describe("ReefRoutes Surveys", () => {
         <Router>
           <Timeline
             isAdmin={false}
-            reefId={0}
+            siteId={0}
             observation="any"
             pointId={0}
             pointName="Test Point"

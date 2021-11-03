@@ -1,6 +1,6 @@
-import { Pois } from "../store/Reefs/types";
+import { SurveyPoints } from "../store/Sites/types";
 
-export const mockSurveyPoint: Pois = {
+export const mockSurveyPoint: SurveyPoints = {
   id: 1,
   name: "Test Survey Point",
   polygon: null,

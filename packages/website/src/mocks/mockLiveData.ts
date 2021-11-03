@@ -1,11 +1,11 @@
-import { LiveData } from "../store/Reefs/types";
+import { LiveData } from "../store/Sites/types";
 
 const now = new Date();
 const minutesAgo = 5;
 const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
 
 export const mockLiveData: LiveData = {
-  reef: { id: 1 },
+  site: { id: 1 },
   bottomTemperature: {
     value: 25,
     timestamp: liveDataDate,

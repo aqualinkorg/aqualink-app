@@ -1,33 +1,33 @@
 import { DeepPartial } from 'typeorm';
-import { SourceType } from '../../src/reefs/schemas/source-type.enum';
-import { Sources } from '../../src/reefs/sources.entity';
-import { athensReef, californiaReef, floridaReef } from './reef.mock';
-import { athensPoiPiraeus } from './poi.mock';
+import { SourceType } from '../../src/sites/schemas/source-type.enum';
+import { Sources } from '../../src/sites/sources.entity';
+import { athensSite, californiaSite, floridaSite } from './site.mock';
+import { athensSurveyPointPiraeus } from './survey-point.mock';
 
 export const californiaSpotterSource: DeepPartial<Sources> = {
-  reef: californiaReef,
+  site: californiaSite,
   type: SourceType.SPOTTER,
-  sensorId: californiaReef.sensorId,
+  sensorId: californiaSite.sensorId,
 };
 
 export const californiaNOAASource: DeepPartial<Sources> = {
-  reef: californiaReef,
+  site: californiaSite,
   type: SourceType.NOAA,
 };
 
 export const floridaNOAASource: DeepPartial<Sources> = {
-  reef: floridaReef,
+  site: floridaSite,
   type: SourceType.NOAA,
 };
 
 export const athensNOAASource: DeepPartial<Sources> = {
-  reef: athensReef,
+  site: athensSite,
   type: SourceType.NOAA,
 };
 
 export const athensPiraeusHoboSource: DeepPartial<Sources> = {
-  reef: athensReef,
-  poi: athensPoiPiraeus,
+  site: athensSite,
+  surveyPoint: athensSurveyPointPiraeus,
   type: SourceType.HOBO,
 };
 

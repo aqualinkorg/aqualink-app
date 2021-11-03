@@ -160,17 +160,17 @@ const NavBar = ({
                       MenuListProps={{ className: classes.userMenu }}
                       PopoverClasses={{ paper: classes.userMenuWrapper }}
                     >
-                      {sortBy(user.administeredReefs, "id").map(
+                      {sortBy(user.administeredSites, "id").map(
                         ({ id, name, region }, index) => {
-                          const reefIdentifier = name || region;
+                          const siteIdentifier = name || region;
                           return (
                             <Link
-                              to={`/reefs/${id}`}
-                              key={`reef-link-${id}`}
+                              to={`/sites/${id}`}
+                              key={`site-link-${id}`}
                               className={classes.menuItemLink}
                             >
                               <MenuItem className={classes.menuItem}>
-                                {reefIdentifier || `Reef ${index + 1}`}
+                                {siteIdentifier || `Site ${index + 1}`}
                               </MenuItem>
                             </Link>
                           );

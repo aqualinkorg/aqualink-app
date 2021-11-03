@@ -8,14 +8,14 @@ import { AdminLevel, User } from './users.entity';
 import {
   adminFirebaseUserMock,
   adminUserMock,
-  reefManagerFirebaseUserMock,
-  reefManagerUserMock,
+  siteManagerFirebaseUserMock,
+  siteManagerUserMock,
   testFirebaseUserMock,
   testUserMock,
 } from '../../test/mock/user.mock';
 import { mockExtractAndVerifyToken } from '../../test/utils';
 import { CreateUserDto } from './dto/create-user.dto';
-import { californiaReef, floridaReef } from '../../test/mock/reef.mock';
+import { californiaSite, floridaSite } from '../../test/mock/site.mock';
 
 const createUserDto = (mockUser: DeepPartial<User>): CreateUserDto => ({
   fullName: mockUser.fullName,
@@ -32,7 +32,7 @@ export const userTests = () => {
   let app: INestApplication;
 
   const testUserDto = createUserDto(testUserMock);
-  const reefManagerUserDto = createUserDto(reefManagerUserMock);
+  const siteManagerUserDto = createUserDto(siteManagerUserMock);
 
   beforeAll(async () => {
     app = await testService.getApp();
@@ -84,7 +84,7 @@ export const userTests = () => {
       const rsp = await request(app.getHttpServer())
         .put(`/users/${testUserId}/level`)
         .send({
-          level: AdminLevel.ReefManager,
+          level: AdminLevel.SiteManager,
         });
 
       expect(rsp.status).toBe(200);
@@ -95,7 +95,7 @@ export const userTests = () => {
       const rsp = await request(app.getHttpServer()).get('/users/current');
 
       expect(rsp.status).toBe(200);
-      expect(rsp.body.adminLevel).toBe(AdminLevel.ReefManager);
+      expect(rsp.body.adminLevel).toBe(AdminLevel.SiteManager);
     });
 
     it('DELETE /:id deletes test user.', async () => {
@@ -108,32 +108,32 @@ export const userTests = () => {
     });
   });
 
-  describe('Creates a user for an existing reef manager.', () => {
+  describe('Creates a user for an existing site manager.', () => {
     it('POST / creates a user.', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
 
       const rsp = await request(app.getHttpServer())
         .post('/users')
-        .send(reefManagerUserDto);
+        .send(siteManagerUserDto);
 
       expect(rsp.status).toBe(201);
-      expect(rsp.body.adminLevel).toBe(AdminLevel.ReefManager);
+      expect(rsp.body.adminLevel).toBe(AdminLevel.SiteManager);
     });
 
-    it('GET /current/administered-reefs Gets administered reefs of user.', async () => {
-      mockExtractAndVerifyToken(reefManagerFirebaseUserMock);
+    it('GET /current/administered-sites Gets administered sites of user.', async () => {
+      mockExtractAndVerifyToken(siteManagerFirebaseUserMock);
 
       const rsp = await request(app.getHttpServer()).get(
-        '/users/current/administered-reefs',
+        '/users/current/administered-sites',
       );
 
       expect(rsp.status).toBe(200);
       expect(rsp.body.length).toBe(2);
       expect(rsp.body[0]).toMatchObject({
-        ...omit(californiaReef, 'updatedAt', 'createdAt'),
+        ...omit(californiaSite, 'updatedAt', 'createdAt'),
       });
       expect(rsp.body[1]).toMatchObject({
-        ...omit(floridaReef, 'updatedAt', 'createdAt'),
+        ...omit(floridaSite, 'updatedAt', 'createdAt'),
       });
     });
   });
@@ -194,7 +194,7 @@ export const userTests = () => {
     mockExtractAndVerifyToken(adminFirebaseUserMock);
 
     const rsp = await request(app.getHttpServer()).put(`/users/0/level`).send({
-      level: AdminLevel.ReefManager,
+      level: AdminLevel.SiteManager,
     });
 
     expect(rsp.status).toBe(404);

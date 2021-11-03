@@ -5,24 +5,24 @@ import { Point } from 'geojson';
 import Bluebird from 'bluebird';
 import { AppModule } from '../src/app.module';
 import { User } from '../src/users/users.entity';
-import { Reef } from '../src/reefs/reefs.entity';
-import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
+import { Site } from '../src/sites/sites.entity';
+import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { GlobalValidationPipe } from '../src/validations/global-validation.pipe';
-import { ReefApplication } from '../src/reef-applications/reef-applications.entity';
-import { Sources } from '../src/reefs/sources.entity';
+import { SiteApplication } from '../src/site-applications/site-applications.entity';
+import { Sources } from '../src/sites/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Collection } from '../src/collections/collections.entity';
-import { DailyData } from '../src/reefs/daily-data.entity';
+import { DailyData } from '../src/sites/daily-data.entity';
 import { Region } from '../src/regions/regions.entity';
 import { Survey } from '../src/surveys/surveys.entity';
-import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
-import { ExclusionDates } from '../src/reefs/exclusion-dates.entity';
+import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { getHistoricalMonthlyMeans } from '../src/utils/temperature';
 import { users } from './mock/user.mock';
-import { reefs } from './mock/reef.mock';
-import { pois } from './mock/poi.mock';
-import { reefApplications } from './mock/reef-application.mock';
+import { sites } from './mock/site.mock';
+import { surveyPoints } from './mock/survey-point.mock';
+import { siteApplications } from './mock/site-application.mock';
 import { sources } from './mock/source.mock';
 import { timeSeries } from './mock/time-series.mock';
 import { collections } from './mock/collection.mock';
@@ -83,9 +83,9 @@ export class TestService {
 
   private async loadMocks(connection: Connection) {
     await connection.getRepository(User).save(users);
-    await connection.getRepository(Reef).save(reefs);
-    await connection.getRepository(ReefPointOfInterest).save(pois);
-    await connection.getRepository(ReefApplication).save(reefApplications);
+    await connection.getRepository(Site).save(sites);
+    await connection.getRepository(SiteSurveyPoint).save(surveyPoints);
+    await connection.getRepository(SiteApplication).save(siteApplications);
     await connection.getRepository(Sources).save(sources);
     await connection.getRepository(TimeSeries).save(timeSeries);
     await connection.query('REFRESH MATERIALIZED VIEW latest_data');
@@ -94,8 +94,8 @@ export class TestService {
     await connection.getRepository(Survey).save(surveys);
     await connection.getRepository(SurveyMedia).save(surveyMedia);
 
-    await Bluebird.map(reefs, async (reef) => {
-      const [longitude, latitude] = (reef.polygon as Point).coordinates;
+    await Bluebird.map(sites, async (site) => {
+      const [longitude, latitude] = (site.polygon as Point).coordinates;
       const historicalMonthlyMean = await getHistoricalMonthlyMeans(
         longitude,
         latitude,
@@ -103,7 +103,7 @@ export class TestService {
 
       return Bluebird.map(historicalMonthlyMean, (hmm) => {
         return connection.getRepository(HistoricalMonthlyMean).save({
-          reef,
+          site,
           month: hmm.month,
           temperature: hmm.temperature,
         });
@@ -145,14 +145,14 @@ export class TestService {
     await connection.getRepository(Sources).delete({});
     await connection.getRepository(Collection).delete({});
     await connection.getRepository(Region).delete({});
-    await connection.getRepository(ReefApplication).delete({});
-    await connection.getRepository(ReefPointOfInterest).delete({});
+    await connection.getRepository(SiteApplication).delete({});
+    await connection.getRepository(SiteSurveyPoint).delete({});
     await connection.getRepository(DailyData).delete({});
     await connection.getRepository(ExclusionDates).delete({});
     await connection.getRepository(Survey).delete({});
     await connection.getRepository(SurveyMedia).delete({});
     await connection.getRepository(HistoricalMonthlyMean).delete({});
-    await connection.getRepository(Reef).delete({});
+    await connection.getRepository(Site).delete({});
     await connection.getRepository(User).delete({});
   }
 }

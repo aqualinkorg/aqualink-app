@@ -9,11 +9,11 @@ import {
 } from "@material-ui/core";
 import { Popup } from "react-leaflet";
 
-import { Pois } from "../../../../store/Reefs/types";
+import { SurveyPoints } from "../../../../store/Sites/types";
 import Link from "../../../Link";
 
 const SurveyPointPopup = ({
-  reefId,
+  siteId,
   point,
   classes,
 }: SurveyPointPopupProps) => {
@@ -38,7 +38,7 @@ const SurveyPointPopup = ({
           </Grid>
           <Grid item>
             <Link
-              to={`/reefs/${reefId}/points/${point.id}`}
+              to={`/sites/${siteId}/points/${point.id}`}
               isIcon
               tooltipTitle="View survey point"
             />
@@ -66,8 +66,8 @@ const styles = () =>
   });
 
 interface SurveyPointPopupIncomingProps {
-  reefId: number;
-  point: Pois;
+  siteId: number;
+  point: SurveyPoints;
 }
 
 type SurveyPointPopupProps = SurveyPointPopupIncomingProps &

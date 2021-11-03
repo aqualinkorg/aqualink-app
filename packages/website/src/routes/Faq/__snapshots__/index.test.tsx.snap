@@ -89,7 +89,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 What is heat stress?
               </mock-typography>
               <p>
-                Heat stress is a measure of the amount of time above the 20 year historical maximum temperature. The unit of measure for heat stress is degree heating weeks. Many marine environments, like coral reefs, degrade after prolonged heat exposure which is why this is an important metric.
+                Heat stress is a measure of the amount of time above the 20 year historical maximum temperature. The unit of measure for heat stress is degree heating weeks. Many marine environments, like coral sites, degrade after prolonged heat exposure which is why this is an important metric.
               </p>
             </div>
           </div>
@@ -106,7 +106,7 @@ exports[`Faq should render with given state from Redux store 1`] = `
                 I am managing a large area and would like more than one Smart Buoy, can I get multiple?
               </mock-typography>
               <p>
-                Please submit an application for each reef or location you would like a spotter for and we’ll be in touch to figure out a staged roll out with you.
+                Please submit an application for each site or location you would like a spotter for and we’ll be in touch to figure out a staged roll out with you.
               </p>
             </div>
           </div>

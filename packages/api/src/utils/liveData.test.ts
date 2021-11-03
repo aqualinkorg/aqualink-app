@@ -1,10 +1,10 @@
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { getLiveData } from './liveData';
 
 test('It creates a liveData object using Sofar API.', async () => {
   jest.setTimeout(30000);
 
-  const reef = {
+  const site = {
     id: 1,
     name: null,
     polygon: {
@@ -21,7 +21,7 @@ test('It creates a liveData object using Sofar API.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const liveData = await getLiveData((reef as unknown) as Reef, true);
+  const liveData = await getLiveData((site as unknown) as Site, true);
 
   expect(liveData.topTemperature).toBeDefined();
 });

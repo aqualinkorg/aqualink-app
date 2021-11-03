@@ -101,7 +101,7 @@ exports[`Popup should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-item"
           >
             <a
-              href="/reefs/1"
+              href="/sites/1"
               style="text-decoration: none;"
             >
               <mock-button

@@ -25,22 +25,22 @@ import {
 } from "../../../helpers/dates";
 import {
   DailyData,
-  Reef,
+  Site,
   SofarValue,
   TimeSeries,
-} from "../../../store/Reefs/types";
+} from "../../../store/Sites/types";
 import {
-  reefOceanSenseDataLoadingSelector,
-  reefTimeSeriesDataLoadingSelector,
-  reefTimeSeriesDataRangeLoadingSelector,
-  reefTimeSeriesDataRangeSelector,
-} from "../../../store/Reefs/selectedReefSlice";
+  siteOceanSenseDataLoadingSelector,
+  siteTimeSeriesDataLoadingSelector,
+  siteTimeSeriesDataRangeLoadingSelector,
+  siteTimeSeriesDataRangeSelector,
+} from "../../../store/Sites/selectedSiteSlice";
 import { findChartPeriod, moreThanOneYear } from "./helpers";
 import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../helpers/surveys";
 
 const Chart = ({
-  reef,
+  site,
   dailyData,
   pointId,
   displayHistoricalMonthlyMean,
@@ -61,15 +61,15 @@ const Chart = ({
   classes,
 }: ChartProps) => {
   const theme = useTheme();
-  const oceanSenseDataLoading = useSelector(reefOceanSenseDataLoadingSelector);
+  const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(reefTimeSeriesDataRangeSelector)?.hobo || {};
+    useSelector(siteTimeSeriesDataRangeSelector)?.hobo || {};
   const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
   const isTimeSeriesDataRangeLoading = useSelector(
-    reefTimeSeriesDataRangeLoadingSelector
+    siteTimeSeriesDataRangeLoadingSelector
   );
   const isTimeSeriesDataLoading = useSelector(
-    reefTimeSeriesDataLoadingSelector
+    siteTimeSeriesDataLoadingSelector
   );
   const surveys = filterSurveys(
     useSelector(surveyListSelector),
@@ -111,13 +111,13 @@ const Chart = ({
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
-    timeZone: reef.timezone,
+    timeZone: site.timezone,
     format: "MM/DD/YYYY",
     displayTimezone: false,
   });
   const maxDateLocal = displayTimeInLocalTimezone({
     isoDate: maxDate,
-    timeZone: reef.timezone,
+    timeZone: site.timezone,
     format: "MM/DD/YYYY",
     displayTimezone: false,
   });
@@ -179,24 +179,24 @@ const Chart = ({
       {success && (
         <ChartWithTooltip
           className={classes.chart}
-          reefId={reef.id}
-          depth={reef.depth}
+          siteId={site.id}
+          depth={site.depth}
           dailyData={convertDailyDataToLocalTime(
             dailyData || [],
-            reef.timezone
+            site.timezone
           )}
-          spotterData={convertTimeSeriesToLocalTime(spotterData, reef.timezone)}
+          spotterData={convertTimeSeriesToLocalTime(spotterData, site.timezone)}
           hoboBottomTemperatureData={convertSofarDataToLocalTime(
             hoboBottomTemperature || [],
-            reef.timezone
+            site.timezone
           )}
           historicalMonthlyMeanData={
             displayHistoricalMonthlyMean
               ? generateHistoricalMonthlyMeanTimestamps(
-                  reef.historicalMonthlyMean,
+                  site.historicalMonthlyMean,
                   startDate,
                   endDate,
-                  reef.timezone
+                  site.timezone
                 )
               : undefined
           }
@@ -208,9 +208,9 @@ const Chart = ({
           maxMonthlyMean={null}
           background
           chartPeriod={findChartPeriod(startDate, endDate)}
-          timeZone={reef.timezone}
-          startDate={convertToLocalTime(startDate, reef.timezone)}
-          endDate={convertToLocalTime(endDate, reef.timezone)}
+          timeZone={site.timezone}
+          startDate={convertToLocalTime(startDate, site.timezone)}
+          endDate={convertToLocalTime(endDate, site.timezone)}
           showYearInTicks={moreThanOneYear(startDate, endDate)}
           fill={false}
         />
@@ -233,7 +233,7 @@ const Chart = ({
                 pickerSize="small"
                 autoOk={false}
                 onChange={onStartDateChange}
-                timeZone={reef.timezone}
+                timeZone={site.timezone}
               />
             </Grid>
             <Grid item>
@@ -244,7 +244,7 @@ const Chart = ({
                 pickerSize="small"
                 autoOk={false}
                 onChange={onEndDateChange}
-                timeZone={reef.timezone}
+                timeZone={site.timezone}
               />
             </Grid>
           </Grid>
@@ -267,7 +267,7 @@ const styles = (theme: Theme) =>
   });
 
 interface ChartIncomingProps {
-  reef: Reef;
+  site: Site;
   pointId?: number;
   dailyData?: DailyData[];
   spotterData?: TimeSeries;

@@ -19,7 +19,7 @@ import {
 } from "../../../../helpers/surveyMedia";
 import {
   surveyLoadingSelector,
-  selectedPoiSelector,
+  selectedSurveyPointSelector,
   setFeaturedImage,
 } from "../../../../store/Survey/surveySlice";
 import { userInfoSelector } from "../../../../store/User/userSlice";
@@ -45,16 +45,16 @@ const carouselSettings = {
   ],
 };
 
-const MediaDetails = ({ reefId, surveyMedia, classes }: MediaDetailsProps) => {
+const MediaDetails = ({ siteId, surveyMedia, classes }: MediaDetailsProps) => {
   const user = useSelector(userInfoSelector);
   const loading = useSelector(surveyLoadingSelector);
-  const selectedPoi = useSelector(selectedPoiSelector);
+  const selectedPoi = useSelector(selectedSurveyPointSelector);
   const dispatch = useDispatch();
 
   const onSurveyMediaUpdate = (mediaId: number) => {
     if (user && user.token) {
       surveyServices
-        .editSurveyMedia(reefId, mediaId, { featured: true }, user.token)
+        .editSurveyMedia(siteId, mediaId, { featured: true }, user.token)
         .then(() => {
           dispatch(setFeaturedImage(mediaId));
         })
@@ -79,7 +79,7 @@ const MediaDetails = ({ reefId, surveyMedia, classes }: MediaDetailsProps) => {
               >
                 <Grid className={classes.surveyPointNameWrapper} item>
                   <MediaPointName
-                    reefId={reefId}
+                    siteId={siteId}
                     pointName={point.name}
                     pointId={point.pointId}
                     selectedPoint={selectedPoi}
@@ -95,7 +95,7 @@ const MediaDetails = ({ reefId, surveyMedia, classes }: MediaDetailsProps) => {
                     key={media.url}
                     media={media}
                     loading={loading}
-                    isReefAdmin={isAdmin(user, reefId)}
+                    isSiteAdmin={isAdmin(user, siteId)}
                     onSurveyMediaUpdate={onSurveyMediaUpdate}
                   />
                 ))}
@@ -124,7 +124,7 @@ const styles = (theme: Theme) =>
   });
 
 interface MediaDetailsIncomingProps {
-  reefId: number;
+  siteId: number;
   surveyMedia?: SurveyMedia[] | null;
 }
 

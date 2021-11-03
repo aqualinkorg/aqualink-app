@@ -7,18 +7,18 @@ test("renders as expected", () => {
   const { container } = render(
     <Router>
       <PointSelector
-        reefId={1}
+        siteId={1}
         pointOptions={[]}
         point="All"
         pointId={-1}
-        editPoiNameDraft={null}
-        isReefAdmin={false}
-        editPoiNameLoading={false}
-        onChangePoiName={() => {}}
+        editSurveyPointNameDraft={null}
+        isSiteAdmin={false}
+        editSurveyPointNameLoading={false}
+        onChangeSurveyPointName={() => {}}
         handlePointChange={() => {}}
-        disableEditPoiName={() => {}}
-        enableEditPoiName={() => {}}
-        submitPoiNameUpdate={() => {}}
+        disableeditSurveyPointName={() => {}}
+        enableeditSurveyPointName={() => {}}
+        submitSurveyPointNameUpdate={() => {}}
         onDeleteButtonClick={() => {}}
       />
     </Router>

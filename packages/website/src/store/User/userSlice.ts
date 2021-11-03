@@ -19,8 +19,8 @@ import { isManager } from "../../helpers/user";
 import userServices from "../../services/userServices";
 import collectionServices from "../../services/collectionServices";
 import { constructUserObject } from "./helpers";
-import { setReefNameFromList } from "../../helpers/reefUtils";
-import { UpdateReefNameFromListArgs } from "../Reefs/types";
+import { setSiteNameFromList } from "../../helpers/siteUtils";
+import { UpdateSiteNameFromListArgs } from "../Sites/types";
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -61,11 +61,11 @@ export const createUser = createAsyncThunk<
         organization: data.organization,
         adminLevel: data.adminLevel,
         firebaseUid: data.firebaseUid,
-        administeredReefs: isManager(data)
-          ? (await userServices.getAdministeredReefs(token)).data
+        administeredSites: isManager(data)
+          ? (await userServices.getAdministeredSites(token)).data
           : [],
         collection: collections?.[0]?.id
-          ? { id: collections[0].id, reefIds: collections[0].reefIds }
+          ? { id: collections[0].id, siteIds: collections[0].siteIds }
           : undefined,
         token: await user?.getIdToken(),
       };
@@ -200,26 +200,26 @@ const userSlice = createSlice({
       return state;
     },
     clearError: (state) => ({ ...state, error: null }),
-    setCollectionReefs: (state, action: PayloadAction<number[]>) => ({
+    setCollectionSites: (state, action: PayloadAction<number[]>) => ({
       ...state,
       userInfo: state.userInfo
         ? {
             ...state.userInfo,
             collection: state.userInfo.collection
-              ? { ...state.userInfo.collection, reefIds: action.payload }
+              ? { ...state.userInfo.collection, siteIds: action.payload }
               : state.userInfo.collection,
           }
         : state.userInfo,
     }),
-    setAdministeredReefName: (
+    setAdministeredSiteName: (
       state,
-      action: PayloadAction<UpdateReefNameFromListArgs>
+      action: PayloadAction<UpdateSiteNameFromListArgs>
     ) => ({
       ...state,
       userInfo: state.userInfo
         ? {
             ...state.userInfo,
-            administeredReefs: setReefNameFromList(action.payload),
+            administeredSites: setSiteNameFromList(action.payload),
           }
         : state.userInfo,
     }),
@@ -254,8 +254,8 @@ export const userErrorSelector = (state: RootState): UserState["error"] =>
 export const {
   setToken,
   clearError,
-  setCollectionReefs,
-  setAdministeredReefName,
+  setCollectionSites,
+  setAdministeredSiteName,
 } = userSlice.actions;
 
 export default userSlice.reducer;

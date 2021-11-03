@@ -5,19 +5,19 @@ import { Point } from 'geojson';
 import { isNil, times } from 'lodash';
 import moment from 'moment';
 
-import { Reef } from '../reefs/reefs.entity';
-import { Sources } from '../reefs/sources.entity';
+import { Site } from '../sites/sites.entity';
+import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { filterSofarResponse, getLatestData, sofarHindcast } from './sofar';
-import { getNOAASource, insertReefDataToTimeSeries } from './time-series.utils';
+import { getNOAASource, insertSiteDataToTimeSeries } from './time-series.utils';
 import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
 import { SofarValue } from './sofar.types';
 
 interface Repositories {
-  reefRepository: Repository<Reef>;
+  siteRepository: Repository<Site>;
   sourceRepository: Repository<Sources>;
   timeSeriesRepository: Repository<TimeSeries>;
 }
@@ -26,15 +26,15 @@ interface Repositories {
 const logger = new Logger('SSTTimeSeries');
 
 /**
- * Get reefs entities based on the given reefIds array.
- * If an empty array was given then this function returns all reefs
- * @param reefIds The reefIds to return
- * @param reefRepository The repository needed to perform the query
- * @returns A reef array with all the requested reefs. If no reefIds request then returns all reefs available.
+ * Get sites entities based on the given siteIds array.
+ * If an empty array was given then this function returns all sites
+ * @param siteIds The siteIds to return
+ * @param siteRepository The repository needed to perform the query
+ * @returns A site array with all the requested sites. If no siteIds request then returns all sites available.
  */
-const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
-  return reefRepository.find({
-    where: reefIds.length > 0 ? { id: In(reefIds) } : {},
+const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
+  return siteRepository.find({
+    where: siteIds.length > 0 ? { id: In(siteIds) } : {},
     relations: ['historicalMonthlyMean'],
   });
 };
@@ -43,43 +43,43 @@ const getReefs = (reefIds: number[], reefRepository: Repository<Reef>) => {
  * A function to fetch satellite temperature data and degree heating weeks from sofar,
  * calculate the sstAnomaly, dailyAlert and weeklyAlert
  * and save all above metrics to time_series table
- * @param reefIds The reefIds for which to perform the update
+ * @param siteIds The siteIds for which to perform the update
  * @param days How many days will this script need to backfill (1 = daily update)
  * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
 export const updateSST = async (
-  reefIds: number[],
+  siteIds: number[],
   days: number,
   connection: Connection,
   repositories: Repositories,
 ) => {
   const {
-    reefRepository,
+    siteRepository,
     timeSeriesRepository,
     sourceRepository,
   } = repositories;
 
-  logger.log('Fetching reefs');
-  // Fetch reefs entities
-  const reefs = await getReefs(reefIds, reefRepository);
+  logger.log('Fetching sites');
+  // Fetch sites entities
+  const sites = await getSites(siteIds, siteRepository);
 
   // Fetch sources
   const sources = await Promise.all(
-    reefs.map((reef) => {
-      return getNOAASource(reef, sourceRepository);
+    sites.map((site) => {
+      return getNOAASource(site, sourceRepository);
     }),
   );
 
   await Bluebird.map(
     sources,
     async (source) => {
-      const { reef } = source;
-      const point = reef.polygon as Point;
-      // Extract reef coordinates
+      const { site } = source;
+      const point = site.polygon as Point;
+      // Extract site coordinates
       const [longitude, latitude] = point.coordinates;
 
-      logger.log(`Back-filling reef with id ${reef.id}.`);
+      logger.log(`Back-filling site with id ${site.id}.`);
 
       const data = await Bluebird.map(
         times(days),
@@ -123,7 +123,7 @@ export const updateSST = async (
             const latestDhw = getLatestData(dhwFiltered);
             // Get alert level
             const alertLevel = calculateAlertLevel(
-              reef.maxMonthlyMean,
+              site.maxMonthlyMean,
               getLatestData(sstFiltered)?.value,
               // Calculate degree heating days
               latestDhw && latestDhw.value * 7,
@@ -132,7 +132,7 @@ export const updateSST = async (
             // Calculate the sstAnomaly
             const sstAnomaly = sstFiltered
               .map((sst) => ({
-                value: getSstAnomaly(reef.historicalMonthlyMean, sst),
+                value: getSstAnomaly(site.historicalMonthlyMean, sst),
                 timestamp: sst.timestamp,
               }))
               // Filter out null values
@@ -165,25 +165,25 @@ export const updateSST = async (
         // Save data on time_series table
         ({ sst, dhw, alert, sstAnomaly }) =>
           Promise.all([
-            insertReefDataToTimeSeries(
+            insertSiteDataToTimeSeries(
               sst,
               Metric.SATELLITE_TEMPERATURE,
               source,
               timeSeriesRepository,
             ),
-            insertReefDataToTimeSeries(
+            insertSiteDataToTimeSeries(
               dhw,
               Metric.DHW,
               source,
               timeSeriesRepository,
             ),
-            insertReefDataToTimeSeries(
+            insertSiteDataToTimeSeries(
               alert,
               Metric.ALERT,
               source,
               timeSeriesRepository,
             ),
-            insertReefDataToTimeSeries(
+            insertSiteDataToTimeSeries(
               sstAnomaly,
               Metric.SST_ANOMALY,
               source,

@@ -1,12 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import ReefFooter from ".";
+import SiteFooter from ".";
 
 test("renders as expected", () => {
   const { container } = render(
     <Router>
-      <ReefFooter />
+      <SiteFooter />
     </Router>
   );
   expect(container).toMatchSnapshot();

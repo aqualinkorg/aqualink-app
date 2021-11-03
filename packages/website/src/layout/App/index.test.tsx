@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 jest.mock("../../routes/Landing", () => "Mock-LandingPage");
 jest.mock("../../routes/HomeMap", () => "Mock-HomeMap");
-jest.mock("../../routes/ReefRoutes", () => "Mock-ReefRoutes");
+jest.mock("../../routes/SiteRoutes", () => "Mock-SiteRoutes");
 jest.mock("../../routes/About", () => "Mock-About");
 jest.mock("../../routes/RegisterSite", () => "Mock-RegisterSite");
 jest.mock("../../routes/Buoy", () => "Mock-Buoy");
@@ -21,7 +21,7 @@ test("renders as expected", () => {
       <Switch>
         <Route exact path="/" component={() => <div>LandingPage</div>} />
         <Route exact path="/map" component={() => <div>HomeMap</div>} />
-        <Route path="/reefs" component={() => <div>Reefs</div>} />
+        <Route path="/sites" component={() => <div>Sites</div>} />
         <Route default component={() => <div>Not Found</div>} />
       </Switch>
     </Router>

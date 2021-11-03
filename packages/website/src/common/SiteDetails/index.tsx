@@ -22,7 +22,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type { Reef } from "../../store/Reefs/types";
+import type { Site } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { sortByDate } from "../../helpers/sortDailyData";
@@ -32,7 +32,7 @@ import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 
 const SiteDetails = ({
   classes,
-  reef,
+  site,
   closestSurveyPointId,
   featuredSurveyId,
   hasDailyData,
@@ -42,9 +42,9 @@ const SiteDetails = ({
 }: SiteDetailsProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const [lng, lat] = getMiddlePoint(reef.polygon);
+  const [lng, lat] = getMiddlePoint(site.polygon);
 
-  const { dailyData, liveData, maxMonthlyMean, videoStream } = reef;
+  const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
   const cards = [
     {
       Component: Satellite as ElementType,
@@ -52,7 +52,7 @@ const SiteDetails = ({
     },
     {
       Component: Sensor as ElementType,
-      props: { reef },
+      props: { site },
     },
     {
       Component: CoralBleaching as ElementType,
@@ -108,7 +108,7 @@ const SiteDetails = ({
               isoDate: surveyDiveDate,
               format: "MMM DD[,] YYYY",
               displayTimezone: false,
-              timeZone: reef.timezone,
+              timeZone: site.timezone,
             })}`,
             variant: "subtitle2",
             marginRight: 0,
@@ -140,10 +140,10 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
         >
           <Map
-            reefId={reef.id}
-            spotterPosition={reef.liveData?.spotterPosition}
-            polygon={reef.polygon}
-            surveyPoints={reef.surveyPoints}
+            siteId={site.id}
+            spotterPosition={site.liveData?.spotterPosition}
+            polygon={site.polygon}
+            surveyPoints={site.surveyPoints}
           />
         </CardWithTitle>
 
@@ -156,9 +156,9 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
         >
           <FeaturedMedia
-            reefId={reef.id}
+            siteId={site.id}
             url={videoStream}
-            featuredImage={reef.featuredImage}
+            featuredImage={site.featuredImage}
             surveyId={featuredSurveyId}
           />
         </CardWithTitle>
@@ -179,15 +179,15 @@ const SiteDetails = ({
             ))}
           </Grid>
 
-          {oceanSenseConfig?.[reef.id] && <OceanSenseMetrics />}
+          {oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
 
           <Box mt="2rem">
             <CombinedCharts
-              reef={reef}
+              site={site}
               closestSurveyPointId={closestSurveyPointId}
               surveys={surveys}
             />
-            <Surveys reef={reef} />
+            <Surveys site={site} />
           </Box>
         </>
       )}
@@ -215,7 +215,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SiteDetailsIncomingProps {
-  reef: Reef;
+  site: Site;
   closestSurveyPointId: string | undefined;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;

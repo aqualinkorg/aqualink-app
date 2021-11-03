@@ -26,7 +26,7 @@ import { Public } from '../auth/public.decorator';
 import { ApiNestNotFoundResponse } from '../docs/api-response';
 
 @ApiTags('Regions')
-@Auth(AdminLevel.ReefManager, AdminLevel.SuperAdmin)
+@Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
 @Controller('regions')
 export class RegionsController {
   constructor(private regionsService: RegionsService) {}

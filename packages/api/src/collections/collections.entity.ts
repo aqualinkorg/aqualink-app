@@ -10,7 +10,7 @@ import {
   RelationId,
   UpdateDateColumn,
 } from 'typeorm';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { User } from '../users/users.entity';
 
 export type DynamicCollection = Omit<
@@ -38,13 +38,13 @@ export class Collection {
   @RelationId((collection: Collection) => collection.user)
   userId: number;
 
-  @ManyToMany(() => Reef)
+  @ManyToMany(() => Site)
   @JoinTable()
-  reefs: Reef[];
+  sites: Site[];
 
   @ApiProperty({ example: [1, 2, 3] })
-  @RelationId((collection: Collection) => collection.reefs)
-  reefIds: number[];
+  @RelationId((collection: Collection) => collection.sites)
+  siteIds: number[];
 
   @CreateDateColumn()
   createdAt: Date;

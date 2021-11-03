@@ -48,7 +48,7 @@ function ChartWithTooltip({
     oceanSenseData,
     oceanSenseDataUnit,
     historicalMonthlyMeanData,
-    reefId,
+    siteId,
     surveys,
     timeZone,
     startDate,
@@ -58,7 +58,7 @@ function ChartWithTooltip({
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
-    reefId,
+    siteId,
     date: "",
     depth,
     historicalMonthlyMeanTemp: null,
@@ -211,7 +211,7 @@ function ChartWithTooltip({
         >
           <Tooltip
             {...tooltipData}
-            reefTimeZone={timeZone}
+            siteTimeZone={timeZone}
             userTimeZone={Intl.DateTimeFormat().resolvedOptions().timeZone}
           />
         </div>

@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { HomePageState } from "./types";
-import { Reef } from "../Reefs/types";
+import { Site } from "../Sites/types";
 import type { RootState } from "../configure";
 
 const homepageInitialState: HomePageState = {
-  reefOnMap: null,
+  siteOnMap: null,
   withSpotterOnly: false,
 };
 
@@ -24,20 +24,20 @@ const homepageSlice = createSlice({
       ...state,
       searchResult: action.payload,
     }),
-    setReefOnMap: (state, action: PayloadAction<Reef>) => ({
+    setSiteOnMap: (state, action: PayloadAction<Site>) => ({
       ...state,
-      reefOnMap: action.payload,
+      siteOnMap: action.payload,
     }),
-    unsetReefOnMap: (state) => ({
+    unsetSiteOnMap: (state) => ({
       ...state,
-      reefOnMap: null,
+      siteOnMap: null,
     }),
   },
 });
 
-export const reefOnMapSelector = (
+export const siteOnMapSelector = (
   state: RootState
-): HomePageState["reefOnMap"] => state.homepage.reefOnMap;
+): HomePageState["siteOnMap"] => state.homepage.siteOnMap;
 
 export const searchResultSelector = (
   state: RootState
@@ -49,8 +49,8 @@ export const withSpotterOnlySelector = (
 
 export const {
   setSearchResult,
-  setReefOnMap,
-  unsetReefOnMap,
+  setSiteOnMap,
+  unsetSiteOnMap,
   setWithSpotterOnly,
 } = homepageSlice.actions;
 

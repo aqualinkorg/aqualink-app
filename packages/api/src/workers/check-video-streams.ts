@@ -2,18 +2,18 @@ import { Logger } from '@nestjs/common';
 import axios, { AxiosPromise } from 'axios';
 import { Dictionary } from 'lodash';
 import { Connection, IsNull, Not } from 'typeorm';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
 import { getYouTubeVideoId } from '../utils/urls';
 
 const logger = new Logger('CheckVideoStreams');
 
-type reefIdToVideoStreamDetails = Record<
+type siteIdToVideoStreamDetails = Record<
   number,
   {
     id?: string;
     name: string | null;
-    reefId: number;
+    siteId: number;
     url: string;
     error: string;
   }
@@ -37,8 +37,8 @@ interface YouTubeApiResponse {
   items: YouTubeVideoItem[];
 }
 
-const getReefFrontEndURL = (reefId: number, frontUrl: string) =>
-  new URL(`reefs/${reefId}`, frontUrl).href;
+const getSiteFrontEndURL = (siteId: number, frontUrl: string) =>
+  new URL(`sites/${siteId}`, frontUrl).href;
 
 export const fetchVideoDetails = (
   youTubeIds: string[],
@@ -123,31 +123,31 @@ export const checkVideoStreams = async (
     return;
   }
 
-  // Fetch reefs with streams
-  const reefsWithStream = await connection.getRepository(Reef).find({
+  // Fetch sites with streams
+  const sitesWithStream = await connection.getRepository(Site).find({
     where: { videoStream: Not(IsNull()) },
   });
 
   // Extract the youTube id from the URLs
-  const reefIdToVideoStreamDetails = reefsWithStream.reduce<
-    reefIdToVideoStreamDetails
-  >((mapping, reef) => {
-    const id = getYouTubeVideoId(reef.videoStream!);
+  const siteIdToVideoStreamDetails = sitesWithStream.reduce<
+    siteIdToVideoStreamDetails
+  >((mapping, site) => {
+    const id = getYouTubeVideoId(site.videoStream!);
 
     return {
       ...mapping,
-      [reef.id]: {
+      [site.id]: {
         id,
-        name: reef.name,
-        reefId: reef.id,
-        url: reef.videoStream!,
+        name: site.name,
+        siteId: site.id,
+        url: site.videoStream!,
         // If no id exists, then url is invalid
         error: id ? '' : 'Video stream URL is invalid',
       },
     };
   }, {});
 
-  const youTubeIds = Object.values(reefIdToVideoStreamDetails)
+  const youTubeIds = Object.values(siteIdToVideoStreamDetails)
     .map((videoStreamDetails) => videoStreamDetails.id)
     .filter((id) => id) as string[];
 
@@ -158,9 +158,9 @@ export const checkVideoStreams = async (
   // For ids with no errors an empty string is returned
   const youTubeIdToError = checkVideoOptions(axiosResponse.data.items);
 
-  const blocks = Object.values(reefIdToVideoStreamDetails).reduce<
+  const blocks = Object.values(siteIdToVideoStreamDetails).reduce<
     Exclude<SlackMessage['blocks'], undefined>
-  >((msgs, { id, reefId, url, name, error }) => {
+  >((msgs, { id, siteId, url, name, error }) => {
     const reportedError =
       error ||
       (!(id! in youTubeIdToError) && 'Video does not exist') ||
@@ -175,7 +175,7 @@ export const checkVideoStreams = async (
       text: {
         type: 'mrkdwn',
         text:
-          `*Reef*: ${name} - ${getReefFrontEndURL(reefId, frontUrl)}\n` +
+          `*Site*: ${name} - ${getSiteFrontEndURL(siteId, frontUrl)}\n` +
           `*Video*: ${url}\n` +
           `*Error*: ${reportedError}`,
       },

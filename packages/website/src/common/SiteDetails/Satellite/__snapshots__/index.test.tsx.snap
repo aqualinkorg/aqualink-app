@@ -369,7 +369,7 @@ exports[`renders as expected 1`] = `
           >
             <a
               class="makeStyles-link-17"
-              href="https://coralreefwatch.noaa.gov/"
+              href="https://coralsitewatch.noaa.gov/"
               target="_blank"
             >
               <mock-typography

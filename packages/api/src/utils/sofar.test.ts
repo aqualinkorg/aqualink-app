@@ -32,7 +32,7 @@ test('it process Sofar Forecast API for live data', async () => {
   const now = new Date();
   const values = await sofarForecast(
     SofarModels.GFS,
-    sofarVariableIDs[SofarModels.GFS].magnitude10MeterWind,
+    sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
     -3.5976336810301888,
     -178.0000002552476,
   );

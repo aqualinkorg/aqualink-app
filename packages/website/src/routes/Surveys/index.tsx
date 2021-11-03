@@ -12,29 +12,29 @@ import { RouteComponentProps } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-  reefDetailsSelector,
-  reefLoadingSelector,
-  reefErrorSelector,
-  reefRequest,
-} from "../../store/Reefs/selectedReefSlice";
+  siteDetailsSelector,
+  siteLoadingSelector,
+  siteErrorSelector,
+  siteRequest,
+} from "../../store/Sites/selectedSiteSlice";
 import NavBar from "../../common/NavBar";
 import Footer from "../../common/Footer";
 import NewSurvey from "./New";
 import ViewSurvey from "./View";
 
 const Surveys = ({ match, isView, classes }: SurveysProps) => {
-  const reefDetails = useSelector(reefDetailsSelector);
-  const loading = useSelector(reefLoadingSelector);
-  const error = useSelector(reefErrorSelector);
+  const siteDetails = useSelector(siteDetailsSelector);
+  const loading = useSelector(siteLoadingSelector);
+  const error = useSelector(siteErrorSelector);
   const dispatch = useDispatch();
-  const reefId = match.params.id;
+  const siteId = match.params.id;
   const surveyId = match.params.sid;
 
   useEffect(() => {
-    if (!reefDetails || `${reefDetails.id}` !== reefId) {
-      dispatch(reefRequest(reefId));
+    if (!siteDetails || `${siteDetails.id}` !== siteId) {
+      dispatch(siteRequest(siteId));
     }
-  }, [dispatch, reefId, reefDetails]);
+  }, [dispatch, siteId, siteDetails]);
 
   if (loading) {
     return (
@@ -50,11 +50,11 @@ const Surveys = ({ match, isView, classes }: SurveysProps) => {
       <NavBar searchLocation />
       <>
         {/* eslint-disable-next-line no-nested-ternary */}
-        {reefDetails && !error ? (
+        {siteDetails && !error ? (
           isView ? (
-            <ViewSurvey reef={reefDetails} surveyId={surveyId} />
+            <ViewSurvey site={siteDetails} surveyId={surveyId} />
           ) : (
-            <NewSurvey reef={reefDetails} />
+            <NewSurvey site={siteDetails} />
           )
         ) : (
           <Container className={classes.noData}>

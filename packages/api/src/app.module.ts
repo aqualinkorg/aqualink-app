@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
 import { configService } from './config/config.service';
-import { ReefApplicationsModule } from './reef-applications/reef-applications.module';
-import { ReefsModule } from './reefs/reefs.module';
-import { ReefPoisModule } from './reef-pois/reef-pois.module';
+import { SiteApplicationsModule } from './site-applications/site-applications.module';
+import { SitesModule } from './sites/sites.module';
+import { SiteSurveyPointsModule } from './site-survey-points/site-survey-points.module';
 import { RegionsModule } from './regions/regions.module';
 import { SurveysModule } from './surveys/surveys.module';
 import { UsersModule } from './users/users.module';
@@ -20,9 +20,9 @@ import { AuditModule } from './audit/audit.module';
 
 @Module({
   imports: [
-    ReefApplicationsModule,
-    ReefsModule,
-    ReefPoisModule,
+    SiteApplicationsModule,
+    SitesModule,
+    SiteSurveyPointsModule,
     RegionsModule,
     SurveysModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),

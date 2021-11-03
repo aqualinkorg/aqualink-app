@@ -24,8 +24,8 @@ REACT_APP_API_BASE_URL="http://localhost:8080/"
 REACT_APP_FIREBASE_API_KEY=
 # SOFAR API for Sea Surface Temperature and Heat Stress map tiles.
 REACT_APP_SOFAR_API_TOKEN=
-# Featured reef to be highlighted on start before users select one.
-REACT_APP_FEATURED_REEF_ID=1
+# Featured site to be highlighted on start before users select one.
+REACT_APP_FEATURED_SITE_ID=1
 ```
 
 In development, we optionally use [dotenv](https://www.npmjs.com/package/dotenv) to automatically load environment

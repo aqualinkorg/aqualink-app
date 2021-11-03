@@ -2,17 +2,17 @@ import yargs from 'yargs';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
-import { Reef } from '../src/reefs/reefs.entity';
-import { ReefPointOfInterest } from '../src/reef-pois/reef-pois.entity';
+import { Site } from '../src/sites/sites.entity';
+import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { User } from '../src/users/users.entity';
 import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
-import { Sources } from '../src/reefs/sources.entity';
+import { Sources } from '../src/sites/sources.entity';
 import { uploadHoboData } from '../src/utils/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
-import { HistoricalMonthlyMean } from '../src/reefs/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -20,7 +20,7 @@ const { argv } = yargs
   .usage('$0 <cmd> [args]')
   .example(
     '$0 -p data/Aqualink -u example@aqualink.com',
-    "This command will import the data contained in 'data/Aqualink' directory and use the user with email 'ex@aqualink.com' for any user relations needed (reef-administrator, survey etc)",
+    "This command will import the data contained in 'data/Aqualink' directory and use the user with email 'ex@aqualink.com' for any user relations needed (site-administrator, survey etc)",
   )
   .option('p', {
     alias: 'path',
@@ -55,15 +55,15 @@ async function run() {
   );
 
   logger.log('Uploading hobo data');
-  const dbIdtTReefId = await uploadHoboData(
+  const dbIdtTSiteId = await uploadHoboData(
     rootPath,
     userEmail,
     googleCloudService,
     connection,
     // Fetch all needed repositories
     {
-      reefRepository: connection.getRepository(Reef),
-      poiRepository: connection.getRepository(ReefPointOfInterest),
+      siteRepository: connection.getRepository(Site),
+      surveyPointRepository: connection.getRepository(SiteSurveyPoint),
       timeSeriesRepository: connection.getRepository(TimeSeries),
       userRepository: connection.getRepository(User),
       surveyRepository: connection.getRepository(Survey),
@@ -77,7 +77,7 @@ async function run() {
   );
 
   logger.log('Finished uploading hobo data');
-  logger.log(dbIdtTReefId);
+  logger.log(dbIdtTSiteId);
 }
 
 run();

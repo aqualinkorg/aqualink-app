@@ -1,6 +1,6 @@
 import Faker from 'faker';
 import { define } from 'typeorm-seeding';
-import { Sources } from '../reefs/sources.entity';
+import { Sources } from '../sites/sources.entity';
 
 define(Sources, (faker: typeof Faker) => {
   const source = new Sources();

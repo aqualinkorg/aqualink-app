@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders as expected 1`] = `
+<div>
+  <form
+    class="Form-form-1"
+  >
+    <mock-typography
+      classname="Form-formTitle-2"
+      variant="h3"
+    >
+      Your Site
+    </mock-typography>
+    <mock-textfield
+      classname="Form-formField-3 Form-textField-6"
+      disabled="true"
+      error="false"
+      fullwidth="true"
+      helpertext=""
+      inputprops="[object Object]"
+      name="siteName"
+      placeholder="Site Name e.g. 'Sombrero Site'"
+      variant="outlined"
+    />
+    <mock-typography
+      classname="Form-additionalInfo-4"
+    >
+      Please provide some additional information for each site:
+    </mock-typography>
+    <mock-typography>
+      Permitting
+    </mock-typography>
+    <mock-textfield
+      classname="Form-formField-3 Form-textField-6"
+      error="false"
+      fullwidth="true"
+      helpertext=""
+      inputprops="[object Object]"
+      multiline="true"
+      name="permitRequirements"
+      placeholder="Please describe the permitting requirements. Please be sure to mention the authority having jurisdiction"
+      rows="2"
+      variant="outlined"
+    />
+    <mock-typography>
+      Funding Source
+    </mock-typography>
+    <mock-textfield
+      classname="Form-formField-3 Form-textField-6"
+      error="false"
+      fullwidth="true"
+      helpertext=""
+      inputprops="[object Object]"
+      multiline="true"
+      name="fundingSource"
+      placeholder="Funding source for import duties and shipping. Please describe the funding source for the import duties and shipping costs"
+      rows="2"
+      variant="outlined"
+    />
+    <mock-typography>
+      Schedule for installation
+    </mock-typography>
+    <mock-typography
+      classname="Form-scheduleDescription-5"
+    >
+      What is the soonest date you could install the Smart Buoy and conduct a survey?
+    </mock-typography>
+    Mock-MuiPickersUtilsProvider
+    <mock-typography>
+      Installation, survey and maintenance personnel and equipment
+    </mock-typography>
+    <mock-textfield
+      classname="Form-formField-3 Form-textField-6"
+      error="false"
+      fullwidth="true"
+      helpertext=""
+      inputprops="[object Object]"
+      multiline="true"
+      name="installationResources"
+      placeholder="Please provide a description of the people that will be able to conduct periodic surveys and maintenance of the buoy. Please also include a description of the equipment (e.g. a boat, cameras) that are available."
+      rows="4"
+      variant="outlined"
+    />
+    <mock-button
+      color="primary"
+      disabled="false"
+      type="submit"
+      variant="contained"
+    >
+      Submit
+    </mock-button>
+  </form>
+</div>
+`;

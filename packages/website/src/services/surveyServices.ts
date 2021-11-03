@@ -7,56 +7,56 @@ import type {
   SurveyPointUpdateParams,
 } from "../store/Survey/types";
 import requests from "../helpers/requests";
-import { Pois } from "../store/Reefs/types";
+import { SurveyPoints } from "../store/Sites/types";
 
-const getSurvey = (reefId: string, surveyId: string) =>
+const getSurvey = (siteId: string, surveyId: string) =>
   requests.send<SurveyState>({
-    url: `reefs/${reefId}/surveys/${surveyId}`,
+    url: `sites/${siteId}/surveys/${surveyId}`,
     method: "GET",
   });
 
-const getSurveys = (reefId: string) =>
+const getSurveys = (siteId: string) =>
   requests.send<SurveyListItem[]>({
-    url: `reefs/${reefId}/surveys`,
+    url: `sites/${siteId}/surveys`,
     method: "GET",
   });
 
-const addSurvey = (reefId: string, surveyData: SurveyData) => {
+const addSurvey = (siteId: string, surveyData: SurveyData) => {
   return requests.send<SurveyState>({
-    url: `reefs/${reefId}/surveys`,
+    url: `sites/${siteId}/surveys`,
     method: "POST",
     data: { ...surveyData, token: undefined },
     token: surveyData.token === null ? undefined : surveyData.token,
   });
 };
 
-const deleteSurvey = (reefId: number, surveyId: number, token: string) => {
+const deleteSurvey = (siteId: number, surveyId: number, token: string) => {
   return requests.send({
-    url: `reefs/${reefId}/surveys/${surveyId}`,
+    url: `sites/${siteId}/surveys/${surveyId}`,
     method: "DELETE",
     token,
   });
 };
 
 const addSurveyMedia = (
-  reefId: string,
+  siteId: string,
   surveyId: string,
   mediaData: SurveyMediaData
 ) => {
   return requests.send<[]>({
-    url: `reefs/${reefId}/surveys/${surveyId}/media`,
+    url: `sites/${siteId}/surveys/${surveyId}/media`,
     method: "POST",
     data: { ...mediaData, token: undefined },
     token: mediaData.token === null ? undefined : mediaData.token,
   });
 };
 
-const addNewPoi = (reefId: number, name: string, token?: string | null) => {
+const addNewPoi = (siteId: number, name: string, token?: string | null) => {
   return requests.send({
-    url: "pois",
+    url: "site-survey-points",
     method: "POST",
     data: {
-      reefId,
+      siteId,
       name,
     },
     token: token === null ? undefined : token,
@@ -64,25 +64,25 @@ const addNewPoi = (reefId: number, name: string, token?: string | null) => {
 };
 
 const updatePoi = (
-  poiId: number,
+  surveyPointId: number,
   updateParams: SurveyPointUpdateParams,
   token: string
 ) =>
-  requests.send<Pois>({
-    url: `pois/${poiId}`,
+  requests.send<SurveyPoints>({
+    url: `site-survey-points/${surveyPointId}`,
     method: "PUT",
     data: updateParams,
     token,
   });
 
 const editSurveyMedia = (
-  reefId: number,
+  siteId: number,
   mediaId: number,
   data: SurveyMediaUpdateRequestData,
   token: string
 ) => {
   return requests.send({
-    url: `reefs/${reefId}/surveys/media/${mediaId}`,
+    url: `sites/${siteId}/surveys/media/${mediaId}`,
     method: "PUT",
     data,
     token,

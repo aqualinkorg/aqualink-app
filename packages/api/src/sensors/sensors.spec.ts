@@ -1,14 +1,14 @@
 import { INestApplication } from '@nestjs/common';
 import moment from 'moment';
 import request from 'supertest';
-import { californiaReef } from '../../test/mock/reef.mock';
+import { californiaSite } from '../../test/mock/site.mock';
 import {
   hoboMetrics,
   NOAAMetrics,
   spotterMetrics,
 } from '../../test/mock/time-series.mock';
 import { TestService } from '../../test/test.service';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.entity';
 
 export const sensorTests = () => {
@@ -19,7 +19,7 @@ export const sensorTests = () => {
     app = await testService.getApp();
   });
 
-  it('GET / retrieve reefs with sensors', async () => {
+  it('GET / retrieve sites with sensors', async () => {
     const rsp = await request(app.getHttpServer()).get('/sensors');
 
     expect(rsp.status).toBe(200);
@@ -28,7 +28,7 @@ export const sensorTests = () => {
 
   it('GET /:id/data fetch sensor data', async () => {
     const rsp = await request(app.getHttpServer())
-      .get(`/sensors/${californiaReef.sensorId}/data`)
+      .get(`/sensors/${californiaSite.sensorId}/data`)
       .query({
         startDate: moment().subtract(5, 'days').startOf('day').toISOString(),
         endDate: moment().endOf('day').toISOString(),
@@ -56,7 +56,7 @@ export const sensorTests = () => {
 
   it('GET /:id/surveys fetch sensor surveys', async () => {
     const rsp = await request(app.getHttpServer()).get(
-      `/sensors/${californiaReef.sensorId}/surveys`,
+      `/sensors/${californiaSite.sensorId}/surveys`,
     );
 
     expect(rsp.status).toBe(200);
@@ -65,7 +65,7 @@ export const sensorTests = () => {
 
   it('GET /:id/data fetch sensor data with invalid metric', async () => {
     const rsp = await request(app.getHttpServer())
-      .get(`/sensors/${californiaReef.sensorId}/data`)
+      .get(`/sensors/${californiaSite.sensorId}/data`)
       .query({
         startDate: moment().subtract(5, 'days').startOf('day').toISOString(),
         endDate: moment().endOf('day').toISOString(),

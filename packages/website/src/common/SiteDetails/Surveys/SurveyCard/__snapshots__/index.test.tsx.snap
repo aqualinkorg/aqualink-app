@@ -13,7 +13,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
         class="MuiGrid-root SurveyCard-cardImageWrapper-9 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
       >
         <a
-          href="/reefs/0/survey_details/46"
+          href="/sites/0/survey_details/46"
         >
           <div
             class="MuiCardMedia-root SurveyCard-cardImage-6"
@@ -86,7 +86,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
             >
               <a
-                href="/reefs/0/survey_details/46"
+                href="/sites/0/survey_details/46"
                 style="text-decoration: none;"
               >
                 <mock-button

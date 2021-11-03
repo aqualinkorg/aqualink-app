@@ -7,7 +7,7 @@ exports[`renders as expected 1`] = `
     classname="AddButton-addSurveyButton-1"
     component="[object Object]"
     starticon="[object Object]"
-    to="/reefs/1/new_survey"
+    to="/sites/1/new_survey"
   >
     <mock-typography
       color="inherit"

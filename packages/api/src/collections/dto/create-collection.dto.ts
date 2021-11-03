@@ -7,7 +7,7 @@ import {
   IsString,
   Validate,
 } from 'class-validator';
-import { Reef } from '../../reefs/reefs.entity';
+import { Site } from '../../sites/sites.entity';
 import { User } from '../../users/users.entity';
 import { EntityExists } from '../../validations/entity-exists.constraint';
 
@@ -30,6 +30,6 @@ export class CreateCollectionDto {
   @ApiProperty({ example: [1, 3, 5] })
   @IsNotEmpty()
   @IsNumber({}, { each: true })
-  @Validate(EntityExists, [Reef], { each: true })
-  reefIds: number[];
+  @Validate(EntityExists, [Site], { each: true })
+  siteIds: number[];
 }

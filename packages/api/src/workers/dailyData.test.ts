@@ -1,12 +1,12 @@
 import { getDailyData } from './dailyData';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(60000);
 
   const date = new Date('2021-08-01');
   date.setUTCHours(23, 59, 59, 999);
-  const reef = {
+  const site = {
     id: 1,
     name: null,
     polygon: {
@@ -23,10 +23,10 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData((reef as unknown) as Reef, date, []);
+  const values = await getDailyData((site as unknown) as Site, date, []);
 
   expect(values).toEqual({
-    reef: { id: 1 },
+    site: { id: 1 },
     date,
     dailyAlertLevel: 0,
     minBottomTemperature: undefined,
@@ -39,10 +39,10 @@ test('It processes Sofar API for daily data.', async () => {
     maxWaveHeight: 0.902798652648926,
     avgWaveHeight: 0.8645887772242228,
     waveDirection: 1,
-    wavePeriod: undefined,
-    minWindSpeed: 1.60820293426514,
-    maxWindSpeed: 4.004723072052,
-    avgWindSpeed: 2.6666289617617926,
-    windDirection: 39,
+    wavePeriod: 6,
+    minWindSpeed: 1.3851696423913313,
+    maxWindSpeed: 3.1935656540742148,
+    avgWindSpeed: 2.093633046123507,
+    windDirection: 34,
   });
 });

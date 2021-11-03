@@ -27,7 +27,7 @@ describe("Survey Card", () => {
             pointName="Test Point"
             pointId={1}
             isAdmin
-            reefId={0}
+            siteId={0}
             survey={mockSurvey}
           />
         </Router>

@@ -13,9 +13,9 @@ const surveyListInitialState: SurveyListState = {
   error: null,
 };
 
-const getSurveys = async (reefId: string) => {
+const getSurveys = async (siteId: string) => {
   try {
-    const { data } = await surveyServices.getSurveys(reefId);
+    const { data } = await surveyServices.getSurveys(siteId);
     return sortBy(data, "diveDate");
   } catch (err) {
     const error: AxiosError<SurveyListState["error"]> = err;
@@ -27,12 +27,12 @@ export const surveysRequest = createAsyncThunk<
   SurveyListState["list"],
   string,
   CreateAsyncThunkTypes
->("surveysList/request", (reefId: string) => getSurveys(reefId), {
-  condition(reefId: string, { getState }) {
+>("surveysList/request", (siteId: string) => getSurveys(siteId), {
+  condition(siteId: string, { getState }) {
     const {
-      selectedReef: { details },
+      selectedSite: { details },
     } = getState();
-    return `${details?.id}` !== reefId;
+    return `${details?.id}` !== siteId;
   },
 });
 
@@ -40,20 +40,20 @@ const surveyListSlice = createSlice({
   name: "surveyList",
   initialState: surveyListInitialState,
   reducers: {
-    updatePoiName: (
+    updateSurveyPointName: (
       state,
       action: PayloadAction<{ id: number; name: string }>
     ) => {
       return {
         ...state,
         list: state.list.map((item) => {
-          if (item.featuredSurveyMedia?.poi?.id === action.payload.id) {
+          if (item.featuredSurveyMedia?.surveyPoint?.id === action.payload.id) {
             return {
               ...item,
               featuredSurveyMedia: {
                 ...item.featuredSurveyMedia,
-                poi: {
-                  ...item.featuredSurveyMedia.poi,
+                surveyPoint: {
+                  ...item.featuredSurveyMedia.surveyPoint,
                   name: action.payload.name,
                 },
               },
@@ -107,6 +107,6 @@ export const surveyListErrorSelector = (
   state: RootState
 ): SurveyListState["error"] => state.surveyList.error;
 
-export const { updatePoiName } = surveyListSlice.actions;
+export const { updateSurveyPointName } = surveyListSlice.actions;
 
 export default surveyListSlice.reducer;

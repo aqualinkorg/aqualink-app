@@ -11,10 +11,10 @@ import {
   RelationId,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Reef } from '../reefs/reefs.entity';
+import { Site } from '../sites/sites.entity';
 import { User } from '../users/users.entity';
-import { DailyData } from '../reefs/daily-data.entity';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { DailyData } from '../sites/daily-data.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Observations, SurveyMedia } from './survey-media.entity';
 import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 import { sensorDataSchema } from '../docs/api-sensor-data';
@@ -56,12 +56,12 @@ export class Survey {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @RelationId((survey: Survey) => survey.reef)
-  reefId: number;
+  @RelationId((survey: Survey) => survey.site)
+  siteId: number;
 
-  @ManyToOne(() => Reef, { onDelete: 'CASCADE', nullable: false })
-  @JoinColumn({ name: 'reef_id' })
-  reef: Reef;
+  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @JoinColumn({ name: 'site_id' })
+  site: Site;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -77,7 +77,7 @@ export class Survey {
 
   latestDailyData?: DailyData;
 
-  surveyPoints?: ReefPointOfInterest[];
+  surveyPoints?: SiteSurveyPoint[];
 
   observations?: Observations[];
 

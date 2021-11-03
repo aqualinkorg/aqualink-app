@@ -10,13 +10,13 @@ import {
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { grey } from "@material-ui/core/colors";
 
-const AddButton = ({ reefId, classes }: AddButtonProps) => {
+const AddButton = ({ siteId, classes }: AddButtonProps) => {
   return (
     <Button
       className={classes.addSurveyButton}
       startIcon={<AddCircleOutlineIcon />}
       component={Link}
-      to={`/reefs/${reefId}/new_survey`}
+      to={`/sites/${siteId}/new_survey`}
       classes={{ iconSizeMedium: classes.addSurveyButtonIcon }}
     >
       <Typography color="inherit" variant="h6">
@@ -42,7 +42,7 @@ const styles = () =>
   });
 
 interface AddButtonIncomingProps {
-  reefId: number;
+  siteId: number;
 }
 
 type AddButtonProps = AddButtonIncomingProps & WithStyles<typeof styles>;

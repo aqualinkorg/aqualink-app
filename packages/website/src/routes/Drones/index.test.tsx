@@ -20,7 +20,7 @@ describe("Drones", () => {
         loading: false,
         error: null,
       },
-      reefsList: {
+      sitesList: {
         list: [],
       },
     });

@@ -22,7 +22,7 @@ const SurveyCard = ({
   pointId,
   pointName,
   isAdmin,
-  reefId,
+  siteId,
   survey,
   classes,
 }: SurveyCardProps) => {
@@ -32,7 +32,7 @@ const SurveyCard = ({
     <Paper elevation={0} className={classes.surveyCard}>
       <Grid style={{ height: "100%" }} container justify="space-between">
         <Grid className={classes.cardImageWrapper} item xs={12} md={5}>
-          <Link to={`/reefs/${reefId}/survey_details/${survey.id}`}>
+          <Link to={`/sites/${siteId}/survey_details/${survey.id}`}>
             <CardMedia
               className={classes.cardImage}
               image={
@@ -59,7 +59,7 @@ const SurveyCard = ({
                 </Typography>
               </Grid>
             )}
-            {survey.featuredSurveyMedia?.poi?.name && (
+            {survey.featuredSurveyMedia?.surveyPoint?.name && (
               <Grid container alignItems="center" item xs={12}>
                 <Typography className={classes.cardFields} variant="h6">
                   Survey Point:
@@ -67,19 +67,19 @@ const SurveyCard = ({
                 <Typography
                   className={`${classes.cardValues} ${classes.valuesWithMargin} ${classes.blueText}`}
                   variant="h6"
-                  title={survey.featuredSurveyMedia.poi.name}
+                  title={survey.featuredSurveyMedia.surveyPoint.name}
                 >
                   <CustomLink
-                    to={`/reefs/${reefId}/points/${
+                    to={`/sites/${siteId}/points/${
                       isShowingFeatured
-                        ? survey.featuredSurveyMedia.poi.id
+                        ? survey.featuredSurveyMedia.surveyPoint.id
                         : pointId
                     }`}
                     isIcon={false}
                     tooltipTitle=""
                     content={
                       pointName === "All"
-                        ? survey.featuredSurveyMedia.poi.name
+                        ? survey.featuredSurveyMedia.surveyPoint.name
                         : pointName
                     }
                   />
@@ -130,7 +130,7 @@ const SurveyCard = ({
               <Grid item xs={10}>
                 <Link
                   style={{ color: "inherit", textDecoration: "none" }}
-                  to={`/reefs/${reefId}/survey_details/${survey.id}`}
+                  to={`/sites/${siteId}/survey_details/${survey.id}`}
                 >
                   <Button size="small" variant="outlined" color="primary">
                     VIEW DETAILS
@@ -140,7 +140,7 @@ const SurveyCard = ({
               {isAdmin && (
                 <Grid container justify="flex-end" item xs={2}>
                   <DeleteButton
-                    reefId={reefId}
+                    siteId={siteId}
                     surveyId={survey.id}
                     diveDate={survey.diveDate}
                   />
@@ -197,7 +197,7 @@ interface SurveyCardIncomingProps {
   pointId: number;
   pointName: string | null;
   isAdmin: boolean;
-  reefId: number;
+  siteId: number;
   survey: SurveyListItem;
 }
 

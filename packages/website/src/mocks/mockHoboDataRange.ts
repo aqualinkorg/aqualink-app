@@ -1,4 +1,4 @@
-import { TimeSeriesDataRange } from "../store/Reefs/types";
+import { TimeSeriesDataRange } from "../store/Sites/types";
 
 export const mockHoboDataRange: TimeSeriesDataRange = {
   hobo: {

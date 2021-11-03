@@ -2,7 +2,7 @@ import {
   getSofarDataClosestToDate,
   sameDay,
 } from "../../../common/Chart/utils";
-import { DailyData, SofarValue, TimeSeries } from "../../../store/Reefs/types";
+import { DailyData, SofarValue, TimeSeries } from "../../../store/Sites/types";
 
 const getSensorValue = (data?: SofarValue[], date?: string | null) =>
   date && data?.[0]

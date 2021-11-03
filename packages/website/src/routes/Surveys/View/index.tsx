@@ -26,13 +26,13 @@ import {
 import SurveyDetails from "./SurveyDetails";
 import SurveyMediaDetails from "./MediaDetails";
 import ChartWithTooltip from "../../../common/Chart/ChartWithTooltip";
-import type { Reef } from "../../../store/Reefs/types";
+import type { Site } from "../../../store/Sites/types";
 import {
   surveyListLoadingSelector,
   surveyListSelector,
   surveysRequest,
 } from "../../../store/Survey/surveyListSlice";
-import { reefTimeSeriesDataRequest } from "../../../store/Reefs/selectedReefSlice";
+import { siteTimeSeriesDataRequest } from "../../../store/Sites/selectedSiteSlice";
 import {
   displayTimeInLocalTimezone,
   convertDailyDataToLocalTime,
@@ -40,7 +40,7 @@ import {
   isBetween,
 } from "../../../helpers/dates";
 
-const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
+const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
   const surveyList = useSelector(surveyListSelector);
   const surveyDetails = useSelector(surveyDetailsSelector);
@@ -48,35 +48,35 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
   const surveyListLoading = useSelector(surveyListLoadingSelector);
   const loading = surveyLoading || surveyListLoading;
 
-  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)?.poi
-    ?.id;
+  const pointId = surveyDetails?.surveyMedia?.find((item) => item.featured)
+    ?.surveyPoint?.id;
 
-  const dailyDataLen = reef.dailyData.length;
+  const dailyDataLen = site.dailyData.length;
   const showChart =
     dailyDataLen > 0 && surveyList.length > 0 && surveyDetails?.diveDate
       ? isBetween(
           surveyDetails.diveDate,
-          reef.dailyData[dailyDataLen - 1].date,
-          reef.dailyData[0].date
+          site.dailyData[dailyDataLen - 1].date,
+          site.dailyData[0].date
         )
       : false;
 
   useEffect(() => {
-    dispatch(surveysRequest(`${reef.id}`));
+    dispatch(surveysRequest(`${site.id}`));
     window.scrollTo({ top: 0 });
-  }, [dispatch, reef.id]);
+  }, [dispatch, site.id]);
 
   useEffect(() => {
     dispatch(
       surveyGetRequest({
-        reefId: `${reef.id}`,
+        siteId: `${site.id}`,
         surveyId,
       })
     );
     return () => {
       dispatch(clearSurvey());
     };
-  }, [dispatch, reef.id, surveyId]);
+  }, [dispatch, site.id, surveyId]);
 
   // Fetch HOBO and Spotter data near the dive date
   useEffect(() => {
@@ -84,8 +84,8 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
       const start = moment(surveyDetails.diveDate).startOf("day").toISOString();
       const end = moment(surveyDetails.diveDate).endOf("day").toISOString();
       dispatch(
-        reefTimeSeriesDataRequest({
-          reefId: `${reef.id}`,
+        siteTimeSeriesDataRequest({
+          siteId: `${site.id}`,
           pointId: `${pointId}`,
           start,
           end,
@@ -94,7 +94,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
         })
       );
     }
-  }, [dispatch, pointId, reef.id, surveyDetails]);
+  }, [dispatch, pointId, site.id, surveyDetails]);
 
   if (loading) {
     return <LinearProgress className={classes.loading} />;
@@ -109,7 +109,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             color="primary"
             startIcon={<ArrowBack />}
             component={Link}
-            to={`/reefs/${reef.id}`}
+            to={`/sites/${site.id}`}
           >
             <Typography style={{ textTransform: "none" }}>
               Back to site
@@ -119,7 +119,7 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
             <Grid container justify="space-between" item xs={12}>
               <Grid container justify="center" item md={12}>
                 <Grid container item xs={12}>
-                  <SurveyDetails reef={reef} survey={surveyDetails} />
+                  <SurveyDetails site={site} survey={surveyDetails} />
                 </Grid>
                 {showChart && (
                   <Grid
@@ -141,22 +141,22 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                       </Box>
                       <ChartWithTooltip
                         className={classes.chart}
-                        reefId={reef.id}
+                        siteId={site.id}
                         dailyData={convertDailyDataToLocalTime(
-                          reef.dailyData,
-                          reef.timezone
+                          site.dailyData,
+                          site.timezone
                         )}
-                        depth={reef.depth}
-                        maxMonthlyMean={reef.maxMonthlyMean || null}
+                        depth={site.depth}
+                        maxMonthlyMean={site.maxMonthlyMean || null}
                         temperatureThreshold={
-                          reef.maxMonthlyMean ? reef.maxMonthlyMean + 1 : null
+                          site.maxMonthlyMean ? site.maxMonthlyMean + 1 : null
                         }
                         surveys={convertSurveyDataToLocalTime(
                           surveyList,
-                          reef.timezone
+                          site.timezone
                         )}
                         background
-                        timeZone={reef.timezone}
+                        timeZone={site.timezone}
                       />
                     </Grid>
                   </Grid>
@@ -176,13 +176,13 @@ const SurveyViewPage = ({ reef, surveyId, classes }: SurveyViewPageProps) => {
                     isoDate: surveyDetails?.diveDate,
                     format: "MM/DD/YYYY",
                     displayTimezone: false,
-                    timeZone: reef.timezone,
+                    timeZone: site.timezone,
                   })} Survey Media`}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <SurveyMediaDetails
-                  reefId={reef.id}
+                  siteId={site.id}
                   surveyMedia={surveyDetails?.surveyMedia}
                 />
               </Grid>
@@ -231,7 +231,7 @@ const styles = (theme: Theme) =>
   });
 
 interface SurveyViewPageIncomingProps {
-  reef: Reef;
+  site: Site;
   surveyId: string;
 }
 

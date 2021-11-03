@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import SwipeableViews from "react-swipeable-views";
 
-import type { Reef } from "../../../store/Reefs/types";
+import type { Site } from "../../../store/Sites/types";
 import Map from "./Map";
 import Form from "./Form";
 import UploadMedia from "./UploadMedia";
@@ -28,7 +28,7 @@ const TabPanel = (props: TabPanelProps) => {
   );
 };
 
-const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
+const NewSurvey = ({ site, classes }: NewSurveyProps) => {
   const [value, setValue] = useState<number>(0);
 
   const onPanelIndexChange = (index: number) => {
@@ -45,11 +45,11 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         <TabPanel value={value} index={0}>
           <Grid className={classes.root} container justify="center">
             <Grid item xs={10}>
-              {reef.name && (
+              {site.name && (
                 <Typography
                   className={classes.title}
                   variant="h5"
-                >{`NEW SURVEY FOR ${reef.name.toUpperCase()}`}</Typography>
+                >{`NEW SURVEY FOR ${site.name.toUpperCase()}`}</Typography>
               )}
             </Grid>
             <Grid
@@ -68,12 +68,12 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
                 </Typography>
               </Grid>
               <Grid className={classes.mapContainer} item xs={12} lg={6}>
-                <Map polygon={reef.polygon} />
+                <Map polygon={site.polygon} />
               </Grid>
               <Grid item xs={12} lg={5}>
                 <Form
-                  reefId={reef.id}
-                  timeZone={reef.timezone}
+                  siteId={site.id}
+                  timeZone={site.timezone}
                   changeTab={onPanelIndexChange}
                 />
               </Grid>
@@ -82,8 +82,8 @@ const NewSurvey = ({ reef, classes }: NewSurveyProps) => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           <UploadMedia
-            reefName={reef.name}
-            reefId={reef.id}
+            siteName={site.name}
+            siteId={site.id}
             changeTab={onPanelIndexChange}
           />
         </TabPanel>
@@ -112,7 +112,7 @@ const styles = (theme: Theme) =>
   });
 
 interface NewSurveyIncomingProps {
-  reef: Reef;
+  site: Site;
 }
 
 interface TabPanelProps {

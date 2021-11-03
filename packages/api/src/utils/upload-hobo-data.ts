@@ -13,8 +13,8 @@ import { Point, GeoJSON } from 'geojson';
 import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
-import { Reef, ReefStatus } from '../reefs/reefs.entity';
-import { ReefPointOfInterest } from '../reef-pois/reef-pois.entity';
+import { Site, SiteStatus } from '../sites/sites.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { User } from '../users/users.entity';
@@ -25,17 +25,17 @@ import {
   Observations,
   SurveyMedia,
 } from '../surveys/survey-media.entity';
-import { Sources } from '../reefs/sources.entity';
-import { backfillReefData } from '../workers/backfill-reef-data';
-import { getRegion, getTimezones } from './reef.utils';
+import { Sources } from '../sites/sources.entity';
+import { backfillSiteData } from '../workers/backfill-site-data';
+import { getRegion, getTimezones } from './site.utils';
 import { getMMM, getHistoricalMonthlyMeans } from './temperature';
 import { Region } from '../regions/regions.entity';
-import { HistoricalMonthlyMean } from '../reefs/historical-monthly-mean.entity';
+import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 import { createPoint } from './coordinates';
-import { SourceType } from '../reefs/schemas/source-type.enum';
+import { SourceType } from '../sites/schemas/source-type.enum';
 
 interface Coords {
-  reef: number;
+  site: number;
   colony: number;
   lat: number;
   long: number;
@@ -48,8 +48,8 @@ interface Data {
 }
 
 interface Repositories {
-  reefRepository: Repository<Reef>;
-  poiRepository: Repository<ReefPointOfInterest>;
+  siteRepository: Repository<Site>;
+  surveyPointRepository: Repository<SiteSurveyPoint>;
   timeSeriesRepository: Repository<TimeSeries>;
   userRepository: Repository<User>;
   surveyRepository: Repository<Survey>;
@@ -59,8 +59,8 @@ interface Repositories {
   historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>;
 }
 
-const FOLDER_PREFIX = 'Patch_Reef_';
-const REEF_PREFIX = 'Patch Reef ';
+const FOLDER_PREFIX = 'Patch_Site_';
+const SITE_PREFIX = 'Patch Site ';
 const COLONY_COORDS_FILE = 'Colony_Coords.csv';
 const COLONY_FOLDER_PREFIX = 'Col_';
 const COLONY_PREFIX = 'Colony ';
@@ -91,11 +91,11 @@ const parseCSV = <T>(
   }) as T[];
 };
 
-const reefQuery = (
-  reefRepository: Repository<Reef>,
+const siteQuery = (
+  siteRepository: Repository<Site>,
   polygon?: GeoJSON | null,
 ) => {
-  return reefRepository
+  return siteRepository
     .createQueryBuilder(`entity`)
     .where(
       `entity.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
@@ -105,14 +105,14 @@ const reefQuery = (
 };
 
 const poiQuery = (
-  poiRepository: Repository<ReefPointOfInterest>,
+  poiRepository: Repository<SiteSurveyPoint>,
   polygon?: GeoJSON | null,
 ) => {
   return poiRepository
-    .createQueryBuilder(`pois`)
-    .innerJoinAndSelect('pois.reef', 'reef')
+    .createQueryBuilder(`surveyPoints`)
+    .innerJoinAndSelect('surveyPoints.site', 'site')
     .where(
-      `pois.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
+      `surveyPoints.polygon = ST_SetSRID(ST_GeomFromGeoJSON(:polygon), 4326)::geometry`,
       { polygon },
     )
     .getOne();
@@ -156,7 +156,7 @@ const handleEntityDuplicate = <T>(
   polygon?: GeoJSON | null,
 ) => {
   return (err) => {
-    // Catch unique violation, i.e. there is already a reef at this location
+    // Catch unique violation, i.e. there is already a site at this location
     if (err.code === '23505') {
       return query(repository, polygon).then((found) => {
         if (!found) {
@@ -176,44 +176,44 @@ const handleEntityDuplicate = <T>(
 /**
  * Read Coords.csv file
  * @param rootPath The path of the root of the data folder
- * @param reefIds The reefIds to be imported
+ * @param siteIds The siteIds to be imported
  */
-const readCoordsFile = (rootPath: string, reefIds: number[]) => {
+const readCoordsFile = (rootPath: string, siteIds: number[]) => {
   // Read coords file
   const coordsFilePath = path.join(rootPath, COLONY_COORDS_FILE);
-  const coordsHeaders = ['reef', 'colony', 'lat', 'long'];
-  const castFunction = castCsvValues(['reef', 'colony'], ['lat', 'long'], []);
+  const coordsHeaders = ['site', 'colony', 'lat', 'long'];
+  const castFunction = castCsvValues(['site', 'colony'], ['lat', 'long'], []);
   return parseCSV<Coords>(coordsFilePath, coordsHeaders, castFunction).filter(
     (record) => {
-      return reefIds.includes(record.reef);
+      return siteIds.includes(record.site);
     },
   );
 };
 
 /**
- * Create reef records
- * Calculate their position by finding the average of the coordinates of all pois in csv file
+ * Create site records
+ * Calculate their position by finding the average of the coordinates of all surveyPoints in csv file
  * @param dataAsJson The json data from the csv file
- * @param reefIds The reefs to be imported
+ * @param siteIds The sites to be imported
  * @param regionRepository The region repository
  */
-const getReefRecords = async (
+const getSiteRecords = async (
   dataAsJson: Coords[],
-  reefIds: number[],
+  siteIds: number[],
   regionRepository: Repository<Region>,
 ) => {
-  // Group by reef
-  const recordsGroupedByReef = groupBy(dataAsJson, 'reef');
+  // Group by site
+  const recordsGroupedBySite = groupBy(dataAsJson, 'site');
 
-  // Extract reef entities and calculate position of reef by averaging all each pois positions
-  const reefs = await Promise.all(
-    reefIds.map((reefId) => {
+  // Extract site entities and calculate position of site by averaging all each surveyPoints positions
+  const sites = await Promise.all(
+    siteIds.map((siteId) => {
       // Filter out NaN values
-      const filteredReefCoords = recordsGroupedByReef[reefId].filter(
+      const filteredSiteCoords = recordsGroupedBySite[siteId].filter(
         (record) => !isNaN(record.lat) && !isNaN(record.long),
       );
 
-      const reefRecord = filteredReefCoords.reduce(
+      const siteRecord = filteredSiteCoords.reduce(
         (previous, record) => {
           return {
             ...previous,
@@ -221,16 +221,16 @@ const getReefRecords = async (
             long: previous.long + record.long,
           };
         },
-        { reef: reefId, colony: 0, lat: 0, long: 0 },
+        { site: siteId, colony: 0, lat: 0, long: 0 },
       );
 
-      // Calculate reef position
+      // Calculate site position
       const point: Point = createPoint(
-        reefRecord.long / filteredReefCoords.length,
-        reefRecord.lat / filteredReefCoords.length,
+        siteRecord.long / filteredSiteCoords.length,
+        siteRecord.lat / filteredSiteCoords.length,
       );
 
-      // Augment reef information
+      // Augment site information
       const [longitude, latitude] = point.coordinates;
       const timezones = getTimezones(latitude, longitude) as string[];
 
@@ -238,64 +238,64 @@ const getReefRecords = async (
         getRegion(longitude, latitude, regionRepository),
         getMMM(longitude, latitude),
       ]).then(([region, maxMonthlyMean]) => ({
-        name: REEF_PREFIX + reefId,
+        name: SITE_PREFIX + siteId,
         polygon: point,
         region,
         maxMonthlyMean,
         approved: false,
         timezone: timezones[0],
-        status: ReefStatus.Approved,
+        status: SiteStatus.Approved,
       }));
     }),
   );
 
-  return { recordsGroupedByReef, reefs };
+  return { recordsGroupedBySite, sites };
 };
 
 /**
- * Save reef records to database or fetch already existing reefs
- * @param reefs The reef records to be saved
- * @param user The user to associate reef with
- * @param reefRepository The reef repository
+ * Save site records to database or fetch already existing sites
+ * @param sites The site records to be saved
+ * @param user The user to associate site with
+ * @param siteRepository The site repository
  * @param userRepository The user repository
  * @param historicalMonthlyMeanRepository The monthly max repository
  */
-const createReefs = async (
-  reefs: Partial<Reef>[],
+const createSites = async (
+  sites: Partial<Site>[],
   user: User,
-  reefRepository: Repository<Reef>,
+  siteRepository: Repository<Site>,
   userRepository: Repository<User>,
   historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
 ) => {
-  logger.log('Saving reefs');
-  const reefEntities = await Promise.all(
-    reefs.map((reef) =>
-      reefRepository
-        .save(reef)
-        .catch(handleEntityDuplicate(reefRepository, reefQuery, reef.polygon)),
+  logger.log('Saving sites');
+  const siteEntities = await Promise.all(
+    sites.map((site) =>
+      siteRepository
+        .save(site)
+        .catch(handleEntityDuplicate(siteRepository, siteQuery, site.polygon)),
     ),
   );
 
   logger.log(`Saving monthly max data`);
   await Bluebird.map(
-    reefEntities,
-    (reef) => {
-      const point: Point = reef.polygon as Point;
+    siteEntities,
+    (site) => {
+      const point: Point = site.polygon as Point;
       const [longitude, latitude] = point.coordinates;
 
       return Promise.all([
         getHistoricalMonthlyMeans(longitude, latitude),
-        historicalMonthlyMeanRepository.findOne({ where: { reef } }),
+        historicalMonthlyMeanRepository.findOne({ where: { site } }),
       ]).then(([historicalMonthlyMean, found]) => {
         if (found || !historicalMonthlyMean) {
-          logger.warn(`Reef ${reef.id} has already monthly max data`);
+          logger.warn(`Site ${site.id} has already monthly max data`);
           return null;
         }
 
         return historicalMonthlyMean.map(({ month, temperature }) => {
           return (
             temperature &&
-            historicalMonthlyMeanRepository.save({ reef, month, temperature })
+            historicalMonthlyMeanRepository.save({ site, month, temperature })
           );
         });
       });
@@ -303,55 +303,55 @@ const createReefs = async (
     { concurrency: 4 },
   );
 
-  // Create reverse map (db.reef.id => csv.reef_id)
+  // Create reverse map (db.site.id => csv.site_id)
   const dbIdToCSVId: Record<number, number> = Object.fromEntries(
-    reefEntities.map((reef) => {
-      if (!reef.name) {
-        throw new InternalServerErrorException('Reef name was not defined');
+    siteEntities.map((site) => {
+      if (!site.name) {
+        throw new InternalServerErrorException('Site name was not defined');
       }
 
-      const reefId = parseInt(reef.name.replace(REEF_PREFIX, ''), 10);
-      return [reef.id, reefId];
+      const siteId = parseInt(site.name.replace(SITE_PREFIX, ''), 10);
+      return [site.id, siteId];
     }),
   );
 
-  // Update administered reefs relationship
+  // Update administered sites relationship
   await userRepository.save({
     id: user.id,
-    administeredReefs: user.administeredReefs.concat(reefEntities),
+    administeredSites: user.administeredSites.concat(siteEntities),
   });
 
-  return { reefEntities, dbIdToCSVId };
+  return { siteEntities, dbIdToCSVId };
 };
 
 /**
- * Create and save reef point of interest records
- * @param reefEntities The saved reef entities
- * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
- * @param recordsGroupedByReef The reef records grouped by reef id
+ * Create and save site point of interest records
+ * @param siteEntities The saved site entities
+ * @param dbIdToCSVId The reverse map (db.site.id => csv.site_id)
+ * @param recordsGroupedBySite The site records grouped by site id
  * @param rootPath The path to the root of the data folder
  * @param poiRepository The poi repository
  */
-const createPois = async (
-  reefEntities: Reef[],
+const createSurveyPoints = async (
+  siteEntities: Site[],
   dbIdToCSVId: Record<number, number>,
-  recordsGroupedByReef: Dictionary<Coords[]>,
+  recordsGroupedBySite: Dictionary<Coords[]>,
   rootPath: string,
-  poiRepository: Repository<ReefPointOfInterest>,
+  poiRepository: Repository<SiteSurveyPoint>,
 ) => {
-  // Create reef points of interest entities for each imported reef
-  // Final result needs to be flattened since the resulting array is grouped by reef
-  const pois = reefEntities
-    .map((reef) => {
-      const currentReefId = dbIdToCSVId[reef.id];
-      const reefFolder = FOLDER_PREFIX + currentReefId;
-      return recordsGroupedByReef[currentReefId]
+  // Create site points of interest entities for each imported site
+  // Final result needs to be flattened since the resulting array is grouped by site
+  const surveyPoints = siteEntities
+    .map((site) => {
+      const currentSiteId = dbIdToCSVId[site.id];
+      const siteFolder = FOLDER_PREFIX + currentSiteId;
+      return recordsGroupedBySite[currentSiteId]
         .filter((record) => {
           const colonyId = record.colony.toString().padStart(3, '0');
           const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
           const colonyFolderPath = path.join(
             rootPath,
-            reefFolder,
+            siteFolder,
             colonyFolder,
           );
 
@@ -365,16 +365,16 @@ const createPois = async (
 
           return {
             name: COLONY_PREFIX + record.colony,
-            reef,
+            site,
             polygon: point,
           };
         });
     })
     .flat();
 
-  logger.log('Saving reef points of interest');
+  logger.log('Saving site points of interest');
   const poiEntities = await Promise.all(
-    pois.map((poi) =>
+    surveyPoints.map((poi) =>
       poiRepository
         .save(poi)
         .catch(handleEntityDuplicate(poiRepository, poiQuery, poi.polygon)),
@@ -390,13 +390,13 @@ const createPois = async (
  * @param sourcesRepository The sources repository
  */
 const createSources = async (
-  poiEntities: ReefPointOfInterest[],
+  poiEntities: SiteSurveyPoint[],
   sourcesRepository: Repository<Sources>,
 ) => {
   // Create sources for each new poi
   const sources = poiEntities.map((poi) => {
     return {
-      reef: poi.reef,
+      site: poi.site,
       poi,
       type: SourceType.HOBO,
     };
@@ -407,8 +407,12 @@ const createSources = async (
     sources.map((source) =>
       sourcesRepository
         .findOne({
-          relations: ['poi', 'reef'],
-          where: { reef: source.reef, poi: source.poi, type: source.type },
+          relations: ['poi', 'site'],
+          where: {
+            site: source.site,
+            surveyPoint: source.poi,
+            type: source.type,
+          },
         })
         .then((foundSource) => {
           if (foundSource) {
@@ -420,20 +424,20 @@ const createSources = async (
     ),
   );
 
-  // Map pois to created sources. Hobo sources have a specified poi.
-  return keyBy(sourceEntities, (o) => o.poi!.id);
+  // Map surveyPoints to created sources. Hobo sources have a specified poi.
+  return keyBy(sourceEntities, (o) => o.surveyPoint!.id);
 };
 
 /**
  * Parse hobo csv
  * @param poiEntities The created poi entities
- * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
+ * @param dbIdToCSVId The reverse map (db.site.id => csv.site_id)
  * @param rootPath The path to the root of the data folder
- * @param poiToSourceMap A object to map pois to source entities
+ * @param poiToSourceMap A object to map surveyPoints to source entities
  * @param timeSeriesRepository The time series repository
  */
 const parseHoboData = async (
-  poiEntities: ReefPointOfInterest[],
+  poiEntities: SiteSurveyPoint[],
   dbIdToCSVId: Record<number, number>,
   rootPath: string,
   poiToSourceMap: Dictionary<Sources>,
@@ -444,8 +448,8 @@ const parseHoboData = async (
     const colonyId = poi.name.split(' ')[1].padStart(3, '0');
     const dataFile = COLONY_DATA_FILE.replace('{}', colonyId);
     const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-    const reefFolder = FOLDER_PREFIX + dbIdToCSVId[poi.reef.id];
-    const filePath = path.join(rootPath, reefFolder, colonyFolder, dataFile);
+    const siteFolder = FOLDER_PREFIX + dbIdToCSVId[poi.site.id];
+    const filePath = path.join(rootPath, siteFolder, colonyFolder, dataFile);
     const headers = [undefined, 'id', 'dateTime', 'bottomTemperature'];
     const castFunction = castCsvValues(
       ['id'],
@@ -471,21 +475,21 @@ const parseHoboData = async (
     return acc.concat(minimum);
   }, []);
 
-  const groupedStartedDates = keyBy(startDates, (o) => o.source.reef.id);
+  const groupedStartedDates = keyBy(startDates, (o) => o.source.site.id);
 
-  // Start a backfill for each reef
-  const reefDiffDays: [number, number][] = Object.keys(groupedStartedDates).map(
-    (reefId) => {
-      const startDate = groupedStartedDates[reefId];
+  // Start a backfill for each site
+  const siteDiffDays: [number, number][] = Object.keys(groupedStartedDates).map(
+    (siteId) => {
+      const startDate = groupedStartedDates[siteId];
       if (!startDate) {
-        return [parseInt(reefId, 10), 0];
+        return [parseInt(siteId, 10), 0];
       }
 
       const start = moment(startDate.timestamp);
       const end = moment();
       const diff = Math.min(end.diff(start, 'd'), 200);
 
-      return [startDate.source.reef.id, diff];
+      return [startDate.source.site.id, diff];
     },
   );
 
@@ -510,22 +514,22 @@ const parseHoboData = async (
     logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
   });
 
-  return reefDiffDays;
+  return siteDiffDays;
 };
 
 /**
- * Upload reef photos and create for each image a new survey and an associated survey media
+ * Upload site photos and create for each image a new survey and an associated survey media
  * As diveDate the creation date of the image will be used
  * @param poiEntities The create poi entities
- * @param dbIdToCSVId The reverse map (db.reef.id => csv.reef_id)
+ * @param dbIdToCSVId The reverse map (db.site.id => csv.site_id)
  * @param rootPath The path to the root of the data folder
  * @param googleCloudService The google cloud service instance
  * @param user A user to associate the surveys with
  * @param surveyRepository The survey repository
  * @param surveyMediaRepository The survey media repository
  */
-const uploadReefPhotos = async (
-  poiEntities: ReefPointOfInterest[],
+const uploadSitePhotos = async (
+  poiEntities: SiteSurveyPoint[],
   dbIdToCSVId: Record<number, number>,
   rootPath: string,
   googleCloudService: GoogleCloudService,
@@ -538,8 +542,8 @@ const uploadReefPhotos = async (
     .map((poi) => {
       const colonyId = poi.name.split(' ')[1].padStart(3, '0');
       const colonyFolder = COLONY_FOLDER_PREFIX + colonyId;
-      const reefFolder = FOLDER_PREFIX + dbIdToCSVId[poi.reef.id];
-      const colonyFolderPath = path.join(rootPath, reefFolder, colonyFolder);
+      const siteFolder = FOLDER_PREFIX + dbIdToCSVId[poi.site.id];
+      const colonyFolderPath = path.join(rootPath, siteFolder, colonyFolder);
       const contents = fs.readdirSync(colonyFolderPath);
       const images = contents.filter((f) => {
         const ext = path.extname(f).toLowerCase().replace('.', '');
@@ -556,7 +560,7 @@ const uploadReefPhotos = async (
             : moment().toDate();
         return {
           imagePath: path.join(colonyFolderPath, image),
-          reef: poi.reef,
+          site: poi.site,
           poi,
           createdDate,
         };
@@ -570,7 +574,7 @@ const uploadReefPhotos = async (
     imageData.map((image) =>
       googleCloudService.uploadFile(image.imagePath, 'image').then((url) => {
         const survey = {
-          reef: image.reef,
+          site: image.site,
           user,
           diveDate: image.createdDate,
           weatherConditions: WeatherConditions.NoData,
@@ -582,7 +586,7 @@ const uploadReefPhotos = async (
             featured: true,
             hidden: false,
             type: MediaType.Image,
-            poi: image.poi,
+            surveyPoint: image.poi,
             surveyId: surveyEntity,
             metadata: JSON.stringify({}),
             observations: Observations.NoData,
@@ -600,15 +604,15 @@ const uploadReefPhotos = async (
   await surveyMediaRepository.save(surveyMedia);
 };
 
-export const performBackfill = (reefDiffDays: [number, number][]) => {
-  reefDiffDays.forEach(([reefId, diff]) => {
-    logger.log(`Performing backfill for reef ${reefId} for ${diff} days`);
-    backfillReefData(reefId, diff);
+export const performBackfill = (siteDiffDays: [number, number][]) => {
+  siteDiffDays.forEach(([siteId, diff]) => {
+    logger.log(`Performing backfill for site ${siteId} for ${diff} days`);
+    backfillSiteData(siteId, diff);
   });
 };
 
 // Upload hobo data
-// Returns a object with keys the db reef ids and values the corresponding imported reef ids
+// Returns a object with keys the db site ids and values the corresponding imported site ids
 export const uploadHoboData = async (
   rootPath: string,
   email: string,
@@ -619,7 +623,7 @@ export const uploadHoboData = async (
   // Grab user and check if they exist
   const user = await repositories.userRepository.findOne({
     where: { email: email.toLowerCase() },
-    relations: ['administeredReefs'],
+    relations: ['administeredSites'],
   });
 
   if (!user) {
@@ -627,41 +631,41 @@ export const uploadHoboData = async (
     throw new BadRequestException('User was not found');
   }
 
-  const reefSet = fs
+  const siteSet = fs
     .readdirSync(rootPath)
     .filter((f) => {
-      // File must be directory and be in Patch_Reef_{reef_id} format
+      // File must be directory and be in Patch_Site_{site_id} format
       return (
         fs.statSync(path.join(rootPath, f)).isDirectory() &&
         f.includes(FOLDER_PREFIX)
       );
     })
-    .map((reefFolder) => {
-      return parseInt(reefFolder.replace(FOLDER_PREFIX, ''), 10);
+    .map((siteFolder) => {
+      return parseInt(siteFolder.replace(FOLDER_PREFIX, ''), 10);
     });
 
-  const dataAsJson = readCoordsFile(rootPath, reefSet);
+  const dataAsJson = readCoordsFile(rootPath, siteSet);
 
-  const { recordsGroupedByReef, reefs } = await getReefRecords(
+  const { recordsGroupedBySite, sites } = await getSiteRecords(
     dataAsJson,
-    reefSet,
+    siteSet,
     repositories.regionRepository,
   );
 
-  const { reefEntities, dbIdToCSVId } = await createReefs(
-    reefs,
+  const { siteEntities, dbIdToCSVId } = await createSites(
+    sites,
     user,
-    repositories.reefRepository,
+    repositories.siteRepository,
     repositories.userRepository,
     repositories.historicalMonthlyMeanRepository,
   );
 
-  const poiEntities = await createPois(
-    reefEntities,
+  const poiEntities = await createSurveyPoints(
+    siteEntities,
     dbIdToCSVId,
-    recordsGroupedByReef,
+    recordsGroupedBySite,
     rootPath,
-    repositories.poiRepository,
+    repositories.surveyPointRepository,
   );
 
   const poiToSourceMap = await createSources(
@@ -669,13 +673,13 @@ export const uploadHoboData = async (
     repositories.sourcesRepository,
   );
 
-  const poisGroupedByReef = groupBy(poiEntities, (poi) => poi.reef.id);
+  const surveyPointsGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
 
-  const reefDiffArray = await Bluebird.map(
-    Object.values(poisGroupedByReef),
-    (pois) =>
+  const siteDiffArray = await Bluebird.map(
+    Object.values(surveyPointsGroupedBySite),
+    (surveyPoints) =>
       parseHoboData(
-        pois,
+        surveyPoints,
         dbIdToCSVId,
         rootPath,
         poiToSourceMap,
@@ -685,10 +689,10 @@ export const uploadHoboData = async (
   );
 
   await Bluebird.map(
-    Object.values(poisGroupedByReef),
-    (pois) =>
-      uploadReefPhotos(
-        pois,
+    Object.values(surveyPointsGroupedBySite),
+    (surveyPoints) =>
+      uploadSitePhotos(
+        surveyPoints,
         dbIdToCSVId,
         rootPath,
         googleCloudService,
@@ -699,7 +703,7 @@ export const uploadHoboData = async (
     { concurrency: 1 },
   );
 
-  performBackfill(reefDiffArray.flat());
+  performBackfill(siteDiffArray.flat());
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');
