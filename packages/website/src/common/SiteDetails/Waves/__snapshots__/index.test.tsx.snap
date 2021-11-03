@@ -81,7 +81,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                96°
+                -84°
               </mock-typography>
             </div>
           </div>
@@ -185,7 +185,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                136°
+                -44°
               </mock-typography>
             </div>
           </div>
