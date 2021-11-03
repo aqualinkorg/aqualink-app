@@ -13,7 +13,7 @@ import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
 import type { LiveData } from "../../../store/Sites/types";
-import { formatNumber } from "../../../helpers/numberUtils";
+import { formatNumber, invertDirection } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";
 import arrow from "../../../assets/directioncircle.svg";
@@ -30,9 +30,13 @@ const Waves = ({ liveData }: WavesProps) => {
     windSpeed,
     windDirection,
   } = liveData;
+
+  // SOFAR uses direction GOING TO.
+  const windDirectionFrom = invertDirection(windDirection?.value);
+  const waveDirectionFrom = invertDirection(waveMeanDirection?.value);
   const classes = useStyles({
-    windDirection: windDirection?.value,
-    wavesDirection: waveMeanDirection?.value,
+    windDirection: windDirectionFrom,
+    wavesDirection: waveDirectionFrom,
   });
 
   const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
@@ -98,7 +102,7 @@ const Waves = ({ liveData }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {!isNil(windDirection?.value) && (
+                {!isNil(windDirectionFrom) && (
                   <img
                     className={classNames(
                       classes.arrow,
@@ -113,8 +117,8 @@ const Waves = ({ liveData }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {!isNil(windDirection?.value)
-                    ? `${formatNumber(windDirection?.value)}\u00B0`
+                  {!isNil(windDirectionFrom)
+                    ? `${formatNumber(windDirectionFrom)}\u00B0`
                     : "- -"}
                 </Typography>
               </Grid>
@@ -199,7 +203,7 @@ const Waves = ({ liveData }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {!isNil(waveMeanDirection?.value) && (
+                {!isNil(waveDirectionFrom) && (
                   <img
                     className={classNames(
                       classes.arrow,
@@ -214,8 +218,8 @@ const Waves = ({ liveData }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {!isNil(waveMeanDirection?.value)
-                    ? `${formatNumber(waveMeanDirection?.value)}\u00B0`
+                  {!isNil(waveDirectionFrom)
+                    ? `${formatNumber(waveDirectionFrom)}\u00B0`
                     : "- -"}
                 </Typography>
               </Grid>
