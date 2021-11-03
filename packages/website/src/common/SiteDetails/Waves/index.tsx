@@ -1,14 +1,15 @@
 import React from "react";
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
   Card,
   CardContent,
   Typography,
   Grid,
+  makeStyles,
 } from "@material-ui/core";
+import classNames from "classnames";
+import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
 import type { LiveData } from "../../../store/Sites/types";
@@ -19,7 +20,7 @@ import arrow from "../../../assets/directioncircle.svg";
 import wind from "../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ liveData, classes }: WavesProps) => {
+const Waves = ({ liveData }: WavesProps) => {
   const {
     topTemperature,
     bottomTemperature,
@@ -29,6 +30,10 @@ const Waves = ({ liveData, classes }: WavesProps) => {
     windSpeed,
     windDirection,
   } = liveData;
+  const classes = useStyles({
+    windDirection: windDirection?.value,
+    wavesDirection: waveMeanDirection?.value,
+  });
 
   const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
 
@@ -93,12 +98,12 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {windDirection?.value && (
+                {!isNil(windDirection?.value) && (
                   <img
-                    style={{
-                      transform: `rotate(${windDirection?.value + 180}deg)`,
-                    }}
-                    className={classes.arrow}
+                    className={classNames(
+                      classes.arrow,
+                      classes.windDirectionArrow
+                    )}
                     alt="arrow"
                     src={arrow}
                   />
@@ -108,7 +113,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {windDirection?.value
+                  {!isNil(windDirection?.value)
                     ? `${formatNumber(windDirection?.value)}\u00B0`
                     : "- -"}
                 </Typography>
@@ -147,7 +152,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 >
                   {formatNumber(waveHeight?.value, 1)}
                 </Typography>
-                {waveHeight?.value && (
+                {!isNil(waveHeight?.value) && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -174,7 +179,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 >
                   {formatNumber(waveMeanPeriod?.value)}
                 </Typography>
-                {waveMeanPeriod?.value && (
+                {!isNil(waveMeanPeriod?.value) && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -194,12 +199,12 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {waveMeanDirection?.value && (
+                {!isNil(waveMeanDirection?.value) && (
                   <img
-                    style={{
-                      transform: `rotate(${waveMeanDirection?.value + 180}deg)`,
-                    }}
-                    className={classes.arrow}
+                    className={classNames(
+                      classes.arrow,
+                      classes.wavesDirectionArrow
+                    )}
                     alt="arrow"
                     src={arrow}
                   />
@@ -209,8 +214,9 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(waveMeanDirection?.value)}
-                  {waveMeanDirection?.value ? "\u00B0" : ""}
+                  {!isNil(waveMeanDirection?.value)
+                    ? `${formatNumber(waveMeanDirection?.value)}\u00B0`
+                    : "- -"}
                 </Typography>
               </Grid>
             </Grid>
@@ -230,7 +236,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
     card: {
@@ -269,12 +275,22 @@ const styles = (theme: Theme) =>
         height: 15,
       },
     },
-  });
+    windDirectionArrow: ({ windDirection }: StyleProps) => ({
+      transform: `rotate(${(windDirection || 0) + 180}deg)`,
+    }),
+    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
+      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
+    }),
+  })
+);
 
-interface WavesIncomingProps {
+interface WavesProps {
   liveData: LiveData;
 }
 
-type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;
+interface StyleProps {
+  windDirection?: number;
+  wavesDirection?: number;
+}
 
-export default withStyles(styles)(Waves);
+export default Waves;

@@ -3,37 +3,37 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Waves-card-1"
+    classname="makeStyles-card-1"
   >
     <mock-cardcontent
-      classname="Waves-contentWrapper-11"
+      classname="makeStyles-contentWrapper-11"
     >
       <div
-        class="MuiGrid-root Waves-content-12 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root makeStyles-content-12 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root Waves-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
-            classname="Waves-cardTitle-2 Waves-coloredText-8"
+            classname="makeStyles-cardTitle-2 makeStyles-coloredText-8"
             variant="h6"
           >
             WIND
           </mock-typography>
           <img
             alt="wind"
-            class="Waves-titleImages-9"
+            class="makeStyles-titleImages-9"
             src="wind.svg"
           />
         </div>
         <div
-          class="MuiGrid-root Waves-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-4"
+              classname="makeStyles-contentTextTitles-4"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -43,14 +43,14 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-5"
+                classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
                 18.0
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-6"
+                classname="makeStyles-contentUnits-6"
                 color="textSecondary"
                 variant="h6"
               >
@@ -62,7 +62,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-4"
+              classname="makeStyles-contentTextTitles-4"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -73,12 +73,11 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-13"
+                class="makeStyles-arrow-13 makeStyles-windDirectionArrow-14 makeStyles-windDirectionArrow-16"
                 src="directioncircle.svg"
-                style="transform: rotate(276deg);"
               />
               <mock-typography
-                classname="Waves-contentTextValues-5"
+                classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
@@ -88,28 +87,28 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root Waves-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
-            classname="Waves-cardTitle-2 Waves-coloredText-8"
+            classname="makeStyles-cardTitle-2 makeStyles-coloredText-8"
             variant="h6"
           >
             WAVES
           </mock-typography>
           <img
             alt="waves"
-            class="Waves-titleImages-9"
+            class="makeStyles-titleImages-9"
             src="waves.svg"
           />
         </div>
         <div
-          class="MuiGrid-root Waves-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-4"
+              classname="makeStyles-contentTextTitles-4"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -119,14 +118,14 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-5"
+                classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
                 3.0
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-6"
+                classname="makeStyles-contentUnits-6"
                 color="textSecondary"
                 variant="h6"
               >
@@ -138,7 +137,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-4"
+              classname="makeStyles-contentTextTitles-4"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -148,14 +147,14 @@ exports[`renders as expected 1`] = `
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
             >
               <mock-typography
-                classname="Waves-contentTextValues-5"
+                classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
                 15
               </mock-typography>
               <mock-typography
-                classname="Waves-contentUnits-6"
+                classname="makeStyles-contentUnits-6"
                 color="textSecondary"
                 variant="h6"
               >
@@ -167,7 +166,7 @@ exports[`renders as expected 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
           >
             <mock-typography
-              classname="Waves-contentTextTitles-4"
+              classname="makeStyles-contentTextTitles-4"
               color="textSecondary"
               variant="subtitle2"
             >
@@ -178,23 +177,21 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="Waves-arrow-13"
+                class="makeStyles-arrow-13 makeStyles-wavesDirectionArrow-15 makeStyles-wavesDirectionArrow-17"
                 src="directioncircle.svg"
-                style="transform: rotate(316deg);"
               />
               <mock-typography
-                classname="Waves-contentTextValues-5"
+                classname="makeStyles-contentTextValues-5"
                 color="textSecondary"
                 variant="h3"
               >
-                136
-                °
+                136°
               </mock-typography>
             </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-14 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root UpdateInfo-updateInfo-18 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
@@ -207,7 +204,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root UpdateInfo-updateIcon-16 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root UpdateInfo-updateIcon-20 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -224,7 +221,7 @@ exports[`renders as expected 1`] = `
                   flexdirection="column"
                 >
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-17"
+                    classname="UpdateInfo-updateInfoText-21"
                     variant="caption"
                   >
                     Last data received
@@ -232,7 +229,7 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-17"
+                    classname="UpdateInfo-updateInfoText-21"
                     variant="caption"
                   >
                     Updated 
@@ -243,20 +240,20 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-23 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-22 makeStyles-chip-27 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <a
-                class="makeStyles-link-21"
+                class="makeStyles-link-25"
                 href="/"
               >
                 <div
-                  class="makeStyles-circle-20"
+                  class="makeStyles-circle-24"
                 />
                 <mock-typography
-                  classname="makeStyles-chipText-19"
+                  classname="makeStyles-chipText-23"
                 >
                   LIVE
                 </mock-typography>
