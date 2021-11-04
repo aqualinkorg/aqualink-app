@@ -26,8 +26,8 @@ const getMockDailyData = (
   minWindSpeed: random(10, true),
   satelliteTemperature: random(15, 35, true),
   topTemperature: random(15, 35, true),
-  waveDirection: random(359),
-  wavePeriod: random(10),
+  waveMeanDirection: random(359),
+  waveMeanPeriod: random(10),
   weeklyAlertLevel: random(4),
   windDirection: random(359),
 });
@@ -56,11 +56,11 @@ export const getMockLiveData = (siteId: number): SofarLiveDataDto => ({
     timestamp: moment().toISOString(),
     value: random(10, true),
   },
-  waveDirection: {
+  waveMeanDirection: {
     timestamp: moment().toISOString(),
     value: random(359),
   },
-  wavePeriod: {
+  waveMeanPeriod: {
     timestamp: moment().toISOString(),
     value: random(10),
   },
@@ -106,7 +106,7 @@ export const getMockSpotterData = (
       timestamp: start.clone().add(i, 'days').toISOString(),
       value: random(15, 35, true),
     })),
-    wavePeakPeriod: times(diffDays, (i) => ({
+    waveMeanPeriod: times(diffDays, (i) => ({
       timestamp: start.clone().add(i, 'days').toISOString(),
       value: random(15, 35, true),
     })),

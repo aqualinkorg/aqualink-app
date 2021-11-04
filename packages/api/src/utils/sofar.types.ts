@@ -17,8 +17,8 @@ export interface SofarDailyData {
   minWaveHeight?: number;
   maxWaveHeight?: number;
   avgWaveHeight?: number;
-  waveDirection?: number;
-  wavePeriod?: number;
+  waveMeanDirection?: number;
+  waveMeanPeriod?: number;
   minWindSpeed?: number;
   maxWindSpeed?: number;
   avgWindSpeed?: number;
@@ -34,8 +34,8 @@ export interface SofarLiveData {
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
   waveHeight?: SofarValue;
-  waveDirection?: SofarValue;
-  wavePeriod?: SofarValue;
+  waveMeanDirection?: SofarValue;
+  waveMeanPeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
   sstAnomaly?: number;
@@ -49,7 +49,7 @@ export interface SpotterData {
   topTemperature: SofarValue[];
   bottomTemperature: SofarValue[];
   significantWaveHeight: SofarValue[];
-  wavePeakPeriod: SofarValue[];
+  waveMeanPeriod: SofarValue[];
   waveMeanDirection: SofarValue[];
   windSpeed: SofarValue[];
   windDirection: SofarValue[];
@@ -61,7 +61,7 @@ export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {
   topTemperature: [],
   bottomTemperature: [],
   significantWaveHeight: [],
-  wavePeakPeriod: [],
+  waveMeanPeriod: [],
   waveMeanDirection: [],
   windSpeed: [],
   windDirection: [],

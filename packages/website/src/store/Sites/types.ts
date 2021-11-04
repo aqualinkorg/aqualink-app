@@ -61,8 +61,8 @@ export interface LiveData {
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
   waveHeight?: SofarValue;
-  waveDirection?: SofarValue;
-  wavePeriod?: SofarValue;
+  waveMeanDirection?: SofarValue;
+  waveMeanPeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
   weeklyAlertLevel?: number;
@@ -90,8 +90,8 @@ export interface DailyData {
   minWaveHeight: number;
   maxWaveHeight: number;
   avgWaveHeight: number;
-  waveDirection: number;
-  wavePeriod: number;
+  waveMeanDirection: number;
+  waveMeanPeriod: number;
 
   weeklyAlertLevel?: number;
 }
@@ -129,7 +129,7 @@ export type MetricsKeys =
   | "bottom_temperature"
   | "sst_anomaly"
   | "significant_wave_height"
-  | "wave_peak_period"
+  | "wave_mean_period"
   | "wave_mean_direction"
   | "wind_speed"
   | "wind_direction"
@@ -143,7 +143,7 @@ export type Metrics =
   | "bottomTemperature"
   | "sstAnomaly"
   | "significantWaveHeight"
-  | "wavePeakPeriod"
+  | "waveMeanPeriod"
   | "waveMeanDirection"
   | "windSpeed"
   | "windDirection"

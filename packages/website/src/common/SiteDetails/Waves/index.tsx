@@ -1,34 +1,43 @@
 import React from "react";
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
   Card,
   CardContent,
   Typography,
   Grid,
+  makeStyles,
 } from "@material-ui/core";
+import classNames from "classnames";
+import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
 import type { LiveData } from "../../../store/Sites/types";
-import { formatNumber } from "../../../helpers/numberUtils";
+import { formatNumber, invertDirection } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";
 import arrow from "../../../assets/directioncircle.svg";
 import wind from "../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ liveData, classes }: WavesProps) => {
+const Waves = ({ liveData }: WavesProps) => {
   const {
     topTemperature,
     bottomTemperature,
     waveHeight,
-    waveDirection,
-    wavePeriod,
+    waveMeanDirection,
+    waveMeanPeriod,
     windSpeed,
     windDirection,
   } = liveData;
+
+  // SOFAR uses direction GOING TO, but we want to disply direction COMING FROM.
+  const windDirectionFrom = invertDirection(windDirection?.value);
+  const waveDirectionFrom = invertDirection(waveMeanDirection?.value);
+  const classes = useStyles({
+    windDirection: windDirectionFrom,
+    wavesDirection: waveDirectionFrom,
+  });
 
   const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
 
@@ -93,12 +102,12 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {windDirection?.value && (
+                {!isNil(windDirectionFrom) && (
                   <img
-                    style={{
-                      transform: `rotate(${windDirection?.value + 180}deg)`,
-                    }}
-                    className={classes.arrow}
+                    className={classNames(
+                      classes.arrow,
+                      classes.windDirectionArrow
+                    )}
                     alt="arrow"
                     src={arrow}
                   />
@@ -108,8 +117,8 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {windDirection?.value
-                    ? `${formatNumber(windDirection?.value)}\u00B0`
+                  {!isNil(windDirectionFrom)
+                    ? `${formatNumber(windDirectionFrom)}\u00B0`
                     : "- -"}
                 </Typography>
               </Grid>
@@ -147,7 +156,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 >
                   {formatNumber(waveHeight?.value, 1)}
                 </Typography>
-                {waveHeight?.value && (
+                {!isNil(waveHeight?.value) && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -172,9 +181,9 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(wavePeriod?.value)}
+                  {formatNumber(waveMeanPeriod?.value)}
                 </Typography>
-                {wavePeriod?.value && (
+                {!isNil(waveMeanPeriod?.value) && (
                   <Typography
                     className={classes.contentUnits}
                     color="textSecondary"
@@ -194,12 +203,12 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                 DIRECTION
               </Typography>
               <Grid container alignItems="baseline">
-                {waveDirection?.value && (
+                {!isNil(waveDirectionFrom) && (
                   <img
-                    style={{
-                      transform: `rotate(${waveDirection?.value + 180}deg)`,
-                    }}
-                    className={classes.arrow}
+                    className={classNames(
+                      classes.arrow,
+                      classes.wavesDirectionArrow
+                    )}
                     alt="arrow"
                     src={arrow}
                   />
@@ -209,8 +218,9 @@ const Waves = ({ liveData, classes }: WavesProps) => {
                   color="textSecondary"
                   variant="h3"
                 >
-                  {formatNumber(waveDirection?.value)}
-                  {waveDirection?.value ? "\u00B0" : ""}
+                  {!isNil(waveDirectionFrom)
+                    ? `${formatNumber(waveDirectionFrom)}\u00B0`
+                    : "- -"}
                 </Typography>
               </Grid>
             </Grid>
@@ -230,7 +240,7 @@ const Waves = ({ liveData, classes }: WavesProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
     card: {
@@ -269,12 +279,22 @@ const styles = (theme: Theme) =>
         height: 15,
       },
     },
-  });
+    windDirectionArrow: ({ windDirection }: StyleProps) => ({
+      transform: `rotate(${(windDirection || 0) + 180}deg)`,
+    }),
+    wavesDirectionArrow: ({ wavesDirection }: StyleProps) => ({
+      transform: `rotate(${(wavesDirection || 0) + 180}deg)`,
+    }),
+  })
+);
 
-interface WavesIncomingProps {
+interface WavesProps {
   liveData: LiveData;
 }
 
-type WavesProps = WithStyles<typeof styles> & WavesIncomingProps;
+interface StyleProps {
+  windDirection?: number;
+  wavesDirection?: number;
+}
 
-export default withStyles(styles)(Waves);
+export default Waves;

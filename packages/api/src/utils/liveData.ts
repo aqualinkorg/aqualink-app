@@ -30,8 +30,8 @@ export const getLiveData = async (
     degreeHeatingDays,
     satelliteTemperature,
     waveHeight,
-    waveDirection,
-    wavePeriod,
+    waveMeanDirection,
+    waveMeanPeriod,
     windVelocity10MeterEastward,
     windVelocity10MeterNorthward,
   ] = await Promise.all([
@@ -55,8 +55,7 @@ export const getLiveData = async (
     ),
     sofarForecast(
       SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-        .meanDirectionWindWaves,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
       latitude,
       longitude,
     ),
@@ -85,8 +84,8 @@ export const getLiveData = async (
         topTemperature: getLatestData(spotterRawData.topTemperature),
         bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
         waveHeight: getLatestData(spotterRawData.significantWaveHeight),
-        wavePeriod: getLatestData(spotterRawData.wavePeakPeriod),
-        waveDirection: getLatestData(spotterRawData.waveMeanDirection),
+        waveMeanPeriod: getLatestData(spotterRawData.waveMeanPeriod),
+        waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
         windSpeed: getLatestData(spotterRawData.windSpeed),
         windDirection: getLatestData(spotterRawData.windDirection),
         longitude:
@@ -114,8 +113,8 @@ export const getLiveData = async (
       satelliteTemperature:
         satelliteTemperature && getLatestData(satelliteTemperature),
       waveHeight,
-      waveDirection,
-      wavePeriod,
+      waveMeanDirection,
+      waveMeanPeriod,
       windSpeed,
       windDirection,
       // Override all possible values with spotter data.

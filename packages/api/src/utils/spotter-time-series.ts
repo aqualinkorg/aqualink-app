@@ -159,7 +159,7 @@ export const addSpotterData = async (
             ['bottomTemperature', Metric.BOTTOM_TEMPERATURE],
             ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
             ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
-            ['wavePeakPeriod', Metric.WAVE_PEAK_PERIOD],
+            ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
             ['windDirection', Metric.WIND_DIRECTION],
             ['windSpeed', Metric.WIND_SPEED],
           ];

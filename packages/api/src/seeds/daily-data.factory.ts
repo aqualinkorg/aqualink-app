@@ -20,8 +20,8 @@ define(DailyData, (faker: typeof Faker) => {
   dailyData.minWaveHeight = avgWaveHeight - 1;
   dailyData.maxWaveHeight = avgWaveHeight + 1;
   dailyData.avgWaveHeight = avgWaveHeight;
-  dailyData.waveDirection = faker.random.number({ min: 0, max: 360 });
-  dailyData.wavePeriod = faker.random.number({ min: 10, max: 30 });
+  dailyData.waveMeanDirection = faker.random.number({ min: 0, max: 360 });
+  dailyData.waveMeanPeriod = faker.random.number({ min: 10, max: 30 });
 
   const avgWindSpeed = faker.random.number({ min: 2, max: 4 });
   dailyData.minWindSpeed = avgWindSpeed - 1;

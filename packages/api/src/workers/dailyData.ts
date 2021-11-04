@@ -90,8 +90,8 @@ export async function getDailyData(
     degreeHeatingDays,
     satelliteTemperatureData,
     significantWaveHeightsRaw,
-    meanDirectionWindWavesRaw,
-    peakPeriodWindWavesRaw,
+    waveMeanDirectionRaw,
+    waveMeanPeriodRaw,
     windVelocity10MeterEastward,
     windVelocity10MeterNorthward,
   ] = await Promise.all([
@@ -118,8 +118,7 @@ export async function getDailyData(
     ).then((data) => data.map(({ value }) => value)),
     getSofarHindcastData(
       SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-        .significantWaveHeight,
+      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
       latitude,
       longitude,
       endOfDate,
@@ -156,7 +155,7 @@ export async function getDailyData(
         topTemperature: [],
         bottomTemperature: [],
         significantWaveHeight: [],
-        wavePeakPeriod: [],
+        waveMeanPeriod: [],
         waveMeanDirection: [],
         windSpeed: [],
         windDirection: [],
@@ -187,21 +186,20 @@ export async function getDailyData(
   const avgWaveHeight =
     significantWaveHeights && getAverage(significantWaveHeights);
 
-  const meanDirectionWindWaves =
+  const meanDirectionWaves =
     spotterData.waveMeanDirection.length > 0
       ? spotterData.waveMeanDirection
-      : meanDirectionWindWavesRaw;
+      : waveMeanDirectionRaw;
 
-  const waveDirection =
-    meanDirectionWindWaves && getAverage(meanDirectionWindWaves, true);
+  const waveMeanDirection =
+    meanDirectionWaves && getAverage(meanDirectionWaves, true);
 
-  const peakPeriodWindWaves =
-    spotterData.wavePeakPeriod.length > 0
-      ? spotterData.wavePeakPeriod
-      : peakPeriodWindWavesRaw;
+  const meanPeriodWaves =
+    spotterData.waveMeanPeriod.length > 0
+      ? spotterData.waveMeanPeriod
+      : waveMeanPeriodRaw;
 
-  const wavePeriod =
-    peakPeriodWindWaves && getAverage(peakPeriodWindWaves, true);
+  const waveMeanPeriod = meanPeriodWaves && getAverage(meanPeriodWaves, true);
 
   // Make sure that windVelocity10MeterEastward and windVelocity10MeterNorthward have the same length.
   const modelWindCheck =
@@ -251,8 +249,8 @@ export async function getDailyData(
     minWaveHeight,
     maxWaveHeight,
     avgWaveHeight,
-    waveDirection,
-    wavePeriod,
+    waveMeanDirection,
+    waveMeanPeriod,
     minWindSpeed,
     maxWindSpeed,
     avgWindSpeed,

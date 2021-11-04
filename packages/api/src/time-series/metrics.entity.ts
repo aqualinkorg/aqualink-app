@@ -10,6 +10,7 @@ export enum Metric {
   BOTTOM_TEMPERATURE = 'bottom_temperature',
   SST_ANOMALY = 'sst_anomaly',
   SIGNIFICANT_WAVE_HEIGHT = 'significant_wave_height',
+  WAVE_MEAN_PERIOD = 'wave_mean_period',
   WAVE_PEAK_PERIOD = 'wave_peak_period',
   WAVE_MEAN_DIRECTION = 'wave_mean_direction',
   WIND_SPEED = 'wind_speed',

@@ -56,11 +56,15 @@ export class DailyData {
 
   @ApiProperty({ example: 279 })
   @Column({ nullable: true, type: 'integer' })
-  waveDirection: number | null;
+  waveMeanDirection: number | null;
 
   @ApiProperty({ example: 11 })
   @Column({ nullable: true, type: 'integer' })
-  wavePeriod: number | null;
+  wavePeakPeriod: number | null;
+
+  @ApiProperty({ example: 11 })
+  @Column({ nullable: true, type: 'integer' })
+  waveMeanPeriod: number | null;
 
   @ApiProperty({ example: 1 })
   @Column('float', { nullable: true })

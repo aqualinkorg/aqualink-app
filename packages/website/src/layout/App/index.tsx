@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import NotFound from "../../routes/NotFound";
@@ -58,6 +63,7 @@ function App() {
                 <Route exact path="/drones" component={Drones} />
                 <Route exact path="/faq" component={Faq} />
                 <Route exact path="/terms" component={Terms} />
+                <Redirect from="/reefs/:id" to="/sites/:id" />
                 <Route path="/sites" component={SiteRoutes} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/tracker" component={Tracker} />

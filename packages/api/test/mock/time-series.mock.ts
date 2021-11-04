@@ -25,7 +25,7 @@ export const spotterMetrics = [
   Metric.TOP_TEMPERATURE,
   Metric.SIGNIFICANT_WAVE_HEIGHT,
   Metric.WAVE_MEAN_DIRECTION,
-  Metric.WAVE_PEAK_PERIOD,
+  Metric.WAVE_MEAN_PERIOD,
   Metric.WIND_DIRECTION,
   Metric.WIND_SPEED,
 ];
