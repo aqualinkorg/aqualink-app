@@ -24,6 +24,10 @@ const observationOptions = [
     value:
       "Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)",
   },
+  {
+    key: "invasive-species",
+    value: "Signs of damage from invasive species",
+  },
 ];
 
 export const findOption = (key: string) => {
