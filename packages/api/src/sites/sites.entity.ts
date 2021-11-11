@@ -30,6 +30,7 @@ export enum SiteStatus {
   Shipped = 'shipped',
   Deployed = 'deployed',
   Maintenance = 'maintenance',
+  Lost = 'lost',
 }
 
 export enum SensorType {
