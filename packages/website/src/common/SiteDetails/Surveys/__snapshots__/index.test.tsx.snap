@@ -258,6 +258,15 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 >
                   Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
                 </mock-menuitem>
+                <mock-menuitem
+                  classname="Surveys-menuItem-8"
+                  data-value="invasive-species"
+                  role="option"
+                  selected="false"
+                  title="Signs of damage from invasive species"
+                >
+                  Signs of damage from invasive species
+                </mock-menuitem>
               </mock-menu>
             </div>
           </div>

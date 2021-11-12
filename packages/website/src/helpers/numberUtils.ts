@@ -12,5 +12,5 @@ export function invertDirection(direction: number | undefined) {
   if (!isNumber(direction)) {
     return undefined;
   }
-  return (direction - 180) % 360;
+  return (direction + 180) % 360;
 }

@@ -15,13 +15,14 @@ import { SensorDataDto } from '../sensors/dto/sensor-data.dto';
 import { sensorDataSchema } from '../docs/api-sensor-data';
 
 export enum Observations {
-  Healthy = 'healthy',
-  PossibleDisease = 'possible-disease',
-  EvidentDisease = 'evident-disease',
-  Mortality = 'mortality',
-  Environmental = 'environmental',
   Anthropogenic = 'anthropogenic',
+  Environmental = 'environmental',
+  EvidentDisease = 'evident-disease',
+  Healthy = 'healthy',
+  InvasiveSpecies = 'invasive-species',
+  Mortality = 'mortality',
   NoData = 'no-data',
+  PossibleDisease = 'possible-disease',
 }
 
 export enum MediaType {

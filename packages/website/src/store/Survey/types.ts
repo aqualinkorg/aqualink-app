@@ -14,7 +14,8 @@ export type Observations =
   | "evident-disease"
   | "mortality"
   | "environmental"
-  | "anthropogenic";
+  | "anthropogenic"
+  | "invasive-species";
 
 type WeatherConditions = "calm" | "waves" | "storm";
 
