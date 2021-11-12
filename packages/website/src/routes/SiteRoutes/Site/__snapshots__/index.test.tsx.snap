@@ -1972,7 +1972,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         color="textSecondary"
                         variant="h3"
                       >
-                        -90°
+                        270°
                       </mock-typography>
                     </div>
                   </div>
@@ -2333,6 +2333,15 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         title="Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)"
                       >
                         Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
+                      </mock-menuitem>
+                      <mock-menuitem
+                        classname="Surveys-menuItem-309"
+                        data-value="invasive-species"
+                        role="option"
+                        selected="false"
+                        title="Signs of damage from invasive species"
+                      >
+                        Signs of damage from invasive species
                       </mock-menuitem>
                     </mock-menu>
                   </div>
