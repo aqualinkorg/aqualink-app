@@ -25,13 +25,13 @@ const LNG_OFFSETS = [-360, 0, 360];
 export default function SiteMarker({ site }: { site: Site }) {
   const siteOnMap = useSelector(siteOnMapSelector);
   const dispatch = useDispatch();
-  const { weeklyAlert } = site.collectionData || {};
+  const { tempWeeklyAlert } = site.collectionData || {};
   const markerIcon = useMarkerIcon(
     hasDeployedSpotter(site),
     site.hasHobo,
     siteOnMap?.id === site.id,
-    alertColorFinder(weeklyAlert),
-    alertIconFinder(weeklyAlert)
+    alertColorFinder(tempWeeklyAlert),
+    alertIconFinder(tempWeeklyAlert)
   );
 
   if (site.polygon.type !== "Point") return null;

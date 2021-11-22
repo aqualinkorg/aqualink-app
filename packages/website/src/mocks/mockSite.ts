@@ -84,7 +84,7 @@ export const mockSite: Site = {
     bottomTemperature: 10.719999999999999,
     satelliteTemperature: 15.8900003433228,
     dhw: 0,
-    weeklyAlert: 0,
+    tempWeeklyAlert: 0,
     sstAnomaly: 1.2,
   },
 };

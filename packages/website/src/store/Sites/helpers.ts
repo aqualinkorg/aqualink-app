@@ -34,7 +34,7 @@ export const constructTableData = (list: Site[]): TableRow[] => {
     const {
       dhw,
       satelliteTemperature,
-      weeklyAlert,
+      tempWeeklyAlert,
       bottomTemperature,
       topTemperature,
       sstAnomaly,
@@ -59,8 +59,8 @@ export const constructTableData = (list: Site[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${weeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
-      alertLevel: isNil(weeklyAlert) ? null : weeklyAlert,
+      alert: `${tempWeeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
+      alertLevel: isNil(tempWeeklyAlert) ? null : tempWeeklyAlert,
     };
   });
 };
@@ -68,18 +68,18 @@ export const constructTableData = (list: Site[]): TableRow[] => {
 const mapMetrics = <T>(
   data: Record<MetricsKeys, T[]>
 ): Record<Metrics, T[]> => ({
-  alert: data.alert,
   bottomTemperature: data.bottom_temperature,
   dhw: data.dhw,
   satelliteTemperature: data.satellite_temperature,
   sstAnomaly: data.sst_anomaly,
   topTemperature: data.top_temperature,
   significantWaveHeight: data.significant_wave_height,
+  tempAlert: data.temp_alert,
+  tempWeeklyAlert: data.temp_weekly_alert,
   waveMeanDirection: data.wave_mean_direction,
   waveMeanPeriod: data.wave_mean_period,
   windDirection: data.wind_direction,
   windSpeed: data.wind_speed,
-  weeklyAlert: data.weekly_alert,
 });
 
 export const mapTimeSeriesData = (

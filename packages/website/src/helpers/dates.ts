@@ -237,7 +237,6 @@ export const convertTimeSeriesToLocalTime = (
     return timeSeries;
   }
   return {
-    alert: convertSofarDataToLocalTime(timeSeries.alert, timeZone),
     dhw: convertSofarDataToLocalTime(timeSeries.dhw, timeZone),
     satelliteTemperature: convertSofarDataToLocalTime(
       timeSeries.satelliteTemperature,
@@ -256,6 +255,11 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.significantWaveHeight,
       timeZone
     ),
+    tempAlert: convertSofarDataToLocalTime(timeSeries.tempAlert, timeZone),
+    tempWeeklyAlert: convertSofarDataToLocalTime(
+      timeSeries.tempWeeklyAlert,
+      timeZone
+    ),
     waveMeanPeriod: convertSofarDataToLocalTime(
       timeSeries.waveMeanPeriod,
       timeZone
@@ -269,7 +273,6 @@ export const convertTimeSeriesToLocalTime = (
       timeSeries.windDirection,
       timeZone
     ),
-    weeklyAlert: convertSofarDataToLocalTime(timeSeries.weeklyAlert, timeZone),
   };
 };
 

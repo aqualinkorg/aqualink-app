@@ -72,7 +72,6 @@ export const filterTimeSeriesData = (
   }
 
   return {
-    alert: filterSofarData(timeSeries.alert, from, to),
     dhw: filterSofarData(timeSeries.dhw, from, to),
     satelliteTemperature: filterSofarData(
       timeSeries.satelliteTemperature,
@@ -87,11 +86,12 @@ export const filterTimeSeriesData = (
       from,
       to
     ),
+    tempAlert: filterSofarData(timeSeries.tempAlert, from, to),
+    tempWeeklyAlert: filterSofarData(timeSeries.tempWeeklyAlert, from, to),
     waveMeanPeriod: filterSofarData(timeSeries.waveMeanPeriod, from, to),
     waveMeanDirection: filterSofarData(timeSeries.waveMeanDirection, from, to),
     windSpeed: filterSofarData(timeSeries.windSpeed, from, to),
     windDirection: filterSofarData(timeSeries.windDirection, from, to),
-    weeklyAlert: filterSofarData(timeSeries.weeklyAlert, from, to),
   };
 };
 

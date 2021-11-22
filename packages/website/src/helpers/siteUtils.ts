@@ -28,7 +28,7 @@ export const findInitialSitePosition = (
     maxBy(
       sites,
       (site) =>
-        `${site.collectionData?.weeklyAlert || 0},${longDHW(
+        `${site.collectionData?.tempWeeklyAlert || 0},${longDHW(
           site.collectionData?.dhw || null
         )}`
     );
