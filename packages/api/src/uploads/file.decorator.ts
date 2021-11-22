@@ -56,7 +56,7 @@ export const AcceptFile = (
     ),
     acl: 'publicread',
   };
-  if (!config.bucket){
+  if (!config.bucket) {
     console.warn('Configure a storage bucket to accept file uploads.');
     return UseInterceptors();
   }
