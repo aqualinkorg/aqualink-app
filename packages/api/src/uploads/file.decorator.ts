@@ -1,4 +1,4 @@
-import { UseInterceptors } from '@nestjs/common';
+import { UseInterceptors, HttpException, HttpStatus } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import MulterGoogleCloudStorage from 'multer-google-storage';
@@ -58,7 +58,10 @@ export const AcceptFile = (
   };
   if (!config.bucket) {
     console.warn('Configure a storage bucket to accept file uploads.');
-    return UseInterceptors();
+    throw new HttpException(
+      'File upload is not configured at the moment. Contact an admin for help.',
+      HttpStatus.NOT_IMPLEMENTED,
+    );
   }
   return UseInterceptors(
     FileInterceptor(param, {
