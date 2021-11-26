@@ -10,6 +10,8 @@ import {
   Put,
   Delete,
   UseGuards,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -62,6 +64,12 @@ export class SurveysController {
     // Override file path because file.path provided an invalid google cloud format and HTTPS is not working correctly
     // Correct format of a URL pointing to a google cloud object should be
     // https://storage.googleapis.com/{bucketName}/path/to/object/in/bucket
+    if (!process.env.GCS_BUCKET){
+      throw new HttpException(
+        'File upload is not configured at the moment. Contact an admin for help.',
+        HttpStatus.NOT_IMPLEMENTED,
+      );
+    }
     return `https://storage.googleapis.com/${process.env.GCS_BUCKET}/${file.filename}`;
   }
 
