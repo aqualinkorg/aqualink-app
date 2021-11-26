@@ -19,6 +19,28 @@ export class ChangeMetricsName1637586875844 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "metrics" ALTER COLUMN "description" DROP NOT NULL`);
         await queryRunner.query(`ALTER TABLE "metrics" ALTER COLUMN "units" DROP NOT NULL`);
         await queryRunner.query(`INSERT INTO metrics(metric) SELECT unnest(enum_range(NULL::metrics_metric_enum)) as metric ON CONFLICT DO NOTHING`);
+        // Reload materialized view
+        await queryRunner.query(
+          `CREATE MATERIALIZED VIEW "latest_data" AS
+            SELECT 
+            "time_series".id,
+            "time_series".metric,
+            "time_series".timestamp,
+            "time_series".value,
+            "source"."type" AS "source",
+            "source"."site_id" AS "site_id",
+            "source"."survey_point_id" AS "survey_point_id"
+            FROM 
+              (SELECT
+                DISTINCT ON (metric, source_id) metric AS "metric",
+                id,
+                timestamp,
+                value,
+                source_id
+              FROM "time_series" "time_series"
+              ORDER BY metric, source_id, timestamp DESC) "time_series"
+            INNER JOIN "sources" "source" ON "source"."id" = "time_series"."source_id"`,
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
@@ -56,5 +78,4 @@ export class ChangeMetricsName1637586875844 implements MigrationInterface {
               INNER JOIN "sources" "source" ON "source"."id" = "time_series"."source_id"`,
           );
     }
-
 }
