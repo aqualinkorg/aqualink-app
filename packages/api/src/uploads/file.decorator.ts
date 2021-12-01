@@ -1,9 +1,16 @@
-import { UseInterceptors } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NestInterceptor,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import MulterGoogleCloudStorage from 'multer-google-storage';
 import * as path from 'path';
 import { random, times } from 'lodash';
+import { Observable } from 'rxjs';
 import { validateMimetype } from './mimetypes';
 import { fileFilter } from './file.filter';
 
@@ -31,6 +38,17 @@ export function assignName(folder: string, prefix: string) {
   };
 }
 
+@Injectable()
+export class MissingConfigInterceptor implements NestInterceptor {
+  // eslint-disable-next-line class-methods-use-this
+  intercept(): Observable<any> {
+    throw new HttpException(
+      'File upload is not configured at the moment. Contact an admin for help.',
+      HttpStatus.NOT_IMPLEMENTED,
+    );
+  }
+}
+
 export const AcceptFile = (
   param: string,
   acceptTypes: string[],
@@ -56,6 +74,10 @@ export const AcceptFile = (
     ),
     acl: 'publicread',
   };
+  if (!config.bucket) {
+    console.warn('Configure a storage bucket to accept file uploads.');
+    return UseInterceptors(MissingConfigInterceptor);
+  }
   return UseInterceptors(
     FileInterceptor(param, {
       storage: new MulterGoogleCloudStorage(config),
