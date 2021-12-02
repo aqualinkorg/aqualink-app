@@ -149,13 +149,13 @@ export type Metrics =
   | "windSpeed"
   | "windDirection";
 
-export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs";
+export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 
-export type Sources = "spotter" | "hobo" | "sofarNoaa" | "sofarGfs";
+export type Sources = "spotter" | "hobo" | "sofarNoaa" | "sofarGfs" | "sonde";
 
-export type TimeSeries = Record<Metrics, SofarValue[]>;
+export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
 
-export type TimeSeriesRange = Record<Metrics, DataRange[]>;
+export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
 
 export type TimeSeriesDataResponse = Record<
   SourcesKeys,
@@ -169,7 +169,7 @@ export type TimeSeriesDataRangeResponse = Record<
   Record<MetricsKeys, DataRange[]>
 >;
 
-export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
+export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;
 
 export type OceanSenseKeys = "DO" | "EC" | "ORP" | "PH" | "PRESS";
 

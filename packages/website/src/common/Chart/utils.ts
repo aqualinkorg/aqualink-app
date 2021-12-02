@@ -45,10 +45,13 @@ export const filterDailyData = (
 };
 
 export const filterSofarData = (
-  sofarData: SofarValue[],
+  sofarData?: SofarValue[],
   from?: string,
   to?: string
 ): SofarValue[] => {
+  if (!sofarData) {
+    return [];
+  }
   if (!from || !to) return sofarData;
   const startDate = moment(from);
   const endDate = moment(to);
@@ -72,26 +75,26 @@ export const filterTimeSeriesData = (
   }
 
   return {
-    dhw: filterSofarData(timeSeries.dhw, from, to),
+    dhw: filterSofarData(timeSeries?.dhw, from, to),
     satelliteTemperature: filterSofarData(
-      timeSeries.satelliteTemperature,
+      timeSeries?.satelliteTemperature,
       from,
       to
     ),
-    topTemperature: filterSofarData(timeSeries.topTemperature, from, to),
-    bottomTemperature: filterSofarData(timeSeries.bottomTemperature, from, to),
-    sstAnomaly: filterSofarData(timeSeries.sstAnomaly, from, to),
+    topTemperature: filterSofarData(timeSeries?.topTemperature, from, to),
+    bottomTemperature: filterSofarData(timeSeries?.bottomTemperature, from, to),
+    sstAnomaly: filterSofarData(timeSeries?.sstAnomaly, from, to),
     significantWaveHeight: filterSofarData(
-      timeSeries.significantWaveHeight,
+      timeSeries?.significantWaveHeight,
       from,
       to
     ),
-    tempAlert: filterSofarData(timeSeries.tempAlert, from, to),
-    tempWeeklyAlert: filterSofarData(timeSeries.tempWeeklyAlert, from, to),
-    waveMeanPeriod: filterSofarData(timeSeries.waveMeanPeriod, from, to),
-    waveMeanDirection: filterSofarData(timeSeries.waveMeanDirection, from, to),
-    windSpeed: filterSofarData(timeSeries.windSpeed, from, to),
-    windDirection: filterSofarData(timeSeries.windDirection, from, to),
+    tempAlert: filterSofarData(timeSeries?.tempAlert, from, to),
+    tempWeeklyAlert: filterSofarData(timeSeries?.tempWeeklyAlert, from, to),
+    waveMeanPeriod: filterSofarData(timeSeries?.waveMeanPeriod, from, to),
+    waveMeanDirection: filterSofarData(timeSeries?.waveMeanDirection, from, to),
+    windSpeed: filterSofarData(timeSeries?.windSpeed, from, to),
+    windDirection: filterSofarData(timeSeries?.windDirection, from, to),
   };
 };
 

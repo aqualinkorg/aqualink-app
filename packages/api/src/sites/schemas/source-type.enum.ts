@@ -1,6 +1,7 @@
 export enum SourceType {
-  SPOTTER = 'spotter',
+  GFS = 'gfs',
   HOBO = 'hobo',
   NOAA = 'noaa',
-  GFS = 'gfs',
+  SPOTTER = 'spotter',
+  SONDE = 'sonde',
 }

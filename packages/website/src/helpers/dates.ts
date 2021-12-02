@@ -221,10 +221,10 @@ export const convertDailyDataToLocalTime = (
   }));
 
 export const convertSofarDataToLocalTime = (
-  sofarData: SofarValue[],
+  sofarData?: SofarValue[],
   timeZone?: string | null
 ): SofarValue[] =>
-  sofarData.map((item) => ({
+  (sofarData || []).map((item) => ({
     ...item,
     timestamp: convertToLocalTime(item.timestamp, timeZone),
   }));

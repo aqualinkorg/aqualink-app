@@ -48,7 +48,7 @@ export class TimeSeriesService {
   async findSiteData(
     startDate: Date,
     endDate: Date,
-    metrics: Metric[],
+    metrics: Metric[] = [],
     hourly: boolean,
     siteDataDto: SiteDataDto,
   ) {

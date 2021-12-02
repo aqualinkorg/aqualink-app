@@ -487,16 +487,15 @@ export const uploadSondeData = async (
   repositories: Repositories,
 ) => {
   // TODO
-  // - Add sonde to sources type
   // - Add foreign key constraint to sources on site_id
 
   const sourceEntity = await repositories.sourcesRepository
     .findOne({
       relations: ['surveyPoint', 'site'],
       where: {
-        site: siteId,
-        surveyPoint: surveyPointId,
-        type: SourceType.HOBO,
+        site: { id: siteId },
+        // surveyPoint: surveyPointId,
+        type: SourceType.SONDE,
       },
     })
     .then((foundSource) => {
@@ -504,9 +503,9 @@ export const uploadSondeData = async (
         return foundSource;
       }
       return repositories.sourcesRepository.save({
-        site_id: 1,
-        survey_point_id: 2,
-        type: SourceType.HOBO,
+        site_id: siteId,
+        // survey_point_id: 2,
+        type: SourceType.SONDE,
       });
     });
 
@@ -544,74 +543,24 @@ export const uploadSondeData = async (
 
     // console.log(dataAstimeSeries);
 
-    repositories.timeSeriesRepository
-      .createQueryBuilder('time_series')
-      .insert()
-      .values(dataAstimeSeries)
-      .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-      .execute();
+    // Data are to much to added with one bulk insert
+    // So we need to break them in batches
+    const batchSize = 1000;
+    logger.log(`Saving time series data in batches of ${batchSize}`);
+    const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
+      return repositories.timeSeriesRepository
+        .createQueryBuilder('time_series')
+        .insert()
+        .values(batch)
+        .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
+        .execute();
+    });
+
+    // Return insert promises and print progress updates
+    const actionsLength = inserts.length;
+    await Bluebird.Promise.each(inserts, (props, idx) => {
+      logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+    });
+    console.log('loading complete');
   }
-
-  console.log(
-    `loading worksheet ${{
-      siteId,
-      surveyPointId,
-      sondeType,
-      connection,
-      repositories,
-    }}`,
-  );
-
-  return {};
-
-  // const poiEntities = await createSurveyPoints(
-  //   siteEntities,
-  //   dbIdToCSVId,
-  //   recordsGroupedBySite,
-  //   rootPath,
-  //   repositories.surveyPointRepository,
-  // );
-
-  // const poiToSourceMap = await createSources(
-  //   poiEntities,
-  //   repositories.sourcesRepository,
-  // );
-
-  // const surveyPointsGroupedBySite = groupBy(poiEntities, (poi) => poi.site.id);
-
-  // const siteDiffArray = await Bluebird.map(
-  //   Object.values(surveyPointsGroupedBySite),
-  //   (surveyPoints) =>
-  //     parseHoboData(
-  //       surveyPoints,
-  //       dbIdToCSVId,
-  //       rootPath,
-  //       poiToSourceMap,
-  //       repositories.timeSeriesRepository,
-  //     ),
-  //   { concurrency: 1 },
-  // );
-
-  // await Bluebird.map(
-  //   Object.values(surveyPointsGroupedBySite),
-  //   (surveyPoints) =>
-  //     uploadSitePhotos(
-  //       surveyPoints,
-  //       dbIdToCSVId,
-  //       rootPath,
-  //       googleCloudService,
-  //       user,
-  //       repositories.surveyRepository,
-  //       repositories.surveyMediaRepository,
-  //     ),
-  //   { concurrency: 1 },
-  // );
-
-  // performBackfill(siteDiffArray.flat());
-
-  // // Update materialized view
-  // logger.log('Refreshing materialized view latest_data');
-  // await connection.query('REFRESH MATERIALIZED VIEW latest_data');
-
-  // return dbIdToCSVId;
 };

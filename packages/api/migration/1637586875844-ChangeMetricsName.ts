@@ -1,12 +1,14 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable prettier/prettier */
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class ChangeMetricsName1637586875844 implements MigrationInterface {
     name = 'ChangeMetricsName1637586875844'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data";`);
+        // Add new sonde type
+        await queryRunner.query(`ALTER TYPE sources_type_enum ADD VALUE IF NOT EXISTS 'sonde'`);
         // Add new sonde metrics
         await queryRunner.query(`ALTER TYPE metrics_metric_enum RENAME VALUE 'alert' TO 'temp_alert'`);
         await queryRunner.query(`ALTER TYPE metrics_metric_enum RENAME VALUE 'weekly_alert' TO 'temp_weekly_alert'`);
@@ -56,6 +58,13 @@ export class ChangeMetricsName1637586875844 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "metrics" ALTER COLUMN "metric" TYPE "metrics_metric_enum" USING "metric"::"text"::"metrics_metric_enum"`);
         await queryRunner.query(`ALTER TABLE "time_series" ALTER COLUMN "metric" TYPE "metrics_metric_enum" USING "metric"::"text"::"metrics_metric_enum"`);
         await queryRunner.query(`DROP TYPE "metrics_metric_enum_old"`);
+        // Drop sonde sources
+        await queryRunner.query(`ALTER TYPE "public"."sources_type_enum" RENAME TO "sources_type_enum_old"`);
+        await queryRunner.query(`CREATE TYPE "sources_type_enum" AS ENUM('spotter', 'hobo', 'noaa', 'gfs')`);
+        await queryRunner.query(`DELETE FROM sources WHERE type::text IN ('sonde')`);
+        await queryRunner.query(`ALTER TABLE "sources" ALTER COLUMN "type" TYPE "sources_type_enum" USING "type"::"text"::"sources_type_enum"`);
+        await queryRunner.query(`DROP TYPE "sources_type_enum_old"`);
+        // recreate materialized view
         await queryRunner.query(
             `CREATE MATERIALIZED VIEW "latest_data" AS
               SELECT 

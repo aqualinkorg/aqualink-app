@@ -68,9 +68,17 @@ export class TimeSeriesController {
   findSiteData(
     @Query('start', ParseDatePipe) startDate: Date,
     @Query('end', ParseDatePipe) endDate: Date,
-    @Query('metrics', ParseArrayPipe) metrics: Metric[],
     @Query('hourly', ParseBoolPipe) hourly: boolean,
     @Param() siteDataDto: SiteDataDto,
+    @Query(
+      'metrics',
+      new ParseArrayPipe({
+        optional: true,
+        items: String,
+        separator: ',',
+      }),
+    )
+    metrics: Metric[],
   ) {
     return this.timeSeriesService.findSiteData(
       startDate,

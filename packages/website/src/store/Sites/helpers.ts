@@ -1,4 +1,4 @@
-import { isNil, mapValues } from "lodash";
+import { camelCase, isNil, mapKeys, mapValues } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import siteServices from "../../services/siteServices";
 
@@ -67,20 +67,8 @@ export const constructTableData = (list: Site[]): TableRow[] => {
 
 const mapMetrics = <T>(
   data: Record<MetricsKeys, T[]>
-): Record<Metrics, T[]> => ({
-  bottomTemperature: data.bottom_temperature,
-  dhw: data.dhw,
-  satelliteTemperature: data.satellite_temperature,
-  sstAnomaly: data.sst_anomaly,
-  topTemperature: data.top_temperature,
-  significantWaveHeight: data.significant_wave_height,
-  tempAlert: data.temp_alert,
-  tempWeeklyAlert: data.temp_weekly_alert,
-  waveMeanDirection: data.wave_mean_direction,
-  waveMeanPeriod: data.wave_mean_period,
-  windDirection: data.wind_direction,
-  windSpeed: data.wind_speed,
-});
+): Partial<Record<Metrics, T[]>> =>
+  mapKeys(data, (v, k) => camelCase(k) as Metrics);
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse
@@ -89,6 +77,7 @@ export const mapTimeSeriesData = (
   spotter: mapMetrics(timeSeriesData.spotter),
   sofarNoaa: mapMetrics(timeSeriesData.noaa),
   sofarGfs: mapMetrics(timeSeriesData.gfs),
+  sonde: mapMetrics(timeSeriesData.sonde),
 });
 
 export const mapTimeSeriesDataRanges = (
@@ -98,6 +87,7 @@ export const mapTimeSeriesDataRanges = (
   spotter: mapMetrics(ranges.spotter),
   sofarNoaa: mapMetrics(ranges.noaa),
   sofarGfs: mapMetrics(ranges.gfs),
+  sonde: mapMetrics(ranges.sonde),
 });
 
 const mapOceanSenseMetric = (
@@ -139,8 +129,9 @@ const attachTimeSeries = (
     mapValues(previousSensorData, (previousMetricData, metric) =>
       attachData(
         direction,
-        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries],
-        previousMetricData
+        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries] ||
+          [],
+        previousMetricData || []
       )
     )
   );

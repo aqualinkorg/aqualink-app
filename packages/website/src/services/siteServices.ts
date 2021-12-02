@@ -48,13 +48,18 @@ const getSiteTimeSeriesData = ({
   end,
   metrics,
   hourly,
-}: TimeSeriesDataRequestParams) =>
-  requests.send<TimeSeriesDataResponse>({
+}: TimeSeriesDataRequestParams) => {
+  let filterMetrics = metrics.length > 0;
+  filterMetrics = false;
+  return requests.send<TimeSeriesDataResponse>({
     url: `time-series/sites/${siteId}${
       pointId ? `/site-survey-points/${pointId}` : ""
-    }?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
+    }?start=${start}&end=${end}${
+      filterMetrics ? `&metrics=${metrics.join(",")}` : ""
+    }&hourly=${hourly}`,
     method: "GET",
   });
+};
 
 const getSiteTimeSeriesDataRange = ({
   siteId,
