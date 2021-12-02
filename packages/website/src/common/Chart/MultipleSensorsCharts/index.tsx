@@ -309,7 +309,9 @@ const ChartWithCard = ({
             dailyData={granularDailyData || []}
             pointId={pointId ? parseInt(pointId, 10) : undefined}
             spotterData={spotterData}
-            hoboBottomTemperature={hoboBottomTemperature || []}
+            hoboBottomTemperature={
+              hoboBottomTemperature || sondeData?.bottomTemperature || []
+            }
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
             pickerEndDate={pickerEndDate || today}
             startDate={chartStartDate}
