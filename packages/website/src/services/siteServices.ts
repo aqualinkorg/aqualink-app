@@ -49,8 +49,8 @@ const getSiteTimeSeriesData = ({
   metrics,
   hourly,
 }: TimeSeriesDataRequestParams) => {
-  let filterMetrics = metrics.length > 0;
-  filterMetrics = false;
+  // TODO - Move the site condition and adapt to prod.
+  const filterMetrics = metrics.length > 0 && siteId !== "1637";
   return requests.send<TimeSeriesDataResponse>({
     url: `time-series/sites/${siteId}${
       pointId ? `/site-survey-points/${pointId}` : ""
