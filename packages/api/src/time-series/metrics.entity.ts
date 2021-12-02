@@ -32,7 +32,7 @@ export enum Metric {
   PH = 'ph',
   PH_MV = 'ph_mv',
   SONDE_BATTERY_VOLTAGE = 'sonde_battery_voltage',
-  SONDE_CABLE_POWER_VOLTAGE = 'sonde_cable_power_voltage'
+  SONDE_CABLE_POWER_VOLTAGE = 'sonde_cable_power_voltage',
 }
 
 export enum Units {
