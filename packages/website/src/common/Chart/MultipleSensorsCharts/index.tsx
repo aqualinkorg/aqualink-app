@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import classnames from "classnames";
 import moment from "moment";
-import { isNaN } from "lodash";
+import { isNaN, snakeCase } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -41,6 +41,7 @@ import { RangeValue } from "./types";
 import Header from "./Header";
 import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+import { getSondeConfig } from "../../../constants/sondeConfig";
 
 const ChartWithCard = ({
   site,
@@ -420,67 +421,75 @@ const ChartWithCard = ({
       {hasSondeData &&
         Object.entries(sondeData || {})
           .filter(([, itemData]) => itemData?.length)
-          .map(([key, itemData]) => (
-            <Box mt={4} key={key}>
-              <Header
-                range={range}
-                onRangeChange={onRangeChange}
-                disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-                title={key}
-                timeSeriesDataRanges={timeSeriesDataRanges}
-                timeZone={site.timezone}
-                showRangeButtons={false}
-                showAvailableRanges={false}
-              />
-              <Grid
-                className={classes.chartWrapper}
-                container
-                justify="space-between"
-                item
-                spacing={1}
-              >
+          .map(([key, itemData]) => {
+            const { title, units, visibility } = getSondeConfig(snakeCase(key));
+
+            if (visibility === "admin") {
+              return null;
+            }
+
+            return (
+              <Box mt={4} key={key}>
+                <Header
+                  range={range}
+                  onRangeChange={onRangeChange}
+                  disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                  title={title}
+                  timeSeriesDataRanges={timeSeriesDataRanges}
+                  timeZone={site.timezone}
+                  showRangeButtons={false}
+                  showAvailableRanges={false}
+                />
                 <Grid
-                  className={classnames(classes.chart, classes.largeChart)}
+                  className={classes.chartWrapper}
+                  container
+                  justify="space-between"
                   item
+                  spacing={1}
                 >
-                  <Chart
-                    site={site}
-                    pickerStartDate={
-                      pickerStartDate || subtractFromDate(today, "week")
-                    }
-                    pickerEndDate={pickerEndDate || today}
-                    startDate={chartStartDate}
-                    endDate={chartEndDate}
-                    onStartDateChange={onPickerDateChange("start")}
-                    onEndDateChange={onPickerDateChange("end")}
-                    pickerErrored={pickerErrored}
-                    showDatePickers={false}
-                    oceanSenseData={itemData}
-                    oceanSenseDataUnit="tbd"
-                    hideYAxisUnits
-                    displayHistoricalMonthlyMean={false}
-                  />
-                </Grid>
-                {!pickerErrored && (
-                  <Grid className={classes.card} item>
-                    <AnalysisCard
-                      dataset="oceanSense"
+                  <Grid
+                    className={classnames(classes.chart, classes.largeChart)}
+                    item
+                  >
+                    <Chart
+                      site={site}
                       pickerStartDate={
                         pickerStartDate || subtractFromDate(today, "week")
                       }
                       pickerEndDate={pickerEndDate || today}
-                      chartStartDate={chartStartDate}
-                      chartEndDate={chartEndDate}
-                      depth={site.depth}
+                      startDate={chartStartDate}
+                      endDate={chartEndDate}
+                      onStartDateChange={onPickerDateChange("start")}
+                      onEndDateChange={onPickerDateChange("end")}
+                      pickerErrored={pickerErrored}
+                      showDatePickers={false}
                       oceanSenseData={itemData}
-                      oceanSenseUnit="tbd"
-                      columnJustification="flex-start"
+                      oceanSenseDataUnit={units}
+                      hideYAxisUnits
+                      displayHistoricalMonthlyMean={false}
                     />
                   </Grid>
-                )}
-              </Grid>
-            </Box>
-          ))}
+                  {!pickerErrored && (
+                    <Grid className={classes.card} item>
+                      <AnalysisCard
+                        dataset="oceanSense"
+                        pickerStartDate={
+                          pickerStartDate || subtractFromDate(today, "week")
+                        }
+                        pickerEndDate={pickerEndDate || today}
+                        chartStartDate={chartStartDate}
+                        chartEndDate={chartEndDate}
+                        depth={site.depth}
+                        oceanSenseData={itemData}
+                        oceanSenseUnit={units}
+                        columnJustification="flex-start"
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              </Box>
+            );
+          })}
     </Container>
   );
 };
