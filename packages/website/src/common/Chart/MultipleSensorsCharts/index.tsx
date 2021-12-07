@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import classnames from "classnames";
 import moment from "moment";
-import { isNaN, snakeCase } from "lodash";
+import { isNaN, snakeCase, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -419,7 +419,10 @@ const ChartWithCard = ({
           )
         )}
       {hasSondeData &&
-        Object.entries(sondeData || {})
+        sortBy(
+          Object.entries(sondeData || {}),
+          ([key]) => getSondeConfig(snakeCase(key)).order
+        )
           .filter(([, itemData]) => itemData?.length)
           .map(([key, itemData]) => {
             const { title, units, visibility } = getSondeConfig(snakeCase(key));
