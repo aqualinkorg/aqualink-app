@@ -176,8 +176,6 @@ export const uploadSondeData = async (
         return false;
       });
 
-    // console.log(dataAstimeSeries);
-
     // Data are to much to added with one bulk insert
     // So we need to break them in batches
     const batchSize = 1000;

@@ -50,7 +50,8 @@ const getSiteTimeSeriesData = ({
   hourly,
 }: TimeSeriesDataRequestParams) => {
   // TODO - Move the site condition and adapt to prod.
-  const filterMetrics = metrics.length > 0 && siteId !== "1637";
+  const filterMetrics =
+    metrics.length > 0 && !["1637", "1638"].includes(siteId);
   return requests.send<TimeSeriesDataResponse>({
     url: `time-series/sites/${siteId}${
       pointId ? `/site-survey-points/${pointId}` : ""
