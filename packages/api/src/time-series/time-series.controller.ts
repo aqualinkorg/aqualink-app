@@ -1,13 +1,13 @@
 import {
   Controller,
-  ParseArrayPipe,
   Get,
   Param,
   Query,
   ParseBoolPipe,
+  ParseArrayPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -38,18 +38,23 @@ export class TimeSeriesController {
   @ApiQuery({ name: 'hourly', example: false })
   @Get('sites/:siteId/site-survey-points/:surveyPointId')
   findSurveyPointData(
-    @Query('start', ParseDatePipe) startDate: Date,
-    @Query('end', ParseDatePipe) endDate: Date,
-    @Query('metrics', ParseArrayPipe) metrics: Metric[],
-    @Query('hourly', ParseBoolPipe) hourly: boolean,
     @Param() surveyPointDataDto: SurveyPointDataDto,
+    @Query(
+      'metrics',
+      new DefaultValuePipe(Object.values(Metric)),
+      ParseArrayPipe,
+    )
+    metrics: Metric[],
+    @Query('start') startDate?: Date,
+    @Query('end') endDate?: Date,
+    @Query('hourly') hourly?: boolean,
   ) {
     return this.timeSeriesService.findSurveyPointData(
+      surveyPointDataDto,
+      metrics,
       startDate,
       endDate,
-      metrics,
       hourly,
-      surveyPointDataDto,
     );
   }
 
@@ -66,18 +71,23 @@ export class TimeSeriesController {
   @ApiQuery({ name: 'hourly', example: false })
   @Get('sites/:siteId')
   findSiteData(
-    @Query('start', ParseDatePipe) startDate: Date,
-    @Query('end', ParseDatePipe) endDate: Date,
-    @Query('metrics', ParseArrayPipe) metrics: Metric[],
-    @Query('hourly', ParseBoolPipe) hourly: boolean,
     @Param() siteDataDto: SiteDataDto,
+    @Query(
+      'metrics',
+      new DefaultValuePipe(Object.values(Metric)),
+      ParseArrayPipe,
+    )
+    metrics: Metric[],
+    @Query('start') startDate?: Date,
+    @Query('end') endDate?: Date,
+    @Query('hourly', ParseBoolPipe) hourly?: boolean,
   ) {
     return this.timeSeriesService.findSiteData(
+      siteDataDto,
+      metrics,
       startDate,
       endDate,
-      metrics,
       hourly,
-      siteDataDto,
     );
   }
 

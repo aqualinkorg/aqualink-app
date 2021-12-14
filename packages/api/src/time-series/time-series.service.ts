@@ -24,21 +24,21 @@ export class TimeSeriesService {
   ) {}
 
   async findSurveyPointData(
-    startDate: Date,
-    endDate: Date,
-    metrics: Metric[],
-    hourly: boolean,
     surveyPointDataDto: SurveyPointDataDto,
+    metrics: Metric[],
+    startDate?: Date,
+    endDate?: Date,
+    hourly?: boolean,
   ) {
     const { siteId, surveyPointId } = surveyPointDataDto;
 
     const data: TimeSeriesData[] = await getDataQuery(
       this.timeSeriesRepository,
+      siteId,
+      metrics,
       startDate,
       endDate,
-      metrics,
       hourly,
-      siteId,
       surveyPointId,
     );
 
@@ -46,21 +46,21 @@ export class TimeSeriesService {
   }
 
   async findSiteData(
-    startDate: Date,
-    endDate: Date,
-    metrics: Metric[],
-    hourly: boolean,
     siteDataDto: SiteDataDto,
+    metrics: Metric[],
+    startDate?: Date,
+    endDate?: Date,
+    hourly?: boolean,
   ) {
     const { siteId } = siteDataDto;
 
     const data: TimeSeriesData[] = await getDataQuery(
       this.timeSeriesRepository,
+      siteId,
+      metrics,
       startDate,
       endDate,
-      metrics,
       hourly,
-      siteId,
     );
 
     return groupByMetricAndSource(data);

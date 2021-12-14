@@ -235,10 +235,10 @@ export interface SiteResponse extends Site {
 export interface TimeSeriesDataRequestParams {
   siteId: string;
   pointId?: string;
-  start: string;
-  end: string;
-  metrics: MetricsKeys[];
-  hourly: boolean;
+  start?: string;
+  end?: string;
+  metrics?: MetricsKeys[];
+  hourly?: boolean;
 }
 
 export interface TimeSeriesDataRangeRequestParams {

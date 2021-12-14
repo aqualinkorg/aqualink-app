@@ -1,4 +1,4 @@
-import _, { omit } from 'lodash';
+import _, { isNaN, omit } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -59,13 +59,19 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
 
 export const getDataQuery = (
   timeSeriesRepository: Repository<TimeSeries>,
-  startDate: Date,
-  endDate: Date,
-  metrics: Metric[],
-  hourly: boolean,
   siteId: number,
+  metrics: Metric[],
+  start?: Date,
+  end?: Date,
+  hourly?: boolean,
   surveyPointId?: number,
 ): Promise<TimeSeriesData[]> => {
+  const endDate = end && !isNaN(end.getTime()) ? end : new Date();
+  const startDate =
+    start && !isNaN(start.getTime())
+      ? start
+      : new Date(new Date(endDate).setMonth(endDate.getMonth() - 3));
+
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
     : 'source.survey_point_id is NULL';

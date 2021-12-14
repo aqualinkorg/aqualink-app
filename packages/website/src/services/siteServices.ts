@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import requests from "../helpers/requests";
+import { constructTimeSeriesDataRequestUrl } from "../helpers/siteUtils";
 import {
   DailyData,
   LiveData,
@@ -41,18 +42,9 @@ const getSiteLiveData = (id: string) =>
     method: "GET",
   });
 
-const getSiteTimeSeriesData = ({
-  siteId,
-  pointId,
-  start,
-  end,
-  metrics,
-  hourly,
-}: TimeSeriesDataRequestParams) =>
+const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) =>
   requests.send<TimeSeriesDataResponse>({
-    url: `time-series/sites/${siteId}${
-      pointId ? `/site-survey-points/${pointId}` : ""
-    }?start=${start}&end=${end}&metrics=${metrics.join()}&hourly=${hourly}`,
+    url: constructTimeSeriesDataRequestUrl(params),
     method: "GET",
   });
 
