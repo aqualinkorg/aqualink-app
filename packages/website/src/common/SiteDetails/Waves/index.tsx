@@ -31,9 +31,8 @@ const Waves = ({ liveData }: WavesProps) => {
     windDirection,
   } = liveData;
 
-  // SOFAR uses direction GOING TO, but we want to display direction COMING FROM.
-  const windDirectionFrom = invertDirection(windDirection?.value);
-  // Wave data seems to be using the COMING FROM convention. Ask eric@ovio.org for questions.
+  // Make sure to getthe direction the wind is COMING FROM.
+  const windDirectionFrom = windDirection?.value;
   const waveDirectionFrom = waveMeanDirection?.value;
   const classes = useStyles({
     windDirection: windDirectionFrom,
