@@ -81,7 +81,7 @@ exports[`renders as expected 1`] = `
                 color="textSecondary"
                 variant="h3"
               >
-                276°
+                96°
               </mock-typography>
             </div>
           </div>
