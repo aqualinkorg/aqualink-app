@@ -11,4 +11,7 @@ test('It calculates direction properly from velocity.', () => {
 
   const northEastWindDirection = getWindDirection(-1, -1);
   expect(northEastWindDirection).toEqual(45);
+
+  const northWestWindDirection = getWindDirection(1, -1);
+  expect(northWestWindDirection).toEqual(315);
 });
