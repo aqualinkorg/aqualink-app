@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import isISODate from "validator/lib/isISO8601";
 import {
   Box,
   Container,
@@ -41,6 +42,7 @@ import { RangeValue } from "./types";
 import Header from "./Header";
 import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+import { useQueryParams } from "../../../hooks/useQueryParams";
 
 const ChartWithCard = ({
   site,
@@ -51,6 +53,16 @@ const ChartWithCard = ({
   classes,
 }: ChartWithCardProps) => {
   const dispatch = useDispatch();
+  const getQueryParam = useQueryParams();
+  const [startDateParam, endDateParam, initialChart] = [
+    "start",
+    "end",
+    "chart",
+  ].map(getQueryParam);
+  const initialStart =
+    startDateParam && isISODate(startDateParam) ? startDateParam : undefined;
+  const initialEnd =
+    endDateParam && isISODate(endDateParam) ? endDateParam : undefined;
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
@@ -59,8 +71,8 @@ const ChartWithCard = ({
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
     timeSeriesDataRanges?.hobo || {};
-  const [pickerEndDate, setPickerEndDate] = useState<string>();
-  const [pickerStartDate, setPickerStartDate] = useState<string>();
+  const [pickerEndDate, setPickerEndDate] = useState(initialEnd);
+  const [pickerStartDate, setPickerStartDate] = useState(initialStart);
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
@@ -96,6 +108,14 @@ const ChartWithCard = ({
 
   const hasOceanSenseId = Boolean(oceanSenseConfig?.[site.id]);
 
+  // Scroll to the chart defined by the initialChart query param.
+  useEffect(() => {
+    if (initialChart) {
+      const chartElement = document.getElementById(initialChart);
+      chartElement?.scrollIntoView();
+    }
+  }, [initialChart]);
+
   // Set pickers initial values once the range request is completed
   useEffect(() => {
     if (hoboBottomTemperatureRange) {
@@ -107,17 +127,27 @@ const ChartWithCard = ({
         .tz(site.timezone || "UTC")
         .startOf("day")
         .toISOString();
-      setPickerEndDate(
-        utcToZonedTime(
-          localizedMaxDate || today,
-          site.timezone || "UTC"
-        ).toISOString()
-      );
-      setPickerStartDate(
-        utcToZonedTime(pastThreeMonths, site.timezone || "UTC").toISOString()
-      );
+      if (!initialEnd) {
+        setPickerEndDate(
+          utcToZonedTime(
+            localizedMaxDate || today,
+            site.timezone || "UTC"
+          ).toISOString()
+        );
+      }
+      if (!initialStart) {
+        setPickerStartDate(
+          utcToZonedTime(pastThreeMonths, site.timezone || "UTC").toISOString()
+        );
+      }
     }
-  }, [hoboBottomTemperatureRange, site.timezone, today]);
+  }, [
+    hoboBottomTemperatureRange,
+    initialEnd,
+    initialStart,
+    site.timezone,
+    today,
+  ]);
 
   // Get time series data
   useEffect(() => {
@@ -286,6 +316,7 @@ const ChartWithCard = ({
       className={classes.chartWithRange}
     >
       <Header
+        id="temperature"
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
@@ -355,6 +386,7 @@ const ChartWithCard = ({
           (item) => (
             <Box mt={4} key={item.title}>
               <Header
+                id={item.id}
                 range={range}
                 onRangeChange={onRangeChange}
                 disableMaxRange={!hoboBottomTemperatureRange?.[0]}

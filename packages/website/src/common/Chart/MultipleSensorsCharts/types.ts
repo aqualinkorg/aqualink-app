@@ -24,4 +24,5 @@ export interface OceanSenseDataset {
   unit: string;
   data: SofarValue[];
   title: string;
+  id: string;
 }
