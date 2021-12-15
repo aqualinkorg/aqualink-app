@@ -204,7 +204,13 @@ export class SitesService {
 
   async findOne(id: number): Promise<Site> {
     const site = await this.sitesRepository.findOne(id, {
-      relations: ['region', 'admins', 'stream', 'historicalMonthlyMean'],
+      relations: [
+        'region',
+        'admins',
+        'stream',
+        'historicalMonthlyMean',
+        'siteApplication',
+      ],
     });
 
     if (!site) {
