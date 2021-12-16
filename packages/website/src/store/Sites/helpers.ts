@@ -1,16 +1,17 @@
-import { isNil, mapValues } from "lodash";
+import { isNil, mapValues, mapKeys, camelCase, map, keyBy } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
 import siteServices from "../../services/siteServices";
 
 import type { TableRow } from "../Homepage/types";
-import type {
+import {
   DailyData,
   Metrics,
   MetricsKeys,
   OceanSenseData,
   OceanSenseDataResponse,
   OceanSenseKeys,
+  OceanSenseKeysList,
   Site,
   SofarValue,
   TimeSeries,
@@ -63,40 +64,16 @@ export const constructTableData = (list: Site[]): TableRow[] => {
   });
 };
 
-const mapMetrics = <T>(
-  data: Record<MetricsKeys, T[]>
-): Record<Metrics, T[]> => ({
-  alert: data.alert,
-  bottomTemperature: data.bottom_temperature,
-  dhw: data.dhw,
-  satelliteTemperature: data.satellite_temperature,
-  sstAnomaly: data.sst_anomaly,
-  topTemperature: data.top_temperature,
-  significantWaveHeight: data.significant_wave_height,
-  waveMeanDirection: data.wave_mean_direction,
-  waveMeanPeriod: data.wave_mean_period,
-  windDirection: data.wind_direction,
-  windSpeed: data.wind_speed,
-  weeklyAlert: data.weekly_alert,
-});
+const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
+  mapKeys(data, (_, key) => camelCase(key)) as Record<Metrics, T[]>;
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse
-): TimeSeriesData => ({
-  hobo: mapMetrics(timeSeriesData.hobo),
-  spotter: mapMetrics(timeSeriesData.spotter),
-  sofarNoaa: mapMetrics(timeSeriesData.noaa),
-  sofarGfs: mapMetrics(timeSeriesData.gfs),
-});
+): TimeSeriesData => mapValues(timeSeriesData, mapMetrics);
 
 export const mapTimeSeriesDataRanges = (
   ranges: TimeSeriesDataRangeResponse
-): TimeSeriesDataRange => ({
-  hobo: mapMetrics(ranges.hobo),
-  spotter: mapMetrics(ranges.spotter),
-  sofarNoaa: mapMetrics(ranges.noaa),
-  sofarGfs: mapMetrics(ranges.gfs),
-});
+): TimeSeriesDataRange => mapValues(ranges, mapMetrics);
 
 const mapOceanSenseMetric = (
   response: OceanSenseDataResponse,
@@ -109,15 +86,17 @@ const mapOceanSenseMetric = (
 
 export const mapOceanSenseData = (
   response: OceanSenseDataResponse
-): OceanSenseData => {
-  return {
-    DO: mapOceanSenseMetric(response, "DO"),
-    EC: mapOceanSenseMetric(response, "EC"),
-    ORP: mapOceanSenseMetric(response, "ORP"),
-    PH: mapOceanSenseMetric(response, "PH"),
-    PRESS: mapOceanSenseMetric(response, "PRESS"),
-  };
-};
+): OceanSenseData =>
+  mapValues(
+    keyBy(
+      map(OceanSenseKeysList, (oceanSenseKey) => ({
+        key: oceanSenseKey,
+        value: mapOceanSenseMetric(response, oceanSenseKey),
+      })),
+      "key"
+    ),
+    "value"
+  ) as OceanSenseData;
 
 const attachData = <T>(
   direction: "left" | "right",

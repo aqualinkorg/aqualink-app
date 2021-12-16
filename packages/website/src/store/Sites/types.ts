@@ -149,29 +149,29 @@ export type Metrics =
   | "windDirection"
   | "weeklyAlert";
 
-export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs";
-
-export type Sources = "spotter" | "hobo" | "sofarNoaa" | "sofarGfs";
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs";
 
 export type TimeSeries = Record<Metrics, SofarValue[]>;
 
 export type TimeSeriesRange = Record<Metrics, DataRange[]>;
 
 export type TimeSeriesDataResponse = Record<
-  SourcesKeys,
+  Sources,
   Record<MetricsKeys, SofarValue[]>
 >;
 
 export type TimeSeriesData = Record<Sources, TimeSeries>;
 
 export type TimeSeriesDataRangeResponse = Record<
-  SourcesKeys,
+  Sources,
   Record<MetricsKeys, DataRange[]>
 >;
 
 export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
 
-export type OceanSenseKeys = "DO" | "EC" | "ORP" | "PH" | "PRESS";
+export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
+
+export type OceanSenseKeys = typeof OceanSenseKeysList[number];
 
 export interface OceanSenseDataRequestParams {
   sensorID: string;
