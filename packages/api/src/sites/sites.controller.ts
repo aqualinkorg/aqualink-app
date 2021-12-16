@@ -113,8 +113,8 @@ export class SitesController {
   @Get(':id/spotter_data')
   getSpotterData(
     @Param('id', ParseIntPipe) id: number,
-    @Query('startDate', ParseDatePipe) startDate: Date,
-    @Query('endDate', ParseDatePipe) endDate: Date,
+    @Query('startDate', ParseDatePipe) startDate?: string,
+    @Query('endDate', ParseDatePipe) endDate?: string,
   ): Promise<SpotterDataDto> {
     return this.sitesService.getSpotterData(id, startDate, endDate);
   }

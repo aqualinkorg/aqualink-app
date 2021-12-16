@@ -26,8 +26,8 @@ export class TimeSeriesService {
   async findSurveyPointData(
     surveyPointDataDto: SurveyPointDataDto,
     metrics: Metric[],
-    startDate?: Date,
-    endDate?: Date,
+    startDate?: string,
+    endDate?: string,
     hourly?: boolean,
   ) {
     const { siteId, surveyPointId } = surveyPointDataDto;
@@ -48,8 +48,8 @@ export class TimeSeriesService {
   async findSiteData(
     siteDataDto: SiteDataDto,
     metrics: Metric[],
-    startDate?: Date,
-    endDate?: Date,
+    startDate?: string,
+    endDate?: string,
     hourly?: boolean,
   ) {
     const { siteId } = siteDataDto;

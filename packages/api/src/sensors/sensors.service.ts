@@ -90,9 +90,9 @@ export class SensorsService {
 
   async findSensorData(
     sensorId: string,
-    startDate: Date,
-    endDate: Date,
     metrics: string[],
+    startDate?: string,
+    endDate?: string,
   ) {
     metrics.forEach((metric) => {
       if (!(Object as any).values(Metric).includes(metric)) {

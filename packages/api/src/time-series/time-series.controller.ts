@@ -18,6 +18,7 @@ import {
   ApiTimeSeriesRangeResponse,
   ApiTimeSeriesResponse,
 } from '../docs/api-time-series-response';
+import { ParseDatePipe } from '../pipes/parse-date.pipe';
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -45,8 +46,8 @@ export class TimeSeriesController {
       ParseArrayPipe,
     )
     metrics: Metric[],
-    @Query('start') startDate?: Date,
-    @Query('end') endDate?: Date,
+    @Query('start', ParseDatePipe) startDate?: string,
+    @Query('end', ParseDatePipe) endDate?: string,
     @Query('hourly') hourly?: boolean,
   ) {
     return this.timeSeriesService.findSurveyPointData(
@@ -78,8 +79,8 @@ export class TimeSeriesController {
       ParseArrayPipe,
     )
     metrics: Metric[],
-    @Query('start') startDate?: Date,
-    @Query('end') endDate?: Date,
+    @Query('start', ParseDatePipe) startDate?: string,
+    @Query('end', ParseDatePipe) endDate?: string,
     @Query('hourly', ParseBoolPipe) hourly?: boolean,
   ) {
     return this.timeSeriesService.findSiteData(
