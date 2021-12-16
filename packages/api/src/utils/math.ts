@@ -28,7 +28,7 @@ export const getWindDirection = (
   windNorhwardVelocity: number,
 ) => {
   const degree =
-    -(Math.atan2(windNorhwardVelocity, windEastwardVelocity) * 180) / Math.PI +
+    -(Math.atan2(windNorhwardVelocity, windEastwardVelocity) * 180) / Math.PI -
     90;
 
   return degree >= 0 ? degree : degree + 360;
