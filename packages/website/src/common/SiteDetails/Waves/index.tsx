@@ -31,7 +31,8 @@ const Waves = ({ liveData }: WavesProps) => {
     windDirection,
   } = liveData;
 
-  // Make sure to getthe direction the wind is COMING FROM.
+  // Make sure to get the direction the wind is COMING FROM.
+  // use `numberUtils.invertDirection` if needed.
   const windDirectionFrom = windDirection?.value;
   const waveDirectionFrom = waveMeanDirection?.value;
   const classes = useStyles({
