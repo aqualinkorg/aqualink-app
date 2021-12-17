@@ -1,5 +1,5 @@
 import { LatLng } from "leaflet";
-import { maxBy, meanBy, omitBy, isUndefined, isArray } from "lodash";
+import { maxBy, meanBy, omitBy, isUndefined } from "lodash";
 
 import { Site, UpdateSiteNameFromListArgs } from "../store/Sites/types";
 import type { TimeSeriesDataRequestParams } from "../store/Sites/types";
@@ -80,20 +80,11 @@ export const constructTimeSeriesDataRequestUrl = ({
   pointId,
   ...rest
 }: TimeSeriesDataRequestParams) => {
-  const urlParams = omitBy({ ...rest }, isUndefined);
-  const stringifiedParams = Object.entries(urlParams).reduce<string>(
-    (acc, [key, value], index) => {
-      const specialChar = index === 0 ? "?" : "&";
-      if (isArray(value)) {
-        return `${acc}${specialChar}${key}=${value.join()}`;
-      }
-
-      return `${acc}${specialChar}${key}=${String(value)}`;
-    },
-    ""
-  );
+  const params = new URLSearchParams({
+    ...omitBy(rest, isUndefined),
+  }).toString();
 
   return `time-series/sites/${siteId}${
     pointId ? `/site-survey-points/${pointId}` : ""
-  }${stringifiedParams}`;
+  }${params.length ? `?${params}` : ""}`;
 };
