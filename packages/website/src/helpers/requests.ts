@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { isUndefined, omitBy } from "lodash";
 
 const agent = (contentType?: string) =>
   axios.create({
@@ -25,6 +26,14 @@ function send<T>(request: Request): Promise<AxiosResponse<T>> {
   });
 }
 
+const generateUrlQueryParams = (params: Record<string, any>) => {
+  const stringifiedParams = new URLSearchParams({
+    ...omitBy(params, isUndefined),
+  }).toString();
+
+  return stringifiedParams.length ? `?${stringifiedParams}` : "";
+};
+
 interface Request {
   method: AxiosRequestConfig["method"];
   url: AxiosRequestConfig["url"];
@@ -39,4 +48,5 @@ interface Request {
 export default {
   agent,
   send,
+  generateUrlQueryParams,
 };

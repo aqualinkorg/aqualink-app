@@ -1,8 +1,12 @@
 import { LatLng } from "leaflet";
 import { maxBy, meanBy } from "lodash";
 
-import { longDHW } from "../store/Sites/helpers";
 import { Site, UpdateSiteNameFromListArgs } from "../store/Sites/types";
+import type { TimeSeriesDataRequestParams } from "../store/Sites/types";
+import requests from "./requests";
+
+export const longDHW = (dhw: number | null): string =>
+  `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
 
 export const findSiteById = (sites: Site[], siteId: string): Site | null => {
   return (
@@ -71,3 +75,13 @@ export const setSiteNameFromList = ({
   name,
 }: UpdateSiteNameFromListArgs): Site[] | undefined =>
   list?.map((item) => (item.id === id && name ? { ...item, name } : item));
+
+export const constructTimeSeriesDataRequestUrl = ({
+  siteId,
+  pointId,
+  ...rest
+}: TimeSeriesDataRequestParams) => {
+  return `time-series/sites/${siteId}${
+    pointId ? `/site-survey-points/${pointId}` : ""
+  }${requests.generateUrlQueryParams(rest)}`;
+};

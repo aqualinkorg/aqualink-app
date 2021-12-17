@@ -90,9 +90,9 @@ export class SensorsService {
 
   async findSensorData(
     sensorId: string,
-    startDate: Date,
-    endDate: Date,
     metrics: string[],
+    startDate?: string,
+    endDate?: string,
   ) {
     metrics.forEach((metric) => {
       if (!(Object as any).values(Metric).includes(metric)) {
@@ -108,11 +108,11 @@ export class SensorsService {
 
     const data = await getDataQuery(
       this.timeSeriesRepository,
+      site.id,
+      metrics as Metric[],
       startDate,
       endDate,
-      metrics as Metric[],
       false,
-      site.id,
     );
 
     return groupByMetricAndSource(data);

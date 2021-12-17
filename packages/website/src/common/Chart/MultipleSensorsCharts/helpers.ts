@@ -172,25 +172,30 @@ export const constructOceanSenseDatasets = (
     data: data?.PH || [],
     unit: "pH",
     title: "ACIDITY (pH)",
+    id: "acidity",
   },
   EC: {
     data: data?.EC || [],
     unit: "μS",
     title: "CONDUCTIVITY (μS)",
+    id: "conductivity",
   },
   PRESS: {
     data: data?.PRESS || [],
     unit: "dbar",
     title: "PRESSURE (dbar)",
+    id: "pressure",
   },
   DO: {
     data: data?.DO || [],
     unit: "mg/L",
     title: "DISSOLVED OXYGEN (mg/L)",
+    id: "dissolved_oxygen",
   },
   ORP: {
     data: data?.ORP || [],
     unit: "mV",
     title: "OXIDATION REDUCTION POTENTIAL (mV)",
+    id: "oxidation_reduction_potential",
   },
 });

@@ -34,7 +34,7 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     windDirection: [],
     weeklyAlert: [],
   },
-  sofarNoaa: {
+  noaa: {
     bottomTemperature: [],
     alert: [],
     dhw: [],
@@ -48,7 +48,7 @@ export const mockHoboDataRange: TimeSeriesDataRange = {
     windDirection: [],
     weeklyAlert: [],
   },
-  sofarGfs: {
+  gfs: {
     bottomTemperature: [],
     alert: [],
     dhw: [],
