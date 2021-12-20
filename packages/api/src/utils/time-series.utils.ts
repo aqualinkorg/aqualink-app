@@ -6,6 +6,7 @@ import { Sources } from '../sites/sources.entity';
 import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
+import { getTimeSeriesDefaultDates } from './dates';
 
 export interface TimeSeriesData {
   value: number;
@@ -59,13 +60,15 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
 
 export const getDataQuery = (
   timeSeriesRepository: Repository<TimeSeries>,
-  startDate: Date,
-  endDate: Date,
-  metrics: Metric[] = [],
-  hourly: boolean,
   siteId: number,
+  metrics: Metric[],
+  start?: string,
+  end?: string,
+  hourly?: boolean,
   surveyPointId?: number,
 ): Promise<TimeSeriesData[]> => {
+  const { endDate, startDate } = getTimeSeriesDefaultDates(start, end);
+
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
     : 'source.survey_point_id is NULL';

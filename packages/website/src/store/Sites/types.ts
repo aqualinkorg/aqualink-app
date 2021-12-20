@@ -149,29 +149,29 @@ export type Metrics =
   | "windSpeed"
   | "windDirection";
 
-export type SourcesKeys = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
-
-export type Sources = "spotter" | "hobo" | "sofarNoaa" | "sofarGfs" | "sonde";
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 
 export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
 
 export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
 
 export type TimeSeriesDataResponse = Record<
-  SourcesKeys,
+  Sources,
   Record<MetricsKeys, SofarValue[]>
 >;
 
 export type TimeSeriesData = Record<Sources, TimeSeries>;
 
 export type TimeSeriesDataRangeResponse = Record<
-  SourcesKeys,
+  Sources,
   Record<MetricsKeys, DataRange[]>
 >;
 
 export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;
 
-export type OceanSenseKeys = "DO" | "EC" | "ORP" | "PH" | "PRESS";
+export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
+
+export type OceanSenseKeys = typeof OceanSenseKeysList[number];
 
 export interface OceanSenseDataRequestParams {
   sensorID: string;
@@ -235,10 +235,10 @@ export interface SiteResponse extends Site {
 export interface TimeSeriesDataRequestParams {
   siteId: string;
   pointId?: string;
-  start: string;
-  end: string;
-  metrics: MetricsKeys[];
-  hourly: boolean;
+  start?: string;
+  end?: string;
+  metrics?: MetricsKeys[];
+  hourly?: boolean;
 }
 
 export interface TimeSeriesDataRangeRequestParams {

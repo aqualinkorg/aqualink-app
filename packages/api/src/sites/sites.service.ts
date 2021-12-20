@@ -44,6 +44,7 @@ import {
   fetchVideoDetails,
   getErrorMessage,
 } from '../workers/check-video-streams';
+import { getTimeSeriesDefaultDates } from '../utils/dates';
 
 @Injectable()
 export class SitesService {
@@ -204,7 +205,13 @@ export class SitesService {
 
   async findOne(id: number): Promise<Site> {
     const site = await this.sitesRepository.findOne(id, {
-      relations: ['region', 'admins', 'stream', 'historicalMonthlyMean'],
+      relations: [
+        'region',
+        'admins',
+        'stream',
+        'historicalMonthlyMean',
+        'siteApplication',
+      ],
     });
 
     if (!site) {
@@ -328,8 +335,9 @@ export class SitesService {
     };
   }
 
-  async getSpotterData(id: number, startDate: Date, endDate: Date) {
+  async getSpotterData(id: number, start?: string, end?: string) {
     const site = await this.sitesRepository.findOne(id);
+    const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
 
     if (!site) {
       throw new NotFoundException(`Site with ID ${id} not found.`);

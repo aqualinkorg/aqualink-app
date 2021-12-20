@@ -19,6 +19,7 @@ import { Sources, TimeSeriesDataRange } from "../../../store/Sites/types";
 import { availableRangeString } from "./helpers";
 
 const Header = ({
+  id,
   range,
   disableMaxRange,
   title,
@@ -62,7 +63,7 @@ const Header = ({
   ];
 
   return (
-    <>
+    <div id={id}>
       <Grid
         className={classes.autoWidth}
         container
@@ -163,7 +164,7 @@ const Header = ({
           </Grid>
         )}
       </Grid>
-    </>
+    </div>
   );
 };
 
@@ -200,6 +201,7 @@ const styles = (theme: Theme) =>
   });
 
 interface HeaderIncomingProps {
+  id?: string;
   range: RangeValue;
   disableMaxRange: boolean;
   title?: string;
@@ -211,6 +213,7 @@ interface HeaderIncomingProps {
 }
 
 Header.defaultProps = {
+  id: undefined,
   title: "",
   timeZone: null,
   showRangeButtons: true,

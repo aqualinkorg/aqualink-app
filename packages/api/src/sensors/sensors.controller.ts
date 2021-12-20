@@ -29,15 +29,15 @@ export class SensorsController {
   @Get(':id/data')
   findSensorData(
     @Param('id') sensorId: string,
-    @Query('startDate', ParseDatePipe) startDate: Date,
-    @Query('endDate', ParseDatePipe) endDate: Date,
     @Query('metrics', ParseArrayPipe) metrics: string[],
+    @Query('startDate', ParseDatePipe) startDate?: string,
+    @Query('endDate', ParseDatePipe) endDate?: string,
   ) {
     return this.coralAtlasService.findSensorData(
       sensorId,
+      metrics,
       startDate,
       endDate,
-      metrics,
     );
   }
 

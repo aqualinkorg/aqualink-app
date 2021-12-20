@@ -1,15 +1,17 @@
-import { camelCase, isNil, mapKeys, mapValues } from "lodash";
+import { isNil, mapValues, mapKeys, camelCase, map, keyBy } from "lodash";
 import { isBefore } from "../../helpers/dates";
+import { longDHW } from "../../helpers/siteUtils";
 import siteServices from "../../services/siteServices";
 
 import type { TableRow } from "../Homepage/types";
-import type {
+import {
   DailyData,
   Metrics,
   MetricsKeys,
   OceanSenseData,
   OceanSenseDataResponse,
   OceanSenseKeys,
+  OceanSenseKeysList,
   Site,
   SofarValue,
   TimeSeries,
@@ -25,9 +27,6 @@ export function getSiteNameAndRegion(site: Site) {
   const region = site.name ? site.region?.name : null;
   return { name, region };
 }
-
-export const longDHW = (dhw: number | null): string =>
-  `0000${dhw ? Math.round(dhw * 10) : "0"}`.slice(-4);
 
 export const constructTableData = (list: Site[]): TableRow[] => {
   return list.map((value, key) => {
@@ -65,30 +64,16 @@ export const constructTableData = (list: Site[]): TableRow[] => {
   });
 };
 
-const mapMetrics = <T>(
-  data: Record<MetricsKeys, T[]>
-): Partial<Record<Metrics, T[]>> =>
-  mapKeys(data, (v, k) => camelCase(k) as Metrics);
+const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
+  mapKeys(data, (_, key) => camelCase(key)) as Record<Metrics, T[]>;
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse
-): TimeSeriesData => ({
-  hobo: mapMetrics(timeSeriesData.hobo),
-  spotter: mapMetrics(timeSeriesData.spotter),
-  sofarNoaa: mapMetrics(timeSeriesData.noaa),
-  sofarGfs: mapMetrics(timeSeriesData.gfs),
-  sonde: mapMetrics(timeSeriesData.sonde),
-});
+): TimeSeriesData => mapValues(timeSeriesData, mapMetrics);
 
 export const mapTimeSeriesDataRanges = (
   ranges: TimeSeriesDataRangeResponse
-): TimeSeriesDataRange => ({
-  hobo: mapMetrics(ranges.hobo),
-  spotter: mapMetrics(ranges.spotter),
-  sofarNoaa: mapMetrics(ranges.noaa),
-  sofarGfs: mapMetrics(ranges.gfs),
-  sonde: mapMetrics(ranges.sonde),
-});
+): TimeSeriesDataRange => mapValues(ranges, mapMetrics);
 
 const mapOceanSenseMetric = (
   response: OceanSenseDataResponse,
@@ -101,15 +86,17 @@ const mapOceanSenseMetric = (
 
 export const mapOceanSenseData = (
   response: OceanSenseDataResponse
-): OceanSenseData => {
-  return {
-    DO: mapOceanSenseMetric(response, "DO"),
-    EC: mapOceanSenseMetric(response, "EC"),
-    ORP: mapOceanSenseMetric(response, "ORP"),
-    PH: mapOceanSenseMetric(response, "PH"),
-    PRESS: mapOceanSenseMetric(response, "PRESS"),
-  };
-};
+): OceanSenseData =>
+  mapValues(
+    keyBy(
+      map(OceanSenseKeysList, (oceanSenseKey) => ({
+        key: oceanSenseKey,
+        value: mapOceanSenseMetric(response, oceanSenseKey),
+      })),
+      "key"
+    ),
+    "value"
+  ) as OceanSenseData;
 
 const attachData = <T>(
   direction: "left" | "right",
@@ -158,14 +145,17 @@ export const timeSeriesRequest = async (
   [
     updatedTimeSeriesData: TimeSeriesData,
     updatedDailyData: DailyData[],
-    updatedStoredStart: string,
-    updatedStoredEnd: string
+    updatedStoredStart?: string,
+    updatedStoredEnd?: string
   ]
 > => {
   const { start, end } = params;
   const minDate =
-    storedStart && !isBefore(start, storedStart, true) ? storedStart : start;
-  const maxDate = storedEnd && isBefore(end, storedEnd, true) ? storedEnd : end;
+    storedStart && start && !isBefore(start, storedStart, true)
+      ? storedStart
+      : start;
+  const maxDate =
+    storedEnd && end && isBefore(end, storedEnd, true) ? storedEnd : end;
 
   // If the user requests data for < storedStart, then make a request for the interval
   // [start, storedStart] and attach the resulting data to the already existing data.
@@ -173,6 +163,7 @@ export const timeSeriesRequest = async (
     storedDailyData &&
     storedTimeSeries &&
     storedStart &&
+    start &&
     isBefore(start, storedStart, true)
   ) {
     const { data } = await siteServices.getSiteTimeSeriesData({
@@ -200,6 +191,7 @@ export const timeSeriesRequest = async (
     storedDailyData &&
     storedTimeSeries &&
     storedEnd &&
+    end &&
     isBefore(storedEnd, end, true)
   ) {
     const { data } = await siteServices.getSiteTimeSeriesData({
@@ -228,6 +220,8 @@ export const timeSeriesRequest = async (
     storedTimeSeries &&
     storedStart &&
     storedEnd &&
+    start &&
+    end &&
     isBefore(storedStart, start) &&
     isBefore(end, storedEnd)
   ) {

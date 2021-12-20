@@ -13,7 +13,7 @@ import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
 import type { LiveData } from "../../../store/Sites/types";
-import { formatNumber, invertDirection } from "../../../helpers/numberUtils";
+import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";
 import arrow from "../../../assets/directioncircle.svg";
@@ -31,9 +31,10 @@ const Waves = ({ liveData }: WavesProps) => {
     windDirection,
   } = liveData;
 
-  // SOFAR uses direction GOING TO, but we want to disply direction COMING FROM.
-  const windDirectionFrom = invertDirection(windDirection?.value);
-  const waveDirectionFrom = invertDirection(waveMeanDirection?.value);
+  // Make sure to get the direction the wind is COMING FROM.
+  // use `numberUtils.invertDirection` if needed.
+  const windDirectionFrom = windDirection?.value;
+  const waveDirectionFrom = waveMeanDirection?.value;
   const classes = useStyles({
     windDirection: windDirectionFrom,
     wavesDirection: waveDirectionFrom,
