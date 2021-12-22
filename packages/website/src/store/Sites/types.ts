@@ -133,7 +133,12 @@ export type MetricsKeys =
   | "wave_mean_period"
   | "wave_mean_direction"
   | "wind_speed"
-  | "wind_direction";
+  | "wind_direction"
+  | "odo_concentration"
+  | "cholorophyll_concentration"
+  | "ph"
+  | "salinity"
+  | "turbidity";
 
 export type Metrics =
   | "dhw"
@@ -147,7 +152,12 @@ export type Metrics =
   | "waveMeanPeriod"
   | "waveMeanDirection"
   | "windSpeed"
-  | "windDirection";
+  | "windDirection"
+  | "odoConcentration"
+  | "cholorophyllConcentration"
+  | "ph"
+  | "salinity"
+  | "turbidity";
 
 export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 
