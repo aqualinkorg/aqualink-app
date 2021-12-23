@@ -117,47 +117,36 @@ export interface DataRange {
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
-// The API sends HOBO data with the following snake_case keys.
+// The API sends time series data with the following snake_case keys.
 // We need to create a new type with the same keys but in camelCase
-// TODO: Combine these two types when we upgrade typescript to V4.1
-// as described in https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
-export type MetricsKeys =
-  | "dhw"
-  | "satellite_temperature"
-  | "top_temperature"
-  | "bottom_temperature"
-  | "sst_anomaly"
-  | "significant_wave_height"
-  | "temp_alert"
-  | "temp_weekly_alert"
-  | "wave_mean_period"
-  | "wave_mean_direction"
-  | "wind_speed"
-  | "wind_direction"
-  | "odo_concentration"
-  | "cholorophyll_concentration"
-  | "ph"
-  | "salinity"
-  | "turbidity";
+export const metricsKeysList = [
+  "dhw",
+  "satellite_temperature",
+  "top_temperature",
+  "bottom_temperature",
+  "sst_anomaly",
+  "significant_wave_height",
+  "temp_alert",
+  "temp_weekly_alert",
+  "wave_mean_period",
+  "wave_mean_direction",
+  "wind_speed",
+  "wind_direction",
+  "odo_concentration",
+  "cholorophyll_concentration",
+  "ph",
+  "salinity",
+  "turbidity",
+] as const;
 
-export type Metrics =
-  | "dhw"
-  | "satelliteTemperature"
-  | "topTemperature"
-  | "bottomTemperature"
-  | "sstAnomaly"
-  | "significantWaveHeight"
-  | "tempAlert"
-  | "tempWeeklyAlert"
-  | "waveMeanPeriod"
-  | "waveMeanDirection"
-  | "windSpeed"
-  | "windDirection"
-  | "odoConcentration"
-  | "cholorophyllConcentration"
-  | "ph"
-  | "salinity"
-  | "turbidity";
+export type MetricsKeys = typeof metricsKeysList[number];
+
+type CamelCase<S extends string> =
+  S extends `${infer P1}_${infer P2}${infer P3}`
+    ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
+    : Lowercase<S>;
+
+export type Metrics = CamelCase<MetricsKeys>;
 
 export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 

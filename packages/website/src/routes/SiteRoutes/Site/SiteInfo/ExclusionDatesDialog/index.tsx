@@ -41,10 +41,8 @@ const ExclusionDatesDialog = ({
   const [pickerError, setPickerError] = useState("");
 
   // State variables for maintain dialog
-  const [
-    maintainStartDateTime,
-    setMaintainStartDateTime,
-  ] = useState<Date | null>(null);
+  const [maintainStartDateTime, setMaintainStartDateTime] =
+    useState<Date | null>(null);
   const [maintainEndDateTime, setMaintainEndDateTime] = useState<Date | null>(
     null
   );

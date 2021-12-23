@@ -114,8 +114,11 @@ const Site = ({ match, classes }: SiteProps) => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   );
 
-  const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
-    featuredMedia || {};
+  const {
+    id: featuredSurveyId,
+    featuredSurveyMedia,
+    diveDate,
+  } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
   const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);

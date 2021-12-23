@@ -53,13 +53,10 @@ const HomepageMap = ({
 }: HomepageMapProps) => {
   const [legendName, setLegendName] = useState<string>(defaultLayerName || "");
   const [currentLocation, setCurrentLocation] = useState<[number, number]>();
-  const [currentLocationAccuracy, setCurrentLocationAccuracy] = useState<
-    number
-  >();
-  const [
-    currentLocationErrorMessage,
-    setCurrentLocationErrorMessage,
-  ] = useState<string>();
+  const [currentLocationAccuracy, setCurrentLocationAccuracy] =
+    useState<number>();
+  const [currentLocationErrorMessage, setCurrentLocationErrorMessage] =
+    useState<string>();
   const loading = useSelector(sitesListLoadingSelector);
   const searchResult = useSelector(searchResultSelector);
   const ref = useRef<Map>(null);

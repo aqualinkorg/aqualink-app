@@ -42,11 +42,10 @@ ColumnTitle.defaultProps = {
 };
 
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const createSortHandler = (property: OrderKeys) => (
-    event: React.MouseEvent<unknown>
-  ) => {
-    props.onRequestSort(event, property);
-  };
+  const createSortHandler =
+    (property: OrderKeys) => (event: React.MouseEvent<unknown>) => {
+      props.onRequestSort(event, property);
+    };
 
   const { isExtended } = props;
 

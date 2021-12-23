@@ -67,8 +67,11 @@ const ChartWithCard = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { hobo: hoboData, spotter: spotterData, sonde: sondeData } =
-    timeSeriesData || {};
+  const {
+    hobo: hoboData,
+    spotter: spotterData,
+    sonde: sondeData,
+  } = timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =

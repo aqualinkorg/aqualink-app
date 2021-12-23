@@ -1,4 +1,4 @@
-import { isNil, mapValues, mapKeys, camelCase, map, keyBy } from "lodash";
+import { isNil, mapValues, mapKeys, camelCase, map, keyBy, pick } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
 import siteServices from "../../services/siteServices";
@@ -8,6 +8,7 @@ import {
   DailyData,
   Metrics,
   MetricsKeys,
+  metricsKeysList,
   OceanSenseData,
   OceanSenseDataResponse,
   OceanSenseKeys,
@@ -40,9 +41,8 @@ export const constructTableData = (list: Site[]): TableRow[] => {
     } = value.collectionData || {};
 
     const { maxMonthlyMean } = value;
-    const { name: locationName = "", region = "" } = getSiteNameAndRegion(
-      value
-    );
+    const { name: locationName = "", region = "" } =
+      getSiteNameAndRegion(value);
 
     return {
       locationName,
@@ -65,7 +65,10 @@ export const constructTableData = (list: Site[]): TableRow[] => {
 };
 
 const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
-  mapKeys(data, (_, key) => camelCase(key)) as Record<Metrics, T[]>;
+  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Record<
+    Metrics,
+    T[]
+  >;
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse

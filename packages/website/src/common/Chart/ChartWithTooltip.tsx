@@ -72,105 +72,108 @@ function ChartWithTooltip({
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
-  const customTooltip = (ref: React.RefObject<Line>) => (
-    tooltipModel: ChartTooltipModel
-  ) => {
-    const chart = ref.current;
-    if (!chart?.chartInstance.canvas) {
-      return;
-    }
+  const customTooltip =
+    (ref: React.RefObject<Line>) => (tooltipModel: ChartTooltipModel) => {
+      const chart = ref.current;
+      if (!chart?.chartInstance.canvas) {
+        return;
+      }
 
-    const date = tooltipModel.dataPoints?.[0]?.xLabel;
-    if (typeof date !== "string") return;
+      const date = tooltipModel.dataPoints?.[0]?.xLabel;
+      if (typeof date !== "string") return;
 
-    const dateObject = new Date(date);
+      const dateObject = new Date(date);
 
-    const surveyId = findSurveyFromDate(date, surveys);
+      const surveyId = findSurveyFromDate(date, surveys);
 
-    const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
+      const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
 
-    const dailyDataForDate =
-      // Try to find data on same day, else closest, else nothing.
-      filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-      getDailyDataClosestToDate(filteredDailyData, dateObject, 24) ||
-      {};
-    const { satelliteTemperature } = dailyDataForDate;
+      const dailyDataForDate =
+        // Try to find data on same day, else closest, else nothing.
+        filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
+        getDailyDataClosestToDate(filteredDailyData, dateObject, 24) ||
+        {};
+      const { satelliteTemperature } = dailyDataForDate;
 
-    const historicalMonthlyMeanTemp = numberOrNull(
-      getHistoricalMonthlyMeanDataClosestToDate(
-        historicalMonthlyMeanData || [],
-        dateObject
-      )
-    );
+      const historicalMonthlyMeanTemp = numberOrNull(
+        getHistoricalMonthlyMeanDataClosestToDate(
+          historicalMonthlyMeanData || [],
+          dateObject
+        )
+      );
 
-    const spotterTopTemp = numberOrNull(
-      getSofarDataClosestToDate(
-        spotterData?.topTemperature || [],
-        dateObject,
-        6
-      )
-    );
+      const spotterTopTemp = numberOrNull(
+        getSofarDataClosestToDate(
+          spotterData?.topTemperature || [],
+          dateObject,
+          6
+        )
+      );
 
-    const spotterBottomTemp = numberOrNull(
-      getSofarDataClosestToDate(
-        spotterData?.bottomTemperature || [],
-        dateObject,
-        6
-      )
-    );
+      const spotterBottomTemp = numberOrNull(
+        getSofarDataClosestToDate(
+          spotterData?.bottomTemperature || [],
+          dateObject,
+          6
+        )
+      );
 
-    const hoboBottomTemp = numberOrNull(
-      getSofarDataClosestToDate(hoboBottomTemperatureData || [], dateObject, 6)
-    );
+      const hoboBottomTemp = numberOrNull(
+        getSofarDataClosestToDate(
+          hoboBottomTemperatureData || [],
+          dateObject,
+          6
+        )
+      );
 
-    const oceanSense = numberOrNull(
-      getSofarDataClosestToDate(oceanSenseData || [], dateObject, 6)
-    );
+      const oceanSense = numberOrNull(
+        getSofarDataClosestToDate(oceanSenseData || [], dateObject, 6)
+      );
 
-    const satelliteTemp = satelliteTemperature || null;
+      const satelliteTemp = satelliteTemperature || null;
 
-    const nValues = [
-      historicalMonthlyMeanTemp,
-      satelliteTemp,
-      spotterTopTemp,
-      spotterBottomTemp,
-      hoboBottomTemp,
-      oceanSense,
-    ].filter(isNumber).length;
-
-    const position = chart.chartInstance.canvas.getBoundingClientRect();
-    const left = position.left + tooltipModel.caretX - 95;
-    const top =
-      position.top +
-      tooltipModel.caretY -
-      ((surveyId ? 30 : 0) + nValues * 20 + 48);
-
-    if (
-      nValues > 0 &&
-      moment(date).isBetween(
-        moment(startDate || last(filteredDailyData)?.date),
-        moment(endDate || filteredDailyData?.[0]?.date),
-        undefined,
-        "[]"
-      )
-    ) {
-      setTooltipPosition({ top, left });
-      setTooltipData({
-        ...tooltipData,
-        date,
-        depth,
+      const nValues = [
         historicalMonthlyMeanTemp,
         satelliteTemp,
         spotterTopTemp,
         spotterBottomTemp,
         hoboBottomTemp,
         oceanSense,
-        oceanSenseUnit: oceanSenseDataUnit || null,
-        surveyId,
-      });
-      setShowTooltip(true);
-    }
-  };
+      ].filter(isNumber).length;
+
+      const position = chart.chartInstance.canvas.getBoundingClientRect();
+      const left = position.left + tooltipModel.caretX - 95;
+      const top =
+        position.top +
+        tooltipModel.caretY -
+        ((surveyId ? 30 : 0) + nValues * 20 + 48);
+
+      if (
+        nValues > 0 &&
+        moment(date).isBetween(
+          moment(startDate || last(filteredDailyData)?.date),
+          moment(endDate || filteredDailyData?.[0]?.date),
+          undefined,
+          "[]"
+        )
+      ) {
+        setTooltipPosition({ top, left });
+        setTooltipData({
+          ...tooltipData,
+          date,
+          depth,
+          historicalMonthlyMeanTemp,
+          satelliteTemp,
+          spotterTopTemp,
+          spotterBottomTemp,
+          hoboBottomTemp,
+          oceanSense,
+          oceanSenseUnit: oceanSenseDataUnit || null,
+          surveyId,
+        });
+        setShowTooltip(true);
+      }
+    };
 
   const hideTooltip = () => {
     setShowTooltip(false);

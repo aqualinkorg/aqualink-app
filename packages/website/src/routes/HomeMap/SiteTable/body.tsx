@@ -127,10 +127,10 @@ const SiteTableBody = ({
 }: SiteTableBodyProps) => {
   const dispatch = useDispatch();
   const storedSites = useSelector(sitesToDisplayListSelector);
-  const sitesList = useMemo(() => collection?.sites || storedSites || [], [
-    collection,
-    storedSites,
-  ]);
+  const sitesList = useMemo(
+    () => collection?.sites || storedSites || [],
+    [collection, storedSites]
+  );
   const siteOnMap = useSelector(siteOnMapSelector);
   const [selectedRow, setSelectedRow] = useState<number>();
 

@@ -34,9 +34,8 @@ const SurveyForm = ({
 }: SurveyFormProps) => {
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
-  const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
-    "calm"
-  );
+  const [weather, setWeather] =
+    useState<SurveyData["weatherConditions"]>("calm");
 
   const { register, errors, handleSubmit, reset } = useForm({
     reValidateMode: "onSubmit",
