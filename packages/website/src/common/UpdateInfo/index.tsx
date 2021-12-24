@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
     width: `calc(100% - ${chipWidth || CHIP_LARGE_DEFAULT_WIDTH}px)`,
     [theme.breakpoints.only("md")]: {
-      maxWidth: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
+      width: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
     },
   }),
   dateInfo: {
