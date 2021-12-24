@@ -94,7 +94,7 @@ const WaterSamplingCard = ({
 
   useEffect(() => {
     const getCardData = async () => {
-      if (minDate && maxDate && pointId) {
+      if (minDate && maxDate) {
         const [data] = await timeSeriesRequest({
           siteId,
           pointId,
@@ -111,7 +111,7 @@ const WaterSamplingCard = ({
   }, [maxDate, minDate, pointId, siteId]);
 
   const onViewUploadButtonClick = () => {
-    if (minDate && maxDate && pointId) {
+    if (minDate && maxDate) {
       dispatch(
         siteTimeSeriesDataRequest({
           siteId,
