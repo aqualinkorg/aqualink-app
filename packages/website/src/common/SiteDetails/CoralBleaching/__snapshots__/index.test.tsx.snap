@@ -96,22 +96,26 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-23 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-24 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
-              <a
-                class="makeStyles-link-21"
-                href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
-                target="_blank"
+              <mock-button
+                classname="makeStyles-button-23"
               >
-                <mock-typography
-                  classname="makeStyles-chipText-19"
+                <a
+                  class="makeStyles-link-21"
+                  href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
+                  target="_blank"
                 >
-                  NOAA CRW
-                </mock-typography>
-              </a>
+                  <mock-typography
+                    classname="makeStyles-chipText-19"
+                  >
+                    NOAA CRW
+                  </mock-typography>
+                </a>
+              </mock-button>
             </div>
           </div>
         </div>

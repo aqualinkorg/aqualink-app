@@ -28,6 +28,7 @@ const UpdateInfo = ({
   withMargin,
   chipWidth,
   subtitle,
+  onClick,
 }: UpdateInfoProps) => {
   const classes = useStyles({ chipWidth });
   const theme = useTheme();
@@ -71,6 +72,7 @@ const UpdateInfo = ({
         href={live ? undefined : href}
         image={image}
         imageText={imageText}
+        onClick={onClick}
         width={
           smallChip
             ? chipWidth || CHIP_SMALL_DEFAULT_WIDTH
@@ -127,6 +129,7 @@ interface UpdateInfoProps {
   href?: string;
   withMargin?: boolean;
   chipWidth?: number;
+  onClick?: () => void;
 }
 
 UpdateInfo.defaultProps = {
@@ -139,6 +142,7 @@ UpdateInfo.defaultProps = {
   withMargin: false,
   live: false,
   chipWidth: undefined,
+  onClick: undefined,
 };
 
 export default UpdateInfo;

@@ -9,11 +9,14 @@ import {
   CardContent,
   GridProps,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import { styles as incomingStyles } from "../styles";
-import { siteTimeSeriesDataRangeSelector } from "../../../store/Sites/selectedSiteSlice";
+import {
+  siteTimeSeriesDataRangeSelector,
+  siteTimeSeriesDataRequest,
+} from "../../../store/Sites/selectedSiteSlice";
 import {
   calculateSondeDataMeanValues,
   findSondeDataMinAndMaxDates,
@@ -81,6 +84,7 @@ const WaterSamplingCard = ({
   pointName,
 }: WaterSamplingCardProps) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { sonde: sondeDataRange } =
     useSelector(siteTimeSeriesDataRangeSelector) || {};
   const { minDate, maxDate } = findSondeDataMinAndMaxDates(sondeDataRange);
@@ -90,7 +94,7 @@ const WaterSamplingCard = ({
 
   useEffect(() => {
     const getCardData = async () => {
-      if (minDate && maxDate) {
+      if (minDate && maxDate && pointId) {
         const [data] = await timeSeriesRequest({
           siteId,
           pointId,
@@ -105,6 +109,21 @@ const WaterSamplingCard = ({
 
     getCardData();
   }, [maxDate, minDate, pointId, siteId]);
+
+  const onViewUploadButtonClick = () => {
+    if (minDate && maxDate && pointId) {
+      dispatch(
+        siteTimeSeriesDataRequest({
+          siteId,
+          pointId,
+          start: minDate,
+          end: maxDate,
+          metrics: METRICS,
+          hourly: true,
+        })
+      );
+    }
+  };
 
   return (
     <Card className={classes.card}>
@@ -158,6 +177,7 @@ const WaterSamplingCard = ({
           subtitle={
             isPointNameLong ? `${pointName}` : `Survey point: ${pointName}`
           }
+          onClick={onViewUploadButtonClick}
         />
       </CardContent>
     </Card>
