@@ -9,14 +9,11 @@ import {
   CardContent,
   GridProps,
 } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import moment from "moment";
 
 import { styles as incomingStyles } from "../styles";
-import {
-  siteTimeSeriesDataRangeSelector,
-  siteTimeSeriesDataRequest,
-} from "../../../store/Sites/selectedSiteSlice";
+import { siteTimeSeriesDataRangeSelector } from "../../../store/Sites/selectedSiteSlice";
 import {
   calculateSondeDataMeanValues,
   findSondeDataMinAndMaxDates,
@@ -26,6 +23,7 @@ import { timeSeriesRequest } from "../../../store/Sites/helpers";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { getSondeConfig } from "../../../constants/sondeConfig";
 import UpdateInfo from "../../UpdateInfo";
+import requests from "../../../helpers/requests";
 
 const CARD_BACKGROUND_COLOR = "#37A692";
 const METRICS: MetricsKeys[] = [
@@ -84,7 +82,6 @@ const WaterSamplingCard = ({
   pointName,
 }: WaterSamplingCardProps) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { sonde: sondeDataRange } =
     useSelector(siteTimeSeriesDataRangeSelector) || {};
   const { minDate, maxDate } = findSondeDataMinAndMaxDates(sondeDataRange);
@@ -109,21 +106,6 @@ const WaterSamplingCard = ({
 
     getCardData();
   }, [maxDate, minDate, pointId, siteId]);
-
-  const onViewUploadButtonClick = () => {
-    if (minDate && maxDate) {
-      dispatch(
-        siteTimeSeriesDataRequest({
-          siteId,
-          pointId,
-          start: minDate,
-          end: maxDate,
-          metrics: METRICS,
-          hourly: true,
-        })
-      );
-    }
-  };
 
   return (
     <Card className={classes.card}>
@@ -174,10 +156,15 @@ const WaterSamplingCard = ({
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
+          href={`/sites/${siteId}${requests.generateUrlQueryParams({
+            start: minDate,
+            end: maxDate,
+          })}`}
           subtitle={
-            isPointNameLong ? `${pointName}` : `Survey point: ${pointName}`
+            pointName
+              ? `${isPointNameLong ? "" : "Survey point:"} ${pointName}`
+              : undefined
           }
-          onClick={onViewUploadButtonClick}
         />
       </CardContent>
     </Card>
