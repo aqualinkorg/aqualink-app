@@ -119,6 +119,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               <mock-box
                 display="flex"
                 flexdirection="column"
+                width="100%"
               >
                 <mock-typography
                   classname="makeStyles-updateInfoText-16"

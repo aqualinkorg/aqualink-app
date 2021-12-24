@@ -1,8 +1,21 @@
 import React from "react";
-import { Theme, Grid, Box, Typography, makeStyles } from "@material-ui/core";
+import {
+  Theme,
+  Grid,
+  Box,
+  Typography,
+  makeStyles,
+  useTheme,
+  useMediaQuery,
+} from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import UpdateIcon from "@material-ui/icons/Update";
 import Chip from "../Chip";
+
+const CHIP_SMALL_DEFAULT_WIDTH = 48;
+const CHIP_LARGE_DEFAULT_WIDTH = 60;
+const UPDATE_ICON_SIZE = 24;
+const UPDATE_ICON_RIGHT_MARGIN = 4;
 
 const UpdateInfo = ({
   relativeTime,
@@ -17,6 +30,8 @@ const UpdateInfo = ({
   subtitle,
 }: UpdateInfoProps) => {
   const classes = useStyles({ chipWidth });
+  const theme = useTheme();
+  const smallChip = useMediaQuery(theme.breakpoints.only("md"));
   return (
     <Grid
       className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
@@ -31,7 +46,7 @@ const UpdateInfo = ({
             <UpdateIcon className={classes.updateIcon} fontSize="small" />
           </Grid>
           <Grid item className={classes.dateInfo}>
-            <Box display="flex" flexDirection="column">
+            <Box display="flex" flexDirection="column" width="100%">
               {relativeTime && (
                 <Typography
                   className={classes.updateInfoText}
@@ -40,7 +55,11 @@ const UpdateInfo = ({
                   {timeText} {relativeTime}
                 </Typography>
               )}
-              <Typography className={classes.updateInfoText} variant="caption">
+              <Typography
+                title={subtitle}
+                className={classes.updateInfoText}
+                variant="caption"
+              >
                 {frequency ? `Updated ${frequency}` : subtitle}
               </Typography>
             </Box>
@@ -52,7 +71,11 @@ const UpdateInfo = ({
         href={live ? undefined : href}
         image={image}
         imageText={imageText}
-        width={chipWidth}
+        width={
+          smallChip
+            ? chipWidth || CHIP_SMALL_DEFAULT_WIDTH
+            : chipWidth || CHIP_LARGE_DEFAULT_WIDTH
+        }
       />
     </Grid>
   );
@@ -69,23 +92,27 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 32,
   },
   updateIcon: {
-    marginRight: 4,
-    height: 24,
-    width: 24,
+    marginRight: UPDATE_ICON_RIGHT_MARGIN,
+    height: UPDATE_ICON_SIZE,
+    width: UPDATE_ICON_SIZE,
   },
   updateInfoText: {
+    width: "99%",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
     [theme.breakpoints.between("md", "md")]: {
       fontSize: 8.5,
     },
   },
   dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
-    maxWidth: `calc(100% - ${chipWidth || 60}px)`,
+    width: `calc(100% - ${chipWidth || CHIP_LARGE_DEFAULT_WIDTH}px)`,
     [theme.breakpoints.only("md")]: {
-      maxWidth: `calc(100% - ${chipWidth || 48}px)`,
+      maxWidth: `calc(100% - ${chipWidth || CHIP_SMALL_DEFAULT_WIDTH}px)`,
     },
   }),
   dateInfo: {
-    maxWidth: "calc(100% - 28px)",
+    width: `calc(100% - ${UPDATE_ICON_RIGHT_MARGIN + UPDATE_ICON_SIZE}px)`,
   },
 }));
 

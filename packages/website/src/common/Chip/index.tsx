@@ -11,15 +11,12 @@ import { grey, green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: ({ width }: { width?: number }) => ({
+    chip: ({ width }: { width: number }) => ({
       backgroundColor: grey[300],
       borderRadius: 8,
       height: 24,
-      width: width || 60,
+      width,
       display: "flex",
-      [theme.breakpoints.only("md")]: {
-        width: width || 48,
-      },
     }),
     chipText: {
       fontSize: 8,
@@ -100,7 +97,7 @@ interface ChipProps {
   liveText?: string;
   imageText?: string | null;
   image?: string | null;
-  width?: number;
+  width: number;
 }
 
 Chip.defaultProps = {
@@ -110,7 +107,6 @@ Chip.defaultProps = {
   imageText: undefined,
   image: undefined,
   liveText: "LIVE",
-  width: undefined,
 };
 
 export default Chip;

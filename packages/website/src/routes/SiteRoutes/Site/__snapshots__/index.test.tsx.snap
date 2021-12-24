@@ -1453,6 +1453,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <mock-box
                         display="flex"
                         flexdirection="column"
+                        width="100%"
                       >
                         <mock-typography
                           classname="makeStyles-updateInfoText-256"
@@ -1620,6 +1621,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       <mock-box
                         display="flex"
                         flexdirection="column"
+                        width="100%"
                       >
                         <mock-typography
                           classname="makeStyles-updateInfoText-256"
@@ -1740,6 +1742,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         <mock-box
                           display="flex"
                           flexdirection="column"
+                          width="100%"
                         >
                           <mock-typography
                             classname="makeStyles-updateInfoText-256"
@@ -2003,6 +2006,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         <mock-box
                           display="flex"
                           flexdirection="column"
+                          width="100%"
                         >
                           <mock-typography
                             classname="makeStyles-updateInfoText-256"

@@ -86,6 +86,7 @@ const WaterSamplingCard = ({
   const { minDate, maxDate } = findSondeDataMinAndMaxDates(sondeDataRange);
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
+  const isPointNameLong = pointName ? pointName.length > 24 : false;
 
   useEffect(() => {
     const getCardData = async () => {
@@ -154,8 +155,9 @@ const WaterSamplingCard = ({
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
-          subtitle={`Survey point: ${pointName}`}
-          href="https://coralsitewatch.noaa.gov/"
+          subtitle={
+            isPointNameLong ? `${pointName}` : `Survey point: ${pointName}`
+          }
         />
       </CardContent>
     </Card>

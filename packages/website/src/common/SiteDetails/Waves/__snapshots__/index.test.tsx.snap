@@ -219,6 +219,7 @@ exports[`renders as expected 1`] = `
                 <mock-box
                   display="flex"
                   flexdirection="column"
+                  width="100%"
                 >
                   <mock-typography
                     classname="makeStyles-updateInfoText-21"
