@@ -246,7 +246,7 @@ const styles = (theme: Theme) =>
       width: "auto",
     },
     lightFont: {
-      fontWeight: 250,
+      fontWeight: 200,
     },
     values: {
       // ensures metric numbers aren't too close together on mobile
