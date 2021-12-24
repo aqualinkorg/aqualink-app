@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  withStyles,
-  WithStyles,
-  createStyles,
-  Theme,
-  Grid,
-  Box,
-  Typography,
-} from "@material-ui/core";
+import { Theme, Grid, Box, Typography, makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import UpdateIcon from "@material-ui/icons/Update";
 import Chip from "../Chip";
@@ -21,84 +13,105 @@ const UpdateInfo = ({
   frequency,
   href,
   withMargin,
-  classes,
-}: UpdateInfoProps) => (
-  <Grid
-    className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
-    container
-    justify="space-between"
-    alignItems="center"
-    item
-  >
-    <Grid item>
-      <Grid container alignItems="center" justify="center">
-        <Grid item>
-          <UpdateIcon className={classes.updateIcon} fontSize="small" />
-        </Grid>
-        <Grid item>
-          <Box display="flex" flexDirection="column">
-            {relativeTime && (
+  chipWidth,
+  subtitle,
+}: UpdateInfoProps) => {
+  const classes = useStyles({ chipWidth });
+  return (
+    <Grid
+      className={`${classes.updateInfo} ${withMargin && classes.withMargin}`}
+      container
+      justify="space-between"
+      alignItems="center"
+      item
+    >
+      <Grid item className={classes.dateInfoWrapper}>
+        <Grid container alignItems="center" justify="center">
+          <Grid item>
+            <UpdateIcon className={classes.updateIcon} fontSize="small" />
+          </Grid>
+          <Grid item className={classes.dateInfo}>
+            <Box display="flex" flexDirection="column">
+              {relativeTime && (
+                <Typography
+                  className={classes.updateInfoText}
+                  variant="caption"
+                >
+                  {timeText} {relativeTime}
+                </Typography>
+              )}
               <Typography className={classes.updateInfoText} variant="caption">
-                {timeText} {relativeTime}
+                {frequency ? `Updated ${frequency}` : subtitle}
               </Typography>
-            )}
-            {frequency && (
-              <Typography className={classes.updateInfoText} variant="caption">
-                Updated {frequency}
-              </Typography>
-            )}
-          </Box>
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
+      <Chip
+        live={live}
+        href={live ? undefined : href}
+        image={image}
+        imageText={imageText}
+        width={chipWidth}
+      />
     </Grid>
-    <Chip
-      live={live}
-      href={live ? undefined : href}
-      image={image}
-      imageText={imageText}
-    />
-  </Grid>
-);
+  );
+};
 
-const styles = (theme: Theme) =>
-  createStyles({
-    updateInfo: {
-      backgroundColor: grey[400],
-      color: grey[700],
-      padding: 4,
-      minHeight: 40,
+const useStyles = makeStyles((theme: Theme) => ({
+  updateInfo: {
+    backgroundColor: grey[400],
+    color: grey[700],
+    padding: 4,
+    minHeight: 40,
+  },
+  withMargin: {
+    marginTop: 32,
+  },
+  updateIcon: {
+    marginRight: 4,
+    height: 24,
+    width: 24,
+  },
+  updateInfoText: {
+    [theme.breakpoints.between("md", "md")]: {
+      fontSize: 8.5,
     },
-    withMargin: {
-      marginTop: 32,
+  },
+  dateInfoWrapper: ({ chipWidth }: { chipWidth?: number }) => ({
+    maxWidth: `calc(100% - ${chipWidth || 60}px)`,
+    [theme.breakpoints.only("md")]: {
+      maxWidth: `calc(100% - ${chipWidth || 48}px)`,
     },
-    updateIcon: {
-      marginRight: 4,
-      height: 24,
-      width: 24,
-    },
-    updateInfoText: {
-      [theme.breakpoints.between("md", "md")]: {
-        fontSize: 8.5,
-      },
-    },
-  });
+  }),
+  dateInfo: {
+    maxWidth: "calc(100% - 28px)",
+  },
+}));
 
-interface UpdateInfoIncomingProps {
-  relativeTime: string | undefined;
+interface UpdateInfoProps {
+  relativeTime?: string;
   timeText: string;
-  image: string | null;
-  imageText: string | null;
-  live: boolean;
-  frequency: "hourly" | "daily" | "every 6 hours" | null;
+  image?: string;
+  imageText?: string;
+  live?: boolean;
+  frequency?: "hourly" | "daily" | "every 6 hours";
+  subtitle?: string;
   href?: string;
   withMargin?: boolean;
+  chipWidth?: number;
 }
 
 UpdateInfo.defaultProps = {
-  href: "",
+  relativeTime: undefined,
+  image: undefined,
+  imageText: undefined,
+  frequency: undefined,
+  subtitle: undefined,
+  href: undefined,
   withMargin: false,
+  live: false,
+  chipWidth: undefined,
 };
 
-type UpdateInfoProps = UpdateInfoIncomingProps & WithStyles<typeof styles>;
-
-export default withStyles(styles)(UpdateInfo);
+export default UpdateInfo;

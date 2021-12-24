@@ -191,10 +191,10 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-18 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root makeStyles-updateInfo-18 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-22 makeStyles-dateInfoWrapper-24 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -204,7 +204,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root UpdateInfo-updateIcon-20 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root makeStyles-updateIcon-20 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -214,14 +214,14 @@ exports[`renders as expected 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root makeStyles-dateInfo-23 MuiGrid-item"
               >
                 <mock-box
                   display="flex"
                   flexdirection="column"
                 >
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-21"
+                    classname="makeStyles-updateInfoText-21"
                     variant="caption"
                   >
                     Last data received
@@ -229,31 +229,30 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-21"
+                    classname="makeStyles-updateInfoText-21"
                     variant="caption"
                   >
-                    Updated 
-                    hourly
+                    Updated hourly
                   </mock-typography>
                 </mock-box>
               </div>
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-22 makeStyles-chip-27 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-25 makeStyles-chip-30 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <a
-                class="makeStyles-link-25"
+                class="makeStyles-link-28"
                 href="/"
               >
                 <div
-                  class="makeStyles-circle-24"
+                  class="makeStyles-circle-27"
                 />
                 <mock-typography
-                  classname="makeStyles-chipText-23"
+                  classname="makeStyles-chipText-26"
                 >
                   LIVE
                 </mock-typography>

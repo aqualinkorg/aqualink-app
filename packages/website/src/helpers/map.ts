@@ -114,6 +114,7 @@ export const findClosestSurveyPoint = (
       if (polygon.type === "Point") {
         return {
           pointId: point.id,
+          pointName: point.name,
           distance: radDistanceCalculator(
             [siteLng, siteLat],
             polygon.coordinates
@@ -123,6 +124,7 @@ export const findClosestSurveyPoint = (
 
       return {
         pointId: point.id,
+        pointName: point.name,
         distance: radDistanceCalculator(
           [siteLng, siteLat],
           getMiddlePoint(polygon)
@@ -130,7 +132,9 @@ export const findClosestSurveyPoint = (
       };
     });
 
-  return minBy(distances, "distance")?.pointId;
+  const closestPoint = minBy(distances, "distance");
+
+  return closestPoint;
 };
 
 const useMarkerStyles = makeStyles({

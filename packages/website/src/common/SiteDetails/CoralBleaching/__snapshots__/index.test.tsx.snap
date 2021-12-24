@@ -47,10 +47,10 @@ exports[`renders as expected 1`] = `
           src="alert_lvl1.svg"
         />
         <div
-          class="MuiGrid-root UpdateInfo-updateInfo-11 UpdateInfo-withMargin-12 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root makeStyles-updateInfo-11 makeStyles-withMargin-12 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-15 makeStyles-dateInfoWrapper-17 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -60,7 +60,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root UpdateInfo-updateIcon-13 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root makeStyles-updateIcon-13 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -70,14 +70,14 @@ exports[`renders as expected 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root makeStyles-dateInfo-16 MuiGrid-item"
               >
                 <mock-box
                   display="flex"
                   flexdirection="column"
                 >
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-14"
+                    classname="makeStyles-updateInfoText-14"
                     variant="caption"
                   >
                     Last data received
@@ -85,29 +85,28 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="UpdateInfo-updateInfoText-14"
+                    classname="makeStyles-updateInfoText-14"
                     variant="caption"
                   >
-                    Updated 
-                    daily
+                    Updated daily
                   </mock-typography>
                 </mock-box>
               </div>
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-15 makeStyles-chip-20 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-23 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <a
-                class="makeStyles-link-18"
+                class="makeStyles-link-21"
                 href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                 target="_blank"
               >
                 <mock-typography
-                  classname="makeStyles-chipText-16"
+                  classname="makeStyles-chipText-19"
                 >
                   NOAA CRW
                 </mock-typography>

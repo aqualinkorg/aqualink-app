@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     }),
     chipText: {
-      fontSize: 9,
+      fontSize: 8,
       color: grey[600],
       [theme.breakpoints.between("md", "md")]: {
         fontSize: 7,
@@ -94,7 +94,7 @@ const Chip = ({
 };
 
 interface ChipProps {
-  live: boolean;
+  live?: boolean;
   href?: string;
   to?: string;
   liveText?: string;
@@ -104,6 +104,7 @@ interface ChipProps {
 }
 
 Chip.defaultProps = {
+  live: false,
   href: undefined,
   to: undefined,
   imageText: undefined,

@@ -8,7 +8,7 @@ export const sondeConfig: { [key: string]: any | undefined } = {
   },
   turbidity: {
     title: "Turbidity",
-    units: "FNU",
+    units: "fnu",
     description: "",
     visibility: "public",
     order: 2,

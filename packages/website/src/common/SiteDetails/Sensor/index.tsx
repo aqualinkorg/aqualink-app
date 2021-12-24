@@ -133,8 +133,6 @@ const Sensor = ({ site, classes }: SensorProps) => {
           <UpdateInfo
             relativeTime={relativeTime}
             timeText="Last data received"
-            image={null}
-            imageText={null}
             live
             frequency="hourly"
             withMargin
