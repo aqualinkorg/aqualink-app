@@ -81,7 +81,9 @@ const ChartWithCard = ({
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
-  const [range, setRange] = useState<RangeValue>("three_months");
+  const [range, setRange] = useState<RangeValue>(
+    initialStart || initialEnd ? "custom" : "three_months"
+  );
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
