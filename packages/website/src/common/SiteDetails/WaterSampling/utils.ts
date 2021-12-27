@@ -1,9 +1,7 @@
 import { compact, mapValues, minBy, meanBy } from "lodash";
-import { DataRange, Metrics, TimeSeriesData } from "../../../store/Sites/types";
+import { TimeSeriesData, TimeSeriesRange } from "../../../store/Sites/types";
 
-export const findSondeDataMinAndMaxDates = (
-  ranges?: Partial<Record<Metrics, DataRange[]>>
-) => {
+export const findSondeDataMinAndMaxDates = (ranges?: TimeSeriesRange) => {
   const minDate = minBy(
     compact(Object.values(ranges || {}).map((range) => range?.[0]?.minDate)),
     (date) => new Date(date).getTime()

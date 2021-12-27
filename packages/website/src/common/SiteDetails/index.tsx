@@ -68,6 +68,7 @@ const SiteDetails = ({
           siteId={`${site.id}`}
           pointId={closestSurveyPointId}
           pointName={closestSurveyPointName}
+          sondeDataRange={sondeDataRange}
         />
       );
     }

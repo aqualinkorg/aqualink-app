@@ -9,16 +9,18 @@ import {
   CardContent,
   GridProps,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import moment from "moment";
 
 import { styles as incomingStyles } from "../styles";
-import { siteTimeSeriesDataRangeSelector } from "../../../store/Sites/selectedSiteSlice";
 import {
   calculateSondeDataMeanValues,
   findSondeDataMinAndMaxDates,
 } from "./utils";
-import { MetricsKeys, TimeSeriesData } from "../../../store/Sites/types";
+import {
+  MetricsKeys,
+  TimeSeriesData,
+  TimeSeriesRange,
+} from "../../../store/Sites/types";
 import { timeSeriesRequest } from "../../../store/Sites/helpers";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { getSondeConfig } from "../../../constants/sondeConfig";
@@ -80,10 +82,9 @@ const WaterSamplingCard = ({
   siteId,
   pointId,
   pointName,
+  sondeDataRange,
 }: WaterSamplingCardProps) => {
   const classes = useStyles();
-  const { sonde: sondeDataRange } =
-    useSelector(siteTimeSeriesDataRangeSelector) || {};
   const { minDate, maxDate } = findSondeDataMinAndMaxDates(sondeDataRange);
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
@@ -193,11 +194,13 @@ interface WaterSamplingCardProps {
   siteId: string;
   pointId?: string;
   pointName?: string;
+  sondeDataRange?: TimeSeriesRange;
 }
 
 WaterSamplingCard.defaultProps = {
   pointId: undefined,
   pointName: undefined,
+  sondeDataRange: undefined,
 };
 
 export default WaterSamplingCard;
