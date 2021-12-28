@@ -119,7 +119,7 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
 export const uploadSondeData = async (
   filePath: string,
   siteId: string,
-  surveyPointId: string,
+  surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
 ) => {
@@ -131,7 +131,7 @@ export const uploadSondeData = async (
       relations: ['surveyPoint', 'site'],
       where: {
         site: { id: siteId },
-        // surveyPoint: surveyPointId,
+        surveyPoint: surveyPointId || null,
         type: SourceType.SONDE,
       },
     })
@@ -139,14 +139,8 @@ export const uploadSondeData = async (
       if (foundSource) {
         return foundSource;
       }
-      return repositories.sourcesRepository.save({
-        site_id: siteId,
-        // survey_point_id: 2,
-        type: SourceType.SONDE,
-      });
+      throw new Error('Source does not exist yet. Please create it manually.');
     });
-
-  logger.log(sourceEntity);
 
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
@@ -174,7 +168,7 @@ export const uploadSondeData = async (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        logger.log('excluding incompatible value:');
+        logger.log('Excluding incompatible value:');
         logger.log(valueObject);
         return false;
       });

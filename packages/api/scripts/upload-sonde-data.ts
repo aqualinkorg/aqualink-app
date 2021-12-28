@@ -33,7 +33,7 @@ const { argv } = yargs
     alias: 'survey_point',
     describe: 'The id of the corresponding survey point.',
     type: 'string',
-    demandOption: true,
+    demandOption: false,
   })
   .option('t', {
     alias: 'sonde_type',
