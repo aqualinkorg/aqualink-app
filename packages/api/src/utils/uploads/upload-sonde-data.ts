@@ -52,7 +52,12 @@ function renameKeys(obj, newKeys) {
 }
 
 function ExcelDateToJSDate(dateSerial: number) {
-  return new Date(Math.round((dateSerial - 25569) * 86400 * 1000));
+  // 25569 is the number of days between 1 January 1900 and 1 January 1970.
+  const EXCEL_DAY_CONVERSION = 25569;
+  const milliSecondsInADay = 86400 * 1000;
+  return new Date(
+    Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
+  );
 }
 
 const getTimestampFromExcelSerials = (
