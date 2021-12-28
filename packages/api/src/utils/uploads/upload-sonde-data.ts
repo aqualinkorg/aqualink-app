@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 import { chunk, isNaN } from 'lodash';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
