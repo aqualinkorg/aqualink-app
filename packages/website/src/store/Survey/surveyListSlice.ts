@@ -27,14 +27,7 @@ export const surveysRequest = createAsyncThunk<
   SurveyListState["list"],
   string,
   CreateAsyncThunkTypes
->("surveysList/request", (siteId: string) => getSurveys(siteId), {
-  condition(siteId: string, { getState }) {
-    const {
-      selectedSite: { details },
-    } = getState();
-    return `${details?.id}` !== siteId;
-  },
-});
+>("surveysList/request", (siteId: string) => getSurveys(siteId));
 
 const surveyListSlice = createSlice({
   name: "surveyList",
