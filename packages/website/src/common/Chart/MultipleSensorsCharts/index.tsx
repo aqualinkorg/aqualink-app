@@ -67,11 +67,8 @@ const ChartWithCard = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const {
-    hobo: hoboData,
-    spotter: spotterData,
-    sonde: sondeData,
-  } = timeSeriesData || {};
+  const { hobo: hoboData, spotter: spotterData, sonde: sondeData } =
+    timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
@@ -181,6 +178,9 @@ const ChartWithCard = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
+          // TODO - If acidity is available, get all metrics
+          // Otherwise, get: bottom_temperature, top_temperature, wind speed, significant wave height.
+          // Then we can remove the override: ["1637", "1638"].includes(params.siteId) in siteServices.ts.
           metrics: ["bottom_temperature", "top_temperature"],
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), "days") >
