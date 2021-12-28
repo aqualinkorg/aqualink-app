@@ -42,17 +42,11 @@ const getSiteLiveData = (id: string) =>
     method: "GET",
   });
 
-const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) => {
-  const filterMetrics =
-    params?.metrics?.length && !["1637", "1638"].includes(params.siteId);
-  return requests.send<TimeSeriesDataResponse>({
-    url: constructTimeSeriesDataRequestUrl({
-      ...params,
-      metrics: filterMetrics ? params?.metrics : undefined,
-    }),
+const getSiteTimeSeriesData = (params: TimeSeriesDataRequestParams) =>
+  requests.send<TimeSeriesDataResponse>({
+    url: constructTimeSeriesDataRequestUrl(params),
     method: "GET",
   });
-};
 
 const getSiteTimeSeriesDataRange = ({
   siteId,

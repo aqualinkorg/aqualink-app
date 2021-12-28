@@ -25,7 +25,7 @@ import {
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
 } from "../../../store/Sites/selectedSiteSlice";
-import { Site } from "../../../store/Sites/types";
+import { MetricsKeys, Site } from "../../../store/Sites/types";
 import {
   generateHistoricalMonthlyMeanTimestamps,
   isBefore,
@@ -44,6 +44,14 @@ import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { getSondeConfig } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
+import { hasSitesSondeData } from "../../../store/Sites/helpers";
+
+const DEFAULT_METRICS: MetricsKeys[] = [
+  "bottom_temperature",
+  "top_temperature",
+  "wind_speed",
+  "significant_wave_height",
+];
 
 const ChartWithCard = ({
   site,
@@ -96,7 +104,7 @@ const ChartWithCard = ({
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
 
-  const hasSondeData = Boolean(sondeData?.bottomTemperature?.[1]);
+  const hasSondeData = hasSitesSondeData(timeSeriesDataRanges?.sonde);
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 
@@ -181,10 +189,7 @@ const ChartWithCard = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
-          // TODO - If acidity is available, get all metrics
-          // Otherwise, get: bottom_temperature, top_temperature, wind speed, significant wave height.
-          // Then we can remove the override: ["1637", "1638"].includes(params.siteId) in siteServices.ts.
-          metrics: ["bottom_temperature", "top_temperature"],
+          metrics: hasSondeData ? undefined : DEFAULT_METRICS,
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), "days") >
             2,
@@ -205,6 +210,7 @@ const ChartWithCard = ({
   }, [
     dispatch,
     hasOceanSenseId,
+    hasSondeData,
     pickerEndDate,
     pickerStartDate,
     pointId,

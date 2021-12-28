@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { some } from "lodash";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -37,6 +36,7 @@ import {
 } from "../../store/Sites/selectedSiteSlice";
 import LoadingCard from "./LoadingCard";
 import WaterSamplingCard from "./WaterSampling";
+import { hasSitesSondeData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   classes,
@@ -55,7 +55,7 @@ const SiteDetails = ({
   const { sonde: sondeDataRange } =
     useSelector(siteTimeSeriesDataRangeSelector) || {};
   const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
-  const hasSondeData = some(sondeDataRange, (range) => Boolean(range?.length));
+  const hasSondeData = hasSitesSondeData(sondeDataRange);
 
   const ThirdCardComponent = () => {
     if (rangesLoading) {
