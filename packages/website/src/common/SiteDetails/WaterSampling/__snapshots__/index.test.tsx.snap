@@ -90,7 +90,7 @@ exports[`renders as expected 1`] = `
               display="inline"
               variant="h6"
             >
-              ug/L
+              µg/L
             </mock-typography>
           </div>
           <div

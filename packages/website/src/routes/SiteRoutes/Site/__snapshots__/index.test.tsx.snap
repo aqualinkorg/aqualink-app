@@ -1760,7 +1760,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       display="inline"
                       variant="h6"
                     >
-                      ug/L
+                      µg/L
                     </mock-typography>
                   </div>
                   <div
