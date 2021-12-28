@@ -115,14 +115,12 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
   return dataAsObjects;
 };
 
-// Upload hobo data
-// Returns a object with keys the db site ids and values the corresponding imported site ids
+// Upload sonde data
 export const uploadSondeData = async (
   filePath: string,
   siteId: string,
   surveyPointId: string,
   sondeType: string,
-  connection: Connection,
   repositories: Repositories,
 ) => {
   // TODO

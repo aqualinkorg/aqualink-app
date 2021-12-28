@@ -46,7 +46,7 @@ const { argv } = yargs
 
 async function run() {
   // Initialize Nest logger
-  const logger = new Logger('ParseHoboData');
+  const logger = new Logger('ParseSondeData');
   // Extract command line arguments
   const { f: filePath, s: siteId, p: surveyPointId, t: sondeType } = argv;
 
@@ -64,7 +64,6 @@ async function run() {
     siteId,
     surveyPointId,
     sondeType,
-    connection,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),
