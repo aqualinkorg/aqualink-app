@@ -39,7 +39,7 @@ export function getSiteNameAndRegion(site: Site) {
   return { name, region };
 }
 
-export function hasSitesSondeData(sondeDataRange?: TimeSeriesRange) {
+export function siteHasSondeData(sondeDataRange?: TimeSeriesRange) {
   return some(sondeDataRange, (range) => Boolean(range?.length));
 }
 

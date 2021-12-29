@@ -1,4 +1,4 @@
-import { compact, mapValues, minBy, meanBy } from "lodash";
+import { compact, mapValues, minBy, meanBy, maxBy } from "lodash";
 import { TimeSeriesData, TimeSeriesRange } from "../../../store/Sites/types";
 
 export const findSondeDataMinAndMaxDates = (ranges?: TimeSeriesRange) => {
@@ -7,7 +7,7 @@ export const findSondeDataMinAndMaxDates = (ranges?: TimeSeriesRange) => {
     (date) => new Date(date).getTime()
   );
 
-  const maxDate = minBy(
+  const maxDate = maxBy(
     compact(Object.values(ranges || {}).map((range) => range?.[0]?.maxDate)),
     (date) => new Date(date).getTime()
   );

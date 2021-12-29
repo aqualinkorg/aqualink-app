@@ -36,7 +36,7 @@ import {
 } from "../../store/Sites/selectedSiteSlice";
 import LoadingCard from "./LoadingCard";
 import WaterSamplingCard from "./WaterSampling";
-import { hasSitesSondeData } from "../../store/Sites/helpers";
+import { siteHasSondeData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   classes,
@@ -55,7 +55,7 @@ const SiteDetails = ({
   const { sonde: sondeDataRange } =
     useSelector(siteTimeSeriesDataRangeSelector) || {};
   const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
-  const hasSondeData = hasSitesSondeData(sondeDataRange);
+  const hasSondeData = siteHasSondeData(sondeDataRange);
 
   const ThirdCardComponent = () => {
     if (rangesLoading) {

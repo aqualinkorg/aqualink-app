@@ -44,7 +44,7 @@ import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { getSondeConfig } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
-import { hasSitesSondeData } from "../../../store/Sites/helpers";
+import { siteHasSondeData } from "../../../store/Sites/helpers";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   "bottom_temperature",
@@ -104,7 +104,7 @@ const ChartWithCard = ({
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
 
-  const hasSondeData = hasSitesSondeData(timeSeriesDataRanges?.sonde);
+  const hasSondeData = siteHasSondeData(timeSeriesDataRanges?.sonde);
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 

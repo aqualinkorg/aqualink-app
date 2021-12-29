@@ -9,7 +9,7 @@ import type { ChartTooltipModel } from "chart.js";
 import { isNumber, last } from "lodash";
 import moment from "moment";
 import Chart, { ChartProps } from ".";
-import Tooltip, { TooltipData } from "./Tooltip";
+import Tooltip, { TooltipData, TOOLTIP_WIDTH } from "./Tooltip";
 import {
   filterDailyData,
   findSurveyFromDate,
@@ -141,13 +141,24 @@ function ChartWithTooltip({
         oceanSense,
       ].filter(isNumber).length;
 
+      // Chart.js displays tooltips in a parallel to the X axis preference, meaning
+      // that it will appear right or left from the chart point. We want to change that,
+      // and display the tooltip in a Y axis preference, and more specifically, above the chart point.
       const position = chart.chartInstance.canvas.getBoundingClientRect();
-      const left = position.left + tooltipModel.caretX - 95;
+
+      // We center the tooltip in the X axis by subtracting half its width.
+      const left = position.left + tooltipModel.caretX - TOOLTIP_WIDTH / 2;
+
+      // We increase the tooltip's top, so that it lands above the chart point. The amount by
+      // which we increase varies based on how many values we display and if there is a survey at that point,
+      // as we display a `VIEW SURVEY` button.
       const top =
         position.top +
         tooltipModel.caretY -
         ((surveyId ? 30 : 0) + nValues * 20 + 48);
 
+      // We display the tooltip only if there are data to display at this point and it lands
+      // between the chart's X axis limits.
       if (
         nValues > 0 &&
         moment(date).isBetween(

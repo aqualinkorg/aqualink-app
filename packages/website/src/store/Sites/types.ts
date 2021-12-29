@@ -141,6 +141,12 @@ export const metricsKeysList = [
 
 export type MetricsKeys = typeof metricsKeysList[number];
 
+// This recursive type converts string literals from snake_case to camelCase.
+// It splits the input string into three parts: P1, P2 and P3.
+// For example, the string "temp_weekly_alert" is split to:
+// P1 = temp, P2 = w, P3 = eekly_alert.
+// Then, applies Lowercase P1 as is, applies Uppercase to P2, and then recursively applies Camelcase to P3.
+// After that, it concatenates these 3 results.
 type CamelCase<S extends string> =
   S extends `${infer P1}_${infer P2}${infer P3}`
     ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
