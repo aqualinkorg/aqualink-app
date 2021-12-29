@@ -33,7 +33,7 @@ const { argv } = yargs
     alias: 'survey_point',
     describe: 'The id of the corresponding survey point.',
     type: 'string',
-    demandOption: true,
+    demandOption: false,
   })
   .option('t', {
     alias: 'sonde_type',
@@ -46,7 +46,7 @@ const { argv } = yargs
 
 async function run() {
   // Initialize Nest logger
-  const logger = new Logger('ParseHoboData');
+  const logger = new Logger('ParseSondeData');
   // Extract command line arguments
   const { f: filePath, s: siteId, p: surveyPointId, t: sondeType } = argv;
 
@@ -64,7 +64,6 @@ async function run() {
     siteId,
     surveyPointId,
     sondeType,
-    connection,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),

@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 import { chunk, isNaN } from 'lodash';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
@@ -52,7 +52,12 @@ function renameKeys(obj, newKeys) {
 }
 
 function ExcelDateToJSDate(dateSerial: number) {
-  return new Date(Math.round((dateSerial - 25569) * 86400 * 1000));
+  // 25569 is the number of days between 1 January 1900 and 1 January 1970.
+  const EXCEL_DAY_CONVERSION = 25569;
+  const milliSecondsInADay = 86400 * 1000;
+  return new Date(
+    Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
+  );
 }
 
 const getTimestampFromExcelSerials = (
@@ -110,14 +115,12 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
   return dataAsObjects;
 };
 
-// Upload hobo data
-// Returns a object with keys the db site ids and values the corresponding imported site ids
+// Upload sonde data
 export const uploadSondeData = async (
   filePath: string,
   siteId: string,
-  surveyPointId: string,
+  surveyPointId: string | undefined,
   sondeType: string,
-  connection: Connection,
   repositories: Repositories,
 ) => {
   // TODO
@@ -128,7 +131,7 @@ export const uploadSondeData = async (
       relations: ['surveyPoint', 'site'],
       where: {
         site: { id: siteId },
-        // surveyPoint: surveyPointId,
+        surveyPoint: surveyPointId || null,
         type: SourceType.SONDE,
       },
     })
@@ -136,14 +139,8 @@ export const uploadSondeData = async (
       if (foundSource) {
         return foundSource;
       }
-      return repositories.sourcesRepository.save({
-        site_id: siteId,
-        // survey_point_id: 2,
-        type: SourceType.SONDE,
-      });
+      throw new Error('Source does not exist yet. Please create it manually.');
     });
-
-  logger.log(sourceEntity);
 
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
@@ -171,7 +168,7 @@ export const uploadSondeData = async (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        logger.log('excluding incompatible value:');
+        logger.log('Excluding incompatible value:');
         logger.log(valueObject);
         return false;
       });
