@@ -10,7 +10,7 @@ $ yarn install
 
 Follow the instructions to install netcdf [here.](https://github.com/parro-it/netcdf4#installation)
 
-Make sure to set your LDFLAGS and CPPFLAGS properly when running when running the install.
+Make sure to set your LDFLAGS and CPPFLAGS properly when running the install.
 For example, if you installed using homebrew:
 ```bash
 $ LDFLAGS="-L/opt/homebrew/opt/netcdf/lib" CPPFLAGS="-I/opt/homebrew/opt/netcdf/include" yarn install
