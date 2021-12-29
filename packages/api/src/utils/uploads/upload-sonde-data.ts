@@ -20,7 +20,7 @@ interface Repositories {
 
 const logger = new Logger('ParseSondeData');
 
-const metricsMapping: { [name: string]: Metric } = {
+const metricsMapping: Record<string, Metric> = {
   'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
   'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
   'Cond µS/cm': Metric.CONDUCTIVITY,
