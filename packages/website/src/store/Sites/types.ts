@@ -122,38 +122,38 @@ type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 // TODO: Combine these two types when we upgrade typescript to V4.1
 // as described in https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
 export type MetricsKeys =
-  | "alert"
   | "dhw"
   | "satellite_temperature"
   | "top_temperature"
   | "bottom_temperature"
   | "sst_anomaly"
   | "significant_wave_height"
+  | "temp_alert"
+  | "temp_weekly_alert"
   | "wave_mean_period"
   | "wave_mean_direction"
   | "wind_speed"
-  | "wind_direction"
-  | "weekly_alert";
+  | "wind_direction";
 
 export type Metrics =
-  | "alert"
   | "dhw"
   | "satelliteTemperature"
   | "topTemperature"
   | "bottomTemperature"
   | "sstAnomaly"
   | "significantWaveHeight"
+  | "tempAlert"
+  | "tempWeeklyAlert"
   | "waveMeanPeriod"
   | "waveMeanDirection"
   | "windSpeed"
-  | "windDirection"
-  | "weeklyAlert";
+  | "windDirection";
 
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs";
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 
-export type TimeSeries = Record<Metrics, SofarValue[]>;
+export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
 
-export type TimeSeriesRange = Record<Metrics, DataRange[]>;
+export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
 
 export type TimeSeriesDataResponse = Record<
   Sources,
@@ -167,7 +167,7 @@ export type TimeSeriesDataRangeResponse = Record<
   Record<MetricsKeys, DataRange[]>
 >;
 
-export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
+export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;
 
 export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
 

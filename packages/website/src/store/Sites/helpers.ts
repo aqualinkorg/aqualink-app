@@ -33,7 +33,7 @@ export const constructTableData = (list: Site[]): TableRow[] => {
     const {
       dhw,
       satelliteTemperature,
-      weeklyAlert,
+      tempWeeklyAlert,
       bottomTemperature,
       topTemperature,
       sstAnomaly,
@@ -58,8 +58,8 @@ export const constructTableData = (list: Site[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${weeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
-      alertLevel: isNil(weeklyAlert) ? null : weeklyAlert,
+      alert: `${tempWeeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
+      alertLevel: isNil(tempWeeklyAlert) ? null : tempWeeklyAlert,
     };
   });
 };
@@ -116,8 +116,9 @@ const attachTimeSeries = (
     mapValues(previousSensorData, (previousMetricData, metric) =>
       attachData(
         direction,
-        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries],
-        previousMetricData
+        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries] ||
+          [],
+        previousMetricData || []
       )
     )
   );

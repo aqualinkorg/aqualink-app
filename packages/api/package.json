@@ -58,6 +58,7 @@
     "backfill-daily-data": "ts-node -r dotenv/config scripts/backfill-daily-data.ts",
     "augment-sites": "ts-node -r dotenv/config scripts/augment-site-data.ts",
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
+    "upload-sonde-data": "ts-node -r dotenv/config scripts/upload-sonde-data.ts",
     "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts"
   },
   "dependencies": {
@@ -89,6 +90,7 @@
     "moment-timezone": "^0.5.31",
     "multer": "^1.4.2",
     "multer-google-storage": "^1.3.0",
+    "node-xlsx": "^0.17.2",
     "objects-to-csv": "^1.3.6",
     "passport": "^0.4.1",
     "passport-custom": "^1.1.1",

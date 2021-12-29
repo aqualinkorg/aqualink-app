@@ -20,8 +20,8 @@ import SiteMarker from "./SiteMarker";
 const clusterIcon = (cluster: any) => {
   const alerts: Interval[] = cluster.getAllChildMarkers().map((marker: any) => {
     const { site } = marker?.options?.children?.[0]?.props || {};
-    const { weeklyAlert } = site?.collectionData || {};
-    return findIntervalByLevel(weeklyAlert);
+    const { tempWeeklyAlert } = site?.collectionData || {};
+    return findIntervalByLevel(tempWeeklyAlert);
   });
   const color = getColorByLevel(findMaxLevel(alerts));
   const count = cluster.getChildCount();

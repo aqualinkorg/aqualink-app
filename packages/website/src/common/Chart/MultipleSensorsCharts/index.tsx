@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import classnames from "classnames";
 import moment from "moment";
-import { isNaN } from "lodash";
+import { isNaN, snakeCase, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -42,6 +42,7 @@ import { RangeValue } from "./types";
 import Header from "./Header";
 import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+import { getSondeConfig } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 
 const ChartWithCard = ({
@@ -66,7 +67,8 @@ const ChartWithCard = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { hobo: hoboData, spotter: spotterData } = timeSeriesData || {};
+  const { hobo: hoboData, spotter: spotterData, sonde: sondeData } =
+    timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
@@ -88,6 +90,8 @@ const ChartWithCard = ({
   const hasSpotterData = Boolean(
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
+
+  const hasSondeData = Boolean(sondeData?.bottomTemperature?.[1]);
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 
@@ -446,6 +450,81 @@ const ChartWithCard = ({
             </Box>
           )
         )}
+      {hasSondeData &&
+        sortBy(
+          Object.entries(sondeData || {}),
+          ([key]) => getSondeConfig(snakeCase(key)).order
+        )
+          .filter(([, itemData]) => itemData?.length)
+          .map(([key, itemData]) => {
+            const { title, units, visibility } = getSondeConfig(snakeCase(key));
+
+            if (visibility === "admin") {
+              return null;
+            }
+
+            return (
+              <Box mt={4} key={key}>
+                <Header
+                  range={range}
+                  onRangeChange={onRangeChange}
+                  disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                  title={title}
+                  timeSeriesDataRanges={timeSeriesDataRanges}
+                  timeZone={site.timezone}
+                  showRangeButtons={false}
+                  showAvailableRanges={false}
+                />
+                <Grid
+                  className={classes.chartWrapper}
+                  container
+                  justify="space-between"
+                  item
+                  spacing={1}
+                >
+                  <Grid
+                    className={classnames(classes.chart, classes.largeChart)}
+                    item
+                  >
+                    <Chart
+                      site={site}
+                      pickerStartDate={
+                        pickerStartDate || subtractFromDate(today, "week")
+                      }
+                      pickerEndDate={pickerEndDate || today}
+                      startDate={chartStartDate}
+                      endDate={chartEndDate}
+                      onStartDateChange={onPickerDateChange("start")}
+                      onEndDateChange={onPickerDateChange("end")}
+                      pickerErrored={pickerErrored}
+                      showDatePickers={false}
+                      oceanSenseData={itemData}
+                      oceanSenseDataUnit={units}
+                      hideYAxisUnits
+                      displayHistoricalMonthlyMean={false}
+                    />
+                  </Grid>
+                  {!pickerErrored && (
+                    <Grid className={classes.card} item>
+                      <AnalysisCard
+                        dataset="oceanSense"
+                        pickerStartDate={
+                          pickerStartDate || subtractFromDate(today, "week")
+                        }
+                        pickerEndDate={pickerEndDate || today}
+                        chartStartDate={chartStartDate}
+                        chartEndDate={chartEndDate}
+                        depth={site.depth}
+                        oceanSenseData={itemData}
+                        oceanSenseUnit={units}
+                        columnJustification="flex-start"
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              </Box>
+            );
+          })}
     </Container>
   );
 };

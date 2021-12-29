@@ -13,26 +13,26 @@ import { Point, GeoJSON } from 'geojson';
 import moment from 'moment';
 import Bluebird from 'bluebird';
 import { ExifParserFactory } from 'ts-exif-parser';
-import { Site, SiteStatus } from '../sites/sites.entity';
-import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
-import { Metric } from '../time-series/metrics.entity';
-import { TimeSeries } from '../time-series/time-series.entity';
-import { User } from '../users/users.entity';
-import { Survey, WeatherConditions } from '../surveys/surveys.entity';
-import { GoogleCloudService } from '../google-cloud/google-cloud.service';
+import { Site, SiteStatus } from '../../sites/sites.entity';
+import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
+import { Metric } from '../../time-series/metrics.entity';
+import { TimeSeries } from '../../time-series/time-series.entity';
+import { User } from '../../users/users.entity';
+import { Survey, WeatherConditions } from '../../surveys/surveys.entity';
+import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 import {
   MediaType,
   Observations,
   SurveyMedia,
-} from '../surveys/survey-media.entity';
-import { Sources } from '../sites/sources.entity';
-import { backfillSiteData } from '../workers/backfill-site-data';
-import { getRegion, getTimezones } from './site.utils';
-import { getMMM, getHistoricalMonthlyMeans } from './temperature';
-import { Region } from '../regions/regions.entity';
-import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
-import { createPoint } from './coordinates';
-import { SourceType } from '../sites/schemas/source-type.enum';
+} from '../../surveys/survey-media.entity';
+import { Sources } from '../../sites/sources.entity';
+import { backfillSiteData } from '../../workers/backfill-site-data';
+import { getRegion, getTimezones } from '../site.utils';
+import { getMMM, getHistoricalMonthlyMeans } from '../temperature';
+import { Region } from '../../regions/regions.entity';
+import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entity';
+import { createPoint } from '../coordinates';
+import { SourceType } from '../../sites/schemas/source-type.enum';
 
 interface Coords {
   site: number;
@@ -407,7 +407,7 @@ const createSources = async (
     sources.map((source) =>
       sourcesRepository
         .findOne({
-          relations: ['poi', 'site'],
+          relations: ['surveyPoint', 'site'],
           where: {
             site: source.site,
             surveyPoint: source.poi,
