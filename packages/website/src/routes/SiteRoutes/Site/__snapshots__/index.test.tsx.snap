@@ -1832,7 +1832,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       display="inline"
                       variant="h6"
                     >
-                      fnu
+                      FNU
                     </mock-typography>
                   </div>
                 </div>

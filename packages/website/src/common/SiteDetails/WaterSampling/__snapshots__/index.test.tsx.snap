@@ -162,7 +162,7 @@ exports[`renders as expected 1`] = `
               display="inline"
               variant="h6"
             >
-              fnu
+              FNU
             </mock-typography>
           </div>
         </div>
