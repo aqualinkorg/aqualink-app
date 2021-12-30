@@ -1874,7 +1874,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         >
                           Last data uploaded
                            
-                          02.02.20
+                          02/02/2020
                         </mock-typography>
                         <mock-typography
                           classname="makeStyles-updateInfoText-255"
