@@ -360,38 +360,41 @@ const MultipleSensorsCharts = ({
           site.timezone
         )}
       />
-      {Object.entries(spotterConfig).map(([key, config]) => (
-        <Box mt={4}>
-          <ChartWithCard
-            id={key}
-            range={range}
-            onRangeChange={onRangeChange}
-            disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-            chartTitle={config.title}
-            timeSeriesDataRanges={timeSeriesDataRanges}
-            timeZone={site.timezone}
-            showRangeButtons={false}
-            showAvailableRanges={false}
-            chartWidth="large"
-            site={site}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
-            pickerEndDate={pickerEndDate || today}
-            chartStartDate={chartStartDate}
-            chartEndDate={chartEndDate}
-            onStartDateChange={onPickerDateChange("start")}
-            onEndDateChange={onPickerDateChange("end")}
-            isPickerErrored={pickerErrored}
-            showDatePickers={false}
-            oceanSenseData={spotterData?.[key as Metrics]}
-            oceanSenseDataUnit={config.unit}
-            hideYAxisUnits
-            displayHistoricalMonthlyMean={false}
-            cardDataset="oceanSense"
-            cardColumnJustification="flex-start"
-            displayDownloadButton={false}
-          />
-        </Box>
-      ))}
+      {hasSpotterData &&
+        Object.entries(spotterConfig).map(([key, config]) => (
+          <Box mt={4}>
+            <ChartWithCard
+              id={key}
+              range={range}
+              onRangeChange={onRangeChange}
+              disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+              chartTitle={config.title}
+              timeSeriesDataRanges={timeSeriesDataRanges}
+              timeZone={site.timezone}
+              showRangeButtons={false}
+              showAvailableRanges={false}
+              chartWidth="large"
+              site={site}
+              pickerStartDate={
+                pickerStartDate || subtractFromDate(today, "week")
+              }
+              pickerEndDate={pickerEndDate || today}
+              chartStartDate={chartStartDate}
+              chartEndDate={chartEndDate}
+              onStartDateChange={onPickerDateChange("start")}
+              onEndDateChange={onPickerDateChange("end")}
+              isPickerErrored={pickerErrored}
+              showDatePickers={false}
+              oceanSenseData={spotterData?.[key as Metrics]}
+              oceanSenseDataUnit={config.unit}
+              hideYAxisUnits
+              displayHistoricalMonthlyMean={false}
+              cardDataset="oceanSense"
+              cardColumnJustification="flex-start"
+              displayDownloadButton={false}
+            />
+          </Box>
+        ))}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.values(constructOceanSenseDatasets(oceanSenseData)).map(
