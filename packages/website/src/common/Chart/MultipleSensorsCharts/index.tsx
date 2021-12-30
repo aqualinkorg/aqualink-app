@@ -393,6 +393,7 @@ const MultipleSensorsCharts = ({
               onEndDateChange={onPickerDateChange("end")}
               isPickerErrored={pickerErrored}
               showDatePickers={false}
+              // TODO -  Make these data input more generic. Eg. in this case, this is not "oceanSense" data.
               oceanSenseData={spotterData?.[key as Metrics]?.map((item) => ({
                 ...item,
                 value: convert ? convert * item.value : item.value,
