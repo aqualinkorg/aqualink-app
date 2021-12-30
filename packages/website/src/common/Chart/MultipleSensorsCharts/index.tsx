@@ -51,6 +51,7 @@ const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
   windSpeed: {
     unit: "km/h",
     title: "Wind Speed",
+    // convert from m/s to to km/h
     convert: 3.6,
   },
   significantWaveHeight: {
