@@ -121,7 +121,7 @@ const Site = ({ match, classes }: SiteProps) => {
   } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
-  const { pointId: closestSurveyPointId, pointName: closestSurveyPointName } =
+  const { id: closestSurveyPointId, name: closestSurveyPointName } =
     findClosestSurveyPoint(polygon, surveyPoints) || {};
 
   const hasSpotterData = Boolean(liveData?.topTemperature);
