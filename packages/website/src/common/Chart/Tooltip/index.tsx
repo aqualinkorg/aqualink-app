@@ -17,6 +17,8 @@ import { isNull, isNumber } from "lodash";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { displayTimeInLocalTimezone } from "../../../helpers/dates";
 
+export const TOOLTIP_WIDTH = 190;
+
 const Circle = styled("div")<{}, { color: string; size?: number }>(
   ({ size = 10, color: backgroundColor }) => ({
     marginRight: 5,
@@ -187,7 +189,7 @@ const styles = () =>
     tooltip: {
       display: "flex",
       justifyContent: "center",
-      width: 190,
+      width: TOOLTIP_WIDTH,
       minHeight: 60,
     },
     tooltipCard: {

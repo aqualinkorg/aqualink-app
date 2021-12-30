@@ -142,7 +142,7 @@ const UploadMedia = ({
             url,
             surveyPointId: metadata[index].surveyPoint
               ? parseInt(metadata[index].surveyPoint, 10)
-              : ((undefined as unknown) as number),
+              : (undefined as unknown as number),
             observations: metadata[index].observation,
             comments: metadata[index].comments || undefined,
             metadata: "{}",

@@ -17,9 +17,8 @@ import { CollectionDetails } from "../../../store/Collection/types";
 const DashboardMap = ({ collection, classes }: DashboardMapProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const [collectionCenter, collectionBounds] = getCollectionCenterAndBounds(
-    collection
-  );
+  const [collectionCenter, collectionBounds] =
+    getCollectionCenterAndBounds(collection);
 
   return (
     <Box className={classes.root}>

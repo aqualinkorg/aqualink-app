@@ -43,7 +43,7 @@ export const sondeConfig: { [key: string]: any | undefined } = {
   },
   cholorophyll_concentration: {
     title: "Chlorophyll Concentration",
-    units: "ug/L",
+    units: "µg/L",
     description: "",
     visibility: "public",
     order: 7,

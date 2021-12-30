@@ -20,7 +20,6 @@
     "publish:release": "lerna publish --force-publish=* --no-push --no-git-tag-version"
   },
   "devDependencies": {
-    "typescript": "^4.3.5",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
     "babel-eslint": "^10.1.0",
@@ -40,7 +39,8 @@
     "husky": "^4.2.5",
     "lerna": "^3.22.0",
     "lint-staged": "^10.2.9",
-    "prettier": "^2.0.5"
+    "prettier": "2.5.1",
+    "typescript": "^4.3.5"
   },
   "engines": {
     "node": "12.x",

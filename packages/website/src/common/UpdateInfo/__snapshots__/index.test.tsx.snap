@@ -3,10 +3,10 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root UpdateInfo-updateInfo-1 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    class="MuiGrid-root makeStyles-updateInfo-1 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root makeStyles-dateInfoWrapper-5 makeStyles-dateInfoWrapper-7 MuiGrid-item"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -16,7 +16,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root UpdateInfo-updateIcon-3 MuiSvgIcon-fontSizeSmall"
+            class="MuiSvgIcon-root makeStyles-updateIcon-3 MuiSvgIcon-fontSizeSmall"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -26,14 +26,15 @@ exports[`renders as expected 1`] = `
           </svg>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfo-6 MuiGrid-item"
         >
           <mock-box
             display="flex"
             flexdirection="column"
+            width="100%"
           >
             <mock-typography
-              classname="UpdateInfo-updateInfoText-4"
+              classname="makeStyles-updateInfoText-4"
               variant="caption"
             >
               Last data received
@@ -41,32 +42,30 @@ exports[`renders as expected 1`] = `
               02/01 14:00 EET
             </mock-typography>
             <mock-typography
-              classname="UpdateInfo-updateInfoText-4"
+              classname="makeStyles-updateInfoText-4"
               variant="caption"
             >
-              Updated 
-              daily
+              Updated daily
             </mock-typography>
           </mock-box>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root makeStyles-chip-5 makeStyles-chip-10 MuiGrid-item"
+      class="MuiGrid-root makeStyles-chip-8 makeStyles-chip-14 MuiGrid-item"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
       >
-        <a
-          class="makeStyles-link-8"
-          href="/"
+        <mock-button
+          classname="makeStyles-button-13"
         >
           <mock-typography
-            classname="makeStyles-chipText-6"
+            classname="makeStyles-chipText-9"
           >
             NOAA
           </mock-typography>
-        </a>
+        </mock-button>
       </div>
     </div>
   </div>

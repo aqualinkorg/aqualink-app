@@ -460,34 +460,36 @@ interface Context {
   datasetIndex?: number;
 }
 
-const fillColor = (threshold: number | null) => ({ chart }: Context) => {
-  const yScale = (chart as any).scales["y-axis-0"];
-  const top = yScale.getPixelForValue(40);
-  const zero = yScale.getPixelForValue(threshold);
-  const bottom = yScale.getPixelForValue(0);
-  const { ctx } = chart as any;
-  if (yScale && ctx && top && bottom) {
-    const gradient = ctx.createLinearGradient(
-      0,
-      top,
-      0,
-      bottom
-    ) as CanvasGradient;
-    const ratio = Math.min((zero - top) / (bottom - top), 1);
-    if (threshold) {
-      gradient.addColorStop(0, "rgba(250, 141, 0, 0.5)");
-      gradient.addColorStop(ratio, "rgba(250, 141, 0, 0.5)");
-      gradient.addColorStop(ratio, "rgb(107,193,225,0.2)");
-      gradient.addColorStop(1, "rgb(107,193,225,0.2)");
-    } else {
-      gradient.addColorStop(0, "rgb(107,193,225,0.2)");
+const fillColor =
+  (threshold: number | null) =>
+  ({ chart }: Context) => {
+    const yScale = (chart as any).scales["y-axis-0"];
+    const top = yScale.getPixelForValue(40);
+    const zero = yScale.getPixelForValue(threshold);
+    const bottom = yScale.getPixelForValue(0);
+    const { ctx } = chart as any;
+    if (yScale && ctx && top && bottom) {
+      const gradient = ctx.createLinearGradient(
+        0,
+        top,
+        0,
+        bottom
+      ) as CanvasGradient;
+      const ratio = Math.min((zero - top) / (bottom - top), 1);
+      if (threshold) {
+        gradient.addColorStop(0, "rgba(250, 141, 0, 0.5)");
+        gradient.addColorStop(ratio, "rgba(250, 141, 0, 0.5)");
+        gradient.addColorStop(ratio, "rgb(107,193,225,0.2)");
+        gradient.addColorStop(1, "rgb(107,193,225,0.2)");
+      } else {
+        gradient.addColorStop(0, "rgb(107,193,225,0.2)");
+      }
+
+      return gradient;
     }
 
-    return gradient;
-  }
-
-  return "transparent";
-};
+    return "transparent";
+  };
 
 const pointColor = (surveyDate: Date | null) => (context: Context) => {
   if (

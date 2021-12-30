@@ -1,28 +1,26 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Typography,
   Grid,
   Theme,
   makeStyles,
   createStyles,
+  Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { grey, green } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: ({ width }: { width?: number }) => ({
+    chip: ({ width }: { width: number }) => ({
       backgroundColor: grey[300],
       borderRadius: 8,
       height: 24,
-      width: width || 60,
+      width,
       display: "flex",
-      [theme.breakpoints.only("md")]: {
-        width: width || 48,
-      },
     }),
     chipText: {
-      fontSize: 9,
+      fontSize: 8,
       color: grey[600],
       [theme.breakpoints.between("md", "md")]: {
         fontSize: 7,
@@ -49,8 +47,39 @@ const useStyles = makeStyles((theme: Theme) =>
       height: 18,
       width: 18,
     },
+    button: {
+      padding: 0,
+      height: "100%",
+    },
   })
 );
+
+interface ChipProps {
+  live?: boolean;
+  href?: string;
+  to?: string;
+  liveText?: string;
+  imageText?: string | null;
+  image?: string | null;
+  width: number;
+  onClick?: () => void;
+}
+
+const LinkWrapper: FC<
+  Pick<ChipProps, "to" | "href"> & { className?: string }
+  // eslint-disable-next-line react/prop-types
+> = ({ to, href, className, children }) =>
+  to || href ? (
+    <Link
+      to={to || { pathname: href }}
+      target={href ? "_blank" : undefined}
+      className={className}
+    >
+      {children}
+    </Link>
+  ) : (
+    <>{children}</>
+  );
 
 const Chip = ({
   live,
@@ -60,56 +89,48 @@ const Chip = ({
   imageText,
   liveText,
   width,
+  onClick,
 }: ChipProps) => {
   const classes = useStyles({ width });
   return (
     <Grid className={classes.chip} item>
       <Grid container alignItems="center" justify="center">
-        <Link
-          to={to || { pathname: href }}
-          target={href ? "_blank" : undefined}
-          className={classes.link}
-        >
-          {live ? (
-            <>
-              <div className={classes.circle} />
-              <Typography className={classes.chipText}>{liveText}</Typography>
-            </>
-          ) : (
-            <>
-              <Typography className={classes.chipText}>{imageText}</Typography>
-              {image && (
-                <img
-                  className={classes.sensorImage}
-                  alt="sensor-type"
-                  src={image}
-                />
-              )}
-            </>
-          )}
-        </Link>
+        <Button className={classes.button} onClick={onClick}>
+          <LinkWrapper to={to} href={href} className={classes.link}>
+            {live ? (
+              <>
+                <div className={classes.circle} />
+                <Typography className={classes.chipText}>{liveText}</Typography>
+              </>
+            ) : (
+              <>
+                <Typography className={classes.chipText}>
+                  {imageText}
+                </Typography>
+                {image && (
+                  <img
+                    className={classes.sensorImage}
+                    alt="sensor-type"
+                    src={image}
+                  />
+                )}
+              </>
+            )}
+          </LinkWrapper>
+        </Button>
       </Grid>
     </Grid>
   );
 };
 
-interface ChipProps {
-  live: boolean;
-  href?: string;
-  to?: string;
-  liveText?: string;
-  imageText?: string | null;
-  image?: string | null;
-  width?: number;
-}
-
 Chip.defaultProps = {
+  live: false,
   href: undefined,
   to: undefined,
   imageText: undefined,
   image: undefined,
   liveText: "LIVE",
-  width: undefined,
+  onClick: undefined,
 };
 
 export default Chip;

@@ -44,9 +44,8 @@ const MediaCard = ({
   classes,
 }: MediaCardProps) => {
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
-  const [addSurveyPointDialogOpen, setAddSurveyPointDialogOpen] = useState<
-    boolean
-  >(false);
+  const [addSurveyPointDialogOpen, setAddSurveyPointDialogOpen] =
+    useState<boolean>(false);
   const [newSurveyPointName, setNewSurveyPointName] = useState<string>("");
 
   const errored = newSurveyPointName.length > maxLengths.SURVEY_POINT_NAME;

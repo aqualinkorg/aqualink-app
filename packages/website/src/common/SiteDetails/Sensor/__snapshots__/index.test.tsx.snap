@@ -91,10 +91,10 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
         </mock-box>
       </mock-box>
       <div
-        class="MuiGrid-root UpdateInfo-updateInfo-13 UpdateInfo-withMargin-14 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-13 makeStyles-withMargin-14 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-17 makeStyles-dateInfoWrapper-19 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -104,7 +104,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root UpdateInfo-updateIcon-15 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-15 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -114,14 +114,15 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-18 MuiGrid-item"
             >
               <mock-box
                 display="flex"
                 flexdirection="column"
+                width="100%"
               >
                 <mock-typography
-                  classname="UpdateInfo-updateInfoText-16"
+                  classname="makeStyles-updateInfoText-16"
                   variant="caption"
                 >
                   Last data received
@@ -129,35 +130,33 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                   5 min. ago
                 </mock-typography>
                 <mock-typography
-                  classname="UpdateInfo-updateInfoText-16"
+                  classname="makeStyles-updateInfoText-16"
                   variant="caption"
                 >
-                  Updated 
-                  hourly
+                  Updated hourly
                 </mock-typography>
               </mock-box>
             </div>
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-22 MuiGrid-item"
+          class="MuiGrid-root makeStyles-chip-20 makeStyles-chip-26 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
-            <a
-              class="makeStyles-link-20"
-              href="/"
+            <mock-button
+              classname="makeStyles-button-25"
             >
               <div
-                class="makeStyles-circle-19"
+                class="makeStyles-circle-22"
               />
               <mock-typography
-                classname="makeStyles-chipText-18"
+                classname="makeStyles-chipText-21"
               >
                 LIVE
               </mock-typography>
-            </a>
+            </mock-button>
           </div>
         </div>
       </div>

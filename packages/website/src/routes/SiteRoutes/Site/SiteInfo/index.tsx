@@ -56,10 +56,8 @@ const SiteNavBar = ({
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const organizationName = site.admins[0]?.organization;
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const [
-    exclusionDatesDialogOpen,
-    setExclusionDatesDeployDialogOpen,
-  ] = useState(false);
+  const [exclusionDatesDialogOpen, setExclusionDatesDeployDialogOpen] =
+    useState(false);
 
   const clearSiteInfo = () => {
     if (!hasDailyData) {
