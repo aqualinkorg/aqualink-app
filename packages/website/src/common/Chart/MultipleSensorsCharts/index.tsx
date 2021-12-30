@@ -41,10 +41,17 @@ const DEFAULT_METRICS: MetricsKeys[] = [
   "significant_wave_height",
 ];
 
-const spotterConfig = {
+interface SpotterConfig {
+  unit: string;
+  title: string;
+  convert?: number;
+}
+
+const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
   windSpeed: {
     unit: "km/h",
     title: "Wind Speed",
+    convert: 3.6,
   },
   significantWaveHeight: {
     unit: "m",
@@ -361,14 +368,14 @@ const MultipleSensorsCharts = ({
         )}
       />
       {hasSpotterData &&
-        Object.entries(spotterConfig).map(([key, config]) => (
+        Object.entries(spotterConfig).map(([key, { title, unit, convert }]) => (
           <Box mt={4}>
             <ChartWithCard
               id={key}
               range={range}
               onRangeChange={onRangeChange}
               disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-              chartTitle={config.title}
+              chartTitle={title}
               timeSeriesDataRanges={timeSeriesDataRanges}
               timeZone={site.timezone}
               showRangeButtons={false}
@@ -385,8 +392,11 @@ const MultipleSensorsCharts = ({
               onEndDateChange={onPickerDateChange("end")}
               isPickerErrored={pickerErrored}
               showDatePickers={false}
-              oceanSenseData={spotterData?.[key as Metrics]}
-              oceanSenseDataUnit={config.unit}
+              oceanSenseData={spotterData?.[key as Metrics]?.map((item) => ({
+                ...item,
+                value: convert ? convert * item.value : item.value,
+              }))}
+              oceanSenseDataUnit={unit}
               hideYAxisUnits
               displayHistoricalMonthlyMean={false}
               cardDataset="oceanSense"
