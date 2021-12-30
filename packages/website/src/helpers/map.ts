@@ -108,7 +108,6 @@ export const findClosestSurveyPoint = (
       ? getMiddlePoint(sitePolygon)
       : sitePolygon.coordinates;
 
-  const smallestIdPoint = minBy(points, "id");
   const closestPoint = minBy(
     points.filter((item) => item.polygon),
     (point) => {
@@ -120,7 +119,8 @@ export const findClosestSurveyPoint = (
     }
   );
 
-  return closestPoint || smallestIdPoint;
+  // if there is no closestPoint - return the first one by id.
+  return closestPoint || minBy(points, "id");
 };
 
 const useMarkerStyles = makeStyles({
