@@ -35,10 +35,10 @@ commands:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v5-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v4-dependencies-
-    
+            - v5-dependencies-
+  
   update_test_cache_file:
     description: Concatenate all spec files into one file to be able to get their checksum
     steps:
