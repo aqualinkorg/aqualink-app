@@ -30,11 +30,7 @@ import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
-import {
-  siteTimeSeriesDataRangeLoadingSelector,
-  siteTimeSeriesDataRangeSelector,
-} from "../../store/Sites/selectedSiteSlice";
-import LoadingCard from "./LoadingCard";
+import { siteTimeSeriesDataRangeSelector } from "../../store/Sites/selectedSiteSlice";
 import WaterSamplingCard from "./WaterSampling";
 import { siteHasSondeData } from "../../store/Sites/helpers";
 
@@ -54,35 +50,22 @@ const SiteDetails = ({
   const [lng, lat] = getMiddlePoint(site.polygon);
   const { sonde: sondeDataRange } =
     useSelector(siteTimeSeriesDataRangeSelector) || {};
-  const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
   const hasSondeData = siteHasSondeData(sondeDataRange);
-
-  const ThirdCardComponent = () => {
-    if (rangesLoading) {
-      return <LoadingCard />;
-    }
-
-    if (hasSondeData) {
-      return (
-        <WaterSamplingCard
-          siteId={`${site.id}`}
-          pointId={closestSurveyPointId}
-          pointName={closestSurveyPointName}
-          sondeDataRange={sondeDataRange}
-        />
-      );
-    }
-
-    return (
-      <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
-    );
-  };
 
   const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
   const cards = [
     <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
     <Sensor site={site} />,
-    ThirdCardComponent(),
+    hasSondeData ? (
+      <WaterSamplingCard
+        siteId={`${site.id}`}
+        pointId={closestSurveyPointId}
+        pointName={closestSurveyPointName}
+        sondeDataRange={sondeDataRange}
+      />
+    ) : (
+      <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
+    ),
     <Waves liveData={liveData} />,
   ];
 
