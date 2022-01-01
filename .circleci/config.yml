@@ -62,7 +62,7 @@ jobs:
             - packages/website/node_modules
             - packages/api/node_modules
             - /usr/local/share/.cache/yarn/v4/
-          key: v4-dependencies-{{ checksum "yarn.lock" }}
+          key: v5-dependencies-{{ checksum "yarn.lock" }}
 
   test_and_lint:
     working_directory: *working_directory
