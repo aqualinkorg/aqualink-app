@@ -8,7 +8,7 @@ references:
 executors:
   default:
     docker:
-      - image: node:16-browsers
+      - image: node:16
         environment:
           DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
           TEST_DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
