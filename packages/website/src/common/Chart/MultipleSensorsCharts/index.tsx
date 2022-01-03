@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from "react";
 import isISODate from "validator/lib/isISO8601";
-import {
-  Box,
-  Container,
-  createStyles,
-  Grid,
-  Theme,
-  WithStyles,
-  withStyles,
-} from "@material-ui/core";
-import classnames from "classnames";
+import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import moment from "moment";
-import { isNaN } from "lodash";
+import { isNaN, snakeCase, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
-import Chart from "./Chart";
-import AnalysisCard from "./AnalysisCard";
 import {
   siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
@@ -25,7 +14,7 @@ import {
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
 } from "../../../store/Sites/selectedSiteSlice";
-import { Site } from "../../../store/Sites/types";
+import { Metrics, MetricsKeys, Site } from "../../../store/Sites/types";
 import {
   generateHistoricalMonthlyMeanTimestamps,
   isBefore,
@@ -39,19 +28,46 @@ import {
   localizedEndOfDay,
 } from "./helpers";
 import { RangeValue } from "./types";
-import Header from "./Header";
-import DownloadCSVButton from "./DownloadCSVButton";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
+import { getSondeConfig } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
+import { siteHasSondeData } from "../../../store/Sites/helpers";
+import ChartWithCard from "./ChartWithCard";
 
-const ChartWithCard = ({
+const DEFAULT_METRICS: MetricsKeys[] = [
+  "bottom_temperature",
+  "top_temperature",
+  "wind_speed",
+  "significant_wave_height",
+];
+
+interface SpotterConfig {
+  unit: string;
+  title: string;
+  convert?: number;
+}
+
+const spotterConfig: Partial<Record<Metrics, SpotterConfig>> = {
+  windSpeed: {
+    unit: "km/h",
+    title: "Wind Speed",
+    // convert from m/s to to km/h
+    convert: 3.6,
+  },
+  significantWaveHeight: {
+    unit: "m",
+    title: "Significant Wave Height",
+  },
+};
+
+const MultipleSensorsCharts = ({
   site,
   pointId,
   surveysFiltered,
   disableGutters,
   displayOceanSenseCharts,
-  classes,
-}: ChartWithCardProps) => {
+}: MultipleSensorsChartsProps) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const getQueryParam = useQueryParams();
   const [startDateParam, endDateParam, initialChart] = [
@@ -66,7 +82,11 @@ const ChartWithCard = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { hobo: hoboData, spotter: spotterData } = timeSeriesData || {};
+  const {
+    hobo: hoboData,
+    spotter: spotterData,
+    sonde: sondeData,
+  } = timeSeriesData || {};
   const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
@@ -76,7 +96,9 @@ const ChartWithCard = ({
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
-  const [range, setRange] = useState<RangeValue>("three_months");
+  const [range, setRange] = useState<RangeValue>(
+    initialStart || initialEnd ? "custom" : "three_months"
+  );
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
@@ -89,12 +111,11 @@ const ChartWithCard = ({
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
 
+  const hasSondeData = siteHasSondeData(timeSeriesDataRanges?.sonde);
+
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 
   const cardDataset = findCardDataset(hasSpotterData, hasHoboData);
-
-  const chartWidthClass =
-    cardDataset === "spotter" ? classes.smallChart : classes.mediumChart;
 
   const chartStartDate = startDate || subtractFromDate(today, "week");
   const chartEndDate = moment
@@ -172,7 +193,7 @@ const ChartWithCard = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
-          metrics: ["bottom_temperature", "top_temperature"],
+          metrics: hasSondeData ? undefined : DEFAULT_METRICS,
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), "days") >
             2,
@@ -193,6 +214,7 @@ const ChartWithCard = ({
   }, [
     dispatch,
     hasOceanSenseId,
+    hasSondeData,
     pickerEndDate,
     pickerStartDate,
     pointId,
@@ -315,199 +337,183 @@ const ChartWithCard = ({
       disableGutters={disableGutters}
       className={classes.chartWithRange}
     >
-      <Header
+      <ChartWithCard
         id="temperature"
         range={range}
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-        title="TEMPERATURE ANALYSIS"
+        chartTitle="TEMPERATURE ANALYSIS"
         timeSeriesDataRanges={timeSeriesDataRanges}
         timeZone={site.timezone}
+        chartWidth={cardDataset === "spotter" ? "small" : "medium"}
+        site={site}
+        dailyData={granularDailyData || []}
+        pointId={pointId ? parseInt(pointId, 10) : undefined}
+        spotterData={spotterData}
+        hoboBottomTemperature={hoboBottomTemperature || []}
+        pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+        pickerEndDate={pickerEndDate || today}
+        chartStartDate={chartStartDate}
+        chartEndDate={chartEndDate}
+        onStartDateChange={onPickerDateChange("start")}
+        onEndDateChange={onPickerDateChange("end")}
+        isPickerErrored={pickerErrored}
+        areSurveysFiltered={surveysFiltered}
+        cardDataset={cardDataset}
+        dailyDataSst={dailyDataSst || []}
+        historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
+          site.historicalMonthlyMean,
+          startDate,
+          endDate,
+          site.timezone
+        )}
       />
-      <Grid
-        className={classes.chartWrapper}
-        container
-        justify="space-between"
-        item
-        spacing={1}
-      >
-        <Grid className={classnames(classes.chart, chartWidthClass)} item>
-          <Chart
-            site={site}
-            dailyData={granularDailyData || []}
-            pointId={pointId ? parseInt(pointId, 10) : undefined}
-            spotterData={spotterData}
-            hoboBottomTemperature={hoboBottomTemperature || []}
-            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
-            pickerEndDate={pickerEndDate || today}
-            startDate={chartStartDate}
-            endDate={chartEndDate}
-            onStartDateChange={onPickerDateChange("start")}
-            onEndDateChange={onPickerDateChange("end")}
-            pickerErrored={pickerErrored}
-            surveysFiltered={surveysFiltered}
-          />
-        </Grid>
-        {!pickerErrored && (
-          <Grid className={classes.card} item>
-            <AnalysisCard
-              dataset={cardDataset}
+      {hasSpotterData &&
+        Object.entries(spotterConfig).map(([key, { title, unit, convert }]) => (
+          <Box mt={4}>
+            <ChartWithCard
+              id={key}
+              range={range}
+              onRangeChange={onRangeChange}
+              disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+              chartTitle={title}
+              timeSeriesDataRanges={timeSeriesDataRanges}
+              timeZone={site.timezone}
+              showRangeButtons={false}
+              showAvailableRanges={false}
+              chartWidth="large"
+              site={site}
               pickerStartDate={
                 pickerStartDate || subtractFromDate(today, "week")
               }
               pickerEndDate={pickerEndDate || today}
               chartStartDate={chartStartDate}
               chartEndDate={chartEndDate}
-              depth={site.depth}
-              dailyDataSst={dailyDataSst || []}
-              spotterData={spotterData}
-              hoboBottomTemperature={hoboBottomTemperature || []}
-              historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
-                site.historicalMonthlyMean,
-                startDate,
-                endDate,
-                site.timezone
-              )}
-            >
-              <DownloadCSVButton
-                startDate={pickerStartDate}
-                endDate={pickerEndDate}
-                siteId={site.id}
-                pointId={pointId}
-                className={classes.button}
-              />
-            </AnalysisCard>
-          </Grid>
-        )}
-      </Grid>
+              onStartDateChange={onPickerDateChange("start")}
+              onEndDateChange={onPickerDateChange("end")}
+              isPickerErrored={pickerErrored}
+              showDatePickers={false}
+              // TODO -  Make these data input more generic. Eg. in this case, this is not "oceanSense" data.
+              oceanSenseData={spotterData?.[key as Metrics]?.map((item) => ({
+                ...item,
+                value: convert ? convert * item.value : item.value,
+              }))}
+              oceanSenseDataUnit={unit}
+              hideYAxisUnits
+              displayHistoricalMonthlyMean={false}
+              cardDataset="oceanSense"
+              cardColumnJustification="flex-start"
+              displayDownloadButton={false}
+            />
+          </Box>
+        ))}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
         Object.values(constructOceanSenseDatasets(oceanSenseData)).map(
           (item) => (
             <Box mt={4} key={item.title}>
-              <Header
+              <ChartWithCard
                 id={item.id}
                 range={range}
                 onRangeChange={onRangeChange}
                 disableMaxRange={!hoboBottomTemperatureRange?.[0]}
-                title={item.title}
+                chartTitle={item.title}
                 timeSeriesDataRanges={timeSeriesDataRanges}
                 timeZone={site.timezone}
                 showRangeButtons={false}
                 showAvailableRanges={false}
+                chartWidth="large"
+                site={site}
+                pickerStartDate={
+                  pickerStartDate || subtractFromDate(today, "week")
+                }
+                pickerEndDate={pickerEndDate || today}
+                chartStartDate={chartStartDate}
+                chartEndDate={chartEndDate}
+                onStartDateChange={onPickerDateChange("start")}
+                onEndDateChange={onPickerDateChange("end")}
+                isPickerErrored={pickerErrored}
+                showDatePickers={false}
+                oceanSenseData={item.data}
+                oceanSenseDataUnit={item.unit}
+                hideYAxisUnits
+                displayHistoricalMonthlyMean={false}
+                cardDataset="oceanSense"
+                cardColumnJustification="flex-start"
+                displayDownloadButton={false}
               />
-              <Grid
-                className={classes.chartWrapper}
-                container
-                justify="space-between"
-                item
-                spacing={1}
-              >
-                <Grid
-                  className={classnames(classes.chart, classes.largeChart)}
-                  item
-                >
-                  <Chart
-                    site={site}
-                    pickerStartDate={
-                      pickerStartDate || subtractFromDate(today, "week")
-                    }
-                    pickerEndDate={pickerEndDate || today}
-                    startDate={chartStartDate}
-                    endDate={chartEndDate}
-                    onStartDateChange={onPickerDateChange("start")}
-                    onEndDateChange={onPickerDateChange("end")}
-                    pickerErrored={pickerErrored}
-                    showDatePickers={false}
-                    oceanSenseData={item.data}
-                    oceanSenseDataUnit={item.unit}
-                    hideYAxisUnits
-                    displayHistoricalMonthlyMean={false}
-                  />
-                </Grid>
-                {!pickerErrored && (
-                  <Grid className={classes.card} item>
-                    <AnalysisCard
-                      dataset="oceanSense"
-                      pickerStartDate={
-                        pickerStartDate || subtractFromDate(today, "week")
-                      }
-                      pickerEndDate={pickerEndDate || today}
-                      chartStartDate={chartStartDate}
-                      chartEndDate={chartEndDate}
-                      depth={site.depth}
-                      oceanSenseData={item.data}
-                      oceanSenseUnit={item.unit}
-                      columnJustification="flex-start"
-                    />
-                  </Grid>
-                )}
-              </Grid>
             </Box>
           )
         )}
+      {hasSondeData &&
+        sortBy(
+          Object.entries(sondeData || {}),
+          ([key]) => getSondeConfig(snakeCase(key)).order
+        )
+          .filter(([, itemData]) => itemData?.length)
+          .map(([key, itemData]) => {
+            const { title, units, visibility } = getSondeConfig(snakeCase(key));
+
+            if (visibility === "admin") {
+              return null;
+            }
+
+            return (
+              <Box mt={4} key={key}>
+                <ChartWithCard
+                  id={key}
+                  range={range}
+                  onRangeChange={onRangeChange}
+                  disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                  chartTitle={title}
+                  timeSeriesDataRanges={timeSeriesDataRanges}
+                  timeZone={site.timezone}
+                  showRangeButtons={false}
+                  showAvailableRanges={false}
+                  chartWidth="large"
+                  site={site}
+                  pickerStartDate={
+                    pickerStartDate || subtractFromDate(today, "week")
+                  }
+                  pickerEndDate={pickerEndDate || today}
+                  chartStartDate={chartStartDate}
+                  chartEndDate={chartEndDate}
+                  onStartDateChange={onPickerDateChange("start")}
+                  onEndDateChange={onPickerDateChange("end")}
+                  isPickerErrored={pickerErrored}
+                  showDatePickers={false}
+                  oceanSenseData={itemData}
+                  oceanSenseDataUnit={units}
+                  hideYAxisUnits
+                  displayHistoricalMonthlyMean={false}
+                  cardDataset="oceanSense"
+                  cardColumnJustification="flex-start"
+                  displayDownloadButton={false}
+                />
+              </Box>
+            );
+          })}
     </Container>
   );
 };
 
-const styles = (theme: Theme) =>
-  createStyles({
-    chartWithRange: {
-      marginTop: theme.spacing(4),
-    },
-    chartWrapper: {
-      marginBottom: 20,
-      [theme.breakpoints.down("xs")]: {
-        marginBottom: 10,
-      },
-    },
-    button: {
-      width: "fit-content",
-    },
-    chart: {
-      [theme.breakpoints.down("sm")]: {
-        width: "100%",
-      },
-    },
-    largeChart: {
-      [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 230px)", // width of 100% minus the card with one column
-      },
-    },
-    mediumChart: {
-      [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 240px)", // width of 100% minus the card with two columns
-      },
-    },
-    smallChart: {
-      [theme.breakpoints.up("md")]: {
-        width: "calc(100% - 320px)", // width of 100% minus the card with three columns
-      },
-    },
-    card: {
-      width: "fit-content",
-      minWidth: 219,
-      [theme.breakpoints.down("sm")]: {
-        width: "inherit",
-        maxWidth: "fit-content",
-        margin: "0 auto",
-      },
-    },
-  });
+const useStyles = makeStyles((theme: Theme) => ({
+  chartWithRange: {
+    marginTop: theme.spacing(4),
+  },
+}));
 
-interface ChartWithCardIncomingProps {
+interface MultipleSensorsChartsProps {
   site: Site;
-  pointId: string | undefined;
+  pointId?: string;
   surveysFiltered: boolean;
   disableGutters: boolean;
   displayOceanSenseCharts?: boolean;
 }
 
-ChartWithCard.defaultProps = {
+MultipleSensorsCharts.defaultProps = {
+  pointId: undefined,
   displayOceanSenseCharts: true,
 };
 
-type ChartWithCardProps = ChartWithCardIncomingProps &
-  WithStyles<typeof styles>;
-
-export default withStyles(styles)(ChartWithCard);
+export default MultipleSensorsCharts;

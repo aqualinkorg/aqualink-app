@@ -1,4 +1,13 @@
-import { isNil, mapValues, mapKeys, camelCase, map, keyBy } from "lodash";
+import {
+  isNil,
+  mapValues,
+  mapKeys,
+  camelCase,
+  map,
+  keyBy,
+  pick,
+  some,
+} from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
 import siteServices from "../../services/siteServices";
@@ -8,6 +17,7 @@ import {
   DailyData,
   Metrics,
   MetricsKeys,
+  metricsKeysList,
   OceanSenseData,
   OceanSenseDataResponse,
   OceanSenseKeys,
@@ -20,6 +30,7 @@ import {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
+  TimeSeriesRange,
 } from "./types";
 
 export function getSiteNameAndRegion(site: Site) {
@@ -28,21 +39,24 @@ export function getSiteNameAndRegion(site: Site) {
   return { name, region };
 }
 
+export function siteHasSondeData(sondeDataRange?: TimeSeriesRange) {
+  return some(sondeDataRange, (range) => Boolean(range?.length));
+}
+
 export const constructTableData = (list: Site[]): TableRow[] => {
   return list.map((value, key) => {
     const {
       dhw,
       satelliteTemperature,
-      weeklyAlert,
+      tempWeeklyAlert,
       bottomTemperature,
       topTemperature,
       sstAnomaly,
     } = value.collectionData || {};
 
     const { maxMonthlyMean } = value;
-    const { name: locationName = "", region = "" } = getSiteNameAndRegion(
-      value
-    );
+    const { name: locationName = "", region = "" } =
+      getSiteNameAndRegion(value);
 
     return {
       locationName,
@@ -58,14 +72,17 @@ export const constructTableData = (list: Site[]): TableRow[] => {
       tableData: {
         id: key,
       },
-      alert: `${weeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
-      alertLevel: isNil(weeklyAlert) ? null : weeklyAlert,
+      alert: `${tempWeeklyAlert || 0},${longDHW(isNil(dhw) ? null : dhw)}`,
+      alertLevel: isNil(tempWeeklyAlert) ? null : tempWeeklyAlert,
     };
   });
 };
 
 const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
-  mapKeys(data, (_, key) => camelCase(key)) as Record<Metrics, T[]>;
+  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Record<
+    Metrics,
+    T[]
+  >;
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse
@@ -116,8 +133,9 @@ const attachTimeSeries = (
     mapValues(previousSensorData, (previousMetricData, metric) =>
       attachData(
         direction,
-        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries],
-        previousMetricData
+        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries] ||
+          [],
+        previousMetricData || []
       )
     )
   );

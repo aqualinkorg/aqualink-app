@@ -117,43 +117,48 @@ export interface DataRange {
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
 
-// The API sends HOBO data with the following snake_case keys.
+// The API sends time series data with the following snake_case keys.
 // We need to create a new type with the same keys but in camelCase
-// TODO: Combine these two types when we upgrade typescript to V4.1
-// as described in https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
-export type MetricsKeys =
-  | "alert"
-  | "dhw"
-  | "satellite_temperature"
-  | "top_temperature"
-  | "bottom_temperature"
-  | "sst_anomaly"
-  | "significant_wave_height"
-  | "wave_mean_period"
-  | "wave_mean_direction"
-  | "wind_speed"
-  | "wind_direction"
-  | "weekly_alert";
+export const metricsKeysList = [
+  "dhw",
+  "satellite_temperature",
+  "top_temperature",
+  "bottom_temperature",
+  "sst_anomaly",
+  "significant_wave_height",
+  "temp_alert",
+  "temp_weekly_alert",
+  "wave_mean_period",
+  "wave_mean_direction",
+  "wind_speed",
+  "wind_direction",
+  "odo_concentration",
+  "cholorophyll_concentration",
+  "ph",
+  "salinity",
+  "turbidity",
+] as const;
 
-export type Metrics =
-  | "alert"
-  | "dhw"
-  | "satelliteTemperature"
-  | "topTemperature"
-  | "bottomTemperature"
-  | "sstAnomaly"
-  | "significantWaveHeight"
-  | "waveMeanPeriod"
-  | "waveMeanDirection"
-  | "windSpeed"
-  | "windDirection"
-  | "weeklyAlert";
+export type MetricsKeys = typeof metricsKeysList[number];
 
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs";
+// This recursive type converts string literals from snake_case to camelCase.
+// It splits the input string into three parts: P1, P2 and P3.
+// For example, the string "temp_weekly_alert" is split to:
+// P1 = temp, P2 = w, P3 = eekly_alert.
+// Then, applies Lowercase P1 as is, applies Uppercase to P2, and then recursively applies Camelcase to P3.
+// After that, it concatenates these 3 results.
+type CamelCase<S extends string> =
+  S extends `${infer P1}_${infer P2}${infer P3}`
+    ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
+    : Lowercase<S>;
 
-export type TimeSeries = Record<Metrics, SofarValue[]>;
+export type Metrics = CamelCase<MetricsKeys>;
 
-export type TimeSeriesRange = Record<Metrics, DataRange[]>;
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
+
+export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
+
+export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
 
 export type TimeSeriesDataResponse = Record<
   Sources,
@@ -167,7 +172,7 @@ export type TimeSeriesDataRangeResponse = Record<
   Record<MetricsKeys, DataRange[]>
 >;
 
-export type TimeSeriesDataRange = Record<Sources, TimeSeriesRange>;
+export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;
 
 export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
 

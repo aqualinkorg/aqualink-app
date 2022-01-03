@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
@@ -10,7 +11,7 @@ import { Survey } from '../src/surveys/surveys.entity';
 import { SurveyMedia } from '../src/surveys/survey-media.entity';
 import { GoogleCloudService } from '../src/google-cloud/google-cloud.service';
 import { Sources } from '../src/sites/sources.entity';
-import { uploadHoboData } from '../src/utils/upload-hobo-data';
+import { uploadHoboData } from '../src/utils/uploads/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 

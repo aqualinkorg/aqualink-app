@@ -27,8 +27,8 @@ async function run(siteId: number, days: number) {
   });
 }
 
-export const backfillSiteData = (siteId: number, days: number = 90) => {
+export const backfillSiteData = async (siteId: number, days: number = 90) => {
   logger.log(`Starting backfill data for site ${siteId}`);
-  run(siteId, days);
+  await run(siteId, days);
   logger.log(`Finished backfill data for site ${siteId}`);
 };

@@ -3,14 +3,13 @@
 exports[`renders as expected 1`] = `
 <div>
   <div
-    class="MuiGrid-root makeStyles-chip-1 makeStyles-chip-6 MuiGrid-item"
+    class="MuiGrid-root makeStyles-chip-1 makeStyles-chip-7 MuiGrid-item"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
     >
-      <a
-        class="makeStyles-link-4"
-        href="/"
+      <mock-button
+        classname="makeStyles-button-6"
       >
         <div
           class="makeStyles-circle-3"
@@ -20,7 +19,7 @@ exports[`renders as expected 1`] = `
         >
           LIVE
         </mock-typography>
-      </a>
+      </mock-button>
     </div>
   </div>
 </div>

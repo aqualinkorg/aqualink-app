@@ -68,11 +68,8 @@ const Homepage = ({ classes }: HomepageProps) => {
   const dispatch = useDispatch();
   const siteOnMap = useSelector(siteOnMapSelector);
 
-  const {
-    initialZoom,
-    initialSiteId,
-    initialCenter,
-  }: MapQueryParams = useQuery();
+  const { initialZoom, initialSiteId, initialCenter }: MapQueryParams =
+    useQuery();
 
   useEffect(() => {
     dispatch(sitesRequest());

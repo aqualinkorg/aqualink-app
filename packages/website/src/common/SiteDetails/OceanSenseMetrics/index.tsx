@@ -126,7 +126,6 @@ const OceanSenseMetrics = ({ classes }: OceanSenseMetricsProps) => {
             timeText="Last data received"
             relativeTime={relativeTime}
             imageText="VIEWBLUE"
-            image={null}
             live={false}
             frequency="hourly"
           />

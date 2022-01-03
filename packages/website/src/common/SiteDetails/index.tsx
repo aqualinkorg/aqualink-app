@@ -1,4 +1,4 @@
-import React, { ElementType } from "react";
+import React from "react";
 import {
   createStyles,
   Grid,
@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -29,11 +30,19 @@ import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
+import {
+  siteTimeSeriesDataRangeLoadingSelector,
+  siteTimeSeriesDataRangeSelector,
+} from "../../store/Sites/selectedSiteSlice";
+import LoadingCard from "./LoadingCard";
+import WaterSamplingCard from "./WaterSampling";
+import { siteHasSondeData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   classes,
   site,
   closestSurveyPointId,
+  closestSurveyPointName,
   featuredSurveyId,
   hasDailyData,
   surveys,
@@ -43,28 +52,38 @@ const SiteDetails = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = getMiddlePoint(site.polygon);
+  const { sonde: sondeDataRange } =
+    useSelector(siteTimeSeriesDataRangeSelector) || {};
+  const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
+  const hasSondeData = siteHasSondeData(sondeDataRange);
+
+  const ThirdCardComponent = () => {
+    if (rangesLoading) {
+      return <LoadingCard />;
+    }
+
+    if (hasSondeData) {
+      return (
+        <WaterSamplingCard
+          siteId={`${site.id}`}
+          pointId={closestSurveyPointId}
+          pointName={closestSurveyPointName}
+          sondeDataRange={sondeDataRange}
+        />
+      );
+    }
+
+    return (
+      <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
+    );
+  };
 
   const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
   const cards = [
-    {
-      Component: Satellite as ElementType,
-      props: { liveData, maxMonthlyMean },
-    },
-    {
-      Component: Sensor as ElementType,
-      props: { site },
-    },
-    {
-      Component: CoralBleaching as ElementType,
-      props: {
-        dailyData: sortByDate(dailyData, "date").slice(-1)[0],
-        maxMonthlyMean,
-      },
-    },
-    {
-      Component: Waves as ElementType,
-      props: { liveData },
-    },
+    <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
+    <Sensor site={site} />,
+    ThirdCardComponent(),
+    <Waves liveData={liveData} />,
   ];
 
   const mapTitleItems: Value[] = [
@@ -172,9 +191,9 @@ const SiteDetails = ({
             justify="space-between"
             spacing={2}
           >
-            {cards.map(({ Component, props }, index) => (
+            {cards.map((Component, index) => (
               <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-                <Component {...props} />
+                {Component}
               </Grid>
             ))}
           </Grid>
@@ -217,6 +236,7 @@ const styles = (theme: Theme) =>
 interface SiteDetailsIncomingProps {
   site: Site;
   closestSurveyPointId: string | undefined;
+  closestSurveyPointName?: string;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
@@ -228,6 +248,7 @@ SiteDetails.defaultProps = {
   featuredSurveyPoint: null,
   surveyDiveDate: null,
   featuredSurveyId: null,
+  closestSurveyPointName: undefined,
 };
 
 type SiteDetailsProps = SiteDetailsIncomingProps & WithStyles<typeof styles>;

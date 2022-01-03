@@ -35,19 +35,18 @@ const EditForm = ({
   const { latitude: draftLatitude, longitude: draftLongitude } =
     draftSite?.coordinates || {};
 
-  const setDraftSiteCoordinates = (field: "longitude" | "latitude") => (
-    value: string
-  ) => {
-    dispatch(
-      setSiteDraft({
-        ...draftSite,
-        coordinates: draftSite?.coordinates && {
-          ...draftSite.coordinates,
-          [field]: parseFloat(value),
-        },
-      })
-    );
-  };
+  const setDraftSiteCoordinates =
+    (field: "longitude" | "latitude") => (value: string) => {
+      dispatch(
+        setSiteDraft({
+          ...draftSite,
+          coordinates: draftSite?.coordinates && {
+            ...draftSite.coordinates,
+            [field]: parseFloat(value),
+          },
+        })
+      );
+    };
 
   // Form Fields
   const [siteName, setSiteName] = useFormField(

@@ -43,9 +43,8 @@ const Apply = ({ classes }: ApplyProps) => {
   const [formErrors, setFormErrors] = useState(Map<string, string>());
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
   const [signInDialogOpen, setSignInDialogOpen] = useState(false);
-  const [snackbarOpenFromDatabase, setSnackbarOpenFromDatabase] = useState(
-    false
-  );
+  const [snackbarOpenFromDatabase, setSnackbarOpenFromDatabase] =
+    useState(false);
   const [snackbarOpenFromCarto, setSnackbarOpenFromCarto] = useState(false);
   const [databaseSubmissionOk, setDatabaseSubmissionOk] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);

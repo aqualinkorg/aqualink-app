@@ -246,11 +246,11 @@ const styles = (theme: Theme) =>
       width: "auto",
     },
     lightFont: {
-      fontWeight: 300,
+      fontWeight: 200,
     },
     values: {
       // ensures metric numbers aren't too close together on mobile
-      margin: theme.spacing(0, 0.5),
+      margin: theme.spacing(0, 0.3),
     },
 
     extraPadding: {
