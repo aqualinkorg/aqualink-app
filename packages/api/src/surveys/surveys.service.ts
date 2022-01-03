@@ -154,13 +154,13 @@ export class SurveysService {
     );
     const surveyPointIdGroupedBySurveyId = this.groupBySurveyId(
       surveyPointsQuery,
-      'surveyPoint_id',
+      'survey_point_id',
     );
 
     const surveyImageGroupedBySurveyPointId = this.groupBySurveyId(
       surveyPointsQuery,
-      'surveyPoint_images',
-      'surveyPoint_id',
+      'surveypoint_images',
+      'survey_point_id',
     );
 
     return surveyHistoryQuery.map((survey) => {
