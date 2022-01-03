@@ -6,6 +6,7 @@ import SiteApplication from "./SiteApplication";
 import SitesList from "./SitesList";
 import Surveys from "../Surveys";
 import SurveyPoint from "./SurveyPoint";
+import UploadData from "./UploadData";
 
 const SiteRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const SiteRoutes = () => {
         path="/sites/:id/survey_details/:sid"
         render={(props) => <Surveys {...props} isView />}
       />
+      <Route exact path="/sites/:id/upload_data" component={UploadData} />
     </Switch>
   );
 };

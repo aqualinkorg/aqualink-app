@@ -149,6 +149,20 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                 EDIT SITE DETAILS
               </mock-button>
             </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <mock-button
+                classname="SiteNavBar-button-3"
+                color="primary"
+                component="[object Object]"
+                size="small"
+                to="/sites/1/upload_data"
+                variant="outlined"
+              >
+                UPLOAD DATA
+              </mock-button>
+            </div>
           </div>
         </div>
       </div>
