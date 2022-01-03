@@ -370,7 +370,7 @@ const MultipleSensorsCharts = ({
       />
       {hasSpotterData &&
         Object.entries(spotterConfig).map(([key, { title, unit, convert }]) => (
-          <Box mt={4}>
+          <Box mt={4} key={title}>
             <ChartWithCard
               id={key}
               range={range}
