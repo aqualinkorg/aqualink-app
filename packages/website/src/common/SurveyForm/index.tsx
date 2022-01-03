@@ -11,8 +11,11 @@ import {
   MenuItem,
   TextField,
   Button,
+  useTheme,
+  useMediaQuery,
 } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import EventIcon from "@material-ui/icons/Event";
 import { Link } from "react-router-dom";
 import {
   KeyboardDatePicker,
@@ -32,10 +35,14 @@ const SurveyForm = ({
   onSubmit,
   classes,
 }: SurveyFormProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
   const [weather, setWeather] =
     useState<SurveyData["weatherConditions"]>("calm");
+  const itemsSize = isMobile ? "small" : "medium";
+  const iconSize = isMobile ? "small" : "default";
 
   const { register, errors, handleSubmit, reset } = useForm({
     reValidateMode: "onSubmit",
@@ -79,36 +86,26 @@ const SurveyForm = ({
     <form onSubmit={handleSubmit(nativeSubmit)}>
       {/* Dive Date and Time */}
       <Grid
-        style={{ marginBottom: "1rem" }}
+        className={classes.section}
         container
         justify="space-between"
-        item
-        xs={12}
+        spacing={2}
       >
-        <Grid item xs={5}>
-          <Typography variant="h6">Dive Date</Typography>
-        </Grid>
-        <Grid item xs={5}>
-          <Typography variant="h6">Dive Local Time</Typography>
-        </Grid>
-      </Grid>
-      <Grid
-        style={{ marginBottom: "1rem" }}
-        container
-        justify="space-between"
-        item
-        xs={12}
-      >
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6" gutterBottom>
+            Dive Date
+          </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               className={classes.textField}
               disableToolbar
               format="MM/dd/yyyy"
+              fullWidth
               id="dive-date"
               name="diveDate"
               autoOk
               showTodayButton
+              size={itemsSize}
               helperText={errors?.diveDate?.message || ""}
               inputRef={register({
                 required: "This is a required field",
@@ -128,16 +125,22 @@ const SurveyForm = ({
                 className: classes.textField,
               }}
               inputVariant="outlined"
+              keyboardIcon={<EventIcon fontSize={iconSize} />}
             />
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6}>
+          <Typography variant="h6" gutterBottom>
+            Dive Local Time
+          </Typography>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardTimePicker
               className={classes.textField}
               id="time-picker"
               name="diveTime"
+              fullWidth
               autoOk
+              size={itemsSize}
               helperText={errors?.diveTime?.message || ""}
               inputRef={register({
                 required: "This is a required field",
@@ -156,24 +159,17 @@ const SurveyForm = ({
               InputProps={{
                 className: classes.textField,
               }}
-              keyboardIcon={<AccessTimeIcon />}
+              keyboardIcon={<AccessTimeIcon fontSize={iconSize} />}
               inputVariant="outlined"
             />
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      {/* Dive Location */}
-      <Grid style={{ marginBottom: "1rem" }} item xs={12}>
-        <Typography variant="h6">Dive Location</Typography>
-      </Grid>
-      <Grid
-        style={{ marginBottom: "2rem" }}
-        container
-        justify="space-between"
-        item
-        xs={12}
-      >
-        <Grid item xs={5}>
+      <Typography variant="h6" gutterBottom>
+        Dive Location
+      </Typography>
+      <Grid className={classes.section} container spacing={2}>
+        <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             inputProps={{ className: classes.textField }}
@@ -182,9 +178,10 @@ const SurveyForm = ({
             label="Latitude"
             value={diveLocation?.lat || ""}
             disabled
+            size={itemsSize}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             inputProps={{ className: classes.textField }}
@@ -193,14 +190,17 @@ const SurveyForm = ({
             label="Longitude"
             value={diveLocation?.lng || ""}
             disabled
+            size={itemsSize}
           />
         </Grid>
       </Grid>
       {/* Weather Conditions */}
-      <Grid style={{ marginBottom: "1rem" }} item xs={12}>
-        <Typography variant="h6">Weather Conditions</Typography>
+      <Grid item xs={12}>
+        <Typography variant="h6" gutterBottom>
+          Weather Conditions
+        </Typography>
       </Grid>
-      <Grid style={{ marginBottom: "2rem" }} item xs={12}>
+      <Grid className={classes.extraMargin} item xs={12}>
         <TextField
           className={classes.textField}
           select
@@ -211,6 +211,7 @@ const SurveyForm = ({
           placeholder="Select One"
           fullWidth
           variant="outlined"
+          size={itemsSize}
           inputProps={{
             className: classes.textField,
           }}
@@ -226,10 +227,12 @@ const SurveyForm = ({
           </MenuItem>
         </TextField>
       </Grid>
-      <Grid style={{ marginBottom: "1rem" }} item xs={12}>
-        <Typography variant="h6">Comments</Typography>
+      <Grid item xs={12}>
+        <Typography variant="h6" gutterBottom>
+          Comments
+        </Typography>
       </Grid>
-      <Grid style={{ marginBottom: "2rem" }} item xs={12}>
+      <Grid className={classes.extraMargin} item xs={12}>
         <TextField
           className={classes.textField}
           variant="outlined"
@@ -238,6 +241,7 @@ const SurveyForm = ({
           placeholder="Did anything stand out during this survey"
           inputRef={register()}
           fullWidth
+          size={itemsSize}
           inputProps={{
             className: classes.textField,
           }}
@@ -245,26 +249,41 @@ const SurveyForm = ({
       </Grid>
       {/* SUBMIT */}
       <Grid
-        style={{ marginBottom: "1rem" }}
+        className={classes.section}
         container
         justify="flex-end"
         item
-        xs={12}
+        spacing={2}
       >
-        <Grid style={{ marginRight: "3rem" }} item xs={2}>
-          <Link to={`/sites/${siteId}`} style={{ textDecoration: "none" }}>
-            <Button onClick={resetForm} color="primary" variant="outlined">
-              Cancel
-            </Button>
-          </Link>
+        <Grid item>
+          <Button
+            component={Link}
+            to={`/sites/${siteId}`}
+            onClick={resetForm}
+            color="primary"
+            variant="outlined"
+            size={itemsSize}
+          >
+            Cancel
+          </Button>
         </Grid>
-        <Grid style={{ marginRight: "3rem" }} item xs={2}>
-          <Button onClick={resetForm} color="primary" variant="outlined">
+        <Grid item>
+          <Button
+            size={itemsSize}
+            onClick={resetForm}
+            color="primary"
+            variant="outlined"
+          >
             Clear
           </Button>
         </Grid>
-        <Grid item xs={2}>
-          <Button type="submit" color="primary" variant="contained">
+        <Grid item>
+          <Button
+            size={itemsSize}
+            type="submit"
+            color="primary"
+            variant="contained"
+          >
             Next
           </Button>
         </Grid>
@@ -283,6 +302,12 @@ const styles = (theme: Theme) =>
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: theme.palette.primary.main,
       },
+    },
+    section: {
+      marginBottom: "1rem",
+    },
+    extraMargin: {
+      marginBottom: "2rem",
     },
   });
 

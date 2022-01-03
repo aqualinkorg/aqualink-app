@@ -35,9 +35,9 @@ commands:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v4-dependencies-{{ checksum "yarn.lock" }}
+            - v4.1-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v4-dependencies-
+            - v4.1-dependencies-
     
   update_test_cache_file:
     description: Concatenate all spec files into one file to be able to get their checksum
@@ -62,7 +62,7 @@ jobs:
             - packages/website/node_modules
             - packages/api/node_modules
             - /usr/local/share/.cache/yarn/v4/
-          key: v4-dependencies-{{ checksum "yarn.lock" }}
+          key: v4.1-dependencies-{{ checksum "yarn.lock" }}
 
   test_and_lint:
     working_directory: *working_directory
