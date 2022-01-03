@@ -107,30 +107,20 @@ export const findClosestSurveyPoint = (
     sitePolygon.type === "Polygon"
       ? getMiddlePoint(sitePolygon)
       : sitePolygon.coordinates;
-  const distances = points
-    .filter((item) => item.polygon)
-    .map((point) => {
+
+  const closestPoint = minBy(
+    points.filter((item) => item.polygon),
+    (point) => {
       const polygon = point.polygon as Polygon | Point;
-      if (polygon.type === "Point") {
-        return {
-          pointId: point.id,
-          distance: radDistanceCalculator(
-            [siteLng, siteLat],
-            polygon.coordinates
-          ),
-        };
-      }
+      return radDistanceCalculator(
+        [siteLng, siteLat],
+        polygon.type === "Point" ? polygon.coordinates : getMiddlePoint(polygon)
+      );
+    }
+  );
 
-      return {
-        pointId: point.id,
-        distance: radDistanceCalculator(
-          [siteLng, siteLat],
-          getMiddlePoint(polygon)
-        ),
-      };
-    });
-
-  return minBy(distances, "distance")?.pointId;
+  // if there is no closestPoint - return the first one by id.
+  return closestPoint || minBy(points, "id");
 };
 
 const useMarkerStyles = makeStyles({

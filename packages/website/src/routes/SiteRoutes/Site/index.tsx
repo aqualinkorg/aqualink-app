@@ -114,11 +114,15 @@ const Site = ({ match, classes }: SiteProps) => {
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   );
 
-  const { id: featuredSurveyId, featuredSurveyMedia, diveDate } =
-    featuredMedia || {};
+  const {
+    id: featuredSurveyId,
+    featuredSurveyMedia,
+    diveDate,
+  } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
 
-  const closestSurveyPointId = findClosestSurveyPoint(polygon, surveyPoints);
+  const { id: closestSurveyPointId, name: closestSurveyPointName } =
+    findClosestSurveyPoint(polygon, surveyPoints) || {};
 
   const hasSpotterData = Boolean(liveData?.topTemperature);
 
@@ -200,6 +204,7 @@ const Site = ({ match, classes }: SiteProps) => {
               closestSurveyPointId={
                 closestSurveyPointId ? `${closestSurveyPointId}` : undefined
               }
+              closestSurveyPointName={closestSurveyPointName || undefined}
               featuredSurveyId={featuredSurveyId}
               hasDailyData={hasDailyData}
               surveys={surveyList}

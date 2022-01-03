@@ -199,10 +199,7 @@ export const surveyErrorSelector = (
 ): SelectedSurveyState["error"] => state.survey.selectedSurvey.error;
 
 export const { setDiveLocation } = surveyFormDraft.actions;
-export const {
-  setSelectedPoi,
-  clearSurvey,
-  setFeaturedImage,
-} = selectedSurvey.actions;
+export const { setSelectedPoi, clearSurvey, setFeaturedImage } =
+  selectedSurvey.actions;
 
 export default survey;

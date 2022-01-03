@@ -39,9 +39,8 @@ const SurveyForm = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const diveLocation = useSelector(diveLocationSelector);
   const [diveDateTime, setDiveDateTime] = useState<Date | null>(null);
-  const [weather, setWeather] = useState<SurveyData["weatherConditions"]>(
-    "calm"
-  );
+  const [weather, setWeather] =
+    useState<SurveyData["weatherConditions"]>("calm");
   const itemsSize = isMobile ? "small" : "medium";
   const iconSize = isMobile ? "small" : "default";
 

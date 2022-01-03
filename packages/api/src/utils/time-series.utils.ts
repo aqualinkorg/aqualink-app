@@ -73,42 +73,33 @@ export const getDataQuery = (
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
     : 'source.survey_point_id is NULL';
 
+  const mainQuery = timeSeriesRepository
+    .createQueryBuilder('time_series')
+    .select(hourly ? 'avg(value)' : 'value', 'value')
+    .addSelect('metric')
+    .addSelect('source.type', 'source')
+    .addSelect(
+      hourly ? "date_trunc('hour', timestamp)" : 'timestamp',
+      'timestamp',
+    )
+    .innerJoin(
+      'time_series.source',
+      'source',
+      `source.site_id = :siteId AND ${surveyPointCondition}`,
+      { siteId },
+    )
+    .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
+      metrics,
+    })
+    .andWhere(startDate ? 'timestamp >= :startDate' : '1=1', { startDate })
+    .andWhere(endDate ? 'timestamp <= :endDate' : '1=1', { endDate });
+
   return hourly
-    ? timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .select('avg(value)', 'value')
-        .addSelect('metric')
-        .addSelect('source.type', 'source')
-        .addSelect("date_trunc('hour', timestamp)", 'timestamp')
-        .innerJoin(
-          'time_series.source',
-          'source',
-          `source.site_id = :siteId AND ${surveyPointCondition}`,
-          { siteId },
-        )
-        .andWhere('metric IN (:...metrics)', { metrics })
-        .andWhere('timestamp >= :startDate', { startDate })
-        .andWhere('timestamp <= :endDate', { endDate })
+    ? mainQuery
         .groupBy("date_trunc('hour', timestamp), metric, source.type")
         .orderBy("date_trunc('hour', timestamp)", 'ASC')
         .getRawMany()
-    : timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .select('value')
-        .addSelect('metric')
-        .addSelect('timestamp')
-        .addSelect('source.type', 'source')
-        .innerJoin(
-          'time_series.source',
-          'source',
-          `source.site_id = :siteId AND ${surveyPointCondition}`,
-          { siteId },
-        )
-        .andWhere('metric IN (:...metrics)', { metrics })
-        .andWhere('timestamp >= :startDate', { startDate })
-        .andWhere('timestamp <= :endDate', { endDate })
-        .orderBy('timestamp', 'ASC')
-        .getRawMany();
+    : mainQuery.orderBy('timestamp', 'ASC').getRawMany();
 };
 
 export const getDataRangeQuery = (

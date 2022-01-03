@@ -56,7 +56,6 @@ const Bleaching = ({ dailyData, classes }: BleachingProps) => {
           <UpdateInfo
             relativeTime={relativeTime}
             timeText="Last data received"
-            image={null}
             imageText="NOAA CRW"
             live={false}
             frequency="daily"

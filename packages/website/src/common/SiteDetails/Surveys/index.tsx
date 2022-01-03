@@ -38,16 +38,13 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
   const pointOptions = site.surveyPoints;
-  const [
-    deleteSurveyPointDialogOpen,
-    setDeleteSurveyPointDialogOpen,
-  ] = useState<boolean>(false);
+  const [deleteSurveyPointDialogOpen, setDeleteSurveyPointDialogOpen] =
+    useState<boolean>(false);
   const [editSurveyPointNameDraft, seteditSurveyPointNameDraft] = useState<
     string | null
   >();
-  const [editSurveyPointNameLoading, seteditSurveyPointNameLoading] = useState<
-    boolean
-  >(false);
+  const [editSurveyPointNameLoading, seteditSurveyPointNameLoading] =
+    useState<boolean>(false);
   const [surveyPointToDelete, setSurveyPointToDelete] = useState<number | null>(
     null
   );
