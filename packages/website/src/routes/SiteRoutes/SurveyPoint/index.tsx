@@ -49,9 +49,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
 
   // Always scroll to top on first render
   useEffect(() => {
-    if (window) {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
     return () => {
       dispatch(clearTimeSeriesDataRange());
       dispatch(clearTimeSeriesData());
