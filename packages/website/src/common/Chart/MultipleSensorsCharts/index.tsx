@@ -91,8 +91,8 @@ const MultipleSensorsCharts = ({
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
     timeSeriesDataRanges?.hobo || {};
-  const [pickerEndDate, setPickerEndDate] = useState(initialEnd);
-  const [pickerStartDate, setPickerStartDate] = useState(initialStart);
+  const [pickerEndDate, setPickerEndDate] = useState<string>();
+  const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
@@ -148,19 +148,19 @@ const MultipleSensorsCharts = ({
         .tz(site.timezone || "UTC")
         .startOf("day")
         .toISOString();
-      if (!initialEnd) {
-        setPickerEndDate(
+
+      setPickerEndDate(
+        initialEnd ||
           utcToZonedTime(
             localizedMaxDate || today,
             site.timezone || "UTC"
           ).toISOString()
-        );
-      }
-      if (!initialStart) {
-        setPickerStartDate(
+      );
+
+      setPickerStartDate(
+        initialStart ||
           utcToZonedTime(pastThreeMonths, site.timezone || "UTC").toISOString()
-        );
-      }
+      );
     }
   }, [
     hoboBottomTemperatureRange,
