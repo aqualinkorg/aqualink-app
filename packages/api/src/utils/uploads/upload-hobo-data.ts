@@ -118,29 +118,27 @@ const poiQuery = (
     .getOne();
 };
 
-const castCsvValues = (
-  integerColumns: string[],
-  floatColumns: string[],
-  dateColumns: string[],
-) => (value: string, context: CastingContext) => {
-  if (!context.column) {
+const castCsvValues =
+  (integerColumns: string[], floatColumns: string[], dateColumns: string[]) =>
+  (value: string, context: CastingContext) => {
+    if (!context.column) {
+      return value;
+    }
+
+    if (integerColumns.includes(context.column.toString())) {
+      return parseInt(value, 10);
+    }
+
+    if (floatColumns.includes(context.column.toString())) {
+      return parseFloat(value);
+    }
+
+    if (dateColumns.includes(context.column.toString())) {
+      return new Date(value);
+    }
+
     return value;
-  }
-
-  if (integerColumns.includes(context.column.toString())) {
-    return parseInt(value, 10);
-  }
-
-  if (floatColumns.includes(context.column.toString())) {
-    return parseFloat(value);
-  }
-
-  if (dateColumns.includes(context.column.toString())) {
-    return new Date(value);
-  }
-
-  return value;
-};
+  };
 
 /**
  * Handle entity duplication because of spatial key constraint
