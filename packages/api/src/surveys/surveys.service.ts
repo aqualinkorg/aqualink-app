@@ -144,7 +144,7 @@ export class SurveysService {
       .select([
         'surveyMedia.surveyId',
         'surveyMedia.surveyPoint',
-        'array_agg(surveyMedia.url) surveyPoint_images',
+        'array_agg(surveyMedia.url) survey_point_images',
       ])
       .getRawMany();
 
@@ -159,7 +159,7 @@ export class SurveysService {
 
     const surveyImageGroupedBySurveyPointId = this.groupBySurveyId(
       surveyPointsQuery,
-      'surveypoint_images',
+      'survey_point_images',
       'survey_point_id',
     );
 
