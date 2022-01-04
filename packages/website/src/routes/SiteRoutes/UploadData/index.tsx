@@ -9,13 +9,16 @@ import Header from "./Header";
 const UploadData = ({ match }: MatchProps) => {
   const classes = useStyles();
   const { site, siteLoading } = useSiteRequest(match.params.id);
+  const loading = !site || siteLoading;
 
   return (
     <>
-      <NavBar searchLocation={false} loading={siteLoading} />
-      <Container className={classes.root}>
-        <Header site={site} />
-      </Container>
+      <NavBar searchLocation={false} loading={loading} />
+      {site && (
+        <Container className={classes.root}>
+          <Header site={site} />
+        </Container>
+      )}
     </>
   );
 };
