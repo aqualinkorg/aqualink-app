@@ -22,7 +22,7 @@ const SENSOR_TYPES: SelectOption[] = [
   { id: 1, name: "sonde", label: "Sonde data" },
 ];
 
-const Selectors = ({ site }: SelectorsProps) => {
+const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
   const classes = useStyles();
   const pointOptions = site.surveyPoints;
   const [selectedPointId, setSelectedPointId] = useState<number>();
@@ -146,6 +146,7 @@ const Selectors = ({ site }: SelectorsProps) => {
         </Grid>
         <Grid item>
           <Button
+            onClick={onCompletedSelection}
             disabled={isContinueDisabled}
             size="small"
             variant="outlined"
@@ -182,6 +183,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface SelectorsProps {
   site: Site;
+  onCompletedSelection: () => void;
 }
 
 export default Selectors;
