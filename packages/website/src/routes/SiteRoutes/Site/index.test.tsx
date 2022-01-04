@@ -125,21 +125,21 @@ describe("Site Detail Page", () => {
       url: "/sites/1",
     };
 
-    // elementEmpty = render(
-    //   <Provider store={emptyStore}>
-    //     <Router>
-    //       <Site match={mockMatch} location={{} as any} history={{} as any} />
-    //     </Router>
-    //   </Provider>
-    // ).container;
+    elementEmpty = render(
+      <Provider store={emptyStore}>
+        <Router>
+          <Site match={mockMatch} location={{} as any} history={{} as any} />
+        </Router>
+      </Provider>
+    ).container;
 
-    // elementFull = render(
-    //   <Provider store={fullStore}>
-    //     <Router>
-    //       <Site match={mockMatch} location={{} as any} history={{} as any} />
-    //     </Router>
-    //   </Provider>
-    // ).container;
+    elementFull = render(
+      <Provider store={fullStore}>
+        <Router>
+          <Site match={mockMatch} location={{} as any} history={{} as any} />
+        </Router>
+      </Provider>
+    ).container;
   });
 
   it("should render with given state from Redux store", () => {
