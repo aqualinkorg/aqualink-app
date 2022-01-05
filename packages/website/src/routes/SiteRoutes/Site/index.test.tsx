@@ -85,7 +85,7 @@ describe("Site Detail Page", () => {
         error: null,
       },
       user: {
-        // userInfo: mockUser,
+        userInfo: mockUser,
         error: null,
         loading: false,
       },
