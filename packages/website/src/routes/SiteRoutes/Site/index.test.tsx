@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable fp/no-mutation */
 import React from "react";
 import { Provider } from "react-redux";
@@ -79,7 +78,7 @@ describe("Site Detail Page", () => {
 
     const fullStore = mockStore({
       selectedSite: {
-        details: { ...mockSite },
+        details: mockSite,
         timeSeriesDataRange: mockHoboDataRange,
         loading: false,
         error: null,
