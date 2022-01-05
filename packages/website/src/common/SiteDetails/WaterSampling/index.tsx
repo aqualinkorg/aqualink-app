@@ -92,16 +92,20 @@ const WaterSamplingCard = ({
 
   useEffect(() => {
     const getCardData = async () => {
-      if (minDate && maxDate) {
-        const [data] = await timeSeriesRequest({
-          siteId,
-          pointId,
-          start: minDate,
-          end: maxDate,
-          metrics: METRICS,
-          hourly: true,
-        });
-        setSondeData(data?.sonde);
+      try {
+        if (minDate && maxDate) {
+          const [data] = await timeSeriesRequest({
+            siteId,
+            pointId,
+            start: minDate,
+            end: maxDate,
+            metrics: METRICS,
+            hourly: true,
+          });
+          setSondeData(data?.sonde);
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
 
