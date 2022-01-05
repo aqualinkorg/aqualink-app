@@ -104,7 +104,7 @@ describe("Site Detail Page", () => {
       },
       survey: {
         selectedSurvey: {
-          // details: mockSurvey,
+          details: mockSurvey,
         },
       },
       collection: {
@@ -126,13 +126,13 @@ describe("Site Detail Page", () => {
       url: "/sites/1",
     };
 
-    // elementEmpty = render(
-    //   <Provider store={emptyStore}>
-    //     <Router>
-    //       <Site match={mockMatch} location={{} as any} history={{} as any} />
-    //     </Router>
-    //   </Provider>
-    // ).container;
+    elementEmpty = render(
+      <Provider store={emptyStore}>
+        <Router>
+          <Site match={mockMatch} location={{} as any} history={{} as any} />
+        </Router>
+      </Provider>
+    ).container;
 
     elementFull = render(
       <Provider store={fullStore}>
