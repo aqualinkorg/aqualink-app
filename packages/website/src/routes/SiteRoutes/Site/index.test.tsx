@@ -108,7 +108,7 @@ describe("Site Detail Page", () => {
         },
       },
       collection: {
-        // details: mockCollection,
+        details: mockCollection,
         loading: false,
         error: null,
       },
