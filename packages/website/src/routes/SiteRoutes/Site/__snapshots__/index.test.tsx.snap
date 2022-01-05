@@ -3,7 +3,7 @@
 exports[`Site Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-65"
+    classname="NavBar-appBar-65 NavBar-appBarXs-67"
     color="primary"
     position="static"
   >
@@ -162,7 +162,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-4"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-sm-2 MuiGrid-grid-md-6"
         >
           <mock-box
             alignitems="center"
@@ -203,8 +203,57 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             </mock-link>
           </mock-box>
         </div>
+        <mock-hidden
+          xsdown="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
+          >
+            <div
+              class="Search-searchBar-79"
+            >
+              <div
+                class="Search-searchBarIcon-80"
+              >
+                <mock-iconbutton
+                  size="small"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </div>
+              <div
+                class="Search-searchBarText-81"
+              >
+                <div
+                  aria-expanded="false"
+                  class="MuiAutocomplete-root Search-searchBarInput-82 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  role="combobox"
+                >
+                  <mock-textfield
+                    disabled="false"
+                    fullwidth="true"
+                    id="location"
+                    inputlabelprops="[object Object]"
+                    inputprops="[object Object]"
+                    placeholder="Search"
+                    variant="outlined"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </mock-hidden>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-8"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-flex-end MuiGrid-grid-xs-7 MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
         >
           <mock-box
             alignitems="center"
@@ -305,6 +354,56 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             </mock-menu>
           </mock-box>
         </div>
+        <mock-hidden
+          smup="true"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            style="margin: 0px; padding-top: 0px;"
+          >
+            <div
+              class="Search-searchBar-79"
+            >
+              <div
+                class="Search-searchBarIcon-80"
+              >
+                <mock-iconbutton
+                  size="small"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    />
+                  </svg>
+                </mock-iconbutton>
+              </div>
+              <div
+                class="Search-searchBarText-81"
+              >
+                <div
+                  aria-expanded="false"
+                  class="MuiAutocomplete-root Search-searchBarInput-82 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  role="combobox"
+                >
+                  <mock-textfield
+                    disabled="false"
+                    fullwidth="true"
+                    id="location"
+                    inputlabelprops="[object Object]"
+                    inputprops="[object Object]"
+                    placeholder="Search"
+                    variant="outlined"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </mock-hidden>
       </div>
     </mock-toolbar>
   </mock-appbar>
@@ -768,16 +867,281 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
     </mock-card>
   </mock-dialog>
   <div
-    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
-    role="progressbar"
+    class="MuiContainer-root Site-noDataWrapper-64 MuiContainer-maxWidthLg"
   >
     <div
-      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
-    />
+      class="MuiCollapse-container MuiCollapse-hidden"
+      style="min-height: 0px;"
+    >
+      <div
+        class="MuiCollapse-wrapper"
+      >
+        <div
+          class="MuiCollapse-wrapperInner"
+        >
+          <div
+            class="MuiPaper-root MuiAlert-root MuiAlert-standardSuccess MuiPaper-elevation0"
+            role="alert"
+          >
+            <div
+              class="MuiAlert-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiAlert-message"
+            >
+              Something went wrong
+            </div>
+            <div
+              class="MuiAlert-action"
+            >
+              <mock-iconbutton
+                color="inherit"
+                size="small"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+              </mock-iconbutton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
-      class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
-    />
+      class="MuiGrid-root SiteNavBar-root-106 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
+        >
+          <div
+            class="MuiGrid-root SiteNavBar-headerButtonWrapper-109 MuiGrid-item"
+          >
+            <mock-iconbutton
+              aria-label="menu"
+              color="primary"
+              component="[object Object]"
+              edge="start"
+              to="/map"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+            </mock-iconbutton>
+          </div>
+          <div
+            class="MuiGrid-root SiteNavBar-headerWrapper-110 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+                >
+                  <div
+                    class="MuiGrid-root SiteNavBar-siteNameWrapper-111 MuiGrid-item"
+                  >
+                    <mock-typography
+                      variant="h4"
+                    >
+                      Hawaii
+                    </mock-typography>
+                  </div>
+                  <div
+                    class="MuiGrid-root SiteNavBar-headerButtonWrapper-109 MuiGrid-item"
+                  />
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-typography
+                  variant="h6"
+                >
+                  Managed by Some organization
+                </mock-typography>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <mock-typography
+                  variant="subtitle1"
+                >
+                  Last surveyed: Sep 10, 2020
+                </mock-typography>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mock-box
+      mt="1.3rem"
+    >
+      <div
+        class="MuiPaper-root MuiAlert-root MuiAlert-standardInfo MuiPaper-elevation0"
+        role="alert"
+      >
+        <div
+          class="MuiAlert-icon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="MuiAlert-message"
+        >
+          Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.
+        </div>
+      </div>
+    </mock-box>
+    <mock-box
+      mt="1.5rem"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <mock-box
+              classname="Title-root-120"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 1rem;"
+                >
+                  <mock-typography
+                    classname=""
+                    variant="subtitle2"
+                  >
+                    LAT: 0.000
+                  </mock-typography>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                  style="margin-right: 0px;"
+                >
+                  <mock-typography
+                    classname=""
+                    variant="subtitle2"
+                  >
+                    LONG: 0.000
+                  </mock-typography>
+                </div>
+              </div>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="CardWithTitle-container-118"
+            >
+              <mock-map
+                polygon="[object Object]"
+                siteid="1"
+                surveypoints=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="CardWithTitle-container-118"
+            >
+              <mock-featuredmedia
+                featuredimage=""
+                siteid="1"
+                surveyid="46"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </mock-box>
   </div>
+  <mock-appbar
+    classname="Footer-appBar-123"
+    position="static"
+  >
+    <mock-toolbar>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <mock-link
+            classname="Footer-navBarLink-124"
+            href="/map"
+          >
+            <mock-typography
+              color="textPrimary"
+              variant="h4"
+            >
+              Aqua
+            </mock-typography>
+            <mock-typography
+              style="color: rgb(138, 198, 222);"
+              variant="h4"
+            >
+              link
+            </mock-typography>
+          </mock-link>
+        </div>
+      </div>
+    </mock-toolbar>
+  </mock-appbar>
 </div>
 `;
 
