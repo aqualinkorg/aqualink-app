@@ -1,6 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import DefaultDropzone from "react-dropzone";
+import DefaultDropzone, {
+  DropzoneProps as DefaultDropzoneProps,
+} from "react-dropzone";
 import { makeStyles, Theme, Grid, Typography, Button } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { grey } from "@material-ui/core/colors";
@@ -12,11 +14,15 @@ const ACCEPTED_TYPES = [
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
 
-const DropZone = () => {
+const DropZone = ({ onFilesDrop }: DropZoneProps) => {
   const classes = useStyles();
 
   return (
-    <DefaultDropzone maxSize={MAX_SIZE_MB * 10 ** 6} accept={ACCEPTED_TYPES}>
+    <DefaultDropzone
+      maxSize={MAX_SIZE_MB * 10 ** 6}
+      accept={ACCEPTED_TYPES}
+      onDropAccepted={onFilesDrop}
+    >
       {({ getRootProps, getInputProps }) => (
         <Grid
           container
@@ -135,5 +141,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
   },
 }));
+
+interface DropZoneProps {
+  onFilesDrop: DefaultDropzoneProps["onDropAccepted"];
+}
 
 export default DropZone;
