@@ -80,7 +80,7 @@ describe("Site Detail Page", () => {
     const fullStore = mockStore({
       selectedSite: {
         // details: mockSite,
-        // timeSeriesDataRange: mockHoboDataRange,
+        timeSeriesDataRange: mockHoboDataRange,
         loading: false,
         error: null,
       },
