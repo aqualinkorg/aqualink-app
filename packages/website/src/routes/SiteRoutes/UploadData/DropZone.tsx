@@ -116,6 +116,14 @@ const useStyles = makeStyles((theme: Theme) => ({
       cursor: "pointer",
       backgroundColor: fade(theme.palette.primary.main, 0.15),
     },
+    transition: theme.transitions.create(
+      ["background-color", "box-shadow", "border"],
+      {
+        duration: "250ms",
+        delay: "0ms",
+        easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+      }
+    ),
   },
   bold: {
     fontWeight: 700,
