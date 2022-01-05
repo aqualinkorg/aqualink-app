@@ -79,36 +79,36 @@ describe("Site Detail Page", () => {
 
     const fullStore = mockStore({
       selectedSite: {
-        details: mockSite,
-        timeSeriesDataRange: mockHoboDataRange,
+        // details: mockSite,
+        // timeSeriesDataRange: mockHoboDataRange,
         loading: false,
         error: null,
       },
       user: {
-        userInfo: mockUser,
+        // userInfo: mockUser,
         error: null,
         loading: false,
       },
       homepage: {
-        siteOnMap: mockSite,
+        siteOnMap: null,
       },
       sitesList: {
-        list: [mockSite],
+        // list: [mockSite],
         loading: false,
         error: null,
       },
       surveyList: {
-        list: [mockSurvey],
+        list: [],
         loading: false,
         error: null,
       },
       survey: {
         selectedSurvey: {
-          details: mockSurvey,
+          // details: mockSurvey,
         },
       },
       collection: {
-        details: mockCollection,
+        // details: mockCollection,
         loading: false,
         error: null,
       },
