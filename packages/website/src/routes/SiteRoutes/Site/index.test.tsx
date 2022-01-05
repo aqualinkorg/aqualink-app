@@ -98,7 +98,7 @@ describe("Site Detail Page", () => {
         error: null,
       },
       surveyList: {
-        list: [],
+        list: [mockSurvey],
         loading: false,
         error: null,
       },
