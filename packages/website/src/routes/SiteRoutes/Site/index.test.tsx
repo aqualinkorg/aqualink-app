@@ -93,7 +93,7 @@ describe("Site Detail Page", () => {
         siteOnMap: null,
       },
       sitesList: {
-        // list: [mockSite],
+        list: [mockSite],
         loading: false,
         error: null,
       },
