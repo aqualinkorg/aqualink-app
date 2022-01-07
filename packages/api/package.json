@@ -100,7 +100,7 @@
     "rxjs": "^6.5.4",
     "swagger-ui-express": "^4.1.6",
     "ts-exif-parser": "^0.2.1",
-    "typeorm": "^0.2.25",
+    "typeorm": "^0.2.41",
     "typeorm-naming-strategies": "^1.1.0"
   },
   "devDependencies": {

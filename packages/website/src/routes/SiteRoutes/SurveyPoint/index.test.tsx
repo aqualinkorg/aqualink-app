@@ -14,6 +14,8 @@ import { mockCollection } from "../../../mocks/mockCollection";
 
 jest.mock("./InfoCard/Map", () => "Mock-Map");
 
+window.scrollTo = jest.fn();
+
 const mockMatch = {
   isExact: true,
   params: {

@@ -8,7 +8,7 @@ references:
 executors:
   default:
     docker:
-      - image: node:12
+      - image: node:16
         environment:
           DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
           TEST_DATABASE_URL: postgres://postgres:CHANGE-ME@postgres:5432/postgres
@@ -35,10 +35,10 @@ commands:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v4.1-dependencies-{{ checksum "yarn.lock" }}
+            - v5-dependencies-{{ checksum "yarn.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v4.1-dependencies-
-    
+            - v5-dependencies-
+  
   update_test_cache_file:
     description: Concatenate all spec files into one file to be able to get their checksum
     steps:
@@ -62,7 +62,7 @@ jobs:
             - packages/website/node_modules
             - packages/api/node_modules
             - /usr/local/share/.cache/yarn/v4/
-          key: v4.1-dependencies-{{ checksum "yarn.lock" }}
+          key: v5-dependencies-{{ checksum "yarn.lock" }}
 
   test_and_lint:
     working_directory: *working_directory
