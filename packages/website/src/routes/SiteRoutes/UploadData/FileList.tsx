@@ -14,11 +14,18 @@ import {
 import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
 import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
 
+import { plural } from "../../../helpers/stringUtils";
+
 const FileList = ({ files, onFileDelete }: FileListProps) => {
   const classes = useStyles();
 
   return (
     <Grid container spacing={2} className={classes.root}>
+      <Grid item xs={12}>
+        <Typography gutterBottom variant="h6">
+          {files.length} {plural(files.length, "file")} to be uploaded
+        </Typography>
+      </Grid>
       {files.map((file) => (
         <Grid item key={file.name} lg={4} md={6} xs={12}>
           <Card variant="outlined">
@@ -65,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   cardHeader: {
-    maxWidth: "calc(100% - 40px - 48px)",
+    maxWidth: "calc(100% - 40px - 48px)", // Full width minus the two icons (file icon and delete icon)
   },
   cardHeaderTitle: {
     overflow: "hidden",
