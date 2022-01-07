@@ -13,6 +13,8 @@ import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
 
 const mockStore = configureStore([]);
 
+window.scrollTo = jest.fn();
+
 jest.mock("../../../common/SiteDetails/Map", () => "Mock-Map");
 jest.mock(
   "../../../common/SiteDetails/FeaturedMedia",
