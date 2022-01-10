@@ -104,23 +104,25 @@ export class TimeSeriesService {
 
   async uploadData(
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
-    path: string,
+    paths: string[],
   ) {
     const { siteId, surveyPointId } = surveyPointDataRangeDto;
-    await uploadSondeData(
-      path,
-      siteId.toString(),
-      surveyPointId.toString(),
-      'sonde',
-      {
-        siteRepository: this.siteRepository,
-        sourcesRepository: this.sourcesRepository,
-        surveyPointRepository: this.surveyPointRepository,
-        timeSeriesRepository: this.timeSeriesRepository,
-      },
-    );
+    paths.forEach(async (path) => {
+      await uploadSondeData(
+        path,
+        siteId.toString(),
+        surveyPointId.toString(),
+        'sonde',
+        {
+          siteRepository: this.siteRepository,
+          sourcesRepository: this.sourcesRepository,
+          surveyPointRepository: this.surveyPointRepository,
+          timeSeriesRepository: this.timeSeriesRepository,
+        },
+      );
 
-    // Remove file once its processing is over
-    unlinkSync(path);
+      // Remove file once its processing is over
+      unlinkSync(path);
+    });
   }
 }

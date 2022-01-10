@@ -8,9 +8,10 @@ import {
   DefaultValuePipe,
   Post,
   UseInterceptors,
-  UploadedFile,
+  UseGuards,
+  UploadedFiles,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -23,6 +24,9 @@ import {
   ApiTimeSeriesResponse,
 } from '../docs/api-time-series-response';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
+import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
+import { AdminLevel } from '../users/users.entity';
+import { Auth } from '../auth/auth.decorator';
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -121,19 +125,21 @@ export class TimeSeriesController {
   }
 
   @ApiOperation({ summary: 'Upload time series data' })
+  @UseGuards(IsSiteAdminGuard)
+  @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
   @Post('sites/:siteId/site-survey-points/:surveyPointId/upload')
   @UseInterceptors(
-    FileInterceptor('file', {
+    FilesInterceptor('files', 10, {
       dest: './upload',
     }),
   )
   uploadTimeSeriesData(
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles() files: Express.Multer.File[],
   ) {
     return this.timeSeriesService.uploadData(
       surveyPointDataRangeDto,
-      `./upload/${file.filename}`,
+      files.map((file) => `./upload/${file.filename}`),
     );
   }
 }
