@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { Container, makeStyles, Theme, Button, Box } from "@material-ui/core";
 import { RouteComponentProps } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
 import { uniqBy } from "lodash";
@@ -36,7 +36,18 @@ const UploadData = ({ match }: MatchProps) => {
           <Selectors site={site} onCompletedSelection={onCompletedSelection} />
           {isSelectionCompleted && <DropZone onFilesDrop={onFilesDrop} />}
           {files.length > 0 && (
-            <FileList files={files} onFileDelete={onFileDelete} />
+            <>
+              <FileList files={files} onFileDelete={onFileDelete} />
+              <Box mt={2} display="flex">
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  className={classes.uploadButton}
+                >
+                  UPLOAD FILES
+                </Button>
+              </Box>
+            </>
           )}
         </Container>
       )}
@@ -48,6 +59,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
+  },
+  uploadButton: {
+    marginLeft: "auto",
   },
 }));
 

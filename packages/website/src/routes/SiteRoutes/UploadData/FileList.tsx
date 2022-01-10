@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  Button,
   Card,
-  CardActions,
   CardHeader,
   Grid,
   IconButton,
@@ -50,16 +48,6 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
               }
               avatar={<FileIcon className={classes.fileIcon} />}
             />
-            <CardActions>
-              <Button
-                className={classes.uploadButton}
-                size="small"
-                variant="outlined"
-                color="primary"
-              >
-                Upload File
-              </Button>
-            </CardActions>
           </Card>
         </Grid>
       ))}
@@ -79,9 +67,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
-  },
-  uploadButton: {
-    marginLeft: "auto",
   },
   fileIcon: {
     color: theme.palette.text.secondary,
