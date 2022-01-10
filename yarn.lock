@@ -4120,6 +4120,11 @@
   dependencies:
     "@types/express" "*"
 
+"@types/node-xlsx@^0.15.3":
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/@types/node-xlsx/-/node-xlsx-0.15.3.tgz#675e5f91868b6c76c0bd3234fb84e4b55b807b1c"
+  integrity sha512-6UAa+t9eR3AZzRanZWGNUV8MoXwVpXQHMqCMdK8PNPwTy+G3kYHP+2KkTI+39vXETNb6krRijL+zWzmFrlfLjw==
+
 "@types/node@*", "@types/node@>= 8":
   version "14.6.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.4.tgz#a145cc0bb14ef9c4777361b7bbafa5cf8e3acb5a"

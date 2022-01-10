@@ -1,4 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
 import { Injectable, Logger } from '@nestjs/common';
 import { SiteDataDto } from './dto/site-data.dto';
@@ -13,6 +14,10 @@ import {
   getDataRangeQuery,
   groupByMetricAndSource,
 } from '../utils/time-series.utils';
+import { Site } from '../sites/sites.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
+import { Sources } from '../sites/sources.entity';
+import { uploadSondeData } from '../utils/uploads/upload-sonde-data';
 
 @Injectable()
 export class TimeSeriesService {
@@ -21,6 +26,15 @@ export class TimeSeriesService {
   constructor(
     @InjectRepository(TimeSeries)
     private timeSeriesRepository: Repository<TimeSeries>,
+
+    @InjectRepository(Site)
+    private siteRepository: Repository<Site>,
+
+    @InjectRepository(SiteSurveyPoint)
+    private surveyPointRepository: Repository<SiteSurveyPoint>,
+
+    @InjectRepository(Sources)
+    private sourcesRepository: Repository<Sources>,
   ) {}
 
   async findSurveyPointData(
@@ -86,5 +100,27 @@ export class TimeSeriesService {
     const data = await getDataRangeQuery(this.timeSeriesRepository, siteId);
 
     return groupByMetricAndSource(data);
+  }
+
+  async uploadData(
+    surveyPointDataRangeDto: SurveyPointDataRangeDto,
+    path: string,
+  ) {
+    const { siteId, surveyPointId } = surveyPointDataRangeDto;
+    await uploadSondeData(
+      path,
+      siteId.toString(),
+      surveyPointId.toString(),
+      'sonde',
+      {
+        siteRepository: this.siteRepository,
+        sourcesRepository: this.sourcesRepository,
+        surveyPointRepository: this.surveyPointRepository,
+        timeSeriesRepository: this.timeSeriesRepository,
+      },
+    );
+
+    // Remove file once its processing is over
+    unlinkSync(path);
   }
 }

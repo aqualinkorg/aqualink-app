@@ -6,7 +6,11 @@ import {
   ParseBoolPipe,
   ParseArrayPipe,
   DefaultValuePipe,
+  Post,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -114,5 +118,22 @@ export class TimeSeriesController {
   @Get('sites/:siteId/range')
   findSiteDataRange(@Param() siteDataRangeDto: SiteDataRangeDto) {
     return this.timeSeriesService.findSiteDataRange(siteDataRangeDto);
+  }
+
+  @ApiOperation({ summary: 'Upload time series data' })
+  @Post('sites/:siteId/site-survey-points/:surveyPointId/upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './upload',
+    }),
+  )
+  uploadTimeSeriesData(
+    @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.timeSeriesService.uploadData(
+      surveyPointDataRangeDto,
+      `./upload/${file.filename}`,
+    );
   }
 }

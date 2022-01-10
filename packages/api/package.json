@@ -72,6 +72,7 @@
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "^7.0.0",
     "@types/bluebird": "^3.5.32",
+    "@types/node-xlsx": "^0.15.3",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "bluebird": "^3.7.2",
