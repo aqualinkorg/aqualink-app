@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -18,6 +18,7 @@ import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Sources } from '../sites/sources.entity';
 import { uploadSondeData } from '../utils/uploads/upload-sonde-data';
+import { SourceType } from '../sites/schemas/source-type.enum';
 
 @Injectable()
 export class TimeSeriesService {
@@ -104,25 +105,36 @@ export class TimeSeriesService {
 
   async uploadData(
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
+    sensor: SourceType,
     paths: string[],
   ) {
-    const { siteId, surveyPointId } = surveyPointDataRangeDto;
-    paths.forEach(async (path) => {
-      await uploadSondeData(
-        path,
-        siteId.toString(),
-        surveyPointId.toString(),
-        'sonde',
-        {
-          siteRepository: this.siteRepository,
-          sourcesRepository: this.sourcesRepository,
-          surveyPointRepository: this.surveyPointRepository,
-          timeSeriesRepository: this.timeSeriesRepository,
-        },
+    if (!sensor) {
+      throw new BadRequestException(
+        `Field 'sensor' is required and must have one of the following values: ${Object.values(
+          SourceType,
+        ).join(', ')}`,
       );
+    }
 
-      // Remove file once its processing is over
-      unlinkSync(path);
-    });
+    const { siteId, surveyPointId } = surveyPointDataRangeDto;
+    if (sensor === 'sonde') {
+      paths.forEach(async (path) => {
+        await uploadSondeData(
+          path,
+          siteId.toString(),
+          surveyPointId.toString(),
+          'sonde',
+          {
+            siteRepository: this.siteRepository,
+            sourcesRepository: this.sourcesRepository,
+            surveyPointRepository: this.surveyPointRepository,
+            timeSeriesRepository: this.timeSeriesRepository,
+          },
+        );
+
+        // Remove file once its processing is over
+        unlinkSync(path);
+      });
+    }
   }
 }

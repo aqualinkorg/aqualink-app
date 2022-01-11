@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UseGuards,
   UploadedFiles,
+  Body,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -27,6 +28,7 @@ import { ParseDatePipe } from '../pipes/parse-date.pipe';
 import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
+import { SourceType } from '../sites/schemas/source-type.enum';
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -136,9 +138,11 @@ export class TimeSeriesController {
   uploadTimeSeriesData(
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
     @UploadedFiles() files: Express.Multer.File[],
+    @Body('sensor') sensor: SourceType,
   ) {
     return this.timeSeriesService.uploadData(
       surveyPointDataRangeDto,
+      sensor,
       files.map((file) => `./upload/${file.filename}`),
     );
   }

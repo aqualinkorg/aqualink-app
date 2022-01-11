@@ -14,4 +14,18 @@ const uploadMedia = (
     responseType: "text",
   });
 
-export default { uploadMedia };
+const uploadTimeSeriesData = (
+  formdData: FormData,
+  siteId: number,
+  pointId: number,
+  token?: string | null
+) =>
+  requests.send({
+    method: "POST",
+    url: `time-series/sites/${siteId}/site-survey-points/${pointId}/upload`,
+    data: formdData,
+    token,
+    contentType: "multipart/form-data",
+  });
+
+export default { uploadMedia, uploadTimeSeriesData };

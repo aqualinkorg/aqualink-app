@@ -8,9 +8,10 @@ import {
   Typography,
   TextFieldProps,
   Button,
+  Chip,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Site } from "../../../store/Sites/types";
+import { Site, Sources } from "../../../store/Sites/types";
 
 interface SelectOption {
   id: number;
@@ -18,24 +19,33 @@ interface SelectOption {
   label?: string;
 }
 
-const SENSOR_TYPES: SelectOption[] = [
-  { id: 1, name: "sonde", label: "Sonde data" },
+type EnhancedSelectOption = SelectOption & { disabled?: boolean };
+
+const SENSOR_TYPES: EnhancedSelectOption[] = [
+  { id: 0, name: "sonde", label: "Sonde data" },
+  // TODO: Enable these options once the API can support various sensors data upload.
+  { id: 1, name: "spotter", label: "Spotter data", disabled: true },
+  { id: 2, name: "hobo", label: "HOBO data", disabled: true },
 ];
 
-const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
+const Selectors = ({
+  site,
+  onCompletedSelection,
+  onSensorChange,
+  onPointChange,
+}: SelectorsProps) => {
   const classes = useStyles();
   const pointOptions = site.surveyPoints;
-  const [selectedPointId, setSelectedPointId] = useState<number>();
-  const [selectedSensorId, setSelectedSensorId] = useState<number>();
-  const selectedPointIndex = pointOptions.findIndex(
-    ({ id }) => id === selectedPointId
-  );
-  const hasSelectedPoint = selectedPointIndex !== -1;
+  const [selectedPointIndex, setSelectedPointIndex] = useState<number>();
+  const [selectedSensorIndex, setSelectedSensorIndex] = useState<number>();
 
-  const selectedSensorIndex = SENSOR_TYPES.findIndex(
-    ({ id }) => id === selectedSensorId
-  );
-  const hasSelectedSensor = selectedSensorIndex !== -1;
+  const pointSelectorValue =
+    typeof selectedPointIndex === "number" ? selectedPointIndex : "";
+  const sensorSelectorValue =
+    typeof selectedSensorIndex === "number" ? selectedSensorIndex : "";
+
+  const hasSelectedPoint = typeof selectedPointIndex === "number";
+  const hasSelectedSensor = typeof selectedSensorIndex === "number";
 
   const isContinueDisabled = !hasSelectedPoint || !hasSelectedSensor;
 
@@ -54,10 +64,15 @@ const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
     },
   };
 
-  const OptionsList = <T extends SelectOption>(options: T[]) =>
-    options.map(({ id, name, label }) =>
+  const OptionsList = <T extends EnhancedSelectOption>(options: T[]) =>
+    options.map(({ id, name, label, disabled }, index) =>
       name ? (
-        <MenuItem key={id} value={id} className={classes.menuItem}>
+        <MenuItem
+          disabled={disabled}
+          key={id}
+          value={index}
+          className={classes.menuItem}
+        >
           <Typography
             title={label || name}
             className={classes.itemName}
@@ -65,6 +80,19 @@ const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
           >
             {label || name}
           </Typography>
+          {disabled && (
+            <Chip
+              className={classes.comingSoonChip}
+              label={
+                <Typography
+                  className={classes.comingSoonChipText}
+                  variant="subtitle2"
+                >
+                  COMING SOON
+                </Typography>
+              }
+            />
+          )}
         </MenuItem>
       ) : null
     );
@@ -76,10 +104,12 @@ const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
 
       switch (type) {
         case "point":
-          setSelectedPointId(value);
+          setSelectedPointIndex(value);
+          onPointChange(pointOptions[value].id);
           break;
         case "sensor":
-          setSelectedSensorId(value);
+          setSelectedSensorIndex(value);
+          onSensorChange(SENSOR_TYPES[value].name as Sources);
           break;
         default:
           break;
@@ -106,7 +136,7 @@ const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
         <Grid item md={4} xs={12}>
           <TextField
             label="Survey point"
-            value={hasSelectedPoint ? pointOptions[selectedPointIndex].id : ""}
+            value={pointSelectorValue}
             onChange={handleChange("point")}
             variant="outlined"
             fullWidth
@@ -119,9 +149,7 @@ const Selectors = ({ site, onCompletedSelection }: SelectorsProps) => {
         <Grid item md={4} xs={12}>
           <TextField
             label="Sensor type"
-            value={
-              hasSelectedSensor ? SENSOR_TYPES[selectedSensorIndex].id : ""
-            }
+            value={sensorSelectorValue}
             onChange={handleChange("sensor")}
             variant="outlined"
             fullWidth
@@ -179,11 +207,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   menuPaper: {
     width: 240,
   },
+  comingSoonChip: {
+    marginLeft: theme.spacing(1),
+    height: 18,
+  },
+  comingSoonChipText: {
+    fontSize: 8,
+  },
 }));
 
 interface SelectorsProps {
   site: Site;
   onCompletedSelection: () => void;
+  onSensorChange: (sensor: Sources) => void;
+  onPointChange: (point: number) => void;
 }
 
 export default Selectors;
