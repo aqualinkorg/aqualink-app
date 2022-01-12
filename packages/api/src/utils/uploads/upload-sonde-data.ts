@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 import { chunk, isNaN } from 'lodash';
 import { Repository } from 'typeorm';
-import { Logger } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { Site } from '../../sites/sites.entity';
@@ -18,7 +18,8 @@ interface Repositories {
   sourcesRepository: Repository<Sources>;
 }
 
-const logger = new Logger('ParseSondeData');
+const logger = (disabled?: boolean) =>
+  disabled ? undefined : new Logger('ParseSondeData');
 
 const metricsMapping: Record<string, Metric> = {
   'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
@@ -122,25 +123,43 @@ export const uploadSondeData = async (
   surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
+  loggsDisabled?: boolean,
 ) => {
   // TODO
   // - Add foreign key constraint to sources on site_id
 
-  const sourceEntity = await repositories.sourcesRepository
-    .findOne({
-      relations: ['surveyPoint', 'site'],
-      where: {
-        site: { id: siteId },
-        surveyPoint: surveyPointId || null,
-        type: SourceType.SONDE,
-      },
-    })
-    .then((foundSource) => {
-      if (foundSource) {
-        return foundSource;
-      }
-      throw new Error('Source does not exist yet. Please create it manually.');
-    });
+  const maybeLogger = logger(loggsDisabled);
+
+  const site = await repositories.siteRepository.findOne({
+    where: { id: parseInt(siteId, 10) },
+  });
+
+  const surveyPoint = surveyPointId
+    ? await repositories.surveyPointRepository.findOne({
+        where: { id: parseInt(surveyPointId, 10) },
+      })
+    : undefined;
+
+  if (!site) {
+    throw new NotFoundException(`Site with id ${siteId} does not exist.`);
+  }
+
+  const existingEntity = await repositories.sourcesRepository.findOne({
+    relations: ['surveyPoint', 'site'],
+    where: {
+      site: { id: siteId },
+      surveyPoint: surveyPointId || null,
+      type: SourceType.SONDE,
+    },
+  });
+
+  const sourceEntity =
+    existingEntity ||
+    (await repositories.sourcesRepository.save({
+      type: SourceType.SONDE,
+      site,
+      surveyPoint,
+    }));
 
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
@@ -168,15 +187,15 @@ export const uploadSondeData = async (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        logger.log('Excluding incompatible value:');
-        logger.log(valueObject);
+        maybeLogger?.log('Excluding incompatible value:');
+        maybeLogger?.log(valueObject);
         return false;
       });
 
     // Data are to much to added with one bulk insert
     // So we need to break them in batches
     const batchSize = 1000;
-    logger.log(`Saving time series data in batches of ${batchSize}`);
+    maybeLogger?.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
       return repositories.timeSeriesRepository
         .createQueryBuilder('time_series')
@@ -189,8 +208,8 @@ export const uploadSondeData = async (
     // Return insert promises and print progress updates
     const actionsLength = inserts.length;
     await Bluebird.Promise.each(inserts, (props, idx) => {
-      logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+      maybeLogger?.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
-    logger.log('loading complete');
+    maybeLogger?.log('loading complete');
   }
 };

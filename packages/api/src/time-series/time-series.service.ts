@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
+import Bluebird from 'bluebird';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -117,8 +118,10 @@ export class TimeSeriesService {
     }
 
     const { siteId, surveyPointId } = surveyPointDataRangeDto;
-    if (sensor === 'sonde') {
-      paths.forEach(async (path) => {
+
+    await Bluebird.Promise.map(
+      paths,
+      async (path) => {
         await uploadSondeData(
           path,
           siteId.toString(),
@@ -130,11 +133,15 @@ export class TimeSeriesService {
             surveyPointRepository: this.surveyPointRepository,
             timeSeriesRepository: this.timeSeriesRepository,
           },
+          true,
         );
 
         // Remove file once its processing is over
         unlinkSync(path);
-      });
-    }
+      },
+      {
+        concurrency: 1,
+      },
+    );
   }
 }
