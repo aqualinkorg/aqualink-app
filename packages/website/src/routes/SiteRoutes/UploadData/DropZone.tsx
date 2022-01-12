@@ -14,7 +14,7 @@ const ACCEPTED_TYPES = [
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ];
 
-const DropZone = ({ onFilesDrop }: DropZoneProps) => {
+const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
   const classes = useStyles();
 
   return (
@@ -22,11 +22,16 @@ const DropZone = ({ onFilesDrop }: DropZoneProps) => {
       maxSize={MAX_SIZE_MB * 10 ** 6}
       accept={ACCEPTED_TYPES}
       onDropAccepted={onFilesDrop}
+      disabled={disabled}
     >
       {({ getRootProps, getInputProps }) => (
         <Grid
           container
-          {...getRootProps({ className: classes.root })}
+          {...getRootProps({
+            className: classNames(classes.root, {
+              [classes.disabled]: disabled,
+            }),
+          })}
           justify="center"
           direction="column"
           alignItems="center"
@@ -131,6 +136,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       }
     ),
   },
+  disabled: {
+    opacity: 0.5,
+    pointerEvents: "none",
+  },
   bold: {
     fontWeight: 700,
   },
@@ -143,6 +152,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface DropZoneProps {
+  disabled: boolean;
   onFilesDrop: DefaultDropzoneProps["onDropAccepted"];
 }
 

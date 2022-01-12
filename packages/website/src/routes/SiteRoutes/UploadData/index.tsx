@@ -88,7 +88,9 @@ const UploadData = ({ match }: MatchProps) => {
             onSensorChange={setSelectedSensor}
             onPointChange={setSelectedPoint}
           />
-          {isSelectionCompleted && <DropZone onFilesDrop={onFilesDrop} />}
+          {isSelectionCompleted && (
+            <DropZone disabled={uploadLoading} onFilesDrop={onFilesDrop} />
+          )}
           {files.length > 0 && (
             <>
               <FileList
