@@ -7,6 +7,7 @@ import { makeStyles, Theme, Grid, Typography, Button } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { grey } from "@material-ui/core/colors";
 
+const GREY_COLOR = grey[500];
 const MAX_SIZE_MB = 10;
 const ACCEPTED_TYPES = [
   "text/csv",
@@ -71,6 +72,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
               className={classes.button}
               color="primary"
               variant="outlined"
+              disabled={disabled}
             >
               Select Files
             </Button>
@@ -139,12 +141,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   disabled: {
     opacity: 0.5,
     pointerEvents: "none",
+    borderColor: GREY_COLOR,
+    color: GREY_COLOR,
+    backgroundColor: fade(GREY_COLOR, 0.1),
   },
   bold: {
     fontWeight: 700,
   },
   grey: {
-    color: grey[500],
+    color: GREY_COLOR,
   },
   button: {
     marginBottom: theme.spacing(2),

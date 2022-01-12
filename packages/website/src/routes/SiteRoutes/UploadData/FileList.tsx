@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   loading: {
-    // filter: "blur(1px)",
     opacity: 0.5,
     pointerEvents: "none",
     cursor: "default",
