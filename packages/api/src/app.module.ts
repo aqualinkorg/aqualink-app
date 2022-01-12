@@ -17,6 +17,7 @@ import { CollectionsModule } from './collections/collections.module';
 import { SensorsModule } from './sensors/sensors.module';
 import { AppController } from './app.controller';
 import { AuditModule } from './audit/audit.module';
+import { DataUploadsModule } from './data-uploads/data-uploads.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { AuditModule } from './audit/audit.module';
     CollectionsModule,
     SensorsModule,
     AuditModule,
+    DataUploadsModule,
   ],
   controllers: [AppController],
 })
