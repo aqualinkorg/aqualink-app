@@ -30,6 +30,9 @@ export class DataUploads {
   sensorType: SourceType;
 
   @Column({ nullable: false })
+  file: string;
+
+  @Column({ nullable: false })
   minDate: Date;
 
   @Column({ nullable: false })
