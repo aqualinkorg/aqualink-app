@@ -16,7 +16,7 @@ import { Sources } from "../../../store/Sites/types";
 import uploadServices from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import UploadButton from "./UploadButton";
-import StatusSnackbar from "./StatusSnackbar";
+import StatusSnackbar from "../../../common/StatusSnackbar";
 
 const UploadData = ({ match }: MatchProps) => {
   const classes = useStyles();
