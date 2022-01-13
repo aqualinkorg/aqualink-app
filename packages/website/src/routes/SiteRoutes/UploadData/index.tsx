@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, makeStyles, Theme } from "@material-ui/core";
-import { AlertProps } from "@material-ui/lab";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
 import { uniqBy } from "lodash";
 import { useSelector } from "react-redux";
@@ -18,8 +17,9 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import UploadButton from "./UploadButton";
 import StatusSnackbar from "../../../common/StatusSnackbar";
 
-const UploadData = ({ match }: MatchProps) => {
+const UploadData = ({ match, onSuccess }: MatchProps) => {
   const classes = useStyles();
+  const history = useHistory();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(match.params.id);
   const [isSelectionCompleted, setIsSelectionCompleted] = useState(false);
@@ -27,7 +27,7 @@ const UploadData = ({ match }: MatchProps) => {
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState<AlertProps["severity"]>();
+  const [isUploadErrored, setIsUploadErrored] = useState(false);
   const loading = !site || siteLoading;
 
   const onCompletedSelection = () => setIsSelectionCompleted(true);
@@ -39,11 +39,11 @@ const UploadData = ({ match }: MatchProps) => {
     acceptedFiles: File[]
   ) => setFiles(uniqBy([...files, ...acceptedFiles], "name"));
 
-  const onStatusSnackbarClose = () => setUploadStatus(undefined);
+  const onStatusSnackbarClose = () => setIsUploadErrored(false);
 
   const onUpload = async () => {
     setUploadLoading(true);
-    setUploadStatus(undefined);
+    setIsUploadErrored(false);
     try {
       if (
         typeof site?.id === "number" &&
@@ -59,24 +59,21 @@ const UploadData = ({ match }: MatchProps) => {
           selectedPoint,
           token
         );
-        setFiles([]);
-        setUploadStatus("success");
+        // eslint-disable-next-line fp/no-mutating-methods
+        history.push(`/sites/${site.id}`);
+        onSuccess();
       }
-    } catch (err) {
-      setUploadStatus("error");
-    } finally {
+    } catch {
       setUploadLoading(false);
+      setIsUploadErrored(true);
     }
   };
 
   return (
     <>
       <NavBar searchLocation={false} loading={loading} />
-      {uploadStatus && (
-        <StatusSnackbar
-          handleClose={onStatusSnackbarClose}
-          severity={uploadStatus}
-        />
+      {isUploadErrored && (
+        <StatusSnackbar handleClose={onStatusSnackbarClose} severity="error" />
       )}
 
       {site && (
@@ -114,6 +111,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface MatchProps extends RouteComponentProps<{ id: string }> {}
+interface MatchProps extends RouteComponentProps<{ id: string }> {
+  onSuccess: () => void;
+}
 
 export default UploadData;
