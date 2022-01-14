@@ -1,5 +1,6 @@
 import _, { omit } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
+import { BadRequestException } from '@nestjs/common';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Sources } from '../sites/sources.entity';
@@ -7,6 +8,7 @@ import { TimeSeriesValueDto } from '../time-series/dto/time-series-value.dto';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getTimeSeriesDefaultDates } from './dates';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 
 export interface TimeSeriesData {
   value: number;
@@ -183,4 +185,20 @@ export const insertSiteDataToTimeSeries = (
     )
     .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
     .execute();
+};
+
+export const surveyPointBelongsToSite = async (
+  siteId: number,
+  pointId: number,
+  surveyPointRepository: Repository<SiteSurveyPoint>,
+) => {
+  const surveyPoint = await surveyPointRepository.findOne({
+    where: { id: pointId },
+  });
+
+  if (surveyPoint?.siteId !== siteId) {
+    throw new BadRequestException(
+      `Survey point with id ${surveyPoint?.id} does not belong to site with id ${siteId}.`,
+    );
+  }
 };

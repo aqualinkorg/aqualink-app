@@ -14,6 +14,7 @@ import {
   getDataQuery,
   getDataRangeQuery,
   groupByMetricAndSource,
+  surveyPointBelongsToSite,
 } from '../utils/time-series.utils';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
@@ -91,6 +92,12 @@ export class TimeSeriesService {
   ) {
     const { siteId, surveyPointId } = surveyPointDataRangeDto;
 
+    await surveyPointBelongsToSite(
+      siteId,
+      surveyPointId,
+      this.surveyPointRepository,
+    );
+
     const data = await getDataRangeQuery(
       this.timeSeriesRepository,
       siteId,
@@ -122,6 +129,12 @@ export class TimeSeriesService {
     }
 
     const { siteId, surveyPointId } = surveyPointDataRangeDto;
+
+    await surveyPointBelongsToSite(
+      siteId,
+      surveyPointId,
+      this.surveyPointRepository,
+    );
 
     await Bluebird.Promise.map(
       files,
