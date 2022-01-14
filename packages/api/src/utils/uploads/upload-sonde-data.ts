@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, isNaN } from 'lodash';
+import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
 import { Repository } from 'typeorm';
 import { Logger, NotFoundException } from '@nestjs/common';
 import xlsx from 'node-xlsx';
@@ -10,12 +10,14 @@ import { Metric } from '../../time-series/metrics.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
+import { DataUploads } from '../../data-uploads/data-uploads.entity';
 
 interface Repositories {
   siteRepository: Repository<Site>;
   surveyPointRepository: Repository<SiteSurveyPoint>;
   timeSeriesRepository: Repository<TimeSeries>;
   sourcesRepository: Repository<Sources>;
+  dataUploadsRepository: Repository<DataUploads>;
 }
 
 const logger = (disabled?: boolean) =>
@@ -119,6 +121,7 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
 // Upload sonde data
 export const uploadSondeData = async (
   filePath: string,
+  fileName: string,
   siteId: string,
   surveyPointId: string | undefined,
   sondeType: string,
@@ -144,7 +147,7 @@ export const uploadSondeData = async (
     throw new NotFoundException(`Site with id ${siteId} does not exist.`);
   }
 
-  const existingEntity = await repositories.sourcesRepository.findOne({
+  const existingSourceEntity = await repositories.sourcesRepository.findOne({
     relations: ['surveyPoint', 'site'],
     where: {
       site: { id: siteId },
@@ -154,7 +157,7 @@ export const uploadSondeData = async (
   });
 
   const sourceEntity =
-    existingEntity ||
+    existingSourceEntity ||
     (await repositories.sourcesRepository.save({
       type: SourceType.SONDE,
       site,
@@ -192,6 +195,42 @@ export const uploadSondeData = async (
         return false;
       });
 
+    const minDate = get(
+      minBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
+
+    const maxDate = get(
+      maxBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
+
+    if (surveyPoint) {
+      const uploadExists = await repositories.dataUploadsRepository.findOne({
+        where: {
+          maxDate,
+          minDate,
+          site,
+          surveyPoint,
+          sensorType: SourceType.SONDE,
+        },
+      });
+
+      await repositories.dataUploadsRepository.save({
+        id: uploadExists?.id,
+        file: fileName,
+        maxDate,
+        minDate,
+        sensorType: SourceType.SONDE,
+        site,
+        surveyPoint,
+      });
+    }
+
     // Data are to much to added with one bulk insert
     // So we need to break them in batches
     const batchSize = 1000;
@@ -201,7 +240,9 @@ export const uploadSondeData = async (
         .createQueryBuilder('time_series')
         .insert()
         .values(batch)
-        .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
+        .onConflict(
+          'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+        )
         .execute();
     });
 

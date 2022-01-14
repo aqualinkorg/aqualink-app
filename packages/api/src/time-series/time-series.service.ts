@@ -20,6 +20,7 @@ import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity
 import { Sources } from '../sites/sources.entity';
 import { uploadSondeData } from '../utils/uploads/upload-sonde-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { DataUploads } from '../data-uploads/data-uploads.entity';
 
 @Injectable()
 export class TimeSeriesService {
@@ -37,6 +38,9 @@ export class TimeSeriesService {
 
     @InjectRepository(Sources)
     private sourcesRepository: Repository<Sources>,
+
+    @InjectRepository(DataUploads)
+    private dataUploadsRepository: Repository<DataUploads>,
   ) {}
 
   async findSurveyPointData(
@@ -107,7 +111,7 @@ export class TimeSeriesService {
   async uploadData(
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
     sensor: SourceType,
-    paths: string[],
+    files: Express.Multer.File[],
   ) {
     if (!sensor) {
       throw new BadRequestException(
@@ -120,10 +124,11 @@ export class TimeSeriesService {
     const { siteId, surveyPointId } = surveyPointDataRangeDto;
 
     await Bluebird.Promise.map(
-      paths,
-      async (path) => {
+      files,
+      async ({ path, originalname }) => {
         await uploadSondeData(
           path,
+          originalname,
           siteId.toString(),
           surveyPointId.toString(),
           'sonde',
@@ -132,6 +137,7 @@ export class TimeSeriesService {
             sourcesRepository: this.sourcesRepository,
             surveyPointRepository: this.surveyPointRepository,
             timeSeriesRepository: this.timeSeriesRepository,
+            dataUploadsRepository: this.dataUploadsRepository,
           },
           true,
         );

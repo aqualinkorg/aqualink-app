@@ -143,7 +143,7 @@ export class TimeSeriesController {
     return this.timeSeriesService.uploadData(
       surveyPointDataRangeDto,
       sensor,
-      files.map((file) => `./upload/${file.filename}`),
+      files,
     );
   }
 }

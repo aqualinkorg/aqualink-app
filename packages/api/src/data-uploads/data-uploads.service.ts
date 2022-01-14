@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
-import { SurveyPointDataDto } from '../time-series/dto/survey-point-data.dto';
+import { SiteDataRangeDto } from '../time-series/dto/site-data-range.dto';
 import { DataUploads } from './data-uploads.entity';
 
 @Injectable()
@@ -19,15 +19,16 @@ export class DataUploadsService {
     private surveyPointRepository: Repository<SiteSurveyPoint>,
   ) {}
 
-  async getDataUploads({ siteId, surveyPointId }: SurveyPointDataDto) {
-    const site = await this.sitesRepository.findOne({ where: { id: siteId } });
-    const surveyPoint = await this.surveyPointRepository.findOne({
-      where: { id: surveyPointId },
-    });
-    const uploads = await this.dataUploadsRepository.find({
-      where: { site, surveyPoint },
-    });
+  async getDataUploads({ siteId }: SiteDataRangeDto) {
+    const query = this.dataUploadsRepository
+      .createQueryBuilder('data_uploads')
+      .leftJoin('data_uploads.surveyPoint', 'site_survey_point')
+      .addSelect(['site_survey_point.id', 'site_survey_point.name'])
+      .orderBy('max_date', 'DESC')
+      .andWhere('data_uploads.site_id = :site', {
+        site: siteId,
+      });
 
-    return uploads;
+    return query.getMany();
   }
 }

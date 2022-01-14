@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Site } from '../sites/sites.entity';
@@ -18,12 +12,10 @@ export class DataUploads {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => Site, { onDelete: 'CASCADE' })
-  @JoinColumn()
+  @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
   site: Site;
 
-  @OneToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE' })
-  @JoinColumn()
+  @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: false })
   surveyPoint: SiteSurveyPoint;
 
   @Column({ type: 'enum', enum: SourceType })

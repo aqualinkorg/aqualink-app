@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -12,7 +13,13 @@ import { TimeSeriesService } from './time-series.service';
   controllers: [TimeSeriesController],
   providers: [TimeSeriesService, EntityExists],
   imports: [
-    TypeOrmModule.forFeature([TimeSeries, Site, SiteSurveyPoint, Sources]),
+    TypeOrmModule.forFeature([
+      TimeSeries,
+      Site,
+      SiteSurveyPoint,
+      Sources,
+      DataUploads,
+    ]),
   ],
 })
 export class TimeSeriesModule {}
