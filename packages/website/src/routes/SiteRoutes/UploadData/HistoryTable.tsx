@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(3),
   },
   table: {
-    minWidth: 960,
+    minWidth: 1080,
   },
   headCell: {
     backgroundColor: grey[200],
