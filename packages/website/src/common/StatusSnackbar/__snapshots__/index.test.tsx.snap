@@ -27,7 +27,7 @@ exports[`renders as expected 1`] = `
       <div
         class="MuiAlert-message"
       >
-        Successfully uploaded files.
+        All good!!
       </div>
       <div
         class="MuiAlert-action"

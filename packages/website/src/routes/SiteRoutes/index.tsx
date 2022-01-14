@@ -19,7 +19,11 @@ const SiteRoutes = () => {
   return (
     <>
       {isUploadSuccessSnackbarOpen && (
-        <StatusSnackbar severity="success" handleClose={handleSnackbarClose} />
+        <StatusSnackbar
+          message="Successfully uploaded files"
+          severity="success"
+          handleClose={handleSnackbarClose}
+        />
       )}
       <Switch>
         <Route exact path="/sites" component={SitesList} />

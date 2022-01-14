@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, makeStyles, Theme } from "@material-ui/core";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
@@ -10,12 +10,14 @@ import Header from "./Header";
 import Selectors from "./Selectors";
 import DropZone from "./DropZone";
 import FileList from "./FileList";
+import HistoryTable from "./HistoryTable";
+import StatusSnackbar from "../../../common/StatusSnackbar";
+import UploadButton from "./UploadButton";
 import { useSiteRequest } from "../../../hooks/useSiteRequest";
-import { Sources } from "../../../store/Sites/types";
+import { SiteUploadHistory, Sources } from "../../../store/Sites/types";
 import uploadServices from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
-import UploadButton from "./UploadButton";
-import StatusSnackbar from "../../../common/StatusSnackbar";
+import siteServices from "../../../services/siteServices";
 
 const UploadData = ({ match, onSuccess }: MatchProps) => {
   const classes = useStyles();
@@ -28,7 +30,10 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [isUploadErrored, setIsUploadErrored] = useState(false);
-  const loading = !site || siteLoading;
+  const [uploadHistory, setUploadHistory] = useState<SiteUploadHistory>([]);
+  const [isUploadHistoryLoading, setIsUploadHistoryLoading] = useState(false);
+  const [isUploadHistoryErrored, setIsUploadHistoryErrored] = useState(false);
+  const loading = !site || siteLoading || isUploadHistoryLoading;
 
   const onCompletedSelection = () => setIsSelectionCompleted(true);
 
@@ -40,6 +45,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   ) => setFiles(uniqBy([...files, ...acceptedFiles], "name"));
 
   const onStatusSnackbarClose = () => setIsUploadErrored(false);
+  const onHistorySnackbarClose = () => setIsUploadHistoryErrored(false);
 
   const onUpload = async () => {
     setUploadLoading(true);
@@ -69,11 +75,41 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
     }
   };
 
+  useEffect(() => {
+    const getUploadHistory = async () => {
+      setIsUploadHistoryLoading(true);
+      setIsUploadHistoryErrored(false);
+      try {
+        if (site) {
+          const { data } = await siteServices.getSiteUploadHistory(site.id);
+          setUploadHistory(data);
+        }
+      } catch {
+        setIsUploadHistoryErrored(true);
+      } finally {
+        setIsUploadHistoryLoading(false);
+      }
+    };
+
+    getUploadHistory();
+  }, [site]);
+
   return (
     <>
       <NavBar searchLocation={false} loading={loading} />
+      {isUploadHistoryErrored && (
+        <StatusSnackbar
+          message="Failed to fetch upload history"
+          handleClose={onHistorySnackbarClose}
+          severity="error"
+        />
+      )}
       {isUploadErrored && (
-        <StatusSnackbar handleClose={onStatusSnackbarClose} severity="error" />
+        <StatusSnackbar
+          message="Something went wrong"
+          handleClose={onStatusSnackbarClose}
+          severity="error"
+        />
       )}
 
       {site && (
@@ -98,6 +134,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
               <UploadButton loading={uploadLoading} onUpload={onUpload} />
             </>
           )}
+          <HistoryTable site={site} uploadHistory={uploadHistory} />
         </Container>
       )}
     </>

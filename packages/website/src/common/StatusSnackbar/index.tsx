@@ -2,18 +2,11 @@ import React from "react";
 import { Snackbar } from "@material-ui/core";
 import { Alert, AlertProps } from "@material-ui/lab";
 
-const alertMessage = (severity: StatusSnackbarProps["severity"]) => {
-  switch (severity) {
-    case "success":
-      return "Successfully uploaded files.";
-    case "error":
-      return "Something went wrong.";
-    default:
-      return null;
-  }
-};
-
-const StatusSnackbar = ({ severity, handleClose }: StatusSnackbarProps) => (
+const StatusSnackbar = ({
+  message,
+  severity,
+  handleClose,
+}: StatusSnackbarProps) => (
   <Snackbar
     open
     onClose={handleClose}
@@ -23,12 +16,13 @@ const StatusSnackbar = ({ severity, handleClose }: StatusSnackbarProps) => (
     }}
   >
     <Alert variant="filled" onClose={handleClose} severity={severity}>
-      {alertMessage(severity)}
+      {message}
     </Alert>
   </Snackbar>
 );
 
 interface StatusSnackbarProps {
+  message: string;
   severity: AlertProps["severity"];
   handleClose: AlertProps["onClose"];
 }

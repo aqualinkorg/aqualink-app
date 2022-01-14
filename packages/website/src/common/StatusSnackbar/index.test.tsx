@@ -5,7 +5,11 @@ import StatusSnackbar from ".";
 
 test("renders as expected", () => {
   const { container } = render(
-    <StatusSnackbar severity="success" handleClose={jest.fn()} />
+    <StatusSnackbar
+      message="All good!!"
+      severity="success"
+      handleClose={jest.fn()}
+    />
   );
   expect(container).toMatchSnapshot();
 });
