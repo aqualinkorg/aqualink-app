@@ -20,8 +20,7 @@ interface Repositories {
   dataUploadsRepository: Repository<DataUploads>;
 }
 
-const logger = (disabled?: boolean) =>
-  disabled ? undefined : new Logger('ParseSondeData');
+const logger = new Logger('ParseSondeData');
 
 const metricsMapping: Record<string, Metric> = {
   'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
@@ -126,12 +125,9 @@ export const uploadSondeData = async (
   surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
-  loggsDisabled?: boolean,
 ) => {
   // TODO
   // - Add foreign key constraint to sources on site_id
-
-  const maybeLogger = logger(loggsDisabled);
 
   const site = await repositories.siteRepository.findOne({
     where: { id: parseInt(siteId, 10) },
@@ -190,8 +186,8 @@ export const uploadSondeData = async (
         if (!isNaN(parseFloat(valueObject.value))) {
           return true;
         }
-        maybeLogger?.log('Excluding incompatible value:');
-        maybeLogger?.log(valueObject);
+        logger.log('Excluding incompatible value:');
+        logger.log(valueObject);
         return false;
       });
 
@@ -234,7 +230,7 @@ export const uploadSondeData = async (
     // Data are to much to added with one bulk insert
     // So we need to break them in batches
     const batchSize = 1000;
-    maybeLogger?.log(`Saving time series data in batches of ${batchSize}`);
+    logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
       return repositories.timeSeriesRepository
         .createQueryBuilder('time_series')
@@ -249,8 +245,8 @@ export const uploadSondeData = async (
     // Return insert promises and print progress updates
     const actionsLength = inserts.length;
     await Bluebird.Promise.each(inserts, (props, idx) => {
-      maybeLogger?.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
+      logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
-    maybeLogger?.log('loading complete');
+    logger.log('loading complete');
   }
 };

@@ -152,7 +152,6 @@ export class TimeSeriesService {
             timeSeriesRepository: this.timeSeriesRepository,
             dataUploadsRepository: this.dataUploadsRepository,
           },
-          true,
         );
 
         // Remove file once its processing is over
