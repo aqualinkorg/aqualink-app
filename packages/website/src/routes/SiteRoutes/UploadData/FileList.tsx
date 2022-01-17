@@ -15,7 +15,7 @@ import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
 import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
 import classNames from "classnames";
 
-import { plural } from "../../../helpers/stringUtils";
+import { pluralize } from "../../../helpers/stringUtils";
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 
@@ -26,7 +26,7 @@ const FileList = ({ files, loading, onFileDelete }: FileListProps) => {
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={12}>
         <Typography gutterBottom variant="h6">
-          {files.length} {plural(files.length, "file")}{" "}
+          {files.length} {pluralize(files.length, "file")}{" "}
           {loading ? "uploading" : "to be uploaded"}
         </Typography>
       </Grid>

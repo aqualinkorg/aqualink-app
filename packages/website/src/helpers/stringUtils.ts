@@ -1,2 +1,2 @@
-export const plural = (count: number, value: string) =>
-  count > 1 ? `${value}s` : value;
+export const pluralize = (count: number, value: string) =>
+  count !== 1 ? `${value}s` : value;

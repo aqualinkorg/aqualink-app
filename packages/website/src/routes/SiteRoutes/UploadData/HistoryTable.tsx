@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 
 import { Site, SiteUploadHistory } from "../../../store/Sites/types";
 import requests from "../../../helpers/requests";
+import { pluralize } from "../../../helpers/stringUtils";
 
 const tableHeaderTitles = [
   "NAME",
@@ -48,7 +49,7 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
   return (
     <div className={classes.root}>
       <Typography variant="h6" gutterBottom>
-        {nUploads} files previously uploaded
+        {nUploads} {pluralize(nUploads, "file")} previously uploaded
       </Typography>
       <TableContainer>
         <Table className={classes.table}>
