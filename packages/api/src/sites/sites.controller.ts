@@ -122,11 +122,11 @@ export class SitesController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Updates specified site' })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Put(':site_id')
+  @Put(':siteId')
   update(
-    @Param('site_id', ParseIntPipe) id: number,
+    @Param('siteId', ParseIntPipe) id: number,
     @Body() updateSiteDto: UpdateSiteDto,
   ): Promise<Site> {
     return this.sitesService.update(id, updateSiteDto);
@@ -135,10 +135,10 @@ export class SitesController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiOperation({ summary: 'Deletes specified site' })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Delete(':site_id')
-  delete(@Param('site_id', ParseIntPipe) id: number): Promise<void> {
+  @Delete(':siteId')
+  delete(@Param('siteId', ParseIntPipe) id: number): Promise<void> {
     return this.sitesService.delete(id);
   }
 
@@ -148,11 +148,11 @@ export class SitesController {
     'Site has no spotter or spotter is already deployed',
   )
   @ApiOperation({ summary: "Deploys site's spotter" })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Post(':site_id/deploy')
+  @Post(':siteId/deploy')
   deploySpotter(
-    @Param('site_id', ParseIntPipe) id: number,
+    @Param('siteId', ParseIntPipe) id: number,
     @Body() deploySpotterDto: DeploySpotterDto,
   ): Promise<void> {
     return this.sitesService.deploySpotter(id, deploySpotterDto);
@@ -164,11 +164,11 @@ export class SitesController {
     'Site has no spotter or start date is larger than end date',
   )
   @ApiOperation({ summary: "Adds exclusion dates to spotter's data" })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Post(':site_id/exclusion_dates')
+  @Post(':siteId/exclusion_dates')
   addExclusionDates(
-    @Param('site_id', ParseIntPipe) id: number,
+    @Param('siteId', ParseIntPipe) id: number,
     @Body() excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ): Promise<void> {
     return this.sitesService.addExclusionDates(id, excludeSpotterDatesDto);
@@ -178,11 +178,11 @@ export class SitesController {
   @ApiOperation({
     summary: "Returns exclusion dates of specified site's spotter",
   })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Get(':site_id/exclusion_dates')
+  @Get(':siteId/exclusion_dates')
   findExclusionDates(
-    @Param('site_id', ParseIntPipe) id: number,
+    @Param('siteId', ParseIntPipe) id: number,
   ): Promise<ExclusionDates[]> {
     return this.sitesService.getExclusionDates(id);
   }
