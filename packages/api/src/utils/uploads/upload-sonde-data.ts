@@ -191,6 +191,11 @@ export const uploadSondeData = async (
         return false;
       });
 
+    // We need a way to uniquely distinguish between different file uploads.
+    // File name is not a very safe way, since two files with the same name
+    // can have different data. A simple workaround is to look at the data
+    // [minDate, maxDate] range, and declare two file uploads as different
+    // if they have different such data ranges.
     const minDate = get(
       minBy(dataAstimeSeries, (item) =>
         new Date(get(item, 'timestamp')).getTime(),
@@ -206,6 +211,7 @@ export const uploadSondeData = async (
     );
 
     if (surveyPoint) {
+      // If the upload exists as described above, then update it, otherwise save it.
       const uploadExists = await repositories.dataUploadsRepository.findOne({
         where: {
           maxDate,
@@ -232,14 +238,17 @@ export const uploadSondeData = async (
     const batchSize = 1000;
     logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
-      return repositories.timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .insert()
-        .values(batch)
-        .onConflict(
-          'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
-        )
-        .execute();
+      return (
+        repositories.timeSeriesRepository
+          .createQueryBuilder('time_series')
+          .insert()
+          .values(batch)
+          // If there's a conflict, replace data with the new value.
+          .onConflict(
+            'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+          )
+          .execute()
+      );
     });
 
     // Return insert promises and print progress updates
