@@ -120,7 +120,7 @@ export class TimeSeriesService {
     sensor: SourceType,
     files: Express.Multer.File[],
   ) {
-    if (!sensor) {
+    if (!sensor || !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
         `Field 'sensor' is required and must have one of the following values: ${Object.values(
           SourceType,
