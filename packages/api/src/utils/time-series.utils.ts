@@ -196,7 +196,7 @@ export const surveyPointBelongsToSite = async (
     where: { id: pointId },
   });
 
-  if (surveyPoint?.siteId !== siteId) {
+  if (surveyPoint?.siteId?.toString() !== siteId.toString()) {
     throw new BadRequestException(
       `Survey point with id ${surveyPoint?.id} does not belong to site with id ${siteId}.`,
     );
