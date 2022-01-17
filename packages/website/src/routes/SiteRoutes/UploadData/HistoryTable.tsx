@@ -15,6 +15,7 @@ import {
 import { grey } from "@material-ui/core/colors";
 import { startCase } from "lodash";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import { Site, SiteUploadHistory } from "../../../store/Sites/types";
 import requests from "../../../helpers/requests";
@@ -38,6 +39,9 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
   const nUploads = uploadHistory.length;
   const classes = useStyles();
   const { timezone } = site;
+  const timezoneAbbreviation = timezone
+    ? moment().tz(timezone).zoneAbbr()
+    : undefined;
 
   const dataVizualizationButtonLink = (start: string, end: string) =>
     `/sites/${site.id}${requests.generateUrlQueryParams({ start, end })}`;
@@ -73,7 +77,7 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                   </TableCell>
                   <TableCell>
                     <Typography {...tableCellTypographyProps}>
-                      {timezone}
+                      {timezoneAbbreviation || timezone}
                     </Typography>
                   </TableCell>
                   <TableCell>
