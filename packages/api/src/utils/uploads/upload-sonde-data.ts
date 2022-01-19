@@ -96,19 +96,8 @@ const validateHeaders = (
     );
   }
 
-  // Check for possible duplicate header row.
-  const headerRow = workSheetData[headerRowIndex];
-  const duplicateHeaderRow = workSheetData
-    .slice(headerRowIndex + 1)
-    .find((row) => headerRow.some((header) => row.includes(header)));
-
-  if (duplicateHeaderRow) {
-    throw new BadRequestException(
-      `File '${file}' must contain only one header row`,
-    );
-  }
-
   // Check if the header row contains at least one of the metricsMapping keys.
+  const headerRow = workSheetData[headerRowIndex];
   const isHeaderRowValid = headerRow.some((header) => header in metricsMapping);
 
   if (!isHeaderRowValid) {
