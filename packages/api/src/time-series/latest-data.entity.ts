@@ -25,6 +25,7 @@ import { TimeSeries } from './time-series.entity';
       .addSelect('value')
       .addSelect('type', 'source')
       .addSelect('site_id')
+      .addSelect('survey_point_id')
       .from(TimeSeries, 'time_series')
       .innerJoin('sources', 'sources', 'sources.id = time_series.source_id')
       .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC');
