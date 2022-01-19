@@ -4,10 +4,11 @@ exports[`renders as expected 1`] = `
 <div>
   <mock-snackbar
     anchororigin="[object Object]"
+    classname="makeStyles-snackbar-1"
     open="true"
   >
     <div
-      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess MuiPaper-elevation0"
+      class="MuiPaper-root MuiAlert-root MuiAlert-filledSuccess makeStyles-alert-2 MuiPaper-elevation0"
       role="alert"
     >
       <div
@@ -25,7 +26,7 @@ exports[`renders as expected 1`] = `
         </svg>
       </div>
       <div
-        class="MuiAlert-message"
+        class="MuiAlert-message makeStyles-alertMessage-3 makeStyles-alertMessage-5"
       >
         All good!!
       </div>

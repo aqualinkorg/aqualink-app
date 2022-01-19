@@ -8,13 +8,33 @@ import Surveys from "../Surveys";
 import SurveyPoint from "./SurveyPoint";
 import UploadData from "./UploadData";
 import StatusSnackbar from "../../common/StatusSnackbar";
+import { UploadTimeSeriesResult } from "../../services/uploadServices";
+import DetailsDialog from "./UploadData/DetailsDialog";
 
 const SiteRoutes = () => {
   const [isUploadSuccessSnackbarOpen, setIsUploadSuccessSnackbarOpen] =
     useState(false);
+  const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
+    useState(false);
+  const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
+    []
+  );
+
+  const displayUploadDetails = uploadDetails.some(
+    (data) => data.ignoredHeaders.length > 0
+  );
 
   const handleSnackbarClose = () => setIsUploadSuccessSnackbarOpen(false);
-  const handleSnackbarOpen = () => setIsUploadSuccessSnackbarOpen(true);
+  const handleDetailsDialogOpen = () => {
+    setIsUploadDetailsDialogOpen(true);
+    setIsUploadSuccessSnackbarOpen(false);
+  };
+  const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
+
+  const onUploadSuccess = (data: UploadTimeSeriesResult[]) => {
+    setUploadDetails(data);
+    setIsUploadSuccessSnackbarOpen(true);
+  };
 
   return (
     <>
@@ -22,9 +42,16 @@ const SiteRoutes = () => {
         <StatusSnackbar
           message="Successfully uploaded files"
           severity="success"
+          furtherActionLabel="View details"
+          onFurtherActionTake={handleDetailsDialogOpen}
           handleClose={handleSnackbarClose}
         />
       )}
+      <DetailsDialog
+        details={uploadDetails}
+        open={displayUploadDetails && isUploadDetailsDialogOpen}
+        onClose={handleDetailsDialogClose}
+      />
       <Switch>
         <Route exact path="/sites" component={SitesList} />
         <Route exact path="/sites/:id" component={Site} />
@@ -48,7 +75,7 @@ const SiteRoutes = () => {
           exact
           path="/sites/:id/upload_data"
           render={(props) => (
-            <UploadData {...props} onSuccess={handleSnackbarOpen} />
+            <UploadData {...props} onSuccess={onUploadSuccess} />
           )}
         />
       </Switch>

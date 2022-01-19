@@ -15,7 +15,9 @@ import StatusSnackbar from "../../../common/StatusSnackbar";
 import UploadButton from "./UploadButton";
 import { useSiteRequest } from "../../../hooks/useSiteRequest";
 import { SiteUploadHistory, Sources } from "../../../store/Sites/types";
-import uploadServices from "../../../services/uploadServices";
+import uploadServices, {
+  UploadTimeSeriesResult,
+} from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import siteServices from "../../../services/siteServices";
 
@@ -29,7 +31,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [isUploadErrored, setIsUploadErrored] = useState(false);
+  const [uploadError, setUploadError] = useState<string>();
   const [uploadHistory, setUploadHistory] = useState<SiteUploadHistory>([]);
   const [isUploadHistoryLoading, setIsUploadHistoryLoading] = useState(false);
   const [isUploadHistoryErrored, setIsUploadHistoryErrored] = useState(false);
@@ -44,12 +46,12 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
     acceptedFiles: File[]
   ) => setFiles(uniqBy([...files, ...acceptedFiles], "name"));
 
-  const onStatusSnackbarClose = () => setIsUploadErrored(false);
+  const onStatusSnackbarClose = () => setUploadError(undefined);
   const onHistorySnackbarClose = () => setIsUploadHistoryErrored(false);
 
   const onUpload = async () => {
     setUploadLoading(true);
-    setIsUploadErrored(false);
+    setUploadError(undefined);
     try {
       if (
         typeof site?.id === "number" &&
@@ -59,19 +61,20 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
         const data = new FormData();
         files.forEach((file) => data.append("files", file));
         data.append("sensor", selectedSensor);
-        await uploadServices.uploadTimeSeriesData(
-          data,
-          site.id,
-          selectedPoint,
-          token
-        );
+        const { data: uploadResponse } =
+          await uploadServices.uploadTimeSeriesData(
+            data,
+            site.id,
+            selectedPoint,
+            token
+          );
         // eslint-disable-next-line fp/no-mutating-methods
         history.push(`/sites/${site.id}`);
-        onSuccess();
+        onSuccess(uploadResponse);
       }
-    } catch {
+    } catch (err) {
       setUploadLoading(false);
-      setIsUploadErrored(true);
+      setUploadError(err?.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -104,9 +107,9 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
           severity="error"
         />
       )}
-      {isUploadErrored && (
+      {uploadError && (
         <StatusSnackbar
-          message="Something went wrong"
+          message={uploadError}
           handleClose={onStatusSnackbarClose}
           severity="error"
         />
@@ -149,7 +152,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface MatchProps extends RouteComponentProps<{ id: string }> {
-  onSuccess: () => void;
+  onSuccess: (arg: UploadTimeSeriesResult[]) => void;
 }
 
 export default UploadData;

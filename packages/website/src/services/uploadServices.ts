@@ -1,5 +1,10 @@
 import requests from "../helpers/requests";
 
+export interface UploadTimeSeriesResult {
+  file: string;
+  ignoredHeaders: string[];
+}
+
 const uploadMedia = (
   formData: FormData,
   siteId: string,
@@ -20,7 +25,7 @@ const uploadTimeSeriesData = (
   pointId: number,
   token?: string | null
 ) =>
-  requests.send({
+  requests.send<UploadTimeSeriesResult[]>({
     method: "POST",
     url: `time-series/sites/${siteId}/site-survey-points/${pointId}/upload`,
     data: formdData,
