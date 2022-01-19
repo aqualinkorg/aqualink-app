@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
 import { Repository } from 'typeorm';
-import { Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Logger, NotFoundException } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { Site } from '../../sites/sites.entity';
@@ -76,6 +76,56 @@ const getTimestampFromExcelSerials = (
   date.setMinutes(Math.round(decimalHours * 60));
   date.setSeconds(seconds);
   return date;
+};
+
+const validateHeaders = (
+  file: string,
+  workSheetData: any[],
+  headerKeys: string[],
+) => {
+  // The header row must contain all header keys.
+  const headerRowIndex = workSheetData.findIndex((row) =>
+    headerKeys.every((header) => row.includes(header)),
+  );
+
+  if (headerRowIndex === -1) {
+    throw new BadRequestException(
+      `[${headerKeys.join(
+        ', ',
+      )}] must be included in the column headers for file '${file}'`,
+    );
+  }
+
+  // Check for possible duplicate header row.
+  const headerRow = workSheetData[headerRowIndex];
+  const duplicateHeaderRow = workSheetData
+    .slice(headerRowIndex + 1)
+    .find((row) => headerRow.some((header) => row.includes(header)));
+
+  if (duplicateHeaderRow) {
+    throw new BadRequestException(
+      `File '${file}' must contain only one header row`,
+    );
+  }
+
+  // Check if the header row contains at least one of the metricsMapping keys.
+  const isHeaderRowValid = headerRow.some((header) => header in metricsMapping);
+
+  if (!isHeaderRowValid) {
+    throw new BadRequestException(
+      `File '${file}' must contain at least one of the following columns: [${Object.keys(
+        metricsMapping,
+      ).join(', ')}]`,
+    );
+  }
+
+  const ignoredHeaders = headerRow.filter(
+    (header) =>
+      ![...headerKeys, ...Object.keys(metricsMapping)].includes(header) &&
+      header !== 'Site Name',
+  );
+
+  return ignoredHeaders as string[];
 };
 
 const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
@@ -163,7 +213,12 @@ export const uploadSondeData = async (
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
-    const results = findXLSXDataWithHeader(workSheetData, 'Chlorophyll RFU');
+    const ignoredHeaders = validateHeaders(fileName, workSheetData, [
+      'Date (MM/DD/YYYY)',
+      'Time (HH:mm:ss)',
+      'Time (Fract. Sec)',
+    ]);
+    const results = findXLSXDataWithHeader(workSheetData, 'Date (MM/DD/YYYY)');
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {
@@ -257,5 +312,9 @@ export const uploadSondeData = async (
       logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
     logger.log('loading complete');
+
+    return ignoredHeaders;
   }
+
+  return [];
 };

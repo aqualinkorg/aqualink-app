@@ -136,10 +136,10 @@ export class TimeSeriesService {
       this.surveyPointRepository,
     );
 
-    await Bluebird.Promise.map(
+    const uploadResponse = await Bluebird.Promise.map(
       files,
       async ({ path, originalname }) => {
-        await uploadSondeData(
+        const ignoredHeaders = await uploadSondeData(
           path,
           originalname,
           siteId.toString(),
@@ -156,10 +156,14 @@ export class TimeSeriesService {
 
         // Remove file once its processing is over
         unlinkSync(path);
+
+        return { file: originalname, ignoredHeaders };
       },
       {
         concurrency: 1,
       },
     );
+
+    return uploadResponse;
   }
 }
