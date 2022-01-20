@@ -25,7 +25,7 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
   const classes = useStyles();
 
   return (
-    <Dialog maxWidth="sm" fullWidth open={open} onClose={onClose}>
+    <Dialog maxWidth="md" fullWidth open={open} onClose={onClose}>
       <DialogTitle disableTypography className={classes.dialogTitle}>
         <Typography variant="h4">Upload Details</Typography>
         <IconButton className={classes.closeButton} onClick={onClose}>
@@ -34,8 +34,8 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <List>
-          {details.map(({ file, ignoredHeaders }, index) =>
-            ignoredHeaders.length > 0 ? (
+          {details.map(({ file, ignoredHeaders, alreadyExists }, index) =>
+            ignoredHeaders?.length || alreadyExists ? (
               // eslint-disable-next-line react/no-array-index-key
               <ListItem key={`${file}-${index}`}>
                 <ListItemAvatar>
@@ -44,11 +44,31 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primaryTypographyProps={{ color: "textSecondary" }}
                   primary={file}
-                  secondary={`These columns are not configured for import yet and were not uploaded: ${ignoredHeaders
-                    .map((header) => `"${header}"`)
-                    .join(", ")}`}
+                  primaryTypographyProps={{
+                    color: "textSecondary",
+                    variant: "h5",
+                  }}
+                  secondary={
+                    <>
+                      {alreadyExists && (
+                        <Typography variant="subtitle1">
+                          - There was a previous file upload with the same date
+                          range. All values were replaced.
+                        </Typography>
+                      )}
+                      {ignoredHeaders && ignoredHeaders.length > 0 && (
+                        <Typography variant="subtitle1">
+                          - These columns are not configured for import yet and
+                          were not uploaded:{" "}
+                          {ignoredHeaders
+                            .map((header) => `"${header}"`)
+                            .join(", ")}
+                          .
+                        </Typography>
+                      )}
+                    </>
+                  }
                 />
               </ListItem>
             ) : null

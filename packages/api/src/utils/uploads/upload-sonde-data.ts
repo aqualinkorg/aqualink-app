@@ -199,6 +199,9 @@ export const uploadSondeData = async (
       surveyPoint,
     }));
 
+  // A boolean that will determine if the upload already exists or not
+  let alreadyExists = false;
+
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
@@ -266,6 +269,9 @@ export const uploadSondeData = async (
         },
       });
 
+      // eslint-disable-next-line fp/no-mutation
+      alreadyExists = true;
+
       await repositories.dataUploadsRepository.save({
         id: uploadExists?.id,
         file: fileName,
@@ -302,8 +308,8 @@ export const uploadSondeData = async (
     });
     logger.log('loading complete');
 
-    return ignoredHeaders;
+    return { ignoredHeaders, alreadyExists };
   }
 
-  return [];
+  return {};
 };

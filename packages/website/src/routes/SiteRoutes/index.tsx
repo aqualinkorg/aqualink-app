@@ -8,48 +8,45 @@ import Surveys from "../Surveys";
 import SurveyPoint from "./SurveyPoint";
 import UploadData from "./UploadData";
 import StatusSnackbar from "../../common/StatusSnackbar";
+import UploadWarnings from "./UploadData/UploadWarnings";
 import { UploadTimeSeriesResult } from "../../services/uploadServices";
-import DetailsDialog from "./UploadData/DetailsDialog";
 
 const SiteRoutes = () => {
-  const [isUploadSuccessSnackbarOpen, setIsUploadSuccessSnackbarOpen] =
-    useState(false);
+  const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
     useState(false);
   const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
     []
   );
 
-  const displayUploadDetails = uploadDetails.some(
-    (data) => data.ignoredHeaders.length > 0
-  );
+  const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders?.length);
 
-  const handleSnackbarClose = () => setIsUploadSuccessSnackbarOpen(false);
+  const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
   const handleDetailsDialogOpen = () => {
     setIsUploadDetailsDialogOpen(true);
-    setIsUploadSuccessSnackbarOpen(false);
+    setIsUploadSnackbarOpen(false);
   };
   const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
 
   const onUploadSuccess = (data: UploadTimeSeriesResult[]) => {
     setUploadDetails(data);
-    setIsUploadSuccessSnackbarOpen(true);
+    setIsUploadSnackbarOpen(true);
   };
 
   return (
     <>
-      {isUploadSuccessSnackbarOpen && (
+      {isUploadSnackbarOpen && (
         <StatusSnackbar
           message="Successfully uploaded files"
-          severity="success"
+          severity={hasWarnings ? "warning" : "success"}
           furtherActionLabel="View details"
           onFurtherActionTake={handleDetailsDialogOpen}
           handleClose={handleSnackbarClose}
         />
       )}
-      <DetailsDialog
+      <UploadWarnings
         details={uploadDetails}
-        open={displayUploadDetails && isUploadDetailsDialogOpen}
+        open={hasWarnings && isUploadDetailsDialogOpen}
         onClose={handleDetailsDialogClose}
       />
       <Switch>
