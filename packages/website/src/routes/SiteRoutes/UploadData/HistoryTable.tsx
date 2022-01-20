@@ -103,7 +103,7 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                       variant="outlined"
                       color="primary"
                     >
-                      SEE DATA VIZUALIZATION
+                      SEE DATA VISUALIZATION
                     </Button>
                   </TableCell>
                 </TableRow>
