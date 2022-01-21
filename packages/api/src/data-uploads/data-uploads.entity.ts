@@ -24,6 +24,6 @@ export class DataUploads {
   @Column({ nullable: false })
   file: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   signature: string;
 }
