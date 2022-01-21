@@ -15,22 +15,20 @@ import { TimeSeries } from './time-series.entity';
 
 @ViewEntity({
   expression: (connection: Connection) => {
-    const subQuery = connection
-      .createQueryBuilder()
-      .select('DISTINCT ON (metric, source_id) metric', 'metric')
-      .addSelect('id')
-      .addSelect('timestamp')
-      .addSelect('value')
-      .addSelect('source_id')
-      .from(TimeSeries, 'time_series')
-      .orderBy('metric, source_id, timestamp', 'DESC');
-
     return connection
       .createQueryBuilder()
-      .from(() => subQuery, 'time_series')
+      .select(
+        'DISTINCT ON (metric, type, site_id, survey_point_id) time_series.id',
+      )
+      .addSelect('metric')
+      .addSelect('timestamp')
+      .addSelect('value')
+      .addSelect('type', 'source')
       .addSelect('site_id')
       .addSelect('survey_point_id')
-      .innerJoin('sources', 'source', 'source.id = time_series.source_id');
+      .from(TimeSeries, 'time_series')
+      .innerJoin('sources', 'sources', 'sources.id = time_series.source_id')
+      .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC');
   },
   materialized: true,
 })
