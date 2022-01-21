@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Metric } from '../../time-series/metrics.entity';
@@ -46,6 +47,32 @@ const metricsMapping: Record<string, Metric> = {
   'Temp °C': Metric.BOTTOM_TEMPERATURE,
   'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+};
+
+const ACCEPTED_FILE_TYPES = [
+  {
+    extension: 'xlsx',
+    mimeType:
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  },
+];
+
+export const fileFilter: MulterOptions['fileFilter'] = (
+  _,
+  { mimetype },
+  callback,
+) => {
+  if (!ACCEPTED_FILE_TYPES.map(({ mimeType }) => mimeType).includes(mimetype)) {
+    callback(
+      new BadRequestException(
+        `Only ${ACCEPTED_FILE_TYPES.map(
+          ({ extension }) => `.${extension}`,
+        ).join(', ')} files are accepted`,
+      ),
+      false,
+    );
+  }
+  callback(null, true);
 };
 
 function renameKeys(obj, newKeys) {

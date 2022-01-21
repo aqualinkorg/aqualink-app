@@ -10,9 +10,14 @@ import { grey } from "@material-ui/core/colors";
 const GREY_COLOR = grey[500];
 const MAX_SIZE_MB = 10;
 const ACCEPTED_TYPES = [
-  "text/csv",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  // TODO: Add these once our API supports them.
+  // { extension: "csv", mimeType: "text/csv" },
+  // { extension: "xls", mimeType: "application/vnd.ms-excel" },
+  {
+    extension: "xlsx",
+    mimeType:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  },
 ];
 
 const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
@@ -21,7 +26,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
   return (
     <DefaultDropzone
       maxSize={MAX_SIZE_MB * 10 ** 6}
-      accept={ACCEPTED_TYPES}
+      accept={ACCEPTED_TYPES.map(({ mimeType }) => mimeType)}
       onDropAccepted={onFilesDrop}
       disabled={disabled}
     >
@@ -101,7 +106,10 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
               display="block"
               align="center"
             >
-              Supported format: .csv, .xls, .xlsx
+              Supported format:{" "}
+              {ACCEPTED_TYPES.map(({ extension }) => `.${extension}`).join(
+                ", "
+              )}
             </Typography>
             <Typography
               className={classNames(classes.bold, classes.grey)}

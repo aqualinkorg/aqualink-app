@@ -29,6 +29,10 @@ import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { fileFilter } from '../utils/uploads/upload-sonde-data';
+
+const MAX_FILE_COUNT = 10;
+const MAX_FILE_SIZE_MB = 10;
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -131,8 +135,12 @@ export class TimeSeriesController {
   @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
   @Post('sites/:siteId/site-survey-points/:surveyPointId/upload')
   @UseInterceptors(
-    FilesInterceptor('files', 10, {
+    FilesInterceptor('files', MAX_FILE_COUNT, {
       dest: './upload',
+      fileFilter,
+      limits: {
+        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+      },
     }),
   )
   uploadTimeSeriesData(
