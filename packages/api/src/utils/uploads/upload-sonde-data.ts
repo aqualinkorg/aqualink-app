@@ -197,7 +197,7 @@ export const uploadSondeData = async (
   surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
-  failOnWarning: boolean,
+  failOnWarning?: boolean,
 ) => {
   // TODO
   // - Add foreign key constraint to sources on site_id

@@ -119,7 +119,7 @@ export class TimeSeriesService {
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
     sensor: SourceType,
     files: Express.Multer.File[],
-    failOnWarning: boolean,
+    failOnWarning?: boolean,
   ) {
     if (!sensor || !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
@@ -140,26 +140,27 @@ export class TimeSeriesService {
     const uploadResponse = await Bluebird.Promise.map(
       files,
       async ({ path, originalname }) => {
-        const ignoredHeaders = await uploadSondeData(
-          path,
-          originalname,
-          siteId.toString(),
-          surveyPointId.toString(),
-          'sonde',
-          {
-            siteRepository: this.siteRepository,
-            sourcesRepository: this.sourcesRepository,
-            surveyPointRepository: this.surveyPointRepository,
-            timeSeriesRepository: this.timeSeriesRepository,
-            dataUploadsRepository: this.dataUploadsRepository,
-          },
-          failOnWarning,
-        );
-
-        // Remove file once its processing is over
-        unlinkSync(path);
-
-        return { file: originalname, ignoredHeaders };
+        try {
+          const ignoredHeaders = await uploadSondeData(
+            path,
+            originalname,
+            siteId.toString(),
+            surveyPointId.toString(),
+            'sonde',
+            {
+              siteRepository: this.siteRepository,
+              sourcesRepository: this.sourcesRepository,
+              surveyPointRepository: this.surveyPointRepository,
+              timeSeriesRepository: this.timeSeriesRepository,
+              dataUploadsRepository: this.dataUploadsRepository,
+            },
+            failOnWarning,
+          );
+          return { file: originalname, ignoredHeaders };
+        } finally {
+          // Remove file once its processing is over
+          unlinkSync(path);
+        }
       },
       {
         concurrency: 1,
