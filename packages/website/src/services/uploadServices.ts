@@ -2,8 +2,7 @@ import requests from "../helpers/requests";
 
 export interface UploadTimeSeriesResult {
   file: string;
-  ignoredHeaders?: string[];
-  alreadyExists?: boolean;
+  ignoredHeaders: string[];
 }
 
 const uploadMedia = (

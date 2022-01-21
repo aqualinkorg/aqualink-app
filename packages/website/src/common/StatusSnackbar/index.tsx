@@ -3,6 +3,7 @@ import { Button, Snackbar, makeStyles, Theme } from "@material-ui/core";
 import { Alert, AlertProps } from "@material-ui/lab";
 
 const StatusSnackbar = ({
+  open,
   message,
   furtherActionLabel,
   severity,
@@ -11,10 +12,10 @@ const StatusSnackbar = ({
 }: StatusSnackbarProps) => {
   const classes = useStyles(!!message);
 
-  return (
+  return message ? (
     <Snackbar
       className={classes.snackbar}
-      open
+      open={open}
       onClose={handleClose}
       anchorOrigin={{
         vertical: "bottom",
@@ -40,7 +41,7 @@ const StatusSnackbar = ({
         )}
       </Alert>
     </Snackbar>
-  );
+  ) : null;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,7 +65,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface StatusSnackbarProps {
-  message: string;
+  open: boolean;
+  message?: string;
   furtherActionLabel?: string;
   severity: AlertProps["severity"];
   handleClose: AlertProps["onClose"];
@@ -73,6 +75,7 @@ interface StatusSnackbarProps {
 
 StatusSnackbar.defaultProps = {
   furtherActionLabel: undefined,
+  message: undefined,
   onFurtherActionTake: () => {},
 };
 

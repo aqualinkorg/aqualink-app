@@ -24,9 +24,6 @@ export class DataUploads {
   @Column({ nullable: false })
   file: string;
 
-  @Column({ nullable: false })
-  minDate: Date;
-
-  @Column({ nullable: false })
-  maxDate: Date;
+  @Column({ nullable: false, unique: true })
+  signature: string;
 }

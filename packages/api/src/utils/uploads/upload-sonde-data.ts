@@ -1,7 +1,13 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
+import { chunk, isNaN } from 'lodash';
+import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
-import { BadRequestException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { Site } from '../../sites/sites.entity';
@@ -90,9 +96,9 @@ const validateHeaders = (
 
   if (headerRowIndex === -1) {
     throw new BadRequestException(
-      `[${headerKeys.join(
+      `${file}: [${headerKeys.join(
         ', ',
-      )}] must be included in the column headers for file '${file}'`,
+      )}] must be included in the column headers`,
     );
   }
 
@@ -102,7 +108,7 @@ const validateHeaders = (
 
   if (!isHeaderRowValid) {
     throw new BadRequestException(
-      `File '${file}' must contain at least one of the following columns: [${Object.keys(
+      `${file}: File must contain at least one of the following columns: [${Object.keys(
         metricsMapping,
       ).join(', ')}]`,
     );
@@ -179,7 +185,7 @@ export const uploadSondeData = async (
     : undefined;
 
   if (!site) {
-    throw new NotFoundException(`Site with id ${siteId} does not exist.`);
+    throw new NotFoundException(`Site with id ${siteId} does not exist`);
   }
 
   const existingSourceEntity = await repositories.sourcesRepository.findOne({
@@ -198,9 +204,6 @@ export const uploadSondeData = async (
       site,
       surveyPoint,
     }));
-
-  // A boolean that will determine if the upload already exists or not
-  let alreadyExists = false;
 
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
@@ -238,45 +241,28 @@ export const uploadSondeData = async (
         return false;
       });
 
-    // We need a way to uniquely distinguish between different file uploads.
-    // File name is not a very safe way, since two files with the same name
-    // can have different data. A simple workaround is to look at the data
-    // [minDate, maxDate] range, and declare two file uploads as different
-    // if they have different such data ranges.
-    const minDate = get(
-      minBy(dataAstimeSeries, (item) =>
-        new Date(get(item, 'timestamp')).getTime(),
-      ),
-      'timestamp',
-    );
-
-    const maxDate = get(
-      maxBy(dataAstimeSeries, (item) =>
-        new Date(get(item, 'timestamp')).getTime(),
-      ),
-      'timestamp',
-    );
+    const signature = await md5Fle(filePath);
 
     if (surveyPoint) {
       // If the upload exists as described above, then update it, otherwise save it.
       const uploadExists = await repositories.dataUploadsRepository.findOne({
         where: {
-          maxDate,
-          minDate,
+          signature,
           site,
           surveyPoint,
           sensorType: SourceType.SONDE,
         },
       });
 
-      // eslint-disable-next-line fp/no-mutation
-      alreadyExists = true;
+      if (uploadExists) {
+        throw new ConflictException(
+          `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
+        );
+      }
 
       await repositories.dataUploadsRepository.save({
-        id: uploadExists?.id,
         file: fileName,
-        maxDate,
-        minDate,
+        signature,
         sensorType: SourceType.SONDE,
         site,
         surveyPoint,
@@ -308,8 +294,8 @@ export const uploadSondeData = async (
     });
     logger.log('loading complete');
 
-    return { ignoredHeaders, alreadyExists };
+    return ignoredHeaders;
   }
 
-  return {};
+  return [];
 };

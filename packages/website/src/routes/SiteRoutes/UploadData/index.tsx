@@ -100,20 +100,18 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   return (
     <>
       <NavBar searchLocation={false} loading={loading} />
-      {isUploadHistoryErrored && (
-        <StatusSnackbar
-          message="Failed to fetch upload history"
-          handleClose={onHistorySnackbarClose}
-          severity="error"
-        />
-      )}
-      {uploadError && (
-        <StatusSnackbar
-          message={uploadError}
-          handleClose={onStatusSnackbarClose}
-          severity="error"
-        />
-      )}
+      <StatusSnackbar
+        open={isUploadHistoryErrored}
+        message="Failed to fetch upload history"
+        handleClose={onHistorySnackbarClose}
+        severity="error"
+      />
+      <StatusSnackbar
+        open={!!uploadError}
+        message={uploadError}
+        handleClose={onStatusSnackbarClose}
+        severity="error"
+      />
 
       {site && (
         <Container className={classes.root}>

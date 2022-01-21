@@ -19,13 +19,10 @@ const SiteRoutes = () => {
     []
   );
 
-  const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders?.length);
+  const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders.length);
 
   const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
-  const handleDetailsDialogOpen = () => {
-    setIsUploadDetailsDialogOpen(true);
-    setIsUploadSnackbarOpen(false);
-  };
+  const handleDetailsDialogOpen = () => setIsUploadDetailsDialogOpen(true);
   const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
 
   const onUploadSuccess = (data: UploadTimeSeriesResult[]) => {
@@ -35,15 +32,14 @@ const SiteRoutes = () => {
 
   return (
     <>
-      {isUploadSnackbarOpen && (
-        <StatusSnackbar
-          message="Successfully uploaded files"
-          severity={hasWarnings ? "warning" : "success"}
-          furtherActionLabel="View details"
-          onFurtherActionTake={handleDetailsDialogOpen}
-          handleClose={handleSnackbarClose}
-        />
-      )}
+      <StatusSnackbar
+        open={isUploadSnackbarOpen}
+        message="Successfully uploaded files"
+        severity={hasWarnings ? "warning" : "success"}
+        furtherActionLabel={hasWarnings ? "View details" : undefined}
+        onFurtherActionTake={hasWarnings ? handleDetailsDialogOpen : undefined}
+        handleClose={handleSnackbarClose}
+      />
       <UploadWarnings
         details={uploadDetails}
         open={hasWarnings && isUploadDetailsDialogOpen}

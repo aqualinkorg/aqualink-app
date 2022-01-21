@@ -34,8 +34,8 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <List>
-          {details.map(({ file, ignoredHeaders, alreadyExists }, index) =>
-            ignoredHeaders?.length || alreadyExists ? (
+          {details.map(({ file, ignoredHeaders }, index) =>
+            ignoredHeaders.length ? (
               // eslint-disable-next-line react/no-array-index-key
               <ListItem key={`${file}-${index}`}>
                 <ListItemAvatar>
@@ -49,26 +49,13 @@ const DetailsDialog = ({ open, details, onClose }: DetailsDialogProps) => {
                     color: "textSecondary",
                     variant: "h5",
                   }}
-                  secondary={
-                    <>
-                      {alreadyExists && (
-                        <Typography variant="subtitle1">
-                          - There was a previous file upload with the same date
-                          range. All values were replaced.
-                        </Typography>
-                      )}
-                      {ignoredHeaders && ignoredHeaders.length > 0 && (
-                        <Typography variant="subtitle1">
-                          - These columns are not configured for import yet and
-                          were not uploaded:{" "}
-                          {ignoredHeaders
-                            .map((header) => `"${header}"`)
-                            .join(", ")}
-                          .
-                        </Typography>
-                      )}
-                    </>
-                  }
+                  secondary={`
+                      These columns are not configured for import yet and were
+                      not uploaded: ${ignoredHeaders
+                        .map((header) => `"${header}"`)
+                        .join(", ")}.
+                    `}
+                  secondaryTypographyProps={{ variant: "subtitle1" }}
                 />
               </ListItem>
             ) : null
