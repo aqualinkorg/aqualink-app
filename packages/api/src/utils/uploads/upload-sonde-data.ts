@@ -197,6 +197,7 @@ export const uploadSondeData = async (
   surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
+  failOnWarning: boolean,
 ) => {
   // TODO
   // - Add foreign key constraint to sources on site_id
@@ -240,6 +241,15 @@ export const uploadSondeData = async (
       'Time (HH:mm:ss)',
       'Time (Fract. Sec)',
     ]);
+
+    if (failOnWarning && ignoredHeaders.length > 0) {
+      throw new BadRequestException(
+        `${fileName}: These columns are not configured for import yet and cannot be uploaded: ${ignoredHeaders
+          .map((header) => `"${header}"`)
+          .join(', ')}.`,
+      );
+    }
+
     const results = findXLSXDataWithHeader(workSheetData, 'Date (MM/DD/YYYY)');
 
     const dataAstimeSeries = results

@@ -66,7 +66,8 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
             data,
             site.id,
             selectedPoint,
-            token
+            token,
+            true
           );
         // eslint-disable-next-line fp/no-mutating-methods
         history.push(`/sites/${site.id}`);

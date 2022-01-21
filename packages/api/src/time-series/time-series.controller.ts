@@ -145,6 +145,7 @@ export class TimeSeriesController {
   )
   uploadTimeSeriesData(
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
+    @Query('failOnWarning', ParseBoolPipe) failOnWarning = false,
     @UploadedFiles() files: Express.Multer.File[],
     @Body('sensor') sensor: SourceType,
   ) {
@@ -152,6 +153,7 @@ export class TimeSeriesController {
       surveyPointDataRangeDto,
       sensor,
       files,
+      failOnWarning,
     );
   }
 }

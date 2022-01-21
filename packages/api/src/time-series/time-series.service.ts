@@ -119,6 +119,7 @@ export class TimeSeriesService {
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
     sensor: SourceType,
     files: Express.Multer.File[],
+    failOnWarning: boolean,
   ) {
     if (!sensor || !Object.values(SourceType).includes(sensor)) {
       throw new BadRequestException(
@@ -152,6 +153,7 @@ export class TimeSeriesService {
             timeSeriesRepository: this.timeSeriesRepository,
             dataUploadsRepository: this.dataUploadsRepository,
           },
+          failOnWarning,
         );
 
         // Remove file once its processing is over
