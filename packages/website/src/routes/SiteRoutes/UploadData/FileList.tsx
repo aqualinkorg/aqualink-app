@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { grey } from "@material-ui/core/colors";
 import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
 import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
@@ -19,7 +20,7 @@ import { pluralize } from "../../../helpers/stringUtils";
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 
-const FileList = ({ files, loading, onFileDelete }: FileListProps) => {
+const FileList = ({ files, loading, errors, onFileDelete }: FileListProps) => {
   const classes = useStyles();
 
   return (
@@ -30,8 +31,8 @@ const FileList = ({ files, loading, onFileDelete }: FileListProps) => {
           {loading ? "uploading" : "to be uploaded"}
         </Typography>
       </Grid>
-      {files.map((file) => (
-        <Grid item key={file.name} lg={4} md={6} xs={12}>
+      {files.map(({ name }) => (
+        <Grid item key={name} lg={4} md={6} xs={12}>
           <Card className={classes.card} variant="outlined">
             <CardHeader
               className={classNames({ [classes.loading]: loading })}
@@ -39,18 +40,18 @@ const FileList = ({ files, loading, onFileDelete }: FileListProps) => {
               title={
                 <Typography
                   className={classes.cardHeaderTitle}
-                  title={file.name}
+                  title={name}
                   color="textSecondary"
                   variant="h6"
                 >
-                  {file.name}
+                  {name}
                 </Typography>
               }
               action={
                 <Tooltip title="Remove file" arrow placement="top">
                   <IconButton
                     disabled={loading}
-                    onClick={() => onFileDelete(file.name)}
+                    onClick={() => onFileDelete(name)}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -65,6 +66,7 @@ const FileList = ({ files, loading, onFileDelete }: FileListProps) => {
               />
             )}
           </Card>
+          {errors?.[name] && <Alert severity="error">{errors[name]}</Alert>}
         </Grid>
       ))}
     </Grid>
@@ -107,6 +109,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface FileListProps {
   files: File[];
+  errors: Record<string, string | null>;
   loading: boolean;
   onFileDelete: (name: string) => void;
 }

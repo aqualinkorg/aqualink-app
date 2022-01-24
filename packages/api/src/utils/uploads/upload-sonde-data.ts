@@ -135,9 +135,9 @@ const validateHeaders = (
 
   if (!isHeaderRowValid) {
     throw new BadRequestException(
-      `${file}: File must contain at least one of the following columns: [${Object.keys(
-        metricsMapping,
-      ).join(', ')}]`,
+      `${file}: At least on of the [${Object.keys(metricsMapping).join(
+        ', ',
+      )}] columns should be included.`,
     );
   }
 
@@ -244,9 +244,11 @@ export const uploadSondeData = async (
 
     if (failOnWarning && ignoredHeaders.length > 0) {
       throw new BadRequestException(
-        `${fileName}: These columns are not configured for import yet and cannot be uploaded: ${ignoredHeaders
+        `${fileName}: The columns ${ignoredHeaders
           .map((header) => `"${header}"`)
-          .join(', ')}.`,
+          .join(
+            ', ',
+          )} are not configured for import yet and cannot be uploaded.`,
       );
     }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, makeStyles, Theme } from "@material-ui/core";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
-import { uniqBy } from "lodash";
+import { uniqBy, reduce, mapValues } from "lodash";
 import { useSelector } from "react-redux";
 
 import NavBar from "../../../common/NavBar";
@@ -32,6 +32,9 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState<string>();
+  const [uploadErrors, setUploadErrors] = useState<
+    Record<string, string | null>
+  >({});
   const [uploadHistory, setUploadHistory] = useState<SiteUploadHistory>([]);
   const [isUploadHistoryLoading, setIsUploadHistoryLoading] = useState(false);
   const [isUploadHistoryErrored, setIsUploadHistoryErrored] = useState(false);
@@ -44,7 +47,20 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
 
   const onFilesDrop: DropzoneProps["onDropAccepted"] = (
     acceptedFiles: File[]
-  ) => setFiles(uniqBy([...files, ...acceptedFiles], "name"));
+  ) => {
+    const newFiles = uniqBy([...files, ...acceptedFiles], "name");
+    setFiles(newFiles);
+    setUploadErrors(
+      reduce(
+        newFiles,
+        (accum, { name }) => ({ ...accum, [name]: null }),
+        uploadErrors
+      )
+    );
+  };
+
+  const clearUploadErrors = () =>
+    setUploadErrors(mapValues(uploadErrors, () => null));
 
   const onStatusSnackbarClose = () => setUploadError(undefined);
   const onHistorySnackbarClose = () => setIsUploadHistoryErrored(false);
@@ -52,6 +68,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const onUpload = async () => {
     setUploadLoading(true);
     setUploadError(undefined);
+    clearUploadErrors();
     try {
       if (
         typeof site?.id === "number" &&
@@ -75,7 +92,15 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
       }
     } catch (err) {
       setUploadLoading(false);
-      setUploadError(err?.response?.data?.message || "Something went wrong");
+      const errorMessage = (err?.response?.data?.message as string) || "";
+      const [maybeFileName, maybeFileError] = errorMessage?.split(": ");
+      if (maybeFileName in uploadErrors) {
+        // File specific error
+        setUploadErrors({ ...uploadErrors, [maybeFileName]: maybeFileError });
+      } else {
+        // General error
+        setUploadError(errorMessage || "Something went wrong");
+      }
     }
   };
 
@@ -130,6 +155,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
             <>
               <FileList
                 files={files}
+                errors={uploadErrors}
                 loading={uploadLoading}
                 onFileDelete={onFileDelete}
               />
