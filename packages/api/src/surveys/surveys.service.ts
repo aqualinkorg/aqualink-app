@@ -18,6 +18,7 @@ import { EditSurveyMediaDto } from './dto/edit-survey-media.dto';
 import { GoogleCloudService } from '../google-cloud/google-cloud.service';
 import { Site } from '../sites/sites.entity';
 import { getFileFromURL } from '../utils/google-cloud.utils';
+import { getSite } from '../utils/site.utils';
 
 @Injectable()
 export class SurveysService {
@@ -44,11 +45,7 @@ export class SurveysService {
     user: User,
     siteId: number,
   ): Promise<Survey> {
-    const site = await this.siteRepository.findOne(siteId);
-
-    if (!site) {
-      throw new NotFoundException(`Site with id ${siteId} was not found`);
-    }
+    const site = await getSite(siteId, this.siteRepository);
 
     const survey = await this.surveyRepository.save({
       user,

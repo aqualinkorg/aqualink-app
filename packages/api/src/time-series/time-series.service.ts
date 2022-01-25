@@ -14,7 +14,6 @@ import {
   getDataQuery,
   getDataRangeQuery,
   groupByMetricAndSource,
-  surveyPointBelongsToSite,
 } from '../utils/time-series.utils';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
@@ -22,6 +21,7 @@ import { Sources } from '../sites/sources.entity';
 import { uploadSondeData } from '../utils/uploads/upload-sonde-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
+import { surveyPointBelongsToSite } from '../utils/site.utils';
 
 @Injectable()
 export class TimeSeriesService {

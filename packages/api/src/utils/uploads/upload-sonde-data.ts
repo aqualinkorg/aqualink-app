@@ -2,12 +2,7 @@
 import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
-import {
-  BadRequestException,
-  ConflictException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
@@ -18,6 +13,7 @@ import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import { getSite, getSiteAndSurveyPoint } from '../site.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -206,22 +202,19 @@ export const uploadSondeData = async (
   repositories: Repositories,
   failOnWarning?: boolean,
 ) => {
-  // TODO
-  // - Add foreign key constraint to sources on site_id
-
-  const site = await repositories.siteRepository.findOne({
-    where: { id: parseInt(siteId, 10) },
-  });
-
-  const surveyPoint = surveyPointId
-    ? await repositories.surveyPointRepository.findOne({
-        where: { id: parseInt(surveyPointId, 10) },
-      })
-    : undefined;
-
-  if (!site) {
-    throw new NotFoundException(`Site with id ${siteId} does not exist`);
-  }
+  // // TODO
+  // // - Add foreign key constraint to sources on site_id
+  const { site, surveyPoint } = surveyPointId
+    ? await getSiteAndSurveyPoint(
+        parseInt(siteId, 10),
+        parseInt(surveyPointId, 10),
+        repositories.siteRepository,
+        repositories.surveyPointRepository,
+      )
+    : {
+        site: await getSite(parseInt(siteId, 10), repositories.siteRepository),
+        surveyPoint: undefined,
+      };
 
   const existingSourceEntity = await repositories.sourcesRepository.findOne({
     relations: ['surveyPoint', 'site'],
