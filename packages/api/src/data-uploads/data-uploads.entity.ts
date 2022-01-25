@@ -4,6 +4,7 @@ import { Exclude } from 'class-transformer';
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { Metric } from '../time-series/metrics.entity';
 
 @Entity()
 export class DataUploads {
@@ -26,4 +27,13 @@ export class DataUploads {
 
   @Column({ nullable: false })
   signature: string;
+
+  @Column({ nullable: false })
+  minDate: Date;
+
+  @Column({ nullable: false })
+  maxDate: Date;
+
+  @Column('character varying', { array: true, nullable: false })
+  metrics: Metric[];
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, isNaN } from 'lodash';
+import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import {
@@ -145,9 +145,16 @@ const validateHeaders = (
     (header) =>
       ![...headerKeys, ...Object.keys(metricsMapping)].includes(header) &&
       header !== 'Site Name',
-  );
+  ) as string[];
 
-  return ignoredHeaders as string[];
+  const importedHeaders = headerRow
+    .filter(
+      (header) =>
+        Object.keys(metricsMapping).includes(header) && header !== 'Site Name',
+    )
+    .map((header) => metricsMapping[header]) as Metric[];
+
+  return { ignoredHeaders, importedHeaders };
 };
 
 const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
@@ -236,11 +243,11 @@ export const uploadSondeData = async (
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
-    const ignoredHeaders = validateHeaders(fileName, workSheetData, [
-      'Date (MM/DD/YYYY)',
-      'Time (HH:mm:ss)',
-      'Time (Fract. Sec)',
-    ]);
+    const { ignoredHeaders, importedHeaders } = validateHeaders(
+      fileName,
+      workSheetData,
+      ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+    );
 
     if (failOnWarning && ignoredHeaders.length > 0) {
       throw new BadRequestException(
@@ -281,6 +288,18 @@ export const uploadSondeData = async (
       });
 
     const signature = await md5Fle(filePath);
+    const minDate = get(
+      minBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
+    const maxDate = get(
+      maxBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
 
     if (surveyPoint) {
       // If the upload exists as described above, then update it, otherwise save it.
@@ -305,6 +324,9 @@ export const uploadSondeData = async (
         sensorType: SourceType.SONDE,
         site,
         surveyPoint,
+        minDate,
+        maxDate,
+        metrics: importedHeaders,
       });
     }
 
