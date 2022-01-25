@@ -43,8 +43,16 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
     ? moment().tz(timezone).zoneAbbr()
     : undefined;
 
-  const dataVizualizationButtonLink = (start: string, end: string) =>
-    `/sites/${site.id}${requests.generateUrlQueryParams({ start, end })}`;
+  const dataVizualizationButtonLink = (
+    start: string,
+    end: string,
+    surveyPoint: number
+  ) =>
+    `/sites/${site.id}${requests.generateUrlQueryParams({
+      start,
+      end,
+      surveyPoint,
+    })}`;
 
   if (nUploads === 0) {
     return null;
@@ -98,7 +106,11 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                   <TableCell>
                     <Button
                       component={Link}
-                      to={dataVizualizationButtonLink(minDate, maxDate)}
+                      to={dataVizualizationButtonLink(
+                        minDate,
+                        maxDate,
+                        surveyPoint.id
+                      )}
                       size="small"
                       variant="outlined"
                       color="primary"

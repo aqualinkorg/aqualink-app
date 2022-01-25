@@ -293,6 +293,7 @@ export interface SiteUploadHistoryItem {
   file: string;
   minDate: string;
   maxDate: string;
+  metrics: MetricsKeys[];
   surveyPoint: {
     id: number;
     name: string;
