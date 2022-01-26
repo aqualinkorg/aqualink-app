@@ -13,7 +13,7 @@ export const californiaSite: DeepPartial<Site> = {
   status: SiteStatus.Deployed,
   maxMonthlyMean: 28.54,
   timezone: 'America/Los_Angeles',
-  approved: true,
+  display: true,
   applied: true,
 };
 
@@ -24,7 +24,7 @@ export const floridaSite: DeepPartial<Site> = {
   status: SiteStatus.Approved,
   maxMonthlyMean: 30.54,
   timezone: 'America/Los_Angeles',
-  approved: true,
+  display: true,
   applied: false,
 };
 
@@ -36,7 +36,7 @@ export const athensSite: DeepPartial<Site> = {
   status: SiteStatus.Shipped,
   maxMonthlyMean: 25.54,
   timezone: 'America/Havana',
-  approved: true,
+  display: true,
   applied: true,
 };
 

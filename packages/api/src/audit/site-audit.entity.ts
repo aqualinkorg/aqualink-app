@@ -14,7 +14,7 @@ enum SiteColumn {
   STATUS = 'status',
   VIDEO_STREAM = 'video_stream',
   MAX_MONTHLY_MEAN = 'max_monthly_mean',
-  APPROVED = 'approved',
+  DISPLAY = 'display',
 }
 
 @Entity()
