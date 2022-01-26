@@ -442,7 +442,7 @@ export const siteTests = () => {
     });
   });
 
-  describe('test site with no hmm', () => {
+  describe('test site with no MMM', () => {
     it('POST / create a site', async () => {
       mockBackfillSiteData();
       mockGetMMM();
