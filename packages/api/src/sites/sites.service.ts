@@ -102,7 +102,7 @@ export class SitesService {
         polygon: createPoint(longitude, latitude),
         maxMonthlyMean,
         timezone: timezones[0],
-        approved: false,
+        display: false,
         depth,
       })
       .catch(handleDuplicateSite);
@@ -187,7 +187,7 @@ export class SitesService {
       .leftJoinAndSelect('site.region', 'region')
       .leftJoinAndSelect('site.admins', 'admins')
       .leftJoinAndSelect('site.stream', 'stream')
-      .andWhere('approved = true')
+      .andWhere('display = true')
       .getMany();
 
     const mappedSiteData = await getCollectionData(

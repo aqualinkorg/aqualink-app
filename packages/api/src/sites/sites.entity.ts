@@ -87,7 +87,7 @@ export class Site {
   timezone: string | null;
 
   @Column({ default: true })
-  approved: boolean;
+  display: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
