@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import yargs from 'yargs';
 import { ConnectionOptions, createConnection } from 'typeorm';
+import { last } from 'lodash';
 import { Logger } from '@nestjs/common';
 import { configService } from '../src/config/config.service';
 import { Site } from '../src/sites/sites.entity';
@@ -8,6 +9,7 @@ import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.en
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Sources } from '../src/sites/sources.entity';
 import { uploadSondeData } from '../src/utils/uploads/upload-sonde-data';
+import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -61,6 +63,7 @@ async function run() {
   logger.log('Uploading sonde data');
   await uploadSondeData(
     filePath,
+    last(filePath.split('/')),
     siteId,
     surveyPointId,
     sondeType,
@@ -70,6 +73,7 @@ async function run() {
       surveyPointRepository: connection.getRepository(SiteSurveyPoint),
       timeSeriesRepository: connection.getRepository(TimeSeries),
       sourcesRepository: connection.getRepository(Sources),
+      dataUploadsRepository: connection.getRepository(DataUploads),
     },
   );
 

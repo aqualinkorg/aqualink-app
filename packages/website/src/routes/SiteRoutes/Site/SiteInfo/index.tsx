@@ -270,6 +270,18 @@ const SiteNavBar = ({
                           </Button>
                         </Grid>
                       )}
+                    <Grid item>
+                      <Button
+                        component={Link}
+                        to={`/sites/${site.id}/upload_data`}
+                        className={classes.button}
+                        color="primary"
+                        variant="outlined"
+                        size="small"
+                      >
+                        UPLOAD DATA
+                      </Button>
+                    </Grid>
                   </Grid>
                 )}
               </Grid>
