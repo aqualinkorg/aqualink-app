@@ -78,6 +78,23 @@ export const metricsKeysList = [
 
 export type MetricsKeys = typeof metricsKeysList[number];
 
+type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
+
+// This recursive type converts string literals from snake_case to camelCase.
+// It splits the input string into three parts: P1, P2 and P3.
+// For example, the string "temp_weekly_alert" is split to:
+// P1 = temp, P2 = w, P3 = eekly_alert.
+// Then, applies Lowercase P1 as is, applies Uppercase to P2, and then recursively applies Camelcase to P3.
+// After that, it concatenates these 3 results.
+type CamelCase<S extends string> =
+  S extends `${infer P1}_${infer P2}${infer P3}`
+    ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
+    : Lowercase<S>;
+
+export type Metrics = CamelCase<MetricsKeys>;
+
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
+
 export interface LatestData {
   id: number;
   timestamp: Date;
@@ -85,8 +102,8 @@ export interface LatestData {
   site: { id: number };
   siteId: number;
   surveyPoint: { id: number };
-  source: string;
-  metric: MetricsKeys;
+  source: Sources;
+  metric: Metrics;
 }
 export interface LiveData {
   site: { id: number };
@@ -149,23 +166,6 @@ export interface DataRange {
   minDate: string;
   maxDate: string;
 }
-
-type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
-
-// This recursive type converts string literals from snake_case to camelCase.
-// It splits the input string into three parts: P1, P2 and P3.
-// For example, the string "temp_weekly_alert" is split to:
-// P1 = temp, P2 = w, P3 = eekly_alert.
-// Then, applies Lowercase P1 as is, applies Uppercase to P2, and then recursively applies Camelcase to P3.
-// After that, it concatenates these 3 results.
-type CamelCase<S extends string> =
-  S extends `${infer P1}_${infer P2}${infer P3}`
-    ? `${Lowercase<P1>}${Uppercase<P2>}${CamelCase<P3>}`
-    : Lowercase<S>;
-
-export type Metrics = CamelCase<MetricsKeys>;
-
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
 
 export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
 
