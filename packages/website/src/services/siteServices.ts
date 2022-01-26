@@ -20,6 +20,7 @@ import {
   OceanSenseDataRequestParams,
   OceanSenseDataResponse,
   SiteResponse,
+  SiteUploadHistory,
 } from "../store/Sites/types";
 
 const getSite = (id: string) =>
@@ -128,6 +129,12 @@ const getSiteApplication = (siteId: number, token: string) =>
     token,
   });
 
+const getSiteUploadHistory = (siteId: number) =>
+  requests.send<SiteUploadHistory>({
+    url: `data-uploads/sites/${siteId}`,
+    method: "GET",
+  });
+
 const updateSite = (siteId: number, data: SiteUpdateParams, token: string) =>
   requests.send<Site>({
     url: `sites/${siteId}`,
@@ -189,6 +196,7 @@ export default {
   registerSite,
   applySite,
   getSiteApplication,
+  getSiteUploadHistory,
   updateSite,
   getExclusionDates,
   deploySpotter,

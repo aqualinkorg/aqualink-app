@@ -1,21 +1,26 @@
 /* eslint-disable no-plusplus */
-import { chunk, isNaN } from 'lodash';
+import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
+import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
-import { Logger } from '@nestjs/common';
+import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Metric } from '../../time-series/metrics.entity';
 import { TimeSeries } from '../../time-series/time-series.entity';
 import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
+import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import { getSite, getSiteAndSurveyPoint } from '../site.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
   surveyPointRepository: Repository<SiteSurveyPoint>;
   timeSeriesRepository: Repository<TimeSeries>;
   sourcesRepository: Repository<Sources>;
+  dataUploadsRepository: Repository<DataUploads>;
 }
 
 const logger = new Logger('ParseSondeData');
@@ -38,6 +43,32 @@ const metricsMapping: Record<string, Metric> = {
   'Temp °C': Metric.BOTTOM_TEMPERATURE,
   'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+};
+
+const ACCEPTED_FILE_TYPES = [
+  {
+    extension: 'xlsx',
+    mimeType:
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  },
+];
+
+export const fileFilter: MulterOptions['fileFilter'] = (
+  _,
+  { mimetype },
+  callback,
+) => {
+  if (!ACCEPTED_FILE_TYPES.map(({ mimeType }) => mimeType).includes(mimetype)) {
+    callback(
+      new BadRequestException(
+        `Only ${ACCEPTED_FILE_TYPES.map(
+          ({ extension }) => `.${extension}`,
+        ).join(', ')} files are accepted`,
+      ),
+      false,
+    );
+  }
+  callback(null, true);
 };
 
 function renameKeys(obj, newKeys) {
@@ -74,6 +105,52 @@ const getTimestampFromExcelSerials = (
   date.setMinutes(Math.round(decimalHours * 60));
   date.setSeconds(seconds);
   return date;
+};
+
+const validateHeaders = (
+  file: string,
+  workSheetData: any[],
+  headerKeys: string[],
+) => {
+  // The header row must contain all header keys.
+  const headerRowIndex = workSheetData.findIndex((row) =>
+    headerKeys.every((header) => row.includes(header)),
+  );
+
+  if (headerRowIndex === -1) {
+    throw new BadRequestException(
+      `${file}: [${headerKeys.join(
+        ', ',
+      )}] must be included in the column headers`,
+    );
+  }
+
+  // Check if the header row contains at least one of the metricsMapping keys.
+  const headerRow = workSheetData[headerRowIndex];
+  const isHeaderRowValid = headerRow.some((header) => header in metricsMapping);
+
+  if (!isHeaderRowValid) {
+    throw new BadRequestException(
+      `${file}: At least on of the [${Object.keys(metricsMapping).join(
+        ', ',
+      )}] columns should be included.`,
+    );
+  }
+
+  const ignoredHeaders = headerRow.filter(
+    (header) =>
+      ![...headerKeys, ...Object.keys(metricsMapping)].includes(header) &&
+      header !== 'Site Name',
+  ) as string[];
+
+  const importedHeaders = headerRow
+    .filter(
+      (header) =>
+        Object.keys(metricsMapping).includes(header) && header !== 'Site Name',
+    )
+    .map((header) => metricsMapping[header]) as Metric[];
+
+  return { ignoredHeaders, importedHeaders };
 };
 
 const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
@@ -118,34 +195,64 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
 // Upload sonde data
 export const uploadSondeData = async (
   filePath: string,
+  fileName: string,
   siteId: string,
   surveyPointId: string | undefined,
   sondeType: string,
   repositories: Repositories,
+  failOnWarning?: boolean,
 ) => {
-  // TODO
-  // - Add foreign key constraint to sources on site_id
+  // // TODO
+  // // - Add foreign key constraint to sources on site_id
+  const { site, surveyPoint } = surveyPointId
+    ? await getSiteAndSurveyPoint(
+        parseInt(siteId, 10),
+        parseInt(surveyPointId, 10),
+        repositories.siteRepository,
+        repositories.surveyPointRepository,
+      )
+    : {
+        site: await getSite(parseInt(siteId, 10), repositories.siteRepository),
+        surveyPoint: undefined,
+      };
 
-  const sourceEntity = await repositories.sourcesRepository
-    .findOne({
-      relations: ['surveyPoint', 'site'],
-      where: {
-        site: { id: siteId },
-        surveyPoint: surveyPointId || null,
-        type: SourceType.SONDE,
-      },
-    })
-    .then((foundSource) => {
-      if (foundSource) {
-        return foundSource;
-      }
-      throw new Error('Source does not exist yet. Please create it manually.');
-    });
+  const existingSourceEntity = await repositories.sourcesRepository.findOne({
+    relations: ['surveyPoint', 'site'],
+    where: {
+      site: { id: siteId },
+      surveyPoint: surveyPointId || null,
+      type: SourceType.SONDE,
+    },
+  });
+
+  const sourceEntity =
+    existingSourceEntity ||
+    (await repositories.sourcesRepository.save({
+      type: SourceType.SONDE,
+      site,
+      surveyPoint,
+    }));
 
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
-    const results = findXLSXDataWithHeader(workSheetData, 'Chlorophyll RFU');
+    const { ignoredHeaders, importedHeaders } = validateHeaders(
+      fileName,
+      workSheetData,
+      ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+    );
+
+    if (failOnWarning && ignoredHeaders.length > 0) {
+      throw new BadRequestException(
+        `${fileName}: The columns ${ignoredHeaders
+          .map((header) => `"${header}"`)
+          .join(
+            ', ',
+          )} are not configured for import yet and cannot be uploaded.`,
+      );
+    }
+
+    const results = findXLSXDataWithHeader(workSheetData, 'Date (MM/DD/YYYY)');
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {
@@ -173,17 +280,65 @@ export const uploadSondeData = async (
         return false;
       });
 
+    const signature = await md5Fle(filePath);
+    const minDate = get(
+      minBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
+    const maxDate = get(
+      maxBy(dataAstimeSeries, (item) =>
+        new Date(get(item, 'timestamp')).getTime(),
+      ),
+      'timestamp',
+    );
+
+    if (surveyPoint) {
+      // If the upload exists as described above, then update it, otherwise save it.
+      const uploadExists = await repositories.dataUploadsRepository.findOne({
+        where: {
+          signature,
+          site,
+          surveyPoint,
+          sensorType: SourceType.SONDE,
+        },
+      });
+
+      if (uploadExists) {
+        throw new ConflictException(
+          `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
+        );
+      }
+
+      await repositories.dataUploadsRepository.save({
+        file: fileName,
+        signature,
+        sensorType: SourceType.SONDE,
+        site,
+        surveyPoint,
+        minDate,
+        maxDate,
+        metrics: importedHeaders,
+      });
+    }
+
     // Data are to much to added with one bulk insert
     // So we need to break them in batches
     const batchSize = 1000;
     logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
-      return repositories.timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .insert()
-        .values(batch)
-        .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-        .execute();
+      return (
+        repositories.timeSeriesRepository
+          .createQueryBuilder('time_series')
+          .insert()
+          .values(batch)
+          // If there's a conflict, replace data with the new value.
+          .onConflict(
+            'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+          )
+          .execute()
+      );
     });
 
     // Return insert promises and print progress updates
@@ -192,5 +347,9 @@ export const uploadSondeData = async (
       logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
     logger.log('loading complete');
+
+    return ignoredHeaders;
   }
+
+  return [];
 };

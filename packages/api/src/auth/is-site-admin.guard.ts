@@ -25,7 +25,7 @@ export class IsSiteAdminGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const { user }: { user: User } = request;
-    const siteId = parseInt(request.params.site_id, 10);
+    const siteId = parseInt(request.params.siteId, 10);
 
     if (user.adminLevel === AdminLevel.SuperAdmin) {
       return true;

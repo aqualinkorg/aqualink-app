@@ -38,8 +38,7 @@ const SurveyCard = ({
               image={
                 isShowingFeatured
                   ? survey.featuredSurveyMedia?.url
-                  : survey.surveyPointImage &&
-                    survey.surveyPointImage[pointId][0]
+                  : survey.surveyPointImage?.[pointId]?.[0]
               }
             />
           </Link>

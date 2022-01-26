@@ -39,12 +39,12 @@ export class SiteApplicationsController {
   @ApiBearerAuth()
   @ApiNestNotFoundResponse('No site application for specified site was found')
   @ApiOperation({ summary: 'Returns site application of specified site' })
-  @ApiParam({ name: 'site_id', example: 1 })
+  @ApiParam({ name: 'siteId', example: 1 })
   @OverrideLevelAccess(AdminLevel.SuperAdmin, AdminLevel.SiteManager)
   @UseGuards(IsSiteAdminGuard)
-  @Get('/sites/:site_id')
+  @Get('/sites/:siteId')
   async findOneFromSite(
-    @Param('site_id') siteId: number,
+    @Param('siteId') siteId: number,
   ): Promise<SiteApplication> {
     return this.siteApplicationsService.findOneFromSite(siteId);
   }
@@ -57,7 +57,7 @@ export class SiteApplicationsController {
   })
   @ApiParam({ name: 'appId', example: 1 })
   @UseGuards(IsSiteAdminGuard)
-  @Put(':appId/sites/:site_id')
+  @Put(':appId/sites/:siteId')
   update(
     @Param('appId', new ParseHashedIdPipe()) id: number,
     @Body() siteApplication: UpdateSiteApplicationDto,

@@ -287,6 +287,21 @@ export interface SiteApplication {
   applied: boolean;
 }
 
+export interface SiteUploadHistoryItem {
+  id: number;
+  sensorType: Sources;
+  file: string;
+  minDate: string;
+  maxDate: string;
+  metrics: MetricsKeys[];
+  surveyPoint: {
+    id: number;
+    name: string;
+  };
+}
+
+export type SiteUploadHistory = SiteUploadHistoryItem[];
+
 export interface SitesRequestData {
   list: Site[];
   sitesToDisplay: Site[];
