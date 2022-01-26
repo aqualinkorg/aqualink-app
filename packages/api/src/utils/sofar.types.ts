@@ -29,7 +29,7 @@ export interface SofarDailyData {
 
 export interface SofarLiveData {
   site: { id: number };
-  latestData: LatestData[];
+  latestData?: LatestData[];
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
   bottomTemperature?: SofarValue;

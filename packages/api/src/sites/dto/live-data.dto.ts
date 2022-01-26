@@ -1,8 +1,10 @@
 import { TimeSeriesValueDto } from '../../time-series/dto/time-series-value.dto';
+import { LatestData } from '../../time-series/latest-data.entity';
 import { SofarLiveData } from '../../utils/sofar.types';
 
 export class SofarLiveDataDto implements SofarLiveData {
   site: { id: number };
+  latestData?: LatestData[];
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
   bottomTemperature?: TimeSeriesValueDto;
