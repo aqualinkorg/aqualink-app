@@ -28,6 +28,7 @@ import {
   hasHoboDataSubQuery,
   getLatestData,
   getSSTFromLiveOrLatestData,
+  getSite,
 } from '../utils/site.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
 import { getSpotterData } from '../utils/sofar';
@@ -205,19 +206,13 @@ export class SitesService {
   }
 
   async findOne(id: number): Promise<Site> {
-    const site = await this.sitesRepository.findOne(id, {
-      relations: [
-        'region',
-        'admins',
-        'stream',
-        'historicalMonthlyMean',
-        'siteApplication',
-      ],
-    });
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found.`);
-    }
+    const site = await getSite(id, this.sitesRepository, [
+      'region',
+      'admins',
+      'stream',
+      'historicalMonthlyMean',
+      'siteApplication',
+    ]);
 
     const videoStream = await this.checkVideoStream(site);
 
@@ -277,11 +272,7 @@ export class SitesService {
     start?: string,
     end?: string,
   ): Promise<DailyData[]> {
-    const site = await this.sitesRepository.findOne(id);
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found.`);
-    }
+    await getSite(id, this.sitesRepository);
 
     if (!moment(start).isValid() || !moment(end).isValid()) {
       throw new BadRequestException('Start or end is not a valid date');
@@ -302,13 +293,9 @@ export class SitesService {
   }
 
   async findLiveData(id: number): Promise<SofarLiveData> {
-    const site = await this.sitesRepository.findOne(id, {
-      relations: ['historicalMonthlyMean'],
-    });
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found.`);
-    }
+    const site = await getSite(id, this.sitesRepository, [
+      'historicalMonthlyMean',
+    ]);
 
     const now = new Date();
 
@@ -340,12 +327,8 @@ export class SitesService {
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {
-    const site = await this.sitesRepository.findOne(id);
+    const site = await getSite(id, this.sitesRepository);
     const { startDate, endDate } = getTimeSeriesDefaultDates(start, end);
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found.`);
-    }
 
     if (!site.sensorId) {
       throw new NotFoundException(`Site with ${id} has no spotter.`);
@@ -376,11 +359,7 @@ export class SitesService {
   async deploySpotter(id: number, deploySpotterDto: DeploySpotterDto) {
     const { endDate } = deploySpotterDto;
 
-    const site = await this.sitesRepository.findOne(id);
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found`);
-    }
+    const site = await getSite(id, this.sitesRepository);
 
     if (!site.sensorId) {
       throw new BadRequestException(`Site with ID ${id} has no spotter`);
@@ -408,11 +387,7 @@ export class SitesService {
   ) {
     const { startDate, endDate } = excludeSpotterDatesDto;
 
-    const site = await this.sitesRepository.findOne(id);
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found`);
-    }
+    const site = await getSite(id, this.sitesRepository);
 
     if (!site.sensorId) {
       throw new BadRequestException(`Site with ID ${id} has no spotter`);
@@ -432,11 +407,7 @@ export class SitesService {
   }
 
   async getExclusionDates(id: number) {
-    const site = await this.sitesRepository.findOne(id);
-
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found`);
-    }
+    const site = await getSite(id, this.sitesRepository);
 
     if (!site.sensorId) {
       throw new BadRequestException(`Site with ID ${id} has no spotter`);
@@ -450,12 +421,7 @@ export class SitesService {
   }
 
   private async updateAdmins(id: number, adminIds: number[]) {
-    const site = await this.sitesRepository.findOne(id, {
-      relations: ['admins'],
-    });
-    if (!site) {
-      throw new NotFoundException(`Site with ID ${id} not found.`);
-    }
+    const site = await getSite(id, this.sitesRepository, ['admins']);
 
     await this.sitesRepository
       .createQueryBuilder('sites')

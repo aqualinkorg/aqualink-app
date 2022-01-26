@@ -21,6 +21,7 @@ import { Sources } from '../sites/sources.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { LatestData } from '../time-series/latest-data.entity';
 import { Metric } from '../time-series/metrics.entity';
+import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 
 const googleMapsClient = new Client({});
 const logger = new Logger('Site Utils');
@@ -153,6 +154,62 @@ export const filterSpotterDataByDate = (
     return isExcluded;
   });
   return data;
+};
+
+export const getSite = async (
+  siteId: number,
+  siteRepository: Repository<Site>,
+  relations?: string[],
+) => {
+  const site = await siteRepository.findOne(siteId, { relations });
+
+  if (!site) {
+    throw new NotFoundException(`Site with id ${siteId} does not exist`);
+  }
+
+  return site;
+};
+
+export const surveyPointBelongsToSite = async (
+  siteId: number,
+  pointId: number,
+  surveyPointRepository: Repository<SiteSurveyPoint>,
+) => {
+  const surveyPoint = await surveyPointRepository.findOne({
+    where: { id: pointId },
+  });
+
+  if (surveyPoint?.siteId?.toString() !== siteId.toString()) {
+    throw new BadRequestException(
+      `Survey point with id ${surveyPoint?.id} does not belong to site with id ${siteId}.`,
+    );
+  }
+};
+
+export const getSiteAndSurveyPoint = async (
+  siteId: number,
+  surveyPointId: number,
+  siteRepository: Repository<Site>,
+  surveyPointRepository: Repository<SiteSurveyPoint>,
+) => {
+  const site = await getSite(siteId, siteRepository);
+  const surveyPoint = await surveyPointRepository.findOne({
+    where: { id: surveyPointId },
+  });
+
+  if (!surveyPoint) {
+    throw new NotFoundException(
+      `Survey point with id ${surveyPointId} does not exist`,
+    );
+  }
+
+  await surveyPointBelongsToSite(
+    site.id,
+    surveyPoint.id,
+    surveyPointRepository,
+  );
+
+  return { site, surveyPoint };
 };
 
 export const getSiteFromSensorId = async (

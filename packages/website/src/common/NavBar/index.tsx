@@ -18,6 +18,7 @@ import {
   useTheme,
   useMediaQuery,
   Divider,
+  LinearProgress,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DashboardTwoToneIcon from "@material-ui/icons/DashboardTwoTone";
@@ -43,6 +44,7 @@ const NavBar = ({
   searchLocation,
   geocodingEnabled,
   routeButtons,
+  loading,
   classes,
 }: NavBarProps) => {
   const user = useSelector(userInfoSelector);
@@ -232,6 +234,7 @@ const NavBar = ({
           </Grid>
         </Toolbar>
       </AppBar>
+      {loading && <LinearProgress />}
       <RegisterDialog
         open={registerDialogOpen}
         handleRegisterOpen={handleRegisterDialog}
@@ -312,11 +315,13 @@ interface NavBarIncomingProps {
   searchLocation: boolean;
   geocodingEnabled?: boolean;
   routeButtons?: boolean;
+  loading?: boolean;
 }
 
 NavBar.defaultProps = {
   geocodingEnabled: false,
   routeButtons: false,
+  loading: false,
 };
 
 type NavBarProps = NavBarIncomingProps & WithStyles<typeof styles>;

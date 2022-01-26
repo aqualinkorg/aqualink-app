@@ -6,7 +6,13 @@ import {
   ParseBoolPipe,
   ParseArrayPipe,
   DefaultValuePipe,
+  Post,
+  UseInterceptors,
+  UseGuards,
+  UploadedFiles,
+  Body,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
@@ -19,6 +25,14 @@ import {
   ApiTimeSeriesResponse,
 } from '../docs/api-time-series-response';
 import { ParseDatePipe } from '../pipes/parse-date.pipe';
+import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
+import { AdminLevel } from '../users/users.entity';
+import { Auth } from '../auth/auth.decorator';
+import { SourceType } from '../sites/schemas/source-type.enum';
+import { fileFilter } from '../utils/uploads/upload-sonde-data';
+
+const MAX_FILE_COUNT = 10;
+const MAX_FILE_SIZE_MB = 10;
 
 @ApiTags('Time Series')
 @Controller('time-series')
@@ -114,5 +128,32 @@ export class TimeSeriesController {
   @Get('sites/:siteId/range')
   findSiteDataRange(@Param() siteDataRangeDto: SiteDataRangeDto) {
     return this.timeSeriesService.findSiteDataRange(siteDataRangeDto);
+  }
+
+  @ApiOperation({ summary: 'Upload time series data' })
+  @UseGuards(IsSiteAdminGuard)
+  @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
+  @Post('sites/:siteId/site-survey-points/:surveyPointId/upload')
+  @UseInterceptors(
+    FilesInterceptor('files', MAX_FILE_COUNT, {
+      dest: './upload',
+      fileFilter,
+      limits: {
+        fileSize: MAX_FILE_SIZE_MB * 10 ** 6,
+      },
+    }),
+  )
+  uploadTimeSeriesData(
+    @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body('sensor') sensor: SourceType,
+    @Query('failOnWarning', ParseBoolPipe) failOnWarning?: boolean,
+  ) {
+    return this.timeSeriesService.uploadData(
+      surveyPointDataRangeDto,
+      sensor,
+      files,
+      failOnWarning,
+    );
   }
 }

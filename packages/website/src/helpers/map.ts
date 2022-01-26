@@ -65,9 +65,12 @@ export const getCollectionCenterAndBounds = (
     meanBy(coordinates, (item) => item[0])
   );
 
-  const bounds = new LeafletPolygon(
-    coordinates.map((item) => new LatLng(item[1], item[0]))
-  ).getBounds();
+  const bounds =
+    coordinates.length > 1
+      ? new LeafletPolygon(
+          coordinates.map((item) => new LatLng(item[1], item[0]))
+        ).getBounds()
+      : undefined;
 
   return [center, bounds];
 };
