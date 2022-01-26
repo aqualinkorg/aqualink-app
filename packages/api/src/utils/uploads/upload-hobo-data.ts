@@ -240,7 +240,7 @@ const getSiteRecords = async (
         polygon: point,
         region,
         maxMonthlyMean,
-        approved: false,
+        display: false,
         timezone: timezones[0],
         status: SiteStatus.Approved,
       }));

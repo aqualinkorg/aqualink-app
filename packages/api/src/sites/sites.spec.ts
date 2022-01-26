@@ -80,7 +80,7 @@ export const siteTests = () => {
     // Approve new site
     await connection
       .getRepository(Site)
-      .update({ name: siteDto.site.name }, { approved: true });
+      .update({ name: siteDto.site.name }, { display: true });
   });
 
   it('GET / find all sites', async () => {
