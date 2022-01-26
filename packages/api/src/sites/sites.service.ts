@@ -26,6 +26,7 @@ import {
   filterSpotterDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
+  getLatestData,
   getSSTFromLiveOrLatestData,
 } from '../utils/site.utils';
 import { getMMM, getHistoricalMonthlyMeans } from '../utils/temperature';
@@ -327,8 +328,11 @@ export class SitesService {
       this.latestDataRepository,
     );
 
+    const latestData = await getLatestData(site, this.latestDataRepository);
+
     return {
       ...liveData,
+      latestData,
       sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
       satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),

@@ -1,3 +1,5 @@
+import { LatestData } from '../time-series/latest-data.entity';
+
 export interface SofarValue {
   timestamp: string;
   value: number;
@@ -27,6 +29,7 @@ export interface SofarDailyData {
 
 export interface SofarLiveData {
   site: { id: number };
+  latestData: LatestData[];
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
   bottomTemperature?: SofarValue;

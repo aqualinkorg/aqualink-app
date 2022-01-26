@@ -56,6 +56,7 @@ export type ExclusionDateResponse = {
 
 export interface LiveData {
   site: { id: number };
+  latestData: any[];
   bottomTemperature?: SofarValue;
   topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;

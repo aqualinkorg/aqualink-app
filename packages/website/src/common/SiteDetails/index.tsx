@@ -32,7 +32,6 @@ import { displayTimeInLocalTimezone } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 import { siteTimeSeriesDataRangeSelector } from "../../store/Sites/selectedSiteSlice";
 import WaterSamplingCard from "./WaterSampling";
-import { siteHasSondeData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   classes,
@@ -48,11 +47,16 @@ const SiteDetails = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = getMiddlePoint(site.polygon);
-  const { sonde: sondeDataRange } =
-    useSelector(siteTimeSeriesDataRangeSelector) || {};
-  const hasSondeData = siteHasSondeData(sondeDataRange);
 
   const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
+
+  const hasSondeData = Boolean(
+    liveData?.latestData.some((data) => data.source === "sonde")
+  );
+
+  const { sonde: sondeDataRange } =
+    useSelector(siteTimeSeriesDataRangeSelector) || {};
+
   const cards = [
     <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
     <Sensor site={site} />,
