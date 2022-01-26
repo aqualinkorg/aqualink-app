@@ -51,7 +51,7 @@ const SiteDetails = ({
   const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
 
   const hasSondeData = Boolean(
-    liveData?.latestData.some((data) => data.source === "sonde")
+    liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
   const { sonde: sondeDataRange } =
