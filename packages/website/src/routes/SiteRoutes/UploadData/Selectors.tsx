@@ -130,7 +130,7 @@ const Selectors = ({
             fullWidth
             disabled
             variant="outlined"
-            value={site.name}
+            value={site.name || `Site ${site.id}`}
           />
         </Grid>
         <Grid item md={4} xs={12}>
