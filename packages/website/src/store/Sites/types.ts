@@ -54,6 +54,40 @@ export type ExclusionDateResponse = {
   endDate: string;
 }[];
 
+// The API sends time series data with the following snake_case keys.
+// We need to create a new type with the same keys but in camelCase
+export const metricsKeysList = [
+  "dhw",
+  "satellite_temperature",
+  "top_temperature",
+  "bottom_temperature",
+  "sst_anomaly",
+  "significant_wave_height",
+  "temp_alert",
+  "temp_weekly_alert",
+  "wave_mean_period",
+  "wave_mean_direction",
+  "wind_speed",
+  "wind_direction",
+  "odo_concentration",
+  "cholorophyll_concentration",
+  "ph",
+  "salinity",
+  "turbidity",
+] as const;
+
+export type MetricsKeys = typeof metricsKeysList[number];
+
+export interface LatestData {
+  id: number;
+  timestamp: Date;
+  value: number;
+  site: { id: number };
+  siteId: number;
+  surveyPoint: { id: number };
+  source: string;
+  metric: MetricsKeys;
+}
 export interface LiveData {
   site: { id: number };
   latestData: any[];
@@ -117,30 +151,6 @@ export interface DataRange {
 }
 
 type Status = "in_review" | "rejected" | "approved" | "shipped" | "deployed";
-
-// The API sends time series data with the following snake_case keys.
-// We need to create a new type with the same keys but in camelCase
-export const metricsKeysList = [
-  "dhw",
-  "satellite_temperature",
-  "top_temperature",
-  "bottom_temperature",
-  "sst_anomaly",
-  "significant_wave_height",
-  "temp_alert",
-  "temp_weekly_alert",
-  "wave_mean_period",
-  "wave_mean_direction",
-  "wind_speed",
-  "wind_direction",
-  "odo_concentration",
-  "cholorophyll_concentration",
-  "ph",
-  "salinity",
-  "turbidity",
-] as const;
-
-export type MetricsKeys = typeof metricsKeysList[number];
 
 // This recursive type converts string literals from snake_case to camelCase.
 // It splits the input string into three parts: P1, P2 and P3.

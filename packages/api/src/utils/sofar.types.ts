@@ -1,4 +1,4 @@
-import { LatestData } from '../time-series/latest-data.entity';
+import type { LatestData } from '../time-series/latest-data.entity';
 
 export interface SofarValue {
   timestamp: string;

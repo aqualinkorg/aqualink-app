@@ -1,5 +1,5 @@
 import { TimeSeriesValueDto } from '../../time-series/dto/time-series-value.dto';
-import { LatestData } from '../../time-series/latest-data.entity';
+import type { LatestData } from '../../time-series/latest-data.entity';
 import { SofarLiveData } from '../../utils/sofar.types';
 
 export class SofarLiveDataDto implements SofarLiveData {

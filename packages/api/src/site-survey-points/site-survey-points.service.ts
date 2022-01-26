@@ -34,9 +34,8 @@ export class SiteSurveyPointsService {
   }
 
   async find(filter: FilterSiteSurveyPointDto): Promise<SiteSurveyPoint[]> {
-    const query = this.surveyPointsRepository.createQueryBuilder(
-      'survey_point',
-    );
+    const query =
+      this.surveyPointsRepository.createQueryBuilder('survey_point');
     if (filter.name) {
       query.andWhere('(lower(survey_point.name) LIKE :name)', {
         name: `%${filter.name.toLowerCase()}%`,

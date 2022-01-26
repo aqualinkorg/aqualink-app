@@ -16,11 +16,8 @@ async function bootstrap() {
   });
   const app = await NestFactory.create(AppModule);
 
-  const {
-    config,
-    documentOptions,
-    customOptions,
-  } = configService.getSwaggerConfig();
+  const { config, documentOptions, customOptions } =
+    configService.getSwaggerConfig();
   const document = SwaggerModule.createDocument(app, config, documentOptions);
   SwaggerModule.setup('api/docs', app, document, customOptions);
 
