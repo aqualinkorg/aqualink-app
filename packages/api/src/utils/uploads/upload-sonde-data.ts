@@ -347,7 +347,9 @@ export const uploadSondeData = async (
       logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
     logger.log('loading complete');
-
+    await repositories.dataUploadsRepository.query(
+      'REFRESH MATERIALIZED VIEW latest_data',
+    );
     return ignoredHeaders;
   }
 
