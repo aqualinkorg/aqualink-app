@@ -23,7 +23,7 @@ test('It processes Sofar API for daily data.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const values = await getDailyData((site as unknown) as Site, date, []);
+  const values = await getDailyData(site as unknown as Site, date, []);
 
   expect(values).toEqual({
     site: { id: 1 },

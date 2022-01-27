@@ -63,10 +63,8 @@ export class SensorsService {
     );
 
     // Group spotter data by site id for easier search
-    const siteIdToSpotterData: Record<
-      number,
-      SpotterData & { id: number }
-    > = keyBy(spotterData, (o) => o.id);
+    const siteIdToSpotterData: Record<number, SpotterData & { id: number }> =
+      keyBy(spotterData, (o) => o.id);
 
     // Construct final response
     return sites.map((site) => {

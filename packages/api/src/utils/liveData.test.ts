@@ -21,7 +21,7 @@ test('It creates a liveData object using Sofar API.', async () => {
     timezone: 'Etc/GMT+12',
   };
 
-  const liveData = await getLiveData((site as unknown) as Site, true);
+  const liveData = await getLiveData(site as unknown as Site, true);
 
   expect(liveData.topTemperature).toBeDefined();
 });

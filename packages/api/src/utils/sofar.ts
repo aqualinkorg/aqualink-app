@@ -29,11 +29,13 @@ export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
   sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);
 
 export const filterSofarResponse = (responseData: any) => {
-  return (responseData
-    ? responseData.values.filter(
-        (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
-      )
-    : []) as SofarValue[];
+  return (
+    responseData
+      ? responseData.values.filter(
+          (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
+        )
+      : []
+  ) as SofarValue[];
 };
 
 axiosRetry(axios, { retries: 3 });
@@ -203,67 +205,60 @@ export async function getSpotterData(
     sofarMeanDirection,
     spotterLatitude,
     spotterLongitude,
-  ]: [
-    SofarValue[],
-    SofarValue[],
-    SofarValue[],
-    SofarValue[],
-    SofarValue[],
-  ] = waves.reduce(
-    (
-      [
-        significantWaveHeights,
-        meanPeriods,
-        meanDirections,
-        latitude,
-        longitude,
-      ],
-      data,
-    ) => {
-      return [
-        significantWaveHeights.concat({
-          timestamp: data.timestamp,
-          value: data.significantWaveHeight,
-        }),
-        meanPeriods.concat({
-          timestamp: data.timestamp,
-          value: data.meanPeriod,
-        }),
-        meanDirections.concat({
-          timestamp: data.timestamp,
-          value: data.meanDirection,
-        }),
-        latitude.concat({
-          timestamp: data.timestamp,
-          value: data.latitude,
-        }),
-        longitude.concat({
-          timestamp: data.timestamp,
-          value: data.longitude,
-        }),
-      ];
-    },
-    [[], [], [], [], []],
-  );
+  ]: [SofarValue[], SofarValue[], SofarValue[], SofarValue[], SofarValue[]] =
+    waves.reduce(
+      (
+        [
+          significantWaveHeights,
+          meanPeriods,
+          meanDirections,
+          latitude,
+          longitude,
+        ],
+        data,
+      ) => {
+        return [
+          significantWaveHeights.concat({
+            timestamp: data.timestamp,
+            value: data.significantWaveHeight,
+          }),
+          meanPeriods.concat({
+            timestamp: data.timestamp,
+            value: data.meanPeriod,
+          }),
+          meanDirections.concat({
+            timestamp: data.timestamp,
+            value: data.meanDirection,
+          }),
+          latitude.concat({
+            timestamp: data.timestamp,
+            value: data.latitude,
+          }),
+          longitude.concat({
+            timestamp: data.timestamp,
+            value: data.longitude,
+          }),
+        ];
+      },
+      [[], [], [], [], []],
+    );
 
-  const [sofarWindSpeed, sofarWindDirection]: [
-    SofarValue[],
-    SofarValue[],
-  ] = wind.reduce(
-    ([speed, direction], data) => {
-      return [
-        speed.concat({
-          timestamp: data.timestamp,
-          value: data.speed,
-        }),
-        direction.concat({
-          timestamp: data.timestamp,
-          value: data.direction,
-        }),
-      ];
-    },
-    [[], []],
-  );
+  const [sofarWindSpeed, sofarWindDirection]: [SofarValue[], SofarValue[]] =
+    wind.reduce(
+      ([speed, direction], data) => {
+        return [
+          speed.concat({
+            timestamp: data.timestamp,
+            value: data.speed,
+          }),
+          direction.concat({
+            timestamp: data.timestamp,
+            value: data.direction,
+          }),
+        ];
+      },
+      [[], []],
+    );
 
   // Sofar increments sensors by distance to the spotter.
   // Sensor 1 -> topTemp and Sensor 2 -> bottomTemp

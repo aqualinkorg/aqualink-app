@@ -30,3 +30,6 @@ sst_clim_*.tiff
 
 # Jest
 .jest-cache
+
+# Temporary yarn.lock
+yarn.lock

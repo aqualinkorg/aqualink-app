@@ -25,6 +25,7 @@ export const mockSite: Site = {
   historicalMonthlyMean: [],
   liveData: {
     site: { id: 1 },
+    latestData: [],
     bottomTemperature: {
       value: 39,
       timestamp: liveDataDate,

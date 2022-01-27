@@ -54,11 +54,8 @@ export const updateSST = async (
   connection: Connection,
   repositories: Repositories,
 ) => {
-  const {
-    siteRepository,
-    timeSeriesRepository,
-    sourceRepository,
-  } = repositories;
+  const { siteRepository, timeSeriesRepository, sourceRepository } =
+    repositories;
 
   logger.log('Fetching sites');
   // Fetch sites entities

@@ -267,3 +267,14 @@ export const getSSTFromLiveOrLatestData = async (
 
   return liveData.satelliteTemperature;
 };
+
+export const getLatestData = async (
+  site: Site,
+  latestDataRepository: Repository<LatestData>,
+): Promise<LatestData[]> => {
+  const latestData = await latestDataRepository.find({
+    site,
+  });
+
+  return latestData;
+};

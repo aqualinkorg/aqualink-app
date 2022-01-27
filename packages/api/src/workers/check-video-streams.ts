@@ -129,23 +129,22 @@ export const checkVideoStreams = async (
   });
 
   // Extract the youTube id from the URLs
-  const siteIdToVideoStreamDetails = sitesWithStream.reduce<
-    siteIdToVideoStreamDetails
-  >((mapping, site) => {
-    const id = getYouTubeVideoId(site.videoStream!);
+  const siteIdToVideoStreamDetails =
+    sitesWithStream.reduce<siteIdToVideoStreamDetails>((mapping, site) => {
+      const id = getYouTubeVideoId(site.videoStream!);
 
-    return {
-      ...mapping,
-      [site.id]: {
-        id,
-        name: site.name,
-        siteId: site.id,
-        url: site.videoStream!,
-        // If no id exists, then url is invalid
-        error: id ? '' : 'Video stream URL is invalid',
-      },
-    };
-  }, {});
+      return {
+        ...mapping,
+        [site.id]: {
+          id,
+          name: site.name,
+          siteId: site.id,
+          url: site.videoStream!,
+          // If no id exists, then url is invalid
+          error: id ? '' : 'Video stream URL is invalid',
+        },
+      };
+    }, {});
 
   const youTubeIds = Object.values(siteIdToVideoStreamDetails)
     .map((videoStreamDetails) => videoStreamDetails.id)

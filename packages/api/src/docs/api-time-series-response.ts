@@ -15,28 +15,26 @@ export const ApiTimeSeriesResponse = () => {
   const sources = Object.values(SourceType)
     .map((source) => {
       const metrics = Object.values(Metric)
-        .map(
-          (metric): Record<string, SchemaObject> => {
-            return {
-              [metric]: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    timestamp: {
-                      type: 'string',
-                      format: 'date-time',
-                    },
-                    value: {
-                      type: 'number',
-                      example: '12.32',
-                    },
+        .map((metric): Record<string, SchemaObject> => {
+          return {
+            [metric]: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  timestamp: {
+                    type: 'string',
+                    format: 'date-time',
+                  },
+                  value: {
+                    type: 'number',
+                    example: '12.32',
                   },
                 },
               },
-            };
-          },
-        )
+            },
+          };
+        })
         .reduce(reduceArrayToObject, {});
 
       return {
@@ -62,28 +60,26 @@ export const ApiTimeSeriesRangeResponse = () => {
   const sources = Object.values(SourceType)
     .map((source) => {
       const metrics = Object.values(Metric)
-        .map(
-          (metric): Record<string, SchemaObject> => {
-            return {
-              [metric]: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    maxDate: {
-                      type: 'string',
-                      format: 'date-time',
-                    },
-                    minDate: {
-                      type: 'string',
-                      format: 'date-time',
-                    },
+        .map((metric): Record<string, SchemaObject> => {
+          return {
+            [metric]: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  maxDate: {
+                    type: 'string',
+                    format: 'date-time',
+                  },
+                  minDate: {
+                    type: 'string',
+                    format: 'date-time',
                   },
                 },
               },
-            };
-          },
-        )
+            },
+          };
+        })
         .reduce(reduceArrayToObject, {});
 
       return {

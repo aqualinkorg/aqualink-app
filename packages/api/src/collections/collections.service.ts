@@ -121,13 +121,8 @@ export class CollectionsService {
       );
     }
 
-    const {
-      name,
-      isPublic,
-      userId,
-      addSiteIds,
-      removeSiteIds,
-    } = updateCollectionDto;
+    const { name, isPublic, userId, addSiteIds, removeSiteIds } =
+      updateCollectionDto;
 
     const filteredAddSiteIds = addSiteIds?.filter(
       (siteId) => !collection.siteIds.includes(siteId),
