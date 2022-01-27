@@ -9,9 +9,13 @@ import {
   TextFieldProps,
   Button,
   Chip,
+  ButtonProps,
 } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
+
 import { Site, Sources } from "../../../store/Sites/types";
+import NewPointDialog from "./NewPointDialog";
 
 interface SelectOption {
   id: number;
@@ -38,6 +42,7 @@ const Selectors = ({
   const pointOptions = site.surveyPoints;
   const [selectedPointIndex, setSelectedPointIndex] = useState<number>();
   const [selectedSensorIndex, setSelectedSensorIndex] = useState<number>();
+  const [isNewPointDialogOpen, setIsNewPointDialogOpen] = useState(false);
 
   const pointSelectorValue =
     typeof selectedPointIndex === "number" ? selectedPointIndex : "";
@@ -116,8 +121,20 @@ const Selectors = ({
       }
     };
 
+  const handleNewPointDialogOpen: ButtonProps["onClick"] = (event) => {
+    setIsNewPointDialogOpen(true);
+    event.stopPropagation();
+  };
+
+  const handleNewPointDialogClose = () => setIsNewPointDialogOpen(false);
+
   return (
     <>
+      <NewPointDialog
+        open={isNewPointDialogOpen}
+        siteId={site.id}
+        onClose={handleNewPointDialogClose}
+      />
       <Grid
         container
         className={classes.selectorsWrapper}
@@ -144,6 +161,18 @@ const Selectors = ({
             SelectProps={selectProps}
           >
             {OptionsList(pointOptions)}
+            <MenuItem className={classes.buttonMenuItem}>
+              <Button
+                onClick={handleNewPointDialogOpen}
+                className={classes.newPointButton}
+                startIcon={<AddIcon />}
+                color="primary"
+                size="small"
+                fullWidth
+              >
+                ADD NEW SURVEY POINT
+              </Button>
+            </MenuItem>
           </TextField>
         </Grid>
         <Grid item md={4} xs={12}>
@@ -213,6 +242,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   comingSoonChipText: {
     fontSize: 8,
+  },
+  buttonMenuItem: {
+    padding: 0,
+  },
+  newPointButton: {
+    color: theme.palette.text.secondary,
+    paddingTop: 8.5,
+    paddingBottom: 8.5,
   },
 }));
 
