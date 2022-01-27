@@ -3,7 +3,7 @@ import { Container, makeStyles, Theme } from "@material-ui/core";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
 import { uniqBy, reduce, mapValues } from "lodash";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import NavBar from "../../../common/NavBar";
 import Header from "./Header";
@@ -20,9 +20,11 @@ import uploadServices, {
 } from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import siteServices from "../../../services/siteServices";
+import { setSelectedSite } from "../../../store/Sites/selectedSiteSlice";
 
 const UploadData = ({ match, onSuccess }: MatchProps) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(match.params.id);
@@ -86,6 +88,9 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
             token,
             true
           );
+        // Clear redux selected site before we land on the site page,
+        // so that we fetch the updated data.
+        dispatch(setSelectedSite());
         // eslint-disable-next-line fp/no-mutating-methods
         history.push(`/sites/${site.id}`);
         onSuccess(uploadResponse);
