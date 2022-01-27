@@ -107,7 +107,7 @@ export interface LatestData {
 }
 export interface LiveData {
   site: { id: number };
-  latestData: any[];
+  latestData: LatestData[];
   bottomTemperature?: SofarValue;
   topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
