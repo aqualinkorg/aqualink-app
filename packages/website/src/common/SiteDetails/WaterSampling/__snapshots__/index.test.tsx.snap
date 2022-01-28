@@ -204,7 +204,7 @@ exports[`renders as expected 1`] = `
                 >
                   Last data uploaded
                    
-                  02/02/2020
+                  01/28/2022
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-12"
@@ -228,7 +228,7 @@ exports[`renders as expected 1`] = `
             >
               <a
                 class="makeStyles-link-19"
-                href="/sites/1?start=2017-11-02T15%3A00%3A00.000Z&end=2020-02-02T21%3A00%3A00.000Z"
+                href="/sites/1?surveyPoint=1"
                 target="_blank"
               >
                 <mock-typography

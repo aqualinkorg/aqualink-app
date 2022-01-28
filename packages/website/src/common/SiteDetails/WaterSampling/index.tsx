@@ -12,20 +12,14 @@ import {
 import moment from "moment";
 
 import { styles as incomingStyles } from "../styles";
-import {
-  calculateSondeDataMeanValues,
-  findSondeDataMinAndMaxDates,
-} from "./utils";
-import {
-  MetricsKeys,
-  TimeSeriesData,
-  TimeSeriesRange,
-} from "../../../store/Sites/types";
+import { calculateSondeDataMeanValues } from "./utils";
+import { MetricsKeys, TimeSeriesData } from "../../../store/Sites/types";
 import { timeSeriesRequest } from "../../../store/Sites/helpers";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { getSondeConfig } from "../../../constants/sondeConfig";
 import UpdateInfo from "../../UpdateInfo";
 import requests from "../../../helpers/requests";
+import siteServices from "../../../services/siteServices";
 
 const CARD_BACKGROUND_COLOR = "#37A692";
 const METRICS: MetricsKeys[] = [
@@ -82,10 +76,11 @@ const WaterSamplingCard = ({
   siteId,
   pointId,
   pointName,
-  sondeDataRange,
 }: WaterSamplingCardProps) => {
   const classes = useStyles();
-  const { minDate, maxDate } = findSondeDataMinAndMaxDates(sondeDataRange);
+  const [minDate, setMinDate] = useState<string>();
+  const [maxDate, setMaxDate] = useState<string>();
+  const [uploadDate, setUploadDate] = useState<string>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
   const isPointNameLong = pointName ? pointName.length > 24 : false;
@@ -93,15 +88,28 @@ const WaterSamplingCard = ({
   useEffect(() => {
     const getCardData = async () => {
       try {
-        if (minDate && maxDate) {
+        const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
+          parseInt(siteId, 10)
+        );
+        const {
+          minDate: from,
+          maxDate: to,
+          createdAt,
+        } = uploadHistory.find(
+          ({ surveyPoint }) => surveyPoint.id.toString() === pointId
+        ) || {};
+        if (from && to && createdAt) {
           const [data] = await timeSeriesRequest({
             siteId,
             pointId,
-            start: minDate,
-            end: maxDate,
+            start: from,
+            end: to,
             metrics: METRICS,
             hourly: true,
           });
+          setUploadDate(createdAt);
+          setMinDate(from);
+          setMaxDate(to);
           setSondeData(data?.sonde);
         }
       } catch (err) {
@@ -110,7 +118,7 @@ const WaterSamplingCard = ({
     };
 
     getCardData();
-  }, [maxDate, minDate, pointId, siteId]);
+  }, [pointId, siteId]);
 
   return (
     <Card className={classes.card}>
@@ -157,13 +165,14 @@ const WaterSamplingCard = ({
           </Grid>
         </Box>
         <UpdateInfo
-          relativeTime={moment(maxDate).format("MM/DD/YYYY")}
+          relativeTime={moment(uploadDate).format("MM/DD/YYYY")}
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
           href={`/sites/${siteId}${requests.generateUrlQueryParams({
             start: minDate,
             end: maxDate,
+            surveyPoint: pointId,
           })}`}
           subtitle={
             pointName
@@ -198,13 +207,11 @@ interface WaterSamplingCardProps {
   siteId: string;
   pointId?: string;
   pointName?: string;
-  sondeDataRange?: TimeSeriesRange;
 }
 
 WaterSamplingCard.defaultProps = {
   pointId: undefined,
   pointName: undefined,
-  sondeDataRange: undefined,
 };
 
 export default WaterSamplingCard;

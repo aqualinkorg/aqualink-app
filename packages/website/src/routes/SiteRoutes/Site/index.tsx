@@ -42,6 +42,7 @@ import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/h
 import { subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
+import { findSurveyPointFromList } from "../../../helpers/siteUtils";
 
 const getAlertMessage = (
   user: User | null,
@@ -111,13 +112,8 @@ const Site = ({ match, classes }: SiteProps) => {
   const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
     siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
-  const initialSurveyPointId =
-    querySurveyPointId &&
-    siteDetails?.surveyPoints
-      .map((point) => point.id.toString())
-      .includes(querySurveyPointId)
-      ? querySurveyPointId
-      : undefined;
+  const { id: initialSurveyPointId, name: initialSurveyPointName } =
+    findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -211,11 +207,12 @@ const Site = ({ match, classes }: SiteProps) => {
                 ...siteDetails,
                 featuredImage: url,
               }}
-              closestSurveyPointId={
-                initialSurveyPointId ||
-                (closestSurveyPointId ? `${closestSurveyPointId}` : undefined)
+              selectedSurveyPointId={
+                initialSurveyPointId || closestSurveyPointId
               }
-              closestSurveyPointName={closestSurveyPointName || undefined}
+              selectedSurveyPointName={
+                initialSurveyPointName || closestSurveyPointName
+              }
               featuredSurveyId={featuredSurveyId}
               hasDailyData={hasDailyData}
               surveys={surveyList}
