@@ -16,7 +16,7 @@ import Alert from "@material-ui/lab/Alert";
 import { ArrowBack, CloudUploadOutlined } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import Dropzone, { FileRejection } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import MediaCard from "./MediaCard";
@@ -25,11 +25,7 @@ import surveyServices from "../../../services/surveyServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { surveyDetailsSelector } from "../../../store/Survey/surveySlice";
 import { SurveyMediaData } from "../../../store/Survey/types";
-import siteServices from "../../../services/siteServices";
-import {
-  siteDetailsSelector,
-  setSiteSurveyPoints,
-} from "../../../store/Sites/selectedSiteSlice";
+import { siteDetailsSelector } from "../../../store/Sites/selectedSiteSlice";
 import { SurveyPoints } from "../../../store/Sites/types";
 
 const maxUploadSize = 40 * 1000 * 1000; // 40mb
@@ -41,7 +37,6 @@ const UploadMedia = ({
   classes,
 }: UploadMediaProps) => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<Metadata[]>([]);
@@ -80,35 +75,17 @@ const UploadMedia = ({
     [files, previews, metadata]
   );
 
-  const handleSurveyPointOptionAdd = (index: number, name: string) => {
-    surveyServices
-      .addNewPoi(siteId, name, user?.token)
-      .then(() => {
-        return siteServices.getSiteSurveyPoints(`${siteId}`);
-      })
-      .then((response) => {
-        const points: SurveyPoints[] = response.data.map((item) => ({
-          id: item.id,
-          name: item.name,
-          polygon: null,
-        }));
-        dispatch(setSiteSurveyPoints(points));
+  const handleSurveyPointOptionAdd =
+    (index: number) => (newPointName: string, newPoints: SurveyPoints[]) => {
+      const newPointId = newPoints.find(
+        (point) => point.name === newPointName
+      )?.id;
 
-        return points.find((point) => point.name === name)?.id;
-      })
-      .then((id) => {
-        const newMetadata = metadata.map((item, key) => {
-          if (key === index) {
-            return {
-              ...item,
-              surveyPoint: `${id}`,
-            };
-          }
-          return item;
-        });
-        setMetadata(newMetadata);
-      });
-  };
+      const newMetadata = metadata.map((item, key) =>
+        key === index ? { ...item, surveyPoint: `${newPointId}` } : item
+      );
+      setMetadata(newMetadata);
+    };
 
   const deleteCard = (index: number) => {
     setPreviews(previews.filter((item, key) => key !== index));
@@ -226,20 +203,15 @@ const UploadMedia = ({
     return (
       <MediaCard
         key={preview}
+        siteId={siteId}
         index={index}
         preview={preview}
         file={files[index]}
         surveyPointOptions={surveyPointOptions}
-        handleSurveyPointOptionAdd={handleSurveyPointOptionAdd}
-        surveyPoint={
-          (metadata && metadata[index] && metadata[index].surveyPoint) || ""
-        }
-        observation={
-          (metadata && metadata[index] && metadata[index].observation) || ""
-        }
-        comments={
-          (metadata && metadata[index] && metadata[index].comments) || ""
-        }
+        handleSurveyPointOptionAdd={handleSurveyPointOptionAdd(index)}
+        surveyPoint={metadata?.[index]?.surveyPoint || ""}
+        observation={metadata?.[index]?.observation || ""}
+        comments={metadata?.[index]?.comments || ""}
         deleteCard={deleteCard}
         setFeatured={setFeatured}
         featuredFile={featuredFile}

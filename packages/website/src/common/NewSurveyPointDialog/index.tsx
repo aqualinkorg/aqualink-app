@@ -16,13 +16,19 @@ import { grey } from "@material-ui/core/colors";
 import CloseIcon from "@material-ui/icons/Close";
 import { useDispatch, useSelector } from "react-redux";
 
-import { maxLengths } from "../../../constants/names";
-import surveyServices from "../../../services/surveyServices";
-import { userInfoSelector } from "../../../store/User/userSlice";
-import siteServices from "../../../services/siteServices";
-import { setSiteSurveyPoints } from "../../../store/Sites/selectedSiteSlice";
+import { maxLengths } from "../../constants/names";
+import surveyServices from "../../services/surveyServices";
+import { userInfoSelector } from "../../store/User/userSlice";
+import siteServices from "../../services/siteServices";
+import { setSiteSurveyPoints } from "../../store/Sites/selectedSiteSlice";
+import { SurveyPoints } from "../../store/Sites/types";
 
-const NewPointDialog = ({ open, siteId, onClose }: NewPointDialogProps) => {
+const NewSurveyPointDialog = ({
+  open,
+  siteId,
+  onClose,
+  onSuccess,
+}: NewSurveyPointDialogProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(userInfoSelector);
@@ -51,11 +57,15 @@ const NewPointDialog = ({ open, siteId, onClose }: NewPointDialogProps) => {
       const { data: newPoints } = await siteServices.getSiteSurveyPoints(
         siteId.toString()
       );
-      dispatch(
-        setSiteSurveyPoints(
-          newPoints.map(({ id, name }) => ({ id, name, polygon: null }))
-        )
-      );
+      const resultingPoints = newPoints.map(({ id, name }) => ({
+        id,
+        name,
+        polygon: null,
+      }));
+      dispatch(setSiteSurveyPoints(resultingPoints));
+      if (onSuccess) {
+        onSuccess(pointName, resultingPoints);
+      }
       onClose();
     } catch (err) {
       const errorMessage = (err?.response?.data?.message as string) || "";
@@ -86,37 +96,40 @@ const NewPointDialog = ({ open, siteId, onClose }: NewPointDialogProps) => {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent className={classes.dialogContent}>
-        <TextField
-          autoFocus
-          variant="outlined"
-          fullWidth
-          label="Survey Point Name"
-          onChange={handleNameChange}
-          error={isNameErrored || !!newPointError}
-          helperText={helperText()}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button
-          size="small"
-          variant="outlined"
-          color="primary"
-          onClick={onDialogClose}
-          disabled={newPointLoading}
-        >
-          Cancel
-        </Button>
-        <Button
-          size="small"
-          variant="outlined"
-          color="primary"
-          disabled={isSaveButtonDisabled}
-          onClick={onPointSave}
-        >
-          {newPointLoading ? "Saving..." : "Save"}
-        </Button>
-      </DialogActions>
+      <form>
+        <DialogContent className={classes.dialogContent}>
+          <TextField
+            autoFocus
+            variant="outlined"
+            fullWidth
+            label="Survey Point Name"
+            onChange={handleNameChange}
+            error={isNameErrored || !!newPointError}
+            helperText={helperText()}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            size="small"
+            variant="outlined"
+            color="primary"
+            onClick={onDialogClose}
+            disabled={newPointLoading}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            size="small"
+            variant="outlined"
+            color="primary"
+            disabled={isSaveButtonDisabled}
+            onClick={onPointSave}
+          >
+            {newPointLoading ? "Saving..." : "Save"}
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };
@@ -133,10 +146,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface NewPointDialogProps {
+interface NewSurveyPointDialogProps {
   open: boolean;
   siteId: number;
   onClose: () => void;
+  onSuccess?: (arg0: string, arg1: SurveyPoints[]) => void;
 }
 
-export default NewPointDialog;
+NewSurveyPointDialog.defaultProps = {
+  onSuccess: undefined,
+};
+
+export default NewSurveyPointDialog;

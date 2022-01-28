@@ -15,7 +15,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 
 import { Site, Sources } from "../../../store/Sites/types";
-import NewPointDialog from "./NewPointDialog";
+import NewSurveyPointDialog from "../../../common/NewSurveyPointDialog";
 
 interface SelectOption {
   id: number;
@@ -130,7 +130,7 @@ const Selectors = ({
 
   return (
     <>
-      <NewPointDialog
+      <NewSurveyPointDialog
         open={isNewPointDialogOpen}
         siteId={site.id}
         onClose={handleNewPointDialogClose}
