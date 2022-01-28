@@ -18,7 +18,8 @@ export class DataUploadsService {
       .addSelect(['site_survey_point.id', 'site_survey_point.name'])
       .andWhere('data_uploads.site_id = :site', {
         site: siteId,
-      });
+      })
+      .orderBy('data_uploads.created_at', 'DESC');
 
     return query.getMany();
   }
