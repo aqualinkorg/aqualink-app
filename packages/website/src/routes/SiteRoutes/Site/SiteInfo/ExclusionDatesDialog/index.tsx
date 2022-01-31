@@ -21,7 +21,10 @@ import { useDispatch } from "react-redux";
 import Dialog, { Action } from "../../../../../common/Dialog";
 import { setTimeZone } from "../../../../../helpers/dates";
 import siteServices from "../../../../../services/siteServices";
-import { siteRequest } from "../../../../../store/Sites/selectedSiteSlice";
+import {
+  excludeSourceData,
+  siteRequest,
+} from "../../../../../store/Sites/selectedSiteSlice";
 
 const ExclusionDatesDialog = ({
   dialogType,
@@ -37,7 +40,7 @@ const ExclusionDatesDialog = ({
   // State variables for deploy dialog
   const [deployDateTime, setDeployDateTime] = useState<Date | null>(null);
   const [deployLoading, setDeployLoading] = useState(false);
-  const [deployError, setDeployError] = useState(false);
+  const [deployError, setDeployError] = useState<string>();
   const [pickerError, setPickerError] = useState("");
 
   // State variables for maintain dialog
@@ -47,7 +50,7 @@ const ExclusionDatesDialog = ({
     null
   );
   const [maintainLoading, setMaintainLoading] = useState(false);
-  const [maintainError, setMaintainError] = useState(false);
+  const [maintainError, setMaintainError] = useState<string>();
   const [startPickerError, setStartPickerError] = useState("");
   const [endPickerError, setEndPickerError] = useState("");
 
@@ -74,7 +77,7 @@ const ExclusionDatesDialog = ({
   const onDeployDialogClose = () => {
     setDeployLoading(false);
     setDeployDateTime(null);
-    setDeployError(false);
+    setDeployError(undefined);
     setPickerError("");
     onClose();
   };
@@ -83,7 +86,7 @@ const ExclusionDatesDialog = ({
     setMaintainLoading(false);
     setMaintainStartDateTime(null);
     setMaintainEndDateTime(null);
-    setMaintainError(false);
+    setMaintainError(undefined);
     setStartPickerError("");
     setEndPickerError("");
     onClose();
@@ -100,7 +103,9 @@ const ExclusionDatesDialog = ({
           onDeployDialogClose();
           dispatch(siteRequest(`${siteId}`));
         })
-        .catch(() => setDeployError(true))
+        .catch((err) =>
+          setDeployError(err?.response?.data?.message || "Something went wrong")
+        )
         .finally(() => setDeployLoading(false));
     } else {
       setPickerError("Cannot be empty");
@@ -123,8 +128,8 @@ const ExclusionDatesDialog = ({
         .maintainSpotter(
           siteId,
           {
-            endDate: localEndDate.toString(),
-            startDate: localStartDate.toString(),
+            endDate: localEndDate,
+            startDate: localStartDate,
           },
           token
         )
@@ -132,9 +137,19 @@ const ExclusionDatesDialog = ({
           setStartPickerError("");
           setEndPickerError("");
           onMaintainDialogClose();
-          dispatch(siteRequest(`${siteId}`));
+          dispatch(
+            excludeSourceData({
+              source: "spotter",
+              start: localStartDate,
+              end: localEndDate,
+            })
+          );
         })
-        .catch(() => setMaintainError(true))
+        .catch((err) =>
+          setMaintainError(
+            err?.response?.data?.message || "Something went wrong"
+          )
+        )
         .finally(() => setMaintainLoading(false));
     }
   };
@@ -190,7 +205,7 @@ const ExclusionDatesDialog = ({
           </Box>
           <Box mb="5px">
             {(deployError || maintainError) && (
-              <Alert severity="error">Something went wrong</Alert>
+              <Alert severity="error">{deployError || maintainError}</Alert>
             )}
           </Box>
           <Typography
