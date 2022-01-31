@@ -204,7 +204,7 @@ exports[`renders as expected 1`] = `
                 >
                   Last data uploaded
                    
-                  01/28/2022
+                  01/31/2022
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-12"

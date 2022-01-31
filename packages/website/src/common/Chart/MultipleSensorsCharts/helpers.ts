@@ -1,5 +1,5 @@
 import { utcToZonedTime } from "date-fns-tz";
-import { minBy, maxBy, meanBy } from "lodash";
+import { minBy, maxBy, meanBy, inRange, has, get } from "lodash";
 import moment from "moment";
 import {
   findMarginalDate,
@@ -21,26 +21,51 @@ import { CardColumn, Dataset, OceanSenseDataset } from "./types";
 
 export const calculateCardMetrics = (
   minNumberOfPoints: number,
+  from: string,
+  to: string,
   data?: (HistoricalMonthlyMeanData | SofarValue)[],
   keyPrefix?: string
-): CardColumn["rows"] => [
-  {
-    key: `${keyPrefix}-max`,
-    value: data?.[minNumberOfPoints - 1]
-      ? maxBy(data, "value")?.value
-      : undefined,
-  },
-  {
-    key: `${keyPrefix}-mean`,
-    value: data?.[minNumberOfPoints - 1] ? meanBy(data, "value") : undefined,
-  },
-  {
-    key: `${keyPrefix}-min`,
-    value: data?.[minNumberOfPoints - 1]
-      ? minBy(data, "value")?.value
-      : undefined,
-  },
-];
+): CardColumn["rows"] => {
+  const isHistoricalMonthlyMean = has(data?.[0], "date");
+  const filteredData = isHistoricalMonthlyMean
+    ? filterHistoricalMonthlyMeanData(
+        (data || []) as HistoricalMonthlyMeanData[],
+        from,
+        to
+      )
+    : data?.filter((item) => {
+        const timestamp = (
+          has(item, "date") ? get(item, "date") : get(item, "timestamp")
+        ) as string;
+
+        return inRange(
+          moment(timestamp).valueOf(),
+          moment(from).valueOf(),
+          moment(to).valueOf() + 1
+        );
+      });
+
+  return [
+    {
+      key: `${keyPrefix}-max`,
+      value: filteredData?.[minNumberOfPoints - 1]
+        ? maxBy(filteredData, "value")?.value
+        : undefined,
+    },
+    {
+      key: `${keyPrefix}-mean`,
+      value: filteredData?.[minNumberOfPoints - 1]
+        ? meanBy(filteredData, "value")
+        : undefined,
+    },
+    {
+      key: `${keyPrefix}-min`,
+      value: filteredData?.[minNumberOfPoints - 1]
+        ? minBy(filteredData, "value")?.value
+        : undefined,
+    },
+  ];
+};
 
 // Show at least 3 ticks on the chart
 export const findChartPeriod = (startDate: string, endDate: string) => {
