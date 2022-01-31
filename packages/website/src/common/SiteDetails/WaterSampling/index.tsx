@@ -80,7 +80,6 @@ const WaterSamplingCard = ({
   const classes = useStyles();
   const [minDate, setMinDate] = useState<string>();
   const [maxDate, setMaxDate] = useState<string>();
-  const [uploadDate, setUploadDate] = useState<string>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
   const isPointNameLong = pointName ? pointName.length > 24 : false;
@@ -91,14 +90,13 @@ const WaterSamplingCard = ({
         const { data: uploadHistory } = await siteServices.getSiteUploadHistory(
           parseInt(siteId, 10)
         );
-        const {
-          minDate: from,
-          maxDate: to,
-          createdAt,
-        } = uploadHistory.find(
-          ({ surveyPoint }) => surveyPoint.id.toString() === pointId
-        ) || {};
-        if (from && to && createdAt) {
+        // Upload history is sorted by `maxDate`, so the first
+        // item is the most recent.
+        const { minDate: from, maxDate: to } =
+          uploadHistory.find(
+            ({ surveyPoint }) => surveyPoint.id.toString() === pointId
+          ) || {};
+        if (from && to) {
           const [data] = await timeSeriesRequest({
             siteId,
             pointId,
@@ -107,7 +105,6 @@ const WaterSamplingCard = ({
             metrics: METRICS,
             hourly: true,
           });
-          setUploadDate(createdAt);
           setMinDate(from);
           setMaxDate(to);
           setSondeData(data?.sonde);
@@ -165,7 +162,7 @@ const WaterSamplingCard = ({
           </Grid>
         </Box>
         <UpdateInfo
-          relativeTime={moment(uploadDate).format("MM/DD/YYYY")}
+          relativeTime={moment(maxDate).format("MM/DD/YYYY")}
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"

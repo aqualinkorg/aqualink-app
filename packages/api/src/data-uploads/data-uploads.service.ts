@@ -19,7 +19,7 @@ export class DataUploadsService {
       .andWhere('data_uploads.site_id = :site', {
         site: siteId,
       })
-      .orderBy('data_uploads.created_at', 'DESC');
+      .orderBy('data_uploads.max_date', 'DESC');
 
     return query.getMany();
   }
