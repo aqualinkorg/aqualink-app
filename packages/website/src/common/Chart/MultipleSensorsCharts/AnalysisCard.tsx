@@ -26,7 +26,6 @@ import {
   TimeSeries,
 } from "../../../store/Sites/types";
 import { calculateCardMetrics } from "./helpers";
-import { filterHistoricalMonthlyMeanData } from "../utils";
 import { CardColumn, Dataset } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { colors } from "../../../layout/App/theme";
@@ -56,12 +55,6 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
 
   const isOceanSense = dataset === "oceanSense";
 
-  const filteredHistoricalMonthlyMeanData = filterHistoricalMonthlyMeanData(
-    historicalMonthlyMean || [],
-    chartStartDate,
-    chartEndDate
-  );
-
   const hasHoboData = !!hoboBottomTemperature?.[1];
   const hasOceanSenseData = !!oceanSenseData?.[1];
 
@@ -86,7 +79,9 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       color: "#d84424",
       rows: calculateCardMetrics(
         1,
-        filteredHistoricalMonthlyMeanData,
+        chartStartDate,
+        chartEndDate,
+        historicalMonthlyMean,
         "historic"
       ),
       display: true,
@@ -95,21 +90,39 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       title: "HOBO",
       key: "hobo",
       color: colors.specialSensorColor,
-      rows: calculateCardMetrics(2, hoboBottomTemperature, "hobo"),
+      rows: calculateCardMetrics(
+        2,
+        chartStartDate,
+        chartEndDate,
+        hoboBottomTemperature,
+        "hobo"
+      ),
       display: dataset === "hobo",
     },
     {
       title: "SENSOR",
       key: "oceanSense",
       color: colors.specialSensorColor,
-      rows: calculateCardMetrics(2, oceanSenseData, "oceanSense"),
+      rows: calculateCardMetrics(
+        2,
+        chartStartDate,
+        chartEndDate,
+        oceanSenseData,
+        "oceanSense"
+      ),
       display: isOceanSense,
     },
     {
       title: "BUOY 1m",
       key: "spotterTop",
       color: "#46a5cf",
-      rows: calculateCardMetrics(2, spotterData?.topTemperature, "spotterTop"),
+      rows: calculateCardMetrics(
+        2,
+        chartStartDate,
+        chartEndDate,
+        spotterData?.topTemperature,
+        "spotterTop"
+      ),
       display: dataset === "spotter",
     },
     {
@@ -118,6 +131,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       color: colors.specialSensorColor,
       rows: calculateCardMetrics(
         2,
+        chartStartDate,
+        chartEndDate,
         spotterData?.bottomTemperature,
         "spotterBottom"
       ),
@@ -127,7 +142,13 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       title: "SST",
       key: "sst",
       color: "#6bc1e1",
-      rows: calculateCardMetrics(2, dailyDataSst, "sst"),
+      rows: calculateCardMetrics(
+        2,
+        chartStartDate,
+        chartEndDate,
+        dailyDataSst,
+        "sst"
+      ),
       display: dataset === "sst",
     },
   ].filter((val) => isNumber(val.rows[0].value));

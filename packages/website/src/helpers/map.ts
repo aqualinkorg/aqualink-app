@@ -123,7 +123,13 @@ export const findClosestSurveyPoint = (
   );
 
   // if there is no closestPoint - return the first one by id.
-  return closestPoint || minBy(points, "id");
+  const resultingPoint = closestPoint || minBy(points, "id");
+
+  return {
+    ...resultingPoint,
+    id: resultingPoint?.id.toString(),
+    name: resultingPoint?.name || undefined,
+  };
 };
 
 const useMarkerStyles = makeStyles({

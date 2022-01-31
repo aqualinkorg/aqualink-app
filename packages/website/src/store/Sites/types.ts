@@ -304,6 +304,8 @@ export interface SiteUploadHistoryItem {
   file: string;
   minDate: string;
   maxDate: string;
+  createdAt: string;
+  updatedAt: string;
   metrics: MetricsKeys[];
   surveyPoint: {
     id: number;

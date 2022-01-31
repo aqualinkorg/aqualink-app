@@ -10,7 +10,6 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import classNames from "classnames";
-import { useSelector } from "react-redux";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -30,14 +29,13 @@ import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
-import { siteTimeSeriesDataRangeSelector } from "../../store/Sites/selectedSiteSlice";
 import WaterSamplingCard from "./WaterSampling";
 
 const SiteDetails = ({
   classes,
   site,
-  closestSurveyPointId,
-  closestSurveyPointName,
+  selectedSurveyPointId,
+  selectedSurveyPointName,
   featuredSurveyId,
   hasDailyData,
   surveys,
@@ -54,18 +52,14 @@ const SiteDetails = ({
     liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
-  const { sonde: sondeDataRange } =
-    useSelector(siteTimeSeriesDataRangeSelector) || {};
-
   const cards = [
     <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
     <Sensor site={site} />,
     hasSondeData ? (
       <WaterSamplingCard
         siteId={`${site.id}`}
-        pointId={closestSurveyPointId}
-        pointName={closestSurveyPointName}
-        sondeDataRange={sondeDataRange}
+        pointId={selectedSurveyPointId}
+        pointName={selectedSurveyPointName}
       />
     ) : (
       <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
@@ -190,7 +184,7 @@ const SiteDetails = ({
           <Box mt="2rem">
             <CombinedCharts
               site={site}
-              closestSurveyPointId={closestSurveyPointId}
+              selectedSurveyPointId={selectedSurveyPointId}
               surveys={surveys}
             />
             <Surveys site={site} />
@@ -222,8 +216,8 @@ const styles = (theme: Theme) =>
 
 interface SiteDetailsIncomingProps {
   site: Site;
-  closestSurveyPointId: string | undefined;
-  closestSurveyPointName?: string;
+  selectedSurveyPointId?: string;
+  selectedSurveyPointName?: string;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
@@ -232,10 +226,11 @@ interface SiteDetailsIncomingProps {
 }
 
 SiteDetails.defaultProps = {
+  selectedSurveyPointId: undefined,
   featuredSurveyPoint: null,
   surveyDiveDate: null,
   featuredSurveyId: null,
-  closestSurveyPointName: undefined,
+  selectedSurveyPointName: undefined,
 };
 
 type SiteDetailsProps = SiteDetailsIncomingProps & WithStyles<typeof styles>;

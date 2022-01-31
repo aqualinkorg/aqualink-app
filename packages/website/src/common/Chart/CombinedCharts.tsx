@@ -18,7 +18,7 @@ import { SurveyListItem } from "../../store/Survey/types";
 
 const CombinedCharts = ({
   site,
-  closestSurveyPointId,
+  selectedSurveyPointId,
   surveys,
   classes,
 }: CombinedChartsProps) => {
@@ -43,7 +43,7 @@ const CombinedCharts = ({
       />
       <MultipleSensorsCharts
         site={site}
-        pointId={closestSurveyPointId}
+        pointId={selectedSurveyPointId}
         surveysFiltered={false}
         disableGutters
       />
@@ -68,7 +68,7 @@ const styles = () =>
 
 interface CombinedChartsIncomingProps {
   site: Site;
-  closestSurveyPointId: string | undefined;
+  selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
 }
 

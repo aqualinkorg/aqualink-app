@@ -84,23 +84,6 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
           </Grid>
           <Grid item>
             <Typography
-              gutterBottom
-              variant="caption"
-              display="block"
-              align="center"
-            >
-              or
-            </Typography>
-            <Typography
-              className={classes.bold}
-              variant="subtitle2"
-              display="block"
-              align="center"
-              gutterBottom
-            >
-              Copy and paste csv data
-            </Typography>
-            <Typography
               className={classNames(classes.bold, classes.grey)}
               variant="caption"
               display="block"
@@ -117,7 +100,7 @@ const DropZone = ({ disabled, onFilesDrop }: DropZoneProps) => {
               display="block"
               align="center"
             >
-              Maximum upload total size: {MAX_SIZE_MB} Mb
+              Maximum upload total size: {MAX_SIZE_MB}MB
             </Typography>
           </Grid>
         </Grid>
