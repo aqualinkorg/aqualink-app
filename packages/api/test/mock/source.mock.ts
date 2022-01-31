@@ -10,6 +10,12 @@ export const californiaSpotterSource: DeepPartial<Sources> = {
   sensorId: californiaSite.sensorId,
 };
 
+export const athensSpotterSource: DeepPartial<Sources> = {
+  site: athensSite,
+  type: SourceType.SPOTTER,
+  sensorId: athensSite.sensorId,
+};
+
 export const californiaNOAASource: DeepPartial<Sources> = {
   site: californiaSite,
   type: SourceType.NOAA,
@@ -37,4 +43,5 @@ export const sources = [
   floridaNOAASource,
   athensNOAASource,
   athensPiraeusHoboSource,
+  athensSpotterSource,
 ];
