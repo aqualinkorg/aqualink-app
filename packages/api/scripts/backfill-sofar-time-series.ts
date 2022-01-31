@@ -1,6 +1,7 @@
 import { ConnectionOptions, createConnection } from 'typeorm';
 import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
+import { ExclusionDates } from '../src/sites/exclusion-dates.entity';
 import { Site } from '../src/sites/sites.entity';
 import { Sources } from '../src/sites/sources.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
@@ -89,6 +90,7 @@ async function run() {
       siteRepository: connection.getRepository(Site),
       sourceRepository: connection.getRepository(Sources),
       timeSeriesRepository: connection.getRepository(TimeSeries),
+      exclusionDatesRepository: connection.getRepository(ExclusionDates),
     },
   );
 }
