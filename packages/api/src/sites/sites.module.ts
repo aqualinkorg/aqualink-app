@@ -13,6 +13,7 @@ import { User } from '../users/users.entity';
 import { Sources } from './sources.entity';
 import { HistoricalMonthlyMean } from './historical-monthly-mean.entity';
 import { LatestData } from '../time-series/latest-data.entity';
+import { TimeSeries } from '../time-series/time-series.entity';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { LatestData } from '../time-series/latest-data.entity';
       User,
       Sources,
       LatestData,
+      TimeSeries,
     ]),
   ],
   controllers: [SitesController],
