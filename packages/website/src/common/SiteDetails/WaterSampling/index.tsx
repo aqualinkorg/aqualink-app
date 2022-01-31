@@ -162,7 +162,9 @@ const WaterSamplingCard = ({
           </Grid>
         </Box>
         <UpdateInfo
-          relativeTime={moment(maxDate).format("MM/DD/YYYY")}
+          relativeTime={
+            maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined
+          }
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"

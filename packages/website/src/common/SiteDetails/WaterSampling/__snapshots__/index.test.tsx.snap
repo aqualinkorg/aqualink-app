@@ -200,14 +200,6 @@ exports[`renders as expected 1`] = `
               >
                 <mock-typography
                   classname="makeStyles-updateInfoText-12"
-                  variant="caption"
-                >
-                  Last data uploaded
-                   
-                  01/31/2022
-                </mock-typography>
-                <mock-typography
-                  classname="makeStyles-updateInfoText-12"
                   title="Survey point: Random Point"
                   variant="caption"
                 >
