@@ -7,7 +7,6 @@ import {
   keyBy,
   pick,
   union,
-  some,
 } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
@@ -30,17 +29,12 @@ import {
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
-  TimeSeriesRange,
 } from "./types";
 
 export function getSiteNameAndRegion(site: Site) {
   const name = site.name || site.region?.name || null;
   const region = site.name ? site.region?.name : null;
   return { name, region };
-}
-
-export function siteHasSondeData(sondeDataRange?: TimeSeriesRange) {
-  return some(sondeDataRange, (range) => Boolean(range?.length));
 }
 
 export const constructTableData = (list: Site[]): TableRow[] => {
