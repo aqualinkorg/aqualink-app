@@ -1,7 +1,11 @@
 import { LatLng } from "leaflet";
 import { maxBy, meanBy } from "lodash";
 
-import { Site, UpdateSiteNameFromListArgs } from "../store/Sites/types";
+import {
+  Site,
+  SurveyPoints,
+  UpdateSiteNameFromListArgs,
+} from "../store/Sites/types";
 import type { TimeSeriesDataRequestParams } from "../store/Sites/types";
 import requests from "./requests";
 
@@ -85,3 +89,15 @@ export const constructTimeSeriesDataRequestUrl = ({
     pointId ? `/site-survey-points/${pointId}` : ""
   }${requests.generateUrlQueryParams(rest)}`;
 };
+
+export const findSurveyPointFromList = (
+  pointId?: string,
+  points?: SurveyPoints[]
+) =>
+  points
+    ?.map((item) => ({
+      ...item,
+      id: item.id.toString(),
+      name: item.name || undefined,
+    }))
+    .find(({ id }) => id === pointId);

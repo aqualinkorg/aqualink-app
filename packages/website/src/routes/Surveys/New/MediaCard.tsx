@@ -12,9 +12,6 @@ import {
   MenuItem,
   TextField,
   Button,
-  Dialog,
-  Card,
-  CardContent,
   Tooltip,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -24,11 +21,12 @@ import classNames from "classnames";
 import observationOptions from "../../../constants/uploadDropdowns";
 import { SurveyPoints } from "../../../store/Sites/types";
 import { ReactComponent as StarIcon } from "../../../assets/starIcon.svg";
-import { maxLengths } from "../../../constants/names";
+import NewSurveyPointDialog from "../../../common/NewSurveyPointDialog";
 
 const MediaCard = ({
   preview,
   surveyPoint,
+  siteId,
   observation,
   comments,
   surveyPointOptions,
@@ -46,15 +44,6 @@ const MediaCard = ({
   const size = (file && file.size && file.size / 1000000)?.toFixed(2);
   const [addSurveyPointDialogOpen, setAddSurveyPointDialogOpen] =
     useState<boolean>(false);
-  const [newSurveyPointName, setNewSurveyPointName] = useState<string>("");
-
-  const errored = newSurveyPointName.length > maxLengths.SURVEY_POINT_NAME;
-
-  const handleNewSurveyPointNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setNewSurveyPointName(event.target.value);
-  };
 
   const onImageClick = useCallback(() => {
     setFeatured(index);
@@ -62,52 +51,12 @@ const MediaCard = ({
 
   return (
     <>
-      <Dialog
-        onClose={() => setAddSurveyPointDialogOpen(false)}
+      <NewSurveyPointDialog
+        siteId={siteId}
         open={addSurveyPointDialogOpen}
-      >
-        <Card className={classes.newSurveyPointDialog}>
-          <CardContent>
-            <Grid container justify="center" item xs={12}>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  inputProps={{ className: classes.textField }}
-                  fullWidth
-                  placeholder="Survey Point"
-                  value={newSurveyPointName}
-                  onChange={handleNewSurveyPointNameChange}
-                  error={errored}
-                  helperText={
-                    errored
-                      ? `Must not exceed ${maxLengths.SURVEY_POINT_NAME} characters`
-                      : undefined
-                  }
-                />
-              </Grid>
-              <Grid
-                style={{ marginTop: "2rem" }}
-                container
-                justify="flex-end"
-                item
-                xs={12}
-              >
-                <Button
-                  disabled={newSurveyPointName === "" || errored}
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => {
-                    handleSurveyPointOptionAdd(index, newSurveyPointName);
-                    setAddSurveyPointDialogOpen(false);
-                  }}
-                >
-                  Add
-                </Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Dialog>
+        onClose={() => setAddSurveyPointDialogOpen(false)}
+        onSuccess={handleSurveyPointOptionAdd}
+      />
       <Grid style={{ marginTop: "2rem" }} container item xs={12}>
         <Paper elevation={0} className={classes.mediaCardWrapper}>
           <Grid
@@ -335,13 +284,14 @@ const styles = (theme: Theme) =>
 interface MediaCardIncomingProps {
   index: number;
   preview: string;
+  siteId: number;
   surveyPoint: string;
   observation: string;
   comments: string;
   surveyPointOptions: SurveyPoints[];
   file?: File | null;
   featuredFile: number | null;
-  handleSurveyPointOptionAdd: (index: number, name: string) => void;
+  handleSurveyPointOptionAdd: (arg0: string, arg1: SurveyPoints[]) => void;
   deleteCard: (index: number) => void;
   setFeatured: (index: number) => void;
   handleCommentsChange: (event: ChangeEvent<{ value: unknown }>) => void;
