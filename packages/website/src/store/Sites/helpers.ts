@@ -6,6 +6,7 @@ import {
   map,
   keyBy,
   pick,
+  union,
   some,
 } from "lodash";
 import { isBefore } from "../../helpers/dates";
@@ -24,7 +25,6 @@ import {
   OceanSenseKeysList,
   Site,
   SofarValue,
-  TimeSeries,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
@@ -78,10 +78,11 @@ export const constructTableData = (list: Site[]): TableRow[] => {
   });
 };
 
-const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
-  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Record<
-    Metrics,
-    T[]
+const mapMetrics = <T>(
+  data: Partial<Record<MetricsKeys, T[]>>
+): Partial<Record<Metrics, T[]>> =>
+  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Partial<
+    Record<Metrics, T[]>
   >;
 
 export const mapTimeSeriesData = (
@@ -129,16 +130,25 @@ const attachTimeSeries = (
   newData: TimeSeriesData,
   previousData: TimeSeriesData
 ): TimeSeriesData =>
-  mapValues(previousData, (previousSensorData, sensor) =>
-    mapValues(previousSensorData, (previousMetricData, metric) =>
-      attachData(
-        direction,
-        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries] ||
-          [],
-        previousMetricData || []
-      )
-    )
-  );
+  mapValues(previousData, (previousSensorData, sensor) => {
+    const sensorKey = sensor as keyof TimeSeriesData;
+    const newSensorData = newData[sensorKey];
+    const previousSensorMetrics = Object.keys(previousSensorData);
+    const newSensorMetrics = Object.keys(newSensorData);
+    const metrics = union(previousSensorMetrics, newSensorMetrics) as Metrics[];
+
+    return metrics.reduce(
+      (acc, metric) => ({
+        ...acc,
+        [metric]: attachData(
+          direction,
+          newSensorData?.[metric] || [],
+          previousSensorData?.[metric] || []
+        ),
+      }),
+      {}
+    );
+  });
 
 /**
   Util function that is responsible for fetching the time series and daily data.

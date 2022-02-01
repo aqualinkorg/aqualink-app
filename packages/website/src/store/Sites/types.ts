@@ -173,14 +173,14 @@ export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
 
 export type TimeSeriesDataResponse = Record<
   Sources,
-  Record<MetricsKeys, SofarValue[]>
+  Partial<Record<MetricsKeys, SofarValue[]>>
 >;
 
 export type TimeSeriesData = Record<Sources, TimeSeries>;
 
 export type TimeSeriesDataRangeResponse = Record<
   Sources,
-  Record<MetricsKeys, DataRange[]>
+  Partial<Record<MetricsKeys, DataRange[]>>
 >;
 
 export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;

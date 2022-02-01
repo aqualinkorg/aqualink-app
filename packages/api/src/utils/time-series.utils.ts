@@ -27,16 +27,13 @@ interface TimeSeriesGroupable {
   source: SourceType;
 }
 
-type TimeSeriesResponse<T> = Record<SourceType, Record<Metric, T[]>>;
+type TimeSeriesResponse<T> = Record<SourceType, Partial<Record<Metric, T[]>>>;
 
 // TODO: Revisit the response structure and simplify when we have more metrics and sources available
 export const emptyMetricsSourcesObject = Object.values(SourceType).reduce(
   (root, key) => ({
     ...root,
-    [key]: Object.values(Metric).reduce(
-      (sources, source) => ({ ...sources, [source]: [] }),
-      {},
-    ),
+    [key]: {},
   }),
   {},
 ) as TimeSeriesResponse<TimeSeriesGroupable>;
