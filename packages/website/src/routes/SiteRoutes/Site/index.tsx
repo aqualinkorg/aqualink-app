@@ -112,8 +112,10 @@ const Site = ({ match, classes }: SiteProps) => {
   const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
     siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
-  const { id: initialSurveyPointId, name: initialSurveyPointName } =
-    findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
+  const { id: selectedSurveyPointId, name: selectedSurveyPointName } =
+    findSurveyPointFromList(querySurveyPointId, surveyPoints) ||
+    findClosestSurveyPoint(polygon, surveyPoints) ||
+    {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -126,9 +128,6 @@ const Site = ({ match, classes }: SiteProps) => {
     diveDate,
   } = featuredMedia || {};
   const { surveyPoint: featuredSurveyPoint, url } = featuredSurveyMedia || {};
-
-  const { id: closestSurveyPointId, name: closestSurveyPointName } =
-    findClosestSurveyPoint(polygon, surveyPoints) || {};
 
   const hasSpotterData = Boolean(liveData?.topTemperature);
 
@@ -155,11 +154,11 @@ const Site = ({ match, classes }: SiteProps) => {
       dispatch(
         siteTimeSeriesDataRangeRequest({
           siteId,
-          pointId: closestSurveyPointId ? `${closestSurveyPointId}` : undefined,
+          pointId: selectedSurveyPointId,
         })
       );
     }
-  }, [closestSurveyPointId, dispatch, id, siteId]);
+  }, [dispatch, id, selectedSurveyPointId, siteId]);
 
   useEffect(() => {
     if (id && oceanSenseConfig?.[id] && siteId === id.toString()) {
@@ -207,12 +206,8 @@ const Site = ({ match, classes }: SiteProps) => {
                 ...siteDetails,
                 featuredImage: url,
               }}
-              selectedSurveyPointId={
-                initialSurveyPointId || closestSurveyPointId
-              }
-              selectedSurveyPointName={
-                initialSurveyPointName || closestSurveyPointName
-              }
+              selectedSurveyPointId={selectedSurveyPointId}
+              selectedSurveyPointName={selectedSurveyPointName}
               featuredSurveyId={featuredSurveyId}
               hasDailyData={hasDailyData}
               surveys={surveyList}
