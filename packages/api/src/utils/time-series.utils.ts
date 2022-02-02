@@ -27,17 +27,11 @@ interface TimeSeriesGroupable {
   source: SourceType;
 }
 
-type TimeSeriesResponse<T> = Record<SourceType, Partial<Record<Metric, T[]>>>;
+type TimeSeriesResponse<T> = Partial<
+  Record<SourceType, Partial<Record<Metric, T[]>>>
+>;
 
 // TODO: Revisit the response structure and simplify when we have more metrics and sources available
-export const emptyMetricsSourcesObject = Object.values(SourceType).reduce(
-  (root, key) => ({
-    ...root,
-    [key]: {},
-  }),
-  {},
-) as TimeSeriesResponse<TimeSeriesGroupable>;
-
 export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
   data: T[],
 ): TimeSeriesResponse<Pick<T, 'metric' | 'source'>> => {
@@ -51,7 +45,6 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
         )
         .toJSON();
     })
-    .merge(emptyMetricsSourcesObject)
     .toJSON();
 };
 

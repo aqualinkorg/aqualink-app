@@ -24,6 +24,7 @@ import {
   OceanSenseKeysList,
   Site,
   SofarValue,
+  Sources,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
@@ -123,26 +124,34 @@ const attachTimeSeries = (
   direction: "left" | "right",
   newData: TimeSeriesData,
   previousData: TimeSeriesData
-): TimeSeriesData =>
-  mapValues(previousData, (previousSensorData, sensor) => {
-    const sensorKey = sensor as keyof TimeSeriesData;
-    const newSensorData = newData[sensorKey];
+): TimeSeriesData => {
+  const previousSources = Object.keys(previousData);
+  const newSources = Object.keys(newData);
+  const sources = union(previousSources, newSources) as Sources[];
+
+  return sources.reduce((ret, currSource) => {
+    const previousSensorData = previousData?.[currSource] || {};
+    const newSensorData = newData?.[currSource] || {};
     const previousSensorMetrics = Object.keys(previousSensorData);
     const newSensorMetrics = Object.keys(newSensorData);
     const metrics = union(previousSensorMetrics, newSensorMetrics) as Metrics[];
 
-    return metrics.reduce(
-      (acc, metric) => ({
-        ...acc,
-        [metric]: attachData(
-          direction,
-          newSensorData?.[metric] || [],
-          previousSensorData?.[metric] || []
-        ),
-      }),
-      {}
-    );
-  });
+    return {
+      ...ret,
+      [currSource]: metrics.reduce(
+        (acc, metric) => ({
+          ...acc,
+          [metric]: attachData(
+            direction,
+            newSensorData?.[metric] || [],
+            previousSensorData?.[metric] || []
+          ),
+        }),
+        {}
+      ),
+    };
+  }, {});
+};
 
 /**
   Util function that is responsible for fetching the time series and daily data.
