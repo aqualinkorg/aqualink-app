@@ -2,11 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import moment from 'moment';
 import request from 'supertest';
 import { californiaSite } from '../../test/mock/site.mock';
-import {
-  hoboMetrics,
-  NOAAMetrics,
-  spotterMetrics,
-} from '../../test/mock/time-series.mock';
 import { TestService } from '../../test/test.service';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Metric } from '../time-series/metrics.entity';
@@ -36,20 +31,9 @@ export const sensorTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA, SourceType.SPOTTER];
+    const sources = [SourceType.SPOTTER];
     sources.forEach((source) => {
       expect(rsp.body).toHaveProperty(source);
-    });
-    hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(0);
-    });
-    NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(0);
-    });
-    spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
     });
     expect(rsp.body[SourceType.SPOTTER][Metric.TOP_TEMPERATURE].length).toBe(6);
   });
