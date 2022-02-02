@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { head } from "lodash";
 import {
   Box,
   Card,
@@ -72,14 +73,12 @@ const metrics = (
   },
 ];
 
-const WaterSamplingCard = ({
-  siteId,
-  pointId,
-  pointName,
-}: WaterSamplingCardProps) => {
+const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const classes = useStyles();
   const [minDate, setMinDate] = useState<string>();
   const [maxDate, setMaxDate] = useState<string>();
+  const [pointId, setPointId] = useState<number>();
+  const [pointName, setPointName] = useState<string>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
   const isPointNameLong = pointName ? pointName.length > 24 : false;
@@ -92,14 +91,15 @@ const WaterSamplingCard = ({
         );
         // Upload history is sorted by `maxDate`, so the first
         // item is the most recent.
-        const { minDate: from, maxDate: to } =
-          uploadHistory.find(
-            ({ surveyPoint }) => surveyPoint.id.toString() === pointId
-          ) || {};
-        if (from && to) {
+        const {
+          minDate: from,
+          maxDate: to,
+          surveyPoint,
+        } = head(uploadHistory) || {};
+        if (from && to && typeof surveyPoint?.id === "number") {
           const [data] = await timeSeriesRequest({
             siteId,
-            pointId,
+            pointId: surveyPoint.id.toString(),
             start: from,
             end: to,
             metrics: METRICS,
@@ -107,6 +107,8 @@ const WaterSamplingCard = ({
           });
           setMinDate(from);
           setMaxDate(to);
+          setPointName(surveyPoint.name);
+          setPointId(surveyPoint.id);
           setSondeData(data?.sonde);
         }
       } catch (err) {
@@ -115,7 +117,7 @@ const WaterSamplingCard = ({
     };
 
     getCardData();
-  }, [pointId, siteId]);
+  }, [siteId]);
 
   return (
     <Card className={classes.card}>
@@ -204,13 +206,6 @@ const useStyles = makeStyles(() => ({
 
 interface WaterSamplingCardProps {
   siteId: string;
-  pointId?: string;
-  pointName?: string;
 }
-
-WaterSamplingCard.defaultProps = {
-  pointId: undefined,
-  pointName: undefined,
-};
 
 export default WaterSamplingCard;

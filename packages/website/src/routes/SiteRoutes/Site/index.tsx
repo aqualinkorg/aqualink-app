@@ -112,7 +112,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
     siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
-  const { id: selectedSurveyPointId, name: selectedSurveyPointName } =
+  const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) ||
     findClosestSurveyPoint(polygon, surveyPoints) ||
     {};
@@ -207,7 +207,6 @@ const Site = ({ match, classes }: SiteProps) => {
                 featuredImage: url,
               }}
               selectedSurveyPointId={selectedSurveyPointId}
-              selectedSurveyPointName={selectedSurveyPointName}
               featuredSurveyId={featuredSurveyId}
               hasDailyData={hasDailyData}
               surveys={surveyList}

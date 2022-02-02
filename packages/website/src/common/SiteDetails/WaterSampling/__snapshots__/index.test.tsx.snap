@@ -200,11 +200,8 @@ exports[`renders as expected 1`] = `
               >
                 <mock-typography
                   classname="makeStyles-updateInfoText-12"
-                  title="Survey point: Random Point"
                   variant="caption"
-                >
-                  Survey point: Random Point
-                </mock-typography>
+                />
               </mock-box>
             </div>
           </div>
@@ -220,7 +217,7 @@ exports[`renders as expected 1`] = `
             >
               <a
                 class="makeStyles-link-19"
-                href="/sites/1?surveyPoint=1"
+                href="/sites/1"
                 target="_blank"
               >
                 <mock-typography
