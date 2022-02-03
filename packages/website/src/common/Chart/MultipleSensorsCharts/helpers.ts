@@ -94,7 +94,7 @@ export const findDataLimits = (
   startDate: string | undefined,
   endDate: string | undefined
 ): [string | undefined, string | undefined] => {
-  const { hobo, spotter } = timeSeriesData || {};
+  const { bottomTemperature, topTemperature } = timeSeriesData || {};
   const historicalMonthlyMeanData = generateHistoricalMonthlyMeanTimestamps(
     historicalMonthlyMean,
     startDate,
@@ -109,9 +109,9 @@ export const findDataLimits = (
   const hasData = Boolean(
     filteredHistoricalMonthlyMeanData?.[0] ||
       dailyData?.[0] ||
-      spotter?.bottomTemperature?.[0] ||
-      spotter?.topTemperature?.[0] ||
-      hobo?.bottomTemperature?.[0]
+      bottomTemperature?.spotter?.[0] ||
+      topTemperature?.spotter?.[0] ||
+      bottomTemperature?.hobo?.[0]
   );
 
   return [
@@ -120,8 +120,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            spotter,
-            hobo?.bottomTemperature || [],
+            bottomTemperature?.spotter,
+            topTemperature?.spotter,
+            bottomTemperature?.hobo,
             "min"
           )
         ).toISOString()
@@ -131,8 +132,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            spotter,
-            hobo?.bottomTemperature || []
+            bottomTemperature?.spotter,
+            topTemperature?.spotter,
+            bottomTemperature?.hobo
           )
         ).toISOString()
       : undefined,

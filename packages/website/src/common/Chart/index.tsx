@@ -13,7 +13,6 @@ import type {
   DailyData,
   HistoricalMonthlyMeanData,
   SofarValue,
-  TimeSeries,
 } from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
@@ -30,7 +29,8 @@ import { convertToLocalTime } from "../../helpers/dates";
 export interface ChartProps {
   siteId: number;
   dailyData: DailyData[];
-  spotterData?: TimeSeries;
+  spotterBottomTemperature?: SofarValue[];
+  spotterTopTemperature?: SofarValue[];
   hoboBottomTemperatureData?: SofarValue[];
   oceanSenseData?: SofarValue[];
   oceanSenseDataUnit?: string;
@@ -90,17 +90,15 @@ const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
   ) &&
   isEqual(prevProps.oceanSenseData, nextProps.oceanSenseData) &&
   isEqual(
-    prevProps.spotterData?.bottomTemperature,
-    nextProps.spotterData?.bottomTemperature
+    prevProps.spotterBottomTemperature,
+    nextProps.spotterBottomTemperature
   ) &&
-  isEqual(
-    prevProps.spotterData?.topTemperature,
-    nextProps.spotterData?.topTemperature
-  );
+  isEqual(prevProps.spotterTopTemperature, nextProps.spotterTopTemperature);
 
 function Chart({
   dailyData,
-  spotterData,
+  spotterBottomTemperature,
+  spotterTopTemperature,
   hoboBottomTemperatureData,
   oceanSenseData,
   historicalMonthlyMeanData,
@@ -149,7 +147,8 @@ function Chart({
     historicalMonthlyMeanTemp,
   } = useProcessedChartData(
     dailyData,
-    spotterData,
+    spotterBottomTemperature,
+    spotterTopTemperature,
     hoboBottomTemperatureData,
     oceanSenseData,
     historicalMonthlyMeanData,

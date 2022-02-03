@@ -23,7 +23,6 @@ import {
 import {
   HistoricalMonthlyMeanData,
   SofarValue,
-  TimeSeries,
 } from "../../../store/Sites/types";
 import { calculateCardMetrics } from "./helpers";
 import { CardColumn, Dataset } from "./types";
@@ -42,7 +41,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
   chartEndDate,
   depth,
   dailyDataSst,
-  spotterData,
+  spotterBottomTemperature,
+  spotterTopTemperature,
   hoboBottomTemperature,
   oceanSenseData,
   oceanSenseUnit,
@@ -58,8 +58,8 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
   const hasHoboData = !!hoboBottomTemperature?.[1];
   const hasOceanSenseData = !!oceanSenseData?.[1];
 
-  const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
-  const hasSpotterTop = !!spotterData?.topTemperature?.[1];
+  const hasSpotterBottom = !!spotterBottomTemperature?.[1];
+  const hasSpotterTop = !!spotterTopTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
   const hasDailyData = !!dailyDataSst?.[1];
 
@@ -120,7 +120,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
         2,
         chartStartDate,
         chartEndDate,
-        spotterData?.topTemperature,
+        spotterTopTemperature,
         "spotterTop"
       ),
       display: dataset === "spotter",
@@ -133,7 +133,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
         2,
         chartStartDate,
         chartEndDate,
-        spotterData?.bottomTemperature,
+        spotterBottomTemperature,
         "spotterBottom"
       ),
       display: dataset === "spotter",
@@ -291,7 +291,8 @@ interface AnalysisCardIncomingProps {
   chartEndDate: string;
   depth: number | null;
   dailyDataSst?: SofarValue[];
-  spotterData?: TimeSeries;
+  spotterBottomTemperature?: SofarValue[];
+  spotterTopTemperature?: SofarValue[];
   hoboBottomTemperature?: SofarValue[];
   oceanSenseData?: SofarValue[];
   oceanSenseUnit?: string;

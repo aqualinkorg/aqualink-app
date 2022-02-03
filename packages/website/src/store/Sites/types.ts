@@ -74,6 +74,17 @@ export const metricsKeysList = [
   "ph",
   "salinity",
   "turbidity",
+  "water_depth",
+  "conductivity",
+  "cholorophyll_rfu",
+  "odo_saturation",
+  "specific_conductance",
+  "tds",
+  "total_suspended_solids",
+  "sonde_wiper_position",
+  "ph_mv",
+  "sonde_battery_voltage",
+  "sonde_cable_power_voltage",
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
@@ -167,21 +178,19 @@ export interface DataRange {
   maxDate: string;
 }
 
-export type TimeSeries = Partial<Record<Metrics, SofarValue[]>>;
+export type TimeSeries = Partial<Record<Sources, SofarValue[]>>;
 
-export type TimeSeriesRange = Partial<Record<Metrics, DataRange[]>>;
+export type TimeSeriesRange = Partial<Record<Sources, DataRange[]>>;
 
-export type TimeSeriesDataResponse = Partial<
-  Record<Sources, Partial<Record<MetricsKeys, SofarValue[]>>>
->;
+export type TimeSeriesDataResponse = Partial<Record<MetricsKeys, TimeSeries>>;
 
-export type TimeSeriesData = Partial<Record<Sources, TimeSeries>>;
+export type TimeSeriesData = Partial<Record<Metrics, TimeSeries>>;
 
 export type TimeSeriesDataRangeResponse = Partial<
-  Record<Sources, Partial<Record<MetricsKeys, DataRange[]>>>
+  Record<MetricsKeys, TimeSeriesRange>
 >;
 
-export type TimeSeriesDataRange = Partial<Record<Sources, TimeSeriesRange>>;
+export type TimeSeriesDataRange = Partial<Record<Metrics, TimeSeriesRange>>;
 
 export const OceanSenseKeysList = ["DO", "EC", "ORP", "PH", "PRESS"] as const;
 

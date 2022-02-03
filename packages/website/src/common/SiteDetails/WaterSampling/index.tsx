@@ -14,16 +14,19 @@ import moment from "moment";
 
 import { styles as incomingStyles } from "../styles";
 import { calculateSondeDataMeanValues } from "./utils";
-import { MetricsKeys, TimeSeriesData } from "../../../store/Sites/types";
+import { TimeSeriesData } from "../../../store/Sites/types";
 import { timeSeriesRequest } from "../../../store/Sites/helpers";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { getSondeConfig } from "../../../constants/sondeConfig";
+import {
+  getSondeConfig,
+  SondeMetricsKeys,
+} from "../../../constants/sondeConfig";
 import UpdateInfo from "../../UpdateInfo";
 import requests from "../../../helpers/requests";
 import siteServices from "../../../services/siteServices";
 
 const CARD_BACKGROUND_COLOR = "#37A692";
-const METRICS: MetricsKeys[] = [
+const METRICS: SondeMetricsKeys[] = [
   "odo_concentration",
   "cholorophyll_concentration",
   "ph",
@@ -79,8 +82,8 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const [maxDate, setMaxDate] = useState<string>();
   const [pointId, setPointId] = useState<number>();
   const [pointName, setPointName] = useState<string>();
-  const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
-  const meanValues = calculateSondeDataMeanValues(sondeData);
+  const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>();
+  const meanValues = calculateSondeDataMeanValues(METRICS, timeSeriesData);
   const isPointNameLong = pointName ? pointName.length > 24 : false;
 
   useEffect(() => {
@@ -109,7 +112,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           setMaxDate(to);
           setPointName(surveyPoint.name);
           setPointId(surveyPoint.id);
-          setSondeData(data?.sonde);
+          setTimeSeriesData(data);
         }
       } catch (err) {
         console.error(err);

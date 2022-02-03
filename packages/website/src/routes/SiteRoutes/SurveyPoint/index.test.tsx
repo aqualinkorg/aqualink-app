@@ -9,7 +9,7 @@ import { mockUser } from "../../../mocks/mockUser";
 
 import SurveyPoint from ".";
 import { mockSurvey } from "../../../mocks/mockSurvey";
-import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
+import { mockDataRange } from "../../../mocks/mockDataRange";
 import { mockCollection } from "../../../mocks/mockCollection";
 
 jest.mock("./InfoCard/Map", () => "Mock-Map");
@@ -33,7 +33,7 @@ describe("Survey Point Detail Page", () => {
   beforeEach(() => {
     const store = mockStore({
       selectedSite: {
-        hoboDataRange: mockHoboDataRange,
+        hoboDataRange: mockDataRange,
         details: mockSite,
         loading: false,
         error: null,

@@ -8,7 +8,6 @@ import {
   HistoricalMonthlyMeanData,
   Range,
   SofarValue,
-  TimeSeries,
 } from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
 import { sortByDate } from "./sortDailyData";
@@ -98,18 +97,19 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
 export const findMarginalDate = (
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   dailyData: DailyData[],
-  spotterData?: TimeSeries,
+  spotterBottomTemperature?: SofarValue[],
+  spotterTopTemperature?: SofarValue[],
   hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
     ...historicalMonthlyMeanData,
     ...dailyData,
-    ...(spotterData?.topTemperature?.map((item) => ({
+    ...(spotterTopTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
-    ...(spotterData?.bottomTemperature?.map((item) => ({
+    ...(spotterBottomTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
@@ -228,53 +228,6 @@ export const convertSofarDataToLocalTime = (
     ...item,
     timestamp: convertToLocalTime(item.timestamp, timeZone),
   }));
-
-export const convertTimeSeriesToLocalTime = (
-  timeSeries?: TimeSeries,
-  timeZone?: string | null
-): TimeSeries | undefined => {
-  if (!timeSeries) {
-    return timeSeries;
-  }
-  return {
-    dhw: convertSofarDataToLocalTime(timeSeries.dhw, timeZone),
-    satelliteTemperature: convertSofarDataToLocalTime(
-      timeSeries.satelliteTemperature,
-      timeZone
-    ),
-    topTemperature: convertSofarDataToLocalTime(
-      timeSeries.topTemperature,
-      timeZone
-    ),
-    bottomTemperature: convertSofarDataToLocalTime(
-      timeSeries.bottomTemperature,
-      timeZone
-    ),
-    sstAnomaly: convertSofarDataToLocalTime(timeSeries.sstAnomaly, timeZone),
-    significantWaveHeight: convertSofarDataToLocalTime(
-      timeSeries.significantWaveHeight,
-      timeZone
-    ),
-    tempAlert: convertSofarDataToLocalTime(timeSeries.tempAlert, timeZone),
-    tempWeeklyAlert: convertSofarDataToLocalTime(
-      timeSeries.tempWeeklyAlert,
-      timeZone
-    ),
-    waveMeanPeriod: convertSofarDataToLocalTime(
-      timeSeries.waveMeanPeriod,
-      timeZone
-    ),
-    waveMeanDirection: convertSofarDataToLocalTime(
-      timeSeries.waveMeanDirection,
-      timeZone
-    ),
-    windSpeed: convertSofarDataToLocalTime(timeSeries.windSpeed, timeZone),
-    windDirection: convertSofarDataToLocalTime(
-      timeSeries.windDirection,
-      timeZone
-    ),
-  };
-};
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],

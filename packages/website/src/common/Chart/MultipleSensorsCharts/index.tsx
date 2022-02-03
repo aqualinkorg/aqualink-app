@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import isISODate from "validator/lib/isISO8601";
 import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import moment from "moment";
-import { isNaN, snakeCase, sortBy } from "lodash";
+import { camelCase, isNaN, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -30,7 +30,10 @@ import {
 } from "./helpers";
 import { RangeValue } from "./types";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
-import { getSondeConfig } from "../../../constants/sondeConfig";
+import {
+  getPublicSondeMetrics,
+  getSondeConfig,
+} from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import ChartWithCard from "./ChartWithCard";
 
@@ -82,15 +85,11 @@ const MultipleSensorsCharts = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const {
-    hobo: hoboData,
-    spotter: spotterData,
-    sonde: sondeData,
-  } = timeSeriesData || {};
-  const { bottomTemperature: hoboBottomTemperature } = hoboData || {};
+  const { bottomTemperature, topTemperature } = timeSeriesData || {};
+  const { hobo: hoboBottomTemperature } = bottomTemperature || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
-  const { bottomTemperature: hoboBottomTemperatureRange } =
-    timeSeriesDataRanges?.hobo || {};
+  const { hobo: hoboBottomTemperatureRange } =
+    timeSeriesDataRanges?.bottomTemperature || {};
   const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
@@ -109,7 +108,7 @@ const MultipleSensorsCharts = ({
   }));
 
   const hasSpotterData = Boolean(
-    spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
+    bottomTemperature?.spotter?.[1] || topTemperature?.spotter?.[1]
   );
 
   const hasSondeData = Boolean(
@@ -355,7 +354,8 @@ const MultipleSensorsCharts = ({
         site={site}
         dailyData={granularDailyData || []}
         pointId={pointId ? parseInt(pointId, 10) : undefined}
-        spotterData={spotterData}
+        spotterTopTemperature={topTemperature?.spotter}
+        spotterBottomTemperature={bottomTemperature?.spotter}
         hoboBottomTemperature={hoboBottomTemperature || []}
         pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
         pickerEndDate={pickerEndDate || today}
@@ -400,10 +400,12 @@ const MultipleSensorsCharts = ({
               isPickerErrored={pickerErrored}
               showDatePickers={false}
               // TODO -  Make these data input more generic. Eg. in this case, this is not "oceanSense" data.
-              oceanSenseData={spotterData?.[key as Metrics]?.map((item) => ({
-                ...item,
-                value: convert ? convert * item.value : item.value,
-              }))}
+              oceanSenseData={timeSeriesData?.[key as Metrics]?.spotter?.map(
+                (item) => ({
+                  ...item,
+                  value: convert ? convert * item.value : item.value,
+                })
+              )}
               oceanSenseDataUnit={unit}
               hideYAxisUnits
               displayHistoricalMonthlyMean={false}
@@ -452,17 +454,13 @@ const MultipleSensorsCharts = ({
           )
         )}
       {hasSondeData &&
-        sortBy(
-          Object.entries(sondeData || {}),
-          ([key]) => getSondeConfig(snakeCase(key)).order
-        )
-          .filter(([, itemData]) => itemData?.length)
-          .map(([key, itemData]) => {
-            const { title, units, visibility } = getSondeConfig(snakeCase(key));
-
-            if (visibility === "admin") {
-              return null;
-            }
+        sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
+          .filter(
+            (key) => timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.length
+          )
+          .map((key) => {
+            const data = timeSeriesData?.[camelCase(key) as Metrics]?.sonde;
+            const { title, units } = getSondeConfig(key);
 
             return (
               <Box mt={4} key={key}>
@@ -488,7 +486,7 @@ const MultipleSensorsCharts = ({
                   onEndDateChange={onPickerDateChange("end")}
                   isPickerErrored={pickerErrored}
                   showDatePickers={false}
-                  oceanSenseData={itemData}
+                  oceanSenseData={data}
                   oceanSenseDataUnit={units}
                   hideYAxisUnits
                   displayHistoricalMonthlyMean={false}

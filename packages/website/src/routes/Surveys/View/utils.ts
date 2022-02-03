@@ -11,8 +11,8 @@ const getSensorValue = (data?: SofarValue[], date?: string | null) =>
 
 export const getCardTemperatureValues = (
   dailyData: DailyData[],
-  spotterData: TimeSeries | undefined,
-  hoboData: TimeSeries | undefined,
+  bottomTemperature: TimeSeries | undefined,
+  topTemperature: TimeSeries | undefined,
   date: string | null | undefined
 ) => {
   const surfaceData = date
@@ -21,9 +21,9 @@ export const getCardTemperatureValues = (
 
   return {
     satelliteTemperature: surfaceData?.satelliteTemperature,
-    spotterBottom: getSensorValue(spotterData?.bottomTemperature, date),
-    spotterTop: getSensorValue(spotterData?.topTemperature, date),
-    hoboBottom: getSensorValue(hoboData?.bottomTemperature, date),
-    hoboSurface: getSensorValue(hoboData?.topTemperature, date),
+    spotterBottom: getSensorValue(bottomTemperature?.spotter, date),
+    spotterTop: getSensorValue(topTemperature?.spotter, date),
+    hoboBottom: getSensorValue(bottomTemperature?.hobo, date),
+    hoboSurface: getSensorValue(topTemperature?.hobo, date),
   };
 };

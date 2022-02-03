@@ -18,17 +18,11 @@ import DatePicker from "../../Datepicker";
 import {
   convertDailyDataToLocalTime,
   convertSofarDataToLocalTime,
-  convertTimeSeriesToLocalTime,
   convertToLocalTime,
   displayTimeInLocalTimezone,
   generateHistoricalMonthlyMeanTimestamps,
 } from "../../../helpers/dates";
-import {
-  DailyData,
-  Site,
-  SofarValue,
-  TimeSeries,
-} from "../../../store/Sites/types";
+import { DailyData, Site, SofarValue } from "../../../store/Sites/types";
 import {
   siteOceanSenseDataLoadingSelector,
   siteTimeSeriesDataLoadingSelector,
@@ -44,7 +38,8 @@ const Chart = ({
   dailyData,
   pointId,
   displayHistoricalMonthlyMean,
-  spotterData,
+  spotterBottomTemperature,
+  spotterTopTemperature,
   hoboBottomTemperature,
   oceanSenseData,
   oceanSenseDataUnit,
@@ -62,8 +57,8 @@ const Chart = ({
 }: ChartProps) => {
   const theme = useTheme();
   const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
-  const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(siteTimeSeriesDataRangeSelector)?.hobo || {};
+  const { hobo: hoboBottomTemperatureRange } =
+    useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
   const isTimeSeriesDataRangeLoading = useSelector(
     siteTimeSeriesDataRangeLoadingSelector
@@ -82,8 +77,8 @@ const Chart = ({
     value: item.satelliteTemperature,
   }));
 
-  const hasSpotterBottom = !!spotterData?.bottomTemperature?.[1];
-  const hasSpotterTop = !!spotterData?.topTemperature?.[1];
+  const hasSpotterBottom = !!spotterBottomTemperature?.[1];
+  const hasSpotterTop = !!spotterTopTemperature?.[1];
   const hasSpotterData = hasSpotterBottom || hasSpotterTop;
 
   const hasHoboData = !!hoboBottomTemperature?.[1];
@@ -185,7 +180,12 @@ const Chart = ({
             dailyData || [],
             site.timezone
           )}
-          spotterData={convertTimeSeriesToLocalTime(spotterData, site.timezone)}
+          spotterBottomTemperature={convertSofarDataToLocalTime(
+            spotterBottomTemperature
+          )}
+          spotterTopTemperature={convertSofarDataToLocalTime(
+            spotterTopTemperature
+          )}
           hoboBottomTemperatureData={convertSofarDataToLocalTime(
             hoboBottomTemperature || [],
             site.timezone
@@ -270,7 +270,8 @@ interface ChartIncomingProps {
   site: Site;
   pointId?: number;
   dailyData?: DailyData[];
-  spotterData?: TimeSeries;
+  spotterBottomTemperature?: SofarValue[];
+  spotterTopTemperature?: SofarValue[];
   hoboBottomTemperature?: SofarValue[];
   oceanSenseData?: SofarValue[];
   oceanSenseDataUnit?: string;
@@ -290,7 +291,8 @@ interface ChartIncomingProps {
 Chart.defaultProps = {
   pointId: undefined,
   dailyData: [],
-  spotterData: undefined,
+  spotterBottomTemperature: undefined,
+  spotterTopTemperature: undefined,
   hoboBottomTemperature: undefined,
   oceanSenseData: undefined,
   oceanSenseDataUnit: undefined,

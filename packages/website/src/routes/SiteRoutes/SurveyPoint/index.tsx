@@ -37,8 +37,8 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const timeSeriesRangeLoading = useSelector(
     siteTimeSeriesDataRangeLoadingSelector
   );
-  const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(siteTimeSeriesDataRangeSelector)?.hobo || {};
+  const { hobo: hoboBottomTemperatureRange } =
+    useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const loading = siteLoading || surveysLoading || timeSeriesRangeLoading;
 
   const hasSpotterData = Boolean(site?.liveData?.topTemperature);

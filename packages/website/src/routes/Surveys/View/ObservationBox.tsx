@@ -25,7 +25,7 @@ const ObservationBox = ({
   date,
   classes,
 }: ObservationBoxProps) => {
-  const { hobo: hoboData, spotter: spotterData } =
+  const { bottomTemperature, topTemperature } =
     useSelector(siteTimeSeriesDataSelector) || {};
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
 
@@ -35,7 +35,12 @@ const ObservationBox = ({
     hoboSurface,
     spotterBottom,
     spotterTop,
-  } = getCardTemperatureValues(dailyData, spotterData, hoboData, date);
+  } = getCardTemperatureValues(
+    dailyData,
+    bottomTemperature,
+    topTemperature,
+    date
+  );
 
   return (
     <div className={classes.outerDiv}>

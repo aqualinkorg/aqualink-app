@@ -90,7 +90,7 @@ const Header = ({
                 {allSensors.map((sensor) => {
                   const dateRangeString = availableRangeString(
                     sensor.name,
-                    timeSeriesDataRanges[sensor.id]?.bottomTemperature?.[0],
+                    timeSeriesDataRanges?.bottomTemperature?.[sensor.id]?.[0],
                     timeZone
                   );
 

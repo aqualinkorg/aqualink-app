@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
-import { max, min } from 'lodash';
+import { max, min, union } from 'lodash';
 import moment from 'moment';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
@@ -36,14 +36,14 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(hoboMetrics, NOAAMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.HOBO][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
+      expect(rsp.body[metric][SourceType.HOBO].length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.HOBO][0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -51,9 +51,9 @@ export const timeSeriesTests = () => {
       ];
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.NOAA][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA][0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -68,21 +68,21 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.NOAA, SourceType.SPOTTER];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(NOAAMetrics, spotterMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.NOAA][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA][0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.SPOTTER][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
+      expect(rsp.body[metric][SourceType.SPOTTER].length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.SPOTTER][0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
@@ -103,17 +103,17 @@ export const timeSeriesTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(hoboMetrics, NOAAMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
+      expect(rsp.body[metric][SourceType.HOBO].length).toBe(10);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].length).toBe(10);
     });
   });
 
@@ -130,17 +130,17 @@ export const timeSeriesTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.NOAA, SourceType.SPOTTER];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(NOAAMetrics, spotterMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].length).toBe(10);
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
+      expect(rsp.body[metric][SourceType.SPOTTER].length).toBe(10);
     });
   });
 };

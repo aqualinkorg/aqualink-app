@@ -12,7 +12,6 @@ import {
   HistoricalMonthlyMeanData,
   Site,
   SofarValue,
-  TimeSeries,
   TimeSeriesDataRange,
 } from "../../../store/Sites/types";
 
@@ -44,7 +43,8 @@ const ChartWithCard = ({
   showDatePickers,
   showRangeButtons,
   site,
-  spotterData,
+  spotterBottomTemperature,
+  spotterTopTemperature,
   timeSeriesDataRanges,
   timeZone,
   onEndDateChange,
@@ -88,7 +88,8 @@ const ChartWithCard = ({
             site={site}
             dailyData={dailyData}
             pointId={pointId}
-            spotterData={spotterData}
+            spotterTopTemperature={spotterTopTemperature}
+            spotterBottomTemperature={spotterBottomTemperature}
             hoboBottomTemperature={hoboBottomTemperature}
             pickerStartDate={pickerStartDate}
             pickerEndDate={pickerEndDate}
@@ -115,7 +116,8 @@ const ChartWithCard = ({
               chartEndDate={chartEndDate}
               depth={site.depth}
               dailyDataSst={dailyDataSst}
-              spotterData={spotterData}
+              spotterTopTemperature={spotterTopTemperature}
+              spotterBottomTemperature={spotterBottomTemperature}
               hoboBottomTemperature={hoboBottomTemperature}
               historicalMonthlyMean={historicalMonthlyMean}
               oceanSenseData={oceanSenseData}
@@ -208,7 +210,8 @@ interface ChartWithCardProps {
   showDatePickers?: boolean;
   showRangeButtons?: boolean;
   site: Site;
-  spotterData?: TimeSeries;
+  spotterBottomTemperature?: SofarValue[];
+  spotterTopTemperature?: SofarValue[];
   timeSeriesDataRanges?: TimeSeriesDataRange;
   timeZone?: string | null;
   onEndDateChange: (date: Date | null) => void;
@@ -232,7 +235,8 @@ ChartWithCard.defaultProps = {
   showAvailableRanges: true,
   showDatePickers: true,
   showRangeButtons: true,
-  spotterData: undefined,
+  spotterBottomTemperature: undefined,
+  spotterTopTemperature: undefined,
   timeSeriesDataRanges: undefined,
   timeZone: undefined,
 };

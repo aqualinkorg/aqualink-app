@@ -28,7 +28,7 @@ interface TimeSeriesGroupable {
 }
 
 type TimeSeriesResponse<T> = Partial<
-  Record<SourceType, Partial<Record<Metric, T[]>>>
+  Record<Metric, Partial<Record<SourceType, T[]>>>
 >;
 
 // TODO: Revisit the response structure and simplify when we have more metrics and sources available
@@ -36,10 +36,10 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
   data: T[],
 ): TimeSeriesResponse<Pick<T, 'metric' | 'source'>> => {
   return _(data)
-    .groupBy('source')
+    .groupBy('metric')
     .mapValues((grouped) => {
       return _(grouped)
-        .groupBy('metric')
+        .groupBy('source')
         .mapValues((groupedData) =>
           groupedData.map((o) => omit(o, 'metric', 'source')),
         )

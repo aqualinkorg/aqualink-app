@@ -43,7 +43,8 @@ function ChartWithTooltip({
 }: PropsWithChildren<ChartWithTooltipProps>) {
   const {
     dailyData,
-    spotterData,
+    spotterBottomTemperature,
+    spotterTopTemperature,
     hoboBottomTemperatureData,
     oceanSenseData,
     oceanSenseDataUnit,
@@ -103,19 +104,11 @@ function ChartWithTooltip({
       );
 
       const spotterTopTemp = numberOrNull(
-        getSofarDataClosestToDate(
-          spotterData?.topTemperature || [],
-          dateObject,
-          6
-        )
+        getSofarDataClosestToDate(spotterTopTemperature || [], dateObject, 6)
       );
 
       const spotterBottomTemp = numberOrNull(
-        getSofarDataClosestToDate(
-          spotterData?.bottomTemperature || [],
-          dateObject,
-          6
-        )
+        getSofarDataClosestToDate(spotterBottomTemperature || [], dateObject, 6)
       );
 
       const hoboBottomTemp = numberOrNull(

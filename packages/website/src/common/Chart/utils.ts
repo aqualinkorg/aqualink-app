@@ -9,7 +9,6 @@ import type {
   DailyData,
   HistoricalMonthlyMeanData,
   SofarValue,
-  TimeSeries,
 } from "../../store/Sites/types";
 import { SurveyListItem } from "../../store/Survey/types";
 import { colors } from "../../layout/App/theme";
@@ -42,60 +41,6 @@ export const filterDailyData = (
     return ret.slice(-diffDays);
   }
   return ret;
-};
-
-export const filterSofarData = (
-  sofarData?: SofarValue[],
-  from?: string,
-  to?: string
-): SofarValue[] => {
-  if (!sofarData) {
-    return [];
-  }
-  if (!from || !to) return sofarData;
-  const startDate = moment(from);
-  const endDate = moment(to);
-
-  return sofarData.filter((item) =>
-    inRange(
-      moment(item.timestamp).valueOf(),
-      startDate.valueOf(),
-      endDate.valueOf() + 1
-    )
-  );
-};
-
-export const filterTimeSeriesData = (
-  timeSeries?: TimeSeries,
-  from?: string,
-  to?: string
-): TimeSeries | undefined => {
-  if (!timeSeries) {
-    return timeSeries;
-  }
-
-  return {
-    dhw: filterSofarData(timeSeries?.dhw, from, to),
-    satelliteTemperature: filterSofarData(
-      timeSeries?.satelliteTemperature,
-      from,
-      to
-    ),
-    topTemperature: filterSofarData(timeSeries?.topTemperature, from, to),
-    bottomTemperature: filterSofarData(timeSeries?.bottomTemperature, from, to),
-    sstAnomaly: filterSofarData(timeSeries?.sstAnomaly, from, to),
-    significantWaveHeight: filterSofarData(
-      timeSeries?.significantWaveHeight,
-      from,
-      to
-    ),
-    tempAlert: filterSofarData(timeSeries?.tempAlert, from, to),
-    tempWeeklyAlert: filterSofarData(timeSeries?.tempWeeklyAlert, from, to),
-    waveMeanPeriod: filterSofarData(timeSeries?.waveMeanPeriod, from, to),
-    waveMeanDirection: filterSofarData(timeSeries?.waveMeanDirection, from, to),
-    windSpeed: filterSofarData(timeSeries?.windSpeed, from, to),
-    windDirection: filterSofarData(timeSeries?.windDirection, from, to),
-  };
 };
 
 const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
@@ -412,7 +357,8 @@ export const calculateAxisLimits = (
 
 export function useProcessedChartData(
   dailyData: ChartProps["dailyData"],
-  spotterData: ChartProps["spotterData"],
+  spotterBottomTemperatureData: ChartProps["spotterBottomTemperature"],
+  spotterTopTemperatureData: ChartProps["spotterTopTemperature"],
   hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
   oceanSenseData: ChartProps["oceanSenseData"],
   historicalMonthlyMeanData: ChartProps["historicalMonthlyMeanData"],
@@ -428,12 +374,10 @@ export function useProcessedChartData(
     endDate
   );
 
-  const { bottomTemperature, topTemperature } = spotterData || {};
-
   const datasets = createDatasets(
     sortedFilteredDailyData,
-    bottomTemperature || [],
-    topTemperature || [],
+    spotterBottomTemperatureData || [],
+    spotterTopTemperatureData || [],
     hoboBottomTemperatureData || [],
     oceanSenseData || [],
     historicalMonthlyMeanData || [],
@@ -442,11 +386,11 @@ export function useProcessedChartData(
 
   const axisLimits = calculateAxisLimits(
     sortedFilteredDailyData,
-    bottomTemperature || [],
+    spotterBottomTemperatureData || [],
     hoboBottomTemperatureData || [],
     oceanSenseData || [],
     historicalMonthlyMeanData || [],
-    topTemperature || [],
+    spotterTopTemperatureData || [],
     surveys,
     temperatureThreshold
   );

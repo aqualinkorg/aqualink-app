@@ -1,4 +1,35 @@
-export const sondeConfig: { [key: string]: any | undefined } = {
+import { MetricsKeys } from "../store/Sites/types";
+
+interface SondeConfig {
+  title: string;
+  units: string;
+  description: string;
+  visibility: string;
+  order: number;
+}
+
+export type SondeMetricsKeys = Extract<
+  MetricsKeys,
+  | "salinity"
+  | "turbidity"
+  | "bottom_temperature"
+  | "odo_saturation"
+  | "ph"
+  | "cholorophyll_rfu"
+  | "cholorophyll_concentration"
+  | "conductivity"
+  | "water_depth"
+  | "odo_concentration"
+  | "specific_conductance"
+  | "tds"
+  | "total_suspended_solids"
+  | "sonde_wiper_position"
+  | "ph_mv"
+  | "sonde_battery_voltage"
+  | "sonde_cable_power_voltage"
+>;
+
+export const sondeConfig: Record<SondeMetricsKeys, SondeConfig> = {
   salinity: {
     title: "Salinity",
     units: "psu",
@@ -120,6 +151,12 @@ export const sondeConfig: { [key: string]: any | undefined } = {
   },
 };
 
-export function getSondeConfig(configKey: string) {
+export function getSondeConfig(configKey: SondeMetricsKeys) {
   return sondeConfig[configKey] || {};
+}
+
+export function getPublicSondeMetrics() {
+  return Object.keys(sondeConfig).filter(
+    (key) => sondeConfig[key as SondeMetricsKeys].visibility !== "admin"
+  ) as SondeMetricsKeys[];
 }

@@ -74,19 +74,19 @@ export const constructTableData = (list: Site[]): TableRow[] => {
 };
 
 const mapMetrics = <T>(
-  data: Partial<Record<MetricsKeys, T[]>>
-): Partial<Record<Metrics, T[]>> =>
+  data: Partial<Record<MetricsKeys, T>>
+): Partial<Record<Metrics, T>> =>
   mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Partial<
-    Record<Metrics, T[]>
+    Record<Metrics, T>
   >;
 
 export const mapTimeSeriesData = (
   timeSeriesData: TimeSeriesDataResponse
-): TimeSeriesData => mapValues(timeSeriesData, mapMetrics);
+): TimeSeriesData => mapMetrics(timeSeriesData);
 
 export const mapTimeSeriesDataRanges = (
   ranges: TimeSeriesDataRangeResponse
-): TimeSeriesDataRange => mapValues(ranges, mapMetrics);
+): TimeSeriesDataRange => mapMetrics(ranges);
 
 const mapOceanSenseMetric = (
   response: OceanSenseDataResponse,
@@ -125,26 +125,26 @@ const attachTimeSeries = (
   newData: TimeSeriesData,
   previousData: TimeSeriesData
 ): TimeSeriesData => {
-  const previousSources = Object.keys(previousData);
-  const newSources = Object.keys(newData);
-  const sources = union(previousSources, newSources) as Sources[];
+  const previousMetrics = Object.keys(previousData);
+  const newMetrics = Object.keys(newData);
+  const metrics = union(previousMetrics, newMetrics) as Metrics[];
 
-  return sources.reduce((ret, currSource) => {
-    const previousSensorData = previousData?.[currSource] || {};
-    const newSensorData = newData?.[currSource] || {};
-    const previousSensorMetrics = Object.keys(previousSensorData);
-    const newSensorMetrics = Object.keys(newSensorData);
-    const metrics = union(previousSensorMetrics, newSensorMetrics) as Metrics[];
+  return metrics.reduce((ret, currMetric) => {
+    const previousMetricData = previousData?.[currMetric] || {};
+    const newMetricData = newData?.[currMetric] || {};
+    const previousMetricSources = Object.keys(previousMetricData);
+    const newMetricSources = Object.keys(newMetricData);
+    const sources = union(previousMetricSources, newMetricSources) as Sources[];
 
     return {
       ...ret,
-      [currSource]: metrics.reduce(
-        (acc, metric) => ({
+      [currMetric]: sources.reduce(
+        (acc, source) => ({
           ...acc,
-          [metric]: attachData(
+          [source]: attachData(
             direction,
-            newSensorData?.[metric] || [],
-            previousSensorData?.[metric] || []
+            newMetricData?.[source] || [],
+            previousMetricData?.[source] || []
           ),
         }),
         {}
