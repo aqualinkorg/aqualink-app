@@ -20,8 +20,11 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
   >
     <mock-dialogtitle
       classname="Dialog-dialogTitle-2"
+      disabletypography="true"
     >
-      <mock-typography>
+      <mock-typography
+        variant="h4"
+      >
         Are you sure you would like to delete the survey for 10/02/2020? It will delete all media assosciated with this survey.
       </mock-typography>
     </mock-dialogtitle>

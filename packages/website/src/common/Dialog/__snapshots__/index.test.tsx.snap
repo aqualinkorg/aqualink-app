@@ -8,8 +8,11 @@ exports[`renders as expected 1`] = `
   >
     <mock-dialogtitle
       classname="Dialog-dialogTitle-1"
+      disabletypography="true"
     >
-      <mock-typography>
+      <mock-typography
+        variant="h4"
+      >
         Random Header
       </mock-typography>
     </mock-dialogtitle>
