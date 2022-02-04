@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { inRange, mapValues, some, times } from 'lodash';
+import { times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
@@ -15,6 +15,7 @@ import {
 } from './sofar.types';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
+import { excludeSpotterData } from './site.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -91,35 +92,6 @@ const getSpotterExclusionDates = (
 ) =>
   sources.map((source) =>
     exclusionDatesRepository.find({ where: { sensorId: source.sensorId } }),
-  );
-
-/**
- * Filters out spotter data whose timestamp falls into any exclusion date interval.
- * @param data The spotter data to filter
- * @param exclusionDates An array of exclusion dates
- * @returns The filtered spotter data
- */
-const excludeSpotterData = (
-  data: SpotterData,
-  exclusionDates: ExclusionDates[],
-) =>
-  mapValues(data, (metricData) =>
-    metricData?.filter(
-      ({ timestamp }) =>
-        // Filter data that do not belong at any `[startDate, endDate]` exclusion date interval
-        !some(
-          exclusionDates,
-          ({ startDate: exclusionStart, endDate: exclusionEnd }) => {
-            const from = exclusionStart ? moment(exclusionStart) : moment(0);
-            const to = exclusionEnd ? moment(exclusionEnd) : moment();
-            return inRange(
-              moment(timestamp).valueOf(),
-              from.valueOf(),
-              to.valueOf(),
-            );
-          },
-        ),
-    ),
   );
 
 /**

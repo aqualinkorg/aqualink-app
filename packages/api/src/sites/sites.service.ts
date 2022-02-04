@@ -24,7 +24,7 @@ import {
   getRegion,
   getTimezones,
   handleDuplicateSite,
-  filterSpotterDataByDate,
+  filterMetricDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
   getLatestData,
@@ -354,10 +354,10 @@ export class SitesService {
     );
 
     return {
-      topTemperature: filterSpotterDataByDate(topTemperature, exclusionDates),
-      bottomTemperature: filterSpotterDataByDate(
-        bottomTemperature,
+      topTemperature: filterMetricDataByDate(exclusionDates, topTemperature),
+      bottomTemperature: filterMetricDataByDate(
         exclusionDates,
+        bottomTemperature,
       ),
     };
   }
