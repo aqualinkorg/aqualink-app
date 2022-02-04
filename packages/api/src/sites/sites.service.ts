@@ -391,6 +391,7 @@ export class SitesService {
     id: number,
     excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ) {
+    const dateFormat = 'MM/DD/YYYY HH:mm';
     const { startDate, endDate } = excludeSpotterDatesDto;
 
     const site = await getSite(id, this.sitesRepository);
@@ -411,7 +412,9 @@ export class SitesService {
 
     if (alreadyExists) {
       throw new ConflictException(
-        `Exclusion period [${startDate}, ${endDate}] already exists`,
+        `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
+          endDate,
+        ).format(dateFormat)}] already exists`,
       );
     }
 
@@ -420,29 +423,25 @@ export class SitesService {
       where: { sensorId: site.sensorId, type: SourceType.SPOTTER },
     });
 
-    if (!source) {
-      throw new NotFoundException(
-        `Spotter ${site.sensorId} has no corresponding source`,
-      );
-    }
-
     await this.exclusionDatesRepository.save({
       sensorId: site.sensorId,
       endDate,
       startDate,
     });
 
-    await this.timeSeriesRepository
-      .createQueryBuilder('time-series')
-      .where('source_id = :id', { id: source.id })
-      .andWhere('timestamp <= :endDate', {
-        endDate: new Date(endDate),
-      })
-      .andWhere('timestamp >= :startDate', {
-        startDate: new Date(startDate),
-      })
-      .delete()
-      .execute();
+    if (source) {
+      await this.timeSeriesRepository
+        .createQueryBuilder('time-series')
+        .where('source_id = :id', { id: source.id })
+        .andWhere('timestamp <= :endDate', {
+          endDate: new Date(endDate),
+        })
+        .andWhere('timestamp >= :startDate', {
+          startDate: new Date(startDate),
+        })
+        .delete()
+        .execute();
+    }
   }
 
   async getExclusionDates(id: number) {
