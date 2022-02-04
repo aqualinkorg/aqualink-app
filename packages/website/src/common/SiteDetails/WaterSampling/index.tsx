@@ -38,6 +38,11 @@ interface Metric {
   xs: GridProps["xs"];
 }
 
+interface SurveyPoint {
+  id: number;
+  name: string;
+}
+
 const metrics = (
   data: ReturnType<typeof calculateSondeDataMeanValues>
 ): Metric[] => [
@@ -77,11 +82,10 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const classes = useStyles();
   const [minDate, setMinDate] = useState<string>();
   const [maxDate, setMaxDate] = useState<string>();
-  const [pointId, setPointId] = useState<number>();
-  const [pointName, setPointName] = useState<string>();
+  const [point, setPoint] = useState<SurveyPoint>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
-  const isPointNameLong = pointName ? pointName.length > 24 : false;
+  const isPointNameLong = point?.name ? point.name.length > 24 : false;
 
   useEffect(() => {
     const getCardData = async () => {
@@ -96,7 +100,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           maxDate: to,
           surveyPoint,
         } = head(uploadHistory) || {};
-        if (from && to && typeof surveyPoint?.id === "number") {
+        if (typeof surveyPoint?.id === "number") {
           const [data] = await timeSeriesRequest({
             siteId,
             pointId: surveyPoint.id.toString(),
@@ -107,8 +111,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           });
           setMinDate(from);
           setMaxDate(to);
-          setPointName(surveyPoint.name);
-          setPointId(surveyPoint.id);
+          setPoint(surveyPoint);
           setSondeData(data?.sonde);
         }
       } catch (err) {
@@ -173,11 +176,11 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           href={`/sites/${siteId}${requests.generateUrlQueryParams({
             start: minDate,
             end: maxDate,
-            surveyPoint: pointId,
+            surveyPoint: point?.id,
           })}`}
           subtitle={
-            pointName
-              ? `${isPointNameLong ? "" : "Survey point:"} ${pointName}`
+            point?.name
+              ? `${isPointNameLong ? "" : "Survey point:"} ${point.name}`
               : undefined
           }
         />
