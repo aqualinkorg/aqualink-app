@@ -141,7 +141,6 @@ const ExclusionDatesDialog = ({
         .then(() => {
           setStartPickerError("");
           setEndPickerError("");
-          onConfirmationDialogClose();
           onMaintainDialogClose();
           dispatch(
             excludeSourceData({
@@ -156,7 +155,10 @@ const ExclusionDatesDialog = ({
             err?.response?.data?.message || "Something went wrong"
           )
         )
-        .finally(() => setMaintainLoading(false));
+        .finally(() => {
+          setMaintainLoading(false);
+          onConfirmationDialogClose();
+        });
     }
   };
 
