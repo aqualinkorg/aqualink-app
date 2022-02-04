@@ -219,8 +219,8 @@ const ExclusionDatesDialog = ({
             <Box mb="20px">
               <Alert severity="info">
                 {dialogType === "deploy"
-                  ? "Spotter data before this date will not be displayed."
-                  : "Spotter data between these dates will not be displayed."}
+                  ? "Spotter data before this date will be deleted."
+                  : "Spotter data between these dates will be deleted."}
               </Alert>
             </Box>
             <Box mb="5px">
