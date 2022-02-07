@@ -28,7 +28,7 @@ const tableHeaderTitles = [
   "SURVEY POINT",
   "SENSOR TYPE",
   "UPLOAD DATE",
-  "",
+  "DATA RANGE",
 ];
 
 const tableCellTypographyProps: TypographyProps = {
