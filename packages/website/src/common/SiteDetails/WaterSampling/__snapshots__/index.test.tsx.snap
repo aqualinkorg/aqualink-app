@@ -215,17 +215,11 @@ exports[`renders as expected 1`] = `
             <mock-button
               classname="makeStyles-button-21"
             >
-              <a
-                class="makeStyles-link-19"
-                href="/sites/1"
-                target="_blank"
+              <mock-typography
+                classname="makeStyles-chipText-17"
               >
-                <mock-typography
-                  classname="makeStyles-chipText-17"
-                >
-                  VIEW UPLOAD
-                </mock-typography>
-              </a>
+                VIEW UPLOAD
+              </mock-typography>
             </mock-button>
           </div>
         </div>

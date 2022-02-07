@@ -85,7 +85,21 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const [point, setPoint] = useState<SurveyPoint>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
-  const isPointNameLong = point?.name ? point.name.length > 24 : false;
+  const isPointNameLong = (point?.name?.length || 0) > 24;
+  const isPointIdValid = typeof point?.id === "number";
+  const surveyPointDisplayName =
+    point?.name || isPointIdValid
+      ? `${isPointNameLong ? "" : " Survey point:"} ${point?.name || point?.id}`
+      : undefined;
+  const viewUploadButtonLink =
+    minDate && maxDate && isPointIdValid
+      ? `/sites/${siteId}${requests.generateUrlQueryParams({
+          start: minDate,
+          end: maxDate,
+          surveyPoint: point?.id,
+        })}`
+      : undefined;
+  const lastUpload = maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined;
 
   useEffect(() => {
     const getCardData = async () => {
@@ -167,22 +181,12 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           </Grid>
         </Box>
         <UpdateInfo
-          relativeTime={
-            maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined
-          }
+          relativeTime={lastUpload}
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
-          href={`/sites/${siteId}${requests.generateUrlQueryParams({
-            start: minDate,
-            end: maxDate,
-            surveyPoint: point?.id,
-          })}`}
-          subtitle={
-            point?.name
-              ? `${isPointNameLong ? "" : "Survey point:"} ${point.name}`
-              : undefined
-          }
+          href={viewUploadButtonLink}
+          subtitle={surveyPointDisplayName}
         />
       </CardContent>
     </Card>
