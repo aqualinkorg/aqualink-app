@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { inRange, mapValues, sortBy } from "lodash";
+import { sortBy } from "lodash";
 import type { AxiosError } from "axios";
-import moment from "moment";
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
@@ -10,7 +9,6 @@ import type {
   SelectedSiteState,
   TimeSeriesDataRangeRequestParams,
   TimeSeriesDataRequestParams,
-  Sources,
 } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import siteServices from "../../services/siteServices";
@@ -215,29 +213,6 @@ const selectedSiteSlice = createSlice({
       }
       return state;
     },
-    excludeSourceData: (
-      state,
-      {
-        payload: { source, start, end },
-      }: PayloadAction<{ start: string; end: string; source: Sources }>
-    ) => ({
-      ...state,
-      timeSeriesData: state.timeSeriesData
-        ? {
-            ...state.timeSeriesData,
-            [source]: mapValues(state.timeSeriesData[source], (data) =>
-              data?.filter(
-                ({ timestamp }) =>
-                  !inRange(
-                    moment(timestamp).valueOf(),
-                    moment(start).valueOf(),
-                    moment(end).valueOf() + 1
-                  )
-              )
-            ),
-          }
-        : state.timeSeriesData,
-    }),
     clearTimeSeriesData: (state) => ({
       ...state,
       timeSeriesData: undefined,
@@ -493,7 +468,6 @@ export const {
   clearGranularDailyData,
   clearOceanSenseData,
   setSiteSurveyPoints,
-  excludeSourceData,
 } = selectedSiteSlice.actions;
 
 export default selectedSiteSlice.reducer;

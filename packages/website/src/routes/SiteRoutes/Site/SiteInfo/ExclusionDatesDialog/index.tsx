@@ -22,7 +22,9 @@ import Dialog, { Action } from "../../../../../common/Dialog";
 import { setTimeZone } from "../../../../../helpers/dates";
 import siteServices from "../../../../../services/siteServices";
 import {
-  excludeSourceData,
+  clearTimeSeriesData,
+  clearTimeSeriesDataRange,
+  setSelectedSite,
   siteRequest,
 } from "../../../../../store/Sites/selectedSiteSlice";
 import ConfirmationDialog from "./ConfirmationDialog";
@@ -142,13 +144,10 @@ const ExclusionDatesDialog = ({
           setStartPickerError("");
           setEndPickerError("");
           onMaintainDialogClose();
-          dispatch(
-            excludeSourceData({
-              source: "spotter",
-              start: localStartDate,
-              end: localEndDate,
-            })
-          );
+          dispatch(clearTimeSeriesData());
+          dispatch(clearTimeSeriesDataRange());
+          dispatch(setSelectedSite(undefined));
+          dispatch(siteRequest(`${siteId}`));
         })
         .catch((err) =>
           setMaintainError(
