@@ -8,8 +8,11 @@ exports[`Surveys should render with given state from Redux store 1`] = `
   >
     <mock-dialogtitle
       classname="Dialog-dialogTitle-10"
+      disabletypography="true"
     >
-      <mock-typography>
+      <mock-typography
+        variant="h4"
+      >
         Are you sure you want to delete this survey point? It will be deleted across all surveys.
       </mock-typography>
     </mock-dialogtitle>

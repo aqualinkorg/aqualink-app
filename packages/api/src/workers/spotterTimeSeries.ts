@@ -1,4 +1,5 @@
 import { Connection } from 'typeorm';
+import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
@@ -9,5 +10,6 @@ export function runSpotterTimeSeriesUpdate(connection: Connection) {
     siteRepository: connection.getRepository(Site),
     sourceRepository: connection.getRepository(Sources),
     timeSeriesRepository: connection.getRepository(TimeSeries),
+    exclusionDatesRepository: connection.getRepository(ExclusionDates),
   });
 }

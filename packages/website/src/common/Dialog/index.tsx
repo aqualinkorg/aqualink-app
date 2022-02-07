@@ -24,8 +24,8 @@ const Dialog = ({
 }: DialogProps) => {
   return (
     <MuiDialog fullWidth onClose={onClose} open={open}>
-      <DialogTitle className={classes.dialogTitle}>
-        <Typography>{header}</Typography>
+      <DialogTitle disableTypography className={classes.dialogTitle}>
+        <Typography variant="h4">{header}</Typography>
       </DialogTitle>
       <DialogContent>{content}</DialogContent>
       <DialogActions>
