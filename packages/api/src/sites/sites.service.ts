@@ -354,11 +354,10 @@ export class SitesService {
     );
 
     return {
-      topTemperature: filterMetricDataByDate(exclusionDates, topTemperature),
-      bottomTemperature: filterMetricDataByDate(
-        exclusionDates,
-        bottomTemperature,
-      ),
+      topTemperature:
+        filterMetricDataByDate(exclusionDates, topTemperature) || [],
+      bottomTemperature:
+        filterMetricDataByDate(exclusionDates, bottomTemperature) || [],
     };
   }
 
