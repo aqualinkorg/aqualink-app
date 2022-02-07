@@ -1,6 +1,5 @@
 import { sortBy } from "lodash";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { AxiosError } from "axios";
 import siteServices from "../../services/siteServices";
 import {
   hasDeployedSpotter,
@@ -13,6 +12,7 @@ import type {
 } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import { mapCollectionData } from "../Collection/utils";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const sitesListInitialState: SitesListState = {
   loading: false,
@@ -43,8 +43,7 @@ export const sitesRequest = createAsyncThunk<
           : transformedData,
       };
     } catch (err) {
-      const error: AxiosError<SitesListState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {

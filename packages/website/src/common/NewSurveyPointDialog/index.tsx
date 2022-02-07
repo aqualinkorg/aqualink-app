@@ -22,6 +22,7 @@ import { userInfoSelector } from "../../store/User/userSlice";
 import siteServices from "../../services/siteServices";
 import { setSiteSurveyPoints } from "../../store/Sites/selectedSiteSlice";
 import { SurveyPoints } from "../../store/Sites/types";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const NewSurveyPointDialog = ({
   open,
@@ -68,8 +69,7 @@ const NewSurveyPointDialog = ({
       }
       onClose();
     } catch (err) {
-      const errorMessage = (err?.response?.data?.message as string) || "";
-      setNewPointError(errorMessage || "Something went wrong");
+      setNewPointError(getAxiosErrorMessage(err));
     } finally {
       setNewPointLoading(false);
     }
