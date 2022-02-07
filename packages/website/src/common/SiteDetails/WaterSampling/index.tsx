@@ -91,14 +91,13 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
     point?.name || isPointIdValid
       ? `${isPointNameLong ? "" : " Survey point:"} ${point?.name || point?.id}`
       : undefined;
-  const viewUploadButtonLink =
-    minDate && maxDate && isPointIdValid
-      ? `/sites/${siteId}${requests.generateUrlQueryParams({
-          start: minDate,
-          end: maxDate,
-          surveyPoint: point?.id,
-        })}`
-      : undefined;
+  const viewUploadButtonLink = `/sites/${siteId}${requests.generateUrlQueryParams(
+    {
+      start: minDate,
+      end: maxDate,
+      surveyPoint: point?.id,
+    }
+  )}`;
   const lastUpload = maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined;
 
   useEffect(() => {
