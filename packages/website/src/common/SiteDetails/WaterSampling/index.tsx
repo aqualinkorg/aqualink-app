@@ -86,11 +86,9 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
   const isPointNameLong = (point?.name?.length || 0) > 24;
-  const isPointIdValid = typeof point?.id === "number";
-  const surveyPointDisplayName =
-    point?.name || isPointIdValid
-      ? `${isPointNameLong ? "" : " Survey point:"} ${point?.name || point?.id}`
-      : undefined;
+  const surveyPointDisplayName = `${isPointNameLong ? "" : " Survey point:"} ${
+    point?.name || point?.id
+  }`;
   const viewUploadButtonLink = `/sites/${siteId}${requests.generateUrlQueryParams(
     {
       start: minDate,
@@ -185,7 +183,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
           href={viewUploadButtonLink}
-          subtitle={surveyPointDisplayName}
+          subtitle={point && surveyPointDisplayName}
         />
       </CardContent>
     </Card>
