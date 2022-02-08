@@ -6,7 +6,7 @@ import {
   map,
   keyBy,
   pick,
-  some,
+  union,
 } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
@@ -24,23 +24,18 @@ import {
   OceanSenseKeysList,
   Site,
   SofarValue,
-  TimeSeries,
+  Sources,
   TimeSeriesData,
   TimeSeriesDataRange,
   TimeSeriesDataRangeResponse,
   TimeSeriesDataRequestParams,
   TimeSeriesDataResponse,
-  TimeSeriesRange,
 } from "./types";
 
 export function getSiteNameAndRegion(site: Site) {
   const name = site.name || site.region?.name || null;
   const region = site.name ? site.region?.name : null;
   return { name, region };
-}
-
-export function siteHasSondeData(sondeDataRange?: TimeSeriesRange) {
-  return some(sondeDataRange, (range) => Boolean(range?.length));
 }
 
 export const constructTableData = (list: Site[]): TableRow[] => {
@@ -78,10 +73,11 @@ export const constructTableData = (list: Site[]): TableRow[] => {
   });
 };
 
-const mapMetrics = <T>(data: Record<MetricsKeys, T[]>): Record<Metrics, T[]> =>
-  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Record<
-    Metrics,
-    T[]
+const mapMetrics = <T>(
+  data: Partial<Record<MetricsKeys, T[]>>
+): Partial<Record<Metrics, T[]>> =>
+  mapKeys(pick(data, metricsKeysList), (_, key) => camelCase(key)) as Partial<
+    Record<Metrics, T[]>
   >;
 
 export const mapTimeSeriesData = (
@@ -128,17 +124,34 @@ const attachTimeSeries = (
   direction: "left" | "right",
   newData: TimeSeriesData,
   previousData: TimeSeriesData
-): TimeSeriesData =>
-  mapValues(previousData, (previousSensorData, sensor) =>
-    mapValues(previousSensorData, (previousMetricData, metric) =>
-      attachData(
-        direction,
-        newData[sensor as keyof TimeSeriesData][metric as keyof TimeSeries] ||
-          [],
-        previousMetricData || []
-      )
-    )
-  );
+): TimeSeriesData => {
+  const previousSources = Object.keys(previousData);
+  const newSources = Object.keys(newData);
+  const sources = union(previousSources, newSources) as Sources[];
+
+  return sources.reduce((ret, currSource) => {
+    const previousSensorData = previousData?.[currSource] || {};
+    const newSensorData = newData?.[currSource] || {};
+    const previousSensorMetrics = Object.keys(previousSensorData);
+    const newSensorMetrics = Object.keys(newSensorData);
+    const metrics = union(previousSensorMetrics, newSensorMetrics) as Metrics[];
+
+    return {
+      ...ret,
+      [currSource]: metrics.reduce(
+        (acc, metric) => ({
+          ...acc,
+          [metric]: attachData(
+            direction,
+            newSensorData?.[metric] || [],
+            previousSensorData?.[metric] || []
+          ),
+        }),
+        {}
+      ),
+    };
+  }, {});
+};
 
 /**
   Util function that is responsible for fetching the time series and daily data.

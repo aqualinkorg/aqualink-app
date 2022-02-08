@@ -36,7 +36,7 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA, SourceType.SPOTTER];
+    const sources = [SourceType.HOBO, SourceType.NOAA];
     sources.forEach((source) => {
       expect(rsp.body).toHaveProperty(source);
     });
@@ -60,10 +60,6 @@ export const timeSeriesTests = () => {
         max([maxDate, endDate]),
       ];
     });
-    spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(0);
-    });
   });
 
   it('GET /sites/:id/range fetch range of site data', async () => {
@@ -72,13 +68,9 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA, SourceType.SPOTTER];
+    const sources = [SourceType.NOAA, SourceType.SPOTTER];
     sources.forEach((source) => {
       expect(rsp.body).toHaveProperty(source);
-    });
-    hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(0);
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
@@ -111,7 +103,7 @@ export const timeSeriesTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA, SourceType.SPOTTER];
+    const sources = [SourceType.HOBO, SourceType.NOAA];
     sources.forEach((source) => {
       expect(rsp.body).toHaveProperty(source);
     });
@@ -122,10 +114,6 @@ export const timeSeriesTests = () => {
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
       expect(rsp.body[SourceType.NOAA][metric].length).toBe(10);
-    });
-    spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(0);
     });
   });
 
@@ -142,13 +130,9 @@ export const timeSeriesTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA, SourceType.SPOTTER];
+    const sources = [SourceType.NOAA, SourceType.SPOTTER];
     sources.forEach((source) => {
       expect(rsp.body).toHaveProperty(source);
-    });
-    hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(0);
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { head } from "lodash";
 import {
   Box,
   Card,
@@ -37,6 +38,11 @@ interface Metric {
   xs: GridProps["xs"];
 }
 
+interface SurveyPoint {
+  id: number;
+  name: string;
+}
+
 const metrics = (
   data: ReturnType<typeof calculateSondeDataMeanValues>
 ): Metric[] => [
@@ -72,17 +78,25 @@ const metrics = (
   },
 ];
 
-const WaterSamplingCard = ({
-  siteId,
-  pointId,
-  pointName,
-}: WaterSamplingCardProps) => {
+const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   const classes = useStyles();
   const [minDate, setMinDate] = useState<string>();
   const [maxDate, setMaxDate] = useState<string>();
+  const [point, setPoint] = useState<SurveyPoint>();
   const [sondeData, setSondeData] = useState<TimeSeriesData["sonde"]>();
   const meanValues = calculateSondeDataMeanValues(sondeData);
-  const isPointNameLong = pointName ? pointName.length > 24 : false;
+  const isPointNameLong = (point?.name?.length || 0) > 24;
+  const surveyPointDisplayName = `${isPointNameLong ? "" : " Survey point:"} ${
+    point?.name || point?.id
+  }`;
+  const viewUploadButtonLink = `/sites/${siteId}${requests.generateUrlQueryParams(
+    {
+      start: minDate,
+      end: maxDate,
+      surveyPoint: point?.id,
+    }
+  )}`;
+  const lastUpload = maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined;
 
   useEffect(() => {
     const getCardData = async () => {
@@ -92,14 +106,15 @@ const WaterSamplingCard = ({
         );
         // Upload history is sorted by `maxDate`, so the first
         // item is the most recent.
-        const { minDate: from, maxDate: to } =
-          uploadHistory.find(
-            ({ surveyPoint }) => surveyPoint.id.toString() === pointId
-          ) || {};
-        if (from && to) {
+        const {
+          minDate: from,
+          maxDate: to,
+          surveyPoint,
+        } = head(uploadHistory) || {};
+        if (typeof surveyPoint?.id === "number") {
           const [data] = await timeSeriesRequest({
             siteId,
-            pointId,
+            pointId: surveyPoint.id.toString(),
             start: from,
             end: to,
             metrics: METRICS,
@@ -107,6 +122,7 @@ const WaterSamplingCard = ({
           });
           setMinDate(from);
           setMaxDate(to);
+          setPoint(surveyPoint);
           setSondeData(data?.sonde);
         }
       } catch (err) {
@@ -115,7 +131,7 @@ const WaterSamplingCard = ({
     };
 
     getCardData();
-  }, [pointId, siteId]);
+  }, [siteId]);
 
   return (
     <Card className={classes.card}>
@@ -162,22 +178,12 @@ const WaterSamplingCard = ({
           </Grid>
         </Box>
         <UpdateInfo
-          relativeTime={
-            maxDate ? moment(maxDate).format("MM/DD/YYYY") : undefined
-          }
+          relativeTime={lastUpload}
           chipWidth={64}
           timeText="Last data uploaded"
           imageText="VIEW UPLOAD"
-          href={`/sites/${siteId}${requests.generateUrlQueryParams({
-            start: minDate,
-            end: maxDate,
-            surveyPoint: pointId,
-          })}`}
-          subtitle={
-            pointName
-              ? `${isPointNameLong ? "" : "Survey point:"} ${pointName}`
-              : undefined
-          }
+          href={viewUploadButtonLink}
+          subtitle={point && surveyPointDisplayName}
         />
       </CardContent>
     </Card>
@@ -204,13 +210,6 @@ const useStyles = makeStyles(() => ({
 
 interface WaterSamplingCardProps {
   siteId: string;
-  pointId?: string;
-  pointName?: string;
 }
-
-WaterSamplingCard.defaultProps = {
-  pointId: undefined,
-  pointName: undefined,
-};
 
 export default WaterSamplingCard;

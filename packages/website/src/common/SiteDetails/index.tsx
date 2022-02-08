@@ -35,7 +35,6 @@ const SiteDetails = ({
   classes,
   site,
   selectedSurveyPointId,
-  selectedSurveyPointName,
   featuredSurveyId,
   hasDailyData,
   surveys,
@@ -56,11 +55,7 @@ const SiteDetails = ({
     <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
     <Sensor site={site} />,
     hasSondeData ? (
-      <WaterSamplingCard
-        siteId={`${site.id}`}
-        pointId={selectedSurveyPointId}
-        pointName={selectedSurveyPointName}
-      />
+      <WaterSamplingCard siteId={site.id.toString()} />
     ) : (
       <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
     ),
@@ -217,7 +212,6 @@ const styles = (theme: Theme) =>
 interface SiteDetailsIncomingProps {
   site: Site;
   selectedSurveyPointId?: string;
-  selectedSurveyPointName?: string;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;
   surveys: SurveyListItem[];
@@ -230,7 +224,6 @@ SiteDetails.defaultProps = {
   featuredSurveyPoint: null,
   surveyDiveDate: null,
   featuredSurveyId: null,
-  selectedSurveyPointName: undefined,
 };
 
 type SiteDetailsProps = SiteDetailsIncomingProps & WithStyles<typeof styles>;

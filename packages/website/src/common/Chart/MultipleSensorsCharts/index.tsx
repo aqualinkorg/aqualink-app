@@ -10,6 +10,7 @@ import {
   siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
   siteOceanSenseDataSelector,
+  siteTimeSeriesDataRangeLoadingSelector,
   siteTimeSeriesDataRangeSelector,
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
@@ -31,7 +32,6 @@ import { RangeValue } from "./types";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { getSondeConfig } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
-import { siteHasSondeData } from "../../../store/Sites/helpers";
 import ChartWithCard from "./ChartWithCard";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
@@ -91,6 +91,7 @@ const MultipleSensorsCharts = ({
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
   const { bottomTemperature: hoboBottomTemperatureRange } =
     timeSeriesDataRanges?.hobo || {};
+  const rangesLoading = useSelector(siteTimeSeriesDataRangeLoadingSelector);
   const [pickerEndDate, setPickerEndDate] = useState<string>();
   const [pickerStartDate, setPickerStartDate] = useState<string>();
   const [endDate, setEndDate] = useState<string>();
@@ -111,7 +112,9 @@ const MultipleSensorsCharts = ({
     spotterData?.bottomTemperature?.[1] || spotterData?.topTemperature?.[1]
   );
 
-  const hasSondeData = siteHasSondeData(timeSeriesDataRanges?.sonde);
+  const hasSondeData = Boolean(
+    site.liveData?.latestData?.some((data) => data.source === "sonde")
+  );
 
   const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
 
@@ -139,7 +142,7 @@ const MultipleSensorsCharts = ({
 
   // Set pickers initial values once the range request is completed
   useEffect(() => {
-    if (hoboBottomTemperatureRange) {
+    if (!rangesLoading && !pickerStartDate && !pickerEndDate) {
       const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
       const pastThreeMonths = moment(
@@ -166,6 +169,9 @@ const MultipleSensorsCharts = ({
     hoboBottomTemperatureRange,
     initialEnd,
     initialStart,
+    pickerEndDate,
+    pickerStartDate,
+    rangesLoading,
     site.timezone,
     today,
   ]);
