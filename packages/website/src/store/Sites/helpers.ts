@@ -187,24 +187,11 @@ export const timeSeriesRequest = async (
   const maxDate =
     storedEnd && end && isBefore(end, storedEnd, true) ? storedEnd : end;
 
-  // If both start and end dates change, then fetch the data in the time interval
-  // [start, end] anyway and replace the stored data.
-  if (storedStart && storedEnd && start !== storedStart && end !== storedEnd) {
-    const { data: timeSeriesData } = await siteServices.getSiteTimeSeriesData(
-      params
-    );
-    const { data: granularDailyData } = await siteServices.getSiteDailyData(
-      siteId,
-      start,
-      end
-    );
-
-    return [mapTimeSeriesData(timeSeriesData), granularDailyData, start, end];
-  }
-
   // If the user requests data for < storedStart, then make a request for the interval
   // [start, storedStart] and attach the resulting data to the already existing data.
   if (
+    // make sure the end date did not change
+    end === storedEnd &&
     storedDailyData &&
     storedTimeSeries &&
     storedStart &&
@@ -237,6 +224,8 @@ export const timeSeriesRequest = async (
   // If the user requests data for > storedEnd, then make a request for the interval
   // [storedEnd, end] and attach the resulting data to the already existing data.
   if (
+    // make sure the start date did not change
+    start === storedStart &&
     storedDailyData &&
     storedTimeSeries &&
     storedEnd &&
