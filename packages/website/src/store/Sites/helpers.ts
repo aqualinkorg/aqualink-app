@@ -179,13 +179,28 @@ export const timeSeriesRequest = async (
     updatedStoredEnd?: string
   ]
 > => {
-  const { start, end } = params;
+  const { siteId, start, end } = params;
   const minDate =
     storedStart && start && !isBefore(start, storedStart, true)
       ? storedStart
       : start;
   const maxDate =
     storedEnd && end && isBefore(end, storedEnd, true) ? storedEnd : end;
+
+  // If both start and end dates change, then fetch the data in the time interval
+  // [start, end] anyway and replace the stored data.
+  if (storedStart && storedEnd && start !== storedStart && end !== storedEnd) {
+    const { data: timeSeriesData } = await siteServices.getSiteTimeSeriesData(
+      params
+    );
+    const { data: granularDailyData } = await siteServices.getSiteDailyData(
+      siteId,
+      start,
+      end
+    );
+
+    return [mapTimeSeriesData(timeSeriesData), granularDailyData, start, end];
+  }
 
   // If the user requests data for < storedStart, then make a request for the interval
   // [start, storedStart] and attach the resulting data to the already existing data.
@@ -196,19 +211,23 @@ export const timeSeriesRequest = async (
     start &&
     isBefore(start, storedStart, true)
   ) {
-    const { data } = await siteServices.getSiteTimeSeriesData({
+    const { data: timeSeriesData } = await siteServices.getSiteTimeSeriesData({
       ...params,
       start,
       end: storedStart,
     });
     const { data: granularDailyData } = await siteServices.getSiteDailyData(
-      params.siteId,
+      siteId,
       start,
       storedStart
     );
 
     return [
-      attachTimeSeries("left", mapTimeSeriesData(data), storedTimeSeries),
+      attachTimeSeries(
+        "left",
+        mapTimeSeriesData(timeSeriesData),
+        storedTimeSeries
+      ),
       attachData("left", granularDailyData, storedDailyData),
       minDate,
       maxDate,
@@ -224,19 +243,23 @@ export const timeSeriesRequest = async (
     end &&
     isBefore(storedEnd, end, true)
   ) {
-    const { data } = await siteServices.getSiteTimeSeriesData({
+    const { data: timeSeriesData } = await siteServices.getSiteTimeSeriesData({
       ...params,
       start: storedEnd,
       end,
     });
     const { data: granularDailyData } = await siteServices.getSiteDailyData(
-      params.siteId,
+      siteId,
       storedEnd,
       end
     );
 
     return [
-      attachTimeSeries("right", mapTimeSeriesData(data), storedTimeSeries),
+      attachTimeSeries(
+        "right",
+        mapTimeSeriesData(timeSeriesData),
+        storedTimeSeries
+      ),
       attachData("right", granularDailyData, storedDailyData),
       minDate,
       maxDate,
@@ -259,12 +282,19 @@ export const timeSeriesRequest = async (
   }
 
   // In any other case, make a request for the interval [start, end].
-  const { data } = await siteServices.getSiteTimeSeriesData(params);
+  const { data: timeSeriesData } = await siteServices.getSiteTimeSeriesData(
+    params
+  );
   const { data: granularDailyData } = await siteServices.getSiteDailyData(
-    params.siteId,
-    params.start,
-    params.end
+    siteId,
+    start,
+    end
   );
 
-  return [mapTimeSeriesData(data), granularDailyData, minDate, maxDate];
+  return [
+    mapTimeSeriesData(timeSeriesData),
+    granularDailyData,
+    minDate,
+    maxDate,
+  ];
 };
