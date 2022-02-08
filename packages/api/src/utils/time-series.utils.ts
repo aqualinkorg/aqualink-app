@@ -1,4 +1,4 @@
-import _, { omit } from 'lodash';
+import _, { last, omit, isNull } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -13,6 +13,7 @@ export interface TimeSeriesData {
   timestamp: Date;
   metric: Metric;
   source: SourceType;
+  surveyPointId?: number;
 }
 
 export interface TimeSeriesRange {
@@ -25,6 +26,7 @@ export interface TimeSeriesRange {
 interface TimeSeriesGroupable {
   metric: Metric;
   source: SourceType;
+  surveyPointId?: number;
 }
 
 type TimeSeriesResponse<T> = Partial<
@@ -40,9 +42,20 @@ export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
     .mapValues((grouped) => {
       return _(grouped)
         .groupBy('source')
-        .mapValues((groupedData) =>
-          groupedData.map((o) => omit(o, 'metric', 'source')),
-        )
+        .mapValues((groupedData) => {
+          const { surveyPointId } = last(groupedData) || {};
+          return groupedData
+            .filter((o) =>
+              typeof surveyPointId === 'number'
+                ? surveyPointId === o.surveyPointId
+                : true,
+            )
+            .map((o) =>
+              isNull(o.surveyPointId)
+                ? omit(o, 'metric', 'source', 'surveyPointId')
+                : omit(o, 'metric', 'source'),
+            );
+        })
         .toJSON();
     })
     .toJSON();
@@ -61,7 +74,7 @@ export const getDataQuery = (
 
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : 'source.survey_point_id is NULL';
+    : undefined;
 
   const mainQuery = timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -75,9 +88,13 @@ export const getDataQuery = (
     .innerJoin(
       'time_series.source',
       'source',
-      `source.site_id = :siteId AND ${surveyPointCondition}`,
+      surveyPointCondition
+        ? `source.site_id = :siteId AND ${surveyPointCondition}`
+        : 'source.site_id = :siteId',
       { siteId },
     )
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .addSelect('surveyPoint.id', 'surveyPointId')
     .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
       metrics,
     })
@@ -86,7 +103,9 @@ export const getDataQuery = (
 
   return hourly
     ? mainQuery
-        .groupBy("date_trunc('hour', timestamp), metric, source.type")
+        .groupBy(
+          "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
+        )
         .orderBy("date_trunc('hour', timestamp)", 'ASC')
         .getRawMany()
     : mainQuery.orderBy('timestamp', 'ASC').getRawMany();
