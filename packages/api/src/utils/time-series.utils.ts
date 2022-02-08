@@ -74,7 +74,7 @@ export const getDataQuery = (
 
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : undefined;
+    : `1=1`;
 
   const mainQuery = timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -88,9 +88,7 @@ export const getDataQuery = (
     .innerJoin(
       'time_series.source',
       'source',
-      surveyPointCondition
-        ? `source.site_id = :siteId AND ${surveyPointCondition}`
-        : 'source.site_id = :siteId',
+      `source.site_id = :siteId AND ${surveyPointCondition}`,
       { siteId },
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
@@ -118,7 +116,7 @@ export const getDataRangeQuery = (
 ): Promise<TimeSeriesRange[]> => {
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : 'source.survey_point_id is NULL';
+    : '1=1';
 
   return timeSeriesRepository
     .createQueryBuilder('time_series')
