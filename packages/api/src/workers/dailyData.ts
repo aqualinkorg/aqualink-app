@@ -36,10 +36,7 @@ import {
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import {
-  filterSpotterDataByDate,
-  getExclusionDates,
-} from '../utils/site.utils';
+import { filterMetricDataByDate, getExclusionDates } from '../utils/site.utils';
 
 export async function getDegreeHeatingDays(
   latitude: number,
@@ -149,7 +146,7 @@ export async function getDailyData(
 
   const spotterData = spotterRawData
     ? mapValues(spotterRawData, (v) =>
-        v ? extractSofarValues(filterSpotterDataByDate(v, excludedDates)) : [],
+        extractSofarValues(filterMetricDataByDate(excludedDates, v)),
       )
     : {
         topTemperature: [],

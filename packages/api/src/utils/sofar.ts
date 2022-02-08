@@ -25,8 +25,9 @@ export const getLatestData = (
   );
 };
 
-export const extractSofarValues = (sofarValues: SofarValue[]): number[] =>
-  sofarValues.filter((data) => !isNil(data.value)).map(({ value }) => value);
+export const extractSofarValues = (sofarValues?: SofarValue[]): number[] =>
+  sofarValues?.filter((data) => !isNil(data.value)).map(({ value }) => value) ||
+  [];
 
 export const filterSofarResponse = (responseData: any) => {
   return (

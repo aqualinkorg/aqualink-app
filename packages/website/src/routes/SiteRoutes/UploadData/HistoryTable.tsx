@@ -27,7 +27,8 @@ const tableHeaderTitles = [
   "SITE",
   "SURVEY POINT",
   "SENSOR TYPE",
-  "",
+  "UPLOAD DATE",
+  "DATA RANGE",
 ];
 
 const tableCellTypographyProps: TypographyProps = {
@@ -42,6 +43,7 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
   const timezoneAbbreviation = timezone
     ? moment().tz(timezone).zoneAbbr()
     : undefined;
+  const dateFormat = "MM/DD/YYYY";
 
   const dataVizualizationButtonLink = (
     start: string,
@@ -76,7 +78,15 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
           </TableHead>
           <TableBody>
             {uploadHistory.map(
-              ({ id, file, surveyPoint, sensorType, minDate, maxDate }) => (
+              ({
+                id,
+                file,
+                surveyPoint,
+                sensorType,
+                minDate,
+                maxDate,
+                createdAt,
+              }) => (
                 <TableRow key={id}>
                   <TableCell component="th" scope="row">
                     <Typography {...tableCellTypographyProps}>
@@ -104,6 +114,11 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                     </Typography>
                   </TableCell>
                   <TableCell>
+                    <Typography {...tableCellTypographyProps}>
+                      {moment(createdAt).format(dateFormat)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
                     <Button
                       component={Link}
                       to={dataVizualizationButtonLink(
@@ -115,7 +130,8 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                       variant="outlined"
                       color="primary"
                     >
-                      SEE DATA VISUALIZATION
+                      {moment(minDate).format(dateFormat)} -{" "}
+                      {moment(maxDate).format(dateFormat)}
                     </Button>
                   </TableCell>
                 </TableRow>

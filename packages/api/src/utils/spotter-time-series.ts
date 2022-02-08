@@ -14,11 +14,14 @@ import {
   SpotterData,
 } from './sofar.types';
 import { SourceType } from '../sites/schemas/source-type.enum';
+import { ExclusionDates } from '../sites/exclusion-dates.entity';
+import { excludeSpotterData } from './site.utils';
 
 interface Repositories {
   siteRepository: Repository<Site>;
   sourceRepository: Repository<Sources>;
   timeSeriesRepository: Repository<TimeSeries>;
+  exclusionDatesRepository: Repository<ExclusionDates>;
 }
 
 const logger = new Logger('SpotterTimeSeries');
@@ -78,6 +81,20 @@ const getSpotterSources = (
 };
 
 /**
+ * Fetches the exclusion dates for the selected sources.
+ * @param sources The selected sources
+ * @param exclusionDatesRepository The necessary repository to perform the query
+ * @returns The requested exclusion date entities
+ */
+const getSpotterExclusionDates = (
+  sources: Sources[],
+  exclusionDatesRepository: Repository<ExclusionDates>,
+) =>
+  sources.map((source) =>
+    exclusionDatesRepository.find({ where: { sensorId: source.sensorId } }),
+  );
+
+/**
  * Save data on time_series table
  * @param batch The batch of data to save
  * @param source The source of the data
@@ -129,10 +146,25 @@ export const addSpotterData = async (
     getSpotterSources(sites, repositories.sourceRepository),
   );
 
+  const exclusionDates = await Promise.all(
+    getSpotterExclusionDates(
+      spotterSources,
+      repositories.exclusionDatesRepository,
+    ),
+  );
+
   // Create a map from the siteIds to the source entities
   const siteToSource: Record<number, Sources> = Object.fromEntries(
     spotterSources.map((source) => [source.site.id, source]),
   );
+
+  const sensorToExclusionDates: Record<string, ExclusionDates[]> =
+    Object.fromEntries(
+      exclusionDates.map((exclusionDate) => [
+        exclusionDate[0].sensorId,
+        exclusionDate,
+      ]),
+    );
 
   logger.log('Saving spotter data');
   await Bluebird.map(
@@ -148,8 +180,12 @@ export const addSpotterData = async (
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
+          const sensorExclusionDates = sensorToExclusionDates[site.sensorId];
+
           // Fetch spotter and wave data from sofar
-          return getSpotterData(site.sensorId, endDate, startDate);
+          return getSpotterData(site.sensorId, endDate, startDate).then(
+            (data) => excludeSpotterData(data, sensorExclusionDates),
+          );
         },
         { concurrency: 100 },
       )

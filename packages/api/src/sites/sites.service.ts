@@ -3,6 +3,7 @@ import {
   NotFoundException,
   Logger,
   BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -23,7 +24,7 @@ import {
   getRegion,
   getTimezones,
   handleDuplicateSite,
-  filterSpotterDataByDate,
+  filterMetricDataByDate,
   getConflictingExclusionDates,
   hasHoboDataSubQuery,
   getLatestData,
@@ -47,6 +48,8 @@ import {
   getErrorMessage,
 } from '../workers/check-video-streams';
 import { getTimeSeriesDefaultDates } from '../utils/dates';
+import { SourceType } from './schemas/source-type.enum';
+import { TimeSeries } from '../time-series/time-series.entity';
 
 @Injectable()
 export class SitesService {
@@ -78,6 +81,9 @@ export class SitesService {
 
     @InjectRepository(LatestData)
     private latestDataRepository: Repository<LatestData>,
+
+    @InjectRepository(TimeSeries)
+    private timeSeriesRepository: Repository<TimeSeries>,
   ) {}
 
   async create(
@@ -348,11 +354,10 @@ export class SitesService {
     );
 
     return {
-      topTemperature: filterSpotterDataByDate(topTemperature, exclusionDates),
-      bottomTemperature: filterSpotterDataByDate(
-        bottomTemperature,
-        exclusionDates,
-      ),
+      topTemperature:
+        filterMetricDataByDate(exclusionDates, topTemperature) || [],
+      bottomTemperature:
+        filterMetricDataByDate(exclusionDates, bottomTemperature) || [],
     };
   }
 
@@ -385,6 +390,7 @@ export class SitesService {
     id: number,
     excludeSpotterDatesDto: ExcludeSpotterDatesDto,
   ) {
+    const dateFormat = 'MM/DD/YYYY HH:mm';
     const { startDate, endDate } = excludeSpotterDatesDto;
 
     const site = await getSite(id, this.sitesRepository);
@@ -399,11 +405,42 @@ export class SitesService {
       );
     }
 
+    const alreadyExists = await this.exclusionDatesRepository.findOne({
+      where: { sensorId: site.sensorId, startDate, endDate },
+    });
+
+    if (alreadyExists) {
+      throw new ConflictException(
+        `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
+          endDate,
+        ).format(dateFormat)}] already exists`,
+      );
+    }
+
+    // We assume that a specific spotter corresponds to only one source.
+    const source = await this.sourceRepository.findOne({
+      where: { sensorId: site.sensorId, type: SourceType.SPOTTER },
+    });
+
     await this.exclusionDatesRepository.save({
       sensorId: site.sensorId,
       endDate,
       startDate,
     });
+
+    if (source) {
+      await this.timeSeriesRepository
+        .createQueryBuilder('time-series')
+        .where('source_id = :id', { id: source.id })
+        .andWhere('timestamp <= :endDate', {
+          endDate: new Date(endDate),
+        })
+        .andWhere('timestamp >= :startDate', {
+          startDate: new Date(startDate),
+        })
+        .delete()
+        .execute();
+    }
   }
 
   async getExclusionDates(id: number) {

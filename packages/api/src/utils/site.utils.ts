@@ -10,11 +10,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { isNil } from 'lodash';
+import { mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { SofarLiveData, SofarValue } from './sofar.types';
+import { SofarLiveData, SofarValue, SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -140,21 +140,27 @@ export const getConflictingExclusionDates = async (
   );
 };
 
-export const filterSpotterDataByDate = (
-  spotterData: SofarValue[],
+export const filterMetricDataByDate = (
   exclusionDates: ExclusionDates[],
-) => {
-  const data = spotterData.filter(({ timestamp }) => {
-    const isExcluded = isNil(
-      exclusionDates.find(({ startDate: start, endDate: end }) => {
+  metricData?: SofarValue[],
+) =>
+  metricData?.filter(
+    ({ timestamp }) =>
+      // Filter data that do not belong at any `[startDate, endDate]` exclusion date interval
+      !some(exclusionDates, ({ startDate, endDate }) => {
         const dataDate = new Date(timestamp);
-        return dataDate <= end && (!start || start <= dataDate);
+
+        return dataDate <= endDate && (!startDate || startDate <= dataDate);
       }),
-    );
-    return isExcluded;
-  });
-  return data;
-};
+  );
+
+export const excludeSpotterData = (
+  data: SpotterData,
+  exclusionDates: ExclusionDates[],
+) =>
+  mapValues(data, (metricData) =>
+    filterMetricDataByDate(exclusionDates, metricData),
+  );
 
 export const getSite = async (
   siteId: number,
