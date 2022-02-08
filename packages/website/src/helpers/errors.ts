@@ -7,4 +7,4 @@ export const getAxiosErrorMessage = (err: unknown) =>
   "Something went wrong";
 
 export const getFirebaseErrorMessage = (err: unknown) =>
-  (err as FirebaseError)?.message || "Something went wrong";
+  (err as FirebaseError)?.message || "Something went wrong with firebase";
