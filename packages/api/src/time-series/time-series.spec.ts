@@ -18,12 +18,12 @@ export const timeSeriesTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
   let surveyPointDataRange: StringDateRange = [
-    new Date().toISOString(),
     new Date(0).toISOString(),
+    new Date().toISOString(),
   ];
   let siteDataRange: StringDateRange = [
-    new Date().toISOString(),
     new Date(0).toISOString(),
+    new Date().toISOString(),
   ];
 
   beforeAll(async () => {
@@ -42,8 +42,8 @@ export const timeSeriesTests = () => {
     });
     hoboMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
-      expect(rsp.body[metric][SourceType.HOBO].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.HOBO][0];
+      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.HOBO].data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -52,8 +52,8 @@ export const timeSeriesTests = () => {
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA][0];
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -74,15 +74,15 @@ export const timeSeriesTests = () => {
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA][0];
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
     spotterMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
-      expect(rsp.body[metric][SourceType.SPOTTER].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[metric][SourceType.SPOTTER][0];
+      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.SPOTTER].data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
@@ -97,7 +97,7 @@ export const timeSeriesTests = () => {
       .query({
         // Increase the search window to combat precision issues with the dates
         start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'minute').toISOString(),
+        end: moment(endDate).add(1, 'day').toISOString(),
         metrics: hoboMetrics.concat(NOAAMetrics),
         hourly: false,
       });
@@ -109,22 +109,22 @@ export const timeSeriesTests = () => {
     });
     hoboMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
-      expect(rsp.body[metric][SourceType.HOBO].length).toBe(10);
+      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(10);
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].length).toBe(10);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
     });
   });
 
-  it('GET /sites/:siteId/site-survey-points/:surveyPointId fetch site data', async () => {
+  it('GET /sites/:siteId fetch site data', async () => {
     const [startDate, endDate] = siteDataRange;
     const rsp = await request(app.getHttpServer())
       .get(`/time-series/sites/${californiaSite.id}`)
       .query({
         // Increase the search window to combat precision issues with the dates
         start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'minute').toISOString(),
+        end: moment(endDate).add(1, 'day').toISOString(),
         metrics: spotterMetrics.concat(NOAAMetrics),
         hourly: false,
       });
@@ -136,11 +136,11 @@ export const timeSeriesTests = () => {
     });
     NOAAMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
-      expect(rsp.body[metric][SourceType.NOAA].length).toBe(10);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
     });
     spotterMetrics.forEach((metric) => {
       expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
-      expect(rsp.body[metric][SourceType.SPOTTER].length).toBe(10);
+      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(10);
     });
   });
 };

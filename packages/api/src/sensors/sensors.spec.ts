@@ -35,7 +35,9 @@ export const sensorTests = () => {
     metrics.forEach((metric) => {
       expect(rsp.body).toHaveProperty(metric);
     });
-    expect(rsp.body[Metric.TOP_TEMPERATURE][SourceType.SPOTTER].length).toBe(6);
+    expect(
+      rsp.body[Metric.TOP_TEMPERATURE][SourceType.SPOTTER].data.length,
+    ).toBe(6);
   });
 
   it('GET /:id/surveys fetch sensor surveys', async () => {
