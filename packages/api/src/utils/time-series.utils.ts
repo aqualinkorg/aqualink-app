@@ -1,4 +1,4 @@
-import _, { last, omit, isNull } from 'lodash';
+import _, { last, omit, isNull, merge } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -8,53 +8,70 @@ import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getTimeSeriesDefaultDates } from './dates';
 
-export interface TimeSeriesData {
-  value: number;
-  timestamp: Date;
-  metric: Metric;
-  source: SourceType;
-  surveyPointId?: number;
-}
-
-export interface TimeSeriesRange {
-  maxDate: Date;
-  minDate: Date;
-  metric: Metric;
-  source: SourceType;
-}
-
 interface TimeSeriesGroupable {
   metric: Metric;
   source: SourceType;
   surveyPointId?: number;
+  surveyPointName?: string;
+}
+
+export type TimeSeriesData = TimeSeriesGroupable & {
+  value: number;
+  timestamp: Date;
+};
+
+export type TimeSeriesRange = TimeSeriesGroupable & {
+  maxDate: Date;
+  minDate: Date;
+};
+
+interface SurveyPoint {
+  id: number;
+  name: string;
 }
 
 type TimeSeriesResponse<T> = Partial<
-  Record<Metric, Partial<Record<SourceType, T[]>>>
+  Record<
+    Metric,
+    Partial<Record<SourceType, { surveyPoint?: SurveyPoint; data: T[] }>>
+  >
 >;
 
 // TODO: Revisit the response structure and simplify when we have more metrics and sources available
 export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
   data: T[],
-): TimeSeriesResponse<Pick<T, 'metric' | 'source'>> => {
+): TimeSeriesResponse<
+  Omit<T, 'metric' | 'source' | 'surveyPointId' | 'surveyPointName'>
+> => {
   return _(data)
     .groupBy('metric')
     .mapValues((grouped) => {
       return _(grouped)
         .groupBy('source')
         .mapValues((groupedData) => {
-          const { surveyPointId } = last(groupedData) || {};
-          return groupedData
-            .filter((o) =>
-              typeof surveyPointId === 'number'
-                ? surveyPointId === o.surveyPointId
-                : true,
-            )
-            .map((o) =>
-              isNull(o.surveyPointId)
-                ? omit(o, 'metric', 'source', 'surveyPointId')
-                : omit(o, 'metric', 'source'),
-            );
+          const { surveyPointId, surveyPointName } = last(groupedData) || {};
+          return merge(
+            !isNull(surveyPointId)
+              ? { surveyPoint: { id: surveyPointId, name: surveyPointName } }
+              : {},
+            {
+              data: groupedData
+                .filter((o) =>
+                  typeof surveyPointId === 'number'
+                    ? surveyPointId === o.surveyPointId
+                    : true,
+                )
+                .map((o) =>
+                  omit(
+                    o,
+                    'metric',
+                    'source',
+                    'surveyPointId',
+                    'surveyPointName',
+                  ),
+                ),
+            },
+          );
         })
         .toJSON();
     })
@@ -93,6 +110,7 @@ export const getDataQuery = (
     )
     .leftJoin('source.surveyPoint', 'surveyPoint')
     .addSelect('surveyPoint.id', 'surveyPointId')
+    .addSelect('surveyPoint.name', 'surveyPointName')
     .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
       metrics,
     })
@@ -122,15 +140,19 @@ export const getDataRangeQuery = (
     .createQueryBuilder('time_series')
     .select('metric')
     .addSelect('source.type', 'source')
-    .addSelect('MIN(timestamp)', 'minDate')
-    .addSelect('MAX(timestamp)', 'maxDate')
+    .addSelect('MIN(timestamp)', 'min_date')
+    .addSelect('MAX(timestamp)', 'max_date')
     .innerJoin(
       'time_series.source',
       'source',
       `source.site_id = :siteId AND ${surveyPointCondition}`,
       { siteId },
     )
-    .groupBy('metric, source.type')
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .addSelect('surveyPoint.id', 'surveyPointId')
+    .addSelect('surveyPoint.name', 'surveyPointName')
+    .groupBy('metric, source.type, surveyPoint.id')
+    .orderBy('max_date', 'ASC')
     .getRawMany();
 };
 
