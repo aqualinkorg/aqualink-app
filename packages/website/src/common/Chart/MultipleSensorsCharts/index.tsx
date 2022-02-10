@@ -108,14 +108,14 @@ const MultipleSensorsCharts = ({
   }));
 
   const hasSpotterData = Boolean(
-    bottomTemperature?.spotter?.[1] || topTemperature?.spotter?.[1]
+    bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1]
   );
 
   const hasSondeData = Boolean(
     site.liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
-  const hasHoboData = Boolean(hoboBottomTemperature?.[1]);
+  const hasHoboData = Boolean(hoboBottomTemperature?.data?.[1]);
 
   const cardDataset = findCardDataset(hasSpotterData, hasHoboData);
 
@@ -142,7 +142,7 @@ const MultipleSensorsCharts = ({
   // Set pickers initial values once the range request is completed
   useEffect(() => {
     if (!rangesLoading && !pickerStartDate && !pickerEndDate) {
-      const { maxDate } = hoboBottomTemperatureRange?.[0] || {};
+      const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
       const pastThreeMonths = moment(
         subtractFromDate(localizedMaxDate || today, "month", 3)
@@ -275,7 +275,7 @@ const MultipleSensorsCharts = ({
   }, [pickerEndDate, pickerStartDate]);
 
   const onRangeChange = (value: RangeValue) => {
-    const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
+    const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
     const localizedMinDate = new Date(
       moment(minDate)
         .tz(site.timezone || "UTC")
@@ -346,7 +346,7 @@ const MultipleSensorsCharts = ({
         id="temperature"
         range={range}
         onRangeChange={onRangeChange}
-        disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+        disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
         chartTitle="TEMPERATURE ANALYSIS"
         timeSeriesDataRanges={timeSeriesDataRanges}
         timeZone={site.timezone}
@@ -354,9 +354,9 @@ const MultipleSensorsCharts = ({
         site={site}
         dailyData={granularDailyData || []}
         pointId={pointId ? parseInt(pointId, 10) : undefined}
-        spotterTopTemperature={topTemperature?.spotter}
-        spotterBottomTemperature={bottomTemperature?.spotter}
-        hoboBottomTemperature={hoboBottomTemperature || []}
+        spotterTopTemperature={topTemperature?.spotter?.data}
+        spotterBottomTemperature={bottomTemperature?.spotter?.data}
+        hoboBottomTemperature={hoboBottomTemperature?.data || []}
         pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
         pickerEndDate={pickerEndDate || today}
         chartStartDate={chartStartDate}
@@ -381,7 +381,7 @@ const MultipleSensorsCharts = ({
               id={key}
               range={range}
               onRangeChange={onRangeChange}
-              disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+              disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
               chartTitle={title}
               timeSeriesDataRanges={timeSeriesDataRanges}
               timeZone={site.timezone}
@@ -400,12 +400,12 @@ const MultipleSensorsCharts = ({
               isPickerErrored={pickerErrored}
               showDatePickers={false}
               // TODO -  Make these data input more generic. Eg. in this case, this is not "oceanSense" data.
-              oceanSenseData={timeSeriesData?.[key as Metrics]?.spotter?.map(
-                (item) => ({
-                  ...item,
-                  value: convert ? convert * item.value : item.value,
-                })
-              )}
+              oceanSenseData={timeSeriesData?.[
+                key as Metrics
+              ]?.spotter?.data?.map((item) => ({
+                ...item,
+                value: convert ? convert * item.value : item.value,
+              }))}
               oceanSenseDataUnit={unit}
               hideYAxisUnits
               displayHistoricalMonthlyMean={false}
@@ -424,7 +424,7 @@ const MultipleSensorsCharts = ({
                 id={item.id}
                 range={range}
                 onRangeChange={onRangeChange}
-                disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
                 chartTitle={item.title}
                 timeSeriesDataRanges={timeSeriesDataRanges}
                 timeZone={site.timezone}
@@ -456,10 +456,12 @@ const MultipleSensorsCharts = ({
       {hasSondeData &&
         sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
           .filter(
-            (key) => timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.length
+            (key) =>
+              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length
           )
           .map((key) => {
-            const data = timeSeriesData?.[camelCase(key) as Metrics]?.sonde;
+            const { data } =
+              timeSeriesData?.[camelCase(key) as Metrics]?.sonde || {};
             const { title, units } = getSondeConfig(key);
 
             return (
@@ -468,7 +470,7 @@ const MultipleSensorsCharts = ({
                   id={key}
                   range={range}
                   onRangeChange={onRangeChange}
-                  disableMaxRange={!hoboBottomTemperatureRange?.[0]}
+                  disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
                   chartTitle={title}
                   timeSeriesDataRanges={timeSeriesDataRanges}
                   timeZone={site.timezone}

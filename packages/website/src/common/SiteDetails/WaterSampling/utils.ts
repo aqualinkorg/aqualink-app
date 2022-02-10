@@ -7,5 +7,5 @@ export const calculateSondeDataMeanValues = (
   timeSeriesData?: TimeSeriesData
 ) =>
   mapValues(pick(timeSeriesData, map(metrics, camelCase)), (data) =>
-    meanBy(data?.sonde, "value")
+    meanBy(data?.sonde?.data, "value")
   );

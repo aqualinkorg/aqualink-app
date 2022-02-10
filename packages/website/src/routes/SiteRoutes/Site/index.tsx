@@ -37,7 +37,6 @@ import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/user";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { User } from "../../../store/User/types";
-import { findClosestSurveyPoint } from "../../../helpers/map";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 import { subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
@@ -109,13 +108,10 @@ const Site = ({ match, classes }: SiteProps) => {
   const dispatch = useDispatch();
   const getQueryParam = useQueryParams();
   const siteId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, polygon, timezone } =
-    siteDetails || {};
+  const { id, liveData, dailyData, surveyPoints, timezone } = siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
   const { id: selectedSurveyPointId } =
-    findSurveyPointFromList(querySurveyPointId, surveyPoints) ||
-    findClosestSurveyPoint(polygon, surveyPoints) ||
-    {};
+    findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
   const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
@@ -150,7 +146,7 @@ const Site = ({ match, classes }: SiteProps) => {
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched
   useEffect(() => {
-    if (siteId === id?.toString()) {
+    if (siteId === id?.toString() && selectedSurveyPointId) {
       dispatch(
         siteTimeSeriesDataRangeRequest({
           siteId,

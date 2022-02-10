@@ -141,11 +141,15 @@ const attachTimeSeries = (
       [currMetric]: sources.reduce(
         (acc, source) => ({
           ...acc,
-          [source]: attachData(
-            direction,
-            newMetricData?.[source] || [],
-            previousMetricData?.[source] || []
-          ),
+          [source]: {
+            surveyPoint: (newMetricData || previousMetricData)?.[source]
+              ?.surveyPoint,
+            data: attachData(
+              direction,
+              newMetricData?.[source]?.data || [],
+              previousMetricData?.[source]?.data || []
+            ),
+          },
         }),
         {}
       ),

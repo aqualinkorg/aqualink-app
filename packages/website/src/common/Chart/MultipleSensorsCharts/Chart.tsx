@@ -59,7 +59,7 @@ const Chart = ({
   const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
   const { hobo: hoboBottomTemperatureRange } =
     useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
-  const { minDate, maxDate } = hoboBottomTemperatureRange?.[0] || {};
+  const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
   const isTimeSeriesDataRangeLoading = useSelector(
     siteTimeSeriesDataRangeLoadingSelector
   );

@@ -178,9 +178,15 @@ export interface DataRange {
   maxDate: string;
 }
 
-export type TimeSeries = Partial<Record<Sources, SofarValue[]>>;
+export type TimeSeriesSurveyPoint = Pick<SurveyPoints, "id" | "name">;
 
-export type TimeSeriesRange = Partial<Record<Sources, DataRange[]>>;
+export type TimeSeries = Partial<
+  Record<Sources, { surveyPoint?: TimeSeriesSurveyPoint; data: SofarValue[] }>
+>;
+
+export type TimeSeriesRange = Partial<
+  Record<Sources, { surveyPoint?: TimeSeriesSurveyPoint; data: DataRange[] }>
+>;
 
 export type TimeSeriesDataResponse = Partial<Record<MetricsKeys, TimeSeries>>;
 

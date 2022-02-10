@@ -35,7 +35,7 @@ const Info = ({ site, pointId, onEditButtonClick, classes }: InfoProps) => {
   const { name: siteName, region: siteRegion } = getSiteNameAndRegion(site);
   const [lng, lat] =
     pointPolygon?.type === "Point" ? pointPolygon.coordinates : [];
-  const nHoboPoints = hoboBottomTemperature?.length || 0;
+  const nHoboPoints = hoboBottomTemperature?.data?.length || 0;
   const lastSurveyed = displayTimeInLocalTimezone({
     isoDate: surveys[0]?.diveDate,
     displayTimezone: false,
