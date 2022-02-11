@@ -15,7 +15,11 @@ import {
 import grey from "@material-ui/core/colors/grey";
 import { Alert } from "@material-ui/lab";
 import { RangeButton, RangeValue } from "./types";
-import { Sources, TimeSeriesDataRange } from "../../../store/Sites/types";
+import {
+  Sources,
+  TimeSeriesDataRange,
+  TimeSeriesSurveyPoint,
+} from "../../../store/Sites/types";
 import { availableRangeString } from "./helpers";
 
 const Header = ({
@@ -29,6 +33,7 @@ const Header = ({
   timeZone,
   showRangeButtons,
   showAvailableRanges,
+  surveyPoint,
 }: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -78,8 +83,13 @@ const Header = ({
               variant="h6"
               color="textSecondary"
             >
-              {title || "TEMPERATURE"}
+              {title?.toUpperCase() || "TEMPERATURE"}
             </Typography>
+            {surveyPoint?.name && (
+              <Typography className={classes.title} variant="subtitle1">
+                Survey point: {surveyPoint.name}
+              </Typography>
+            )}
             {timeSeriesDataRanges && showAvailableRanges && (
               <Grid
                 className={classes.rangesWrapper}
@@ -211,6 +221,7 @@ interface HeaderIncomingProps {
   timeZone?: string | null;
   showRangeButtons?: boolean;
   showAvailableRanges?: boolean;
+  surveyPoint?: TimeSeriesSurveyPoint;
 }
 
 Header.defaultProps = {
@@ -219,6 +230,7 @@ Header.defaultProps = {
   timeZone: null,
   showRangeButtons: true,
   showAvailableRanges: true,
+  surveyPoint: undefined,
 };
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

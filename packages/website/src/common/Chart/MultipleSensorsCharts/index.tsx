@@ -406,6 +406,9 @@ const MultipleSensorsCharts = ({
                 ...item,
                 value: convert ? convert * item.value : item.value,
               }))}
+              surveyPoint={
+                timeSeriesData?.[key as Metrics]?.spotter?.surveyPoint
+              }
               oceanSenseDataUnit={unit}
               hideYAxisUnits
               displayHistoricalMonthlyMean={false}
@@ -460,7 +463,7 @@ const MultipleSensorsCharts = ({
               timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length
           )
           .map((key) => {
-            const { data } =
+            const { data, surveyPoint } =
               timeSeriesData?.[camelCase(key) as Metrics]?.sonde || {};
             const { title, units } = getSondeConfig(key);
 
@@ -489,6 +492,7 @@ const MultipleSensorsCharts = ({
                   isPickerErrored={pickerErrored}
                   showDatePickers={false}
                   oceanSenseData={data}
+                  surveyPoint={surveyPoint}
                   oceanSenseDataUnit={units}
                   hideYAxisUnits
                   displayHistoricalMonthlyMean={false}

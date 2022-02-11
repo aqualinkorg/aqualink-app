@@ -13,6 +13,7 @@ import {
   Site,
   SofarValue,
   TimeSeriesDataRange,
+  TimeSeriesSurveyPoint,
 } from "../../../store/Sites/types";
 
 const ChartWithCard = ({
@@ -45,6 +46,7 @@ const ChartWithCard = ({
   site,
   spotterBottomTemperature,
   spotterTopTemperature,
+  surveyPoint,
   timeSeriesDataRanges,
   timeZone,
   onEndDateChange,
@@ -75,6 +77,7 @@ const ChartWithCard = ({
         timeZone={timeZone}
         showAvailableRanges={showAvailableRanges}
         showRangeButtons={showRangeButtons}
+        surveyPoint={surveyPoint}
       />
       <Grid
         className={classes.chartWrapper}
@@ -212,6 +215,7 @@ interface ChartWithCardProps {
   site: Site;
   spotterBottomTemperature?: SofarValue[];
   spotterTopTemperature?: SofarValue[];
+  surveyPoint?: TimeSeriesSurveyPoint;
   timeSeriesDataRanges?: TimeSeriesDataRange;
   timeZone?: string | null;
   onEndDateChange: (date: Date | null) => void;
@@ -237,6 +241,7 @@ ChartWithCard.defaultProps = {
   showRangeButtons: true,
   spotterBottomTemperature: undefined,
   spotterTopTemperature: undefined,
+  surveyPoint: undefined,
   timeSeriesDataRanges: undefined,
   timeZone: undefined,
 };
