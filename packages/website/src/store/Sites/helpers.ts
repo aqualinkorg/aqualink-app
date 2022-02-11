@@ -7,6 +7,7 @@ import {
   keyBy,
   pick,
   union,
+  isString,
 } from "lodash";
 import { isBefore } from "../../helpers/dates";
 import { longDHW } from "../../helpers/siteUtils";
@@ -114,18 +115,18 @@ export const mapOceanSenseData = (
 const attachData = <T>(
   direction: "left" | "right",
   newData: T[],
-  previousData: T[]
+  previousData?: T[]
 ) =>
   direction === "left"
-    ? [...newData, ...previousData]
-    : [...previousData, ...newData];
+    ? [...newData, ...(previousData || [])]
+    : [...(previousData || []), ...newData];
 
 const attachTimeSeries = (
   direction: "left" | "right",
   newData: TimeSeriesData,
-  previousData: TimeSeriesData
+  previousData?: TimeSeriesData
 ): TimeSeriesData => {
-  const previousSources = Object.keys(previousData);
+  const previousSources = Object.keys(previousData || {});
   const newSources = Object.keys(newData);
   const sources = union(previousSources, newSources) as Sources[];
 
@@ -153,6 +154,85 @@ const attachTimeSeries = (
   }, {});
 };
 
+const findRequestTimePeriod = (
+  prevStart?: string,
+  prevEnd?: string,
+  newStart?: string,
+  newEnd?: string
+): "past" | "future" | "between" | undefined => {
+  if (
+    prevEnd === newEnd &&
+    isString(prevStart) &&
+    isString(newStart) &&
+    isBefore(newStart, prevStart, true)
+  ) {
+    return "past";
+  }
+
+  if (
+    prevStart === newStart &&
+    isString(prevEnd) &&
+    isString(newEnd) &&
+    isBefore(prevEnd, newEnd, true)
+  ) {
+    return "future";
+  }
+
+  if (
+    isString(newStart) &&
+    isString(newEnd) &&
+    isString(prevStart) &&
+    isString(prevEnd) &&
+    isBefore(prevStart, newStart) &&
+    isBefore(newEnd, prevEnd)
+  ) {
+    return "between";
+  }
+
+  return undefined;
+};
+
+const calculateRequestParams = (
+  prevStart?: string,
+  prevEnd?: string,
+  newStart?: string,
+  newEnd?: string
+): {
+  start?: string;
+  end?: string;
+  attachDirection?: "right" | "left";
+  returnStored?: boolean;
+} => {
+  const timePeriod = findRequestTimePeriod(
+    prevStart,
+    prevEnd,
+    newStart,
+    newEnd
+  );
+
+  switch (timePeriod) {
+    case "past":
+      return {
+        start: newStart,
+        end: prevStart,
+        attachDirection: "left",
+      };
+
+    case "future":
+      return {
+        start: prevEnd,
+        end: newEnd,
+        attachDirection: "right",
+      };
+
+    case "between":
+      return { returnStored: true };
+
+    default:
+      return { start: newStart, end: newEnd };
+  }
+};
+
 /**
   Util function that is responsible for fetching the time series and daily data.
   This function takes into consideration that only one from `params.start` and `params.end`
@@ -166,105 +246,66 @@ const attachTimeSeries = (
   @param storedEnd - The most recent date the user has requested data for
 */
 export const timeSeriesRequest = async (
-  params: TimeSeriesDataRequestParams,
+  inputParams: TimeSeriesDataRequestParams,
   storedTimeSeries?: TimeSeriesData,
   storedDailyData?: DailyData[],
   storedStart?: string,
   storedEnd?: string
 ): Promise<
   [
-    updatedTimeSeriesData: TimeSeriesData,
-    updatedDailyData: DailyData[],
+    updatedTimeSeriesData?: TimeSeriesData,
+    updatedDailyData?: DailyData[],
     updatedStoredStart?: string,
     updatedStoredEnd?: string
   ]
 > => {
-  const { start, end } = params;
+  const { siteId, start: inputStart, end: inputEnd } = inputParams;
   const minDate =
-    storedStart && start && !isBefore(start, storedStart, true)
+    storedStart && inputStart && !isBefore(inputStart, storedStart, true)
       ? storedStart
-      : start;
+      : inputStart;
   const maxDate =
-    storedEnd && end && isBefore(end, storedEnd, true) ? storedEnd : end;
+    storedEnd && inputEnd && isBefore(inputEnd, storedEnd, true)
+      ? storedEnd
+      : inputEnd;
+  const { start, end, attachDirection, returnStored } = calculateRequestParams(
+    storedStart,
+    storedEnd,
+    inputStart,
+    inputEnd
+  );
 
-  // If the user requests data for < storedStart, then make a request for the interval
-  // [start, storedStart] and attach the resulting data to the already existing data.
-  if (
-    storedDailyData &&
-    storedTimeSeries &&
-    storedStart &&
-    start &&
-    isBefore(start, storedStart, true)
-  ) {
-    const { data } = await siteServices.getSiteTimeSeriesData({
-      ...params,
-      start,
-      end: storedStart,
-    });
-    const { data: granularDailyData } = await siteServices.getSiteDailyData(
-      params.siteId,
-      start,
-      storedStart
-    );
-
-    return [
-      attachTimeSeries("left", mapTimeSeriesData(data), storedTimeSeries),
-      attachData("left", granularDailyData, storedDailyData),
-      minDate,
-      maxDate,
-    ];
-  }
-
-  // If the user requests data for > storedEnd, then make a request for the interval
-  // [storedEnd, end] and attach the resulting data to the already existing data.
-  if (
-    storedDailyData &&
-    storedTimeSeries &&
-    storedEnd &&
-    end &&
-    isBefore(storedEnd, end, true)
-  ) {
-    const { data } = await siteServices.getSiteTimeSeriesData({
-      ...params,
-      start: storedEnd,
-      end,
-    });
-    const { data: granularDailyData } = await siteServices.getSiteDailyData(
-      params.siteId,
-      storedEnd,
-      end
-    );
-
-    return [
-      attachTimeSeries("right", mapTimeSeriesData(data), storedTimeSeries),
-      attachData("right", granularDailyData, storedDailyData),
-      minDate,
-      maxDate,
-    ];
-  }
-
-  // If the interval [start, end] belongs to the interval [storedStart, storedEnd],
-  // return the already existing data.
-  if (
-    storedDailyData &&
-    storedTimeSeries &&
-    storedStart &&
-    storedEnd &&
-    start &&
-    end &&
-    isBefore(storedStart, start) &&
-    isBefore(end, storedEnd)
-  ) {
+  if (returnStored) {
     return [storedTimeSeries, storedDailyData, minDate, maxDate];
   }
 
-  // In any other case, make a request for the interval [start, end].
-  const { data } = await siteServices.getSiteTimeSeriesData(params);
-  const { data: granularDailyData } = await siteServices.getSiteDailyData(
-    params.siteId,
-    params.start,
-    params.end
-  );
+  const timeSeriesData =
+    start && end
+      ? (
+          await siteServices.getSiteTimeSeriesData({
+            ...inputParams,
+            start,
+            end,
+          })
+        )?.data
+      : {};
 
-  return [mapTimeSeriesData(data), granularDailyData, minDate, maxDate];
+  const granularDailyData =
+    start && end
+      ? (await siteServices.getSiteDailyData(siteId, start, end))?.data
+      : [];
+
+  const resultingTimeSeriesData = attachDirection
+    ? attachTimeSeries(
+        attachDirection,
+        mapTimeSeriesData(timeSeriesData),
+        storedTimeSeries
+      )
+    : mapTimeSeriesData(timeSeriesData);
+
+  const resultingDailyData = attachDirection
+    ? attachData(attachDirection, granularDailyData, storedDailyData)
+    : granularDailyData;
+
+  return [resultingTimeSeriesData, resultingDailyData, minDate, maxDate];
 };
