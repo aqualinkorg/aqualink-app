@@ -59,7 +59,6 @@ export interface ChartProps {
 }
 
 const SMALL_WINDOW = 400;
-const X_TICK_THRESHOLD = 90;
 
 const makeAnnotation = (
   name: string,
@@ -145,10 +144,12 @@ function Chart({
       );
       const nTicks = ticksPositions.length;
       const {
-        chartArea: { right },
+        chartArea: { right, left },
       } = current.chartInstance;
+      const ticksWidth =
+        typeof nTicks === "number" && nTicks > 0 ? (right - left) / nTicks : 0;
       // If last tick is too close to the chart's right edge then hide it
-      if (right - ticksPositions[nTicks - 1] < X_TICK_THRESHOLD) {
+      if (right - ticksPositions[nTicks - 1] < ticksWidth) {
         setHideLastTick(true);
       } else {
         setHideLastTick(false);
