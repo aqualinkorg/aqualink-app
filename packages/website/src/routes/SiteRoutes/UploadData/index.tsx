@@ -21,6 +21,7 @@ import uploadServices, {
 import { userInfoSelector } from "../../../store/User/userSlice";
 import siteServices from "../../../services/siteServices";
 import { setSelectedSite } from "../../../store/Sites/selectedSiteSlice";
+import { getAxiosErrorMessage } from "../../../helpers/errors";
 
 const UploadData = ({ match, onSuccess }: MatchProps) => {
   const classes = useStyles();
@@ -97,7 +98,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
       }
     } catch (err) {
       setUploadLoading(false);
-      const errorMessage = (err?.response?.data?.message as string) || "";
+      const errorMessage = getAxiosErrorMessage(err);
       const [maybeFileName, maybeFileError] = errorMessage?.split(": ");
       if (maybeFileName in uploadErrors) {
         // File specific error

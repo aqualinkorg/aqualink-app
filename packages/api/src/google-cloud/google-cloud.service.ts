@@ -104,7 +104,10 @@ export class GoogleCloudService {
     try {
       await this.storage.bucket(this.GCS_BUCKET).file(file).delete();
     } catch (error) {
-      this.logger.error(`Failed to delete the file ${file}: `, error);
+      this.logger.error(
+        `Failed to delete the file ${file}: `,
+        error as string | undefined,
+      );
       throw new InternalServerErrorException();
     }
   }

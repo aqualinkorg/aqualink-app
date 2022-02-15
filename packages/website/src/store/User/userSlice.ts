@@ -5,7 +5,6 @@ import {
   ActionReducerMapBuilder,
   AsyncThunk,
 } from "@reduxjs/toolkit";
-import { FirebaseError } from "firebase/app";
 
 import type {
   PasswordResetParams,
@@ -21,6 +20,10 @@ import collectionServices from "../../services/collectionServices";
 import { constructUserObject } from "./helpers";
 import { setSiteNameFromList } from "../../helpers/siteUtils";
 import { UpdateSiteNameFromListArgs } from "../Sites/types";
+import {
+  getAxiosErrorMessage,
+  getFirebaseErrorMessage,
+} from "../../helpers/errors";
 
 const userInitialState: UserState = {
   userInfo: null,
@@ -72,7 +75,7 @@ export const createUser = createAsyncThunk<
     } catch (err) {
       // Delete the user from Firebase if it exists, then rethrow the error
       await user?.delete();
-      return rejectWithValue(err.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
@@ -93,7 +96,7 @@ export const signInUser = createAsyncThunk<
       );
       return constructUserObject(userData, collections, token);
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
@@ -107,7 +110,7 @@ export const resetPassword = createAsyncThunk<
     await userServices.resetPassword(email);
     return { email };
   } catch (err) {
-    return rejectWithValue(err.message);
+    return rejectWithValue(getAxiosErrorMessage(err));
   }
 });
 
@@ -121,7 +124,7 @@ export const getSelf = createAsyncThunk<User, string, CreateAsyncThunkTypes>(
       );
       return constructUserObject(userData, collections, token);
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
@@ -144,8 +147,7 @@ export const signOutUser = createAsyncThunk<
     await userServices.signOutUser();
     return null;
   } catch (err) {
-    const error: FirebaseError = err;
-    return Promise.reject(error.message);
+    return Promise.reject(getFirebaseErrorMessage(err));
   }
 });
 

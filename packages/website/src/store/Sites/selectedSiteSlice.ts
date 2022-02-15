@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { sortBy } from "lodash";
-import type { AxiosError } from "axios";
 import type {
   OceanSenseData,
   OceanSenseDataRequestParams,
@@ -17,6 +16,7 @@ import {
   mapTimeSeriesDataRanges,
   timeSeriesRequest,
 } from "./helpers";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
@@ -62,8 +62,7 @@ export const siteRequest = createAsyncThunk<
         })),
       };
     } catch (err) {
-      const error: AxiosError<SelectedSiteState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   },
   {
@@ -87,8 +86,7 @@ export const siteOceanSenseDataRequest = createAsyncThunk<
       const { data } = await siteServices.getOceanSenseData(params);
       return { data: mapOceanSenseData(data), latest };
     } catch (err) {
-      const error: AxiosError<SelectedSiteState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
@@ -135,8 +133,7 @@ export const siteTimeSeriesDataRequest = createAsyncThunk<
         timeSeriesMaxRequestDate,
       };
     } catch (err) {
-      const error: AxiosError<SelectedSiteState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
@@ -152,8 +149,7 @@ export const siteTimeSeriesDataRangeRequest = createAsyncThunk<
       const { data } = await siteServices.getSiteTimeSeriesDataRange(params);
       return mapTimeSeriesDataRanges(data);
     } catch (err) {
-      const error: AxiosError<SelectedSiteState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );

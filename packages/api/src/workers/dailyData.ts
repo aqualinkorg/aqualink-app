@@ -1,5 +1,6 @@
 /** Worker to process daily data for all sites. */
 import {
+  get,
   isEmpty,
   isNil,
   isNumber,
@@ -341,7 +342,7 @@ export async function getSitesDailyData(
         await dailyDataRepository.save(entity);
       } catch (err) {
         // Update instead of insert
-        if (err.constraint === 'no_duplicated_date') {
+        if (get(err, 'constraint') === 'no_duplicated_date') {
           const filteredData = omitBy(entity, isNil);
           await dailyDataRepository
             .createQueryBuilder('dailyData')
