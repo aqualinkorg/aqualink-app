@@ -41,6 +41,8 @@ class ConfigService {
     return value;
   }
 
+  API_URL = this.getValue('BACKEND_BASE_URL', true);
+
   public ensureValues(keys: string[]) {
     keys.forEach((k) => this.getValue(k, true));
     return this;
@@ -55,16 +57,19 @@ class ConfigService {
     return mode !== 'development';
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       ...dbConfig,
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public getSwaggerConfig() {
     const config = new DocumentBuilder()
       .setTitle('Aqualink API documentation')
       .setDescription('The Aqualink public API documentation')
+      .addServer(this.API_URL)
       .addBearerAuth()
       .build();
 

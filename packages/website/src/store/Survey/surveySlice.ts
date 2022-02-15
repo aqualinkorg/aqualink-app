@@ -4,10 +4,10 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import type { AxiosError } from "axios";
 import { SelectedSurveyState, SurveyState, SurveyData } from "./types";
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import surveyServices from "../../services/surveyServices";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const selectedSurveyInitialState: SelectedSurveyState = {
   loading: true,
@@ -35,8 +35,7 @@ export const surveyGetRequest = createAsyncThunk<
       const { data } = await surveyServices.getSurvey(siteId, surveyId);
       return data;
     } catch (err) {
-      const error: AxiosError<SelectedSurveyState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
@@ -63,8 +62,7 @@ export const surveyAddRequest = createAsyncThunk<
         });
       return data;
     } catch (err) {
-      const error: AxiosError<SelectedSurveyState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );

@@ -1,11 +1,11 @@
 import { sortBy } from "lodash";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 
 import { SurveyListState } from "./types";
 
 import type { RootState, CreateAsyncThunkTypes } from "../configure";
 import surveyServices from "../../services/surveyServices";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const surveyListInitialState: SurveyListState = {
   list: [],
@@ -18,8 +18,7 @@ const getSurveys = async (siteId: string) => {
     const { data } = await surveyServices.getSurveys(siteId);
     return sortBy(data, "diveDate");
   } catch (err) {
-    const error: AxiosError<SurveyListState["error"]> = err;
-    return Promise.reject(error.message);
+    return Promise.reject(getAxiosErrorMessage(err));
   }
 };
 

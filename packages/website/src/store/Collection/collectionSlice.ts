@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { AxiosError } from "axios";
 
 import { CollectionState, CollectionRequestParams } from "./types";
 import type { CreateAsyncThunkTypes, RootState } from "../configure";
 import collectionServices from "../../services/collectionServices";
 import { constructCollection } from "./utils";
+import { getAxiosErrorMessage } from "../../helpers/errors";
 
 const collectionInitialState: CollectionState = {
   loading: false,
@@ -31,8 +31,7 @@ export const collectionRequest = createAsyncThunk<
       }
       return undefined;
     } catch (err) {
-      const error: AxiosError<CollectionState["error"]> = err;
-      return rejectWithValue(error.message);
+      return rejectWithValue(getAxiosErrorMessage(err));
     }
   }
 );
