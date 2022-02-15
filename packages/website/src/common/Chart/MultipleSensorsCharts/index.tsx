@@ -15,9 +15,13 @@ import {
   siteTimeSeriesDataRequest,
   siteTimeSeriesDataSelector,
 } from "../../../store/Sites/selectedSiteSlice";
-import { Metrics, MetricsKeys, Site } from "../../../store/Sites/types";
 import {
-  generateHistoricalMonthlyMeanTimestamps,
+  Metrics,
+  MetricsKeys,
+  Site,
+  SofarValue,
+} from "../../../store/Sites/types";
+import {
   isBefore,
   setTimeZone,
   subtractFromDate,
@@ -26,6 +30,8 @@ import {
   constructOceanSenseDatasets,
   findCardDataset,
   findDataLimits,
+  generateSpotterMetricDataset,
+  generateTempAnalysisDatasets,
   localizedEndOfDay,
 } from "./helpers";
 import { RangeValue } from "./types";
@@ -36,6 +42,11 @@ import {
 } from "../../../constants/sondeConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import ChartWithCard from "./ChartWithCard";
+import {
+  OCEAN_SENSE_DATA_COLOR,
+  SONDE_DATA_COLOR,
+} from "../../../constants/charts";
+import { Dataset } from "..";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   "bottom_temperature",
@@ -102,11 +113,6 @@ const MultipleSensorsCharts = ({
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
-  const dailyDataSst = granularDailyData?.map((item) => ({
-    timestamp: item.date,
-    value: item.satelliteTemperature,
-  }));
-
   const hasSpotterData = Boolean(
     bottomTemperature?.spotter?.data?.[1] || topTemperature?.spotter?.data?.[1]
   );
@@ -130,6 +136,42 @@ const MultipleSensorsCharts = ({
     .toISOString();
 
   const hasOceanSenseId = Boolean(oceanSenseConfig?.[site.id]);
+
+  const tempAnalysisDatasets = generateTempAnalysisDatasets(
+    granularDailyData,
+    timeSeriesData?.bottomTemperature?.spotter?.data,
+    timeSeriesData?.topTemperature?.spotter?.data,
+    hoboBottomTemperature?.data,
+    site.historicalMonthlyMean,
+    startDate,
+    endDate,
+    site.timezone,
+    site.depth
+  );
+
+  const spotterMetricDataset = (metric: Metrics) => {
+    const { unit, convert } = spotterConfig[metric] || {};
+
+    return generateSpotterMetricDataset(
+      "SENSOR",
+      timeSeriesData?.[metric]?.spotter?.data?.map((item) => ({
+        ...item,
+        value: convert ? convert * item.value : item.value,
+      })) || [],
+      unit || ""
+    );
+  };
+
+  const sondeDataset = (unit: string, data?: SofarValue[]): Dataset => ({
+    label: "SENSOR",
+    data: data || [],
+    unit,
+    type: "line",
+    curveColor: SONDE_DATA_COLOR,
+    maxHoursGap: 6,
+    tooltipMaxHoursGap: 6,
+    displayData: true,
+  });
 
   // Scroll to the chart defined by the initialChart query param.
   useEffect(() => {
@@ -352,11 +394,8 @@ const MultipleSensorsCharts = ({
         timeZone={site.timezone}
         chartWidth={cardDataset === "spotter" ? "small" : "medium"}
         site={site}
-        dailyData={granularDailyData || []}
+        datasets={tempAnalysisDatasets}
         pointId={pointId ? parseInt(pointId, 10) : undefined}
-        spotterTopTemperature={topTemperature?.spotter?.data}
-        spotterBottomTemperature={bottomTemperature?.spotter?.data}
-        hoboBottomTemperature={hoboBottomTemperature?.data || []}
         pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
         pickerEndDate={pickerEndDate || today}
         chartStartDate={chartStartDate}
@@ -366,18 +405,12 @@ const MultipleSensorsCharts = ({
         isPickerErrored={pickerErrored}
         areSurveysFiltered={surveysFiltered}
         cardDataset={cardDataset}
-        dailyDataSst={dailyDataSst || []}
-        historicalMonthlyMean={generateHistoricalMonthlyMeanTimestamps(
-          site.historicalMonthlyMean,
-          startDate,
-          endDate,
-          site.timezone
-        )}
       />
       {hasSpotterData &&
-        Object.entries(spotterConfig).map(([key, { title, unit, convert }]) => (
+        Object.entries(spotterConfig).map(([key, { title }]) => (
           <Box mt={4} key={title}>
             <ChartWithCard
+              datasets={[spotterMetricDataset(key as Metrics)]}
               id={key}
               range={range}
               onRangeChange={onRangeChange}
@@ -399,19 +432,7 @@ const MultipleSensorsCharts = ({
               onEndDateChange={onPickerDateChange("end")}
               isPickerErrored={pickerErrored}
               showDatePickers={false}
-              // TODO -  Make these data input more generic. Eg. in this case, this is not "oceanSense" data.
-              oceanSenseData={timeSeriesData?.[
-                key as Metrics
-              ]?.spotter?.data?.map((item) => ({
-                ...item,
-                value: convert ? convert * item.value : item.value,
-              }))}
-              surveyPoint={
-                timeSeriesData?.[key as Metrics]?.spotter?.surveyPoint
-              }
-              oceanSenseDataUnit={unit}
               hideYAxisUnits
-              displayHistoricalMonthlyMean={false}
               cardDataset="oceanSense"
               cardColumnJustification="flex-start"
               displayDownloadButton={false}
@@ -420,10 +441,22 @@ const MultipleSensorsCharts = ({
         ))}
       {displayOceanSenseCharts &&
         hasOceanSenseId &&
-        Object.values(constructOceanSenseDatasets(oceanSenseData)).map(
-          (item) => (
+        Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
+          ([key, item]) => (
             <Box mt={4} key={item.title}>
               <ChartWithCard
+                datasets={[
+                  {
+                    label: key,
+                    data: item.data,
+                    type: "line",
+                    curveColor: OCEAN_SENSE_DATA_COLOR,
+                    unit: item.unit,
+                    maxHoursGap: 6,
+                    tooltipMaxHoursGap: 6,
+                    displayData: true,
+                  },
+                ]}
                 id={item.id}
                 range={range}
                 onRangeChange={onRangeChange}
@@ -445,10 +478,7 @@ const MultipleSensorsCharts = ({
                 onEndDateChange={onPickerDateChange("end")}
                 isPickerErrored={pickerErrored}
                 showDatePickers={false}
-                oceanSenseData={item.data}
-                oceanSenseDataUnit={item.unit}
                 hideYAxisUnits
-                displayHistoricalMonthlyMean={false}
                 cardDataset="oceanSense"
                 cardColumnJustification="flex-start"
                 displayDownloadButton={false}
@@ -470,6 +500,7 @@ const MultipleSensorsCharts = ({
             return (
               <Box mt={4} key={key}>
                 <ChartWithCard
+                  datasets={[sondeDataset(units, data)]}
                   id={key}
                   range={range}
                   onRangeChange={onRangeChange}
@@ -491,11 +522,8 @@ const MultipleSensorsCharts = ({
                   onEndDateChange={onPickerDateChange("end")}
                   isPickerErrored={pickerErrored}
                   showDatePickers={false}
-                  oceanSenseData={data}
                   surveyPoint={surveyPoint}
-                  oceanSenseDataUnit={units}
                   hideYAxisUnits
-                  displayHistoricalMonthlyMean={false}
                   cardDataset="oceanSense"
                   cardColumnJustification="flex-start"
                   displayDownloadButton={false}

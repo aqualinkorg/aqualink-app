@@ -1,17 +1,3 @@
-import type { DailyData } from "../store/Sites/types";
-
-/** Utility function to get the closest available data given a date in UTC. */
-export function getDailyDataClosestToDate(dailyData: DailyData[], date: Date) {
-  const timeDiff = (incomingDate: string) =>
-    Math.abs(new Date(incomingDate).getTime() - date.getTime());
-
-  return dailyData.reduce((prevClosest, nextPoint) =>
-    timeDiff(prevClosest.date) > timeDiff(nextPoint.date)
-      ? nextPoint
-      : prevClosest
-  );
-}
-
 /** Utility function to sort data by date */
 export const sortByDate = <T>(
   list: T[],

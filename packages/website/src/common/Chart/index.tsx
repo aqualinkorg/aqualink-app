@@ -9,32 +9,39 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
-import type {
-  DailyData,
-  HistoricalMonthlyMeanData,
-  SofarValue,
-} from "../../store/Sites/types";
+import type { SofarValue } from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
-import {
-  createChartData,
-  useProcessedChartData,
-  augmentSurfaceTemperature,
-} from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Sites/types";
 import { convertToLocalTime } from "../../helpers/dates";
+import { useProcessedChartData } from "./utils";
+
+export interface Dataset {
+  label: string;
+  data: SofarValue[];
+  type: "line" | "scatter";
+  unit: string;
+  curveColor: string;
+  threshold?: number;
+  fillColor?: string;
+  fillColorAboveThreshold?: string;
+  fillColorBelowThreshold?: string;
+  surveysAttached?: boolean;
+  considerForXAxisLimits?: boolean;
+  maxHoursGap?: number;
+  tooltipMaxHoursGap?: number;
+  isDailyUpdated?: boolean;
+  displayData?: boolean;
+  cardColumnName?: string;
+  cardColumnTooltip?: string;
+  tooltipLabel?: string;
+}
 
 export interface ChartProps {
   siteId: number;
-  dailyData: DailyData[];
-  spotterBottomTemperature?: SofarValue[];
-  spotterTopTemperature?: SofarValue[];
-  hoboBottomTemperatureData?: SofarValue[];
-  oceanSenseData?: SofarValue[];
-  oceanSenseDataUnit?: string;
-  historicalMonthlyMeanData?: HistoricalMonthlyMeanData[];
+  datasets?: Dataset[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -79,29 +86,10 @@ const makeAnnotation = (
 });
 
 const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
-  isEqual(prevProps.dailyData, nextProps.dailyData) &&
-  isEqual(
-    prevProps.historicalMonthlyMeanData,
-    nextProps.historicalMonthlyMeanData
-  ) &&
-  isEqual(
-    prevProps.hoboBottomTemperatureData,
-    nextProps.hoboBottomTemperatureData
-  ) &&
-  isEqual(prevProps.oceanSenseData, nextProps.oceanSenseData) &&
-  isEqual(
-    prevProps.spotterBottomTemperature,
-    nextProps.spotterBottomTemperature
-  ) &&
-  isEqual(prevProps.spotterTopTemperature, nextProps.spotterTopTemperature);
+  isEqual(prevProps.datasets, nextProps.datasets);
 
 function Chart({
-  dailyData,
-  spotterBottomTemperature,
-  spotterTopTemperature,
-  hoboBottomTemperatureData,
-  oceanSenseData,
-  historicalMonthlyMeanData,
+  datasets,
   surveys,
   timeZone,
   startDate,
@@ -113,11 +101,13 @@ function Chart({
   showYearInTicks,
   hideYAxisUnits,
   chartSettings = {},
-  fill = true,
   chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
   const selectedSurvey = useSelector(surveyDetailsSelector);
+  const selectedSurveyDate = selectedSurvey?.diveDate
+    ? new Date(convertToLocalTime(selectedSurvey.diveDate, timeZone))
+    : undefined;
 
   if (forwardRef) {
     // this might be doable with forwardRef or callbacks, but its a little hard since we need to
@@ -132,31 +122,15 @@ function Chart({
 
   const [hideLastTick, setHideLastTick] = useState<boolean>(false);
 
-  const {
-    xAxisMax,
-    xAxisMin,
-    yAxisMax,
-    yAxisMin,
-    surfaceTemperatureData,
-    tempWithSurvey,
-    bottomTemperatureData,
-    spotterBottom,
-    spotterTop,
-    hoboBottom,
-    oceanSense,
-    historicalMonthlyMeanTemp,
-  } = useProcessedChartData(
-    dailyData,
-    spotterBottomTemperature,
-    spotterTopTemperature,
-    hoboBottomTemperatureData,
-    oceanSenseData,
-    historicalMonthlyMeanData,
-    surveys,
-    temperatureThreshold,
-    startDate,
-    endDate
-  );
+  const { processedDatasets, xAxisMax, xAxisMin, yAxisMax, yAxisMin } =
+    useProcessedChartData(
+      datasets,
+      startDate,
+      endDate,
+      surveys,
+      temperatureThreshold,
+      selectedSurveyDate
+    );
 
   const nYTicks = 5;
   const yStepSize = Math.ceil((yAxisMax - yAxisMin) / nYTicks);
@@ -207,6 +181,7 @@ function Chart({
   useEffect(() => {
     changeXTickShiftAndPeriod();
   });
+
   const settings = mergeWith(
     {
       layout: {
@@ -249,8 +224,8 @@ function Chart({
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: startDate || xAxisMin,
-              max: endDate || xAxisMax,
+              min: xAxisMin,
+              max: xAxisMax,
               padding: 10,
               callback: (value: number, index: number, values: string[]) =>
                 index === values.length - 1 && hideLastTick ? undefined : value,
@@ -303,29 +278,12 @@ function Chart({
       return undefined;
     }
   );
+
   return (
     <Line
       ref={chartRef}
       options={settings}
-      data={createChartData(
-        spotterBottom,
-        spotterTop,
-        hoboBottom,
-        oceanSense,
-        tempWithSurvey,
-        augmentSurfaceTemperature(
-          surfaceTemperatureData,
-          startDate || xAxisMin,
-          endDate || xAxisMax
-        ),
-        bottomTemperatureData,
-        historicalMonthlyMeanTemp,
-        selectedSurvey?.diveDate
-          ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
-          : null,
-        temperatureThreshold,
-        fill
-      )}
+      data={{ datasets: processedDatasets }}
     />
   );
 }

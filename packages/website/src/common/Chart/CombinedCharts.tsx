@@ -6,6 +6,7 @@ import {
   withStyles,
   WithStyles,
 } from "@material-ui/core";
+import { isNumber } from "lodash";
 
 import ChartWithTooltip from "./ChartWithTooltip";
 import MultipleSensorsCharts from "./MultipleSensorsCharts";
@@ -15,6 +16,13 @@ import {
   convertSurveyDataToLocalTime,
 } from "../../helpers/dates";
 import { SurveyListItem } from "../../store/Survey/types";
+import { Dataset } from ".";
+import { convertDailyToSofar } from "./utils";
+import {
+  DAILY_DATA_CURVE_COLOR,
+  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+} from "../../constants/charts";
 
 const CombinedCharts = ({
   site,
@@ -22,7 +30,27 @@ const CombinedCharts = ({
   surveys,
   classes,
 }: CombinedChartsProps) => {
-  const { id, timezone, dailyData, depth, maxMonthlyMean } = site;
+  const { id, timezone, dailyData, maxMonthlyMean } = site;
+
+  const heatStressDataset: Dataset = {
+    label: "SURFACE",
+    data:
+      convertDailyToSofar(convertDailyDataToLocalTime(dailyData, timezone), [
+        "satelliteTemperature",
+      ])?.satelliteTemperature || [],
+    curveColor: DAILY_DATA_CURVE_COLOR,
+    maxHoursGap: 48,
+    tooltipMaxHoursGap: 24,
+    type: "line",
+    unit: "°C",
+    considerForXAxisLimits: true,
+    surveysAttached: true,
+    isDailyUpdated: true,
+    threshold: isNumber(maxMonthlyMean) ? maxMonthlyMean + 1 : undefined,
+    fillColorAboveThreshold: DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+    fillColorBelowThreshold: DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+  };
+
   return (
     <div>
       <Box className={classes.graphtTitleWrapper}>
@@ -31,14 +59,13 @@ const CombinedCharts = ({
         </Typography>
       </Box>
       <ChartWithTooltip
+        className={classes.chart}
         siteId={id}
-        depth={depth}
-        dailyData={convertDailyDataToLocalTime(dailyData, timezone)}
+        datasets={[heatStressDataset]}
         surveys={convertSurveyDataToLocalTime(surveys, timezone)}
         temperatureThreshold={maxMonthlyMean ? maxMonthlyMean + 1 : null}
         maxMonthlyMean={maxMonthlyMean || null}
         background
-        className={classes.chart}
         timeZone={timezone}
       />
       <MultipleSensorsCharts

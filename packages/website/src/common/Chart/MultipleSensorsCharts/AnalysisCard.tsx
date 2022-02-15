@@ -13,145 +13,57 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { isNumber } from "lodash";
 import classNames from "classnames";
 
-import {
-  siteOceanSenseDataLoadingSelector,
-  siteTimeSeriesDataLoadingSelector,
-} from "../../../store/Sites/selectedSiteSlice";
-import {
-  HistoricalMonthlyMeanData,
-  SofarValue,
-} from "../../../store/Sites/types";
+import { siteTimeSeriesDataLoadingSelector } from "../../../store/Sites/selectedSiteSlice";
 import { calculateCardMetrics } from "./helpers";
 import { CardColumn, Dataset } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
-import { colors } from "../../../layout/App/theme";
+import type { Dataset as ChartDataset } from "..";
 
 const rows = ["MAX", "MEAN", "MIN"];
 
 /* eslint-disable react/prop-types */
 const AnalysisCard: FC<AnalysisCardProps> = ({
   classes,
+  datasets,
   dataset,
   pickerStartDate,
   pickerEndDate,
   chartStartDate,
   chartEndDate,
-  depth,
-  dailyDataSst,
-  spotterBottomTemperature,
-  spotterTopTemperature,
-  hoboBottomTemperature,
-  oceanSenseData,
-  oceanSenseUnit,
   columnJustification,
-  historicalMonthlyMean,
   children,
 }) => {
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
-  const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
-
+  const hasData = datasets.some(({ displayData }) => displayData);
   const isOceanSense = dataset === "oceanSense";
-
-  const hasHoboData = !!hoboBottomTemperature?.[1];
-  const hasOceanSenseData = !!oceanSenseData?.[1];
-
-  const hasSpotterBottom = !!spotterBottomTemperature?.[1];
-  const hasSpotterTop = !!spotterTopTemperature?.[1];
-  const hasSpotterData = hasSpotterBottom || hasSpotterTop;
-  const hasDailyData = !!dailyDataSst?.[1];
-
-  const showCard =
-    !loading &&
-    (!oceanSenseData || !oceanSenseDataLoading) &&
-    (hasHoboData || hasOceanSenseData || hasSpotterData || hasDailyData);
+  const showCard = !loading && hasData;
 
   if (!showCard) {
     return null;
   }
-  const cardColumns: CardColumn[] = [
-    {
-      title: "HISTORIC",
-      tooltip: "Historic long-term average of satellite surface temperature",
-      key: "historic",
-      color: "#d84424",
-      rows: calculateCardMetrics(
-        1,
-        chartStartDate,
-        chartEndDate,
-        historicalMonthlyMean,
-        "historic"
-      ),
-      display: true,
-    },
-    {
-      title: "HOBO",
-      key: "hobo",
-      color: colors.specialSensorColor,
-      rows: calculateCardMetrics(
-        2,
-        chartStartDate,
-        chartEndDate,
-        hoboBottomTemperature,
-        "hobo"
-      ),
-      display: dataset === "hobo",
-    },
-    {
-      title: "SENSOR",
-      key: "oceanSense",
-      color: colors.specialSensorColor,
-      rows: calculateCardMetrics(
-        2,
-        chartStartDate,
-        chartEndDate,
-        oceanSenseData,
-        "oceanSense"
-      ),
-      display: isOceanSense,
-    },
-    {
-      title: "BUOY 1m",
-      key: "spotterTop",
-      color: "#46a5cf",
-      rows: calculateCardMetrics(
-        2,
-        chartStartDate,
-        chartEndDate,
-        spotterTopTemperature,
-        "spotterTop"
-      ),
-      display: dataset === "spotter",
-    },
-    {
-      title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
-      key: "spotterBottom",
-      color: colors.specialSensorColor,
-      rows: calculateCardMetrics(
-        2,
-        chartStartDate,
-        chartEndDate,
-        spotterBottomTemperature,
-        "spotterBottom"
-      ),
-      display: dataset === "spotter",
-    },
-    {
-      title: "SST",
-      key: "sst",
-      color: "#6bc1e1",
-      rows: calculateCardMetrics(
-        2,
-        chartStartDate,
-        chartEndDate,
-        dailyDataSst,
-        "sst"
-      ),
-      display: dataset === "sst",
-    },
-  ].filter((val) => isNumber(val.rows[0].value));
+
+  const cardColumns: CardColumn[] = datasets.map(
+    ({
+      label,
+      curveColor,
+      data,
+      unit,
+      displayData,
+      cardColumnName,
+      cardColumnTooltip,
+    }) => ({
+      title: cardColumnName || label,
+      color: curveColor,
+      display: !!displayData,
+      key: label,
+      rows: calculateCardMetrics(2, chartStartDate, chartEndDate, data, label),
+      unit,
+      tooltip: cardColumnTooltip,
+    })
+  );
+
   const formattedpickerStartDate = moment(pickerStartDate).format("MM/DD/YYYY");
   const formattedpickerEndDate = moment(pickerEndDate).format("MM/DD/YYYY");
 
@@ -226,7 +138,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
                           variant="h5"
                           color="textSecondary"
                         >
-                          {formatNumber(value, 1)} {oceanSenseUnit || "°C"}
+                          {formatNumber(value, 1)} {item.unit}
                         </Typography>
                       </Grid>
                     ))}
@@ -284,20 +196,13 @@ interface AnalysisCardProps
     WithStyles<typeof styles> {}
 
 interface AnalysisCardIncomingProps {
+  datasets: ChartDataset[];
   dataset: Dataset;
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;
   chartEndDate: string;
-  depth: number | null;
-  dailyDataSst?: SofarValue[];
-  spotterBottomTemperature?: SofarValue[];
-  spotterTopTemperature?: SofarValue[];
-  hoboBottomTemperature?: SofarValue[];
-  oceanSenseData?: SofarValue[];
-  oceanSenseUnit?: string;
   columnJustification?: GridProps["justify"];
-  historicalMonthlyMean?: HistoricalMonthlyMeanData[];
 }
 
 export default withStyles(styles)(AnalysisCard);

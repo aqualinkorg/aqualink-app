@@ -6,69 +6,36 @@ import React, {
 } from "react";
 import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
-import { isNumber, last } from "lodash";
+import { head, isNumber, maxBy, minBy } from "lodash";
 import moment from "moment";
-import Chart, { ChartProps } from ".";
+import Chart, { ChartProps, Dataset } from ".";
 import Tooltip, { TooltipData, TOOLTIP_WIDTH } from "./Tooltip";
 import {
-  filterDailyData,
   findSurveyFromDate,
-  getDailyDataClosestToDate,
-  getHistoricalMonthlyMeanDataClosestToDate,
   getSofarDataClosestToDate,
-  sameDay,
+  getDatasetsTimestamps,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
-  depth: number | null;
   className?: string;
   style?: CSSProperties;
 }
 
-/**
- * Gets the number of a result or null if no number was found.
- */
-const numberOrNull = (result: { value: number } | undefined): number | null => {
-  const value = result?.value;
-  return isNumber(value) ? value : null;
-};
-
 function ChartWithTooltip({
-  depth,
   chartSettings,
   children,
   className,
   style,
   ...rest
 }: PropsWithChildren<ChartWithTooltipProps>) {
-  const {
-    dailyData,
-    spotterBottomTemperature,
-    spotterTopTemperature,
-    hoboBottomTemperatureData,
-    oceanSenseData,
-    oceanSenseDataUnit,
-    historicalMonthlyMeanData,
-    siteId,
-    surveys,
-    timeZone,
-    startDate,
-    endDate,
-  } = rest;
+  const { siteId, surveys, timeZone, startDate, endDate, datasets } = rest;
   const chartDataRef = useRef<Line>(null);
 
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const [tooltipData, setTooltipData] = useState<TooltipData>({
     siteId,
     date: "",
-    depth,
-    historicalMonthlyMeanTemp: null,
-    satelliteTemp: null,
-    spotterTopTemp: null,
-    spotterBottomTemp: null,
-    hoboBottomTemp: null,
-    oceanSense: null,
-    oceanSenseUnit: null,
+    datasets: [],
     surveyId: null,
   });
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
@@ -87,52 +54,26 @@ function ChartWithTooltip({
 
       const surveyId = findSurveyFromDate(date, surveys);
 
-      const filteredDailyData = filterDailyData(dailyData, startDate, endDate);
+      const datasetsDates = getDatasetsTimestamps(datasets);
+      const minDataDate = minBy(datasetsDates, (item) => new Date(item));
+      const maxDataDate = maxBy(datasetsDates, (item) => new Date(item));
 
-      const dailyDataForDate =
-        // Try to find data on same day, else closest, else nothing.
-        filteredDailyData.filter((data) => sameDay(data.date, date))[0] ||
-        getDailyDataClosestToDate(filteredDailyData, dateObject, 24) ||
-        {};
-      const { satelliteTemperature } = dailyDataForDate;
+      const closestDatasetData = (datasets?.map((dataset) => {
+        const closestData =
+          getSofarDataClosestToDate(
+            dataset.data,
+            dateObject,
+            dataset.tooltipMaxHoursGap
+          ) || undefined;
+        return {
+          ...dataset,
+          data: closestData ? [closestData] : [],
+        };
+      }) || []) as Dataset[];
 
-      const historicalMonthlyMeanTemp = numberOrNull(
-        getHistoricalMonthlyMeanDataClosestToDate(
-          historicalMonthlyMeanData || [],
-          dateObject
-        )
-      );
-
-      const spotterTopTemp = numberOrNull(
-        getSofarDataClosestToDate(spotterTopTemperature || [], dateObject, 6)
-      );
-
-      const spotterBottomTemp = numberOrNull(
-        getSofarDataClosestToDate(spotterBottomTemperature || [], dateObject, 6)
-      );
-
-      const hoboBottomTemp = numberOrNull(
-        getSofarDataClosestToDate(
-          hoboBottomTemperatureData || [],
-          dateObject,
-          6
-        )
-      );
-
-      const oceanSense = numberOrNull(
-        getSofarDataClosestToDate(oceanSenseData || [], dateObject, 6)
-      );
-
-      const satelliteTemp = satelliteTemperature || null;
-
-      const nValues = [
-        historicalMonthlyMeanTemp,
-        satelliteTemp,
-        spotterTopTemp,
-        spotterBottomTemp,
-        hoboBottomTemp,
-        oceanSense,
-      ].filter(isNumber).length;
+      const nValues = closestDatasetData
+        .map(({ data }) => head(data)?.value)
+        .filter(isNumber).length;
 
       // Chart.js displays tooltips in a parallel to the X axis preference, meaning
       // that it will appear right or left from the chart point. We want to change that,
@@ -155,8 +96,8 @@ function ChartWithTooltip({
       if (
         nValues > 0 &&
         moment(date).isBetween(
-          moment(startDate || last(filteredDailyData)?.date),
-          moment(endDate || filteredDailyData?.[0]?.date),
+          moment(startDate || minDataDate),
+          moment(endDate || maxDataDate),
           undefined,
           "[]"
         )
@@ -165,15 +106,8 @@ function ChartWithTooltip({
         setTooltipData({
           ...tooltipData,
           date,
-          depth,
-          historicalMonthlyMeanTemp,
-          satelliteTemp,
-          spotterTopTemp,
-          spotterBottomTemp,
-          hoboBottomTemp,
-          oceanSense,
-          oceanSenseUnit: oceanSenseDataUnit || null,
           surveyId,
+          datasets: closestDatasetData,
         });
         setShowTooltip(true);
       }
@@ -182,6 +116,7 @@ function ChartWithTooltip({
   const hideTooltip = () => {
     setShowTooltip(false);
   };
+
   // Hide tooltip on scroll to avoid dragging it on the page.
   if (showTooltip) {
     window.addEventListener("scroll", hideTooltip);

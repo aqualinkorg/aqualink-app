@@ -1,58 +1,40 @@
-import type { ChartPoint } from "chart.js";
-import { ChartComponentProps } from "react-chartjs-2";
 import moment from "moment";
-import { inRange } from "lodash";
-import type { ChartProps } from ".";
-import { isBefore } from "../../helpers/dates";
-import { sortByDate } from "../../helpers/sortDailyData";
+import {
+  filter,
+  flatten,
+  inRange,
+  isNil,
+  isNumber,
+  map,
+  maxBy,
+  minBy,
+} from "lodash";
+import { ChartDataSets, ChartPoint } from "chart.js";
 import type {
   DailyData,
   HistoricalMonthlyMeanData,
   SofarValue,
 } from "../../store/Sites/types";
 import { SurveyListItem } from "../../store/Survey/types";
-import { colors } from "../../layout/App/theme";
+import {
+  DEFAULT_SURVEY_CHART_POINT_COLOR,
+  SELECTED_SURVEY_CHART_POINT_COLOR,
+  SURVEY_CHART_POINT_BORDER_COLOR,
+  Y_SPACING_PERCENTAGE,
+} from "../../constants/charts";
+import type { ChartProps } from ".";
 
-// TODO make bottom temp permanent once we work UI caveats
-export const CHART_BOTTOM_TEMP_ENABLED = false;
+interface Context {
+  chart?: Chart;
+  dataIndex?: number;
+  dataset?: Chart.ChartDataSets;
+  datasetIndex?: number;
+}
 
-export const filterDailyData = (
-  dailyData: DailyData[],
-  // Date strings, ISO preferred.
-  from?: string,
-  to?: string
-): DailyData[] => {
-  if (!from || !to) return dailyData;
-  const startDate = moment(from);
-  const endDate = moment(to);
-
-  const ret = dailyData.filter((item) =>
-    // add one since inRange is exclusive for last param
-    inRange(
-      moment(item.date).valueOf(),
-      startDate.valueOf(),
-      endDate.valueOf() + 1
-    )
-  );
-  // if this list is empty, it means satellite is behind. We want to display latest value, so lets just return the latest values.
-  if (ret.length === 0) {
-    // daily data is separated by days, so lets try match the amount of days between the range given to us.
-    const diffDays = endDate.diff(startDate, "days");
-    return ret.slice(-diffDays);
-  }
-  return ret;
-};
-
-const getSurveyDates = (surveys: SurveyListItem[]): (number | null)[] => {
-  const dates = surveys.map((survey) => {
-    if (survey.diveDate) {
-      return new Date(survey.diveDate).setHours(0, 0, 0, 0);
-    }
-    return null;
-  });
-
-  return dates;
-};
+export const getSurveyDates = (surveys: SurveyListItem[]): number[] =>
+  surveys
+    .filter(({ diveDate }) => !isNil(diveDate))
+    .map(({ diveDate }) => new Date(diveDate as string).setHours(0, 0, 0, 0));
 
 export const sameDay = (
   date1: string | number | Date,
@@ -72,56 +54,6 @@ export const findSurveyFromDate = (
     )?.id || null
   );
 };
-
-// Extend surface temperature line to the chart extremities.
-export const augmentSurfaceTemperature = (
-  surfaceTemperatureData: {
-    x: string;
-    y: number;
-  }[],
-  min: string,
-  max: string
-) => {
-  if (surfaceTemperatureData.length > 0) {
-    const firstData = surfaceTemperatureData[0];
-    const lastData = surfaceTemperatureData[surfaceTemperatureData.length - 1];
-
-    const firstDateExtension = moment(firstData.x).subtract(1, "days").format();
-    const lastDateExtension = moment(lastData.x).add(1, "days").format();
-
-    const startDate = isBefore(min, firstDateExtension)
-      ? firstDateExtension
-      : min;
-
-    const endDate = isBefore(max, lastDateExtension) ? max : lastDateExtension;
-
-    return [
-      { x: startDate, y: firstData.y },
-      ...surfaceTemperatureData,
-      { x: endDate, y: lastData.y },
-    ];
-  }
-  return surfaceTemperatureData;
-};
-
-export function getDailyDataClosestToDate(
-  dailyData: DailyData[],
-  date: Date,
-  maxHours: number
-) {
-  if (dailyData.length > 0) {
-    const closest = dailyData.reduce((prevClosest, nextPoint) =>
-      timeDiff(prevClosest.date, date) > timeDiff(nextPoint.date, date)
-        ? nextPoint
-        : prevClosest
-    );
-
-    return timeDiff(closest.date, date) < maxHours * 60 * 60 * 1000
-      ? closest
-      : undefined;
-  }
-  return undefined;
-}
 
 export function getHistoricalMonthlyMeanDataClosestToDate(
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
@@ -191,221 +123,30 @@ export function getSofarDataClosestToDate(
     : undefined;
 }
 
-export const createDatasets = (
-  dailyData: DailyData[],
-  rawSpotterBottom: SofarValue[],
-  rawSpotterTop: SofarValue[],
-  rawHoboBottom: SofarValue[],
-  rawOceanSense: SofarValue[],
-  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
-  surveys: SurveyListItem[]
-) => {
-  const bottomTemperature = dailyData
-    .filter((item) => item.avgBottomTemperature !== null)
-    .map((item) => ({
-      x: item.date,
-      y: item.avgBottomTemperature,
-    }));
-
-  const surfaceTemperature = dailyData
-    .filter((item) => item.satelliteTemperature !== null)
-    .map((item) => ({ x: item.date, y: item.satelliteTemperature }));
-
-  const surveyDates = getSurveyDates(surveys);
-
-  const spotterBottom = rawSpotterBottom.map((item) => ({
-    x: item.timestamp,
-    y: item.value,
-  }));
-
-  const spotterTop = rawSpotterTop.map((item) => ({
-    x: item.timestamp,
-    y: item.value,
-  }));
-
-  const hoboBottom = rawHoboBottom.map((item) => ({
-    x: item.timestamp,
-    y: item.value,
-  }));
-
-  const oceanSense = rawOceanSense.map((item) => ({
-    x: item.timestamp,
-    y: item.value,
-  }));
-
-  const historicalMonthlyMeanTemp = historicalMonthlyMeanData.map((item) => ({
-    x: item.date,
-    y: item.value,
-  }));
-
-  const tempWithSurvey = dailyData
-    .filter(
-      (item) =>
-        item.satelliteTemperature !== null &&
-        surveyDates.some(
-          (surveyDate) => surveyDate && sameDay(surveyDate, item.date)
-        )
-    )
-    .map((item) => ({
-      x: item.date,
-      y:
-        // Position survey on bottom temp, if enabled, else surface temp.
-        (CHART_BOTTOM_TEMP_ENABLED && item.avgBottomTemperature) ||
-        item.satelliteTemperature,
-    }));
-
-  return {
-    tempWithSurvey,
-    bottomTemperatureData: CHART_BOTTOM_TEMP_ENABLED ? bottomTemperature : [],
-    surfaceTemperatureData: surfaceTemperature,
-    spotterBottom,
-    spotterTop,
-    hoboBottom,
-    oceanSense,
-    historicalMonthlyMeanTemp,
-  };
-};
-
-export const calculateAxisLimits = (
-  dailyData: DailyData[],
-  spotterBottomTemperature: SofarValue[],
-  hoboTemperatureData: SofarValue[],
-  oceanSenseData: SofarValue[],
-  historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
-  spotterTopTemperature: SofarValue[],
-  surveys: SurveyListItem[],
-  temperatureThreshold: number | null
-) => {
-  const dates =
-    dailyData.length > 0
-      ? dailyData
-          .filter(
-            (item) =>
-              item.topTemperature !== null || item.satelliteTemperature !== null
-          )
-          .map((item) => item.date)
-      : spotterBottomTemperature.map((item) => item.timestamp);
-
-  const spotterTimestamps = spotterBottomTemperature.map(
-    (item) => item.timestamp
-  );
-  const spotterXMax = spotterTimestamps.slice(-1)[0];
-  const spotterXMin = spotterTimestamps[0];
-
-  const xAxisMax = spotterXMax || dates.slice(-1)[0];
-  const xAxisMin = spotterXMin || dates[0];
-
-  const {
-    surfaceTemperatureData,
-    bottomTemperatureData,
-    spotterBottom,
-    spotterTop,
-    hoboBottom,
-    oceanSense,
-    historicalMonthlyMeanTemp,
-  } = createDatasets(
-    dailyData,
-    spotterBottomTemperature,
-    spotterTopTemperature,
-    hoboTemperatureData,
-    oceanSenseData,
-    historicalMonthlyMeanData,
-    surveys
+export const convertDailyToSofar = (
+  dailyData?: DailyData[],
+  metrics?: Exclude<keyof DailyData, "id" | "date">[]
+):
+  | Partial<Record<Exclude<keyof DailyData, "id" | "date">, SofarValue[]>>
+  | undefined =>
+  metrics?.reduce(
+    (acc, metric) => ({
+      ...acc,
+      [metric]: dailyData?.map((item) => ({
+        value: item[metric],
+        timestamp: item.date,
+      })),
+    }),
+    {}
   );
 
-  const accumulatedData = [
-    ...surfaceTemperatureData,
-    ...bottomTemperatureData,
-    ...spotterBottom,
-    ...spotterTop,
-    ...hoboBottom,
-    ...oceanSense,
-    ...historicalMonthlyMeanTemp,
-  ]
-    .filter((value) => value)
-    .map((value) => value.y);
+export const convertHistoricalMonthlyMeanToSofar = (
+  data?: HistoricalMonthlyMeanData[]
+): SofarValue[] | undefined =>
+  data?.map((item) => ({ timestamp: item.date, value: item.value }));
 
-  const minValue = Math.min(...accumulatedData);
-  const maxValue = Math.max(...accumulatedData);
-
-  const spacingPercentage = 0.1;
-  const ySpacing = Math.ceil(spacingPercentage * (maxValue - minValue)); // Set ySpacing as a percentage of the data range
-
-  const yAxisMinTemp = minValue - ySpacing;
-
-  const yAxisMaxTemp = maxValue + ySpacing;
-
-  const yAxisMin = Math.round(
-    temperatureThreshold
-      ? Math.min(yAxisMinTemp, temperatureThreshold - ySpacing)
-      : yAxisMinTemp
-  );
-
-  const yAxisMax = Math.round(
-    temperatureThreshold
-      ? Math.max(yAxisMaxTemp, temperatureThreshold + ySpacing)
-      : yAxisMaxTemp
-  );
-
-  return {
-    xAxisMax,
-    xAxisMin,
-    yAxisMin,
-    yAxisMax,
-  };
-};
-
-export function useProcessedChartData(
-  dailyData: ChartProps["dailyData"],
-  spotterBottomTemperatureData: ChartProps["spotterBottomTemperature"],
-  spotterTopTemperatureData: ChartProps["spotterTopTemperature"],
-  hoboBottomTemperatureData: ChartProps["hoboBottomTemperatureData"],
-  oceanSenseData: ChartProps["oceanSenseData"],
-  historicalMonthlyMeanData: ChartProps["historicalMonthlyMeanData"],
-  surveys: SurveyListItem[],
-  temperatureThreshold: ChartProps["temperatureThreshold"],
-  startDate: ChartProps["startDate"],
-  endDate: ChartProps["endDate"]
-) {
-  // Sort daily data by date & in given date range, or latest data if no data found in range.
-  const sortedFilteredDailyData = filterDailyData(
-    sortByDate(dailyData, "date"),
-    startDate,
-    endDate
-  );
-
-  const datasets = createDatasets(
-    sortedFilteredDailyData,
-    spotterBottomTemperatureData || [],
-    spotterTopTemperatureData || [],
-    hoboBottomTemperatureData || [],
-    oceanSenseData || [],
-    historicalMonthlyMeanData || [],
-    surveys
-  );
-
-  const axisLimits = calculateAxisLimits(
-    sortedFilteredDailyData,
-    spotterBottomTemperatureData || [],
-    hoboBottomTemperatureData || [],
-    oceanSenseData || [],
-    historicalMonthlyMeanData || [],
-    spotterTopTemperatureData || [],
-    surveys,
-    temperatureThreshold
-  );
-  return { sortedFilteredDailyData, ...axisLimits, ...datasets };
-}
-
-interface Context {
-  chart?: Chart;
-  dataIndex?: number;
-  dataset?: Chart.ChartDataSets;
-  datasetIndex?: number;
-}
-
-const fillColor =
-  (threshold: number | null) =>
+export const chartFillColor =
+  (threshold: number | null, above: string, below: string) =>
   ({ chart }: Context) => {
     const yScale = (chart as any).scales["y-axis-0"];
     const top = yScale.getPixelForValue(40);
@@ -421,12 +162,12 @@ const fillColor =
       ) as CanvasGradient;
       const ratio = Math.min((zero - top) / (bottom - top), 1);
       if (threshold) {
-        gradient.addColorStop(0, "rgba(250, 141, 0, 0.5)");
-        gradient.addColorStop(ratio, "rgba(250, 141, 0, 0.5)");
-        gradient.addColorStop(ratio, "rgb(107,193,225,0.2)");
-        gradient.addColorStop(1, "rgb(107,193,225,0.2)");
+        gradient.addColorStop(0, above);
+        gradient.addColorStop(ratio, above);
+        gradient.addColorStop(ratio, below);
+        gradient.addColorStop(1, below);
       } else {
-        gradient.addColorStop(0, "rgb(107,193,225,0.2)");
+        gradient.addColorStop(0, below);
       }
 
       return gradient;
@@ -435,7 +176,7 @@ const fillColor =
     return "transparent";
   };
 
-const pointColor = (surveyDate: Date | null) => (context: Context) => {
+export const pointColor = (surveyDate?: Date) => (context: Context) => {
   if (
     surveyDate &&
     context.dataset?.data &&
@@ -443,9 +184,11 @@ const pointColor = (surveyDate: Date | null) => (context: Context) => {
   ) {
     const chartPoint = context.dataset.data[context.dataIndex] as ChartPoint;
     const chartDate = new Date(chartPoint.x as string);
-    return sameDay(surveyDate, chartDate) ? "#6bc1e1" : "white";
+    return sameDay(surveyDate, chartDate)
+      ? SELECTED_SURVEY_CHART_POINT_COLOR
+      : DEFAULT_SURVEY_CHART_POINT_COLOR;
   }
-  return "white";
+  return DEFAULT_SURVEY_CHART_POINT_COLOR;
 };
 
 const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
@@ -480,114 +223,167 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   return data;
 };
 
-export const createChartData = (
-  spotterBottom: ChartPoint[],
-  spotterTop: ChartPoint[],
-  hoboBottom: ChartPoint[],
-  oceanSense: ChartPoint[],
-  tempWithSurvey: ChartPoint[],
-  surfaceTemps: ChartPoint[],
-  bottomTemps: ChartPoint[],
-  historicalMonthlyMean: ChartPoint[],
-  surveyDate: Date | null,
-  temperatureThreshold: number | null,
-  fill: boolean
-) => {
-  const displaySpotterData = spotterTop.length > 0;
-  const data: ChartComponentProps["data"] = {
-    datasets: [
-      {
+export const createDatasets = (
+  datasets: ChartProps["datasets"],
+  surveys: ChartProps["surveys"],
+  selectedSurveyDate?: Date
+): ChartDataSets[] => {
+  const surveyDates = getSurveyDates(surveys || []);
+  const processedDatasets = datasets?.map(
+    ({
+      label,
+      data,
+      type,
+      fillColor,
+      curveColor,
+      threshold,
+      fillColorAboveThreshold,
+      fillColorBelowThreshold,
+      maxHoursGap,
+    }) => {
+      const processedData = data
+        .filter(({ value }) => !isNil(value))
+        .map(({ value, timestamp }) => ({
+          x: timestamp,
+          y: value,
+        }));
+      const chartData =
+        typeof maxHoursGap === "number"
+          ? createGaps(processedData, maxHoursGap)
+          : processedData;
+
+      return {
+        type,
+        label,
+        fill:
+          !!fillColor || !!fillColorAboveThreshold || !!fillColorBelowThreshold,
+        borderColor: curveColor,
+        borderWidth: 2,
+        pointRadius: 0,
+        cubicInterpolationMode:
+          "monotone" as ChartDataSets["cubicInterpolationMode"],
+        backgroundColor:
+          isNumber(threshold) &&
+          fillColorAboveThreshold &&
+          fillColorBelowThreshold
+            ? chartFillColor(
+                threshold,
+                fillColorAboveThreshold,
+                fillColorBelowThreshold
+              )
+            : fillColor,
+        data: chartData,
+      };
+    }
+  );
+
+  const datasetToAttachSurveysOn = datasets?.find(
+    (dataset) => dataset.surveysAttached
+  );
+
+  const surveysDataset = datasetToAttachSurveysOn
+    ? {
         type: "scatter",
         label: "SURVEYS",
-        data: tempWithSurvey,
-        pointRadius: 5,
-        backgroundColor: "white",
-        pointBackgroundColor: pointColor(surveyDate),
+        pointBackgroundColor: pointColor(selectedSurveyDate),
         borderWidth: 1.5,
-        borderColor: "#128cc0",
-      },
-      {
-        label: "SURFACE TEMP",
-        data: createGaps(surfaceTemps, 48),
-        fill,
-        borderColor: "#6bc1e1",
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-        backgroundColor: fillColor(temperatureThreshold),
-      },
-      {
-        label: "MONTHLY MEAN",
-        data: historicalMonthlyMean,
-        fill: false,
-        borderColor: "#d84424",
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        label: "TEMP AT DEPTH",
-        data:
-          CHART_BOTTOM_TEMP_ENABLED && !displaySpotterData
-            ? createGaps(bottomTemps, 48)
-            : undefined,
-        borderColor: "#46a5cf",
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        label: "HOBO BOTTOM",
-        data: createGaps(hoboBottom, 24),
-        fill: false,
-        borderColor: colors.specialSensorColor,
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        label: "OCEAN SENSE",
-        data: createGaps(oceanSense, 6),
-        fill: false,
-        borderColor: colors.specialSensorColor,
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        label: "SPOTTER BOTTOM",
-        data: createGaps(spotterBottom, 24),
-        fill: false,
-        borderColor: "rgba(250, 141, 0)",
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-      {
-        label: "SPOTTER SURFACE",
-        data: createGaps(spotterTop, 24),
-        fill: false,
-        borderColor: "#46a5cf",
-        borderWidth: 2,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1.5,
-        pointRadius: 0,
-        cubicInterpolationMode: "monotone",
-      },
-    ],
-  };
+        pointRadius: 5,
+        borderColor: SURVEY_CHART_POINT_BORDER_COLOR,
+        data: datasetToAttachSurveysOn.data
+          .filter(
+            (item) =>
+              !isNil(item.value) &&
+              surveyDates.some(
+                (surveyDate) =>
+                  isNumber(surveyDate) && sameDay(surveyDate, item.timestamp)
+              )
+          )
+          .map(
+            ({ timestamp, value }) => ({ x: timestamp, y: value } as ChartPoint)
+          ),
+      }
+    : undefined;
 
-  return data;
+  return [
+    ...(surveysDataset ? [surveysDataset] : []),
+    ...(processedDatasets || []),
+  ];
+};
+
+export const getDatasetsTimestamps = (datasets: ChartProps["datasets"]) =>
+  flatten(map(datasets, ({ data }) => map(data, ({ timestamp }) => timestamp)));
+
+export const calculateAxisLimits = (
+  datasets: ChartProps["datasets"],
+  startDate: ChartProps["startDate"],
+  endDate: ChartProps["endDate"],
+  temperatureThreshold: ChartProps["temperatureThreshold"]
+) => {
+  const timestampsToConsiderForXAxis = getDatasetsTimestamps(
+    datasets?.filter((dataset) => dataset.considerForXAxisLimits)
+  );
+  const accumulatedYAxisData = flatten(
+    map(datasets, ({ data }) =>
+      map(
+        filter(data, ({ value }) => !isNil(value)),
+        ({ value }) => value
+      )
+    )
+  );
+
+  // x axis limits calculation
+  const datasetsXMin = minBy(
+    timestampsToConsiderForXAxis,
+    (timestamp) => new Date(timestamp)
+  );
+  const datasetsXMax = maxBy(
+    timestampsToConsiderForXAxis,
+    (timestamp) => new Date(timestamp)
+  );
+  const xAxisMin = startDate || datasetsXMin;
+  const xAxisMax = endDate || datasetsXMax;
+
+  // y axis limits calculation
+  const datasetsYMin = Math.min(...accumulatedYAxisData);
+  const datasetsYMax = Math.max(...accumulatedYAxisData);
+  const ySpacing = Math.ceil(
+    Y_SPACING_PERCENTAGE * (datasetsYMax - datasetsYMin)
+  ); // Set ySpacing as a percentage of the data range
+  const yAxisMinTemp = datasetsYMin - ySpacing;
+  const yAxisMaxTemp = datasetsYMax + ySpacing;
+  const yAxisMin = Math.round(
+    temperatureThreshold
+      ? Math.min(yAxisMinTemp, temperatureThreshold - ySpacing)
+      : yAxisMinTemp
+  );
+  const yAxisMax = Math.round(
+    temperatureThreshold
+      ? Math.max(yAxisMaxTemp, temperatureThreshold + ySpacing)
+      : yAxisMaxTemp
+  );
+
+  return { xAxisMin, xAxisMax, yAxisMin, yAxisMax };
+};
+
+export const useProcessedChartData = (
+  datasets: ChartProps["datasets"],
+  startDate: ChartProps["startDate"],
+  endDate: ChartProps["endDate"],
+  surveys: ChartProps["surveys"],
+  temperatureThreshold: ChartProps["temperatureThreshold"],
+  selectedSurveyDate?: Date
+) => {
+  const processedDatasets = createDatasets(
+    datasets,
+    surveys,
+    selectedSurveyDate
+  );
+  const axisLimits = calculateAxisLimits(
+    datasets,
+    startDate,
+    endDate,
+    temperatureThreshold
+  );
+
+  return { processedDatasets, ...axisLimits };
 };

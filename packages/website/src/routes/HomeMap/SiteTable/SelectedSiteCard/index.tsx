@@ -28,7 +28,7 @@ import {
 } from "../../../../store/Sites/selectedSiteSlice";
 import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
 import { Site } from "../../../../store/Sites/types";
-import Chart from "../../../../common/Chart";
+import Chart, { Dataset } from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import Chip from "../../../../common/Chip";
@@ -37,6 +37,12 @@ import {
   GaCategory,
   trackButtonClick,
 } from "../../../../utils/google-analytics";
+import { convertDailyToSofar } from "../../../../common/Chart/utils";
+import {
+  DAILY_DATA_CURVE_COLOR,
+  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+} from "../../../../constants/charts";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -153,10 +159,29 @@ const SelectedSiteContent = ({ site, imageUrl }: SelectedSiteContentProps) => {
 
   const { name, region: regionName } = getSiteNameAndRegion(site);
 
+  const chartDataset: Dataset = {
+    label: "SURFACE",
+    data:
+      convertDailyToSofar(
+        convertDailyDataToLocalTime(site.dailyData, site.timezone),
+        ["satelliteTemperature"]
+      )?.satelliteTemperature || [],
+    curveColor: DAILY_DATA_CURVE_COLOR,
+    type: "line",
+    unit: "°C",
+    considerForXAxisLimits: true,
+    isDailyUpdated: true,
+    threshold: isNumber(site.maxMonthlyMean)
+      ? site.maxMonthlyMean + 1
+      : undefined,
+    fillColorAboveThreshold: DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+    fillColorBelowThreshold: DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+  };
+
   const ChartComponent = (
     <Chart
       siteId={site.id}
-      dailyData={convertDailyDataToLocalTime(site.dailyData, site.timezone)}
+      datasets={[chartDataset]}
       surveys={[]}
       temperatureThreshold={
         site.maxMonthlyMean ? site.maxMonthlyMean + 1 : null
