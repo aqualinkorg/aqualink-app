@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { has, times } from 'lodash';
+import { get, times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
@@ -179,19 +179,15 @@ export const addSpotterData = async (
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
-          const sensorExclusionDates = has(
+          const sensorExclusionDates = get(
             sensorToExclusionDates,
             site.sensorId,
-          )
-            ? sensorToExclusionDates[site.sensorId]
-            : undefined;
+            [],
+          );
 
           // Fetch spotter and wave data from sofar
           return getSpotterData(site.sensorId, endDate, startDate).then(
-            (data) =>
-              sensorExclusionDates
-                ? excludeSpotterData(data, sensorExclusionDates)
-                : data,
+            (data) => excludeSpotterData(data, sensorExclusionDates),
           );
         },
         { concurrency: 100 },
