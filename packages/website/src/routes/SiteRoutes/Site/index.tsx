@@ -146,7 +146,7 @@ const Site = ({ match, classes }: SiteProps) => {
   // Fetch time series data range for the site's closest survey point
   // once the survey points are successfully fetched
   useEffect(() => {
-    if (siteId === id?.toString() && selectedSurveyPointId) {
+    if (siteId === id?.toString()) {
       dispatch(
         siteTimeSeriesDataRangeRequest({
           siteId,

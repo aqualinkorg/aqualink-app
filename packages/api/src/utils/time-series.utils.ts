@@ -140,8 +140,8 @@ export const getDataRangeQuery = (
     .createQueryBuilder('time_series')
     .select('metric')
     .addSelect('source.type', 'source')
-    .addSelect('MIN(timestamp)', 'min_date')
-    .addSelect('MAX(timestamp)', 'max_date')
+    .addSelect('MIN(timestamp)', 'minDate')
+    .addSelect('MAX(timestamp)', 'maxDate')
     .innerJoin(
       'time_series.source',
       'source',
@@ -152,7 +152,7 @@ export const getDataRangeQuery = (
     .addSelect('surveyPoint.id', 'surveyPointId')
     .addSelect('surveyPoint.name', 'surveyPointName')
     .groupBy('metric, source.type, surveyPoint.id')
-    .orderBy('max_date', 'ASC')
+    .orderBy('MAX(timestamp)', 'ASC')
     .getRawMany();
 };
 
