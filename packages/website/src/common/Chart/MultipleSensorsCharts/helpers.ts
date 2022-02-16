@@ -259,8 +259,11 @@ export const generateTempAnalysisDatasets = (
         timezone
       )
     ) || [];
-  const localSpotterBottomData = convertSofarDataToLocalTime(spotterBottom);
-  const localSpotterTopData = convertSofarDataToLocalTime(spotterTop);
+  const localSpotterBottomData = convertSofarDataToLocalTime(
+    spotterBottom,
+    timezone
+  );
+  const localSpotterTopData = convertSofarDataToLocalTime(spotterTop, timezone);
   const localHoboBottomData = convertSofarDataToLocalTime(
     hoboBottom || [],
     timezone
