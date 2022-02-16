@@ -26,6 +26,7 @@ interface Repositories {
 const logger = new Logger('ParseSondeData');
 
 const metricsMapping: Record<string, Metric> = {
+  // Sonde Data
   'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
   'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
   'Cond µS/cm': Metric.CONDUCTIVITY,
@@ -43,6 +44,14 @@ const metricsMapping: Record<string, Metric> = {
   'Temp °C': Metric.BOTTOM_TEMPERATURE,
   'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+  // Meteorological Data
+  'Pressure, mbar': Metric.PRESSURE,
+  'Rain, mm': Metric.PRECIPITATION,
+  'Temp, °C': Metric.TOP_TEMPERATURE,
+  'RH, %': Metric.RH,
+  'Wind Speed, m/s': Metric.WIND_SPEED,
+  'Gust Speed, m/s': Metric.WIND_GUST_SPEED,
+  'Wind Direction, ø': Metric.WIND_DIRECTION,
 };
 
 const ACCEPTED_FILE_TYPES = [
