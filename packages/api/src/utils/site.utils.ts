@@ -157,10 +157,15 @@ export const filterMetricDataByDate = (
 export const excludeSpotterData = (
   data: SpotterData,
   exclusionDates: ExclusionDates[],
-) =>
-  mapValues(data, (metricData) =>
+) => {
+  if (exclusionDates.length === 0) {
+    return data;
+  }
+
+  return mapValues(data, (metricData) =>
     filterMetricDataByDate(exclusionDates, metricData),
   );
+};
 
 export const getSite = async (
   siteId: number,
