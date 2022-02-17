@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { times } from 'lodash';
+import { get, times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
@@ -160,10 +160,9 @@ export const addSpotterData = async (
 
   const sensorToExclusionDates: Record<string, ExclusionDates[]> =
     Object.fromEntries(
-      exclusionDates.map((exclusionDate) => [
-        exclusionDate[0].sensorId,
-        exclusionDate,
-      ]),
+      exclusionDates
+        .filter((exclusionDate) => exclusionDate?.[0]?.sensorId)
+        .map((exclusionDate) => [exclusionDate[0].sensorId, exclusionDate]),
     );
 
   logger.log('Saving spotter data');
@@ -180,7 +179,11 @@ export const addSpotterData = async (
             return DEFAULT_SPOTTER_DATA_VALUE;
           }
 
-          const sensorExclusionDates = sensorToExclusionDates[site.sensorId];
+          const sensorExclusionDates = get(
+            sensorToExclusionDates,
+            site.sensorId,
+            [],
+          );
 
           // Fetch spotter and wave data from sofar
           return getSpotterData(site.sensorId, endDate, startDate).then(
