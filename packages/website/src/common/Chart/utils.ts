@@ -201,7 +201,7 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
       if (
         currIndex !== 0 &&
         currIndex !== nPoints - 1 &&
-        moment(data[currIndex + 1].x).diff(moment(curr.x), "hours") >
+        Math.abs(moment(data[currIndex + 1].x).diff(moment(curr.x), "hours")) >
           maxHoursGap
       ) {
         return [

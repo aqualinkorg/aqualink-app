@@ -6,8 +6,8 @@ import AnalysisCard from "./AnalysisCard";
 import Chart from "./Chart";
 import DownloadCSVButton from "./DownloadCSVButton";
 import Header from "./Header";
-import { Dataset, RangeValue } from "./types";
-import type { Dataset as ChartDataset } from "../index";
+import { RangeValue } from "./types";
+import type { Dataset } from "../index";
 import {
   Site,
   TimeSeriesDataRange,
@@ -17,7 +17,6 @@ import {
 const ChartWithCard = ({
   areSurveysFiltered,
   cardColumnJustification,
-  cardDataset,
   chartEndDate,
   chartStartDate,
   chartTitle,
@@ -97,7 +96,6 @@ const ChartWithCard = ({
           <Grid className={classes.card} item>
             <AnalysisCard
               datasets={datasets}
-              dataset={cardDataset}
               pickerStartDate={pickerStartDate}
               pickerEndDate={pickerEndDate}
               chartStartDate={chartStartDate}
@@ -165,12 +163,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
   cardColumnJustification?: GridProps["justify"];
-  cardDataset: Dataset;
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
   chartWidth: "small" | "medium" | "large";
-  datasets: ChartDataset[];
+  datasets: Dataset[];
   disableMaxRange: boolean;
   displayDownloadButton?: boolean;
   hideYAxisUnits?: boolean;

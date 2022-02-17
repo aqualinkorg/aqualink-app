@@ -1,6 +1,6 @@
 // General
 export const Y_SPACING_PERCENTAGE = 0.1;
-export const MIN_NUMBER_OF_POINTS = 2;
+export const CHART_MIN_NUMBER_OF_POINTS = 2;
 
 // Surveys chart points
 export const SELECTED_SURVEY_CHART_POINT_COLOR = "#6bc1e1";

@@ -17,9 +17,9 @@ import classNames from "classnames";
 
 import { siteTimeSeriesDataLoadingSelector } from "../../../store/Sites/selectedSiteSlice";
 import { calculateCardMetrics } from "./helpers";
-import { CardColumn, Dataset } from "./types";
+import { CardColumn } from "./types";
 import { formatNumber } from "../../../helpers/numberUtils";
-import type { Dataset as ChartDataset } from "..";
+import type { Dataset } from "..";
 
 const rows = ["MAX", "MEAN", "MIN"];
 
@@ -27,7 +27,6 @@ const rows = ["MAX", "MEAN", "MIN"];
 const AnalysisCard: FC<AnalysisCardProps> = ({
   classes,
   datasets,
-  dataset,
   pickerStartDate,
   pickerEndDate,
   chartStartDate,
@@ -37,8 +36,11 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
 }) => {
   const loading = useSelector(siteTimeSeriesDataLoadingSelector);
   const hasData = datasets.some(({ displayData }) => displayData);
-  const isOceanSense = dataset === "oceanSense";
+  const nColumns = datasets.filter(
+    ({ displayCardColumn }) => displayCardColumn
+  ).length;
   const showCard = !loading && hasData;
+  const isCardSmall = nColumns === 1;
 
   if (!showCard) {
     return null;
@@ -50,15 +52,15 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
       curveColor,
       data,
       unit,
-      displayData,
+      displayCardColumn,
       cardColumnName,
       cardColumnTooltip,
     }) => ({
       title: cardColumnName || label,
       color: curveColor,
-      display: !!displayData,
+      display: !!displayCardColumn,
       key: label,
-      rows: calculateCardMetrics(2, chartStartDate, chartEndDate, data, label),
+      rows: calculateCardMetrics(chartStartDate, chartEndDate, data, label),
       unit,
       tooltip: cardColumnTooltip,
     })
@@ -84,9 +86,9 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
           container
           justify={columnJustification || "space-between"}
           alignItems="flex-end"
-          spacing={isOceanSense ? 2 : 1}
+          spacing={isCardSmall ? 2 : 1}
         >
-          <Grid item xs={isOceanSense ? 2 : undefined}>
+          <Grid item xs={isCardSmall ? 2 : undefined}>
             <Grid
               className={classes.metricsTitle}
               container
@@ -106,7 +108,7 @@ const AnalysisCard: FC<AnalysisCardProps> = ({
           {cardColumns.map(
             (item) =>
               item.display && (
-                <Grid key={item.key} item xs={isOceanSense ? 10 : undefined}>
+                <Grid key={item.key} item xs={isCardSmall ? 10 : undefined}>
                   <Grid
                     className={classes.autoWidth}
                     container
@@ -196,8 +198,7 @@ interface AnalysisCardProps
     WithStyles<typeof styles> {}
 
 interface AnalysisCardIncomingProps {
-  datasets: ChartDataset[];
-  dataset: Dataset;
+  datasets: Dataset[];
   pickerStartDate: string;
   pickerEndDate: string;
   chartStartDate: string;

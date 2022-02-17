@@ -34,6 +34,7 @@ export interface Dataset {
   tooltipMaxHoursGap?: number;
   isDailyUpdated?: boolean;
   displayData?: boolean;
+  displayCardColumn?: boolean;
   cardColumnName?: string;
   cardColumnTooltip?: string;
   tooltipLabel?: string;

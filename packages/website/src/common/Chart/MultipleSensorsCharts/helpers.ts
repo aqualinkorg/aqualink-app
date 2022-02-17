@@ -17,15 +17,14 @@ import {
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Sites/types";
-import { CardColumn, Dataset, OceanSenseDataset } from "./types";
-import type { Dataset as ChartDataset } from "../index";
+import { CardColumn, OceanSenseDataset } from "./types";
+import type { Dataset } from "../index";
 import {
   DAILY_DATA_CURVE_COLOR,
   HISTORICAL_MONTHLY_MEAN_COLOR,
   HOBO_BOTTOM_DATA_CURVE_COLOR,
-  MIN_NUMBER_OF_POINTS,
+  CHART_MIN_NUMBER_OF_POINTS,
   SPOTTER_BOTTOM_DATA_CURVE_COLOR,
-  SPOTTER_METRIC_DATA_COLOR,
   SPOTTER_TOP_DATA_CURVE_COLOR,
 } from "../../../constants/charts";
 import {
@@ -34,37 +33,46 @@ import {
   filterHistoricalMonthlyMeanData,
 } from "../utils";
 
-export const calculateCardMetrics = (
-  minNumberOfPoints: number,
-  from: string,
-  to: string,
+export const filterSofarData = (
   data?: SofarValue[],
-  keyPrefix?: string
-): CardColumn["rows"] => {
-  const filteredData = data?.filter(({ timestamp }) =>
+  from?: string,
+  to?: string
+) => {
+  if (!from || !to || !data) {
+    return data;
+  }
+
+  return data?.filter(({ timestamp }) =>
     inRange(
       moment(timestamp).valueOf(),
       moment(from).valueOf(),
       moment(to).valueOf() + 1
     )
   );
+};
+
+export const calculateCardMetrics = (
+  from: string,
+  to: string,
+  data?: SofarValue[],
+  keyPrefix?: string
+): CardColumn["rows"] => {
+  const filteredData = filterSofarData(data, from, to);
 
   return [
     {
       key: `${keyPrefix}-max`,
-      value: filteredData?.[minNumberOfPoints - 1]
+      value: filteredData?.[0]
         ? maxBy(filteredData, "value")?.value
         : undefined,
     },
     {
       key: `${keyPrefix}-mean`,
-      value: filteredData?.[minNumberOfPoints - 1]
-        ? meanBy(filteredData, "value")
-        : undefined,
+      value: filteredData?.[0] ? meanBy(filteredData, "value") : undefined,
     },
     {
       key: `${keyPrefix}-min`,
-      value: filteredData?.[minNumberOfPoints - 1]
+      value: filteredData?.[0]
         ? minBy(filteredData, "value")?.value
         : undefined,
     },
@@ -145,17 +153,22 @@ export const findDataLimits = (
   ];
 };
 
-export const findCardDataset = (
-  hasSpotterData: boolean,
-  hasHoboData: boolean
-): Dataset => {
+export const findChartWidth = (
+  datasets: Dataset[]
+): "small" | "medium" | "large" => {
+  const nCardColumns = datasets.filter(
+    ({ displayCardColumn }) => displayCardColumn
+  ).length;
+
   switch (true) {
-    case hasSpotterData:
-      return "spotter";
-    case hasHoboData:
-      return "hobo";
+    case nCardColumns === 3:
+      return "small";
+    case nCardColumns === 2:
+      return "large";
+    case nCardColumns === 1:
+      return "large";
     default:
-      return "sst";
+      return "small";
   }
 };
 
@@ -242,9 +255,11 @@ export const generateTempAnalysisDatasets = (
   historicalMonthlyMean?: HistoricalMonthlyMean[],
   startDate?: string,
   endDate?: string,
+  chartStartDate?: string,
+  chartEndDate?: string,
   timezone?: string | null,
   depth?: number | null
-): ChartDataset[] => {
+): Dataset[] => {
   const localDailyData =
     convertDailyToSofar(
       convertDailyDataToLocalTime(dailyData || [], timezone),
@@ -252,11 +267,15 @@ export const generateTempAnalysisDatasets = (
     )?.satelliteTemperature || [];
   const localMonthlyMeanData =
     convertHistoricalMonthlyMeanToSofar(
-      generateHistoricalMonthlyMeanTimestamps(
-        historicalMonthlyMean || [],
-        startDate,
-        endDate,
-        timezone
+      filterHistoricalMonthlyMeanData(
+        generateHistoricalMonthlyMeanTimestamps(
+          historicalMonthlyMean || [],
+          startDate,
+          endDate,
+          timezone
+        ),
+        chartStartDate,
+        chartEndDate
       )
     ) || [];
   const localSpotterBottomData = convertSofarDataToLocalTime(
@@ -269,43 +288,24 @@ export const generateTempAnalysisDatasets = (
     timezone
   );
   const hasEnoughSpotterBottomData = hasAtLeastNData(
-    MIN_NUMBER_OF_POINTS,
-    localSpotterBottomData
+    CHART_MIN_NUMBER_OF_POINTS,
+    filterSofarData(localSpotterBottomData, chartStartDate, chartEndDate)
   );
   const hasEnoughSpotterTopData = hasAtLeastNData(
-    MIN_NUMBER_OF_POINTS,
-    localSpotterTopData
+    CHART_MIN_NUMBER_OF_POINTS,
+    filterSofarData(localSpotterTopData, chartStartDate, chartEndDate)
   );
   const hasEnoughHoboBottomData = hasAtLeastNData(
-    MIN_NUMBER_OF_POINTS,
-    localHoboBottomData
+    CHART_MIN_NUMBER_OF_POINTS,
+    filterSofarData(localHoboBottomData, chartStartDate, chartEndDate)
   );
   const hasEnoughDailyData = hasAtLeastNData(
-    MIN_NUMBER_OF_POINTS,
-    localDailyData
+    CHART_MIN_NUMBER_OF_POINTS,
+    filterSofarData(localDailyData, chartStartDate, chartEndDate)
   );
-  const hasEnoughMonthlyMeanData = hasAtLeastNData(
-    MIN_NUMBER_OF_POINTS,
-    localMonthlyMeanData
-  );
+  const hasEnoughMonthlyMeanData = hasAtLeastNData(1, localMonthlyMeanData);
 
   return [
-    {
-      label: "SURFACE",
-      data: localDailyData,
-      curveColor: DAILY_DATA_CURVE_COLOR,
-      maxHoursGap: 48,
-      tooltipMaxHoursGap: 24,
-      type: "line",
-      unit: "°C",
-      surveysAttached: true,
-      isDailyUpdated: true,
-      displayData:
-        !hasEnoughSpotterBottomData &&
-        !hasEnoughSpotterTopData &&
-        !hasEnoughHoboBottomData &&
-        hasEnoughDailyData,
-    },
     {
       label: "MONTHLY MEAN",
       cardColumnName: "HISTORIC",
@@ -316,12 +316,31 @@ export const generateTempAnalysisDatasets = (
       type: "line",
       unit: "°C",
       tooltipMaxHoursGap: 24 * 15,
-      displayData:
+      displayData: hasEnoughMonthlyMeanData,
+      displayCardColumn:
         hasEnoughMonthlyMeanData &&
         (hasEnoughSpotterBottomData ||
           hasEnoughSpotterTopData ||
           hasEnoughHoboBottomData ||
           hasEnoughDailyData),
+    },
+    {
+      label: "SURFACE",
+      data: localDailyData,
+      curveColor: DAILY_DATA_CURVE_COLOR,
+      maxHoursGap: 48,
+      tooltipMaxHoursGap: 24,
+      type: "line",
+      unit: "°C",
+      cardColumnName: "SST",
+      surveysAttached: true,
+      isDailyUpdated: true,
+      displayData: hasEnoughDailyData,
+      displayCardColumn:
+        !hasEnoughSpotterBottomData &&
+        !hasEnoughSpotterTopData &&
+        !hasEnoughHoboBottomData &&
+        hasEnoughDailyData,
     },
     {
       label: `BUOY ${depth}m`,
@@ -331,10 +350,8 @@ export const generateTempAnalysisDatasets = (
       unit: "°C",
       maxHoursGap: 24,
       tooltipMaxHoursGap: 6,
-      displayData: hasAtLeastNData(
-        MIN_NUMBER_OF_POINTS,
-        localSpotterBottomData
-      ),
+      displayData: hasEnoughSpotterBottomData,
+      displayCardColumn: hasEnoughSpotterBottomData,
     },
     {
       label: "BUOY 1m",
@@ -344,7 +361,8 @@ export const generateTempAnalysisDatasets = (
       unit: "°C",
       maxHoursGap: 24,
       tooltipMaxHoursGap: 6,
-      displayData: hasAtLeastNData(MIN_NUMBER_OF_POINTS, localSpotterTopData),
+      displayData: hasEnoughSpotterTopData,
+      displayCardColumn: hasEnoughSpotterTopData,
     },
     {
       label: "HOBO",
@@ -354,7 +372,9 @@ export const generateTempAnalysisDatasets = (
       unit: "°C",
       maxHoursGap: 24,
       tooltipMaxHoursGap: 6,
-      displayData:
+      tooltipLabel: "HOBO LOGGER",
+      displayData: hasEnoughHoboBottomData,
+      displayCardColumn:
         !hasEnoughSpotterBottomData &&
         !hasEnoughSpotterTopData &&
         hasEnoughHoboBottomData,
@@ -362,17 +382,23 @@ export const generateTempAnalysisDatasets = (
   ];
 };
 
-export const generateSpotterMetricDataset = (
+export const generateMetricDataset = (
   label: string,
   data: SofarValue[],
-  unit: string
-): ChartDataset => ({
+  unit: string,
+  color: string,
+  chartStartDate?: string,
+  chartEndDate?: string
+): Dataset => ({
   label,
   data: convertSofarDataToLocalTime(data),
   unit,
-  curveColor: SPOTTER_METRIC_DATA_COLOR,
+  curveColor: color,
   type: "line",
   maxHoursGap: 24,
   tooltipMaxHoursGap: 6,
-  displayData: true,
+  displayData: hasAtLeastNData(
+    CHART_MIN_NUMBER_OF_POINTS,
+    filterSofarData(data, chartStartDate, chartEndDate)
+  ),
 });

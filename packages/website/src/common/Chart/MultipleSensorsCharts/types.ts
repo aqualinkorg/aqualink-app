@@ -19,8 +19,6 @@ export interface CardColumn {
   unit: string;
 }
 
-export type Dataset = "spotter" | "hobo" | "sst" | "oceanSense";
-
 export interface OceanSenseDataset {
   unit: string;
   data: SofarValue[];
