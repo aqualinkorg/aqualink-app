@@ -317,12 +317,7 @@ export const generateTempAnalysisDatasets = (
       unit: "°C",
       tooltipMaxHoursGap: 24 * 15,
       displayData: hasEnoughMonthlyMeanData,
-      displayCardColumn:
-        hasEnoughMonthlyMeanData &&
-        (hasEnoughSpotterBottomData ||
-          hasEnoughSpotterTopData ||
-          hasEnoughHoboBottomData ||
-          hasEnoughDailyData),
+      displayCardColumn: hasEnoughMonthlyMeanData,
     },
     {
       label: "SURFACE",
