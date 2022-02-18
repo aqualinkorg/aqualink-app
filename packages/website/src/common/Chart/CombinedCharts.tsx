@@ -6,23 +6,13 @@ import {
   withStyles,
   WithStyles,
 } from "@material-ui/core";
-import { isNumber } from "lodash";
 
 import ChartWithTooltip from "./ChartWithTooltip";
 import MultipleSensorsCharts from "./MultipleSensorsCharts";
 import { Site } from "../../store/Sites/types";
-import {
-  convertDailyDataToLocalTime,
-  convertSurveyDataToLocalTime,
-} from "../../helpers/dates";
+import { convertSurveyDataToLocalTime } from "../../helpers/dates";
 import { SurveyListItem } from "../../store/Survey/types";
-import { Dataset } from ".";
-import { convertDailyToSofar } from "./utils";
-import {
-  DAILY_DATA_CURVE_COLOR,
-  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
-  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
-} from "../../constants/charts";
+import { standardDailyDataDataset } from "./MultipleSensorsCharts/helpers";
 
 const CombinedCharts = ({
   site,
@@ -32,24 +22,12 @@ const CombinedCharts = ({
 }: CombinedChartsProps) => {
   const { id, timezone, dailyData, maxMonthlyMean } = site;
 
-  const heatStressDataset: Dataset = {
-    label: "SURFACE",
-    data:
-      convertDailyToSofar(convertDailyDataToLocalTime(dailyData, timezone), [
-        "satelliteTemperature",
-      ])?.satelliteTemperature || [],
-    curveColor: DAILY_DATA_CURVE_COLOR,
-    maxHoursGap: 48,
-    tooltipMaxHoursGap: 24,
-    type: "line",
-    unit: "°C",
-    considerForXAxisLimits: true,
-    surveysAttached: true,
-    isDailyUpdated: true,
-    threshold: isNumber(maxMonthlyMean) ? maxMonthlyMean + 1 : undefined,
-    fillColorAboveThreshold: DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
-    fillColorBelowThreshold: DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
-  };
+  const heatStressDataset = standardDailyDataDataset(
+    dailyData,
+    maxMonthlyMean,
+    true,
+    timezone
+  );
 
   return (
     <div>

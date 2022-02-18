@@ -154,7 +154,8 @@ const MultipleSensorsCharts = ({
       unit || "",
       SPOTTER_METRIC_DATA_COLOR,
       chartStartDate,
-      chartEndDate
+      chartEndDate,
+      site.timezone
     );
   };
 
@@ -435,7 +436,8 @@ const MultipleSensorsCharts = ({
                     item.unit,
                     OCEAN_SENSE_DATA_COLOR,
                     chartStartDate,
-                    chartEndDate
+                    chartEndDate,
+                    site.timezone
                   ),
                 ]}
                 id={item.id}
@@ -487,7 +489,8 @@ const MultipleSensorsCharts = ({
                       units,
                       SONDE_DATA_COLOR,
                       chartStartDate,
-                      chartEndDate
+                      chartEndDate,
+                      site.timezone
                     ),
                   ]}
                   id={key}

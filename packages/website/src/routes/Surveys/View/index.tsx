@@ -17,7 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import { isNumber } from "lodash";
 import {
   surveyDetailsSelector,
   surveyGetRequest,
@@ -36,17 +35,10 @@ import {
 import { siteTimeSeriesDataRequest } from "../../../store/Sites/selectedSiteSlice";
 import {
   displayTimeInLocalTimezone,
-  convertDailyDataToLocalTime,
   convertSurveyDataToLocalTime,
   isBetween,
 } from "../../../helpers/dates";
-import { convertDailyToSofar } from "../../../common/Chart/utils";
-import {
-  DAILY_DATA_CURVE_COLOR,
-  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
-  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
-} from "../../../constants/charts";
-import { Dataset } from "../../../common/Chart";
+import { standardDailyDataDataset } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
@@ -68,28 +60,12 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
           site.dailyData[0].date
         )
       : false;
-
-  const chartDataset: Dataset = {
-    label: "SURFACE",
-    data:
-      convertDailyToSofar(
-        convertDailyDataToLocalTime(site.dailyData, site.timezone),
-        ["satelliteTemperature"]
-      )?.satelliteTemperature || [],
-    curveColor: DAILY_DATA_CURVE_COLOR,
-    maxHoursGap: 48,
-    tooltipMaxHoursGap: 24,
-    type: "line",
-    unit: "°C",
-    considerForXAxisLimits: true,
-    surveysAttached: true,
-    isDailyUpdated: true,
-    threshold: isNumber(site.maxMonthlyMean)
-      ? site.maxMonthlyMean + 1
-      : undefined,
-    fillColorAboveThreshold: DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
-    fillColorBelowThreshold: DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
-  };
+  const chartDataset = standardDailyDataDataset(
+    site.dailyData,
+    site.maxMonthlyMean,
+    true,
+    site.timezone
+  );
 
   useEffect(() => {
     dispatch(surveysRequest(`${site.id}`));

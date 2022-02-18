@@ -211,23 +211,13 @@ export const convertToLocalTime = (
   ).toISOString();
 };
 
-export const convertDailyDataToLocalTime = (
-  dailyData: DailyData[],
-  timeZone?: string | null
-): DailyData[] =>
-  dailyData.map((item) => ({
-    ...item,
-    date: convertToLocalTime(item.date, timeZone),
-  }));
-
-export const convertSofarDataToLocalTime = (
-  sofarData?: SofarValue[],
-  timeZone?: string | null
-): SofarValue[] =>
-  (sofarData || []).map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone),
-  }));
+export const convertSofarDataToLocalTime =
+  (timeZone?: string | null) =>
+  (sofarData?: SofarValue[]): SofarValue[] =>
+    (sofarData || []).map((item) => ({
+      ...item,
+      timestamp: convertToLocalTime(item.timestamp, timeZone),
+    }));
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],

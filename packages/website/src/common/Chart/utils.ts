@@ -229,53 +229,57 @@ export const createDatasets = (
   selectedSurveyDate?: Date
 ): ChartDataSets[] => {
   const surveyDates = getSurveyDates(surveys || []);
-  const processedDatasets = datasets?.map(
-    ({
-      label,
-      data,
-      type,
-      fillColor,
-      curveColor,
-      threshold,
-      fillColorAboveThreshold,
-      fillColorBelowThreshold,
-      maxHoursGap,
-    }) => {
-      const processedData = data
-        .filter(({ value }) => !isNil(value))
-        .map(({ value, timestamp }) => ({
-          x: timestamp,
-          y: value,
-        }));
-      const chartData =
-        typeof maxHoursGap === "number"
-          ? createGaps(processedData, maxHoursGap)
-          : processedData;
-
-      return {
-        type,
+  const processedDatasets = datasets
+    ?.filter(({ displayData }) => displayData)
+    ?.map(
+      ({
         label,
-        fill:
-          !!fillColor || !!fillColorAboveThreshold || !!fillColorBelowThreshold,
-        borderColor: curveColor,
-        borderWidth: 2,
-        pointRadius: 0,
-        cubicInterpolationMode:
-          "monotone" as ChartDataSets["cubicInterpolationMode"],
-        backgroundColor:
-          isNumber(threshold) &&
-          fillColorAboveThreshold &&
-          fillColorBelowThreshold
-            ? chartFillColor(
-                threshold,
-                fillColorAboveThreshold,
-                fillColorBelowThreshold
-              )
-            : fillColor,
-        data: chartData,
-      };
-    }
-  );
+        data,
+        type,
+        fillColor,
+        curveColor,
+        threshold,
+        fillColorAboveThreshold,
+        fillColorBelowThreshold,
+        maxHoursGap,
+      }) => {
+        const processedData = data
+          .filter(({ value }) => !isNil(value))
+          .map(({ value, timestamp }) => ({
+            x: timestamp,
+            y: value,
+          }));
+        const chartData =
+          typeof maxHoursGap === "number"
+            ? createGaps(processedData, maxHoursGap)
+            : processedData;
+
+        return {
+          type,
+          label,
+          fill:
+            !!fillColor ||
+            !!fillColorAboveThreshold ||
+            !!fillColorBelowThreshold,
+          borderColor: curveColor,
+          borderWidth: 2,
+          pointRadius: 0,
+          cubicInterpolationMode:
+            "monotone" as ChartDataSets["cubicInterpolationMode"],
+          backgroundColor:
+            isNumber(threshold) &&
+            fillColorAboveThreshold &&
+            fillColorBelowThreshold
+              ? chartFillColor(
+                  threshold,
+                  fillColorAboveThreshold,
+                  fillColorBelowThreshold
+                )
+              : fillColor,
+          data: chartData,
+        };
+      }
+    );
 
   const datasetToAttachSurveysOn = datasets?.find(
     (dataset) => dataset.surveysAttached
