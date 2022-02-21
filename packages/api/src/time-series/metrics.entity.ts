@@ -33,6 +33,10 @@ export enum Metric {
   PH_MV = 'ph_mv',
   SONDE_BATTERY_VOLTAGE = 'sonde_battery_voltage',
   SONDE_CABLE_POWER_VOLTAGE = 'sonde_cable_power_voltage',
+  PRESSURE = 'pressure',
+  PRECIPITATION = 'precipitation',
+  RH = 'rh',
+  WIND_GUST_SPEED = 'wind_gust_speed',
 }
 
 export enum Units {

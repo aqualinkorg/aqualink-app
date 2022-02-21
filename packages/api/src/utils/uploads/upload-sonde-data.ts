@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
+import { chunk, get, isNaN, last, maxBy, minBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -43,22 +43,41 @@ const metricsMapping: Record<string, Metric> = {
   'Temp °C': Metric.BOTTOM_TEMPERATURE,
   'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+  'Pressure, mbar (LGR S/N: 21067056, SEN S/N: 21062973)': Metric.PRESSURE,
+  'Rain, mm (LGR S/N: 21067056, SEN S/N: 21065937)': Metric.PRECIPITATION,
+  'Temp, °C (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.TOP_TEMPERATURE,
+  'RH, % (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.RH,
+  'Wind Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)': Metric.WIND_SPEED,
+  'Gust Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)':
+    Metric.WIND_GUST_SPEED,
+  'Wind Direction, ø (LGR S/N: 21067056, SEN S/N: 21091774)':
+    Metric.WIND_DIRECTION,
 };
 
 const ACCEPTED_FILE_TYPES = [
   {
     extension: 'xlsx',
-    mimeType:
+    mimetype:
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   },
-];
+  {
+    extension: 'csv',
+    mimetype: 'text/csv',
+  },
+] as const;
+
+export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
-  { mimetype },
+  { mimetype: inputMimetype },
   callback,
 ) => {
-  if (!ACCEPTED_FILE_TYPES.map(({ mimeType }) => mimeType).includes(mimetype)) {
+  if (
+    !ACCEPTED_FILE_TYPES.map(({ mimetype }) => mimetype as string).includes(
+      inputMimetype,
+    )
+  ) {
     callback(
       new BadRequestException(
         `Only ${ACCEPTED_FILE_TYPES.map(
@@ -70,6 +89,24 @@ export const fileFilter: MulterOptions['fileFilter'] = (
   }
   callback(null, true);
 };
+
+export const requiredHeadersForMimetype = (mimetype: Mimetype): string[] => {
+  switch (mimetype) {
+    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+      return ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'];
+    case 'text/csv':
+      return ['Date Time'];
+    default:
+      return [];
+  }
+};
+
+const rowIncludesHeaderKeys = (row: any, headerKeys: string[]): boolean =>
+  headerKeys.every((header) =>
+    row.some((cell) => {
+      return typeof cell === 'string' && cell.startsWith(header);
+    }),
+  );
 
 function renameKeys(obj, newKeys) {
   const keyValues = Object.keys(obj).map((key) => {
@@ -91,11 +128,10 @@ function ExcelDateToJSDate(dateSerial: number) {
   );
 }
 
-const getTimestampFromExcelSerials = (
-  dateSerial: number,
-  hourSerial: number,
-  seconds: number,
-) => {
+const getTimestampFromExcelSerials = (dataObject: any) => {
+  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
+  const hourSerial = dataObject['Time (HH:mm:ss)'];
+  const seconds = dataObject['Time (Fract. Sec)'];
   // Extract EXCEL date and hours from serials:
   const date = ExcelDateToJSDate(dateSerial);
   const hours = (hourSerial * 24) % 24;
@@ -107,6 +143,24 @@ const getTimestampFromExcelSerials = (
   return date;
 };
 
+const getTimestampFromCsvDateString = (dataObject: any) => {
+  const dateKey = Object.keys(dataObject).find((key) =>
+    key.startsWith('Date Time'),
+  );
+
+  if (!dateKey) {
+    return undefined;
+  }
+
+  const timezone = last(dateKey.split(', '));
+
+  if (timezone) {
+    return new Date(`${dataObject[dateKey]} ${timezone}`);
+  }
+
+  return new Date(dataObject[dateKey]);
+};
+
 const validateHeaders = (
   file: string,
   workSheetData: any[],
@@ -114,7 +168,7 @@ const validateHeaders = (
 ) => {
   // The header row must contain all header keys.
   const headerRowIndex = workSheetData.findIndex((row) =>
-    headerKeys.every((header) => row.includes(header)),
+    rowIncludesHeaderKeys(row, headerKeys),
   );
 
   if (headerRowIndex === -1) {
@@ -153,10 +207,10 @@ const validateHeaders = (
   return { ignoredHeaders, importedHeaders };
 };
 
-const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
+const extractHeadersAndData = (workSheetData: any[], headerKeys: string[]) => {
   const { tempHeaders: headers, tempData: data } = workSheetData.reduce(
     ({ tempHeaders, tempData }: any, row) => {
-      if (row.includes(headerKey)) {
+      if (rowIncludesHeaderKeys(row, headerKeys)) {
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         tempHeaders = row;
       } else if (row[0] != null && tempHeaders != null) {
@@ -167,6 +221,27 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
     },
     { tempHeaders: null, tempData: [] },
   );
+
+  return { headers, data };
+};
+
+const timeStampExtractor = (dataObject: any, mimetype: Mimetype) => {
+  switch (mimetype) {
+    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+      return getTimestampFromExcelSerials(dataObject);
+    case 'text/csv':
+      return getTimestampFromCsvDateString(dataObject);
+    default:
+      return undefined;
+  }
+};
+
+const findSheetDataWithHeader = (
+  workSheetData: any[],
+  headerKeys: string[],
+  mimetype: Mimetype,
+) => {
+  const { headers, data } = extractHeadersAndData(workSheetData, headerKeys);
 
   const dataAsObjects = data
     .map((row) => {
@@ -179,11 +254,7 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
       );
 
       return {
-        timestamp: getTimestampFromExcelSerials(
-          dataObject['Date (MM/DD/YYYY)'],
-          dataObject['Time (HH:mm:ss)'],
-          dataObject['Time (Fract. Sec)'],
-        ),
+        timestamp: timeStampExtractor(dataObject, mimetype),
         ...renameKeys(dataObject, metricsMapping),
       };
     })
@@ -196,6 +267,7 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
 export const uploadSondeData = async (
   filePath: string,
   fileName: string,
+  mimetype: Mimetype,
   siteId: string,
   surveyPointId: string | undefined,
   sondeType: string,
@@ -236,10 +308,11 @@ export const uploadSondeData = async (
   if (sondeType === 'sonde') {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
+    const requiredHeaders = requiredHeadersForMimetype(mimetype);
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
       workSheetData,
-      ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+      requiredHeaders,
     );
 
     if (failOnWarning && ignoredHeaders.length > 0) {
@@ -252,7 +325,11 @@ export const uploadSondeData = async (
       );
     }
 
-    const results = findXLSXDataWithHeader(workSheetData, 'Date (MM/DD/YYYY)');
+    const results = findSheetDataWithHeader(
+      workSheetData,
+      requiredHeaders,
+      mimetype,
+    );
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {
@@ -264,7 +341,7 @@ export const uploadSondeData = async (
             .map((key) => {
               return {
                 timestamp,
-                value: object[key],
+                value: parseFloat(object[key]),
                 metric: key,
                 source: sourceEntity,
               };
