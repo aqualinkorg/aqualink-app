@@ -137,6 +137,12 @@ export class TimeSeriesService {
       this.surveyPointRepository,
     );
 
+    if (!files?.length) {
+      throw new BadRequestException(
+        'The upload must contain at least one file',
+      );
+    }
+
     const uploadResponse = await Bluebird.Promise.map(
       files,
       async ({ path, originalname }) => {
