@@ -193,14 +193,19 @@ const validateHeaders = (
 
   const ignoredHeaders = headerRow.filter(
     (header) =>
-      ![...headerKeys, ...Object.keys(metricsMapping)].includes(header) &&
-      header !== 'Site Name',
+      ![...headerKeys, ...Object.keys(metricsMapping)].some((item) =>
+        header.startsWith(item),
+      ) &&
+      header !== 'Site Name' &&
+      header !== '#',
   ) as string[];
 
   const importedHeaders = headerRow
     .filter(
       (header) =>
-        Object.keys(metricsMapping).includes(header) && header !== 'Site Name',
+        Object.keys(metricsMapping).some((item) => header.startsWith(item)) &&
+        header !== 'Site Name' &&
+        header !== '#',
     )
     .map((header) => metricsMapping[header]) as Metric[];
 
