@@ -85,6 +85,10 @@ export const metricsKeysList = [
   "ph_mv",
   "sonde_battery_voltage",
   "sonde_cable_power_voltage",
+  "pressure",
+  "precipitation",
+  "rh",
+  "wind_gust_speed",
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
