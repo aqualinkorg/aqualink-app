@@ -145,7 +145,7 @@ export const convertHistoricalMonthlyMeanToSofar = (
 ): SofarValue[] | undefined =>
   data?.map((item) => ({ timestamp: item.date, value: item.value }));
 
-// // Util function used to fill the area between the chart's plot and the y axis 0.
+// Util function used to fill the area between the chart's plot and the y axis 0.
 // Accepts a threshold and two colors. If a threshold is passed, we use the `above` color
 // for the areas between the chart's plot and the threshold
 

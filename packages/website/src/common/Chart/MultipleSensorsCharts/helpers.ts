@@ -423,7 +423,8 @@ export const generateMetricDataset = (
 };
 
 /**
- * A util function to generate the daily data dataset, used in a bunch of places.
+ * A util function to generate the daily temperature dataset.
+ * Eg. used in combined charts and for the selected site card.
  * @param data The input daily data
  * @param threshold An optional temperature threshold
  * @param surveysAttached A boolean to determine if we will display the surveys scatter plot or not
