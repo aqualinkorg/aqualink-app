@@ -22,7 +22,7 @@ import {
   SURVEY_CHART_POINT_BORDER_COLOR,
   Y_SPACING_PERCENTAGE,
 } from "../../constants/charts";
-import type { ChartProps } from ".";
+import type { ChartProps, Dataset } from ".";
 
 interface Context {
   chart?: Chart;
@@ -145,6 +145,20 @@ export const convertHistoricalMonthlyMeanToSofar = (
 ): SofarValue[] | undefined =>
   data?.map((item) => ({ timestamp: item.date, value: item.value }));
 
+// // Util function used to fill the area between the chart's plot and the y axis 0.
+// Accepts a threshold and two colors. If a threshold is passed, we use the `above` color
+// for the areas between the chart's plot and the threshold
+
+/**
+ * Util function used to fill the area between the chart's plot and the y axis 0.
+   Accepts a threshold and two colors. If a threshold is passed, we use the `above` color
+   for the area between the chart's plot and the threshold and the `below` color for the area
+   between the theshold and the y axis 0.
+ * @param threshold The specified threshold
+ * @param above The fill color for the area between the chart's plot and the threshold
+ * @param below The fill color for the area between the theshold and the y axis 0
+ * @returns A Chart.js compatible function for the dataset `backgroundColor` property.
+ */
 export const chartFillColor =
   (threshold: number | null, above: string, below: string) =>
   ({ chart }: Context) => {
@@ -176,7 +190,14 @@ export const chartFillColor =
     return "transparent";
   };
 
-export const pointColor = (surveyDate?: Date) => (context: Context) => {
+/**
+ * Util function used to fill the surveys data scatter plot points.
+   If a survey date is passed, then the scatter plot point for the survey on that date
+  is filled with a different color.
+ * @param surveyDate The date of the selected survey
+ * @returns A Chart.js compatible function for the dataset `pointBackgroundColor` property.
+ */
+const pointColor = (surveyDate?: Date) => (context: Context) => {
   if (
     surveyDate &&
     context.dataset?.data &&
@@ -191,6 +212,14 @@ export const pointColor = (surveyDate?: Date) => (context: Context) => {
   return DEFAULT_SURVEY_CHART_POINT_COLOR;
 };
 
+/**
+ * A util function used to create gaps in a chart's plot. Chart.js identifies gaps
+ * as points with a valid x value and an invalid y value. This function inserts invalid
+ * values between chart points that differ more than a specified hours threshold
+ * @param data The input chart data
+ * @param maxHoursGap The maximum number of hours threshold
+ * @returns The augmented data array with the invalid values
+ */
 const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   const nPoints = data.length;
   if (nPoints > 0) {
@@ -223,6 +252,13 @@ const createGaps = (data: ChartPoint[], maxHoursGap: number): ChartPoint[] => {
   return data;
 };
 
+/**
+ * A util function used to produce the datasets that will be passed on the chart component
+ * @param datasets The input datasets
+ * @param surveys An array of surveys
+ * @param selectedSurveyDate An optional survey date
+ * @returns An array of datasets that will be passed on the chart
+ */
 export const createDatasets = (
   datasets: ChartProps["datasets"],
   surveys: ChartProps["surveys"],
@@ -317,6 +353,35 @@ export const createDatasets = (
 export const getDatasetsTimestamps = (datasets: ChartProps["datasets"]) =>
   flatten(map(datasets, ({ data }) => map(data, ({ timestamp }) => timestamp)));
 
+/**
+ * A util function that fetches the closest data for a specified date.
+ * @param date The input date
+ * @param datasets An array of datasets.
+ * @returns For each dataset, another dataset, whose data is a sigle item array, containing the
+ * value closest to specified date.
+ */
+export const getTooltipClosestData = (date: Date, datasets?: Dataset[]) =>
+  (datasets?.map((dataset) => {
+    const closestData =
+      getSofarDataClosestToDate(
+        dataset.data,
+        date,
+        dataset.tooltipMaxHoursGap
+      ) || undefined;
+    return {
+      ...dataset,
+      data: closestData ? [closestData] : [],
+    };
+  }) || []) as Dataset[];
+
+/**
+ * Util function used to calculate the chart's horizontal and vertical limits
+ * @param datasets The input datasets
+ * @param startDate Optional date to use as the chart's left limit
+ * @param endDate Optional date to use as the chart's right limit
+ * @param temperatureThreshold A possible temperature threshold taken into account for the chart's vertical limits
+ * @returns The chart's horizontal and vertical limits
+ */
 export const calculateAxisLimits = (
   datasets: ChartProps["datasets"],
   startDate: ChartProps["startDate"],
@@ -369,6 +434,17 @@ export const calculateAxisLimits = (
   return { xAxisMin, xAxisMax, yAxisMin, yAxisMax };
 };
 
+/**
+ * A custom hook used to produce the datasets passed on the chart and calculate
+ * the chart's horizontal and vertical axis limits.
+ * @param datasets The input datasets
+ * @param startDate Optional date to use as the chart's left limit
+ * @param endDate Optional date to use as the chart's right limit
+ * @param surveys An array of surveys to attach in one of the datasets plots
+ * @param temperatureThreshold A possible temperature threshold taken into account for the chart's vertical limits
+ * @param selectedSurveyDate The date of the selected survey
+ * @returns An array of datasets passed on the chart and chart's axis limits
+ */
 export const useProcessedChartData = (
   datasets: ChartProps["datasets"],
   startDate: ChartProps["startDate"],

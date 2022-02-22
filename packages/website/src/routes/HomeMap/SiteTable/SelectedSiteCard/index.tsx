@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from "react";
-import { isNumber } from "lodash";
+import { isNumber, orderBy } from "lodash";
 import {
   Box,
   Button,
@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
@@ -125,7 +124,7 @@ const SelectedSiteContent = ({ site, imageUrl }: SelectedSiteContentProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
-  const sortedDailyData = sortByDate(site.dailyData, "date");
+  const sortedDailyData = orderBy(site.dailyData, "date", "asc");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
     (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
@@ -350,7 +349,7 @@ const SelectedSiteCard = () => {
   const isFeatured = `${site?.id}` === featuredSiteId;
 
   const { featuredSurveyMedia } =
-    sortByDate(surveyList, "diveDate", "desc").find(
+    orderBy(surveyList, "diveDate", "desc").find(
       (survey) =>
         survey.featuredSurveyMedia &&
         survey.featuredSurveyMedia.type === "image"

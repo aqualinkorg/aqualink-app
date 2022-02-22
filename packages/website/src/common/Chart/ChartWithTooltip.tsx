@@ -8,12 +8,12 @@ import { Line } from "react-chartjs-2";
 import type { ChartTooltipModel } from "chart.js";
 import { head, isNumber, maxBy, minBy } from "lodash";
 import moment from "moment";
-import Chart, { ChartProps, Dataset } from ".";
+import Chart, { ChartProps } from ".";
 import Tooltip, { TooltipData, TOOLTIP_WIDTH } from "./Tooltip";
 import {
   findSurveyFromDate,
-  getSofarDataClosestToDate,
   getDatasetsTimestamps,
+  getTooltipClosestData,
 } from "./utils";
 
 export interface ChartWithTooltipProps extends ChartProps {
@@ -58,18 +58,7 @@ function ChartWithTooltip({
       const minDataDate = minBy(datasetsDates, (item) => new Date(item));
       const maxDataDate = maxBy(datasetsDates, (item) => new Date(item));
 
-      const closestDatasetData = (datasets?.map((dataset) => {
-        const closestData =
-          getSofarDataClosestToDate(
-            dataset.data,
-            dateObject,
-            dataset.tooltipMaxHoursGap
-          ) || undefined;
-        return {
-          ...dataset,
-          data: closestData ? [closestData] : [],
-        };
-      }) || []) as Dataset[];
+      const closestDatasetData = getTooltipClosestData(dateObject, datasets);
 
       const nValues = closestDatasetData
         .map(({ data }) => head(data)?.value)

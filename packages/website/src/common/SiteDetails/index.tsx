@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import classNames from "classnames";
+import { orderBy } from "lodash";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -25,7 +26,6 @@ import CombinedCharts from "../Chart/CombinedCharts";
 import type { Site } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
-import { sortByDate } from "../../helpers/sortDailyData";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
@@ -57,7 +57,9 @@ const SiteDetails = ({
     hasSondeData ? (
       <WaterSamplingCard siteId={site.id.toString()} />
     ) : (
-      <CoralBleaching dailyData={sortByDate(dailyData, "date").slice(-1)[0]} />
+      <CoralBleaching
+        dailyData={orderBy(dailyData, "date", "asc").slice(-1)[0]}
+      />
     ),
     <Waves liveData={liveData} />,
   ];

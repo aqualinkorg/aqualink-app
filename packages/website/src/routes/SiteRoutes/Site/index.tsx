@@ -12,6 +12,7 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
+import { orderBy } from "lodash";
 
 import SiteNavBar from "../../../common/NavBar";
 import SiteFooter from "../../../common/Footer";
@@ -32,7 +33,6 @@ import {
   surveysRequest,
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/user";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
@@ -113,7 +113,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
-  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
+  const featuredMedia = orderBy(surveyList, "diveDate", "desc").find(
     (survey) =>
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   );

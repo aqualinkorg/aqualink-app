@@ -18,26 +18,27 @@ import { Range } from "../../store/Sites/types";
 import { convertToLocalTime } from "../../helpers/dates";
 import { useProcessedChartData } from "./utils";
 
+// An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
-  label: string;
-  data: SofarValue[];
-  type: "line" | "scatter";
-  unit: string;
-  curveColor: string;
-  threshold?: number;
-  fillColor?: string;
-  fillColorAboveThreshold?: string;
-  fillColorBelowThreshold?: string;
-  surveysAttached?: boolean;
-  considerForXAxisLimits?: boolean;
-  maxHoursGap?: number;
-  tooltipMaxHoursGap?: number;
-  isDailyUpdated?: boolean;
-  displayData?: boolean;
-  displayCardColumn?: boolean;
-  cardColumnName?: string;
-  cardColumnTooltip?: string;
-  tooltipLabel?: string;
+  label: string; // The dataset's label
+  data: SofarValue[]; // The dataset's data, typed as a SofarValue array
+  type: "line" | "scatter"; // The plot's type, either line or scatter
+  unit: string; // The unit of the dataset's data, e.g. °C for temperature data
+  curveColor: string; // The color used for displaying the data
+  threshold?: number; // An optional data threshold
+  fillColor?: string; // An optional color to fill the area beneath the chart
+  fillColorAboveThreshold?: string; // The color used to fill the area between the chart and the threshold. Only used if a threshold is specified
+  fillColorBelowThreshold?: string; // The color used to fill the area between the threshold and the y axis 0. Only used if a threshold is specified
+  surveysAttached?: boolean; // Boolean that determines if the surveys scatter dataset will be attached on the chart's plot
+  considerForXAxisLimits?: boolean; // Boolean that determines if the plot's min and max date will be used to calculate the chart's x axis limits
+  maxHoursGap?: number; // If there is a time gap bigger than this, then display a gap on the chart's plot
+  tooltipMaxHoursGap?: number; // The chart's tooltip takes into account data that belong in the interval [x - tooltipMaxHoursGap, x + tooltipMaxHoursGap]
+  isDailyUpdated?: boolean; // A boolean that determines if the data is daily updated
+  displayData?: boolean; // A boolean that determines if the data will be displayed on the chart
+  displayCardColumn?: boolean; // A boolean that determinse if the data will be displayed in the analysis card
+  cardColumnName?: string; // The label of the data column on the analysis card. If not specified, the label property is used instead
+  cardColumnTooltip?: string; // An optional tooltip for the card column label
+  tooltipLabel?: string; // An optional label for the data on the chart's tooltip. If not specified, the label property is used instead
 }
 
 export interface ChartProps {

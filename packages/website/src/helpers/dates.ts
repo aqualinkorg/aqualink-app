@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { range as createRange } from "lodash";
+import { range as createRange, orderBy } from "lodash";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 import {
@@ -10,7 +10,6 @@ import {
   SofarValue,
 } from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
-import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
@@ -119,7 +118,7 @@ export const findMarginalDate = (
     })) || []),
   ];
 
-  const sortedData = sortByDate(
+  const sortedData = orderBy(
     combinedData,
     "date",
     type === "max" ? "desc" : "asc"

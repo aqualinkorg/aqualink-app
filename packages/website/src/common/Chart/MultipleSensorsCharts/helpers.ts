@@ -245,6 +245,21 @@ export const constructOceanSenseDatasets = (
 export const hasAtLeastNData = (n: number) => (data?: SofarValue[]) =>
   typeof data?.length === "number" && data.length >= n;
 
+/**
+ * A util function used to generate the temperature analysis chart datasets.
+ * @param dailyData A daily data array
+ * @param spotterBottom An array of spotter bottom temperatures
+ * @param spotterTop An array of spotter top temperatures
+ * @param hoboBottom An array of hobo top temperatures
+ * @param historicalMonthlyMean An array of historical monthly temperatures
+ * @param startDate A start date used in the historical monthly mean data generation
+ * @param endDate An end date used in the historical monthly mean data generation
+ * @param chartStartDate An optionnal chart start date used to filter the datasets
+ * @param chartEndDate An optionnal chart end date used to filter the datasets
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @param depth The site's depth
+ * @returns An array of datasets to display on the chart
+ */
 export const generateTempAnalysisDatasets = (
   dailyData?: DailyData[],
   spotterBottom?: SofarValue[],
@@ -370,6 +385,17 @@ export const generateTempAnalysisDatasets = (
   ];
 };
 
+/**
+ * A util function to generate a dataset for a specific metric
+ * @param label The label of the dataset
+ * @param data The metric data
+ * @param unit The data units
+ * @param color The curve color
+ * @param chartStartDate An optional param for the chart's start date, used filter the data
+ * @param chartEndDate An optional param for the chart's end date, used filter the data
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @returns A dataset for the specified metric
+ */
 export const generateMetricDataset = (
   label: string,
   data: SofarValue[],
@@ -396,6 +422,14 @@ export const generateMetricDataset = (
   };
 };
 
+/**
+ * A util function to generate the daily data dataset, used in a bunch of places.
+ * @param data The input daily data
+ * @param threshold An optional temperature threshold
+ * @param surveysAttached A boolean to determine if we will display the surveys scatter plot or not
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @returns A dataset for the daily data
+ */
 export const standardDailyDataDataset = (
   data: DailyData[],
   threshold: number | null,
