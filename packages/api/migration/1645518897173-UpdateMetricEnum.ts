@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class UpdateMetricEnum1645518897173 implements MigrationInterface {
     name = 'UpdateMetricEnum1645518897173'
@@ -6,7 +6,7 @@ export class UpdateMetricEnum1645518897173 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`DROP MATERIALIZED VIEW "latest_data"`);
         await queryRunner.query(`ALTER TYPE "public"."metrics_metric_enum" RENAME TO "metrics_metric_enum_old"`);
-        await queryRunner.query(`CREATE TYPE "public"."metrics_metric_enum" AS ENUM('temp_alert', 'temp_weekly_alert', 'dhw', 'satellite_temperature', 'top_temperature', 'bottom_temperature', 'sst_anomaly', 'significant_wave_height', 'wave_mean_period', 'wave_peak_period', 'wave_mean_direction', 'wind_speed', 'wind_direction', 'cholorophyll_rfu', 'cholorophyll_concentration', 'conductivity', 'water_depth', 'odo_saturation', 'odo_concentration', 'salinity', 'specific_conductance', 'tds', 'turbidity', 'total_suspended_solids', 'sonde_wiper_position', 'ph', 'ph_mv', 'sonde_battery_voltage', 'sonde_cable_power_voltage', 'pressure', 'precipitation', 'rh', 'wind_gust_speed')`);
+        await queryRunner.query(`CREATE TYPE "public"."metrics_metric_enum" AS ENUM('temp_alert', 'temp_weekly_alert', 'dhw', 'air_temperature', 'satellite_temperature', 'top_temperature', 'bottom_temperature', 'sst_anomaly', 'significant_wave_height', 'wave_mean_period', 'wave_peak_period', 'wave_mean_direction', 'wind_speed', 'wind_direction', 'cholorophyll_rfu', 'cholorophyll_concentration', 'conductivity', 'water_depth', 'odo_saturation', 'odo_concentration', 'salinity', 'specific_conductance', 'tds', 'turbidity', 'total_suspended_solids', 'sonde_wiper_position', 'ph', 'ph_mv', 'sonde_battery_voltage', 'sonde_cable_power_voltage', 'pressure', 'precipitation', 'rh', 'wind_gust_speed')`);
         await queryRunner.query(`ALTER TABLE "metrics" ALTER COLUMN "metric" TYPE "public"."metrics_metric_enum" USING "metric"::"text"::"public"."metrics_metric_enum"`);
         await queryRunner.query(`ALTER TABLE "time_series" ALTER COLUMN "metric" TYPE "public"."metrics_metric_enum" USING "metric"::"text"::"public"."metrics_metric_enum"`);
         await queryRunner.query(`DROP TYPE "public"."metrics_metric_enum_old"`);

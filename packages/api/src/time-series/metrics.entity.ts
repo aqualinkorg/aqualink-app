@@ -7,6 +7,7 @@ export enum Metric {
   WEEKLY_ALERT = 'temp_weekly_alert',
   DHW = 'dhw',
   SATELLITE_TEMPERATURE = 'satellite_temperature',
+  AIR_TEMPERATURE = 'air_temperature',
   TOP_TEMPERATURE = 'top_temperature',
   BOTTOM_TEMPERATURE = 'bottom_temperature',
   SST_ANOMALY = 'sst_anomaly',
