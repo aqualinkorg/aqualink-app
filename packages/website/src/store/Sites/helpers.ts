@@ -280,7 +280,7 @@ export const timeSeriesRequest = async (
   );
 
   if (returnStored) {
-    return [storedTimeSeries, storedDailyData, minDate, maxDate];
+    return [storedTimeSeries, storedDailyData, storedStart, storedEnd];
   }
 
   const timeSeriesData =
@@ -311,5 +311,10 @@ export const timeSeriesRequest = async (
     ? attachData(attachDirection, granularDailyData, storedDailyData)
     : granularDailyData;
 
-  return [resultingTimeSeriesData, resultingDailyData, minDate, maxDate];
+  return [
+    resultingTimeSeriesData,
+    resultingDailyData,
+    !attachDirection ? start : minDate,
+    !attachDirection ? end : maxDate,
+  ];
 };

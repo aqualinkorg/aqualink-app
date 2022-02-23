@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { range as createRange } from "lodash";
+import { range as createRange, orderBy } from "lodash";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 import {
@@ -10,7 +10,6 @@ import {
   SofarValue,
 } from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
-import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
@@ -85,6 +84,19 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
       return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
 };
+/**
+ * Util function to sort an array by a specific date key
+ * @param list The input array
+ * @param dateKey The key to sort by
+ * @param order The sort order
+ * @returns A sorted by the input key array
+ */
+export const sortByDate = <T>(
+  list: T[],
+  dateKey: keyof T,
+  order?: "asc" | "desc"
+) =>
+  orderBy(list, (item) => new Date(item[dateKey] as unknown as string), order);
 
 /**
  * Depending on the type param, it calculates the maximum or minimun date
@@ -211,23 +223,13 @@ export const convertToLocalTime = (
   ).toISOString();
 };
 
-export const convertDailyDataToLocalTime = (
-  dailyData: DailyData[],
-  timeZone?: string | null
-): DailyData[] =>
-  dailyData.map((item) => ({
-    ...item,
-    date: convertToLocalTime(item.date, timeZone),
-  }));
-
-export const convertSofarDataToLocalTime = (
-  sofarData?: SofarValue[],
-  timeZone?: string | null
-): SofarValue[] =>
-  (sofarData || []).map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone),
-  }));
+export const convertSofarDataToLocalTime =
+  (timeZone?: string | null) =>
+  (sofarData?: SofarValue[]): SofarValue[] =>
+    (sofarData || []).map((item) => ({
+      ...item,
+      timestamp: convertToLocalTime(item.timestamp, timeZone),
+    }));
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],

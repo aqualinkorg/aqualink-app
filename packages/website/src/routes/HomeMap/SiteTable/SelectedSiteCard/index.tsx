@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { sortByDate } from "../../../../helpers/sortDailyData";
 import { formatNumber } from "../../../../helpers/numberUtils";
 
 import { degreeHeatingWeeksCalculator } from "../../../../helpers/degreeHeatingWeeks";
@@ -30,13 +29,14 @@ import { getSiteNameAndRegion } from "../../../../store/Sites/helpers";
 import { Site } from "../../../../store/Sites/types";
 import Chart from "../../../../common/Chart";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
-import { convertDailyDataToLocalTime } from "../../../../helpers/dates";
 import Chip from "../../../../common/Chip";
 import {
   GaAction,
   GaCategory,
   trackButtonClick,
 } from "../../../../utils/google-analytics";
+import { standardDailyDataDataset } from "../../../../common/Chart/MultipleSensorsCharts/helpers";
+import { sortByDate } from "../../../../helpers/dates";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -152,11 +152,17 @@ const SelectedSiteContent = ({ site, imageUrl }: SelectedSiteContentProps) => {
   ];
 
   const { name, region: regionName } = getSiteNameAndRegion(site);
+  const chartDataset = standardDailyDataDataset(
+    site.dailyData,
+    site.maxMonthlyMean,
+    false,
+    site.timezone
+  );
 
   const ChartComponent = (
     <Chart
       siteId={site.id}
-      dailyData={convertDailyDataToLocalTime(site.dailyData, site.timezone)}
+      datasets={[chartDataset]}
       surveys={[]}
       temperatureThreshold={
         site.maxMonthlyMean ? site.maxMonthlyMean + 1 : null

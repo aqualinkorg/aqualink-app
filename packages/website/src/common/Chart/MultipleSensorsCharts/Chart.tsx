@@ -16,15 +16,11 @@ import { useSelector } from "react-redux";
 import ChartWithTooltip from "../ChartWithTooltip";
 import DatePicker from "../../Datepicker";
 import {
-  convertDailyDataToLocalTime,
-  convertSofarDataToLocalTime,
   convertToLocalTime,
   displayTimeInLocalTimezone,
-  generateHistoricalMonthlyMeanTimestamps,
 } from "../../../helpers/dates";
-import { DailyData, Site, SofarValue } from "../../../store/Sites/types";
+import { Site } from "../../../store/Sites/types";
 import {
-  siteOceanSenseDataLoadingSelector,
   siteTimeSeriesDataLoadingSelector,
   siteTimeSeriesDataRangeLoadingSelector,
   siteTimeSeriesDataRangeSelector,
@@ -32,17 +28,12 @@ import {
 import { findChartPeriod, moreThanOneYear } from "./helpers";
 import { surveyListSelector } from "../../../store/Survey/surveyListSlice";
 import { filterSurveys } from "../../../helpers/surveys";
+import { Dataset } from "..";
 
 const Chart = ({
+  datasets,
   site,
-  dailyData,
   pointId,
-  displayHistoricalMonthlyMean,
-  spotterBottomTemperature,
-  spotterTopTemperature,
-  hoboBottomTemperature,
-  oceanSenseData,
-  oceanSenseDataUnit,
   hideYAxisUnits,
   pickerStartDate,
   pickerEndDate,
@@ -56,7 +47,6 @@ const Chart = ({
   classes,
 }: ChartProps) => {
   const theme = useTheme();
-  const oceanSenseDataLoading = useSelector(siteOceanSenseDataLoadingSelector);
   const { hobo: hoboBottomTemperatureRange } =
     useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
@@ -72,37 +62,12 @@ const Chart = ({
     surveysFiltered ? pointId || -1 : -1
   );
 
-  const dailyDataSst = dailyData?.map((item) => ({
-    timestamp: item.date,
-    value: item.satelliteTemperature,
-  }));
+  const hasData = datasets.some(({ displayData }) => displayData);
 
-  const hasSpotterBottom = !!spotterBottomTemperature?.[1];
-  const hasSpotterTop = !!spotterTopTemperature?.[1];
-  const hasSpotterData = hasSpotterBottom || hasSpotterTop;
+  const loading = isTimeSeriesDataLoading || isTimeSeriesDataRangeLoading;
 
-  const hasHoboData = !!hoboBottomTemperature?.[1];
-
-  const hasOceanSenseData = !!oceanSenseData?.[1];
-
-  const hasDailyData = !!dailyDataSst?.[1];
-
-  const loading =
-    isTimeSeriesDataLoading ||
-    isTimeSeriesDataRangeLoading ||
-    (oceanSenseData && oceanSenseDataLoading);
-
-  const success =
-    !pickerErrored &&
-    !loading &&
-    (hasHoboData || hasSpotterData || hasDailyData || hasOceanSenseData);
-  const warning =
-    !pickerErrored &&
-    !loading &&
-    !hasHoboData &&
-    !hasSpotterData &&
-    !hasDailyData &&
-    !hasOceanSenseData;
+  const success = !pickerErrored && !loading && hasData;
+  const warning = !pickerErrored && !loading && !hasData;
 
   const minDateLocal = displayTimeInLocalTimezone({
     isoDate: minDate,
@@ -162,9 +127,7 @@ const Chart = ({
               <Typography>
                 {minDateLocal && maxDateLocal
                   ? `No HOBO data available - data available from ${minDateLocal} to ${maxDateLocal}.`
-                  : `No ${
-                      oceanSenseData ? "Ocean Sense" : "Smart Buoy or HOBO"
-                    } data available in this time range.`}
+                  : "No data available in this time range."}
               </Typography>
             </Alert>
           </Box>
@@ -174,34 +137,8 @@ const Chart = ({
       {success && (
         <ChartWithTooltip
           className={classes.chart}
+          datasets={datasets}
           siteId={site.id}
-          depth={site.depth}
-          dailyData={convertDailyDataToLocalTime(
-            dailyData || [],
-            site.timezone
-          )}
-          spotterBottomTemperature={convertSofarDataToLocalTime(
-            spotterBottomTemperature
-          )}
-          spotterTopTemperature={convertSofarDataToLocalTime(
-            spotterTopTemperature
-          )}
-          hoboBottomTemperatureData={convertSofarDataToLocalTime(
-            hoboBottomTemperature || [],
-            site.timezone
-          )}
-          historicalMonthlyMeanData={
-            displayHistoricalMonthlyMean
-              ? generateHistoricalMonthlyMeanTimestamps(
-                  site.historicalMonthlyMean,
-                  startDate,
-                  endDate,
-                  site.timezone
-                )
-              : undefined
-          }
-          oceanSenseData={oceanSenseData}
-          oceanSenseDataUnit={oceanSenseDataUnit}
           hideYAxisUnits={hideYAxisUnits}
           surveys={surveys}
           temperatureThreshold={null}
@@ -269,14 +206,8 @@ const styles = (theme: Theme) =>
 interface ChartIncomingProps {
   site: Site;
   pointId?: number;
-  dailyData?: DailyData[];
-  spotterBottomTemperature?: SofarValue[];
-  spotterTopTemperature?: SofarValue[];
-  hoboBottomTemperature?: SofarValue[];
-  oceanSenseData?: SofarValue[];
-  oceanSenseDataUnit?: string;
+  datasets: Dataset[];
   hideYAxisUnits?: boolean;
-  displayHistoricalMonthlyMean?: boolean;
   pickerStartDate: string;
   pickerEndDate: string;
   startDate: string;
@@ -290,14 +221,7 @@ interface ChartIncomingProps {
 
 Chart.defaultProps = {
   pointId: undefined,
-  dailyData: [],
-  spotterBottomTemperature: undefined,
-  spotterTopTemperature: undefined,
-  hoboBottomTemperature: undefined,
-  oceanSenseData: undefined,
-  oceanSenseDataUnit: undefined,
   hideYAxisUnits: false,
-  displayHistoricalMonthlyMean: true,
   surveysFiltered: undefined,
   showDatePickers: true,
 };

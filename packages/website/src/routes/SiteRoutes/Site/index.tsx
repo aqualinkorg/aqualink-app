@@ -32,13 +32,12 @@ import {
   surveysRequest,
   surveyListSelector,
 } from "../../../store/Survey/surveyListSlice";
-import { sortByDate } from "../../../helpers/sortDailyData";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import { isAdmin } from "../../../helpers/user";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { User } from "../../../store/User/types";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
-import { subtractFromDate } from "../../../helpers/dates";
+import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
