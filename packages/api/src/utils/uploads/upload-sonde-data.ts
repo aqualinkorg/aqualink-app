@@ -269,13 +269,13 @@ const findSheetDataWithHeader = (
 };
 
 // Upload sonde data
-export const uploadSondeData = async (
+export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
   mimetype: Mimetype,
   siteId: string,
   surveyPointId: string | undefined,
-  sondeType: string,
+  sourceType: SourceType,
   repositories: Repositories,
   failOnWarning?: boolean,
 ) => {
@@ -298,19 +298,19 @@ export const uploadSondeData = async (
     where: {
       site: { id: siteId },
       surveyPoint: surveyPointId || null,
-      type: SourceType.SONDE,
+      type: sourceType,
     },
   });
 
   const sourceEntity =
     existingSourceEntity ||
     (await repositories.sourcesRepository.save({
-      type: SourceType.SONDE,
+      type: sourceType,
       site,
       surveyPoint,
     }));
 
-  if (sondeType === 'sonde') {
+  if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const requiredHeaders = requiredHeadersForMimetype(mimetype);
@@ -383,7 +383,7 @@ export const uploadSondeData = async (
           signature,
           site,
           surveyPoint,
-          sensorType: SourceType.SONDE,
+          sensorType: sourceType,
         },
       });
 
@@ -396,7 +396,7 @@ export const uploadSondeData = async (
       await repositories.dataUploadsRepository.save({
         file: fileName,
         signature,
-        sensorType: SourceType.SONDE,
+        sensorType: sourceType,
         site,
         surveyPoint,
         minDate,

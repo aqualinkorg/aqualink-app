@@ -18,7 +18,10 @@ import {
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Sources } from '../sites/sources.entity';
-import { Mimetype, uploadSondeData } from '../utils/uploads/upload-sonde-data';
+import {
+  Mimetype,
+  uploadTimeSeriesData,
+} from '../utils/uploads/upload-sonde-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
@@ -147,13 +150,13 @@ export class TimeSeriesService {
       files,
       async ({ path, originalname, mimetype }) => {
         try {
-          const ignoredHeaders = await uploadSondeData(
+          const ignoredHeaders = await uploadTimeSeriesData(
             path,
             originalname,
             mimetype as Mimetype,
             siteId.toString(),
             surveyPointId.toString(),
-            'sonde',
+            sensor,
             {
               siteRepository: this.siteRepository,
               sourcesRepository: this.sourcesRepository,
