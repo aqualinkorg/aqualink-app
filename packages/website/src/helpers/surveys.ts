@@ -1,17 +1,18 @@
-import { orderBy, sumBy } from "lodash";
+import { sumBy } from "lodash";
 
 import {
   SurveyListState,
   Observations,
   SurveyListItem,
 } from "../store/Survey/types";
+import { sortByDate } from "./dates";
 
 export const filterSurveys = (
   list: SurveyListState["list"],
   observation: Observations | "any",
   point: number
 ): SurveyListState["list"] => {
-  const sortedSurveys = orderBy(list, "diveDate", "desc");
+  const sortedSurveys = sortByDate(list, "diveDate", "desc");
 
   if (observation === "any" && point === -1) {
     return sortedSurveys;

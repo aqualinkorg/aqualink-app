@@ -84,6 +84,19 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
       return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
 };
+/**
+ * Util function to sort an array by a specific date key
+ * @param list The input array
+ * @param dateKey The key to sort by
+ * @param order The sort order
+ * @returns A sorted by the input key array
+ */
+export const sortByDate = <T>(
+  list: T[],
+  dateKey: keyof T,
+  order?: "asc" | "desc"
+) =>
+  orderBy(list, (item) => new Date(item[dateKey] as unknown as string), order);
 
 /**
  * Depending on the type param, it calculates the maximum or minimun date
@@ -118,7 +131,7 @@ export const findMarginalDate = (
     })) || []),
   ];
 
-  const sortedData = orderBy(
+  const sortedData = sortByDate(
     combinedData,
     "date",
     type === "max" ? "desc" : "asc"

@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React from "react";
-import { isNumber, orderBy } from "lodash";
+import { isNumber } from "lodash";
 import {
   Box,
   Button,
@@ -36,6 +36,7 @@ import {
   trackButtonClick,
 } from "../../../../utils/google-analytics";
 import { standardDailyDataDataset } from "../../../../common/Chart/MultipleSensorsCharts/helpers";
+import { sortByDate } from "../../../../helpers/dates";
 
 const useStyles = makeStyles((theme) => ({
   cardWrapper: {
@@ -124,7 +125,7 @@ const SelectedSiteContent = ({ site, imageUrl }: SelectedSiteContentProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
-  const sortedDailyData = orderBy(site.dailyData, "date", "asc");
+  const sortedDailyData = sortByDate(site.dailyData, "date");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
     (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
@@ -349,7 +350,7 @@ const SelectedSiteCard = () => {
   const isFeatured = `${site?.id}` === featuredSiteId;
 
   const { featuredSurveyMedia } =
-    orderBy(surveyList, "diveDate", "desc").find(
+    sortByDate(surveyList, "diveDate", "desc").find(
       (survey) =>
         survey.featuredSurveyMedia &&
         survey.featuredSurveyMedia.type === "image"

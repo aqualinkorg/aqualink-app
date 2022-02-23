@@ -12,7 +12,6 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-import { orderBy } from "lodash";
 
 import SiteNavBar from "../../../common/NavBar";
 import SiteFooter from "../../../common/Footer";
@@ -38,7 +37,7 @@ import { isAdmin } from "../../../helpers/user";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { User } from "../../../store/User/types";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
-import { subtractFromDate } from "../../../helpers/dates";
+import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
@@ -113,7 +112,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
-  const featuredMedia = orderBy(surveyList, "diveDate", "desc").find(
+  const featuredMedia = sortByDate(surveyList, "diveDate", "desc").find(
     (survey) =>
       survey.featuredSurveyMedia && survey.featuredSurveyMedia.type === "image"
   );
