@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import isISODate from "validator/lib/isISO8601";
 import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import moment from "moment";
-import { camelCase, isNaN, sortBy } from "lodash";
+import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
@@ -38,10 +38,15 @@ import {
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import ChartWithCard from "./ChartWithCard";
 import {
+  METLOG_DATA_COLOR,
   OCEAN_SENSE_DATA_COLOR,
   SONDE_DATA_COLOR,
   SPOTTER_METRIC_DATA_COLOR,
 } from "../../../constants/charts";
+import {
+  getMetlogConfig,
+  getPublicMetlogMetrics,
+} from "../../../constants/metlogConfig";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   "bottom_temperature",
@@ -116,6 +121,10 @@ const MultipleSensorsCharts = ({
     site.liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
+  const hasMetlogData = Boolean(
+    site.liveData?.latestData?.some((data) => data.source === "metlog")
+  );
+
   const chartStartDate = startDate || subtractFromDate(today, "week");
   const chartEndDate = moment
     .min(
@@ -158,6 +167,67 @@ const MultipleSensorsCharts = ({
       site.timezone
     );
   };
+
+  const sondeDatasets = () =>
+    hasSondeData
+      ? sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
+          .filter(
+            (key) =>
+              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length
+          )
+          .map((key) => {
+            const { data, surveyPoint } =
+              timeSeriesData?.[camelCase(key) as Metrics]?.sonde || {};
+            const { title, units } = getSondeConfig(key);
+
+            return {
+              key,
+              title,
+              surveyPoint,
+              dataset: generateMetricDataset(
+                "SENSOR",
+                data || [],
+                units,
+                SONDE_DATA_COLOR,
+                chartStartDate,
+                chartEndDate,
+                site.timezone
+              ),
+            };
+          })
+      : [];
+
+  const metlogDatasets = () =>
+    hasMetlogData
+      ? sortBy(getPublicMetlogMetrics(), (key) => getMetlogConfig(key).order)
+          .filter(
+            (key) =>
+              timeSeriesData?.[camelCase(key) as Metrics]?.metlog?.data?.length
+          )
+          .map((key) => {
+            const { data, surveyPoint } =
+              timeSeriesData?.[camelCase(key) as Metrics]?.metlog || {};
+            const { title, units, convert } = getMetlogConfig(key);
+
+            return {
+              key,
+              title,
+              surveyPoint,
+              dataset: generateMetricDataset(
+                "SENSOR",
+                (data || []).map((item) => ({
+                  ...item,
+                  value: isNumber(convert) ? item.value * convert : item.value,
+                })),
+                units,
+                METLOG_DATA_COLOR,
+                chartStartDate,
+                chartEndDate,
+                site.timezone
+              ),
+            };
+          })
+      : [];
 
   // Scroll to the chart defined by the initialChart query param.
   useEffect(() => {
@@ -468,60 +538,66 @@ const MultipleSensorsCharts = ({
             </Box>
           )
         )}
-      {hasSondeData &&
-        sortBy(getPublicSondeMetrics(), (key) => getSondeConfig(key).order)
-          .filter(
-            (key) =>
-              timeSeriesData?.[camelCase(key) as Metrics]?.sonde?.data?.length
-          )
-          .map((key) => {
-            const { data, surveyPoint } =
-              timeSeriesData?.[camelCase(key) as Metrics]?.sonde || {};
-            const { title, units } = getSondeConfig(key);
-
-            return (
-              <Box mt={4} key={key}>
-                <ChartWithCard
-                  datasets={[
-                    generateMetricDataset(
-                      "SENSOR",
-                      data || [],
-                      units,
-                      SONDE_DATA_COLOR,
-                      chartStartDate,
-                      chartEndDate,
-                      site.timezone
-                    ),
-                  ]}
-                  id={key}
-                  range={range}
-                  onRangeChange={onRangeChange}
-                  disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
-                  chartTitle={title}
-                  timeSeriesDataRanges={timeSeriesDataRanges}
-                  timeZone={site.timezone}
-                  showRangeButtons={false}
-                  showAvailableRanges={false}
-                  chartWidth="large"
-                  site={site}
-                  pickerStartDate={
-                    pickerStartDate || subtractFromDate(today, "week")
-                  }
-                  pickerEndDate={pickerEndDate || today}
-                  chartStartDate={chartStartDate}
-                  chartEndDate={chartEndDate}
-                  onStartDateChange={onPickerDateChange("start")}
-                  onEndDateChange={onPickerDateChange("end")}
-                  isPickerErrored={pickerErrored}
-                  showDatePickers={false}
-                  surveyPoint={surveyPoint}
-                  hideYAxisUnits
-                  cardColumnJustification="flex-start"
-                  displayDownloadButton={false}
-                />
-              </Box>
-            );
-          })}
+      {sondeDatasets().map(({ key, title, surveyPoint, dataset }) => (
+        <Box mt={4} key={key}>
+          <ChartWithCard
+            datasets={[dataset]}
+            id={key}
+            range={range}
+            onRangeChange={onRangeChange}
+            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+            chartTitle={title}
+            timeSeriesDataRanges={timeSeriesDataRanges}
+            timeZone={site.timezone}
+            showRangeButtons={false}
+            showAvailableRanges={false}
+            chartWidth="large"
+            site={site}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+            pickerEndDate={pickerEndDate || today}
+            chartStartDate={chartStartDate}
+            chartEndDate={chartEndDate}
+            onStartDateChange={onPickerDateChange("start")}
+            onEndDateChange={onPickerDateChange("end")}
+            isPickerErrored={pickerErrored}
+            showDatePickers={false}
+            surveyPoint={surveyPoint}
+            hideYAxisUnits
+            cardColumnJustification="flex-start"
+            displayDownloadButton={false}
+          />
+        </Box>
+      ))}
+      {metlogDatasets().map(({ key, title, surveyPoint, dataset }) => (
+        <Box mt={4} key={key}>
+          <ChartWithCard
+            datasets={[dataset]}
+            id={key}
+            range={range}
+            onRangeChange={onRangeChange}
+            disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
+            chartTitle={title}
+            timeSeriesDataRanges={timeSeriesDataRanges}
+            timeZone={site.timezone}
+            showRangeButtons={false}
+            showAvailableRanges={false}
+            chartWidth="large"
+            site={site}
+            pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
+            pickerEndDate={pickerEndDate || today}
+            chartStartDate={chartStartDate}
+            chartEndDate={chartEndDate}
+            onStartDateChange={onPickerDateChange("start")}
+            onEndDateChange={onPickerDateChange("end")}
+            isPickerErrored={pickerErrored}
+            showDatePickers={false}
+            surveyPoint={surveyPoint}
+            hideYAxisUnits
+            cardColumnJustification="flex-start"
+            displayDownloadButton={false}
+          />
+        </Box>
+      ))}
     </Container>
   );
 };

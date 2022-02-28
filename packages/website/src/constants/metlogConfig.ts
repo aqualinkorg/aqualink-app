@@ -78,7 +78,7 @@ export function getMetlogConfig(configKey: MetlogMetricsKeys) {
   return metlogConfig[configKey] || {};
 }
 
-export function getPublicSondeMetrics() {
+export function getPublicMetlogMetrics() {
   return Object.keys(metlogConfig).filter(
     (key) => metlogConfig[key as MetlogMetricsKeys].visibility !== "admin"
   ) as MetlogMetricsKeys[];
