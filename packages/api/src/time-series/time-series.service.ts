@@ -21,7 +21,7 @@ import { Sources } from '../sites/sources.entity';
 import {
   Mimetype,
   uploadTimeSeriesData,
-} from '../utils/uploads/upload-sonde-data';
+} from '../utils/uploads/upload-sheet-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';

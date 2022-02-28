@@ -29,7 +29,7 @@ import { IsSiteAdminGuard } from '../auth/is-site-admin.guard';
 import { AdminLevel } from '../users/users.entity';
 import { Auth } from '../auth/auth.decorator';
 import { SourceType } from '../sites/schemas/source-type.enum';
-import { fileFilter } from '../utils/uploads/upload-sonde-data';
+import { fileFilter } from '../utils/uploads/upload-sheet-data';
 
 const MAX_FILE_COUNT = 10;
 const MAX_FILE_SIZE_MB = 10;

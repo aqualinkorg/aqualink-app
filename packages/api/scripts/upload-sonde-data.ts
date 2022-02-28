@@ -8,7 +8,7 @@ import { Site } from '../src/sites/sites.entity';
 import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Sources } from '../src/sites/sources.entity';
-import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sonde-data';
+import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sheet-data';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { SourceType } from '../src/sites/schemas/source-type.enum';
 
