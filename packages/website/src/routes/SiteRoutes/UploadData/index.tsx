@@ -99,10 +99,13 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
     } catch (err) {
       setUploadLoading(false);
       const errorMessage = getAxiosErrorMessage(err);
-      const [maybeFileName, maybeFileError] = errorMessage?.split(": ");
+      const [maybeFileName, ...maybeFileError] = errorMessage?.split(": ");
       if (maybeFileName in uploadErrors) {
         // File specific error
-        setUploadErrors({ ...uploadErrors, [maybeFileName]: maybeFileError });
+        setUploadErrors({
+          ...uploadErrors,
+          [maybeFileName]: maybeFileError.join(": "),
+        });
       } else {
         // General error
         setUploadError(errorMessage || "Something went wrong");
