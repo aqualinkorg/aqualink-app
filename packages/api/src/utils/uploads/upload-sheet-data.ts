@@ -54,6 +54,18 @@ const metricsMapping: Record<string, Metric> = {
     Metric.WIND_DIRECTION,
 };
 
+const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+const IGNORE_HEADER_KEYS = [
+  '#',
+  'Site Name',
+  'Time (HH:mm:ss)',
+  'Time (Fract. Sec)',
+];
+const TIMESTAMP_KEYS = [
+  ['Date Time'],
+  ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+];
+
 const ACCEPTED_FILE_TYPES = [
   {
     extension: 'xlsx',
@@ -65,8 +77,6 @@ const ACCEPTED_FILE_TYPES = [
     mimetype: 'text/csv',
   },
 ] as const;
-
-export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
@@ -90,23 +100,15 @@ export const fileFilter: MulterOptions['fileFilter'] = (
   callback(null, true);
 };
 
-export const requiredHeadersForMimetype = (mimetype: Mimetype): string[] => {
-  switch (mimetype) {
-    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-      return ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'];
-    case 'text/csv':
-      return ['Date Time'];
-    default:
-      return [];
-  }
-};
-
-const rowIncludesHeaderKeys = (row: any, headerKeys: string[]): boolean =>
-  headerKeys.every((header) =>
+const isHeaderRow = (row: any) =>
+  HEADER_KEYS.some((header) =>
     row.some((cell) => {
       return typeof cell === 'string' && cell.startsWith(header);
     }),
   );
+
+const rowIncludesHeaderKeys = (row: string[], headerKeys: string[]) =>
+  headerKeys.every((key) => row.some((dataKey) => dataKey.startsWith(key)));
 
 function renameKeys(obj, newKeys) {
   const keyValues = Object.keys(obj).map((key) => {
@@ -161,19 +163,12 @@ const getTimestampFromCsvDateString = (dataObject: any) => {
   return new Date(dataObject[dateKey]);
 };
 
-const validateHeaders = (
-  file: string,
-  workSheetData: any[],
-  headerKeys: string[],
-) => {
-  // The header row must contain all header keys.
-  const headerRowIndex = workSheetData.findIndex((row) =>
-    rowIncludesHeaderKeys(row, headerKeys),
-  );
+const validateHeaders = (file: string, workSheetData: any[]) => {
+  const headerRowIndex = workSheetData.findIndex(isHeaderRow);
 
   if (headerRowIndex === -1) {
     throw new BadRequestException(
-      `${file}: [${headerKeys.join(
+      `${file}: At least one of [${HEADER_KEYS.join(
         ', ',
       )}] must be included in the column headers`,
     );
@@ -193,29 +188,26 @@ const validateHeaders = (
 
   const ignoredHeaders = headerRow.filter(
     (header) =>
-      ![...headerKeys, ...Object.keys(metricsMapping)].some((item) =>
+      ![...HEADER_KEYS, ...Object.keys(metricsMapping)].some((item) =>
         header.startsWith(item),
-      ) &&
-      header !== 'Site Name' &&
-      header !== '#',
+      ) && !IGNORE_HEADER_KEYS.includes(header),
   ) as string[];
 
   const importedHeaders = headerRow
     .filter(
       (header) =>
         Object.keys(metricsMapping).some((item) => header.startsWith(item)) &&
-        header !== 'Site Name' &&
-        header !== '#',
+        !IGNORE_HEADER_KEYS.includes(header),
     )
     .map((header) => metricsMapping[header]) as Metric[];
 
   return { ignoredHeaders, importedHeaders };
 };
 
-const extractHeadersAndData = (workSheetData: any[], headerKeys: string[]) => {
+const extractHeadersAndData = (workSheetData: any[]) => {
   const { tempHeaders: headers, tempData: data } = workSheetData.reduce(
     ({ tempHeaders, tempData }: any, row) => {
-      if (rowIncludesHeaderKeys(row, headerKeys)) {
+      if (isHeaderRow(row)) {
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         tempHeaders = row;
       } else if (row[0] != null && tempHeaders != null) {
@@ -230,23 +222,24 @@ const extractHeadersAndData = (workSheetData: any[], headerKeys: string[]) => {
   return { headers, data };
 };
 
-const timeStampExtractor = (dataObject: any, mimetype: Mimetype) => {
-  switch (mimetype) {
-    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-      return getTimestampFromExcelSerials(dataObject);
-    case 'text/csv':
+const timeStampExtractor = (file: string, dataObject: any) => {
+  const dataKeys = Object.keys(dataObject);
+  switch (true) {
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
       return getTimestampFromCsvDateString(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
+      return getTimestampFromExcelSerials(dataObject);
     default:
-      return undefined;
+      throw new BadRequestException(
+        `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
+          (keys) => `[${keys.join(', ')}]`,
+        ).join(', ')}`,
+      );
   }
 };
 
-const findSheetDataWithHeader = (
-  workSheetData: any[],
-  headerKeys: string[],
-  mimetype: Mimetype,
-) => {
-  const { headers, data } = extractHeadersAndData(workSheetData, headerKeys);
+const findSheetDataWithHeader = (fileName: string, workSheetData: any[]) => {
+  const { headers, data } = extractHeadersAndData(workSheetData);
 
   const dataAsObjects = data
     .map((row) => {
@@ -259,7 +252,7 @@ const findSheetDataWithHeader = (
       );
 
       return {
-        timestamp: timeStampExtractor(dataObject, mimetype),
+        timestamp: timeStampExtractor(fileName, dataObject),
         ...renameKeys(dataObject, metricsMapping),
       };
     })
@@ -272,7 +265,6 @@ const findSheetDataWithHeader = (
 export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
-  mimetype: Mimetype,
   siteId: string,
   surveyPointId: string | undefined,
   sourceType: SourceType,
@@ -313,11 +305,9 @@ export const uploadTimeSeriesData = async (
   if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
-    const requiredHeaders = requiredHeadersForMimetype(mimetype);
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
       workSheetData,
-      requiredHeaders,
     );
 
     if (failOnWarning && ignoredHeaders.length > 0) {
@@ -330,11 +320,7 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const results = findSheetDataWithHeader(
-      workSheetData,
-      requiredHeaders,
-      mimetype,
-    );
+    const results = findSheetDataWithHeader(fileName, workSheetData);
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {

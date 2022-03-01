@@ -61,15 +61,10 @@ async function run() {
   const config = configService.getTypeOrmConfig() as ConnectionOptions;
   const connection = await createConnection(config);
 
-  const isCsv = filePath.endsWith('.csv');
-
   logger.log('Uploading sonde data');
   await uploadTimeSeriesData(
     filePath,
     last(filePath.split('/')),
-    isCsv
-      ? 'text/csv'
-      : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     siteId,
     surveyPointId,
     sourceType as SourceType,
