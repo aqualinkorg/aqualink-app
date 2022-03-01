@@ -296,7 +296,7 @@ const MultipleSensorsCharts = ({
           pointId,
           start: siteLocalStartDate,
           end: siteLocalEndDate,
-          metrics: hasSondeData ? undefined : DEFAULT_METRICS,
+          metrics: hasSondeData || hasMetlogData ? undefined : DEFAULT_METRICS,
           hourly:
             moment(siteLocalEndDate).diff(moment(siteLocalStartDate), "days") >
             2,
@@ -316,6 +316,7 @@ const MultipleSensorsCharts = ({
     }
   }, [
     dispatch,
+    hasMetlogData,
     hasOceanSenseId,
     hasSondeData,
     pickerEndDate,
