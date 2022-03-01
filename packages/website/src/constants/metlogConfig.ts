@@ -13,7 +13,7 @@ export type MetlogMetricsKeys = Extract<
   MetricsKeys,
   | "wind_direction"
   | "wind_speed"
-  | "top_temperature"
+  | "air_temperature"
   | "pressure"
   | "precipitation"
   | "rh"
@@ -21,8 +21,8 @@ export type MetlogMetricsKeys = Extract<
 >;
 
 export const metlogConfig: Record<MetlogMetricsKeys, MetlogConfig> = {
-  top_temperature: {
-    title: "Top Temperature",
+  air_temperature: {
+    title: "Air Temperature",
     units: "°C",
     description: "",
     visibility: "public",

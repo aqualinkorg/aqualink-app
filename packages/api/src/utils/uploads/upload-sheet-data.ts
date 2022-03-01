@@ -45,7 +45,7 @@ const metricsMapping: Record<string, Metric> = {
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
   'Pressure, mbar (LGR S/N: 21067056, SEN S/N: 21062973)': Metric.PRESSURE,
   'Rain, mm (LGR S/N: 21067056, SEN S/N: 21065937)': Metric.PRECIPITATION,
-  'Temp, °C (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.TOP_TEMPERATURE,
+  'Temp, °C (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.AIR_TEMPERATURE,
   'RH, % (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.RH,
   'Wind Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)': Metric.WIND_SPEED,
   'Gust Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)':
