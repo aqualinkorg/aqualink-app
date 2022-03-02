@@ -6,35 +6,27 @@ import AnalysisCard from "./AnalysisCard";
 import Chart from "./Chart";
 import DownloadCSVButton from "./DownloadCSVButton";
 import Header from "./Header";
-import { Dataset, RangeValue } from "./types";
+import { RangeValue } from "./types";
+import type { Dataset } from "../index";
 import {
-  DailyData,
-  HistoricalMonthlyMeanData,
   Site,
-  SofarValue,
   TimeSeriesDataRange,
+  TimeSeriesSurveyPoint,
 } from "../../../store/Sites/types";
 
 const ChartWithCard = ({
   areSurveysFiltered,
   cardColumnJustification,
-  cardDataset,
   chartEndDate,
   chartStartDate,
   chartTitle,
   chartWidth,
-  dailyData,
-  dailyDataSst,
+  datasets,
   disableMaxRange,
   displayDownloadButton,
-  displayHistoricalMonthlyMean,
   hideYAxisUnits,
-  historicalMonthlyMean,
-  hoboBottomTemperature,
   id,
   isPickerErrored,
-  oceanSenseData,
-  oceanSenseDataUnit,
   pickerEndDate,
   pickerStartDate,
   pointId,
@@ -43,8 +35,7 @@ const ChartWithCard = ({
   showDatePickers,
   showRangeButtons,
   site,
-  spotterBottomTemperature,
-  spotterTopTemperature,
+  surveyPoint,
   timeSeriesDataRanges,
   timeZone,
   onEndDateChange,
@@ -75,6 +66,7 @@ const ChartWithCard = ({
         timeZone={timeZone}
         showAvailableRanges={showAvailableRanges}
         showRangeButtons={showRangeButtons}
+        surveyPoint={surveyPoint}
       />
       <Grid
         className={classes.chartWrapper}
@@ -86,11 +78,8 @@ const ChartWithCard = ({
         <Grid className={classnames(classes.chart, chartWidthClass())} item>
           <Chart
             site={site}
-            dailyData={dailyData}
             pointId={pointId}
-            spotterTopTemperature={spotterTopTemperature}
-            spotterBottomTemperature={spotterBottomTemperature}
-            hoboBottomTemperature={hoboBottomTemperature}
+            datasets={datasets}
             pickerStartDate={pickerStartDate}
             pickerEndDate={pickerEndDate}
             startDate={chartStartDate}
@@ -99,29 +88,18 @@ const ChartWithCard = ({
             onEndDateChange={onEndDateChange}
             pickerErrored={isPickerErrored}
             surveysFiltered={areSurveysFiltered}
-            oceanSenseData={oceanSenseData}
-            oceanSenseDataUnit={oceanSenseDataUnit}
             hideYAxisUnits={hideYAxisUnits}
-            displayHistoricalMonthlyMean={displayHistoricalMonthlyMean}
             showDatePickers={showDatePickers}
           />
         </Grid>
         {!isPickerErrored && (
           <Grid className={classes.card} item>
             <AnalysisCard
-              dataset={cardDataset}
+              datasets={datasets}
               pickerStartDate={pickerStartDate}
               pickerEndDate={pickerEndDate}
               chartStartDate={chartStartDate}
               chartEndDate={chartEndDate}
-              depth={site.depth}
-              dailyDataSst={dailyDataSst}
-              spotterTopTemperature={spotterTopTemperature}
-              spotterBottomTemperature={spotterBottomTemperature}
-              hoboBottomTemperature={hoboBottomTemperature}
-              historicalMonthlyMean={historicalMonthlyMean}
-              oceanSenseData={oceanSenseData}
-              oceanSenseUnit={oceanSenseDataUnit}
               columnJustification={cardColumnJustification}
             >
               {displayDownloadButton && (
@@ -185,23 +163,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
   cardColumnJustification?: GridProps["justify"];
-  cardDataset: Dataset;
   chartEndDate: string;
   chartStartDate: string;
   chartTitle: string;
   chartWidth: "small" | "medium" | "large";
-  dailyData?: DailyData[];
-  dailyDataSst?: SofarValue[];
+  datasets: Dataset[];
   disableMaxRange: boolean;
   displayDownloadButton?: boolean;
-  displayHistoricalMonthlyMean?: boolean;
   hideYAxisUnits?: boolean;
-  historicalMonthlyMean?: HistoricalMonthlyMeanData[];
-  hoboBottomTemperature?: SofarValue[];
   id: string;
   isPickerErrored: boolean;
-  oceanSenseData?: SofarValue[];
-  oceanSenseDataUnit?: string;
   pickerEndDate: string;
   pickerStartDate: string;
   pointId?: number;
@@ -210,8 +181,7 @@ interface ChartWithCardProps {
   showDatePickers?: boolean;
   showRangeButtons?: boolean;
   site: Site;
-  spotterBottomTemperature?: SofarValue[];
-  spotterTopTemperature?: SofarValue[];
+  surveyPoint?: TimeSeriesSurveyPoint;
   timeSeriesDataRanges?: TimeSeriesDataRange;
   timeZone?: string | null;
   onEndDateChange: (date: Date | null) => void;
@@ -222,21 +192,13 @@ interface ChartWithCardProps {
 ChartWithCard.defaultProps = {
   areSurveysFiltered: undefined,
   cardColumnJustification: "space-between",
-  dailyData: undefined,
-  dailyDataSst: undefined,
   displayDownloadButton: true,
-  displayHistoricalMonthlyMean: true,
   hideYAxisUnits: false,
-  historicalMonthlyMean: undefined,
-  hoboBottomTemperature: undefined,
-  oceanSenseData: undefined,
-  oceanSenseDataUnit: undefined,
   pointId: undefined,
   showAvailableRanges: true,
   showDatePickers: true,
   showRangeButtons: true,
-  spotterBottomTemperature: undefined,
-  spotterTopTemperature: undefined,
+  surveyPoint: undefined,
   timeSeriesDataRanges: undefined,
   timeZone: undefined,
 };

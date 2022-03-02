@@ -43,7 +43,8 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
 
   const hasSpotterData = Boolean(site?.liveData?.topTemperature);
   const hasRange = !!(
-    hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
+    hoboBottomTemperatureRange?.data &&
+    hoboBottomTemperatureRange.data.length > 0
   );
   const showChart = hasSpotterData || hasRange;
 

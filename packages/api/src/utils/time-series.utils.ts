@@ -1,4 +1,4 @@
-import _, { omit } from 'lodash';
+import _, { last, omit, isNull, merge } from 'lodash';
 import { IsNull, Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -8,41 +8,71 @@ import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { getTimeSeriesDefaultDates } from './dates';
 
-export interface TimeSeriesData {
-  value: number;
-  timestamp: Date;
-  metric: Metric;
-  source: SourceType;
-}
-
-export interface TimeSeriesRange {
-  maxDate: Date;
-  minDate: Date;
-  metric: Metric;
-  source: SourceType;
-}
-
 interface TimeSeriesGroupable {
   metric: Metric;
   source: SourceType;
+  surveyPointId?: number;
+  surveyPointName?: string;
+}
+
+export type TimeSeriesData = TimeSeriesGroupable & {
+  value: number;
+  timestamp: Date;
+};
+
+export type TimeSeriesRange = TimeSeriesGroupable & {
+  maxDate: Date;
+  minDate: Date;
+};
+
+interface SurveyPoint {
+  id: number;
+  name: string;
 }
 
 type TimeSeriesResponse<T> = Partial<
-  Record<Metric, Partial<Record<SourceType, T[]>>>
+  Record<
+    Metric,
+    Partial<Record<SourceType, { surveyPoint?: SurveyPoint; data: T[] }>>
+  >
 >;
 
 // TODO: Revisit the response structure and simplify when we have more metrics and sources available
 export const groupByMetricAndSource = <T extends TimeSeriesGroupable>(
   data: T[],
-): TimeSeriesResponse<Pick<T, 'metric' | 'source'>> => {
+): TimeSeriesResponse<
+  Omit<T, 'metric' | 'source' | 'surveyPointId' | 'surveyPointName'>
+> => {
   return _(data)
     .groupBy('metric')
     .mapValues((grouped) => {
       return _(grouped)
         .groupBy('source')
-        .mapValues((groupedData) =>
-          groupedData.map((o) => omit(o, 'metric', 'source')),
-        )
+        .mapValues((groupedData) => {
+          const { surveyPointId, surveyPointName } = last(groupedData) || {};
+          return merge(
+            !isNull(surveyPointId)
+              ? { surveyPoint: { id: surveyPointId, name: surveyPointName } }
+              : {},
+            {
+              data: groupedData
+                .filter((o) =>
+                  typeof surveyPointId === 'number'
+                    ? surveyPointId === o.surveyPointId
+                    : true,
+                )
+                .map((o) =>
+                  omit(
+                    o,
+                    'metric',
+                    'source',
+                    'surveyPointId',
+                    'surveyPointName',
+                  ),
+                ),
+            },
+          );
+        })
         .toJSON();
     })
     .toJSON();
@@ -61,7 +91,7 @@ export const getDataQuery = (
 
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : 'source.survey_point_id is NULL';
+    : `1=1`;
 
   const mainQuery = timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -78,6 +108,9 @@ export const getDataQuery = (
       `source.site_id = :siteId AND ${surveyPointCondition}`,
       { siteId },
     )
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .addSelect('surveyPoint.id', 'surveyPointId')
+    .addSelect('surveyPoint.name', 'surveyPointName')
     .andWhere(metrics.length > 0 ? 'metric IN (:...metrics)' : '1=1', {
       metrics,
     })
@@ -86,7 +119,9 @@ export const getDataQuery = (
 
   return hourly
     ? mainQuery
-        .groupBy("date_trunc('hour', timestamp), metric, source.type")
+        .groupBy(
+          "date_trunc('hour', timestamp), metric, source.type, surveyPoint.id",
+        )
         .orderBy("date_trunc('hour', timestamp)", 'ASC')
         .getRawMany()
     : mainQuery.orderBy('timestamp', 'ASC').getRawMany();
@@ -99,7 +134,7 @@ export const getDataRangeQuery = (
 ): Promise<TimeSeriesRange[]> => {
   const surveyPointCondition = surveyPointId
     ? `(source.survey_point_id = ${surveyPointId} OR source.survey_point_id is NULL)`
-    : 'source.survey_point_id is NULL';
+    : '1=1';
 
   return timeSeriesRepository
     .createQueryBuilder('time_series')
@@ -113,7 +148,11 @@ export const getDataRangeQuery = (
       `source.site_id = :siteId AND ${surveyPointCondition}`,
       { siteId },
     )
-    .groupBy('metric, source.type')
+    .leftJoin('source.surveyPoint', 'surveyPoint')
+    .addSelect('surveyPoint.id', 'surveyPointId')
+    .addSelect('surveyPoint.name', 'surveyPointName')
+    .groupBy('metric, source.type, surveyPoint.id')
+    .orderBy('MAX(timestamp)', 'ASC')
     .getRawMany();
 };
 

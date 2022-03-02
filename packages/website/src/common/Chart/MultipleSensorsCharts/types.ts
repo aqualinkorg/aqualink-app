@@ -16,9 +16,8 @@ export interface CardColumn {
   rows: { key: string; value: number | undefined }[];
   tooltip?: string;
   display: boolean;
+  unit: string;
 }
-
-export type Dataset = "spotter" | "hobo" | "sst" | "oceanSense";
 
 export interface OceanSenseDataset {
   unit: string;

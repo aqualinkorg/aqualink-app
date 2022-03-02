@@ -142,11 +142,15 @@ const attachTimeSeries = (
       [currMetric]: sources.reduce(
         (acc, source) => ({
           ...acc,
-          [source]: attachData(
-            direction,
-            newMetricData?.[source] || [],
-            previousMetricData?.[source] || []
-          ),
+          [source]: {
+            surveyPoint: (newMetricData || previousMetricData)?.[source]
+              ?.surveyPoint,
+            data: attachData(
+              direction,
+              newMetricData?.[source]?.data || [],
+              previousMetricData?.[source]?.data || []
+            ),
+          },
         }),
         {}
       ),
@@ -276,7 +280,7 @@ export const timeSeriesRequest = async (
   );
 
   if (returnStored) {
-    return [storedTimeSeries, storedDailyData, minDate, maxDate];
+    return [storedTimeSeries, storedDailyData, storedStart, storedEnd];
   }
 
   const timeSeriesData =
@@ -307,5 +311,10 @@ export const timeSeriesRequest = async (
     ? attachData(attachDirection, granularDailyData, storedDailyData)
     : granularDailyData;
 
-  return [resultingTimeSeriesData, resultingDailyData, minDate, maxDate];
+  return [
+    resultingTimeSeriesData,
+    resultingDailyData,
+    !attachDirection ? start : minDate,
+    !attachDirection ? end : maxDate,
+  ];
 };

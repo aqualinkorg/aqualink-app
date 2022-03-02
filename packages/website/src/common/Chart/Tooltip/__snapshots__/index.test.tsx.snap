@@ -37,74 +37,14 @@ exports[`renders as expected 1`] = `
             >
               <div
                 class="div-root-8 div-root-9"
-                color="#d84424"
+                color="red"
               />
               <mock-typography
                 variant="caption"
               >
-                MONTHLY MEAN
-                 
-                20.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-10"
-                color="#6bc1e1"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                SURFACE
-                 
-                20.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-11"
-                color="#46a5cf"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                BUOY 1m
+                MOCK LOGGER
                  
                 10.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-12"
-                color="rgba(250, 141, 0)"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                BUOY 10m
-                 
-                15.0 °C
-              </mock-typography>
-            </div>
-            <div
-              class="MuiGrid-root Tooltip-tooltipContentItem-5 MuiGrid-container MuiGrid-item"
-            >
-              <div
-                class="div-root-8 div-root-13"
-                color="rgba(250, 141, 0)"
-              />
-              <mock-typography
-                variant="caption"
-              >
-                HOBO LOGGER
-                 
-                20.0 °C
               </mock-typography>
             </div>
           </div>

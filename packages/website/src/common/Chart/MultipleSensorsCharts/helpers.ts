@@ -1,7 +1,8 @@
 import { utcToZonedTime } from "date-fns-tz";
-import { minBy, maxBy, meanBy, inRange, has, get } from "lodash";
+import { minBy, maxBy, meanBy, inRange, isNumber } from "lodash";
 import moment from "moment";
 import {
+  convertSofarDataToLocalTime,
   findMarginalDate,
   generateHistoricalMonthlyMeanTimestamps,
 } from "../../../helpers/dates";
@@ -10,57 +11,66 @@ import {
   DailyData,
   DataRange,
   HistoricalMonthlyMean,
-  HistoricalMonthlyMeanData,
   OceanSenseData,
   OceanSenseKeys,
   SofarValue,
   TimeSeriesData,
 } from "../../../store/Sites/types";
-import { filterHistoricalMonthlyMeanData } from "../utils";
-import { CardColumn, Dataset, OceanSenseDataset } from "./types";
+import { CardColumn, OceanSenseDataset } from "./types";
+import type { Dataset } from "../index";
+import {
+  DAILY_DATA_CURVE_COLOR,
+  HISTORICAL_MONTHLY_MEAN_COLOR,
+  HOBO_BOTTOM_DATA_CURVE_COLOR,
+  CHART_MIN_NUMBER_OF_POINTS,
+  SPOTTER_BOTTOM_DATA_CURVE_COLOR,
+  SPOTTER_TOP_DATA_CURVE_COLOR,
+  DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+  DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
+} from "../../../constants/charts";
+import {
+  convertDailyToSofar,
+  convertHistoricalMonthlyMeanToSofar,
+  filterHistoricalMonthlyMeanData,
+} from "../utils";
+
+const filterSofarData =
+  (from?: string, to?: string) => (data?: SofarValue[]) => {
+    if (!from || !to || !data) {
+      return data;
+    }
+
+    return data?.filter(({ timestamp }) =>
+      inRange(
+        moment(timestamp).valueOf(),
+        moment(from).valueOf(),
+        moment(to).valueOf() + 1
+      )
+    );
+  };
 
 export const calculateCardMetrics = (
-  minNumberOfPoints: number,
   from: string,
   to: string,
-  data?: (HistoricalMonthlyMeanData | SofarValue)[],
+  data?: SofarValue[],
   keyPrefix?: string
 ): CardColumn["rows"] => {
-  const isHistoricalMonthlyMean = has(data?.[0], "date");
-  const filteredData = isHistoricalMonthlyMean
-    ? filterHistoricalMonthlyMeanData(
-        (data || []) as HistoricalMonthlyMeanData[],
-        from,
-        to
-      )
-    : data?.filter((item) => {
-        const timestamp = (
-          has(item, "date") ? get(item, "date") : get(item, "timestamp")
-        ) as string;
-
-        return inRange(
-          moment(timestamp).valueOf(),
-          moment(from).valueOf(),
-          moment(to).valueOf() + 1
-        );
-      });
+  const filteredData = filterSofarData(from, to)(data);
 
   return [
     {
       key: `${keyPrefix}-max`,
-      value: filteredData?.[minNumberOfPoints - 1]
+      value: filteredData?.[0]
         ? maxBy(filteredData, "value")?.value
         : undefined,
     },
     {
       key: `${keyPrefix}-mean`,
-      value: filteredData?.[minNumberOfPoints - 1]
-        ? meanBy(filteredData, "value")
-        : undefined,
+      value: filteredData?.[0] ? meanBy(filteredData, "value") : undefined,
     },
     {
       key: `${keyPrefix}-min`,
-      value: filteredData?.[minNumberOfPoints - 1]
+      value: filteredData?.[0]
         ? minBy(filteredData, "value")?.value
         : undefined,
     },
@@ -109,9 +119,9 @@ export const findDataLimits = (
   const hasData = Boolean(
     filteredHistoricalMonthlyMeanData?.[0] ||
       dailyData?.[0] ||
-      bottomTemperature?.spotter?.[0] ||
-      topTemperature?.spotter?.[0] ||
-      bottomTemperature?.hobo?.[0]
+      bottomTemperature?.spotter?.data?.[0] ||
+      topTemperature?.spotter?.data?.[0] ||
+      bottomTemperature?.hobo?.data?.[0]
   );
 
   return [
@@ -120,9 +130,9 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter,
-            topTemperature?.spotter,
-            bottomTemperature?.hobo,
+            bottomTemperature?.spotter?.data,
+            topTemperature?.spotter?.data,
+            bottomTemperature?.hobo?.data,
             "min"
           )
         ).toISOString()
@@ -132,26 +142,31 @@ export const findDataLimits = (
           findMarginalDate(
             filteredHistoricalMonthlyMeanData,
             dailyData || [],
-            bottomTemperature?.spotter,
-            topTemperature?.spotter,
-            bottomTemperature?.hobo
+            bottomTemperature?.spotter?.data,
+            topTemperature?.spotter?.data,
+            bottomTemperature?.hobo?.data
           )
         ).toISOString()
       : undefined,
   ];
 };
 
-export const findCardDataset = (
-  hasSpotterData: boolean,
-  hasHoboData: boolean
-): Dataset => {
+export const findChartWidth = (
+  datasets: Dataset[]
+): "small" | "medium" | "large" => {
+  const nCardColumns = datasets.filter(
+    ({ displayCardColumn }) => displayCardColumn
+  ).length;
+
   switch (true) {
-    case hasSpotterData:
-      return "spotter";
-    case hasHoboData:
-      return "hobo";
+    case nCardColumns === 3:
+      return "small";
+    case nCardColumns === 2:
+      return "medium";
+    case nCardColumns === 1:
+      return "large";
     default:
-      return "sst";
+      return "small";
   }
 };
 
@@ -225,4 +240,217 @@ export const constructOceanSenseDatasets = (
     title: "OXIDATION REDUCTION POTENTIAL (mV)",
     id: "oxidation_reduction_potential",
   },
+});
+
+export const hasAtLeastNData = (n: number) => (data?: SofarValue[]) =>
+  typeof data?.length === "number" && data.length >= n;
+
+/**
+ * A util function used to generate the temperature analysis chart datasets.
+ * @param dailyData A daily data array
+ * @param spotterBottom An array of spotter bottom temperatures
+ * @param spotterTop An array of spotter top temperatures
+ * @param hoboBottom An array of hobo top temperatures
+ * @param historicalMonthlyMean An array of historical monthly temperatures
+ * @param startDate A start date used in the historical monthly mean data generation
+ * @param endDate An end date used in the historical monthly mean data generation
+ * @param chartStartDate An optionnal chart start date used to filter the datasets
+ * @param chartEndDate An optionnal chart end date used to filter the datasets
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @param depth The site's depth
+ * @returns An array of datasets to display on the chart
+ */
+export const generateTempAnalysisDatasets = (
+  dailyData?: DailyData[],
+  spotterBottom?: SofarValue[],
+  spotterTop?: SofarValue[],
+  hoboBottom?: SofarValue[],
+  historicalMonthlyMean?: HistoricalMonthlyMean[],
+  startDate?: string,
+  endDate?: string,
+  chartStartDate?: string,
+  chartEndDate?: string,
+  timezone?: string | null,
+  depth?: number | null
+): Dataset[] => {
+  const processedDailyData = convertDailyToSofar(dailyData, [
+    "satelliteTemperature",
+  ])?.satelliteTemperature;
+  const localMonthlyMeanData =
+    convertHistoricalMonthlyMeanToSofar(
+      filterHistoricalMonthlyMeanData(
+        generateHistoricalMonthlyMeanTimestamps(
+          historicalMonthlyMean || [],
+          startDate,
+          endDate,
+          timezone
+        ),
+        chartStartDate,
+        chartEndDate
+      )
+    ) || [];
+  const [
+    localDailyData,
+    localSpotterBottomData,
+    localSpotterTopData,
+    localHoboBottomData,
+  ] = [processedDailyData, spotterBottom, spotterTop, hoboBottom].map(
+    convertSofarDataToLocalTime(timezone)
+  );
+
+  const [
+    hasEnoughSpotterBottomData,
+    hasEnoughSpotterTopData,
+    hasEnoughHoboBottomData,
+    hasEnoughDailyData,
+  ] = [
+    localSpotterBottomData,
+    localSpotterTopData,
+    localHoboBottomData,
+    localDailyData,
+  ]
+    .map(filterSofarData(chartStartDate, chartEndDate))
+    .map(hasAtLeastNData(CHART_MIN_NUMBER_OF_POINTS));
+  const hasEnoughMonthlyMeanData = hasAtLeastNData(1)(localMonthlyMeanData);
+
+  return [
+    {
+      label: "MONTHLY MEAN",
+      cardColumnName: "HISTORIC",
+      cardColumnTooltip:
+        "Historic long-term average of satellite surface temperature",
+      data: localMonthlyMeanData,
+      curveColor: HISTORICAL_MONTHLY_MEAN_COLOR,
+      type: "line",
+      unit: "°C",
+      tooltipMaxHoursGap: 24 * 15,
+      displayData: hasEnoughMonthlyMeanData,
+      displayCardColumn: hasEnoughMonthlyMeanData,
+    },
+    {
+      label: "SURFACE",
+      data: localDailyData,
+      curveColor: DAILY_DATA_CURVE_COLOR,
+      maxHoursGap: 48,
+      tooltipMaxHoursGap: 24,
+      type: "line",
+      unit: "°C",
+      cardColumnName: "SST",
+      surveysAttached: true,
+      isDailyUpdated: true,
+      displayData: hasEnoughDailyData,
+      displayCardColumn:
+        !hasEnoughSpotterBottomData &&
+        !hasEnoughSpotterTopData &&
+        !hasEnoughHoboBottomData &&
+        hasEnoughDailyData,
+    },
+    {
+      label: "BUOY 1m",
+      data: localSpotterTopData,
+      curveColor: SPOTTER_TOP_DATA_CURVE_COLOR,
+      type: "line",
+      unit: "°C",
+      maxHoursGap: 24,
+      tooltipMaxHoursGap: 6,
+      displayData: hasEnoughSpotterTopData,
+      displayCardColumn: hasEnoughSpotterTopData,
+    },
+    {
+      label: `BUOY ${depth}m`,
+      data: localSpotterBottomData,
+      curveColor: SPOTTER_BOTTOM_DATA_CURVE_COLOR,
+      type: "line",
+      unit: "°C",
+      maxHoursGap: 24,
+      tooltipMaxHoursGap: 6,
+      displayData: hasEnoughSpotterBottomData,
+      displayCardColumn: hasEnoughSpotterBottomData,
+    },
+    {
+      label: "HOBO",
+      data: localHoboBottomData,
+      curveColor: HOBO_BOTTOM_DATA_CURVE_COLOR,
+      type: "line",
+      unit: "°C",
+      maxHoursGap: 24,
+      tooltipMaxHoursGap: 6,
+      tooltipLabel: "HOBO LOGGER",
+      displayData: hasEnoughHoboBottomData,
+      displayCardColumn:
+        !hasEnoughSpotterBottomData &&
+        !hasEnoughSpotterTopData &&
+        hasEnoughHoboBottomData,
+    },
+  ];
+};
+
+/**
+ * A util function to generate a dataset for a specific metric
+ * @param label The label of the dataset
+ * @param data The metric data
+ * @param unit The data units
+ * @param color The curve color
+ * @param chartStartDate An optional param for the chart's start date, used filter the data
+ * @param chartEndDate An optional param for the chart's end date, used filter the data
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @returns A dataset for the specified metric
+ */
+export const generateMetricDataset = (
+  label: string,
+  data: SofarValue[],
+  unit: string,
+  color: string,
+  chartStartDate?: string,
+  chartEndDate?: string,
+  timezone?: string | null
+): Dataset => {
+  const display = hasAtLeastNData(CHART_MIN_NUMBER_OF_POINTS)(
+    filterSofarData(chartStartDate, chartEndDate)(data)
+  );
+
+  return {
+    label,
+    data: convertSofarDataToLocalTime(timezone)(data),
+    unit,
+    curveColor: color,
+    type: "line",
+    maxHoursGap: 24,
+    tooltipMaxHoursGap: 6,
+    displayData: display,
+    displayCardColumn: display,
+  };
+};
+
+/**
+ * A util function to generate the daily temperature dataset.
+ * Eg. used in combined charts and for the selected site card.
+ * @param data The input daily data
+ * @param threshold An optional temperature threshold
+ * @param surveysAttached A boolean to determine if we will display the surveys scatter plot or not
+ * @param timezone An optional timezone option, to convert the data timestamps
+ * @returns A dataset for the daily data
+ */
+export const standardDailyDataDataset = (
+  data: DailyData[],
+  threshold: number | null,
+  surveysAttached?: boolean,
+  timezone?: string | null
+): Dataset => ({
+  label: "SURFACE",
+  data: convertSofarDataToLocalTime(timezone)(
+    convertDailyToSofar(data, ["satelliteTemperature"])?.satelliteTemperature
+  ),
+  curveColor: DAILY_DATA_CURVE_COLOR,
+  type: "line",
+  unit: "°C",
+  maxHoursGap: 48,
+  tooltipMaxHoursGap: 24,
+  considerForXAxisLimits: true,
+  isDailyUpdated: true,
+  surveysAttached,
+  displayData: true,
+  threshold: isNumber(threshold) ? threshold + 1 : undefined,
+  fillColorAboveThreshold: DAILY_DATA_FILL_COLOR_ABOVE_THRESHOLD,
+  fillColorBelowThreshold: DAILY_DATA_FILL_COLOR_BELOW_THRESHOLD,
 });

@@ -86,9 +86,9 @@ function DownloadCSVButton({
   const [loading, setLoading] = useState(false);
 
   const getCSVData = () =>
-    constructCSVData("spotterBottomTemp", bottomTemperature?.spotter)
-      .chained("spotterTopTemp", topTemperature?.spotter)
-      .chained("hoboTemp", bottomTemperature?.hobo)
+    constructCSVData("spotterBottomTemp", bottomTemperature?.spotter?.data)
+      .chained("spotterTopTemp", topTemperature?.spotter?.data)
+      .chained("hoboTemp", bottomTemperature?.hobo?.data)
       .chained(
         "dailySST",
         granularDailyData?.map((val) => ({
