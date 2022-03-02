@@ -43,15 +43,13 @@ const metricsMapping: Record<string, Metric> = {
   'Temp °C': Metric.BOTTOM_TEMPERATURE,
   'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
   'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
-  'Pressure, mbar (LGR S/N: 21067056, SEN S/N: 21062973)': Metric.PRESSURE,
-  'Rain, mm (LGR S/N: 21067056, SEN S/N: 21065937)': Metric.PRECIPITATION,
-  'Temp, °C (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.AIR_TEMPERATURE,
-  'RH, % (LGR S/N: 21067056, SEN S/N: 21067709)': Metric.RH,
-  'Wind Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)': Metric.WIND_SPEED,
-  'Gust Speed, m/s (LGR S/N: 21067056, SEN S/N: 21091774)':
-    Metric.WIND_GUST_SPEED,
-  'Wind Direction, ø (LGR S/N: 21067056, SEN S/N: 21091774)':
-    Metric.WIND_DIRECTION,
+  'Pressure, mbar': Metric.PRESSURE,
+  'Rain, mm': Metric.PRECIPITATION,
+  'Temp, °C': Metric.AIR_TEMPERATURE,
+  'RH, %': Metric.RH,
+  'Wind Speed, m/s': Metric.WIND_SPEED,
+  'Gust Speed, m/s': Metric.WIND_GUST_SPEED,
+  'Wind Direction, ø': Metric.WIND_DIRECTION,
 };
 
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
@@ -100,15 +98,20 @@ export const fileFilter: MulterOptions['fileFilter'] = (
   callback(null, true);
 };
 
+const headerMatchesKey = (header: string, key: string) =>
+  header.toLocaleLowerCase().startsWith(key.toLocaleLowerCase());
+
 const isHeaderRow = (row: any) =>
-  HEADER_KEYS.some((header) =>
+  HEADER_KEYS.some((key) =>
     row.some((cell) => {
-      return typeof cell === 'string' && cell.startsWith(header);
+      return typeof cell === 'string' && headerMatchesKey(cell, key);
     }),
   );
 
 const rowIncludesHeaderKeys = (row: string[], headerKeys: string[]) =>
-  headerKeys.every((key) => row.some((dataKey) => dataKey.startsWith(key)));
+  headerKeys.every((key) =>
+    row.some((dataKey) => headerMatchesKey(dataKey, key)),
+  );
 
 function renameKeys(obj, newKeys) {
   const keyValues = Object.keys(obj).map((key) => {
@@ -146,8 +149,8 @@ const getTimestampFromExcelSerials = (dataObject: any) => {
 };
 
 const getTimestampFromCsvDateString = (dataObject: any) => {
-  const dateKey = Object.keys(dataObject).find((key) =>
-    key.startsWith('Date Time'),
+  const dateKey = Object.keys(dataObject).find((header) =>
+    headerMatchesKey(header, 'Date Time'),
   );
 
   if (!dateKey) {
@@ -164,6 +167,7 @@ const getTimestampFromCsvDateString = (dataObject: any) => {
 };
 
 const validateHeaders = (file: string, workSheetData: any[]) => {
+  const metricsKeys = Object.keys(metricsMapping);
   const headerRowIndex = workSheetData.findIndex(isHeaderRow);
 
   if (headerRowIndex === -1) {
@@ -176,11 +180,13 @@ const validateHeaders = (file: string, workSheetData: any[]) => {
 
   // Check if the header row contains at least one of the metricsMapping keys.
   const headerRow = workSheetData[headerRowIndex];
-  const isHeaderRowValid = headerRow.some((header) => header in metricsMapping);
+  const isHeaderRowValid = headerRow.some((header) =>
+    metricsKeys.some((metricsKey) => headerMatchesKey(header, metricsKey)),
+  );
 
   if (!isHeaderRowValid) {
     throw new BadRequestException(
-      `${file}: At least on of the [${Object.keys(metricsMapping).join(
+      `${file}: At least on of the [${metricsKeys.join(
         ', ',
       )}] columns should be included.`,
     );
@@ -188,18 +194,23 @@ const validateHeaders = (file: string, workSheetData: any[]) => {
 
   const ignoredHeaders = headerRow.filter(
     (header) =>
-      ![...HEADER_KEYS, ...Object.keys(metricsMapping)].some((item) =>
-        header.startsWith(item),
+      ![...HEADER_KEYS, ...metricsKeys].some((key) =>
+        headerMatchesKey(header, key),
       ) && !IGNORE_HEADER_KEYS.includes(header),
   ) as string[];
 
   const importedHeaders = headerRow
     .filter(
       (header) =>
-        Object.keys(metricsMapping).some((item) => header.startsWith(item)) &&
+        metricsKeys.some((key) => headerMatchesKey(header, key)) &&
         !IGNORE_HEADER_KEYS.includes(header),
     )
-    .map((header) => metricsMapping[header]) as Metric[];
+    .map(
+      (header) =>
+        metricsMapping[
+          metricsKeys.find((key) => headerMatchesKey(header, key)) as string
+        ],
+    ) as Metric[];
 
   return { ignoredHeaders, importedHeaders };
 };
