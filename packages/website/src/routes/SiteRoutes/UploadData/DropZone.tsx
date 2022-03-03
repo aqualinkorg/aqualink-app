@@ -10,8 +10,7 @@ import { grey } from "@material-ui/core/colors";
 const GREY_COLOR = grey[500];
 const MAX_SIZE_MB = 10;
 const ACCEPTED_TYPES = [
-  // TODO: Add these once our API supports them.
-  // { extension: "xls", mimeType: "application/vnd.ms-excel" },
+  { extension: "xls", mimeType: "application/vnd.ms-excel" },
   { extension: "csv", mimeType: "text/csv" },
   {
     extension: "xlsx",

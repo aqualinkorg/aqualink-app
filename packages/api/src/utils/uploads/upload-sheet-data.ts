@@ -74,6 +74,10 @@ const ACCEPTED_FILE_TYPES = [
     extension: 'csv',
     mimetype: 'text/csv',
   },
+  {
+    extension: 'xls',
+    mimetype: 'application/vnd.ms-excel',
+  },
 ] as const;
 
 export const fileFilter: MulterOptions['fileFilter'] = (
