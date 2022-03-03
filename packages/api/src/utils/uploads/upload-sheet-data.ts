@@ -113,16 +113,16 @@ const rowIncludesHeaderKeys = (row: string[], headerKeys: string[]) =>
     row.some((dataKey) => headerMatchesKey(dataKey, key)),
   );
 
-function renameKeys(obj, newKeys) {
-  const keyValues = Object.keys(obj).map((key) => {
-    if (key in newKeys) {
-      const newKey = newKeys[key] || key;
-      return { [newKey]: obj[key] };
-    }
-    return {};
-  });
-  return Object.assign({}, ...keyValues);
-}
+const renameKeys = (oldKeys: string[]): Partial<Record<string, Metric>> => {
+  const metricsKeys = Object.keys(metricsMapping);
+
+  return oldKeys.reduce((acc, curr) => {
+    const metricKey = metricsKeys.find((key) => headerMatchesKey(curr, key));
+    return metricKey
+      ? { ...acc, [curr]: metricsMapping[metricKey] as Metric }
+      : acc;
+  }, {});
+};
 
 function ExcelDateToJSDate(dateSerial: number) {
   // 25569 is the number of days between 1 January 1900 and 1 January 1970.
@@ -249,6 +249,18 @@ const timeStampExtractor = (file: string, dataObject: any) => {
   }
 };
 
+const rowValuesExtractor = (row: any, headers: any) => {
+  const keysMapping = renameKeys(headers);
+
+  return Object.keys(row).reduce(
+    (acc, curr) =>
+      curr in keysMapping
+        ? { ...acc, [keysMapping[curr] as string]: row[curr] }
+        : acc,
+    {},
+  );
+};
+
 const findSheetDataWithHeader = (fileName: string, workSheetData: any[]) => {
   const { headers, data } = extractHeadersAndData(workSheetData);
 
@@ -264,7 +276,7 @@ const findSheetDataWithHeader = (fileName: string, workSheetData: any[]) => {
 
       return {
         timestamp: timeStampExtractor(fileName, dataObject),
-        ...renameKeys(dataObject, metricsMapping),
+        ...rowValuesExtractor(dataObject, headers),
       };
     })
     .filter((object) => object !== undefined);
