@@ -31,11 +31,13 @@ export const sensorTests = () => {
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.SPOTTER];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = [Metric.TOP_TEMPERATURE];
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
-    expect(rsp.body[SourceType.SPOTTER][Metric.TOP_TEMPERATURE].length).toBe(6);
+    expect(
+      rsp.body[Metric.TOP_TEMPERATURE][SourceType.SPOTTER].data.length,
+    ).toBe(6);
   });
 
   it('GET /:id/surveys fetch sensor surveys', async () => {

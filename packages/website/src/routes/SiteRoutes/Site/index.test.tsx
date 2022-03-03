@@ -9,7 +9,7 @@ import { mockSite } from "../../../mocks/mockSite";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSurvey } from "../../../mocks/mockSurvey";
 import { mockCollection } from "../../../mocks/mockCollection";
-import { mockHoboDataRange } from "../../../mocks/mockHoboDataRange";
+import { mockDataRange } from "../../../mocks/mockDataRange";
 
 const mockStore = configureStore([]);
 
@@ -42,7 +42,7 @@ describe("Site Detail Page", () => {
     const emptyStore = mockStore({
       selectedSite: {
         details: { ...mockSite, dailyData: [] },
-        timeSeriesDataRange: mockHoboDataRange,
+        timeSeriesDataRange: mockDataRange,
         loading: false,
         error: null,
       },
@@ -79,7 +79,7 @@ describe("Site Detail Page", () => {
     const fullStore = mockStore({
       selectedSite: {
         details: mockSite,
-        timeSeriesDataRange: mockHoboDataRange,
+        timeSeriesDataRange: mockDataRange,
         loading: false,
         error: null,
       },

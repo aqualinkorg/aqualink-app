@@ -35,10 +35,10 @@ import {
 import { siteTimeSeriesDataRequest } from "../../../store/Sites/selectedSiteSlice";
 import {
   displayTimeInLocalTimezone,
-  convertDailyDataToLocalTime,
   convertSurveyDataToLocalTime,
   isBetween,
 } from "../../../helpers/dates";
+import { standardDailyDataDataset } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 
 const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
   const dispatch = useDispatch();
@@ -60,6 +60,12 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
           site.dailyData[0].date
         )
       : false;
+  const chartDataset = standardDailyDataDataset(
+    site.dailyData,
+    site.maxMonthlyMean,
+    true,
+    site.timezone
+  );
 
   useEffect(() => {
     dispatch(surveysRequest(`${site.id}`));
@@ -142,11 +148,7 @@ const SurveyViewPage = ({ site, surveyId, classes }: SurveyViewPageProps) => {
                       <ChartWithTooltip
                         className={classes.chart}
                         siteId={site.id}
-                        dailyData={convertDailyDataToLocalTime(
-                          site.dailyData,
-                          site.timezone
-                        )}
-                        depth={site.depth}
+                        datasets={[chartDataset]}
                         maxMonthlyMean={site.maxMonthlyMean || null}
                         temperatureThreshold={
                           site.maxMonthlyMean ? site.maxMonthlyMean + 1 : null

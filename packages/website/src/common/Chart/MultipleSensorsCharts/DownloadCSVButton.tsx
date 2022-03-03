@@ -81,14 +81,14 @@ function DownloadCSVButton({
 }) {
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { hobo: hoboData, spotter: spotterData } =
+  const { bottomTemperature, topTemperature } =
     useSelector(siteTimeSeriesDataSelector) || {};
   const [loading, setLoading] = useState(false);
 
   const getCSVData = () =>
-    constructCSVData("spotterBottomTemp", spotterData?.bottomTemperature)
-      .chained("spotterTopTemp", spotterData?.topTemperature)
-      .chained("hoboTemp", hoboData?.bottomTemperature)
+    constructCSVData("spotterBottomTemp", bottomTemperature?.spotter?.data)
+      .chained("spotterTopTemp", topTemperature?.spotter?.data)
+      .chained("hoboTemp", bottomTemperature?.hobo?.data)
       .chained(
         "dailySST",
         granularDailyData?.map((val) => ({

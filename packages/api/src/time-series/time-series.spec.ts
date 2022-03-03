@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { INestApplication } from '@nestjs/common';
-import { max, min } from 'lodash';
+import { max, min, union } from 'lodash';
 import moment from 'moment';
 import { TestService } from '../../test/test.service';
 import { athensSite, californiaSite } from '../../test/mock/site.mock';
@@ -18,12 +18,12 @@ export const timeSeriesTests = () => {
   const testService = TestService.getInstance();
   let app: INestApplication;
   let surveyPointDataRange: StringDateRange = [
-    new Date().toISOString(),
     new Date(0).toISOString(),
+    new Date().toISOString(),
   ];
   let siteDataRange: StringDateRange = [
-    new Date().toISOString(),
     new Date(0).toISOString(),
+    new Date().toISOString(),
   ];
 
   beforeAll(async () => {
@@ -36,14 +36,14 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(hoboMetrics, NOAAMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.HOBO][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
+      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.HOBO].data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -51,9 +51,9 @@ export const timeSeriesTests = () => {
       ];
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.NOAA][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
       const [startDate, endDate] = surveyPointDataRange;
       surveyPointDataRange = [
         min([minDate, startDate]),
@@ -68,21 +68,21 @@ export const timeSeriesTests = () => {
     );
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.NOAA, SourceType.SPOTTER];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(NOAAMetrics, spotterMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.NOAA][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.NOAA].data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(1);
-      const { minDate, maxDate } = rsp.body[SourceType.SPOTTER][metric][0];
+      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
+      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(1);
+      const { minDate, maxDate } = rsp.body[metric][SourceType.SPOTTER].data[0];
       const [startDate, endDate] = siteDataRange;
       siteDataRange = [min([minDate, startDate]), max([maxDate, endDate])];
     });
@@ -97,50 +97,50 @@ export const timeSeriesTests = () => {
       .query({
         // Increase the search window to combat precision issues with the dates
         start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'minute').toISOString(),
+        end: moment(endDate).add(1, 'day').toISOString(),
         metrics: hoboMetrics.concat(NOAAMetrics),
         hourly: false,
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.HOBO, SourceType.NOAA];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(hoboMetrics, NOAAMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     hoboMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.HOBO]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.HOBO][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.HOBO);
+      expect(rsp.body[metric][SourceType.HOBO].data.length).toBe(10);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
     });
   });
 
-  it('GET /sites/:siteId/site-survey-points/:surveyPointId fetch site data', async () => {
+  it('GET /sites/:siteId fetch site data', async () => {
     const [startDate, endDate] = siteDataRange;
     const rsp = await request(app.getHttpServer())
       .get(`/time-series/sites/${californiaSite.id}`)
       .query({
         // Increase the search window to combat precision issues with the dates
         start: moment(startDate).subtract(1, 'minute').toISOString(),
-        end: moment(endDate).add(1, 'minute').toISOString(),
+        end: moment(endDate).add(1, 'day').toISOString(),
         metrics: spotterMetrics.concat(NOAAMetrics),
         hourly: false,
       });
 
     expect(rsp.status).toBe(200);
-    const sources = [SourceType.NOAA, SourceType.SPOTTER];
-    sources.forEach((source) => {
-      expect(rsp.body).toHaveProperty(source);
+    const metrics = union(NOAAMetrics, spotterMetrics);
+    metrics.forEach((metric) => {
+      expect(rsp.body).toHaveProperty(metric);
     });
     NOAAMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.NOAA]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.NOAA][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.NOAA);
+      expect(rsp.body[metric][SourceType.NOAA].data.length).toBe(10);
     });
     spotterMetrics.forEach((metric) => {
-      expect(rsp.body[SourceType.SPOTTER]).toHaveProperty(metric);
-      expect(rsp.body[SourceType.SPOTTER][metric].length).toBe(10);
+      expect(rsp.body[metric]).toHaveProperty(SourceType.SPOTTER);
+      expect(rsp.body[metric][SourceType.SPOTTER].data.length).toBe(10);
     });
   });
 };

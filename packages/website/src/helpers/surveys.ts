@@ -5,7 +5,7 @@ import {
   Observations,
   SurveyListItem,
 } from "../store/Survey/types";
-import { sortByDate } from "./sortDailyData";
+import { sortByDate } from "./dates";
 
 export const filterSurveys = (
   list: SurveyListState["list"],

@@ -10,11 +10,9 @@ import {
 import ChartWithTooltip from "./ChartWithTooltip";
 import MultipleSensorsCharts from "./MultipleSensorsCharts";
 import { Site } from "../../store/Sites/types";
-import {
-  convertDailyDataToLocalTime,
-  convertSurveyDataToLocalTime,
-} from "../../helpers/dates";
+import { convertSurveyDataToLocalTime } from "../../helpers/dates";
 import { SurveyListItem } from "../../store/Survey/types";
+import { standardDailyDataDataset } from "./MultipleSensorsCharts/helpers";
 
 const CombinedCharts = ({
   site,
@@ -22,7 +20,15 @@ const CombinedCharts = ({
   surveys,
   classes,
 }: CombinedChartsProps) => {
-  const { id, timezone, dailyData, depth, maxMonthlyMean } = site;
+  const { id, timezone, dailyData, maxMonthlyMean } = site;
+
+  const heatStressDataset = standardDailyDataDataset(
+    dailyData,
+    maxMonthlyMean,
+    true,
+    timezone
+  );
+
   return (
     <div>
       <Box className={classes.graphtTitleWrapper}>
@@ -31,14 +37,13 @@ const CombinedCharts = ({
         </Typography>
       </Box>
       <ChartWithTooltip
+        className={classes.chart}
         siteId={id}
-        depth={depth}
-        dailyData={convertDailyDataToLocalTime(dailyData, timezone)}
+        datasets={[heatStressDataset]}
         surveys={convertSurveyDataToLocalTime(surveys, timezone)}
         temperatureThreshold={maxMonthlyMean ? maxMonthlyMean + 1 : null}
         maxMonthlyMean={maxMonthlyMean || null}
         background
-        className={classes.chart}
         timeZone={timezone}
       />
       <MultipleSensorsCharts

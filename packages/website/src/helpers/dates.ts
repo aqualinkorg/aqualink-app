@@ -1,5 +1,5 @@
 import moment from "moment-timezone";
-import { range as createRange } from "lodash";
+import { range as createRange, orderBy } from "lodash";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 import {
@@ -8,10 +8,8 @@ import {
   HistoricalMonthlyMeanData,
   Range,
   SofarValue,
-  TimeSeries,
 } from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
-import { sortByDate } from "./sortDailyData";
 
 type DateString = string | null | undefined;
 
@@ -86,6 +84,19 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
       return `${timePeriodInDays} day${timePeriodInDays > 1 ? "s" : ""} ago`;
   }
 };
+/**
+ * Util function to sort an array by a specific date key
+ * @param list The input array
+ * @param dateKey The key to sort by
+ * @param order The sort order
+ * @returns A sorted by the input key array
+ */
+export const sortByDate = <T>(
+  list: T[],
+  dateKey: keyof T,
+  order?: "asc" | "desc"
+) =>
+  orderBy(list, (item) => new Date(item[dateKey] as unknown as string), order);
 
 /**
  * Depending on the type param, it calculates the maximum or minimun date
@@ -98,18 +109,19 @@ export const toRelativeTime = (timestamp: Date | string | number) => {
 export const findMarginalDate = (
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   dailyData: DailyData[],
-  spotterData?: TimeSeries,
+  spotterBottomTemperature?: SofarValue[],
+  spotterTopTemperature?: SofarValue[],
   hoboBottomTemperature?: SofarValue[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
     ...historicalMonthlyMeanData,
     ...dailyData,
-    ...(spotterData?.topTemperature?.map((item) => ({
+    ...(spotterTopTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
-    ...(spotterData?.bottomTemperature?.map((item) => ({
+    ...(spotterBottomTemperature?.map((item) => ({
       date: item.timestamp,
       value: item.value,
     })) || []),
@@ -211,70 +223,13 @@ export const convertToLocalTime = (
   ).toISOString();
 };
 
-export const convertDailyDataToLocalTime = (
-  dailyData: DailyData[],
-  timeZone?: string | null
-): DailyData[] =>
-  dailyData.map((item) => ({
-    ...item,
-    date: convertToLocalTime(item.date, timeZone),
-  }));
-
-export const convertSofarDataToLocalTime = (
-  sofarData?: SofarValue[],
-  timeZone?: string | null
-): SofarValue[] =>
-  (sofarData || []).map((item) => ({
-    ...item,
-    timestamp: convertToLocalTime(item.timestamp, timeZone),
-  }));
-
-export const convertTimeSeriesToLocalTime = (
-  timeSeries?: TimeSeries,
-  timeZone?: string | null
-): TimeSeries | undefined => {
-  if (!timeSeries) {
-    return timeSeries;
-  }
-  return {
-    dhw: convertSofarDataToLocalTime(timeSeries.dhw, timeZone),
-    satelliteTemperature: convertSofarDataToLocalTime(
-      timeSeries.satelliteTemperature,
-      timeZone
-    ),
-    topTemperature: convertSofarDataToLocalTime(
-      timeSeries.topTemperature,
-      timeZone
-    ),
-    bottomTemperature: convertSofarDataToLocalTime(
-      timeSeries.bottomTemperature,
-      timeZone
-    ),
-    sstAnomaly: convertSofarDataToLocalTime(timeSeries.sstAnomaly, timeZone),
-    significantWaveHeight: convertSofarDataToLocalTime(
-      timeSeries.significantWaveHeight,
-      timeZone
-    ),
-    tempAlert: convertSofarDataToLocalTime(timeSeries.tempAlert, timeZone),
-    tempWeeklyAlert: convertSofarDataToLocalTime(
-      timeSeries.tempWeeklyAlert,
-      timeZone
-    ),
-    waveMeanPeriod: convertSofarDataToLocalTime(
-      timeSeries.waveMeanPeriod,
-      timeZone
-    ),
-    waveMeanDirection: convertSofarDataToLocalTime(
-      timeSeries.waveMeanDirection,
-      timeZone
-    ),
-    windSpeed: convertSofarDataToLocalTime(timeSeries.windSpeed, timeZone),
-    windDirection: convertSofarDataToLocalTime(
-      timeSeries.windDirection,
-      timeZone
-    ),
-  };
-};
+export const convertSofarDataToLocalTime =
+  (timeZone?: string | null) =>
+  (sofarData?: SofarValue[]): SofarValue[] =>
+    (sofarData || []).map((item) => ({
+      ...item,
+      timestamp: convertToLocalTime(item.timestamp, timeZone),
+    }));
 
 export const convertSurveyDataToLocalTime = (
   surveys: SurveyListItem[],

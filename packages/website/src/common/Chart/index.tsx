@@ -9,32 +9,41 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
-import type {
-  DailyData,
-  HistoricalMonthlyMeanData,
-  SofarValue,
-  TimeSeries,
-} from "../../store/Sites/types";
+import type { SofarValue } from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
-import {
-  createChartData,
-  useProcessedChartData,
-  augmentSurfaceTemperature,
-} from "./utils";
 import { SurveyListItem } from "../../store/Survey/types";
 import { surveyDetailsSelector } from "../../store/Survey/surveySlice";
 import { Range } from "../../store/Sites/types";
 import { convertToLocalTime } from "../../helpers/dates";
+import { useProcessedChartData } from "./utils";
+
+// An interface that describes all the possible options for displaying a dataset on a chart.
+export interface Dataset {
+  label: string; // The dataset's label
+  data: SofarValue[]; // The dataset's data, typed as a SofarValue array
+  type: "line" | "scatter"; // The plot's type, either line or scatter
+  unit: string; // The unit of the dataset's data, e.g. °C for temperature data
+  curveColor: string; // The color used for displaying the data
+  threshold?: number; // An optional data threshold
+  fillColor?: string; // An optional color to fill the area beneath the chart
+  fillColorAboveThreshold?: string; // The color used to fill the area between the chart and the threshold. Only used if a threshold is specified
+  fillColorBelowThreshold?: string; // The color used to fill the area between the threshold and the y axis 0. Only used if a threshold is specified
+  surveysAttached?: boolean; // Boolean that determines if the surveys scatter dataset will be attached on the chart's plot
+  considerForXAxisLimits?: boolean; // Boolean that determines if the plot's min and max date will be used to calculate the chart's x axis limits
+  maxHoursGap?: number; // If there is a time gap bigger than this, then display a gap on the chart's plot
+  tooltipMaxHoursGap?: number; // The chart's tooltip takes into account data that belong in the interval [x - tooltipMaxHoursGap, x + tooltipMaxHoursGap]
+  isDailyUpdated?: boolean; // A boolean that determines if the data is daily updated
+  displayData?: boolean; // A boolean that determines if the data will be displayed on the chart
+  displayCardColumn?: boolean; // A boolean that determinse if the data will be displayed in the analysis card
+  cardColumnName?: string; // The label of the data column on the analysis card. If not specified, the label property is used instead
+  cardColumnTooltip?: string; // An optional tooltip for the card column label
+  tooltipLabel?: string; // An optional label for the data on the chart's tooltip. If not specified, the label property is used instead
+}
 
 export interface ChartProps {
   siteId: number;
-  dailyData: DailyData[];
-  spotterData?: TimeSeries;
-  hoboBottomTemperatureData?: SofarValue[];
-  oceanSenseData?: SofarValue[];
-  oceanSenseDataUnit?: string;
-  historicalMonthlyMeanData?: HistoricalMonthlyMeanData[];
+  datasets?: Dataset[];
   timeZone?: string | null;
   startDate?: string;
   endDate?: string;
@@ -52,7 +61,6 @@ export interface ChartProps {
 }
 
 const SMALL_WINDOW = 400;
-const X_TICK_THRESHOLD = 90;
 
 const makeAnnotation = (
   name: string,
@@ -79,31 +87,10 @@ const makeAnnotation = (
 });
 
 const returnMemoized = (prevProps: ChartProps, nextProps: ChartProps) =>
-  isEqual(prevProps.dailyData, nextProps.dailyData) &&
-  isEqual(
-    prevProps.historicalMonthlyMeanData,
-    nextProps.historicalMonthlyMeanData
-  ) &&
-  isEqual(
-    prevProps.hoboBottomTemperatureData,
-    nextProps.hoboBottomTemperatureData
-  ) &&
-  isEqual(prevProps.oceanSenseData, nextProps.oceanSenseData) &&
-  isEqual(
-    prevProps.spotterData?.bottomTemperature,
-    nextProps.spotterData?.bottomTemperature
-  ) &&
-  isEqual(
-    prevProps.spotterData?.topTemperature,
-    nextProps.spotterData?.topTemperature
-  );
+  isEqual(prevProps.datasets, nextProps.datasets);
 
 function Chart({
-  dailyData,
-  spotterData,
-  hoboBottomTemperatureData,
-  oceanSenseData,
-  historicalMonthlyMeanData,
+  datasets,
   surveys,
   timeZone,
   startDate,
@@ -115,11 +102,13 @@ function Chart({
   showYearInTicks,
   hideYAxisUnits,
   chartSettings = {},
-  fill = true,
   chartRef: forwardRef,
 }: ChartProps) {
   const chartRef = useRef<Line>(null);
   const selectedSurvey = useSelector(surveyDetailsSelector);
+  const selectedSurveyDate = selectedSurvey?.diveDate
+    ? new Date(convertToLocalTime(selectedSurvey.diveDate, timeZone))
+    : undefined;
 
   if (forwardRef) {
     // this might be doable with forwardRef or callbacks, but its a little hard since we need to
@@ -134,30 +123,15 @@ function Chart({
 
   const [hideLastTick, setHideLastTick] = useState<boolean>(false);
 
-  const {
-    xAxisMax,
-    xAxisMin,
-    yAxisMax,
-    yAxisMin,
-    surfaceTemperatureData,
-    tempWithSurvey,
-    bottomTemperatureData,
-    spotterBottom,
-    spotterTop,
-    hoboBottom,
-    oceanSense,
-    historicalMonthlyMeanTemp,
-  } = useProcessedChartData(
-    dailyData,
-    spotterData,
-    hoboBottomTemperatureData,
-    oceanSenseData,
-    historicalMonthlyMeanData,
-    surveys,
-    temperatureThreshold,
-    startDate,
-    endDate
-  );
+  const { processedDatasets, xAxisMax, xAxisMin, yAxisMax, yAxisMin } =
+    useProcessedChartData(
+      datasets,
+      startDate,
+      endDate,
+      surveys,
+      temperatureThreshold,
+      selectedSurveyDate
+    );
 
   const nYTicks = 5;
   const yStepSize = Math.ceil((yAxisMax - yAxisMin) / nYTicks);
@@ -172,10 +146,12 @@ function Chart({
       );
       const nTicks = ticksPositions.length;
       const {
-        chartArea: { right },
+        chartArea: { right, left },
       } = current.chartInstance;
+      const ticksWidth =
+        typeof nTicks === "number" && nTicks > 0 ? (right - left) / nTicks : 0;
       // If last tick is too close to the chart's right edge then hide it
-      if (right - ticksPositions[nTicks - 1] < X_TICK_THRESHOLD) {
+      if (right - ticksPositions[nTicks - 1] < ticksWidth) {
         setHideLastTick(true);
       } else {
         setHideLastTick(false);
@@ -208,6 +184,7 @@ function Chart({
   useEffect(() => {
     changeXTickShiftAndPeriod();
   });
+
   const settings = mergeWith(
     {
       layout: {
@@ -250,8 +227,8 @@ function Chart({
             display: true,
             ticks: {
               labelOffset: xTickShift,
-              min: startDate || xAxisMin,
-              max: endDate || xAxisMax,
+              min: xAxisMin,
+              max: xAxisMax,
               padding: 10,
               callback: (value: number, index: number, values: string[]) =>
                 index === values.length - 1 && hideLastTick ? undefined : value,
@@ -304,29 +281,12 @@ function Chart({
       return undefined;
     }
   );
+
   return (
     <Line
       ref={chartRef}
       options={settings}
-      data={createChartData(
-        spotterBottom,
-        spotterTop,
-        hoboBottom,
-        oceanSense,
-        tempWithSurvey,
-        augmentSurfaceTemperature(
-          surfaceTemperatureData,
-          startDate || xAxisMin,
-          endDate || xAxisMax
-        ),
-        bottomTemperatureData,
-        historicalMonthlyMeanTemp,
-        selectedSurvey?.diveDate
-          ? new Date(convertToLocalTime(selectedSurvey?.diveDate, timeZone))
-          : null,
-        temperatureThreshold,
-        fill
-      )}
+      data={{ datasets: processedDatasets }}
     />
   );
 }

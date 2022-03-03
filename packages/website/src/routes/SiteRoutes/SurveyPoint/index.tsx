@@ -37,13 +37,14 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   const timeSeriesRangeLoading = useSelector(
     siteTimeSeriesDataRangeLoadingSelector
   );
-  const { bottomTemperature: hoboBottomTemperatureRange } =
-    useSelector(siteTimeSeriesDataRangeSelector)?.hobo || {};
+  const { hobo: hoboBottomTemperatureRange } =
+    useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const loading = siteLoading || surveysLoading || timeSeriesRangeLoading;
 
   const hasSpotterData = Boolean(site?.liveData?.topTemperature);
   const hasRange = !!(
-    hoboBottomTemperatureRange && hoboBottomTemperatureRange.length > 0
+    hoboBottomTemperatureRange?.data &&
+    hoboBottomTemperatureRange.data.length > 0
   );
   const showChart = hasSpotterData || hasRange;
 

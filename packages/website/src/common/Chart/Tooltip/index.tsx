@@ -12,10 +12,11 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import styled from "@material-ui/core/styles/styled";
-import { isNull, isNumber } from "lodash";
+import { isNumber } from "lodash";
 
 import { formatNumber } from "../../../helpers/numberUtils";
 import { displayTimeInLocalTimezone } from "../../../helpers/dates";
+import { Dataset } from "..";
 
 export const TOOLTIP_WIDTH = 190;
 
@@ -32,13 +33,13 @@ const Circle = styled("div")<{}, { color: string; size?: number }>(
 );
 
 const TemperatureMetric = ({
-  temperature,
+  value,
   title,
   color,
   unit,
   gridClassName,
 }: {
-  temperature: number | null;
+  value: number | null;
   title: string;
   color: string;
   unit: string;
@@ -47,7 +48,7 @@ const TemperatureMetric = ({
   <Grid container item className={gridClassName}>
     <Circle color={color} />
     <Typography variant="caption">
-      {title} {`${formatNumber(temperature, 1)} ${unit}`}
+      {title} {`${formatNumber(value, 1)} ${unit}`}
     </Typography>
   </Grid>
 );
@@ -55,21 +56,13 @@ const TemperatureMetric = ({
 const Tooltip = ({
   siteId,
   date,
-  depth,
-  historicalMonthlyMeanTemp,
-  satelliteTemp,
-  spotterTopTemp,
-  spotterBottomTemp,
-  hoboBottomTemp,
-  oceanSense,
-  oceanSenseUnit,
+  datasets,
   surveyId,
   siteTimeZone,
   userTimeZone,
   classes,
 }: TooltipProps) => {
-  const hasHourlyData =
-    !isNull(spotterTopTemp) || !isNull(hoboBottomTemp) || !isNull(oceanSense);
+  const hasHourlyData = datasets.some(({ isDailyUpdated }) => !isDailyUpdated);
   const dateString = displayTimeInLocalTimezone({
     isoDate: date,
     format: `MM/DD/YY${hasHourlyData ? " hh:mm A" : ""}`,
@@ -79,48 +72,16 @@ const Tooltip = ({
   });
 
   const tooltipLines: {
-    temperature: number | null;
+    value: number | null;
     color: string;
     title: string;
     unit: string;
-  }[] = [
-    {
-      temperature: historicalMonthlyMeanTemp,
-      color: "#d84424",
-      title: "MONTHLY MEAN",
-      unit: "°C",
-    },
-    {
-      temperature: satelliteTemp,
-      color: "#6bc1e1",
-      title: "SURFACE",
-      unit: "°C",
-    },
-    {
-      temperature: spotterTopTemp,
-      color: "#46a5cf",
-      title: "BUOY 1m",
-      unit: "°C",
-    },
-    {
-      temperature: spotterBottomTemp,
-      color: "rgba(250, 141, 0)",
-      title: depth ? `BUOY ${depth}m` : "BUOY AT DEPTH",
-      unit: "°C",
-    },
-    {
-      temperature: hoboBottomTemp,
-      color: "rgba(250, 141, 0)",
-      title: "HOBO LOGGER",
-      unit: "°C",
-    },
-    {
-      temperature: oceanSense,
-      color: "rgba(250, 141, 0)",
-      title: "SENSOR",
-      unit: oceanSenseUnit || "",
-    },
-  ];
+  }[] = datasets.map(({ data, curveColor, label, unit, tooltipLabel }) => ({
+    value: data[0]?.value,
+    color: curveColor,
+    title: tooltipLabel || label,
+    unit,
+  }));
 
   return (
     <div className={classes.tooltip}>
@@ -149,7 +110,7 @@ const Tooltip = ({
             >
               {tooltipLines.map(
                 (item) =>
-                  isNumber(item.temperature) && (
+                  isNumber(item.value) && (
                     <TemperatureMetric
                       key={item.color}
                       {...item}
@@ -234,14 +195,7 @@ const styles = () =>
 export interface TooltipData {
   siteId: number;
   date: string;
-  depth: number | null;
-  historicalMonthlyMeanTemp: number | null;
-  satelliteTemp: number | null;
-  spotterTopTemp: number | null;
-  spotterBottomTemp: number | null;
-  hoboBottomTemp: number | null;
-  oceanSense: number | null;
-  oceanSenseUnit: string | null;
+  datasets: Dataset[];
   surveyId?: number | null;
   siteTimeZone?: string | null;
   userTimeZone?: string;
