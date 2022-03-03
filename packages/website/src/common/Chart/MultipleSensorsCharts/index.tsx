@@ -447,7 +447,16 @@ const MultipleSensorsCharts = ({
         onRangeChange={onRangeChange}
         disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
         chartTitle="TEMPERATURE ANALYSIS"
-        timeSeriesDataRanges={timeSeriesDataRanges}
+        availableRanges={[
+          {
+            name: "Spotter",
+            data: timeSeriesDataRanges?.bottomTemperature?.spotter?.data,
+          },
+          {
+            name: "HOBO",
+            data: timeSeriesDataRanges?.bottomTemperature?.hobo?.data,
+          },
+        ]}
         timeZone={site.timezone}
         chartWidth={findChartWidth(tempAnalysisDatasets)}
         site={site}
@@ -472,10 +481,14 @@ const MultipleSensorsCharts = ({
               onRangeChange={onRangeChange}
               disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
               chartTitle={title}
-              timeSeriesDataRanges={timeSeriesDataRanges}
+              availableRanges={[
+                {
+                  name: "Spotter",
+                  data: timeSeriesDataRanges?.[key as Metrics]?.spotter?.data,
+                },
+              ]}
               timeZone={site.timezone}
               showRangeButtons={false}
-              showAvailableRanges={false}
               chartWidth="large"
               site={site}
               pickerStartDate={
@@ -516,10 +529,8 @@ const MultipleSensorsCharts = ({
                 onRangeChange={onRangeChange}
                 disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
                 chartTitle={item.title}
-                timeSeriesDataRanges={timeSeriesDataRanges}
                 timeZone={site.timezone}
                 showRangeButtons={false}
-                showAvailableRanges={false}
                 chartWidth="large"
                 site={site}
                 pickerStartDate={
@@ -548,10 +559,15 @@ const MultipleSensorsCharts = ({
             onRangeChange={onRangeChange}
             disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
             chartTitle={title}
-            timeSeriesDataRanges={timeSeriesDataRanges}
+            availableRanges={[
+              {
+                name: "Sonde",
+                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.sonde
+                  ?.data,
+              },
+            ]}
             timeZone={site.timezone}
             showRangeButtons={false}
-            showAvailableRanges={false}
             chartWidth="large"
             site={site}
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}
@@ -578,10 +594,15 @@ const MultipleSensorsCharts = ({
             onRangeChange={onRangeChange}
             disableMaxRange={!hoboBottomTemperatureRange?.data?.[0]}
             chartTitle={title}
-            timeSeriesDataRanges={timeSeriesDataRanges}
+            availableRanges={[
+              {
+                name: "Meteorological",
+                data: timeSeriesDataRanges?.[camelCase(key) as Metrics]?.metlog
+                  ?.data,
+              },
+            ]}
             timeZone={site.timezone}
             showRangeButtons={false}
-            showAvailableRanges={false}
             chartWidth="large"
             site={site}
             pickerStartDate={pickerStartDate || subtractFromDate(today, "week")}

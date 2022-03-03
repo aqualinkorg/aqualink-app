@@ -1,4 +1,4 @@
-import { SofarValue } from "../../../store/Sites/types";
+import { DataRange, SofarValue } from "../../../store/Sites/types";
 
 export type RangeValue = "three_months" | "one_year" | "max" | "custom";
 
@@ -24,4 +24,9 @@ export interface OceanSenseDataset {
   data: SofarValue[];
   title: string;
   id: string;
+}
+
+export interface AvailableRange {
+  name: string;
+  data?: DataRange[];
 }

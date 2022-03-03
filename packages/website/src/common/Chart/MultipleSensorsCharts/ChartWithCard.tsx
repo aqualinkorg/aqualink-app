@@ -6,13 +6,9 @@ import AnalysisCard from "./AnalysisCard";
 import Chart from "./Chart";
 import DownloadCSVButton from "./DownloadCSVButton";
 import Header from "./Header";
-import { RangeValue } from "./types";
+import { AvailableRange, RangeValue } from "./types";
 import type { Dataset } from "../index";
-import {
-  Site,
-  TimeSeriesDataRange,
-  TimeSeriesSurveyPoint,
-} from "../../../store/Sites/types";
+import { Site, TimeSeriesSurveyPoint } from "../../../store/Sites/types";
 
 const ChartWithCard = ({
   areSurveysFiltered,
@@ -31,12 +27,11 @@ const ChartWithCard = ({
   pickerStartDate,
   pointId,
   range,
-  showAvailableRanges,
   showDatePickers,
   showRangeButtons,
   site,
   surveyPoint,
-  timeSeriesDataRanges,
+  availableRanges,
   timeZone,
   onEndDateChange,
   onStartDateChange,
@@ -62,9 +57,8 @@ const ChartWithCard = ({
         onRangeChange={onRangeChange}
         disableMaxRange={disableMaxRange}
         title={chartTitle}
-        timeSeriesDataRanges={timeSeriesDataRanges}
+        availableRanges={availableRanges}
         timeZone={timeZone}
-        showAvailableRanges={showAvailableRanges}
         showRangeButtons={showRangeButtons}
         surveyPoint={surveyPoint}
       />
@@ -177,12 +171,11 @@ interface ChartWithCardProps {
   pickerStartDate: string;
   pointId?: number;
   range: RangeValue;
-  showAvailableRanges?: boolean;
   showDatePickers?: boolean;
   showRangeButtons?: boolean;
   site: Site;
   surveyPoint?: TimeSeriesSurveyPoint;
-  timeSeriesDataRanges?: TimeSeriesDataRange;
+  availableRanges?: AvailableRange[];
   timeZone?: string | null;
   onEndDateChange: (date: Date | null) => void;
   onStartDateChange: (date: Date | null) => void;
@@ -195,11 +188,10 @@ ChartWithCard.defaultProps = {
   displayDownloadButton: true,
   hideYAxisUnits: false,
   pointId: undefined,
-  showAvailableRanges: true,
   showDatePickers: true,
   showRangeButtons: true,
   surveyPoint: undefined,
-  timeSeriesDataRanges: undefined,
+  availableRanges: [],
   timeZone: undefined,
 };
 
