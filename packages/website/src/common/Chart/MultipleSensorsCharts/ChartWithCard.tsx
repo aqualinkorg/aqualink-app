@@ -12,6 +12,7 @@ import { Site, TimeSeriesSurveyPoint } from "../../../store/Sites/types";
 
 const ChartWithCard = ({
   areSurveysFiltered,
+  availableRanges,
   cardColumnJustification,
   chartEndDate,
   chartStartDate,
@@ -31,7 +32,6 @@ const ChartWithCard = ({
   showRangeButtons,
   site,
   surveyPoint,
-  availableRanges,
   timeZone,
   onEndDateChange,
   onStartDateChange,
@@ -156,6 +156,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ChartWithCardProps {
   areSurveysFiltered?: boolean;
+  availableRanges?: AvailableRange[];
   cardColumnJustification?: GridProps["justify"];
   chartEndDate: string;
   chartStartDate: string;
@@ -175,7 +176,6 @@ interface ChartWithCardProps {
   showRangeButtons?: boolean;
   site: Site;
   surveyPoint?: TimeSeriesSurveyPoint;
-  availableRanges?: AvailableRange[];
   timeZone?: string | null;
   onEndDateChange: (date: Date | null) => void;
   onStartDateChange: (date: Date | null) => void;
