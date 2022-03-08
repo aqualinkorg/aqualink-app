@@ -8,8 +8,9 @@ import { Site } from '../src/sites/sites.entity';
 import { SiteSurveyPoint } from '../src/site-survey-points/site-survey-points.entity';
 import { TimeSeries } from '../src/time-series/time-series.entity';
 import { Sources } from '../src/sites/sources.entity';
-import { uploadSondeData } from '../src/utils/uploads/upload-sonde-data';
+import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sheet-data';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
+import { SourceType } from '../src/sites/schemas/source-type.enum';
 
 // Initialize command definition
 const { argv } = yargs
@@ -50,10 +51,10 @@ async function run() {
   // Initialize Nest logger
   const logger = new Logger('ParseSondeData');
   // Extract command line arguments
-  const { f: filePath, s: siteId, p: surveyPointId, t: sondeType } = argv;
+  const { f: filePath, s: siteId, p: surveyPointId, t: sourceType } = argv;
 
   logger.log(
-    `Script params: filePath: ${filePath}, siteId/surveyPointId: ${siteId}/${surveyPointId}, sondeType: ${sondeType}`,
+    `Script params: filePath: ${filePath}, siteId/surveyPointId: ${siteId}/${surveyPointId}, sourceType: ${sourceType}`,
   );
 
   // Initialize typeorm connection
@@ -61,12 +62,12 @@ async function run() {
   const connection = await createConnection(config);
 
   logger.log('Uploading sonde data');
-  await uploadSondeData(
+  await uploadTimeSeriesData(
     filePath,
     last(filePath.split('/')),
     siteId,
     surveyPointId,
-    sondeType,
+    sourceType as SourceType,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),

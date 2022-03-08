@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, maxBy, minBy } from 'lodash';
+import { chunk, get, isNaN, last, maxBy, minBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -25,40 +25,79 @@ interface Repositories {
 
 const logger = new Logger('ParseSondeData');
 
-const metricsMapping: Record<string, Metric> = {
-  'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
-  'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
-  'Cond µS/cm': Metric.CONDUCTIVITY,
-  'Depth m': Metric.WATER_DEPTH,
-  'ODO % sat': Metric.ODO_SATURATION,
-  'ODO mg/L': Metric.ODO_CONCENTRATION,
-  'Sal psu': Metric.SALINITY,
-  'SpCond µS/cm': Metric.SPECIFIC_CONDUCTANCE,
-  'TDS mg/L': Metric.TDS,
-  'Turbidity FNU': Metric.TURBIDITY,
-  'TSS mg/L': Metric.TOTAL_SUSPENDED_SOLIDS,
-  'Wiper Position volt': Metric.SONDE_WIPER_POSITION,
-  pH: Metric.PH,
-  'pH mV': Metric.PH_MV,
-  'Temp °C': Metric.BOTTOM_TEMPERATURE,
-  'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
-  'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+const metricsMapping: Record<SourceType, Record<string, Metric>> = {
+  sonde: {
+    'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
+    'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
+    'Cond µS/cm': Metric.CONDUCTIVITY,
+    'Depth m': Metric.WATER_DEPTH,
+    'ODO % sat': Metric.ODO_SATURATION,
+    'ODO mg/L': Metric.ODO_CONCENTRATION,
+    'Sal psu': Metric.SALINITY,
+    'SpCond µS/cm': Metric.SPECIFIC_CONDUCTANCE,
+    'TDS mg/L': Metric.TDS,
+    'Turbidity FNU': Metric.TURBIDITY,
+    'TSS mg/L': Metric.TOTAL_SUSPENDED_SOLIDS,
+    'Wiper Position volt': Metric.SONDE_WIPER_POSITION,
+    pH: Metric.PH,
+    'pH mV': Metric.PH_MV,
+    'Temp °C': Metric.BOTTOM_TEMPERATURE,
+    'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
+    'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+  },
+  metlog: {
+    'Pressure, mbar': Metric.PRESSURE,
+    'Rain, mm': Metric.PRECIPITATION,
+    'Temp, °C': Metric.AIR_TEMPERATURE,
+    'RH, %': Metric.RH,
+    'Wind Speed, m/s': Metric.WIND_SPEED,
+    'Gust Speed, m/s': Metric.WIND_GUST_SPEED,
+    'Wind Direction, ø': Metric.WIND_DIRECTION,
+  },
+  gfs: {},
+  hobo: {},
+  noaa: {},
+  spotter: {},
 };
+
+const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+const IGNORE_HEADER_KEYS = [
+  '#',
+  'Site Name',
+  'Time (HH:mm:ss)',
+  'Time (Fract. Sec)',
+];
+const TIMESTAMP_KEYS = [
+  ['Date Time'],
+  ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+];
 
 const ACCEPTED_FILE_TYPES = [
   {
     extension: 'xlsx',
-    mimeType:
+    mimetype:
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   },
-];
+  {
+    extension: 'csv',
+    mimetype: 'text/csv',
+  },
+  {
+    extension: 'xls',
+    mimetype: 'application/vnd.ms-excel',
+  },
+] as const;
 
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
-  { mimetype },
+  { mimetype: inputMimetype },
   callback,
 ) => {
-  if (!ACCEPTED_FILE_TYPES.map(({ mimeType }) => mimeType).includes(mimetype)) {
+  if (
+    !ACCEPTED_FILE_TYPES.map(({ mimetype }) => mimetype as string).includes(
+      inputMimetype,
+    )
+  ) {
     callback(
       new BadRequestException(
         `Only ${ACCEPTED_FILE_TYPES.map(
@@ -71,16 +110,34 @@ export const fileFilter: MulterOptions['fileFilter'] = (
   callback(null, true);
 };
 
-function renameKeys(obj, newKeys) {
-  const keyValues = Object.keys(obj).map((key) => {
-    if (key in newKeys) {
-      const newKey = newKeys[key] || key;
-      return { [newKey]: obj[key] };
-    }
-    return {};
-  });
-  return Object.assign({}, ...keyValues);
-}
+const headerMatchesKey = (header: string, key: string) =>
+  header.toLocaleLowerCase().startsWith(key.toLocaleLowerCase());
+
+const isHeaderRow = (row: any) =>
+  HEADER_KEYS.some((key) =>
+    row.some((cell) => {
+      return typeof cell === 'string' && headerMatchesKey(cell, key);
+    }),
+  );
+
+const rowIncludesHeaderKeys = (row: string[], headerKeys: string[]) =>
+  headerKeys.every((key) =>
+    row.some((dataKey) => headerMatchesKey(dataKey, key)),
+  );
+
+const renameKeys = (
+  oldKeys: string[],
+  source: SourceType,
+): Partial<Record<string, Metric>> => {
+  const metricsKeys = Object.keys(metricsMapping[source]);
+
+  return oldKeys.reduce((acc, curr) => {
+    const metricKey = metricsKeys.find((key) => headerMatchesKey(curr, key));
+    return metricKey
+      ? { ...acc, [curr]: metricsMapping[source][metricKey] as Metric }
+      : acc;
+  }, {});
+};
 
 function ExcelDateToJSDate(dateSerial: number) {
   // 25569 is the number of days between 1 January 1900 and 1 January 1970.
@@ -91,11 +148,10 @@ function ExcelDateToJSDate(dateSerial: number) {
   );
 }
 
-const getTimestampFromExcelSerials = (
-  dateSerial: number,
-  hourSerial: number,
-  seconds: number,
-) => {
+const getTimestampFromExcelSerials = (dataObject: any) => {
+  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
+  const hourSerial = dataObject['Time (HH:mm:ss)'];
+  const seconds = dataObject['Time (Fract. Sec)'];
   // Extract EXCEL date and hours from serials:
   const date = ExcelDateToJSDate(dateSerial);
   const hours = (hourSerial * 24) % 24;
@@ -107,19 +163,35 @@ const getTimestampFromExcelSerials = (
   return date;
 };
 
+const getTimestampFromCsvDateString = (dataObject: any) => {
+  const dateKey = Object.keys(dataObject).find((header) =>
+    headerMatchesKey(header, 'Date Time'),
+  );
+
+  if (!dateKey) {
+    return undefined;
+  }
+
+  const timezone = last(dateKey.split(', '));
+
+  if (timezone) {
+    return new Date(`${dataObject[dateKey]} ${timezone}`);
+  }
+
+  return new Date(dataObject[dateKey]);
+};
+
 const validateHeaders = (
   file: string,
   workSheetData: any[],
-  headerKeys: string[],
+  source: SourceType,
 ) => {
-  // The header row must contain all header keys.
-  const headerRowIndex = workSheetData.findIndex((row) =>
-    headerKeys.every((header) => row.includes(header)),
-  );
+  const metricsKeys = Object.keys(metricsMapping[source]);
+  const headerRowIndex = workSheetData.findIndex(isHeaderRow);
 
   if (headerRowIndex === -1) {
     throw new BadRequestException(
-      `${file}: [${headerKeys.join(
+      `${file}: At least one of [${HEADER_KEYS.join(
         ', ',
       )}] must be included in the column headers`,
     );
@@ -127,11 +199,13 @@ const validateHeaders = (
 
   // Check if the header row contains at least one of the metricsMapping keys.
   const headerRow = workSheetData[headerRowIndex];
-  const isHeaderRowValid = headerRow.some((header) => header in metricsMapping);
+  const isHeaderRowValid = headerRow.some((header) =>
+    metricsKeys.some((metricsKey) => headerMatchesKey(header, metricsKey)),
+  );
 
   if (!isHeaderRowValid) {
     throw new BadRequestException(
-      `${file}: At least on of the [${Object.keys(metricsMapping).join(
+      `${file}: At least on of the [${metricsKeys.join(
         ', ',
       )}] columns should be included.`,
     );
@@ -139,24 +213,31 @@ const validateHeaders = (
 
   const ignoredHeaders = headerRow.filter(
     (header) =>
-      ![...headerKeys, ...Object.keys(metricsMapping)].includes(header) &&
-      header !== 'Site Name',
+      ![...HEADER_KEYS, ...metricsKeys].some((key) =>
+        headerMatchesKey(header, key),
+      ) && !IGNORE_HEADER_KEYS.includes(header),
   ) as string[];
 
   const importedHeaders = headerRow
     .filter(
       (header) =>
-        Object.keys(metricsMapping).includes(header) && header !== 'Site Name',
+        metricsKeys.some((key) => headerMatchesKey(header, key)) &&
+        !IGNORE_HEADER_KEYS.includes(header),
     )
-    .map((header) => metricsMapping[header]) as Metric[];
+    .map(
+      (header) =>
+        metricsMapping[source][
+          metricsKeys.find((key) => headerMatchesKey(header, key)) as string
+        ],
+    ) as Metric[];
 
   return { ignoredHeaders, importedHeaders };
 };
 
-const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
+const extractHeadersAndData = (workSheetData: any[]) => {
   const { tempHeaders: headers, tempData: data } = workSheetData.reduce(
     ({ tempHeaders, tempData }: any, row) => {
-      if (row.includes(headerKey)) {
+      if (isHeaderRow(row)) {
         // eslint-disable-next-line fp/no-mutation, no-param-reassign
         tempHeaders = row;
       } else if (row[0] != null && tempHeaders != null) {
@@ -167,6 +248,44 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
     },
     { tempHeaders: null, tempData: [] },
   );
+
+  return { headers, data };
+};
+
+const timeStampExtractor = (file: string, dataObject: any) => {
+  const dataKeys = Object.keys(dataObject);
+  switch (true) {
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
+      return getTimestampFromCsvDateString(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
+      return getTimestampFromExcelSerials(dataObject);
+    default:
+      throw new BadRequestException(
+        `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
+          (keys) => `[${keys.join(', ')}]`,
+        ).join(', ')}`,
+      );
+  }
+};
+
+const rowValuesExtractor = (row: any, headers: any, source: SourceType) => {
+  const keysMapping = renameKeys(headers, source);
+
+  return Object.keys(row).reduce(
+    (acc, curr) =>
+      curr in keysMapping
+        ? { ...acc, [keysMapping[curr] as string]: row[curr] }
+        : acc,
+    {},
+  );
+};
+
+const findSheetDataWithHeader = (
+  fileName: string,
+  workSheetData: any[],
+  source: SourceType,
+) => {
+  const { headers, data } = extractHeadersAndData(workSheetData);
 
   const dataAsObjects = data
     .map((row) => {
@@ -179,12 +298,8 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
       );
 
       return {
-        timestamp: getTimestampFromExcelSerials(
-          dataObject['Date (MM/DD/YYYY)'],
-          dataObject['Time (HH:mm:ss)'],
-          dataObject['Time (Fract. Sec)'],
-        ),
-        ...renameKeys(dataObject, metricsMapping),
+        timestamp: timeStampExtractor(fileName, dataObject),
+        ...rowValuesExtractor(dataObject, headers, source),
       };
     })
     .filter((object) => object !== undefined);
@@ -193,12 +308,12 @@ const findXLSXDataWithHeader = (workSheetData: any[], headerKey: string) => {
 };
 
 // Upload sonde data
-export const uploadSondeData = async (
+export const uploadTimeSeriesData = async (
   filePath: string,
   fileName: string,
   siteId: string,
   surveyPointId: string | undefined,
-  sondeType: string,
+  sourceType: SourceType,
   repositories: Repositories,
   failOnWarning?: boolean,
 ) => {
@@ -221,25 +336,25 @@ export const uploadSondeData = async (
     where: {
       site: { id: siteId },
       surveyPoint: surveyPointId || null,
-      type: SourceType.SONDE,
+      type: sourceType,
     },
   });
 
   const sourceEntity =
     existingSourceEntity ||
     (await repositories.sourcesRepository.save({
-      type: SourceType.SONDE,
+      type: sourceType,
       site,
       surveyPoint,
     }));
 
-  if (sondeType === 'sonde') {
+  if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
       workSheetData,
-      ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
+      sourceType,
     );
 
     if (failOnWarning && ignoredHeaders.length > 0) {
@@ -252,7 +367,11 @@ export const uploadSondeData = async (
       );
     }
 
-    const results = findXLSXDataWithHeader(workSheetData, 'Date (MM/DD/YYYY)');
+    const results = findSheetDataWithHeader(
+      fileName,
+      workSheetData,
+      sourceType,
+    );
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {
@@ -264,7 +383,7 @@ export const uploadSondeData = async (
             .map((key) => {
               return {
                 timestamp,
-                value: object[key],
+                value: parseFloat(object[key]),
                 metric: key,
                 source: sourceEntity,
               };
@@ -301,7 +420,7 @@ export const uploadSondeData = async (
           signature,
           site,
           surveyPoint,
-          sensorType: SourceType.SONDE,
+          sensorType: sourceType,
         },
       });
 
@@ -314,7 +433,7 @@ export const uploadSondeData = async (
       await repositories.dataUploadsRepository.save({
         file: fileName,
         signature,
-        sensorType: SourceType.SONDE,
+        sensorType: sourceType,
         site,
         surveyPoint,
         minDate,

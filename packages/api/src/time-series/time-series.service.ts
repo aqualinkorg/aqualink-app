@@ -18,7 +18,7 @@ import {
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Sources } from '../sites/sources.entity';
-import { uploadSondeData } from '../utils/uploads/upload-sonde-data';
+import { uploadTimeSeriesData } from '../utils/uploads/upload-sheet-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
@@ -137,16 +137,22 @@ export class TimeSeriesService {
       this.surveyPointRepository,
     );
 
+    if (!files?.length) {
+      throw new BadRequestException(
+        'The upload must contain at least one file',
+      );
+    }
+
     const uploadResponse = await Bluebird.Promise.map(
       files,
       async ({ path, originalname }) => {
         try {
-          const ignoredHeaders = await uploadSondeData(
+          const ignoredHeaders = await uploadTimeSeriesData(
             path,
             originalname,
             siteId.toString(),
             surveyPointId.toString(),
-            'sonde',
+            sensor,
             {
               siteRepository: this.siteRepository,
               sourcesRepository: this.sourcesRepository,

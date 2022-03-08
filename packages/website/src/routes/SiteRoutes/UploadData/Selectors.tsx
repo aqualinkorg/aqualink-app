@@ -27,9 +27,9 @@ type EnhancedSelectOption = SelectOption & { disabled?: boolean };
 
 const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 0, name: "sonde", label: "Sonde data" },
-  // TODO: Enable these options once the API can support various sensors data upload.
-  { id: 1, name: "spotter", label: "Spotter data", disabled: true },
-  { id: 2, name: "hobo", label: "HOBO data", disabled: true },
+  { id: 1, name: "metlog", label: "Meteorological data" },
+  { id: 2, name: "spotter", label: "Spotter data", disabled: true },
+  { id: 3, name: "hobo", label: "HOBO data", disabled: true },
 ];
 
 const Selectors = ({

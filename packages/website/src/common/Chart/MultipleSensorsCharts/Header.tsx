@@ -14,12 +14,10 @@ import {
 } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import { Alert } from "@material-ui/lab";
-import { RangeButton, RangeValue } from "./types";
-import {
-  Sources,
-  TimeSeriesDataRange,
-  TimeSeriesSurveyPoint,
-} from "../../../store/Sites/types";
+import isEmpty from "lodash/isEmpty";
+
+import { AvailableRange, RangeButton, RangeValue } from "./types";
+import { TimeSeriesSurveyPoint } from "../../../store/Sites/types";
 import { availableRangeString } from "./helpers";
 
 const Header = ({
@@ -29,19 +27,13 @@ const Header = ({
   title,
   onRangeChange,
   classes,
-  timeSeriesDataRanges,
+  availableRanges,
   timeZone,
   showRangeButtons,
-  showAvailableRanges,
   surveyPoint,
 }: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-
-  const allSensors: { id: Sources; name: string }[] = [
-    { id: "hobo", name: "HOBO" },
-    { id: "spotter", name: "Spotter" },
-  ];
 
   const buttons: RangeButton[] = [
     {
@@ -90,18 +82,17 @@ const Header = ({
                 Survey point: {surveyPoint.name}
               </Typography>
             )}
-            {timeSeriesDataRanges && showAvailableRanges && (
+            {!isEmpty(availableRanges) && (
               <Grid
                 className={classes.rangesWrapper}
                 container
                 alignItems="center"
                 spacing={2}
               >
-                {allSensors.map((sensor) => {
+                {availableRanges?.map(({ name, data }) => {
                   const dateRangeString = availableRangeString(
-                    sensor.name,
-                    timeSeriesDataRanges?.bottomTemperature?.[sensor.id]
-                      ?.data?.[0],
+                    name,
+                    data?.[0],
                     timeZone
                   );
 
@@ -110,7 +101,7 @@ const Header = ({
                   }
 
                   return (
-                    <Grid key={sensor.id} item>
+                    <Grid key={name} item>
                       <Alert
                         classes={{
                           icon: classes.rangeIcon,
@@ -216,11 +207,10 @@ interface HeaderIncomingProps {
   range: RangeValue;
   disableMaxRange: boolean;
   title?: string;
+  availableRanges?: AvailableRange[];
   onRangeChange: (value: RangeValue) => void;
-  timeSeriesDataRanges: TimeSeriesDataRange | undefined;
   timeZone?: string | null;
   showRangeButtons?: boolean;
-  showAvailableRanges?: boolean;
   surveyPoint?: TimeSeriesSurveyPoint;
 }
 
@@ -229,8 +219,8 @@ Header.defaultProps = {
   title: "",
   timeZone: null,
   showRangeButtons: true,
-  showAvailableRanges: true,
   surveyPoint: undefined,
+  availableRanges: [],
 };
 
 type HeaderProps = HeaderIncomingProps & WithStyles<typeof styles>;

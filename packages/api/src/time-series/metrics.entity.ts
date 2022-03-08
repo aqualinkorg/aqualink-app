@@ -7,6 +7,7 @@ export enum Metric {
   WEEKLY_ALERT = 'temp_weekly_alert',
   DHW = 'dhw',
   SATELLITE_TEMPERATURE = 'satellite_temperature',
+  AIR_TEMPERATURE = 'air_temperature',
   TOP_TEMPERATURE = 'top_temperature',
   BOTTOM_TEMPERATURE = 'bottom_temperature',
   SST_ANOMALY = 'sst_anomaly',
@@ -33,6 +34,10 @@ export enum Metric {
   PH_MV = 'ph_mv',
   SONDE_BATTERY_VOLTAGE = 'sonde_battery_voltage',
   SONDE_CABLE_POWER_VOLTAGE = 'sonde_cable_power_voltage',
+  PRESSURE = 'pressure',
+  PRECIPITATION = 'precipitation',
+  RH = 'rh',
+  WIND_GUST_SPEED = 'wind_gust_speed',
 }
 
 export enum Units {

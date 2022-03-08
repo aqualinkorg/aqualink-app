@@ -23,6 +23,7 @@ import {
   Y_SPACING_PERCENTAGE,
 } from "../../constants/charts";
 import type { ChartProps, Dataset } from ".";
+import { sortByDate } from "../../helpers/dates";
 
 interface Context {
   chart?: Chart;
@@ -128,17 +129,20 @@ export const convertDailyToSofar = (
   metrics?: Exclude<keyof DailyData, "id" | "date">[]
 ):
   | Partial<Record<Exclude<keyof DailyData, "id" | "date">, SofarValue[]>>
-  | undefined =>
-  metrics?.reduce(
+  | undefined => {
+  const sortedData = sortByDate(dailyData || [], "date");
+
+  return metrics?.reduce(
     (acc, metric) => ({
       ...acc,
-      [metric]: dailyData?.map((item) => ({
+      [metric]: sortedData.map((item) => ({
         value: item[metric],
         timestamp: item.date,
       })),
     }),
     {}
   );
+};
 
 export const convertHistoricalMonthlyMeanToSofar = (
   data?: HistoricalMonthlyMeanData[]

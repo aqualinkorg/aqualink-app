@@ -4,4 +4,5 @@ export enum SourceType {
   NOAA = 'noaa',
   SPOTTER = 'spotter',
   SONDE = 'sonde',
+  METLOG = 'metlog',
 }

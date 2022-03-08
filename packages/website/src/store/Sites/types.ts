@@ -59,6 +59,7 @@ export type ExclusionDateResponse = {
 export const metricsKeysList = [
   "dhw",
   "satellite_temperature",
+  "air_temperature",
   "top_temperature",
   "bottom_temperature",
   "sst_anomaly",
@@ -85,6 +86,10 @@ export const metricsKeysList = [
   "ph_mv",
   "sonde_battery_voltage",
   "sonde_cable_power_voltage",
+  "pressure",
+  "precipitation",
+  "rh",
+  "wind_gust_speed",
 ] as const;
 
 export type MetricsKeys = typeof metricsKeysList[number];
@@ -104,7 +109,7 @@ type CamelCase<S extends string> =
 
 export type Metrics = CamelCase<MetricsKeys>;
 
-export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde";
+export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
 
 export interface LatestData {
   id: number;
