@@ -25,31 +25,39 @@ interface Repositories {
 
 const logger = new Logger('ParseSondeData');
 
-const metricsMapping: Record<string, Metric> = {
-  'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
-  'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
-  'Cond µS/cm': Metric.CONDUCTIVITY,
-  'Depth m': Metric.WATER_DEPTH,
-  'ODO % sat': Metric.ODO_SATURATION,
-  'ODO mg/L': Metric.ODO_CONCENTRATION,
-  'Sal psu': Metric.SALINITY,
-  'SpCond µS/cm': Metric.SPECIFIC_CONDUCTANCE,
-  'TDS mg/L': Metric.TDS,
-  'Turbidity FNU': Metric.TURBIDITY,
-  'TSS mg/L': Metric.TOTAL_SUSPENDED_SOLIDS,
-  'Wiper Position volt': Metric.SONDE_WIPER_POSITION,
-  pH: Metric.PH,
-  'pH mV': Metric.PH_MV,
-  'Temp °C': Metric.BOTTOM_TEMPERATURE,
-  'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
-  'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
-  'Pressure, mbar': Metric.PRESSURE,
-  'Rain, mm': Metric.PRECIPITATION,
-  'Temp, °C': Metric.AIR_TEMPERATURE,
-  'RH, %': Metric.RH,
-  'Wind Speed, m/s': Metric.WIND_SPEED,
-  'Gust Speed, m/s': Metric.WIND_GUST_SPEED,
-  'Wind Direction, ø': Metric.WIND_DIRECTION,
+const metricsMapping: Record<SourceType, Record<string, Metric>> = {
+  sonde: {
+    'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
+    'Chlorophyll ug/L': Metric.CHOLOROPHYLL_CONCENTRATION,
+    'Cond µS/cm': Metric.CONDUCTIVITY,
+    'Depth m': Metric.WATER_DEPTH,
+    'ODO % sat': Metric.ODO_SATURATION,
+    'ODO mg/L': Metric.ODO_CONCENTRATION,
+    'Sal psu': Metric.SALINITY,
+    'SpCond µS/cm': Metric.SPECIFIC_CONDUCTANCE,
+    'TDS mg/L': Metric.TDS,
+    'Turbidity FNU': Metric.TURBIDITY,
+    'TSS mg/L': Metric.TOTAL_SUSPENDED_SOLIDS,
+    'Wiper Position volt': Metric.SONDE_WIPER_POSITION,
+    pH: Metric.PH,
+    'pH mV': Metric.PH_MV,
+    'Temp °C': Metric.BOTTOM_TEMPERATURE,
+    'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
+    'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
+  },
+  metlog: {
+    'Pressure, mbar': Metric.PRESSURE,
+    'Rain, mm': Metric.PRECIPITATION,
+    'Temp, °C': Metric.AIR_TEMPERATURE,
+    'RH, %': Metric.RH,
+    'Wind Speed, m/s': Metric.WIND_SPEED,
+    'Gust Speed, m/s': Metric.WIND_GUST_SPEED,
+    'Wind Direction, ø': Metric.WIND_DIRECTION,
+  },
+  gfs: {},
+  hobo: {},
+  noaa: {},
+  spotter: {},
 };
 
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
@@ -117,13 +125,16 @@ const rowIncludesHeaderKeys = (row: string[], headerKeys: string[]) =>
     row.some((dataKey) => headerMatchesKey(dataKey, key)),
   );
 
-const renameKeys = (oldKeys: string[]): Partial<Record<string, Metric>> => {
-  const metricsKeys = Object.keys(metricsMapping);
+const renameKeys = (
+  oldKeys: string[],
+  source: SourceType,
+): Partial<Record<string, Metric>> => {
+  const metricsKeys = Object.keys(metricsMapping[source]);
 
   return oldKeys.reduce((acc, curr) => {
     const metricKey = metricsKeys.find((key) => headerMatchesKey(curr, key));
     return metricKey
-      ? { ...acc, [curr]: metricsMapping[metricKey] as Metric }
+      ? { ...acc, [curr]: metricsMapping[source][metricKey] as Metric }
       : acc;
   }, {});
 };
@@ -170,8 +181,12 @@ const getTimestampFromCsvDateString = (dataObject: any) => {
   return new Date(dataObject[dateKey]);
 };
 
-const validateHeaders = (file: string, workSheetData: any[]) => {
-  const metricsKeys = Object.keys(metricsMapping);
+const validateHeaders = (
+  file: string,
+  workSheetData: any[],
+  source: SourceType,
+) => {
+  const metricsKeys = Object.keys(metricsMapping[source]);
   const headerRowIndex = workSheetData.findIndex(isHeaderRow);
 
   if (headerRowIndex === -1) {
@@ -211,7 +226,7 @@ const validateHeaders = (file: string, workSheetData: any[]) => {
     )
     .map(
       (header) =>
-        metricsMapping[
+        metricsMapping[source][
           metricsKeys.find((key) => headerMatchesKey(header, key)) as string
         ],
     ) as Metric[];
@@ -253,8 +268,8 @@ const timeStampExtractor = (file: string, dataObject: any) => {
   }
 };
 
-const rowValuesExtractor = (row: any, headers: any) => {
-  const keysMapping = renameKeys(headers);
+const rowValuesExtractor = (row: any, headers: any, source: SourceType) => {
+  const keysMapping = renameKeys(headers, source);
 
   return Object.keys(row).reduce(
     (acc, curr) =>
@@ -265,7 +280,11 @@ const rowValuesExtractor = (row: any, headers: any) => {
   );
 };
 
-const findSheetDataWithHeader = (fileName: string, workSheetData: any[]) => {
+const findSheetDataWithHeader = (
+  fileName: string,
+  workSheetData: any[],
+  source: SourceType,
+) => {
   const { headers, data } = extractHeadersAndData(workSheetData);
 
   const dataAsObjects = data
@@ -280,7 +299,7 @@ const findSheetDataWithHeader = (fileName: string, workSheetData: any[]) => {
 
       return {
         timestamp: timeStampExtractor(fileName, dataObject),
-        ...rowValuesExtractor(dataObject, headers),
+        ...rowValuesExtractor(dataObject, headers, source),
       };
     })
     .filter((object) => object !== undefined);
@@ -335,6 +354,7 @@ export const uploadTimeSeriesData = async (
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
       workSheetData,
+      sourceType,
     );
 
     if (failOnWarning && ignoredHeaders.length > 0) {
@@ -347,7 +367,11 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const results = findSheetDataWithHeader(fileName, workSheetData);
+    const results = findSheetDataWithHeader(
+      fileName,
+      workSheetData,
+      sourceType,
+    );
 
     const dataAstimeSeries = results
       .reduce((timeSeriesObjects: any[], object) => {
