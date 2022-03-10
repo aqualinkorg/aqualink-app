@@ -33,7 +33,7 @@ test('It processes Sofar API for daily data.', async () => {
     maxBottomTemperature: undefined,
     avgBottomTemperature: undefined,
     topTemperature: undefined,
-    satelliteTemperature: 10.7700004577637,
+    satelliteTemperature: 11,
     degreeHeatingDays: 0,
     minWaveHeight: 1.18205952644348,
     maxWaveHeight: 1.98118472099304,
