@@ -54,12 +54,8 @@ export const surveyAddRequest = createAsyncThunk<
   "selectedSurvey/addRequest",
   async ({ surveyData, siteId, changeTab }, { rejectWithValue }) => {
     try {
-      const { data } = await surveyServices
-        .addSurvey(siteId, surveyData)
-        .then((res) => {
-          changeTab(1);
-          return res;
-        });
+      const { data } = await surveyServices.addSurvey(siteId, surveyData);
+      changeTab(1);
       return data;
     } catch (err) {
       return rejectWithValue(getAxiosErrorMessage(err));

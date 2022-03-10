@@ -102,7 +102,8 @@ const Surveys = ({ site, classes }: SurveysProps) => {
         .then(() => {
           setDeleteSurveyPointDialogOpen(false);
           setSurveyPointToDelete(null);
-        });
+        })
+        .catch(console.error);
     }
   };
 
@@ -150,6 +151,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
           );
           seteditSurveyPointNameDraft(undefined);
         })
+        .catch(console.error)
         .finally(() => seteditSurveyPointNameLoading(false));
     }
   };

@@ -38,9 +38,12 @@ function App() {
       app.auth().onAuthStateChanged((user) => {
         if (user) {
           // User is signed in
-          user.getIdToken().then((token) => {
-            dispatch(getSelf(token));
-          });
+          user
+            .getIdToken()
+            .then((token) => {
+              dispatch(getSelf(token));
+            })
+            .catch(console.error);
         }
       });
     }
