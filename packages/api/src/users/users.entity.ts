@@ -9,7 +9,11 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import {
+  ApiHideProperty,
+  ApiProperty,
+  ApiPropertyOptional,
+} from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Site } from '../sites/sites.entity';
 import { ApiPointProperty } from '../docs/api-properties';
@@ -74,6 +78,7 @@ export class User {
   @Column({ nullable: true, type: 'character varying' })
   imageUrl: string | null;
 
+  @ApiPropertyOptional()
   @ManyToMany(() => Site, (site) => site.admins, { cascade: true })
   @JoinTable()
   administeredSites: Site[];
