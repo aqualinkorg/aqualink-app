@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, last, maxBy, minBy } from 'lodash';
+import { chunk, get, isNaN, last, maxBy, minBy, uniqBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -358,31 +358,35 @@ export const uploadTimeSeriesData = async (
       sourceType,
     );
 
-    const dataAstimeSeries = results
-      .reduce((timeSeriesObjects: any[], object) => {
-        const { timestamp } = object;
-        return [
-          ...timeSeriesObjects,
-          ...Object.keys(object)
-            .filter((k) => k !== 'timestamp')
-            .map((key) => {
-              return {
-                timestamp,
-                value: parseFloat(object[key]),
-                metric: key,
-                source: sourceEntity,
-              };
-            }),
-        ];
-      }, [])
-      .filter((valueObject) => {
-        if (!isNaN(parseFloat(valueObject.value))) {
-          return true;
-        }
-        logger.log('Excluding incompatible value:');
-        logger.log(valueObject);
-        return false;
-      });
+    const dataAstimeSeries = uniqBy(
+      results
+        .reduce((timeSeriesObjects: any[], object) => {
+          const { timestamp } = object;
+          return [
+            ...timeSeriesObjects,
+            ...Object.keys(object)
+              .filter((k) => k !== 'timestamp')
+              .map((key) => {
+                return {
+                  timestamp,
+                  value: parseFloat(object[key]),
+                  metric: key,
+                  source: sourceEntity,
+                };
+              }),
+          ];
+        }, [])
+        .filter((valueObject) => {
+          if (!isNaN(parseFloat(valueObject.value))) {
+            return true;
+          }
+          logger.log('Excluding incompatible value:');
+          logger.log(valueObject);
+          return false;
+        }),
+      ({ timestamp, metric, source }) =>
+        `${timestamp}, ${metric}, ${source.id}`,
+    );
 
     const signature = await md5Fle(filePath);
     const minDate = get(
