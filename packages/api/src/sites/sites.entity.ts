@@ -12,7 +12,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { Expose } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Region } from '../regions/regions.entity';
 import { VideoStream } from './video-streams.entity';
 import { Survey } from '../surveys/surveys.entity';
@@ -104,12 +104,14 @@ export class Site {
   @ManyToMany(() => User, (user) => user.administeredSites)
   admins: User[];
 
+  @ApiPropertyOptional()
   @OneToMany(() => Survey, (survey) => survey.site)
   surveys: Survey[];
 
   @OneToOne(() => SiteApplication, (siteApplication) => siteApplication.site)
   siteApplication?: SiteApplication;
 
+  @ApiPropertyOptional()
   @OneToMany(
     () => HistoricalMonthlyMean,
     (historicalMonthlyMean) => historicalMonthlyMean.site,
