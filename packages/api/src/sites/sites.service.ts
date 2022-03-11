@@ -220,9 +220,20 @@ export class SitesService {
       'siteApplication',
     ]);
 
+    // Typeorm returns undefined instead of [] for
+    // OneToMany relations, so we fix it to match OpenAPI specs:
+    const surveys = site.surveys || [];
+    const historicalMonthlyMean = site.historicalMonthlyMean || [];
+
     const videoStream = await this.checkVideoStream(site);
 
-    return { ...site, videoStream, applied: site.applied };
+    return {
+      ...site,
+      surveys,
+      historicalMonthlyMean,
+      videoStream,
+      applied: site.applied,
+    };
   }
 
   async update(id: number, updateSiteDto: UpdateSiteDto): Promise<Site> {

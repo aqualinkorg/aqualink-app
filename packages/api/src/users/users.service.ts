@@ -104,13 +104,15 @@ export class UsersService {
       .where('users.id = :id', { id: req.user.id })
       .getOne();
 
-    return user!.administeredSites.map((site) => {
-      return {
-        ...site,
-        siteApplication: undefined,
-        applied: site.applied,
-      };
-    });
+    return (
+      user!.administeredSites.map((site) => {
+        return {
+          ...site,
+          siteApplication: undefined,
+          applied: site.applied,
+        };
+      }) || []
+    );
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
