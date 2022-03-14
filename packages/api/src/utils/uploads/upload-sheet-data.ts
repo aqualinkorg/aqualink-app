@@ -376,8 +376,7 @@ export const uploadTimeSeriesData = async (
 
   if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
     const workSheetsFromFile = xlsx.parse(filePath, {
-      raw: true,
-      type: 'binary',
+      raw: false,
     });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
