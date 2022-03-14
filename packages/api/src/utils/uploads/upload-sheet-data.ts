@@ -139,11 +139,26 @@ const renameKeys = (
   }, {});
 };
 
+const ExcelDateToJSDate = (dateSerial: number) => {
+  // 25569 is the number of days between 1 January 1900 and 1 January 1970.
+  const EXCEL_DAY_CONVERSION = 25569;
+  const milliSecondsInADay = 86400 * 1000;
+  return new Date(
+    Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
+  );
+};
+
 const getTimestampFromExcelSerials = (dataObject: any) => {
   const dateSerial = dataObject['Date (MM/DD/YYYY)'];
   const hourSerial = dataObject['Time (HH:mm:ss)'];
   const seconds = dataObject['Time (Fract. Sec)'];
-  const date = new Date(`${dateSerial} ${hourSerial} UTC`);
+
+  const date = ExcelDateToJSDate(dateSerial);
+  const hours = (hourSerial * 24) % 24;
+  const hoursFloor = Math.floor(hours);
+  const decimalHours = hours - hoursFloor;
+  date.setHours(hoursFloor);
+  date.setMinutes(Math.round(decimalHours * 60));
   date.setSeconds(seconds);
   return date;
 };
@@ -334,7 +349,7 @@ export const uploadTimeSeriesData = async (
     }));
 
   if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
-    const workSheetsFromFile = xlsx.parse(filePath, { raw: false });
+    const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
