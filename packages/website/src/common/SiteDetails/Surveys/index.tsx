@@ -32,6 +32,7 @@ import { isAdmin } from "../../../helpers/user";
 import DeleteSurveyPointDialog, { Action } from "../../Dialog";
 import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
+import { getAxiosErrorMessage } from "../../../helpers/errors";
 
 const Surveys = ({ site, classes }: SurveysProps) => {
   const theme = useTheme();
@@ -48,6 +49,8 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const [surveyPointToDelete, setSurveyPointToDelete] = useState<number | null>(
     null
   );
+  const [isDeletePointLoading, setIsDeletePointLoading] = useState(false);
+  const [deletePointError, setDeletePointError] = useState<string>();
   const [observation, setObservation] = useState<
     SurveyMedia["observations"] | "any"
   >("any");
@@ -56,6 +59,10 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const dispatch = useDispatch();
 
   const bodyLength = useBodyLength();
+
+  const surveyPointToDeleteName = pointOptions.find(
+    ({ id }) => id === surveyPointToDelete
+  )?.name;
 
   useEffect(() => {
     dispatch(setSelectedPoi(point));
@@ -83,27 +90,32 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   const handleDeleteSurveyPointDialogClose = () => {
     setDeleteSurveyPointDialogOpen(false);
     setSurveyPointToDelete(null);
+    setIsDeletePointLoading(false);
+    setDeletePointError(undefined);
   };
 
-  const handleSurveyPointDelete = () => {
-    if (user && user.token && surveyPointToDelete) {
-      siteServices
-        .deleteSiteSurveyPoint(surveyPointToDelete, user.token)
-        .then(() =>
-          dispatch(
-            setSiteSurveyPoints(
-              pointOptions.filter((option) => option.id !== surveyPointToDelete)
-            )
+  const handleSurveyPointDelete = async () => {
+    if (typeof surveyPointToDelete === "number") {
+      setIsDeletePointLoading(true);
+      try {
+        await siteServices.deleteSiteSurveyPoint(
+          surveyPointToDelete,
+          user?.token
+        );
+
+        dispatch(
+          setSiteSurveyPoints(
+            pointOptions.filter((option) => option.id !== surveyPointToDelete)
           )
-        )
-        .then(() => {
-          dispatch(surveysRequest(`${site.id}`));
-        })
-        .then(() => {
-          setDeleteSurveyPointDialogOpen(false);
-          setSurveyPointToDelete(null);
-        })
-        .catch(console.error);
+        );
+        dispatch(surveysRequest(`${site.id}`));
+        setDeleteSurveyPointDialogOpen(false);
+        setSurveyPointToDelete(null);
+      } catch (error) {
+        setDeletePointError(getAxiosErrorMessage(error));
+      } finally {
+        setIsDeletePointLoading(false);
+      }
     }
   };
 
@@ -162,6 +174,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
       variant: "contained",
       color: "secondary",
       text: "No",
+      disabled: isDeletePointLoading,
       action: handleDeleteSurveyPointDialogClose,
     },
     {
@@ -169,6 +182,8 @@ const Surveys = ({ site, classes }: SurveysProps) => {
       variant: "contained",
       color: "primary",
       text: "Yes",
+      loading: isDeletePointLoading,
+      disabled: isDeletePointLoading,
       action: handleSurveyPointDelete,
     },
   ];
@@ -178,7 +193,14 @@ const Surveys = ({ site, classes }: SurveysProps) => {
       <DeleteSurveyPointDialog
         open={deleteSurveyPointDialogOpen}
         onClose={handleDeleteSurveyPointDialogClose}
-        header="Are you sure you want to delete this survey point? It will be deleted across all surveys."
+        error={deletePointError}
+        header={`Delete ${surveyPointToDeleteName}`}
+        content={
+          <Typography color="textSecondary">
+            Are you sure you want to delete this survey point? It will be
+            deleted across all surveys.
+          </Typography>
+        }
         actions={deleteSurveyPointDialogActions}
       />
       <Grid className={classes.root} container justify="center" spacing={2}>

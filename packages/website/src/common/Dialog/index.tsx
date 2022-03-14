@@ -12,21 +12,50 @@ import {
   Typography,
   ButtonProps,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const Dialog = ({
   open,
   header,
   content,
   actions,
+  error,
   onClose,
   classes,
 }: DialogProps) => {
+  const ActionButton = ({
+    text,
+    color,
+    variant,
+    size,
+    disabled,
+    loading,
+    action,
+  }: Action) => (
+    <Button
+      key={text}
+      color={color}
+      variant={variant}
+      size={size}
+      disabled={disabled}
+      onClick={action}
+    >
+      {loading ? (
+        <CircularProgress className={classes.loading} size={24} />
+      ) : (
+        text
+      )}
+    </Button>
+  );
+
   return (
     <MuiDialog fullWidth onClose={onClose} open={open}>
       <DialogTitle disableTypography className={classes.dialogTitle}>
         <Typography variant="h4">{header}</Typography>
       </DialogTitle>
+      {error && <Alert severity="error">{error}</Alert>}
       <DialogContent>{content}</DialogContent>
       <DialogActions>
         {actions &&
@@ -38,31 +67,11 @@ const Dialog = ({
                   style={{ color: "inherit", textDecoration: "none" }}
                   to={action.link}
                 >
-                  <Button
-                    key={action.text}
-                    color={action.color}
-                    variant={action.variant}
-                    size={action.size}
-                    disabled={action.disabled}
-                    onClick={action.action}
-                  >
-                    {action.text}
-                  </Button>
+                  {ActionButton(action)}
                 </Link>
               );
             }
-            return (
-              <Button
-                key={action.text}
-                color={action.color}
-                variant={action.variant}
-                size={action.size}
-                disabled={action.disabled}
-                onClick={action.action}
-              >
-                {action.text}
-              </Button>
-            );
+            return ActionButton(action);
           })}
       </DialogActions>
     </MuiDialog>
@@ -75,6 +84,9 @@ const styles = (theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
       overflowWrap: "break-word",
     },
+    loading: {
+      color: "white",
+    },
   });
 
 export interface Action {
@@ -84,6 +96,7 @@ export interface Action {
   text: string;
   link?: string;
   disabled?: boolean;
+  loading?: boolean;
   action: (...args: any[]) => void;
 }
 
@@ -92,6 +105,7 @@ interface DialogIncomingProps {
   header?: string;
   content?: JSX.Element | null;
   actions?: Action[];
+  error?: string;
   onClose?: (...args: any[]) => void;
 }
 
@@ -99,6 +113,7 @@ Dialog.defaultProps = {
   header: "",
   content: null,
   actions: [],
+  error: undefined,
   onClose: () => {},
 };
 
