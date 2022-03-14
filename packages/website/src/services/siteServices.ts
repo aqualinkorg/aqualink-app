@@ -77,7 +77,7 @@ const getSiteSurveyPoints = (
     cancelToken,
   });
 
-const deleteSiteSurveyPoint = (id: number, token: string) =>
+const deleteSiteSurveyPoint = (id: number, token?: string | null) =>
   requests.send({
     url: `site-survey-points/${id}`,
     method: "DELETE",
