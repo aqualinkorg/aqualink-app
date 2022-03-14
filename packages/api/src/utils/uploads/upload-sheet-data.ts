@@ -88,6 +88,8 @@ const ACCEPTED_FILE_TYPES = [
   },
 ] as const;
 
+export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
+
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
   { mimetype: inputMimetype },
@@ -160,6 +162,18 @@ const getTimestampFromExcelSerials = (dataObject: any) => {
   date.setHours(hoursFloor);
   date.setMinutes(Math.round(decimalHours * 60));
   date.setSeconds(seconds);
+
+  return date;
+};
+
+const getTimestampFromCsvSerials = (dataObject: any) => {
+  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
+  const hourSerial = dataObject['Time (HH:mm:ss)'];
+  const seconds = dataObject['Time (Fract. Sec)'];
+
+  const date = new Date(`${dateSerial} ${hourSerial} UTC`);
+  date.setSeconds(seconds);
+
   return date;
 };
 
@@ -252,13 +266,23 @@ const extractHeadersAndData = (workSheetData: any[]) => {
   return { headers, data };
 };
 
-const timeStampExtractor = (file: string, dataObject: any) => {
+const timeStampExtractor = (
+  file: string,
+  dataObject: any,
+  mimetype?: Mimetype,
+) => {
   const dataKeys = Object.keys(dataObject);
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
       return getTimestampFromCsvDateString(dataObject);
-    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
+      (mimetype === 'application/vnd.ms-excel' ||
+        mimetype ===
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
       return getTimestampFromExcelSerials(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
+      mimetype === 'text/csv':
+      return getTimestampFromCsvSerials(dataObject);
     default:
       throw new BadRequestException(
         `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
@@ -284,6 +308,7 @@ const findSheetDataWithHeader = (
   fileName: string,
   workSheetData: any[],
   source: SourceType,
+  mimetype?: Mimetype,
 ) => {
   const { headers, data } = extractHeadersAndData(workSheetData);
 
@@ -298,7 +323,7 @@ const findSheetDataWithHeader = (
       );
 
       return {
-        timestamp: timeStampExtractor(fileName, dataObject),
+        timestamp: timeStampExtractor(fileName, dataObject, mimetype),
         ...rowValuesExtractor(dataObject, headers, source),
       };
     })
@@ -316,6 +341,7 @@ export const uploadTimeSeriesData = async (
   sourceType: SourceType,
   repositories: Repositories,
   failOnWarning?: boolean,
+  mimetype?: Mimetype,
 ) => {
   // // TODO
   // // - Add foreign key constraint to sources on site_id
@@ -371,6 +397,7 @@ export const uploadTimeSeriesData = async (
       fileName,
       workSheetData,
       sourceType,
+      mimetype,
     );
 
     const dataAstimeSeries = uniqBy(

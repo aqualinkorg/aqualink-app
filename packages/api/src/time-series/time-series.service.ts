@@ -18,7 +18,10 @@ import {
 import { Site } from '../sites/sites.entity';
 import { SiteSurveyPoint } from '../site-survey-points/site-survey-points.entity';
 import { Sources } from '../sites/sources.entity';
-import { uploadTimeSeriesData } from '../utils/uploads/upload-sheet-data';
+import {
+  Mimetype,
+  uploadTimeSeriesData,
+} from '../utils/uploads/upload-sheet-data';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
@@ -145,7 +148,7 @@ export class TimeSeriesService {
 
     const uploadResponse = await Bluebird.Promise.map(
       files,
-      async ({ path, originalname }) => {
+      async ({ path, originalname, mimetype }) => {
         try {
           const ignoredHeaders = await uploadTimeSeriesData(
             path,
@@ -161,6 +164,7 @@ export class TimeSeriesService {
               dataUploadsRepository: this.dataUploadsRepository,
             },
             failOnWarning,
+            mimetype as Mimetype,
           );
           return { file: originalname, ignoredHeaders };
         } finally {
