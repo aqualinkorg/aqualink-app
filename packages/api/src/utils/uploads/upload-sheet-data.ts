@@ -25,6 +25,8 @@ interface Repositories {
 
 const logger = new Logger('ParseSondeData');
 
+// If column names risk overlapping, make sure to put the longer
+// name first. Eg. "pH mV" and "pH".
 const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   sonde: {
     'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
