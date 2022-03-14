@@ -141,43 +141,43 @@ const renameKeys = (
   }, {});
 };
 
-const ExcelDateToJSDate = (dateSerial: number) => {
-  // 25569 is the number of days between 1 January 1900 and 1 January 1970.
-  const EXCEL_DAY_CONVERSION = 25569;
-  const milliSecondsInADay = 86400 * 1000;
-  return new Date(
-    Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
-  );
-};
+// const ExcelDateToJSDate = (dateSerial: number) => {
+//   // 25569 is the number of days between 1 January 1900 and 1 January 1970.
+//   const EXCEL_DAY_CONVERSION = 25569;
+//   const milliSecondsInADay = 86400 * 1000;
+//   return new Date(
+//     Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
+//   );
+// };
 
-const getTimestampFromExcelSerials = (dataObject: any) => {
-  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
-  const hourSerial = dataObject['Time (HH:mm:ss)'];
+// const getTimestampFromExcelSerials = (dataObject: any) => {
+//   const dateSerial = dataObject['Date (MM/DD/YYYY)'];
+//   const hourSerial = dataObject['Time (HH:mm:ss)'];
+//   const seconds = dataObject['Time (Fract. Sec)'];
+
+//   const date = ExcelDateToJSDate(dateSerial);
+//   const hours = (hourSerial * 24) % 24;
+//   const hoursFloor = Math.floor(hours);
+//   const decimalHours = hours - hoursFloor;
+//   date.setHours(hoursFloor);
+//   date.setMinutes(Math.round(decimalHours * 60));
+//   date.setSeconds(seconds);
+
+//   return date;
+// };
+
+const getTimestampFromMultiColumnDate = (dataObject: any) => {
+  const dateString = dataObject['Date (MM/DD/YYYY)'];
+  const hourString = dataObject['Time (HH:mm:ss)'];
   const seconds = dataObject['Time (Fract. Sec)'];
 
-  const date = ExcelDateToJSDate(dateSerial);
-  const hours = (hourSerial * 24) % 24;
-  const hoursFloor = Math.floor(hours);
-  const decimalHours = hours - hoursFloor;
-  date.setHours(hoursFloor);
-  date.setMinutes(Math.round(decimalHours * 60));
+  const date = new Date(`${dateString} ${hourString} UTC`);
   date.setSeconds(seconds);
 
   return date;
 };
 
-const getTimestampFromCsvSerials = (dataObject: any) => {
-  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
-  const hourSerial = dataObject['Time (HH:mm:ss)'];
-  const seconds = dataObject['Time (Fract. Sec)'];
-
-  const date = new Date(`${dateSerial} ${hourSerial} UTC`);
-  date.setSeconds(seconds);
-
-  return date;
-};
-
-const getTimestampFromCsvDateString = (dataObject: any) => {
+const getTimestampFromDateString = (dataObject: any) => {
   const dateKey = Object.keys(dataObject).find((header) =>
     headerMatchesKey(header, 'Date Time'),
   );
@@ -274,15 +274,15 @@ const timeStampExtractor = (
   const dataKeys = Object.keys(dataObject);
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
-      return getTimestampFromCsvDateString(dataObject);
+      return getTimestampFromDateString(dataObject);
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
       (mimetype === 'application/vnd.ms-excel' ||
         mimetype ===
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
-      return getTimestampFromExcelSerials(dataObject);
+      return getTimestampFromMultiColumnDate(dataObject);
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
       mimetype === 'text/csv':
-      return getTimestampFromCsvSerials(dataObject);
+      return getTimestampFromMultiColumnDate(dataObject);
     default:
       throw new BadRequestException(
         `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
