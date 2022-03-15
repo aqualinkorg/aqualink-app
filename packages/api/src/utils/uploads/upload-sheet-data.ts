@@ -62,6 +62,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   spotter: {},
 };
 
+const TIMEZONE_KEYWORDS = ['UTC', 'GMT'];
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
 const IGNORE_HEADER_KEYS = [
   '#',
@@ -188,9 +189,17 @@ const getTimestampFromDateString = (dataObject: any) => {
     return undefined;
   }
 
-  const timezone = last(dateKey.split(', '));
+  const timezoneKeyword = TIMEZONE_KEYWORDS.find((keyword) =>
+    dateKey.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()),
+  );
 
-  if (timezone) {
+  if (timezoneKeyword) {
+    const offset =
+      last(
+        dateKey.toLocaleLowerCase().split(timezoneKeyword.toLocaleLowerCase()),
+      ) || '00:00';
+    const timezone = `${timezoneKeyword} ${offset}`;
+
     return new Date(`${dataObject[dateKey]} ${timezone}`);
   }
 
