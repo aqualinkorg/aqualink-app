@@ -143,38 +143,38 @@ const renameKeys = (
   }, {});
 };
 
-// const ExcelDateToJSDate = (dateSerial: number) => {
-//   // 25569 is the number of days between 1 January 1900 and 1 January 1970.
-//   const EXCEL_DAY_CONVERSION = 25569;
-//   const milliSecondsInADay = 86400 * 1000;
-//   return new Date(
-//     Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
-//   );
-// };
+const ExcelDateToJSDate = (dateSerial: number) => {
+  // 25569 is the number of days between 1 January 1900 and 1 January 1970.
+  const EXCEL_DAY_CONVERSION = 25569;
+  const milliSecondsInADay = 86400 * 1000;
+  return new Date(
+    Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
+  );
+};
 
-// const getTimestampFromExcelSerials = (dataObject: any) => {
-//   const dateSerial = dataObject['Date (MM/DD/YYYY)'];
-//   const hourSerial = dataObject['Time (HH:mm:ss)'];
-//   const seconds = dataObject['Time (Fract. Sec)'];
+const getTimestampFromMultiColumnDate = (
+  dataObject: any,
+  mimetype?: Mimetype,
+) => {
+  const dateValue = dataObject['Date (MM/DD/YYYY)'];
+  const hoursValue = dataObject['Time (HH:mm:ss)'];
+  const secondsValue = dataObject['Time (Fract. Sec)'];
 
-//   const date = ExcelDateToJSDate(dateSerial);
-//   const hours = (hourSerial * 24) % 24;
-//   const hoursFloor = Math.floor(hours);
-//   const decimalHours = hours - hoursFloor;
-//   date.setHours(hoursFloor);
-//   date.setMinutes(Math.round(decimalHours * 60));
-//   date.setSeconds(seconds);
+  // In we are parsing a `.csv` file, the above date values are parsed as strings.
+  if (mimetype === 'text/csv') {
+    const date = new Date(`${dateValue} ${hoursValue} UTC`);
+    date.setSeconds(secondsValue);
 
-//   return date;
-// };
+    return date;
+  }
 
-const getTimestampFromMultiColumnDate = (dataObject: any) => {
-  const dateString = dataObject['Date (MM/DD/YYYY)'];
-  const hourString = dataObject['Time (HH:mm:ss)'];
-  const seconds = dataObject['Time (Fract. Sec)'];
-
-  const date = new Date(`${dateString} ${hourString} UTC`);
-  date.setSeconds(seconds);
+  const date = ExcelDateToJSDate(dateValue);
+  const hours = (hoursValue * 24) % 24;
+  const hoursFloor = Math.floor(hours);
+  const decimalHours = hours - hoursFloor;
+  date.setHours(hoursFloor);
+  date.setMinutes(Math.round(decimalHours * 60));
+  date.setSeconds(secondsValue);
 
   return date;
 };
@@ -277,14 +277,8 @@ const timeStampExtractor = (
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
       return getTimestampFromDateString(dataObject);
-    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
-      (mimetype === 'application/vnd.ms-excel' ||
-        mimetype ===
-          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
-      return getTimestampFromMultiColumnDate(dataObject);
-    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]) &&
-      mimetype === 'text/csv':
-      return getTimestampFromMultiColumnDate(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
+      return getTimestampFromMultiColumnDate(dataObject, mimetype);
     default:
       throw new BadRequestException(
         `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
@@ -377,9 +371,7 @@ export const uploadTimeSeriesData = async (
     }));
 
   if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
-    const workSheetsFromFile = xlsx.parse(filePath, {
-      raw: false,
-    });
+    const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
       fileName,
