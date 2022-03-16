@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, last, maxBy, minBy } from 'lodash';
+import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -25,6 +25,8 @@ interface Repositories {
 
 const logger = new Logger('ParseSondeData');
 
+// If column names risk overlapping, make sure to put the longer
+// name first. Eg. "pH mV" and "pH".
 const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   sonde: {
     'Chlorophyll RFU': Metric.CHOLOROPHYLL_RFU,
@@ -39,8 +41,8 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
     'Turbidity FNU': Metric.TURBIDITY,
     'TSS mg/L': Metric.TOTAL_SUSPENDED_SOLIDS,
     'Wiper Position volt': Metric.SONDE_WIPER_POSITION,
-    pH: Metric.PH,
     'pH mV': Metric.PH_MV,
+    pH: Metric.PH,
     'Temp °C': Metric.BOTTOM_TEMPERATURE,
     'Battery V': Metric.SONDE_BATTERY_VOLTAGE,
     'Cable Pwr V': Metric.SONDE_CABLE_POWER_VOLTAGE,
@@ -60,6 +62,11 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   spotter: {},
 };
 
+// Timezone regexp to match the following cases:
+// 1. GMT±1
+// 2. GMT±01
+// 3. GMT±01:00
+const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
 const IGNORE_HEADER_KEYS = [
   '#',
@@ -87,6 +94,8 @@ const ACCEPTED_FILE_TYPES = [
     mimetype: 'application/vnd.ms-excel',
   },
 ] as const;
+
+export type Mimetype = typeof ACCEPTED_FILE_TYPES[number]['mimetype'];
 
 export const fileFilter: MulterOptions['fileFilter'] = (
   _,
@@ -139,31 +148,43 @@ const renameKeys = (
   }, {});
 };
 
-function ExcelDateToJSDate(dateSerial: number) {
+const ExcelDateToJSDate = (dateSerial: number) => {
   // 25569 is the number of days between 1 January 1900 and 1 January 1970.
   const EXCEL_DAY_CONVERSION = 25569;
   const milliSecondsInADay = 86400 * 1000;
   return new Date(
     Math.round((dateSerial - EXCEL_DAY_CONVERSION) * milliSecondsInADay),
   );
-}
+};
 
-const getTimestampFromExcelSerials = (dataObject: any) => {
-  const dateSerial = dataObject['Date (MM/DD/YYYY)'];
-  const hourSerial = dataObject['Time (HH:mm:ss)'];
-  const seconds = dataObject['Time (Fract. Sec)'];
-  // Extract EXCEL date and hours from serials:
-  const date = ExcelDateToJSDate(dateSerial);
-  const hours = (hourSerial * 24) % 24;
+const getTimestampFromMultiColumnDate = (
+  dataObject: any,
+  mimetype?: Mimetype,
+) => {
+  const dateValue = dataObject['Date (MM/DD/YYYY)'];
+  const hoursValue = dataObject['Time (HH:mm:ss)'];
+  const secondsValue = dataObject['Time (Fract. Sec)'];
+
+  // In we are parsing a `.csv` file, the above date values are parsed as strings.
+  if (mimetype === 'text/csv') {
+    const date = new Date(`${dateValue} ${hoursValue} UTC`);
+    date.setSeconds(secondsValue);
+
+    return date;
+  }
+
+  const date = ExcelDateToJSDate(dateValue);
+  const hours = (hoursValue * 24) % 24;
   const hoursFloor = Math.floor(hours);
   const decimalHours = hours - hoursFloor;
   date.setHours(hoursFloor);
   date.setMinutes(Math.round(decimalHours * 60));
-  date.setSeconds(seconds);
+  date.setSeconds(secondsValue);
+
   return date;
 };
 
-const getTimestampFromCsvDateString = (dataObject: any) => {
+const getTimestampFromDateString = (dataObject: any) => {
   const dateKey = Object.keys(dataObject).find((header) =>
     headerMatchesKey(header, 'Date Time'),
   );
@@ -172,10 +193,10 @@ const getTimestampFromCsvDateString = (dataObject: any) => {
     return undefined;
   }
 
-  const timezone = last(dateKey.split(', '));
+  const timezoneOffset = first(dateKey.match(TIMEZONE_REGEX));
 
-  if (timezone) {
-    return new Date(`${dataObject[dateKey]} ${timezone}`);
+  if (timezoneOffset) {
+    return new Date(`${dataObject[dateKey]} GMT ${timezoneOffset}`);
   }
 
   return new Date(dataObject[dateKey]);
@@ -252,13 +273,17 @@ const extractHeadersAndData = (workSheetData: any[]) => {
   return { headers, data };
 };
 
-const timeStampExtractor = (file: string, dataObject: any) => {
+const timeStampExtractor = (
+  file: string,
+  dataObject: any,
+  mimetype?: Mimetype,
+) => {
   const dataKeys = Object.keys(dataObject);
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
-      return getTimestampFromCsvDateString(dataObject);
+      return getTimestampFromDateString(dataObject);
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
-      return getTimestampFromExcelSerials(dataObject);
+      return getTimestampFromMultiColumnDate(dataObject, mimetype);
     default:
       throw new BadRequestException(
         `${file}: Column headers must include at least one of the following sets of headers: ${TIMESTAMP_KEYS.map(
@@ -284,6 +309,7 @@ const findSheetDataWithHeader = (
   fileName: string,
   workSheetData: any[],
   source: SourceType,
+  mimetype?: Mimetype,
 ) => {
   const { headers, data } = extractHeadersAndData(workSheetData);
 
@@ -298,7 +324,7 @@ const findSheetDataWithHeader = (
       );
 
       return {
-        timestamp: timeStampExtractor(fileName, dataObject),
+        timestamp: timeStampExtractor(fileName, dataObject, mimetype),
         ...rowValuesExtractor(dataObject, headers, source),
       };
     })
@@ -316,6 +342,7 @@ export const uploadTimeSeriesData = async (
   sourceType: SourceType,
   repositories: Repositories,
   failOnWarning?: boolean,
+  mimetype?: Mimetype,
 ) => {
   // // TODO
   // // - Add foreign key constraint to sources on site_id
@@ -371,33 +398,38 @@ export const uploadTimeSeriesData = async (
       fileName,
       workSheetData,
       sourceType,
+      mimetype,
     );
 
-    const dataAstimeSeries = results
-      .reduce((timeSeriesObjects: any[], object) => {
-        const { timestamp } = object;
-        return [
-          ...timeSeriesObjects,
-          ...Object.keys(object)
-            .filter((k) => k !== 'timestamp')
-            .map((key) => {
-              return {
-                timestamp,
-                value: parseFloat(object[key]),
-                metric: key,
-                source: sourceEntity,
-              };
-            }),
-        ];
-      }, [])
-      .filter((valueObject) => {
-        if (!isNaN(parseFloat(valueObject.value))) {
-          return true;
-        }
-        logger.log('Excluding incompatible value:');
-        logger.log(valueObject);
-        return false;
-      });
+    const dataAstimeSeries = uniqBy(
+      results
+        .reduce((timeSeriesObjects: any[], object) => {
+          const { timestamp } = object;
+          return [
+            ...timeSeriesObjects,
+            ...Object.keys(object)
+              .filter((k) => k !== 'timestamp')
+              .map((key) => {
+                return {
+                  timestamp,
+                  value: parseFloat(object[key]),
+                  metric: key,
+                  source: sourceEntity,
+                };
+              }),
+          ];
+        }, [])
+        .filter((valueObject) => {
+          if (!isNaN(parseFloat(valueObject.value))) {
+            return true;
+          }
+          logger.log('Excluding incompatible value:');
+          logger.log(valueObject);
+          return false;
+        }),
+      ({ timestamp, metric, source }) =>
+        `${timestamp}, ${metric}, ${source.id}`,
+    );
 
     const signature = await md5Fle(filePath);
     const minDate = get(

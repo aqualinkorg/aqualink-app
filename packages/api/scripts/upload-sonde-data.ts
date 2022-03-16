@@ -64,7 +64,7 @@ async function run() {
   logger.log('Uploading sonde data');
   await uploadTimeSeriesData(
     filePath,
-    last(filePath.split('/')),
+    last(filePath.split('/')) || '',
     siteId,
     surveyPointId,
     sourceType as SourceType,
