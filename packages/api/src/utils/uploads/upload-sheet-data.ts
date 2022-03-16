@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { chunk, get, isNaN, last, maxBy, minBy, uniqBy } from 'lodash';
+import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
 import md5Fle from 'md5-file';
 import { Repository } from 'typeorm';
 import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
@@ -62,7 +62,11 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   spotter: {},
 };
 
-const TIMEZONE_KEYWORDS = ['UTC', 'GMT'];
+// Timezone regexp to match the following cases:
+// 1. GMT±1
+// 2. GMT±01
+// 3. GMT±01:00
+const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
 const IGNORE_HEADER_KEYS = [
   '#',
@@ -189,18 +193,10 @@ const getTimestampFromDateString = (dataObject: any) => {
     return undefined;
   }
 
-  const timezoneKeyword = TIMEZONE_KEYWORDS.find((keyword) =>
-    dateKey.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()),
-  );
+  const timezoneOffset = first(dateKey.match(TIMEZONE_REGEX));
 
-  if (timezoneKeyword) {
-    const offset =
-      last(
-        dateKey.toLocaleLowerCase().split(timezoneKeyword.toLocaleLowerCase()),
-      ) || '00:00';
-    const timezone = `${timezoneKeyword} ${offset}`;
-
-    return new Date(`${dataObject[dateKey]} ${timezone}`);
+  if (timezoneOffset) {
+    return new Date(`${dataObject[dateKey]} GMT ${timezoneOffset}`);
   }
 
   return new Date(dataObject[dateKey]);
