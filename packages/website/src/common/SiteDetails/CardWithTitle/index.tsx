@@ -11,6 +11,7 @@ import classNames from "classnames";
 
 import Title from "./Title";
 import { Value } from "./types";
+import LoadingSkeleton from "../../LoadingSkeleton";
 
 const CardWithTitle: FC<CardWithTitleProps> = ({
   classes,
@@ -24,7 +25,9 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
     <Grid className={className} container item {...gridProps}>
       {titleItems.length > 0 && (
         <Grid item xs={12}>
-          <Title values={titleItems} />
+          <LoadingSkeleton loading variant="text" lines={1}>
+            <Title values={titleItems} />
+          </LoadingSkeleton>
         </Grid>
       )}
       <Grid
@@ -41,7 +44,9 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
               : classes.container
           }
         >
-          {children}
+          <LoadingSkeleton loading variant="rect" height="100%">
+            {children}
+          </LoadingSkeleton>
         </div>
       </Grid>
     </Grid>

@@ -41,6 +41,7 @@ import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
+import LoadingSkeleton from "../../../common/LoadingSkeleton";
 
 const getAlertMessage = (
   user: User | null,
@@ -183,12 +184,16 @@ const Site = ({ match, classes }: SiteProps) => {
       <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
         {siteDetails && liveData && !error ? (
           <>
-            <SiteInfo
-              hasDailyData={hasDailyData}
-              site={siteDetails}
-              lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-              isAdmin={isAdmin(user, parseInt(siteId, 10))}
-            />
+            <Box marginTop="2rem">
+              <LoadingSkeleton loading variant="text" lines={3}>
+                <SiteInfo
+                  hasDailyData={hasDailyData}
+                  site={siteDetails}
+                  lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+                  isAdmin={isAdmin(user, parseInt(siteId, 10))}
+                />
+              </LoadingSkeleton>
+            </Box>
             {!hasSpotterData && (
               <Box mt="1.3rem">
                 <Alert severity="info">

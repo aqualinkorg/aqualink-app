@@ -153,12 +153,7 @@ const SiteNavBar = ({
             : "Something went wrong"}
         </Alert>
       </Collapse>
-      <Grid
-        className={classes.root}
-        container
-        justify="space-between"
-        alignItems="center"
-      >
+      <Grid container justify="space-between" alignItems="center">
         <Grid item xs={12}>
           <Grid alignItems="center" container spacing={1}>
             {!editEnabled ? (
@@ -295,9 +290,6 @@ const SiteNavBar = ({
 
 const styles = () =>
   createStyles({
-    root: {
-      marginTop: "2rem",
-    },
     managerInfo: {
       marginRight: "0.5rem",
     },

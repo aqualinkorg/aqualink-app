@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   createStyles,
@@ -29,6 +30,8 @@ import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone, sortByDate } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 import WaterSamplingCard from "./WaterSampling";
+import { styles as incomingStyles } from "./styles";
+import LoadingSkeleton from "../LoadingSkeleton";
 
 const SiteDetails = ({
   classes,
@@ -170,21 +173,25 @@ const SiteDetails = ({
           >
             {cards.map((Component, index) => (
               <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-                {Component}
+                <div className={classes.card}>
+                  <LoadingSkeleton variant="rect" height="100%" loading>
+                    {Component}
+                  </LoadingSkeleton>
+                </div>
               </Grid>
             ))}
           </Grid>
 
-          {oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
+          {/* {oceanSenseConfig?.[site.id] && <OceanSenseMetrics />} */}
 
-          <Box mt="2rem">
+          {/* <Box mt="2rem">
             <CombinedCharts
               site={site}
               selectedSurveyPointId={selectedSurveyPointId}
               surveys={surveys}
             />
             <Surveys site={site} />
-          </Box>
+          </Box> */}
         </>
       )}
     </Box>
@@ -193,6 +200,7 @@ const SiteDetails = ({
 
 const styles = (theme: Theme) =>
   createStyles({
+    ...incomingStyles,
     root: {
       marginTop: "2rem",
     },

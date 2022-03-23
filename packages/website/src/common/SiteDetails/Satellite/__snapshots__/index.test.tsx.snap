@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Satellite-card-1"
+    classname="Satellite-root-8"
     style="background-color: rgb(117, 180, 114);"
   >
     <div
@@ -36,7 +36,7 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="Satellite-content-8"
+      classname="Satellite-content-9"
     >
       <mock-box
         display="flex"
@@ -313,10 +313,10 @@ exports[`renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-11 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-15 makeStyles-dateInfoWrapper-17 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -326,7 +326,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-updateIcon-12 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-13 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -336,7 +336,7 @@ exports[`renders as expected 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root makeStyles-dateInfo-15 MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-16 MuiGrid-item"
             >
               <mock-box
                 display="flex"
@@ -344,7 +344,7 @@ exports[`renders as expected 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-13"
+                  classname="makeStyles-updateInfoText-14"
                   variant="caption"
                 >
                   Last data received
@@ -352,7 +352,7 @@ exports[`renders as expected 1`] = `
                   5 min. ago
                 </mock-typography>
                 <mock-typography
-                  classname="makeStyles-updateInfoText-13"
+                  classname="makeStyles-updateInfoText-14"
                   variant="caption"
                 >
                   Updated daily
@@ -362,27 +362,27 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
+          class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-24 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
             <mock-button
-              classname="makeStyles-button-22"
+              classname="makeStyles-button-23"
             >
               <a
-                class="makeStyles-link-20"
+                class="makeStyles-link-21"
                 href="https://coralsitewatch.noaa.gov/"
                 target="_blank"
               >
                 <mock-typography
-                  classname="makeStyles-chipText-18"
+                  classname="makeStyles-chipText-19"
                 >
                   NOAA
                 </mock-typography>
                 <img
                   alt="sensor-type"
-                  class="makeStyles-sensorImage-21"
+                  class="makeStyles-sensorImage-22"
                   src="satellite.svg"
                 />
               </a>

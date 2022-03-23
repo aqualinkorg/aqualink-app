@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="Bleaching-card-1"
+    classname="Bleaching-root-8"
   >
     <div
       class="MuiCardHeader-root Bleaching-header-3"
@@ -36,21 +36,21 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="Bleaching-contentWrapper-8"
+      classname="Bleaching-contentWrapper-9"
     >
       <div
-        class="MuiGrid-root Bleaching-content-9 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root Bleaching-content-10 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
       >
         <img
           alt="alert-level"
-          class="Bleaching-alertImage-10"
+          class="Bleaching-alertImage-11"
           src="alert_lvl1.svg"
         />
         <div
-          class="MuiGrid-root makeStyles-updateInfo-11 makeStyles-withMargin-12 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root makeStyles-updateInfo-12 makeStyles-withMargin-13 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root makeStyles-dateInfoWrapper-15 makeStyles-dateInfoWrapper-17 MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-16 makeStyles-dateInfoWrapper-18 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -60,7 +60,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root makeStyles-updateIcon-13 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root makeStyles-updateIcon-14 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -70,7 +70,7 @@ exports[`renders as expected 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiGrid-root makeStyles-dateInfo-16 MuiGrid-item"
+                class="MuiGrid-root makeStyles-dateInfo-17 MuiGrid-item"
               >
                 <mock-box
                   display="flex"
@@ -78,7 +78,7 @@ exports[`renders as expected 1`] = `
                   width="100%"
                 >
                   <mock-typography
-                    classname="makeStyles-updateInfoText-14"
+                    classname="makeStyles-updateInfoText-15"
                     variant="caption"
                   >
                     Last data received
@@ -86,7 +86,7 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="makeStyles-updateInfoText-14"
+                    classname="makeStyles-updateInfoText-15"
                     variant="caption"
                   >
                     Updated daily
@@ -96,21 +96,21 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-18 makeStyles-chip-24 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-19 makeStyles-chip-25 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <mock-button
-                classname="makeStyles-button-23"
+                classname="makeStyles-button-24"
               >
                 <a
-                  class="makeStyles-link-21"
+                  class="makeStyles-link-22"
                   href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                   target="_blank"
                 >
                   <mock-typography
-                    classname="makeStyles-chipText-19"
+                    classname="makeStyles-chipText-20"
                   >
                     NOAA CRW
                   </mock-typography>
