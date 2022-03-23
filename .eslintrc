@@ -44,6 +44,7 @@
     ],
     // Allow props spreading in React
     "react/jsx-props-no-spreading": 0,
+    "react/prop-types": 0,
     // Allow named exports only files
     "import/prefer-default-export": 0,
     "object-curly-spacing": [
