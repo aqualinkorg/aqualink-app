@@ -15,6 +15,7 @@ import LoadingSkeleton from "../../LoadingSkeleton";
 
 const CardWithTitle: FC<CardWithTitleProps> = ({
   classes,
+  loading,
   gridProps,
   titleItems,
   className,
@@ -25,7 +26,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
     <Grid className={className} container item {...gridProps}>
       {titleItems.length > 0 && (
         <Grid item xs={12}>
-          <LoadingSkeleton loading variant="text" lines={1}>
+          <LoadingSkeleton loading={loading} variant="text" lines={1}>
             <Title values={titleItems} />
           </LoadingSkeleton>
         </Grid>
@@ -44,7 +45,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
               : classes.container
           }
         >
-          <LoadingSkeleton loading variant="rect" height="100%">
+          <LoadingSkeleton loading={loading} variant="rect" height="100%">
             {children}
           </LoadingSkeleton>
         </div>
@@ -86,6 +87,7 @@ const styles = (theme: Theme) => {
 
 interface CardWithTitleIncomingProps {
   gridProps: GridProps;
+  loading: boolean;
   titleItems: Value[];
   className?: string;
   forcedAspectRatio?: boolean;

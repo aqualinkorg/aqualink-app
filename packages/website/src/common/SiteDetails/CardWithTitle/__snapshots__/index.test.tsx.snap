@@ -8,22 +8,32 @@ exports[`renders as expected 1`] = `
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
-      <span
-        class="MuiSkeleton-root MuiSkeleton-text makeStyles-root-4 MuiSkeleton-pulse"
-        style="width: 33%;"
-      />
+      <mock-box
+        classname="Title-root-5"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item"
+            style="margin-right: 1rem;"
+          >
+            <mock-typography
+              classname=""
+              variant="h6"
+            >
+              Some value
+            </mock-typography>
+          </div>
+        </div>
+      </mock-box>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
         class="CardWithTitle-container-2"
-      >
-        <span
-          class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-4 MuiSkeleton-pulse"
-          style="height: 100%;"
-        />
-      </div>
+      />
     </div>
   </div>
 </div>
