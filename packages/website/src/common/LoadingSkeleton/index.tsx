@@ -5,6 +5,8 @@ import { Skeleton, SkeletonProps } from "@material-ui/lab";
 import random from "lodash/random";
 import times from "lodash/times";
 
+import chartSkeletonImage from "../../assets/img/chart_skeleton.png";
+
 const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   loading,
   children,
@@ -12,6 +14,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   width,
   height,
   lines,
+  isChart,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -42,11 +45,15 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   }
 
   return (
-    <Skeleton
-      className={classes.root}
-      variant={variant}
-      {...rectSkeletonProps}
-    />
+    <Skeleton className={classes.root} variant={variant} {...rectSkeletonProps}>
+      {isChart ? (
+        <img
+          src={chartSkeletonImage}
+          alt="chart-skeleton"
+          className={classes.chartSkeletonImage}
+        />
+      ) : null}
+    </Skeleton>
   );
 };
 
@@ -54,6 +61,13 @@ const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: fade("#000000", 0.11),
     borderRadius: 4,
+  },
+  chartSkeletonImage: {
+    visibility: "visible",
+    width: "100%",
+    height: "100%",
+    opacity: 0.3,
+    filter: "grayscale(1)",
   },
 }));
 
@@ -63,6 +77,7 @@ interface LoadingSkeletonProps {
   width?: SkeletonProps["width"];
   height?: SkeletonProps["height"];
   lines?: number;
+  isChart?: boolean;
 }
 
 export default LoadingSkeleton;

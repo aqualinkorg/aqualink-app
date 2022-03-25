@@ -13,45 +13,65 @@ import { Site } from "../../store/Sites/types";
 import { convertSurveyDataToLocalTime } from "../../helpers/dates";
 import { SurveyListItem } from "../../store/Survey/types";
 import { standardDailyDataDataset } from "./MultipleSensorsCharts/helpers";
+import LoadingSkeleton from "../LoadingSkeleton";
 
 const CombinedCharts = ({
   site,
   selectedSurveyPointId,
   surveys,
+  loading,
   classes,
 }: CombinedChartsProps) => {
-  const { id, timezone, dailyData, maxMonthlyMean } = site;
-
-  const heatStressDataset = standardDailyDataDataset(
-    dailyData,
-    maxMonthlyMean,
-    true,
-    timezone
-  );
+  const heatStressDataset = site
+    ? standardDailyDataDataset(
+        site.dailyData,
+        site.maxMonthlyMean,
+        true,
+        site.timezone
+      )
+    : undefined;
 
   return (
     <div>
-      <Box className={classes.graphtTitleWrapper}>
-        <Typography className={classes.graphTitle} variant="h6">
-          HEAT STRESS ANALYSIS (°C)
-        </Typography>
-      </Box>
-      <ChartWithTooltip
-        className={classes.chart}
-        siteId={id}
-        datasets={[heatStressDataset]}
-        surveys={convertSurveyDataToLocalTime(surveys, timezone)}
-        temperatureThreshold={maxMonthlyMean ? maxMonthlyMean + 1 : null}
-        maxMonthlyMean={maxMonthlyMean || null}
-        background
-        timeZone={timezone}
-      />
-      <MultipleSensorsCharts
-        site={site}
-        pointId={selectedSurveyPointId}
-        surveysFiltered={false}
-        disableGutters
-      />
+      <LoadingSkeleton loading={loading} variant="text" lines={1}>
+        <Box className={classes.graphtTitleWrapper}>
+          <Typography className={classes.graphTitle} variant="h6">
+            HEAT STRESS ANALYSIS (°C)
+          </Typography>
+        </Box>
+      </LoadingSkeleton>
+      <LoadingSkeleton
+        loading={loading}
+        variant="rect"
+        height={256}
+        width="100%"
+        isChart
+      >
+        {site && heatStressDataset && (
+          <>
+            <ChartWithTooltip
+              className={classes.chart}
+              siteId={site.id}
+              datasets={[heatStressDataset]}
+              surveys={convertSurveyDataToLocalTime(surveys, site.timezone)}
+              temperatureThreshold={
+                typeof site.maxMonthlyMean === "number"
+                  ? site.maxMonthlyMean + 1
+                  : null
+              }
+              maxMonthlyMean={site.maxMonthlyMean || null}
+              background
+              timeZone={site.timezone}
+            />
+            <MultipleSensorsCharts
+              site={site}
+              pointId={selectedSurveyPointId}
+              surveysFiltered={false}
+              disableGutters
+            />
+          </>
+        )}
+      </LoadingSkeleton>
     </div>
   );
 };
@@ -72,12 +92,17 @@ const styles = () =>
   });
 
 interface CombinedChartsIncomingProps {
-  site: Site;
+  site?: Site;
   selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
+  loading: boolean;
 }
 
 type CombinedChartsProps = CombinedChartsIncomingProps &
   WithStyles<typeof styles>;
+
+CombinedCharts.defaultProps = {
+  site: undefined,
+};
 
 export default withStyles(styles)(CombinedCharts);

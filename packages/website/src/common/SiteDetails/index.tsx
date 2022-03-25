@@ -199,6 +199,15 @@ const SiteDetails = ({
 
       {site && !loading && oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
 
+      <Box my="2rem">
+        <CombinedCharts
+          site={site}
+          selectedSurveyPointId={selectedSurveyPointId}
+          surveys={surveys}
+          loading={loading}
+        />
+      </Box>
+
       {/* <Box mt="2rem">
             <CombinedCharts
               site={site}
