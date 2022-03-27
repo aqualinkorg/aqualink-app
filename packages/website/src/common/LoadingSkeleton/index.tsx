@@ -5,6 +5,7 @@ import { Skeleton, SkeletonProps } from "@material-ui/lab";
 import random from "lodash/random";
 import times from "lodash/times";
 
+import classNames from "classnames";
 import chartSkeletonImage from "../../assets/img/chart_skeleton.png";
 
 const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
@@ -15,6 +16,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   height,
   lines,
   isChart,
+  dark = true,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -34,7 +36,8 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
       <>
         {times(lines).map((i) => (
           <Skeleton
-            className={classes.root}
+            animation="wave"
+            className={classNames(classes.root, { [classes.dark]: dark })}
             key={i}
             variant={variant}
             width={`${random(isMobile ? 50 : 20, isMobile ? 100 : 40)}%`}
@@ -45,7 +48,12 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   }
 
   return (
-    <Skeleton className={classes.root} variant={variant} {...rectSkeletonProps}>
+    <Skeleton
+      animation="wave"
+      className={classNames(classes.root, { [classes.dark]: dark })}
+      variant={variant}
+      {...rectSkeletonProps}
+    >
       {isChart ? (
         <img
           src={chartSkeletonImage}
@@ -59,8 +67,10 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
 
 const useStyles = makeStyles(() => ({
   root: {
-    backgroundColor: fade("#000000", 0.11),
     borderRadius: 4,
+  },
+  dark: {
+    backgroundColor: fade("#000000", 0.11),
   },
   chartSkeletonImage: {
     visibility: "visible",
@@ -78,6 +88,7 @@ interface LoadingSkeletonProps {
   height?: SkeletonProps["height"];
   lines?: number;
   isChart?: boolean;
+  dark?: boolean;
 }
 
 export default LoadingSkeleton;
