@@ -424,7 +424,7 @@ export class SitesService {
       throw new ConflictException(
         `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
           endDate,
-        ).format(dateFormat)}] already exists`,
+        ).format(dateFormat)}] already exists for spotter ${site.sensorId}.`,
       );
     }
 
@@ -440,6 +440,10 @@ export class SitesService {
     });
 
     if (source) {
+      this.logger.log(
+        `Deleting time-series data for spotter ${site.sensorId} ; source ${source.id}`,
+      );
+
       await this.timeSeriesRepository
         .createQueryBuilder('time-series')
         .where('source_id = :id', { id: source.id })
