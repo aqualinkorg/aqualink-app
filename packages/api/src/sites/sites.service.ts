@@ -430,7 +430,11 @@ export class SitesService {
 
     // We assume that a specific spotter corresponds to only one source.
     const source = await this.sourceRepository.findOne({
-      where: { sensorId: site.sensorId, type: SourceType.SPOTTER },
+      where: {
+        siteId: site.id,
+        sensorId: site.sensorId,
+        type: SourceType.SPOTTER,
+      },
     });
 
     await this.exclusionDatesRepository.save({
