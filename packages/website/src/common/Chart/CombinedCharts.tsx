@@ -14,6 +14,7 @@ import { convertSurveyDataToLocalTime } from "../../helpers/dates";
 import { SurveyListItem } from "../../store/Survey/types";
 import { standardDailyDataDataset } from "./MultipleSensorsCharts/helpers";
 import LoadingSkeleton from "../LoadingSkeleton";
+import chartSkeletonImage from "../../assets/img/chart_skeleton.png";
 
 const CombinedCharts = ({
   site,
@@ -45,7 +46,7 @@ const CombinedCharts = ({
         variant="rect"
         height={256}
         width="100%"
-        isChart
+        image={chartSkeletonImage}
       >
         {site && heatStressDataset && (
           <>

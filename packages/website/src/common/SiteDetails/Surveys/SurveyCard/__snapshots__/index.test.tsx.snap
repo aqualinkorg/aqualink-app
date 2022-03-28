@@ -3,60 +3,60 @@
 exports[`Survey Card should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="MuiPaper-root SurveyCard-surveyCard-5 MuiPaper-elevation0 MuiPaper-rounded"
+    class="MuiPaper-root makeStyles-surveyCard-5 MuiPaper-elevation0 MuiPaper-rounded"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
       style="height: 100%;"
     >
       <div
-        class="MuiGrid-root SurveyCard-cardImageWrapper-9 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+        class="MuiGrid-root makeStyles-cardImageWrapper-9 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
       >
         <a
           href="/sites/0/survey_details/46"
         >
           <div
-            class="MuiCardMedia-root SurveyCard-cardImage-6"
+            class="MuiCardMedia-root makeStyles-cardImage-6"
           />
         </a>
       </div>
       <div
-        class="MuiGrid-root SurveyCard-infoWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+        class="MuiGrid-root makeStyles-infoWrapper-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
       >
         <div
-          class="MuiGrid-root SurveyCard-info-15 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-info-15 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="SurveyCard-cardFields-7"
+              classname="makeStyles-cardFields-7"
               variant="h6"
             >
               User:
             </mock-typography>
             <mock-typography
-              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-13"
+              classname="makeStyles-cardValues-8 makeStyles-valuesWithMargin-13"
               variant="h6"
             >
               Joe Doe
             </mock-typography>
           </div>
           <div
-            class="MuiGrid-root SurveyCard-commentsWrapper-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+            class="MuiGrid-root makeStyles-commentsWrapper-11 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
               style="height: 80%;"
             >
               <mock-typography
-                classname="SurveyCard-cardFields-7"
+                classname="makeStyles-cardFields-7"
                 variant="h6"
               >
                 Comments:
               </mock-typography>
               <mock-typography
-                classname="SurveyCard-cardValues-8 SurveyCard-comments-12"
+                classname="makeStyles-cardValues-8 makeStyles-comments-12"
                 variant="h6"
               >
                 No comments
@@ -67,13 +67,13 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
           >
             <mock-typography
-              classname="SurveyCard-cardFields-7"
+              classname="makeStyles-cardFields-7"
               variant="h6"
             >
               Temp:
             </mock-typography>
             <mock-typography
-              classname="SurveyCard-cardValues-8 SurveyCard-valuesWithMargin-13"
+              classname="makeStyles-cardValues-8 makeStyles-valuesWithMargin-13"
               variant="h6"
             >
               10.0 °C
@@ -118,7 +118,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 open="false"
               >
                 <mock-dialogtitle
-                  classname="Dialog-dialogTitle-17"
+                  classname="Dialog-dialogTitle-22"
                   disabletypography="true"
                 >
                   <mock-typography
@@ -129,7 +129,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 </mock-dialogtitle>
                 <mock-dialogcontent>
                   <div
-                    class="MuiCollapse-container DeleteButton-alert-16 MuiCollapse-hidden"
+                    class="MuiCollapse-container DeleteButton-alert-21 MuiCollapse-hidden"
                     style="min-height: 0px;"
                   >
                     <div

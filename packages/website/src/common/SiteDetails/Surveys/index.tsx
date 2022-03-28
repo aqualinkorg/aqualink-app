@@ -1,7 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   useTheme,
   useMediaQuery,
@@ -12,6 +10,7 @@ import {
   FormControl,
   MenuItem,
   Box,
+  makeStyles,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -34,11 +33,12 @@ import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
 import { getAxiosErrorMessage } from "../../../helpers/errors";
 
-const Surveys = ({ site, classes }: SurveysProps) => {
+const Surveys = ({ site, loading }: SurveysProps) => {
+  const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const [point, setPoint] = useState<string>("All");
-  const pointOptions = site.surveyPoints;
+  const pointOptions = site?.surveyPoints || [];
   const [deleteSurveyPointDialogOpen, setDeleteSurveyPointDialogOpen] =
     useState<boolean>(false);
   const [editSurveyPointNameDraft, seteditSurveyPointNameDraft] = useState<
@@ -55,7 +55,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
     SurveyMedia["observations"] | "any"
   >("any");
   const user = useSelector(userInfoSelector);
-  const isSiteAdmin = isAdmin(user, site.id);
+  const isSiteAdmin = site ? isAdmin(user, site.id) : false;
   const dispatch = useDispatch();
 
   const bodyLength = useBodyLength();
@@ -95,7 +95,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   };
 
   const handleSurveyPointDelete = async () => {
-    if (typeof surveyPointToDelete === "number") {
+    if (site && typeof surveyPointToDelete === "number") {
       setIsDeletePointLoading(true);
       try {
         await siteServices.deleteSiteSurveyPoint(
@@ -211,92 +211,95 @@ const Surveys = ({ site, classes }: SurveysProps) => {
           width={bodyLength}
           zIndex="-1"
         />
-        <Grid
-          className={classes.surveyWrapper}
-          container
-          justify="space-between"
-          item
-          lg={12}
-          xs={11}
-          alignItems="baseline"
-          spacing={isTablet ? 4 : 1}
-        >
+        {!loading && (
           <Grid
+            className={classes.surveyWrapper}
             container
-            justify={isTablet ? "flex-start" : "center"}
+            justify="space-between"
             item
-            md={12}
-            lg={3}
+            lg={12}
+            xs={11}
+            alignItems="baseline"
+            spacing={isTablet ? 4 : 1}
           >
-            <Typography className={classes.title}>Survey History</Typography>
-          </Grid>
-          <PointSelector
-            siteId={site.id}
-            pointOptions={pointOptions}
-            point={point}
-            pointId={pointIdFinder(point)}
-            editSurveyPointNameDraft={editSurveyPointNameDraft}
-            isSiteAdmin={isSiteAdmin}
-            editSurveyPointNameLoading={editSurveyPointNameLoading}
-            onChangeSurveyPointName={onChangeSurveyPointName}
-            handlePointChange={handlePointChange}
-            enableeditSurveyPointName={enableeditSurveyPointName}
-            disableeditSurveyPointName={disableeditSurveyPointName}
-            submitSurveyPointNameUpdate={submitSurveyPointNameUpdate}
-            onDeleteButtonClick={onDeleteSurveyPointButtonClick}
-          />
-          <Grid
-            container
-            alignItems="center"
-            justify={isTablet ? "flex-start" : "center"}
-            item
-            md={12}
-            lg={4}
-            spacing={1}
-          >
-            {/* TODO - Make observation a required field. */}
-            <Grid item>
-              <Typography variant="h6" className={classes.subTitle}>
-                Observation:
-              </Typography>
+            <Grid
+              container
+              justify={isTablet ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={3}
+            >
+              <Typography className={classes.title}>Survey History</Typography>
             </Grid>
-            <Grid item className={classes.selectorWrapper}>
-              <FormControl className={classes.formControl}>
-                <Select
-                  labelId="survey-observation"
-                  id="survey-observation"
-                  name="survey-observation"
-                  value={observation}
-                  onChange={handleObservationChange}
-                  className={classes.selectedItem}
-                  inputProps={{ className: classes.textField }}
-                >
-                  <MenuItem value="any">
-                    <Typography className={classes.menuItem} variant="h6">
-                      Any
-                    </Typography>
-                  </MenuItem>
-                  {observationOptions.map((item) => (
-                    <MenuItem
-                      className={classes.menuItem}
-                      value={item.key}
-                      key={item.key}
-                      title={item.value}
-                    >
-                      {item.value}
+            <PointSelector
+              siteId={site?.id}
+              pointOptions={pointOptions}
+              point={point}
+              pointId={pointIdFinder(point)}
+              editSurveyPointNameDraft={editSurveyPointNameDraft}
+              isSiteAdmin={isSiteAdmin}
+              editSurveyPointNameLoading={editSurveyPointNameLoading}
+              onChangeSurveyPointName={onChangeSurveyPointName}
+              handlePointChange={handlePointChange}
+              enableeditSurveyPointName={enableeditSurveyPointName}
+              disableeditSurveyPointName={disableeditSurveyPointName}
+              submitSurveyPointNameUpdate={submitSurveyPointNameUpdate}
+              onDeleteButtonClick={onDeleteSurveyPointButtonClick}
+            />
+            <Grid
+              container
+              alignItems="center"
+              justify={isTablet ? "flex-start" : "center"}
+              item
+              md={12}
+              lg={4}
+              spacing={1}
+            >
+              {/* TODO - Make observation a required field. */}
+              <Grid item>
+                <Typography variant="h6" className={classes.subTitle}>
+                  Observation:
+                </Typography>
+              </Grid>
+              <Grid item className={classes.selectorWrapper}>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="survey-observation"
+                    id="survey-observation"
+                    name="survey-observation"
+                    value={observation}
+                    onChange={handleObservationChange}
+                    className={classes.selectedItem}
+                    inputProps={{ className: classes.textField }}
+                  >
+                    <MenuItem value="any">
+                      <Typography className={classes.menuItem} variant="h6">
+                        Any
+                      </Typography>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    {observationOptions.map((item) => (
+                      <MenuItem
+                        className={classes.menuItem}
+                        value={item.key}
+                        key={item.key}
+                        title={item.value}
+                      >
+                        {item.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
         <Grid container justify="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isSiteAdmin}
+            loading={loading}
             addNewButton
-            siteId={site.id}
-            timeZone={site.timezone}
+            siteId={site?.id}
+            timeZone={site?.timezone}
             observation={observation}
             pointName={point}
             pointId={pointIdFinder(point)}
@@ -307,7 +310,7 @@ const Surveys = ({ site, classes }: SurveysProps) => {
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       marginTop: "5rem",
@@ -352,12 +355,16 @@ const styles = (theme: Theme) =>
       textOverflow: "ellipsis",
       display: "block",
     },
-  });
+  })
+);
 
-interface SurveyIncomingProps {
-  site: Site;
+interface SurveysProps {
+  site?: Site;
+  loading: boolean;
 }
 
-type SurveysProps = SurveyIncomingProps & WithStyles<typeof styles>;
+Surveys.defaultProps = {
+  site: undefined,
+};
 
-export default withStyles(styles)(Surveys);
+export default Surveys;

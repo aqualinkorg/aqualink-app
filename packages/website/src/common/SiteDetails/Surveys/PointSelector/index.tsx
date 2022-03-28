@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import {
-  withStyles,
-  WithStyles,
   createStyles,
   Theme,
   Grid,
@@ -13,6 +11,7 @@ import {
   Tooltip,
   TextField,
   Hidden,
+  makeStyles,
 } from "@material-ui/core";
 import { Create, DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -36,8 +35,8 @@ const PointSelector = ({
   disableeditSurveyPointName,
   submitSurveyPointNameUpdate,
   onDeleteButtonClick,
-  classes,
 }: PointSelectorProps) => {
+  const classes = useStyles();
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editSurveyPoint, seteditSurveyPoint] = useState<SurveyPoints>();
   const errored =
@@ -246,7 +245,7 @@ const PointSelector = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     subTitle: {
       lineHeight: 1,
@@ -290,10 +289,11 @@ const styles = (theme: Theme) =>
     closeIcon: {
       color: theme.palette.error.main,
     },
-  });
+  })
+);
 
-interface PointSelectorIncomingProps {
-  siteId: number;
+interface PointSelectorProps {
+  siteId?: number;
   pointOptions: SurveyPoints[];
   point: string;
   pointId: number;
@@ -310,7 +310,8 @@ interface PointSelectorIncomingProps {
   onDeleteButtonClick: (id: number) => void;
 }
 
-type PointSelectorProps = PointSelectorIncomingProps &
-  WithStyles<typeof styles>;
+PointSelector.defaultProps = {
+  siteId: undefined,
+};
 
-export default withStyles(styles)(PointSelector);
+export default PointSelector;
