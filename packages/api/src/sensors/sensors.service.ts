@@ -52,6 +52,9 @@ export class SensorsService {
     const spotterData = await Bluebird.map(
       sites,
       (site) => {
+        if (site.sensorId === null) {
+          console.warn(`Spotter for site ${site.id} appears null.`);
+        }
         return getSpotterData(site.sensorId!).then((data) => {
           return {
             id: site.id,
