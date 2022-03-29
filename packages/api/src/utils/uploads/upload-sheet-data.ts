@@ -176,7 +176,6 @@ const getTimestampFromMultiColumnDate = (
   dataObject: any,
   mimetype?: Mimetype,
 ) => {
-  // TODO - Make this case insensitive
   const dateValue = getParameterCaseInsensitive(
     dataObject,
     'Date (MM/DD/YYYY)',
