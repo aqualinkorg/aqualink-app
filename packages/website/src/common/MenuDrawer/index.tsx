@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Box,
   Button,
+  Link as ExternalLink,
   ButtonGroup,
   createStyles,
   Drawer,
@@ -49,6 +50,11 @@ const menuRoutes = [
     gaActionLabel: "About",
   },
   {
+    text: "STORIES",
+    href: "https://stories.aqualink.org",
+    gaActionLabel: "Stories",
+  },
+  {
     text: "FAQ",
     to: "/faq",
     gaActionLabel: "Faq",
@@ -84,12 +90,14 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, to, gaActionLabel }) => (
+      {menuRoutes.map(({ text, to, href, gaActionLabel }) => (
         <Button
           className={classes.menuDrawerButton}
           key={text}
-          component={Link}
-          to={to}
+          component={href ? ExternalLink : Link}
+          target={href ? "_blank" : undefined}
+          href={href || undefined}
+          to={to || ""}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
