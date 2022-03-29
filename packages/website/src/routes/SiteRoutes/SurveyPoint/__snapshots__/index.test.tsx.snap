@@ -77,6 +77,19 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-button>
         <mock-button
           classname="MenuDrawer-menuDrawerButton-14"
+          component="mock-Link"
+          href="https://stories.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            variant="h6"
+          >
+            STORIES
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-14"
           component="[object Object]"
           to="/faq"
         >
