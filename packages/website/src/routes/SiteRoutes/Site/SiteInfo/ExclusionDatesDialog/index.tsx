@@ -194,8 +194,6 @@ const ExclusionDatesDialog = ({
     },
   ];
 
-  // TODO add timezone info in the confirmation dialog.
-
   return (
     <>
       <ConfirmationDialog
@@ -205,6 +203,7 @@ const ExclusionDatesDialog = ({
         handleMaintainPeriodAddition={onMaintainAdd}
         start={maintainStartDateTime || undefined}
         end={maintainEndDateTime || undefined}
+        timeZone={timeZone || "UTC"}
       />
       <Dialog
         open={open}
@@ -222,8 +221,8 @@ const ExclusionDatesDialog = ({
                 {dialogType === "deploy"
                   ? "Spotter data before this date will be deleted."
                   : "Spotter data between these dates will be deleted."}{" "}
-                Note: The dates below correspond to the site&apos;s local
-                timezone ({timeZone || "UTC"}).
+                Note: The dates below are in the site&apos;s local timezone (
+                {timeZone || "UTC"}).
               </Alert>
             </Box>
             <Box mb="5px">
