@@ -71,6 +71,19 @@ exports[`MenuDrawer open should render with given state from Redux store 1`] = `
     </mock-button>
     <mock-button
       classname="MenuDrawer-menuDrawerButton-3"
+      component="mock-Link"
+      href="https://stories.aqualink.org"
+      target="_blank"
+      to=""
+    >
+      <mock-typography
+        variant="h6"
+      >
+        STORIES
+      </mock-typography>
+    </mock-button>
+    <mock-button
+      classname="MenuDrawer-menuDrawerButton-3"
       component="[object Object]"
       to="/faq"
     >
