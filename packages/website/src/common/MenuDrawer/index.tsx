@@ -155,7 +155,7 @@ const styles = (theme: Theme) =>
       },
     },
     menuDrawerButton: {
-      margin: theme.spacing(2, 4, 4),
+      margin: theme.spacing(2, 2, 2),
       "&:hover": {
         color: "white",
       },
