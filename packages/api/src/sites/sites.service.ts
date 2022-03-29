@@ -417,18 +417,6 @@ export class SitesService {
       );
     }
 
-    const alreadyExists = await this.exclusionDatesRepository.findOne({
-      where: { sensorId: site.sensorId, startDate, endDate },
-    });
-
-    if (alreadyExists) {
-      throw new ConflictException(
-        `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
-          endDate,
-        ).format(dateFormat)}] already exists for spotter ${site.sensorId}.`,
-      );
-    }
-
     const sources = await this.sourceRepository.find({
       where: {
         site,
@@ -439,13 +427,27 @@ export class SitesService {
     Bluebird.Promise.each(sources, async (source) => {
       if (!source.sensorId) {
         throw new BadRequestException(
-          'Cannot delete spotter data for sensor with invalid id',
+          'Cannot delete spotter with missing sensorId',
         );
       }
 
       this.logger.log(
-        `Deleting time-series data for spotter ${source.sensorId} ; source ${source.id}`,
+        `Deleting time-series data for spotter ${source.sensorId} ; site ${site.id}`,
       );
+
+      const alreadyExists = await this.exclusionDatesRepository.findOne({
+        where: { sensorId: source.sensorId, startDate, endDate },
+      });
+
+      if (alreadyExists) {
+        throw new ConflictException(
+          `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
+            endDate,
+          ).format(dateFormat)}] already exists for spotter ${
+            source.sensorId
+          }.`,
+        );
+      }
 
       await this.exclusionDatesRepository.save({
         sensorId: source.sensorId,
