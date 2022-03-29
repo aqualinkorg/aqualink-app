@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { omit } from 'lodash';
 import moment from 'moment';
+import Bluebird from 'bluebird';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
@@ -428,25 +429,29 @@ export class SitesService {
       );
     }
 
-    // We assume that a specific spotter corresponds to only one source.
-    const source = await this.sourceRepository.findOne({
+    const sources = await this.sourceRepository.find({
       where: {
         site,
-        sensorId: site.sensorId,
         type: SourceType.SPOTTER,
       },
     });
 
-    await this.exclusionDatesRepository.save({
-      sensorId: site.sensorId,
-      endDate,
-      startDate,
-    });
+    Bluebird.Promise.each(sources, async (source) => {
+      if (!source.sensorId) {
+        throw new BadRequestException(
+          'Cannot delete spotter data for sensor with invalid id',
+        );
+      }
 
-    if (source) {
       this.logger.log(
-        `Deleting time-series data for spotter ${site.sensorId} ; source ${source.id}`,
+        `Deleting time-series data for spotter ${source.sensorId} ; source ${source.id}`,
       );
+
+      await this.exclusionDatesRepository.save({
+        sensorId: source.sensorId,
+        endDate,
+        startDate,
+      });
 
       await this.timeSeriesRepository
         .createQueryBuilder('time-series')
@@ -459,7 +464,7 @@ export class SitesService {
         })
         .delete()
         .execute();
-    }
+    });
   }
 
   async getExclusionDates(id: number) {
