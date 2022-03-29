@@ -77,6 +77,19 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </mock-button>
         <mock-button
           classname="MenuDrawer-menuDrawerButton-199"
+          component="mock-Link"
+          href="https://stories.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            variant="h6"
+          >
+            STORIES
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-199"
           component="[object Object]"
           to="/faq"
         >
@@ -2753,6 +2766,19 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             variant="h6"
           >
             ABOUT
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-16"
+          component="mock-Link"
+          href="https://stories.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            variant="h6"
+          >
+            STORIES
           </mock-typography>
         </mock-button>
         <mock-button
