@@ -194,6 +194,8 @@ const ExclusionDatesDialog = ({
     },
   ];
 
+  // TODO add timezone info in the confirmation dialog.
+
   return (
     <>
       <ConfirmationDialog

@@ -19,6 +19,7 @@ const ConfirmationDialog = ({
   handleMaintainPeriodAddition,
 }: ConfirmationDialogProps) => {
   const classes = useStyles();
+  // TODO add timezone info in the confirmation dialog.
   const startDate = moment(start).format("MM/DD/YYYY HH:mm");
   const endDate = moment(end).format("MM/DD/YYYY HH:mm");
 
