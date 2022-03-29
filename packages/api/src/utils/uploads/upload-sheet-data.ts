@@ -213,6 +213,7 @@ const getTimestampFromDateString = (dataObject: any) => {
   );
 
   if (!dateKey) {
+    // TODO - Can we raise an error here instead? Is it safe?
     return undefined;
   }
 
