@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { omit } from 'lodash';
 import moment from 'moment';
+import Bluebird from 'bluebird';
 import { Site, SiteStatus } from './sites.entity';
 import { DailyData } from './daily-data.entity';
 import { FilterSiteDto } from './dto/filter-site.dto';
@@ -416,30 +417,44 @@ export class SitesService {
       );
     }
 
-    const alreadyExists = await this.exclusionDatesRepository.findOne({
-      where: { sensorId: site.sensorId, startDate, endDate },
+    const sources = await this.sourceRepository.find({
+      where: {
+        site,
+        type: SourceType.SPOTTER,
+      },
     });
 
-    if (alreadyExists) {
-      throw new ConflictException(
-        `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
-          endDate,
-        ).format(dateFormat)}] already exists`,
+    Bluebird.Promise.each(sources, async (source) => {
+      if (!source.sensorId) {
+        throw new BadRequestException(
+          'Cannot delete spotter with missing sensorId',
+        );
+      }
+
+      this.logger.log(
+        `Deleting time-series data for spotter ${source.sensorId} ; site ${site.id}`,
       );
-    }
 
-    // We assume that a specific spotter corresponds to only one source.
-    const source = await this.sourceRepository.findOne({
-      where: { sensorId: site.sensorId, type: SourceType.SPOTTER },
-    });
+      const alreadyExists = await this.exclusionDatesRepository.findOne({
+        where: { sensorId: source.sensorId, startDate, endDate },
+      });
 
-    await this.exclusionDatesRepository.save({
-      sensorId: site.sensorId,
-      endDate,
-      startDate,
-    });
+      if (alreadyExists) {
+        throw new ConflictException(
+          `Exclusion period [${moment(startDate).format(dateFormat)}, ${moment(
+            endDate,
+          ).format(dateFormat)}] already exists for spotter ${
+            source.sensorId
+          }.`,
+        );
+      }
 
-    if (source) {
+      await this.exclusionDatesRepository.save({
+        sensorId: source.sensorId,
+        endDate,
+        startDate,
+      });
+
       await this.timeSeriesRepository
         .createQueryBuilder('time-series')
         .where('source_id = :id', { id: source.id })
@@ -451,7 +466,7 @@ export class SitesService {
         })
         .delete()
         .execute();
-    }
+    });
   }
 
   async getExclusionDates(id: number) {

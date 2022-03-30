@@ -15,6 +15,7 @@ const ConfirmationDialog = ({
   isConfirmLoading,
   start,
   end,
+  timeZone,
   onClose,
   handleMaintainPeriodAddition,
 }: ConfirmationDialogProps) => {
@@ -27,8 +28,14 @@ const ConfirmationDialog = ({
       <DialogContent className={classes.content}>
         <Typography color="textSecondary">
           Are you sure you want to proceed? Data between{" "}
-          <span className={classes.bold}>{startDate}</span> and{" "}
-          <span className={classes.bold}>{endDate}</span> will be lost.
+          <span className={classes.bold}>
+            {startDate} {timeZone}
+          </span>{" "}
+          and{" "}
+          <span className={classes.bold}>
+            {endDate} {timeZone}
+          </span>{" "}
+          will be lost.
         </Typography>
       </DialogContent>
       <DialogActions>
@@ -68,6 +75,7 @@ interface ConfirmationDialogProps {
   isConfirmLoading: boolean;
   start?: Date;
   end?: Date;
+  timeZone: string;
   onClose: () => void;
   handleMaintainPeriodAddition: () => void;
 }

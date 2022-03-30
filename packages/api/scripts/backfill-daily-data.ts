@@ -15,7 +15,7 @@ const { argv } = yargs
     type: 'number',
     demandOption: true,
   })
-  .option('r', {
+  .option('s', {
     alias: 'sites',
     describe: 'Specify the sites which will be backfilled with data',
     type: 'array',
@@ -23,7 +23,7 @@ const { argv } = yargs
   .help();
 
 async function run() {
-  const { d: days, r: sites } = argv;
+  const { d: days, s: sites } = argv;
   const backlogArray = Array.from(Array(days).keys());
   const siteIds = sites && sites.map((site) => parseInt(`${site}`, 10));
   const today = moment()
