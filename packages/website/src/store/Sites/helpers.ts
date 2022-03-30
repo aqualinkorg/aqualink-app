@@ -33,7 +33,10 @@ import {
   TimeSeriesDataResponse,
 } from "./types";
 
-export function getSiteNameAndRegion(site: Site) {
+export function getSiteNameAndRegion(site?: Site | null) {
+  if (!site) {
+    return {};
+  }
   const name = site.name || site.region?.name || null;
   const region = site.name ? site.region?.name : null;
   return { name, region };

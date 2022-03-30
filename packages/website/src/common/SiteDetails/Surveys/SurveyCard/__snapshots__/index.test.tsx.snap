@@ -118,7 +118,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 open="false"
               >
                 <mock-dialogtitle
-                  classname="Dialog-dialogTitle-22"
+                  classname="Dialog-dialogTitle-25"
                   disabletypography="true"
                 >
                   <mock-typography
@@ -129,7 +129,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 </mock-dialogtitle>
                 <mock-dialogcontent>
                   <div
-                    class="MuiCollapse-container DeleteButton-alert-21 MuiCollapse-hidden"
+                    class="MuiCollapse-container DeleteButton-alert-24 MuiCollapse-hidden"
                     style="min-height: 0px;"
                   >
                     <div

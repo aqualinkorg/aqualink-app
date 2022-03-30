@@ -3,12 +3,12 @@
 exports[`Site Detail Page should render with given state from Redux store: snapshot-with-data 1`] = `
 <div>
   <mock-appbar
-    classname="NavBar-appBar-236 NavBar-appBarXs-238"
+    classname="NavBar-appBar-263 NavBar-appBarXs-265"
     color="primary"
     position="static"
   >
     <mock-toolbar
-      classname="NavBar-toolbar-239"
+      classname="NavBar-toolbar-266"
     >
       <mock-drawer
         anchor="left"
@@ -21,7 +21,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           <clear />
         </mock-iconbutton>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/"
         >
@@ -32,7 +32,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/map"
         >
@@ -43,7 +43,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/buoy"
         >
@@ -54,7 +54,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/drones"
         >
@@ -65,7 +65,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/about"
         >
@@ -76,7 +76,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="mock-Link"
           href="https://stories.aqualink.org"
           target="_blank"
@@ -89,7 +89,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/faq"
         >
@@ -100,7 +100,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/tracker"
         >
@@ -111,7 +111,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-typography>
         </mock-button>
         <mock-button
-          classname="MenuDrawer-menuDrawerButton-249"
+          classname="MenuDrawer-menuDrawerButton-276"
           component="[object Object]"
           to="/register"
         >
@@ -135,7 +135,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             role="group"
           >
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-248"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-275"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -151,7 +151,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               GitHub
             </mock-button>
             <mock-button
-              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-248"
+              classname="MuiButtonGroup-grouped MuiButtonGroup-groupedHorizontal MuiButtonGroup-groupedContained MuiButtonGroup-groupedContainedHorizontal MuiButtonGroup-groupedContained MenuDrawer-contributeButton-275"
               color="default"
               disabled="false"
               disableelevation="false"
@@ -198,7 +198,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-link
-              classname="NavBar-navBarLink-237"
+              classname="NavBar-navBarLink-264"
               href="/map"
             >
               <mock-typography
@@ -223,10 +223,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 MuiGrid-grid-md-3"
           >
             <div
-              class="Search-searchBar-250"
+              class="Search-searchBar-277"
             >
               <div
-                class="Search-searchBarIcon-251"
+                class="Search-searchBarIcon-278"
               >
                 <mock-iconbutton
                   size="small"
@@ -244,11 +244,11 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </mock-iconbutton>
               </div>
               <div
-                class="Search-searchBarText-252"
+                class="Search-searchBarText-279"
               >
                 <div
                   aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-253 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  class="MuiAutocomplete-root Search-searchBarInput-280 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                   role="combobox"
                 >
                   <mock-textfield
@@ -275,11 +275,11 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           >
             Mock User
             <mock-iconbutton
-              classname="NavBar-button-246"
+              classname="NavBar-button-273"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root NavBar-expandIcon-245"
+                class="MuiSvgIcon-root NavBar-expandIcon-272"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -289,21 +289,21 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </svg>
             </mock-iconbutton>
             <mock-menu
-              classname="NavBar-userMenu-242"
+              classname="NavBar-userMenu-269"
               keepmounted="true"
               menulistprops="[object Object]"
               open="false"
               popoverclasses="[object Object]"
             >
               <mock-divider
-                classname="NavBar-userMenuDivider-241"
+                classname="NavBar-userMenuDivider-268"
               />
               <a
-                class="NavBar-menuItemLink-244"
+                class="NavBar-menuItemLink-271"
                 href="/dashboard"
               >
                 <mock-menuitem
-                  classname="NavBar-menuItem-243"
+                  classname="NavBar-menuItem-270"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -335,10 +335,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </mock-menuitem>
               </a>
               <mock-divider
-                classname="NavBar-userMenuDivider-241"
+                classname="NavBar-userMenuDivider-268"
               />
               <mock-menuitem
-                classname="NavBar-menuItem-243"
+                classname="NavBar-menuItem-270"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -375,10 +375,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             style="margin: 0px; padding-top: 0px;"
           >
             <div
-              class="Search-searchBar-250"
+              class="Search-searchBar-277"
             >
               <div
-                class="Search-searchBarIcon-251"
+                class="Search-searchBarIcon-278"
               >
                 <mock-iconbutton
                   size="small"
@@ -396,11 +396,11 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </mock-iconbutton>
               </div>
               <div
-                class="Search-searchBarText-252"
+                class="Search-searchBarText-279"
               >
                 <div
                   aria-expanded="false"
-                  class="MuiAutocomplete-root Search-searchBarInput-253 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
+                  class="MuiAutocomplete-root Search-searchBarInput-280 MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
                   role="combobox"
                 >
                   <mock-textfield
@@ -427,7 +427,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
   >
     <mock-card>
       <div
-        class="MuiCardHeader-root RegisterDialog-dialogHeader-257"
+        class="MuiCardHeader-root RegisterDialog-dialogHeader-284"
       >
         <div
           class="MuiCardHeader-content"
@@ -453,7 +453,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="RegisterDialog-dialogHeaderSecondPart-258"
+                    classname="RegisterDialog-dialogHeaderSecondPart-285"
                     variant="h4"
                   >
                     link
@@ -464,7 +464,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="RegisterDialog-closeButton-256"
+                  classname="RegisterDialog-closeButton-283"
                   size="small"
                 >
                   <svg
@@ -488,7 +488,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root RegisterDialog-dialogContentTitle-259 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root RegisterDialog-dialogContentTitle-286 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -505,10 +505,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="RegisterDialog-form-260"
+              class="RegisterDialog-form-287"
             >
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-261 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-288 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -523,7 +523,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-261 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-288 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -538,7 +538,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-261 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-288 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -553,7 +553,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-261 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-288 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -568,7 +568,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-textFieldWrapper-261 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-textFieldWrapper-288 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -591,7 +591,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-checkbox
                     checked="false"
-                    classname="RegisterDialog-termsCheckbox-265"
+                    classname="RegisterDialog-termsCheckbox-292"
                     color="primary"
                   />
                 </div>
@@ -600,14 +600,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 >
                   <mock-box>
                     <mock-typography
-                      classname="RegisterDialog-formText-263"
+                      classname="RegisterDialog-formText-290"
                       color="textSecondary"
                       variant="subtitle1"
                     >
                       I have read the
                        
                       <a
-                        class="RegisterDialog-termsLink-266"
+                        class="RegisterDialog-termsLink-293"
                         href="/terms"
                       >
                         Terms and Conditions
@@ -617,7 +617,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <div
-                class="MuiGrid-root RegisterDialog-button-264 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root RegisterDialog-button-291 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -634,7 +634,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="RegisterDialog-formText-263"
+                  classname="RegisterDialog-formText-290"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -661,7 +661,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       elevation="0"
     >
       <div
-        class="MuiCardHeader-root SignInDialog-dialogHeader-268"
+        class="MuiCardHeader-root SignInDialog-dialogHeader-295"
       >
         <div
           class="MuiCardHeader-content"
@@ -687,7 +687,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     Aqua
                   </mock-typography>
                   <mock-typography
-                    classname="SignInDialog-dialogHeaderSecondPart-269"
+                    classname="SignInDialog-dialogHeaderSecondPart-296"
                     variant="h4"
                   >
                     link
@@ -698,7 +698,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-iconbutton
-                  classname="SignInDialog-closeButton-267"
+                  classname="SignInDialog-closeButton-294"
                   size="small"
                 >
                   <svg
@@ -779,7 +779,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
         >
           <div
-            class="MuiGrid-root SignInDialog-dialogContentTitle-270 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
+            class="MuiGrid-root SignInDialog-dialogContentTitle-297 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <div
               class="MuiGrid-root MuiGrid-item"
@@ -796,10 +796,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
           >
             <form
-              class="SignInDialog-form-271"
+              class="SignInDialog-form-298"
             >
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-272 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-299 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -814,7 +814,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 />
               </div>
               <div
-                class="MuiGrid-root SignInDialog-textFieldWrapper-272 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-textFieldWrapper-299 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-textfield
                   error="false"
@@ -833,7 +833,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
-                  classname="SignInDialog-forgotPasswordButton-276"
+                  classname="SignInDialog-forgotPasswordButton-303"
                 >
                   <mock-typography
                     color="textSecondary"
@@ -844,7 +844,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </mock-button>
               </div>
               <div
-                class="MuiGrid-root SignInDialog-button-275 MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root SignInDialog-button-302 MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-button
                   color="primary"
@@ -860,7 +860,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <mock-typography
-                  classname="SignInDialog-formText-274"
+                  classname="SignInDialog-formText-301"
                   color="textSecondary"
                   variant="subtitle1"
                 >
@@ -951,7 +951,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
           >
             <div
-              class="MuiGrid-root SiteNavBar-headerButtonWrapper-283 MuiGrid-item"
+              class="MuiGrid-root SiteNavBar-headerButtonWrapper-312 MuiGrid-item"
             >
               <mock-iconbutton
                 aria-label="menu"
@@ -973,7 +973,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </mock-iconbutton>
             </div>
             <div
-              class="MuiGrid-root SiteNavBar-headerWrapper-284 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+              class="MuiGrid-root SiteNavBar-headerWrapper-313 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
@@ -985,7 +985,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                   >
                     <div
-                      class="MuiGrid-root SiteNavBar-siteNameWrapper-285 MuiGrid-item"
+                      class="MuiGrid-root SiteNavBar-siteNameWrapper-314 MuiGrid-item"
                     >
                       <mock-typography
                         variant="h4"
@@ -994,7 +994,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root SiteNavBar-headerButtonWrapper-283 MuiGrid-item"
+                      class="MuiGrid-root SiteNavBar-headerButtonWrapper-312 MuiGrid-item"
                     />
                   </div>
                 </div>
@@ -1063,7 +1063,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <mock-box
-              classname="Title-root-302"
+              classname="Title-root-332"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
@@ -1097,7 +1097,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-299"
+              class="CardWithTitle-container-328"
             >
               <mock-map
                 polygon="[object Object]"
@@ -1114,7 +1114,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-299"
+              class="CardWithTitle-container-328"
             >
               <mock-featuredmedia
                 featuredimage=""
@@ -1126,20 +1126,20 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-297 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root SiteDetails-metricsWrapper-326 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-287"
+            class="SiteDetails-card-316"
           >
             <mock-card
-              classname="Satellite-root-376"
+              classname="Satellite-root-419"
               style="background-color: rgb(117, 180, 114);"
             >
               <div
-                class="MuiCardHeader-root Satellite-header-371"
+                class="MuiCardHeader-root Satellite-header-414"
               >
                 <div
                   class="MuiCardHeader-content"
@@ -1157,7 +1157,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="Satellite-cardTitle-370"
+                          classname="Satellite-cardTitle-413"
                           variant="h6"
                         >
                           SATELLITE OBSERVATION
@@ -1168,7 +1168,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <mock-cardcontent
-                classname="Satellite-content-377"
+                classname="Satellite-content-420"
               >
                 <mock-box
                   display="flex"
@@ -1182,7 +1182,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-372"
+                        classname="Satellite-contentTextTitles-415"
                         variant="subtitle2"
                       >
                         SURFACE TEMP
@@ -1191,7 +1191,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         title=""
                       >
                         <mock-typography
-                          classname="Satellite-contentTextValues-373"
+                          classname="Satellite-contentTextValues-416"
                           variant="h3"
                         >
                           29.0°C
@@ -1202,7 +1202,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-372"
+                        classname="Satellite-contentTextTitles-415"
                         variant="subtitle2"
                       >
                         HISTORICAL MAX
@@ -1211,7 +1211,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         title="Historical maximum monthly average over the past 20 years"
                       >
                         <mock-typography
-                          classname="Satellite-contentTextValues-373"
+                          classname="Satellite-contentTextValues-416"
                           variant="h3"
                         >
                           0.0°C
@@ -1222,7 +1222,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-372"
+                        classname="Satellite-contentTextTitles-415"
                         variant="subtitle2"
                       >
                         DEGREE HEATING WEEKS
@@ -1231,7 +1231,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         title="Degree Heating Weeks - a measure of the amount of time above the 20 year historical maximum temperatures"
                       >
                         <mock-typography
-                          classname="Satellite-contentTextValues-373"
+                          classname="Satellite-contentTextValues-416"
                           variant="h3"
                         >
                           4.9
@@ -1242,7 +1242,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="Satellite-contentTextTitles-372"
+                        classname="Satellite-contentTextTitles-415"
                         variant="subtitle2"
                       >
                         SST ANOMALY
@@ -1251,7 +1251,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         title="Difference between current SST and longterm average"
                       >
                         <mock-typography
-                          classname="Satellite-contentTextValues-373"
+                          classname="Satellite-contentTextValues-416"
                           variant="h3"
                         >
                           - -°C
@@ -1445,10 +1445,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root makeStyles-updateInfo-379 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root makeStyles-updateInfo-422 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
-                    class="MuiGrid-root makeStyles-dateInfoWrapper-383 makeStyles-dateInfoWrapper-385 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-dateInfoWrapper-426 makeStyles-dateInfoWrapper-428 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -1458,7 +1458,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root makeStyles-updateIcon-381 MuiSvgIcon-fontSizeSmall"
+                          class="MuiSvgIcon-root makeStyles-updateIcon-424 MuiSvgIcon-fontSizeSmall"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
@@ -1468,7 +1468,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </svg>
                       </div>
                       <div
-                        class="MuiGrid-root makeStyles-dateInfo-384 MuiGrid-item"
+                        class="MuiGrid-root makeStyles-dateInfo-427 MuiGrid-item"
                       >
                         <mock-box
                           display="flex"
@@ -1476,7 +1476,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           width="100%"
                         >
                           <mock-typography
-                            classname="makeStyles-updateInfoText-382"
+                            classname="makeStyles-updateInfoText-425"
                             variant="caption"
                           >
                             Last data received
@@ -1484,7 +1484,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             5 min. ago
                           </mock-typography>
                           <mock-typography
-                            classname="makeStyles-updateInfoText-382"
+                            classname="makeStyles-updateInfoText-425"
                             variant="caption"
                           >
                             Updated daily
@@ -1494,27 +1494,27 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-chip-386 makeStyles-chip-392 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-chip-429 makeStyles-chip-435 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <mock-button
-                        classname="makeStyles-button-391"
+                        classname="makeStyles-button-434"
                       >
                         <a
-                          class="makeStyles-link-389"
+                          class="makeStyles-link-432"
                           href="https://coralsitewatch.noaa.gov/"
                           target="_blank"
                         >
                           <mock-typography
-                            classname="makeStyles-chipText-387"
+                            classname="makeStyles-chipText-430"
                           >
                             NOAA
                           </mock-typography>
                           <img
                             alt="sensor-type"
-                            class="makeStyles-sensorImage-390"
+                            class="makeStyles-sensorImage-433"
                             src="satellite.svg"
                           />
                         </a>
@@ -1530,13 +1530,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-287"
+            class="SiteDetails-card-316"
           >
             <mock-card
-              classname="Sensor-root-401"
+              classname="Sensor-root-445"
             >
               <div
-                class="MuiCardHeader-root Sensor-header-396"
+                class="MuiCardHeader-root Sensor-header-440"
               >
                 <div
                   class="MuiCardHeader-content"
@@ -1554,7 +1554,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-item"
                       >
                         <mock-typography
-                          classname="Sensor-cardTitle-395"
+                          classname="Sensor-cardTitle-439"
                           variant="h6"
                         >
                           BUOY OBSERVATION
@@ -1565,7 +1565,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <mock-cardcontent
-                classname="Sensor-content-403"
+                classname="Sensor-content-447"
               >
                 <mock-box
                   display="flex"
@@ -1580,13 +1580,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <mock-typography
-                        classname="Sensor-contentTextTitles-397"
+                        classname="Sensor-contentTextTitles-441"
                         variant="subtitle2"
                       >
                         TEMP AT 1m
                       </mock-typography>
                       <mock-typography
-                        classname="Sensor-contentTextValues-398"
+                        classname="Sensor-contentTextValues-442"
                         variant="h3"
                       >
                         - -°C
@@ -1596,13 +1596,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <mock-typography
-                        classname="Sensor-contentTextTitles-397"
+                        classname="Sensor-contentTextTitles-441"
                         variant="subtitle2"
                       >
                         TEMP AT DEPTH
                       </mock-typography>
                       <mock-typography
-                        classname="Sensor-contentTextValues-398"
+                        classname="Sensor-contentTextValues-442"
                         variant="h3"
                       >
                         39.0°C
@@ -1621,10 +1621,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   </mock-box>
                 </mock-box>
                 <div
-                  class="MuiGrid-root makeStyles-updateInfo-379 makeStyles-withMargin-380 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                  class="MuiGrid-root makeStyles-updateInfo-422 makeStyles-withMargin-423 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                 >
                   <div
-                    class="MuiGrid-root makeStyles-dateInfoWrapper-383 makeStyles-dateInfoWrapper-407 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-dateInfoWrapper-426 makeStyles-dateInfoWrapper-451 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -1634,7 +1634,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root makeStyles-updateIcon-381 MuiSvgIcon-fontSizeSmall"
+                          class="MuiSvgIcon-root makeStyles-updateIcon-424 MuiSvgIcon-fontSizeSmall"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
@@ -1644,7 +1644,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         </svg>
                       </div>
                       <div
-                        class="MuiGrid-root makeStyles-dateInfo-384 MuiGrid-item"
+                        class="MuiGrid-root makeStyles-dateInfo-427 MuiGrid-item"
                       >
                         <mock-box
                           display="flex"
@@ -1652,7 +1652,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           width="100%"
                         >
                           <mock-typography
-                            classname="makeStyles-updateInfoText-382"
+                            classname="makeStyles-updateInfoText-425"
                             variant="caption"
                           >
                             Last data received
@@ -1660,7 +1660,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             5 min. ago
                           </mock-typography>
                           <mock-typography
-                            classname="makeStyles-updateInfoText-382"
+                            classname="makeStyles-updateInfoText-425"
                             variant="caption"
                           >
                             Updated hourly
@@ -1670,19 +1670,19 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-chip-386 makeStyles-chip-408 MuiGrid-item"
+                    class="MuiGrid-root makeStyles-chip-429 makeStyles-chip-452 MuiGrid-item"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                     >
                       <mock-button
-                        classname="makeStyles-button-391"
+                        classname="makeStyles-button-434"
                       >
                         <div
-                          class="makeStyles-circle-388"
+                          class="makeStyles-circle-431"
                         />
                         <mock-typography
-                          classname="makeStyles-chipText-387"
+                          classname="makeStyles-chipText-430"
                         >
                           LIVE
                         </mock-typography>
@@ -1698,13 +1698,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-287"
+            class="SiteDetails-card-316"
           >
             <mock-card
-              classname="Bleaching-root-417"
+              classname="Bleaching-root-462"
             >
               <div
-                class="MuiCardHeader-root Bleaching-header-412"
+                class="MuiCardHeader-root Bleaching-header-457"
               >
                 <div
                   class="MuiCardHeader-content"
@@ -1722,7 +1722,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                       >
                         <mock-typography
-                          classname="Bleaching-cardTitle-411"
+                          classname="Bleaching-cardTitle-456"
                           color="textSecondary"
                           variant="h6"
                         >
@@ -1734,21 +1734,21 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 </div>
               </div>
               <mock-cardcontent
-                classname="Bleaching-contentWrapper-418"
+                classname="Bleaching-contentWrapper-463"
               >
                 <div
-                  class="MuiGrid-root Bleaching-content-419 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                  class="MuiGrid-root Bleaching-content-464 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
                 >
                   <img
                     alt="alert-level"
-                    class="Bleaching-alertImage-420"
+                    class="Bleaching-alertImage-465"
                     src="alert_nostress.svg"
                   />
                   <div
-                    class="MuiGrid-root makeStyles-updateInfo-379 makeStyles-withMargin-380 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                    class="MuiGrid-root makeStyles-updateInfo-422 makeStyles-withMargin-423 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-383 makeStyles-dateInfoWrapper-421 MuiGrid-item"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-426 makeStyles-dateInfoWrapper-466 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -1758,7 +1758,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         >
                           <svg
                             aria-hidden="true"
-                            class="MuiSvgIcon-root makeStyles-updateIcon-381 MuiSvgIcon-fontSizeSmall"
+                            class="MuiSvgIcon-root makeStyles-updateIcon-424 MuiSvgIcon-fontSizeSmall"
                             focusable="false"
                             viewBox="0 0 24 24"
                           >
@@ -1768,7 +1768,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           </svg>
                         </div>
                         <div
-                          class="MuiGrid-root makeStyles-dateInfo-384 MuiGrid-item"
+                          class="MuiGrid-root makeStyles-dateInfo-427 MuiGrid-item"
                         >
                           <mock-box
                             display="flex"
@@ -1776,7 +1776,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             width="100%"
                           >
                             <mock-typography
-                              classname="makeStyles-updateInfoText-382"
+                              classname="makeStyles-updateInfoText-425"
                               variant="caption"
                             >
                               Last data received
@@ -1784,7 +1784,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               5 min. ago
                             </mock-typography>
                             <mock-typography
-                              classname="makeStyles-updateInfoText-382"
+                              classname="makeStyles-updateInfoText-425"
                               variant="caption"
                             >
                               Updated daily
@@ -1794,21 +1794,21 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root makeStyles-chip-386 makeStyles-chip-422 MuiGrid-item"
+                      class="MuiGrid-root makeStyles-chip-429 makeStyles-chip-467 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                       >
                         <mock-button
-                          classname="makeStyles-button-391"
+                          classname="makeStyles-button-434"
                         >
                           <a
-                            class="makeStyles-link-389"
+                            class="makeStyles-link-432"
                             href="https://coralsitewatch.noaa.gov/product/5km/index_5km_baa_max_r07d.php"
                             target="_blank"
                           >
                             <mock-typography
-                              classname="makeStyles-chipText-387"
+                              classname="makeStyles-chipText-430"
                             >
                               NOAA CRW
                             </mock-typography>
@@ -1826,40 +1826,40 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-287"
+            class="SiteDetails-card-316"
           >
             <mock-card
-              classname="makeStyles-root-431"
+              classname="makeStyles-root-477"
             >
               <mock-cardcontent
-                classname="makeStyles-contentWrapper-435"
+                classname="makeStyles-contentWrapper-481"
               >
                 <div
-                  class="MuiGrid-root makeStyles-content-436 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                  class="MuiGrid-root makeStyles-content-482 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
                 >
                   <div
-                    class="MuiGrid-root makeStyles-paddingContainer-434 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root makeStyles-paddingContainer-480 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
-                      classname="makeStyles-cardTitle-425 makeStyles-coloredText-432"
+                      classname="makeStyles-cardTitle-471 makeStyles-coloredText-478"
                       variant="h6"
                     >
                       WIND
                     </mock-typography>
                     <img
                       alt="wind"
-                      class="makeStyles-titleImages-433"
+                      class="makeStyles-titleImages-479"
                       src="wind.svg"
                     />
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-paddingContainer-434 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root makeStyles-paddingContainer-480 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="makeStyles-contentTextTitles-427"
+                        classname="makeStyles-contentTextTitles-473"
                         color="textSecondary"
                         variant="subtitle2"
                       >
@@ -1869,14 +1869,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                       >
                         <mock-typography
-                          classname="makeStyles-contentTextValues-428"
+                          classname="makeStyles-contentTextValues-474"
                           color="textSecondary"
                           variant="h3"
                         >
                           21.6
                         </mock-typography>
                         <mock-typography
-                          classname="makeStyles-contentUnits-429"
+                          classname="makeStyles-contentUnits-475"
                           color="textSecondary"
                           variant="h6"
                         >
@@ -1888,7 +1888,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
                     >
                       <mock-typography
-                        classname="makeStyles-contentTextTitles-427"
+                        classname="makeStyles-contentTextTitles-473"
                         color="textSecondary"
                         variant="subtitle2"
                       >
@@ -1899,11 +1899,11 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <img
                           alt="arrow"
-                          class="makeStyles-arrow-437 makeStyles-windDirectionArrow-438 makeStyles-windDirectionArrow-440"
+                          class="makeStyles-arrow-483 makeStyles-windDirectionArrow-484 makeStyles-windDirectionArrow-486"
                           src="directioncircle.svg"
                         />
                         <mock-typography
-                          classname="makeStyles-contentTextValues-428"
+                          classname="makeStyles-contentTextValues-474"
                           color="textSecondary"
                           variant="h3"
                         >
@@ -1913,28 +1913,28 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-paddingContainer-434 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                    class="MuiGrid-root makeStyles-paddingContainer-480 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                   >
                     <mock-typography
-                      classname="makeStyles-cardTitle-425 makeStyles-coloredText-432"
+                      classname="makeStyles-cardTitle-471 makeStyles-coloredText-478"
                       variant="h6"
                     >
                       WAVES
                     </mock-typography>
                     <img
                       alt="waves"
-                      class="makeStyles-titleImages-433"
+                      class="makeStyles-titleImages-479"
                       src="waves.svg"
                     />
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-paddingContainer-434 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+                    class="MuiGrid-root makeStyles-paddingContainer-480 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
                     >
                       <mock-typography
-                        classname="makeStyles-contentTextTitles-427"
+                        classname="makeStyles-contentTextTitles-473"
                         color="textSecondary"
                         variant="subtitle2"
                       >
@@ -1944,14 +1944,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                       >
                         <mock-typography
-                          classname="makeStyles-contentTextValues-428"
+                          classname="makeStyles-contentTextValues-474"
                           color="textSecondary"
                           variant="h3"
                         >
                           1.0
                         </mock-typography>
                         <mock-typography
-                          classname="makeStyles-contentUnits-429"
+                          classname="makeStyles-contentUnits-475"
                           color="textSecondary"
                           variant="h6"
                         >
@@ -1963,7 +1963,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-3"
                     >
                       <mock-typography
-                        classname="makeStyles-contentTextTitles-427"
+                        classname="makeStyles-contentTextTitles-473"
                         color="textSecondary"
                         variant="subtitle2"
                       >
@@ -1973,14 +1973,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                       >
                         <mock-typography
-                          classname="makeStyles-contentTextValues-428"
+                          classname="makeStyles-contentTextValues-474"
                           color="textSecondary"
                           variant="h3"
                         >
                           3
                         </mock-typography>
                         <mock-typography
-                          classname="makeStyles-contentUnits-429"
+                          classname="makeStyles-contentUnits-475"
                           color="textSecondary"
                           variant="h6"
                         >
@@ -1992,7 +1992,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-5"
                     >
                       <mock-typography
-                        classname="makeStyles-contentTextTitles-427"
+                        classname="makeStyles-contentTextTitles-473"
                         color="textSecondary"
                         variant="subtitle2"
                       >
@@ -2003,11 +2003,11 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       >
                         <img
                           alt="arrow"
-                          class="makeStyles-arrow-437 makeStyles-wavesDirectionArrow-439 makeStyles-wavesDirectionArrow-441"
+                          class="makeStyles-arrow-483 makeStyles-wavesDirectionArrow-485 makeStyles-wavesDirectionArrow-487"
                           src="directioncircle.svg"
                         />
                         <mock-typography
-                          classname="makeStyles-contentTextValues-428"
+                          classname="makeStyles-contentTextValues-474"
                           color="textSecondary"
                           variant="h3"
                         >
@@ -2017,10 +2017,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root makeStyles-updateInfo-379 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+                    class="MuiGrid-root makeStyles-updateInfo-422 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateInfoWrapper-383 makeStyles-dateInfoWrapper-442 MuiGrid-item"
+                      class="MuiGrid-root makeStyles-dateInfoWrapper-426 makeStyles-dateInfoWrapper-488 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -2030,7 +2030,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         >
                           <svg
                             aria-hidden="true"
-                            class="MuiSvgIcon-root makeStyles-updateIcon-381 MuiSvgIcon-fontSizeSmall"
+                            class="MuiSvgIcon-root makeStyles-updateIcon-424 MuiSvgIcon-fontSizeSmall"
                             focusable="false"
                             viewBox="0 0 24 24"
                           >
@@ -2040,7 +2040,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           </svg>
                         </div>
                         <div
-                          class="MuiGrid-root makeStyles-dateInfo-384 MuiGrid-item"
+                          class="MuiGrid-root makeStyles-dateInfo-427 MuiGrid-item"
                         >
                           <mock-box
                             display="flex"
@@ -2048,7 +2048,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                             width="100%"
                           >
                             <mock-typography
-                              classname="makeStyles-updateInfoText-382"
+                              classname="makeStyles-updateInfoText-425"
                               variant="caption"
                             >
                               Last data received
@@ -2056,7 +2056,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                               5 min. ago
                             </mock-typography>
                             <mock-typography
-                              classname="makeStyles-updateInfoText-382"
+                              classname="makeStyles-updateInfoText-425"
                               variant="caption"
                             >
                               Updated hourly
@@ -2066,19 +2066,19 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root makeStyles-chip-386 makeStyles-chip-443 MuiGrid-item"
+                      class="MuiGrid-root makeStyles-chip-429 makeStyles-chip-489 MuiGrid-item"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
                       >
                         <mock-button
-                          classname="makeStyles-button-391"
+                          classname="makeStyles-button-434"
                         >
                           <div
-                            class="makeStyles-circle-388"
+                            class="makeStyles-circle-431"
                           />
                           <mock-typography
-                            classname="makeStyles-chipText-387"
+                            classname="makeStyles-chipText-430"
                           >
                             LIVE
                           </mock-typography>
@@ -2097,17 +2097,17 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <mock-box
-            classname="CombinedCharts-graphtTitleWrapper-312"
+            classname="CombinedCharts-graphtTitleWrapper-348"
           >
             <mock-typography
-              classname="CombinedCharts-graphTitle-313"
+              classname="CombinedCharts-graphTitle-349"
               variant="h6"
             >
               HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
-            class="CombinedCharts-chart-311"
+            class="CombinedCharts-chart-347"
           >
             Mock-Line
           </div>
@@ -2122,7 +2122,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           open="false"
         >
           <mock-dialogtitle
-            classname="Dialog-dialogTitle-325"
+            classname="Dialog-dialogTitle-363"
             disabletypography="true"
           >
             <mock-typography
@@ -2158,7 +2158,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-dialogactions>
         </mock-dialog>
         <div
-          class="MuiGrid-root makeStyles-root-316 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+          class="MuiGrid-root makeStyles-root-354 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
         >
           <mock-box
             bgcolor="#f5f6f6"
@@ -2167,13 +2167,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             zindex="-1"
           />
           <div
-            class="MuiGrid-root makeStyles-surveyWrapper-317 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+            class="MuiGrid-root makeStyles-surveyWrapper-355 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
             >
               <mock-typography
-                classname="makeStyles-title-318"
+                classname="makeStyles-title-356"
               >
                 Survey History
               </mock-typography>
@@ -2185,14 +2185,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="makeStyles-subTitle-327"
+                  classname="makeStyles-subTitle-365"
                   variant="h6"
                 >
                   Survey Point:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root makeStyles-selectorWrapper-328 MuiGrid-item"
+                class="MuiGrid-root makeStyles-selectorWrapper-366 MuiGrid-item"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
@@ -2201,7 +2201,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-329"
+                      class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-367"
                     >
                       <div
                         aria-haspopup="listbox"
@@ -2244,7 +2244,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           selected="true"
                         >
                           <mock-typography
-                            classname="makeStyles-menuItem-331"
+                            classname="makeStyles-menuItem-369"
                             variant="h6"
                           >
                             All
@@ -2263,31 +2263,31 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="makeStyles-subTitle-319"
+                  classname="makeStyles-subTitle-357"
                   variant="h6"
                 >
                   Observation:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root makeStyles-selectorWrapper-320 MuiGrid-item"
+                class="MuiGrid-root makeStyles-selectorWrapper-358 MuiGrid-item"
               >
                 <div
-                  class="MuiFormControl-root makeStyles-formControl-321"
+                  class="MuiFormControl-root makeStyles-formControl-359"
                 >
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-322 MuiInputBase-formControl MuiInput-formControl"
+                    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-360 MuiInputBase-formControl MuiInput-formControl"
                   >
                     <div
                       aria-haspopup="listbox"
                       aria-labelledby="survey-observation survey-observation"
-                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-324"
+                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-362"
                       id="survey-observation"
                       role="button"
                       tabindex="0"
                     >
                       <mock-typography
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         variant="h6"
                       >
                         Any
@@ -2324,14 +2324,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         selected="true"
                       >
                         <mock-typography
-                          classname="makeStyles-menuItem-323"
+                          classname="makeStyles-menuItem-361"
                           variant="h6"
                         >
                           Any
                         </mock-typography>
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="healthy"
                         role="option"
                         selected="false"
@@ -2340,7 +2340,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Appears healthy
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="possible-disease"
                         role="option"
                         selected="false"
@@ -2349,7 +2349,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Showing possible signs of disease
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="evident-disease"
                         role="option"
                         selected="false"
@@ -2358,7 +2358,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of disease are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="mortality"
                         role="option"
                         selected="false"
@@ -2367,7 +2367,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of mortality are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="environmental"
                         role="option"
                         selected="false"
@@ -2376,7 +2376,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of environmental disturbance are evident (e.g. storm damage)
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="anthropogenic"
                         role="option"
                         selected="false"
@@ -2385,7 +2385,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-323"
+                        classname="makeStyles-menuItem-361"
                         data-value="invasive-species"
                         role="option"
                         selected="false"
@@ -2403,7 +2403,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
-              class="SurveyTimeline-root-336"
+              class="SurveyTimeline-root-374"
             >
               <mock-hidden
                 mddown="true"
@@ -2412,13 +2412,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   class="MuiTimeline-root MuiTimeline-alignLeft"
                 >
                   <li
-                    class="MuiTimelineItem-root MuiTimelineItem-alignLeft makeStyles-timelineItem-345"
+                    class="MuiTimelineItem-root MuiTimelineItem-alignLeft makeStyles-timelineItem-383"
                   >
                     <div
-                      class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent makeStyles-timelineOppositeContent-346"
+                      class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent makeStyles-timelineOppositeContent-384"
                     >
                       <mock-typography
-                        classname="makeStyles-dates-338"
+                        classname="makeStyles-dates-376"
                         variant="h6"
                       >
                         09/10/2020
@@ -2428,73 +2428,73 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       class="MuiTimelineSeparator-root"
                     >
                       <hr
-                        class="makeStyles-connector-349"
+                        class="makeStyles-connector-387"
                       />
                       <span
-                        class="MuiTimelineDot-root makeStyles-dot-350 MuiTimelineDot-outlinedGrey"
+                        class="MuiTimelineDot-root makeStyles-dot-388 MuiTimelineDot-outlinedGrey"
                       />
                       <hr
-                        class="makeStyles-connector-349"
+                        class="makeStyles-connector-387"
                       />
                     </div>
                     <div
-                      class="MuiTimelineContent-root MuiTimelineItem-content makeStyles-surveyCardWrapper-340"
+                      class="MuiTimelineContent-root MuiTimelineItem-content makeStyles-surveyCardWrapper-378"
                     >
                       <div
-                        class="MuiPaper-root makeStyles-surveyCard-451 MuiPaper-elevation0 MuiPaper-rounded"
+                        class="MuiPaper-root makeStyles-surveyCard-500 MuiPaper-elevation0 MuiPaper-rounded"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                           style="height: 100%;"
                         >
                           <div
-                            class="MuiGrid-root makeStyles-cardImageWrapper-455 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                            class="MuiGrid-root makeStyles-cardImageWrapper-504 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                           >
                             <a
                               href="/sites/1/survey_details/46"
                             >
                               <div
-                                class="MuiCardMedia-root makeStyles-cardImage-452"
+                                class="MuiCardMedia-root makeStyles-cardImage-501"
                               />
                             </a>
                           </div>
                           <div
-                            class="MuiGrid-root makeStyles-infoWrapper-456 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                            class="MuiGrid-root makeStyles-infoWrapper-505 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                           >
                             <div
-                              class="MuiGrid-root makeStyles-info-461 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                              class="MuiGrid-root makeStyles-info-510 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                             >
                               <div
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="makeStyles-cardFields-453"
+                                  classname="makeStyles-cardFields-502"
                                   variant="h6"
                                 >
                                   User:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="makeStyles-cardValues-454 makeStyles-valuesWithMargin-459"
+                                  classname="makeStyles-cardValues-503 makeStyles-valuesWithMargin-508"
                                   variant="h6"
                                 >
                                   Joe Doe
                                 </mock-typography>
                               </div>
                               <div
-                                class="MuiGrid-root makeStyles-commentsWrapper-457 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                                class="MuiGrid-root makeStyles-commentsWrapper-506 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                               >
                                 <div
                                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                                   style="height: 80%;"
                                 >
                                   <mock-typography
-                                    classname="makeStyles-cardFields-453"
+                                    classname="makeStyles-cardFields-502"
                                     variant="h6"
                                   >
                                     Comments:
                                   </mock-typography>
                                   <mock-typography
-                                    classname="makeStyles-cardValues-454 makeStyles-comments-458"
+                                    classname="makeStyles-cardValues-503 makeStyles-comments-507"
                                     variant="h6"
                                   >
                                     No comments
@@ -2505,13 +2505,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="makeStyles-cardFields-453"
+                                  classname="makeStyles-cardFields-502"
                                   variant="h6"
                                 >
                                   Temp:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="makeStyles-cardValues-454 makeStyles-valuesWithMargin-459"
+                                  classname="makeStyles-cardValues-503 makeStyles-valuesWithMargin-508"
                                   variant="h6"
                                 >
                                   10.0 °C
@@ -2552,76 +2552,76 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                 >
                   <div
-                    class="MuiGrid-root makeStyles-surveyWrapper-361 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+                    class="MuiGrid-root makeStyles-surveyWrapper-399 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
                   >
                     <div
-                      class="MuiGrid-root makeStyles-dateWrapper-352 MuiGrid-item MuiGrid-grid-xs-11"
+                      class="MuiGrid-root makeStyles-dateWrapper-390 MuiGrid-item MuiGrid-grid-xs-11"
                     >
                       <mock-typography
-                        classname="makeStyles-dates-353"
+                        classname="makeStyles-dates-391"
                         variant="h6"
                       >
                         09/10/2020
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root makeStyles-surveyCardWrapper-355 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                      class="MuiGrid-root makeStyles-surveyCardWrapper-393 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                     >
                       <div
-                        class="MuiPaper-root makeStyles-surveyCard-451 MuiPaper-elevation0 MuiPaper-rounded"
+                        class="MuiPaper-root makeStyles-surveyCard-500 MuiPaper-elevation0 MuiPaper-rounded"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                           style="height: 100%;"
                         >
                           <div
-                            class="MuiGrid-root makeStyles-cardImageWrapper-455 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                            class="MuiGrid-root makeStyles-cardImageWrapper-504 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                           >
                             <a
                               href="/sites/1/survey_details/46"
                             >
                               <div
-                                class="MuiCardMedia-root makeStyles-cardImage-452"
+                                class="MuiCardMedia-root makeStyles-cardImage-501"
                               />
                             </a>
                           </div>
                           <div
-                            class="MuiGrid-root makeStyles-infoWrapper-456 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                            class="MuiGrid-root makeStyles-infoWrapper-505 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                           >
                             <div
-                              class="MuiGrid-root makeStyles-info-461 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                              class="MuiGrid-root makeStyles-info-510 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                             >
                               <div
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="makeStyles-cardFields-453"
+                                  classname="makeStyles-cardFields-502"
                                   variant="h6"
                                 >
                                   User:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="makeStyles-cardValues-454 makeStyles-valuesWithMargin-459"
+                                  classname="makeStyles-cardValues-503 makeStyles-valuesWithMargin-508"
                                   variant="h6"
                                 >
                                   Joe Doe
                                 </mock-typography>
                               </div>
                               <div
-                                class="MuiGrid-root makeStyles-commentsWrapper-457 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                                class="MuiGrid-root makeStyles-commentsWrapper-506 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                               >
                                 <div
                                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                                   style="height: 80%;"
                                 >
                                   <mock-typography
-                                    classname="makeStyles-cardFields-453"
+                                    classname="makeStyles-cardFields-502"
                                     variant="h6"
                                   >
                                     Comments:
                                   </mock-typography>
                                   <mock-typography
-                                    classname="makeStyles-cardValues-454 makeStyles-comments-458"
+                                    classname="makeStyles-cardValues-503 makeStyles-comments-507"
                                     variant="h6"
                                   >
                                     No comments
@@ -2632,13 +2632,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                               >
                                 <mock-typography
-                                  classname="makeStyles-cardFields-453"
+                                  classname="makeStyles-cardFields-502"
                                   variant="h6"
                                 >
                                   Temp:
                                 </mock-typography>
                                 <mock-typography
-                                  classname="makeStyles-cardValues-454 makeStyles-valuesWithMargin-459"
+                                  classname="makeStyles-cardValues-503 makeStyles-valuesWithMargin-508"
                                   variant="h6"
                                 >
                                   10.0 °C
@@ -2679,7 +2679,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
     </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-362"
+    classname="Footer-appBar-400"
     position="static"
   >
     <mock-toolbar>
@@ -2690,7 +2690,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-363"
+            classname="Footer-navBarLink-401"
             href="/map"
           >
             <mock-typography
@@ -3664,7 +3664,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
           >
             <div
-              class="MuiGrid-root SiteNavBar-headerButtonWrapper-50 MuiGrid-item"
+              class="MuiGrid-root SiteNavBar-headerButtonWrapper-52 MuiGrid-item"
             >
               <mock-iconbutton
                 aria-label="menu"
@@ -3686,7 +3686,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               </mock-iconbutton>
             </div>
             <div
-              class="MuiGrid-root SiteNavBar-headerWrapper-51 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+              class="MuiGrid-root SiteNavBar-headerWrapper-53 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
@@ -3698,7 +3698,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
                   >
                     <div
-                      class="MuiGrid-root SiteNavBar-siteNameWrapper-52 MuiGrid-item"
+                      class="MuiGrid-root SiteNavBar-siteNameWrapper-54 MuiGrid-item"
                     >
                       <mock-typography
                         variant="h4"
@@ -3707,7 +3707,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       </mock-typography>
                     </div>
                     <div
-                      class="MuiGrid-root SiteNavBar-headerButtonWrapper-50 MuiGrid-item"
+                      class="MuiGrid-root SiteNavBar-headerButtonWrapper-52 MuiGrid-item"
                     />
                   </div>
                 </div>
@@ -3767,7 +3767,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <mock-box
-              classname="Title-root-69"
+              classname="Title-root-72"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
@@ -3801,7 +3801,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-66"
+              class="CardWithTitle-container-68"
             >
               <mock-map
                 polygon="[object Object]"
@@ -3818,7 +3818,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-66"
+              class="CardWithTitle-container-68"
             >
               <mock-featuredmedia
                 siteid="1"
@@ -3828,16 +3828,16 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-64 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root SiteDetails-metricsWrapper-66 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-54"
+            class="SiteDetails-card-56"
           >
             <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-46 makeStyles-image-74 makeStyles-dark-45 MuiSkeleton-wave"
+              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-80 makeStyles-dark-45 MuiSkeleton-wave"
               style="height: 100%;"
             />
           </div>
@@ -3846,10 +3846,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-54"
+            class="SiteDetails-card-56"
           >
             <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-46 makeStyles-image-75 makeStyles-dark-45 MuiSkeleton-wave"
+              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-82 makeStyles-dark-45 MuiSkeleton-wave"
               style="height: 100%;"
             />
           </div>
@@ -3858,10 +3858,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-54"
+            class="SiteDetails-card-56"
           >
             <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-46 makeStyles-image-76 makeStyles-dark-45 MuiSkeleton-wave"
+              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-84 makeStyles-dark-45 MuiSkeleton-wave"
               style="height: 100%;"
             />
           </div>
@@ -3870,10 +3870,10 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-54"
+            class="SiteDetails-card-56"
           >
             <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-46 makeStyles-image-77 makeStyles-dark-45 MuiSkeleton-wave"
+              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-86 makeStyles-dark-45 MuiSkeleton-wave"
               style="height: 100%;"
             />
           </div>
@@ -3884,17 +3884,17 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <mock-box
-            classname="CombinedCharts-graphtTitleWrapper-79"
+            classname="CombinedCharts-graphtTitleWrapper-88"
           >
             <mock-typography
-              classname="CombinedCharts-graphTitle-80"
+              classname="CombinedCharts-graphTitle-89"
               variant="h6"
             >
               HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
-            class="CombinedCharts-chart-78"
+            class="CombinedCharts-chart-87"
           >
             Mock-Line
           </div>
@@ -3909,7 +3909,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           open="false"
         >
           <mock-dialogtitle
-            classname="Dialog-dialogTitle-92"
+            classname="Dialog-dialogTitle-103"
             disabletypography="true"
           >
             <mock-typography
@@ -3945,7 +3945,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           </mock-dialogactions>
         </mock-dialog>
         <div
-          class="MuiGrid-root makeStyles-root-83 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+          class="MuiGrid-root makeStyles-root-94 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
         >
           <mock-box
             bgcolor="#f5f6f6"
@@ -3954,13 +3954,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             zindex="-1"
           />
           <div
-            class="MuiGrid-root makeStyles-surveyWrapper-84 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+            class="MuiGrid-root makeStyles-surveyWrapper-95 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
             >
               <mock-typography
-                classname="makeStyles-title-85"
+                classname="makeStyles-title-96"
               >
                 Survey History
               </mock-typography>
@@ -3972,14 +3972,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="makeStyles-subTitle-94"
+                  classname="makeStyles-subTitle-105"
                   variant="h6"
                 >
                   Survey Point:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root makeStyles-selectorWrapper-95 MuiGrid-item"
+                class="MuiGrid-root makeStyles-selectorWrapper-106 MuiGrid-item"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
@@ -3988,7 +3988,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                     class="MuiGrid-root MuiGrid-item"
                   >
                     <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-96"
+                      class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-107"
                     >
                       <div
                         aria-haspopup="listbox"
@@ -4031,7 +4031,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                           selected="true"
                         >
                           <mock-typography
-                            classname="makeStyles-menuItem-98"
+                            classname="makeStyles-menuItem-109"
                             variant="h6"
                           >
                             All
@@ -4050,31 +4050,31 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                 class="MuiGrid-root MuiGrid-item"
               >
                 <mock-typography
-                  classname="makeStyles-subTitle-86"
+                  classname="makeStyles-subTitle-97"
                   variant="h6"
                 >
                   Observation:
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root makeStyles-selectorWrapper-87 MuiGrid-item"
+                class="MuiGrid-root makeStyles-selectorWrapper-98 MuiGrid-item"
               >
                 <div
-                  class="MuiFormControl-root makeStyles-formControl-88"
+                  class="MuiFormControl-root makeStyles-formControl-99"
                 >
                   <div
-                    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-89 MuiInputBase-formControl MuiInput-formControl"
+                    class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-100 MuiInputBase-formControl MuiInput-formControl"
                   >
                     <div
                       aria-haspopup="listbox"
                       aria-labelledby="survey-observation survey-observation"
-                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-91"
+                      class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-102"
                       id="survey-observation"
                       role="button"
                       tabindex="0"
                     >
                       <mock-typography
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         variant="h6"
                       >
                         Any
@@ -4111,14 +4111,14 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         selected="true"
                       >
                         <mock-typography
-                          classname="makeStyles-menuItem-90"
+                          classname="makeStyles-menuItem-101"
                           variant="h6"
                         >
                           Any
                         </mock-typography>
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="healthy"
                         role="option"
                         selected="false"
@@ -4127,7 +4127,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Appears healthy
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="possible-disease"
                         role="option"
                         selected="false"
@@ -4136,7 +4136,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Showing possible signs of disease
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="evident-disease"
                         role="option"
                         selected="false"
@@ -4145,7 +4145,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of disease are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="mortality"
                         role="option"
                         selected="false"
@@ -4154,7 +4154,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of mortality are evident
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="environmental"
                         role="option"
                         selected="false"
@@ -4163,7 +4163,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of environmental disturbance are evident (e.g. storm damage)
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="anthropogenic"
                         role="option"
                         selected="false"
@@ -4172,7 +4172,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                         Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
                       </mock-menuitem>
                       <mock-menuitem
-                        classname="makeStyles-menuItem-90"
+                        classname="makeStyles-menuItem-101"
                         data-value="invasive-species"
                         role="option"
                         selected="false"
@@ -4190,7 +4190,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
           >
             <div
-              class="SurveyTimeline-root-103"
+              class="SurveyTimeline-root-114"
             >
               <mock-hidden
                 mddown="true"
@@ -4213,7 +4213,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
     </mock-box>
   </div>
   <mock-appbar
-    classname="Footer-appBar-129"
+    classname="Footer-appBar-140"
     position="static"
   >
     <mock-toolbar>
@@ -4224,7 +4224,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-130"
+            classname="Footer-navBarLink-141"
             href="/map"
           >
             <mock-typography

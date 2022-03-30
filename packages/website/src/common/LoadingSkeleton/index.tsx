@@ -19,8 +19,9 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   dark = true,
   className,
   longText,
+  textHeight,
 }) => {
-  const classes = useStyles({ image });
+  const classes = useStyles({ image, textHeight });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const rectSkeletonProps: SkeletonProps =
@@ -39,7 +40,7 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
         {times(lines).map((i) => (
           <Skeleton
             animation="wave"
-            className={classNames(classes.root, className, {
+            className={classNames(classes.root, classes.textHeight, className, {
               [classes.dark]: dark,
             })}
             key={i}
@@ -76,7 +77,13 @@ const useStyles = makeStyles(() => ({
   dark: {
     backgroundColor: fade("#000000", 0.11),
   },
-  image: ({ image }: Pick<LoadingSkeletonProps, "image">) =>
+  textHeight: ({ textHeight }: LoadingSkeletonStyleProps) =>
+    typeof textHeight !== "undefined"
+      ? {
+          height: textHeight,
+        }
+      : {},
+  image: ({ image }: LoadingSkeletonStyleProps) =>
     image
       ? {
           backgroundImage: `
@@ -103,6 +110,12 @@ interface LoadingSkeletonProps {
   dark?: boolean;
   className?: string;
   longText?: boolean;
+  textHeight?: SkeletonProps["height"];
 }
+
+type LoadingSkeletonStyleProps = Pick<
+  LoadingSkeletonProps,
+  "textHeight" | "image"
+>;
 
 export default LoadingSkeleton;
