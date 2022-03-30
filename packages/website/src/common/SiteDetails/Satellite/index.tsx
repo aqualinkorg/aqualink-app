@@ -137,12 +137,6 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
 const styles = () =>
   createStyles({
     ...incomingStyles,
-    // card: {
-    //   ...incomingStyles.card,
-    //   display: "flex",
-    //   flexDirection: "column",
-    //   // height: "100%",
-    // },
     root: {
       height: "100%",
       display: "flex",

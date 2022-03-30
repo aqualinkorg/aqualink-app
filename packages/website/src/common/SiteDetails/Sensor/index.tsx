@@ -164,13 +164,6 @@ const Sensor = ({ site, classes }: SensorProps) => {
 const styles = () =>
   createStyles({
     ...incomingStyles,
-    // card: {
-    //   ...incomingStyles.card,
-    //   display: "flex",
-    //   flexDirection: "column",
-    //   // height: "100%",
-    //   backgroundColor: "#128cc0",
-    // },
     root: {
       height: "100%",
       display: "flex",

@@ -195,13 +195,6 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
 
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
-  // card: {
-  //   ...incomingStyles.card,
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   // height: "100%",
-  //   backgroundColor: CARD_BACKGROUND_COLOR,
-  // },
   root: {
     display: "flex",
     flexDirection: "column",

@@ -243,14 +243,6 @@ const Waves = ({ liveData }: WavesProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
-    // card: {
-    //   ...incomingStyles.card,
-    //   // height: "100%",
-    //   width: "100%",
-    //   backgroundColor: "#eff0f0",
-    //   display: "flex",
-    //   flexDirection: "column",
-    // },
     root: {
       height: "100%",
       width: "100%",
