@@ -112,7 +112,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          Aqualink's source code is licenced under MIT. Contribute!
+          Aqualink is open-source (MIT). Join us and contribute!
         </Typography>
         <ButtonGroup variant="contained" color="default">
           <Button
