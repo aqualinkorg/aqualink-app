@@ -67,7 +67,9 @@ const SelectedSiteCardContent = ({
     },
   ];
 
-  const { name, region: regionName } = getSiteNameAndRegion(site);
+  const { name, region: regionName } = site
+    ? getSiteNameAndRegion(site)
+    : { name: null, region: null };
 
   const chartDataset = site
     ? standardDailyDataDataset(

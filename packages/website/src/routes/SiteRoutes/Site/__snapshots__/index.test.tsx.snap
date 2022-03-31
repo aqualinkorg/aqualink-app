@@ -1126,13 +1126,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-326 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-metricsWrapper-326 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-316"
+            class="makeStyles-card-316"
           >
             <mock-card
               classname="Satellite-root-419"
@@ -1530,7 +1530,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-316"
+            class="makeStyles-card-316"
           >
             <mock-card
               classname="Sensor-root-445"
@@ -1698,7 +1698,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-316"
+            class="makeStyles-card-316"
           >
             <mock-card
               classname="Bleaching-root-462"
@@ -1826,7 +1826,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-316"
+            class="makeStyles-card-316"
           >
             <mock-card
               classname="makeStyles-root-477"
@@ -2097,17 +2097,17 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <mock-box
-            classname="CombinedCharts-graphtTitleWrapper-348"
+            classname="makeStyles-graphtTitleWrapper-348"
           >
             <mock-typography
-              classname="CombinedCharts-graphTitle-349"
+              classname="makeStyles-graphTitle-349"
               variant="h6"
             >
               HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
-            class="CombinedCharts-chart-347"
+            class="makeStyles-chart-347"
           >
             Mock-Line
           </div>
@@ -3828,13 +3828,13 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </div>
       </div>
       <div
-        class="MuiGrid-root SiteDetails-metricsWrapper-66 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-metricsWrapper-66 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-space-between"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-56"
+            class="makeStyles-card-56"
           >
             <span
               class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-80 makeStyles-dark-45 MuiSkeleton-wave"
@@ -3846,7 +3846,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-56"
+            class="makeStyles-card-56"
           >
             <span
               class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-82 makeStyles-dark-45 MuiSkeleton-wave"
@@ -3858,7 +3858,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-56"
+            class="makeStyles-card-56"
           >
             <span
               class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-84 makeStyles-dark-45 MuiSkeleton-wave"
@@ -3870,7 +3870,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
-            class="SiteDetails-card-56"
+            class="makeStyles-card-56"
           >
             <span
               class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-44 makeStyles-image-47 makeStyles-image-86 makeStyles-dark-45 MuiSkeleton-wave"
@@ -3884,17 +3884,17 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
       >
         <div>
           <mock-box
-            classname="CombinedCharts-graphtTitleWrapper-88"
+            classname="makeStyles-graphtTitleWrapper-88"
           >
             <mock-typography
-              classname="CombinedCharts-graphTitle-89"
+              classname="makeStyles-graphTitle-89"
               variant="h6"
             >
               HEAT STRESS ANALYSIS (°C)
             </mock-typography>
           </mock-box>
           <div
-            class="CombinedCharts-chart-87"
+            class="makeStyles-chart-87"
           >
             Mock-Line
           </div>

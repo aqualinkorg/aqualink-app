@@ -310,8 +310,4 @@ interface PointSelectorProps {
   onDeleteButtonClick: (id: number) => void;
 }
 
-PointSelector.defaultProps = {
-  siteId: undefined,
-};
-
 export default PointSelector;

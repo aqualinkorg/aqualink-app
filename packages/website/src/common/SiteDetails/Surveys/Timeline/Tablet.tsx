@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 
 import AddButton from "../AddButton";
@@ -8,7 +8,7 @@ import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 import { TimelineProps } from "./types";
 import LoadingSkeleton from "../../../LoadingSkeleton";
 
-const TimelineTablet: FC<TimelineProps> = ({
+const TimelineTablet = ({
   siteId,
   loading,
   surveys,
@@ -17,7 +17,7 @@ const TimelineTablet: FC<TimelineProps> = ({
   pointName,
   isAdmin,
   timeZone,
-}) => {
+}: TimelineProps) => {
   const classes = useStyles();
   const isSiteIdValid = typeof siteId === "number";
 

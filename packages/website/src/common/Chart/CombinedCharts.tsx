@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  createStyles,
-  Typography,
-  withStyles,
-  WithStyles,
-} from "@material-ui/core";
+import { Box, createStyles, makeStyles, Typography } from "@material-ui/core";
 
 import ChartWithTooltip from "./ChartWithTooltip";
 import MultipleSensorsCharts from "./MultipleSensorsCharts";
@@ -21,8 +15,8 @@ const CombinedCharts = ({
   selectedSurveyPointId,
   surveys,
   loading,
-  classes,
 }: CombinedChartsProps) => {
+  const classes = useStyles();
   const heatStressDataset = site
     ? standardDailyDataDataset(
         site.dailyData,
@@ -77,7 +71,7 @@ const CombinedCharts = ({
   );
 };
 
-const styles = () =>
+const useStyles = makeStyles(() =>
   createStyles({
     chart: {
       height: "16rem",
@@ -90,20 +84,14 @@ const styles = () =>
     graphTitle: {
       lineHeight: 1.5,
     },
-  });
+  })
+);
 
-interface CombinedChartsIncomingProps {
+interface CombinedChartsProps {
   site?: Site;
   selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
   loading: boolean;
 }
 
-type CombinedChartsProps = CombinedChartsIncomingProps &
-  WithStyles<typeof styles>;
-
-CombinedCharts.defaultProps = {
-  site: undefined,
-};
-
-export default withStyles(styles)(CombinedCharts);
+export default CombinedCharts;

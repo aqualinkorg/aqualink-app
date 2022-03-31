@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   createStyles,
   Grid,
-  withStyles,
-  WithStyles,
+  makeStyles,
   Theme,
   Box,
   useTheme,
@@ -35,16 +33,16 @@ import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 
 const SiteDetails = ({
-  classes,
   site,
   loading,
   selectedSurveyPointId,
-  featuredSurveyId,
   hasDailyData,
   surveys,
-  featuredSurveyPoint,
-  surveyDiveDate,
+  featuredSurveyId = null,
+  featuredSurveyPoint = null,
+  surveyDiveDate = null,
 }: SiteDetailsProps) => {
+  const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
@@ -212,7 +210,7 @@ const SiteDetails = ({
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
     root: {
@@ -230,9 +228,10 @@ const styles = (theme: Theme) =>
     metricsWrapper: {
       marginTop: "1rem",
     },
-  });
+  })
+);
 
-interface SiteDetailsIncomingProps {
+interface SiteDetailsProps {
   site?: Site;
   loading: boolean;
   selectedSurveyPointId?: string;
@@ -243,14 +242,4 @@ interface SiteDetailsIncomingProps {
   surveyDiveDate?: string | null;
 }
 
-SiteDetails.defaultProps = {
-  site: undefined,
-  selectedSurveyPointId: undefined,
-  featuredSurveyPoint: null,
-  surveyDiveDate: null,
-  featuredSurveyId: null,
-};
-
-type SiteDetailsProps = SiteDetailsIncomingProps & WithStyles<typeof styles>;
-
-export default withStyles(styles)(SiteDetails);
+export default SiteDetails;

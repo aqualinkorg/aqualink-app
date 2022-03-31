@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import {
   Timeline,
   TimelineContent,
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/lab";
 import { makeStyles, Theme, Typography } from "@material-ui/core";
 import classNames from "classnames";
+import grey from "@material-ui/core/colors/grey";
 
 import AddButton from "../AddButton";
 import SurveyCard from "../SurveyCard";
@@ -17,7 +18,9 @@ import { displayTimeInLocalTimezone } from "../../../../helpers/dates";
 import incomingStyles from "../styles";
 import { TimelineProps } from "./types";
 
-const TimelineDesktop: FC<TimelineProps> = ({
+const CONNECTOR_COLOR = grey[500];
+
+const TimelineDesktop = ({
   siteId,
   loading,
   displayAddButton,
@@ -26,7 +29,7 @@ const TimelineDesktop: FC<TimelineProps> = ({
   pointName,
   isAdmin,
   timeZone,
-}) => {
+}: TimelineProps) => {
   const classes = useStyles();
   const isSiteIdValid = typeof siteId === "number";
 
@@ -107,12 +110,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   connector: {
     height: 180,
-    borderLeft: "2px dashed #8f8f8f",
+    borderLeft: `2px dashed ${CONNECTOR_COLOR}`,
     marginTop: 0,
     marginBottom: 0,
   },
   dot: {
-    border: "solid 1px #979797",
+    border: `1px solid ${CONNECTOR_COLOR}`,
     backgroundColor: theme.palette.primary.light,
     height: "1rem",
     width: "1rem",

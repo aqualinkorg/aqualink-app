@@ -23,8 +23,8 @@ const SurveyCard = ({
   pointName,
   isAdmin,
   siteId,
-  survey,
-  loading,
+  survey = null,
+  loading = false,
 }: SurveyCardProps) => {
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
@@ -229,11 +229,5 @@ interface SurveyCardProps {
   survey?: SurveyListItem | null;
   loading?: boolean;
 }
-
-SurveyCard.defaultProps = {
-  loading: false,
-  survey: null,
-  siteId: undefined,
-};
 
 export default SurveyCard;
