@@ -35,7 +35,7 @@ import chartLoading from "../../../../assets/img/chart_skeleton.png";
 const SelectedSiteCardContent = ({
   site,
   loading,
-  imageUrl,
+  imageUrl = null,
 }: SelectedSiteCardContentProps) => {
   const classes = useStyles({ imageUrl, loading });
   const theme = useTheme();
@@ -144,9 +144,7 @@ const SelectedSiteCardContent = ({
                     <Typography variant="h5">{name}</Typography>
 
                     {regionName && (
-                      <Typography variant="h6" style={{ fontWeight: 400 }}>
-                        {regionName}
-                      </Typography>
+                      <Typography variant="h6">{regionName}</Typography>
                     )}
                   </Box>
                 </Box>
@@ -172,19 +170,17 @@ const SelectedSiteCardContent = ({
                       />
                     )}
                     <Grid item>
-                      <Link
-                        style={{ color: "inherit", textDecoration: "none" }}
+                      <Button
+                        className={classes.exporeButton}
+                        component={Link}
                         to={`/sites/${site.id}`}
+                        onClick={onExploreButtonClick}
+                        size="small"
+                        variant="contained"
+                        color="primary"
                       >
-                        <Button
-                          onClick={onExploreButtonClick}
-                          size="small"
-                          variant="contained"
-                          color="primary"
-                        >
-                          EXPLORE
-                        </Button>
-                      </Link>
+                        EXPLORE
+                      </Button>
                     </Grid>
                   </Grid>
                 </Box>
@@ -199,7 +195,7 @@ const SelectedSiteCardContent = ({
         xs={12}
         md={useCardWithImageLayout ? 6 : 12}
         lg={useCardWithImageLayout ? 6 : 10}
-        style={{ marginBottom: "2rem", maxHeight: "14rem" }}
+        className={classes.cardAnalyticsWrapper}
       >
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden smDown={useCardWithImageLayout}>
@@ -285,14 +281,7 @@ const SelectedSiteCardContent = ({
         </Hidden>
       </Grid>
 
-      <Grid
-        item
-        xs={12}
-        lg={2}
-        style={{
-          display: "flex",
-        }}
-      >
+      <Grid item xs={12} lg={2} container>
         <div className={classes.metricsContainer}>
           {metrics.map(({ label, value, unit, display }) => (
             <div key={label} className={classes.metric}>
@@ -366,6 +355,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     right: 16,
     overflowWrap: "break-word",
   },
+  cardAnalyticsWrapper: {
+    marginBottom: "2rem",
+    maxHeight: "14rem",
+  },
   cardTitleWrapper: {
     maxWidth: "calc(100% - 88px)",
     marginRight: theme.spacing(1),
@@ -403,6 +396,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   mobileChartLoading: {
     margin: "auto",
   },
+  exporeButton: {
+    "&:hover": {
+      color: "white",
+    },
+  },
 }));
 
 interface SelectedSiteCardContentProps {
@@ -415,10 +413,5 @@ type SelectedSiteCardContentStyleProps = Pick<
   SelectedSiteCardContentProps,
   "imageUrl" | "loading"
 >;
-
-SelectedSiteCardContent.defaultProps = {
-  site: undefined,
-  imageUrl: null,
-};
 
 export default SelectedSiteCardContent;
