@@ -16,7 +16,7 @@ import { SurveyListItem } from "../../../../store/Survey/types";
 import incomingStyles from "../styles";
 import CustomLink from "../../../Link";
 import LoadingSkeleton from "../../../LoadingSkeleton";
-import pointImageSkeleton from "../../../../assets/img/loading-image.png";
+import pointImageSkeleton from "../../../../assets/img/loading-image.svg";
 
 const SurveyCard = ({
   pointId,

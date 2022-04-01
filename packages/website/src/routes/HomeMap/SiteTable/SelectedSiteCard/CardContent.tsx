@@ -29,7 +29,7 @@ import {
 } from "../../../../utils/google-analytics";
 import Chip from "../../../../common/Chip";
 import LoadingSkeleton from "../../../../common/LoadingSkeleton";
-import featuredImageLoading from "../../../../assets/img/loading-image.png";
+import featuredImageLoading from "../../../../assets/img/loading-image.svg";
 import chartLoading from "../../../../assets/img/chart_skeleton.png";
 
 const SelectedSiteCardContent = ({
