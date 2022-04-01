@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { makeStyles, useTheme, useMediaQuery } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { Skeleton, SkeletonProps } from "@material-ui/lab";
@@ -24,34 +24,45 @@ const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   const classes = useStyles({ image, textHeight });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const [lineWidths, setLineWidths] = useState<
+    { key: number; width: number }[]
+  >([]);
   const rectSkeletonProps: SkeletonProps =
     variant === "rect" &&
     (typeof width !== "undefined" || typeof height !== "undefined")
       ? { width, height }
       : {};
 
+  useEffect(() => {
+    if (typeof lines === "number") {
+      setLineWidths(
+        times(lines, (i) => ({
+          key: i,
+          width: random(
+            longText || isMobile ? 50 : 20,
+            longText || isMobile ? 100 : 40
+          ),
+        }))
+      );
+    }
+  }, [isMobile, lines, longText]);
+
   if (!loading) {
     return <>{children}</>;
   }
 
-  if (variant === "text" && typeof lines === "number") {
+  if (variant === "text" && typeof lines === "number" && lineWidths.length) {
     return (
       <>
-        {times(lines).map((i) => (
+        {lineWidths.map(({ key, width: lineWidth }) => (
           <Skeleton
             animation="wave"
             className={classNames(classes.root, classes.textHeight, className, {
               [classes.dark]: dark,
             })}
-            key={i}
+            key={key}
             variant={variant}
-            width={
-              width ||
-              `${random(
-                longText || isMobile ? 50 : 20,
-                longText || isMobile ? 100 : 40
-              )}%`
-            }
+            width={width || `${lineWidth}%`}
           />
         ))}
       </>
