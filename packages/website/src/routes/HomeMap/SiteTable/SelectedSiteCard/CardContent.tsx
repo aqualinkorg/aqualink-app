@@ -34,17 +34,17 @@ import chartLoading from "../../../../assets/img/chart_skeleton.png";
 
 const SelectedSiteCardContent = ({
   site,
-  loading,
   imageUrl = null,
 }: SelectedSiteCardContentProps) => {
-  const classes = useStyles({ imageUrl, loading });
+  const isLoading = !site;
+  const classes = useStyles({ imageUrl, isLoading });
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
   const sortedDailyData = sortByDate(site?.dailyData || [], "date");
   const dailyDataLen = sortedDailyData.length;
   const { maxBottomTemperature, satelliteTemperature, degreeHeatingDays } =
     (dailyDataLen && sortedDailyData[dailyDataLen - 1]) || {};
-  const useCardWithImageLayout = Boolean(loading || imageUrl);
+  const useCardWithImageLayout = Boolean(isLoading || imageUrl);
 
   const metrics = [
     {
@@ -115,7 +115,7 @@ const SelectedSiteCardContent = ({
             <LoadingSkeleton
               className={classes.imageBorderRadius}
               image={featuredImageLoading}
-              loading={loading}
+              loading={isLoading}
               variant="rect"
               height="100%"
             >
@@ -200,7 +200,7 @@ const SelectedSiteCardContent = ({
         <Box pb="0.5rem" pl="0.5rem" pt="1.5rem" fontWeight={400}>
           <Hidden smDown={useCardWithImageLayout}>
             <LoadingSkeleton
-              loading={loading}
+              loading={isLoading}
               variant="text"
               lines={1}
               textHeight={28}
@@ -227,7 +227,7 @@ const SelectedSiteCardContent = ({
               </Grid>
             </LoadingSkeleton>
             <LoadingSkeleton
-              loading={loading}
+              loading={isLoading}
               variant="text"
               lines={1}
               textHeight={19}
@@ -246,7 +246,7 @@ const SelectedSiteCardContent = ({
             </LoadingSkeleton>
           </Hidden>
           <LoadingSkeleton
-            loading={loading}
+            loading={isLoading}
             variant="text"
             lines={1}
             textHeight={12}
@@ -259,7 +259,7 @@ const SelectedSiteCardContent = ({
         <Hidden smDown>
           <LoadingSkeleton
             image={chartLoading}
-            loading={loading}
+            loading={isLoading}
             variant="rect"
             width="98%"
             height={180}
@@ -271,7 +271,7 @@ const SelectedSiteCardContent = ({
           <LoadingSkeleton
             className={classes.mobileChartLoading}
             image={chartLoading}
-            loading={loading}
+            loading={isLoading}
             variant="rect"
             width="98%"
             height={200}
@@ -287,7 +287,7 @@ const SelectedSiteCardContent = ({
             <div key={label} className={classes.metric}>
               <LoadingSkeleton
                 longText
-                loading={loading}
+                loading={isLoading}
                 variant="text"
                 lines={1}
                 textHeight={12}
@@ -299,7 +299,7 @@ const SelectedSiteCardContent = ({
                 )}
               </LoadingSkeleton>
               <LoadingSkeleton
-                loading={loading}
+                loading={isLoading}
                 variant="rect"
                 width={80}
                 height={32}
@@ -323,13 +323,16 @@ const SelectedSiteCardContent = ({
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  cardWrapper: ({ imageUrl, loading }: SelectedSiteCardContentStyleProps) => ({
+  cardWrapper: ({
+    imageUrl,
+    isLoading,
+  }: SelectedSiteCardContentStyleProps) => ({
     minHeight: "18rem",
     [theme.breakpoints.down("md")]: {
       minHeight: "24rem",
     },
     [theme.breakpoints.down("sm")]: {
-      height: imageUrl || loading ? "42rem" : "27rem",
+      height: imageUrl || isLoading ? "42rem" : "27rem",
     },
   }),
   imageBorderRadius: {
@@ -405,13 +408,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface SelectedSiteCardContentProps {
   site?: Site | null;
-  loading: boolean;
   imageUrl?: string | null;
 }
 
 type SelectedSiteCardContentStyleProps = Pick<
   SelectedSiteCardContentProps,
-  "imageUrl" | "loading"
->;
+  "imageUrl"
+> & { isLoading: boolean };
 
 export default SelectedSiteCardContent;

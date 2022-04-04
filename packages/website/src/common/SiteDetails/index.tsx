@@ -34,7 +34,6 @@ import LoadingSkeleton from "../LoadingSkeleton";
 
 const SiteDetails = ({
   site,
-  loading,
   selectedSurveyPointId,
   hasDailyData,
   surveys,
@@ -46,6 +45,7 @@ const SiteDetails = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
+  const isLoading = !site;
 
   const { videoStream } = site || {};
 
@@ -136,7 +136,7 @@ const SiteDetails = ({
         })}
       >
         <CardWithTitle
-          loading={loading}
+          loading={isLoading}
           className={classNames({
             [classes.mobileMargin]: !!videoStream,
           })}
@@ -155,7 +155,7 @@ const SiteDetails = ({
         </CardWithTitle>
 
         <CardWithTitle
-          loading={loading}
+          loading={isLoading}
           className={classNames({
             [classes.mobileMargin]: !!videoStream,
           })}
@@ -183,28 +183,23 @@ const SiteDetails = ({
         {cards.map((Component, index) => (
           <Grid key={index.toString()} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
-              <LoadingSkeleton
-                variant="rect"
-                height="100%"
-                loading={loading || !hasDailyData}
-              >
-                {Component}
+              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
+                {hasDailyData && Component}
               </LoadingSkeleton>
             </div>
           </Grid>
         ))}
       </Grid>
 
-      {site && !loading && oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
+      {site && oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
 
       <Box mt="2rem">
         <CombinedCharts
           site={site}
           selectedSurveyPointId={selectedSurveyPointId}
           surveys={surveys}
-          loading={loading}
         />
-        <Surveys site={site} loading={loading} />
+        <Surveys site={site} />
       </Box>
     </Box>
   );
@@ -233,7 +228,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SiteDetailsProps {
   site?: Site;
-  loading: boolean;
   selectedSurveyPointId?: string;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;

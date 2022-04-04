@@ -14,9 +14,9 @@ const CombinedCharts = ({
   site,
   selectedSurveyPointId,
   surveys,
-  loading,
 }: CombinedChartsProps) => {
   const classes = useStyles();
+  const isLoading = !site;
   const heatStressDataset = site
     ? standardDailyDataDataset(
         site.dailyData,
@@ -28,7 +28,7 @@ const CombinedCharts = ({
 
   return (
     <div>
-      <LoadingSkeleton loading={loading} variant="text" lines={1}>
+      <LoadingSkeleton loading={isLoading} variant="text" lines={1}>
         <Box className={classes.graphtTitleWrapper}>
           <Typography className={classes.graphTitle} variant="h6">
             HEAT STRESS ANALYSIS (°C)
@@ -36,7 +36,7 @@ const CombinedCharts = ({
         </Box>
       </LoadingSkeleton>
       <LoadingSkeleton
-        loading={loading}
+        loading={isLoading}
         variant="rect"
         height={256}
         width="100%"
@@ -91,7 +91,6 @@ interface CombinedChartsProps {
   site?: Site;
   selectedSurveyPointId: string | undefined;
   surveys: SurveyListItem[];
-  loading: boolean;
 }
 
 export default CombinedCharts;

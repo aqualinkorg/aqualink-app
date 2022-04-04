@@ -6,10 +6,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  siteDetailsSelector,
-  siteLoadingSelector,
-} from "../../../../store/Sites/selectedSiteSlice";
+import { siteDetailsSelector } from "../../../../store/Sites/selectedSiteSlice";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { sortByDate } from "../../../../helpers/dates";
 import LoadingSkeleton from "../../../../common/LoadingSkeleton";
@@ -20,7 +17,6 @@ const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || "";
 const SelectedSiteCard = () => {
   const classes = useStyles();
   const site = useSelector(siteDetailsSelector);
-  const loading = useSelector(siteLoadingSelector);
   const surveyList = useSelector(surveyListSelector);
 
   const isFeatured = `${site?.id}` === featuredSiteId;
@@ -38,7 +34,7 @@ const SelectedSiteCard = () => {
     <Box className={classes.card}>
       <Box mb={2}>
         <LoadingSkeleton
-          loading={loading}
+          loading={!site}
           variant="text"
           lines={1}
           textHeight={28}
@@ -57,7 +53,6 @@ const SelectedSiteCard = () => {
       <Card>
         <SelectedSiteCardContent
           site={site}
-          loading={loading || !site}
           imageUrl={featuredSurveyMedia?.url}
         />
       </Card>

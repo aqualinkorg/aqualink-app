@@ -33,10 +33,11 @@ import { useBodyLength } from "../../../hooks/useBodyLength";
 import surveyServices from "../../../services/surveyServices";
 import { getAxiosErrorMessage } from "../../../helpers/errors";
 
-const Surveys = ({ site, loading }: SurveysProps) => {
+const Surveys = ({ site }: SurveysProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const isLoading = !site;
   const [point, setPoint] = useState<string>("All");
   const pointOptions = site?.surveyPoints || [];
   const [deleteSurveyPointDialogOpen, setDeleteSurveyPointDialogOpen] =
@@ -211,7 +212,7 @@ const Surveys = ({ site, loading }: SurveysProps) => {
           width={bodyLength}
           zIndex="-1"
         />
-        {!loading && (
+        {!isLoading && (
           <Grid
             className={classes.surveyWrapper}
             container
@@ -296,7 +297,7 @@ const Surveys = ({ site, loading }: SurveysProps) => {
         <Grid container justify="center" item xs={11} lg={12}>
           <Timeline
             isAdmin={isSiteAdmin}
-            loading={loading}
+            loading={isLoading}
             addNewButton
             siteId={site?.id}
             timeZone={site?.timezone}
@@ -360,11 +361,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface SurveysProps {
   site?: Site;
-  loading: boolean;
 }
-
-Surveys.defaultProps = {
-  site: undefined,
-};
 
 export default Surveys;

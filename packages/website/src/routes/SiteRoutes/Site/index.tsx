@@ -17,7 +17,6 @@ import SiteDetails from "../../../common/SiteDetails";
 import SiteInfo from "./SiteInfo";
 import {
   siteDetailsSelector,
-  siteLoadingSelector,
   siteRequest,
   siteTimeSeriesDataRangeRequest,
   clearTimeSeriesData,
@@ -100,7 +99,6 @@ const getAlertMessage = (
 const Site = ({ match, classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const user = useSelector(userInfoSelector);
-  const loading = useSelector(siteLoadingSelector);
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const getQueryParam = useQueryParams();
@@ -128,11 +126,11 @@ const Site = ({ match, classes }: SiteProps) => {
 
   const today = localizedEndOfDay(undefined, timezone);
 
-  const isLoading = loading || !siteDetails;
-
   const siteWithFeaturedImage: SiteType | undefined = siteDetails
     ? { ...siteDetails, featuredImage: url }
     : undefined;
+
+  const isLoading = !siteWithFeaturedImage;
 
   // Fetch site and surveys
   useEffect(() => {
@@ -199,7 +197,6 @@ const Site = ({ match, classes }: SiteProps) => {
         )}
         <SiteDetails
           site={siteWithFeaturedImage}
-          loading={isLoading}
           selectedSurveyPointId={selectedSurveyPointId}
           featuredSurveyId={featuredSurveyId}
           hasDailyData={hasDailyData}
