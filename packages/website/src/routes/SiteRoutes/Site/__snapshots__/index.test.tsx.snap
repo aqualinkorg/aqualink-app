@@ -1097,7 +1097,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-328"
+              class="makeStyles-container-328"
             >
               <mock-map
                 polygon="[object Object]"
@@ -1114,7 +1114,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-328"
+              class="makeStyles-container-328"
             >
               <mock-featuredmedia
                 featuredimage=""
@@ -3801,7 +3801,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-68"
+              class="makeStyles-container-68"
             >
               <mock-map
                 polygon="[object Object]"
@@ -3818,7 +3818,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="CardWithTitle-container-68"
+              class="makeStyles-container-68"
             >
               <mock-featuredmedia
                 siteid="1"

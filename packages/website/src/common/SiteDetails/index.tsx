@@ -31,6 +31,7 @@ import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 import WaterSamplingCard from "./WaterSampling";
 import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
+import playIcon from "../../assets/play-icon.svg";
 
 const SiteDetails = ({
   site,
@@ -162,6 +163,7 @@ const SiteDetails = ({
           titleItems={featuredMediaTitleItems()}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
+          loadingImage={playIcon}
         >
           {site && (
             <FeaturedMedia

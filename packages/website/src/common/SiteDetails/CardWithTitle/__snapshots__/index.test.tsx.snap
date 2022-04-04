@@ -32,7 +32,7 @@ exports[`renders as expected 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
-        class="CardWithTitle-container-2"
+        class="makeStyles-container-2"
       />
     </div>
   </div>

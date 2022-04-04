@@ -1,7 +1,6 @@
 import React, { FC, PropsWithChildren } from "react";
 import {
-  withStyles,
-  WithStyles,
+  makeStyles,
   createStyles,
   GridProps,
   Grid,
@@ -14,14 +13,16 @@ import { Value } from "./types";
 import LoadingSkeleton from "../../LoadingSkeleton";
 
 const CardWithTitle: FC<CardWithTitleProps> = ({
-  classes,
   loading,
   gridProps,
   titleItems,
   className,
   forcedAspectRatio,
   children,
+  loadingImage,
 }: PropsWithChildren<CardWithTitleProps>) => {
+  const classes = useStyles();
+
   return (
     <Grid className={className} container item {...gridProps}>
       {titleItems.length > 0 && (
@@ -45,7 +46,12 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
               : classes.container
           }
         >
-          <LoadingSkeleton loading={loading} variant="rect" height="100%">
+          <LoadingSkeleton
+            image={loadingImage}
+            loading={loading}
+            variant="rect"
+            height="100%"
+          >
             {children}
           </LoadingSkeleton>
         </div>
@@ -54,7 +60,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
   );
 };
 
-const styles = (theme: Theme) => {
+const useStyles = makeStyles((theme: Theme) => {
   const aspectRatio = "16 / 9";
 
   return createStyles({
@@ -83,17 +89,15 @@ const styles = (theme: Theme) => {
       height: "100%",
     },
   });
-};
+});
 
-interface CardWithTitleIncomingProps {
+interface CardWithTitleProps {
   gridProps: GridProps;
   loading: boolean;
   titleItems: Value[];
   className?: string;
   forcedAspectRatio?: boolean;
+  loadingImage?: string;
 }
 
-type CardWithTitleProps = CardWithTitleIncomingProps &
-  WithStyles<typeof styles>;
-
-export default withStyles(styles)(CardWithTitle);
+export default CardWithTitle;
