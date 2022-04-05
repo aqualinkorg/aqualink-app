@@ -2,14 +2,14 @@ import React from "react";
 import {
   createStyles,
   Grid,
-  withStyles,
-  WithStyles,
+  makeStyles,
   Theme,
   Box,
   useTheme,
   useMediaQuery,
 } from "@material-ui/core";
 import classNames from "classnames";
+import times from "lodash/times";
 
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
@@ -29,39 +29,48 @@ import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
 import { displayTimeInLocalTimezone, sortByDate } from "../../helpers/dates";
 import { oceanSenseConfig } from "../../constants/oceanSenseConfig";
 import WaterSamplingCard from "./WaterSampling";
+import { styles as incomingStyles } from "./styles";
+import LoadingSkeleton from "../LoadingSkeleton";
+import playIcon from "../../assets/play-icon.svg";
 
 const SiteDetails = ({
-  classes,
   site,
   selectedSurveyPointId,
-  featuredSurveyId,
   hasDailyData,
   surveys,
-  featuredSurveyPoint,
-  surveyDiveDate,
+  featuredSurveyId = null,
+  featuredSurveyPoint = null,
+  surveyDiveDate = null,
 }: SiteDetailsProps) => {
+  const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const [lng, lat] = getMiddlePoint(site.polygon);
+  const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
+  const isLoading = !site;
 
-  const { dailyData, liveData, maxMonthlyMean, videoStream } = site;
+  const { videoStream } = site || {};
 
   const hasSondeData = Boolean(
-    liveData?.latestData?.some((data) => data.source === "sonde")
+    site?.liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
-  const cards = [
-    <Satellite liveData={liveData} maxMonthlyMean={maxMonthlyMean} />,
-    <Sensor site={site} />,
-    hasSondeData ? (
-      <WaterSamplingCard siteId={site.id.toString()} />
-    ) : (
-      <CoralBleaching
-        dailyData={sortByDate(dailyData, "date", "asc").slice(-1)[0]}
-      />
-    ),
-    <Waves liveData={liveData} />,
-  ];
+  const cards = site
+    ? [
+        <Satellite
+          liveData={site.liveData}
+          maxMonthlyMean={site.maxMonthlyMean}
+        />,
+        <Sensor site={site} />,
+        hasSondeData ? (
+          <WaterSamplingCard siteId={site.id.toString()} />
+        ) : (
+          <CoralBleaching
+            dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
+          />
+        ),
+        <Waves liveData={site.liveData} />,
+      ]
+    : times(4, () => null);
 
   const mapTitleItems: Value[] = [
     {
@@ -104,7 +113,7 @@ const SiteDetails = ({
               isoDate: surveyDiveDate,
               format: "MMM DD[,] YYYY",
               displayTimezone: false,
-              timeZone: site.timezone,
+              timeZone: site?.timezone,
             })}`,
             variant: "subtitle2",
             marginRight: 0,
@@ -128,6 +137,7 @@ const SiteDetails = ({
         })}
       >
         <CardWithTitle
+          loading={isLoading}
           className={classNames({
             [classes.mobileMargin]: !!videoStream,
           })}
@@ -135,64 +145,71 @@ const SiteDetails = ({
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
         >
-          <Map
-            siteId={site.id}
-            spotterPosition={site.liveData?.spotterPosition}
-            polygon={site.polygon}
-            surveyPoints={site.surveyPoints}
-          />
+          {site && (
+            <Map
+              siteId={site.id}
+              spotterPosition={site.liveData?.spotterPosition}
+              polygon={site.polygon}
+              surveyPoints={site.surveyPoints}
+            />
+          )}
         </CardWithTitle>
 
         <CardWithTitle
+          loading={isLoading}
           className={classNames({
             [classes.mobileMargin]: !!videoStream,
           })}
           titleItems={featuredMediaTitleItems()}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
+          loadingImage={playIcon}
         >
-          <FeaturedMedia
-            siteId={site.id}
-            url={videoStream}
-            featuredImage={site.featuredImage}
-            surveyId={featuredSurveyId}
-          />
+          {site && (
+            <FeaturedMedia
+              siteId={site.id}
+              url={videoStream}
+              featuredImage={site.featuredImage}
+              surveyId={featuredSurveyId}
+            />
+          )}
         </CardWithTitle>
       </Grid>
 
-      {hasDailyData && (
-        <>
-          <Grid
-            className={classes.metricsWrapper}
-            container
-            justify="space-between"
-            spacing={2}
-          >
-            {cards.map((Component, index) => (
-              <Grid key={index.toString()} item xs={12} sm={6} md={3}>
-                {Component}
-              </Grid>
-            ))}
+      <Grid
+        className={classes.metricsWrapper}
+        container
+        justify="space-between"
+        spacing={2}
+      >
+        {cards.map((Component, index) => (
+          <Grid key={index.toString()} item xs={12} sm={6} md={3}>
+            <div className={classes.card}>
+              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
+                {hasDailyData && Component}
+              </LoadingSkeleton>
+            </div>
           </Grid>
+        ))}
+      </Grid>
 
-          {oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
+      {site && oceanSenseConfig?.[site.id] && <OceanSenseMetrics />}
 
-          <Box mt="2rem">
-            <CombinedCharts
-              site={site}
-              selectedSurveyPointId={selectedSurveyPointId}
-              surveys={surveys}
-            />
-            <Surveys site={site} />
-          </Box>
-        </>
-      )}
+      <Box mt="2rem">
+        <CombinedCharts
+          site={site}
+          selectedSurveyPointId={selectedSurveyPointId}
+          surveys={surveys}
+        />
+        <Surveys site={site} />
+      </Box>
     </Box>
   );
 };
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    ...incomingStyles,
     root: {
       marginTop: "2rem",
     },
@@ -208,10 +225,11 @@ const styles = (theme: Theme) =>
     metricsWrapper: {
       marginTop: "1rem",
     },
-  });
+  })
+);
 
-interface SiteDetailsIncomingProps {
-  site: Site;
+interface SiteDetailsProps {
+  site?: Site;
   selectedSurveyPointId?: string;
   featuredSurveyId?: number | null;
   hasDailyData: boolean;
@@ -220,13 +238,4 @@ interface SiteDetailsIncomingProps {
   surveyDiveDate?: string | null;
 }
 
-SiteDetails.defaultProps = {
-  selectedSurveyPointId: undefined,
-  featuredSurveyPoint: null,
-  surveyDiveDate: null,
-  featuredSurveyId: null,
-};
-
-type SiteDetailsProps = SiteDetailsIncomingProps & WithStyles<typeof styles>;
-
-export default withStyles(styles)(SiteDetails);
+export default SiteDetails;

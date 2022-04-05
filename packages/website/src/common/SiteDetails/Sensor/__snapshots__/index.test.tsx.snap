@@ -3,7 +3,7 @@
 exports[`Sensor Card should render with given state from Redux store 1`] = `
 <div>
   <mock-card
-    classname="Sensor-card-1"
+    classname="Sensor-root-8"
   >
     <div
       class="MuiCardHeader-root Sensor-header-3"
@@ -35,7 +35,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="Sensor-content-9"
+      classname="Sensor-content-10"
     >
       <mock-box
         display="flex"
@@ -91,10 +91,10 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
         </mock-box>
       </mock-box>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-13 makeStyles-withMargin-14 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-14 makeStyles-withMargin-15 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-17 makeStyles-dateInfoWrapper-19 MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-18 makeStyles-dateInfoWrapper-20 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -104,7 +104,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-updateIcon-15 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-16 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -114,7 +114,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root makeStyles-dateInfo-18 MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-19 MuiGrid-item"
             >
               <mock-box
                 display="flex"
@@ -122,7 +122,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-16"
+                  classname="makeStyles-updateInfoText-17"
                   variant="caption"
                 >
                   Last data received
@@ -130,7 +130,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                   5 min. ago
                 </mock-typography>
                 <mock-typography
-                  classname="makeStyles-updateInfoText-16"
+                  classname="makeStyles-updateInfoText-17"
                   variant="caption"
                 >
                   Updated hourly
@@ -140,19 +140,19 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-20 makeStyles-chip-26 MuiGrid-item"
+          class="MuiGrid-root makeStyles-chip-21 makeStyles-chip-27 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
             <mock-button
-              classname="makeStyles-button-25"
+              classname="makeStyles-button-26"
             >
               <div
-                class="makeStyles-circle-22"
+                class="makeStyles-circle-23"
               />
               <mock-typography
-                classname="makeStyles-chipText-21"
+                classname="makeStyles-chipText-22"
               >
                 LIVE
               </mock-typography>

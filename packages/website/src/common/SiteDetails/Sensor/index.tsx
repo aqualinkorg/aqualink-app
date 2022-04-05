@@ -88,7 +88,7 @@ const Sensor = ({ site, classes }: SensorProps) => {
   const [alertText, clickable] = getApplicationTag(user, site.id);
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.root}>
       <CardHeader
         className={classes.header}
         title={
@@ -164,11 +164,10 @@ const Sensor = ({ site, classes }: SensorProps) => {
 const styles = () =>
   createStyles({
     ...incomingStyles,
-    card: {
-      ...incomingStyles.card,
+    root: {
+      height: "100%",
       display: "flex",
       flexDirection: "column",
-      height: "100%",
       backgroundColor: "#128cc0",
     },
     titleImage: {

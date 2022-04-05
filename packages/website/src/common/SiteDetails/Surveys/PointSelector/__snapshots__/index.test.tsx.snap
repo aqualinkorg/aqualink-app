@@ -9,14 +9,14 @@ exports[`renders as expected 1`] = `
       class="MuiGrid-root MuiGrid-item"
     >
       <mock-typography
-        classname="PointSelector-subTitle-1"
+        classname="makeStyles-subTitle-1"
         variant="h6"
       >
         Survey Point:
       </mock-typography>
     </div>
     <div
-      class="MuiGrid-root PointSelector-selectorWrapper-2 MuiGrid-item"
+      class="MuiGrid-root makeStyles-selectorWrapper-2 MuiGrid-item"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
@@ -25,7 +25,7 @@ exports[`renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item"
         >
           <div
-            class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-3"
+            class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-3"
           >
             <div
               aria-haspopup="listbox"
@@ -68,7 +68,7 @@ exports[`renders as expected 1`] = `
                 selected="true"
               >
                 <mock-typography
-                  classname="PointSelector-menuItem-5"
+                  classname="makeStyles-menuItem-5"
                   variant="h6"
                 >
                   All

@@ -3,31 +3,31 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="makeStyles-card-1"
+    classname="makeStyles-root-8"
   >
     <mock-cardcontent
-      classname="makeStyles-contentWrapper-11"
+      classname="makeStyles-contentWrapper-12"
     >
       <div
-        class="MuiGrid-root makeStyles-content-12 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+        class="MuiGrid-root makeStyles-content-13 MuiGrid-container MuiGrid-item MuiGrid-align-content-xs-space-between MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
       >
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
-            classname="makeStyles-cardTitle-2 makeStyles-coloredText-8"
+            classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
             variant="h6"
           >
             WIND
           </mock-typography>
           <img
             alt="wind"
-            class="makeStyles-titleImages-9"
+            class="makeStyles-titleImages-10"
             src="wind.svg"
           />
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
@@ -73,7 +73,7 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="makeStyles-arrow-13 makeStyles-windDirectionArrow-14 makeStyles-windDirectionArrow-16"
+                class="makeStyles-arrow-14 makeStyles-windDirectionArrow-15 makeStyles-windDirectionArrow-17"
                 src="directioncircle.svg"
               />
               <mock-typography
@@ -87,22 +87,22 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
           <mock-typography
-            classname="makeStyles-cardTitle-2 makeStyles-coloredText-8"
+            classname="makeStyles-cardTitle-2 makeStyles-coloredText-9"
             variant="h6"
           >
             WAVES
           </mock-typography>
           <img
             alt="waves"
-            class="makeStyles-titleImages-9"
+            class="makeStyles-titleImages-10"
             src="waves.svg"
           />
         </div>
         <div
-          class="MuiGrid-root makeStyles-paddingContainer-10 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
+          class="MuiGrid-root makeStyles-paddingContainer-11 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-space-between MuiGrid-grid-xs-12"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-4"
@@ -177,7 +177,7 @@ exports[`renders as expected 1`] = `
             >
               <img
                 alt="arrow"
-                class="makeStyles-arrow-13 makeStyles-wavesDirectionArrow-15 makeStyles-wavesDirectionArrow-17"
+                class="makeStyles-arrow-14 makeStyles-wavesDirectionArrow-16 makeStyles-wavesDirectionArrow-18"
                 src="directioncircle.svg"
               />
               <mock-typography
@@ -191,10 +191,10 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-updateInfo-18 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+          class="MuiGrid-root makeStyles-updateInfo-19 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
         >
           <div
-            class="MuiGrid-root makeStyles-dateInfoWrapper-22 makeStyles-dateInfoWrapper-24 MuiGrid-item"
+            class="MuiGrid-root makeStyles-dateInfoWrapper-23 makeStyles-dateInfoWrapper-25 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -204,7 +204,7 @@ exports[`renders as expected 1`] = `
               >
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root makeStyles-updateIcon-20 MuiSvgIcon-fontSizeSmall"
+                  class="MuiSvgIcon-root makeStyles-updateIcon-21 MuiSvgIcon-fontSizeSmall"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -214,7 +214,7 @@ exports[`renders as expected 1`] = `
                 </svg>
               </div>
               <div
-                class="MuiGrid-root makeStyles-dateInfo-23 MuiGrid-item"
+                class="MuiGrid-root makeStyles-dateInfo-24 MuiGrid-item"
               >
                 <mock-box
                   display="flex"
@@ -222,7 +222,7 @@ exports[`renders as expected 1`] = `
                   width="100%"
                 >
                   <mock-typography
-                    classname="makeStyles-updateInfoText-21"
+                    classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
                     Last data received
@@ -230,7 +230,7 @@ exports[`renders as expected 1`] = `
                     5 min. ago
                   </mock-typography>
                   <mock-typography
-                    classname="makeStyles-updateInfoText-21"
+                    classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
                     Updated hourly
@@ -240,19 +240,19 @@ exports[`renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="MuiGrid-root makeStyles-chip-25 makeStyles-chip-31 MuiGrid-item"
+            class="MuiGrid-root makeStyles-chip-26 makeStyles-chip-32 MuiGrid-item"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
             >
               <mock-button
-                classname="makeStyles-button-30"
+                classname="makeStyles-button-31"
               >
                 <div
-                  class="makeStyles-circle-27"
+                  class="makeStyles-circle-28"
                 />
                 <mock-typography
-                  classname="makeStyles-chipText-26"
+                  classname="makeStyles-chipText-27"
                 >
                   LIVE
                 </mock-typography>

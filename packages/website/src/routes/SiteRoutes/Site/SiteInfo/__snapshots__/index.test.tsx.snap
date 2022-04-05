@@ -59,7 +59,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
     </div>
   </div>
   <div
-    class="MuiGrid-root SiteNavBar-root-1 MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+    class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
@@ -68,7 +68,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-align-items-xs-center"
       >
         <div
-          class="MuiGrid-root SiteNavBar-headerButtonWrapper-4 MuiGrid-item"
+          class="MuiGrid-root SiteNavBar-headerButtonWrapper-3 MuiGrid-item"
         >
           <mock-iconbutton
             aria-label="menu"
@@ -90,7 +90,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
           </mock-iconbutton>
         </div>
         <div
-          class="MuiGrid-root SiteNavBar-headerWrapper-5 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+          class="MuiGrid-root SiteNavBar-headerWrapper-4 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
@@ -102,7 +102,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-baseline"
               >
                 <div
-                  class="MuiGrid-root SiteNavBar-siteNameWrapper-6 MuiGrid-item"
+                  class="MuiGrid-root SiteNavBar-siteNameWrapper-5 MuiGrid-item"
                 >
                   <mock-typography
                     variant="h4"
@@ -111,7 +111,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
                   </mock-typography>
                 </div>
                 <div
-                  class="MuiGrid-root SiteNavBar-headerButtonWrapper-4 MuiGrid-item"
+                  class="MuiGrid-root SiteNavBar-headerButtonWrapper-3 MuiGrid-item"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <mock-button
-                classname="SiteNavBar-button-3"
+                classname="SiteNavBar-button-2"
                 color="primary"
                 size="small"
                 variant="outlined"
@@ -153,7 +153,7 @@ exports[`SiteNavBar should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <mock-button
-                classname="SiteNavBar-button-3"
+                classname="SiteNavBar-button-2"
                 color="primary"
                 component="[object Object]"
                 size="small"

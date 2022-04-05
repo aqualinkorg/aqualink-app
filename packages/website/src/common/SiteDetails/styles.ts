@@ -7,6 +7,7 @@ const MOBILE = 350;
 export const styles = {
   card: {
     minHeight: "18rem",
+    height: "100%",
   },
   cardTitle: {
     lineHeight: 1.5,

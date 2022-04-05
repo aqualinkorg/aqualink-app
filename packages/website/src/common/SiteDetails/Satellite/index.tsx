@@ -63,7 +63,7 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
 
   return (
     <Card
-      className={classes.card}
+      className={classes.root}
       style={{ backgroundColor: dhwColorFinder(degreeHeatingWeeks) }}
     >
       <CardHeader
@@ -137,11 +137,10 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
 const styles = () =>
   createStyles({
     ...incomingStyles,
-    card: {
-      ...incomingStyles.card,
+    root: {
+      height: "100%",
       display: "flex",
       flexDirection: "column",
-      height: "100%",
     },
     content: {
       display: "flex",
