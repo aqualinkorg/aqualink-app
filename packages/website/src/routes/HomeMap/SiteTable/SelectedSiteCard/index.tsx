@@ -6,7 +6,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { siteDetailsSelector } from "../../../../store/Sites/selectedSiteSlice";
+import {
+  siteDetailsSelector,
+  siteErrorSelector,
+  siteLoadingSelector,
+} from "../../../../store/Sites/selectedSiteSlice";
 import { surveyListSelector } from "../../../../store/Survey/surveyListSlice";
 import { sortByDate } from "../../../../helpers/dates";
 import LoadingSkeleton from "../../../../common/LoadingSkeleton";
@@ -17,6 +21,8 @@ const featuredSiteId = process.env.REACT_APP_FEATURED_SITE_ID || "";
 const SelectedSiteCard = () => {
   const classes = useStyles();
   const site = useSelector(siteDetailsSelector);
+  const loading = useSelector(siteLoadingSelector);
+  const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
 
   const isFeatured = `${site?.id}` === featuredSiteId;
@@ -34,25 +40,29 @@ const SelectedSiteCard = () => {
     <Box className={classes.card}>
       <Box mb={2}>
         <LoadingSkeleton
-          loading={!site}
+          loading={loading}
           variant="text"
           lines={1}
           textHeight={28}
         >
-          <Typography variant="h5" color="textSecondary">
-            {isFeatured ? "Featured Site" : "Selected Site"}
-            {!hasMedia && (
-              <Link to={`sites/${site?.id}`}>
-                <LaunchIcon className={classes.launchIcon} />
-              </Link>
-            )}
-          </Typography>
+          {site && (
+            <Typography variant="h5" color="textSecondary">
+              {isFeatured ? "Featured Site" : "Selected Site"}
+              {!hasMedia && (
+                <Link to={`sites/${site?.id}`}>
+                  <LaunchIcon className={classes.launchIcon} />
+                </Link>
+              )}
+            </Typography>
+          )}
         </LoadingSkeleton>
       </Box>
 
       <Card>
         <SelectedSiteCardContent
           site={site}
+          loading={loading}
+          error={error}
           imageUrl={featuredSurveyMedia?.url}
         />
       </Card>
