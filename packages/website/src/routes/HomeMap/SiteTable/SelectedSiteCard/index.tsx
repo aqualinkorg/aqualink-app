@@ -25,7 +25,7 @@ const SelectedSiteCard = () => {
   const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
 
-  const isFeatured = `${site?.id}` === featuredSiteId;
+  const isFeatured = (site?.id || "").toString() === featuredSiteId;
 
   const { featuredSurveyMedia } =
     sortByDate(surveyList, "diveDate", "desc").find(
@@ -35,6 +35,11 @@ const SelectedSiteCard = () => {
     ) || {};
 
   const hasMedia = Boolean(featuredSurveyMedia?.url);
+
+  // If FEATURED_SITE is not setup, no card is displayed.
+  if (featuredSiteId === "" && isFeatured) {
+    return null;
+  }
 
   return (
     <Box className={classes.card}>
