@@ -509,6 +509,7 @@ export const uploadTimeSeriesData = async (
           .values(batch)
           // If there's a conflict, replace data with the new value.
           // TODO - onConflict is deprecated, update.
+          // Watch https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
           .onConflict(
             'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
           )
