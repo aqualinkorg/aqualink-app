@@ -46,7 +46,7 @@ const Waves = ({ liveData }: WavesProps) => {
     windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.root}>
       <CardContent className={classes.contentWrapper}>
         <Grid
           className={classes.content}
@@ -243,8 +243,7 @@ const Waves = ({ liveData }: WavesProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     ...incomingStyles,
-    card: {
-      ...incomingStyles.card,
+    root: {
       height: "100%",
       width: "100%",
       backgroundColor: "#eff0f0",

@@ -77,6 +77,19 @@ exports[`Terms page should render with given state from Redux store 1`] = `
         </mock-button>
         <mock-button
           classname="MenuDrawer-menuDrawerButton-15"
+          component="mock-Link"
+          href="https://stories.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            variant="h6"
+          >
+            STORIES
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-15"
           component="[object Object]"
           to="/faq"
         >
@@ -115,7 +128,7 @@ exports[`Terms page should render with given state from Redux store 1`] = `
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink's source code is licenced under MIT. Contribute!
+            Aqualink is open-source (MIT). Join us and contribute!
           </mock-typography>
           <div
             class="MuiButtonGroup-root MuiButtonGroup-contained"

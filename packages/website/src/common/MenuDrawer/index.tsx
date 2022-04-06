@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   Box,
   Button,
+  Link as ExternalLink,
   ButtonGroup,
   createStyles,
   Drawer,
@@ -49,6 +50,11 @@ const menuRoutes = [
     gaActionLabel: "About",
   },
   {
+    text: "STORIES",
+    href: "https://stories.aqualink.org",
+    gaActionLabel: "Stories",
+  },
+  {
     text: "FAQ",
     to: "/faq",
     gaActionLabel: "Faq",
@@ -84,12 +90,14 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       >
         <Clear />
       </IconButton>
-      {menuRoutes.map(({ text, to, gaActionLabel }) => (
+      {menuRoutes.map(({ text, to, href, gaActionLabel }) => (
         <Button
           className={classes.menuDrawerButton}
           key={text}
-          component={Link}
-          to={to}
+          component={href ? ExternalLink : Link}
+          target={href ? "_blank" : undefined}
+          href={href || undefined}
+          to={to || ""}
           onClick={() =>
             trackButtonClick(
               GaCategory.BUTTON_CLICK,
@@ -104,7 +112,7 @@ const MenuDrawer = ({ classes, open, onClose }: MenuDrawerProps) => {
       <Box marginTop="auto" padding="25px">
         <Typography variant="subtitle1">
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          Aqualink's source code is licenced under MIT. Contribute!
+          Aqualink is open-source (MIT). Join us and contribute!
         </Typography>
         <ButtonGroup variant="contained" color="default">
           <Button
@@ -147,7 +155,7 @@ const styles = (theme: Theme) =>
       },
     },
     menuDrawerButton: {
-      margin: theme.spacing(2, 4, 4),
+      margin: theme.spacing(2, 2, 2),
       "&:hover": {
         color: "white",
       },

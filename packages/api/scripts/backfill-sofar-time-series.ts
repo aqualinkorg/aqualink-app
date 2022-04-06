@@ -33,7 +33,7 @@ const { argv } = yargs
     demandOption: true,
     type: 'number',
   })
-  .option('r', {
+  .option('s', {
     alias: 'sites',
     describe: 'The sites that should be backfilled with spotter data',
     type: 'array',
@@ -68,7 +68,7 @@ function getTaskFn(task: string) {
 
 async function run() {
   // Extract command line arguments
-  const { d: days, r: siteIds, t: task } = argv;
+  const { d: days, s: siteIds, t: task } = argv;
 
   // Cast siteIds into a number array. If none are given return empty array
   const parsedSiteIds = siteIds ? siteIds.map(Number) : [];

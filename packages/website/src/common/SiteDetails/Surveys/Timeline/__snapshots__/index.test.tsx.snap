@@ -3,7 +3,7 @@
 exports[`SiteRoutes Surveys should render with given state from Redux store 1`] = `
 <div>
   <div
-    class="SurveyTimeline-root-9"
+    class="SurveyTimeline-root-1"
   >
     <mock-hidden
       mddown="true"

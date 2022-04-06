@@ -43,7 +43,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
     </mock-dialogactions>
   </mock-dialog>
   <div
-    class="MuiGrid-root Surveys-root-1 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
+    class="MuiGrid-root makeStyles-root-1 MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-justify-xs-center"
   >
     <mock-box
       bgcolor="#f5f6f6"
@@ -52,13 +52,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       zindex="-1"
     />
     <div
-      class="MuiGrid-root Surveys-surveyWrapper-2 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
+      class="MuiGrid-root makeStyles-surveyWrapper-2 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-baseline MuiGrid-justify-xs-space-between MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-md-12 MuiGrid-grid-lg-3"
       >
         <mock-typography
-          classname="Surveys-title-3"
+          classname="makeStyles-title-3"
         >
           Survey History
         </mock-typography>
@@ -70,14 +70,14 @@ exports[`Surveys should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item"
         >
           <mock-typography
-            classname="PointSelector-subTitle-12"
+            classname="makeStyles-subTitle-12"
             variant="h6"
           >
             Survey Point:
           </mock-typography>
         </div>
         <div
-          class="MuiGrid-root PointSelector-selectorWrapper-13 MuiGrid-item"
+          class="MuiGrid-root makeStyles-selectorWrapper-13 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
@@ -86,7 +86,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline PointSelector-selector-14"
+                class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selector-14"
               >
                 <div
                   aria-haspopup="listbox"
@@ -129,7 +129,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                     selected="true"
                   >
                     <mock-typography
-                      classname="PointSelector-menuItem-16"
+                      classname="makeStyles-menuItem-16"
                       variant="h6"
                     >
                       All
@@ -148,31 +148,31 @@ exports[`Surveys should render with given state from Redux store 1`] = `
           class="MuiGrid-root MuiGrid-item"
         >
           <mock-typography
-            classname="Surveys-subTitle-4"
+            classname="makeStyles-subTitle-4"
             variant="h6"
           >
             Observation:
           </mock-typography>
         </div>
         <div
-          class="MuiGrid-root Surveys-selectorWrapper-5 MuiGrid-item"
+          class="MuiGrid-root makeStyles-selectorWrapper-5 MuiGrid-item"
         >
           <div
-            class="MuiFormControl-root Surveys-formControl-6"
+            class="MuiFormControl-root makeStyles-formControl-6"
           >
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline Surveys-selectedItem-7 MuiInputBase-formControl MuiInput-formControl"
+              class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-selectedItem-7 MuiInputBase-formControl MuiInput-formControl"
             >
               <div
                 aria-haspopup="listbox"
                 aria-labelledby="survey-observation survey-observation"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Surveys-textField-9"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input makeStyles-textField-9"
                 id="survey-observation"
                 role="button"
                 tabindex="0"
               >
                 <mock-typography
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   variant="h6"
                 >
                   Any
@@ -209,14 +209,14 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   selected="true"
                 >
                   <mock-typography
-                    classname="Surveys-menuItem-8"
+                    classname="makeStyles-menuItem-8"
                     variant="h6"
                   >
                     Any
                   </mock-typography>
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="healthy"
                   role="option"
                   selected="false"
@@ -225,7 +225,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Appears healthy
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="possible-disease"
                   role="option"
                   selected="false"
@@ -234,7 +234,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Showing possible signs of disease
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="evident-disease"
                   role="option"
                   selected="false"
@@ -243,7 +243,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Signs of disease are evident
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="mortality"
                   role="option"
                   selected="false"
@@ -252,7 +252,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Signs of mortality are evident
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="environmental"
                   role="option"
                   selected="false"
@@ -261,7 +261,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Signs of environmental disturbance are evident (e.g. storm damage)
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="anthropogenic"
                   role="option"
                   selected="false"
@@ -270,7 +270,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                   Signs of anthropogenic disturbance are evident (e.g.,fishing gear, trampling)
                 </mock-menuitem>
                 <mock-menuitem
-                  classname="Surveys-menuItem-8"
+                  classname="makeStyles-menuItem-8"
                   data-value="invasive-species"
                   role="option"
                   selected="false"
@@ -288,7 +288,7 @@ exports[`Surveys should render with given state from Redux store 1`] = `
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-11 MuiGrid-grid-lg-12"
     >
       <div
-        class="SurveyTimeline-root-29"
+        class="SurveyTimeline-root-21"
       >
         <mock-hidden
           mddown="true"
@@ -297,13 +297,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
             class="MuiTimeline-root MuiTimeline-alignLeft"
           >
             <li
-              class="MuiTimelineItem-root MuiTimelineItem-alignLeft SurveyTimeline-timelineItem-31"
+              class="MuiTimelineItem-root MuiTimelineItem-alignLeft makeStyles-timelineItem-30"
             >
               <div
-                class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent SurveyTimeline-timelineOppositeContent-32"
+                class="MuiTimelineOppositeContent-root MuiTimelineItem-oppositeContent makeStyles-timelineOppositeContent-31"
               >
                 <mock-typography
-                  classname="SurveyTimeline-dates-22"
+                  classname="makeStyles-dates-23"
                   variant="h6"
                 >
                   09/10/2020
@@ -313,73 +313,73 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                 class="MuiTimelineSeparator-root"
               >
                 <hr
-                  class="SurveyTimeline-connector-30"
+                  class="makeStyles-connector-34"
                 />
                 <span
-                  class="MuiTimelineDot-root SurveyTimeline-dot-33 MuiTimelineDot-outlinedGrey"
+                  class="MuiTimelineDot-root makeStyles-dot-35 MuiTimelineDot-outlinedGrey"
                 />
                 <hr
-                  class="SurveyTimeline-connector-30"
+                  class="makeStyles-connector-34"
                 />
               </div>
               <div
-                class="MuiTimelineContent-root MuiTimelineItem-content SurveyTimeline-surveyCardWrapper-24"
+                class="MuiTimelineContent-root MuiTimelineItem-content makeStyles-surveyCardWrapper-25"
               >
                 <div
-                  class="MuiPaper-root SurveyCard-surveyCard-40 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root SurveyCard-cardImageWrapper-44 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root makeStyles-cardImageWrapper-51 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                     >
                       <a
                         href="/sites/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root SurveyCard-cardImage-41"
+                          class="MuiCardMedia-root makeStyles-cardImage-48"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root SurveyCard-infoWrapper-45 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root makeStyles-infoWrapper-52 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                     >
                       <div
-                        class="MuiGrid-root SurveyCard-info-50 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root makeStyles-info-57 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-42"
+                            classname="makeStyles-cardFields-49"
                             variant="h6"
                           >
                             User:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-43 SurveyCard-valuesWithMargin-48"
+                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
                             variant="h6"
                           >
                             Joe Doe
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root SurveyCard-commentsWrapper-46 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root makeStyles-commentsWrapper-53 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                             style="height: 80%;"
                           >
                             <mock-typography
-                              classname="SurveyCard-cardFields-42"
+                              classname="makeStyles-cardFields-49"
                               variant="h6"
                             >
                               Comments:
                             </mock-typography>
                             <mock-typography
-                              classname="SurveyCard-cardValues-43 SurveyCard-comments-47"
+                              classname="makeStyles-cardValues-50 makeStyles-comments-54"
                               variant="h6"
                             >
                               No comments
@@ -390,13 +390,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-42"
+                            classname="makeStyles-cardFields-49"
                             variant="h6"
                           >
                             Temp:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-43 SurveyCard-valuesWithMargin-48"
+                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
                             variant="h6"
                           >
                             10.0 °C
@@ -437,76 +437,76 @@ exports[`Surveys should render with given state from Redux store 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              class="MuiGrid-root SurveyTimeline-surveyWrapper-34 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
+              class="MuiGrid-root makeStyles-surveyWrapper-71 MuiGrid-container MuiGrid-item MuiGrid-justify-xs-center MuiGrid-grid-xs-12"
             >
               <div
-                class="MuiGrid-root SurveyTimeline-dateWrapper-21 MuiGrid-item MuiGrid-grid-xs-11"
+                class="MuiGrid-root makeStyles-dateWrapper-62 MuiGrid-item MuiGrid-grid-xs-11"
               >
                 <mock-typography
-                  classname="SurveyTimeline-dates-22"
+                  classname="makeStyles-dates-63"
                   variant="h6"
                 >
                   09/10/2020
                 </mock-typography>
               </div>
               <div
-                class="MuiGrid-root SurveyTimeline-surveyCardWrapper-24 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                class="MuiGrid-root makeStyles-surveyCardWrapper-65 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
               >
                 <div
-                  class="MuiPaper-root SurveyCard-surveyCard-40 MuiPaper-elevation0 MuiPaper-rounded"
+                  class="MuiPaper-root makeStyles-surveyCard-47 MuiPaper-elevation0 MuiPaper-rounded"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-between"
                     style="height: 100%;"
                   >
                     <div
-                      class="MuiGrid-root SurveyCard-cardImageWrapper-44 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+                      class="MuiGrid-root makeStyles-cardImageWrapper-51 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
                     >
                       <a
                         href="/sites/1/survey_details/46"
                       >
                         <div
-                          class="MuiCardMedia-root SurveyCard-cardImage-41"
+                          class="MuiCardMedia-root makeStyles-cardImage-48"
                         />
                       </a>
                     </div>
                     <div
-                      class="MuiGrid-root SurveyCard-infoWrapper-45 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
+                      class="MuiGrid-root makeStyles-infoWrapper-52 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7"
                     >
                       <div
-                        class="MuiGrid-root SurveyCard-info-50 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+                        class="MuiGrid-root makeStyles-info-57 MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
                       >
                         <div
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-42"
+                            classname="makeStyles-cardFields-49"
                             variant="h6"
                           >
                             User:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-43 SurveyCard-valuesWithMargin-48"
+                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
                             variant="h6"
                           >
                             Joe Doe
                           </mock-typography>
                         </div>
                         <div
-                          class="MuiGrid-root SurveyCard-commentsWrapper-46 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
+                          class="MuiGrid-root makeStyles-commentsWrapper-53 MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-flex-start MuiGrid-grid-xs-12"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
                             style="height: 80%;"
                           >
                             <mock-typography
-                              classname="SurveyCard-cardFields-42"
+                              classname="makeStyles-cardFields-49"
                               variant="h6"
                             >
                               Comments:
                             </mock-typography>
                             <mock-typography
-                              classname="SurveyCard-cardValues-43 SurveyCard-comments-47"
+                              classname="makeStyles-cardValues-50 makeStyles-comments-54"
                               variant="h6"
                             >
                               No comments
@@ -517,13 +517,13 @@ exports[`Surveys should render with given state from Redux store 1`] = `
                           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12"
                         >
                           <mock-typography
-                            classname="SurveyCard-cardFields-42"
+                            classname="makeStyles-cardFields-49"
                             variant="h6"
                           >
                             Temp:
                           </mock-typography>
                           <mock-typography
-                            classname="SurveyCard-cardValues-43 SurveyCard-valuesWithMargin-48"
+                            classname="makeStyles-cardValues-50 makeStyles-valuesWithMargin-55"
                             variant="h6"
                           >
                             10.0 °C

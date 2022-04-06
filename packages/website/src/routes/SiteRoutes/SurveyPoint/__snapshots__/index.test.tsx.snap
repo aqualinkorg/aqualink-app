@@ -77,6 +77,19 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-button>
         <mock-button
           classname="MenuDrawer-menuDrawerButton-14"
+          component="mock-Link"
+          href="https://stories.aqualink.org"
+          target="_blank"
+          to=""
+        >
+          <mock-typography
+            variant="h6"
+          >
+            STORIES
+          </mock-typography>
+        </mock-button>
+        <mock-button
+          classname="MenuDrawer-menuDrawerButton-14"
           component="[object Object]"
           to="/faq"
         >
@@ -115,7 +128,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           <mock-typography
             variant="subtitle1"
           >
-            Aqualink's source code is licenced under MIT. Contribute!
+            Aqualink is open-source (MIT). Join us and contribute!
           </mock-typography>
           <div
             class="MuiButtonGroup-root MuiButtonGroup-contained"
@@ -1107,7 +1120,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
         </mock-box>
       </div>
       <div
-        class="SurveyTimeline-root-61"
+        class="SurveyTimeline-root-53"
       >
         <mock-hidden
           mddown="true"
@@ -1127,7 +1140,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
     </div>
   </mock-box>
   <mock-appbar
-    classname="Footer-appBar-68"
+    classname="Footer-appBar-79"
     position="static"
   >
     <mock-toolbar>
@@ -1138,7 +1151,7 @@ exports[`Survey Point Detail Page should render with given state from Redux stor
           class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-10"
         >
           <mock-link
-            classname="Footer-navBarLink-69"
+            classname="Footer-navBarLink-80"
             href="/map"
           >
             <mock-typography

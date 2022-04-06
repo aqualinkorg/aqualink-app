@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-card
-    classname="makeStyles-card-1"
+    classname="makeStyles-root-8"
   >
     <div
       class="MuiCardHeader-root makeStyles-header-3"
@@ -35,7 +35,7 @@ exports[`renders as expected 1`] = `
       </div>
     </div>
     <mock-cardcontent
-      classname="makeStyles-content-8"
+      classname="makeStyles-content-9"
     >
       <mock-box
         display="flex"
@@ -168,10 +168,10 @@ exports[`renders as expected 1`] = `
         </div>
       </mock-box>
       <div
-        class="MuiGrid-root makeStyles-updateInfo-9 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-updateInfo-10 false MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root makeStyles-dateInfoWrapper-13 makeStyles-dateInfoWrapper-15 MuiGrid-item"
+          class="MuiGrid-root makeStyles-dateInfoWrapper-14 makeStyles-dateInfoWrapper-16 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -181,7 +181,7 @@ exports[`renders as expected 1`] = `
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root makeStyles-updateIcon-11 MuiSvgIcon-fontSizeSmall"
+                class="MuiSvgIcon-root makeStyles-updateIcon-12 MuiSvgIcon-fontSizeSmall"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -191,7 +191,7 @@ exports[`renders as expected 1`] = `
               </svg>
             </div>
             <div
-              class="MuiGrid-root makeStyles-dateInfo-14 MuiGrid-item"
+              class="MuiGrid-root makeStyles-dateInfo-15 MuiGrid-item"
             >
               <mock-box
                 display="flex"
@@ -199,7 +199,7 @@ exports[`renders as expected 1`] = `
                 width="100%"
               >
                 <mock-typography
-                  classname="makeStyles-updateInfoText-12"
+                  classname="makeStyles-updateInfoText-13"
                   variant="caption"
                 />
               </mock-box>
@@ -207,21 +207,21 @@ exports[`renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root makeStyles-chip-16 makeStyles-chip-22 MuiGrid-item"
+          class="MuiGrid-root makeStyles-chip-17 makeStyles-chip-23 MuiGrid-item"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
           >
             <mock-button
-              classname="makeStyles-button-21"
+              classname="makeStyles-button-22"
             >
               <a
-                class="makeStyles-link-19"
+                class="makeStyles-link-20"
                 href="/sites/1"
                 target="_blank"
               >
                 <mock-typography
-                  classname="makeStyles-chipText-17"
+                  classname="makeStyles-chipText-18"
                 >
                   VIEW UPLOAD
                 </mock-typography>

@@ -137,7 +137,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
   }, [siteId]);
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.root}>
       <CardHeader
         className={classes.header}
         title={
@@ -195,8 +195,7 @@ const WaterSamplingCard = ({ siteId }: WaterSamplingCardProps) => {
 
 const useStyles = makeStyles(() => ({
   ...incomingStyles,
-  card: {
-    ...incomingStyles.card,
+  root: {
     display: "flex",
     flexDirection: "column",
     height: "100%",

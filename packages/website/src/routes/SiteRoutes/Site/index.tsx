@@ -4,23 +4,19 @@ import {
   WithStyles,
   createStyles,
   Container,
-  Grid,
   Box,
-  Typography,
-  LinearProgress,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 
+import classNames from "classnames";
 import SiteNavBar from "../../../common/NavBar";
 import SiteFooter from "../../../common/Footer";
 import SiteDetails from "../../../common/SiteDetails";
 import SiteInfo from "./SiteInfo";
 import {
   siteDetailsSelector,
-  siteLoadingSelector,
-  siteErrorSelector,
   siteRequest,
   siteTimeSeriesDataRangeRequest,
   clearTimeSeriesData,
@@ -41,6 +37,8 @@ import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
+import LoadingSkeleton from "../../../common/LoadingSkeleton";
+import { Site as SiteType } from "../../../store/Sites/types";
 
 const getAlertMessage = (
   user: User | null,
@@ -101,8 +99,6 @@ const getAlertMessage = (
 const Site = ({ match, classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const user = useSelector(userInfoSelector);
-  const loading = useSelector(siteLoadingSelector);
-  const error = useSelector(siteErrorSelector);
   const surveyList = useSelector(surveyListSelector);
   const dispatch = useDispatch();
   const getQueryParam = useQueryParams();
@@ -129,6 +125,12 @@ const Site = ({ match, classes }: SiteProps) => {
   const hasDailyData = Boolean(dailyData && dailyData.length > 0);
 
   const today = localizedEndOfDay(undefined, timezone);
+
+  const siteWithFeaturedImage: SiteType | undefined = siteDetails
+    ? { ...siteDetails, featuredImage: url }
+    : undefined;
+
+  const isLoading = !siteWithFeaturedImage;
 
   // Fetch site and surveys
   useEffect(() => {
@@ -168,58 +170,40 @@ const Site = ({ match, classes }: SiteProps) => {
     }
   }, [dispatch, id, siteId, today]);
 
-  if (loading || (!siteDetails && !error)) {
-    return (
-      <>
-        <SiteNavBar searchLocation={false} />
-        <LinearProgress />
-      </>
-    );
-  }
-
   return (
     <>
       <SiteNavBar searchLocation />
-      <Container className={!hasDailyData ? classes.noDataWrapper : ""}>
-        {siteDetails && liveData && !error ? (
-          <>
-            <SiteInfo
-              hasDailyData={hasDailyData}
-              site={siteDetails}
-              lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-              isAdmin={isAdmin(user, parseInt(siteId, 10))}
-            />
-            {!hasSpotterData && (
-              <Box mt="1.3rem">
-                <Alert severity="info">
-                  {getAlertMessage(user, siteId, hasDailyData)}
-                </Alert>
-              </Box>
+      <Container
+        className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
+      >
+        <Box marginTop="2rem">
+          <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
+            {siteDetails && (
+              <SiteInfo
+                hasDailyData={hasDailyData}
+                site={siteDetails}
+                lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+                isAdmin={isAdmin(user, parseInt(siteId, 10))}
+              />
             )}
-            <SiteDetails
-              site={{
-                ...siteDetails,
-                featuredImage: url,
-              }}
-              selectedSurveyPointId={selectedSurveyPointId}
-              featuredSurveyId={featuredSurveyId}
-              hasDailyData={hasDailyData}
-              surveys={surveyList}
-              featuredSurveyPoint={featuredSurveyPoint}
-              surveyDiveDate={diveDate}
-            />
-          </>
-        ) : (
-          <Container className={classes.noData}>
-            <Grid container direction="column" alignItems="center">
-              <Grid item>
-                <Typography gutterBottom color="primary" variant="h2">
-                  No Data Found
-                </Typography>
-              </Grid>
-            </Grid>
-          </Container>
+          </LoadingSkeleton>
+        </Box>
+        {!hasSpotterData && !isLoading && (
+          <Box mt="1.3rem">
+            <Alert severity="info">
+              {getAlertMessage(user, siteId, hasDailyData)}
+            </Alert>
+          </Box>
         )}
+        <SiteDetails
+          site={siteWithFeaturedImage}
+          selectedSurveyPointId={selectedSurveyPointId}
+          featuredSurveyId={featuredSurveyId}
+          hasDailyData={hasDailyData}
+          surveys={surveyList}
+          featuredSurveyPoint={featuredSurveyPoint}
+          surveyDiveDate={diveDate}
+        />
       </Container>
       <SiteFooter />
     </>

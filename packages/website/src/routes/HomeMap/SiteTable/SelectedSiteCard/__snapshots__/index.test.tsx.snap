@@ -3,7 +3,7 @@
 exports[`renders as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-4"
+    classname="makeStyles-card-1"
   >
     <mock-box
       mb="2"
@@ -18,7 +18,7 @@ exports[`renders as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-7"
+            class="MuiSvgIcon-root makeStyles-launchIcon-2"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -31,11 +31,10 @@ exports[`renders as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-1 makeStyles-mobileCardWrapperWithNoImage-3 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-9 makeStyles-cardWrapper-21 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
-          style="margin-bottom: 2rem; max-height: 14rem;"
+          class="MuiGrid-root makeStyles-cardAnalyticsWrapper-13 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
         >
           <mock-box
             fontweight="400"
@@ -50,10 +49,10 @@ exports[`renders as expected 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
                 <div
-                  class="MuiGrid-root makeStyles-cardTitleWrapper-9 MuiGrid-item"
+                  class="MuiGrid-root makeStyles-cardTitleWrapper-14 MuiGrid-item"
                 >
                   <mock-typography
-                    classname="makeStyles-cardTitle-10"
+                    classname="makeStyles-cardTitle-15"
                     color="textSecondary"
                     variant="h5"
                   >
@@ -66,7 +65,7 @@ exports[`renders as expected 1`] = `
                 </div>
               </div>
               <mock-typography
-                classname="makeStyles-cardTitle-10 makeStyles-siteRegionName-8"
+                classname="makeStyles-cardTitle-15 makeStyles-siteRegionName-16"
                 color="textSecondary"
                 variant="h6"
               >
@@ -96,13 +95,14 @@ exports[`renders as expected 1`] = `
           </mock-hidden>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
-          style="display: flex;"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
         >
           <div
-            class="makeStyles-metricsContainer-6"
+            class="makeStyles-metricsContainer-17"
           >
-            <div>
+            <div
+              class="makeStyles-metric-18"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
@@ -123,7 +123,9 @@ exports[`renders as expected 1`] = `
                 </mock-typography>
               </mock-typography>
             </div>
-            <div>
+            <div
+              class="makeStyles-metric-18"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
@@ -144,7 +146,9 @@ exports[`renders as expected 1`] = `
                 </mock-typography>
               </mock-typography>
             </div>
-            <div>
+            <div
+              class="makeStyles-metric-18"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
@@ -176,7 +180,7 @@ exports[`renders as expected 1`] = `
 exports[`renders loading as expected 1`] = `
 <div>
   <mock-box
-    classname="makeStyles-card-15"
+    classname="makeStyles-card-44"
   >
     <mock-box
       mb="2"
@@ -191,7 +195,7 @@ exports[`renders loading as expected 1`] = `
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root makeStyles-launchIcon-18"
+            class="MuiSvgIcon-root makeStyles-launchIcon-45"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -204,11 +208,10 @@ exports[`renders loading as expected 1`] = `
     </mock-box>
     <mock-card>
       <div
-        class="MuiGrid-root makeStyles-cardWrapper-12 makeStyles-mobileCardWrapperWithNoImage-14 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
+        class="MuiGrid-root makeStyles-cardWrapper-52 makeStyles-cardWrapper-64 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-justify-xs-space-between"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
-          style="margin-bottom: 2rem; max-height: 14rem;"
+          class="MuiGrid-root makeStyles-cardAnalyticsWrapper-56 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10"
         >
           <mock-box
             fontweight="400"
@@ -223,10 +226,10 @@ exports[`renders loading as expected 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center"
               >
                 <div
-                  class="MuiGrid-root makeStyles-cardTitleWrapper-20 MuiGrid-item"
+                  class="MuiGrid-root makeStyles-cardTitleWrapper-57 MuiGrid-item"
                 >
                   <mock-typography
-                    classname="makeStyles-cardTitle-21"
+                    classname="makeStyles-cardTitle-58"
                     color="textSecondary"
                     variant="h5"
                   >
@@ -239,7 +242,7 @@ exports[`renders loading as expected 1`] = `
                 </div>
               </div>
               <mock-typography
-                classname="makeStyles-cardTitle-21 makeStyles-siteRegionName-19"
+                classname="makeStyles-cardTitle-58 makeStyles-siteRegionName-59"
                 color="textSecondary"
                 variant="h6"
               >
@@ -269,13 +272,14 @@ exports[`renders loading as expected 1`] = `
           </mock-hidden>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
-          style="display: flex;"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2"
         >
           <div
-            class="makeStyles-metricsContainer-17"
+            class="makeStyles-metricsContainer-60"
           >
-            <div>
+            <div
+              class="makeStyles-metric-61"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
@@ -296,7 +300,9 @@ exports[`renders loading as expected 1`] = `
                 </mock-typography>
               </mock-typography>
             </div>
-            <div>
+            <div
+              class="makeStyles-metric-61"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
@@ -317,7 +323,9 @@ exports[`renders loading as expected 1`] = `
                 </mock-typography>
               </mock-typography>
             </div>
-            <div>
+            <div
+              class="makeStyles-metric-61"
+            >
               <mock-typography
                 color="textSecondary"
                 variant="caption"
