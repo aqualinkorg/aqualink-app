@@ -50,7 +50,10 @@ const NewSurveyPointDialog = ({
     onClose();
   };
 
-  const onPointSave = async () => {
+  const onPointSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
     setNewPointError(undefined);
     setNewPointLoading(true);
     try {
@@ -124,7 +127,7 @@ const NewSurveyPointDialog = ({
             variant="outlined"
             color="primary"
             disabled={isSaveButtonDisabled}
-            onClick={onPointSave}
+            onClick={(e) => onPointSave(e)}
           >
             {newPointLoading ? "Saving..." : "Save"}
           </Button>
