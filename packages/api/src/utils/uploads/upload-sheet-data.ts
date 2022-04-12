@@ -68,12 +68,13 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
 // 3. GMT±01:00
 const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+// Keep Ignore Header Keys in lower case.
 const IGNORE_HEADER_KEYS = [
   '#',
-  'Site Name',
-  'Time (HH:mm:ss)',
-  'Time (Fract. Sec)',
-].map((key) => key.toLowerCase());
+  'site name',
+  'time (hh:mm:ss)',
+  'time (fract. sec)',
+];
 
 const TIMESTAMP_KEYS = [
   ['Date Time'],
@@ -85,7 +86,7 @@ const TIMESTAMP_KEYS = [
  * @param {string} key
  * @return {any} value
  */
-function getParameterCaseInsensitive(object: Object, key: string) {
+function getParameterCaseInsensitive(object: Object, key: string): any {
   const asLowercase = key.toLowerCase();
   const matchingKey = Object.keys(object).find(
     (k) => k.toLowerCase() === asLowercase,
@@ -468,35 +469,32 @@ export const uploadTimeSeriesData = async (
       'timestamp',
     );
 
-    // TODO - Why do we have this check on surveyPoint?
-    if (surveyPoint) {
-      // If the upload exists as described above, then update it, otherwise save it.
-      const uploadExists = await repositories.dataUploadsRepository.findOne({
-        where: {
-          signature,
-          site,
-          surveyPoint,
-          sensorType: sourceType,
-        },
-      });
-
-      if (uploadExists) {
-        throw new ConflictException(
-          `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
-        );
-      }
-
-      await repositories.dataUploadsRepository.save({
-        file: fileName,
+    // If the upload exists as described above, then update it, otherwise save it.
+    const uploadExists = await repositories.dataUploadsRepository.findOne({
+      where: {
         signature,
-        sensorType: sourceType,
         site,
         surveyPoint,
-        minDate,
-        maxDate,
-        metrics: importedHeaders,
-      });
+        sensorType: sourceType,
+      },
+    });
+
+    if (uploadExists) {
+      throw new ConflictException(
+        `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
+      );
     }
+
+    await repositories.dataUploadsRepository.save({
+      file: fileName,
+      signature,
+      sensorType: sourceType,
+      site,
+      surveyPoint,
+      minDate,
+      maxDate,
+      metrics: importedHeaders,
+    });
 
     // Data is too big to added with one bulk insert so we batch the upload.
     const batchSize = 1000;
@@ -508,8 +506,8 @@ export const uploadTimeSeriesData = async (
           .insert()
           .values(batch)
           // If there's a conflict, replace data with the new value.
-          // TODO - onConflict is deprecated, update.
-          // Watch https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
+          // onConflict is deprecated, but updating it is tricky.
+          // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
           .onConflict(
             'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
           )
