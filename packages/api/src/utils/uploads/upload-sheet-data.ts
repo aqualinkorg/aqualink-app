@@ -68,16 +68,32 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
 // 3. GMT±01:00
 const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
 const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+// Keep Ignore Header Keys in lower case.
 const IGNORE_HEADER_KEYS = [
   '#',
-  'Site Name',
-  'Time (HH:mm:ss)',
-  'Time (Fract. Sec)',
+  'site name',
+  'time (hh:mm:ss)',
+  'time (fract. sec)',
 ];
+
 const TIMESTAMP_KEYS = [
   ['Date Time'],
   ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
 ];
+
+/**
+ * @param {Object} object
+ * @param {string} key
+ * @return {any} value
+ */
+function getParameterCaseInsensitive(object: Object, key: string): any {
+  const asLowercase = key.toLowerCase();
+  const matchingKey = Object.keys(object).find(
+    (k) => k.toLowerCase() === asLowercase,
+  );
+
+  return matchingKey ? object[matchingKey] : undefined;
+}
 
 const ACCEPTED_FILE_TYPES = [
   {
@@ -120,7 +136,7 @@ export const fileFilter: MulterOptions['fileFilter'] = (
 };
 
 const headerMatchesKey = (header: string, key: string) =>
-  header.toLocaleLowerCase().startsWith(key.toLocaleLowerCase());
+  header.toLowerCase().startsWith(key.toLowerCase());
 
 const isHeaderRow = (row: any) =>
   HEADER_KEYS.some((key) =>
@@ -161,9 +177,16 @@ const getTimestampFromMultiColumnDate = (
   dataObject: any,
   mimetype?: Mimetype,
 ) => {
-  const dateValue = dataObject['Date (MM/DD/YYYY)'];
-  const hoursValue = dataObject['Time (HH:mm:ss)'];
-  const secondsValue = dataObject['Time (Fract. Sec)'];
+  const dateValue = getParameterCaseInsensitive(
+    dataObject,
+    'Date (MM/DD/YYYY)',
+  );
+  const hoursValue = getParameterCaseInsensitive(dataObject, 'Time (HH:mm:ss)');
+
+  const secondsValue = getParameterCaseInsensitive(
+    dataObject,
+    'Time (Fract. Sec)',
+  );
 
   // In we are parsing a `.csv` file, the above date values are parsed as strings.
   if (mimetype === 'text/csv') {
@@ -190,6 +213,7 @@ const getTimestampFromDateString = (dataObject: any) => {
   );
 
   if (!dateKey) {
+    // TODO - Can we raise an error here instead? Is it safe?
     return undefined;
   }
 
@@ -219,7 +243,7 @@ const validateHeaders = (
   }
 
   // Check if the header row contains at least one of the metricsMapping keys.
-  const headerRow = workSheetData[headerRowIndex];
+  const headerRow: string[] = workSheetData[headerRowIndex];
   const isHeaderRowValid = headerRow.some((header) =>
     metricsKeys.some((metricsKey) => headerMatchesKey(header, metricsKey)),
   );
@@ -236,14 +260,14 @@ const validateHeaders = (
     (header) =>
       ![...HEADER_KEYS, ...metricsKeys].some((key) =>
         headerMatchesKey(header, key),
-      ) && !IGNORE_HEADER_KEYS.includes(header),
+      ) && !IGNORE_HEADER_KEYS.includes(header.toLowerCase()),
   ) as string[];
 
   const importedHeaders = headerRow
     .filter(
       (header) =>
         metricsKeys.some((key) => headerMatchesKey(header, key)) &&
-        !IGNORE_HEADER_KEYS.includes(header),
+        !IGNORE_HEADER_KEYS.includes(header.toLowerCase()),
     )
     .map(
       (header) =>
@@ -458,20 +482,17 @@ export const uploadTimeSeriesData = async (
     );
 
     const saveDataUploadsFile = async (): Promise<DataUploads | undefined> => {
-      if (surveyPoint) {
-        const res = await repositories.dataUploadsRepository.save({
-          file: fileName,
-          signature,
-          sensorType: sourceType,
-          site,
-          surveyPoint,
-          minDate,
-          maxDate,
-          metrics: importedHeaders,
-        });
-        return res;
-      }
-      return undefined;
+      const res = await repositories.dataUploadsRepository.save({
+        file: fileName,
+        signature,
+        sensorType: sourceType,
+        site,
+        surveyPoint,
+        minDate,
+        maxDate,
+        metrics: importedHeaders,
+      });
+      return res;
     };
 
     const dataUploadsFile = await saveDataUploadsFile();
@@ -486,8 +507,18 @@ export const uploadTimeSeriesData = async (
       };
     });
 
-    // Data are to much to added with one bulk insert
-    // So we need to break them in batches
+    await repositories.dataUploadsRepository.save({
+      file: fileName,
+      signature,
+      sensorType: sourceType,
+      site,
+      surveyPoint,
+      minDate,
+      maxDate,
+      metrics: importedHeaders,
+    });
+
+    // Data is too big to added with one bulk insert so we batch the upload.
     const batchSize = 1000;
     logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAsTimeSeries, batchSize).map((batch: any[]) => {
@@ -497,6 +528,8 @@ export const uploadTimeSeriesData = async (
           .insert()
           .values(batch)
           // If there's a conflict, replace data with the new value.
+          // onConflict is deprecated, but updating it is tricky.
+          // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
           .onConflict(
             'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
           )
