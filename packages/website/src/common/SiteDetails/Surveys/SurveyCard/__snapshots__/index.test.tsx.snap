@@ -117,17 +117,14 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                 fullwidth="true"
                 open="false"
               >
-                <mock-dialogtitle
-                  classname="Dialog-dialogTitle-25"
-                  disabletypography="true"
+                <mock-dialogcontent
+                  dividers="true"
                 >
                   <mock-typography
-                    variant="h4"
+                    color="textSecondary"
                   >
                     Are you sure you would like to delete the survey for 09/10/2020? It will delete all media associated with this survey.
                   </mock-typography>
-                </mock-dialogtitle>
-                <mock-dialogcontent>
                   <div
                     class="MuiCollapse-container DeleteButton-alert-24 MuiCollapse-hidden"
                     style="min-height: 0px;"
@@ -189,7 +186,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                     size="small"
                     variant="outlined"
                   >
-                    No
+                    Cancel
                   </mock-button>
                   <mock-button
                     color="primary"

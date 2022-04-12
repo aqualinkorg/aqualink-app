@@ -16,7 +16,9 @@ exports[`renders as expected 1`] = `
         Random Header
       </mock-typography>
     </mock-dialogtitle>
-    <mock-dialogcontent>
+    <mock-dialogcontent
+      dividers="true"
+    >
       <div>
         Some random content
       </div>
