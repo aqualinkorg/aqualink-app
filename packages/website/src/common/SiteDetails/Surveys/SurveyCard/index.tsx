@@ -181,11 +181,13 @@ const SurveyCard = ({
                     {displayDeleteButton && (
                       <Grid container justify="flex-end" item xs={2}>
                         <DeleteButton
-                          header={`Are you sure you would like to delete the survey for ${moment(
-                            survey.diveDate
-                          ).format(
-                            "MM/DD/YYYY"
-                          )}? It will delete all media associated with this survey.`}
+                          content={
+                            <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${moment(
+                              survey.diveDate
+                            ).format(
+                              "MM/DD/YYYY"
+                            )}? It will delete all media associated with this survey.`}</Typography>
+                          }
                           onConfirm={onSurveyDelete}
                           onSuccess={onSurveyDeleteSuccess}
                         />

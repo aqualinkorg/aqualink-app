@@ -53,7 +53,7 @@ const DeleteButton = ({
       size: "small",
       variant: "outlined",
       color: "secondary",
-      text: "No",
+      text: "Cancel",
       action: handleClose,
     },
     {
@@ -120,7 +120,7 @@ interface DeleteButtonIncomingProps {
 }
 
 DeleteButton.defaultProps = {
-  header: "Are you sure you want to delete this item?",
+  header: undefined,
   content: null,
   onSuccess: () => {},
   onError: () => {},

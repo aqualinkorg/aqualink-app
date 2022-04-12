@@ -128,6 +128,8 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                         onConfirm={() => onDelete([id])}
                         content={
                           <Typography color="textSecondary">
+                            Are you sure you want to delete file &quot;
+                            <span className={classes.bold}>{file}</span>&quot;?
                             Data between dates{" "}
                             <span className={classes.bold}>
                               {moment(minDate).format("MM/DD/YYYY HH:mm")}
@@ -139,7 +141,6 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                             will be lost.
                           </Typography>
                         }
-                        header={`Are you sure you want to delete file '${file}'?`}
                       />
                     </TableCell>
                   </TableRow>
