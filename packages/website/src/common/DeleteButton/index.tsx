@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
   withStyles,
   WithStyles,
@@ -11,21 +10,16 @@ import {
 import Alert from "@material-ui/lab/Alert";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import CloseIcon from "@material-ui/icons/Close";
-import moment from "moment";
-
-import surveyServices from "../../../../services/surveyServices";
-import { userInfoSelector } from "../../../../store/User/userSlice";
-import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
-import DeleteDialog, { Action } from "../../../Dialog";
+import DeleteDialog, { Action } from "../Dialog";
 
 const DeleteButton = ({
-  siteId,
-  surveyId,
-  diveDate,
+  header,
+  content,
+  onConfirm,
+  onSuccess,
+  onError,
   classes,
 }: DeleteButtonProps) => {
-  const user = useSelector(userInfoSelector);
-  const dispatch = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [alertText, setAlertText] = useState<string>("");
@@ -41,36 +35,33 @@ const DeleteButton = ({
     setAlertText("");
   };
 
-  const onSurveyDelete = () => {
-    if (surveyId && user && user.token) {
-      setLoading(true);
-      surveyServices
-        .deleteSurvey(siteId, surveyId, user.token)
-        .then(() => {
-          dispatch(surveysRequest(`${siteId}`));
-        })
-        .catch((error) => {
-          setAlertOpen(true);
-          setAlertText(error.message);
-        })
-        .finally(() => setLoading(false));
+  const onDelete = async () => {
+    setLoading(true);
+    try {
+      await onConfirm();
+      onSuccess?.();
+    } catch (error) {
+      onError?.();
+      setAlertOpen(true);
+      setAlertText((error as any)?.message);
     }
+    setLoading(false);
   };
 
   const dialogActions: Action[] = [
     {
       size: "small",
-      variant: "contained",
+      variant: "outlined",
       color: "secondary",
       text: "No",
       action: handleClose,
     },
     {
       size: "small",
-      variant: "contained",
+      variant: "outlined",
       color: "primary",
       text: "Yes",
-      action: onSurveyDelete,
+      action: onDelete,
     },
   ];
 
@@ -82,13 +73,10 @@ const DeleteButton = ({
       <DeleteDialog
         open={open}
         onClose={handleClose}
-        header={`Are you sure you would like to delete the survey for ${moment(
-          diveDate
-        ).format(
-          "MM/DD/YYYY"
-        )}? It will delete all media assosciated with this survey.`}
+        header={header}
         content={
           <>
+            {content}
             {loading && <LinearProgress />}
             <Collapse className={classes.alert} in={alertOpen}>
               <Alert
@@ -124,14 +112,18 @@ const styles = () =>
   });
 
 interface DeleteButtonIncomingProps {
-  surveyId?: number | null;
-  diveDate?: string | null;
-  siteId: number;
+  header?: string;
+  content?: JSX.Element | null;
+  onConfirm: () => Promise<any>;
+  onSuccess?: () => void;
+  onError?: () => void;
 }
 
 DeleteButton.defaultProps = {
-  surveyId: null,
-  diveDate: null,
+  header: "Are you sure you want to delete this item?",
+  content: null,
+  onSuccess: () => {},
+  onError: () => {},
 };
 
 type DeleteButtonProps = DeleteButtonIncomingProps & WithStyles<typeof styles>;

@@ -124,7 +124,7 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                   <mock-typography
                     variant="h4"
                   >
-                    Are you sure you would like to delete the survey for 09/10/2020? It will delete all media assosciated with this survey.
+                    Are you sure you would like to delete the survey for 09/10/2020? It will delete all media associated with this survey.
                   </mock-typography>
                 </mock-dialogtitle>
                 <mock-dialogcontent>
@@ -187,14 +187,14 @@ exports[`Survey Card should render with given state from Redux store 1`] = `
                   <mock-button
                     color="secondary"
                     size="small"
-                    variant="contained"
+                    variant="outlined"
                   >
                     No
                   </mock-button>
                   <mock-button
                     color="primary"
                     size="small"
-                    variant="contained"
+                    variant="outlined"
                   >
                     Yes
                   </mock-button>

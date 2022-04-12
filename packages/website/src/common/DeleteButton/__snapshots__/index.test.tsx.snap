@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Surveys Delete Button should render with given state from Redux store 1`] = `
+exports[`Delete Button should render with given state from Redux store 1`] = `
 <div>
   <mock-iconbutton>
     <svg
@@ -25,7 +25,7 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
       <mock-typography
         variant="h4"
       >
-        Are you sure you would like to delete the survey for 10/02/2020? It will delete all media assosciated with this survey.
+        some text
       </mock-typography>
     </mock-dialogtitle>
     <mock-dialogcontent>
@@ -88,14 +88,14 @@ exports[`Surveys Delete Button should render with given state from Redux store 1
       <mock-button
         color="secondary"
         size="small"
-        variant="contained"
+        variant="outlined"
       >
         No
       </mock-button>
       <mock-button
         color="primary"
         size="small"
-        variant="contained"
+        variant="outlined"
       >
         Yes
       </mock-button>

@@ -34,7 +34,6 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const [selectedPoint, setSelectedPoint] = useState<number>();
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const [uploadError, setUploadError] = useState<string>();
   const [deleteError, setDeleteError] = useState<string>();
   const [uploadErrors, setUploadErrors] = useState<
@@ -117,7 +116,6 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   };
 
   const onDelete = async (ids: number[]) => {
-    setDeleteLoading(true);
     setDeleteError(undefined);
     try {
       if (ids.length > 0) {
@@ -131,7 +129,6 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
         }
       }
     } catch (err) {
-      setDeleteLoading(false);
       const errorMessage = getAxiosErrorMessage(err);
       setDeleteError(errorMessage || "Something went wrong");
     }
@@ -205,7 +202,6 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
             site={site}
             uploadHistory={uploadHistory}
             onDelete={onDelete}
-            loading={deleteLoading}
           />
         </Container>
       )}

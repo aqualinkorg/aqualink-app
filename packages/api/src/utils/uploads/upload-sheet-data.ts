@@ -412,7 +412,7 @@ export const uploadTimeSeriesData = async (
       },
     });
 
-    if (surveyPoint && uploadExists) {
+    if (uploadExists) {
       throw new ConflictException(
         `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
       );
