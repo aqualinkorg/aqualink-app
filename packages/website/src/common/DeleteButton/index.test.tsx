@@ -3,11 +3,11 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import DeleteButton from ".";
-import { mockUser } from "../../../../mocks/mockUser";
+import { mockUser } from "../../mocks/mockUser";
 
 const mockStore = configureStore([]);
 
-describe("Surveys Delete Button", () => {
+describe("Delete Button", () => {
   let element: HTMLElement;
   beforeEach(() => {
     const store = mockStore({
@@ -18,9 +18,11 @@ describe("Surveys Delete Button", () => {
 
     store.dispatch = jest.fn();
 
+    const dummyFunc = () => new Promise<void>((resolve) => resolve());
+
     element = render(
       <Provider store={store}>
-        <DeleteButton siteId={0} surveyId={0} diveDate="10/2/2020" />
+        <DeleteButton onConfirm={dummyFunc} header="some text" />
       </Provider>
     ).container;
   });

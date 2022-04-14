@@ -9,6 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { Sources } from '../sites/sources.entity';
 import { Metric } from './metrics.entity';
 
@@ -32,6 +33,9 @@ export class TimeSeries {
 
   @ManyToOne(() => Sources, { onDelete: 'SET NULL', nullable: true })
   source: Sources | null;
+
+  @ManyToOne(() => DataUploads, { onDelete: 'CASCADE', nullable: true })
+  dataUpload: DataUploads | null;
 
   @CreateDateColumn()
   createdAt: Date;

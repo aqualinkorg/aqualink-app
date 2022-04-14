@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { SiteDataRangeDto } from '../time-series/dto/site-data-range.dto';
 import { DataUploads } from './data-uploads.entity';
+import { DataUploadsDeleteDto } from './dto/data-uploads-delete.dto';
 
 @Injectable()
 export class DataUploadsService {
@@ -22,5 +23,9 @@ export class DataUploadsService {
       .orderBy('data_uploads.max_date', 'DESC');
 
     return query.getMany();
+  }
+
+  async deleteDataUploads({ ids }: DataUploadsDeleteDto) {
+    await this.dataUploadsRepository.delete({ id: In(ids) });
   }
 }

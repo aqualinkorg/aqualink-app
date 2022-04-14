@@ -52,11 +52,13 @@ const Dialog = ({
 
   return (
     <MuiDialog fullWidth onClose={onClose} open={open}>
-      <DialogTitle disableTypography className={classes.dialogTitle}>
-        <Typography variant="h4">{header}</Typography>
-      </DialogTitle>
+      {header && (
+        <DialogTitle disableTypography className={classes.dialogTitle}>
+          <Typography variant="h4">{header}</Typography>
+        </DialogTitle>
+      )}
       {error && <Alert severity="error">{error}</Alert>}
-      <DialogContent>{content}</DialogContent>
+      <DialogContent dividers>{content}</DialogContent>
       <DialogActions>
         {actions &&
           actions.map((action) => {
@@ -110,7 +112,7 @@ interface DialogIncomingProps {
 }
 
 Dialog.defaultProps = {
-  header: "",
+  header: undefined,
   content: null,
   actions: [],
   error: undefined,

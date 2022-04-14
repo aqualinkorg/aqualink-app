@@ -36,4 +36,16 @@ const uploadTimeSeriesData = (
     contentType: "multipart/form-data",
   });
 
-export default { uploadMedia, uploadTimeSeriesData };
+const deleteFileTimeSeriesData = (
+  data: { ids: number[] },
+  token?: string | null
+) =>
+  requests.send<void>({
+    method: "POST",
+    url: "/data-uploads/delete-uploads",
+    data,
+    token,
+    contentType: "application/json",
+  });
+
+export default { uploadMedia, uploadTimeSeriesData, deleteFileTimeSeriesData };

@@ -16,10 +16,10 @@ import { grey } from "@material-ui/core/colors";
 import { startCase } from "lodash";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
 import { Site, SiteUploadHistory } from "../../../store/Sites/types";
 import requests from "../../../helpers/requests";
 import { pluralize } from "../../../helpers/stringUtils";
+import DeleteButton from "../../../common/DeleteButton";
 
 const tableHeaderTitles = [
   "NAME",
@@ -29,6 +29,7 @@ const tableHeaderTitles = [
   "SENSOR TYPE",
   "UPLOAD DATE",
   "DATA RANGE",
+  "",
 ];
 
 const tableCellTypographyProps: TypographyProps = {
@@ -36,7 +37,7 @@ const tableCellTypographyProps: TypographyProps = {
   variant: "subtitle2",
 };
 
-const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
+const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
   const nUploads = uploadHistory.length;
   const classes = useStyles();
   const { timezone } = site;
@@ -45,7 +46,7 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
     : undefined;
   const dateFormat = "MM/DD/YYYY";
 
-  const dataVizualizationButtonLink = (
+  const dataVisualizationButtonLink = (
     start: string,
     end: string,
     surveyPoint: number
@@ -62,9 +63,11 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h6" gutterBottom>
-        {nUploads} {pluralize(nUploads, "file")} previously uploaded
-      </Typography>
+      <div>
+        <Typography variant="h6" gutterBottom>
+          {nUploads} {pluralize(nUploads, "file")} previously uploaded
+        </Typography>
+      </div>
       <TableContainer>
         <Table className={classes.table}>
           <TableHead>
@@ -86,56 +89,64 @@ const HistoryTable = ({ site, uploadHistory }: HistoryTableProps) => {
                 minDate,
                 maxDate,
                 createdAt,
-              }) => (
-                <TableRow key={id}>
-                  <TableCell component="th" scope="row">
-                    <Typography {...tableCellTypographyProps}>
-                      {file}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography {...tableCellTypographyProps}>
-                      {timezoneAbbreviation || timezone}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography {...tableCellTypographyProps}>
-                      {site.name}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography {...tableCellTypographyProps}>
-                      {surveyPoint.name}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography {...tableCellTypographyProps}>
-                      {startCase(sensorType)}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography {...tableCellTypographyProps}>
-                      {moment(createdAt).format(dateFormat)}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      component={Link}
-                      to={dataVizualizationButtonLink(
-                        minDate,
-                        maxDate,
-                        surveyPoint.id
-                      )}
-                      size="small"
-                      variant="outlined"
-                      color="primary"
-                    >
-                      {moment(minDate).format(dateFormat)} -{" "}
-                      {moment(maxDate).format(dateFormat)}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              )
+              }) => {
+                const row = [
+                  file,
+                  timezoneAbbreviation || timezone,
+                  site.name,
+                  surveyPoint.name,
+                  startCase(sensorType),
+                  moment(createdAt).format(dateFormat),
+                ];
+                return (
+                  <TableRow key={id}>
+                    {row.map((item) => (
+                      <TableCell>
+                        <Typography {...tableCellTypographyProps}>
+                          {item}
+                        </Typography>
+                      </TableCell>
+                    ))}
+                    <TableCell>
+                      <Button
+                        component={Link}
+                        to={dataVisualizationButtonLink(
+                          minDate,
+                          maxDate,
+                          surveyPoint.id
+                        )}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        className={classes.dateIntervalButton}
+                      >
+                        {moment(minDate).format(dateFormat)} -{" "}
+                        {moment(maxDate).format(dateFormat)}
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <DeleteButton
+                        onConfirm={() => onDelete([id])}
+                        content={
+                          <Typography color="textSecondary">
+                            Are you sure you want to delete file &quot;
+                            <span className={classes.bold}>{file}</span>&quot;?
+                            Data between dates{" "}
+                            <span className={classes.bold}>
+                              {moment(minDate).format("MM/DD/YYYY HH:mm")}
+                            </span>{" "}
+                            and{" "}
+                            <span className={classes.bold}>
+                              {moment(maxDate).format("MM/DD/YYYY HH:mm")}
+                            </span>{" "}
+                            will be lost.
+                          </Typography>
+                        }
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             )}
           </TableBody>
         </Table>
@@ -155,11 +166,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   headCell: {
     backgroundColor: grey[200],
   },
+  bold: {
+    fontWeight: 700,
+  },
+  dateIntervalButton: {
+    whiteSpace: "nowrap",
+  },
 }));
 
 interface HistoryTableProps {
   site: Site;
   uploadHistory: SiteUploadHistory;
+  onDelete: (ids: number[]) => Promise<void>;
 }
 
 export default HistoryTable;

@@ -425,7 +425,24 @@ export const uploadTimeSeriesData = async (
       mimetype,
     );
 
-    const dataAstimeSeries = uniqBy(
+    const signature = await md5Fle(filePath);
+
+    const uploadExists = await repositories.dataUploadsRepository.findOne({
+      where: {
+        signature,
+        site,
+        surveyPoint,
+        sensorType: sourceType,
+      },
+    });
+
+    if (uploadExists) {
+      throw new ConflictException(
+        `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
+      );
+    }
+
+    const data = uniqBy(
       results
         .reduce((timeSeriesObjects: any[], object) => {
           const { timestamp } = object;
@@ -455,51 +472,45 @@ export const uploadTimeSeriesData = async (
         `${timestamp}, ${metric}, ${source.id}`,
     );
 
-    const signature = await md5Fle(filePath);
     const minDate = get(
-      minBy(dataAstimeSeries, (item) =>
-        new Date(get(item, 'timestamp')).getTime(),
-      ),
+      minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
       'timestamp',
     );
     const maxDate = get(
-      maxBy(dataAstimeSeries, (item) =>
-        new Date(get(item, 'timestamp')).getTime(),
-      ),
+      maxBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
       'timestamp',
     );
 
-    // If the upload exists as described above, then update it, otherwise save it.
-    const uploadExists = await repositories.dataUploadsRepository.findOne({
-      where: {
+    const saveDataUploadsFile = async (): Promise<DataUploads | undefined> => {
+      const res = await repositories.dataUploadsRepository.save({
+        file: fileName,
         signature,
+        sensorType: sourceType,
         site,
         surveyPoint,
-        sensorType: sourceType,
-      },
-    });
+        minDate,
+        maxDate,
+        metrics: importedHeaders,
+      });
+      return res;
+    };
 
-    if (uploadExists) {
-      throw new ConflictException(
-        `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
-      );
-    }
+    const dataUploadsFile = await saveDataUploadsFile();
 
-    await repositories.dataUploadsRepository.save({
-      file: fileName,
-      signature,
-      sensorType: sourceType,
-      site,
-      surveyPoint,
-      minDate,
-      maxDate,
-      metrics: importedHeaders,
+    const dataAsTimeSeries = data.map((x: any) => {
+      return {
+        timestamp: x.timestamp,
+        value: x.value,
+        metric: x.metric,
+        source: x.source,
+        dataUpload: dataUploadsFile,
+      };
     });
 
     // Data is too big to added with one bulk insert so we batch the upload.
     const batchSize = 1000;
     logger.log(`Saving time series data in batches of ${batchSize}`);
-    const inserts = chunk(dataAstimeSeries, batchSize).map((batch: any[]) => {
+    const inserts = chunk(dataAsTimeSeries, batchSize).map((batch: any[]) => {
       return (
         repositories.timeSeriesRepository
           .createQueryBuilder('time_series')

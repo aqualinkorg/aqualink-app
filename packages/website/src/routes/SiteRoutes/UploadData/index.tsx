@@ -35,6 +35,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState<string>();
+  const [deleteError, setDeleteError] = useState<string>();
   const [uploadErrors, setUploadErrors] = useState<
     Record<string, string | null>
   >({});
@@ -67,6 +68,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
 
   const onStatusSnackbarClose = () => setUploadError(undefined);
   const onHistorySnackbarClose = () => setIsUploadHistoryErrored(false);
+  const onDeleteSnackbarClose = () => setDeleteError(undefined);
 
   const onUpload = async () => {
     setUploadLoading(true);
@@ -113,6 +115,25 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
     }
   };
 
+  const onDelete = async (ids: number[]) => {
+    setDeleteError(undefined);
+    try {
+      if (ids.length > 0) {
+        await uploadServices.deleteFileTimeSeriesData({ ids }, token);
+        // Clear redux selected site before we land on the site page,
+        // so that we fetch the updated data.
+        dispatch(setSelectedSite());
+        if (typeof site?.id === "number") {
+          // eslint-disable-next-line fp/no-mutating-methods
+          history.push(`/sites/${site.id}`);
+        }
+      }
+    } catch (err) {
+      const errorMessage = getAxiosErrorMessage(err);
+      setDeleteError(errorMessage || "Something went wrong");
+    }
+  };
+
   useEffect(() => {
     const getUploadHistory = async () => {
       setIsUploadHistoryLoading(true);
@@ -147,6 +168,12 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
         handleClose={onStatusSnackbarClose}
         severity="error"
       />
+      <StatusSnackbar
+        open={!!deleteError}
+        message={deleteError}
+        handleClose={onDeleteSnackbarClose}
+        severity="error"
+      />
 
       {site && (
         <Container className={classes.root}>
@@ -171,7 +198,11 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
               <UploadButton loading={uploadLoading} onUpload={onUpload} />
             </>
           )}
-          <HistoryTable site={site} uploadHistory={uploadHistory} />
+          <HistoryTable
+            site={site}
+            uploadHistory={uploadHistory}
+            onDelete={onDelete}
+          />
         </Container>
       )}
     </>

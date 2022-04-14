@@ -16,7 +16,9 @@ exports[`Surveys should render with given state from Redux store 1`] = `
         Delete undefined
       </mock-typography>
     </mock-dialogtitle>
-    <mock-dialogcontent>
+    <mock-dialogcontent
+      dividers="true"
+    >
       <mock-typography
         color="textSecondary"
       >

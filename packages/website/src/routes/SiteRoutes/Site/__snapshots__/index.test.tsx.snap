@@ -2131,7 +2131,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               Delete undefined
             </mock-typography>
           </mock-dialogtitle>
-          <mock-dialogcontent>
+          <mock-dialogcontent
+            dividers="true"
+          >
             <mock-typography
               color="textSecondary"
             >
@@ -3898,7 +3900,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
               Delete undefined
             </mock-typography>
           </mock-dialogtitle>
-          <mock-dialogcontent>
+          <mock-dialogcontent
+            dividers="true"
+          >
             <mock-typography
               color="textSecondary"
             >

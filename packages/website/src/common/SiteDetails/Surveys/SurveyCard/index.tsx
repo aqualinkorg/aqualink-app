@@ -9,14 +9,18 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
 import { formatNumber } from "../../../../helpers/numberUtils";
-import DeleteButton from "../DeleteButton";
 import { SurveyListItem } from "../../../../store/Survey/types";
 import incomingStyles from "../styles";
 import CustomLink from "../../../Link";
 import LoadingSkeleton from "../../../LoadingSkeleton";
 import pointImageSkeleton from "../../../../assets/img/loading-image.svg";
+import DeleteButton from "../../../DeleteButton";
+import { userInfoSelector } from "../../../../store/User/userSlice";
+import { surveysRequest } from "../../../../store/Survey/surveyListSlice";
+import surveyServices from "../../../../services/surveyServices";
 
 const SurveyCard = ({
   pointId,
@@ -29,6 +33,17 @@ const SurveyCard = ({
   const classes = useStyles();
   const isShowingFeatured = pointId === -1;
   const displayDeleteButton = isAdmin && typeof siteId === "number";
+  const user = useSelector(userInfoSelector);
+  const dispatch = useDispatch();
+
+  const onSurveyDelete = async () => {
+    if (survey?.id && siteId && user && user.token) {
+      return surveyServices.deleteSurvey(siteId, survey.id, user.token);
+    }
+    return new Promise<void>((resolve) => resolve());
+  };
+
+  const onSurveyDeleteSuccess = () => dispatch(surveysRequest(`${siteId}`));
 
   return (
     <Paper elevation={0} className={classes.surveyCard}>
@@ -166,9 +181,15 @@ const SurveyCard = ({
                     {displayDeleteButton && (
                       <Grid container justify="flex-end" item xs={2}>
                         <DeleteButton
-                          siteId={siteId}
-                          surveyId={survey.id}
-                          diveDate={survey.diveDate}
+                          content={
+                            <Typography color="textSecondary">{`Are you sure you would like to delete the survey for ${moment(
+                              survey.diveDate
+                            ).format(
+                              "MM/DD/YYYY"
+                            )}? It will delete all media associated with this survey.`}</Typography>
+                          }
+                          onConfirm={onSurveyDelete}
+                          onSuccess={onSurveyDeleteSuccess}
                         />
                       </Grid>
                     )}
