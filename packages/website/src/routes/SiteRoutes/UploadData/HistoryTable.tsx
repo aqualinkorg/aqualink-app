@@ -118,6 +118,7 @@ const HistoryTable = ({ site, uploadHistory, onDelete }: HistoryTableProps) => {
                         size="small"
                         variant="outlined"
                         color="primary"
+                        className={classes.dateIntervalButton}
                       >
                         {moment(minDate).format(dateFormat)} -{" "}
                         {moment(maxDate).format(dateFormat)}
@@ -167,6 +168,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   bold: {
     fontWeight: 700,
+  },
+  dateIntervalButton: {
+    whiteSpace: "nowrap",
   },
 }));
 
