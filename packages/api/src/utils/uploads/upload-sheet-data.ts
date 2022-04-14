@@ -14,6 +14,7 @@ import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite, getSiteAndSurveyPoint } from '../site.utils';
+import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -442,6 +443,16 @@ export const uploadTimeSeriesData = async (
       );
     }
 
+    // Initialize google cloud service, to be used for media upload
+    const googleCloudService = new GoogleCloudService();
+
+    const gCloudPath = await googleCloudService.uploadFile(
+      filePath,
+      sourceType,
+      'data_uploads',
+      'data_upload',
+    );
+
     const data = uniqBy(
       results
         .reduce((timeSeriesObjects: any[], object) => {
@@ -491,6 +502,7 @@ export const uploadTimeSeriesData = async (
         minDate,
         maxDate,
         metrics: importedHeaders,
+        gCloudLocation: gCloudPath,
       });
       return res;
     };

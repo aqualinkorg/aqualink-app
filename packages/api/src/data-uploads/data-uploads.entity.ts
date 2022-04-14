@@ -44,6 +44,9 @@ export class DataUploads {
   @Column('character varying', { array: true, nullable: false })
   metrics: Metric[];
 
+  @Column({ nullable: true })
+  gCloudLocation: string;
+
   @CreateDateColumn()
   createdAt: Date;
 
