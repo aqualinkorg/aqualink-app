@@ -507,17 +507,6 @@ export const uploadTimeSeriesData = async (
       };
     });
 
-    await repositories.dataUploadsRepository.save({
-      file: fileName,
-      signature,
-      sensorType: sourceType,
-      site,
-      surveyPoint,
-      minDate,
-      maxDate,
-      metrics: importedHeaders,
-    });
-
     // Data is too big to added with one bulk insert so we batch the upload.
     const batchSize = 1000;
     logger.log(`Saving time series data in batches of ${batchSize}`);
