@@ -419,13 +419,6 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const results = findSheetDataWithHeader(
-      fileName,
-      workSheetData,
-      sourceType,
-      mimetype,
-    );
-
     const signature = await md5Fle(filePath);
 
     const uploadExists = await repositories.dataUploadsRepository.findOne({
@@ -451,6 +444,13 @@ export const uploadTimeSeriesData = async (
       sourceType,
       'data_uploads',
       'data_upload',
+    );
+
+    const results = findSheetDataWithHeader(
+      fileName,
+      workSheetData,
+      sourceType,
+      mimetype,
     );
 
     const data = uniqBy(
@@ -502,7 +502,7 @@ export const uploadTimeSeriesData = async (
         minDate,
         maxDate,
         metrics: importedHeaders,
-        gCloudLocation: gCloudPath,
+        fileLocation: gCloudPath,
       });
       return res;
     };

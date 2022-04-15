@@ -45,7 +45,7 @@ export class DataUploads {
   metrics: Metric[];
 
   @Column({ nullable: true })
-  gCloudLocation: string;
+  fileLocation: string;
 
   @CreateDateColumn()
   createdAt: Date;
