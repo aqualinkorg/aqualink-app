@@ -439,7 +439,7 @@ export const uploadTimeSeriesData = async (
     // Initialize google cloud service, to be used for media upload
     const googleCloudService = new GoogleCloudService();
 
-    const gCloudPath = await googleCloudService.uploadFile(
+    const fileLocation = await googleCloudService.uploadFile(
       filePath,
       sourceType,
       'data_uploads',
@@ -502,7 +502,7 @@ export const uploadTimeSeriesData = async (
         minDate,
         maxDate,
         metrics: importedHeaders,
-        fileLocation: gCloudPath,
+        fileLocation,
       });
       return res;
     };
