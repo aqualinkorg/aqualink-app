@@ -11,6 +11,8 @@ import SurveyHistory from "./SurveyHistory";
 import {
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
+  liveDataRequest,
+  liveDataSelector,
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
@@ -32,6 +34,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
 
   const dispatch = useDispatch();
   const site = useSelector(siteDetailsSelector);
+  const liveData = useSelector(liveDataSelector);
   const siteLoading = useSelector(siteLoadingSelector);
   const surveysLoading = useSelector(surveyListLoadingSelector);
   const timeSeriesRangeLoading = useSelector(
@@ -41,7 +44,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
     useSelector(siteTimeSeriesDataRangeSelector)?.bottomTemperature || {};
   const loading = siteLoading || surveysLoading || timeSeriesRangeLoading;
 
-  const hasSpotterData = Boolean(site?.liveData?.topTemperature);
+  const hasSpotterData = Boolean(liveData?.topTemperature);
   const hasRange = !!(
     hoboBottomTemperatureRange?.data &&
     hoboBottomTemperatureRange.data.length > 0
@@ -65,6 +68,7 @@ const SurveyPoint = ({ match }: SurveyPointProps) => {
   useEffect(() => {
     if (!site || site.id !== siteIdNumber) {
       dispatch(siteRequest(id));
+      dispatch(liveDataRequest(id));
       dispatch(surveysRequest(id));
     }
   }, [dispatch, id, pointId, site, siteIdNumber]);

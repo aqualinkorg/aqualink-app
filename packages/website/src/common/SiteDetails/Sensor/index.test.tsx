@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Sensor from ".";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSite } from "../../../mocks/mockSite";
+import { mockLiveData } from "../../../mocks/mockLiveData";
 
 const mockStore = configureStore([]);
 
@@ -24,7 +25,11 @@ describe("Sensor Card", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Sensor site={mockSite} />
+          <Sensor
+            depth={mockSite.depth}
+            id={mockSite.id}
+            liveData={mockLiveData}
+          />
         </Router>
       </Provider>
     ).container;

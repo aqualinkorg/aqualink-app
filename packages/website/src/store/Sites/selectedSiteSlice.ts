@@ -21,6 +21,7 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
+  loadingLiveData: false,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
@@ -29,6 +30,30 @@ const selectedSiteInitialState: SelectedSiteState = {
   oceanSenseDataError: null,
   error: null,
 };
+
+export const liveDataRequest = createAsyncThunk<
+  SelectedSiteState["liveData"],
+  string,
+  CreateAsyncThunkTypes
+>(
+  "selectedSite/requestLiveData",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await siteServices.getSiteLiveData(id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  },
+  {
+    condition(id: string, { getState }) {
+      const {
+        selectedSite: { details },
+      } = getState();
+      return `${details?.id}` !== id;
+    },
+  }
+);
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState["details"],
@@ -40,13 +65,11 @@ export const siteRequest = createAsyncThunk<
     try {
       const { data } = await siteServices.getSite(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
-      const { data: liveData } = await siteServices.getSiteLiveData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
         ...data,
         dailyData,
-        liveData,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
           (item) => item.month
@@ -261,6 +284,36 @@ const selectedSiteSlice = createSlice({
     });
 
     builder.addCase(
+      liveDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+        return {
+          ...state,
+          liveData: action.payload,
+          loadingLiveData: false,
+        };
+      }
+    );
+
+    builder.addCase(
+      liveDataRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+          loadingLiveData: false,
+        };
+      }
+    );
+
+    builder.addCase(liveDataRequest.pending, (state) => {
+      return {
+        ...state,
+        loadingLiveData: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
       siteOceanSenseDataRequest.fulfilled,
       (
         state,
@@ -390,6 +443,10 @@ export const siteDetailsSelector = (
   state: RootState
 ): SelectedSiteState["details"] => state.selectedSite.details;
 
+export const liveDataSelector = (
+  state: RootState
+): SelectedSiteState["liveData"] => state.selectedSite.liveData;
+
 export const siteGranularDailyDataSelector = (
   state: RootState
 ): SelectedSiteState["granularDailyData"] =>
@@ -421,6 +478,10 @@ export const siteDraftSelector = (
 export const siteLoadingSelector = (
   state: RootState
 ): SelectedSiteState["loading"] => state.selectedSite.loading;
+
+export const siteLiveDataLoadingSelector = (
+  state: RootState
+): SelectedSiteState["loadingLiveData"] => state.selectedSite.loadingLiveData;
 
 export const siteErrorSelector = (
   state: RootState

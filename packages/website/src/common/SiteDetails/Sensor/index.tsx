@@ -17,7 +17,7 @@ import UpdateInfo from "../../UpdateInfo";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
-import type { Site } from "../../../store/Sites/types";
+import type { LiveData } from "../../../store/Sites/types";
 import { User } from "../../../store/User/types";
 import sensor from "../../../assets/sensor.svg";
 import { styles as incomingStyles } from "../styles";
@@ -62,8 +62,8 @@ const getApplicationTag = (
   }
 };
 
-const Sensor = ({ site, classes }: SensorProps) => {
-  const { topTemperature, bottomTemperature } = site.liveData;
+const Sensor = ({ depth, id, liveData, classes }: SensorProps) => {
+  const { topTemperature, bottomTemperature } = liveData;
 
   const relativeTime =
     (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
@@ -80,12 +80,12 @@ const Sensor = ({ site, classes }: SensorProps) => {
       value: `${formatNumber(topTemperature?.value, 1)}°C`,
     },
     {
-      label: `TEMP AT ${site.depth ? `${site.depth}m` : "DEPTH"}`,
+      label: `TEMP AT ${depth ? `${depth}m` : "DEPTH"}`,
       value: `${formatNumber(bottomTemperature?.value, 1)}°C`,
     },
   ];
 
-  const [alertText, clickable] = getApplicationTag(user, site.id);
+  const [alertText, clickable] = getApplicationTag(user, id);
 
   return (
     <Card className={classes.root}>
@@ -147,7 +147,7 @@ const Sensor = ({ site, classes }: SensorProps) => {
             {clickable ? (
               <Link
                 className={classes.newSpotterLink}
-                to={`/sites/${site.id}/apply`}
+                to={`/sites/${id}/apply`}
               >
                 <Typography variant="h6">{alertText}</Typography>
               </Link>
@@ -208,7 +208,9 @@ const styles = () =>
   });
 
 interface SensorIncomingProps {
-  site: Site;
+  depth: number | null;
+  id: number;
+  liveData: LiveData;
 }
 
 type SensorProps = WithStyles<typeof styles> & SensorIncomingProps;

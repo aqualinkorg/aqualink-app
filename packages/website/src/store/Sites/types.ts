@@ -251,7 +251,6 @@ export interface Site {
   admins: User[];
   stream: string | null;
   dailyData: DailyData[];
-  liveData: LiveData;
   featuredImage?: string;
   applied?: boolean;
   sensorId: string | null;
@@ -348,6 +347,7 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
+  liveData?: LiveData;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;
@@ -362,5 +362,6 @@ export interface SelectedSiteState {
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
+  loadingLiveData: boolean;
   error?: string | null;
 }

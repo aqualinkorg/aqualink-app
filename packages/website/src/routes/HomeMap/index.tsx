@@ -17,7 +17,10 @@ import {
   sitesRequest,
   sitesListSelector,
 } from "../../store/Sites/sitesListSlice";
-import { siteRequest } from "../../store/Sites/selectedSiteSlice";
+import {
+  liveDataRequest,
+  siteRequest,
+} from "../../store/Sites/selectedSiteSlice";
 import { siteOnMapSelector } from "../../store/Homepage/homepageSlice";
 
 import { surveysRequest } from "../../store/Survey/surveyListSlice";
@@ -78,9 +81,11 @@ const Homepage = ({ classes }: HomepageProps) => {
   useEffect(() => {
     if (!siteOnMap && initialSiteId) {
       dispatch(siteRequest(initialSiteId));
+      dispatch(liveDataRequest(initialSiteId));
       dispatch(surveysRequest(initialSiteId));
     } else if (siteOnMap) {
       dispatch(siteRequest(`${siteOnMap.id}`));
+      dispatch(liveDataRequest(`${siteOnMap.id}`));
       dispatch(surveysRequest(`${siteOnMap.id}`));
     }
   }, [dispatch, initialSiteId, siteOnMap]);

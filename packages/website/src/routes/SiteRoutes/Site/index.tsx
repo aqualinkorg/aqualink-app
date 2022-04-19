@@ -23,6 +23,8 @@ import {
   clearTimeSeriesDataRange,
   siteOceanSenseDataRequest,
   clearOceanSenseData,
+  liveDataRequest,
+  liveDataSelector,
 } from "../../../store/Sites/selectedSiteSlice";
 import {
   surveysRequest,
@@ -100,10 +102,11 @@ const Site = ({ match, classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
+  const liveData = useSelector(liveDataSelector);
   const dispatch = useDispatch();
   const getQueryParam = useQueryParams();
   const siteId = match.params.id;
-  const { id, liveData, dailyData, surveyPoints, timezone } = siteDetails || {};
+  const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
@@ -135,6 +138,7 @@ const Site = ({ match, classes }: SiteProps) => {
   // Fetch site and surveys
   useEffect(() => {
     dispatch(siteRequest(siteId));
+    dispatch(liveDataRequest(siteId));
     dispatch(surveysRequest(siteId));
 
     return () => {
