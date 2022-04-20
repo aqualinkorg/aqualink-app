@@ -44,6 +44,9 @@ export class DataUploads {
   @Column('character varying', { array: true, nullable: false })
   metrics: Metric[];
 
+  @Column({ nullable: true })
+  fileLocation: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

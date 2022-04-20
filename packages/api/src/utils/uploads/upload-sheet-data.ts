@@ -14,6 +14,7 @@ import { Sources } from '../../sites/sources.entity';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite, getSiteAndSurveyPoint } from '../site.utils';
+import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -418,13 +419,6 @@ export const uploadTimeSeriesData = async (
       );
     }
 
-    const results = findSheetDataWithHeader(
-      fileName,
-      workSheetData,
-      sourceType,
-      mimetype,
-    );
-
     const signature = await md5Fle(filePath);
 
     const uploadExists = await repositories.dataUploadsRepository.findOne({
@@ -441,6 +435,23 @@ export const uploadTimeSeriesData = async (
         `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
       );
     }
+
+    // Initialize google cloud service, to be used for media upload
+    const googleCloudService = new GoogleCloudService();
+
+    const fileLocation = await googleCloudService.uploadFile(
+      filePath,
+      sourceType,
+      'data_uploads',
+      'data_upload',
+    );
+
+    const results = findSheetDataWithHeader(
+      fileName,
+      workSheetData,
+      sourceType,
+      mimetype,
+    );
 
     const data = uniqBy(
       results
@@ -491,6 +502,7 @@ export const uploadTimeSeriesData = async (
         minDate,
         maxDate,
         metrics: importedHeaders,
+        fileLocation,
       });
       return res;
     };

@@ -23,7 +23,7 @@ export class GoogleCloudService {
 
   constructor(
     @InjectRepository(SurveyMedia)
-    private surveyMediaRepository: Repository<SurveyMedia>,
+    private surveyMediaRepository?: Repository<SurveyMedia>,
   ) {
     this.storage = new Storage({
       autoRetry: true,
@@ -33,15 +33,19 @@ export class GoogleCloudService {
     });
   }
 
-  public async uploadFile(filePath: string, type: string): Promise<string> {
+  public async uploadFile(
+    filePath: string,
+    type: string,
+    dir: string = 'surveys',
+    prefix: string = 'site_hobo_image',
+  ): Promise<string> {
     if (!this.GCS_BUCKET || !this.STORAGE_FOLDER) {
       this.logger.error(
         'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
       );
       throw new InternalServerErrorException();
     }
-    const folder = `${this.STORAGE_FOLDER}/surveys/`;
-    const prefix = 'site_hobo_image';
+    const folder = `${this.STORAGE_FOLDER}/${dir}/`;
     const basename = path.basename(filePath);
     const destination = getRandomName(folder, prefix, basename, type);
 
@@ -63,6 +67,10 @@ export class GoogleCloudService {
       this.logger.error(
         'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
       );
+      throw new InternalServerErrorException();
+    }
+
+    if (!this.surveyMediaRepository) {
       throw new InternalServerErrorException();
     }
 

@@ -4,7 +4,6 @@ import { RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
 import { uniqBy, reduce, mapValues } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-
 import NavBar from "../../../common/NavBar";
 import Header from "./Header";
 import Selectors from "./Selectors";
