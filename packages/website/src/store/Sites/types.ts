@@ -347,7 +347,7 @@ export interface SitesListState {
 export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
-  liveData?: LiveData;
+  liveData?: LiveData | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;

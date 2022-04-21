@@ -34,25 +34,14 @@ export const liveDataRequest = createAsyncThunk<
   SelectedSiteState["liveData"],
   string,
   CreateAsyncThunkTypes
->(
-  "selectedSite/requestLiveData",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      const { data } = await siteServices.getSiteLiveData(id);
-      return data;
-    } catch (err) {
-      return rejectWithValue(getAxiosErrorMessage(err));
-    }
-  },
-  {
-    condition(id: string, { getState }) {
-      const {
-        selectedSite: { details },
-      } = getState();
-      return `${details?.id}` !== id;
-    },
+>("selectedSite/requestLiveData", async (id: string, { rejectWithValue }) => {
+  try {
+    const { data } = await siteServices.getSiteLiveData(id);
+    return data;
+  } catch (err) {
+    return rejectWithValue(getAxiosErrorMessage(err));
   }
-);
+});
 
 export const siteRequest = createAsyncThunk<
   SelectedSiteState["details"],
@@ -193,6 +182,14 @@ const selectedSiteSlice = createSlice({
     ) => ({
       ...state,
       details: action.payload,
+    }),
+    unsetSelectedSite: (state) => ({
+      ...state,
+      details: null,
+    }),
+    unsetLiveData: (state) => ({
+      ...state,
+      liveData: null,
     }),
     setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
       if (state.details) {
@@ -512,6 +509,8 @@ export const {
   setSiteDraft,
   setSelectedSite,
   setSiteData,
+  unsetSelectedSite,
+  unsetLiveData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,

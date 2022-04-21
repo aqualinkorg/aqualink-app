@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  liveDataRequest,
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
@@ -16,7 +15,6 @@ export const useSiteRequest = (siteId: string) => {
   useEffect(() => {
     if (!site || site.id !== parseInt(siteId, 10)) {
       dispatch(siteRequest(siteId));
-      dispatch(liveDataRequest(siteId));
     }
   }, [dispatch, site, siteId]);
 

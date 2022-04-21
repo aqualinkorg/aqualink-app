@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   createStyles,
   Grid,
@@ -11,7 +11,7 @@ import {
 import classNames from "classnames";
 import times from "lodash/times";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
@@ -33,7 +33,11 @@ import WaterSamplingCard from "./WaterSampling";
 import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
-import { liveDataSelector } from "../../store/Sites/selectedSiteSlice";
+import {
+  liveDataRequest,
+  liveDataSelector,
+  unsetLiveData,
+} from "../../store/Sites/selectedSiteSlice";
 
 const SiteDetails = ({
   site,
@@ -46,10 +50,23 @@ const SiteDetails = ({
 }: SiteDetailsProps) => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const liveData = useSelector(liveDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
+
+  useEffect(() => {
+    if (site && !liveData) {
+      dispatch(liveDataRequest(`${site.id}`));
+    }
+  }, [dispatch, site, liveData]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(unsetLiveData());
+    };
+  }, [dispatch]);
 
   const { videoStream } = site || {};
 
