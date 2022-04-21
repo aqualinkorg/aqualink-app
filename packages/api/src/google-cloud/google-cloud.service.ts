@@ -39,6 +39,10 @@ export class GoogleCloudService {
     dir: string,
     prefix: string,
   ): string {
+    if (!this.STORAGE_FOLDER) {
+      this.logger.error('STORAGE_FOLDER variable has not been initialized');
+      throw new InternalServerErrorException();
+    }
     const folder = `${this.STORAGE_FOLDER}/${dir}/`;
     const basename = path.basename(filePath);
     return getRandomName(folder, prefix, basename, type);
@@ -50,24 +54,29 @@ export class GoogleCloudService {
     dir: string = 'surveys',
     prefix: string = 'site_hobo_image',
   ): string {
-    this.uploadFile(filePath, type, dir, prefix);
-    return this.getDestination(filePath, type, dir, prefix);
+    const dest = this.getDestination(filePath, type, dir, prefix);
+    this.uploadFile(filePath, dest);
+    return dest;
   }
 
-  public async uploadFile(
+  public async uploadFileSync(
     filePath: string,
     type: string,
     dir: string = 'surveys',
     prefix: string = 'site_hobo_image',
   ): Promise<string> {
-    if (!this.GCS_BUCKET || !this.STORAGE_FOLDER) {
-      this.logger.error(
-        'GCS_BUCKET or STORAGE_FOLDER variable has not been initialized',
-      );
+    const destination = this.getDestination(filePath, type, dir, prefix);
+    return this.uploadFile(filePath, destination);
+  }
+
+  private async uploadFile(
+    filePath: string,
+    destination: string,
+  ): Promise<string> {
+    if (!this.GCS_BUCKET) {
+      this.logger.error('GCS_BUCKET variable has not been initialized');
       throw new InternalServerErrorException();
     }
-    const destination = this.getDestination(filePath, type, dir, prefix);
-
     const response = await this.storage
       .bucket(this.GCS_BUCKET)
       .upload(filePath, {
