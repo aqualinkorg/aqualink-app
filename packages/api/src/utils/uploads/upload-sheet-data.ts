@@ -439,7 +439,8 @@ export const uploadTimeSeriesData = async (
     // Initialize google cloud service, to be used for media upload
     const googleCloudService = new GoogleCloudService();
 
-    const fileLocation = await googleCloudService.uploadFile(
+    // Note this may fail. It would still return a location, but the file may not have been uploaded
+    const fileLocation = googleCloudService.uploadFileAsync(
       filePath,
       sourceType,
       'data_uploads',

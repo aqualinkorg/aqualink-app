@@ -33,6 +33,27 @@ export class GoogleCloudService {
     });
   }
 
+  private getDestination(
+    filePath: string,
+    type: string,
+    dir: string,
+    prefix: string,
+  ): string {
+    const folder = `${this.STORAGE_FOLDER}/${dir}/`;
+    const basename = path.basename(filePath);
+    return getRandomName(folder, prefix, basename, type);
+  }
+
+  public uploadFileAsync(
+    filePath: string,
+    type: string,
+    dir: string = 'surveys',
+    prefix: string = 'site_hobo_image',
+  ): string {
+    this.uploadFile(filePath, type, dir, prefix);
+    return this.getDestination(filePath, type, dir, prefix);
+  }
+
   public async uploadFile(
     filePath: string,
     type: string,
@@ -45,9 +66,7 @@ export class GoogleCloudService {
       );
       throw new InternalServerErrorException();
     }
-    const folder = `${this.STORAGE_FOLDER}/${dir}/`;
-    const basename = path.basename(filePath);
-    const destination = getRandomName(folder, prefix, basename, type);
+    const destination = this.getDestination(filePath, type, dir, prefix);
 
     const response = await this.storage
       .bucket(this.GCS_BUCKET)
