@@ -21,7 +21,6 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
-  loadingLiveData: false,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
@@ -289,7 +288,6 @@ const selectedSiteSlice = createSlice({
         return {
           ...state,
           liveData: action.payload,
-          loadingLiveData: false,
         };
       }
     );
@@ -300,7 +298,6 @@ const selectedSiteSlice = createSlice({
         return {
           ...state,
           error: action.payload,
-          loadingLiveData: false,
         };
       }
     );
@@ -308,7 +305,6 @@ const selectedSiteSlice = createSlice({
     builder.addCase(liveDataRequest.pending, (state) => {
       return {
         ...state,
-        loadingLiveData: true,
         error: null,
       };
     });
@@ -478,10 +474,6 @@ export const siteDraftSelector = (
 export const siteLoadingSelector = (
   state: RootState
 ): SelectedSiteState["loading"] => state.selectedSite.loading;
-
-export const siteLiveDataLoadingSelector = (
-  state: RootState
-): SelectedSiteState["loadingLiveData"] => state.selectedSite.loadingLiveData;
 
 export const siteErrorSelector = (
   state: RootState

@@ -362,6 +362,5 @@ export interface SelectedSiteState {
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
-  loadingLiveData: boolean;
   error?: string | null;
 }

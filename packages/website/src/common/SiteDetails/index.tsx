@@ -33,10 +33,7 @@ import WaterSamplingCard from "./WaterSampling";
 import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
-import {
-  liveDataSelector,
-  siteLiveDataLoadingSelector,
-} from "../../store/Sites/selectedSiteSlice";
+import { liveDataSelector } from "../../store/Sites/selectedSiteSlice";
 
 const SiteDetails = ({
   site,
@@ -50,7 +47,6 @@ const SiteDetails = ({
   const classes = useStyles();
   const theme = useTheme();
   const liveData = useSelector(liveDataSelector);
-  const liveDataLoading = useSelector(siteLiveDataLoadingSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -196,7 +192,7 @@ const SiteDetails = ({
               <LoadingSkeleton
                 variant="rect"
                 height="100%"
-                loading={isLoading || liveDataLoading}
+                loading={isLoading || !liveData}
               >
                 {hasDailyData && Component}
               </LoadingSkeleton>
