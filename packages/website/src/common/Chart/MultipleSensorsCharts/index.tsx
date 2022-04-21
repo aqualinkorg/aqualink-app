@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
 import {
+  liveDataSelector,
   siteGranularDailyDataSelector,
   siteOceanSenseDataRequest,
   siteOceanSenseDataSelector,
@@ -96,6 +97,7 @@ const MultipleSensorsCharts = ({
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
+  const liveData = useSelector(liveDataSelector);
   const { bottomTemperature, topTemperature } = timeSeriesData || {};
   const { hobo: hoboBottomTemperature } = bottomTemperature || {};
   const timeSeriesDataRanges = useSelector(siteTimeSeriesDataRangeSelector);
@@ -118,11 +120,11 @@ const MultipleSensorsCharts = ({
   );
 
   const hasSondeData = Boolean(
-    site.liveData?.latestData?.some((data) => data.source === "sonde")
+    liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
   const hasMetlogData = Boolean(
-    site.liveData?.latestData?.some((data) => data.source === "metlog")
+    liveData?.latestData?.some((data) => data.source === "metlog")
   );
 
   const chartStartDate = startDate || subtractFromDate(today, "week");

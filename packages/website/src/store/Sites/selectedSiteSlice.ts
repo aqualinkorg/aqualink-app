@@ -30,6 +30,19 @@ const selectedSiteInitialState: SelectedSiteState = {
   error: null,
 };
 
+export const liveDataRequest = createAsyncThunk<
+  SelectedSiteState["liveData"],
+  string,
+  CreateAsyncThunkTypes
+>("selectedSite/requestLiveData", async (id: string, { rejectWithValue }) => {
+  try {
+    const { data } = await siteServices.getSiteLiveData(id);
+    return data;
+  } catch (err) {
+    return rejectWithValue(getAxiosErrorMessage(err));
+  }
+});
+
 export const siteRequest = createAsyncThunk<
   SelectedSiteState["details"],
   string,
@@ -40,13 +53,11 @@ export const siteRequest = createAsyncThunk<
     try {
       const { data } = await siteServices.getSite(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
-      const { data: liveData } = await siteServices.getSiteLiveData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
         ...data,
         dailyData,
-        liveData,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
           (item) => item.month
@@ -172,6 +183,14 @@ const selectedSiteSlice = createSlice({
       ...state,
       details: action.payload,
     }),
+    unsetSelectedSite: (state) => ({
+      ...state,
+      details: null,
+    }),
+    unsetLiveData: (state) => ({
+      ...state,
+      liveData: null,
+    }),
     setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
       if (state.details) {
         return {
@@ -256,6 +275,33 @@ const selectedSiteSlice = createSlice({
       return {
         ...state,
         loading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      liveDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+        return {
+          ...state,
+          liveData: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(
+      liveDataRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(liveDataRequest.pending, (state) => {
+      return {
+        ...state,
         error: null,
       };
     });
@@ -390,6 +436,10 @@ export const siteDetailsSelector = (
   state: RootState
 ): SelectedSiteState["details"] => state.selectedSite.details;
 
+export const liveDataSelector = (
+  state: RootState
+): SelectedSiteState["liveData"] => state.selectedSite.liveData;
+
 export const siteGranularDailyDataSelector = (
   state: RootState
 ): SelectedSiteState["granularDailyData"] =>
@@ -459,6 +509,8 @@ export const {
   setSiteDraft,
   setSelectedSite,
   setSiteData,
+  unsetSelectedSite,
+  unsetLiveData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   createStyles,
   Grid,
@@ -11,6 +11,7 @@ import {
 import classNames from "classnames";
 import times from "lodash/times";
 
+import { useDispatch, useSelector } from "react-redux";
 import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
@@ -32,6 +33,11 @@ import WaterSamplingCard from "./WaterSampling";
 import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
+import {
+  liveDataRequest,
+  liveDataSelector,
+  unsetLiveData,
+} from "../../store/Sites/selectedSiteSlice";
 
 const SiteDetails = ({
   site,
@@ -44,33 +50,48 @@ const SiteDetails = ({
 }: SiteDetailsProps) => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const liveData = useSelector(liveDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
 
+  useEffect(() => {
+    if (site && !liveData) {
+      dispatch(liveDataRequest(`${site.id}`));
+    }
+  }, [dispatch, site, liveData]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(unsetLiveData());
+    };
+  }, [dispatch]);
+
   const { videoStream } = site || {};
 
   const hasSondeData = Boolean(
-    site?.liveData?.latestData?.some((data) => data.source === "sonde")
+    liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
-  const cards = site
-    ? [
-        <Satellite
-          liveData={site.liveData}
-          maxMonthlyMean={site.maxMonthlyMean}
-        />,
-        <Sensor site={site} />,
-        hasSondeData ? (
-          <WaterSamplingCard siteId={site.id.toString()} />
-        ) : (
-          <CoralBleaching
-            dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
-          />
-        ),
-        <Waves liveData={site.liveData} />,
-      ]
-    : times(4, () => null);
+  const cards =
+    site && liveData
+      ? [
+          <Satellite
+            liveData={liveData}
+            maxMonthlyMean={site.maxMonthlyMean}
+          />,
+          <Sensor depth={site.depth} id={site.id} liveData={liveData} />,
+          hasSondeData ? (
+            <WaterSamplingCard siteId={site.id.toString()} />
+          ) : (
+            <CoralBleaching
+              dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
+            />
+          ),
+          <Waves liveData={liveData} />,
+        ]
+      : times(4, () => null);
 
   const mapTitleItems: Value[] = [
     {
@@ -148,7 +169,7 @@ const SiteDetails = ({
           {site && (
             <Map
               siteId={site.id}
-              spotterPosition={site.liveData?.spotterPosition}
+              spotterPosition={liveData?.spotterPosition}
               polygon={site.polygon}
               surveyPoints={site.surveyPoints}
             />
@@ -185,7 +206,11 @@ const SiteDetails = ({
         {cards.map((Component, index) => (
           <Grid key={index.toString()} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
-              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
+              <LoadingSkeleton
+                variant="rect"
+                height="100%"
+                loading={isLoading || !liveData}
+              >
                 {hasDailyData && Component}
               </LoadingSkeleton>
             </div>

@@ -23,42 +23,6 @@ export const mockSite: Site = {
   surveyPoints: [],
   stream: null,
   historicalMonthlyMean: [],
-  liveData: {
-    site: { id: 1 },
-    latestData: [],
-    bottomTemperature: {
-      value: 39,
-      timestamp: liveDataDate,
-    },
-    satelliteTemperature: {
-      value: 29,
-      timestamp: liveDataDate,
-    },
-    degreeHeatingDays: {
-      value: 34,
-      timestamp: liveDataDate,
-    },
-    waveHeight: {
-      value: 1,
-      timestamp: liveDataDate,
-    },
-    waveMeanDirection: {
-      value: 90,
-      timestamp: liveDataDate,
-    },
-    waveMeanPeriod: {
-      value: 3,
-      timestamp: liveDataDate,
-    },
-    windSpeed: {
-      value: 6,
-      timestamp: liveDataDate,
-    },
-    windDirection: {
-      value: 180,
-      timestamp: liveDataDate,
-    },
-  },
   dailyData: [
     {
       id: 171,

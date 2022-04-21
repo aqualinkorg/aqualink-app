@@ -31,6 +31,7 @@ import {
   userLoadingSelector,
 } from "../../../store/User/userSlice";
 import {
+  liveDataRequest,
   siteDetailsSelector,
   siteLoadingSelector,
   siteRequest,
@@ -61,6 +62,7 @@ const Apply = ({ match, classes }: ApplyProps) => {
 
   useEffect(() => {
     dispatch(siteRequest(`${siteId}`));
+    dispatch(liveDataRequest(`${siteId}`));
   }, [dispatch, siteId]);
 
   useEffect(() => {

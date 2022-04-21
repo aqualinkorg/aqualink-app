@@ -23,6 +23,10 @@ import {
 } from "../../store/Sites/sitesListSlice";
 import { getSiteNameAndRegion } from "../../store/Sites/helpers";
 import mapServices from "../../services/mapServices";
+import {
+  unsetLiveData,
+  unsetSelectedSite,
+} from "../../store/Sites/selectedSiteSlice";
 
 const siteAugmentedName = (site: Site) => {
   const { name, region } = getSiteNameAndRegion(site);
@@ -71,6 +75,8 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedSite(null);
       dispatch(setSiteOnMap(value));
+      dispatch(unsetSelectedSite());
+      dispatch(unsetLiveData());
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${value.id}`);
       }
