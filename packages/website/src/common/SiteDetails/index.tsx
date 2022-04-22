@@ -76,9 +76,11 @@ const SiteDetails = ({
 
   // Temporary change to show cards without waiting for liveData
   // TODO - Split latestData and liveData requests
-  // The use latestData instead of liveData when possible
+  // The use latestData instead of liveData for cards possible
   console.log(hasDailyData);
   const tempLiveData = liveData || ({} as LiveData);
+
+  console.log(tempLiveData.latestData);
 
   const cards =
     site && tempLiveData
