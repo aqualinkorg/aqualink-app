@@ -75,6 +75,11 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedSite(null);
       dispatch(setSiteOnMap(value));
+      // TODO - create a function to cleanup the state whenever we change the site.
+      // At the moment this needs to happen:
+      // - through the dropdown
+      // - through the search
+      // - through the admin side panel
       dispatch(unsetSelectedSite());
       dispatch(unsetLiveData());
       if (!geocodingEnabled) {
@@ -88,6 +93,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${searchedSite.id}`);
       }
+      dispatch(unsetLiveData());
       dispatch(setSiteOnMap(searchedSite));
       setSearchedSite(null);
     } else if (searchValue && geocodingEnabled) {

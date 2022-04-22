@@ -23,7 +23,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type { Site } from "../../store/Sites/types";
+import type { Site, LiveData } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -74,14 +74,20 @@ const SiteDetails = ({
     liveData?.latestData?.some((data) => data.source === "sonde")
   );
 
+  // Temporary change to show cards without waiting for liveData
+  // TODO - Split latestData and liveData requests
+  // The use latestData instead of liveData when possible
+  console.log(hasDailyData);
+  const tempLiveData = liveData || ({} as LiveData);
+
   const cards =
-    site && liveData
+    site && tempLiveData
       ? [
           <Satellite
-            liveData={liveData}
+            liveData={tempLiveData}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
-          <Sensor depth={site.depth} id={site.id} liveData={liveData} />,
+          <Sensor depth={site.depth} id={site.id} liveData={tempLiveData} />,
           hasSondeData ? (
             <WaterSamplingCard siteId={site.id.toString()} />
           ) : (
@@ -89,7 +95,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves liveData={liveData} />,
+          <Waves liveData={tempLiveData} />,
         ]
       : times(4, () => null);
 
@@ -206,12 +212,8 @@ const SiteDetails = ({
         {cards.map((Component, index) => (
           <Grid key={index.toString()} item xs={12} sm={6} md={3}>
             <div className={classes.card}>
-              <LoadingSkeleton
-                variant="rect"
-                height="100%"
-                loading={isLoading || !liveData}
-              >
-                {hasDailyData && Component}
+              <LoadingSkeleton variant="rect" height="100%" loading={isLoading}>
+                {Component}
               </LoadingSkeleton>
             </div>
           </Grid>
