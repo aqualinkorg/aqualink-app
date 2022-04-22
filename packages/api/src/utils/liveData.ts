@@ -19,6 +19,7 @@ export const getLiveData = async (
   site: Site,
   isDeployed: boolean,
 ): Promise<SofarLiveData> => {
+  console.time(`getLiveData for site ${site.id}`);
   const { polygon, sensorId, maxMonthlyMean } = site;
   // TODO - Accept Polygon option
   const [longitude, latitude] = (polygon as Point).coordinates;
@@ -128,6 +129,8 @@ export const getLiveData = async (
     filteredValues?.satelliteTemperature?.value,
     degreeHeatingDays?.value,
   );
+
+  console.timeEnd(`getLiveData for site ${site.id}`);
 
   return {
     site: { id: site.id },
