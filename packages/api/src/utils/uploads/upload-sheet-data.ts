@@ -358,6 +358,15 @@ const findSheetDataWithHeader = (
   return dataAsObjects;
 };
 
+async function refreshMaterializedView(repositories: Repositories) {
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  console.time(`Refresh Materialized View ${hash}`);
+  await repositories.dataUploadsRepository.query(
+    'REFRESH MATERIALIZED VIEW latest_data',
+  );
+  console.timeEnd(`Refresh Materialized View ${hash}`);
+}
+
 // Upload sonde data
 export const uploadTimeSeriesData = async (
   filePath: string,
@@ -551,9 +560,8 @@ export const uploadTimeSeriesData = async (
     });
     console.timeEnd(`Loading into DB ${fileName}`);
     logger.log('loading complete');
-    repositories.dataUploadsRepository.query(
-      'REFRESH MATERIALIZED VIEW latest_data',
-    );
+
+    refreshMaterializedView(repositories);
 
     console.timeEnd(`Upload datafile ${fileName}`);
     return ignoredHeaders;
