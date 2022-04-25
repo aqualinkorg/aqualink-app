@@ -82,7 +82,7 @@ export async function sofarForecast(
   latitude: number,
   longitude: number,
 ): Promise<SofarValue> {
-  console.time(`sofarForecast for ${variableID}`);
+  console.time(`sofarForecast for ${modelId}-${variableID}`);
   const forecast = await axios
     .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
       params: {
@@ -107,7 +107,7 @@ export async function sofarForecast(
         );
       }
     });
-  console.timeEnd(`sofarForecast for ${variableID}`);
+  console.timeEnd(`sofarForecast for ${modelId}-${variableID}`);
   return forecast;
 }
 
@@ -168,7 +168,7 @@ export async function getSofarHindcastData(
 ) {
   const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
-  console.time(`getSofarHindcast for ${variableID}`);
+  console.time(`getSofarHindcast for ${modelId}-${variableID}`);
   const hindcastVariables = await sofarHindcast(
     modelId,
     variableID,
@@ -177,7 +177,7 @@ export async function getSofarHindcastData(
     start,
     end,
   );
-  console.timeEnd(`getSofarHindcast for ${variableID}`);
+  console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 
   // Filter out unkown values
   return filterSofarResponse(hindcastVariables);
