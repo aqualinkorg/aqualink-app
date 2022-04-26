@@ -34,8 +34,11 @@ import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
 import {
+  latestDataRequest,
+  latestDataSelector,
   liveDataRequest,
   liveDataSelector,
+  unsetLatestData,
   unsetLiveData,
 } from "../../store/Sites/selectedSiteSlice";
 
@@ -52,6 +55,7 @@ const SiteDetails = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const liveData = useSelector(liveDataSelector);
+  const latestData = useSelector(latestDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -60,18 +64,22 @@ const SiteDetails = ({
     if (site && !liveData) {
       dispatch(liveDataRequest(`${site.id}`));
     }
-  }, [dispatch, site, liveData]);
+    if (site && !latestData) {
+      dispatch(latestDataRequest(`${site.id}`));
+    }
+  }, [dispatch, site, liveData, latestData]);
 
   useEffect(() => {
     return () => {
       dispatch(unsetLiveData());
+      dispatch(unsetLatestData());
     };
   }, [dispatch]);
 
   const { videoStream } = site || {};
 
   const hasSondeData = Boolean(
-    liveData?.latestData?.some((data) => data.source === "sonde")
+    latestData?.some((data) => data.source === "sonde")
   );
 
   // Temporary change to show cards without waiting for liveData

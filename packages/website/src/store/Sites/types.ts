@@ -123,7 +123,6 @@ export interface LatestData {
 }
 export interface LiveData {
   site: { id: number };
-  latestData: LatestData[];
   bottomTemperature?: SofarValue;
   topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
@@ -348,6 +347,7 @@ export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
   liveData?: LiveData | null;
+  latestData?: LatestData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;
