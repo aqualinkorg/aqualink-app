@@ -41,6 +41,7 @@ import {
   ApiNestNotFoundResponse,
 } from '../docs/api-response';
 import { SofarLiveDataDto } from './dto/live-data.dto';
+import { SofarLatestDataDto } from './dto/latest-data.dto';
 
 @ApiTags('Sites')
 @Auth(AdminLevel.SiteManager, AdminLevel.SuperAdmin)
@@ -102,6 +103,18 @@ export class SitesController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<SofarLiveDataDto> {
     return this.sitesService.findLiveData(id);
+  }
+
+  @ApiNestNotFoundResponse('No site was found with the specified id')
+  @ApiOperation({ summary: 'Returns latest data of the specified site' })
+  @ApiParam({ name: 'id', example: 1 })
+  @Public()
+  @Get(':id/latest_data')
+  async findLatestData(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<SofarLatestDataDto> {
+    const latestData = await this.sitesService.findLatestData(id);
+    return { latestData };
   }
 
   @ApiNestNotFoundResponse('No site was found or found site had no spotter')

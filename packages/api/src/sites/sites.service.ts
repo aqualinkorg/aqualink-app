@@ -333,15 +333,20 @@ export class SitesService {
       this.latestDataRepository,
     );
 
-    const latestData = await getLatestData(site, this.latestDataRepository);
-
     return {
       ...liveData,
-      latestData,
       sstAnomaly: getSstAnomaly(site.historicalMonthlyMean, sst),
       satelliteTemperature: sst,
       weeklyAlertLevel: getMaxAlert(liveData.dailyAlertLevel, weeklyAlertLevel),
     };
+  }
+
+  async findLatestData(id: number): Promise<LatestData[]> {
+    const site = await getSite(id, this.sitesRepository, [
+      'historicalMonthlyMean',
+    ]);
+
+    return getLatestData(site, this.latestDataRepository);
   }
 
   async getSpotterData(id: number, start?: string, end?: string) {
