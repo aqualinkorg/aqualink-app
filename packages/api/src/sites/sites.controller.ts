@@ -80,7 +80,7 @@ export class SitesController {
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
   @ApiNestBadRequestResponse('Start or end is not a valid date')
-  @ApiOperation({ summary: 'Returns daily data of the specified site' })
+  @ApiOperation({ summary: 'Returns daily data for the specified site' })
   @ApiParam({ name: 'id', example: 1 })
   @ApiQuery({ name: 'start', example: '2021-04-18T08:45:35.780Z' })
   @ApiQuery({ name: 'end', example: '2021-05-18T08:45:35.780Z' })
@@ -95,7 +95,7 @@ export class SitesController {
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
-  @ApiOperation({ summary: 'Returns live data of the specified site' })
+  @ApiOperation({ summary: 'Returns live data for the specified site' })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/live_data')
@@ -106,7 +106,7 @@ export class SitesController {
   }
 
   @ApiNestNotFoundResponse('No site was found with the specified id')
-  @ApiOperation({ summary: 'Returns latest data of the specified site' })
+  @ApiOperation({ summary: 'Returns latest data for the specified site' })
   @ApiParam({ name: 'id', example: 1 })
   @Public()
   @Get(':id/latest_data')
@@ -118,7 +118,7 @@ export class SitesController {
   }
 
   @ApiNestNotFoundResponse('No site was found or found site had no spotter')
-  @ApiOperation({ summary: 'Returns spotter data of the specified site' })
+  @ApiOperation({ summary: 'Returns spotter data for the specified site' })
   @ApiParam({ name: 'id', example: 1 })
   @ApiQuery({ name: 'startDate', example: '2021-04-18T08:45:35.780Z' })
   @ApiQuery({ name: 'endDate', example: '2021-05-18T08:45:35.780Z' })
