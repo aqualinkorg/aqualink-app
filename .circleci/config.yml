@@ -129,7 +129,16 @@ workflows:
   build:
     jobs:
       - build_dependencies
-      - test_and_lint:
+
+      - lint_all:
+          requires:
+            - build_dependencies
+
+      - test_website:
+          requires:
+            - build_dependencies
+
+      - test_api:
           requires:
             - build_dependencies
 
