@@ -15,6 +15,7 @@ export class improveLatestDataMaterializedView1650815506446
             FROM "time_series" "time_series"
             INNER JOIN "sources" "sources" ON "sources"."id" = "time_series"."source_id"
             WHERE timestamp >= current_date - INTERVAL '7 days'
+            OR type IN ('sonde') AND (timestamp >= current_date - INTERVAL '90 days')
             ORDER BY metric, type, site_id, survey_point_id, timestamp DESC`,
     );
   }
