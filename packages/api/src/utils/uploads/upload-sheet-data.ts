@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
 import md5Fle from 'md5-file';

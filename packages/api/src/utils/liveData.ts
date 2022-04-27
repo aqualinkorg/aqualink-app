@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Point } from 'geojson';
 import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';

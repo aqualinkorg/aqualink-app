@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import axios from 'axios';
 import { isNil } from 'lodash';
