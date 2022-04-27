@@ -69,6 +69,7 @@ jobs:
     executor: default
 
     steps:
+      - checkout_and_restore_dependencies
       - run: yarn lint:all
 
   test_website:
