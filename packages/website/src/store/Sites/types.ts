@@ -115,9 +115,9 @@ export interface LatestData {
   id: number;
   timestamp: string;
   value: number;
-  site: { id: number };
+  site?: { id: number };
   siteId: number;
-  surveyPoint: { id: number };
+  surveyPoint?: { id: number };
   source: Sources;
   metric: MetricsKeys;
 }

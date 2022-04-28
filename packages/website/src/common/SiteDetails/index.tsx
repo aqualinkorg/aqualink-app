@@ -26,8 +26,6 @@ import CombinedCharts from "../Chart/CombinedCharts";
 import type {
   Site,
   SatelliteDataProps,
-  LatestData,
-  SofarValue,
   SensorDataProps,
   WavesDataProps,
 } from "../../store/Sites/types";
@@ -48,13 +46,7 @@ import {
   unsetLatestData,
   unsetLiveData,
 } from "../../store/Sites/selectedSiteSlice";
-
-const latestDataToSofarValue = (
-  data: LatestData | undefined
-): SofarValue | undefined => {
-  if (!data) return undefined;
-  return { timestamp: data.timestamp, value: data.value };
-};
+import { latestDataToSofarValue } from "../../helpers/siteUtils";
 
 const SiteDetails = ({
   site,
