@@ -283,9 +283,7 @@ export const getLatestData = async (
   site: Site,
   latestDataRepository: Repository<LatestData>,
 ): Promise<LatestData[]> => {
-  const latestData = await latestDataRepository.find({
+  return latestDataRepository.find({
     site,
   });
-
-  return latestData;
 };
