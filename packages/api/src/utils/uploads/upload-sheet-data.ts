@@ -15,6 +15,12 @@ import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite, getSiteAndSurveyPoint } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
+import { uploadHoboData } from './upload-hobo-data';
+import { SurveyMedia } from '../../surveys/survey-media.entity';
+import { User } from '../../users/users.entity';
+import { Survey } from '../../surveys/surveys.entity';
+import { Region } from '../../regions/regions.entity';
+import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entity';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -22,6 +28,11 @@ interface Repositories {
   timeSeriesRepository: Repository<TimeSeries>;
   sourcesRepository: Repository<Sources>;
   dataUploadsRepository: Repository<DataUploads>;
+  userRepository: Repository<User>;
+  surveyRepository: Repository<Survey>;
+  surveyMediaRepository: Repository<SurveyMedia>;
+  regionRepository: Repository<Region>;
+  historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>;
 }
 
 const logger = new Logger('ParseSondeData');
@@ -366,6 +377,7 @@ export const uploadTimeSeriesData = async (
   surveyPointId: string | undefined,
   sourceType: SourceType,
   repositories: Repositories,
+  userEmail?: string,
   failOnWarning?: boolean,
   mimetype?: Mimetype,
 ) => {
@@ -399,6 +411,17 @@ export const uploadTimeSeriesData = async (
       site,
       surveyPoint,
     }));
+
+  // Initialize google cloud service, to be used for media upload
+  const googleCloudService = new GoogleCloudService();
+
+  // Note this may fail. It would still return a location, but the file may not have been uploaded
+  const fileLocation = googleCloudService.uploadFileAsync(
+    filePath,
+    sourceType,
+    'data_uploads',
+    'data_upload',
+  );
 
   if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
@@ -435,17 +458,6 @@ export const uploadTimeSeriesData = async (
         `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
       );
     }
-
-    // Initialize google cloud service, to be used for media upload
-    const googleCloudService = new GoogleCloudService();
-
-    // Note this may fail. It would still return a location, but the file may not have been uploaded
-    const fileLocation = googleCloudService.uploadFileAsync(
-      filePath,
-      sourceType,
-      'data_uploads',
-      'data_upload',
-    );
 
     const results = findSheetDataWithHeader(
       fileName,
@@ -549,6 +561,37 @@ export const uploadTimeSeriesData = async (
       'REFRESH MATERIALIZED VIEW latest_data',
     );
     return ignoredHeaders;
+  }
+
+  if (sourceType === SourceType.HOBO) {
+    console.log(
+      filePath,
+      fileName,
+      siteId,
+      surveyPointId,
+      sourceType,
+      userEmail,
+      repositories,
+      failOnWarning,
+      mimetype,
+    );
+    if (!userEmail) {
+      throw new BadRequestException('Unspecified user');
+    }
+    const res = await uploadHoboData('upload/', userEmail, googleCloudService, {
+      siteRepository: repositories.siteRepository,
+      surveyPointRepository: repositories.surveyPointRepository,
+      timeSeriesRepository: repositories.timeSeriesRepository,
+      userRepository: repositories.userRepository,
+      surveyRepository: repositories.surveyRepository,
+      surveyMediaRepository: repositories.surveyMediaRepository,
+      sourcesRepository: repositories.sourcesRepository,
+      regionRepository: repositories.regionRepository,
+      historicalMonthlyMeanRepository:
+        repositories.historicalMonthlyMeanRepository,
+      dataUploadsRepository: repositories.dataUploadsRepository,
+    });
+    console.log(res);
   }
 
   return [];

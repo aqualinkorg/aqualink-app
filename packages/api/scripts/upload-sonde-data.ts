@@ -11,6 +11,11 @@ import { Sources } from '../src/sites/sources.entity';
 import { uploadTimeSeriesData } from '../src/utils/uploads/upload-sheet-data';
 import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 import { SourceType } from '../src/sites/schemas/source-type.enum';
+import { User } from '../src/users/users.entity';
+import { Survey } from '../src/surveys/surveys.entity';
+import { SurveyMedia } from '../src/surveys/survey-media.entity';
+import { Region } from '../src/regions/regions.entity';
+import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -75,6 +80,13 @@ async function run() {
       timeSeriesRepository: connection.getRepository(TimeSeries),
       sourcesRepository: connection.getRepository(Sources),
       dataUploadsRepository: connection.getRepository(DataUploads),
+      userRepository: connection.getRepository(User),
+      surveyRepository: connection.getRepository(Survey),
+      surveyMediaRepository: connection.getRepository(SurveyMedia),
+      regionRepository: connection.getRepository(Region),
+      historicalMonthlyMeanRepository: connection.getRepository(
+        HistoricalMonthlyMean,
+      ),
     },
   );
 

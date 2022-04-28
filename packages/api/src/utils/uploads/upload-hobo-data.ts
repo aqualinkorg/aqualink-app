@@ -1,5 +1,5 @@
 import { chunk, Dictionary, groupBy, isNaN, keyBy, minBy } from 'lodash';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import {
   BadRequestException,
   InternalServerErrorException,
@@ -33,6 +33,7 @@ import { Region } from '../../regions/regions.entity';
 import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entity';
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
+import { DataUploads } from '../../data-uploads/data-uploads.entity';
 
 interface Coords {
   site: number;
@@ -57,6 +58,7 @@ interface Repositories {
   sourcesRepository: Repository<Sources>;
   regionRepository: Repository<Region>;
   historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>;
+  dataUploadsRepository: Repository<DataUploads>;
 }
 
 const FOLDER_PREFIX = 'Patch_Site_';
@@ -617,7 +619,6 @@ export const uploadHoboData = async (
   rootPath: string,
   email: string,
   googleCloudService: GoogleCloudService,
-  connection: Connection,
   repositories: Repositories,
 ): Promise<Record<string, number>> => {
   // Grab user and check if they exist
@@ -707,7 +708,9 @@ export const uploadHoboData = async (
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  repositories.dataUploadsRepository.query(
+    'REFRESH MATERIALIZED VIEW latest_data',
+  );
 
   return dbIdToCSVId;
 };
