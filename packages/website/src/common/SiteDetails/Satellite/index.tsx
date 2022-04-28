@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 
 import { dhwColorCode } from "../../../assets/colorCode";
-import type { LiveData } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import satellite from "../../../assets/satellite.svg";
 import {
@@ -23,9 +22,10 @@ import {
 import { styles as incomingStyles } from "../styles";
 import UpdateInfo from "../../UpdateInfo";
 import { toRelativeTime } from "../../../helpers/dates";
+import { SatelliteDataProps } from "../../../store/Sites/types";
 
-const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
-  const { degreeHeatingDays, satelliteTemperature, sstAnomaly } = liveData;
+const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
+  const { degreeHeatingDays, satelliteTemperature, sstAnomaly } = data;
   const relativeTime =
     satelliteTemperature?.timestamp &&
     toRelativeTime(satelliteTemperature.timestamp);
@@ -157,7 +157,7 @@ const styles = () =>
 
 interface SatelliteIncomingProps {
   maxMonthlyMean: number | null;
-  liveData: LiveData;
+  data: SatelliteDataProps;
 }
 
 type SatelliteProps = WithStyles<typeof styles> & SatelliteIncomingProps;

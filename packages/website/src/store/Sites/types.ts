@@ -113,13 +113,13 @@ export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
 
 export interface LatestData {
   id: number;
-  timestamp: Date;
+  timestamp: string;
   value: number;
   site: { id: number };
   siteId: number;
   surveyPoint: { id: number };
   source: Sources;
-  metric: Metrics;
+  metric: MetricsKeys;
 }
 export interface LiveData {
   site: { id: number };
@@ -363,4 +363,25 @@ export interface SelectedSiteState {
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
   error?: string | null;
+}
+
+export interface SatelliteDataProps {
+  degreeHeatingDays?: SofarValue;
+  satelliteTemperature?: SofarValue;
+  sstAnomaly?: number;
+}
+
+export interface SensorDataProps {
+  topTemperature?: SofarValue;
+  bottomTemperature?: SofarValue;
+}
+
+export interface WavesDataProps {
+  topTemperature?: SofarValue;
+  bottomTemperature?: SofarValue;
+  waveHeight?: SofarValue;
+  waveMeanDirection?: SofarValue;
+  waveMeanPeriod?: SofarValue;
+  windSpeed?: SofarValue;
+  windDirection?: SofarValue;
 }
