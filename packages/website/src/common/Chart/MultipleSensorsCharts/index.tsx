@@ -6,7 +6,7 @@ import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   liveDataSelector,
   siteGranularDailyDataSelector,
@@ -113,7 +113,6 @@ const MultipleSensorsCharts = ({
   const [range, setRange] = useState<RangeValue>(
     initialStart || initialEnd ? "custom" : "three_months"
   );
-  const { start, end } = useParams<{ start: string; end: string }>();
   const history = useHistory();
 
   const today = localizedEndOfDay(undefined, site.timezone);
@@ -386,11 +385,6 @@ const MultipleSensorsCharts = ({
       });
     }
   }, [history, pickerEndDate, pickerStartDate]);
-
-  useEffect(() => {
-    setPickerStartDate(start);
-    setPickerEndDate(end);
-  }, [start, end]);
 
   const onRangeChange = (value: RangeValue) => {
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
