@@ -214,6 +214,7 @@ export const addSpotterData = async (
  * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
+// TODO - Fix this function. Currently getting Error: read ECONNRESET in firebase cloud functions.
 export const addWindWaveData = async (
   siteIds: number[],
   connection: Connection,
@@ -261,6 +262,10 @@ export const addWindWaveData = async (
   await Bluebird.map(sites, async (site) => {
     const { polygon } = site;
     const [longitude, latitude] = (polygon as Point).coordinates;
+
+    logger.log(
+      `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+    );
 
     const [
       significantWaveHeight,
