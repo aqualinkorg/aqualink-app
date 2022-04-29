@@ -108,7 +108,7 @@ export const addSpotterData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, false, repositories.siteRepository);
+  const sites = await getSites(siteIds, true, repositories.siteRepository);
 
   logger.log('Fetching sources');
   // Fetch sources
@@ -221,7 +221,7 @@ export const addWindWaveData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, true, repositories.siteRepository);
+  const sites = await getSites(siteIds, false, repositories.siteRepository);
 
   logger.log('Fetching sources');
   // Fetch sources
