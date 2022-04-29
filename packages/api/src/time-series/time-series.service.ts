@@ -25,11 +25,6 @@ import {
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { DataUploads } from '../data-uploads/data-uploads.entity';
 import { surveyPointBelongsToSite } from '../utils/site.utils';
-import { User } from '../users/users.entity';
-import { Survey } from '../surveys/surveys.entity';
-import { SurveyMedia } from '../surveys/survey-media.entity';
-import { Region } from '../regions/regions.entity';
-import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
 
 @Injectable()
 export class TimeSeriesService {
@@ -50,21 +45,6 @@ export class TimeSeriesService {
 
     @InjectRepository(DataUploads)
     private dataUploadsRepository: Repository<DataUploads>,
-
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-
-    @InjectRepository(Survey)
-    private surveyRepository: Repository<Survey>,
-
-    @InjectRepository(SurveyMedia)
-    private surveyMediaRepository: Repository<SurveyMedia>,
-
-    @InjectRepository(Region)
-    private regionRepository: Repository<Region>,
-
-    @InjectRepository(HistoricalMonthlyMean)
-    private historicalMonthlyMeanRepository: Repository<HistoricalMonthlyMean>,
   ) {}
 
   async findSurveyPointData(
@@ -142,7 +122,6 @@ export class TimeSeriesService {
     surveyPointDataRangeDto: SurveyPointDataRangeDto,
     sensor: SourceType,
     files: Express.Multer.File[],
-    userEmail?: string,
     failOnWarning?: boolean,
   ) {
     if (!sensor || !Object.values(SourceType).includes(sensor)) {
@@ -183,14 +162,7 @@ export class TimeSeriesService {
               surveyPointRepository: this.surveyPointRepository,
               timeSeriesRepository: this.timeSeriesRepository,
               dataUploadsRepository: this.dataUploadsRepository,
-              userRepository: this.userRepository,
-              surveyRepository: this.surveyRepository,
-              surveyMediaRepository: this.surveyMediaRepository,
-              regionRepository: this.regionRepository,
-              historicalMonthlyMeanRepository:
-                this.historicalMonthlyMeanRepository,
             },
-            userEmail,
             failOnWarning,
             mimetype as Mimetype,
           );

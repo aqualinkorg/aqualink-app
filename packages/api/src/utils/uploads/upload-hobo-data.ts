@@ -77,7 +77,7 @@ const logger = new Logger('ParseHoboData');
  * @param header The headers to be used. If undefined the column will be ignored
  * @param range The amount or rows to skip
  */
-const parseCSV = <T>(
+export const parseCSV = <T>(
   filePath: string,
   header: (string | undefined)[],
   castFunction: CastingFunction,

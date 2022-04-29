@@ -11,11 +11,9 @@ import {
   UseGuards,
   UploadedFiles,
   Body,
-  Req,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AuthRequest } from '../auth/auth.types';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -146,7 +144,6 @@ export class TimeSeriesController {
     }),
   )
   uploadTimeSeriesData(
-    @Req() req: AuthRequest,
     @Param() surveyPointDataRangeDto: SurveyPointDataRangeDto,
     @UploadedFiles() files: Express.Multer.File[],
     @Body('sensor') sensor: SourceType,
@@ -156,7 +153,6 @@ export class TimeSeriesController {
       surveyPointDataRangeDto,
       sensor,
       files,
-      req.user.email,
       failOnWarning,
     );
   }
