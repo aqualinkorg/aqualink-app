@@ -212,7 +212,6 @@ export const addSpotterData = async (
  */
 export const addWindWaveData = async (
   siteIds: number[],
-  days: number,
   connection: Connection,
   repositories: Repositories,
 ) => {

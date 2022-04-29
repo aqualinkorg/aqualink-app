@@ -62,6 +62,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   hobo: {},
   noaa: {},
   spotter: {},
+  sofar_wave_model: {},
 };
 
 // Timezone regexp to match the following cases:
