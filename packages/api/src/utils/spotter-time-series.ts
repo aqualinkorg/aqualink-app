@@ -263,7 +263,7 @@ export const addWindWaveData = async (
     const [longitude, latitude] = (polygon as Point).coordinates;
 
     const [
-      waveHeight,
+      significantWaveHeight,
       waveMeanDirection,
       waveMeanPeriod,
       windVelocity10MeterEastward,
@@ -315,7 +315,7 @@ export const addWindWaveData = async (
     };
 
     const forecastData = {
-      waveHeight,
+      significantWaveHeight,
       waveMeanDirection,
       waveMeanPeriod,
       windSpeed,
