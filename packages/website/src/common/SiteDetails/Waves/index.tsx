@@ -12,7 +12,7 @@ import classNames from "classnames";
 import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
-import type { WavesDataProps } from "../../../store/Sites/types";
+import type { LatestDataASSofarValue } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";
@@ -24,12 +24,14 @@ const Waves = ({ data }: WavesProps) => {
   const {
     topTemperature,
     bottomTemperature,
-    waveHeight,
+    significantWaveHeight,
     waveMeanDirection,
     waveMeanPeriod,
     windSpeed,
     windDirection,
   } = data;
+
+  const waveHeight = significantWaveHeight;
 
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
@@ -288,7 +290,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface WavesProps {
-  data: WavesDataProps;
+  data: LatestDataASSofarValue;
 }
 
 interface StyleProps {

@@ -16,6 +16,8 @@ import siteServices from "../../services/siteServices";
 import type { TableRow } from "../Homepage/types";
 import {
   DailyData,
+  LatestData,
+  LatestDataASSofarValue,
   Metrics,
   MetricsKeys,
   metricsKeysList,
@@ -317,4 +319,30 @@ export const timeSeriesRequest = async (
     !attachDirection ? start : minDate,
     !attachDirection ? end : maxDate,
   ];
+};
+
+export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
+  if (!data || data.length === 0) return {};
+
+  // Coping, sorting and filtering are done to keep the latest timestamp for each Metric
+  const copy = [...data];
+
+  // eslint-disable-next-line fp/no-mutating-methods
+  const sorted = copy.sort((x, y) => {
+    if (x.timestamp > y.timestamp) return -1;
+    if (x.timestamp < y.timestamp) return 1;
+    return 0;
+  });
+
+  const filtered = sorted.filter(
+    (value, index, self) => self.indexOf(value) === index
+  );
+
+  return filtered.reduce(
+    (a, c) => ({
+      ...a,
+      [camelCase(c.metric)]: { timestamp: c.timestamp, value: c.value },
+    }),
+    {}
+  );
 };

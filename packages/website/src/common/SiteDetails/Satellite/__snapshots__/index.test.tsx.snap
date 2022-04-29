@@ -349,7 +349,7 @@ exports[`renders as expected 1`] = `
                 >
                   Last data received
                    
-                  24 days ago
+                  1 day ago
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-14"

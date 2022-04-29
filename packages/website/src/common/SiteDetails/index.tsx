@@ -23,12 +23,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type {
-  Site,
-  SatelliteDataProps,
-  SensorDataProps,
-  WavesDataProps,
-} from "../../store/Sites/types";
+import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -46,7 +41,7 @@ import {
   unsetLatestData,
   unsetLiveData,
 } from "../../store/Sites/selectedSiteSlice";
-import { latestDataToSofarValue } from "../../helpers/siteUtils";
+import { parseLatestData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   site,
@@ -61,12 +56,10 @@ const SiteDetails = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const liveData = useSelector(liveDataSelector);
+  const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
+    useState<LatestDataASSofarValue>({});
+  const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
-  const [dataForSatellite, setDataForSatellite] = useState<SatelliteDataProps>(
-    {}
-  );
-  const [dataForSensor, setDataForSensor] = useState<SensorDataProps>({});
-  const [dataForWave, setDataForWave] = useState<WavesDataProps>({});
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -89,71 +82,27 @@ const SiteDetails = ({
 
   useEffect(() => {
     if (latestData) {
-      // Data for Satellite
-      // not sure if here 'dhw' is the one
-      const degreeHeating = latestData.find((x) => x.metric === "dhw");
-      const satelliteTemperature = latestData.find(
-        (x) => x.metric === "satellite_temperature"
-      );
-      const sstAnomaly = latestData.find((x) => x.metric === "sst_anomaly");
-      setDataForSatellite({
-        degreeHeatingDays: latestDataToSofarValue(degreeHeating),
-        satelliteTemperature: latestDataToSofarValue(satelliteTemperature),
-        sstAnomaly: sstAnomaly?.value,
-      });
-
-      // Data for Sensor
-      const topTemperature = latestData.find(
-        (x) => x.metric === "top_temperature"
-      );
-      const bottomTemperature = latestData.find(
-        (x) => x.metric === "bottom_temperature"
-      );
-      setDataForSensor({
-        topTemperature: latestDataToSofarValue(topTemperature),
-        bottomTemperature: latestDataToSofarValue(bottomTemperature),
-      });
-
-      // Data for Wave
-      const waveHeight = latestData.find(
-        (x) => x.metric === "significant_wave_height"
-      ); // not sure if here 'significant_wave_height' is the one
-      const waveMeanDirection = latestData.find(
-        (x) => x.metric === "wave_mean_direction"
-      );
-      const waveMeanPeriod = latestData.find(
-        (x) => x.metric === "wave_mean_period"
-      );
-      const windSpeed = latestData.find((x) => x.metric === "wind_speed");
-      const windDirection = latestData.find(
-        (x) => x.metric === "wind_direction"
-      );
-      setDataForWave({
-        topTemperature: latestDataToSofarValue(topTemperature),
-        bottomTemperature: latestDataToSofarValue(bottomTemperature),
-        waveHeight: latestDataToSofarValue(waveHeight),
-        waveMeanDirection: latestDataToSofarValue(waveMeanDirection),
-        waveMeanPeriod: latestDataToSofarValue(waveMeanPeriod),
-        windSpeed: latestDataToSofarValue(windSpeed),
-        windDirection: latestDataToSofarValue(windDirection),
-      });
+      setLatestDataAsSofarValues(parseLatestData(latestData));
     }
+    setHasSondeData(
+      Boolean(latestData?.some((data) => data.source === "sonde"))
+    );
   }, [latestData]);
 
   const { videoStream } = site || {};
-
-  const hasSondeData = Boolean(
-    latestData?.some((data) => data.source === "sonde")
-  );
 
   const cards =
     site && latestData
       ? [
           <Satellite
-            data={dataForSatellite}
+            data={latestDataAsSofarValues}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
-          <Sensor depth={site.depth} id={site.id} data={dataForSensor} />,
+          <Sensor
+            depth={site.depth}
+            id={site.id}
+            data={latestDataAsSofarValues}
+          />,
           hasSondeData ? (
             <WaterSamplingCard siteId={site.id.toString()} />
           ) : (
@@ -161,7 +110,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves data={dataForWave} />,
+          <Waves data={latestDataAsSofarValues} />,
         ]
       : times(4, () => null);
 

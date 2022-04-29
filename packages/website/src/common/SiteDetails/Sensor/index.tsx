@@ -22,10 +22,10 @@ import sensor from "../../../assets/sensor.svg";
 import { styles as incomingStyles } from "../styles";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
-import { SensorDataProps } from "../../../store/Sites/types";
+import { LatestDataASSofarValue } from "../../../store/Sites/types";
 
 /**
- * Get the sensor application tag message and clickability for a user/site conbination.
+ * Get the sensor application tag message and clickability for a user/site combination.
  *
  * @param user
  * @param siteId
@@ -210,7 +210,7 @@ const styles = () =>
 interface SensorIncomingProps {
   depth: number | null;
   id: number;
-  data: SensorDataProps;
+  data: LatestDataASSofarValue;
 }
 
 type SensorProps = WithStyles<typeof styles> & SensorIncomingProps;

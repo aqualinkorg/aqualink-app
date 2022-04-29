@@ -75,7 +75,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
               classname="Sensor-contentTextValues-5"
               variant="h3"
             >
-              20.3°C
+              30.2°C
             </mock-typography>
           </div>
         </div>
@@ -127,7 +127,7 @@ exports[`Sensor Card should render with given state from Redux store 1`] = `
                 >
                   Last data received
                    
-                  22 days ago
+                  1 day ago
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-17"

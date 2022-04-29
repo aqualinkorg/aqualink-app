@@ -2,9 +2,7 @@ import { LatLng } from "leaflet";
 import { maxBy, meanBy } from "lodash";
 
 import {
-  LatestData,
   Site,
-  SofarValue,
   SurveyPoints,
   UpdateSiteNameFromListArgs,
 } from "../store/Sites/types";
@@ -103,10 +101,3 @@ export const findSurveyPointFromList = (
       name: item.name || undefined,
     }))
     .find(({ id }) => id === pointId);
-
-export const latestDataToSofarValue = (
-  data: LatestData | undefined
-): SofarValue | undefined => {
-  if (!data) return undefined;
-  return { timestamp: data.timestamp, value: data.value };
-};

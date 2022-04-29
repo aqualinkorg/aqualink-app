@@ -39,6 +39,11 @@ import {
   clearCollection,
   collectionDetailsSelector,
 } from "../../store/Collection/collectionSlice";
+import {
+  unsetLatestData,
+  unsetLiveData,
+  unsetSelectedSite,
+} from "../../store/Sites/selectedSiteSlice";
 
 const NavBar = ({
   searchLocation,
@@ -75,6 +80,12 @@ const NavBar = ({
     }
     dispatch(signOutUser());
     handleMenuClose();
+  };
+
+  const onSiteChange = () => {
+    dispatch(unsetSelectedSite());
+    dispatch(unsetLiveData());
+    dispatch(unsetLatestData());
   };
 
   return (
@@ -171,7 +182,10 @@ const NavBar = ({
                               key={`site-link-${id}`}
                               className={classes.menuItemLink}
                             >
-                              <MenuItem className={classes.menuItem}>
+                              <MenuItem
+                                onClick={() => onSiteChange()}
+                                className={classes.menuItem}
+                              >
                                 {siteIdentifier || `Site ${index + 1}`}
                               </MenuItem>
                             </Link>

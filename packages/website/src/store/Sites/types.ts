@@ -111,6 +111,10 @@ export type Metrics = CamelCase<MetricsKeys>;
 
 export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
 
+export type LatestDataASSofarValue = {
+  [keys in Metrics]?: SofarValue;
+};
+
 export interface LatestData {
   id: number;
   timestamp: string;
@@ -363,25 +367,4 @@ export interface SelectedSiteState {
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
   error?: string | null;
-}
-
-export interface SatelliteDataProps {
-  degreeHeatingDays?: SofarValue;
-  satelliteTemperature?: SofarValue;
-  sstAnomaly?: number;
-}
-
-export interface SensorDataProps {
-  topTemperature?: SofarValue;
-  bottomTemperature?: SofarValue;
-}
-
-export interface WavesDataProps {
-  topTemperature?: SofarValue;
-  bottomTemperature?: SofarValue;
-  waveHeight?: SofarValue;
-  waveMeanDirection?: SofarValue;
-  waveMeanPeriod?: SofarValue;
-  windSpeed?: SofarValue;
-  windDirection?: SofarValue;
 }

@@ -8,23 +8,14 @@ import Sensor from ".";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSite } from "../../../mocks/mockSite";
 import { mockLatestData } from "../../../mocks/mockLatestData";
-import { latestDataToSofarValue } from "../../../helpers/siteUtils";
+import { parseLatestData } from "../../../store/Sites/helpers";
 
 const mockStore = configureStore([]);
 
 describe("Sensor Card", () => {
   let element: HTMLElement;
 
-  const topTemperature = mockLatestData.find(
-    (x) => x.metric === "top_temperature"
-  );
-  const bottomTemperature = mockLatestData.find(
-    (x) => x.metric === "bottom_temperature"
-  );
-  const data = {
-    topTemperature: latestDataToSofarValue(topTemperature),
-    bottomTemperature: latestDataToSofarValue(bottomTemperature),
-  };
+  const data = parseLatestData(mockLatestData);
 
   beforeEach(() => {
     const store = mockStore({
