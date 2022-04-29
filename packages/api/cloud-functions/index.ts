@@ -167,7 +167,7 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
 exports.scheduledWindWaveTimeSeriesUpdate = functions
   .runWith({ timeoutSeconds: 540, memory: '512MB' })
   // Run spotter data update every hour
-  .pubsub.schedule('0 * * * *')
+  .pubsub.schedule('30 * * * *')
   .timeZone('America/Los_Angeles')
   .retryConfig({ retryCount: 2 })
   .onRun(async () => {
