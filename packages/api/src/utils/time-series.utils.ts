@@ -211,7 +211,7 @@ export const getSources = (
           site,
           surveyPoint: IsNull(),
           type,
-          sensorId: site.sensorId,
+          sensorId: type === SourceType.SPOTTER ? site.sensorId : IsNull(),
         },
       })
       .then((source) => {
@@ -224,7 +224,7 @@ export const getSources = (
         return sourceRepository.save({
           site,
           type,
-          sensorId: site.sensorId,
+          sensorId: type === SourceType.SPOTTER ? site.sensorId : undefined,
         });
       }),
   );

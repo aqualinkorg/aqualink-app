@@ -37,11 +37,15 @@ const logger = new Logger('SpotterTimeSeries');
  * @param siteRepository The required repository to make the query
  * @returns An array of site entities
  */
-const getSites = (siteIds: number[], siteRepository: Repository<Site>) => {
+const getSites = (
+  siteIds: number[],
+  hasSensorOnly: boolean = false,
+  siteRepository: Repository<Site>,
+) => {
   return siteRepository.find({
     where: {
       ...(siteIds.length > 0 ? { id: In(siteIds) } : {}),
-      sensorId: Not(IsNull()),
+      ...(hasSensorOnly ? { sensorId: Not(IsNull()) } : {}),
     },
   });
 };
@@ -104,7 +108,7 @@ export const addSpotterData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, repositories.siteRepository);
+  const sites = await getSites(siteIds, false, repositories.siteRepository);
 
   logger.log('Fetching sources');
   // Fetch sources
@@ -217,7 +221,7 @@ export const addWindWaveData = async (
 ) => {
   logger.log('Fetching sites');
   // Fetch all sites
-  const sites = await getSites(siteIds, repositories.siteRepository);
+  const sites = await getSites(siteIds, true, repositories.siteRepository);
 
   logger.log('Fetching sources');
   // Fetch sources
