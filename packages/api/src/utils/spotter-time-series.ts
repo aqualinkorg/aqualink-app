@@ -359,7 +359,7 @@ export const addWindWaveData = async (
         }),
       );
     },
-    { concurrency: 1 },
+    { concurrency: 4 },
   );
 
   // Update materialized view
