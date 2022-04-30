@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { get, times } from 'lodash';
+import { get, isNil, times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
@@ -333,7 +333,7 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         gfsDataLabels.map(([dataLabel, metric]) => {
-          if (forecastData[dataLabel] !== undefined) {
+          if (!isNil(forecastData[dataLabel])) {
             return saveDataBatch(
               [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
               siteToGfsSource[site.id],
@@ -348,7 +348,7 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         sofarDataLabels.map(([dataLabel, metric]) => {
-          if (forecastData[dataLabel] !== undefined) {
+          if (!isNil(forecastData[dataLabel])) {
             return saveDataBatch(
               [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
               siteToSofarWaveModelSource[site.id],
