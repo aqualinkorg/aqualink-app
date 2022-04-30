@@ -259,104 +259,108 @@ export const addWindWaveData = async (
   ];
 
   logger.log('Saving wind & wave forecast data');
-  await Bluebird.map(sites, async (site) => {
-    const { polygon } = site;
-    const [longitude, latitude] = (polygon as Point).coordinates;
+  await Bluebird.map(
+    sites,
+    async (site) => {
+      const { polygon } = site;
+      const [longitude, latitude] = (polygon as Point).coordinates;
 
-    logger.log(
-      `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
-    );
+      logger.log(
+        `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
+      );
 
-    const [
-      significantWaveHeight,
-      waveMeanDirection,
-      waveMeanPeriod,
-      windVelocity10MeterEastward,
-      windVelocity10MeterNorthward,
-    ] = await Promise.all([
-      sofarForecast(
-        SofarModels.SofarOperationalWaveModel,
-        sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-          .significantWaveHeight,
-        latitude,
-        longitude,
-      ),
-      sofarForecast(
-        SofarModels.SofarOperationalWaveModel,
-        sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-        latitude,
-        longitude,
-      ),
-      sofarForecast(
-        SofarModels.SofarOperationalWaveModel,
-        sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-        latitude,
-        longitude,
-      ),
-      sofarForecast(
-        SofarModels.GFS,
-        sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-        latitude,
-        longitude,
-      ),
-      sofarForecast(
-        SofarModels.GFS,
-        sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
-        latitude,
-        longitude,
-      ),
-    ]);
+      const [
+        significantWaveHeight,
+        waveMeanDirection,
+        waveMeanPeriod,
+        windVelocity10MeterEastward,
+        windVelocity10MeterNorthward,
+      ] = await Promise.all([
+        sofarForecast(
+          SofarModels.SofarOperationalWaveModel,
+          sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
+            .significantWaveHeight,
+          latitude,
+          longitude,
+        ),
+        sofarForecast(
+          SofarModels.SofarOperationalWaveModel,
+          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
+          latitude,
+          longitude,
+        ),
+        sofarForecast(
+          SofarModels.SofarOperationalWaveModel,
+          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
+          latitude,
+          longitude,
+        ),
+        sofarForecast(
+          SofarModels.GFS,
+          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
+          latitude,
+          longitude,
+        ),
+        sofarForecast(
+          SofarModels.GFS,
+          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
+          latitude,
+          longitude,
+        ),
+      ]);
 
-    // Calculate wind speed and direction from velocity
-    const windNorhwardVelocity = windVelocity10MeterNorthward.value;
-    const windEastwardVelocity = windVelocity10MeterEastward.value;
-    const windSpeed = {
-      timestamp: windVelocity10MeterNorthward.timestamp,
-      value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
-    };
-    const windDirection = {
-      timestamp: windVelocity10MeterNorthward.timestamp,
-      value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
-    };
+      // Calculate wind speed and direction from velocity
+      const windNorhwardVelocity = windVelocity10MeterNorthward.value;
+      const windEastwardVelocity = windVelocity10MeterEastward.value;
+      const windSpeed = {
+        timestamp: windVelocity10MeterNorthward.timestamp,
+        value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
+      };
+      const windDirection = {
+        timestamp: windVelocity10MeterNorthward.timestamp,
+        value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
+      };
 
-    const forecastData = {
-      significantWaveHeight,
-      waveMeanDirection,
-      waveMeanPeriod,
-      windSpeed,
-      windDirection,
-    };
+      const forecastData = {
+        significantWaveHeight,
+        waveMeanDirection,
+        waveMeanPeriod,
+        windSpeed,
+        windDirection,
+      };
 
-    // Save wind forecast data to time_series
-    await Promise.all(
-      // eslint-disable-next-line array-callback-return, consistent-return
-      gfsDataLabels.map(([dataLabel, metric]) => {
-        if (forecastData[dataLabel] !== undefined) {
-          return saveDataBatch(
-            [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
-            siteToGfsSource[site.id],
-            metric,
-            repositories.timeSeriesRepository,
-          );
-        }
-      }),
-    );
+      // Save wind forecast data to time_series
+      await Promise.all(
+        // eslint-disable-next-line array-callback-return, consistent-return
+        gfsDataLabels.map(([dataLabel, metric]) => {
+          if (forecastData[dataLabel] !== undefined) {
+            return saveDataBatch(
+              [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
+              siteToGfsSource[site.id],
+              metric,
+              repositories.timeSeriesRepository,
+            );
+          }
+        }),
+      );
 
-    // Save sofar wave forecast data to time_series
-    await Promise.all(
-      // eslint-disable-next-line array-callback-return, consistent-return
-      sofarDataLabels.map(([dataLabel, metric]) => {
-        if (forecastData[dataLabel] !== undefined) {
-          return saveDataBatch(
-            [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
-            siteToSofarWaveModelSource[site.id],
-            metric,
-            repositories.timeSeriesRepository,
-          );
-        }
-      }),
-    );
-  });
+      // Save sofar wave forecast data to time_series
+      await Promise.all(
+        // eslint-disable-next-line array-callback-return, consistent-return
+        sofarDataLabels.map(([dataLabel, metric]) => {
+          if (forecastData[dataLabel] !== undefined) {
+            return saveDataBatch(
+              [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
+              siteToSofarWaveModelSource[site.id],
+              metric,
+              repositories.timeSeriesRepository,
+            );
+          }
+        }),
+      );
+    },
+    { concurrency: 1 },
+  );
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');
