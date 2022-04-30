@@ -78,6 +78,7 @@ const saveDataBatch = (
   metric: Metric,
   timeSeriesRepository: Repository<TimeSeries>,
 ) => {
+  // TODO - Filter out nil values
   return timeSeriesRepository
     .createQueryBuilder('time_series')
     .insert()
@@ -333,7 +334,7 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         gfsDataLabels.map(([dataLabel, metric]) => {
-          if (!isNil(forecastData[dataLabel])) {
+          if (!isNil(forecastData[dataLabel]?.value)) {
             return saveDataBatch(
               [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
               siteToGfsSource[site.id],
@@ -348,7 +349,7 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         sofarDataLabels.map(([dataLabel, metric]) => {
-          if (!isNil(forecastData[dataLabel])) {
+          if (!isNil(forecastData[dataLabel]?.value)) {
             return saveDataBatch(
               [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
               siteToSofarWaveModelSource[site.id],
