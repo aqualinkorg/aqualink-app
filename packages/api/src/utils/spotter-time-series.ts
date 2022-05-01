@@ -211,7 +211,6 @@ export const addSpotterData = async (
 /**
  * Fetch spotter and wave data from sofar and save them on time_series table
  * @param siteIds The siteIds for which to perform the update
- * @param days How many days will this script need to backfill (1 = daily update)
  * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
@@ -310,8 +309,8 @@ export const addWindWaveData = async (
       ]);
 
       // Calculate wind speed and direction from velocity
-      const windNorhwardVelocity = windVelocity10MeterNorthward.value;
-      const windEastwardVelocity = windVelocity10MeterEastward.value;
+      const windNorhwardVelocity = windVelocity10MeterNorthward?.value;
+      const windEastwardVelocity = windVelocity10MeterEastward?.value;
       const windSpeed = {
         timestamp: windVelocity10MeterNorthward.timestamp,
         value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),

@@ -185,6 +185,7 @@ exports.scheduledWindWaveTimeSeriesUpdate = functions
       console.log(`Wind and Wave data hourly update on ${new Date()}`);
     } catch (err) {
       await sendErrorToSlack('scheduledWindWaveTimeSeriesUpdate', err);
+      console.warn(err);
       throw err;
     } finally {
       conn.close();

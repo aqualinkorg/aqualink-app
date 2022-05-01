@@ -27,14 +27,15 @@ export const getLatestData = (
 };
 
 export const extractSofarValues = (sofarValues?: SofarValue[]): number[] =>
-  sofarValues?.filter((data) => !isNil(data.value)).map(({ value }) => value) ||
-  [];
+  sofarValues
+    ?.filter((data) => !isNil(data?.value))
+    .map(({ value }) => value) || [];
 
 export const filterSofarResponse = (responseData: any) => {
   return (
     responseData
       ? responseData.values.filter(
-          (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
+          (data: SofarValue) => !isNil(data?.value) && data.value !== 9999,
         )
       : []
   ) as SofarValue[];
@@ -83,7 +84,8 @@ export async function sofarForecast(
   latitude: number,
   longitude: number,
 ): Promise<SofarValue> {
-  console.time(`sofarForecast for ${modelId}-${variableID}`);
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  console.time(`sofarForecast for ${modelId}-${variableID} (${hash})`);
   const forecast = await axios
     .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
       params: {
@@ -108,7 +110,7 @@ export async function sofarForecast(
         );
       }
     });
-  console.timeEnd(`sofarForecast for ${modelId}-${variableID}`);
+  console.timeEnd(`sofarForecast for ${modelId}-${variableID} (${hash})`);
   return forecast;
 }
 
