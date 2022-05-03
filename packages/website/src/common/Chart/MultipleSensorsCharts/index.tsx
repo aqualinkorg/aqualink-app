@@ -381,7 +381,9 @@ const MultipleSensorsCharts = ({
     if (pickerStartDate && pickerEndDate) {
       // eslint-disable-next-line fp/no-mutating-methods
       history.push({
-        search: `?start=${pickerStartDate}&end=${pickerEndDate}`,
+        search: `?start=${pickerStartDate.split("T")[0]}&end=${
+          pickerEndDate.split("T")[0]
+        }`,
       });
     }
   }, [history, pickerEndDate, pickerStartDate]);
