@@ -205,7 +205,7 @@ export const addSpotterData = async (
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  connection.query('REFRESH MATERIALIZED VIEW latest_data');
 };
 
 /**
@@ -312,11 +312,11 @@ export const addWindWaveData = async (
       const windNorhwardVelocity = windVelocity10MeterNorthward?.value;
       const windEastwardVelocity = windVelocity10MeterEastward?.value;
       const windSpeed = {
-        timestamp: windVelocity10MeterNorthward.timestamp,
+        timestamp: windVelocity10MeterNorthward?.timestamp,
         value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
       };
       const windDirection = {
-        timestamp: windVelocity10MeterNorthward.timestamp,
+        timestamp: windVelocity10MeterNorthward?.timestamp,
         value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
       };
 
@@ -363,5 +363,5 @@ export const addWindWaveData = async (
 
   // Update materialized view
   logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+  connection.query('REFRESH MATERIALIZED VIEW latest_data');
 };

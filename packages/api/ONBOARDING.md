@@ -170,7 +170,7 @@ Since this is a materialized view, we need to reload any time we make any update
 For example at the end of `utils/spotter-time-series.ts` script we run the following:
 
 ```ts
-await connection.query('REFRESH MATERIALIZED VIEW latest_data');
+connection.query('REFRESH MATERIALIZED VIEW latest_data');
 ```
 
 **\*** TypeORM does not allow complex syntax on indices, so we edited the generated migration (`1622124846208-RefactorTimeSeries.ts`) to include the descending order on timestamps.
