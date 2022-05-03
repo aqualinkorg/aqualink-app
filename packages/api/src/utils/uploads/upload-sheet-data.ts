@@ -6,7 +6,9 @@ import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
-import { CastingContext } from 'csv-parse';
+import { CastingContext, CastingFunction } from 'csv-parse';
+import fs from 'fs';
+import parse from 'csv-parse/lib/sync';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Metric } from '../../time-series/metrics.entity';
@@ -16,7 +18,6 @@ import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
 import { getSite, getSiteAndSurveyPoint } from '../site.utils';
 import { GoogleCloudService } from '../../google-cloud/google-cloud.service';
-import { parseCSV } from './upload-hobo-data';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -83,6 +84,28 @@ const TIMESTAMP_KEYS = [
   ['Date Time'],
   ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
 ];
+
+/**
+ * Parse csv data
+ * @param filePath The path to the csv file
+ * @param header The headers to be used. If undefined the column will be ignored
+ * @param range The amount or rows to skip
+ */
+export const parseCSV = <T>(
+  filePath: string,
+  header: (string | undefined)[],
+  castFunction: CastingFunction,
+  range: number = 2,
+): T[] => {
+  // Read csv file
+  const csv = fs.readFileSync(filePath);
+  // Parse csv and transform it to T
+  return parse(csv, {
+    cast: castFunction,
+    columns: header,
+    fromLine: range,
+  }) as T[];
+};
 
 /**
  * @param {Object} object

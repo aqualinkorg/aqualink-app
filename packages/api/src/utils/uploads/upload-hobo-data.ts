@@ -7,8 +7,7 @@ import {
 } from '@nestjs/common';
 import fs from 'fs';
 import path from 'path';
-import { CastingContext, CastingFunction } from 'csv-parse';
-import parse from 'csv-parse/lib/sync';
+import { CastingContext } from 'csv-parse';
 import { Point, GeoJSON } from 'geojson';
 import moment from 'moment';
 import Bluebird from 'bluebird';
@@ -34,6 +33,7 @@ import { HistoricalMonthlyMean } from '../../sites/historical-monthly-mean.entit
 import { createPoint } from '../coordinates';
 import { SourceType } from '../../sites/schemas/source-type.enum';
 import { DataUploads } from '../../data-uploads/data-uploads.entity';
+import { parseCSV } from './upload-sheet-data';
 
 interface Coords {
   site: number;
@@ -70,28 +70,6 @@ const COLONY_DATA_FILE = 'Col{}_FullHOBO_zoned.csv';
 const validFiles = new Set(['png', 'jpeg', 'jpg']);
 
 const logger = new Logger('ParseHoboData');
-
-/**
- * Parse csv data
- * @param filePath The path to the csv file
- * @param header The headers to be used. If undefined the column will be ignored
- * @param range The amount or rows to skip
- */
-export const parseCSV = <T>(
-  filePath: string,
-  header: (string | undefined)[],
-  castFunction: CastingFunction,
-  range: number = 2,
-): T[] => {
-  // Read csv file
-  const csv = fs.readFileSync(filePath);
-  // Parse csv and transform it to T
-  return parse(csv, {
-    cast: castFunction,
-    columns: header,
-    fromLine: range,
-  }) as T[];
-};
 
 const siteQuery = (
   siteRepository: Repository<Site>,
