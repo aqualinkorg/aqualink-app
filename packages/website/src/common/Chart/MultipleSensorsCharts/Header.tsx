@@ -37,9 +37,9 @@ const Header = ({
 
   const buttons: RangeButton[] = [
     {
-      id: "three_months",
-      title: "3 Months",
-      tooltip: "Range of 3 months from maximum date",
+      id: "one_month",
+      title: "1 Month",
+      tooltip: "1 month from maximum date",
     },
     {
       id: "one_year",
