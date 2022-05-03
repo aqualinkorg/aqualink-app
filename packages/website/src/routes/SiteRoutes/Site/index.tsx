@@ -51,8 +51,7 @@ const getAlertMessage = (
   const { applied, status } = userSite || {};
   const isSiteAdmin = isAdmin(user, parseInt(siteId, 10));
 
-  const defaultMessage =
-    "Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.";
+  const defaultMessage = "";
 
   switch (true) {
     case !isSiteAdmin:
@@ -192,7 +191,8 @@ const Site = ({ match, classes }: SiteProps) => {
             )}
           </LoadingSkeleton>
         </Box>
-        {!hasSpotterData && !isLoading && (
+        {/* Only show alert message when data is loading */}
+        {!hasSpotterData && !isLoading && !hasDailyData && (
           <Box mt="1.3rem">
             <Alert severity="info">
               {getAlertMessage(user, siteId, hasDailyData)}
