@@ -10,7 +10,7 @@ export class improveLatestDataMaterializedView1650815506446
 
     // Edit sources enum
     await queryRunner.query(
-      `ALTER TYPE "public"."sources_type_enum" ADD VALUE 'sofar_wave_model'`,
+      `ALTER TYPE "public"."sources_type_enum" ADD VALUE IF NOT EXISTS 'sofar_wave_model'`,
     );
 
     await queryRunner.query(
