@@ -51,7 +51,8 @@ const getAlertMessage = (
   const { applied, status } = userSite || {};
   const isSiteAdmin = isAdmin(user, parseInt(siteId, 10));
 
-  const defaultMessage = "";
+  const defaultMessage =
+    "Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
     case !isSiteAdmin:
