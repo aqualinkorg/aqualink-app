@@ -50,7 +50,7 @@ export class TimeSeriesController {
     name: 'metrics',
     example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
   })
-  @ApiQuery({ name: 'hourly', example: false })
+  @ApiQuery({ name: 'hourly', example: false, required: false })
   @Get('sites/:siteId/site-survey-points/:surveyPointId')
   findSurveyPointData(
     @Param() surveyPointDataDto: SurveyPointDataDto,
@@ -83,7 +83,7 @@ export class TimeSeriesController {
     name: 'metrics',
     example: [Metric.BOTTOM_TEMPERATURE, Metric.TOP_TEMPERATURE],
   })
-  @ApiQuery({ name: 'hourly', example: false })
+  @ApiQuery({ name: 'hourly', example: false, required: false })
   @Get('sites/:siteId')
   findSiteData(
     @Param() siteDataDto: SiteDataDto,
