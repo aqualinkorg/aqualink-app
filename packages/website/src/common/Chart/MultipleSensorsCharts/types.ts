@@ -1,6 +1,6 @@
 import { DataRange, SofarValue } from "../../../store/Sites/types";
 
-export type RangeValue = "three_months" | "one_year" | "max" | "custom";
+export type RangeValue = "one_month" | "one_year" | "max" | "custom";
 
 export interface RangeButton {
   id: RangeValue;
