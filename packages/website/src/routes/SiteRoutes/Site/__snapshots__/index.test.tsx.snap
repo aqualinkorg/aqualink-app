@@ -2808,7 +2808,9 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         </div>
         <div
           class="MuiAlert-message"
-        />
+        >
+          Welcome to your virtual site, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.
+        </div>
       </div>
     </mock-box>
     <mock-box
