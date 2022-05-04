@@ -40,10 +40,10 @@ const getApplicationTag = (
 
   switch (true) {
     case !isSiteAdmin:
-      return ["Not Installed Yet", false];
+      return ["No Live Telemetry", false];
 
     case !applied:
-      return ["Apply for a Smart Buoy", true];
+      return ["No Live Telemetry", false];
 
     case status === "in_review":
       return ["My Application", true];

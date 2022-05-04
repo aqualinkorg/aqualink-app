@@ -570,27 +570,29 @@ const uploadSitePhotos = async (
   const imageLength = imageData.length;
   const surveyMedia = await Bluebird.each(
     imageData.map((image) =>
-      googleCloudService.uploadFile(image.imagePath, 'image').then((url) => {
-        const survey = {
-          site: image.site,
-          user,
-          diveDate: image.createdDate,
-          weatherConditions: WeatherConditions.NoData,
-        };
-
-        return surveyRepository.save(survey).then((surveyEntity) => {
-          return {
-            url,
-            featured: true,
-            hidden: false,
-            type: MediaType.Image,
-            surveyPoint: image.poi,
-            surveyId: surveyEntity,
-            metadata: JSON.stringify({}),
-            observations: Observations.NoData,
+      googleCloudService
+        .uploadFileSync(image.imagePath, 'image')
+        .then((url) => {
+          const survey = {
+            site: image.site,
+            user,
+            diveDate: image.createdDate,
+            weatherConditions: WeatherConditions.NoData,
           };
-        });
-      }),
+
+          return surveyRepository.save(survey).then((surveyEntity) => {
+            return {
+              url,
+              featured: true,
+              hidden: false,
+              type: MediaType.Image,
+              surveyPoint: image.poi,
+              surveyId: surveyEntity,
+              metadata: JSON.stringify({}),
+              observations: Observations.NoData,
+            };
+          });
+        }),
     ),
     (data, idx) => {
       logger.log(`${idx + 1} images uploaded out of ${imageLength}`);
