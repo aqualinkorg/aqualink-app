@@ -6,9 +6,6 @@ import { BadRequestException, ConflictException, Logger } from '@nestjs/common';
 import xlsx from 'node-xlsx';
 import Bluebird from 'bluebird';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
-import { CastingContext, CastingFunction } from 'csv-parse';
-import fs from 'fs';
-import parse from 'csv-parse/lib/sync';
 import { Site } from '../../sites/sites.entity';
 import { SiteSurveyPoint } from '../../site-survey-points/site-survey-points.entity';
 import { Metric } from '../../time-series/metrics.entity';
@@ -61,7 +58,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
     'Wind Direction, ø': Metric.WIND_DIRECTION,
   },
   gfs: {},
-  hobo: {},
+  hobo: { Temp: Metric.BOTTOM_TEMPERATURE },
   noaa: {},
   spotter: {},
 };
@@ -71,7 +68,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
 // 2. GMT±01
 // 3. GMT±01:00
 const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
-const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time', 'Date_Time'];
 // Keep Ignore Header Keys in lower case.
 const IGNORE_HEADER_KEYS = [
   '#',
@@ -84,28 +81,6 @@ const TIMESTAMP_KEYS = [
   ['Date Time'],
   ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
 ];
-
-/**
- * Parse csv data
- * @param filePath The path to the csv file
- * @param header The headers to be used. If undefined the column will be ignored
- * @param range The amount or rows to skip
- */
-export const parseCSV = <T>(
-  filePath: string,
-  header: (string | undefined)[],
-  castFunction: CastingFunction,
-  range: number = 2,
-): T[] => {
-  // Read csv file
-  const csv = fs.readFileSync(filePath);
-  // Parse csv and transform it to T
-  return parse(csv, {
-    cast: castFunction,
-    columns: header,
-    fromLine: range,
-  }) as T[];
-};
 
 /**
  * @param {Object} object
@@ -425,20 +400,11 @@ export const uploadTimeSeriesData = async (
       surveyPoint,
     }));
 
-  // Initialize google cloud service, to be used for media upload
-  const googleCloudService = new GoogleCloudService();
-
-  // Note this may fail. It would still return a location, but the file may not have been uploaded
-  const fileLocation = googleCloudService.uploadFileAsync(
-    filePath,
-    sourceType,
-    'data_uploads',
-    'data_upload',
-  );
-
-  const signature = await md5Fle(filePath);
-
-  if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
+  if (
+    sourceType === SourceType.SONDE ||
+    sourceType === SourceType.METLOG ||
+    sourceType === SourceType.HOBO
+  ) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
@@ -456,6 +422,8 @@ export const uploadTimeSeriesData = async (
           )} are not configured for import yet and cannot be uploaded.`,
       );
     }
+
+    const signature = await md5Fle(filePath);
 
     const uploadExists = await repositories.dataUploadsRepository.findOne({
       where: {
@@ -518,6 +486,17 @@ export const uploadTimeSeriesData = async (
       'timestamp',
     );
 
+    // Initialize google cloud service, to be used for media upload
+    const googleCloudService = new GoogleCloudService();
+
+    // Note this may fail. It would still return a location, but the file may not have been uploaded
+    const fileLocation = googleCloudService.uploadFileAsync(
+      filePath,
+      sourceType,
+      'data_uploads',
+      'data_upload',
+    );
+
     const dataUploadsFile = await repositories.dataUploadsRepository.save({
       file: fileName,
       signature,
@@ -569,112 +548,6 @@ export const uploadTimeSeriesData = async (
       'REFRESH MATERIALIZED VIEW latest_data',
     );
     return ignoredHeaders;
-  }
-
-  if (sourceType === SourceType.HOBO) {
-    // Parse hobo data
-    const castCsvValues =
-      (
-        integerColumns: string[],
-        floatColumns: string[],
-        dateColumns: string[],
-      ) =>
-      (value: string, context: CastingContext) => {
-        if (!context.column) {
-          return value;
-        }
-
-        if (integerColumns.includes(context.column.toString())) {
-          return parseInt(value, 10);
-        }
-
-        if (floatColumns.includes(context.column.toString())) {
-          return parseFloat(value);
-        }
-
-        if (dateColumns.includes(context.column.toString())) {
-          return new Date(value);
-        }
-
-        return value;
-      };
-
-    const headers = [undefined, undefined, 'Date_Time', 'Temp'];
-    const castFunction = castCsvValues([], ['Temp'], ['Date_Time']);
-    interface Data {
-      // eslint-disable-next-line camelcase
-      Date_Time: Date;
-      Temp: number;
-    }
-    const parsedData = parseCSV<Data>(filePath, headers, castFunction).map(
-      (data) => {
-        return {
-          timestamp: data.Date_Time,
-          value: data.Temp,
-          source: sourceEntity,
-          metric: Metric.BOTTOM_TEMPERATURE,
-        };
-      },
-    );
-
-    const minDate = get(
-      minBy(parsedData, (item) => new Date(get(item, 'timestamp')).getTime()),
-      'timestamp',
-    );
-    const maxDate = get(
-      maxBy(parsedData, (item) => new Date(get(item, 'timestamp')).getTime()),
-      'timestamp',
-    );
-
-    const importedHeaders: Metric[] = [Metric.BOTTOM_TEMPERATURE];
-
-    const dataUploadsFile = await repositories.dataUploadsRepository.save({
-      file: fileName,
-      signature,
-      sensorType: sourceType,
-      site,
-      surveyPoint,
-      minDate,
-      maxDate,
-      metrics: importedHeaders,
-      fileLocation,
-    });
-
-    const dataAsTimeSeries = parsedData.map((x) => {
-      return {
-        timestamp: x.timestamp,
-        value: x.value,
-        metric: x.metric,
-        source: x.source,
-        dataUpload: dataUploadsFile,
-      };
-    });
-
-    // Data are to much to added with one bulk insert
-    // So we need to break them in batches
-    const batchSize = 1000;
-    logger.log(`Saving time series data in batches of ${batchSize}`);
-    const inserts = chunk(dataAsTimeSeries, batchSize).map((batch) => {
-      return repositories.timeSeriesRepository
-        .createQueryBuilder('time_series')
-        .insert()
-        .values(batch)
-        .onConflict('ON CONSTRAINT "no_duplicate_data" DO NOTHING')
-        .execute();
-    });
-
-    // Return insert promises and print progress updates
-    const actionsLength = inserts.length;
-    await Bluebird.Promise.each(inserts, (props, idx) => {
-      logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
-    });
-
-    logger.log('Refreshing materialized view latest_data');
-    repositories.dataUploadsRepository.query(
-      'REFRESH MATERIALIZED VIEW latest_data',
-    );
-
-    return [];
   }
 
   return [];
