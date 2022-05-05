@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
-import {
-  siteGranularDailyDataSelector,
-  siteOceanSenseDataSelector,
-  siteTimeSeriesDataSelector,
-} from "../../../store/Sites/selectedSiteSlice";
 import { SofarValue } from "../../../store/Sites/types";
+import DownloadCSVDialog from "./DownloadCSVDialog";
 
 type CSVDataColumn =
   | "spotterBottomTemp"
@@ -67,41 +62,51 @@ function constructCSVData(
 }
 
 function DownloadCSVButton({
+  data,
   startDate,
   endDate,
   className,
   pointId,
   siteId,
 }: {
+  data: { name: string; values: SofarValue[] }[];
   startDate?: string;
   endDate?: string;
   className?: string;
   siteId?: number | string;
   pointId?: number | string;
 }) {
-  const granularDailyData = useSelector(siteGranularDailyDataSelector);
-  const oceanSenseData = useSelector(siteOceanSenseDataSelector);
-  const { bottomTemperature, topTemperature } =
-    useSelector(siteTimeSeriesDataSelector) || {};
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const getCSVData = () =>
-    constructCSVData("spotterBottomTemp", bottomTemperature?.spotter?.data)
-      .chained("spotterTopTemp", topTemperature?.spotter?.data)
-      .chained("hoboTemp", bottomTemperature?.hobo?.data)
-      .chained(
-        "dailySST",
-        granularDailyData?.map((val) => ({
-          timestamp: val.date,
-          value: val.satelliteTemperature,
-        }))
-      )
-      .chained("oceanSensePH", oceanSenseData?.PH)
-      .chained("oceanSenseEC", oceanSenseData?.EC)
-      .chained("oceanSensePRESS", oceanSenseData?.PRESS)
-      .chained("oceanSenseDO", oceanSenseData?.DO)
-      .chained("oceanSenseORP", oceanSenseData?.ORP)
-      .result();
+  const onClose = (selectedData: { name: string; values: SofarValue[] }[]) => {
+    if (selectedData.length === 0) {
+      setOpen(false);
+      return;
+    }
+    setLoading(true);
+    // give time for the loading state to be rendered by react.
+    setTimeout(() => {
+      downloadCsv(getCSVData(selectedData), undefined, fileName);
+      setLoading(false);
+      setOpen(false);
+    }, 5);
+  };
+
+  const getCSVData = (
+    selectedData: { name: string; values: SofarValue[] }[]
+  ) => {
+    const [head, ...tail] = selectedData;
+
+    // TODO: Change either CSVDataColumn names type or make it generic string
+    const start = constructCSVData(head.name as CSVDataColumn, head.values);
+    const result = tail.reduce(
+      (prev, curr) => prev.chained(curr.name as CSVDataColumn, curr.values),
+      start
+    );
+    return result.result();
+  };
+
   const fileName = `data_site_${siteId}${
     pointId ? `_survey_point_${pointId}` : ""
   }_${moment(startDate).format(DATE_FORMAT)}_${moment(endDate).format(
@@ -109,23 +114,27 @@ function DownloadCSVButton({
   )}.csv`;
 
   return (
-    <Button
-      disabled={loading}
-      variant="outlined"
-      color="primary"
-      className={className}
-      onClick={() => {
-        setLoading(true);
-        // give time for the loading state to be rendered by react.
-        setTimeout(() => {
-          downloadCsv(getCSVData(), undefined, fileName);
-          setLoading(false);
-        }, 5);
-      }}
-    >
-      {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
-      {loading ? "Loading..." : "Download CSV"}
-    </Button>
+    <>
+      <Button
+        disabled={loading}
+        variant="outlined"
+        color="primary"
+        className={className}
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        {/* TODO update this component with LoadingButton from MUILab when newest version is released. */}
+        {loading ? "Loading..." : "Download CSV"}
+      </Button>
+      <DownloadCSVDialog
+        open={open}
+        onClose={onClose}
+        data={data}
+        startDate={startDate || ""}
+        endDate={endDate || ""}
+      />
+    </>
   );
 }
 

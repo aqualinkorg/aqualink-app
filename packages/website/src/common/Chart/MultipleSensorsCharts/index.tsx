@@ -48,6 +48,7 @@ import {
   getMetlogConfig,
   getPublicMetlogMetrics,
 } from "../../../constants/metlogConfig";
+import DownloadCSVButton from "./DownloadCSVButton";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   "bottom_temperature",
@@ -375,6 +376,38 @@ const MultipleSensorsCharts = ({
     }
   }, [pickerEndDate, pickerStartDate]);
 
+  const dataForCsv = [
+    ...tempAnalysisDatasets.map((dataset) => ({
+      name: `TEMPERATURE ANALYSIS ${dataset.label}`,
+      values: dataset.data,
+    })),
+    ...Object.entries(spotterConfig).map(([key, { title }]) => {
+      const dataset = spotterMetricDataset(key as Metrics);
+      return {
+        name: `${title} ${dataset.label}`,
+        values: dataset.data,
+      };
+    }),
+    ...Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
+      ([key, item]) => {
+        const dataset = generateMetricDataset(
+          key,
+          item.data,
+          item.unit,
+          OCEAN_SENSE_DATA_COLOR,
+          chartStartDate,
+          chartEndDate,
+          site.timezone
+        );
+        return { name: `${item.title} ${dataset.label}`, values: dataset.data };
+      }
+    ),
+    ...sondeDatasets().map(({ title, dataset }) => ({
+      name: `${title} ${dataset.label}`,
+      values: dataset.data,
+    })),
+  ].filter((x) => x.values.length > 0);
+
   const onRangeChange = (value: RangeValue) => {
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
     const localizedMinDate = new Date(
@@ -443,6 +476,16 @@ const MultipleSensorsCharts = ({
       disableGutters={disableGutters}
       className={classes.chartWithRange}
     >
+      <div className={classes.buttonWrapper}>
+        <DownloadCSVButton
+          data={dataForCsv}
+          startDate={pickerStartDate}
+          endDate={pickerEndDate}
+          siteId={site.id}
+          pointId={pointId}
+          className={classes.button}
+        />
+      </div>
       <ChartWithCard
         id="temperature"
         range={range}
@@ -505,7 +548,6 @@ const MultipleSensorsCharts = ({
               showDatePickers={false}
               hideYAxisUnits
               cardColumnJustification="flex-start"
-              displayDownloadButton={false}
             />
           </Box>
         ))}
@@ -547,7 +589,6 @@ const MultipleSensorsCharts = ({
                 showDatePickers={false}
                 hideYAxisUnits
                 cardColumnJustification="flex-start"
-                displayDownloadButton={false}
               />
             </Box>
           )
@@ -583,7 +624,6 @@ const MultipleSensorsCharts = ({
             surveyPoint={surveyPoint}
             hideYAxisUnits
             cardColumnJustification="flex-start"
-            displayDownloadButton={false}
           />
         </Box>
       ))}
@@ -618,7 +658,6 @@ const MultipleSensorsCharts = ({
             surveyPoint={surveyPoint}
             hideYAxisUnits
             cardColumnJustification="flex-start"
-            displayDownloadButton={false}
           />
         </Box>
       ))}
@@ -629,6 +668,13 @@ const MultipleSensorsCharts = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWithRange: {
     marginTop: theme.spacing(4),
+  },
+  button: {
+    width: "fit-content",
+  },
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "end",
   },
 }));
 
