@@ -14,6 +14,7 @@ import { Sources } from '../src/sites/sources.entity';
 import { uploadHoboData } from '../src/utils/uploads/upload-hobo-data';
 import { Region } from '../src/regions/regions.entity';
 import { HistoricalMonthlyMean } from '../src/sites/historical-monthly-mean.entity';
+import { DataUploads } from '../src/data-uploads/data-uploads.entity';
 
 // Initialize command definition
 const { argv } = yargs
@@ -60,7 +61,6 @@ async function run() {
     rootPath,
     userEmail,
     googleCloudService,
-    connection,
     // Fetch all needed repositories
     {
       siteRepository: connection.getRepository(Site),
@@ -74,6 +74,7 @@ async function run() {
       historicalMonthlyMeanRepository: connection.getRepository(
         HistoricalMonthlyMean,
       ),
+      dataUploadsRepository: connection.getRepository(DataUploads),
     },
   );
 
