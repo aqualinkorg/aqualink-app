@@ -5,7 +5,7 @@ import moment from "moment";
 import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
-
+import { useHistory } from "react-router-dom";
 import {
   liveDataSelector,
   siteGranularDailyDataSelector,
@@ -113,6 +113,7 @@ const MultipleSensorsCharts = ({
   const [range, setRange] = useState<RangeValue>(
     initialStart || initialEnd ? "custom" : "one_month"
   );
+  const history = useHistory();
 
   const today = localizedEndOfDay(undefined, site.timezone);
 
@@ -253,16 +254,17 @@ const MultipleSensorsCharts = ({
         .toISOString();
 
       setPickerEndDate(
-        initialEnd ||
-          utcToZonedTime(
-            localizedMaxDate || today,
-            site.timezone || "UTC"
-          ).toISOString()
+        utcToZonedTime(
+          initialEnd || localizedMaxDate || today,
+          site.timezone || "UTC"
+        ).toISOString()
       );
 
       setPickerStartDate(
-        initialStart ||
-          utcToZonedTime(pastThreeMonths, site.timezone || "UTC").toISOString()
+        utcToZonedTime(
+          initialStart || pastThreeMonths,
+          site.timezone || "UTC"
+        ).toISOString()
       );
     }
   }, [
@@ -368,6 +370,26 @@ const MultipleSensorsCharts = ({
         : moment(pickerLocalEndDate).endOf("day").toISOString()
     );
   }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
+
+  useEffect(() => {
+    if (pickerStartDate && pickerEndDate) {
+      const newStart =
+        pickerStartDate !== initialStart
+          ? moment(pickerStartDate).format("YYYY-MM-DD")
+          : pickerStartDate;
+
+      const newEnd =
+        pickerEndDate !== initialEnd
+          ? moment(pickerEndDate).format("YYYY-MM-DD")
+          : pickerEndDate;
+
+      // eslint-disable-next-line fp/no-mutating-methods
+      history.push({
+        search: `?start=${newStart}&end=${newEnd}`,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history, pickerEndDate, pickerStartDate, site.timezone]);
 
   // Set picker error
   useEffect(() => {

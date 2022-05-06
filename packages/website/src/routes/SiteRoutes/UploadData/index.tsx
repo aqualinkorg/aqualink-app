@@ -88,7 +88,7 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
             site.id,
             selectedPoint,
             token,
-            true
+            false
           );
         // Clear redux selected site before we land on the site page,
         // so that we fetch the updated data.

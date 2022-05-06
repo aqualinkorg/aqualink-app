@@ -28,8 +28,8 @@ type EnhancedSelectOption = SelectOption & { disabled?: boolean };
 const SENSOR_TYPES: EnhancedSelectOption[] = [
   { id: 0, name: "sonde", label: "Sonde data" },
   { id: 1, name: "metlog", label: "Meteorological data" },
+  { id: 3, name: "hobo", label: "HOBO data" },
   { id: 2, name: "spotter", label: "Spotter data", disabled: true },
-  { id: 3, name: "hobo", label: "HOBO data", disabled: true },
 ];
 
 const Selectors = ({
