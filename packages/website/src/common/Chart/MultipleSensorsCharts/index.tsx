@@ -110,7 +110,7 @@ const MultipleSensorsCharts = ({
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>(
-    initialStart || initialEnd ? "custom" : "three_months"
+    initialStart || initialEnd ? "custom" : "one_month"
   );
   const history = useHistory();
 
@@ -246,7 +246,7 @@ const MultipleSensorsCharts = ({
       const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
       const pastThreeMonths = moment(
-        subtractFromDate(localizedMaxDate || today, "month", 3)
+        subtractFromDate(localizedMaxDate || today, "month", 1)
       )
         .tz(site.timezone || "UTC")
         .startOf("day")
@@ -411,9 +411,9 @@ const MultipleSensorsCharts = ({
     ).toISOString();
     setRange(value);
     switch (value) {
-      case "three_months":
+      case "one_month":
         setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());
-        setPickerStartDate(subtractFromDate(localizedMaxDate, "month", 3));
+        setPickerStartDate(subtractFromDate(localizedMaxDate, "month", 1));
         break;
       case "one_year":
         setPickerEndDate(moment(localizedMaxDate).endOf("day").toISOString());

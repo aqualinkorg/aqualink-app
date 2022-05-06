@@ -56,12 +56,11 @@ const getAlertMessage = (
     "Currently no Smart Buoy deployed at this site location. Real-time values are derived from a combination of NOAA satellite readings and weather models.";
 
   switch (true) {
-    case !isSiteAdmin:
-      return defaultMessage;
-
     case !hasDailyData:
       return "Welcome to your virtual site, data is loading, please come back in a few hours. This site will be visible publicly as soon as it has been approved by the Aqualink team.";
 
+    case !isSiteAdmin:
+      return defaultMessage;
     case !applied:
       return (
         <div>
