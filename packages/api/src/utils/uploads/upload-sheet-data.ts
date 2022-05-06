@@ -538,7 +538,7 @@ export const uploadTimeSeriesData = async (
             .execute();
         } catch {
           console.warn('The following batch failed to upload:');
-          console.log(batch);
+          console.warn(batch);
         }
         return true;
       },
