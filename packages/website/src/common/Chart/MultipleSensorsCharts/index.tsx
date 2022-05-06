@@ -253,16 +253,17 @@ const MultipleSensorsCharts = ({
         .toISOString();
 
       setPickerEndDate(
-        initialEnd ||
-          utcToZonedTime(
-            localizedMaxDate || today,
-            site.timezone || "UTC"
-          ).toISOString()
+        utcToZonedTime(
+          initialEnd || localizedMaxDate || today,
+          site.timezone || "UTC"
+        ).toISOString()
       );
 
       setPickerStartDate(
-        initialStart ||
-          utcToZonedTime(pastThreeMonths, site.timezone || "UTC").toISOString()
+        utcToZonedTime(
+          initialStart || pastThreeMonths,
+          site.timezone || "UTC"
+        ).toISOString()
       );
     }
   }, [
