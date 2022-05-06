@@ -520,23 +520,29 @@ export const uploadTimeSeriesData = async (
     });
 
     // Data is too big to added with one bulk insert so we batch the upload.
-    const batchSize = 1000;
+    const batchSize = 10;
     logger.log(`Saving time series data in batches of ${batchSize}`);
-    const inserts = chunk(dataAsTimeSeries, batchSize).map((batch: any[]) => {
-      return (
-        repositories.timeSeriesRepository
-          .createQueryBuilder('time_series')
-          .insert()
-          .values(batch)
-          // If there's a conflict, replace data with the new value.
-          // onConflict is deprecated, but updating it is tricky.
-          // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
-          .onConflict(
-            'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
-          )
-          .execute()
-      );
-    });
+    const inserts = chunk(dataAsTimeSeries, batchSize).map(
+      async (batch: any[]) => {
+        try {
+          await repositories.timeSeriesRepository
+            .createQueryBuilder('time_series')
+            .insert()
+            .values(batch)
+            // If there's a conflict, replace data with the new value.
+            // onConflict is deprecated, but updating it is tricky.
+            // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
+            .onConflict(
+              'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+            )
+            .execute();
+        } catch {
+          console.warn('The following batch failed to upload:');
+          console.log(batch);
+        }
+        return true;
+      },
+    );
 
     // Return insert promises and print progress updates
     const actionsLength = inserts.length;
