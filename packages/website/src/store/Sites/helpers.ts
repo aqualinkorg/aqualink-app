@@ -327,10 +327,23 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
   // Coping, sorting and filtering are done to keep the latest timestamp for each Metric
   const copy = [...data];
 
+  const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
+  const validityDate = Date.now() - spotterValidityLimit;
+
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = copy.sort((x, y) => {
-    if (x.timestamp > y.timestamp) return -1;
-    if (x.timestamp < y.timestamp) return 1;
+    // if spotter data is available and less than 12 hours old, use it.
+    const xTime = new Date(x.timestamp).getTime();
+    if (x.source === "spotter" && xTime > validityDate) {
+      return -1;
+    }
+    const yTime = new Date(y.timestamp).getTime();
+    if (y.source === "spotter" && yTime > validityDate) {
+      return -1;
+    }
+
+    if (xTime > yTime) return -1;
+    if (xTime < yTime) return 1;
     return 0;
   });
 
