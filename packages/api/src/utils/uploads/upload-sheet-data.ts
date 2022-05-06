@@ -59,7 +59,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
     'Wind Direction, ø': Metric.WIND_DIRECTION,
   },
   gfs: {},
-  hobo: {},
+  hobo: { Temp: Metric.BOTTOM_TEMPERATURE },
   noaa: {},
   spotter: {},
   sofar_wave_model: {},
@@ -70,7 +70,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
 // 2. GMT±01
 // 3. GMT±01:00
 const TIMEZONE_REGEX = /[+-][0-9]{1,2}:?[0-9]{0,2}\b/;
-const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time'];
+const HEADER_KEYS = ['Date (MM/DD/YYYY)', 'Date Time', 'Date_Time'];
 // Keep Ignore Header Keys in lower case.
 const IGNORE_HEADER_KEYS = [
   '#',
@@ -79,6 +79,7 @@ const IGNORE_HEADER_KEYS = [
   'time (fract. sec)',
 ];
 
+// TODO - Improve detection of time columns and parsing method
 const TIMESTAMP_KEYS = [
   ['Date Time'],
   ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
@@ -211,8 +212,11 @@ const getTimestampFromMultiColumnDate = (
 };
 
 const getTimestampFromDateString = (dataObject: any) => {
-  const dateKey = Object.keys(dataObject).find((header) =>
-    headerMatchesKey(header, 'Date Time'),
+  const dateKey = Object.keys(dataObject).find(
+    (header) =>
+      // TODO - these keys should not be hardcoded here.
+      headerMatchesKey(header, 'Date Time') ||
+      headerMatchesKey(header, 'Date_Time'),
   );
 
   if (!dateKey) {
@@ -309,6 +313,8 @@ const timeStampExtractor = (
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
       return getTimestampFromDateString(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, ['Date_Time']):
+      return getTimestampFromDateString(dataObject);
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
       return getTimestampFromMultiColumnDate(dataObject, mimetype);
     default:
@@ -351,6 +357,7 @@ const findSheetDataWithHeader = (
       );
 
       return {
+        // Select timestampExtractor ONCE at the beginning and not for every row.
         timestamp: timeStampExtractor(fileName, dataObject, mimetype),
         ...rowValuesExtractor(dataObject, headers, source),
       };
@@ -412,7 +419,11 @@ export const uploadTimeSeriesData = async (
       surveyPoint,
     }));
 
-  if (sourceType === SourceType.SONDE || sourceType === SourceType.METLOG) {
+  if (
+    sourceType === SourceType.SONDE ||
+    sourceType === SourceType.METLOG ||
+    sourceType === SourceType.HOBO
+  ) {
     const workSheetsFromFile = xlsx.parse(filePath, { raw: true });
     const workSheetData = workSheetsFromFile[0]?.data;
     const { ignoredHeaders, importedHeaders } = validateHeaders(
@@ -447,18 +458,6 @@ export const uploadTimeSeriesData = async (
         `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
       );
     }
-
-    // Initialize google cloud service, to be used for media upload
-    const googleCloudService = new GoogleCloudService();
-
-    // Note this may fail. It would still return a location, but the file may not have been uploaded
-    const fileLocation = googleCloudService.uploadFileAsync(
-      filePath,
-      sourceType,
-      'data_uploads',
-      'data_upload',
-    );
-
     console.time(`Get data from sheet ${fileName}`);
     const results = findSheetDataWithHeader(
       fileName,
@@ -509,22 +508,28 @@ export const uploadTimeSeriesData = async (
       'timestamp',
     );
 
-    const saveDataUploadsFile = async (): Promise<DataUploads | undefined> => {
-      const res = await repositories.dataUploadsRepository.save({
-        file: fileName,
-        signature,
-        sensorType: sourceType,
-        site,
-        surveyPoint,
-        minDate,
-        maxDate,
-        metrics: importedHeaders,
-        fileLocation,
-      });
-      return res;
-    };
+    // Initialize google cloud service, to be used for media upload
+    const googleCloudService = new GoogleCloudService();
 
-    const dataUploadsFile = await saveDataUploadsFile();
+    // Note this may fail. It would still return a location, but the file may not have been uploaded
+    const fileLocation = googleCloudService.uploadFileAsync(
+      filePath,
+      sourceType,
+      'data_uploads',
+      'data_upload',
+    );
+
+    const dataUploadsFile = await repositories.dataUploadsRepository.save({
+      file: fileName,
+      signature,
+      sensorType: sourceType,
+      site,
+      surveyPoint,
+      minDate,
+      maxDate,
+      metrics: importedHeaders,
+      fileLocation,
+    });
 
     const dataAsTimeSeries = data.map((x: any) => {
       return {
@@ -537,24 +542,30 @@ export const uploadTimeSeriesData = async (
     });
 
     // Data is too big to added with one bulk insert so we batch the upload.
-    const batchSize = 1000;
     console.time(`Loading into DB ${fileName}`);
+    const batchSize = 100;
     logger.log(`Saving time series data in batches of ${batchSize}`);
-    const inserts = chunk(dataAsTimeSeries, batchSize).map((batch: any[]) => {
-      return (
-        repositories.timeSeriesRepository
-          .createQueryBuilder('time_series')
-          .insert()
-          .values(batch)
-          // If there's a conflict, replace data with the new value.
-          // onConflict is deprecated, but updating it is tricky.
-          // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
-          .onConflict(
-            'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
-          )
-          .execute()
-      );
-    });
+    const inserts = chunk(dataAsTimeSeries, batchSize).map(
+      async (batch: any[]) => {
+        try {
+          await repositories.timeSeriesRepository
+            .createQueryBuilder('time_series')
+            .insert()
+            .values(batch)
+            // If there's a conflict, replace data with the new value.
+            // onConflict is deprecated, but updating it is tricky.
+            // See https://github.com/typeorm/typeorm/issues/8731?fbclid=IwAR2Obg9eObtGNRXaFrtKvkvvVSWfvjtHpFu-VEM47yg89SZcPpxEcZOmcLw
+            .onConflict(
+              'ON CONSTRAINT "no_duplicate_data" DO UPDATE SET "value" = excluded.value',
+            )
+            .execute();
+        } catch {
+          console.warn('The following batch failed to upload:');
+          console.warn(batch);
+        }
+        return true;
+      },
+    );
 
     // Return insert promises and print progress updates
     const actionsLength = inserts.length;
