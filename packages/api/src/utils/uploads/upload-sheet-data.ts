@@ -77,6 +77,7 @@ const IGNORE_HEADER_KEYS = [
   'time (fract. sec)',
 ];
 
+// TODO - Improve detection of time columns and parsing method
 const TIMESTAMP_KEYS = [
   ['Date Time'],
   ['Date (MM/DD/YYYY)', 'Time (HH:mm:ss)', 'Time (Fract. Sec)'],
@@ -209,8 +210,11 @@ const getTimestampFromMultiColumnDate = (
 };
 
 const getTimestampFromDateString = (dataObject: any) => {
-  const dateKey = Object.keys(dataObject).find((header) =>
-    headerMatchesKey(header, 'Date Time'),
+  const dateKey = Object.keys(dataObject).find(
+    (header) =>
+      // TODO - these keys should not be hardcoded here.
+      headerMatchesKey(header, 'Date Time') ||
+      headerMatchesKey(header, 'Date_Time'),
   );
 
   if (!dateKey) {
@@ -307,6 +311,8 @@ const timeStampExtractor = (
   switch (true) {
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[0]):
       return getTimestampFromDateString(dataObject);
+    case rowIncludesHeaderKeys(dataKeys, ['Date_Time']):
+      return getTimestampFromDateString(dataObject);
     case rowIncludesHeaderKeys(dataKeys, TIMESTAMP_KEYS[1]):
       return getTimestampFromMultiColumnDate(dataObject, mimetype);
     default:
@@ -349,6 +355,7 @@ const findSheetDataWithHeader = (
       );
 
       return {
+        // Select timestampExtractor ONCE at the beginning and not for every row.
         timestamp: timeStampExtractor(fileName, dataObject, mimetype),
         ...rowValuesExtractor(dataObject, headers, source),
       };
@@ -520,7 +527,7 @@ export const uploadTimeSeriesData = async (
     });
 
     // Data is too big to added with one bulk insert so we batch the upload.
-    const batchSize = 10;
+    const batchSize = 100;
     logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAsTimeSeries, batchSize).map(
       async (batch: any[]) => {
