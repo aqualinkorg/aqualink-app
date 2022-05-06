@@ -5,7 +5,6 @@ import moment from "moment";
 import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { utcToZonedTime } from "date-fns-tz";
-
 import { useHistory } from "react-router-dom";
 import {
   liveDataSelector,
@@ -379,14 +378,23 @@ const MultipleSensorsCharts = ({
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate) {
+      const newStart =
+        pickerStartDate !== initialStart
+          ? moment(pickerStartDate).format("YYYY-MM-DD")
+          : pickerStartDate;
+
+      const newEnd =
+        pickerEndDate !== initialEnd
+          ? moment(pickerEndDate).format("YYYY-MM-DD")
+          : pickerEndDate;
+
       // eslint-disable-next-line fp/no-mutating-methods
       history.push({
-        search: `?start=${pickerStartDate.split("T")[0]}&end=${
-          pickerEndDate.split("T")[0]
-        }`,
+        search: `?start=${newStart}&end=${newEnd}`,
       });
     }
-  }, [history, pickerEndDate, pickerStartDate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history, pickerEndDate, pickerStartDate, site.timezone]);
 
   const onRangeChange = (value: RangeValue) => {
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
