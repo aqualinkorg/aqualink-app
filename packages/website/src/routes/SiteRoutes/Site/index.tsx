@@ -9,8 +9,8 @@ import {
 import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-
 import classNames from "classnames";
+import NotFoundPage from "../../NotFound/index";
 import SiteNavBar from "../../../common/NavBar";
 import SiteFooter from "../../../common/Footer";
 import SiteDetails from "../../../common/SiteDetails";
@@ -25,6 +25,7 @@ import {
   clearOceanSenseData,
   liveDataRequest,
   liveDataSelector,
+  siteLoadingSelector,
 } from "../../../store/Sites/selectedSiteSlice";
 import {
   surveysRequest,
@@ -100,6 +101,7 @@ const getAlertMessage = (
 
 const Site = ({ match, classes }: SiteProps) => {
   const siteDetails = useSelector(siteDetailsSelector);
+  const siteLoading = useSelector(siteLoadingSelector);
   const user = useSelector(userInfoSelector);
   const surveyList = useSelector(surveyListSelector);
   const liveData = useSelector(liveDataSelector);
@@ -177,38 +179,43 @@ const Site = ({ match, classes }: SiteProps) => {
   return (
     <>
       <SiteNavBar searchLocation />
-      <Container
-        className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
-      >
-        <Box marginTop="2rem">
-          <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
-            {siteDetails && (
-              <SiteInfo
-                hasDailyData={hasDailyData}
-                site={siteDetails}
-                lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
-                isAdmin={isAdmin(user, parseInt(siteId, 10))}
-              />
-            )}
-          </LoadingSkeleton>
-        </Box>
-        {!hasSpotterData && !isLoading && (
-          <Box mt="1.3rem">
-            <Alert severity="info">
-              {getAlertMessage(user, siteId, hasDailyData)}
-            </Alert>
+      {!siteLoading && !siteDetails ? (
+        <NotFoundPage />
+      ) : (
+        <Container
+          className={classNames({ [classes.noDataWrapper]: !hasDailyData })}
+        >
+          <Box marginTop="2rem">
+            <LoadingSkeleton loading={isLoading} variant="text" lines={3}>
+              {siteDetails && (
+                <SiteInfo
+                  hasDailyData={hasDailyData}
+                  site={siteDetails}
+                  lastSurvey={surveyList[surveyList.length - 1]?.diveDate}
+                  isAdmin={isAdmin(user, parseInt(siteId, 10))}
+                />
+              )}
+            </LoadingSkeleton>
           </Box>
-        )}
-        <SiteDetails
-          site={siteWithFeaturedImage}
-          selectedSurveyPointId={selectedSurveyPointId}
-          featuredSurveyId={featuredSurveyId}
-          hasDailyData={hasDailyData}
-          surveys={surveyList}
-          featuredSurveyPoint={featuredSurveyPoint}
-          surveyDiveDate={diveDate}
-        />
-      </Container>
+          {/* Only show alert message when data is loading */}
+          {!hasSpotterData && !isLoading && !hasDailyData && (
+            <Box mt="1.3rem">
+              <Alert severity="info">
+                {getAlertMessage(user, siteId, hasDailyData)}
+              </Alert>
+            </Box>
+          )}
+          <SiteDetails
+            site={siteWithFeaturedImage}
+            selectedSurveyPointId={selectedSurveyPointId}
+            featuredSurveyId={featuredSurveyId}
+            hasDailyData={hasDailyData}
+            surveys={surveyList}
+            featuredSurveyPoint={featuredSurveyPoint}
+            surveyDiveDate={diveDate}
+          />
+        </Container>
+      )}
       <SiteFooter />
     </>
   );
