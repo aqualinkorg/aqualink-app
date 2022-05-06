@@ -324,9 +324,8 @@ export const timeSeriesRequest = async (
 export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
-  // Coping, sorting and filtering are done to keep the latest timestamp for each Metric
+  // Copying, sorting and filtering to keep spotter or latest data.
   const copy = [...data];
-
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
 
