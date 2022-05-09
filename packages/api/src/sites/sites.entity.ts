@@ -122,7 +122,6 @@ export class Site {
 
   liveData?: SofarLiveDataDto[];
 
-  // TODO - only return this data when required for a collection
   collectionData?: CollectionDataDto;
 
   @Expose()
