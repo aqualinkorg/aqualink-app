@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { get, isNaN, isNil, times } from 'lodash';
+import { get, isNil, times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
