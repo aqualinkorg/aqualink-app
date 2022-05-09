@@ -48,12 +48,6 @@ const landingPageButtons: LandingPageButton[] = [
     variant: "outlined",
     hasWhiteColor: true,
   },
-  {
-    label: "Track a Heatwave",
-    to: "/tracker",
-    variant: "outlined",
-    hasWhiteColor: true,
-  },
 ];
 
 const LandingPage = ({ classes }: LandingPageProps) => {
@@ -118,7 +112,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid container item sm={11} md={7}>
               <Box mt="1.5rem" display="flex">
                 <Typography variant="h1" color="textPrimary">
-                  Temperature monitoring for marine ecosystems
+                  Monitoring for marine ecosystems
                 </Typography>
               </Box>
             </Grid>

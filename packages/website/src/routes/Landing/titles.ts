@@ -1,30 +1,39 @@
 import { CardIncomingProps } from "./Card";
-import buoy from "../../assets/img/landing-page/buoy.jpg";
 import metrics from "../../assets/img/landing-page/metrics.png";
+import sensors from "../../assets/img/landing-page/sensors.png";
 import surveyImages from "../../assets/img/landing-page/survey-images.png";
+import map from "../../assets/img/landing-page/map.png";
 
 export const cardTitles: CardIncomingProps[] = [
   {
-    title: "Underwater temperature monitoring with a smart buoy",
-    text: "There is some incredible existing technology that uses satellites to measure the ocean’s surface temperature from space. However, coral sites and other important marine ecosystems are not always near the surface, and complex ocean dynamics can create a large temperature difference just a few meters down. To augment the satellite temperature, we partnered with Sofar Ocean to design a buoy that measures the temperature at the ocean floor. By building as many of these buoys as we can, and deploying them around the world, we can begin to build a dataset that helps in understanding where and when heat stress in the ocean will occur. By measuring, we can understand. And by understanding, we can begin to help.",
+    title: "Centralized information",
+    text: "Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.",
     backgroundColor: "rgba(69, 76, 79, 0.05)",
     direction: "row",
-    image: buoy,
+    image: metrics,
   },
   {
-    title: "Each site gets its own web page",
-    text: "For each site, with or without a buoy, we report the surface temperature as measured from satellite, along with the historical max for that specific site, the alert level, and a time-series plot of the temperature data. If a buoy can be deployed, we will make sure it happens.",
+    title: "Integrated sensors for automated data collection",
+    text: "Sofar spotter for real-time telemetry, Fathom for live underwater video, a multi-parameter sonde for water quality information, and hobo temperature logger. Additionally any data in csv format can be uploaded to Aqualink.",
     backgroundColor: "#ffffff",
     direction: "row-reverse",
-    image: metrics,
+    image: sensors,
     scaleDown: true,
   },
   {
-    title: "Correlate survey observations with temperature changes",
-    text: "Each site on the Aqualink web app has a detailed page outlining the satellite data, buoy data, heat stress alert level, as well as weather and a time history of the temperature. But perhaps most importantly for the site manager, it provides the ability to upload survey imagery and correlate it with all the other data. When a user uploads imagery, it provides a snapshot in time of the measured temperature with visual observations. By tagging the images, we are beginning to create a structured database that future machine learning algorithms can use to help predict heat stress events, such as coral bleaching. Adding surveys also connects the local ecosystem manager to a global network of scientists and engineers that are working everyday to protect these sensitive environments. The datasets are free and available to everyone.",
+    title: "A structured approach to survey management",
+    text: "Collect data and conduct photographic surveys in a structured way based on best practices. Create a grid of survey points and upload data and imagery to each point.",
     backgroundColor: "rgba(69, 76, 79, 0.05)",
     direction: "row",
     image: surveyImages,
+    scaleDown: true,
+  },
+  {
+    title: "Open source and free to use globally",
+    text: "All of the aqualink code is open source. Let us know what we should build, or build extensions yourself. The system is provided for free by Aqualink, a philanthropic engineering organization.",
+    backgroundColor: "#ffffff",
+    direction: "row-reverse",
+    image: map,
     scaleDown: true,
   },
 ];
