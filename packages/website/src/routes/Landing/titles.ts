@@ -3,6 +3,7 @@ import metrics from "../../assets/img/landing-page/metrics.jpg";
 import sensors from "../../assets/img/landing-page/sensors.png";
 import surveyImages from "../../assets/img/landing-page/survey-images.jpg";
 import map from "../../assets/img/landing-page/map.png";
+import customers from "../../assets/img/landing-page/customers.jpg";
 
 export const cardTitles: CardIncomingProps[] = [
   {
@@ -34,6 +35,14 @@ export const cardTitles: CardIncomingProps[] = [
     backgroundColor: "#ffffff",
     direction: "row-reverse",
     image: map,
+    scaleDown: true,
+  },
+  {
+    title: "Over 500 sites across hundreds of organizations",
+    text: "",
+    backgroundColor: "#ffffff",
+    direction: "row-reverse",
+    image: customers,
     scaleDown: true,
   },
 ];

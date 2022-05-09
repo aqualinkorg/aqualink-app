@@ -20,20 +20,26 @@ const Card = ({
   scaleDown,
   classes,
 }: CardProps) => {
+  const titleOnly = !text;
+
   return (
     <Box bgcolor={backgroundColor} className={classes.container}>
       <Grid container direction={direction} item xs={12}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={titleOnly ? 12 : 6}>
           <Box className={classes.textContainer}>
             <Box mb="1rem">
-              <Typography className={classes.cardTitle} variant="h5">
+              <Typography
+                className={classes.cardTitle}
+                variant="h5"
+                align={titleOnly ? "center" : "inherit"}
+              >
                 {title}
               </Typography>
             </Box>
             <Typography variant="h6">{text}</Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={titleOnly ? 12 : 6}>
           <CardMedia
             className={
               scaleDown ? classes.cardImageScaleDown : classes.cardImage
@@ -75,7 +81,7 @@ const styles = (theme: Theme) =>
 
 export interface CardIncomingProps {
   title: string;
-  text: string;
+  text?: string;
   backgroundColor: string;
   direction: GridProps["direction"];
   image: string;

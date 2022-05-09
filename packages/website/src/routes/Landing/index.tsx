@@ -156,7 +156,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           </Container>
         </Box>
       </div>
-      <Container>
+      <Container className={classes.cardContainer}>
         {cardTitles.map((item) => (
           <Card
             key={item.title}
@@ -195,6 +195,9 @@ const styles = (theme: Theme) =>
     },
     aqualinkSecondPart: {
       opacity: 0.5,
+    },
+    cardContainer: {
+      marginBottom: "1rem",
     },
     buttons: {
       height: 48,
