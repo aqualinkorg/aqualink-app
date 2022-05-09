@@ -6,7 +6,6 @@ const liveDataDate = new Date(now.getTime() - minutesAgo * 60000).toISOString();
 
 export const mockLiveData: LiveData = {
   site: { id: 1 },
-  latestData: [],
   bottomTemperature: {
     value: 25,
     timestamp: liveDataDate,

@@ -4,7 +4,10 @@ import Axios from 'axios';
 import * as functions from 'firebase-functions';
 import { createConnection } from 'typeorm';
 import { runDailyUpdate } from '../src/workers/dailyData';
-import { runSpotterTimeSeriesUpdate } from '../src/workers/spotterTimeSeries';
+import {
+  runSpotterTimeSeriesUpdate,
+  runWindWaveTimeSeriesUpdate,
+} from '../src/workers/spotterTimeSeries';
 import { runSSTTimeSeriesUpdate } from '../src/workers/sstTimeSeries';
 import { checkVideoStreams } from '../src/workers/check-video-streams';
 import { sendSlackMessage } from '../src/utils/slack.utils';
@@ -155,6 +158,34 @@ exports.scheduledSpotterTimeSeriesUpdate = functions
       console.log(`Spotter data hourly update on ${new Date()}`);
     } catch (err) {
       await sendErrorToSlack('scheduledSpotterTimeSeriesUpdate', err);
+      throw err;
+    } finally {
+      conn.close();
+    }
+  });
+
+exports.scheduledWindWaveTimeSeriesUpdate = functions
+  .runWith({ timeoutSeconds: 540, memory: '512MB' })
+  // Run spotter data update every hour
+  .pubsub.schedule('30 * * * *')
+  .timeZone('America/Los_Angeles')
+  .retryConfig({ retryCount: 2 })
+  .onRun(async () => {
+    const dbUrl = functions.config().database.url;
+    process.env.SOFAR_API_TOKEN = functions.config().sofar_api.token;
+    // eslint-disable-next-line no-undef
+    const entities = dbEntities.map(extractEntityDefinition);
+    const conn = await createConnection({
+      ...dbConfig,
+      url: dbUrl,
+      entities,
+    });
+    try {
+      await runWindWaveTimeSeriesUpdate(conn);
+      console.log(`Wind and Wave data hourly update on ${new Date()}`);
+    } catch (err) {
+      await sendErrorToSlack('scheduledWindWaveTimeSeriesUpdate', err);
+      console.warn(err);
       throw err;
     } finally {
       conn.close();

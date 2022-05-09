@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -23,7 +23,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type { Site } from "../../store/Sites/types";
+import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -34,10 +34,14 @@ import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
 import {
+  latestDataRequest,
+  latestDataSelector,
   liveDataRequest,
   liveDataSelector,
+  unsetLatestData,
   unsetLiveData,
 } from "../../store/Sites/selectedSiteSlice";
+import { parseLatestData } from "../../store/Sites/helpers";
 
 const SiteDetails = ({
   site,
@@ -52,6 +56,10 @@ const SiteDetails = ({
   const theme = useTheme();
   const dispatch = useDispatch();
   const liveData = useSelector(liveDataSelector);
+  const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
+    useState<LatestDataASSofarValue>({});
+  const [hasSondeData, setHasSondeData] = useState<boolean>(false);
+  const latestData = useSelector(latestDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -60,28 +68,41 @@ const SiteDetails = ({
     if (site && !liveData) {
       dispatch(liveDataRequest(`${site.id}`));
     }
-  }, [dispatch, site, liveData]);
+    if (site && !latestData) {
+      dispatch(latestDataRequest(`${site.id}`));
+    }
+  }, [dispatch, site, liveData, latestData]);
 
   useEffect(() => {
     return () => {
       dispatch(unsetLiveData());
+      dispatch(unsetLatestData());
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    if (latestData) {
+      setLatestDataAsSofarValues(parseLatestData(latestData));
+    }
+    setHasSondeData(
+      Boolean(latestData?.some((data) => data.source === "sonde"))
+    );
+  }, [latestData]);
+
   const { videoStream } = site || {};
 
-  const hasSondeData = Boolean(
-    liveData?.latestData?.some((data) => data.source === "sonde")
-  );
-
   const cards =
-    site && liveData
+    site && latestData
       ? [
           <Satellite
-            liveData={liveData}
+            data={latestDataAsSofarValues}
             maxMonthlyMean={site.maxMonthlyMean}
           />,
-          <Sensor depth={site.depth} id={site.id} liveData={liveData} />,
+          <Sensor
+            depth={site.depth}
+            id={site.id}
+            data={latestDataAsSofarValues}
+          />,
           hasSondeData ? (
             <WaterSamplingCard siteId={site.id.toString()} />
           ) : (
@@ -89,7 +110,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves liveData={liveData} />,
+          <Waves data={latestDataAsSofarValues} />,
         ]
       : times(4, () => null);
 
@@ -209,9 +230,9 @@ const SiteDetails = ({
               <LoadingSkeleton
                 variant="rect"
                 height="100%"
-                loading={isLoading || !liveData}
+                loading={isLoading || !hasDailyData}
               >
-                {hasDailyData && Component}
+                {Component}
               </LoadingSkeleton>
             </div>
           </Grid>

@@ -17,15 +17,15 @@ import UpdateInfo from "../../UpdateInfo";
 import { findAdministeredSite } from "../../../helpers/findAdministeredSite";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
-import type { LiveData } from "../../../store/Sites/types";
 import { User } from "../../../store/User/types";
 import sensor from "../../../assets/sensor.svg";
 import { styles as incomingStyles } from "../styles";
 import { isAdmin } from "../../../helpers/user";
 import { userInfoSelector } from "../../../store/User/userSlice";
+import { LatestDataASSofarValue } from "../../../store/Sites/types";
 
 /**
- * Get the sensor application tag message and clickability for a user/site conbination.
+ * Get the sensor application tag message and clickability for a user/site combination.
  *
  * @param user
  * @param siteId
@@ -62,8 +62,8 @@ const getApplicationTag = (
   }
 };
 
-const Sensor = ({ depth, id, liveData, classes }: SensorProps) => {
-  const { topTemperature, bottomTemperature } = liveData;
+const Sensor = ({ depth, id, data, classes }: SensorProps) => {
+  const { topTemperature, bottomTemperature } = data;
 
   const relativeTime =
     (topTemperature?.timestamp && toRelativeTime(topTemperature.timestamp)) ||
@@ -210,7 +210,7 @@ const styles = () =>
 interface SensorIncomingProps {
   depth: number | null;
   id: number;
-  liveData: LiveData;
+  data: LatestDataASSofarValue;
 }
 
 type SensorProps = WithStyles<typeof styles> & SensorIncomingProps;

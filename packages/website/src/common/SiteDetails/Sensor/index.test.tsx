@@ -7,12 +7,16 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Sensor from ".";
 import { mockUser } from "../../../mocks/mockUser";
 import { mockSite } from "../../../mocks/mockSite";
-import { mockLiveData } from "../../../mocks/mockLiveData";
+import { mockLatestData } from "../../../mocks/mockLatestData";
+import { parseLatestData } from "../../../store/Sites/helpers";
 
 const mockStore = configureStore([]);
 
 describe("Sensor Card", () => {
   let element: HTMLElement;
+
+  const data = parseLatestData(mockLatestData);
+
   beforeEach(() => {
     const store = mockStore({
       user: {
@@ -25,11 +29,7 @@ describe("Sensor Card", () => {
     element = render(
       <Provider store={store}>
         <Router>
-          <Sensor
-            depth={mockSite.depth}
-            id={mockSite.id}
-            liveData={mockLiveData}
-          />
+          <Sensor depth={mockSite.depth} id={mockSite.id} data={data} />
         </Router>
       </Provider>
     ).container;

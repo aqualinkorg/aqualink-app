@@ -24,6 +24,7 @@ import {
 import { getSiteNameAndRegion } from "../../store/Sites/helpers";
 import mapServices from "../../services/mapServices";
 import {
+  unsetLatestData,
   unsetLiveData,
   unsetSelectedSite,
 } from "../../store/Sites/selectedSiteSlice";
@@ -75,8 +76,14 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
     if (value) {
       setSearchedSite(null);
       dispatch(setSiteOnMap(value));
+      // TODO - create a function to cleanup the state whenever we change the site.
+      // At the moment this needs to happen:
+      // - through the dropdown
+      // - through the search
+      // - through the admin side panel
       dispatch(unsetSelectedSite());
       dispatch(unsetLiveData());
+      dispatch(unsetLatestData());
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${value.id}`);
       }
@@ -88,6 +95,8 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
       if (!geocodingEnabled) {
         browserHistory.push(`/sites/${searchedSite.id}`);
       }
+      dispatch(unsetLiveData());
+      dispatch(unsetLatestData());
       dispatch(setSiteOnMap(searchedSite));
       setSearchedSite(null);
     } else if (searchValue && geocodingEnabled) {

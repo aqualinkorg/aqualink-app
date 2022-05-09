@@ -1105,48 +1105,28 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
         >
           <div
             class="makeStyles-card-244"
-          >
-            <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-232 makeStyles-image-235 makeStyles-image-339 makeStyles-dark-233 MuiSkeleton-wave"
-              style="height: 100%;"
-            />
-          </div>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
             class="makeStyles-card-244"
-          >
-            <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-232 makeStyles-image-235 makeStyles-image-341 makeStyles-dark-233 MuiSkeleton-wave"
-              style="height: 100%;"
-            />
-          </div>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
             class="makeStyles-card-244"
-          >
-            <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-232 makeStyles-image-235 makeStyles-image-343 makeStyles-dark-233 MuiSkeleton-wave"
-              style="height: 100%;"
-            />
-          </div>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3"
         >
           <div
             class="makeStyles-card-244"
-          >
-            <span
-              class="MuiSkeleton-root MuiSkeleton-rect makeStyles-root-232 makeStyles-image-235 makeStyles-image-345 makeStyles-dark-233 MuiSkeleton-wave"
-              style="height: 100%;"
-            />
-          </div>
+          />
         </div>
       </div>
       <mock-box

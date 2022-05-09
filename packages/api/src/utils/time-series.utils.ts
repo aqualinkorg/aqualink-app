@@ -190,6 +190,46 @@ export const getNOAASource = async (
     });
 };
 
+/**
+ * Fetches the spotter sources based on the site.
+ * If no such source exists, it creates it
+ * @param sites The selected site
+ * @param type The SourceType
+ * @param sourceRepository The necessary repository to perform the query
+ * @returns The requested source entity
+ */
+export const getSources = (
+  sites: Site[],
+  type: SourceType,
+  sourceRepository: Repository<Sources>,
+) => {
+  return sites.map((site) =>
+    sourceRepository
+      .findOne({
+        relations: ['site'],
+        where: {
+          site,
+          surveyPoint: IsNull(),
+          type,
+          sensorId: type === SourceType.SPOTTER ? site.sensorId : IsNull(),
+        },
+      })
+      .then((source) => {
+        // If the source exists return it
+        if (source) {
+          return source;
+        }
+
+        // Else create it and return the created entity
+        return sourceRepository.save({
+          site,
+          type,
+          sensorId: type === SourceType.SPOTTER ? site.sensorId : undefined,
+        });
+      }),
+  );
+};
+
 export const insertSiteDataToTimeSeries = (
   data: TimeSeriesValueDto[],
   metric: Metric,

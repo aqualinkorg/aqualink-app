@@ -64,7 +64,26 @@ jobs:
             - /usr/local/share/.cache/yarn/v4/
           key: v6-dependencies-{{ checksum "yarn.lock" }}
 
-  test_and_lint:
+  lint_all:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
+      - run: yarn lint:all
+
+  test_website:
+    working_directory: *working_directory
+    executor: default
+
+    steps:
+      - checkout_and_restore_dependencies
+      - update_test_cache_file
+
+      # Run website tests
+      - run: cd packages/website && yarn test
+
+  test_api:
     working_directory: *working_directory
     executor: default
 
@@ -95,9 +114,6 @@ jobs:
             - packages/api/.jest-cache
           key: v1-test-{{ checksum "/tmp/all-tests.spec.txt" }}
 
-      # Run lint
-      - run: yarn lint:all
-
   build_app:
     working_directory: *working_directory
     executor: default
@@ -114,7 +130,16 @@ workflows:
   build:
     jobs:
       - build_dependencies
-      - test_and_lint:
+
+      - lint_all:
+          requires:
+            - build_dependencies
+
+      - test_website:
+          requires:
+            - build_dependencies
+
+      - test_api:
           requires:
             - build_dependencies
 

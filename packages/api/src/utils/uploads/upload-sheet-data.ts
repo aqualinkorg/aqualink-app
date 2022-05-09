@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 import { chunk, first, get, isNaN, maxBy, minBy, uniqBy } from 'lodash';
 import md5Fle from 'md5-file';
@@ -61,6 +62,7 @@ const metricsMapping: Record<SourceType, Record<string, Metric>> = {
   hobo: { Temp: Metric.BOTTOM_TEMPERATURE },
   noaa: {},
   spotter: {},
+  sofar_wave_model: {},
 };
 
 // Timezone regexp to match the following cases:
@@ -365,6 +367,15 @@ const findSheetDataWithHeader = (
   return dataAsObjects;
 };
 
+async function refreshMaterializedView(repositories: Repositories) {
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  console.time(`Refresh Materialized View ${hash}`);
+  await repositories.dataUploadsRepository.query(
+    'REFRESH MATERIALIZED VIEW latest_data',
+  );
+  console.timeEnd(`Refresh Materialized View ${hash}`);
+}
+
 // Upload sonde data
 export const uploadTimeSeriesData = async (
   filePath: string,
@@ -378,6 +389,7 @@ export const uploadTimeSeriesData = async (
 ) => {
   // // TODO
   // // - Add foreign key constraint to sources on site_id
+  console.time(`Upload datafile ${fileName}`);
   const { site, surveyPoint } = surveyPointId
     ? await getSiteAndSurveyPoint(
         parseInt(siteId, 10),
@@ -446,14 +458,16 @@ export const uploadTimeSeriesData = async (
         `${fileName}: A file upload named '${uploadExists.file}' with the same data already exists`,
       );
     }
-
+    console.time(`Get data from sheet ${fileName}`);
     const results = findSheetDataWithHeader(
       fileName,
       workSheetData,
       sourceType,
       mimetype,
     );
+    console.timeEnd(`Get data from sheet ${fileName}`);
 
+    console.time(`Remove duplicates and empty values ${fileName}`);
     const data = uniqBy(
       results
         .reduce((timeSeriesObjects: any[], object) => {
@@ -483,6 +497,7 @@ export const uploadTimeSeriesData = async (
       ({ timestamp, metric, source }) =>
         `${timestamp}, ${metric}, ${source.id}`,
     );
+    console.timeEnd(`Remove duplicates and empty values ${fileName}`);
 
     const minDate = get(
       minBy(data, (item) => new Date(get(item, 'timestamp')).getTime()),
@@ -527,6 +542,7 @@ export const uploadTimeSeriesData = async (
     });
 
     // Data is too big to added with one bulk insert so we batch the upload.
+    console.time(`Loading into DB ${fileName}`);
     const batchSize = 100;
     logger.log(`Saving time series data in batches of ${batchSize}`);
     const inserts = chunk(dataAsTimeSeries, batchSize).map(
@@ -556,10 +572,12 @@ export const uploadTimeSeriesData = async (
     await Bluebird.Promise.each(inserts, (props, idx) => {
       logger.log(`Saved ${idx + 1} out of ${actionsLength} batches`);
     });
+    console.timeEnd(`Loading into DB ${fileName}`);
     logger.log('loading complete');
-    await repositories.dataUploadsRepository.query(
-      'REFRESH MATERIALIZED VIEW latest_data',
-    );
+
+    refreshMaterializedView(repositories);
+
+    console.timeEnd(`Upload datafile ${fileName}`);
     return ignoredHeaders;
   }
 

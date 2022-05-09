@@ -21,6 +21,7 @@ import {
   OceanSenseDataResponse,
   SiteResponse,
   SiteUploadHistory,
+  LatestData,
 } from "../store/Sites/types";
 
 const getSite = (id: string) =>
@@ -40,6 +41,12 @@ const getSiteDailyData = (id: string, start?: string, end?: string) =>
 const getSiteLiveData = (id: string) =>
   requests.send<LiveData>({
     url: `sites/${id}/live_data`,
+    method: "GET",
+  });
+
+const getSiteLatestData = (id: string) =>
+  requests.send<{ latestData: LatestData[] }>({
+    url: `sites/${id}/latest_data`,
     method: "GET",
   });
 
@@ -189,6 +196,7 @@ export default {
   getSites,
   getSiteDailyData,
   getSiteLiveData,
+  getSiteLatestData,
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,
   getSiteSurveyPoints,

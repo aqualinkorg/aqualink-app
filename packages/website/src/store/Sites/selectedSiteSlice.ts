@@ -43,6 +43,19 @@ export const liveDataRequest = createAsyncThunk<
   }
 });
 
+export const latestDataRequest = createAsyncThunk<
+  SelectedSiteState["latestData"],
+  string,
+  CreateAsyncThunkTypes
+>("selectedSite/requestLatestData", async (id: string, { rejectWithValue }) => {
+  try {
+    const { data: latestData } = await siteServices.getSiteLatestData(id);
+    return latestData.latestData;
+  } catch (err) {
+    return rejectWithValue(getAxiosErrorMessage(err));
+  }
+});
+
 export const siteRequest = createAsyncThunk<
   SelectedSiteState["details"],
   string,
@@ -191,6 +204,10 @@ const selectedSiteSlice = createSlice({
       ...state,
       liveData: null,
     }),
+    unsetLatestData: (state) => ({
+      ...state,
+      latestData: null,
+    }),
     setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
       if (state.details) {
         return {
@@ -300,6 +317,33 @@ const selectedSiteSlice = createSlice({
     );
 
     builder.addCase(liveDataRequest.pending, (state) => {
+      return {
+        ...state,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      latestDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["latestData"]>) => {
+        return {
+          ...state,
+          latestData: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(
+      latestDataRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(latestDataRequest.pending, (state) => {
       return {
         ...state,
         error: null,
@@ -440,6 +484,10 @@ export const liveDataSelector = (
   state: RootState
 ): SelectedSiteState["liveData"] => state.selectedSite.liveData;
 
+export const latestDataSelector = (
+  state: RootState
+): SelectedSiteState["latestData"] => state.selectedSite.latestData;
+
 export const siteGranularDailyDataSelector = (
   state: RootState
 ): SelectedSiteState["granularDailyData"] =>
@@ -511,6 +559,7 @@ export const {
   setSiteData,
   unsetSelectedSite,
   unsetLiveData,
+  unsetLatestData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,

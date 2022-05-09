@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
 import axios from 'axios';
 import { isNil } from 'lodash';
@@ -26,14 +27,15 @@ export const getLatestData = (
 };
 
 export const extractSofarValues = (sofarValues?: SofarValue[]): number[] =>
-  sofarValues?.filter((data) => !isNil(data.value)).map(({ value }) => value) ||
-  [];
+  sofarValues
+    ?.filter((data) => !isNil(data?.value))
+    .map(({ value }) => value) || [];
 
 export const filterSofarResponse = (responseData: any) => {
   return (
     responseData
       ? responseData.values.filter(
-          (data: SofarValue) => !isNil(data.value) && data.value !== 9999,
+          (data: SofarValue) => !isNil(data?.value) && data.value !== 9999,
         )
       : []
   ) as SofarValue[];
@@ -82,7 +84,9 @@ export async function sofarForecast(
   latitude: number,
   longitude: number,
 ): Promise<SofarValue> {
-  return axios
+  const hash = (Math.random() + 1).toString(36).substring(7);
+  console.time(`sofarForecast for ${modelId}-${variableID} (${hash})`);
+  const forecast = await axios
     .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
       params: {
         variableIDs: [variableID],
@@ -106,6 +110,8 @@ export async function sofarForecast(
         );
       }
     });
+  console.timeEnd(`sofarForecast for ${modelId}-${variableID} (${hash})`);
+  return forecast;
 }
 
 export function sofarSensor(sensorId: string, start?: string, end?: string) {
@@ -165,6 +171,7 @@ export async function getSofarHindcastData(
 ) {
   const [start, end] = getStartEndDate(endDate, hours);
   // Get data for model and return values
+  console.time(`getSofarHindcast for ${modelId}-${variableID}`);
   const hindcastVariables = await sofarHindcast(
     modelId,
     variableID,
@@ -173,6 +180,7 @@ export async function getSofarHindcastData(
     start,
     end,
   );
+  console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 
   // Filter out unkown values
   return filterSofarResponse(hindcastVariables);
@@ -183,6 +191,7 @@ export async function getSpotterData(
   endDate?: Date,
   startDate?: Date,
 ): Promise<SpotterData> {
+  console.time(`getSpotterData for sensor ${sensorId}`);
   const [start, end] =
     endDate && !startDate
       ? getStartEndDate(endDate)
@@ -293,6 +302,8 @@ export async function getSpotterData(
     },
     [[], []],
   );
+
+  console.timeEnd(`getSpotterData for sensor ${sensorId}`);
 
   return {
     topTemperature: sofarTopTemperature.filter((data) => !isNil(data.value)),

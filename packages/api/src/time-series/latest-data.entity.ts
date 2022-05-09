@@ -15,20 +15,28 @@ import { TimeSeries } from './time-series.entity';
 
 @ViewEntity({
   expression: (connection: Connection) => {
-    return connection
-      .createQueryBuilder()
-      .select(
-        'DISTINCT ON (metric, type, site_id, survey_point_id) time_series.id',
-      )
-      .addSelect('metric')
-      .addSelect('timestamp')
-      .addSelect('value')
-      .addSelect('type', 'source')
-      .addSelect('site_id')
-      .addSelect('survey_point_id')
-      .from(TimeSeries, 'time_series')
-      .innerJoin('sources', 'sources', 'sources.id = time_series.source_id')
-      .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC');
+    return (
+      connection
+        .createQueryBuilder()
+        .select(
+          'DISTINCT ON (metric, type, site_id, survey_point_id) time_series.id',
+        )
+        .addSelect('metric')
+        .addSelect('timestamp')
+        .addSelect('value')
+        .addSelect('type', 'source')
+        .addSelect('site_id')
+        .addSelect('survey_point_id')
+        .from(TimeSeries, 'time_series')
+        .innerJoin('sources', 'sources', 'sources.id = time_series.source_id')
+        // Limit data to the past week. Bonus, it makes view refreshes a lot faster.
+        .where("timestamp >= current_date - INTERVAL '7 days'")
+        // Look a bit further in the past for sonde data
+        .orWhere(
+          "type IN ('sonde') AND (timestamp >= current_date - INTERVAL '90 days')",
+        )
+        .orderBy('metric, type, site_id, survey_point_id, timestamp', 'DESC')
+    );
   },
   materialized: true,
 })

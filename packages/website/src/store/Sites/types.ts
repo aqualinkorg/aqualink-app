@@ -111,19 +111,22 @@ export type Metrics = CamelCase<MetricsKeys>;
 
 export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
 
+export type LatestDataASSofarValue = {
+  [keys in Metrics]?: SofarValue;
+};
+
 export interface LatestData {
   id: number;
-  timestamp: Date;
+  timestamp: string;
   value: number;
-  site: { id: number };
+  site?: { id: number };
   siteId: number;
-  surveyPoint: { id: number };
+  surveyPoint?: { id: number };
   source: Sources;
-  metric: Metrics;
+  metric: MetricsKeys;
 }
 export interface LiveData {
   site: { id: number };
-  latestData: LatestData[];
   bottomTemperature?: SofarValue;
   topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
@@ -348,6 +351,7 @@ export interface SelectedSiteState {
   draft: SiteUpdateParams | null;
   details?: Site | null;
   liveData?: LiveData | null;
+  latestData?: LatestData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;

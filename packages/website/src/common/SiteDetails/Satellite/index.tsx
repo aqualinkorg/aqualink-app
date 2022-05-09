@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 
 import { dhwColorCode } from "../../../assets/colorCode";
-import type { LiveData } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import satellite from "../../../assets/satellite.svg";
 import {
@@ -23,9 +22,11 @@ import {
 import { styles as incomingStyles } from "../styles";
 import UpdateInfo from "../../UpdateInfo";
 import { toRelativeTime } from "../../../helpers/dates";
+import { LatestDataASSofarValue } from "../../../store/Sites/types";
 
-const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
-  const { degreeHeatingDays, satelliteTemperature, sstAnomaly } = liveData;
+const Satellite = ({ maxMonthlyMean, data, classes }: SatelliteProps) => {
+  const { dhw, satelliteTemperature, sstAnomaly } = data;
+  const degreeHeatingDays = { ...dhw, value: (dhw?.value || 0) * 7 };
   const relativeTime =
     satelliteTemperature?.timestamp &&
     toRelativeTime(satelliteTemperature.timestamp);
@@ -55,7 +56,10 @@ const Satellite = ({ maxMonthlyMean, liveData, classes }: SatelliteProps) => {
       tooltipTitle: "Difference between current SST and longterm average",
       value: `${
         sstAnomaly
-          ? `${sstAnomaly > 0 ? "+" : ""}${formatNumber(sstAnomaly, 1)}`
+          ? `${sstAnomaly.value > 0 ? "+" : ""}${formatNumber(
+              sstAnomaly.value,
+              1
+            )}`
           : "- -"
       }°C`,
     },
@@ -157,7 +161,7 @@ const styles = () =>
 
 interface SatelliteIncomingProps {
   maxMonthlyMean: number | null;
-  liveData: LiveData;
+  data: LatestDataASSofarValue;
 }
 
 type SatelliteProps = WithStyles<typeof styles> & SatelliteIncomingProps;

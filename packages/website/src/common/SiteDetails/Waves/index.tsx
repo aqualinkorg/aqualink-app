@@ -12,7 +12,7 @@ import classNames from "classnames";
 import { isNil } from "lodash";
 
 import UpdateInfo from "../../UpdateInfo";
-import type { LiveData } from "../../../store/Sites/types";
+import type { LatestDataASSofarValue } from "../../../store/Sites/types";
 import { formatNumber } from "../../../helpers/numberUtils";
 import { toRelativeTime } from "../../../helpers/dates";
 import waves from "../../../assets/waves.svg";
@@ -20,16 +20,18 @@ import arrow from "../../../assets/directioncircle.svg";
 import wind from "../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ liveData }: WavesProps) => {
+const Waves = ({ data }: WavesProps) => {
   const {
     topTemperature,
     bottomTemperature,
-    waveHeight,
+    significantWaveHeight,
     waveMeanDirection,
     waveMeanPeriod,
     windSpeed,
     windDirection,
-  } = liveData;
+  } = data;
+
+  const waveHeight = significantWaveHeight;
 
   // Make sure to get the direction the wind is COMING FROM.
   // use `numberUtils.invertDirection` if needed.
@@ -288,7 +290,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface WavesProps {
-  liveData: LiveData;
+  data: LatestDataASSofarValue;
 }
 
 interface StyleProps {

@@ -16,6 +16,8 @@ import siteServices from "../../services/siteServices";
 import type { TableRow } from "../Homepage/types";
 import {
   DailyData,
+  LatestData,
+  LatestDataASSofarValue,
   Metrics,
   MetricsKeys,
   metricsKeysList,
@@ -317,4 +319,42 @@ export const timeSeriesRequest = async (
     !attachDirection ? start : minDate,
     !attachDirection ? end : maxDate,
   ];
+};
+
+export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
+  if (!data || data.length === 0) return {};
+
+  // Copying, sorting and filtering to keep spotter or latest data.
+  const copy = [...data];
+  const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
+  const validityDate = Date.now() - spotterValidityLimit;
+
+  // eslint-disable-next-line fp/no-mutating-methods
+  const sorted = copy.sort((x, y) => {
+    // if spotter data is available and less than 12 hours old, use it.
+    const xTime = new Date(x.timestamp).getTime();
+    if (x.source === "spotter" && xTime > validityDate) {
+      return -1;
+    }
+    const yTime = new Date(y.timestamp).getTime();
+    if (y.source === "spotter" && yTime > validityDate) {
+      return -1;
+    }
+
+    if (xTime > yTime) return -1;
+    if (xTime < yTime) return 1;
+    return 0;
+  });
+
+  const filtered = sorted.filter(
+    (value, index, self) => self.indexOf(value) === index
+  );
+
+  return filtered.reduce(
+    (a, c) => ({
+      ...a,
+      [camelCase(c.metric)]: { timestamp: c.timestamp, value: c.value },
+    }),
+    {}
+  );
 };

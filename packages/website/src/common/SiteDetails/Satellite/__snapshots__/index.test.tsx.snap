@@ -4,7 +4,7 @@ exports[`renders as expected 1`] = `
 <div>
   <mock-card
     classname="Satellite-root-8"
-    style="background-color: rgb(117, 180, 114);"
+    style="background-color: rgb(8, 91, 163);"
   >
     <div
       class="MuiCardHeader-root Satellite-header-3"
@@ -62,7 +62,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-5"
                 variant="h3"
               >
-                26.0°C
+                15.3°C
               </mock-typography>
             </mock-tooltip>
           </div>
@@ -102,7 +102,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-5"
                 variant="h3"
               >
-                4.1
+                0.0
               </mock-typography>
             </mock-tooltip>
           </div>
@@ -122,7 +122,7 @@ exports[`renders as expected 1`] = `
                 classname="Satellite-contentTextValues-5"
                 variant="h3"
               >
-                - -°C
+                -0.5°C
               </mock-typography>
             </mock-tooltip>
           </div>
@@ -349,7 +349,7 @@ exports[`renders as expected 1`] = `
                 >
                   Last data received
                    
-                  5 min. ago
+                  1 day ago
                 </mock-typography>
                 <mock-typography
                   classname="makeStyles-updateInfoText-14"
