@@ -1,7 +1,7 @@
 import { CardIncomingProps } from "./Card";
-import metrics from "../../assets/img/landing-page/metrics.png";
+import metrics from "../../assets/img/landing-page/metrics.jpg";
 import sensors from "../../assets/img/landing-page/sensors.png";
-import surveyImages from "../../assets/img/landing-page/survey-images.png";
+import surveyImages from "../../assets/img/landing-page/survey-images.jpg";
 import map from "../../assets/img/landing-page/map.png";
 
 export const cardTitles: CardIncomingProps[] = [
