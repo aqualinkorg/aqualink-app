@@ -4,7 +4,7 @@ import { Box, Container, makeStyles, Theme } from "@material-ui/core";
 import moment from "moment";
 import { camelCase, isNaN, isNumber, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { utcToZonedTime } from "date-fns-tz";
+import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
 import { useHistory } from "react-router-dom";
 import {
   latestDataSelector,
@@ -251,27 +251,29 @@ const MultipleSensorsCharts = ({
         .tz(site.timezone || "UTC")
         .startOf("day")
         .toISOString();
-
-      setPickerEndDate(
-        utcToZonedTime(
-          initialEnd || localizedMaxDate || today,
-          site.timezone || "UTC"
-        ).toISOString()
-      );
-
       setPickerStartDate(
-        utcToZonedTime(
-          initialStart || pastThreeMonths,
-          site.timezone || "UTC"
-        ).toISOString()
+        initialStart
+          ? zonedTimeToUtc(initialStart, site.timezone || "UTC").toISOString()
+          : utcToZonedTime(
+              initialStart || pastThreeMonths,
+              site.timezone || "UTC"
+            ).toISOString()
+      );
+      setPickerEndDate(
+        initialEnd
+          ? zonedTimeToUtc(initialEnd, site.timezone || "UTC").toISOString()
+          : utcToZonedTime(
+              localizedMaxDate || today,
+              site.timezone || "UTC"
+            ).toISOString()
       );
     }
   }, [
     hoboBottomTemperatureRange,
     initialEnd,
     initialStart,
-    pickerEndDate,
     pickerStartDate,
+    pickerEndDate,
     rangesLoading,
     site.timezone,
     today,
@@ -379,15 +381,8 @@ const MultipleSensorsCharts = ({
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate) {
-      const newStart =
-        pickerStartDate !== initialStart
-          ? moment(pickerStartDate).format("YYYY-MM-DD")
-          : pickerStartDate;
-
-      const newEnd =
-        pickerEndDate !== initialEnd
-          ? moment(pickerEndDate).format("YYYY-MM-DD")
-          : pickerEndDate;
+      const newStart = moment(pickerStartDate).format("YYYY-MM-DD");
+      const newEnd = moment(pickerEndDate).format("YYYY-MM-DD");
 
       // eslint-disable-next-line fp/no-mutating-methods
       history.push({
