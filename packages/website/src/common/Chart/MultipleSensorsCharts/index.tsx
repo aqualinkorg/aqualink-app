@@ -245,7 +245,7 @@ const MultipleSensorsCharts = ({
     if (!rangesLoading && !pickerStartDate && !pickerEndDate) {
       const { maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
       const localizedMaxDate = localizedEndOfDay(maxDate, site.timezone);
-      const pastThreeMonths = moment(
+      const pastOneMonth = moment(
         subtractFromDate(localizedMaxDate || today, "month", 1)
       )
         .tz(site.timezone || "UTC")
@@ -254,10 +254,7 @@ const MultipleSensorsCharts = ({
       setPickerStartDate(
         initialStart
           ? zonedTimeToUtc(initialStart, site.timezone || "UTC").toISOString()
-          : utcToZonedTime(
-              initialStart || pastThreeMonths,
-              site.timezone || "UTC"
-            ).toISOString()
+          : utcToZonedTime(pastOneMonth, site.timezone || "UTC").toISOString()
       );
       setPickerEndDate(
         initialEnd
@@ -381,12 +378,11 @@ const MultipleSensorsCharts = ({
 
   useEffect(() => {
     if (pickerStartDate && pickerEndDate) {
-      const newStart = moment(pickerStartDate).format("YYYY-MM-DD");
-      const newEnd = moment(pickerEndDate).format("YYYY-MM-DD");
-
       // eslint-disable-next-line fp/no-mutating-methods
       history.push({
-        search: `?start=${newStart}&end=${newEnd}`,
+        search: `?start=${pickerStartDate.split("T")[0]}&end=${
+          pickerEndDate.split("T")[0]
+        }`,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
