@@ -400,13 +400,13 @@ const MultipleSensorsCharts = ({
 
   const dataForCsv = [
     ...tempAnalysisDatasets.map((dataset) => ({
-      name: `TEMPERATURE ANALYSIS ${dataset.label}`,
+      name: `${dataset.metric || "unknownMetric"}_${dataset.label}`,
       values: dataset.data,
     })),
-    ...Object.entries(spotterConfig).map(([key, { title }]) => {
+    ...Object.entries(spotterConfig).map(([key]) => {
       const dataset = spotterMetricDataset(key as Metrics);
       return {
-        name: `${title} ${dataset.label}`,
+        name: `${key}_${dataset.label}`,
         values: dataset.data,
       };
     }),
@@ -421,7 +421,10 @@ const MultipleSensorsCharts = ({
           chartEndDate,
           site.timezone
         );
-        return { name: `${item.title} ${dataset.label}`, values: dataset.data };
+        return {
+          name: `${item.title.split(" ")[0]} ${dataset.label}`,
+          values: dataset.data,
+        };
       }
     ),
     ...sondeDatasets().map(({ title, dataset }) => ({

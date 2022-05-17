@@ -9,7 +9,7 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
-import type { SofarValue } from "../../store/Sites/types";
+import type { Metrics, SofarValue } from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
 import { SurveyListItem } from "../../store/Survey/types";
@@ -39,6 +39,7 @@ export interface Dataset {
   cardColumnName?: string; // The label of the data column on the analysis card. If not specified, the label property is used instead
   cardColumnTooltip?: string; // An optional tooltip for the card column label
   tooltipLabel?: string; // An optional label for the data on the chart's tooltip. If not specified, the label property is used instead
+  metric?: Metrics;
 }
 
 export interface ChartProps {
