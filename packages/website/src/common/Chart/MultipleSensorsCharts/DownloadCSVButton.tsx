@@ -79,15 +79,15 @@ function DownloadCSVButton({
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const onClose = (selectedData: { name: string; values: SofarValue[] }[]) => {
-    if (selectedData.length === 0) {
+  const onClose = (shouldDownload: boolean) => {
+    if (!shouldDownload) {
       setOpen(false);
       return;
     }
     setLoading(true);
     // give time for the loading state to be rendered by react.
     setTimeout(() => {
-      downloadCsv(getCSVData(selectedData), undefined, fileName);
+      downloadCsv(getCSVData(data), undefined, fileName);
       setLoading(false);
       setOpen(false);
     }, 5);

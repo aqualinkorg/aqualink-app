@@ -1,15 +1,13 @@
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SofarValue } from "../../../store/Sites/types";
 
 export interface DownloadCSVDialogProps {
@@ -17,7 +15,7 @@ export interface DownloadCSVDialogProps {
   data: { name: string; values: SofarValue[] }[];
   startDate: string;
   endDate: string;
-  onClose: (data: { name: string; values: SofarValue[] }[]) => void;
+  onClose: (shouldDownload: boolean) => void;
 }
 
 const DownloadCSVDialog = ({
@@ -28,28 +26,14 @@ const DownloadCSVDialog = ({
   endDate,
 }: DownloadCSVDialogProps) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState<boolean[]>(
-    new Array(data.length).fill(true)
-  );
-
-  const handleChange = (position: number) => {
-    const newSelected = selected.map((item, index) =>
-      index === position ? !item : item
-    );
-    setSelected(newSelected);
-  };
 
   const handleClose = (shouldDownload: boolean) => {
     if (shouldDownload) {
-      onClose(data.filter((_, index) => selected[index]));
+      onClose(true);
     } else {
-      onClose([]);
+      onClose(false);
     }
   };
-
-  useEffect(() => {
-    setSelected(new Array(data.length).fill(true));
-  }, [data]);
 
   return (
     <Dialog
@@ -65,7 +49,7 @@ const DownloadCSVDialog = ({
       </DialogTitle>
       <DialogContent dividers>
         <DialogContentText>
-          Select data to download into CSV format for dates between{" "}
+          Selected data to download into CSV format from dates between{" "}
           <span className={classes.bold}>
             {moment(startDate).format("MM/DD/YYYY")}
           </span>{" "}
@@ -74,21 +58,14 @@ const DownloadCSVDialog = ({
             {moment(endDate).format("MM/DD/YYYY")}
           </span>
         </DialogContentText>
-        <div className={classes.checkboxesWrapper}>
-          {data.map((x, index) => (
-            <FormControlLabel
-              className={classes.checkboxLabel}
-              control={
-                <Checkbox
-                  color="primary"
-                  disabled={x.values.length === 0}
-                  checked={selected[index]}
-                  onChange={() => handleChange(index)}
-                />
-              }
-              label={x.name}
-            />
-          ))}
+        <div className={classes.listWrapper}>
+          <ul>
+            {data.map((x) => (
+              <li key={x.name} className={classes.listItem}>
+                {x.name}
+              </li>
+            ))}
+          </ul>
         </div>
       </DialogContent>
       <DialogActions>
@@ -108,11 +85,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     overflowWrap: "break-word",
   },
-  checkboxesWrapper: {
+  listWrapper: {
     display: "flex",
     flexDirection: "column",
   },
-  checkboxLabel: {
+  listItem: {
     color: "#2f2f2f",
   },
   bold: {
