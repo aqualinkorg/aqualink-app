@@ -400,13 +400,15 @@ const MultipleSensorsCharts = ({
 
   const dataForCsv = [
     ...tempAnalysisDatasets.map((dataset) => ({
-      name: `${dataset.metric || "unknownMetric"}_${dataset.label}`,
+      name: `${dataset.metric || "unknownMetric"}_${
+        dataset.source || "unknownSource"
+      }`,
       values: dataset.data,
     })),
     ...Object.entries(spotterConfig).map(([key]) => {
       const dataset = spotterMetricDataset(key as Metrics);
       return {
-        name: `${key}_${dataset.label}`,
+        name: `${key}_spotter`,
         values: dataset.data,
       };
     }),
@@ -422,7 +424,7 @@ const MultipleSensorsCharts = ({
           site.timezone
         );
         return {
-          name: `${item.title.split(" ")[0]} ${dataset.label}`,
+          name: `${camelCase(item.title.split(" ")[0])}`,
           values: dataset.data,
         };
       }
