@@ -1,9 +1,11 @@
 import { Connection } from 'typeorm';
+import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { addSpotterData, addWindWaveData } from '../utils/spotter-time-series';
+import { addSpotterData } from '../utils/spotter-time-series';
+import { addWindWaveData } from '../utils/hindcast-wind-wave';
 
 export function runSpotterTimeSeriesUpdate(connection: Connection) {
   return addSpotterData([], 1, connection, {
@@ -15,10 +17,8 @@ export function runSpotterTimeSeriesUpdate(connection: Connection) {
 }
 
 export function runWindWaveTimeSeriesUpdate(connection: Connection) {
-  return addWindWaveData([], connection, {
+  return addWindWaveData([], {
     siteRepository: connection.getRepository(Site),
-    sourceRepository: connection.getRepository(Sources),
-    timeSeriesRepository: connection.getRepository(TimeSeries),
-    exclusionDatesRepository: connection.getRepository(ExclusionDates),
+    hindcastRepository: connection.getRepository(ForecastData),
   });
 }

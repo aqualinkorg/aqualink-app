@@ -1,14 +1,13 @@
 import { Logger } from '@nestjs/common';
-import { get, isNil, times } from 'lodash';
+import { get, times } from 'lodash';
 import moment from 'moment';
 import { Connection, In, IsNull, Not, Repository } from 'typeorm';
 import Bluebird from 'bluebird';
-import { Point } from 'geojson';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
 import { Metric } from '../time-series/metrics.entity';
 import { TimeSeries } from '../time-series/time-series.entity';
-import { getSpotterData, sofarForecast } from './sofar';
+import { getSpotterData } from './sofar';
 import {
   DEFAULT_SPOTTER_DATA_VALUE,
   ValueWithTimestamp,
@@ -18,8 +17,6 @@ import { SourceType } from '../sites/schemas/source-type.enum';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
 import { excludeSpotterData } from './site.utils';
 import { getSources } from './time-series.utils';
-import { SofarModels, sofarVariableIDs } from './constants';
-import { getWindDirection, getWindSpeed } from './math';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -37,7 +34,7 @@ const logger = new Logger('SpotterTimeSeries');
  * @param siteRepository The required repository to make the query
  * @returns An array of site entities
  */
-const getSites = (
+export const getSites = (
   siteIds: number[],
   hasSensorOnly: boolean = false,
   siteRepository: Repository<Site>,
@@ -201,170 +198,6 @@ export const addSpotterData = async (
           );
         }),
     { concurrency: 1 },
-  );
-
-  // Update materialized view
-  logger.log('Refreshing materialized view latest_data');
-  await connection.query('REFRESH MATERIALIZED VIEW latest_data');
-};
-
-/**
- * Fetch spotter and wave data from sofar and save them on time_series table
- * @param siteIds The siteIds for which to perform the update
- * @param connection An active typeorm connection object
- * @param repositories The needed repositories, as defined by the interface
- */
-export const addWindWaveData = async (
-  siteIds: number[],
-  connection: Connection,
-  repositories: Repositories,
-) => {
-  logger.log('Fetching sites');
-  // Fetch all sites
-  const sites = await getSites(siteIds, false, repositories.siteRepository);
-
-  logger.log('Fetching sources');
-  // Fetch sources
-  const gfsSources = await Promise.all(
-    getSources(sites, SourceType.GFS, repositories.sourceRepository),
-  );
-  const sofarWaveSources = await Promise.all(
-    getSources(
-      sites,
-      SourceType.SOFAR_WAVE_MODEL,
-      repositories.sourceRepository,
-    ),
-  );
-
-  // Create a map from the siteIds to the source entities
-  const siteToGfsSource: Record<number, Sources> = Object.fromEntries(
-    gfsSources.map((source) => [source.site.id, source]),
-  );
-
-  const siteToSofarWaveModelSource: Record<number, Sources> =
-    Object.fromEntries(
-      sofarWaveSources.map((source) => [source.site.id, source]),
-    );
-
-  const gfsDataLabels: [keyof SpotterData, Metric][] = [
-    ['windDirection', Metric.WIND_DIRECTION],
-    ['windSpeed', Metric.WIND_SPEED],
-  ];
-
-  const sofarDataLabels: [keyof SpotterData, Metric][] = [
-    ['significantWaveHeight', Metric.SIGNIFICANT_WAVE_HEIGHT],
-    ['waveMeanDirection', Metric.WAVE_MEAN_DIRECTION],
-    ['waveMeanPeriod', Metric.WAVE_MEAN_PERIOD],
-  ];
-
-  logger.log('Saving wind & wave forecast data');
-  await Bluebird.map(
-    sites,
-    async (site) => {
-      const { polygon } = site;
-      const [longitude, latitude] = (polygon as Point).coordinates;
-
-      logger.log(
-        `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
-      );
-
-      const [
-        significantWaveHeight,
-        waveMeanDirection,
-        waveMeanPeriod,
-        windVelocity10MeterEastward,
-        windVelocity10MeterNorthward,
-      ] = await Promise.all([
-        sofarForecast(
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-            .significantWaveHeight,
-          latitude,
-          longitude,
-        ),
-        sofarForecast(
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-          latitude,
-          longitude,
-        ),
-        sofarForecast(
-          SofarModels.SofarOperationalWaveModel,
-          sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-          latitude,
-          longitude,
-        ),
-        sofarForecast(
-          SofarModels.GFS,
-          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-          latitude,
-          longitude,
-        ),
-        sofarForecast(
-          SofarModels.GFS,
-          sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
-          latitude,
-          longitude,
-        ),
-      ]);
-
-      // Calculate wind speed and direction from velocity
-      const windNorhwardVelocity = windVelocity10MeterNorthward?.value;
-      const windEastwardVelocity = windVelocity10MeterEastward?.value;
-      const windSpeed = {
-        timestamp: windVelocity10MeterNorthward?.timestamp,
-        value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
-      };
-      const windDirection = {
-        timestamp: windVelocity10MeterNorthward?.timestamp,
-        value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
-      };
-
-      const forecastData = {
-        significantWaveHeight,
-        waveMeanDirection,
-        waveMeanPeriod,
-        windSpeed,
-        windDirection,
-      };
-
-      // Save wind forecast data to time_series
-      await Promise.all(
-        // eslint-disable-next-line array-callback-return, consistent-return
-        gfsDataLabels.map(([dataLabel, metric]) => {
-          if (
-            !isNil(forecastData[dataLabel]?.value) &&
-            !Number.isNaN(forecastData[dataLabel]?.value)
-          ) {
-            return saveDataBatch(
-              [forecastData[dataLabel]] as ValueWithTimestamp[], // We know that there would not be any undefined values here
-              siteToGfsSource[site.id],
-              metric,
-              repositories.timeSeriesRepository,
-            );
-          }
-        }),
-      );
-
-      // Save sofar wave forecast data to time_series
-      await Promise.all(
-        // eslint-disable-next-line array-callback-return, consistent-return
-        sofarDataLabels.map(([dataLabel, metric]) => {
-          if (
-            !isNil(forecastData[dataLabel]?.value) &&
-            !Number.isNaN(forecastData[dataLabel]?.value)
-          ) {
-            return saveDataBatch(
-              [forecastData[dataLabel]] as ValueWithTimestamp[], // We know that there would not be any undefined values here
-              siteToSofarWaveModelSource[site.id],
-              metric,
-              repositories.timeSeriesRepository,
-            );
-          }
-        }),
-      );
-    },
-    { concurrency: 4 },
   );
 
   // Update materialized view

@@ -43,6 +43,16 @@ export const filterSofarResponse = (responseData: any) => {
   ) as ValueWithTimestamp[];
 };
 
+axiosRetry(axios, { retries: 3 });
+
+interface HindcastResponse {
+  variableID: string;
+  variableName: string;
+  dataCategory: string;
+  physicalUnit: string;
+  values: { timestamp: string; value: number }[];
+}
+
 export async function sofarHindcast(
   modelId: string,
   variableID: string,
@@ -63,7 +73,7 @@ export async function sofarHindcast(
       },
     })
     .then((response) => {
-      return response.data.hindcastVariables[0];
+      return response.data.hindcastVariables[0] as HindcastResponse;
     })
     .catch((error) => {
       if (error.response) {
