@@ -1,13 +1,18 @@
 import { Logger } from '@nestjs/common';
 import Bluebird from 'bluebird';
 import { Point } from 'geojson';
+import { isNil } from 'lodash';
 import moment from 'moment';
 import { Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
-import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
+import {
+  ForecastData,
+  WindWaveMetric,
+} from '../wind-wave-data/wind-wave-data.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
+import { SofarValue, SpotterData } from './sofar.types';
 import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
@@ -103,18 +108,6 @@ export const addWindWaveData = async (
         return x.values[x.values.length - 1]; // latest available forecast in the past
       });
 
-      // get latest date
-      const timestamp = [
-        significantWaveHeight,
-        waveMeanDirection,
-        waveMeanPeriod,
-        windVelocity10MeterEastward,
-        windVelocity10MeterNorthward,
-      ].reduce((prev, curr) => {
-        if (!curr) return prev;
-        return curr.timestamp > prev ? curr.timestamp : prev;
-      }, '');
-
       // Calculate wind speed and direction from velocity
       // TODO: treat undefined better
       const windNorthwardVelocity = windVelocity10MeterNorthward?.value || 0;
@@ -128,25 +121,54 @@ export const addWindWaveData = async (
         value: getWindDirection(windEastwardVelocity, windNorthwardVelocity),
       };
 
-      await repositories.hindcastRepository
-        .createQueryBuilder('forecast_data')
-        .insert()
-        .values([
-          {
-            site,
-            timestamp: moment(timestamp).startOf('minute').toDate(),
-            significantWaveHeight: significantWaveHeight?.value,
-            meanDirection: waveMeanDirection?.value,
-            meanPeriod: waveMeanPeriod?.value,
-            windSpeed: windSpeed.value,
-            windDirection: windDirection.value,
-            updatedAt: today,
-          },
-        ])
-        .onConflict(
-          `("site_id") DO UPDATE SET "timestamp" = excluded."timestamp", "significant_wave_height" = excluded."significant_wave_height", "mean_direction" = excluded."mean_direction", "mean_period" = excluded."mean_period", "wind_speed" = excluded."wind_speed", "wind_direction" = excluded."wind_direction", "updated_at" = excluded."updated_at"`,
-        )
-        .execute();
+      const dataLabels: [keyof SpotterData, WindWaveMetric][] = [
+        ['significantWaveHeight', WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT],
+        ['waveMeanDirection', WindWaveMetric.WAVE_MEAN_DIRECTION],
+        ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD],
+        ['windDirection', WindWaveMetric.WIND_DIRECTION],
+        ['windSpeed', WindWaveMetric.WIND_SPEED],
+      ];
+
+      const forecastData = {
+        significantWaveHeight,
+        waveMeanDirection,
+        waveMeanPeriod,
+        windSpeed,
+        windDirection,
+      };
+
+      // Save wind wave data to forecast_data
+      await Promise.all(
+        // eslint-disable-next-line array-callback-return, consistent-return
+        dataLabels.map(([dataLabel, metric]) => {
+          if (
+            !isNil(forecastData[dataLabel]?.value) &&
+            !Number.isNaN(forecastData[dataLabel]?.value)
+          ) {
+            return repositories.hindcastRepository
+              .createQueryBuilder('forecast_data')
+              .insert()
+              .values(
+                [1].map(() => {
+                  const value = forecastData[dataLabel] as SofarValue;
+                  return {
+                    site,
+                    timestamp: moment(value.timestamp)
+                      .startOf('minute')
+                      .toDate(),
+                    metric,
+                    value: value.value,
+                    updatedAt: today,
+                  };
+                }),
+              )
+              .onConflict(
+                `ON CONSTRAINT "one_row_per_site_per_metric" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+              )
+              .execute();
+          }
+        }),
+      );
     },
     { concurrency: 4 },
   );

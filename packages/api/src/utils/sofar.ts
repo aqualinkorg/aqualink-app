@@ -50,7 +50,7 @@ interface HindcastResponse {
   variableName: string;
   dataCategory: string;
   physicalUnit: string;
-  values: { timestamp: string; value: number }[];
+  values: SofarValue[];
 }
 
 export async function sofarHindcast(
@@ -141,7 +141,7 @@ export function sofarSensor(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -166,7 +166,7 @@ export function sofarWaveData(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -192,7 +192,7 @@ export async function getSofarHindcastData(
   );
   console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 
-  // Filter out unkown values
+  // Filter out unknown values
   return filterSofarResponse(hindcastVariables);
 }
 

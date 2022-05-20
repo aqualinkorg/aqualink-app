@@ -11,7 +11,7 @@ export class WindWaveService {
   ) {}
 
   async getWindWaveDate(siteId: number) {
-    return this.forecastDataRepository.findOne({
+    return this.forecastDataRepository.find({
       where: { site: siteId },
     });
   }
