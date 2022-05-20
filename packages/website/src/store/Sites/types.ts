@@ -131,14 +131,18 @@ export interface LiveData {
   topTemperature?: SofarValue;
   satelliteTemperature?: SofarValue;
   degreeHeatingDays?: SofarValue;
-  waveHeight?: SofarValue;
+  weeklyAlertLevel?: number;
+  spotterPosition?: SpotterPosition;
+  sstAnomaly?: number;
+}
+
+export interface ForecastData {
+  site: { id: number };
+  significantWaveHeight?: SofarValue;
   waveMeanDirection?: SofarValue;
   waveMeanPeriod?: SofarValue;
   windSpeed?: SofarValue;
   windDirection?: SofarValue;
-  weeklyAlertLevel?: number;
-  spotterPosition?: SpotterPosition;
-  sstAnomaly?: number;
 }
 
 export interface DailyData {
@@ -352,6 +356,7 @@ export interface SelectedSiteState {
   details?: Site | null;
   liveData?: LiveData | null;
   latestData?: LatestData[] | null;
+  forecastData?: ForecastData | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;

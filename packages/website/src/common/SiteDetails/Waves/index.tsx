@@ -20,10 +20,8 @@ import arrow from "../../../assets/directioncircle.svg";
 import wind from "../../../assets/wind.svg";
 import { styles as incomingStyles } from "../styles";
 
-const Waves = ({ data }: WavesProps) => {
+const Waves = ({ data, hasSpotter }: WavesProps) => {
   const {
-    topTemperature,
-    bottomTemperature,
     significantWaveHeight,
     waveMeanDirection,
     waveMeanPeriod,
@@ -41,8 +39,6 @@ const Waves = ({ data }: WavesProps) => {
     windDirection: windDirectionFrom,
     wavesDirection: waveDirectionFrom,
   });
-
-  const hasSpotter = Boolean(topTemperature?.value || bottomTemperature?.value);
 
   const windRelativeTime =
     windSpeed?.timestamp && toRelativeTime(windSpeed.timestamp);
@@ -291,6 +287,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface WavesProps {
   data: LatestDataASSofarValue;
+  hasSpotter: boolean;
 }
 
 interface StyleProps {

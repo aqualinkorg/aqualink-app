@@ -34,10 +34,13 @@ import { styles as incomingStyles } from "./styles";
 import LoadingSkeleton from "../LoadingSkeleton";
 import playIcon from "../../assets/play-icon.svg";
 import {
+  forecastDataRequest,
+  forecastDataSelector,
   latestDataRequest,
   latestDataSelector,
   liveDataRequest,
   liveDataSelector,
+  unsetForecastData,
   unsetLatestData,
   unsetLiveData,
 } from "../../store/Sites/selectedSiteSlice";
@@ -59,7 +62,9 @@ const SiteDetails = ({
   const [latestDataAsSofarValues, setLatestDataAsSofarValues] =
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
+  const [hastSpotterData, setHasSpotterData] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
+  const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const [lng, lat] = site?.polygon ? getMiddlePoint(site.polygon) : [];
   const isLoading = !site;
@@ -77,17 +82,55 @@ const SiteDetails = ({
     return () => {
       dispatch(unsetLiveData());
       dispatch(unsetLatestData());
+      dispatch(unsetForecastData());
     };
   }, [dispatch]);
 
   useEffect(() => {
     if (latestData) {
       setLatestDataAsSofarValues(parseLatestData(latestData));
+      const latestWindWaveInformation = latestData.find(
+        (x) =>
+          x.metric === "wind_direction" ||
+          x.metric === "significant_wave_height" ||
+          x.metric === "wind_speed" ||
+          x.metric === "wave_mean_direction" ||
+          x.metric === "wave_mean_period"
+      );
+      const now = new Date();
+      const twelveHoursEarlier = new Date(now.getTime() - 12 * 60 * 60 * 1000);
+      if (
+        (latestWindWaveInformation?.timestamp || "") <
+          twelveHoursEarlier.toISOString() &&
+        site
+      ) {
+        if (!forecastData) {
+          dispatch(forecastDataRequest(`${site.id}`));
+        }
+        setHasSpotterData(false);
+      } else {
+        setHasSpotterData(true);
+      }
     }
     setHasSondeData(
       Boolean(latestData?.some((data) => data.source === "sonde"))
     );
-  }, [latestData]);
+  }, [dispatch, forecastData, latestData, site]);
+
+  useEffect(() => {
+    if (forecastData && !hastSpotterData) {
+      const newDate = {
+        ...latestDataAsSofarValues,
+        significantWaveHeight: forecastData.significantWaveHeight,
+        waveMeanDirection: forecastData.waveMeanDirection,
+        waveMeanPeriod: forecastData.waveMeanPeriod,
+        windDirection: forecastData.windDirection,
+        windSpeed: forecastData.windSpeed,
+      } as LatestDataASSofarValue;
+      setLatestDataAsSofarValues(newDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forecastData, hastSpotterData]);
 
   const { videoStream } = site || {};
 
@@ -110,7 +153,7 @@ const SiteDetails = ({
               dailyData={sortByDate(site.dailyData, "date", "asc").slice(-1)[0]}
             />
           ),
-          <Waves data={latestDataAsSofarValues} />,
+          <Waves data={latestDataAsSofarValues} hasSpotter={hastSpotterData} />,
         ]
       : times(4, () => null);
 
