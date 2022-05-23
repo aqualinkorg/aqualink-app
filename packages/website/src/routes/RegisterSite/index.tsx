@@ -183,19 +183,10 @@ const Apply = ({ classes }: ApplyProps) => {
               </Typography>
 
               <Typography>
-                To get your local site registered with Aqualink to start
-                tracking surface temperatures and survey imagery please complete
+                To get your local site registered with Aqualink please complete
                 the form below. Your site will become immediately available for
-                you to see though some of the data will take up to 24 hours to
-                show up.
-              </Typography>
-
-              <Typography>
-                Once you have your site registered you can apply to get a smart
-                buoy to track underwater temperatures as well. If approved,
-                Aqualink will provide you with a buoy free of charge but you
-                will be responsible for paying the shipping and import duties
-                costs (if applicable).
+                you to see though some of the satellite and model data will take
+                up to 24 hours to show up.
               </Typography>
             </Grid>
           </Grid>

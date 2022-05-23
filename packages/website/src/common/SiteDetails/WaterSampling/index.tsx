@@ -75,7 +75,7 @@ const metrics = (
   },
   {
     label: "TURBIDITY",
-    value: formatNumber(data?.turbidity, 1),
+    value: formatNumber(data?.turbidity, 0),
     unit: getSondeConfig("turbidity").units,
     xs: 3,
   },

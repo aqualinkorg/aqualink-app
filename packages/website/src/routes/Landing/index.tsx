@@ -48,12 +48,6 @@ const landingPageButtons: LandingPageButton[] = [
     variant: "outlined",
     hasWhiteColor: true,
   },
-  {
-    label: "Track a Heatwave",
-    to: "/tracker",
-    variant: "outlined",
-    hasWhiteColor: true,
-  },
 ];
 
 const LandingPage = ({ classes }: LandingPageProps) => {
@@ -118,7 +112,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
             <Grid container item sm={11} md={7}>
               <Box mt="1.5rem" display="flex">
                 <Typography variant="h1" color="textPrimary">
-                  Temperature monitoring for marine ecosystems
+                  Monitoring for marine ecosystems
                 </Typography>
               </Box>
             </Grid>
@@ -162,7 +156,7 @@ const LandingPage = ({ classes }: LandingPageProps) => {
           </Container>
         </Box>
       </div>
-      <Container>
+      <Container className={classes.cardContainer}>
         {cardTitles.map((item) => (
           <Card
             key={item.title}
@@ -201,6 +195,9 @@ const styles = (theme: Theme) =>
     },
     aqualinkSecondPart: {
       opacity: 0.5,
+    },
+    cardContainer: {
+      marginBottom: "1rem",
     },
     buttons: {
       height: 48,
