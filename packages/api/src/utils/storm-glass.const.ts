@@ -7,4 +7,4 @@ try {
 }
 
 export const STORM_GLASS_API_KEY = process.env.STORMGLASS_API_KEY;
-export const STORM_GLASS_BASE_URL = 'https://api.stormglass.io/v2/';
+export const STORM_GLASS_BASE_URL = 'https://api.stormglass.io/v2';
