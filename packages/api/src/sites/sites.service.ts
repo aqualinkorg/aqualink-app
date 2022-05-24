@@ -51,6 +51,8 @@ import {
 import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
+import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
+import { functionsConfig } from '../../functionsConfig';
 
 @Injectable()
 export class SitesService {
@@ -146,6 +148,17 @@ export class SitesService {
           })
         );
       }),
+    );
+
+    const messageTemplate = {
+      channel: functionsConfig.slack.channel,
+      text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
+      mrkdwn: true,
+    } as SlackMessage;
+
+    await sendSlackMessage(
+      messageTemplate,
+      functionsConfig.slack.token as string,
     );
 
     return this.siteApplicationRepository.save({
