@@ -74,6 +74,12 @@ export async function sofarHindcast(
     })
     .then((response) => {
       // The api return an array of requested variables, but since we request one, ours it's always first
+      if (!response.data.hindcastVariables[0]) {
+        console.error(
+          `No Hindcast variable '${variableID}' available for ${latitude}, ${longitude}`,
+        );
+        return undefined;
+      }
       return response.data.hindcastVariables[0] as HindcastResponse;
     })
     .catch((error) => {
