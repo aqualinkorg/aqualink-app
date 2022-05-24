@@ -348,7 +348,7 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
 
   const filtered = sorted.filter(
     (value, index, self) =>
-      self.indexOf(value) === index &&
+      self.findIndex((v) => v.metric === value.metric) === index &&
       // only keep spotter top/bottom temp for now
       !(
         ["bottom_temperature", "top_temperature"].includes(value.metric) &&
