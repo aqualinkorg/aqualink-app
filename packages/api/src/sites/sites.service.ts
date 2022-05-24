@@ -52,7 +52,6 @@ import { getTimeSeriesDefaultDates } from '../utils/dates';
 import { SourceType } from './schemas/source-type.enum';
 import { TimeSeries } from '../time-series/time-series.entity';
 import { sendSlackMessage, SlackMessage } from '../utils/slack.utils';
-import { functionsConfig } from '../../functionsConfig';
 
 @Injectable()
 export class SitesService {
@@ -101,6 +100,7 @@ export class SitesService {
       longitude,
       latitude,
     );
+    const { SLACK_BOT_TOKEN, SLACK_BOT_CHANNEL } = process.env;
 
     const timezones = getTimezones(latitude, longitude) as string[];
 
@@ -151,15 +151,12 @@ export class SitesService {
     );
 
     const messageTemplate = {
-      channel: functionsConfig.slack.channel,
+      channel: SLACK_BOT_CHANNEL,
       text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
       mrkdwn: true,
     } as SlackMessage;
 
-    await sendSlackMessage(
-      messageTemplate,
-      functionsConfig.slack.token as string,
-    );
+    await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
 
     return this.siteApplicationRepository.save({
       ...appParams,
