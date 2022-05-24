@@ -338,7 +338,7 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
     }
     const yTime = new Date(y.timestamp).getTime();
     if (y.source === "spotter" && yTime > validityDate) {
-      return -1;
+      return 1;
     }
 
     if (xTime > yTime) return -1;
