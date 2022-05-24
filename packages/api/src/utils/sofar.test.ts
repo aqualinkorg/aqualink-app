@@ -1,5 +1,6 @@
 import { SofarModels, sofarVariableIDs } from './constants';
-import { getSofarHindcastData, getSpotterData, sofarForecast } from './sofar';
+import { getSofarHindcastData, getSpotterData, sofarHindcast } from './sofar';
+import { SofarValue } from './sofar.types';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
@@ -27,17 +28,27 @@ test('It processes Sofar Spotter API for daily data.', async () => {
   expect(values.topTemperature.length).toEqual(144);
 });
 
-test('it process Sofar Forecast API for live data', async () => {
+test('it process Sofar Hindcast API for wind-wave data', async () => {
   jest.setTimeout(30000);
   const now = new Date();
-  const values = await sofarForecast(
-    SofarModels.GFS,
-    sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
+  const yesterdayDate = new Date(now);
+  yesterdayDate.setDate(now.getDate() - 1);
+  const today = now.toISOString();
+  const yesterday = yesterdayDate.toISOString();
+
+  const response = await sofarHindcast(
+    SofarModels.SofarOperationalWaveModel,
+    sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
+      .significantWaveHeight,
     -3.5976336810301888,
     -178.0000002552476,
+    yesterday,
+    today,
   );
 
-  expect(new Date(values.timestamp).getTime()).toBeLessThanOrEqual(
+  const values = response?.values[0] as SofarValue;
+
+  expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
     now.getTime(),
   );
 });

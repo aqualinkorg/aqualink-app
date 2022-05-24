@@ -17,6 +17,14 @@ import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
 
+const dataLabels: [keyof SpotterData, WindWaveMetric][] = [
+  ['significantWaveHeight', WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT],
+  ['waveMeanDirection', WindWaveMetric.WAVE_MEAN_DIRECTION],
+  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD],
+  ['windDirection', WindWaveMetric.WIND_DIRECTION],
+  ['windSpeed', WindWaveMetric.WIND_SPEED],
+];
+
 interface Repositories {
   siteRepository: Repository<Site>;
   hindcastRepository: Repository<ForecastData>;
@@ -37,7 +45,7 @@ export const addWindWaveData = async (
   const sites = await getSites(siteIds, false, repositories.siteRepository);
 
   const date = new Date();
-  const yesterdayDate = new Date(date.getTime());
+  const yesterdayDate = new Date(date);
   yesterdayDate.setDate(date.getDate() - 1);
   const today = date.toISOString();
   const yesterday = yesterdayDate.toISOString();
@@ -53,49 +61,42 @@ export const addWindWaveData = async (
         `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
       );
 
-      const response = await Promise.all([
-        sofarHindcast(
+      const hindcastOptions = [
+        [
           SofarModels.SofarOperationalWaveModel,
           sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
             .significantWaveHeight,
-          latitude,
-          longitude,
-          yesterday,
-          today,
-        ),
-        sofarHindcast(
+        ],
+        [
           SofarModels.SofarOperationalWaveModel,
           sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-          latitude,
-          longitude,
-          yesterday,
-          today,
-        ),
-        sofarHindcast(
+        ],
+        [
           SofarModels.SofarOperationalWaveModel,
           sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-          latitude,
-          longitude,
-          yesterday,
-          today,
-        ),
-        sofarHindcast(
+        ],
+        [
           SofarModels.GFS,
           sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-          latitude,
-          longitude,
-          yesterday,
-          today,
-        ),
-        sofarHindcast(
+        ],
+        [
           SofarModels.GFS,
           sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
-          latitude,
-          longitude,
-          yesterday,
-          today,
-        ),
-      ]);
+        ],
+      ];
+
+      const response = await Promise.all(
+        hindcastOptions.map(([sofarModel, sofarVariableId]) => {
+          return sofarHindcast(
+            sofarModel,
+            sofarVariableId,
+            latitude,
+            longitude,
+            yesterday,
+            today,
+          );
+        }),
+      );
 
       const [
         significantWaveHeight,
@@ -104,30 +105,34 @@ export const addWindWaveData = async (
         windVelocity10MeterEastward,
         windVelocity10MeterNorthward,
       ] = response.map((x) => {
-        if (!x) return undefined;
+        if (!x || x.values.length < 1) return undefined;
         return x.values[x.values.length - 1]; // latest available forecast in the past
       });
 
       // Calculate wind speed and direction from velocity
       // TODO: treat undefined better
-      const windNorthwardVelocity = windVelocity10MeterNorthward?.value || 0;
-      const windEastwardVelocity = windVelocity10MeterEastward?.value || 0;
-      const windSpeed = {
-        timestamp: windVelocity10MeterNorthward?.timestamp,
-        value: getWindSpeed(windEastwardVelocity, windNorthwardVelocity),
-      };
-      const windDirection = {
-        timestamp: windVelocity10MeterNorthward?.timestamp,
-        value: getWindDirection(windEastwardVelocity, windNorthwardVelocity),
-      };
-
-      const dataLabels: [keyof SpotterData, WindWaveMetric][] = [
-        ['significantWaveHeight', WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT],
-        ['waveMeanDirection', WindWaveMetric.WAVE_MEAN_DIRECTION],
-        ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD],
-        ['windDirection', WindWaveMetric.WIND_DIRECTION],
-        ['windSpeed', WindWaveMetric.WIND_SPEED],
-      ];
+      const windNorthwardVelocity = windVelocity10MeterNorthward?.value;
+      const windEastwardVelocity = windVelocity10MeterEastward?.value;
+      const sameTimestamps =
+        windVelocity10MeterEastward?.timestamp ===
+        windVelocity10MeterNorthward?.timestamp;
+      const windSpeed: SofarValue | undefined =
+        windNorthwardVelocity && windEastwardVelocity && sameTimestamps
+          ? {
+              timestamp: windVelocity10MeterNorthward?.timestamp,
+              value: getWindSpeed(windEastwardVelocity, windNorthwardVelocity),
+            }
+          : undefined;
+      const windDirection: SofarValue | undefined =
+        windNorthwardVelocity && windEastwardVelocity && sameTimestamps
+          ? {
+              timestamp: windVelocity10MeterNorthward?.timestamp,
+              value: getWindDirection(
+                windEastwardVelocity,
+                windNorthwardVelocity,
+              ),
+            }
+          : undefined;
 
       const forecastData = {
         significantWaveHeight,
@@ -141,27 +146,22 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         dataLabels.map(([dataLabel, metric]) => {
-          if (
-            !isNil(forecastData[dataLabel]?.value) &&
-            !Number.isNaN(forecastData[dataLabel]?.value)
-          ) {
+          const sofarValue = forecastData[dataLabel] as SofarValue;
+          if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
             return repositories.hindcastRepository
               .createQueryBuilder('forecast_data')
               .insert()
-              .values(
-                [1].map(() => {
-                  const value = forecastData[dataLabel] as SofarValue;
-                  return {
-                    site,
-                    timestamp: moment(value.timestamp)
-                      .startOf('minute')
-                      .toDate(),
-                    metric,
-                    value: value.value,
-                    updatedAt: today,
-                  };
-                }),
-              )
+              .values([
+                {
+                  site,
+                  timestamp: moment(sofarValue.timestamp)
+                    .startOf('minute')
+                    .toDate(),
+                  metric,
+                  value: sofarValue.value,
+                  updatedAt: today,
+                },
+              ])
               .onConflict(
                 `ON CONSTRAINT "one_row_per_site_per_metric" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
               )

@@ -73,6 +73,7 @@ export async function sofarHindcast(
       },
     })
     .then((response) => {
+      // The api return an array of requested variables, but since we request one, ours it's always first
       return response.data.hindcastVariables[0] as HindcastResponse;
     })
     .catch((error) => {
@@ -86,42 +87,6 @@ export async function sofarHindcast(
         );
       }
     });
-}
-
-export async function sofarForecast(
-  modelId: string,
-  variableID: string,
-  latitude: number,
-  longitude: number,
-): Promise<ValueWithTimestamp> {
-  const hash = (Math.random() + 1).toString(36).substring(7);
-  console.time(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  const forecast = await axios
-    .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
-      params: {
-        variableIDs: [variableID],
-        latitude,
-        longitude,
-        token: process.env.SOFAR_API_TOKEN,
-      },
-    })
-    .then((response) => {
-      // Get latest live (forecast) data
-      return response.data.forecastVariables[0].values[0];
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error(
-          `Sofar Forecast API responded with a ${error.response.status} status. ${error.response.data.message}`,
-        );
-      } else {
-        console.error(
-          `An error occurred accessing the Sofar Forecast API - ${error}`,
-        );
-      }
-    });
-  console.timeEnd(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  return forecast;
 }
 
 export function sofarSensor(sensorId: string, start?: string, end?: string) {
