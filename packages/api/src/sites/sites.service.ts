@@ -150,11 +150,11 @@ export class SitesService {
       }),
     );
 
-    const messageTemplate = {
-      channel: SLACK_BOT_CHANNEL,
+    const messageTemplate: SlackMessage = {
+      channel: SLACK_BOT_CHANNEL as string,
       text: `New site ${site.name} created with id=${site.id}, by ${user.fullName}`,
       mrkdwn: true,
-    } as SlackMessage;
+    };
 
     await sendSlackMessage(messageTemplate, SLACK_BOT_TOKEN as string);
 
