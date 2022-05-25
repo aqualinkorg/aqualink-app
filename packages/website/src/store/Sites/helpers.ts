@@ -329,7 +329,7 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
 
-  // sort data with timestamp ASCENDING
+  // sort data with timestamp ASCENDING but prioritizing spotter data
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = copy.sort((x, y) => {
     // if spotter data is available and less than 12 hours old, use it.
