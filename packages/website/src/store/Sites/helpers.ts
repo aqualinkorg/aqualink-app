@@ -353,9 +353,7 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
     "top_temperature",
   ]);
 
-  const filtered = Object.values(
-    Object.fromEntries(sorted.map((value) => [value.metric, value]))
-  ).filter(
+  const filtered = sorted.filter(
     (value) =>
       value.source === "spotter" || !spotterTempWhitelist.has(value.metric)
   );
