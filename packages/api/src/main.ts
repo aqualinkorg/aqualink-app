@@ -11,9 +11,12 @@ import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
 import { configService } from './config/config.service';
 
 async function bootstrap() {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
+  if (Object.values(serviceAccount).every((value) => value)) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+  }
+
   const app = await NestFactory.create(AppModule);
 
   const { config, documentOptions, customOptions } =
