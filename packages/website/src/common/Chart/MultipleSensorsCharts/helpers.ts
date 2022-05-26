@@ -326,6 +326,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 24 * 15,
       displayData: hasEnoughMonthlyMeanData,
       displayCardColumn: hasEnoughMonthlyMeanData,
+      metric: "satelliteTemperature",
+      source: "noaa",
     },
     {
       label: "SURFACE",
@@ -344,6 +346,8 @@ export const generateTempAnalysisDatasets = (
         !hasEnoughSpotterTopData &&
         !hasEnoughHoboBottomData &&
         hasEnoughDailyData,
+      metric: "sstAnomaly",
+      source: "noaa",
     },
     {
       label: "BUOY 1m",
@@ -355,6 +359,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSpotterTopData,
       displayCardColumn: hasEnoughSpotterTopData,
+      metric: "topTemperature",
+      source: "spotter",
     },
     {
       label: `BUOY ${depth}m`,
@@ -366,6 +372,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSpotterBottomData,
       displayCardColumn: hasEnoughSpotterBottomData,
+      metric: "bottomTemperature",
+      source: "spotter",
     },
     {
       label: "HOBO",
@@ -381,6 +389,8 @@ export const generateTempAnalysisDatasets = (
         !hasEnoughSpotterBottomData &&
         !hasEnoughSpotterTopData &&
         hasEnoughHoboBottomData,
+      metric: "bottomTemperature",
+      source: "hobo",
     },
   ];
 };
