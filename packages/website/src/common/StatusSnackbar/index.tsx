@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     ...(hasMessage ? { padding: 0 } : {}),
   }),
   button: {
+    backgroundColor: "#3d8a27",
     marginLeft: theme.spacing(1.5),
   },
 }));

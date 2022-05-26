@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
-
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Site from "./Site";
 import SiteApplication from "./SiteApplication";
 import SitesList from "./SitesList";
@@ -10,22 +10,40 @@ import UploadData from "./UploadData";
 import StatusSnackbar from "../../common/StatusSnackbar";
 import UploadWarnings from "./UploadData/UploadWarnings";
 import { UploadTimeSeriesResult } from "../../services/uploadServices";
+import { setSelectedSite } from "../../store/Sites/selectedSiteSlice";
 
 const SiteRoutes = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
     useState(false);
   const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
     []
   );
+  const [uploadError, setUploadError] = useState<string | undefined>();
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders.length);
 
   const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
   const handleDetailsDialogOpen = () => setIsUploadDetailsDialogOpen(true);
   const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
+  const onStatusSnackbarClose = () => setUploadError(undefined);
+  const [siteId, setSiteId] = useState<number | undefined>(undefined);
 
-  const onUploadSuccess = (data: UploadTimeSeriesResult[]) => {
+  const handleRefreshOnSuccessUpload = () => {
+    dispatch(setSelectedSite());
+    // eslint-disable-next-line fp/no-mutating-methods
+    history.push(`/sites/${siteId}?refresh=true`);
+    setIsUploadSnackbarOpen(false);
+  };
+
+  const onUploadSuccess = (
+    data: UploadTimeSeriesResult[],
+    currSiteId?: number
+  ) => {
+    setSiteId(currSiteId);
     setUploadDetails(data);
     setIsUploadSnackbarOpen(true);
   };
@@ -36,9 +54,23 @@ const SiteRoutes = () => {
         open={isUploadSnackbarOpen}
         message="Successfully uploaded files"
         severity={hasWarnings ? "warning" : "success"}
-        furtherActionLabel={hasWarnings ? "View details" : undefined}
-        onFurtherActionTake={hasWarnings ? handleDetailsDialogOpen : undefined}
+        furtherActionLabel={hasWarnings ? "View details" : "Refresh page"}
+        onFurtherActionTake={
+          hasWarnings ? handleDetailsDialogOpen : handleRefreshOnSuccessUpload
+        }
         handleClose={handleSnackbarClose}
+      />
+      <StatusSnackbar
+        open={!!uploadError}
+        message={uploadError}
+        handleClose={onStatusSnackbarClose}
+        severity="error"
+      />
+      <StatusSnackbar
+        open={uploadLoading}
+        message="Uploading files..."
+        handleClose={() => {}}
+        severity="info"
       />
       <UploadWarnings
         details={uploadDetails}
@@ -68,7 +100,12 @@ const SiteRoutes = () => {
           exact
           path="/sites/:id/upload_data"
           render={(props) => (
-            <UploadData {...props} onSuccess={onUploadSuccess} />
+            <UploadData
+              {...props}
+              onSuccess={onUploadSuccess}
+              setUploadError={setUploadError}
+              setUploadLoading={setUploadLoading}
+            />
           )}
         />
       </Switch>
