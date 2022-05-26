@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
-import axios from 'axios';
 import { isNil } from 'lodash';
-import axiosRetry from 'axios-retry';
 import moment from 'moment';
+import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
   SOFAR_MARINE_URL,
@@ -40,8 +39,6 @@ export const filterSofarResponse = (responseData: any) => {
       : []
   ) as SofarValue[];
 };
-
-axiosRetry(axios, { retries: 3 });
 
 export async function sofarHindcast(
   modelId: string,

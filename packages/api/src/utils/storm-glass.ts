@@ -1,12 +1,9 @@
-import axios from 'axios';
-import axiosRetry from 'axios-retry';
-import { STORM_GLASS_API_KEY, STORM_GLASS_BASE_URL } from './storm-glass.const';
+import axios from './retry-axios';
+import { STORM_GLASS_BASE_URL } from './storm-glass.const';
 import {
   StormGlassWeatherProps,
   StormGlassWeatherQueryProps,
 } from './storm-glass.types';
-
-axiosRetry(axios, { retries: 3 });
 
 export async function stormGlassGetWeather({
   latitude,
@@ -20,32 +17,41 @@ export async function stormGlassGetWeather({
     lat: latitude,
     lng: longitude,
     params: params.join(','),
+    ...(source && {
+      source: Array.isArray(source) ? source.join(',') : source,
+    }),
+    ...(start && { start }),
+    ...(end && { end }),
   };
-
-  if (source) {
-    // eslint-disable-next-line fp/no-mutation
-    queryParams.source = Array.isArray(source) ? source.join(',') : source;
-  }
-
-  if (start) {
-    // eslint-disable-next-line fp/no-mutation
-    queryParams.start = start;
-  }
-
-  if (end) {
-    // eslint-disable-next-line fp/no-mutation
-    queryParams.end = end;
-  }
 
   return axios
     .get(`${STORM_GLASS_BASE_URL}/weather/point`, {
       headers: {
-        Authorization: STORM_GLASS_API_KEY,
+        Authorization: process.env.STORMGLASS_API_KEY,
       },
       params: queryParams,
     })
     .then((response) => {
       return response.data.hours;
+    })
+    .then((data) => {
+      return data.map(({ time, ...other }) => {
+        const entries = Object.entries(other).map((prop) => {
+          const arrValues: number[] = Object.values(prop[1]);
+          const sum = arrValues.reduce((a, b) => a + b, 0);
+          const avgValue = sum / arrValues.length;
+
+          return [
+            prop[0],
+            {
+              timestamp: time,
+              value: avgValue,
+            },
+          ];
+        });
+
+        return Object.fromEntries(entries);
+      });
     })
     .catch((error) => {
       if (error.response) {
