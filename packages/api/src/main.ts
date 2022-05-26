@@ -11,7 +11,7 @@ import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
 import { configService } from './config/config.service';
 
 async function bootstrap() {
-  if (Object.values(serviceAccount).every((value) => value)) {
+  if (Object.values(serviceAccount).every((value) => !!value)) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
     });
