@@ -7,12 +7,13 @@ import {
   Box,
   useTheme,
   useMediaQuery,
+  // CardContent,
 } from "@material-ui/core";
 import classNames from "classnames";
 import times from "lodash/times";
 
 import { useDispatch, useSelector } from "react-redux";
-import Map from "./Map";
+// import Map from "./Map";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
@@ -123,6 +124,11 @@ const SiteDetails = ({
     {
       text: `LONG: ${formatNumber(lng, 3)}`,
       variant: "subtitle2",
+      marginRight: "1rem",
+    },
+    {
+      text: "Honolii Reef Shelf by MegaLab - approx. 20-ft",
+      variant: "subtitle2",
       marginRight: 0,
     },
   ];
@@ -188,12 +194,21 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
         >
           {site && (
-            <Map
-              siteId={site.id}
-              spotterPosition={liveData?.spotterPosition}
-              polygon={site.polygon}
-              surveyPoints={site.surveyPoints}
-            />
+            <>
+              <iframe
+                title={site.name || "Sketchfab"}
+                frameBorder="0"
+                allowFullScreen
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                xr-spatial-tracking
+                execution-while-out-of-viewport
+                execution-while-not-rendered
+                web-share
+                width="100%"
+                height="100%"
+                src="https://sketchfab.com/models/0fd310d08bd6472db293f574da0e200b/embed"
+              />
+            </>
           )}
         </CardWithTitle>
 
@@ -217,7 +232,6 @@ const SiteDetails = ({
           )}
         </CardWithTitle>
       </Grid>
-
       <Grid
         className={classes.metricsWrapper}
         container
