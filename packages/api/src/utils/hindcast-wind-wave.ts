@@ -5,10 +5,9 @@ import { isNil } from 'lodash';
 import moment from 'moment';
 import { Repository } from 'typeorm';
 import { Site } from '../sites/sites.entity';
-import {
-  ForecastData,
-  WindWaveMetric,
-} from '../wind-wave-data/wind-wave-data.entity';
+import { Metric } from '../time-series/metrics.entity';
+import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
+import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
@@ -157,7 +156,7 @@ export const addWindWaveData = async (
                   timestamp: moment(sofarValue.timestamp)
                     .startOf('minute')
                     .toDate(),
-                  metric,
+                  metric: metric as unknown as Metric,
                   value: sofarValue.value,
                   updatedAt: today,
                 },

@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ForecastData, WindWaveMetric } from './wind-wave-data.entity';
+import { Metric } from '../time-series/metrics.entity';
+import { ForecastData } from './wind-wave-data.entity';
+import { WindWaveMetric } from './wind-wave-data.types';
 
 @Injectable()
 export class WindWaveService {
@@ -15,7 +17,9 @@ export class WindWaveService {
       where: { site: siteId },
     });
     const getSofarValue = (metric: WindWaveMetric) => {
-      const forecast = result.find((x) => x.metric === metric);
+      const forecast = result.find(
+        (x) => x.metric === (metric as unknown as Metric),
+      );
       return { timestamp: forecast?.timestamp, value: forecast?.value };
     };
     return {
