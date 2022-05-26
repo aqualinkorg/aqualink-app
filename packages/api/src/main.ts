@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import * as admin from 'firebase-admin';
 import { AppModule } from './app.module';
@@ -11,9 +12,14 @@ import { apiLoggerMiddleware } from './middleware/api-logger.middleware';
 import { configService } from './config/config.service';
 
 async function bootstrap() {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
+  if (Object.values(serviceAccount).every((value) => !!value)) {
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+  } else {
+    Logger.warn('Firebase environments not provided', 'MAIN');
+  }
+
   const app = await NestFactory.create(AppModule);
 
   const { config, documentOptions, customOptions } =
