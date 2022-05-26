@@ -329,33 +329,36 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
 
+  // sort data by timestamp ASCENDING but prioritize spotter data
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = copy.sort((x, y) => {
     // if spotter data is available and less than 12 hours old, use it.
     const xTime = new Date(x.timestamp).getTime();
     if (x.source === "spotter" && xTime > validityDate) {
-      return -1;
+      return +1;
     }
     const yTime = new Date(y.timestamp).getTime();
     if (y.source === "spotter" && yTime > validityDate) {
       return -1;
     }
 
-    if (xTime > yTime) return -1;
-    if (xTime < yTime) return 1;
+    if (xTime > yTime) return +1;
+    if (xTime < yTime) return -1;
     return 0;
   });
 
+  // only keep spotter top/bottom temp for now
+  const spotterTempWhitelist = new Set([
+    "bottom_temperature",
+    "top_temperature",
+  ]);
+
   const filtered = sorted.filter(
-    (value, index, self) =>
-      self.indexOf(value) === index &&
-      // only keep spotter top/bottom temp for now
-      !(
-        ["bottom_temperature", "top_temperature"].includes(value.metric) &&
-        value.source !== "spotter"
-      )
+    (value) =>
+      value.source === "spotter" || !spotterTempWhitelist.has(value.metric)
   );
 
+  // reduce the array, into a mapping, keeping only the latest data for each metric
   return filtered.reduce(
     (a, c) => ({
       ...a,
