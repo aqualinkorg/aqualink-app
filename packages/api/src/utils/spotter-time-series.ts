@@ -20,6 +20,7 @@ import { excludeSpotterData } from './site.utils';
 import { getSources } from './time-series.utils';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
+import { getSofarNearestAvailablePoint } from './sofar-availability';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -214,6 +215,7 @@ export const addSpotterData = async (
  * @param connection An active typeorm connection object
  * @param repositories The needed repositories, as defined by the interface
  */
+
 export const addWindWaveData = async (
   siteIds: number[],
   connection: Connection,
@@ -262,7 +264,12 @@ export const addWindWaveData = async (
     sites,
     async (site) => {
       const { polygon } = site;
-      const [longitude, latitude] = (polygon as Point).coordinates;
+      const point = (polygon as Point).coordinates;
+
+      const [longitude, latitude] = getSofarNearestAvailablePoint(point) as [
+        number,
+        number,
+      ];
 
       logger.log(
         `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
