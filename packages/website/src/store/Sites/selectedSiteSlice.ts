@@ -31,6 +31,8 @@ const selectedSiteInitialState: SelectedSiteState = {
   error: null,
 };
 
+const AlreadyLoadingErrorMessage = "Request already loading";
+
 export const liveDataRequest = createAsyncThunk<
   SelectedSiteState["liveData"],
   string,
@@ -40,7 +42,7 @@ export const liveDataRequest = createAsyncThunk<
   async (id: string, { rejectWithValue, getState }) => {
     const state = getState();
     if (state.selectedSite.loadingLiveData !== 1) {
-      return rejectWithValue("Request already loading");
+      return rejectWithValue(AlreadyLoadingErrorMessage);
     }
     try {
       const { data } = await siteServices.getSiteLiveData(id);
@@ -320,7 +322,10 @@ const selectedSiteSlice = createSlice({
       (state, action: PayloadAction<SelectedSiteState["error"]>) => {
         return {
           ...state,
-          error: action.payload,
+          error:
+            action.payload === AlreadyLoadingErrorMessage
+              ? null
+              : action.payload,
           loadingLiveData: state.loadingLiveData - 1,
         };
       }
