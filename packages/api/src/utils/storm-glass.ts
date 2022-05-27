@@ -1,9 +1,10 @@
 import axios from './retry-axios';
-import { STORM_GLASS_BASE_URL } from './storm-glass.const';
 import {
   StormGlassWeatherProps,
   StormGlassWeatherQueryProps,
 } from './storm-glass.types';
+import { STORM_GLASS_BASE_URL } from './constants';
+import { ValueWithTimestamp } from './sofar.types';
 
 export async function stormGlassGetWeather({
   latitude,
@@ -12,7 +13,9 @@ export async function stormGlassGetWeather({
   source,
   start,
   end,
-}: StormGlassWeatherProps) {
+}: StormGlassWeatherProps): Promise<
+  Record<StormGlassWeatherQueryProps['params'], ValueWithTimestamp>
+> {
   const queryParams: StormGlassWeatherQueryProps = {
     lat: latitude,
     lng: longitude,
@@ -32,26 +35,25 @@ export async function stormGlassGetWeather({
       params: queryParams,
     })
     .then((response) => {
-      return response.data.hours;
+      return response.data.hours[0];
     })
     .then((data) => {
-      return data.map(({ time, ...other }) => {
-        const entries = Object.entries(other).map((prop) => {
-          const arrValues: number[] = Object.values(prop[1]);
-          const sum = arrValues.reduce((a, b) => a + b, 0);
-          const avgValue = sum / arrValues.length;
+      const { time, ...other } = data;
+      const entries = Object.entries(other).map((prop) => {
+        const arrValues: number[] = Object.values(prop[1] as {});
+        const sum = arrValues.reduce((a, b) => a + b, 0);
+        const avgValue = sum / arrValues.length;
 
-          return [
-            prop[0],
-            {
-              timestamp: time,
-              value: avgValue,
-            },
-          ];
-        });
-
-        return Object.fromEntries(entries);
+        return [
+          prop[0],
+          {
+            timestamp: time,
+            value: avgValue,
+          },
+        ];
       });
+
+      return Object.fromEntries(entries);
     })
     .catch((error) => {
       if (error.response) {

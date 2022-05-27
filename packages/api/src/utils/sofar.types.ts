@@ -1,6 +1,6 @@
 import type { LatestData } from '../time-series/latest-data.entity';
 
-export interface SofarValue {
+export interface ValueWithTimestamp {
   timestamp: string;
   value: number;
 }
@@ -32,32 +32,32 @@ export interface SofarLiveData {
   latestData?: LatestData[];
   dailyAlertLevel?: number;
   weeklyAlertLevel?: number;
-  bottomTemperature?: SofarValue;
-  topTemperature?: SofarValue;
-  satelliteTemperature?: SofarValue;
-  degreeHeatingDays?: SofarValue;
-  waveHeight?: SofarValue;
-  waveMeanDirection?: SofarValue;
-  waveMeanPeriod?: SofarValue;
-  windSpeed?: SofarValue;
-  windDirection?: SofarValue;
+  bottomTemperature?: ValueWithTimestamp;
+  topTemperature?: ValueWithTimestamp;
+  satelliteTemperature?: ValueWithTimestamp;
+  degreeHeatingDays?: ValueWithTimestamp;
+  waveHeight?: ValueWithTimestamp;
+  waveMeanDirection?: ValueWithTimestamp;
+  waveMeanPeriod?: ValueWithTimestamp;
+  windSpeed?: ValueWithTimestamp;
+  windDirection?: ValueWithTimestamp;
   sstAnomaly?: number;
   spotterPosition?: {
-    latitude: SofarValue;
-    longitude: SofarValue;
+    latitude: ValueWithTimestamp;
+    longitude: ValueWithTimestamp;
   };
 }
 
 export interface SpotterData {
-  topTemperature: SofarValue[];
-  bottomTemperature: SofarValue[];
-  significantWaveHeight: SofarValue[];
-  waveMeanPeriod: SofarValue[];
-  waveMeanDirection: SofarValue[];
-  windSpeed: SofarValue[];
-  windDirection: SofarValue[];
-  latitude?: SofarValue[];
-  longitude?: SofarValue[];
+  topTemperature: ValueWithTimestamp[];
+  bottomTemperature: ValueWithTimestamp[];
+  significantWaveHeight: ValueWithTimestamp[];
+  waveMeanPeriod: ValueWithTimestamp[];
+  waveMeanDirection: ValueWithTimestamp[];
+  windSpeed: ValueWithTimestamp[];
+  windDirection: ValueWithTimestamp[];
+  latitude?: ValueWithTimestamp[];
+  longitude?: ValueWithTimestamp[];
 }
 
 export const DEFAULT_SPOTTER_DATA_VALUE: SpotterData = {

@@ -10,7 +10,7 @@ import {
   getSpotterData,
   sofarForecast,
 } from './sofar';
-import { SofarLiveData, SofarValue } from './sofar.types';
+import { SofarLiveData, ValueWithTimestamp } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
@@ -160,7 +160,7 @@ export const getLiveData = async (
  * */
 export const getSstAnomaly = (
   historicalMonthlyMean: HistoricalMonthlyMean[],
-  satelliteTemperature?: SofarValue,
+  satelliteTemperature?: ValueWithTimestamp,
 ) => {
   if (historicalMonthlyMean.length < 12 || !satelliteTemperature?.value) {
     return undefined;
