@@ -21,6 +21,6 @@ export function getSofarWaveModelAvailability(): FeatureCollection<Point> {
 }
 
 export function getSofarNearestAvailablePoint(point: Coord): Coord {
-  const geojson = getSofarWaveModelAvailability();
-  return nearestPoint(point, geojson).geometry.coordinates as Coord;
+  const availablePoints = getSofarWaveModelAvailability();
+  return nearestPoint(point, availablePoints).geometry.coordinates as Coord;
 }
