@@ -12,7 +12,7 @@ export function getSofarWaveModelAvailability(): FeatureCollection<Point> {
         type: 'Feature',
         geometry: {
           type: 'Point',
-          coordinates: coordinate as Coord,
+          coordinates: coordinate,
         },
       })),
     };
@@ -20,7 +20,10 @@ export function getSofarWaveModelAvailability(): FeatureCollection<Point> {
   return geojson;
 }
 
-export function getSofarNearestAvailablePoint(point: Coord): Coord {
+export function getSofarNearestAvailablePoint(point: Coord): [number, number] {
   const availablePoints = getSofarWaveModelAvailability();
-  return nearestPoint(point, availablePoints).geometry.coordinates as Coord;
+  // deconstructing number[] into [number, number] in order to make typescript compiler happy
+  const [longitude, latitude] = nearestPoint(point, availablePoints).geometry
+    .coordinates;
+  return [longitude, latitude];
 }
