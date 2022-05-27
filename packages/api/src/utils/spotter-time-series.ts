@@ -266,10 +266,7 @@ export const addWindWaveData = async (
       const { polygon } = site;
       const point = (polygon as Point).coordinates;
 
-      const [longitude, latitude] = getSofarNearestAvailablePoint(point) as [
-        number,
-        number,
-      ];
+      const [longitude, latitude] = getSofarNearestAvailablePoint(point);
 
       logger.log(
         `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
