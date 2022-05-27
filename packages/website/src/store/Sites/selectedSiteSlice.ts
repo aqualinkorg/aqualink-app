@@ -21,6 +21,7 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
+  loadingLiveData: 0,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
@@ -30,18 +31,27 @@ const selectedSiteInitialState: SelectedSiteState = {
   error: null,
 };
 
+const AlreadyLoadingErrorMessage = "Request already loading";
+
 export const liveDataRequest = createAsyncThunk<
   SelectedSiteState["liveData"],
   string,
   CreateAsyncThunkTypes
->("selectedSite/requestLiveData", async (id: string, { rejectWithValue }) => {
-  try {
-    const { data } = await siteServices.getSiteLiveData(id);
-    return data;
-  } catch (err) {
-    return rejectWithValue(getAxiosErrorMessage(err));
+>(
+  "selectedSite/requestLiveData",
+  async (id: string, { rejectWithValue, getState }) => {
+    const state = getState();
+    if (state.selectedSite.loadingLiveData !== 1) {
+      return rejectWithValue(AlreadyLoadingErrorMessage);
+    }
+    try {
+      const { data } = await siteServices.getSiteLiveData(id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
   }
-});
+);
 
 export const latestDataRequest = createAsyncThunk<
   SelectedSiteState["latestData"],
@@ -302,6 +312,7 @@ const selectedSiteSlice = createSlice({
         return {
           ...state,
           liveData: action.payload,
+          loadingLiveData: state.loadingLiveData - 1,
         };
       }
     );
@@ -311,7 +322,11 @@ const selectedSiteSlice = createSlice({
       (state, action: PayloadAction<SelectedSiteState["error"]>) => {
         return {
           ...state,
-          error: action.payload,
+          error:
+            action.payload === AlreadyLoadingErrorMessage
+              ? null
+              : action.payload,
+          loadingLiveData: state.loadingLiveData - 1,
         };
       }
     );
@@ -320,6 +335,7 @@ const selectedSiteSlice = createSlice({
       return {
         ...state,
         error: null,
+        loadingLiveData: state.loadingLiveData + 1,
       };
     });
 
