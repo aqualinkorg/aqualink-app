@@ -11,7 +11,7 @@ import { TimeSeries } from '../time-series/time-series.entity';
 import { getSpotterData, sofarForecast } from './sofar';
 import {
   DEFAULT_SPOTTER_DATA_VALUE,
-  SofarValue,
+  ValueWithTimestamp,
   SpotterData,
 } from './sofar.types';
 import { SourceType } from '../sites/schemas/source-type.enum';
@@ -73,7 +73,7 @@ const getSpotterExclusionDates = (
  * @returns An InsertResult
  */
 const saveDataBatch = (
-  batch: SofarValue[],
+  batch: ValueWithTimestamp[],
   source: Sources,
   metric: Metric,
   timeSeriesRepository: Repository<TimeSeries>,
@@ -180,7 +180,7 @@ export const addSpotterData = async (
               .map((dailySpotterData) =>
                 dataLabels.map(([spotterDataLabel, metric]) =>
                   saveDataBatch(
-                    dailySpotterData[spotterDataLabel] as SofarValue[], // We know that there would not be any undefined values here
+                    dailySpotterData[spotterDataLabel] as ValueWithTimestamp[], // We know that there would not be any undefined values here
                     siteToSource[site.id],
                     metric,
                     repositories.timeSeriesRepository,
@@ -337,7 +337,7 @@ export const addWindWaveData = async (
             !Number.isNaN(forecastData[dataLabel]?.value)
           ) {
             return saveDataBatch(
-              [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
+              [forecastData[dataLabel]] as ValueWithTimestamp[], // We know that there would not be any undefined values here
               siteToGfsSource[site.id],
               metric,
               repositories.timeSeriesRepository,
@@ -355,7 +355,7 @@ export const addWindWaveData = async (
             !Number.isNaN(forecastData[dataLabel]?.value)
           ) {
             return saveDataBatch(
-              [forecastData[dataLabel]] as SofarValue[], // We know that there would not be any undefined values here
+              [forecastData[dataLabel]] as ValueWithTimestamp[], // We know that there would not be any undefined values here
               siteToSofarWaveModelSource[site.id],
               metric,
               repositories.timeSeriesRepository,

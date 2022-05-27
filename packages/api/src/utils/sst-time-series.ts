@@ -14,7 +14,7 @@ import { getNOAASource, insertSiteDataToTimeSeries } from './time-series.utils';
 import { Metric } from '../time-series/metrics.entity';
 import { calculateAlertLevel } from './bleachingAlert';
 import { getSstAnomaly } from './liveData';
-import { SofarValue } from './sofar.types';
+import { ValueWithTimestamp } from './sofar.types';
 
 interface Repositories {
   siteRepository: Repository<Site>;
@@ -135,7 +135,7 @@ export const updateSST = async (
               // Filter out null values
               .filter((sstAnomalyValue) => {
                 return !isNil(sstAnomalyValue.value);
-              }) as SofarValue[];
+              }) as ValueWithTimestamp[];
 
             // return calculated metrics (sst, dhw, sstAnomaly alert)
             return {
