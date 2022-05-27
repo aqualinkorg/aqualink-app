@@ -2,6 +2,7 @@ import React from "react";
 import {
   Card,
   CardHeader,
+  CircularProgress,
   Grid,
   IconButton,
   makeStyles,
@@ -9,25 +10,42 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { grey } from "@material-ui/core/colors";
 import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
 import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
+import classNames from "classnames";
 
+import { useSelector } from "react-redux";
 import { pluralize } from "../../../helpers/stringUtils";
+import {
+  uploadsErrorSelector,
+  uploadsInProgressSelector,
+} from "../../../store/uploads/uploadsSlice";
+
+const CIRCULAR_PROGRESS_SIZE = 36;
 
 const FileList = ({ files, onFileDelete }: FileListProps) => {
   const classes = useStyles();
+  const errors = useSelector(uploadsErrorSelector) as Record<
+    string,
+    string | null
+  >;
+  const loading = useSelector(uploadsInProgressSelector);
 
   return (
     <Grid container spacing={2} className={classes.root}>
       <Grid item xs={12}>
         <Typography gutterBottom variant="h6">
           {files.length} {pluralize(files.length, "file")}{" "}
+          {loading ? "uploading" : "to be uploaded"}
         </Typography>
       </Grid>
       {files.map(({ name }) => (
         <Grid item key={name} lg={4} md={6} xs={12}>
           <Card className={classes.card} variant="outlined">
             <CardHeader
+              className={classNames({ [classes.loading]: loading })}
               classes={{ content: classes.cardContent }}
               title={
                 <Typography
@@ -41,14 +59,24 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
               }
               action={
                 <Tooltip title="Remove file" arrow placement="top">
-                  <IconButton onClick={() => onFileDelete(name)}>
+                  <IconButton
+                    disabled={loading}
+                    onClick={() => onFileDelete(name)}
+                  >
                     <CloseIcon />
                   </IconButton>
                 </Tooltip>
               }
               avatar={<FileIcon className={classes.fileIcon} />}
             />
+            {loading && (
+              <CircularProgress
+                size={CIRCULAR_PROGRESS_SIZE}
+                className={classes.circularProgress}
+              />
+            )}
           </Card>
+          {errors?.[name] && <Alert severity="error">{errors[name]}</Alert>}
         </Grid>
       ))}
     </Grid>
@@ -73,6 +101,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   fileIcon: {
     color: theme.palette.text.secondary,
+  },
+  loading: {
+    opacity: 0.5,
+    pointerEvents: "none",
+    cursor: "default",
+  },
+  circularProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -CIRCULAR_PROGRESS_SIZE / 2,
+    marginLeft: -CIRCULAR_PROGRESS_SIZE / 2,
+    color: grey[500],
   },
 }));
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   makeStyles,
@@ -14,8 +14,10 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 
+import { useSelector } from "react-redux";
 import { Site, Sources } from "../../../store/Sites/types";
 import NewSurveyPointDialog from "../../../common/NewSurveyPointDialog";
+import { uploadsTargetSelector } from "../../../store/uploads/uploadsSlice";
 
 interface SelectOption {
   id: number;
@@ -39,6 +41,7 @@ const Selectors = ({
   onPointChange,
 }: SelectorsProps) => {
   const classes = useStyles();
+  const uploadsTarget = useSelector(uploadsTargetSelector);
   const pointOptions = site.surveyPoints;
   const [selectedPointIndex, setSelectedPointIndex] = useState<number>();
   const [selectedSensorIndex, setSelectedSensorIndex] = useState<number>();
@@ -127,6 +130,18 @@ const Selectors = ({
   };
 
   const handleNewPointDialogClose = () => setIsNewPointDialogOpen(false);
+
+  useEffect(() => {
+    if (uploadsTarget) {
+      const newPointIndex = uploadsTarget.selectedPoint - 1;
+      const newSensorIndex = SENSOR_TYPES.findIndex(
+        (x) => x.name === uploadsTarget.selectedSensor
+      );
+      setSelectedPointIndex(newPointIndex);
+      setSelectedSensorIndex(newSensorIndex);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadsTarget]);
 
   return (
     <>
