@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   withStyles,
   WithStyles,
@@ -11,47 +11,46 @@ import {
   Theme,
 } from "@material-ui/core";
 
-const Card = ({
-  title,
-  text,
-  backgroundColor,
-  direction,
-  image,
-  scaleDown,
-  classes,
-}: CardProps) => {
-  const titleOnly = !text;
+const Card = forwardRef<HTMLDivElement, CardProps>(
+  (
+    { title, text, backgroundColor, direction, image, scaleDown, classes },
+    ref
+  ) => {
+    const titleOnly = !text;
 
-  return (
-    <Box bgcolor={backgroundColor} className={classes.container}>
-      <Grid container direction={direction} item xs={12}>
-        <Grid item xs={12} md={titleOnly ? 12 : 6}>
-          <Box className={classes.textContainer}>
-            <Box mb="1rem">
-              <Typography
-                className={classes.cardTitle}
-                variant="h5"
-                align={titleOnly ? "center" : "inherit"}
-              >
-                {title}
-              </Typography>
-            </Box>
-            <Typography variant="h6">{text}</Typography>
-          </Box>
-        </Grid>
-        <Grid item xs={12} md={titleOnly ? 12 : 6}>
-          <CardMedia
-            className={
-              scaleDown ? classes.cardImageScaleDown : classes.cardImage
-            }
-            component="img"
-            src={image}
-          />
-        </Grid>
-      </Grid>
-    </Box>
-  );
-};
+    return (
+      <div ref={ref}>
+        <Box bgcolor={backgroundColor} className={classes.container}>
+          <Grid container direction={direction} item xs={12}>
+            <Grid item xs={12} md={titleOnly ? 12 : 6}>
+              <Box className={classes.textContainer}>
+                <Box mb="1rem">
+                  <Typography
+                    className={classes.cardTitle}
+                    variant="h5"
+                    align={titleOnly ? "center" : "inherit"}
+                  >
+                    {title}
+                  </Typography>
+                </Box>
+                <Typography variant="h6">{text}</Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={titleOnly ? 12 : 6}>
+              <CardMedia
+                className={
+                  scaleDown ? classes.cardImageScaleDown : classes.cardImage
+                }
+                component="img"
+                src={image}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+    );
+  }
+);
 
 const styles = (theme: Theme) =>
   createStyles({
