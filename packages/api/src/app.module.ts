@@ -18,6 +18,7 @@ import { SensorsModule } from './sensors/sensors.module';
 import { AppController } from './app.controller';
 import { AuditModule } from './audit/audit.module';
 import { DataUploadsModule } from './data-uploads/data-uploads.module';
+import { SiteSketchFabModule } from './site-sketch-fab/site-sketch-fab.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { DataUploadsModule } from './data-uploads/data-uploads.module';
     SensorsModule,
     AuditModule,
     DataUploadsModule,
+    SiteSketchFabModule,
   ],
   controllers: [AppController],
 })

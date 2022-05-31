@@ -12,7 +12,9 @@ import classNames from "classnames";
 import times from "lodash/times";
 
 import { useDispatch, useSelector } from "react-redux";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Map from "./Map";
+import SketchFab from "./SketchFab";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
@@ -188,12 +190,13 @@ const SiteDetails = ({
           forcedAspectRatio={!!videoStream}
         >
           {site && (
-            <Map
-              siteId={site.id}
-              spotterPosition={liveData?.spotterPosition}
-              polygon={site.polygon}
-              surveyPoints={site.surveyPoints}
-            />
+            <SketchFab />
+            // <Map
+            //   siteId={site.id}
+            //   spotterPosition={liveData?.spotterPosition}
+            //   polygon={site.polygon}
+            //   surveyPoints={site.surveyPoints}
+            // />
           )}
         </CardWithTitle>
 
