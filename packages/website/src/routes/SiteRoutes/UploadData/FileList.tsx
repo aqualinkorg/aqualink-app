@@ -16,12 +16,24 @@ import CloseIcon from "@material-ui/icons/HighlightOffOutlined";
 import FileIcon from "@material-ui/icons/InsertDriveFileOutlined";
 import classNames from "classnames";
 
+import { useSelector } from "react-redux";
 import { pluralize } from "../../../helpers/stringUtils";
+import {
+  uploadsErrorSelector,
+  uploadsInProgressSelector,
+  uploadsResponseSelector,
+} from "../../../store/uploads/uploadsSlice";
 
 const CIRCULAR_PROGRESS_SIZE = 36;
 
-const FileList = ({ files, loading, errors, onFileDelete }: FileListProps) => {
+const FileList = ({ files, onFileDelete }: FileListProps) => {
   const classes = useStyles();
+  const errors = useSelector(uploadsErrorSelector) as Record<
+    string,
+    string | null
+  >;
+  const loading = useSelector(uploadsInProgressSelector);
+  const uploadResponse = useSelector(uploadsResponseSelector);
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -67,6 +79,10 @@ const FileList = ({ files, loading, errors, onFileDelete }: FileListProps) => {
             )}
           </Card>
           {errors?.[name] && <Alert severity="error">{errors[name]}</Alert>}
+          {!loading &&
+            !!uploadResponse?.some((x) => x.file === name && !x.error) && (
+              <Alert severity="success">File uploaded</Alert>
+            )}
         </Grid>
       ))}
     </Grid>
@@ -109,8 +125,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface FileListProps {
   files: File[];
-  errors: Record<string, string | null>;
-  loading: boolean;
   onFileDelete: (name: string) => void;
 }
 
