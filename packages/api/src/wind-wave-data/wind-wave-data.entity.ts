@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Site } from '../sites/sites.entity';
-import { Metric } from '../time-series/metrics.entity';
+import { WindWaveMetric } from './wind-wave-data.types';
 
 @Entity()
 @Unique('one_row_per_site_per_metric', ['site', 'metric'])
@@ -29,8 +29,8 @@ export class ForecastData {
   @Column({ type: 'float', nullable: false })
   value: number;
 
-  @Column({ type: 'enum', enum: Metric, nullable: false })
-  metric: Metric;
+  @Column({ type: 'enum', enum: WindWaveMetric, nullable: false })
+  metric: WindWaveMetric;
 
   @CreateDateColumn()
   createdAt: Date;
