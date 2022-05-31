@@ -1,6 +1,6 @@
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getSofarHindcastData, getSpotterData, sofarHindcast } from './sofar';
-import { SofarValue } from './sofar.types';
+import { ValueWithTimestamp } from './sofar.types';
 
 test('It processes Sofar API for daily data.', async () => {
   jest.setTimeout(30000);
@@ -46,7 +46,7 @@ test('it process Sofar Hindcast API for wind-wave data', async () => {
     today,
   );
 
-  const values = response?.values[0] as SofarValue;
+  const values = response?.values[0] as ValueWithTimestamp;
 
   expect(new Date(values?.timestamp).getTime()).toBeLessThanOrEqual(
     now.getTime(),

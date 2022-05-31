@@ -8,11 +8,11 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
 import React from "react";
-import { SofarValue } from "../../../store/Sites/types";
+import { ValueWithTimestamp } from "../../../store/Sites/types";
 
 export interface DownloadCSVDialogProps {
   open: boolean;
-  data: { name: string; values: SofarValue[] }[];
+  data: { name: string; values: ValueWithTimestamp[] }[];
   startDate: string;
   endDate: string;
   onClose: (shouldDownload: boolean) => void;

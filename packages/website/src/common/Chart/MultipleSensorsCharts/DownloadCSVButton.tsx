@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import downloadCsv from "download-csv";
 import { Button } from "@material-ui/core";
 import moment from "moment";
-import { SofarValue } from "../../../store/Sites/types";
+import { ValueWithTimestamp } from "../../../store/Sites/types";
 import DownloadCSVDialog from "./DownloadCSVDialog";
 
 type CSVDataColumn =
@@ -32,7 +32,7 @@ const DATE_FORMAT = "YYYY_MM_DD";
  */
 function constructCSVData(
   columnName: CSVDataColumn,
-  data: SofarValue[] = [],
+  data: ValueWithTimestamp[] = [],
   existingData: Record<CSVRow["timestamp"], CSVRow> = {}
 ) {
   // writing this in an immutable fashion will be detrimental to performance.
@@ -55,8 +55,10 @@ function constructCSVData(
         (a, b) =>
           new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
       ),
-    chained: (chainedFinalKey: CSVDataColumn, chainedData: SofarValue[] = []) =>
-      constructCSVData(chainedFinalKey, chainedData, result),
+    chained: (
+      chainedFinalKey: CSVDataColumn,
+      chainedData: ValueWithTimestamp[] = []
+    ) => constructCSVData(chainedFinalKey, chainedData, result),
   };
   /* eslint-enable no-param-reassign,fp/no-mutation */
 }
@@ -69,7 +71,7 @@ function DownloadCSVButton({
   pointId,
   siteId,
 }: {
-  data: { name: string; values: SofarValue[] }[];
+  data: { name: string; values: ValueWithTimestamp[] }[];
   startDate?: string;
   endDate?: string;
   className?: string;
@@ -94,7 +96,7 @@ function DownloadCSVButton({
   };
 
   const getCSVData = (
-    selectedData: { name: string; values: SofarValue[] }[]
+    selectedData: { name: string; values: ValueWithTimestamp[] }[]
   ) => {
     const [head, ...tail] = selectedData;
 

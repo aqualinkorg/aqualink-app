@@ -2,9 +2,13 @@ import {
   getSofarDataClosestToDate,
   sameDay,
 } from "../../../common/Chart/utils";
-import { DailyData, SofarValue, TimeSeries } from "../../../store/Sites/types";
+import {
+  DailyData,
+  ValueWithTimestamp,
+  TimeSeries,
+} from "../../../store/Sites/types";
 
-const getSensorValue = (data?: SofarValue[], date?: string | null) =>
+const getSensorValue = (data?: ValueWithTimestamp[], date?: string | null) =>
   date && data?.[0]
     ? getSofarDataClosestToDate(data, new Date(date), 6)?.value
     : undefined;

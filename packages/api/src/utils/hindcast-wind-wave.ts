@@ -10,7 +10,7 @@ import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
-import { SofarValue, SpotterData } from './sofar.types';
+import { ValueWithTimestamp, SpotterData } from './sofar.types';
 import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
@@ -114,14 +114,14 @@ export const addWindWaveData = async (
       const sameTimestamps =
         windVelocity10MeterEastward?.timestamp ===
         windVelocity10MeterNorthward?.timestamp;
-      const windSpeed: SofarValue | undefined =
+      const windSpeed: ValueWithTimestamp | undefined =
         windNorthwardVelocity && windEastwardVelocity && sameTimestamps
           ? {
               timestamp: windVelocity10MeterNorthward?.timestamp,
               value: getWindSpeed(windEastwardVelocity, windNorthwardVelocity),
             }
           : undefined;
-      const windDirection: SofarValue | undefined =
+      const windDirection: ValueWithTimestamp | undefined =
         windNorthwardVelocity && windEastwardVelocity && sameTimestamps
           ? {
               timestamp: windVelocity10MeterNorthward?.timestamp,
@@ -144,7 +144,7 @@ export const addWindWaveData = async (
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
         dataLabels.map(([dataLabel, metric]) => {
-          const sofarValue = forecastData[dataLabel] as SofarValue;
+          const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
           if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
             return repositories.hindcastRepository
               .createQueryBuilder('forecast_data')
