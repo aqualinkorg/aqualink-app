@@ -139,6 +139,9 @@ const Selectors = ({
       );
       setSelectedPointIndex(newPointIndex);
       setSelectedSensorIndex(newSensorIndex);
+    } else {
+      setSelectedPointIndex(undefined);
+      setSelectedSensorIndex(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadsTarget]);

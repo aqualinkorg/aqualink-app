@@ -21,6 +21,7 @@ import { pluralize } from "../../../helpers/stringUtils";
 import {
   uploadsErrorSelector,
   uploadsInProgressSelector,
+  uploadsResponseSelector,
 } from "../../../store/uploads/uploadsSlice";
 
 const CIRCULAR_PROGRESS_SIZE = 36;
@@ -32,6 +33,7 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
     string | null
   >;
   const loading = useSelector(uploadsInProgressSelector);
+  const uploadResponse = useSelector(uploadsResponseSelector);
 
   return (
     <Grid container spacing={2} className={classes.root}>
@@ -77,6 +79,10 @@ const FileList = ({ files, onFileDelete }: FileListProps) => {
             )}
           </Card>
           {errors?.[name] && <Alert severity="error">{errors[name]}</Alert>}
+          {!loading &&
+            !!uploadResponse?.some((x) => x.file === name && !x.error) && (
+              <Alert severity="success">File uploaded</Alert>
+            )}
         </Grid>
       ))}
     </Grid>

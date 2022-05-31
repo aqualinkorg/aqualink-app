@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Container,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { Box, Container, makeStyles, Theme } from "@material-ui/core";
+import { Link, RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "@material-ui/lab";
 import NavBar from "../../../common/NavBar";
 import Header from "./Header";
 import Selectors from "./Selectors";
@@ -28,6 +23,7 @@ import {
   addUploadsFiles,
   clearUploadsError,
   clearUploadsFiles,
+  clearUploadsResponse,
   clearUploadsTarget,
   removeUploadsFiles,
   setUploadsTarget,
@@ -36,6 +32,7 @@ import {
   uploadsInProgressSelector,
   uploadsTargetSelector,
 } from "../../../store/uploads/uploadsSlice";
+import InfoWithAction from "../../../common/InfoWithAction";
 
 const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const classes = useStyles();
@@ -123,31 +120,26 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
     getUploadHistory();
   }, [site]);
 
+  // on component did mount
   useEffect(() => {
     if (
-      !uploadLoading &&
-      site?.id &&
       uploadTarget?.siteId &&
-      uploadTarget.siteId !== site.id
+      uploadTarget.siteId !== Number(match.params.id)
     ) {
-      dispatch(clearUploadsFiles);
-      dispatch(clearUploadsTarget);
-      dispatch(clearUploadsError);
+      if (uploadLoading) {
+        setShouldShowPage(false);
+      } else {
+        dispatch(clearUploadsFiles());
+        dispatch(clearUploadsTarget());
+        dispatch(clearUploadsError());
+        dispatch(clearUploadsResponse());
+      }
     }
-  }, [dispatch, site, uploadTarget, uploadLoading]);
-
-  // on component mount
-  useEffect(() => {
-    if (
-      uploadLoading &&
-      site?.id &&
-      uploadTarget?.siteId &&
-      uploadTarget.siteId !== site.id
-    ) {
-      setShouldShowPage(false);
+    if (site?.id && uploadTarget?.siteId && uploadTarget.siteId === site.id) {
+      setShouldShowPage(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [site?.id]);
 
   const onGoBackClick = () => {
     // eslint-disable-next-line fp/no-mutating-methods
@@ -189,6 +181,15 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
                 <UploadButton loading={uploadLoading} onUpload={onUpload} />
               </>
             )}
+            {uploadLoading && (
+              <Box mb="20px" style={{ paddingTop: "1em" }}>
+                <Alert severity="info">
+                  Upload in progress. please DO NOT reload the page, it may take
+                  a while. You can still{" "}
+                  <Link to={`/sites/${site?.id}`}>have a look around</Link>
+                </Alert>
+              </Box>
+            )}
             <HistoryTable
               site={site}
               uploadHistory={uploadHistory}
@@ -197,18 +198,11 @@ const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
           </Container>
         )
       ) : (
-        <>
-          <Typography
-            variant="h3"
-            style={{ textAlign: "center" }}
-            color="primary"
-          >
-            An upload is already loading. Please wait.
-          </Typography>
-          <Button color="primary" onClick={onGoBackClick}>
-            Go back!
-          </Button>
-        </>
+        <InfoWithAction
+          message="An upload is already loading. Please wait."
+          action={onGoBackClick}
+          actionText="Go Back!"
+        />
       )}
     </>
   );

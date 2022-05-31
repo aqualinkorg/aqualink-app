@@ -13,6 +13,9 @@ import { UploadTimeSeriesResult } from "../../services/uploadServices";
 import { setSelectedSite } from "../../store/Sites/selectedSiteSlice";
 import {
   clearUploadsError,
+  clearUploadsFiles,
+  clearUploadsResponse,
+  clearUploadsTarget,
   uploadsErrorSelector,
   uploadsInProgressSelector,
   uploadsResponseSelector,
@@ -23,6 +26,7 @@ const SiteRoutes = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
     useState(false);
   const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
@@ -33,12 +37,14 @@ const SiteRoutes = () => {
   const uploadResult = useSelector(uploadsResponseSelector);
   const uploadTarget = useSelector(uploadsTargetSelector);
 
-  const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders.length);
+  const hasWarnings = uploadDetails.some(
+    (data) => (data.ignoredHeaders?.length || 0) > 0
+  );
 
   const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
   const handleDetailsDialogOpen = () => setIsUploadDetailsDialogOpen(true);
   const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
-  const onStatusSnackbarClose = () => dispatch(clearUploadsError());
+  const onStatusSnackbarClose = () => setIsErrorSnackbarOpen(false);
   const [siteId, setSiteId] = useState<number | undefined>(undefined);
 
   const onHandleUploadError = () => {
@@ -51,22 +57,25 @@ const SiteRoutes = () => {
     // eslint-disable-next-line fp/no-mutating-methods
     history.push(`/sites/${siteId}?refresh=true`);
     setIsUploadSnackbarOpen(false);
-  };
-
-  const onUploadSuccess = (
-    data: UploadTimeSeriesResult[],
-    currSiteId?: number
-  ) => {
-    setSiteId(currSiteId);
-    setUploadDetails(data);
-    setIsUploadSnackbarOpen(true);
+    dispatch(clearUploadsFiles());
+    dispatch(clearUploadsTarget());
+    dispatch(clearUploadsError());
+    dispatch(clearUploadsResponse());
   };
 
   useEffect(() => {
     if (uploadResult && !uploadLoading && !uploadError && uploadTarget) {
-      onUploadSuccess(uploadResult, uploadTarget.siteId);
+      setSiteId(uploadTarget.siteId);
+      setUploadDetails(uploadResult);
+      if (!uploadResult.some((x) => !!x.error)) {
+        setIsUploadSnackbarOpen(true);
+      }
     }
   }, [uploadResult, uploadLoading, uploadError, uploadTarget]);
+
+  useEffect(() => {
+    setIsErrorSnackbarOpen(!!uploadError);
+  }, [uploadError]);
 
   return (
     <>
@@ -81,8 +90,12 @@ const SiteRoutes = () => {
         handleClose={handleSnackbarClose}
       />
       <StatusSnackbar
-        open={!!uploadError}
-        message="Something went wrong with the upload"
+        open={isErrorSnackbarOpen}
+        message={
+          typeof uploadError === "string"
+            ? uploadError
+            : "Something went wrong with the upload"
+        }
         furtherActionLabel="View details"
         onFurtherActionTake={onHandleUploadError}
         handleClose={onStatusSnackbarClose}

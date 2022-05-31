@@ -89,10 +89,13 @@ const uploadsSlice = createSlice({
       ...state,
       target: undefined,
     }),
-    // Should this function exists?
     clearUploadsError: (state) => ({
       ...state,
       error: undefined,
+    }),
+    clearUploadsResponse: (state) => ({
+      ...state,
+      uploadResponse: undefined,
     }),
   },
   extraReducers: (builder) => {
@@ -106,23 +109,32 @@ const uploadsSlice = createSlice({
     builder.addCase(
       uploadFiles.fulfilled,
       (state, action: PayloadAction<UploadsSliceState["uploadResponse"]>) => {
+        const response = action.payload;
+        const hasError = response?.some((x) => !!x.error);
+        const error = response?.reduce((acc, cur) => {
+          if (!cur.error) {
+            return acc;
+          }
+          const [maybeFileName, ...maybeFileError] = cur.error.split(": ");
+          return {
+            ...acc,
+            [maybeFileName]: maybeFileError.join(": "),
+          };
+        }, {});
         return {
           ...state,
           uploadInProgress: false,
           uploadResponse: action.payload,
+          error: hasError ? error : undefined,
         };
       }
     );
     builder.addCase(
       uploadFiles.rejected,
       (state, action: PayloadAction<UploadsSliceState["error"]>) => {
-        const errorMessage = action.payload;
-        const [maybeFileName, ...maybeFileError] = errorMessage?.split(": ");
         return {
           ...state,
-          error: {
-            [maybeFileName]: maybeFileError.join(": "),
-          },
+          error: action.payload,
           uploadInProgress: false,
         };
       }
@@ -157,6 +169,7 @@ export const {
   setUploadsTarget,
   clearUploadsTarget,
   clearUploadsError,
+  clearUploadsResponse,
 } = uploadsSlice.actions;
 
 export default uploadsSlice.reducer;
