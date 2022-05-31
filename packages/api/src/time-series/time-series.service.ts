@@ -2,7 +2,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { unlinkSync } from 'fs';
 import { Repository } from 'typeorm';
 import Bluebird from 'bluebird';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { SiteDataDto } from './dto/site-data.dto';
 import { SurveyPointDataDto } from './dto/survey-point-data.dto';
 import { Metric } from './metrics.entity';
@@ -166,7 +171,14 @@ export class TimeSeriesService {
             failOnWarning,
             mimetype as Mimetype,
           );
-          return { file: originalname, ignoredHeaders };
+          return { file: originalname, ignoredHeaders, error: null };
+        } catch (err: unknown) {
+          const error = err as HttpException;
+          return {
+            file: originalname,
+            ignoredHeaders: null,
+            error: error.message,
+          };
         } finally {
           // Remove file once its processing is over
           unlinkSync(path);

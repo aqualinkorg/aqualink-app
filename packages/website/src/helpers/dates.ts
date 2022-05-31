@@ -7,7 +7,7 @@ import {
   HistoricalMonthlyMean,
   HistoricalMonthlyMeanData,
   Range,
-  SofarValue,
+  ValueWithTimestamp,
 } from "../store/Sites/types";
 import { SurveyListItem } from "../store/Survey/types";
 
@@ -109,9 +109,9 @@ export const sortByDate = <T>(
 export const findMarginalDate = (
   historicalMonthlyMeanData: HistoricalMonthlyMeanData[],
   dailyData: DailyData[],
-  spotterBottomTemperature?: SofarValue[],
-  spotterTopTemperature?: SofarValue[],
-  hoboBottomTemperature?: SofarValue[],
+  spotterBottomTemperature?: ValueWithTimestamp[],
+  spotterTopTemperature?: ValueWithTimestamp[],
+  hoboBottomTemperature?: ValueWithTimestamp[],
   type: "min" | "max" = "max"
 ): string => {
   const combinedData = [
@@ -225,7 +225,7 @@ export const convertToLocalTime = (
 
 export const convertSofarDataToLocalTime =
   (timeZone?: string | null) =>
-  (sofarData?: SofarValue[]): SofarValue[] =>
+  (sofarData?: ValueWithTimestamp[]): ValueWithTimestamp[] =>
     (sofarData || []).map((item) => ({
       ...item,
       timestamp: convertToLocalTime(item.timestamp, timeZone),

@@ -48,6 +48,7 @@ import {
   getMetlogConfig,
   getPublicMetlogMetrics,
 } from "../../../constants/metlogConfig";
+import DownloadCSVButton from "./DownloadCSVButton";
 
 const DEFAULT_METRICS: MetricsKeys[] = [
   "bottom_temperature",
@@ -369,13 +370,6 @@ const MultipleSensorsCharts = ({
     );
   }, [granularDailyData, pickerEndDate, pickerStartDate, site, timeSeriesData]);
 
-  // Set picker error
-  useEffect(() => {
-    if (pickerStartDate && pickerEndDate) {
-      setPickerErrored(!isBefore(pickerStartDate, pickerEndDate));
-    }
-  }, [pickerEndDate, pickerStartDate]);
-
   useEffect(() => {
     if (pickerStartDate && pickerEndDate) {
       // eslint-disable-next-line fp/no-mutating-methods
@@ -387,6 +381,50 @@ const MultipleSensorsCharts = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history, pickerEndDate, pickerStartDate, site.timezone]);
+
+  // Set picker error
+  useEffect(() => {
+    if (pickerStartDate && pickerEndDate) {
+      setPickerErrored(!isBefore(pickerStartDate, pickerEndDate));
+    }
+  }, [pickerEndDate, pickerStartDate]);
+
+  const dataForCsv = [
+    ...tempAnalysisDatasets.map((dataset) => ({
+      name: `${dataset.metric || "unknownMetric"}_${
+        dataset.source || "unknownSource"
+      }`,
+      values: dataset.data,
+    })),
+    ...Object.entries(spotterConfig).map(([key]) => {
+      const dataset = spotterMetricDataset(key as Metrics);
+      return {
+        name: `${key}_spotter`,
+        values: dataset.data,
+      };
+    }),
+    ...Object.entries(constructOceanSenseDatasets(oceanSenseData)).map(
+      ([key, item]) => {
+        const dataset = generateMetricDataset(
+          key,
+          item.data,
+          item.unit,
+          OCEAN_SENSE_DATA_COLOR,
+          chartStartDate,
+          chartEndDate,
+          site.timezone
+        );
+        return {
+          name: `${camelCase(item.title.split(" ")[0])}`,
+          values: dataset.data,
+        };
+      }
+    ),
+    ...sondeDatasets().map(({ title, dataset }) => ({
+      name: `${title} ${dataset.label}`,
+      values: dataset.data,
+    })),
+  ].filter((x) => x.values.length > 0);
 
   const onRangeChange = (value: RangeValue) => {
     const { minDate, maxDate } = hoboBottomTemperatureRange?.data?.[0] || {};
@@ -456,6 +494,16 @@ const MultipleSensorsCharts = ({
       disableGutters={disableGutters}
       className={classes.chartWithRange}
     >
+      <div className={classes.buttonWrapper}>
+        <DownloadCSVButton
+          data={dataForCsv}
+          startDate={pickerStartDate}
+          endDate={pickerEndDate}
+          siteId={site.id}
+          pointId={pointId}
+          className={classes.button}
+        />
+      </div>
       <ChartWithCard
         id="temperature"
         range={range}
@@ -518,7 +566,6 @@ const MultipleSensorsCharts = ({
               showDatePickers={false}
               hideYAxisUnits
               cardColumnJustification="flex-start"
-              displayDownloadButton={false}
             />
           </Box>
         ))}
@@ -560,7 +607,6 @@ const MultipleSensorsCharts = ({
                 showDatePickers={false}
                 hideYAxisUnits
                 cardColumnJustification="flex-start"
-                displayDownloadButton={false}
               />
             </Box>
           )
@@ -596,7 +642,6 @@ const MultipleSensorsCharts = ({
             surveyPoint={surveyPoint}
             hideYAxisUnits
             cardColumnJustification="flex-start"
-            displayDownloadButton={false}
           />
         </Box>
       ))}
@@ -631,7 +676,6 @@ const MultipleSensorsCharts = ({
             surveyPoint={surveyPoint}
             hideYAxisUnits
             cardColumnJustification="flex-start"
-            displayDownloadButton={false}
           />
         </Box>
       ))}
@@ -642,6 +686,13 @@ const MultipleSensorsCharts = ({
 const useStyles = makeStyles((theme: Theme) => ({
   chartWithRange: {
     marginTop: theme.spacing(4),
+  },
+  button: {
+    width: "fit-content",
+  },
+  buttonWrapper: {
+    display: "flex",
+    justifyContent: "end",
   },
 }));
 

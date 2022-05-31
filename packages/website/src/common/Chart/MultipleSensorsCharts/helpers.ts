@@ -13,7 +13,7 @@ import {
   HistoricalMonthlyMean,
   OceanSenseData,
   OceanSenseKeys,
-  SofarValue,
+  ValueWithTimestamp,
   TimeSeriesData,
 } from "../../../store/Sites/types";
 import { CardColumn, OceanSenseDataset } from "./types";
@@ -35,7 +35,7 @@ import {
 } from "../utils";
 
 const filterSofarData =
-  (from?: string, to?: string) => (data?: SofarValue[]) => {
+  (from?: string, to?: string) => (data?: ValueWithTimestamp[]) => {
     if (!from || !to || !data) {
       return data;
     }
@@ -52,7 +52,7 @@ const filterSofarData =
 export const calculateCardMetrics = (
   from: string,
   to: string,
-  data?: SofarValue[],
+  data?: ValueWithTimestamp[],
   keyPrefix?: string
 ): CardColumn["rows"] => {
   const filteredData = filterSofarData(from, to)(data);
@@ -242,7 +242,7 @@ export const constructOceanSenseDatasets = (
   },
 });
 
-export const hasAtLeastNData = (n: number) => (data?: SofarValue[]) =>
+export const hasAtLeastNData = (n: number) => (data?: ValueWithTimestamp[]) =>
   typeof data?.length === "number" && data.length >= n;
 
 /**
@@ -262,9 +262,9 @@ export const hasAtLeastNData = (n: number) => (data?: SofarValue[]) =>
  */
 export const generateTempAnalysisDatasets = (
   dailyData?: DailyData[],
-  spotterBottom?: SofarValue[],
-  spotterTop?: SofarValue[],
-  hoboBottom?: SofarValue[],
+  spotterBottom?: ValueWithTimestamp[],
+  spotterTop?: ValueWithTimestamp[],
+  hoboBottom?: ValueWithTimestamp[],
   historicalMonthlyMean?: HistoricalMonthlyMean[],
   startDate?: string,
   endDate?: string,
@@ -326,6 +326,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 24 * 15,
       displayData: hasEnoughMonthlyMeanData,
       displayCardColumn: hasEnoughMonthlyMeanData,
+      metric: "satelliteTemperature",
+      source: "noaa",
     },
     {
       label: "SURFACE",
@@ -344,6 +346,8 @@ export const generateTempAnalysisDatasets = (
         !hasEnoughSpotterTopData &&
         !hasEnoughHoboBottomData &&
         hasEnoughDailyData,
+      metric: "sstAnomaly",
+      source: "noaa",
     },
     {
       label: "BUOY 1m",
@@ -355,6 +359,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSpotterTopData,
       displayCardColumn: hasEnoughSpotterTopData,
+      metric: "topTemperature",
+      source: "spotter",
     },
     {
       label: `BUOY ${depth}m`,
@@ -366,6 +372,8 @@ export const generateTempAnalysisDatasets = (
       tooltipMaxHoursGap: 6,
       displayData: hasEnoughSpotterBottomData,
       displayCardColumn: hasEnoughSpotterBottomData,
+      metric: "bottomTemperature",
+      source: "spotter",
     },
     {
       label: "HOBO",
@@ -381,6 +389,8 @@ export const generateTempAnalysisDatasets = (
         !hasEnoughSpotterBottomData &&
         !hasEnoughSpotterTopData &&
         hasEnoughHoboBottomData,
+      metric: "bottomTemperature",
+      source: "hobo",
     },
   ];
 };
@@ -398,7 +408,7 @@ export const generateTempAnalysisDatasets = (
  */
 export const generateMetricDataset = (
   label: string,
-  data: SofarValue[],
+  data: ValueWithTimestamp[],
   unit: string,
   color: string,
   chartStartDate?: string,

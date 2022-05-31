@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import {
   setSiteOnMap,
@@ -39,6 +39,7 @@ const siteAugmentedName = (site: Site) => {
 
 const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   const browserHistory = useHistory();
+  const { id } = useParams<{ id: string }>();
   const [searchedSite, setSearchedSite] = useState<Site | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ const Search = ({ geocodingEnabled, classes }: SearchProps) => {
   };
 
   const onDropdownItemSelect = (event: ChangeEvent<{}>, value: Site | null) => {
-    if (value) {
+    if (value && parseInt(id, 10) !== value.id) {
       setSearchedSite(null);
       dispatch(setSiteOnMap(value));
       // TODO - create a function to cleanup the state whenever we change the site.

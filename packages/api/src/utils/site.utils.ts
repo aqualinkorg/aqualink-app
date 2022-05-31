@@ -14,7 +14,7 @@ import { mapValues, some } from 'lodash';
 import geoTz from 'geo-tz';
 import { Region } from '../regions/regions.entity';
 import { ExclusionDates } from '../sites/exclusion-dates.entity';
-import { SofarLiveData, SofarValue, SpotterData } from './sofar.types';
+import { SofarLiveData, ValueWithTimestamp, SpotterData } from './sofar.types';
 import { createPoint } from './coordinates';
 import { Site } from '../sites/sites.entity';
 import { Sources } from '../sites/sources.entity';
@@ -142,7 +142,7 @@ export const getConflictingExclusionDates = async (
 
 export const filterMetricDataByDate = (
   exclusionDates: ExclusionDates[],
-  metricData?: SofarValue[],
+  metricData?: ValueWithTimestamp[],
 ) =>
   metricData?.filter(
     ({ timestamp }) =>
@@ -260,7 +260,7 @@ export const getSSTFromLiveOrLatestData = async (
   liveData: SofarLiveData,
   site: Site,
   latestDataRepository: Repository<LatestData>,
-): Promise<SofarValue | undefined> => {
+): Promise<ValueWithTimestamp | undefined> => {
   if (!liveData.satelliteTemperature) {
     const sst = await latestDataRepository.findOne({
       site,

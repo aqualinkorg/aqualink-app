@@ -59,7 +59,8 @@
     "augment-sites": "ts-node -r dotenv/config scripts/augment-site-data.ts",
     "upload-hobo-data": "ts-node -r dotenv/config scripts/upload-hobo-data.ts",
     "upload-sonde-data": "ts-node -r dotenv/config scripts/upload-sonde-data.ts",
-    "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts"
+    "backfill-sofar-time-series": "ts-node -r dotenv/config scripts/backfill-sofar-time-series.ts",
+    "update-wind-wave-data": "ts-node -r dotenv/config scripts/hindcast-wind-wave-data.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.3.0",

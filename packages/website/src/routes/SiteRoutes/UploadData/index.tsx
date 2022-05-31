@@ -1,117 +1,85 @@
 import React, { useState, useEffect } from "react";
-import { Container, makeStyles, Theme } from "@material-ui/core";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { Box, Container, makeStyles, Theme } from "@material-ui/core";
+import { Link, RouteComponentProps, useHistory } from "react-router-dom";
 import { DropzoneProps } from "react-dropzone";
-import { uniqBy, reduce, mapValues } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import { Alert } from "@material-ui/lab";
 import NavBar from "../../../common/NavBar";
 import Header from "./Header";
 import Selectors from "./Selectors";
 import DropZone from "./DropZone";
 import FileList from "./FileList";
 import HistoryTable from "./HistoryTable";
-import StatusSnackbar from "../../../common/StatusSnackbar";
 import UploadButton from "./UploadButton";
 import { useSiteRequest } from "../../../hooks/useSiteRequest";
 import { SiteUploadHistory, Sources } from "../../../store/Sites/types";
-import uploadServices, {
-  UploadTimeSeriesResult,
-} from "../../../services/uploadServices";
+import uploadServices from "../../../services/uploadServices";
 import { userInfoSelector } from "../../../store/User/userSlice";
 import siteServices from "../../../services/siteServices";
 import { setSelectedSite } from "../../../store/Sites/selectedSiteSlice";
 import { getAxiosErrorMessage } from "../../../helpers/errors";
+import StatusSnackbar from "../../../common/StatusSnackbar";
+import {
+  addUploadsFiles,
+  clearUploadsError,
+  clearUploadsFiles,
+  clearUploadsResponse,
+  clearUploadsTarget,
+  removeUploadsFiles,
+  setUploadsTarget,
+  uploadFiles,
+  uploadsFilesSelector,
+  uploadsInProgressSelector,
+  uploadsTargetSelector,
+} from "../../../store/uploads/uploadsSlice";
+import InfoWithAction from "../../../common/InfoWithAction";
 
-const UploadData = ({ match, onSuccess }: MatchProps) => {
+const UploadData = ({ match }: RouteComponentProps<{ id: string }>) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useSelector(userInfoSelector) || {};
   const { site, siteLoading } = useSiteRequest(match.params.id);
-  const [isSelectionCompleted, setIsSelectionCompleted] = useState(false);
+  // const [isSelectionCompleted, setIsSelectionCompleted] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState<Sources>();
   const [selectedPoint, setSelectedPoint] = useState<number>();
-  const [files, setFiles] = useState<File[]>([]);
-  const [uploadLoading, setUploadLoading] = useState(false);
-  const [uploadError, setUploadError] = useState<string>();
-  const [deleteError, setDeleteError] = useState<string>();
-  const [uploadErrors, setUploadErrors] = useState<
-    Record<string, string | null>
-  >({});
+  // const [files, setFiles] = useState<File[]>([]);
+  const files = useSelector(uploadsFilesSelector);
+  const uploadTarget = useSelector(uploadsTargetSelector);
+  const uploadLoading = useSelector(uploadsInProgressSelector);
+  const [isUploadHistoryErrored, setIsUploadHistoryErrored] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | undefined>();
   const [uploadHistory, setUploadHistory] = useState<SiteUploadHistory>([]);
   const [isUploadHistoryLoading, setIsUploadHistoryLoading] = useState(false);
-  const [isUploadHistoryErrored, setIsUploadHistoryErrored] = useState(false);
+  const [shouldShowPage, setShouldShowPage] = useState(true);
   const loading = !site || siteLoading || isUploadHistoryLoading;
 
-  const onCompletedSelection = () => setIsSelectionCompleted(true);
+  const onCompletedSelection = () => {
+    if (site?.id && selectedPoint && selectedSensor) {
+      dispatch(
+        setUploadsTarget({ siteId: site?.id, selectedSensor, selectedPoint })
+      );
+    }
+  };
 
-  const onFileDelete = (name: string) =>
-    setFiles(files.filter((file) => file.name !== name));
+  const onFileDelete = (name: string) => {
+    dispatch(removeUploadsFiles(name));
+    // setFiles(files.filter((file) => file.name !== name));
+  };
 
   const onFilesDrop: DropzoneProps["onDropAccepted"] = (
     acceptedFiles: File[]
   ) => {
-    const newFiles = uniqBy([...files, ...acceptedFiles], "name");
-    setFiles(newFiles);
-    setUploadErrors(
-      reduce(
-        newFiles,
-        (accum, { name }) => ({ ...accum, [name]: null }),
-        uploadErrors
-      )
-    );
+    dispatch(addUploadsFiles(acceptedFiles));
+    // const newFiles = uniqBy([...files, ...acceptedFiles], "name");
+    // setFiles(newFiles);
   };
 
-  const clearUploadErrors = () =>
-    setUploadErrors(mapValues(uploadErrors, () => null));
-
-  const onStatusSnackbarClose = () => setUploadError(undefined);
   const onHistorySnackbarClose = () => setIsUploadHistoryErrored(false);
   const onDeleteSnackbarClose = () => setDeleteError(undefined);
 
-  const onUpload = async () => {
-    setUploadLoading(true);
-    setUploadError(undefined);
-    clearUploadErrors();
-    try {
-      if (
-        typeof site?.id === "number" &&
-        typeof selectedPoint === "number" &&
-        selectedSensor
-      ) {
-        const data = new FormData();
-        files.forEach((file) => data.append("files", file));
-        data.append("sensor", selectedSensor);
-        const { data: uploadResponse } =
-          await uploadServices.uploadTimeSeriesData(
-            data,
-            site.id,
-            selectedPoint,
-            token,
-            false
-          );
-        // Clear redux selected site before we land on the site page,
-        // so that we fetch the updated data.
-        dispatch(setSelectedSite());
-        // eslint-disable-next-line fp/no-mutating-methods
-        history.push(`/sites/${site.id}`);
-        onSuccess(uploadResponse);
-      }
-    } catch (err) {
-      setUploadLoading(false);
-      const errorMessage = getAxiosErrorMessage(err);
-      const [maybeFileName, ...maybeFileError] = errorMessage?.split(": ");
-      if (maybeFileName in uploadErrors) {
-        // File specific error
-        setUploadErrors({
-          ...uploadErrors,
-          [maybeFileName]: maybeFileError.join(": "),
-        });
-      } else {
-        // General error
-        setUploadError(errorMessage || "Something went wrong");
-      }
-    }
+  const onUpload = () => {
+    dispatch(uploadFiles(token));
   };
 
   const onDelete = async (ids: number[]) => {
@@ -152,6 +120,32 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
     getUploadHistory();
   }, [site]);
 
+  // on component did mount
+  useEffect(() => {
+    if (
+      uploadTarget?.siteId &&
+      uploadTarget.siteId !== Number(match.params.id)
+    ) {
+      if (uploadLoading) {
+        setShouldShowPage(false);
+      } else {
+        dispatch(clearUploadsFiles());
+        dispatch(clearUploadsTarget());
+        dispatch(clearUploadsError());
+        dispatch(clearUploadsResponse());
+      }
+    }
+    if (site?.id && uploadTarget?.siteId && uploadTarget.siteId === site.id) {
+      setShouldShowPage(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [site?.id]);
+
+  const onGoBackClick = () => {
+    // eslint-disable-next-line fp/no-mutating-methods
+    history.push(`/sites/${site?.id}`);
+  };
+
   return (
     <>
       <NavBar searchLocation={false} loading={loading} />
@@ -162,47 +156,53 @@ const UploadData = ({ match, onSuccess }: MatchProps) => {
         severity="error"
       />
       <StatusSnackbar
-        open={!!uploadError}
-        message={uploadError}
-        handleClose={onStatusSnackbarClose}
-        severity="error"
-      />
-      <StatusSnackbar
         open={!!deleteError}
         message={deleteError}
         handleClose={onDeleteSnackbarClose}
         severity="error"
       />
 
-      {site && (
-        <Container className={classes.root}>
-          <Header site={site} />
-          <Selectors
-            site={site}
-            onCompletedSelection={onCompletedSelection}
-            onSensorChange={setSelectedSensor}
-            onPointChange={setSelectedPoint}
-          />
-          {isSelectionCompleted && (
-            <DropZone disabled={uploadLoading} onFilesDrop={onFilesDrop} />
-          )}
-          {files.length > 0 && (
-            <>
-              <FileList
-                files={files}
-                errors={uploadErrors}
-                loading={uploadLoading}
-                onFileDelete={onFileDelete}
-              />
-              <UploadButton loading={uploadLoading} onUpload={onUpload} />
-            </>
-          )}
-          <HistoryTable
-            site={site}
-            uploadHistory={uploadHistory}
-            onDelete={onDelete}
-          />
-        </Container>
+      {shouldShowPage ? (
+        site && (
+          <Container className={classes.root}>
+            <Header site={site} />
+            <Selectors
+              site={site}
+              onCompletedSelection={onCompletedSelection}
+              onSensorChange={setSelectedSensor}
+              onPointChange={setSelectedPoint}
+            />
+            {!!uploadTarget && (
+              <DropZone disabled={uploadLoading} onFilesDrop={onFilesDrop} />
+            )}
+            {files.length > 0 && (
+              <>
+                <FileList files={files} onFileDelete={onFileDelete} />
+                <UploadButton loading={uploadLoading} onUpload={onUpload} />
+              </>
+            )}
+            {uploadLoading && (
+              <Box mb="20px" style={{ paddingTop: "1em" }}>
+                <Alert severity="info">
+                  Upload in progress. please DO NOT reload the page, it may take
+                  a while. You can still{" "}
+                  <Link to={`/sites/${site?.id}`}>have a look around</Link>
+                </Alert>
+              </Box>
+            )}
+            <HistoryTable
+              site={site}
+              uploadHistory={uploadHistory}
+              onDelete={onDelete}
+            />
+          </Container>
+        )
+      ) : (
+        <InfoWithAction
+          message="An upload is already loading. Please wait."
+          action={onGoBackClick}
+          actionText="Go Back!"
+        />
       )}
     </>
   );
@@ -214,9 +214,5 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(3),
   },
 }));
-
-interface MatchProps extends RouteComponentProps<{ id: string }> {
-  onSuccess: (arg: UploadTimeSeriesResult[]) => void;
-}
 
 export default UploadData;

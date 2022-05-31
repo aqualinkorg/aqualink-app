@@ -9,7 +9,11 @@ import React, {
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { mergeWith, isEqual } from "lodash";
-import type { SofarValue } from "../../store/Sites/types";
+import type {
+  Metrics,
+  ValueWithTimestamp,
+  Sources,
+} from "../../store/Sites/types";
 import "./plugins/backgroundPlugin";
 import "chartjs-plugin-annotation";
 import { SurveyListItem } from "../../store/Survey/types";
@@ -21,7 +25,7 @@ import { useProcessedChartData } from "./utils";
 // An interface that describes all the possible options for displaying a dataset on a chart.
 export interface Dataset {
   label: string; // The dataset's label
-  data: SofarValue[]; // The dataset's data, typed as a SofarValue array
+  data: ValueWithTimestamp[]; // The dataset's data, typed as a ValueWithTimestamp array
   type: "line" | "scatter"; // The plot's type, either line or scatter
   unit: string; // The unit of the dataset's data, e.g. °C for temperature data
   curveColor: string; // The color used for displaying the data
@@ -39,6 +43,8 @@ export interface Dataset {
   cardColumnName?: string; // The label of the data column on the analysis card. If not specified, the label property is used instead
   cardColumnTooltip?: string; // An optional tooltip for the card column label
   tooltipLabel?: string; // An optional label for the data on the chart's tooltip. If not specified, the label property is used instead
+  metric?: Metrics;
+  source?: Sources;
 }
 
 export interface ChartProps {

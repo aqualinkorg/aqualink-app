@@ -32,7 +32,7 @@ import { calculateDegreeHeatingDays } from '../utils/temperature';
 import {
   DEFAULT_SPOTTER_DATA_VALUE,
   SofarDailyData,
-  SofarValue,
+  ValueWithTimestamp,
 } from '../utils/sofar.types';
 import { SofarModels, sofarVariableIDs } from '../utils/constants';
 import { calculateAlertLevel } from '../utils/bleachingAlert';
@@ -44,7 +44,7 @@ export async function getDegreeHeatingDays(
   longitude: number,
   endOfDate: Date,
   maxMonthlyMean: number | null,
-): Promise<SofarValue | undefined> {
+): Promise<ValueWithTimestamp | undefined> {
   try {
     // TODO - Get data for the past 84 days.
     const seaSurfaceTemperatures = [] as number[];

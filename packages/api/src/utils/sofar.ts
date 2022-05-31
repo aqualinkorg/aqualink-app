@@ -1,20 +1,19 @@
 /* eslint-disable no-console */
 /** Utility function to access the Sofar API and retrieve relevant data. */
-import axios from 'axios';
 import { isNil } from 'lodash';
-import axiosRetry from 'axios-retry';
 import moment from 'moment';
+import axios from './retry-axios';
 import { getStartEndDate } from './dates';
 import {
   SOFAR_MARINE_URL,
   SOFAR_SENSOR_DATA_URL,
   SOFAR_WAVE_DATA_URL,
 } from './constants';
-import { SofarValue, SpotterData } from './sofar.types';
+import { ValueWithTimestamp, SpotterData } from './sofar.types';
 
 export const getLatestData = (
-  sofarValues: SofarValue[] | undefined,
-): SofarValue | undefined => {
+  sofarValues: ValueWithTimestamp[] | undefined,
+): ValueWithTimestamp | undefined => {
   if (!sofarValues) {
     return undefined;
   }
@@ -26,7 +25,9 @@ export const getLatestData = (
   );
 };
 
-export const extractSofarValues = (sofarValues?: SofarValue[]): number[] =>
+export const extractSofarValues = (
+  sofarValues?: ValueWithTimestamp[],
+): number[] =>
   sofarValues
     ?.filter((data) => !isNil(data?.value))
     .map(({ value }) => value) || [];
@@ -35,13 +36,20 @@ export const filterSofarResponse = (responseData: any) => {
   return (
     responseData
       ? responseData.values.filter(
-          (data: SofarValue) => !isNil(data?.value) && data.value !== 9999,
+          (data: ValueWithTimestamp) =>
+            !isNil(data?.value) && data.value !== 9999,
         )
       : []
-  ) as SofarValue[];
+  ) as ValueWithTimestamp[];
 };
 
-axiosRetry(axios, { retries: 3 });
+interface HindcastResponse {
+  variableID: string;
+  variableName: string;
+  dataCategory: string;
+  physicalUnit: string;
+  values: ValueWithTimestamp[];
+}
 
 export async function sofarHindcast(
   modelId: string,
@@ -63,7 +71,14 @@ export async function sofarHindcast(
       },
     })
     .then((response) => {
-      return response.data.hindcastVariables[0];
+      // The api return an array of requested variables, but since we request one, ours it's always first
+      if (!response.data.hindcastVariables[0]) {
+        console.error(
+          `No Hindcast variable '${variableID}' available for ${latitude}, ${longitude}`,
+        );
+        return undefined;
+      }
+      return response.data.hindcastVariables[0] as HindcastResponse;
     })
     .catch((error) => {
       if (error.response) {
@@ -76,42 +91,6 @@ export async function sofarHindcast(
         );
       }
     });
-}
-
-export async function sofarForecast(
-  modelId: string,
-  variableID: string,
-  latitude: number,
-  longitude: number,
-): Promise<SofarValue> {
-  const hash = (Math.random() + 1).toString(36).substring(7);
-  console.time(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  const forecast = await axios
-    .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
-      params: {
-        variableIDs: [variableID],
-        latitude,
-        longitude,
-        token: process.env.SOFAR_API_TOKEN,
-      },
-    })
-    .then((response) => {
-      // Get latest live (forecast) data
-      return response.data.forecastVariables[0].values[0];
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error(
-          `Sofar Forecast API responded with a ${error.response.status} status. ${error.response.data.message}`,
-        );
-      } else {
-        console.error(
-          `An error occurred accessing the Sofar Forecast API - ${error}`,
-        );
-      }
-    });
-  console.timeEnd(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  return forecast;
 }
 
 export function sofarSensor(sensorId: string, start?: string, end?: string) {
@@ -131,7 +110,7 @@ export function sofarSensor(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -156,7 +135,7 @@ export function sofarWaveData(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -182,7 +161,7 @@ export async function getSofarHindcastData(
   );
   console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 
-  // Filter out unkown values
+  // Filter out unknown values
   return filterSofarResponse(hindcastVariables);
 }
 
@@ -215,66 +194,73 @@ export async function getSpotterData(
     sofarMeanDirection,
     spotterLatitude,
     spotterLongitude,
-  ]: [SofarValue[], SofarValue[], SofarValue[], SofarValue[], SofarValue[]] =
-    waves.reduce(
-      (
-        [
-          significantWaveHeights,
-          meanPeriods,
-          meanDirections,
-          latitude,
-          longitude,
-        ],
-        data,
-      ) => {
-        return [
-          significantWaveHeights.concat({
-            timestamp: data.timestamp,
-            value: data.significantWaveHeight,
-          }),
-          meanPeriods.concat({
-            timestamp: data.timestamp,
-            value: data.meanPeriod,
-          }),
-          meanDirections.concat({
-            timestamp: data.timestamp,
-            value: data.meanDirection,
-          }),
-          latitude.concat({
-            timestamp: data.timestamp,
-            value: data.latitude,
-          }),
-          longitude.concat({
-            timestamp: data.timestamp,
-            value: data.longitude,
-          }),
-        ];
-      },
-      [[], [], [], [], []],
-    );
+  ]: [
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
+  ] = waves.reduce(
+    (
+      [
+        significantWaveHeights,
+        meanPeriods,
+        meanDirections,
+        latitude,
+        longitude,
+      ],
+      data,
+    ) => {
+      return [
+        significantWaveHeights.concat({
+          timestamp: data.timestamp,
+          value: data.significantWaveHeight,
+        }),
+        meanPeriods.concat({
+          timestamp: data.timestamp,
+          value: data.meanPeriod,
+        }),
+        meanDirections.concat({
+          timestamp: data.timestamp,
+          value: data.meanDirection,
+        }),
+        latitude.concat({
+          timestamp: data.timestamp,
+          value: data.latitude,
+        }),
+        longitude.concat({
+          timestamp: data.timestamp,
+          value: data.longitude,
+        }),
+      ];
+    },
+    [[], [], [], [], []],
+  );
 
-  const [sofarWindSpeed, sofarWindDirection]: [SofarValue[], SofarValue[]] =
-    wind.reduce(
-      ([speed, direction], data) => {
-        return [
-          speed.concat({
-            timestamp: data.timestamp,
-            value: data.speed,
-          }),
-          direction.concat({
-            timestamp: data.timestamp,
-            value: data.direction,
-          }),
-        ];
-      },
-      [[], []],
-    );
+  const [sofarWindSpeed, sofarWindDirection]: [
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
+  ] = wind.reduce(
+    ([speed, direction], data) => {
+      return [
+        speed.concat({
+          timestamp: data.timestamp,
+          value: data.speed,
+        }),
+        direction.concat({
+          timestamp: data.timestamp,
+          value: data.direction,
+        }),
+      ];
+    },
+    [[], []],
+  );
 
   // Sofar increments sensors by distance to the spotter.
   // Sensor 1 -> topTemp and Sensor 2 -> bottomTemp
   const [sofarTopTemperature, sofarBottomTemperature]: [
-    SofarValue[],
-    SofarValue[],
+    ValueWithTimestamp[],
+    ValueWithTimestamp[],
   ] = smartMooringData.reduce(
     ([sensor1Data, sensor2Data], data) => {
       const { sensorPosition, unit_type: unitType } = data;
@@ -322,7 +308,7 @@ export async function getSpotterData(
 
 /** Utility function to get the closest available data given a date in UTC. */
 export function getValueClosestToDate(
-  sofarValues: SofarValue[],
+  sofarValues: ValueWithTimestamp[],
   utcDate: Date,
 ) {
   const timeDiff = (timestamp: string) =>

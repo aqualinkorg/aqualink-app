@@ -892,209 +892,219 @@ exports[`Landing Page should render with given state from Redux store 1`] = `
   <div
     class="MuiContainer-root LandingPage-cardContainer-4 MuiContainer-maxWidthLg"
   >
-    <mock-box
-      bgcolor="rgba(69, 76, 79, 0.05)"
-      classname="Card-container-42"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+    <div>
+      <mock-box
+        bgcolor="rgba(69, 76, 79, 0.05)"
+        classname="ForwardRef-container-42"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
         >
-          <mock-box
-            classname="Card-textContainer-43"
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
           >
             <mock-box
-              mb="1rem"
+              classname="ForwardRef-textContainer-43"
             >
-              <mock-typography
-                align="inherit"
-                classname="Card-cardTitle-44"
-                variant="h5"
+              <mock-box
+                mb="1rem"
               >
-                Centralized information
+                <mock-typography
+                  align="inherit"
+                  classname="ForwardRef-cardTitle-44"
+                  variant="h5"
+                >
+                  Centralized information
+                </mock-typography>
+              </mock-box>
+              <mock-typography
+                variant="h6"
+              >
+                Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.
               </mock-typography>
             </mock-box>
-            <mock-typography
-              variant="h6"
-            >
-              Aqualink integrates data from sensors, models, satellite observations, surveys, images, and video to give you an instant view of your ecosystem.
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <img
-            class="MuiCardMedia-root Card-cardImage-45 MuiCardMedia-media MuiCardMedia-img"
-            src="metrics.jpg"
-          />
-        </div>
-      </div>
-    </mock-box>
-    <mock-box
-      bgcolor="#ffffff"
-      classname="Card-container-42"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <mock-box
-            classname="Card-textContainer-43"
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
           >
-            <mock-box
-              mb="1rem"
-            >
-              <mock-typography
-                align="inherit"
-                classname="Card-cardTitle-44"
-                variant="h5"
-              >
-                Integrated sensors for automated data collection
-              </mock-typography>
-            </mock-box>
-            <mock-typography
-              variant="h6"
-            >
-              Sofar spotter for real-time telemetry, Fathom for live underwater video, a multi-parameter sonde for water quality information, and hobo temperature logger. Additionally any data in csv format can be uploaded to Aqualink.
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <img
-            class="MuiCardMedia-root Card-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
-            src="sensors.png"
-          />
-        </div>
-      </div>
-    </mock-box>
-    <mock-box
-      bgcolor="rgba(69, 76, 79, 0.05)"
-      classname="Card-container-42"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <mock-box
-            classname="Card-textContainer-43"
-          >
-            <mock-box
-              mb="1rem"
-            >
-              <mock-typography
-                align="inherit"
-                classname="Card-cardTitle-44"
-                variant="h5"
-              >
-                A structured approach to survey management
-              </mock-typography>
-            </mock-box>
-            <mock-typography
-              variant="h6"
-            >
-              Collect data and conduct photographic surveys in a structured way based on best practices. Create a grid of survey points and upload data and imagery to each point.
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <img
-            class="MuiCardMedia-root Card-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
-            src="survey-images.jpg"
-          />
-        </div>
-      </div>
-    </mock-box>
-    <mock-box
-      bgcolor="#ffffff"
-      classname="Card-container-42"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <mock-box
-            classname="Card-textContainer-43"
-          >
-            <mock-box
-              mb="1rem"
-            >
-              <mock-typography
-                align="inherit"
-                classname="Card-cardTitle-44"
-                variant="h5"
-              >
-                Open source and free to use globally
-              </mock-typography>
-            </mock-box>
-            <mock-typography
-              variant="h6"
-            >
-              All of the aqualink code is open source. Let us know what we should build, or build extensions yourself. The system is provided for free by Aqualink, a philanthropic engineering organization.
-            </mock-typography>
-          </mock-box>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
-        >
-          <img
-            class="MuiCardMedia-root Card-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
-            src="map.png"
-          />
-        </div>
-      </div>
-    </mock-box>
-    <mock-box
-      bgcolor="#ffffff"
-      classname="Card-container-42"
-    >
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12"
-        >
-          <mock-box
-            classname="Card-textContainer-43"
-          >
-            <mock-box
-              mb="1rem"
-            >
-              <mock-typography
-                align="center"
-                classname="Card-cardTitle-44"
-                variant="h5"
-              >
-                Over 500 sites across hundreds of organizations
-              </mock-typography>
-            </mock-box>
-            <mock-typography
-              variant="h6"
+            <img
+              class="MuiCardMedia-root ForwardRef-cardImage-45 MuiCardMedia-media MuiCardMedia-img"
+              src="metrics.jpg"
             />
-          </mock-box>
+          </div>
         </div>
+      </mock-box>
+    </div>
+    <div>
+      <mock-box
+        bgcolor="#ffffff"
+        classname="ForwardRef-container-42"
+      >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
         >
-          <img
-            class="MuiCardMedia-root Card-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
-            src="customers.jpg"
-          />
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <mock-box
+              classname="ForwardRef-textContainer-43"
+            >
+              <mock-box
+                mb="1rem"
+              >
+                <mock-typography
+                  align="inherit"
+                  classname="ForwardRef-cardTitle-44"
+                  variant="h5"
+                >
+                  Integrated sensors for automated data collection
+                </mock-typography>
+              </mock-box>
+              <mock-typography
+                variant="h6"
+              >
+                Sofar spotter for real-time telemetry, Fathom for live underwater video, a multi-parameter sonde for water quality information, and hobo temperature logger. Additionally any data in csv format can be uploaded to Aqualink.
+              </mock-typography>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <img
+              class="MuiCardMedia-root ForwardRef-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
+              src="sensors.png"
+            />
+          </div>
         </div>
-      </div>
-    </mock-box>
+      </mock-box>
+    </div>
+    <div>
+      <mock-box
+        bgcolor="rgba(69, 76, 79, 0.05)"
+        classname="ForwardRef-container-42"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <mock-box
+              classname="ForwardRef-textContainer-43"
+            >
+              <mock-box
+                mb="1rem"
+              >
+                <mock-typography
+                  align="inherit"
+                  classname="ForwardRef-cardTitle-44"
+                  variant="h5"
+                >
+                  A structured approach to survey management
+                </mock-typography>
+              </mock-box>
+              <mock-typography
+                variant="h6"
+              >
+                Collect data and conduct photographic surveys in a structured way based on best practices. Create a grid of survey points and upload data and imagery to each point.
+              </mock-typography>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <img
+              class="MuiCardMedia-root ForwardRef-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
+              src="survey-images.jpg"
+            />
+          </div>
+        </div>
+      </mock-box>
+    </div>
+    <div>
+      <mock-box
+        bgcolor="#ffffff"
+        classname="ForwardRef-container-42"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <mock-box
+              classname="ForwardRef-textContainer-43"
+            >
+              <mock-box
+                mb="1rem"
+              >
+                <mock-typography
+                  align="inherit"
+                  classname="ForwardRef-cardTitle-44"
+                  variant="h5"
+                >
+                  Open source and free to use globally
+                </mock-typography>
+              </mock-box>
+              <mock-typography
+                variant="h6"
+              >
+                All of the aqualink code is open source. Let us know what we should build, or build extensions yourself. The system is provided for free by Aqualink, a philanthropic engineering organization.
+              </mock-typography>
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+          >
+            <img
+              class="MuiCardMedia-root ForwardRef-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
+              src="map.png"
+            />
+          </div>
+        </div>
+      </mock-box>
+    </div>
+    <div>
+      <mock-box
+        bgcolor="#ffffff"
+        classname="ForwardRef-container-42"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-row-reverse MuiGrid-grid-xs-12"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12"
+          >
+            <mock-box
+              classname="ForwardRef-textContainer-43"
+            >
+              <mock-box
+                mb="1rem"
+              >
+                <mock-typography
+                  align="center"
+                  classname="ForwardRef-cardTitle-44"
+                  variant="h5"
+                >
+                  Over 500 sites across hundreds of organizations
+                </mock-typography>
+              </mock-box>
+              <mock-typography
+                variant="h6"
+              />
+            </mock-box>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12"
+          >
+            <img
+              class="MuiCardMedia-root ForwardRef-cardImageScaleDown-46 MuiCardMedia-media MuiCardMedia-img"
+              src="customers.jpg"
+            />
+          </div>
+        </div>
+      </mock-box>
+    </div>
   </div>
   <mock-appbar
     classname="Footer-appBar-47"

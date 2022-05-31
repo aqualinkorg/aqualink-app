@@ -225,7 +225,7 @@ exports[`renders as expected 1`] = `
                     classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
-                    Last data received
+                    Forecast valid for
                      
                     1 day ago
                   </mock-typography>
@@ -233,7 +233,7 @@ exports[`renders as expected 1`] = `
                     classname="makeStyles-updateInfoText-22"
                     variant="caption"
                   >
-                    Updated hourly
+                    Updated every 6 hours
                   </mock-typography>
                 </mock-box>
               </div>
@@ -248,14 +248,17 @@ exports[`renders as expected 1`] = `
               <mock-button
                 classname="makeStyles-button-31"
               >
-                <div
-                  class="makeStyles-circle-28"
-                />
-                <mock-typography
-                  classname="makeStyles-chipText-27"
+                <a
+                  class="makeStyles-link-29"
+                  href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"
+                  target="_blank"
                 >
-                  LIVE
-                </mock-typography>
+                  <mock-typography
+                    classname="makeStyles-chipText-27"
+                  >
+                    NOAA GFS
+                  </mock-typography>
+                </a>
               </mock-button>
             </div>
           </div>

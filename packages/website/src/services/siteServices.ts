@@ -22,6 +22,7 @@ import {
   SiteResponse,
   SiteUploadHistory,
   LatestData,
+  ForecastData,
 } from "../store/Sites/types";
 
 const getSite = (id: string) =>
@@ -41,6 +42,12 @@ const getSiteDailyData = (id: string, start?: string, end?: string) =>
 const getSiteLiveData = (id: string) =>
   requests.send<LiveData>({
     url: `sites/${id}/live_data`,
+    method: "GET",
+  });
+
+const getSiteForecastData = (id: string) =>
+  requests.send<ForecastData>({
+    url: `wind-wave-data-hindcast/sites/${id}`,
     method: "GET",
   });
 
@@ -196,6 +203,7 @@ export default {
   getSites,
   getSiteDailyData,
   getSiteLiveData,
+  getSiteForecastData,
   getSiteLatestData,
   getSiteTimeSeriesData,
   getSiteTimeSeriesDataRange,

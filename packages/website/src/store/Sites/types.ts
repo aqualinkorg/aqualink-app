@@ -112,7 +112,7 @@ export type Metrics = CamelCase<MetricsKeys>;
 export type Sources = "spotter" | "hobo" | "noaa" | "gfs" | "sonde" | "metlog";
 
 export type LatestDataASSofarValue = {
-  [keys in Metrics]?: SofarValue;
+  [keys in Metrics]?: ValueWithTimestamp;
 };
 
 export interface LatestData {
@@ -127,18 +127,22 @@ export interface LatestData {
 }
 export interface LiveData {
   site: { id: number };
-  bottomTemperature?: SofarValue;
-  topTemperature?: SofarValue;
-  satelliteTemperature?: SofarValue;
-  degreeHeatingDays?: SofarValue;
-  waveHeight?: SofarValue;
-  waveMeanDirection?: SofarValue;
-  waveMeanPeriod?: SofarValue;
-  windSpeed?: SofarValue;
-  windDirection?: SofarValue;
+  bottomTemperature?: ValueWithTimestamp;
+  topTemperature?: ValueWithTimestamp;
+  satelliteTemperature?: ValueWithTimestamp;
+  degreeHeatingDays?: ValueWithTimestamp;
   weeklyAlertLevel?: number;
   spotterPosition?: SpotterPosition;
   sstAnomaly?: number;
+}
+
+export interface ForecastData {
+  site: { id: number };
+  significantWaveHeight?: ValueWithTimestamp;
+  waveMeanDirection?: ValueWithTimestamp;
+  waveMeanPeriod?: ValueWithTimestamp;
+  windSpeed?: ValueWithTimestamp;
+  windDirection?: ValueWithTimestamp;
 }
 
 export interface DailyData {
@@ -172,7 +176,7 @@ export interface HistoricalMonthlyMeanData {
   date: string;
 }
 
-export interface SofarValue {
+export interface ValueWithTimestamp {
   timestamp: string;
   value: number;
 }
@@ -189,7 +193,10 @@ export interface DataRange {
 export type TimeSeriesSurveyPoint = Pick<SurveyPoints, "id" | "name">;
 
 export type TimeSeries = Partial<
-  Record<Sources, { surveyPoint?: TimeSeriesSurveyPoint; data: SofarValue[] }>
+  Record<
+    Sources,
+    { surveyPoint?: TimeSeriesSurveyPoint; data: ValueWithTimestamp[] }
+  >
 >;
 
 export type TimeSeriesRange = Partial<
@@ -221,7 +228,7 @@ export interface OceanSenseDataResponse {
   timestamps: string[];
 }
 
-export type OceanSenseData = Record<OceanSenseKeys, SofarValue[]>;
+export type OceanSenseData = Record<OceanSenseKeys, ValueWithTimestamp[]>;
 
 export interface HistoricalMonthlyMean {
   id: number;
@@ -352,6 +359,7 @@ export interface SelectedSiteState {
   details?: Site | null;
   liveData?: LiveData | null;
   latestData?: LatestData[] | null;
+  forecastData?: ForecastData | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;
@@ -366,5 +374,6 @@ export interface SelectedSiteState {
   timeSeriesMinRequestDate?: string;
   timeSeriesMaxRequestDate?: string;
   loading: boolean;
+  loadingLiveData: number;
   error?: string | null;
 }

@@ -4,7 +4,6 @@ import { Grid, GridProps, makeStyles, Theme } from "@material-ui/core";
 
 import AnalysisCard from "./AnalysisCard";
 import Chart from "./Chart";
-import DownloadCSVButton from "./DownloadCSVButton";
 import Header from "./Header";
 import { AvailableRange, RangeValue } from "./types";
 import type { Dataset } from "../index";
@@ -20,7 +19,6 @@ const ChartWithCard = ({
   chartWidth,
   datasets,
   disableMaxRange,
-  displayDownloadButton,
   hideYAxisUnits,
   id,
   isPickerErrored,
@@ -95,17 +93,7 @@ const ChartWithCard = ({
               chartStartDate={chartStartDate}
               chartEndDate={chartEndDate}
               columnJustification={cardColumnJustification}
-            >
-              {displayDownloadButton && (
-                <DownloadCSVButton
-                  startDate={pickerStartDate}
-                  endDate={pickerEndDate}
-                  siteId={site.id}
-                  pointId={pointId}
-                  className={classes.button}
-                />
-              )}
-            </AnalysisCard>
+            />
           </Grid>
         )}
       </Grid>
@@ -140,9 +128,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: "calc(100% - 320px)", // width of 100% minus the card with three columns
     },
   },
-  button: {
-    width: "fit-content",
-  },
   card: {
     width: "fit-content",
     minWidth: 219,
@@ -164,7 +149,6 @@ interface ChartWithCardProps {
   chartWidth: "small" | "medium" | "large";
   datasets: Dataset[];
   disableMaxRange: boolean;
-  displayDownloadButton?: boolean;
   hideYAxisUnits?: boolean;
   id: string;
   isPickerErrored: boolean;
@@ -185,7 +169,6 @@ interface ChartWithCardProps {
 ChartWithCard.defaultProps = {
   areSurveysFiltered: undefined,
   cardColumnJustification: "space-between",
-  displayDownloadButton: true,
   hideYAxisUnits: false,
   pointId: undefined,
   showDatePickers: true,

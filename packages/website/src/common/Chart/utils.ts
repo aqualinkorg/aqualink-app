@@ -13,7 +13,7 @@ import { ChartDataSets, ChartPoint } from "chart.js";
 import type {
   DailyData,
   HistoricalMonthlyMeanData,
-  SofarValue,
+  ValueWithTimestamp,
 } from "../../store/Sites/types";
 import { SurveyListItem } from "../../store/Survey/types";
 import {
@@ -105,7 +105,7 @@ export const filterHistoricalMonthlyMeanData = (
 };
 
 export function getSofarDataClosestToDate(
-  spotterData: SofarValue[],
+  spotterData: ValueWithTimestamp[],
   date: Date,
   maxHours?: number
 ) {
@@ -128,7 +128,9 @@ export const convertDailyToSofar = (
   dailyData?: DailyData[],
   metrics?: Exclude<keyof DailyData, "id" | "date">[]
 ):
-  | Partial<Record<Exclude<keyof DailyData, "id" | "date">, SofarValue[]>>
+  | Partial<
+      Record<Exclude<keyof DailyData, "id" | "date">, ValueWithTimestamp[]>
+    >
   | undefined => {
   const sortedData = sortByDate(dailyData || [], "date");
 
@@ -146,7 +148,7 @@ export const convertDailyToSofar = (
 
 export const convertHistoricalMonthlyMeanToSofar = (
   data?: HistoricalMonthlyMeanData[]
-): SofarValue[] | undefined =>
+): ValueWithTimestamp[] | undefined =>
   data?.map((item) => ({ timestamp: item.date, value: item.value }));
 
 // Util function used to fill the area between the chart's plot and the y axis 0.

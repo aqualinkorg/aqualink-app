@@ -21,6 +21,7 @@ import { getAxiosErrorMessage } from "../../helpers/errors";
 const selectedSiteInitialState: SelectedSiteState = {
   draft: null,
   loading: true,
+  loadingLiveData: 0,
   timeSeriesDataLoading: false,
   timeSeriesDataRangeLoading: false,
   latestOceanSenseDataLoading: false,
@@ -30,18 +31,43 @@ const selectedSiteInitialState: SelectedSiteState = {
   error: null,
 };
 
+const AlreadyLoadingErrorMessage = "Request already loading";
+
+export const forecastDataRequest = createAsyncThunk<
+  SelectedSiteState["forecastData"],
+  string,
+  CreateAsyncThunkTypes
+>(
+  "selectedSite/requestForecastData",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await siteServices.getSiteForecastData(id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  }
+);
+
 export const liveDataRequest = createAsyncThunk<
   SelectedSiteState["liveData"],
   string,
   CreateAsyncThunkTypes
->("selectedSite/requestLiveData", async (id: string, { rejectWithValue }) => {
-  try {
-    const { data } = await siteServices.getSiteLiveData(id);
-    return data;
-  } catch (err) {
-    return rejectWithValue(getAxiosErrorMessage(err));
+>(
+  "selectedSite/requestLiveData",
+  async (id: string, { rejectWithValue, getState }) => {
+    const state = getState();
+    if (state.selectedSite.loadingLiveData !== 1) {
+      return rejectWithValue(AlreadyLoadingErrorMessage);
+    }
+    try {
+      const { data } = await siteServices.getSiteLiveData(id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
   }
-});
+);
 
 export const latestDataRequest = createAsyncThunk<
   SelectedSiteState["latestData"],
@@ -208,6 +234,10 @@ const selectedSiteSlice = createSlice({
       ...state,
       latestData: null,
     }),
+    unsetForecastData: (state) => ({
+      ...state,
+      forecastData: null,
+    }),
     setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
       if (state.details) {
         return {
@@ -297,11 +327,39 @@ const selectedSiteSlice = createSlice({
     });
 
     builder.addCase(
+      forecastDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+        return {
+          ...state,
+          forecastData: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(
+      forecastDataRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(forecastDataRequest.pending, (state) => {
+      return {
+        ...state,
+        error: null,
+      };
+    });
+
+    builder.addCase(
       liveDataRequest.fulfilled,
       (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
         return {
           ...state,
           liveData: action.payload,
+          loadingLiveData: state.loadingLiveData - 1,
         };
       }
     );
@@ -311,7 +369,11 @@ const selectedSiteSlice = createSlice({
       (state, action: PayloadAction<SelectedSiteState["error"]>) => {
         return {
           ...state,
-          error: action.payload,
+          error:
+            action.payload === AlreadyLoadingErrorMessage
+              ? null
+              : action.payload,
+          loadingLiveData: state.loadingLiveData - 1,
         };
       }
     );
@@ -320,6 +382,7 @@ const selectedSiteSlice = createSlice({
       return {
         ...state,
         error: null,
+        loadingLiveData: state.loadingLiveData + 1,
       };
     });
 
@@ -488,6 +551,10 @@ export const latestDataSelector = (
   state: RootState
 ): SelectedSiteState["latestData"] => state.selectedSite.latestData;
 
+export const forecastDataSelector = (
+  state: RootState
+): SelectedSiteState["forecastData"] => state.selectedSite.forecastData;
+
 export const siteGranularDailyDataSelector = (
   state: RootState
 ): SelectedSiteState["granularDailyData"] =>
@@ -560,6 +627,7 @@ export const {
   unsetSelectedSite,
   unsetLiveData,
   unsetLatestData,
+  unsetForecastData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,

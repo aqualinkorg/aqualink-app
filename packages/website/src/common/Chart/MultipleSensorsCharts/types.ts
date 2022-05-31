@@ -1,4 +1,4 @@
-import { DataRange, SofarValue } from "../../../store/Sites/types";
+import { DataRange, ValueWithTimestamp } from "../../../store/Sites/types";
 
 export type RangeValue = "one_month" | "one_year" | "max" | "custom";
 
@@ -21,7 +21,7 @@ export interface CardColumn {
 
 export interface OceanSenseDataset {
   unit: string;
-  data: SofarValue[];
+  data: ValueWithTimestamp[];
   title: string;
   id: string;
 }
