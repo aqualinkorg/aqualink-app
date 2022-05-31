@@ -4,17 +4,11 @@ import { isNil, omitBy, sortBy } from 'lodash';
 import moment from 'moment';
 import { Site } from '../sites/sites.entity';
 import { SofarModels, sofarVariableIDs } from './constants';
-import {
-  getLatestData,
-  getSofarHindcastData,
-  getSpotterData,
-  sofarForecast,
-} from './sofar';
+import { getLatestData, getSofarHindcastData, getSpotterData } from './sofar';
 import { SofarLiveData, ValueWithTimestamp } from './sofar.types';
 import { getDegreeHeatingDays } from '../workers/dailyData';
 import { calculateAlertLevel } from './bleachingAlert';
 import { HistoricalMonthlyMean } from '../sites/historical-monthly-mean.entity';
-import { getWindDirection, getWindSpeed } from './math';
 
 export const getLiveData = async (
   site: Site,
@@ -27,69 +21,25 @@ export const getLiveData = async (
 
   const now = new Date();
 
-  const [
-    spotterRawData,
-    degreeHeatingDays,
-    satelliteTemperature,
-    waveHeight,
-    waveMeanDirection,
-    waveMeanPeriod,
-    windVelocity10MeterEastward,
-    windVelocity10MeterNorthward,
-  ] = await Promise.all([
-    sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
-    getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
-    getSofarHindcastData(
-      SofarModels.NOAACoralReefWatch,
-      sofarVariableIDs[SofarModels.NOAACoralReefWatch]
-        .analysedSeaSurfaceTemperature,
-      latitude,
-      longitude,
-      now,
-      96,
-    ),
-    sofarForecast(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel]
-        .significantWaveHeight,
-      latitude,
-      longitude,
-    ),
-    sofarForecast(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanDirection,
-      latitude,
-      longitude,
-    ),
-    sofarForecast(
-      SofarModels.SofarOperationalWaveModel,
-      sofarVariableIDs[SofarModels.SofarOperationalWaveModel].meanPeriod,
-      latitude,
-      longitude,
-    ),
-    sofarForecast(
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterEastward,
-      latitude,
-      longitude,
-    ),
-    sofarForecast(
-      SofarModels.GFS,
-      sofarVariableIDs[SofarModels.GFS].windVelocity10MeterNorthward,
-      latitude,
-      longitude,
-    ),
-  ]);
+  const [spotterRawData, degreeHeatingDays, satelliteTemperature] =
+    await Promise.all([
+      sensorId && isDeployed ? getSpotterData(sensorId) : undefined,
+      getDegreeHeatingDays(latitude, longitude, now, maxMonthlyMean),
+      getSofarHindcastData(
+        SofarModels.NOAACoralReefWatch,
+        sofarVariableIDs[SofarModels.NOAACoralReefWatch]
+          .analysedSeaSurfaceTemperature,
+        latitude,
+        longitude,
+        now,
+        96,
+      ),
+    ]);
 
   const spotterData = spotterRawData
     ? {
         topTemperature: getLatestData(spotterRawData.topTemperature),
         bottomTemperature: getLatestData(spotterRawData.bottomTemperature),
-        waveHeight: getLatestData(spotterRawData.significantWaveHeight),
-        waveMeanPeriod: getLatestData(spotterRawData.waveMeanPeriod),
-        waveMeanDirection: getLatestData(spotterRawData.waveMeanDirection),
-        windSpeed: getLatestData(spotterRawData.windSpeed),
-        windDirection: getLatestData(spotterRawData.windDirection),
         longitude:
           spotterRawData.longitude && getLatestData(spotterRawData.longitude),
         latitude:
@@ -97,28 +47,11 @@ export const getLiveData = async (
       }
     : {};
 
-  // Calculate wind speed and direction from velocity
-  const windNorhwardVelocity = windVelocity10MeterNorthward.value;
-  const windEastwardVelocity = windVelocity10MeterEastward.value;
-  const windSpeed = {
-    timestamp: windVelocity10MeterNorthward.timestamp,
-    value: getWindSpeed(windEastwardVelocity, windNorhwardVelocity),
-  };
-  const windDirection = {
-    timestamp: windVelocity10MeterNorthward.timestamp,
-    value: getWindDirection(windEastwardVelocity, windNorhwardVelocity),
-  };
-
   const filteredValues = omitBy(
     {
       degreeHeatingDays,
       satelliteTemperature:
         satelliteTemperature && getLatestData(satelliteTemperature),
-      waveHeight,
-      waveMeanDirection,
-      waveMeanPeriod,
-      windSpeed,
-      windDirection,
       // Override all possible values with spotter data.
       ...spotterData,
     },

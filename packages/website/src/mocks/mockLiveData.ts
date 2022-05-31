@@ -18,24 +18,4 @@ export const mockLiveData: LiveData = {
     value: 29,
     timestamp: liveDataDate,
   },
-  waveHeight: {
-    value: 3,
-    timestamp: liveDataDate,
-  },
-  waveMeanDirection: {
-    value: 136,
-    timestamp: liveDataDate,
-  },
-  waveMeanPeriod: {
-    value: 15,
-    timestamp: liveDataDate,
-  },
-  windSpeed: {
-    value: 5,
-    timestamp: liveDataDate,
-  },
-  windDirection: {
-    value: 96,
-    timestamp: liveDataDate,
-  },
 };
