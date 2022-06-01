@@ -100,15 +100,8 @@ const SiteDetails = ({
         setHasSpotterData(true);
       }
     }
-    setHasSondeData(
-      Boolean(latestData?.some((data) => data.source === "sonde"))
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, forecastData, latestData, site]);
-
-  useEffect(() => {
     if (forecastData && !hastSpotterData) {
-      const newDate = {
+      const newData = {
         ...latestDataAsSofarValues,
         significantWaveHeight: forecastData.significantWaveHeight,
         waveMeanDirection: forecastData.waveMeanDirection,
@@ -116,10 +109,13 @@ const SiteDetails = ({
         windDirection: forecastData.windDirection,
         windSpeed: forecastData.windSpeed,
       } as LatestDataASSofarValue;
-      setLatestDataAsSofarValues({ ...latestDataAsSofarValues, ...newDate });
+      setLatestDataAsSofarValues({ ...latestDataAsSofarValues, ...newData });
     }
+    setHasSondeData(
+      Boolean(latestData?.some((data) => data.source === "sonde"))
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forecastData, hastSpotterData]);
+  }, [dispatch, forecastData, latestData, site]);
 
   const { videoStream } = site || {};
 
