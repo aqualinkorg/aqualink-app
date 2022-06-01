@@ -189,15 +189,17 @@ const SiteDetails = ({
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
         >
-          {site && (
-            <SketchFab />
-            // <Map
-            //   siteId={site.id}
-            //   spotterPosition={liveData?.spotterPosition}
-            //   polygon={site.polygon}
-            //   surveyPoints={site.surveyPoints}
-            // />
-          )}
+          {site &&
+            (site?.sketchFab ? (
+              <SketchFab uuid={site.sketchFab.uuid} />
+            ) : (
+              <Map
+                siteId={site.id}
+                spotterPosition={liveData?.spotterPosition}
+                polygon={site.polygon}
+                surveyPoints={site.surveyPoints}
+              />
+            ))}
         </CardWithTitle>
 
         <CardWithTitle
