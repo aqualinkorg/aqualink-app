@@ -23,11 +23,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type {
-  Site,
-  LatestDataASSofarValue,
-  LatestData,
-} from "../../store/Sites/types";
+import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -80,7 +76,10 @@ const SiteDetails = ({
     if (site && !latestData) {
       dispatch(latestDataRequest(`${site.id}`));
     }
-  }, [dispatch, site, liveData, latestData]);
+    if (site && !forecastData) {
+      dispatch(forecastDataRequest(String(site.id)));
+    }
+  }, [dispatch, site, liveData, latestData, forecastData]);
 
   useEffect(() => {
     return () => {
@@ -96,28 +95,8 @@ const SiteDetails = ({
         ...latestDataAsSofarValues,
         ...parseLatestData(latestData),
       });
-      const validMetrics: LatestData["metric"][] = [
-        "wind_direction",
-        "significant_wave_height",
-        "wind_direction",
-        "wave_mean_direction",
-        "wave_mean_period",
-      ];
-      const latestWindWaveInformation = latestData.find((x) =>
-        validMetrics.includes(x.metric)
-      );
-      const now = new Date();
-      const twelveHoursEarlier = new Date(now.getTime() - 12 * 60 * 60 * 1000);
-      if (
-        site &&
-        (latestWindWaveInformation?.timestamp || "") <
-          twelveHoursEarlier.toISOString()
-      ) {
-        if (!forecastData) {
-          dispatch(forecastDataRequest(String(site.id)));
-        }
-        setHasSpotterData(false);
-      } else {
+      const spotterData = latestData.find((x) => x.source === "spotter");
+      if (spotterData) {
         setHasSpotterData(true);
       }
     }
