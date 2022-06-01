@@ -20,7 +20,7 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
         });
       },
       error: () => {
-        console.log("Viewer error");
+        console.error("Viewer error");
       },
     });
   }, [uuid]);

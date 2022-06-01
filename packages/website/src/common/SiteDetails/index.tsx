@@ -12,7 +12,6 @@ import classNames from "classnames";
 import times from "lodash/times";
 
 import { useDispatch, useSelector } from "react-redux";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Map from "./Map";
 import SketchFab from "./SketchFab";
 import FeaturedMedia from "./FeaturedMedia";
