@@ -33,6 +33,22 @@ const selectedSiteInitialState: SelectedSiteState = {
 
 const AlreadyLoadingErrorMessage = "Request already loading";
 
+export const forecastDataRequest = createAsyncThunk<
+  SelectedSiteState["forecastData"],
+  string,
+  CreateAsyncThunkTypes
+>(
+  "selectedSite/requestForecastData",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await siteServices.getSiteForecastData(id);
+      return data;
+    } catch (err) {
+      return rejectWithValue(getAxiosErrorMessage(err));
+    }
+  }
+);
+
 export const liveDataRequest = createAsyncThunk<
   SelectedSiteState["liveData"],
   string,
@@ -220,6 +236,10 @@ const selectedSiteSlice = createSlice({
       ...state,
       latestData: null,
     }),
+    unsetForecastData: (state) => ({
+      ...state,
+      forecastData: null,
+    }),
     setSiteData: (state, action: PayloadAction<SiteUpdateParams>) => {
       if (state.details) {
         return {
@@ -304,6 +324,33 @@ const selectedSiteSlice = createSlice({
       return {
         ...state,
         loading: true,
+        error: null,
+      };
+    });
+
+    builder.addCase(
+      forecastDataRequest.fulfilled,
+      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+        return {
+          ...state,
+          forecastData: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(
+      forecastDataRequest.rejected,
+      (state, action: PayloadAction<SelectedSiteState["error"]>) => {
+        return {
+          ...state,
+          error: action.payload,
+        };
+      }
+    );
+
+    builder.addCase(forecastDataRequest.pending, (state) => {
+      return {
+        ...state,
         error: null,
       };
     });
@@ -506,6 +553,10 @@ export const latestDataSelector = (
   state: RootState
 ): SelectedSiteState["latestData"] => state.selectedSite.latestData;
 
+export const forecastDataSelector = (
+  state: RootState
+): SelectedSiteState["forecastData"] => state.selectedSite.forecastData;
+
 export const siteGranularDailyDataSelector = (
   state: RootState
 ): SelectedSiteState["granularDailyData"] =>
@@ -578,6 +629,7 @@ export const {
   unsetSelectedSite,
   unsetLiveData,
   unsetLatestData,
+  unsetForecastData,
   clearTimeSeriesData,
   clearTimeSeriesDataRange,
   clearGranularDailyData,

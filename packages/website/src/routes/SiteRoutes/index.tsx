@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Switch, Route } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Site from "./Site";
 import SiteApplication from "./SiteApplication";
 import SitesList from "./SitesList";
@@ -10,25 +10,72 @@ import UploadData from "./UploadData";
 import StatusSnackbar from "../../common/StatusSnackbar";
 import UploadWarnings from "./UploadData/UploadWarnings";
 import { UploadTimeSeriesResult } from "../../services/uploadServices";
+import { setSelectedSite } from "../../store/Sites/selectedSiteSlice";
+import {
+  clearUploadsError,
+  clearUploadsFiles,
+  clearUploadsResponse,
+  clearUploadsTarget,
+  uploadsErrorSelector,
+  uploadsInProgressSelector,
+  uploadsResponseSelector,
+  uploadsTargetSelector,
+} from "../../store/uploads/uploadsSlice";
 
 const SiteRoutes = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [isUploadSnackbarOpen, setIsUploadSnackbarOpen] = useState(false);
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [isUploadDetailsDialogOpen, setIsUploadDetailsDialogOpen] =
     useState(false);
   const [uploadDetails, setUploadDetails] = useState<UploadTimeSeriesResult[]>(
     []
   );
+  const uploadLoading = useSelector(uploadsInProgressSelector);
+  const uploadError = useSelector(uploadsErrorSelector);
+  const uploadResult = useSelector(uploadsResponseSelector);
+  const uploadTarget = useSelector(uploadsTargetSelector);
 
-  const hasWarnings = uploadDetails.some((data) => data.ignoredHeaders.length);
+  const hasWarnings = uploadDetails.some(
+    (data) => (data.ignoredHeaders?.length || 0) > 0
+  );
 
   const handleSnackbarClose = () => setIsUploadSnackbarOpen(false);
   const handleDetailsDialogOpen = () => setIsUploadDetailsDialogOpen(true);
   const handleDetailsDialogClose = () => setIsUploadDetailsDialogOpen(false);
+  const onStatusSnackbarClose = () => setIsErrorSnackbarOpen(false);
+  const [siteId, setSiteId] = useState<number | undefined>(undefined);
 
-  const onUploadSuccess = (data: UploadTimeSeriesResult[]) => {
-    setUploadDetails(data);
-    setIsUploadSnackbarOpen(true);
+  const onHandleUploadError = () => {
+    // eslint-disable-next-line fp/no-mutating-methods
+    history.push(`/sites/${uploadTarget?.siteId}/upload_data`);
   };
+
+  const handleRefreshOnSuccessUpload = () => {
+    dispatch(setSelectedSite());
+    // eslint-disable-next-line fp/no-mutating-methods
+    history.push(`/sites/${siteId}?refresh=true`);
+    setIsUploadSnackbarOpen(false);
+    dispatch(clearUploadsFiles());
+    dispatch(clearUploadsTarget());
+    dispatch(clearUploadsError());
+    dispatch(clearUploadsResponse());
+  };
+
+  useEffect(() => {
+    if (uploadResult && !uploadLoading && !uploadError && uploadTarget) {
+      setSiteId(uploadTarget.siteId);
+      setUploadDetails(uploadResult);
+      if (!uploadResult.some((x) => !!x.error)) {
+        setIsUploadSnackbarOpen(true);
+      }
+    }
+  }, [uploadResult, uploadLoading, uploadError, uploadTarget]);
+
+  useEffect(() => {
+    setIsErrorSnackbarOpen(!!uploadError);
+  }, [uploadError]);
 
   return (
     <>
@@ -36,9 +83,29 @@ const SiteRoutes = () => {
         open={isUploadSnackbarOpen}
         message="Successfully uploaded files"
         severity={hasWarnings ? "warning" : "success"}
-        furtherActionLabel={hasWarnings ? "View details" : undefined}
-        onFurtherActionTake={hasWarnings ? handleDetailsDialogOpen : undefined}
+        furtherActionLabel={hasWarnings ? "View details" : "Refresh page"}
+        onFurtherActionTake={
+          hasWarnings ? handleDetailsDialogOpen : handleRefreshOnSuccessUpload
+        }
         handleClose={handleSnackbarClose}
+      />
+      <StatusSnackbar
+        open={isErrorSnackbarOpen}
+        message={
+          typeof uploadError === "string"
+            ? uploadError
+            : "Something went wrong with the upload"
+        }
+        furtherActionLabel="View details"
+        onFurtherActionTake={onHandleUploadError}
+        handleClose={onStatusSnackbarClose}
+        severity="error"
+      />
+      <StatusSnackbar
+        open={uploadLoading}
+        message="Uploading files..."
+        handleClose={() => {}}
+        severity="info"
       />
       <UploadWarnings
         details={uploadDetails}
@@ -67,9 +134,7 @@ const SiteRoutes = () => {
         <Route
           exact
           path="/sites/:id/upload_data"
-          render={(props) => (
-            <UploadData {...props} onSuccess={onUploadSuccess} />
-          )}
+          render={(props) => <UploadData {...props} />}
         />
       </Switch>
     </>

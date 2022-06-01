@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 
 interface UploadButtonProps {
   loading: boolean;
-  onUpload: () => Promise<void>;
+  onUpload: () => any;
 }
 
 export default UploadButton;

@@ -143,6 +143,8 @@ The rest of the scripts are used to either augment the models with missing data 
 - SST backfill: Backfill historical sst values from NOAA repositories
   - (no standard command) `yarn ts-node -r dotenv/config scripts/sst-backfill.ts`
   - Make sure that the `sitesToProcess` array is populated with the desired siteIds to process, before running the script
+- Wind-wave data: Update hindcast data in `forecast_data` table
+  - `yarn update-wind-wave-date [-s siteId1 siteId2 ...]`
 
 ### Swagger API docs
 

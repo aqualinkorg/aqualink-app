@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   withStyles,
   WithStyles,
@@ -55,11 +55,11 @@ const LandingPage = ({ classes }: LandingPageProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const firstCard = useRef<HTMLDivElement>(null);
 
   const seeMore = () => {
-    window.scrollTo({
+    firstCard.current?.scrollIntoView({
       behavior: "smooth",
-      top: window.innerHeight,
     });
   };
 
@@ -157,8 +157,9 @@ const LandingPage = ({ classes }: LandingPageProps) => {
         </Box>
       </div>
       <Container className={classes.cardContainer}>
-        {cardTitles.map((item) => (
+        {cardTitles.map((item, i) => (
           <Card
+            ref={i === 0 ? firstCard : undefined}
             key={item.title}
             title={item.title}
             text={item.text}

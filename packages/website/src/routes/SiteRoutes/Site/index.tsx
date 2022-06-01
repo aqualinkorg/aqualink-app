@@ -109,6 +109,7 @@ const Site = ({ match, classes }: SiteProps) => {
   const siteId = match.params.id;
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
   const querySurveyPointId = getQueryParam("surveyPoint");
+  const refresh = getQueryParam("refresh");
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -135,6 +136,19 @@ const Site = ({ match, classes }: SiteProps) => {
     : undefined;
 
   const isLoading = !siteWithFeaturedImage;
+
+  useEffect(() => {
+    if (refresh === "true") {
+      dispatch(clearTimeSeriesDataRange());
+      dispatch(clearTimeSeriesData());
+      dispatch(clearOceanSenseData());
+
+      dispatch(siteRequest(siteId));
+      dispatch(liveDataRequest(siteId));
+      dispatch(surveysRequest(siteId));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refresh]);
 
   // Fetch site and surveys
   useEffect(() => {

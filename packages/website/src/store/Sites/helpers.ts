@@ -26,7 +26,7 @@ import {
   OceanSenseKeys,
   OceanSenseKeysList,
   Site,
-  SofarValue,
+  ValueWithTimestamp,
   Sources,
   TimeSeriesData,
   TimeSeriesDataRange,
@@ -94,7 +94,7 @@ export const mapTimeSeriesDataRanges = (
 const mapOceanSenseMetric = (
   response: OceanSenseDataResponse,
   key: OceanSenseKeys
-): SofarValue[] =>
+): ValueWithTimestamp[] =>
   response.data[key].map((value, index) => ({
     value,
     timestamp: response.timestamps[index],

@@ -43,6 +43,14 @@ export const filterSofarResponse = (responseData: any) => {
   ) as ValueWithTimestamp[];
 };
 
+interface HindcastResponse {
+  variableID: string;
+  variableName: string;
+  dataCategory: string;
+  physicalUnit: string;
+  values: ValueWithTimestamp[];
+}
+
 export async function sofarHindcast(
   modelId: string,
   variableID: string,
@@ -63,7 +71,14 @@ export async function sofarHindcast(
       },
     })
     .then((response) => {
-      return response.data.hindcastVariables[0];
+      // The api return an array of requested variables, but since we request one, ours it's always first
+      if (!response.data.hindcastVariables[0]) {
+        console.error(
+          `No Hindcast variable '${variableID}' available for ${latitude}, ${longitude}`,
+        );
+        return undefined;
+      }
+      return response.data.hindcastVariables[0] as HindcastResponse;
     })
     .catch((error) => {
       if (error.response) {
@@ -76,42 +91,6 @@ export async function sofarHindcast(
         );
       }
     });
-}
-
-export async function sofarForecast(
-  modelId: string,
-  variableID: string,
-  latitude: number,
-  longitude: number,
-): Promise<ValueWithTimestamp> {
-  const hash = (Math.random() + 1).toString(36).substring(7);
-  console.time(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  const forecast = await axios
-    .get(`${SOFAR_MARINE_URL}${modelId}/forecast/point`, {
-      params: {
-        variableIDs: [variableID],
-        latitude,
-        longitude,
-        token: process.env.SOFAR_API_TOKEN,
-      },
-    })
-    .then((response) => {
-      // Get latest live (forecast) data
-      return response.data.forecastVariables[0].values[0];
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error(
-          `Sofar Forecast API responded with a ${error.response.status} status. ${error.response.data.message}`,
-        );
-      } else {
-        console.error(
-          `An error occurred accessing the Sofar Forecast API - ${error}`,
-        );
-      }
-    });
-  console.timeEnd(`sofarForecast for ${modelId}-${variableID} (${hash})`);
-  return forecast;
 }
 
 export function sofarSensor(sensorId: string, start?: string, end?: string) {
@@ -131,7 +110,7 @@ export function sofarSensor(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -156,7 +135,7 @@ export function sofarWaveData(sensorId: string, start?: string, end?: string) {
           `Sofar API responded with a ${error.response.status} status for spotter ${sensorId}. ${error.response.data.message}`,
         );
       } else {
-        console.error(`An error occured accessing the Sofar API - ${error}`);
+        console.error(`An error occurred accessing the Sofar API - ${error}`);
       }
     });
 }
@@ -182,7 +161,7 @@ export async function getSofarHindcastData(
   );
   console.timeEnd(`getSofarHindcast for ${modelId}-${variableID}`);
 
-  // Filter out unkown values
+  // Filter out unknown values
   return filterSofarResponse(hindcastVariables);
 }
 

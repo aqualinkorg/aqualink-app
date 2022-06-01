@@ -19,6 +19,7 @@ import { AppController } from './app.controller';
 import { AuditModule } from './audit/audit.module';
 import { DataUploadsModule } from './data-uploads/data-uploads.module';
 import { SiteSketchFabModule } from './site-sketch-fab/site-sketch-fab.module';
+import { WindWaveModule } from './wind-wave-data/wind-wave-data.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { SiteSketchFabModule } from './site-sketch-fab/site-sketch-fab.module';
     AuditModule,
     DataUploadsModule,
     SiteSketchFabModule,
+    WindWaveModule,
   ],
   controllers: [AppController],
 })
