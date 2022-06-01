@@ -10,6 +10,7 @@ import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';
 import { sofarHindcast } from './sofar';
+import { getSofarNearestAvailablePoint } from './sofar-availability';
 import { ValueWithTimestamp, SpotterData } from './sofar.types';
 import { getSites } from './spotter-time-series';
 
@@ -53,7 +54,10 @@ export const addWindWaveData = async (
     sites,
     async (site) => {
       const { polygon } = site;
-      const [longitude, latitude] = (polygon as Point).coordinates;
+
+      const [longitude, latitude] = getSofarNearestAvailablePoint(
+        polygon as Point,
+      );
 
       logger.log(
         `Saving wind & wave forecast data for ${site.id} at ${latitude} - ${longitude}`,
