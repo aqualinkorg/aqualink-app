@@ -92,7 +92,10 @@ const SiteDetails = ({
 
   useEffect(() => {
     if (latestData) {
-      setLatestDataAsSofarValues(parseLatestData(latestData));
+      setLatestDataAsSofarValues({
+        ...latestDataAsSofarValues,
+        ...parseLatestData(latestData),
+      });
       const validMetrics: LatestData["metric"][] = [
         "wind_direction",
         "significant_wave_height",
@@ -121,6 +124,7 @@ const SiteDetails = ({
     setHasSondeData(
       Boolean(latestData?.some((data) => data.source === "sonde"))
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, forecastData, latestData, site]);
 
   useEffect(() => {
@@ -133,7 +137,7 @@ const SiteDetails = ({
         windDirection: forecastData.windDirection,
         windSpeed: forecastData.windSpeed,
       } as LatestDataASSofarValue;
-      setLatestDataAsSofarValues(newDate);
+      setLatestDataAsSofarValues({ ...latestDataAsSofarValues, ...newDate });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forecastData, hastSpotterData]);
