@@ -71,10 +71,10 @@ const SiteDetails = ({
 
   useEffect(() => {
     if (site && !liveData) {
-      dispatch(liveDataRequest(`${site.id}`));
+      dispatch(liveDataRequest(String(site.id)));
     }
     if (site && !latestData) {
-      dispatch(latestDataRequest(`${site.id}`));
+      dispatch(latestDataRequest(String(site.id)));
     }
     if (site && !forecastData) {
       dispatch(forecastDataRequest(String(site.id)));
@@ -90,32 +90,30 @@ const SiteDetails = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (latestData) {
-      setLatestDataAsSofarValues({
-        ...latestDataAsSofarValues,
-        ...parseLatestData(latestData),
+    if (forecastData && latestData) {
+      const combinedArray = [...forecastData, ...latestData];
+      const formatted = combinedArray.map((x) => ({
+        timestamp: x.timestamp,
+        value: x.value,
+        source: x.source,
+        metric: x.metric,
+      }));
+      const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
+      const validityDate = Date.now() - spotterValidityLimit;
+      const hasSpotter = combinedArray.some((x) => {
+        const xTime = new Date(x.timestamp).getTime();
+        return x.source === "spotter" && xTime > validityDate;
       });
-      const spotterData = latestData.find((x) => x.source === "spotter");
-      if (spotterData) {
-        setHasSpotterData(true);
-      }
+      const hasSonde = Boolean(
+        combinedArray?.some((data) => data.source === "sonde")
+      );
+      setHasSondeData(hasSonde);
+      const parsedData = parseLatestData(formatted);
+
+      setHasSpotterData(hasSpotter);
+      setLatestDataAsSofarValues(parsedData);
     }
-    if (forecastData && !hastSpotterData) {
-      const newData = {
-        ...latestDataAsSofarValues,
-        significantWaveHeight: forecastData.significantWaveHeight,
-        waveMeanDirection: forecastData.waveMeanDirection,
-        waveMeanPeriod: forecastData.waveMeanPeriod,
-        windDirection: forecastData.windDirection,
-        windSpeed: forecastData.windSpeed,
-      } as LatestDataASSofarValue;
-      setLatestDataAsSofarValues({ ...latestDataAsSofarValues, ...newData });
-    }
-    setHasSondeData(
-      Boolean(latestData?.some((data) => data.source === "sonde"))
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, forecastData, latestData, site]);
+  }, [forecastData, latestData]);
 
   const { videoStream } = site || {};
 

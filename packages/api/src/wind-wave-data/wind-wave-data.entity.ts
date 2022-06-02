@@ -9,6 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
 import { WindWaveMetric } from './wind-wave-data.types';
 
@@ -31,6 +32,9 @@ export class ForecastData {
 
   @Column({ type: 'enum', enum: WindWaveMetric, nullable: false })
   metric: WindWaveMetric;
+
+  @Column({ type: 'enum', enum: SourceType })
+  source: SourceType;
 
   @CreateDateColumn()
   createdAt: Date;

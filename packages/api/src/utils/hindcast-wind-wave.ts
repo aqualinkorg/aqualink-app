@@ -4,6 +4,7 @@ import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import moment from 'moment';
 import { Repository } from 'typeorm';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
 import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
@@ -160,6 +161,8 @@ export const addWindWaveData = async (
                     .startOf('minute')
                     .toDate(),
                   metric,
+                  // For now they all have the same source
+                  source: SourceType.SOFAR_WAVE_MODEL,
                   value: sofarValue.value,
                   updatedAt: today,
                 },

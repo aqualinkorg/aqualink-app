@@ -137,12 +137,11 @@ export interface LiveData {
 }
 
 export interface ForecastData {
-  site: { id: number };
-  significantWaveHeight?: ValueWithTimestamp;
-  waveMeanDirection?: ValueWithTimestamp;
-  waveMeanPeriod?: ValueWithTimestamp;
-  windSpeed?: ValueWithTimestamp;
-  windDirection?: ValueWithTimestamp;
+  timestamp: string;
+  value: number;
+  site?: { id: number };
+  source: Sources;
+  metric: MetricsKeys;
 }
 
 export interface DailyData {
@@ -359,7 +358,7 @@ export interface SelectedSiteState {
   details?: Site | null;
   liveData?: LiveData | null;
   latestData?: LatestData[] | null;
-  forecastData?: ForecastData | null;
+  forecastData?: ForecastData[] | null;
   latestOceanSenseData?: OceanSenseData;
   latestOceanSenseDataLoading: boolean;
   latestOceanSenseDataError?: string | null;

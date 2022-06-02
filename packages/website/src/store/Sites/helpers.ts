@@ -16,7 +16,6 @@ import siteServices from "../../services/siteServices";
 import type { TableRow } from "../Homepage/types";
 import {
   DailyData,
-  LatestData,
   LatestDataASSofarValue,
   Metrics,
   MetricsKeys,
@@ -321,7 +320,14 @@ export const timeSeriesRequest = async (
   ];
 };
 
-export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
+export const parseLatestData = (
+  data: {
+    timestamp: string;
+    value: number;
+    source: Sources;
+    metric: MetricsKeys;
+  }[]
+): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
   // Copying, sorting and filtering to keep spotter or latest data.
