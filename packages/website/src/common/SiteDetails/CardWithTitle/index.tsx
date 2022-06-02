@@ -32,7 +32,7 @@ const CardWithTitle: FC<CardWithTitleProps> = ({
           item
           xs={12}
           container
-          alignItems="center"
+          alignItems="flex-end"
           className={classes.row}
         >
           <LoadingSkeleton loading={loading} variant="text" lines={1}>
