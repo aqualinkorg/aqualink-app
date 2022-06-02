@@ -142,6 +142,8 @@ export interface ForecastData {
   site?: { id: number };
   source: Sources;
   metric: MetricsKeys;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface DailyData {

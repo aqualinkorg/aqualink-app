@@ -15,10 +15,7 @@ export class WindWaveService {
       where: { site: siteId },
     });
     return result.map((item) => ({
-      timestamp: item.timestamp,
-      value: item.value,
-      source: item.source,
-      metric: item.metric,
+      ...item,
       site: { id: siteId },
     }));
   }

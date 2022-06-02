@@ -14,7 +14,7 @@ import { Site } from '../sites/sites.entity';
 import { WindWaveMetric } from './wind-wave-data.types';
 
 @Entity()
-@Unique('one_row_per_site_per_metric', ['site', 'metric'])
+@Unique('one_row_per_site_per_metric', ['site', 'metric', 'source'])
 @Index(['site'])
 export class ForecastData {
   @ApiProperty({ example: 1 })
