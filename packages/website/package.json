@@ -62,7 +62,8 @@
     "redux-mock-store": "^1.5.4",
     "slick-carousel": "^1.8.1",
     "validator": "^13.1.1",
-    "youtube-v3-api": "^1.1.1"
+    "youtube-v3-api": "^1.1.1",
+    "react-helmet": "^6.1.0"
   },
   "jest": {
     "snapshotSerializers": [
@@ -101,6 +102,7 @@
     "@types/react-swipeable-views": "^0.13.0",
     "@types/redux-mock-store": "^1.0.2",
     "@types/validator": "^13.1.0",
+    "@types/react-helmet": "^6.1.0",
     "canvas": "^2.8.0",
     "cross-env": "^7.0.2",
     "dotenv-cli": "^4.0.0"

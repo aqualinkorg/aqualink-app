@@ -10,6 +10,7 @@ import { Alert } from "@material-ui/lab";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 import classNames from "classnames";
+import { Helmet } from "react-helmet";
 import NotFoundPage from "../../NotFound/index";
 import SiteNavBar from "../../../common/NavBar";
 import SiteFooter from "../../../common/Footer";
@@ -191,6 +192,12 @@ const Site = ({ match, classes }: SiteProps) => {
 
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content={siteDetails?.name || "Ocean Monitoring"}
+        />
+      </Helmet>
       <SiteNavBar searchLocation />
       {!siteLoading && !siteDetails ? (
         <NotFoundPage />
