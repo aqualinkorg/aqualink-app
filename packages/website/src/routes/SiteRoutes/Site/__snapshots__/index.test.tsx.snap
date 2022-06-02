@@ -605,7 +605,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       variant="subtitle1"
                     >
                       I have read the
-
+                       
                       <a
                         class="RegisterDialog-termsLink-222"
                         href="/terms"
@@ -639,7 +639,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   variant="subtitle1"
                 >
                   Have an account?
-
+                   
                   <mock-button
                     color="primary"
                   >
@@ -865,7 +865,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   variant="subtitle1"
                 >
                   Don't have an account?
-
+                   
                   <mock-button
                     color="primary"
                   >
@@ -2357,7 +2357,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                       variant="subtitle1"
                     >
                       I have read the
-
+                       
                       <a
                         class="RegisterDialog-termsLink-33"
                         href="/terms"
@@ -2391,7 +2391,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   variant="subtitle1"
                 >
                   Have an account?
-
+                   
                   <mock-button
                     color="primary"
                   >
@@ -2617,7 +2617,7 @@ exports[`Site Detail Page should render with given state from Redux store: snaps
                   variant="subtitle1"
                 >
                   Don't have an account?
-
+                   
                   <mock-button
                     color="primary"
                   >
