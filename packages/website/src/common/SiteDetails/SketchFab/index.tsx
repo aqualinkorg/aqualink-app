@@ -13,11 +13,6 @@ const SketchFab = ({ classes, uuid }: SiteMapProps) => {
     client.init(uuid, {
       success: (api: any) => {
         api.start();
-
-        api.addEventListener("viewerready", () => {
-          // API is ready to use
-          console.log("Viewer is ready");
-        });
       },
       error: () => {
         console.error("Viewer error");

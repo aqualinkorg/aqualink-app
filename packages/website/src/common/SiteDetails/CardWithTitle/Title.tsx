@@ -44,10 +44,7 @@ const Title = ({ classes, values }: TitleProps) => {
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(0, 0, 0.4, 2),
-      [theme.breakpoints.down("xs")]: {
-        margin: theme.spacing(0, 2, 0.4, 2),
-      },
+      flex: 1,
     },
     maxWidth: {
       maxWidth: "45%",
