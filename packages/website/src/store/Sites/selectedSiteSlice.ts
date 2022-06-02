@@ -91,14 +91,14 @@ export const siteRequest = createAsyncThunk<
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSite(id);
-      // const { data: sketchFab } = await siteServices.getSiteSketchFab(id);
+      const { data: sketchFab } = await siteServices.getSiteSketchFab(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
         ...data,
         dailyData,
-        // sketchFab,
+        sketchFab,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
           (item) => item.month
