@@ -84,12 +84,9 @@ const MultipleSensorsCharts = ({
 }: MultipleSensorsChartsProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [startParam, setStartParam] = useQueryParam("start");
-  const [endParam, setEndParam] = useQueryParam("end");
+  const [startParam, setStartParam] = useQueryParam("start", isISODate);
+  const [endParam, setEndParam] = useQueryParam("end", isISODate);
   const [chartParam] = useQueryParam("chart");
-  const initialStart =
-    startParam && isISODate(startParam) ? startParam : undefined;
-  const initialEnd = endParam && isISODate(endParam) ? endParam : undefined;
   const granularDailyData = useSelector(siteGranularDailyDataSelector);
   const timeSeriesData = useSelector(siteTimeSeriesDataSelector);
   const oceanSenseData = useSelector(siteOceanSenseDataSelector);
@@ -106,7 +103,7 @@ const MultipleSensorsCharts = ({
   const [startDate, setStartDate] = useState<string>();
   const [pickerErrored, setPickerErrored] = useState(false);
   const [range, setRange] = useState<RangeValue>(
-    initialStart || initialEnd ? "custom" : "one_month"
+    startParam || endParam ? "custom" : "one_month"
   );
 
   const today = localizedEndOfDay(undefined, site.timezone);
@@ -247,13 +244,13 @@ const MultipleSensorsCharts = ({
         .startOf("day")
         .toISOString();
       setPickerStartDate(
-        initialStart
-          ? zonedTimeToUtc(initialStart, site.timezone || "UTC").toISOString()
+        startParam
+          ? zonedTimeToUtc(startParam, site.timezone || "UTC").toISOString()
           : utcToZonedTime(pastOneMonth, site.timezone || "UTC").toISOString()
       );
       setPickerEndDate(
-        initialEnd
-          ? zonedTimeToUtc(initialEnd, site.timezone || "UTC").toISOString()
+        endParam
+          ? zonedTimeToUtc(endParam, site.timezone || "UTC").toISOString()
           : utcToZonedTime(
               localizedMaxDate || today,
               site.timezone || "UTC"
@@ -262,8 +259,8 @@ const MultipleSensorsCharts = ({
     }
   }, [
     hoboBottomTemperatureRange,
-    initialEnd,
-    initialStart,
+    endParam,
+    startParam,
     pickerStartDate,
     pickerEndDate,
     rangesLoading,

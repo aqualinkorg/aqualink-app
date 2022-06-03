@@ -7,7 +7,10 @@ import { useHistory, useLocation } from "react-router-dom";
 let processing = false;
 const stack: { key: string; value?: string }[] = [];
 
-export const useQueryParam = (key: string) => {
+export const useQueryParam = (
+  key: string,
+  valid: (value: string) => boolean = () => true
+) => {
   const { search } = useLocation();
   const history = useHistory();
   const [value, setValue] = useState<string | undefined>(() => {
@@ -54,8 +57,8 @@ export const useQueryParam = (key: string) => {
     if (stack.length > 0) processStack();
   }, [search]);
 
-  return [value, setValue] as [
-    string,
+  return [value && valid(value) ? value : undefined, setValue] as [
+    string | undefined,
     React.Dispatch<React.SetStateAction<string | undefined>>
   ];
 };
