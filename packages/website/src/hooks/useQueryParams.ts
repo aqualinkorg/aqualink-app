@@ -5,8 +5,16 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 let processing = false;
-const stack: { key: string; value?: string }[] = [];
+const queue: { key: string; value?: string }[] = [];
 
+/**
+ * To update the query string in the url, query params must change
+ * synchronously, so there is no missing update. That is achieved by
+ * adding key/value pairs into a 'queue' and then processing them one
+ * by one. 'processing' is essentially a lock, locking 'processStack'
+ * function right on entry and unlocking it just after 'search' is
+ * updated with the new value.
+ */
 export const useQueryParam = (
   key: string,
   valid: (value: string) => boolean = () => true
@@ -21,25 +29,17 @@ export const useQueryParam = (
   const processStack = () => {
     if (processing) return;
     processing = true;
-    const item = stack.pop();
+    const item = queue.shift();
     if (!item) return;
     const { key: k, value: v } = item;
-    const withoutQuestionMark = search.substring(1);
-    const params = withoutQuestionMark.split("&");
-    const index = params.findIndex((x) => x.startsWith(k));
-    if (v === undefined && index > -1) {
-      params.splice(index, 1);
-    } else if (v !== undefined && index > -1) {
-      const prevValue = params[index];
-      const newValue = prevValue.split("=");
-      newValue[1] = v;
-      params[index] = newValue.join("=");
-    } else if (v !== undefined && index < 0) {
-      params.push(`${k}=${v}`);
-    }
-    const newSearch = `?${params.filter((x) => x !== "").join("&")}`;
+    const params = new URLSearchParams(search);
+    const hasKey = params.has(k);
+    if (hasKey) params.delete(k);
+    if (v !== undefined) params.set(k, v);
+    const newSearch = params.toString();
     if (search === newSearch) {
       processing = false;
+      processStack();
       return;
     }
     history.push({
@@ -48,13 +48,13 @@ export const useQueryParam = (
   };
 
   useEffect(() => {
-    stack.push({ key, value });
+    queue.push({ key, value });
     processStack();
   }, [value]);
 
   useEffect(() => {
     processing = false;
-    if (stack.length > 0) processStack();
+    if (queue.length > 0) processStack();
   }, [search]);
 
   return [value && valid(value) ? value : undefined, setValue] as [
