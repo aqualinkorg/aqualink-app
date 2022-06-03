@@ -39,7 +39,7 @@ import { User } from "../../../store/User/types";
 import { localizedEndOfDay } from "../../../common/Chart/MultipleSensorsCharts/helpers";
 import { sortByDate, subtractFromDate } from "../../../helpers/dates";
 import { oceanSenseConfig } from "../../../constants/oceanSenseConfig";
-import { useQueryParams } from "../../../hooks/useQueryParams";
+import { useQueryParam } from "../../../hooks/useQueryParams";
 import { findSurveyPointFromList } from "../../../helpers/siteUtils";
 import LoadingSkeleton from "../../../common/LoadingSkeleton";
 import { Site as SiteType } from "../../../store/Sites/types";
@@ -106,11 +106,10 @@ const Site = ({ match, classes }: SiteProps) => {
   const surveyList = useSelector(surveyListSelector);
   const liveData = useSelector(liveDataSelector);
   const dispatch = useDispatch();
-  const getQueryParam = useQueryParams();
   const siteId = match.params.id;
   const { id, dailyData, surveyPoints, timezone } = siteDetails || {};
-  const querySurveyPointId = getQueryParam("surveyPoint");
-  const refresh = getQueryParam("refresh");
+  const [querySurveyPointId] = useQueryParam("surveyPoint");
+  const [refresh, setRefresh] = useQueryParam("refresh");
   const { id: selectedSurveyPointId } =
     findSurveyPointFromList(querySurveyPointId, surveyPoints) || {};
 
@@ -140,6 +139,8 @@ const Site = ({ match, classes }: SiteProps) => {
 
   useEffect(() => {
     if (refresh === "true") {
+      setRefresh(undefined);
+
       dispatch(clearTimeSeriesDataRange());
       dispatch(clearTimeSeriesData());
       dispatch(clearOceanSenseData());
