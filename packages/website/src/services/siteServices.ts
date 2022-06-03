@@ -34,7 +34,7 @@ const getSite = (id: string) =>
 
 const getSiteSketchFab = (siteId: string) =>
   requests.send<SiteSketchFab>({
-    url: `site-sketch-fab`,
+    url: `site-sketchfab`,
     method: "GET",
     params: {
       siteId,

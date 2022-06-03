@@ -1,10 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SiteSketchFabService } from './site-sketch-fab.service';
-import { FindSketchFabDto } from './dto/find-sketch-fab.dto';
+import { SiteSketchFabService } from './site-sketchfab.service';
+import { FindSketchFabDto } from './dto/find-sketchfab.dto';
 
-@ApiTags('site-sketch-fab')
-@Controller('site-sketch-fab')
+@ApiTags('site-sketchfab')
+@Controller('site-sketchfab')
 export class SiteSketchFabController {
   constructor(private siteSketchFab: SiteSketchFabService) {}
 

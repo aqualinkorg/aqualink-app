@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SiteSketchFabService } from './site-sketch-fab.service';
-import { SiteSketchFabController } from './site-sketch-fab.controller';
-import { SketchFab } from './site-sketch-fab.entity';
+import { SiteSketchFabService } from './site-sketchfab.service';
+import { SiteSketchFabController } from './site-sketchfab.controller';
+import { SketchFab } from './site-sketchfab.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SketchFab])],

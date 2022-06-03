@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FindSketchFabDto } from './dto/find-sketch-fab.dto';
-import { SketchFab } from './site-sketch-fab.entity';
+import { FindSketchFabDto } from './dto/find-sketchfab.dto';
+import { SketchFab } from './site-sketchfab.entity';
 
 @Injectable()
 export class SiteSketchFabService {

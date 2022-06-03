@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SiteSketchFabService } from './site-sketch-fab.service';
+import { SiteSketchFabService } from './site-sketchfab.service';
 
 describe('SiteSketchFabService', () => {
   let service: SiteSketchFabService;
