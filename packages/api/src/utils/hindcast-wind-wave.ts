@@ -178,7 +178,7 @@ export const addWindWaveData = async (
                 },
               ])
               .onConflict(
-                `ON CONSTRAINT "one_row_per_site_per_metric" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+                `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
               )
               .execute();
           }
