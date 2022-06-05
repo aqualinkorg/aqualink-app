@@ -6,6 +6,7 @@ import availabilityPoints from './sofar-availability-points';
 let geojson;
 export function getSofarWaveModelAvailability(): FeatureCollection<Point> {
   if (!geojson) {
+    // eslint-disable-next-line fp/no-mutation
     geojson = {
       type: 'FeatureCollection',
       features: availabilityPoints.map((coordinate) => ({

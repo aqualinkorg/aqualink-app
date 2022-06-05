@@ -269,6 +269,17 @@ export interface Site {
   historicalMonthlyMean: HistoricalMonthlyMean[];
   hasHobo: boolean;
   collectionData?: CollectionData;
+  sketchFab?: SiteSketchFab;
+}
+
+export interface SiteSketchFab {
+  id: number;
+  siteId: number;
+  scale: number;
+  description?: string;
+  uuid: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface SiteResponse extends Site {

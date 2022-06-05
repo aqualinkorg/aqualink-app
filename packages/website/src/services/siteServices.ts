@@ -22,6 +22,7 @@ import {
   SiteResponse,
   SiteUploadHistory,
   LatestData,
+  SiteSketchFab,
   ForecastData,
 } from "../store/Sites/types";
 
@@ -29,6 +30,15 @@ const getSite = (id: string) =>
   requests.send<Site>({
     url: `sites/${id}`,
     method: "GET",
+  });
+
+const getSiteSketchFab = (siteId: string) =>
+  requests.send<SiteSketchFab>({
+    url: `site-sketchfab`,
+    method: "GET",
+    params: {
+      siteId,
+    },
   });
 
 const getSiteDailyData = (id: string, start?: string, end?: string) =>
@@ -201,6 +211,7 @@ const getOceanSenseData = ({
 export default {
   getSite,
   getSites,
+  getSiteSketchFab,
   getSiteDailyData,
   getSiteLiveData,
   getSiteForecastData,
