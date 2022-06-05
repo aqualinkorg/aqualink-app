@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -13,6 +13,7 @@ import times from "lodash/times";
 
 import { useDispatch, useSelector } from "react-redux";
 import Map from "./Map";
+import SketchFab from "./SketchFab";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
@@ -63,6 +64,7 @@ const SiteDetails = ({
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hastSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [isSketchFabView, setIsSketchFabView] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -151,7 +153,26 @@ const SiteDetails = ({
       variant: "subtitle2",
       marginRight: 0,
     },
+    ...(site?.sketchFab
+      ? [
+          {
+            text: site?.sketchFab.description,
+            variant: "subtitle2",
+            marginRight: 0,
+          } as Value,
+        ]
+      : []),
   ];
+
+  const switchButton = useMemo(() => {
+    if (site?.sketchFab) {
+      return {
+        onClick: () => setIsSketchFabView(!isSketchFabView),
+        label: isSketchFabView ? "MAP" : "3D-VIEW",
+      };
+    }
+    return undefined;
+  }, [isSketchFabView, site]);
 
   const featuredMediaTitleItems = (): Value[] => {
     switch (true) {
@@ -212,8 +233,12 @@ const SiteDetails = ({
           titleItems={mapTitleItems}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
+          switchButton={switchButton}
         >
-          {site && (
+          {site && site.sketchFab?.uuid && isSketchFabView && (
+            <SketchFab uuid={site.sketchFab?.uuid} />
+          )}
+          {site && !isSketchFabView && (
             <Map
               siteId={site.id}
               spotterPosition={liveData?.spotterPosition}
