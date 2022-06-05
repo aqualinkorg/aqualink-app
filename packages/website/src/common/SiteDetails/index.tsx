@@ -94,24 +94,11 @@ const SiteDetails = ({
   useEffect(() => {
     if (forecastData && latestData) {
       const combinedArray = [...forecastData, ...latestData];
-      const formatted = combinedArray.map((x) => ({
-        timestamp: x.timestamp,
-        value: x.value,
-        source: x.source,
-        metric: x.metric,
-      }));
-      const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
-      const validityDate = Date.now() - spotterValidityLimit;
-      const hasSpotter = combinedArray.some((x) => {
-        const xTime = new Date(x.timestamp).getTime();
-        return x.source === "spotter" && xTime > validityDate;
-      });
-      const hasSonde = Boolean(
-        combinedArray?.some((data) => data.source === "sonde")
-      );
-      setHasSondeData(hasSonde);
-      const parsedData = parseLatestData(formatted);
+      const parsedData = parseLatestData(combinedArray);
+      const hasSpotter = Boolean(parsedData.bottomTemperature);
+      const hasSonde = Boolean(parsedData.salinity);
 
+      setHasSondeData(hasSonde);
       setHasSpotterData(hasSpotter);
       setLatestDataAsSofarValues(parsedData);
     }
