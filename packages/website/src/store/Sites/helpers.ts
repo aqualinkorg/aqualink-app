@@ -352,11 +352,11 @@ export const parseLatestData = (
   // eslint-disable-next-line fp/no-mutating-methods
   const sorted = filtered.sort((x, y) => {
     // if spotter data is available and, use it.
-    if (x.source === "spotter") {
+    if (x.source === "spotter" && y.source !== "spotter") {
       return +1;
     }
 
-    if (y.source === "spotter") {
+    if (y.source === "spotter" && x.source !== "spotter") {
       return -1;
     }
 
