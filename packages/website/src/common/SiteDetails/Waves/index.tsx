@@ -226,7 +226,7 @@ const Waves = ({ data, hasSpotter }: WavesProps) => {
           </Grid>
           <UpdateInfo
             relativeTime={windRelativeTime}
-            timeText={hasSpotter ? "Last data received" : "Forecast valid for"}
+            timeText={hasSpotter ? "Last data received" : "Valid"}
             live={hasSpotter}
             frequency={hasSpotter ? "hourly" : "every 6 hours"}
             href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs"

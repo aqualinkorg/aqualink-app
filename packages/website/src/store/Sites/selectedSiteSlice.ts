@@ -330,7 +330,7 @@ const selectedSiteSlice = createSlice({
 
     builder.addCase(
       forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+      (state, action: PayloadAction<SelectedSiteState["forecastData"]>) => {
         return {
           ...state,
           forecastData: action.payload,
