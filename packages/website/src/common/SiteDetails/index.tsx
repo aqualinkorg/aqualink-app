@@ -138,12 +138,12 @@ const SiteDetails = ({
     {
       text: `LONG: ${formatNumber(lng, 3)}`,
       variant: "subtitle2",
-      marginRight: 0,
+      marginRight: site?.sketchFab ? "1rem" : 0,
     },
-    ...(site?.sketchFab
+    ...(isSketchFabView
       ? [
           {
-            text: site?.sketchFab.description,
+            text: site?.sketchFab?.description,
             variant: "subtitle2",
             marginRight: 0,
           } as Value,
