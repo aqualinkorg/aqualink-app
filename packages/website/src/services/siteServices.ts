@@ -56,7 +56,7 @@ const getSiteLiveData = (id: string) =>
   });
 
 const getSiteForecastData = (id: string) =>
-  requests.send<ForecastData>({
+  requests.send<ForecastData[]>({
     url: `wind-wave-data-hindcast/sites/${id}`,
     method: "GET",
   });

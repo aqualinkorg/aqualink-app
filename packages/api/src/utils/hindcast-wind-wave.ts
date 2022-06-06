@@ -4,6 +4,7 @@ import { Point } from 'geojson';
 import { isNil } from 'lodash';
 import moment from 'moment';
 import { Repository } from 'typeorm';
+import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
 import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
@@ -16,12 +17,24 @@ import { getSites } from './spotter-time-series';
 
 const logger = new Logger('hindcastWindWaveData');
 
-const dataLabels: [keyof SpotterData, WindWaveMetric][] = [
-  ['significantWaveHeight', WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT],
-  ['waveMeanDirection', WindWaveMetric.WAVE_MEAN_DIRECTION],
-  ['waveMeanPeriod', WindWaveMetric.WAVE_MEAN_PERIOD],
-  ['windDirection', WindWaveMetric.WIND_DIRECTION],
-  ['windSpeed', WindWaveMetric.WIND_SPEED],
+const dataLabels: [keyof SpotterData, WindWaveMetric, SourceType][] = [
+  [
+    'significantWaveHeight',
+    WindWaveMetric.SIGNIFICANT_WAVE_HEIGHT,
+    SourceType.SOFAR_WAVE_MODEL,
+  ],
+  [
+    'waveMeanDirection',
+    WindWaveMetric.WAVE_MEAN_DIRECTION,
+    SourceType.SOFAR_WAVE_MODEL,
+  ],
+  [
+    'waveMeanPeriod',
+    WindWaveMetric.WAVE_MEAN_PERIOD,
+    SourceType.SOFAR_WAVE_MODEL,
+  ],
+  ['windDirection', WindWaveMetric.WIND_DIRECTION, SourceType.GFS],
+  ['windSpeed', WindWaveMetric.WIND_SPEED, SourceType.GFS],
 ];
 
 interface Repositories {
@@ -112,7 +125,6 @@ export const addWindWaveData = async (
       });
 
       // Calculate wind speed and direction from velocity
-      // TODO: treat undefined better
       const windNorthwardVelocity = windVelocity10MeterNorthward?.value;
       const windEastwardVelocity = windVelocity10MeterEastward?.value;
       const sameTimestamps =
@@ -147,7 +159,7 @@ export const addWindWaveData = async (
       // Save wind wave data to forecast_data
       await Promise.all(
         // eslint-disable-next-line array-callback-return, consistent-return
-        dataLabels.map(([dataLabel, metric]) => {
+        dataLabels.map(([dataLabel, metric, source]) => {
           const sofarValue = forecastData[dataLabel] as ValueWithTimestamp;
           if (!isNil(sofarValue?.value) && !Number.isNaN(sofarValue?.value)) {
             return repositories.hindcastRepository
@@ -160,12 +172,13 @@ export const addWindWaveData = async (
                     .startOf('minute')
                     .toDate(),
                   metric,
+                  source,
                   value: sofarValue.value,
                   updatedAt: today,
                 },
               ])
               .onConflict(
-                `ON CONSTRAINT "one_row_per_site_per_metric" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
+                `ON CONSTRAINT "one_row_per_site_per_metric_per_source" DO UPDATE SET "timestamp" = excluded."timestamp", "updated_at" = excluded."updated_at", "value" = excluded."value"`,
               )
               .execute();
           }

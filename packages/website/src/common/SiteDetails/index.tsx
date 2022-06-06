@@ -24,11 +24,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type {
-  Site,
-  LatestDataASSofarValue,
-  LatestData,
-} from "../../store/Sites/types";
+import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -77,12 +73,15 @@ const SiteDetails = ({
 
   useEffect(() => {
     if (site && !liveData) {
-      dispatch(liveDataRequest(`${site.id}`));
+      dispatch(liveDataRequest(String(site.id)));
     }
     if (site && !latestData) {
-      dispatch(latestDataRequest(`${site.id}`));
+      dispatch(latestDataRequest(String(site.id)));
     }
-  }, [dispatch, site, liveData, latestData]);
+    if (site && !forecastData) {
+      dispatch(forecastDataRequest(String(site.id)));
+    }
+  }, [dispatch, site, liveData, latestData, forecastData]);
 
   useEffect(() => {
     return () => {
@@ -93,52 +92,17 @@ const SiteDetails = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (latestData) {
-      setLatestDataAsSofarValues(parseLatestData(latestData));
-      const validMetrics: LatestData["metric"][] = [
-        "wind_direction",
-        "significant_wave_height",
-        "wind_direction",
-        "wave_mean_direction",
-        "wave_mean_period",
-      ];
-      const latestWindWaveInformation = latestData.find((x) =>
-        validMetrics.includes(x.metric)
-      );
-      const now = new Date();
-      const twelveHoursEarlier = new Date(now.getTime() - 12 * 60 * 60 * 1000);
-      if (
-        site &&
-        (latestWindWaveInformation?.timestamp || "") <
-          twelveHoursEarlier.toISOString()
-      ) {
-        if (!forecastData) {
-          dispatch(forecastDataRequest(String(site.id)));
-        }
-        setHasSpotterData(false);
-      } else {
-        setHasSpotterData(true);
-      }
-    }
-    setHasSondeData(
-      Boolean(latestData?.some((data) => data.source === "sonde"))
-    );
-  }, [dispatch, forecastData, latestData, site]);
+    if (forecastData && latestData) {
+      const combinedArray = [...forecastData, ...latestData];
+      const parsedData = parseLatestData(combinedArray);
+      const hasSpotter = Boolean(parsedData.bottomTemperature);
+      const hasSonde = Boolean(parsedData.salinity);
 
-  useEffect(() => {
-    if (forecastData && !hastSpotterData) {
-      const newDate = {
-        ...latestDataAsSofarValues,
-        significantWaveHeight: forecastData.significantWaveHeight,
-        waveMeanDirection: forecastData.waveMeanDirection,
-        waveMeanPeriod: forecastData.waveMeanPeriod,
-        windDirection: forecastData.windDirection,
-        windSpeed: forecastData.windSpeed,
-      } as LatestDataASSofarValue;
-      setLatestDataAsSofarValues(newDate);
+      setHasSondeData(hasSonde);
+      setHasSpotterData(hasSpotter);
+      setLatestDataAsSofarValues(parsedData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forecastData, hastSpotterData]);
+  }, [forecastData, latestData]);
 
   const { videoStream } = site || {};
 

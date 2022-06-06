@@ -16,7 +16,6 @@ import siteServices from "../../services/siteServices";
 import type { TableRow } from "../Homepage/types";
 import {
   DailyData,
-  LatestData,
   LatestDataASSofarValue,
   Metrics,
   MetricsKeys,
@@ -321,7 +320,14 @@ export const timeSeriesRequest = async (
   ];
 };
 
-export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
+export const parseLatestData = (
+  data: {
+    timestamp: string;
+    value: number;
+    source: Sources;
+    metric: MetricsKeys;
+  }[]
+): LatestDataASSofarValue => {
   if (!data || data.length === 0) return {};
 
   // Copying, sorting and filtering to keep spotter or latest data.
@@ -329,37 +335,40 @@ export const parseLatestData = (data: LatestData[]): LatestDataASSofarValue => {
   const spotterValidityLimit = 12 * 60 * 60 * 1000; // 12 hours
   const validityDate = Date.now() - spotterValidityLimit;
 
-  // sort data by timestamp ASCENDING but prioritize spotter data
-  // eslint-disable-next-line fp/no-mutating-methods
-  const sorted = copy.sort((x, y) => {
-    // if spotter data is available and less than 12 hours old, use it.
-    const xTime = new Date(x.timestamp).getTime();
-    if (x.source === "spotter" && xTime > validityDate) {
-      return +1;
-    }
-    const yTime = new Date(y.timestamp).getTime();
-    if (y.source === "spotter" && yTime > validityDate) {
-      return -1;
-    }
-
-    if (xTime > yTime) return +1;
-    if (xTime < yTime) return -1;
-    return 0;
-  });
-
-  // only keep spotter top/bottom temp for now
+  // only keep spotter top/bottom temp for now and check for validity date
   const spotterTempWhitelist = new Set([
     "bottom_temperature",
     "top_temperature",
   ]);
 
-  const filtered = sorted.filter(
+  const filtered = copy.filter(
     (value) =>
-      value.source === "spotter" || !spotterTempWhitelist.has(value.metric)
+      (value.source === "spotter" &&
+        new Date(value.timestamp).getTime() > validityDate) ||
+      !spotterTempWhitelist.has(value.metric)
   );
 
+  // sort data by timestamp ASCENDING but prioritize spotter data
+  // eslint-disable-next-line fp/no-mutating-methods
+  const sorted = filtered.sort((x, y) => {
+    // if spotter data is available and, use it.
+    if (x.source === "spotter" && y.source !== "spotter") {
+      return +1;
+    }
+
+    if (y.source === "spotter" && x.source !== "spotter") {
+      return -1;
+    }
+
+    const xTime = new Date(x.timestamp).getTime();
+    const yTime = new Date(y.timestamp).getTime();
+    if (xTime > yTime) return +1;
+    if (xTime < yTime) return -1;
+    return 0;
+  });
+
   // reduce the array, into a mapping, keeping only the latest data for each metric
-  return filtered.reduce(
+  return sorted.reduce(
     (a, c) => ({
       ...a,
       [camelCase(c.metric)]: { timestamp: c.timestamp, value: c.value },
