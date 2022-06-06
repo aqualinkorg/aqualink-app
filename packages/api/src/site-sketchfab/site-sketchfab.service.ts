@@ -13,7 +13,9 @@ export class SiteSketchFabService {
   async find(findSketchFabDto: FindSketchFabDto) {
     return this.sketchFabRepository.findOne({
       where: {
-        siteId: findSketchFabDto.siteId,
+        site: {
+          id: findSketchFabDto.siteId,
+        },
       },
     });
   }
