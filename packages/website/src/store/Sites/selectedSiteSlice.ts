@@ -91,12 +91,14 @@ export const siteRequest = createAsyncThunk<
   async (id: string, { rejectWithValue }) => {
     try {
       const { data } = await siteServices.getSite(id);
+      const { data: sketchFab } = await siteServices.getSiteSketchFab(id);
       const { data: dailyData } = await siteServices.getSiteDailyData(id);
       const { data: surveyPoints } = await siteServices.getSiteSurveyPoints(id);
 
       return {
         ...data,
         dailyData,
+        sketchFab,
         historicalMonthlyMean: sortBy(
           data.historicalMonthlyMean,
           (item) => item.month
@@ -328,7 +330,7 @@ const selectedSiteSlice = createSlice({
 
     builder.addCase(
       forecastDataRequest.fulfilled,
-      (state, action: PayloadAction<SelectedSiteState["liveData"]>) => {
+      (state, action: PayloadAction<SelectedSiteState["forecastData"]>) => {
         return {
           ...state,
           forecastData: action.payload,

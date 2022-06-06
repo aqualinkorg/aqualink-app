@@ -3566,6 +3566,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@sketchfab/viewer-api@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@sketchfab/viewer-api/-/viewer-api-1.12.0.tgz#48e63bb522b60c1761249a5302c21d90daad9e0c"
+  integrity sha512-XN4QHbKzdR3z7b2WBM095A/DJfKcMEtKfg2ta3RzzDgdHdnqwGvZ8PnQTqwxtWJ14mOIvNV75Rt6SB6MtPoEtQ==
+
 "@sqltools/formatter@^1.2.2":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@sqltools/formatter/-/formatter-1.2.3.tgz#1185726610acc37317ddab11c3c7f9066966bd20"

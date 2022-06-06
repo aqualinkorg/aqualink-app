@@ -1,12 +1,11 @@
 import {
-  getSofarWaveModelAvailability,
+  AVAILABLE_POINTS,
   getSofarNearestAvailablePoint,
 } from './sofar-availability';
 
 test('getting Sofar Wave Model availability zones', () => {
-  const geojson = getSofarWaveModelAvailability();
-  expect(geojson.type).toBe('FeatureCollection');
-  expect(geojson.features.length).toBeGreaterThanOrEqual(100);
+  expect(AVAILABLE_POINTS.type).toBe('FeatureCollection');
+  expect(AVAILABLE_POINTS.features.length).toBeGreaterThanOrEqual(100);
 });
 
 test('snapping point to availability zones', () => {
