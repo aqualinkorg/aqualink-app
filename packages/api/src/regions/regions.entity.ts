@@ -40,6 +40,7 @@ export class Region {
 
   @ApiProperty({ type: () => Region })
   @ManyToOne(() => Region, { onDelete: 'CASCADE', nullable: true })
+  @Index()
   parent: Region | null;
 
   @ApiProperty({ example: 1 })

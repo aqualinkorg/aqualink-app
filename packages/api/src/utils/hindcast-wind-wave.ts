@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Repository } from 'typeorm';
 import { SourceType } from '../sites/schemas/source-type.enum';
 import { Site } from '../sites/sites.entity';
-import { ForecastData } from '../wind-wave-data/wind-wave-data.entity';
+import { ForecastData } from '../wind-wave-data/forecast-data.entity';
 import { WindWaveMetric } from '../wind-wave-data/wind-wave-data.types';
 import { SofarModels, sofarVariableIDs } from './constants';
 import { getWindDirection, getWindSpeed } from './math';

@@ -3,7 +3,7 @@ import yargs from 'yargs';
 import { configService } from '../src/config/config.service';
 import { Site } from '../src/sites/sites.entity';
 import { addWindWaveData } from '../src/utils/hindcast-wind-wave';
-import { ForecastData } from '../src/wind-wave-data/wind-wave-data.entity';
+import { ForecastData } from '../src/wind-wave-data/forecast-data.entity';
 
 // Initialize command definition
 const { argv } = yargs

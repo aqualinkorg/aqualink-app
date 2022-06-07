@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,9 +22,11 @@ export class DataUploads {
   id: number;
 
   @ManyToOne(() => Site, { onDelete: 'CASCADE', nullable: false })
+  @Index()
   site: Site;
 
   @ManyToOne(() => SiteSurveyPoint, { onDelete: 'CASCADE', nullable: false })
+  @Index()
   surveyPoint: SiteSurveyPoint;
 
   @Column({ type: 'enum', enum: SourceType })

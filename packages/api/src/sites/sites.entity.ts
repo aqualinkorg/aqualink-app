@@ -96,9 +96,11 @@ export class Site {
   updatedAt: Date;
 
   @ManyToOne(() => Region, { onDelete: 'SET NULL', nullable: true })
+  @Index()
   region: Region | null;
 
   @ManyToOne(() => VideoStream, { onDelete: 'SET NULL', nullable: true })
+  @Index()
   stream: VideoStream | null;
 
   @ManyToMany(() => User, (user) => user.administeredSites)
