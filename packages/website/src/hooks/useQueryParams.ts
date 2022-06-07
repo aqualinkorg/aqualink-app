@@ -22,6 +22,7 @@ export const useQueryParam = (
   const { search } = useLocation();
   const history = useHistory();
   const [value, setValue] = useState<string | undefined>(() => {
+    // NOTE: IE does not support URLSearchParams
     const params = new URLSearchParams(search);
     return params.get(key) || undefined;
   });
