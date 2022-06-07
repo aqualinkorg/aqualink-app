@@ -65,7 +65,7 @@ export const SiteMarkers = ({ collection }: SiteMarkersProps) => {
         disableClusteringAtZoom={1}
       >
         {sitesList.map((site: Site) => (
-          <SiteMarker key={site.id} site={site} />
+          <SiteMarker key={site.id} site={site} setCenter={setCenter} />
         ))}
       </MarkerClusterGroup>
     </LayerGroup>

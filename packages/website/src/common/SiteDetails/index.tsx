@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   createStyles,
   Grid,
@@ -13,6 +13,7 @@ import times from "lodash/times";
 
 import { useDispatch, useSelector } from "react-redux";
 import Map from "./Map";
+import SketchFab from "./SketchFab";
 import FeaturedMedia from "./FeaturedMedia";
 import Satellite from "./Satellite";
 import Sensor from "./Sensor";
@@ -23,11 +24,7 @@ import Surveys from "./Surveys";
 import CardWithTitle from "./CardWithTitle";
 import { Value } from "./CardWithTitle/types";
 import CombinedCharts from "../Chart/CombinedCharts";
-import type {
-  Site,
-  LatestDataASSofarValue,
-  LatestData,
-} from "../../store/Sites/types";
+import type { Site, LatestDataASSofarValue } from "../../store/Sites/types";
 import { getMiddlePoint } from "../../helpers/map";
 import { formatNumber } from "../../helpers/numberUtils";
 import { SurveyListItem, SurveyPoint } from "../../store/Survey/types";
@@ -67,6 +64,7 @@ const SiteDetails = ({
     useState<LatestDataASSofarValue>({});
   const [hasSondeData, setHasSondeData] = useState<boolean>(false);
   const [hastSpotterData, setHasSpotterData] = useState<boolean>(false);
+  const [isSketchFabView, setIsSketchFabView] = useState<boolean>(false);
   const latestData = useSelector(latestDataSelector);
   const forecastData = useSelector(forecastDataSelector);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
@@ -75,12 +73,15 @@ const SiteDetails = ({
 
   useEffect(() => {
     if (site && !liveData) {
-      dispatch(liveDataRequest(`${site.id}`));
+      dispatch(liveDataRequest(String(site.id)));
     }
     if (site && !latestData) {
-      dispatch(latestDataRequest(`${site.id}`));
+      dispatch(latestDataRequest(String(site.id)));
     }
-  }, [dispatch, site, liveData, latestData]);
+    if (site && !forecastData) {
+      dispatch(forecastDataRequest(String(site.id)));
+    }
+  }, [dispatch, site, liveData, latestData, forecastData]);
 
   useEffect(() => {
     return () => {
@@ -91,52 +92,17 @@ const SiteDetails = ({
   }, [dispatch]);
 
   useEffect(() => {
-    if (latestData) {
-      setLatestDataAsSofarValues(parseLatestData(latestData));
-      const validMetrics: LatestData["metric"][] = [
-        "wind_direction",
-        "significant_wave_height",
-        "wind_direction",
-        "wave_mean_direction",
-        "wave_mean_period",
-      ];
-      const latestWindWaveInformation = latestData.find((x) =>
-        validMetrics.includes(x.metric)
-      );
-      const now = new Date();
-      const twelveHoursEarlier = new Date(now.getTime() - 12 * 60 * 60 * 1000);
-      if (
-        site &&
-        (latestWindWaveInformation?.timestamp || "") <
-          twelveHoursEarlier.toISOString()
-      ) {
-        if (!forecastData) {
-          dispatch(forecastDataRequest(String(site.id)));
-        }
-        setHasSpotterData(false);
-      } else {
-        setHasSpotterData(true);
-      }
-    }
-    setHasSondeData(
-      Boolean(latestData?.some((data) => data.source === "sonde"))
-    );
-  }, [dispatch, forecastData, latestData, site]);
+    if (forecastData && latestData) {
+      const combinedArray = [...forecastData, ...latestData];
+      const parsedData = parseLatestData(combinedArray);
+      const hasSpotter = Boolean(parsedData.bottomTemperature);
+      const hasSonde = Boolean(parsedData.salinity);
 
-  useEffect(() => {
-    if (forecastData && !hastSpotterData) {
-      const newDate = {
-        ...latestDataAsSofarValues,
-        significantWaveHeight: forecastData.significantWaveHeight,
-        waveMeanDirection: forecastData.waveMeanDirection,
-        waveMeanPeriod: forecastData.waveMeanPeriod,
-        windDirection: forecastData.windDirection,
-        windSpeed: forecastData.windSpeed,
-      } as LatestDataASSofarValue;
-      setLatestDataAsSofarValues(newDate);
+      setHasSondeData(hasSonde);
+      setHasSpotterData(hasSpotter);
+      setLatestDataAsSofarValues(parsedData);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forecastData, hastSpotterData]);
+  }, [forecastData, latestData]);
 
   const { videoStream } = site || {};
 
@@ -172,9 +138,28 @@ const SiteDetails = ({
     {
       text: `LONG: ${formatNumber(lng, 3)}`,
       variant: "subtitle2",
-      marginRight: 0,
+      marginRight: site?.sketchFab ? "1rem" : 0,
     },
+    ...(isSketchFabView
+      ? [
+          {
+            text: site?.sketchFab?.description,
+            variant: "subtitle2",
+            marginRight: 0,
+          } as Value,
+        ]
+      : []),
   ];
+
+  const switchButton = useMemo(() => {
+    if (site?.sketchFab) {
+      return {
+        onClick: () => setIsSketchFabView(!isSketchFabView),
+        label: isSketchFabView ? "MAP" : "3D-VIEW",
+      };
+    }
+    return undefined;
+  }, [isSketchFabView, site]);
 
   const featuredMediaTitleItems = (): Value[] => {
     switch (true) {
@@ -235,8 +220,12 @@ const SiteDetails = ({
           titleItems={mapTitleItems}
           gridProps={{ xs: 12, md: 6 }}
           forcedAspectRatio={!!videoStream}
+          switchButton={switchButton}
         >
-          {site && (
+          {site && site.sketchFab?.uuid && isSketchFabView && (
+            <SketchFab uuid={site.sketchFab?.uuid} />
+          )}
+          {site && !isSketchFabView && (
             <Map
               siteId={site.id}
               spotterPosition={liveData?.spotterPosition}

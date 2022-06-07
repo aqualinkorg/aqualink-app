@@ -12,6 +12,7 @@ test("renders as expected", () => {
           marginRight: "1rem",
         },
       ]}
+      loading={false}
       gridProps={{ xs: 12 }}
     />
   );

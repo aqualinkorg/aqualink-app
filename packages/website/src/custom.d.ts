@@ -25,3 +25,4 @@ declare module "download-csv" {
 }
 declare module "react-leaflet-markercluster";
 declare module "react-swipeable-bottom-sheet";
+declare module "@sketchfab/viewer-api";
