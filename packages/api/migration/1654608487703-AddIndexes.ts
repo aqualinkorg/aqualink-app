@@ -38,12 +38,6 @@ export class AddIndexes1654608487703 implements MigrationInterface {
       `CREATE INDEX "IDX_2e5de2284644a41979436d3820" ON "historical_monthly_mean" ("site_id") `,
     );
     await queryRunner.query(
-      `CREATE INDEX "IDX_ff7a13fae129f15180a3e36f9e" ON "site" ("region_id") `,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_2d56028954ec00388e734fb266" ON "site" ("stream_id") `,
-    );
-    await queryRunner.query(
       `CREATE INDEX "IDX_687c94fe33408bad80672846e1" ON "survey_media" ("survey_point_id") `,
     );
     await queryRunner.query(
@@ -63,12 +57,6 @@ export class AddIndexes1654608487703 implements MigrationInterface {
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_687c94fe33408bad80672846e1"`,
-    );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_2d56028954ec00388e734fb266"`,
-    );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_ff7a13fae129f15180a3e36f9e"`,
     );
     await queryRunner.query(
       `DROP INDEX "public"."IDX_2e5de2284644a41979436d3820"`,
